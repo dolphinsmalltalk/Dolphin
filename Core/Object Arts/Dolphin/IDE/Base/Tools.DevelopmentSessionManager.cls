@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.GUISessionManager subclass: #'Tools.DevelopmentSessionManager'
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
@@ -38,14 +38,14 @@ appIdString
 applicationName
 	"Answers the <readableString> name of this Dolphin product"
 	
-	^self productDetails at: 1
+	^self productDetails at: #productName
 
 !
 
 applicationShortName
 	"Answer a <readableString> which is the abbreviated application name."
 
-	^self productDetails at: 2!
+	^self productDetails at: #shortProductName!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
@@ -64,12 +64,12 @@ backupOnImageSave: aBoolean
 bootInfo
 	"Answer the Git info of the sources from which this image was originally booted"
 
-	^self productDetails at: 8!
+	^self productDetails at: #bootInfo!
 
 bootInfo: aStringOrNil 
 	"Set the Git info of the sources from which this image was originally booted"
 
-	^self productDetails at: 8 put: aStringOrNil!
+	^self productDetails at: #bootInfo put: aStringOrNil!
 
 canPlaySounds
 	^SmalltalkSystemShell playSystemSounds!
@@ -134,7 +134,7 @@ getInstallationDirectory
 	folder isNil
 		ifTrue: 
 			["Otherwise try the path to the VM"
-			folder := File splitPathFrom: VMLibrary default fileName].
+			folder := File splitPathFrom: VM fileName].
 	^File appendPathDelimiter: folder!
 
 imageStamp
@@ -150,7 +150,7 @@ imageStamp: aDateAndTime
 imageVersionMinor: anInteger
 	"Private - Set the minor component of the image's version Integer."
 
-	^VMLibrary default registryAt: #ImageVersionMinor put: anInteger!
+	^VM registryAt: #ImageVersionMinor put: anInteger!
 
 initialize
 	super initialize.
@@ -209,7 +209,7 @@ isEmbedded
 isOAD
 	"Private - Is this an Object Arts Development image?"
 
-	^(self productDetails at: 6) = 'OAE'!
+	^(self productDetails at: #abbreviatedProductName) = 'OAE'!
 
 keepAlive
 	"The inputState has determined that there are no live windows.
@@ -244,7 +244,7 @@ logError: anException
 
 	self isUnattended
 		ifTrue: 
-			[VMLibrary default
+			[VM
 				dump: anException description
 				path: nil
 				stackDepth: -1
@@ -252,7 +252,10 @@ logError: anException
 			^self].
 	
 	[| f |
-	f := FileStream write: self errorLogName mode: #append type: #utf8.
+	f := FileStream
+				write: self errorLogName
+				mode: #append
+				type: #utf8.
 	f
 		print: DateAndTime now;
 		nextPutAll: ': Unhandled exception - '.
@@ -452,19 +455,9 @@ processCommandLine
 	arguments allButFirst do: [:openFile | self open: openFile]	"leave off image name"!
 
 productDetails
-	"Private - Answers an eight element <Array> describing this version of the development environment
+	"Private - Answers a <LookupTable>  of key-value pairs describing this version of the development environment"
 
-	1. <readableString> Product name 
-	2. <readableString> Short product name
-	3. <Float> Version number
-	4. <readableString> Version special
-	5. <Integer> Image patch level
-	6 <readableString> Very short product name
-	7 <readableString> Serial number
-	8 <readableString> Boot source version info"
-
-	productDetails isNil ifTrue: [
-		productDetails := VMLibrary default defaultProductDetails ].
+	productDetails isNil ifTrue: [productDetails := VM defaultProductDetails].
 	^productDetails!
 
 productDetails: anArray
@@ -477,27 +470,24 @@ productDetails: anArray
 productMajorVersion
 	"Answers the <Integer> major version number of this development image."
 	
-	^self productVersion truncated
+	^self productVersion major
 !
 
 productRegistryKey
 	"Private - Answers the <readableString> registry key of this product"
 
-	^'Software\Object Arts\Dolphin Smalltalk ', self productRegistryVersion printString!
+	^'Software\Object Arts\Dolphin Smalltalk ' , self productRegistryVersion!
 
 productRegistryVersion
-	"Private - Answers the <Float> version this product suitable for looking up our
-	installation in the registry. Currently we drop hundreths in the version number."
+	"Private - Answers the version this product suitable for looking up our installation in the registry. This is a special version that normally doesn't change between major versions."
 	
-	"Note: we don't use #roundTo: because of <Float>rounding errors"
-	^((self productVersion *10) truncated / 10) asFloat
+	^self productDetails at: #registryVersion
 !
 
 productVersion
-	"Answers the <Float> version of this product"
-	
-	^self productDetails at: 3
-!
+	"Answers a `SemVer` describing the version of this product."
+
+	^SemVer fromString: (self productDetails at: #productVersionString)!
 
 productVersionSpecial
 	"Answers the <readableString> special version of this product"
@@ -508,7 +498,7 @@ productVersionSpecial
 registeredSerialNumber
 	"Private - Answers the primary <readableString> registered serial number for this product."
 
-	^self productDetails at: 7!
+	^self productDetails at: #serialNumber!
 
 registeredSerialNumber: aString
 	"Private - Sets the primary <readableString> registered serial number for this product."
@@ -518,7 +508,7 @@ registeredSerialNumber: aString
 resetPatchLevel
 	"Private - Set the current patch level of this image to 0"
 
-	self productDetails at: 5 put: 0.
+	self productDetails at: #basePatchLevel put: 0.
 !
 
 resourcesLocatorForClass: aClass 
@@ -577,12 +567,12 @@ saveImageTo: aString
 	self
 		snapshot: self imageFileName;
 		logComment: ('Image saved to <1p>' expandMacrosWith: aString).
-	KernelLibrary default closeHandle: oldSentry]
+	Kernel32 closeHandle: oldSentry]
 			ifCurtailed: 
 				["Attempt to return to the old state so sources & stuff are intact
 				 before showing the user the problem."
 				
-				[KernelLibrary default closeHandle: sentry.
+				[Kernel32 closeHandle: sentry.
 				sentry := oldSentry.
 				self
 					imagePath: oldImagePath;
@@ -694,19 +684,12 @@ unhandledException: anException
 versionInfo
 	"Answer the <VersionInfo> for this session, extracted from the host executable."
 
-	^VMLibrary default versionInfo
-!
+	^VM versionInfo!
 
 versionString
 	"Answers a String containing the current version of the system"
 
-	| patch verString special |
-	verString := self productVersion printString.
-	patch := self patchLevel.
-	patch = 0 ifFalse: [verString := verString , patch displayString].
-	special := self productVersionSpecial.
-	special notEmpty ifTrue: [verString := verString , ' ' , special].
-	^'<1s> <2d>' expandMacrosWith: self applicationShortName with: verString! !
+	^'<1s> <2d>' expandMacrosWith: self applicationShortName with: self productVersion majorMinorPatch! !
 !Tools.DevelopmentSessionManager categoriesFor: #advanceImageVersionMinor!operations-saving!public! !
 !Tools.DevelopmentSessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
 !Tools.DevelopmentSessionManager categoriesFor: #appIdString!constants!public! !
@@ -799,7 +782,7 @@ imageExtension
 	"Answer the suffix for an image file, We'll append the major version of Dolphin that
 	should be associated with this particular image."
 
-	^'img7'! !
+	^'img8'! !
 !Tools.DevelopmentSessionManager class categoriesFor: #icon!constants!public! !
 !Tools.DevelopmentSessionManager class categoriesFor: #imageExtension!constants!public! !
 

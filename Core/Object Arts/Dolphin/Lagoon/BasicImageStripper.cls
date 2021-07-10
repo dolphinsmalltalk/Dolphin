@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
@@ -182,7 +182,7 @@ destroyAndRemoveProgress
 			do: 
 				[:e |
 				self deploymentContext logStrippingError: e.
-				VMLibrary default crashDump: e description].
+				VM crashDump: e description].
 	self collectGarbage: 3.
 	self finishedWithAll: #(#destroyNotifier #progressDialogClass #removeGuiForConsoleApplication)!
 
@@ -330,7 +330,7 @@ messagesSentByClasses: aCollectionOfClasses
 					eachSymbol == selector ifFalse: [sent add: eachSymbol]]].
 
 	"Add all messages that can be triggered by events"
-	_EventsRegister do: [:each | each do: [:mseq | mseq messagesDo: [:ms | sent add: ms selector]]].
+	_EventsRegister do: [:each | each do: [:mseq | mseq messages do: [:ms | sent add: ms selector]]].
 	^sent!
 
 notify: aStringMessage
@@ -516,8 +516,7 @@ removeGuiForConsoleApplication
 	self startElement: 'StripConsoleApplication' attributes: #().
 	#(#{Kernel.ImageRelativeFileLocator} #{Kernel.InstallRelativeFileLocator})
 		do: [:each | each ifDefined: [:class | class uninitialize]].
-	#{UI.View} isDefined
-		ifFalse: [VMLibrary default unregisterObject: #wndProc:message:wParam:lParam:cookie:].
+	#{UI.View} isDefined ifFalse: [VM unregisterObject: #wndProc:message:wParam:lParam:cookie:].
 	self collectGarbage: 3.
 	self endElement: true!
 
@@ -625,7 +624,7 @@ removeRedundantClassesAndResources: stripResources
 	"Find classes that are redundant"
 	msg := 'Removing redundant classes'.
 	stripResources ifTrue: [msg := msg , ' and resources'].
-	self notify: msg , '...'.
+	self notify: msg , '…'.
 	self collectGarbage: 3.
 	referencedClasses := self allReferencedClasses.
 	stripResources ifTrue: [count := count + (self removeRedundantResources: referencedClasses)].
@@ -644,7 +643,7 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 
 	| redundantMessages redundantMethods sent implemented |
 	self stripRedundantMethods ifFalse: [^0].
-	self notify: 'Removing redundant methods...'.
+	self notify: 'Removing redundant methods…'.
 	self collectGarbage: 1.
 	sent := self messagesSentByClasses: aCollectionOfClasses.
 	implemented := Set new: aCollectionOfClasses size * 12.
@@ -680,7 +679,7 @@ removeRedundantPackages
 	[required := self verifyRequiredPackages] on: Warning
 		do: 
 			[:warning |
-			warning resume: (OS.UserLibrary default
+			warning resume: (User32
 						messageBox: nil
 						lpText: warning description
 						lpCaption: SessionManager current applicationName
@@ -759,7 +758,7 @@ speciallySentMessages
 	"Private - A number of messages can be sent without  appearing in the literal
 	frame of any method. Answer a Set of these selectors here."
 
-	^Set withAll: (VMLibrary default registry select: [:each | each class == Symbol])!
+	^Set withAll: (VM registry select: [:each | each class == Symbol])!
 
 startElement: aString attributes: aCollectionOfAttributes
 	self deploymentContext startElement: aString attributes: aCollectionOfAttributes!

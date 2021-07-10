@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure subclass: #'External.SIZE'
 	instanceVariableNames: ''
@@ -60,7 +60,7 @@ fromPoint: aPoint
 icon
 	"Answer a suitable iconic representation for the receiver."
 
-	^Graphics.Icon fromId: 'extent.ico'!
+	^##(Graphics.Icon fromId: 'extent.ico')!
 
 width: cx height: cy
 	^self new

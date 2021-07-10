@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.GraphicsTool subclass: #'Graphics.Region'
 	instanceVariableNames: ''
@@ -17,7 +17,7 @@ combine: aRegion mode: anInteger
 
 	| result |
 	result := Region empty.
-	GDILibrary default
+	Gdi32
 		combineRgn: result asParameter
 		hrgnSrc1: self asParameter
 		hrgnSrc2: aRegion asParameter
@@ -27,7 +27,7 @@ combine: aRegion mode: anInteger
 containsPoint: aPoint
 	"Answer whether aPoint is contained by the receiver"
 
-	^(GDILibrary default
+	^(Gdi32
 		ptInRegion: self asParameter
 		x: aPoint x
 		y: aPoint y) asBoolean!
@@ -67,7 +67,7 @@ union: aRegion
 ellipse: aRectangle
 	"Answer an elliptic region defined by aRectangle"
 
-	^self fromOwnedHandle: (GDILibrary default createEllipticRgnIndirect: aRectangle asParameter)!
+	^self fromOwnedHandle: (Gdi32 createEllipticRgnIndirect: aRectangle asParameter)!
 
 empty
 	"Answer an empty rectangular region"
@@ -77,7 +77,7 @@ empty
 rectangle: aRectangle
 	"Answer a rectangular region defined by aRectangle"
 
-	^self fromOwnedHandle: (GDILibrary default createRectRgnIndirect: aRectangle asParameter)! !
+	^self fromOwnedHandle: (Gdi32 createRectRgnIndirect: aRectangle asParameter)! !
 !Graphics.Region class categoriesFor: #ellipse:!instance creation!public! !
 !Graphics.Region class categoriesFor: #empty!instance creation!public! !
 !Graphics.Region class categoriesFor: #rectangle:!instance creation!public! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.IUnknown subclass: #'OS.COM.IDispatch'
 	instanceVariableNames: 'typeInfo dispatchImplementor'
@@ -795,7 +795,7 @@ defineFunctions
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil!
+	VM registryAt: self name put: nil!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 

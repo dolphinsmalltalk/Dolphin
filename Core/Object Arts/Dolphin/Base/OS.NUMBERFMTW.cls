@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.NUMBERFMTW'
 	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
@@ -151,7 +151,7 @@ numberGrouping: aString
 				into: 
 					[:grouping :each |
 					| group |
-					group := CRTLibrary default atoi: each.
+					group := Ucrt atoi: each.
 					grouping * 10 + group])!
 
 NumDigits

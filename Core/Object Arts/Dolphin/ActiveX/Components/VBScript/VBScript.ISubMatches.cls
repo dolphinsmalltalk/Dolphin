@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-IDispatch subclass: #ISubMatches
+OS.COM.IDispatch subclass: #'VBScript.ISubMatches'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ISubMatches guid: (IID fromString: '{3f4dacb3-160d-11d2-a8e9-00104b365c9f}')!
-ISubMatches comment: '`ISubMatches` is a wrapper class for the COM interface ''VBScript_RegExp_55.ISubMatches'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.ISubMatches guid: (OS.COM.IID fromString: '{3f4dacb3-160d-11d2-a8e9-00104b365c9f}')!
+VBScript.ISubMatches comment: '`ISubMatches` is a wrapper class for the COM interface ''VBScript_RegExp_55.ISubMatches'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -36,8 +37,8 @@ interface ISubMatches : IDispatch
 };
 ```
 '!
-!ISubMatches categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
-!ISubMatches methodsFor!
+!VBScript.ISubMatches categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+!VBScript.ISubMatches methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_NewEnum' property of the receiver."
@@ -48,15 +49,23 @@ _newEnum
 	^answer asObject!
 
 asArray
-	^(0 to: self count - 1) collect: [:each | self item: each]!
+	| variant answer count |
+	variant := VARIANT new.
+	count := self count.
+	answer := Array new: count.
+	1 to: count do: [:i |
+			self get_Item: i - 1 pSubMatch: variant.
+			answer at: i put: variant value.
+			variant basicFree].
+	^answer!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := ByteArray newFixed: 4.
 	self get_Count: answer.
-	^answer asObject!
+	^answer sdwordAtOffset: 0!
 
 get__NewEnum: ppEnum
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -105,17 +114,17 @@ item: index
 	answer := variant value.
 	variant free.
 	^answer! !
-!ISubMatches categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!ISubMatches categoriesFor: #asArray!converting!public! !
-!ISubMatches categoriesFor: #count!**auto generated**!properties!public! !
-!ISubMatches categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!ISubMatches categoriesFor: #get_Count:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!ISubMatches categoriesFor: #get_Item:pSubMatch:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!ISubMatches categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ISubMatches categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ISubMatches categoriesFor: #item:!properties!public! !
+!VBScript.ISubMatches categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!VBScript.ISubMatches categoriesFor: #asArray!converting!public! !
+!VBScript.ISubMatches categoriesFor: #count!properties!public! !
+!VBScript.ISubMatches categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-ISubMatches!private! !
+!VBScript.ISubMatches categoriesFor: #get_Count:!**auto generated**!COM Interfaces-ISubMatches!private! !
+!VBScript.ISubMatches categoriesFor: #get_Item:pSubMatch:!**auto generated**!COM Interfaces-ISubMatches!private! !
+!VBScript.ISubMatches categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!VBScript.ISubMatches categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!VBScript.ISubMatches categoriesFor: #item:!properties!public! !
 
-!ISubMatches class methodsFor!
+!VBScript.ISubMatches class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the coclass (SubMatches) for which the receiver is the default interface."
@@ -135,6 +144,6 @@ defineFunctions
 		defineFunction: #get__NewEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!ISubMatches class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ISubMatches class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.ISubMatches class categoriesFor: #clsid!**auto generated**!constants!private! !
+!VBScript.ISubMatches class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

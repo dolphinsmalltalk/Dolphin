@@ -1,8 +1,8 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'IsAppThemed'
+	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -1044,21 +1044,14 @@ fileName
 	^'UXTHEME'
 !
 
-isAppThemed
-	^IsAppThemed!
-
 new
 	^(SystemMetrics current hasThemes
 		ifTrue: [SystemMetrics current hasEnhancedThemes ifTrue: [VistaThemeLibrary] ifFalse: [self]]
 		ifFalse: [MockThemeLibrary]) basicNew!
 
-onStartup2
-	"Private - Perform session startup processing for the receiver and its subclasses."
-
-	default := nil.
-	IsAppThemed := self default isThemeActive and: [default isAppThemed]! !
+sharedVariableName
+	^#{UxTheme}! !
 !OS.ThemeLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!OS.ThemeLibrary class categoriesFor: #isAppThemed!private!testing! !
 !OS.ThemeLibrary class categoriesFor: #new!instance creation!public! !
-!OS.ThemeLibrary class categoriesFor: #onStartup2!event handling!private! !
+!OS.ThemeLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

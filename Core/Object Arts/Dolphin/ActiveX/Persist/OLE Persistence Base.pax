@@ -68,7 +68,7 @@ readFromIStream: anIStream
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		oleLoadFromStream: anIStream
 		iidInterface: self iid
 		ppvObj: answer.
@@ -84,15 +84,14 @@ nextPutObject: unkObj
 	at least write the object's CLSID to the stream so that it can be reinstantiated."
 
 	| ips |
-	ips := unkObj queryInterface: IPersistStreamInit
-				ifNone: [unkObj queryInterface: IPersistStream].
+	ips := unkObj queryInterface: IPersistStreamInit ifNone: [unkObj queryInterface: IPersistStream].
 	ips isNull
 		ifTrue: 
 			[| ip |
 			ip := unkObj queryInterface: IPersist
 						ifNone: [^self error: 'Object not persistable: ' , unkObj printString].
 			self nextPutCLSID: ip clsid]
-		ifFalse: [OLELibrary default oleSaveToStream: ips pStm: self]! !
+		ifFalse: [Ole32 oleSaveToStream: ips pStm: self]! !
 !OS.COM.IStream categoriesFor: #nextPutObject:!accessing!public! !
 
 !OS.COM.OLELibrary methodsFor!

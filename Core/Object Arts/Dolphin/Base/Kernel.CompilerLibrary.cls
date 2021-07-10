@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'Kernel.CompilerLibrary'
 	instanceVariableNames: ''
@@ -35,6 +35,6 @@ fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
-	^VMLibrary default compilerFileName! !
+	^VM compilerFileName! !
 !Kernel.CompilerLibrary class categoriesFor: #fileName!constants!public! !
 

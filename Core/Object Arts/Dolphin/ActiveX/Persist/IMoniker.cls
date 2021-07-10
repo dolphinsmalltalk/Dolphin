@@ -508,7 +508,7 @@ forItem: itemName delimiter: separatorString
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
+	Ole32
 		createItemMoniker: separatorString asUnicodeString 
 		lpszItem: itemName asUnicodeString 
 		ppmk: answer.
@@ -520,7 +520,7 @@ forPath: path
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default createFileMoniker: path asUnicodeString ppmk: answer.
+	Ole32 createFileMoniker: path asUnicodeString ppmk: answer.
 	^answer.
 
 "
@@ -533,7 +533,7 @@ forPointer: anIUnknown
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default createPointerMoniker: anIUnknown ppmk: answer.
+	Ole32 createPointerMoniker: anIUnknown ppmk: answer.
 	^answer.
 
 "

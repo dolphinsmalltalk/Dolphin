@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.CRTLibrary subclass: #'OS.CRTLibraryNonBlocking'
 	instanceVariableNames: ''
@@ -40,4 +40,10 @@ fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: c
 !OS.CRTLibraryNonBlocking categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !
 !OS.CRTLibraryNonBlocking categoriesFor: #fgetws:n:stream:!CRT functions-stream I/O!public! !
 !OS.CRTLibraryNonBlocking categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+
+!OS.CRTLibraryNonBlocking class methodsFor!
+
+sharedVariableName
+	^nil! !
+!OS.CRTLibraryNonBlocking class categoriesFor: #sharedVariableName!constants!private! !
 

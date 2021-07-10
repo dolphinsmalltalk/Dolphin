@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ContainerView subclass: #'UI.ShellView'
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
@@ -72,7 +72,7 @@ allAdditionalKeyBindings
 basicMenu: aMenuBarOrNil
 	"Private - Set the menu bar for this window to aMenuBarOrNil."
 
-	UserLibrary default setMenu: self asParameter hMenu: aMenuBarOrNil asParameter!
+	User32 setMenu: self asParameter hMenu: aMenuBarOrNil asParameter!
 
 buildCombinedAcceleratorTable
 	combinedAcceleratorTable := acceleratorTable
@@ -188,7 +188,7 @@ defaultPositionWithin: aParentView forExtent: aPoint
 	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint.
 	This is used only on creation."
 
-	| testWindow defaultPosition |
+	| testWindow defaultPosition activeMonitor defaultMonitor |
 	self assert: [aParentView notNil].
 	self isInitiallyCentered ifTrue: [^self centerExtent: aPoint within: aParentView].
 
@@ -200,6 +200,15 @@ defaultPositionWithin: aParentView forExtent: aPoint
 		createAt: ##(CW_USEDEFAULT @ CW_USEDEFAULT) extent: aPoint.
 	defaultPosition := testWindow position.
 	testWindow destroy.
+	"Reposition to within bounds of active monitor"
+	activeMonitor := DisplayMonitor active.
+	defaultMonitor := DisplayMonitor containingPoint: defaultPosition.
+	activeMonitor = defaultMonitor
+		ifFalse: 
+			[| workArea |
+			defaultPosition := activeMonitor origin + (defaultPosition - defaultMonitor origin).
+			workArea := activeMonitor workArea.
+			defaultPosition := (defaultPosition min: workArea bottomRight - aPoint) max: workArea topLeft].
 	^defaultPosition!
 
 defaultShowStyle
@@ -266,7 +275,7 @@ drawMenuBar
 	"Draw the receiver's menu bar, either when initially set or after it has been updated.
 	Answer whether the request succeeded."
 
-	^UserLibrary default drawMenuBar: self asParameter!
+	^User32 drawMenuBar: self asParameter!
 
 ensureSubViewVisible: aSubView 
 	"Terminate the recursion as making a sub-view visible should not change the z-order of the Windows on the desktop (or indeed in an idea space).
@@ -304,7 +313,7 @@ flash: flashCountInteger flags: flagsInteger
 		hwnd: self asParameter;
 		uCount: flashCountInteger;
 		dwFlags: flagsInteger.
-	^(UserLibrary default flashWindowEx: params) ~= 0!
+	^(User32 flashWindowEx: params) ~= 0!
 
 getDefId
 	"Private - Answer the ID of any default push button in the receiver, or 0 if none."
@@ -320,7 +329,7 @@ getLastActivePopup
 	if there is no popup."
 
 	| hWnd |
-	hWnd := UserLibrary default getLastActivePopup: self asParameter.
+	hWnd := User32 getLastActivePopup: self asParameter.
 	^(hWnd notNil and: [hWnd ~= handle]) ifTrue: [View fromHandle: hWnd]!
 
 hasCaption
@@ -415,7 +424,7 @@ invalidateUserInterface
 	to be requeried using #validateUserInterface (usually at idle time)"
 
 	flags := flags maskClear: UIValidMask.
-	SessionManager inputState prod!
+	SessionManager.Current inputState prod!
 
 isInitiallyCentered
 	"Private - Answer whether the receiver should be centered within its parent when created."
@@ -445,7 +454,7 @@ isLayeredWindow: aBoolean
 isMaximized
 	"Answer whether the receiver is currently maximized."
 
-	^UserLibrary default isZoomed: self asParameter!
+	^User32 isZoomed: self asParameter!
 
 isMinimized
 	"Answer whether the receiver is currently minimized."
@@ -726,7 +735,7 @@ onViewDeactivated: anEvent
 
 	| focus |
 	focus := self class focus.
-	(focus notNil and: [UserLibrary default isChild: self asParameter hWnd: focus asParameter])
+	(focus notNil and: [User32 isChild: self asParameter hWnd: focus asParameter])
 		ifTrue: [self lastFocus: focus].
 	self trigger: #viewDeactivated.
 	^0!
@@ -893,7 +902,7 @@ setButtonId: id style: style
 
 	| hWndButton |
 	hWndButton := self findItemHandle: id ifAbsent: [^self].
-	UserLibrary default
+	User32
 		sendMessage: hWndButton
 		msg: BM_SETSTYLE
 		wParam: style
@@ -982,7 +991,7 @@ translateAccelerator: aMSG
 	| hAccel |
 	hAccel := self combinedAcceleratorTable asParameter.
 	^hAccel ~= 0 and: 
-			[(UserLibrary default
+			[(User32
 				translateAccelerator: self asParameter
 				haccl: combinedAcceleratorTable asParameter
 				lpmsg: aMSG) ~~ false]	"useful on image restart of debugged process"!

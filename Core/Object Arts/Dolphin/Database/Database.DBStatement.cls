@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.DBAbstractStatement subclass: #'Database.DBStatement'
 	instanceVariableNames: 'sqlString'
@@ -31,7 +31,7 @@ exec: aString
 	self sqlString: aString; exec!
 
 executeStatement
-	^OS.ODBCLibrary default 
+	^OS.Odbc32
 		sqlExecDirect: self allocatedHandle
 		statementText: self sqlString
 		textLength: SQL_NTS!

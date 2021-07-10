@@ -11,7 +11,7 @@ This package is the basis of Dolphin''s extensive Active-X Automation support (f
 
 package basicPackageVersion: '6.1'.
 
-package basicScriptAt: #postinstall put: 'VMLibrary default
+package basicScriptAt: #postinstall put: 'VM
 	registryAt: #VARIANT put: COM.VARIANT;
 	registryAt: #IDispatch put: COM.IDispatch.
 
@@ -2703,7 +2703,7 @@ asFloat
 
 	| vtime |
 	vtime := COM.DATE new.
-	COM.OLEAutLibrary default systemTimeToVariantTime: self pvtime: vtime.
+	COM.OleAut32 systemTimeToVariantTime: self pvtime: vtime.
 	^vtime!
 
 asVariant
@@ -2718,7 +2718,7 @@ asVariant
 fromDATE: aFloat
 	| systime |
 	systime := self new.
-	COM.OLEAutLibrary default variantTimeToSystemTime: aFloat lpSystemTime: systime.
+	COM.OleAut32 variantTimeToSystemTime: aFloat lpSystemTime: systime.
 	^systime! !
 !OS.SYSTEMTIME class categoriesFor: #fromDATE:!public! !
 
@@ -2741,7 +2741,7 @@ boolFormat
 getVariantBoolString: anInteger
 	| bstr str |
 	bstr := COM.BSTR new.
-	COM.OLEAutLibrary default
+	COM.OleAut32
 		varBstrFromBool: anInteger
 		lcid: self lcid
 		dwFlags: COM.AutomationConstants.VARIANT_LOCALBOOL

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.PostedActionWindow'
 	instanceVariableNames: 'handle actions'
@@ -58,7 +58,7 @@ isView
 	^false!
 
 killTimer: anInteger
-	^UserLibrary default killTimer: handle uIDEvent: anInteger!
+	^User32 killTimer: handle uIDEvent: anInteger!
 
 onStartup
 	"Private - Ensure that the handle of the receiver is set to nil at startup."
@@ -71,7 +71,7 @@ postAction: aNiladicValuable
 	thread."
 
 	actions nextPut: aNiladicValuable.
-	UserLibrary default
+	User32
 		postMessage: handle
 		msg: WM_USER
 		wParam: 0
@@ -97,11 +97,11 @@ preTranslateMessage: aMSG
 			^true].
 	^false!
 
-setTimer: idInteger interval: intervalInteger
-	^UserLibrary default
+setTimer: idInteger interval: integerOrDuration
+	^User32
 		setTimer: handle
 		nIDEvent: idInteger
-		uElapse: intervalInteger
+		uElapse: integerOrDuration asParameter
 		lpTimerFunc: nil! !
 !Kernel.PostedActionWindow categoriesFor: #asParameter!converting!public! !
 !Kernel.PostedActionWindow categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !

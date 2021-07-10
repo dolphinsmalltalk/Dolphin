@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'UI.AbstractDelegatingView'
 	instanceVariableNames: 'resourceIdentifier referee'
@@ -15,6 +15,9 @@ Instance Variables:
 	referee			<view> which is the delegated view.'!
 !UI.AbstractDelegatingView categoriesForClass!MVP-Resources-Misc! !
 !UI.AbstractDelegatingView methodsFor!
+
+applyFont
+	"Nothing to do here. The delegatee will respond appropriately when the change is propagated to it."!
 
 backcolor: aColorOrNil 
 	"Sets the background colour of the receiver and the referee to aColorOrNil."
@@ -174,6 +177,7 @@ viewNamed: aString ifNone: aBlock
 	on to our referee."
 
 	^self referee viewNamed: aString ifNone: aBlock! !
+!UI.AbstractDelegatingView categoriesFor: #applyFont!font!private!updating! !
 !UI.AbstractDelegatingView categoriesFor: #backcolor:!accessing!public! !
 !UI.AbstractDelegatingView categoriesFor: #calculateExtent:!geometry!private! !
 !UI.AbstractDelegatingView categoriesFor: #clearReferee!event handling!private! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.GUID variableByteSubclass: #'OS.COM.CLSID'
 	instanceVariableNames: ''
@@ -25,7 +25,7 @@ progID
 
 	| pProgId answer |
 	pProgId := TaskMemory new.
-	OLELibrary default progIDFromCLSID: self lplpszProgID: pProgId.
+	Ole32 progIDFromCLSID: self lplpszProgID: pProgId.
 	answer := String fromUtf16String: pProgId.
 	pProgId free.
 	^answer! !
@@ -40,7 +40,7 @@ fromProgID: aString
 
 	| answer |
 	answer := self newNull.
-	OLELibrary default clsidFromProgID: aString lpclsid: answer.
+	Ole32 clsidFromProgID: aString lpclsid: answer.
 	^answer!
 
 fromString: aString

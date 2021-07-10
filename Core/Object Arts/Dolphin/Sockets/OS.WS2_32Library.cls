@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'OS.WS2_32Library'
 	instanceVariableNames: 'wsaData'
@@ -970,6 +970,10 @@ fileName
 	"Answer the host system file name of the external library which the 
 	receiver represents"
 
-	^'WS2_32'! !
+	^'WS2_32'!
+
+sharedVariableName
+	^#{Ws2_32}! !
 !OS.WS2_32Library class categoriesFor: #fileName!constants!public! !
+!OS.WS2_32Library class categoriesFor: #sharedVariableName!constants!private! !
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DOUBLE subclass: #'OS.COM.DATE'
 	instanceVariableNames: ''
@@ -36,7 +36,7 @@ fromString: aString
 fromString: aString locale: aLocale
 	| answer |
 	answer := self new.
-	OLEAutLibrary default
+	OleAut32
 		varDateFromStr: aString
 		lcid: aLocale asParameter
 		dwFlags: 0
@@ -53,7 +53,7 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self!
+	VM registryAt: self name put: self!
 
 maximum
 	^(self new)
@@ -79,7 +79,7 @@ typeName
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil!
+	VM registryAt: self name put: nil!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 

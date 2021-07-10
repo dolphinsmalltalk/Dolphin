@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'External.Callback'
 	instanceVariableNames: 'thunk cookie descriptor'
@@ -126,12 +126,12 @@ allocateThunks
 
 	| procAddress |
 	self deallocateThunks.
-	ThunkBase := KernelLibrary default
+	ThunkBase := Kernel32
 				virtualAlloc: 0
 				dwSize: MaxThunks * ThunkSize
 				flAllocationType: MEM_COMMIT
 				flProtect: PAGE_EXECUTE_READWRITE.
-	procAddress := VMLibrary default getGenericCallback.
+	procAddress := VM getGenericCallback.
 	1 to: MaxThunks
 		do: 
 			[:i |
@@ -195,7 +195,7 @@ clear
 
 deallocateThunks
 	ThunkBase isNil ifTrue: [^self].
-	KernelLibrary default
+	Kernel32
 		virtualFree: ThunkBase
 		dwSize: 0
 		dwFreeType: MEM_RELEASE.
@@ -283,8 +283,7 @@ uninitializeBeforeRemove
 		ifTrue: 
 			[Notification signal: 'Uninstalling VM callback entry point'.
 			ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie: ifAbsent: [].
-			VMLibrary default registryAtIndex: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:)
-				put: nil]!
+			VM registryAtIndex: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:) put: nil]!
 
 unitializeSubclass: anExternalCallbackClass
 	! !

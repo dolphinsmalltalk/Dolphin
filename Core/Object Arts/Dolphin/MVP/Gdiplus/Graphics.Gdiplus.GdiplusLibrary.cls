@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'Graphics.Gdiplus.GdiplusLibrary'
 	instanceVariableNames: 'token'
@@ -7589,6 +7589,10 @@ fileName
 	"Answer the host system file name for the library."
 
 	^'GDIPLUS'
-! !
+!
+
+sharedVariableName
+	^#{Gdip}! !
 !Graphics.Gdiplus.GdiplusLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!Graphics.Gdiplus.GdiplusLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

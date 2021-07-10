@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Security.SecureHashAlgorithm'
 	instanceVariableNames: 'context'
@@ -17,28 +17,25 @@ context
 
 	context isNil
 		ifTrue: 
-			[OS.KernelLibrary default isWindows7OrGreater ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
-			context := self shaLibrary shaCreate].
+			[OS.Kernel32 isWindows7OrGreater
+				ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
+			context := OS.BCrypt shaCreate].
 	^context!
 
 finalHash
 	"Private - Answers the final hash from the context and closes it"
 
 	| hashBytes hashValue |
-
-	hashBytes := self shaLibrary shaGetHash: self context.
+	hashBytes := OS.BCrypt shaGetHash: self context.
 	self resetContext.
-
 	hashValue := 0.
-	1 to: hashBytes size do: [ :i | hashValue := ( hashValue bitShift: 8 ) bitOr: ( hashBytes at: i ) ].
-	^ hashValue.!
+	1 to: hashBytes size do: [:i | hashValue := (hashValue bitShift: 8) bitOr: (hashBytes at: i)].
+	^hashValue!
 
-hashIn: aByteArray 
+hashIn: aByteArray
 	"Private - Hashes the data in aByteArray using the current SHA context"
 
-	self shaLibrary 
-		shaHashBuffer: self context buffer: aByteArray.
-!
+	OS.BCrypt shaHashBuffer: self context buffer: aByteArray!
 
 hashInInteger: aPositiveInteger 
 	"Hash in the given positive integer. The integer to be hashed should have 512 or fewer bits."
@@ -99,15 +96,10 @@ hashStream: aPositionableStream
 	^self finalHash!
 
 resetContext
-	context notNil 
+	context notNil
 		ifTrue: 
-			[self shaLibrary shaDestroy: context.
-			context := nil]!
-
-shaLibrary
-	"Private - Answers the <ExternalLibrary> containing the SHA functions"
-
-	^OS.BCryptLibrary default! !
+			[OS.BCrypt shaDestroy: context.
+			context := nil]! !
 !Security.SecureHashAlgorithm categoriesFor: #context!helpers!private! !
 !Security.SecureHashAlgorithm categoriesFor: #finalHash!helpers!private! !
 !Security.SecureHashAlgorithm categoriesFor: #hashIn:!helpers!private! !
@@ -118,7 +110,6 @@ shaLibrary
 !Security.SecureHashAlgorithm categoriesFor: #hashMessage:!operations!public! !
 !Security.SecureHashAlgorithm categoriesFor: #hashStream:!operations!public! !
 !Security.SecureHashAlgorithm categoriesFor: #resetContext!helpers!private! !
-!Security.SecureHashAlgorithm categoriesFor: #shaLibrary!helpers!private! !
 
 !Security.SecureHashAlgorithm class methodsFor!
 

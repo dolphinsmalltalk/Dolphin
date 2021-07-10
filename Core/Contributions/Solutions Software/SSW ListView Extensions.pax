@@ -22,7 +22,6 @@ package methodNames
 	add: #ListView -> #horzScrollBy:;
 	add: #ListView -> #horzScrollPos;
 	add: #ListView -> #horzScrollPos:;
-	add: #ListView -> #lvmGetItemCount;
 	add: #ListView -> #lvmGetToolTips;
 	add: #ListView -> #lvmGetTopIndex;
 	add: #ListView -> #maxTipWidth:;
@@ -136,10 +135,6 @@ horzScrollPos: anInteger
 
 	self horzScrollBy: (anInteger - self horzScrollPos)!
 
-lvmGetItemCount
-
-	^self sendMessage: LVM_GETITEMCOUNT!
-
 lvmGetToolTips
 
 	^self sendMessage: LVM_GETTOOLTIPS!
@@ -195,7 +190,6 @@ vertScrollPos: anInteger
 !ListView categoriesFor: #horzScrollBy:!enquiries!public! !
 !ListView categoriesFor: #horzScrollPos!enquiries!public! !
 !ListView categoriesFor: #horzScrollPos:!enquiries!public! !
-!ListView categoriesFor: #lvmGetItemCount!accessing!public! !
 !ListView categoriesFor: #lvmGetToolTips!accessing!public! !
 !ListView categoriesFor: #lvmGetTopIndex!accessing!public! !
 !ListView categoriesFor: #maxTipWidth:!helpers!public! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
 	instanceVariableNames: 'pathString flags private start stop'

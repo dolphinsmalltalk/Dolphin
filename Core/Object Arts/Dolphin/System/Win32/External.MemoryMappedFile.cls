@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'External.MemoryMappedFile'
 	instanceVariableNames: 'file name handle maximumSize ownsFile'
@@ -44,19 +44,19 @@ basicFree
 		print: file;
 		cr."
 
-	KernelLibrary default closeHandle: handle.
+	Kernel32 closeHandle: handle.
 	ownsFile ifTrue: [file close]!
 
 createMapping
 	"Private - Create the file mapping and answer its handle."
 
-	^(KernelLibrary default
+	^(Kernel32
 		createFileMapping: file asParameter
 		lpAttributes: nil
 		flProtect: (self isReadOnly ifTrue: [PAGE_READONLY] ifFalse: [PAGE_READWRITE])
 		dwMaximumSizeHigh: (maximumSize bitShift: -32)
 		dwMaximumSizeLow: (16rFFFFFFFF bitAnd: maximumSize)
-		lpName: name) ifNil: [KernelLibrary default systemError]!
+		lpName: name) ifNil: [Kernel32 systemError]!
 
 free
 	"Free external resources held by the receiver, and leave in a clean state."
@@ -89,7 +89,7 @@ mapViewFrom: startInteger to: stopInteger
 			[self error: ('Start offset must be a multiple of the system''s allocation granularity (<1p>)'
 						expandMacrosWith: allocationGranularity)].
 	count := stopInteger - offset.
-	view := KernelLibrary default
+	view := Kernel32
 				mapViewOfFile: self asParameter
 				dwDesiredAccess: (self isReadOnly ifTrue: [FILE_MAP_READ] ifFalse: [FILE_MAP_ALL_ACCESS])
 				dwFileOffsetHigh: (offset bitShift: -32)

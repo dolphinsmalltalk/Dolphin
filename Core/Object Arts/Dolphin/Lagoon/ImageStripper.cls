@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource _unused8 stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
@@ -394,7 +394,7 @@ closeAllDevelopmentTools
 		purgeDeadWindows.
 
 	"Update the desktop to redraw under removed windows"
-	OS.UserLibrary default updateWindow: OS.UserLibrary default getDesktopWindow.
+	User32 updateWindow: User32 getDesktopWindow.
 	self collectGarbage: 3!
 
 closeChangeLog
@@ -422,8 +422,7 @@ copyAndUpdateStub: stubFile to: exeFile
 	File copy: stubFile to: exeFile.
 	File isWriteable: exeFile set: true.
 	self isResourceUpdatingRequired
-		ifTrue: 
-			[OS.KernelLibrary default updateResourcesOf: exeFile do: [:hUpdate | self updateStubResources: hUpdate]].
+		ifTrue: [OS.Kernel32 updateResourcesOf: exeFile do: [:hUpdate | self updateStubResources: hUpdate]].
 	^exeFile!
 
 defaultStubFilePath
@@ -1098,12 +1097,12 @@ The image MUST exit immediately, but see crash dump (if configured).
 
 '
 				, anError description.
-	OS.UserLibrary default
+	User32
 		messageBox: nil
 		lpText: text
 		lpCaption: SessionManager current applicationName
 		uType: ##(MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_SETFOREGROUND).
-	VMLibrary default crashDump: anError description.
+	VM crashDump: anError description.
 	SessionManager current primQuit: -1!
 
 onNotification: aNotification
@@ -1293,7 +1292,7 @@ referencesFromObjectsInClasses: aCollection
 
 	"Add all messages that can be triggered by events"
 	_EventsRegister
-		do: [:each | each do: [:mseq | mseq messagesDo: [:ms | messageMap at: ms put: {ms selector}]]].
+		do: [:each | each do: [:mseq | mseq messages do: [:ms | messageMap at: ms put: {ms selector}]]].
 
 	"Note that we don't add the preserved aspect setters to the sent messages as this would prevent removal of non-aspect setter 
 	methods with the same selectors. Rather we prebuild a collection of potential aspect setters, and block deletion of these."
@@ -1586,22 +1585,22 @@ saveExecutable: exePath keepImage: retainImage
 	size := imageFile size.
 	imageData := ByteArray new: size.
 	imageFile read: imageData count: size.
-	OS.KernelLibrary default updateResourcesOf: exePath
+	OS.Kernel32 updateResourcesOf: exePath
 		do: 
 			[:hUpdate |
-			(OS.KernelLibrary default
+			(OS.Kernel32
 				updateResource: hUpdate
 				lpType: RT_RCDATA
 				lpName: 100
 				wLanguage: 0
 				lpData: imageData
-				cbData: size) ifFalse: [OS.KernelLibrary default systemError]]]
+				cbData: size) ifFalse: [OS.Kernel32 systemError]]]
 			ensure: 
 				[imageFile close.
 				retainImage ifFalse: [File delete: image]].
 	unattended
 		ifFalse: 
-			[OS.UserLibrary default
+			[User32
 				messageBox: nil
 				lpText: 'The image has been stripped and deployed to the executable file:
 ' , exePath
@@ -1889,13 +1888,13 @@ updateXPManifestResource: anExternalHandle
 				buildManifest: assemblyName contents
 				description: (strings at: 'FileDescription' ifAbsent: [file , ' Application'])
 				version: ver.
-	(OS.KernelLibrary default
+	(OS.Kernel32
 		updateResource: anExternalHandle
 		lpType: RT_MANIFEST
 		lpName: self manifestResourceId
 		wLanguage: ver languageId
 		lpData: manifest
-		cbData: manifest size) ifFalse: [OS.KernelLibrary default systemError]!
+		cbData: manifest size) ifFalse: [OS.Kernel32 systemError]!
 
 verifyRequiredPackages
 	| packages required found missing |
@@ -1959,7 +1958,7 @@ vmReferencedClasses
 	"Answer a <collection> of all the classes referenced directly by the VM.
 	These must not be stripped!!"
 
-	^VMLibrary default registry select: 
+	^VM registry select: 
 			[:each |
 			each class isMeta and: [(#('GUID' 'PoolConstantsDictionary') includes: each name asString) not]]!
 

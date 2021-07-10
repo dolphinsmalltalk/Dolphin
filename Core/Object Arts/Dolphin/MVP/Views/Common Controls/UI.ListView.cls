@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.IconicListAbstract subclass: #'UI.ListView'
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
@@ -791,8 +791,8 @@ hasHeaderDragDrop: aBoolean
 	^self listViewStyleMask: LVS_EX_HEADERDRAGDROP set: aBoolean!
 
 hasHotTracking
-	"Answer whether the receiver has the track select style.
-	This is not available in pre-IE4 versions of the CommCtrl Library."
+	"Answer whether the receiver has the track select style. This means that the item under the cursor is automatically selected when hovered over for a period of time. 
+	See [Extended List-View Styles](https://docs.microsoft.com/en-us/windows/win32/controls/extended-list-view-styles)."
 
 	^self listViewStyleAllMask: LVS_EX_TRACKSELECT!
 
@@ -879,7 +879,7 @@ iconSpacing: aPointOrNil
 	#smallIcons view mode to aPointOrNil. If nil the receiver uses the default spacing."
 
 	self setIconSpacing: (iconSpacing := aPointOrNil).
-	self fontChanged!
+	self applyFont!
 
 imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.
@@ -940,7 +940,7 @@ invalidateHeader
 	| hWnd |
 	(hWnd := self lvmGetHeader) notNull
 		ifTrue: 
-			[UserLibrary default
+			[User32
 				invalidate: hWnd
 				lpRect: nil
 				bErase: true]!
@@ -1200,6 +1200,11 @@ lvmGetItem: aLvItem
 		lpParam: aLvItem) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
+lvmGetItemCount
+	"Private - Answers the number of items in the underlying list-view control."
+
+	^self sendMessage: LVM_GETITEMCOUNT!
+
 lvmGetItemPosition: index
 	"Private - Answer the Point of the index item on the view."
 
@@ -1381,7 +1386,7 @@ lvmSetImageList: aWinImageList type: anIntegerImageType
 	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
 	Answer the handle of the previous image list."
 
-	^UserLibrary default
+	^User32
 		sendMessageU: handle
 		msg: LVM_SETIMAGELIST
 		wParam: anIntegerImageType
@@ -1732,6 +1737,32 @@ onItem: anObject removedAtIndex: anInteger
 	"Implementation Note: Override in order to maintain the lastSel correctly."
 
 	super onItem: anObject removedAtIndex: anInteger.
+	self updateSelectionCache!
+
+onItems: aSequenceableCollection addedAtIndex: anInteger
+	"Event received when the specified sequence of objects has been added to the receiver's model beginning at the specified <integer> index. By default, do nothing."
+
+	self isVirtual
+		ifTrue: 
+			[| count |
+			count := aSequenceableCollection size.
+			"In a virtual list, if more than a few items are being added, we may as well just update the virtual size. This will cause the list to be redrawn completely, but unless inserting at the end that is likely anyway, and this is many times faster than sending multiple LVM_INSERTITEM messages."
+			count > 3
+				ifTrue: [self lvmSetItemCount: self lvmGetItemCount + count]
+				ifFalse: 
+					[| lvItem |
+					lvItem := LVITEMW allCallbacks.
+					aSequenceableCollection inject: anInteger
+						into: 
+							[:index :each |
+							lvItem iItem: anInteger - 1.
+							self lvmInsertItem: lvItem.
+							anInteger + 1]]]
+		ifFalse: 
+			[self
+				addOrUpdate: false
+				nonVirtualItems: aSequenceableCollection
+				afterIndex: anInteger - 1].
 	self updateSelectionCache!
 
 onKeyPressed: aKeyEvent
@@ -2178,7 +2209,9 @@ thumbnailExtent
 	^thumbnailExtent ifNil: [self defaultThumbnailExtent]!
 
 thumbnailExtent: aPointOrNil
-	thumbnailExtent := aPointOrNil = self defaultThumbnailExtent ifFalse: [aPointOrNil]!
+	thumbnailExtent = aPointOrNil ifTrue: [^self].
+	thumbnailExtent := aPointOrNil = self defaultThumbnailExtent ifFalse: [aPointOrNil].
+	self viewMode == #thumbnails ifTrue: [self viewModeChanged]!
 
 thumbnailsImageManager
 	"Private - Answer the  private <ImageManager> containing images for the large images size modes of the receiver.
@@ -2430,6 +2463,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !UI.ListView categoriesFor: #lvmGetHeader!geometry!private! !
 !UI.ListView categoriesFor: #lvmGetImageList:!image management!private! !
 !UI.ListView categoriesFor: #lvmGetItem:!accessing!private! !
+!UI.ListView categoriesFor: #lvmGetItemCount!accessing!private! !
 !UI.ListView categoriesFor: #lvmGetItemPosition:!geometry!private! !
 !UI.ListView categoriesFor: #lvmGetItemRect:bounding:!geometry!private! !
 !UI.ListView categoriesFor: #lvmGetItemSpacing!accessing!private! !
@@ -2489,6 +2523,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !UI.ListView categoriesFor: #onDropDown:!event handling!private! !
 !UI.ListView categoriesFor: #onEraseRequired:!event handling!public! !
 !UI.ListView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
+!UI.ListView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
 !UI.ListView categoriesFor: #onKeyPressed:!event handling!public! !
 !UI.ListView categoriesFor: #onKeyTyped:!event handling!public! !
 !UI.ListView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
@@ -2589,7 +2624,7 @@ onStartup
 	"The system is starting: Register a message to be used for cancelling a selection after
 	the fact."
 
-	NTLibrary isWine
+	NtDll isWine
 		ifTrue: 
 			["Having autoSelectPackages option turned on in System  Browser gives unpleasant scrolling effect when many multiple packages are selected. This also happens in Package Browser. Problem under Wine traced to LVIS_FOCUSED option in ListView>>selectIndex:. Not sure what overall effect it will have turning this off."
 			SelectionStateMask := LVIS_SELECTED]

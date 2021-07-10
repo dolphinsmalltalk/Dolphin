@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.LayoutManager subclass: #'UI.GridLayout'
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'

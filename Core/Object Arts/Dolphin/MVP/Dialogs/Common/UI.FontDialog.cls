@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.CommonDialog subclass: #'UI.FontDialog'
 	instanceVariableNames: ''
@@ -20,7 +20,7 @@ Instance Variables:
 basicShowModal
 	"Private - Show the common Font dialog."
 
-	^ComDlgLibrary default chooseFont: self winStruct asParameter!
+	^ComDlg32 chooseFont: self winStruct asParameter!
 
 extractResult: result 
 	"Private - Extract and apply the result from the parameter structure 

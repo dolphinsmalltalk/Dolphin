@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Stream subclass: #'Kernel.DebugTraceStream'
 	instanceVariableNames: 'buffer'
@@ -37,7 +37,7 @@ flush
 
 	buffer position == 0
 		ifFalse: 
-			[KernelLibrary default outputDebugString: buffer contents asUtf16String.
+			[Kernel32 outputDebugString: buffer contents asUtf16String.
 			buffer reset]!
 
 initialize

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
 	instanceVariableNames: 'testKey'
@@ -54,7 +54,7 @@ testEmptySz
 	| temp |
 	temp := RegKey userRoot createKey: GUID newUnique asString.
 	
-	[self assert: (AdvApiLibrary default
+	[self assert: (AdvApi32
 				regSetValueEx: temp asParameter
 				lpValueName: 'Empty'
 				reserved: 0
@@ -67,7 +67,7 @@ testEmptySz
 
 testExpandSz
 	| path |
-	path := KernelLibrary default expandEnvironmentStrings: '%PATH%'.
+	path := Kernel32 expandEnvironmentStrings: '%PATH%'.
 	testKey
 		valueAt: 'PATH'
 		put: '%PATH%'

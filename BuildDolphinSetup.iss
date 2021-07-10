@@ -1,10 +1,10 @@
 #define MyAppName "Dolphin Smalltalk"
-#define MyAppVersion "7"
+#define MyAppVersion "8"
 #define MyAppPublisher "Object Arts"
 #define MyAppURL "http://www.object-arts.com/"
-#define MyAppExeName "Dolphin7.exe"
-#define ImageName "DPRO.img7"
-#define ImageExtension ".img7"
+#define MyAppExeName "Dolphin8.exe"
+#define ImageName "DPRO.img8"
+#define ImageExtension ".img8"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -21,8 +21,8 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName} {#MyAppVersion}
 LicenseFile=LICENSE
 DisableProgramGroupPage=yes
-OutputDir=Releases\Dolphin7Setup
-OutputBaseFilename=Dolphin7Setup
+OutputDir=Releases\Dolphin8Setup
+OutputBaseFilename=Dolphin8Setup
 Compression=lzma
 SolidCompression=yes
 ChangesAssociations=yes
@@ -45,11 +45,11 @@ Source: "Resources\*"; DestDir: "{app}\Resources"; Flags: ignoreversion recurses
 Source: "Help\*"; DestDir: "{app}\Help"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "ConsoleStub.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ConsoleToGo.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DolphinCR7.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DolphinDR7.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DolphinVM7.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DolphinCR8.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DolphinDR8.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "DolphinVM8.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DPRO.chg"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
-Source: "DPRO.img7"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
+Source: "DPRO.img8"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
 Source: "DPRO.sml"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
 Source: "EducationCentre7.chm"; DestDir: "{app}"; Flags: ignoreversion
 Source: "GUIStub.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -73,7 +73,7 @@ Filename: "{tmp}\VC_redist.x86.exe"; Parameters: "/install /quiet /norestart"; S
 Filename: "{app}\{#MyAppExeName}"; Parameters: "{#ImageName}"; WorkingDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: nowait postinstall skipifsilent; Description: "{cm:LaunchProgram,{#MyAppName}}"
 
 [Registry]
-Root: HKCR; Subkey: "{#ImageExtension}"; ValueType: string; ValueName: ""; ValueData: "Dolphin7Image"; Flags: uninsdeletevalue 
-Root: HKCR; Subkey: "Dolphin7Image"; ValueType: string; ValueName: ""; ValueData: "{#MyAppName} Image"; Flags: uninsdeletekey 
-Root: HKCR; Subkey: "Dolphin7Image\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0" 
-Root: HKCR; Subkey: "Dolphin7Image\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
+Root: HKCR; Subkey: "{#ImageExtension}"; ValueType: string; ValueName: ""; ValueData: "Dolphin8Image"; Flags: uninsdeletevalue 
+Root: HKCR; Subkey: "Dolphin8Image"; ValueType: string; ValueName: ""; ValueData: "{#MyAppName} Image"; Flags: uninsdeletekey 
+Root: HKCR; Subkey: "Dolphin8Image\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0" 
+Root: HKCR; Subkey: "Dolphin8Image\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""

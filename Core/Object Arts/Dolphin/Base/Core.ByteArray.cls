@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.ArrayedCollection variableByteSubclass: #'Core.ByteArray'
 	instanceVariableNames: ''
@@ -812,10 +812,10 @@ fromGlobalHandle: anExternalHandle
 	specified handle."
 
 	| bytes len |
-	bytes := OS.KernelLibrary default globalLock: anExternalHandle.
+	bytes := OS.Kernel32 globalLock: anExternalHandle.
 	len := External.Memory GetSize: bytes.
 	bytes := self fromAddress: bytes length: len.
-	OS.KernelLibrary default globalUnlock: anExternalHandle.
+	OS.Kernel32 globalUnlock: anExternalHandle.
 	^bytes!
 
 fromHexString: aString

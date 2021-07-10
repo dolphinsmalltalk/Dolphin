@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.INTEGER subclass: #'External.DWORD'
 	instanceVariableNames: ''
@@ -109,12 +109,12 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self!
+	VM registryAt: self name put: self!
 
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil! !
+	VM registryAt: self name put: nil! !
 !External.DWORD class categoriesFor: #defineFields!public!template definition! !
 !External.DWORD class categoriesFor: #initialize!development!initializing!private! !
 !External.DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Net.InternetAddress'
 	instanceVariableNames: 'host ipAddress'
@@ -40,7 +40,7 @@ host
 	(host isNil and: [ipAddress notNil])
 		ifTrue: 
 			[| hostent |
-			hostent := WS2_32Library default
+			hostent := Ws2_32
 						gethostbyaddr: ipAddress
 						len: ipAddress size
 						type: AF_INET.
@@ -156,7 +156,7 @@ localHost
 	| hostName |
 	"256 is 'always adequate' for any host name, apparently"
 	hostName := Utf16String new: MaxHostName.
-	WS2_32Library default gethostname: hostName namelen: hostName size.
+	Ws2_32 gethostname: hostName namelen: hostName size.
 	^self host: hostName trimNulls! !
 !Net.InternetAddress class categoriesFor: #allForHost:!accessing!public! !
 !Net.InternetAddress class categoriesFor: #fromIPString:!instance creation!public! !

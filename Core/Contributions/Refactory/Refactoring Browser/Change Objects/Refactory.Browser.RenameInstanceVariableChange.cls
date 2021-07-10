@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RenameVariableChange subclass: #'Refactory.Browser.RenameInstanceVariableChange'
 	instanceVariableNames: ''

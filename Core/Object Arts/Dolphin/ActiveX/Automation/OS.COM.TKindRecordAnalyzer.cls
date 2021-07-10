@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.StructureTypeAnalyzer subclass: #'OS.COM.TKindRecordAnalyzer'
 	instanceVariableNames: ''

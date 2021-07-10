@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Net.SocketAbstract'
 	instanceVariableNames: 'port descriptor'
@@ -22,14 +22,14 @@ close
 	"Close the socket."
 
 	descriptor isNull ifTrue: [^self].
-	WS2_32Library default closesocket: descriptor.
+	Ws2_32 closesocket: descriptor.
 	descriptor := nil!
 
 create
 	"Private - Create a new socket."
 
 	| sd |
-	sd := WS2_32Library default
+	sd := Ws2_32
 				socket: AF_INET
 				type: SOCK_STREAM
 				protocol: 0.
@@ -90,7 +90,7 @@ queryPort
 	nameLength := SDWORD new
 				value: name size;
 				yourself.
-	WS2_32Library default
+	Ws2_32
 		getsockname: self asParameter
 		name: name
 		namelen: nameLength.
@@ -99,7 +99,7 @@ queryPort
 socketError
 	"Private - Raise a <SocketError> in response to an error in a non-overlapped socket library call."
 
-	SocketError signalWith: WS2_32Library default wsaGetLastError!
+	SocketError signalWith: Ws2_32 wsaGetLastError!
 
 socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Graphics.Rectangle'
 	instanceVariableNames: 'origin corner'
@@ -441,7 +441,7 @@ subtract: aRectangle
 	| rect |
 	#todo.	"Implememt in Smalltalk"
 	rect := RECTL new.
-	UserLibrary default
+	User32
 		subtractRect: rect
 		lprcSrc1: self asParameter
 		lprcSrc2: aRectangle asParameter.

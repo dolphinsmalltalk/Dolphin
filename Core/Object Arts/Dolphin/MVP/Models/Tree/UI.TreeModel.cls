@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.TreeModelAbstract subclass: #'UI.TreeModel'
 	instanceVariableNames: 'anchorNode objectNodeMap'
@@ -105,9 +105,11 @@ depthOf: anObject
 	"Answer the depth of anObject in the tree. Roots are at depth 0, and then immediate children at depth 1, and so on."
 
 	| answer ancestor |
-	answer := 0.
+	answer := -1.
 	ancestor := self parentNodeOf: anObject.
-	[(ancestor := ancestor parent) notNil] whileTrue: [answer := answer + 1].
+	[ancestor isNil] whileFalse: 
+			[answer := answer + 1.
+			ancestor := ancestor parent].
 	^answer!
 
 forgetChildrenOfNode: aTreeNode
@@ -196,7 +198,7 @@ nodeClass
 	^TreeNode!
 
 parentNodeOf: anObject
-	^(self getNodeFor: anObject) parent!
+	^(self lookupNode: anObject) ifNotNil: [:node | node parent]!
 
 parentOf: anObject
 	"Answer the parent of anObject within the hierarchy managed by the
@@ -204,7 +206,9 @@ parentOf: anObject
 	If anObject does not exist in the receiver then raise a suitable
 	exception."
 
-	^(self parentNodeOf: anObject) object!
+	^(self parentNodeOf: anObject)
+		ifNil: [self errorNotFound: anObject]
+		ifNotNil: [:parent | parent object]!
 
 remove: anObject ifAbsent: aNiladicValuable 
 	"Removes anObject from the receiver. If anObject does not exist in the tree then answer the

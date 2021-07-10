@@ -34,13 +34,13 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Object Arts Ltd."
             VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
-            VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
+            VALUE "FileVersion", DOLPHIN_FILE_VERSION
             VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Copyright © Object Arts Ltd 1997-2018."
-            VALUE "OriginalFilename", "DolphinVM7.DLL"
-            VALUE "PrivateBuild", "11192015"
-            VALUE "ProductName", "Dolphin Smalltalk 7"
-            VALUE "ProductVersion", GIT_TAG
+            VALUE "LegalCopyright", "Portions Copyright © Object Arts Ltd 1997-2021."
+            VALUE "OriginalFilename", "DolphinVM8.DLL"
+            VALUE "PrivateBuild", ""
+            VALUE "ProductName", "Dolphin Smalltalk"
+            VALUE "ProductVersion", DOLPHIN_PRODUCT_VERSION
         END
     END
     BLOCK "VarFileInfo"

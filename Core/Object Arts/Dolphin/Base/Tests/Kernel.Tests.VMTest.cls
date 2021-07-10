@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.VMTest'
 	instanceVariableNames: 'expiryHandler'
@@ -89,7 +89,7 @@ earlyTermination: aBoolean
 			[a := 1.
 			
 			[a := 2.
-			KernelLibrary default sleep: 30] ifCurtailed: [a := 0].
+			Kernel32 sleep: 30] ifCurtailed: [a := 0].
 			a := 3]
 					forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
 	self assert: proc isWaiting description: 'Proc should be blocked on the overlapped call semaphore'.
@@ -356,7 +356,7 @@ suspendAndTerminate
 	self assert: Processor pendingTerminations isEmpty.
 	proc := 
 			[a := 1.
-			KernelLibrary default sleep: 10.
+			Kernel32 sleep: 10.
 			a := 2] forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
 	self assert: proc isWaiting.	"proc should be blocked on the overlapped call semaphore"
 	self assert: a identicalTo: 1.
@@ -404,7 +404,7 @@ testBSTRArg
 	method := Compiler compile: 'test: aString <stdcall: bstr AnswerDWORD bstr>' in: VMLibrary.
 	1000 timesRepeat: 
 			[| bstr |
-			bstr := method value: VMLibrary default withArguments: #('Some 🐬 data').
+			bstr := method value: VM withArguments: #('Some 🐬 data').
 			self assert: bstr value equals: 'Some 🐬 data'.
 			bstr free]!
 
@@ -412,12 +412,10 @@ testCRTFault
 	"Tests that the VM sends an interrupt when the CRT is passed an invalid parameter and calls
 	the invalid parameter handler (issue #59). On an unfixed V2015 VM this will just crash."
 
-	| crt |
-	crt := CRTLibrary default.
 	self
 		should: 
 			[Processor enableAsyncEvents: false.
-			crt _close: -1]
+			Ucrt _close: -1]
 		raise: CRTError
 		matching: 
 			[:err |
@@ -425,7 +423,7 @@ testCRTFault
 			self
 				isFault: err
 				raisedIn: CRTLibrary >> #_close:
-				receiver: crt]!
+				receiver: Ucrt]!
 
 testDwordAtOffsetPut
 	| bytes dword max |
@@ -517,9 +515,8 @@ testExtCallOverlappedFpFault
 	self verifyExtCallFpFault: true!
 
 testExtCallOverlappedGC
-	| kernel event finished delay1 delay2 |
-	kernel := KernelLibrary default.
-	event := kernel
+	| event finished delay1 delay2 |
+	event := Kernel32
 				createEvent: nil
 				bManualReset: false
 				bInitialState: false
@@ -529,7 +526,7 @@ testExtCallOverlappedGC
 	delay2 := Delay forDuration: 20 milliseconds.
 	
 	[delay1 signal.
-	kernel waitForSingleObject: event dwMilliseconds: -1.
+	Kernel32 waitForSingleObject: event dwMilliseconds: -1.
 	finished := true.
 	delay2 signal]
 			forkAt: Processor userInterruptPriority.
@@ -540,7 +537,7 @@ testExtCallOverlappedGC
 				collectGarbage;
 				administerLastRites].
 	self deny: finished.
-	kernel setEvent: event.
+	Kernel32 setEvent: event.
 	delay2 wait.
 	self assert: finished!
 
@@ -598,7 +595,7 @@ testExtCallRetNtStatus
 testExtendedCharsInCrashDump
 	| path dumped index |
 	path := File temporaryFilename.
-	VMLibrary default
+	VM
 		dump: 'abc' , (String with: Character dolphin)
 		path: path
 		stackDepth: 0
@@ -1114,27 +1111,25 @@ testIntDivideByZero
 testMakeLargeUnsigned
 	| bytes |
 	bytes := ByteArray new: 8.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: 0.
+	self assert: (VM makeLargeUnsigned: bytes) identicalTo: 0.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: 1.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: 1.
+	self assert: (VM makeLargeUnsigned: bytes) identicalTo: 1.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: SmallInteger maximum.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: SmallInteger maximum.
+	self assert: (VM makeLargeUnsigned: bytes) identicalTo: SmallInteger maximum.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: SmallInteger minimum.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes)
-		equals: (2 raisedToInteger: 64) + SmallInteger minimum.
+	self assert: (VM makeLargeUnsigned: bytes) equals: (2 raisedToInteger: 64) + SmallInteger minimum.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: (2 raisedToInteger: 31).
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) equals: (2 raisedToInteger: 31).
-	self assert: (VMLibrary default makeLargeUnsigned: Float fmax)
+	self assert: (VM makeLargeUnsigned: bytes) equals: (2 raisedToInteger: 31).
+	self assert: (VM makeLargeUnsigned: Float fmax)
 		equals: (#[255 255 255 255 255 255 239 127] qwordAtOffset: 0).
-	self assert: (VMLibrary default makeLargeUnsigned: Float fminNormalized)
+	self assert: (VM makeLargeUnsigned: Float fminNormalized)
 		equals: (Float fminNormalized shallowCopy becomeA: LargeInteger).
 	"#1130"
-	#(16r7FFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFF)
-		do: [:each | (VMLibrary default makeLargeUnsigned: each) = each]!
+	#(16r7FFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFF) do: [:each | (VM makeLargeUnsigned: each) = each]!
 
 testMustBeBoolean
 	| trueClass falseClass pseudoTrue pseudoFalse |
@@ -2900,7 +2895,7 @@ testRegistry
 	self assert: imageVersionMinor isInteger.
 	imageVersionMajor := SessionManager current imageVersionMajor.
 	self assert: imageVersionMajor isInteger.
-	nonClasses := Dictionary withAll: {#DolphinHandle -> (KernelLibrary default getModuleHandle: nil).
+	nonClasses := Dictionary withAll: {#DolphinHandle -> (Kernel32 getModuleHandle: nil).
 						#Corpse -> DeadObject current.
 						#interruptHotKey -> interruptHotKey.
 						#BereavementSemaphore -> (MemoryManager current instVarNamed: 'bereavements').
@@ -2909,10 +2904,10 @@ testRegistry
 						#WakeupEvent -> (SessionManager inputState instVarNamed: 'wakeupEvent').
 						#ImageVersionMinor -> imageVersionMinor.
 						#ImageVersionMajor -> imageVersionMajor.
-						#KernelHandle -> KernelLibrary default handle.
-						#CRTHandle -> CRTLibrary default handle.
+						#KernelHandle -> Kernel32 handle.
+						#CRTHandle -> Ucrt handle.
 						#Dispatcher -> SessionManager inputState.
-						#VMHandle -> VMLibrary default handle.
+						#VMHandle -> VM handle.
 						#arithmeticSelectors -> #+.
 						#commonSelectors -> #==.
 						#BereavementQueue -> (MemoryManager current instVarNamed: 'bereaved').
@@ -2941,17 +2936,17 @@ testSignedFromUnsigned
 			| signed expected dword |
 			self assert: each isImmutable.
 			expected := each > 16r7FFFFFFF ifTrue: [each - 16rFFFFFFFF - 1] ifFalse: [each].
-			signed := VMLibrary default signedFromUnsigned: each.
+			signed := VM signedFromUnsigned: each.
 			self assert: signed equals: expected.
 			each class == SmallInteger
 				ifFalse: 
 					[dword := each + 1 - 1.
 					self assert: dword isImmutable.
-					signed := VMLibrary default signedFromUnsigned: dword.
+					signed := VM signedFromUnsigned: dword.
 					self assert: signed equals: expected.
 					self assert: signed isImmutable]].
-	self should: [VMLibrary default signedFromUnsigned: 16r100000000] raise: Error.
-	self should: [VMLibrary default signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
+	self should: [VM signedFromUnsigned: 16r100000000] raise: Error.
+	self should: [VM signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
 
 testSqwordAtOffset
 	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
@@ -3013,7 +3008,7 @@ testSqwordAtOffset
 
 testVMPointersImmutable
 	| vmPointers |
-	vmPointers := VMLibrary default registry yourAddress asExternalAddress.
+	vmPointers := VM registry yourAddress asExternalAddress.
 	self
 		should: [vmPointers dwordAtOffset: 0 put: 1]
 		raise: Processor constWriteSignal
@@ -3092,17 +3087,17 @@ verifyExtCallArgLppvoid: aBoolean
 	string := 'Hello World' asAnsiString.
 	"Sanity check"
 	address := string yourAddress asExternalAddress.
-	result := method value: VMLibrary default withArguments: {address}.
+	result := method value: VM withArguments: {address}.
 	self assert: result equals: address basicYourAddress.
 
 	"Integers are a special case - they should pass through directly as the pointer value"
 	address := string yourAddress.
-	result := method value: VMLibrary default withArguments: {address}.
+	result := method value: VM withArguments: {address}.
 	self assert: result equals: address.
 
 	"Now check LI"
 	address := string yourAddress becomeA: LargeInteger.
-	result := method value: VMLibrary default withArguments: {address}.
+	result := method value: VM withArguments: {address}.
 	self assert: result equals: string yourAddress!
 
 verifyExtCallArgLpwstr: aBoolean
@@ -3116,28 +3111,28 @@ verifyExtCallArgLpwstr: aBoolean
 	self assert: method argumentTypes asArray equals: #('lpwstr').
 	self assert: method returnType equals: 'lpwstr'.
 	expected := Utf16String fromByteArray: #[97 0 32 0 163 0 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
-	actual := method value: VMLibrary default withArguments: {expected}.
+	actual := method value: VM withArguments: {expected}.
 	self assert: actual equals: expected.
 	self deny: actual == expected.
 	self assert: actual isKindOf: Utf16String.
-	actual := method value: VMLibrary default withArguments: #('a £ or two').
+	actual := method value: VM withArguments: #('a £ or two').
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
-	actual := method value: VMLibrary default withArguments: {'a £ or two' asUtf8String}.
+	actual := method value: VM withArguments: {'a £ or two' asUtf8String}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
 	{String empty. Utf8String empty} do: 
 			[:each |
-			actual := method value: VMLibrary default withArguments: {each}.
+			actual := method value: VM withArguments: {each}.
 			self assert: actual isKindOf: Utf16String.
 			self assert: actual size equals: 0.
 			self assert: actual equals: Utf16String empty]!
 
 verifyExtCallCrtFault: aBoolean
 	| lib |
-	lib := aBoolean ifTrue: [CRTLibrary nonblocking] ifFalse: [CRTLibrary default].
+	lib := aBoolean ifTrue: [CRTLibrary nonblocking] ifFalse: [Ucrt].
 	self
-		should: [lib fgetc:  nil]
+		should: [lib fgetc: nil]
 		raise: CRTError
 		matching: [:ex | ex tag == EINVAL]!
 
@@ -3148,7 +3143,7 @@ verifyExtCallFpFault: aBoolean
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
 	exceptions := OrderedCollection new.
-	[2 timesRepeat: [method value: CRTLibrary default withArguments: #(-1)]] on: FloatingPointException
+	[2 timesRepeat: [method value: Ucrt withArguments: #(-1)]] on: FloatingPointException
 		do: [:ex | exceptions add: ex].
 	self assert: exceptions size equals: 1.
 	fpFault := exceptions first.
@@ -3167,12 +3162,9 @@ verifyExtCallGpf: aBoolean
 		do: 
 			[:i |
 			self
-				should: [method value: VMLibrary default withArguments: #(1)]
+				should: [method value: VM withArguments: #(1)]
 				raise: GPFault
-				matching: 
-					[:ex |
-					ex inaccessibleAddress = 1
-						and: [ex isReading and: [ex moduleFileName = VMLibrary default moduleFileName]]]]!
+				matching: [:ex | ex inaccessibleAddress = 1 and: [ex isReading and: [ex moduleFileName = VM moduleFileName]]]]!
 
 verifyExtCallIntDivZero: aBoolean
 	| method |
@@ -3181,7 +3173,7 @@ verifyExtCallIntDivZero: aBoolean
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
 	self
-		should: [method value: CRTLibrary default withArguments: #(123 0)]
+		should: [method value: Ucrt withArguments: #(123 0)]
 		raise: ZeroDivide
 		matching: [:ex | ex dividend = 123]!
 
@@ -3193,13 +3185,13 @@ verifyExtCallRetErrno: aBoolean
 	^''Failure '', _failureCode printString'
 						expandMacrosWith: aBoolean)
 				in: VMLibrary.
-	self assert: (method value: VMLibrary default withArguments: {0}) identicalTo: 0.
+	self assert: (method value: VM withArguments: {0}) identicalTo: 0.
 
 	"Any non-zero result should fail. It is assumed the codes don't exceed the SmallInteger range"
 	{SmallInteger minimum. -1. 1. SmallInteger maximum} do: 
 			[:each |
 			| result |
-			result := method value: VMLibrary default withArguments: {each}.
+			result := method value: VM withArguments: {each}.
 			self assert: result equals: 'Failure ' , each printString]!
 
 verifyExtCallRetHRESULT: aBoolean
@@ -3213,7 +3205,7 @@ verifyExtCallRetHRESULT: aBoolean
 	#(0 1 16r3FFFFFFF 16r40000000 16r7FFFFFFF) do: 
 			[:each |
 			| result |
-			result := method value: VMLibrary default withArguments: {each}.
+			result := method value: VM withArguments: {each}.
 			self assert: result isKindOf: Integer.
 			self assert: result equals: each.
 			self assert: each class identicalTo: result class].
@@ -3222,7 +3214,7 @@ verifyExtCallRetHRESULT: aBoolean
 	#(16rFFFFFFFF 16r80004005 16rC0000000 16rBFFFFFFF 16r80000000 16rEABCFFFF 16r80290422) do: 
 			[:each |
 			self
-				should: [method value: VMLibrary default withArguments: {each}]
+				should: [method value: VM withArguments: {each}]
 				raise: HRESULTError
 				matching: [:ex | ex hresult = (HRESULT fromUnsignedInteger: (each bitAnd: 16r8000000 bitInvert))]]!
 
@@ -3235,7 +3227,7 @@ verifyExtCallRetLpwstr: aBoolean
 						expandMacrosWith: aBoolean)
 				in: VMLibrary.
 	expected := 'oña' asUtf16String.
-	actual := method value: VMLibrary default withArguments: {expected yourAddress}.
+	actual := method value: VM withArguments: {expected yourAddress}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String!
 
@@ -3250,7 +3242,7 @@ verifyExtCallRetNtStatus: aBoolean
 	#(0 1 16r3FFFFFFF 16r40000000 16r7FFFFFFF) do: 
 			[:each |
 			| result |
-			result := method value: VMLibrary default withArguments: {each}.
+			result := method value: VM withArguments: {each}.
 			self assert: result isKindOf: Integer.
 			self assert: result equals: each.
 			self assert: each class identicalTo: result class].
@@ -3259,7 +3251,7 @@ verifyExtCallRetNtStatus: aBoolean
 	#(16rC0000001 16rC0EC0007) do: 
 			[:each |
 			self
-				should: [method value: VMLibrary default withArguments: {each}]
+				should: [method value: VM withArguments: {each}]
 				raise: HRESULTError
 				matching: [:ex | ex hresult asUnsignedInteger = (each bitOr: HRESULT.FACILITY_NT_BIT)]]!
 

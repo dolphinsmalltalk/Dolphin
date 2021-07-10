@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.FileDialog subclass: #'UI.FileSaveDialog'
 	instanceVariableNames: ''
@@ -14,7 +14,7 @@ UI.FileSaveDialog comment: 'FileSaveDialog is a <valueDialogPresenter> implement
 basicShowModal
 	"Private - Show a File Save dialog for the receiver."
 
-	^ComDlgLibrary default getSaveFileName: winStruct!
+	^ComDlg32 getSaveFileName: winStruct!
 
 overwritePrompt
 

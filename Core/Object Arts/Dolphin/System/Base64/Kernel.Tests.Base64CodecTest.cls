@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.Base64CodecTest'
 	instanceVariableNames: ''
@@ -92,7 +92,7 @@ testVM
 	confident that it works."
 
 	| f encoded decoded |
-	f := FileStream read: VMLibrary default fileName text: false.
+	f := FileStream read: VM fileName text: false.
 	encoded := String writeStream.
 	Base64Codec encodeFrom: f onto: encoded.
 	decoded := ByteArray writeStream.

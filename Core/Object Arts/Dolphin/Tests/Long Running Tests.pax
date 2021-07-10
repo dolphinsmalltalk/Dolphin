@@ -252,9 +252,8 @@ getCPUTime
 	exit := FILETIME new.
 	user := FILETIME new.
 	kernel := FILETIME new.
-	lib := KernelLibrary default.
-	lib
-		getThreadTimes: lib getCurrentThread
+	Kernel32
+		getThreadTimes: Kernel32 getCurrentThread
 		lpCreationTime: creation
 		lpExitTime: exit
 		lpKernelTime: kernel

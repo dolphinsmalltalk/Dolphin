@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.ShlwapiLibraryTest'
 	instanceVariableNames: ''
@@ -14,7 +14,7 @@ OS.Tests.ShlwapiLibraryTest comment: ''!
 testPathCompactPathEx
 	| buf |
 	buf := Utf16String newFixed: 20.
-	self assert: (ShlwapiLibrary default
+	self assert: (Shlwapi
 				pathCompactPathEx: buf
 				pszSrc: 'c:\dolphin\'
 				cchMax: buf size - 1

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.MenuPainter subclass: #'Tools.PopupMenuPainter'
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
@@ -132,7 +132,7 @@ paintSeparatorOn: aCanvas in: aRectangle
 
 	| offset |
 	offset := textOffset - SystemMetrics current paddedBorderThickness.
-	UserLibrary default
+	User32
 		drawEdge: aCanvas asParameter
 		qrc: (RECTL
 				left: aRectangle left + offset

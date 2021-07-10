@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.PROTOENT'
 	instanceVariableNames: ''
@@ -98,20 +98,18 @@ fromInteger: anInteger
 		(self fromInteger: 6) 
 	"
 
-	| answer lib |
-	lib := WS2_32Library default.
-	answer := lib getprotobynumber: anInteger.
-	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+	| answer |
+	answer := Ws2_32 getprotobynumber: anInteger.
+	^answer isNull ifTrue: [Net.SocketError signalWith: Ws2_32 wsaGetLastError] ifFalse: [answer]!
 
 fromString: aString
 	"Answer the static (per-thread) PROTOENT instance populated with data for the named protocol.
 		(self fromString: 'tcp') 
 	"
 
-	| answer lib |
-	lib := WS2_32Library default.
-	answer := lib getprotobyname: aString.
-	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+	| answer |
+	answer := Ws2_32 getprotobyname: aString.
+	^answer isNull ifTrue: [Net.SocketError signalWith: Ws2_32 wsaGetLastError] ifFalse: [answer]!
 
 getFieldNames
 	^#(#p_name #p_proto)! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'Tools.MenuComposer'
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
@@ -195,9 +195,9 @@ mutateIntoCommand
 			(item items select: [:e | e command notNil and: [e command ~~ #noCommand]]) notEmpty
 				ifTrue: 
 					[(MessageBox
-						confirm: ('The menu <1p> has sub-items that will be lost.<n><n>Are you sure you want to contine?'
-								expandMacrosWith: item description)
-						caption: 'Mutate Menu into Command...') ifFalse: [proceed := false]].
+						confirm: 'The menu <1p> has sub-items that will be lost.<n><n>Are you sure you want to contine?'
+								<< item description
+						caption: 'Mutate Menu into Command…') ifFalse: [proceed := false]].
 			proceed ifTrue: [self commandItemClass commandDescription: item commandDescription]]!
 
 mutateIntoMenu

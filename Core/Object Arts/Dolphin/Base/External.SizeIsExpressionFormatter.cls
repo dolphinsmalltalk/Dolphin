@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ArithmeticExpressionVisitor subclass: #'External.SizeIsExpressionFormatter'
 	instanceVariableNames: 'codeStream structClass variable'

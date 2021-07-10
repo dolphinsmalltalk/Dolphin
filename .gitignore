@@ -2,6 +2,7 @@
 *.ERRORS
 *.img
 *.img7
+*.img8
 *.pac
 *.sml
 *.exe
@@ -9,7 +10,7 @@
 *.pdb
 !Scintilla.dll
 !Lexilla.dll
-!DBOOT.img7
+!DBOOT.img8
 !DBOOT.sml
 Repository/
 Releases/

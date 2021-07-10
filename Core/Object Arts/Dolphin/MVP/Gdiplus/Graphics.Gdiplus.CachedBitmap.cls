@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.CachedBitmap'
 	instanceVariableNames: ''
@@ -16,7 +16,7 @@ Graphics.Gdiplus.CachedBitmap comment: 'GdiplusCachedBitmap stores a bitmap in a
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteCachedBitmap: handle! !
+	Gdip gdipDeleteCachedBitmap: handle! !
 !Graphics.Gdiplus.CachedBitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
 
 !Graphics.Gdiplus.CachedBitmap class methodsFor!

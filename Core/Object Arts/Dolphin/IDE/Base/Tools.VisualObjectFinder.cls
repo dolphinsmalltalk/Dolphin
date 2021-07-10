@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.InspectorAbstract subclass: #'Tools.VisualObjectFinder'
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
@@ -122,17 +122,16 @@ viewFromPoint: aPoint
 	clientPoint := aPoint.
 	under := desktop := View desktop.
 	
-	[child := OS.UserLibrary default 
+	[child := OS.User32
 				childWindowFromPointEx: under asParameter
 				pt: clientPoint asParameter
-				uFlags: CWP_SKIPINVISIBLE "| CWP_SKIPTRANSPARENT".
-	child isNil or: [child = under asParameter]] 
+				uFlags: CWP_SKIPINVISIBLE.	"| CWP_SKIPTRANSPARENT"
+	child isNil or: [child = under asParameter]]
 			whileFalse: 
 				[clientPoint := desktop mapPoint: aPoint to: child.
 				under := View fromHandle: child.
-				(SessionManager inputState isDolphinWindow: under asParameter) 
-					ifTrue: [lastDolphin := under]].
-	^(under isDolphinWindow or: [self class findNonDolphinWindows]) 
+				(SessionManager inputState isDolphinWindow: under asParameter) ifTrue: [lastDolphin := under]].
+	^(under isDolphinWindow or: [self class findNonDolphinWindows])
 		ifTrue: [under]
 		ifFalse: [lastDolphin]!
 

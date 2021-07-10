@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueConvertingControlView subclass: #'UI.ScrollBar'
 	instanceVariableNames: 'continuousTracking'
@@ -43,7 +43,7 @@ getScrollInfo: siStruct
 	"Private - Ask windows for information about the receiver.
 	Answer true if values were retrieved successfully."
 
-	^UserLibrary default
+	^User32
 		getScrollInfo: self asParameter
 		fnBar: SB_CTL
 		lpsi: siStruct!
@@ -179,7 +179,7 @@ setScrollInfo: siStruct
 	"Private - Set the specified scroll info for the receiver.
 	A wrapper for the Win32 function. Answer the current position of the thumb."
 
-	^UserLibrary default
+	^User32
 		setScrollInfo: self asParameter
 		fnBar: SB_CTL
 		lpsi: siStruct

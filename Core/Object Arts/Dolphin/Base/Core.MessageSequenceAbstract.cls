@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.MessageSequenceAbstract'
 	instanceVariableNames: ''
@@ -35,24 +35,20 @@ forwardTo: anObject
 	"Forwards all the messages in this sequence to anObject. Answers the
 	result of the last message in the sequence."
 
-	| answer |
-	self messagesDo: [:each | answer := each forwardTo: anObject].
-	^answer!
+	^self subclassResponsibility!
 
 includes: aMessage
-	"Answer whether the argument, anObject, is equal to one of the 
-	receiver's elements."
+	"Answer whether the argument, anObject, is equal to one of the receiver's elements."
 
-	self messagesDo: [:each | aMessage = each ifTrue: [^true]].
-	^false!
+	^self subclassResponsibility!
 
 isEmpty
 	"Answers true if there are no message in this sequence"
 
 	^self size == 0!
 
-messagesDo: aBlock
-	"Private - Enumerates through the receiver"
+messages
+	"Answer a <collection> of all the messages in the sequence."
 
 	^self subclassResponsibility!
 
@@ -61,47 +57,46 @@ notEmpty
 
 	^self isEmpty not!
 
+removeMessagesFor: anObject
+	"Removes all the messages in this sequence that are destined for anObject.
+	Answer the receiver."
+
+	self subclassResponsibility!
+
 value
-	"Plays all the messages in this sequence. They are assumed to be MessageSends
+	"Plays all the messages in this sequence, which are assumed to be MessageSends
 	that are fully qualified with their receivers. Answers the result of the last 
 	message in the sequence."
 
-	| answer |
-	self messagesDo: [:each | answer := each value].
-	^answer!
+	^self valueWithArguments: #()!
 
-value: arg1
-	"Plays all the messages in this sequence passing the <Object> arg1 as a parameter. 
-	They are assumed to be <message>s that are fully qualified with their receivers. 
+value: anObject
+	"Plays all the messages in this sequence passing the <Object> argument as a parameter. 
+	The messages are assumed to be <message>s that are fully qualified with their receivers. 
 	Answers the result of the last message in the sequence."
 
-	| answer |
-	self messagesDo: [:each | answer := each value: arg1].
-	^answer!
+	^self valueWithArguments: {anObject}!
 
 value: arg1 value: arg2
 	"Plays all the messages in this sequence passing the <Object>s arg1 and arg2 as parameters. 
-	They are assumed to be <message>s that are fully qualified with their receivers. 
+	The messages are assumed to be <message>s that are fully qualified with their receivers. 
 	Answers the result of the last message in the sequence."
 
-	| answer |
-	self messagesDo: [:each | answer := each value: arg1 value: arg2].
-	^answer!
+	^self valueWithArguments: {arg1. arg2}!
 
-valueWithArguments: argArray
-	"Evaluate the receiver with an <Array> of arguments in argArray"
+valueWithArguments: anArray
+	"Evaluate the receiver with the specified <Array> of arguments."
 
-	| answer |
-	self messagesDo: [:each | answer := each valueWithArguments: argArray].
-	^answer! !
+	^self subclassResponsibility! !
 !Core.MessageSequenceAbstract categoriesFor: #add:!adding!public! !
 !Core.MessageSequenceAbstract categoriesFor: #argumentCount!accessing!public! !
 !Core.MessageSequenceAbstract categoriesFor: #asMinimumRepresentation!converting!public! !
 !Core.MessageSequenceAbstract categoriesFor: #forwardTo:!operations!public! !
 !Core.MessageSequenceAbstract categoriesFor: #includes:!public!searching! !
 !Core.MessageSequenceAbstract categoriesFor: #isEmpty!public!testing! !
-!Core.MessageSequenceAbstract categoriesFor: #messagesDo:!enumerating!private! !
+!Core.MessageSequenceAbstract categoriesFor: #messages!accessing!public! !
 !Core.MessageSequenceAbstract categoriesFor: #notEmpty!public!testing! !
+!Core.MessageSequenceAbstract categoriesFor: #removeMessagesFor:!public!removing! !
 !Core.MessageSequenceAbstract categoriesFor: #value!evaluating!public! !
 !Core.MessageSequenceAbstract categoriesFor: #value:!evaluating!public! !
 !Core.MessageSequenceAbstract categoriesFor: #value:value:!evaluating!public! !

@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-IDispatch subclass: #IMatch
+OS.COM.IDispatch subclass: #'VBScript.IMatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IMatch guid: (IID fromString: '{3f4daca1-160d-11d2-a8e9-00104b365c9f}')!
-IMatch comment: '`IMatch` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IMatch guid: (OS.COM.IID fromString: '{3f4daca1-160d-11d2-a8e9-00104b365c9f}')!
+VBScript.IMatch comment: '`IMatch` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -34,8 +35,8 @@ interface IMatch : IDispatch
 		[out, retval]long* pLength);
 };
 ```'!
-!IMatch categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
-!IMatch methodsFor!
+!VBScript.IMatch categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+!VBScript.IMatch methodsFor!
 
 firstIndex
 	"Answer the <sdword> value of the 'FirstIndex' property of the receiver."
@@ -106,17 +107,17 @@ value
 	answer := bstr asUtf16String.
 	bstr free.
 	^answer! !
-!IMatch categoriesFor: #firstIndex!**auto generated**!properties!public! !
-!IMatch categoriesFor: #get_FirstIndex:!**auto generated**!COM Interfaces-IMatch!private! !
-!IMatch categoriesFor: #get_Length:!**auto generated**!COM Interfaces-IMatch!private! !
-!IMatch categoriesFor: #get_Value:!**auto generated**!COM Interfaces-IMatch!private! !
-!IMatch categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMatch categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMatch categoriesFor: #length!**auto generated**!properties!public! !
-!IMatch categoriesFor: #range!accessing!public! !
-!IMatch categoriesFor: #value!properties!public! !
+!VBScript.IMatch categoriesFor: #firstIndex!**auto generated**!properties!public! !
+!VBScript.IMatch categoriesFor: #get_FirstIndex:!**auto generated**!COM Interfaces-IMatch!private! !
+!VBScript.IMatch categoriesFor: #get_Length:!**auto generated**!COM Interfaces-IMatch!private! !
+!VBScript.IMatch categoriesFor: #get_Value:!**auto generated**!COM Interfaces-IMatch!private! !
+!VBScript.IMatch categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!VBScript.IMatch categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!VBScript.IMatch categoriesFor: #length!**auto generated**!properties!public! !
+!VBScript.IMatch categoriesFor: #range!accessing!public! !
+!VBScript.IMatch categoriesFor: #value!properties!public! !
 
-!IMatch class methodsFor!
+!VBScript.IMatch class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the associated coclass, Match, which is noncreatable."
@@ -134,6 +135,6 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #get_Length:
 			argumentTypes: 'sdword*'! !
-!IMatch class categoriesFor: #clsid!constants!private! !
-!IMatch class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.IMatch class categoriesFor: #clsid!constants!private! !
+!VBScript.IMatch class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

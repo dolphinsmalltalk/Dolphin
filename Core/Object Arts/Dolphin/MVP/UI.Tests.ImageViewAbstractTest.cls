@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.ImageViewAbstractTest'
 	instanceVariableNames: ''
@@ -31,7 +31,7 @@ testInvalidateOnResize
 	retries := 0.
 	
 	[presenter validate.
-	(UserLibrary default
+	(User32
 		getUpdateRect: presenter handle
 		lpRect: rect
 		bErase: false) and: [retries < 5]]
@@ -39,14 +39,14 @@ testInvalidateOnResize
 	self assert: rect extent equals: 0 @ 0.
 	extent := presenter extent.
 	presenter topView extent: presenter topView extent + extent.
-	self assert: (UserLibrary default
+	self assert: (User32
 				getUpdateRect: presenter handle
 				lpRect: rect
 				bErase: false).
 	self assert: rect extent equals: extent * 2.
 	presenter validate.
 	presenter topView extent: presenter topView extent - (50 @ 100).
-	self assert: (UserLibrary default
+	self assert: (User32
 				getUpdateRect: presenter handle
 				lpRect: rect
 				bErase: false).

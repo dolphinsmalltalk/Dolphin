@@ -44,6 +44,14 @@ package setClassNames: #(
 	#{OS.WSADATA}
 ).
 
+package setVariableNames: #(
+	#{OS.Ws2_32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.Ws2_32}
+).
+
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 ).

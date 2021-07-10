@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MSXML.XmlDomVisitor subclass: #'MSXML.XmlFormatter'
 	instanceVariableNames: 'stream indent line newlineNeeded'

@@ -53,6 +53,7 @@ package setMethodNames: #(
 	#(#{Core.ScaledDecimal class} #icon)
 	#(#{Core.SearchPolicy class} #icon)
 	#(#{Core.Semaphore class} #icon)
+	#(#{Core.SemVer class} #icon)
 	#(#{Core.Set class} #icon)
 	#(#{Core.Signal class} #icon)
 	#(#{Core.SortAlgorithm class} #icon)
@@ -135,6 +136,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\System\SemVer\Dolphin SemVer'
 	'..\..\System\STON\Dolphin STON-Core'
 	'Dolphin Text Tile Icons'
 ).
@@ -156,7 +158,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class: ↂ"
 
-	^##((TextTileIcon text: $\x2182 fontName: 'Segoe UI')
+	^##((TextTileIcon text: $\x2182 fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.ArithmeticValue class categoriesFor: #icon!constants!public! !
@@ -202,9 +204,9 @@ icon
 !Core.Boolean class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answers an Icon that can be used to represent this class: ❑"
 
-	^##(self) defaultIcon! !
+	^##(TextTileIcon text: $\x2751 fontName: 'Cambria')! !
 !Core.Boolean class categoriesFor: #icon!constants!public! !
 
 !Core.ByteArray class methodsFor!
@@ -222,7 +224,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '$b' fontName: 'Cambria')
+	^##((TextTileIcon text: '$b' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Character class categoriesFor: #icon!constants!public! !
@@ -324,7 +326,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '0.8' fontName: 'Cambria')
+	^##((TextTileIcon text: '0.8' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Float class categoriesFor: #icon!constants!public! !
@@ -334,7 +336,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '⅞' fontName: 'Cambria')
+	^##((TextTileIcon text: '⅞' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Fraction class categoriesFor: #icon!constants!public! !
@@ -352,7 +354,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '42' fontName: 'Cambria')
+	^##((TextTileIcon text: '42' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Integer class categoriesFor: #icon!constants!public! !
@@ -406,7 +408,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '|x|' fontName: 'Cambria')
+	^##((TextTileIcon text: '|x|' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Magnitude class categoriesFor: #icon!constants!public! !
@@ -485,7 +487,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class: №"
 
-	^##((TextTileIcon text: $\x2116 fontName: 'Cambria')
+	^##((TextTileIcon text: $\x2116 fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Number class categoriesFor: #icon!constants!public! !
@@ -503,7 +505,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '5⁹⁹' fontName: 'Segoe UI')
+	^##((TextTileIcon text: '5⁹⁹' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.ScaledDecimal class categoriesFor: #icon!constants!public! !
@@ -527,6 +529,14 @@ icon
 		textcolor: Color red;
 		yourself)! !
 !Core.Semaphore class categoriesFor: #icon!public! !
+
+!Core.SemVer class methodsFor!
+
+icon
+	^##((TextTileIcon text: $\x1F522 fontName: 'Segoe UI Emoji')
+		textcolor: Color navy;
+		yourself)! !
+!Core.SemVer class categoriesFor: #icon!public! !
 
 !Core.Set class methodsFor!
 
@@ -577,7 +587,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '‘A’' fontName: 'Cambria') textcolor: Color darkBlue)! !
+	^##((TextTileIcon text: '‘ab’' fontName: 'Arial Narrow') textcolor: Color darkBlue)! !
 !Core.String class categoriesFor: #icon!constants!public! !
 
 !Core.Symbol class methodsFor!
@@ -585,7 +595,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '#S' fontName: 'Cambria')
+	^##((TextTileIcon text: '#ab' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Symbol class categoriesFor: #icon!constants!public! !
@@ -623,7 +633,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: '‘U’' fontName: 'Cambria')
+	^##((TextTileIcon text: '‘U+’' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.UtfEncodedString class categoriesFor: #icon!constants!public! !
@@ -769,7 +779,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class: ⌖"
 
-	^##((TextTileIcon text: $\x2316 fontName: 'Georgia')
+	^##((TextTileIcon text: $\x2316 fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Graphics.Point class categoriesFor: #icon!constants!public! !
@@ -777,9 +787,9 @@ icon
 !Graphics.Rectangle class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class: ▭"
+	"Answers an Icon that can be used to represent this class: ▬"
 
-	^##(TextTileIcon text: $\x25AD)! !
+	^##(TextTileIcon text: $\x25AC fontName: 'Cambria')! !
 !Graphics.Rectangle class categoriesFor: #icon!constants!public! !
 
 !Kernel class methodsFor!
@@ -1125,7 +1135,9 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class: ⦿"
 
-	^##(TextTileIcon text: $\x29BF fontName: 'Cambria')! !
+	^##((TextTileIcon text: $\x29BF fontName: 'Cambria')
+		textcolor: Color hotlight;
+		yourself)! !
 !UI.RadioButton class categoriesFor: #icon!constants!public! !
 
 !UI.RadioButtonSetPresenter class methodsFor!

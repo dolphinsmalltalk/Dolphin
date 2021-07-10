@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'OS.COM.OLEAutLibrary'
 	instanceVariableNames: ''
@@ -74,6 +74,10 @@ fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
-	^'OLEAUT32'! !
+	^'OLEAUT32'!
+
+sharedVariableName
+	^#{OleAut32}! !
 !OS.COM.OLEAutLibrary class categoriesFor: #fileName!constants!public! !
+!OS.COM.OLEAutLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

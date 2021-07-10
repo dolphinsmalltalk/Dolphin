@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Field subclass: #'External.FillerField'
 	instanceVariableNames: 'byteSize'

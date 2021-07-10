@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.GenericExternalArray subclass: #'OS.COM.SAFEARRAY'
 	instanceVariableNames: 'data start recordInfo'
@@ -36,7 +36,7 @@ _deepenShallowCopy: clone trail: copiesDictionary
 	the contents instance variable by copying the referenced SAFEARRAY."
 
 	clone beNullPointer.
-	OLEAutLibrary default safeArrayCopy: self ppsaout: clone.
+	OleAut32 safeArrayCopy: self ppsaout: clone.
 	^clone!
 
 accessData
@@ -46,7 +46,7 @@ accessData
 	| pvData |
 	self assert: [data isNull].
 	pvData := Address new.
-	OLEAutLibrary default safeArrayAccessData: self ppvData: pvData.
+	OleAut32 safeArrayAccessData: self ppvData: pvData.
 	"We'll need finalization to unlock"
 	self beFinalizable.
 	^pvData!
@@ -96,7 +96,7 @@ copy
 
 	| pcopy |
 	pcopy := self pointerClass new.
-	OLEAutLibrary default safeArrayCopy: self ppsaout: pcopy.
+	OleAut32 safeArrayCopy: self ppsaout: pcopy.
 	^self class
 		fromAddress: pcopy
 		elementClass: self elementClass
@@ -148,7 +148,7 @@ dimensions
 	Note: It is more efficient to access this as a structure member through cDims,
 	but MS recommend using the (more object-oriented) functions."
 
-	^OLEAutLibrary default safeArrayGetDim: self!
+	^OleAut32 safeArrayGetDim: self!
 
 elementAt: aSequencedReadableCollectionOfInteger
 	"Answer the element of the receiver at the location identified by the <sequencedReadableCollection> of <integer> argument."
@@ -162,7 +162,7 @@ elementAt: aSequencedReadableCollectionOfInteger
 	sz := aSequencedReadableCollectionOfInteger size.
 	rgIndices := SDWORDArray new: sz.
 	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
-	OLEAutLibrary default
+	OleAut32
 		safeArrayGetElement: self
 		rgIndices: rgIndices
 		pv: buf.
@@ -175,7 +175,7 @@ elementAt: aSequencedReadableCollectionOfInteger put: anExternalObject
 	sz := aSequencedReadableCollectionOfInteger size.
 	rgIndices := SDWORDArray new: sz.
 	1 to: sz do: [:i | rgIndices uncheckedAt: i put: (aSequencedReadableCollectionOfInteger at: i)].
-	OLEAutLibrary default
+	OleAut32
 		safeArrayPutElement: self
 		rgIndices: rgIndices
 		pv: anExternalObject.
@@ -228,7 +228,7 @@ iid
 
 	| answer |
 	answer := IID new.
-	OLEAutLibrary default safeArrayGetIID: self pguid: answer.
+	OleAut32 safeArrayGetIID: self pguid: answer.
 	^answer!
 
 initializePointer
@@ -263,7 +263,7 @@ lowerBound: anInteger
 
 	| lBound |
 	lBound := DWORDBytes new.
-	OLEAutLibrary default
+	OleAut32
 		safeArrayGetLBound: self
 		nDim: anInteger
 		plLbound: lBound.
@@ -301,7 +301,7 @@ queryRecordInfo
 	| recInfo |
 	self hasRecordInfo ifFalse: [^nil].
 	recInfo := IRecordInfo newPointer.
-	OLEAutLibrary default safeArrayGetRecordInfo: self prinfo: recInfo.
+	OleAut32 safeArrayGetRecordInfo: self prinfo: recInfo.
 	^recInfo!
 
 recordClass
@@ -332,7 +332,7 @@ redim: interval
 	bound
 		lLbound: interval start;
 		cElements: interval size.
-	OLEAutLibrary default safeArrayRedim: self psaboundNew: bound!
+	OleAut32 safeArrayRedim: self psaboundNew: bound!
 
 rgsabound
 	"Answer the <StructureArray> value of the receiver's 'rgsabound' field."
@@ -359,7 +359,7 @@ unaccessData
 	data notNull
 		ifTrue: 
 			[data := nil.
-			OLEAutLibrary default safeArrayUnaccessData: self]!
+			OleAut32 safeArrayUnaccessData: self]!
 
 uncheckedAt: anInteger put: anObject
 	"Private - Set the value of the element of the receiver at the specified <integer> index to the specified value, which must be representable by the element class of the receiver. Assumes that the receiver is a single-dimensioned array, if not an error will result. 
@@ -373,7 +373,7 @@ upperBound: anInteger
 
 	| uBound |
 	uBound := DWORDBytes new.
-	OLEAutLibrary default
+	OleAut32
 		safeArrayGetUBound: self
 		nDim: anInteger
 		plUbound: uBound.
@@ -384,7 +384,7 @@ vartype
 
 	| vt |
 	vt := ByteArray new: 2.
-	OLEAutLibrary default safeArrayGetVartype: self pvt: vt.
+	OleAut32 safeArrayGetVartype: self pvt: vt.
 	^vt wordAtOffset: 0!
 
 vt
@@ -458,14 +458,14 @@ clear: addressOrBytes
 	which resides at the specified address."
 
 	| hr |
-	hr := OLEAutLibrary default safeArrayDestroy: addressOrBytes.
+	hr := OleAut32 safeArrayDestroy: addressOrBytes.
 	hr < 0 ifFalse: [^self].
 	"If the array is merely locked, then attempt to unlock it"
 	hr = DISP_E_ARRAYISLOCKED
 		ifTrue: 
 			["Set cLocks to 1, and then call unlock"
 			addressOrBytes dwordAtOffset: 8 put: 1.
-			hr := OLEAutLibrary default
+			hr := OleAut32
 						safeArrayUnlock: addressOrBytes;
 						safeArrayDestroy: addressOrBytes].
 	"If still locked after a large number of attempts, or some other error, then report it"
@@ -478,7 +478,7 @@ createVector: lenInteger vt: vtInteger extra: pvExtra
 	zero for compatibility with VB."
 
 	| answer |
-	answer := OLEAutLibrary default
+	answer := OleAut32
 				safeArrayCreateVectorEx: vtInteger
 				lLbound: 0
 				cElements: lenInteger

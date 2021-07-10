@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
 	instanceVariableNames: ''
@@ -98,25 +98,25 @@ drawThemeParentBackground: hwnd hdc: hDC prc: prc
 			[in, optional]RECTL* prc);"
 
 	| offset parent oldOrg |
-	parent := UserLibrary default getParent: hwnd.
+	parent := User32 getParent: hwnd.
 	offset := POINTL new.
-	UserLibrary default
+	User32
 		mapWindowPoints: hwnd
 		hWndTo: parent
 		lpPoints: offset
 		cPoints: 1.
 	oldOrg := POINTL new.
-	(GDILibrary default
+	(Gdi32
 		offsetWindowOrgEx: hDC
 		nXOrg: offset x
 		nYOrg: offset y
-		lppt: oldOrg) ifFalse: [^HRESULT win32Error: KernelLibrary default getLastError].
-	UserLibrary default
+		lppt: oldOrg) ifFalse: [^HRESULT win32Error: Kernel32 getLastError].
+	User32
 		sendMessage: parent
 		msg: WM_PRINTCLIENT
 		wParam: hDC
 		lParam: PRF_CLIENT.
-	GDILibrary default
+	Gdi32
 		setWindowOrgEx: hDC
 		nXOrg: oldOrg x
 		nYOrg: oldOrg y
@@ -456,7 +456,7 @@ getThemeSysColorBrush: htheme iColorId: iColorId
 			[in]HTHEME HTHEME,
 			[in]int iColorId);"
 
-	^UserLibrary default getSysColorBrush: iColorId!
+	^User32 getSysColorBrush: iColorId!
 
 getThemeSysFont: htheme iFontId: iFontId plf: plf
 	"Invoke the GetThemeSysFont() function of the module wrapped by the receiver.
@@ -531,9 +531,7 @@ getThemeTextMetrics: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pTM: pt
 			[in]int iStateId,
 			[out]TEXTMETRIC* ptm);"
 
-	^(GDILibrary default getTextMetrics: hDC lptm: ptm)
-		ifTrue: [S_OK]
-		ifFalse: [(HRESULT win32Error: 2) asInteger]!
+	^(Gdi32 getTextMetrics: hDC lptm: ptm) ifTrue: [S_OK] ifFalse: [(HRESULT win32Error: 2) asInteger]!
 
 getWindowTheme: hwnd 
 	"Invoke the GetWindowTheme() function of the module wrapped by the receiver.

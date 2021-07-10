@@ -1,8 +1,8 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.PermanentLibrary subclass: #'OS.NTLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'IsWine'
+	instanceVariableNames: 'isWine'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -16,6 +16,13 @@ Warning: This comment was automatically generated from the Module''s type inform
 '!
 !OS.NTLibrary categoriesForClass!External-Libraries! !
 !OS.NTLibrary methodsFor!
+
+initialize
+	super initialize.
+	isWine := self wineGetVersion notNil!
+
+isWine
+	^isWine!
 
 ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
 	<stdcall: sdword NtQueryTimerResolution lpvoid lpvoid lpvoid>
@@ -42,6 +49,8 @@ wineGetVersion
 
 	<stdcall: lpstr wine_get_version>
 	^nil	"instead of reporting an error"! !
+!OS.NTLibrary categoriesFor: #initialize!initializing!public! !
+!OS.NTLibrary categoriesFor: #isWine!public!testing! !
 !OS.NTLibrary categoriesFor: #ntQueryTimerResolution:maximum:actual:!public! !
 !OS.NTLibrary categoriesFor: #rtlNtStatusToDosError:!public!win32 functions-error handling! !
 !OS.NTLibrary categoriesFor: #setTimerResolution:set:actualResolution:!accessing!public! !
@@ -55,19 +64,8 @@ fileName
 
 	^'ntdll'!
 
-isWine
-	"
-	NTLibrary isWine.
-"
-
-	^IsWine!
-
-openDefault
-	| lib |
-	lib := super openDefault.
-	IsWine := lib wineGetVersion notNil.
-	^lib! !
+sharedVariableName
+	^#{NtDll}! !
 !OS.NTLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!OS.NTLibrary class categoriesFor: #isWine!public!testing! !
-!OS.NTLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
+!OS.NTLibrary class categoriesFor: #sharedVariableName!constants!private!realizing/unrealizing! !
 

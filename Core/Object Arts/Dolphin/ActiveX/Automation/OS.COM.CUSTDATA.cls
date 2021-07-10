@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.FinalizableStructure subclass: #'OS.COM.CUSTDATA'
 	instanceVariableNames: 'contents'
@@ -21,7 +21,7 @@ Warning: This comment was automatically generated from the struct''s type inform
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	OLEAutLibrary default clearCustData: self!
+	OleAut32 clearCustData: self!
 
 buildContents
 	| attrs |

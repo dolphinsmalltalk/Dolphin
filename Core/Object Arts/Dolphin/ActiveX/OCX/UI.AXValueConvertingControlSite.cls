@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.AXControlSite subclass: #'UI.AXValueConvertingControlSite'
 	instanceVariableNames: 'typeconverter'

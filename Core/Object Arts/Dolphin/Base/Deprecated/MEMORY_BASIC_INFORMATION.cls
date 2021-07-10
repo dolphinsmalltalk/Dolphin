@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
@@ -69,7 +69,7 @@ forAddress: anAddress
 
 	| answer |
 	answer := self new.
-	KernelLibrary default
+	Kernel32
 		virtualQuery: anAddress
 		lpBuffer: answer
 		dwLength: answer size.

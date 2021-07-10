@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.GraphicsTool subclass: #'Graphics.Brush'
 	instanceVariableNames: 'logBrush'
@@ -17,7 +17,7 @@ Graphics.Brush comment: '`Brush` is a `GraphicsTool` that wraps a Windows GDI Br
 createHandle
 	"Private - Answer an external handle to a new brush as described by the logbrush structure."
 
-	^GDILibrary default createBrushIndirect: logBrush!
+	^Gdi32 createBrushIndirect: logBrush!
 
 logBrush
 	"Private - Answe the logical description (LOGBRUSH) for the receiver."

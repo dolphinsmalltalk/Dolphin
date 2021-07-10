@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ShellView subclass: #'UI.DialogView'
 	instanceVariableNames: 'endModal isModal oldWndProc'
@@ -39,11 +39,11 @@ basicCreateAt: position extent: size
 	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
 	can only be loaded from DLLs that have been loaded as normal code modules."
 
-	^UserLibrary default
+	^User32
 		createDialog: self resourceLib asParameter
 		lpTemplate: self templateId asResourceId
 		hWndParent: self class activeHandle
-		lpDialogFunc: VMLibrary default getDlgProc
+		lpDialogFunc: VM getDlgProc
 		dwInitParam: 0!
 
 cancel
@@ -57,13 +57,27 @@ defaultBackcolor
 
 	^(self hasCaption or: [self isThemed not]) ifTrue: [Color face3d] ifFalse: [super defaultBackcolor]!
 
+defaultExtent
+	"Answer the default size of the receiver"
+
+	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
+
+	^260 @ 295!
+
+defaultPositionWithin: aParentView forExtent: aPoint
+	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint."
+
+	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
+
+	^0 @ 0!
+
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a Windows message to the 'default' window procedure of the receiver.
 	As the receiver is a dialog we must call the DefDlgProc() instead, this will call
 	our own DialogProc() (dialog procs are not WndProcs), which just returns false
 	to get the DefDlgProc() to do its stuff."
 
-	^UserLibrary default
+	^User32
 		defDlgProc: handle
 		msg: message
 		wParam: wParam
@@ -141,13 +155,13 @@ enableItem: anInteger state: aBoolean
 	"Private - Enable/Disable the receiver's control with the specified Id. Answers the previous
 	state of the window."
 
-	^UserLibrary default enableWindow: (self getItem: anInteger) asParameter bEnable: aBoolean!
+	^User32 enableWindow: (self getItem: anInteger) asParameter bEnable: aBoolean!
 
 endDialog: result
 	"Close the receiver with result as the result of the dialog (should be an Integer
 	or convertible to anInteger by asDword)"
 
-	UserLibrary default endDialog: handle nResult: result asUIntPtr!
+	User32 endDialog: handle nResult: result asUIntPtr!
 
 getItemText: anInteger
 	"Private - Get the text of the receiver's control with the specified id.
@@ -212,12 +226,11 @@ onInitDialog
 
 	"Similarly, Windows always creates dialog as a child of the desktop. Force the required
 	parent here"
-	UserLibrary default setParent: self asParameter hWndNewParent: creationParent asParameter.
-
+	User32 setParent: self asParameter hWndNewParent: creationParent asParameter.
 	(self isPropertyPage and: [self isThemed])
-		ifTrue: [
-			"Property pages in tabbed dialogs require a specific theme"
-			ThemeLibrary default enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
+		ifTrue: 
+			["Property pages in tabbed dialogs require a specific theme"
+			UxTheme enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
 	(though subclasses loaded from a Windows dialog template resource may wish to return true
@@ -246,7 +259,7 @@ resourceLib
 	flag), as if it is then CreateDialogIndirect() will GPF when attempting to use 
 	any templates from it."
 
-	^VMLibrary default!
+	^VM!
 
 runModalInProcessLoop
 	"Private - Create a modal message loop until our continue flag suggests exit. Note that here
@@ -255,7 +268,7 @@ runModalInProcessLoop
 	likely to be required by the new process."
 
 	self isModal: true.
-	SessionManager inputState loopWhile: [self isModal]!
+	SessionManager.Current inputState loopWhile: [self isModal]!
 
 runModalLoop
 	"Private - create a modal message loop. We do this by forking a new UI process, and 
@@ -276,7 +289,7 @@ runModalLoop
 setItem: anInteger font: aFontOrHandle
 	"Private - Set the font of the receiver's control with the specified id."
 
-	UserLibrary default
+	User32
 		sendMessage: (self getItemHandle: anInteger ifAbsent: [])
 		msg: WM_SETFONT
 		wParam: aFontOrHandle asParameter
@@ -287,7 +300,7 @@ setItem: anInteger icon: anIcon
 	Difficult to trap error here because return is 0 if previously control had no error,
 	or if a real error occurred!!. The answer is the handle of the previous icon."
 
-	^UserLibrary default
+	^User32
 		sendDlgItemMessage: handle
 		nIDDlgItem: anInteger
 		msg: STM_SETICON
@@ -298,19 +311,19 @@ setItem: anIntegerId int: anInteger
 	"Private - Set the text of the receiver's control with the specified id to the string
 	representation of anInteger."
 
-	(UserLibrary default
+	(User32
 		setDlgItemInt: handle
 		nIDDlgItem: anIntegerId
 		uValue: anInteger
-		bSigned: anInteger negative) ifFalse: [UserLibrary default systemError]!
+		bSigned: anInteger negative) ifFalse: [User32 systemError]!
 
 setItem: anInteger text: aString
 	"Private - Set the text of the receiver's control with the specified id."
 
-	(UserLibrary default
+	(User32
 		setDlgItemText: self asParameter
 		nIDDlgItem: anInteger
-		lpString: aString) ifFalse: [UserLibrary default systemError]!
+		lpString: aString) ifFalse: [User32 systemError]!
 
 showModal
 	"Private - Show the receiver as a dialog modal to the current active window. Note that if the Dialog has already been created, it will have taken activation, and it is no longer possible to determine the previously active window."
@@ -340,7 +353,7 @@ showModalTo: aView
 				enableOwningView ifTrue: [owningView beActive].
 				"Force the owning view to re-paint and update its cursor in case actions following closure of the dialog are lengthy"
 				owningView update.
-				UserLibrary default
+				User32
 					sendMessage: owningView asParameter
 					msg: WM_SETCURSOR
 					wParam: 0
@@ -392,6 +405,8 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !UI.DialogView categoriesFor: #cancel!commands!public! !
 !UI.DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
+!UI.DialogView categoriesFor: #defaultExtent!constants!public! !
+!UI.DialogView categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
 !UI.DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 !UI.DialogView categoriesFor: #defaultWindowStyle!constants!private! !
 !UI.DialogView categoriesFor: #destroy!public!realizing/unrealizing! !

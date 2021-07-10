@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.Sound'
 	instanceVariableNames: 'name location type fileLocator'
@@ -88,12 +88,12 @@ beep
 beep: anInteger
 	"Generate a parp of the specified type (see Win32 documentation) from the system speaker."
 
-	OS.UserLibrary default messageBeep: anInteger!
+	OS.User32 messageBeep: anInteger!
 
 beep: freqInteger duration: durationInteger
 	"Generate a parp of the specified frequency and duration from the system speaker."
 
-	OS.KernelLibrary default beep: freqInteger dwDuration: durationInteger!
+	OS.Kernel32 beep: freqInteger dwDuration: durationInteger!
 
 bell
 	"Generate a very short parp using the computer speaker - useful for debugging.

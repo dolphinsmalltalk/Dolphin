@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Number variableByteSubclass: #'Core.Float'
 	instanceVariableNames: ''
@@ -1338,7 +1338,7 @@ reset
 	Processor activeProcess resetFloatingPoint!
 
 statusFlags
-	^OS.CRTLibrary default _statusfp!
+	^OS.Ucrt _statusfp!
 
 zero
 	"Answer the receiver's representation of zero."

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.IDispatch subclass: #'OS.COM.IFontDisp'
 	instanceVariableNames: ''
@@ -199,7 +199,7 @@ fromFont: aFont
 	| answer fd |
 	fd := FONTDESC fromFont: aFont.
 	answer := IFontDisp newPointer.
-	OLEAutLibrary default
+	OleAut32
 		oleCreateFontIndirect: fd
 		riid: IFontDisp iid
 		ppvObj: answer.

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.Behavior'
 	instanceVariableNames: 'superclass methodDictionary instanceSpec'
@@ -688,7 +688,7 @@ referenceFilterFor: anObject
 	anObject isSymbol
 		ifTrue: 
 			[| index |
-			index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [].
+			index := VM indexOfSpecialSelector: anObject ifAbsent: [].
 			index notNil
 				ifTrue: 
 					[| dispatcher |
@@ -701,16 +701,15 @@ referenceFilterFor: anObject
 	^[:eachMethod | eachMethod refersToLiteral: anObject]!
 
 referenceFilterForAnyOf: aCollection
-	| array specialSelectorIndices vm |
+	| array specialSelectorIndices |
 	array := aCollection asArray.
 	"Here we are expecting that aCollection is very small, and there will generally be no special selectors in it."
-	vm := VMLibrary default.	
 	specialSelectorIndices := #().
 	array do: 
 			[:each |
 			each isSymbol
 				ifTrue: 
-					[(vm indexOfSpecialSelector: each ifAbsent: [])
+					[(VM indexOfSpecialSelector: each ifAbsent: [])
 						ifNotNil: [:index | specialSelectorIndices := specialSelectorIndices copyWith: index]]].
 	^specialSelectorIndices isEmpty
 		ifTrue: [[:method | method refersToAnyOf: array]]

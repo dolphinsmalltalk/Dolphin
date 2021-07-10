@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.InstructionInterpreter subclass: #'Tools.Disassembler'
 	instanceVariableNames: 'stream'
@@ -278,7 +278,7 @@ printLiteral: offset
 		next: cc
 		putAll: literal
 		startingAt: 1.
-	cc < literal size ifTrue: [stream nextPutAll: '...']!
+	cc < literal size ifTrue: [stream nextPutAll: '…']!
 
 printLongPrefix
 	"Private - Append the long instruction prefix to the stream"

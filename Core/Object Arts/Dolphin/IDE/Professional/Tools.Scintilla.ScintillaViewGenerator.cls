@@ -1,7 +1,7 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
-	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
+	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions defaultReturnValues'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla})
 	classInstanceVariableNames: ''
@@ -371,6 +371,9 @@ defineConstantsPool
 				'SC_PRINT_INVERTLIGHT' -> 1.
 				'SC_PRINT_NORMAL' -> 0.
 				'SC_PRINT_SCREENCOLOURS' -> 5.
+				'SC_REPRESENTATION_BLOB' -> 1.
+				'SC_REPRESENTATION_COLOUR' -> 16.
+				'SC_REPRESENTATION_PLAIN' -> 0.
 				'SC_SEL_LINES' -> 2.
 				'SC_SEL_RECTANGLE' -> 1.
 				'SC_SEL_STREAM' -> 0.
@@ -522,6 +525,7 @@ defineConstantsPool
 				'SCI_CLEAR' -> 2180.
 				'SCI_CLEARALL' -> 2004.
 				'SCI_CLEARALLCMDKEYS' -> 2072.
+				'SCI_CLEARALLREPRESENTATIONS' -> 2770.
 				'SCI_CLEARCMDKEY' -> 2071.
 				'SCI_CLEARDOCUMENTSTYLE' -> 2005.
 				'SCI_CLEARREGISTEREDIMAGES' -> 2408.
@@ -623,6 +627,7 @@ defineConstantsPool
 				'SCI_GETDEFAULTFOLDDISPLAYTEXT' -> 2723.
 				'SCI_GETDIRECTFUNCTION' -> 2184.
 				'SCI_GETDIRECTPOINTER' -> 2185.
+				'SCI_GETDIRECTSTATUSFUNCTION' -> 2772.
 				'SCI_GETDOCPOINTER' -> 2357.
 				'SCI_GETDOCUMENTOPTIONS' -> 2379.
 				'SCI_GETEDGECOLOUR' -> 2364.
@@ -721,6 +726,8 @@ defineConstantsPool
 				'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 2593.
 				'SCI_GETRECTANGULARSELECTIONMODIFIER' -> 2599.
 				'SCI_GETREPRESENTATION' -> 2666.
+				'SCI_GETREPRESENTATIONAPPEARANCE' -> 2767.
+				'SCI_GETREPRESENTATIONCOLOUR' -> 2769.
 				'SCI_GETSCROLLWIDTH' -> 2275.
 				'SCI_GETSCROLLWIDTHTRACKING' -> 2517.
 				'SCI_GETSEARCHFLAGS' -> 2199.
@@ -925,6 +932,7 @@ defineConstantsPool
 				'SCI_RELEASEALLEXTENDEDSTYLES' -> 2552.
 				'SCI_RELEASEDOCUMENT' -> 2377.
 				'SCI_RELEASELINECHARACTERINDEX' -> 2712.
+				'SCI_REPLACERECTANGULAR' -> 2771.
 				'SCI_REPLACESEL' -> 2170.
 				'SCI_REPLACETARGET' -> 2194.
 				'SCI_REPLACETARGETRE' -> 2195.
@@ -1051,6 +1059,8 @@ defineConstantsPool
 				'SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 2592.
 				'SCI_SETRECTANGULARSELECTIONMODIFIER' -> 2598.
 				'SCI_SETREPRESENTATION' -> 2665.
+				'SCI_SETREPRESENTATIONAPPEARANCE' -> 2766.
+				'SCI_SETREPRESENTATIONCOLOUR' -> 2768.
 				'SCI_SETSAVEPOINT' -> 2014.
 				'SCI_SETSCROLLWIDTH' -> 2274.
 				'SCI_SETSCROLLWIDTHTRACKING' -> 2516.
@@ -1367,6 +1377,7 @@ generateEventHandler: aScintillaEventDef
 
 generateFunction: func
 	| stream |
+	func hasReturnValue ifTrue: [defaultReturnValues at: func constName put: func defaultReturnValue].
 	(self class ignoredMessages includes: func constName) 
 		ifTrue: 
 			[Notification signal: 'Ignoring message ' , func constName.
@@ -1423,6 +1434,38 @@ generateNotificationMap
 		in: self scintillaViewClass
 		categories: (self autoGenMethodCategories copyWith: 'event handling-win32')!
 
+generateNullLibraryDefaults
+	| stream selector |
+	self setKnownDefaults.
+	stream := String writeStream.
+	selector := #returnValues.
+	stream
+		display: selector;
+		cr;
+		nextPutAll: '^##((IdentityDictionary new)';
+		cr.
+	defaultReturnValues associations asSortedCollection do: 
+			[:each |
+			stream
+				nextPutAll: 'at: ';
+				display: each key;
+				nextPutAll: ' put: ';
+				display: each value;
+				nextPut: $;].
+	stream
+		display: #shrink;
+		nextPut: $;;
+		display: #isImmutable:;
+		display: true;
+		nextPut: $;;
+		nextPutAll: 'yourself';
+		nextPut: $).
+	self
+		compile: stream contents
+		selector: selector
+		in: NullScintillaLibrary
+		categories: self autoGenMethodCategories , {'private'. 'development'}!
+
 getAndResetCommentQueue
 	| answer |
 	answer := commentQueue contents.
@@ -1442,7 +1485,8 @@ initialize
 	generatedSelectors := LookupTable new.
 	constantsPool := Dictionary new.
 	aliases := LookupTable new.
-	functions := OrderedCollection new!
+	functions := OrderedCollection new.
+	defaultReturnValues := LookupTable new!
 
 isIgnoredConstant: aString
 	
@@ -1465,12 +1509,11 @@ parseCategory: aReadableStream
 				upToEnd.
 	parsingDeprecated := category asLowercase = 'deprecated'!
 
-parseEnum: aReadableStream 
+parseEnum: aReadableStream
 	| typeName prefix |
 	typeName := aReadableStream upTo: $=.
 	prefix := aReadableStream nextWord.
-	TypeReference declareEnum: typeName
-!
+	TypeReference declareEnum: typeName prefix: prefix!
 
 parseEvent: aReadableStream 
 	| event |
@@ -1498,10 +1541,12 @@ parseFile: aFileName
 	cFile := FileStream read: aFileName.
 	[cFile atEnd] whileFalse: [self parseLine: cFile nextLine].
 	cFile close.
+	self setEnumSpecialDefaultValues.
 	self generateFunctions.
 	self generateConstantsPool.
 	self generateNotificationMap.
 	self generateCommandMap.
+	self generateNullLibraryDefaults.
 	self removeStaleAutoGeneratedMethods.
 	self updateLibVersion.
 	previewChanges
@@ -1567,13 +1612,13 @@ parseValue: aReadableStream
 	| value numberStream radix constName |
 	self getAndResetCommentQueue.
 	constName := aReadableStream upTo: $=.
-	(self isIgnoredConstant: constName) ifTrue: [^self].
 	value := aReadableStream upToEnd.
 	numberStream := value readStream.
 	radix := (numberStream skipWhileMatchAll: '0x') ifTrue: [16] ifFalse: [10].
 	value := Integer readFrom: numberStream radix: radix.
 	numberStream atEnd ifFalse: [^self].
-	self constantsPool at: constName put: value!
+	(self isIgnoredConstant: constName) ifFalse: [self constantsPool at: constName put: value].
+	(TypeReference enumForConst: constName) ifNotNil: [:enum | enum addConst: constName value: value]!
 
 previewChanges: aBoolean 
 	"Set whether the parser is in preview mode. When in preview mode the generator will not apply the
@@ -1715,6 +1760,19 @@ sciCommands
 scintillaViewClass
 	^ScintillaView!
 
+setEnumSpecialDefaultValues
+	#('Alpha' 'SC_ALPHA_NOALPHA' 'IndicatorStyle' 'INDIC_SQUIGGLE' 'CaretStyle' 'CARETSTYLE_LINE' 'CharacterSet' 'SC_CHARSET_DEFAULT')
+		pairsDo: [:enumName :default | (TypeReference named: enumName) defaultValueName: default]
+
+!
+
+setKnownDefaults
+	"Integer values generally default to 0, and boolean to false. Here we set the special cases. Some are documented, others just read from the Scintilla code.
+	This knowledge is duplicated in the ScintillaView>>state method, and in the property maps for some attributes, so we should (ideally) generate those too."
+
+	#('SCI_GETMOUSEDWELLTIME' 'SC_TIME_FOREVER' 'SCI_GETCARETWIDTH' 1 'SCI_GETLAYOUTCACHE' 'SC_CACHE_CARET' 'SCI_GETHSCROLLBAR' true 'SCI_SETENDATLASTLINE' true 'SCI_GETSCROLLWIDTH' 2000 'SCI_GETTABINDENTS' true 'SCI_GETTABWIDTH' 8 'SCI_GETUSETABS' true 'SCI_GETTABMINIMUMWIDTH' 2 'SCI_AUTOCGETSEPARATOR' '$\x20 codePoint' 'SCI_AUTOCGETTYPESEPARATOR' '$? codePoint' 'SCI_AUTOCGETCANCELATSTART' true 'SCI_AUTOCGETAUTOHIDE' true 'SCI_AUTOCGETMAXHEIGHT' 5 'SCI_GETEDGECOLUMN' 1 'SCI_GETPOSITIONCACHE' 1024 'SCI_GETHOTSPOTSINGLELINE' true 'SCI_GETADDITIONALCARETSVISIBLE' true 'SCI_GETWHITESPACESIZE' 1 'SCI_GETPHASESDRAW' 'SC_PHASES_TWO' 'SCI_GETMOUSEWHEELCAPTURES' true 'SCI_GETMARGINCURSORN' 'SC_CURSORREVERSEARROW' 'SCI_GETMARGINLEFT' 1 'SCI_GETMARGINRIGHT' 1 'SCI_GETCODEPAGE' 'SC_CP_UTF8' 'SCI_INDICGETALPHA' 30 'SCI_INDICGETOUTLINEALPHA' 50 'SCI_INDICGETSTROKEWIDTH' 100 'SCI_STYLEGETBACK' 'Color white rgbCode')
+		pairsDo: [:getMessage :defaultValue | defaultReturnValues at: getMessage put: defaultValue]!
+
 splitDefinition: aReadableStream
 	| tokens |
 	tokens := Array writeStream.
@@ -1783,6 +1841,7 @@ updateLibVersion
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateFunction:!generating!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateFunctions!accessing!generating!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateNotificationMap!generating!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #generateNullLibraryDefaults!generating!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #getAndResetCommentQueue!helpers!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #initialize!helpers!initializing!public! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #isIgnoredConstant:!helpers!private! !
@@ -1803,6 +1862,8 @@ updateLibVersion
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #removeStaleAutoGeneratedMethods!helpers!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #sciCommands!constants!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #scintillaViewClass!constants!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #setEnumSpecialDefaultValues!generating!private! !
+!Tools.Scintilla.ScintillaViewGenerator categoriesFor: #setKnownDefaults!generating!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #splitDefinition:!private! !
 !Tools.Scintilla.ScintillaViewGenerator categoriesFor: #updateLibVersion!accessing!private! !
 
@@ -1940,6 +2001,10 @@ ignoredMessages
 
 	"5.0.3 - the elements API replaces quite a number of colour settings"
 	ignoredMessages addAll: #('SCI_MARKERGETLAYER' 'SCI_MARKERSETLAYER' 'SCI_GETCARETLINEVISIBLE' 'SCI_SETCARETLINEVISIBLE' 'SCI_SETCARETLINEBACK' 'SCI_GETCARETLINEBACKALPHA' 'SCI_SETCARETLINEBACKALPHA' 'SCI_SETCARETFORE' 'SCI_GETSELALPHA' 'SCI_SETSELALPHA'  'SCI_GETADDITIONALSELALPHA' 'SCI_SETADDITIONALSELALPHA'  'SCI_GETADDITIONALSELFORE' 'SCI_SETADDITIONALSELFORE' 'SCI_GETADDITIONALSELBACK' 'SCI_SETADDITIONALSELBACK' 'SCI_SETADDITIONALCARETFORE' 'SCI_SETSELBACK' 'SCI_SETSELFORE' 'SCI_SETHOTSPOTACTIVEBACK' 'SCI_SETHOTSPOTACTIVEFORE' 'SCI_GETELEMENTBASECOLOUR').
+
+	"5.1.0"
+	"The status codes are currently very limited and it is difficult to see why one would bother with them. Even if they were more useful, we wouldn't want to call the function this way - odd that it wasn't immediately added to the ScintillaDLL exports like the existing direct function. Perhaps when it is, it will be worth calling, but even then we won't need this message."
+	ignoredMessages add: 'SCI_GETDIRECTSTATUSFUNCTION'.
 
 	ignoredMessages
 		shrink;

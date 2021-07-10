@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.ICONINFO'
 	instanceVariableNames: ''
@@ -26,7 +26,7 @@ extent
 
 	| bitmapInfo |
 	bitmapInfo := BITMAP new.
-	GDILibrary default
+	Gdi32
 		getObject: self hbmColor
 		cbBuffer: bitmapInfo byteSize
 		lpvObject: bitmapInfo.
@@ -40,11 +40,11 @@ free
 	hbm := self hbmColor.
 	hbm isNull
 		ifFalse: 
-			[GDILibrary default deleteObject: hbm.
+			[Gdi32 deleteObject: hbm.
 			self hbmColor: 0].
 	hbm := self hbmMask.
 	hbm isNull ifTrue: [^self].
-	GDILibrary default deleteObject: hbm.
+	Gdi32 deleteObject: hbm.
 	self hbmMask: 0!
 
 hbmColor

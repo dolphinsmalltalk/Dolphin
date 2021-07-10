@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Error subclass: #'OS.CRTError'
 	instanceVariableNames: ''
@@ -30,7 +30,7 @@ initialize
 	"Private - Initialize the receiver's instance variables. Set the tag to be the last error
 	code reported by a C runtime function library (i.e. that returned by CRTLibrary>>errno)."
 
-	self tag: CRTLibrary default errno!
+	self tag: Ucrt errno!
 
 messageText
 	"Answer the <readableString> message text supplied when the receiver was signalled, or, if
@@ -44,7 +44,7 @@ strerror
 
 	| buf |
 	buf := String newFixed: 80.
-	^(CRTLibrary default
+	^(Ucrt
 		strerror_s: buf
 		bufferSize: buf size + 1
 		errnum: self errno) == 0

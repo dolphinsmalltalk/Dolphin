@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.Parser'
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source environment'
@@ -417,7 +417,7 @@ parseExternalCallArgs: anStExternalCallNode
 	got < expected 
 		ifTrue: 
 			[self parserError: CErrInsufficientArgTypes range: (start to: self errorPosition - 1)
-			"Error ignored, but no recovery needed as the decl is syntactically correct,it just defines too many types."].
+			"Error ignored, but no recovery needed as the decl is syntactically correct,it just defines too few types."].
 	got > expected 
 		ifTrue: 
 			[self parserError: CErrTooManyArgTypes range: (start to: types last sourceInterval stop)

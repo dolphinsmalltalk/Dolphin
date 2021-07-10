@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
@@ -61,10 +61,10 @@ dolphinInsideBaseColor
 		b: 1!
 
 dolphinInsideIntensityColor
-	^Color 
-		r: 215
-		g: 109
-		b: 10!
+	^Color
+		r: 192
+		g: 89
+		b: 207!
 
 dolphinInsideIntensityPeriod
 	^1500!
@@ -89,10 +89,7 @@ dolphinOutline
 dolphinSplashBackcolor
 	"Private - The ambient background colour in the Dolphin splash bitmap as shipped. We could pull a pixel out of the bitmap, but that is very slow, so it is hard coded below."
 
-	^Color
-		r: 41
-		g: 124
-		b: 182!
+	^Color seaGreen!
 
 drawInfoTextOn: graphics
 	| fontCopyright brush stringFormat |
@@ -174,7 +171,7 @@ initialize
 	dolphinIntensity := 0.
 	self loadTextureMap: 'ObjectsInside'.
 	random := Random new.
-	copyright := $. split: VMLibrary default versionInfo legalCopyright.
+	copyright := $. split: VM versionInfo legalCopyright.
 	info := Utf16String writeStream.
 	info nextPutAll: copyright first.
 	(copyright size > 1 and: [copyright second notEmpty])
@@ -185,7 +182,6 @@ initialize
 	info
 		nextPut: $.;
 		cr;
-		nextPutAll: 'Dolphin ';
 		nextPutAll: SessionManager current versionString;
 		nextPutAll: ' is Open Source under the MIT License.'.
 	SessionManager current bootInfo
@@ -194,7 +190,7 @@ initialize
 			info
 				cr;
 				nextPutAll: 'Image boot info: ';
-				nextPutAll: bootInfo].
+				display: bootInfo].
 	info := info contents.
 	scale := View desktop extent * 0.75 / self originalBitmapExtent.
 	baseScale := (scale x min: scale y) min: 1.
@@ -360,7 +356,7 @@ showHintBubble
 
 splashBitmap
 	| bitmap rawBitmap extent imageAttr |
-	rawBitmap := Gdiplus.Bitmap fromFile: 'Resources\Dolphin7Splash.png'
+	rawBitmap := Gdiplus.Bitmap fromFile: 'Resources\DolphinSplash.png'
 				usingLocator: FileLocator installRelative.
 	extent := rawBitmap extent.
 	bitmap := Gdiplus.Bitmap extent: extent.
@@ -385,7 +381,8 @@ startStepProcess
 	stepProcess := 
 			[
 			[[self step] on: Error do: [:ex | ex toTrace].
-			Processor sleep: 1000 // self frameRate] repeat]
+			Processor sleep: 1000 // self frameRate.
+			self isOpen] whileTrue]
 					forkAt: Processor userBackgroundPriority!
 
 step

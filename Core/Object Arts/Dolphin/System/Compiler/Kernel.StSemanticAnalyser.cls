@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ParseNodeVisitor subclass: #'Kernel.StSemanticAnalyser'
 	instanceVariableNames: 'methodNode classScope evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock isMutator inTag'
@@ -848,7 +848,7 @@ initialize
 	restrictedSelectors := IdentitySet new.
 	optimizedMessages do: [:each | restrictedSelectors addAll: each].
 	self addClassConstant: 'RestrictedSelectors' value: restrictedSelectors.
-	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
+	self addClassConstant: 'SpecialSelectors' value: VM specialSelectors! !
 !Kernel.StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:environment:context:pools:onError:!accessing!public! !
 !Kernel.StSemanticAnalyser class categoriesFor: #initialize!development!initializing!public! !
 

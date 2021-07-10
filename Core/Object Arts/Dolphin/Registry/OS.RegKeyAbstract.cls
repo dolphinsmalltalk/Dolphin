@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
@@ -174,6 +174,9 @@ isRoot
 
 	^handle = rootKey handle!
 
+isWriteable
+	^self sam allMask: KEY_WRITE!
+
 key
 	"Answer the lookup key of the receiver."
 
@@ -251,7 +254,7 @@ objectFromValue: bytes type: type size: size
 	type == REG_NONE ifTrue: [^nil].
 	type == REG_EXPAND_SZ
 		ifTrue: 
-			[^KernelLibrary default
+			[^Kernel32
 				expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1)].
 	type == REG_QWORD ifTrue: [^bytes sqwordAtOffset: 0].
 	Notification signal: 'Unrecognised registry value type treated as binary: ' , type printString.
@@ -400,7 +403,7 @@ registryLibrary
 	"Private - Answer the host system shared DLL used
 	to access the registry."
 
-	^AdvApiLibrary default!
+	^AdvApi32!
 
 removeKey: key ifAbsent: exceptionHandler
 	"Remove the key (and its associated value), from the receiver. If key is
@@ -712,7 +715,7 @@ valueAt: aString put: anObject type: aSymbol
 				ifFalse: [anObject].
 	"The size is always specified in bytes"
 	size := value byteSize.
-	result := AdvApiLibrary default
+	result := AdvApi32
 				regSetValueEx: self asParameter
 				lpValueName: aString
 				reserved: 0
@@ -770,6 +773,7 @@ valueFromObject: value
 !OS.RegKeyAbstract categoriesFor: #hash!comparing!public! !
 !OS.RegKeyAbstract categoriesFor: #includesKey:!public!searching! !
 !OS.RegKeyAbstract categoriesFor: #isRoot!public!testing! !
+!OS.RegKeyAbstract categoriesFor: #isWriteable!public!testing! !
 !OS.RegKeyAbstract categoriesFor: #key!accessing!public! !
 !OS.RegKeyAbstract categoriesFor: #key:!accessing!public! !
 !OS.RegKeyAbstract categoriesFor: #keyInfo!accessing!public! !

@@ -59,7 +59,7 @@ HRESULT __stdcall CreateVM(CLSCTX clsContext, const CLSID* pVMCLSID, LPCWSTR psz
 {
 	HRESULT hr;
 
-	LPCWSTR szVMPath = pszVM?pszVM:L"DolphinVM7.DLL";
+	LPCWSTR szVMPath = pszVM?pszVM:L"DolphinVM8.DLL";
 
 	// First attempt to load from current directory
 	{

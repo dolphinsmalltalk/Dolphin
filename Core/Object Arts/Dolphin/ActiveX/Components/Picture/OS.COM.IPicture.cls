@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.IUnknown subclass: #'OS.COM.IPicture'
 	instanceVariableNames: ''
@@ -426,7 +426,7 @@ createPicture: handle type: picType owns: isOwner
 	desc handle: handle asParameter.
 	desc picType: picType.
 	answer := self newPointer.
-	OLEAutLibrary default
+	OleAut32
 		oleCreatePictureIndirect: desc
 		riid: self iid
 		fOwn: isOwner
@@ -484,7 +484,7 @@ fromFile: path
 
 	| answer |
 	answer := self newPointer.
-	OLEAutLibrary default
+	OleAut32
 		oleLoadPicturePath: path
 		punkCaller: nil
 		dwReserved: 0
@@ -531,7 +531,7 @@ readFromIStream: anIStream
 
 	| answer |
 	answer := self newPointer.
-	OLEAutLibrary default
+	OleAut32
 		oleLoadPicture: anIStream
 		lSize: 0
 		fRunmode: false

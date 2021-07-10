@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.DelayTest'
 	instanceVariableNames: 'delay startTime'
@@ -13,18 +13,22 @@ Core.Tests.DelayTest comment: ''!
 
 expectDelay: expectedDuration for: nowMicroseconds
 	| elapsed delta |
-	elapsed := nowMicroseconds - startTime.
-	delta := elapsed - expectedDuration asMicroseconds.
+	elapsed := (nowMicroseconds - startTime) microseconds.
+	delta := elapsed - expectedDuration.
 	"Although a Delay could end up waiting much longer than the expected duration,
 	e.g. if the CPU is very busy, this should happen only rarely, and we do not want
 	to tolerate it if it happens all the time as that would indicate an actual bug."
-	self assert: (delta > -1000 and: [delta < 3000])
-		description: ('Expected delay of <1d>ms, got <2d>ms' expandMacrosWith: expectedDuration
-				with: (elapsed // 100 / 10 asScaledDecimal: 1))!
+	self assert: (delta between: -1 milliseconds and: 5 milliseconds)
+		description: 
+			[String smalltalkWriteStream
+				nextPutAll: 'Expected delay of ';
+				display: expectedDuration;
+				nextPutAll: ' got ';
+				display: elapsed;
+				contents]!
 
 setUp
 	super setUp.
-	startTime := Time microsecondClockValue.
 	Delay timerResolution: 1 milliseconds set: true!
 
 tearDown
@@ -32,9 +36,12 @@ tearDown
 	super tearDown!
 
 testBasicWait
+	| endTime |
 	delay := Delay forMilliseconds: 20.
+	startTime := Time microsecondClockValue.
 	delay wait.
-	self expectDelay: 20 milliseconds for: Time microsecondClockValue!
+	endTime := Time microsecondClockValue.
+	self expectDelay: delay duration for: endTime!
 
 testCancel
 	| proc endTime |
@@ -56,46 +63,58 @@ testCancelWithOtherShorterDelay
 	self testCancel!
 
 testSchedulingMultipleDelays
-	| endTime |
+	| endTime delay2 |
 	delay := Delay forMilliseconds: 20.
+	delay2 := Delay forMilliseconds: 30.
 	
-	[delay wait.
-	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
-	(Delay forMilliseconds: 30) wait.
-	self expectDelay: 20 milliseconds for: endTime.
-	self expectDelay: 30 milliseconds for: Time microsecondClockValue!
+	[startTime := Time microsecondClockValue.
+	delay wait.
+	endTime := Time microsecondClockValue]
+			forkAt: Processor userInterruptPriority.
+	delay2 wait.
+	self expectDelay: delay duration for: endTime.
+	self expectDelay: delay2 duration for: Time microsecondClockValue!
 
 testSchedulingMultipleDelaysLongerFirst
-	| endTime |
+	| endTime delay2 delay3 endTime2 |
 	delay := Delay forMilliseconds: 30.
+	delay2 := Delay forMilliseconds: 20.
+	delay3 := Delay forMilliseconds: 20.
 	
-	[delay wait.
-	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
+	[startTime := Time microsecondClockValue.
+	delay wait.
+	endTime := Time microsecondClockValue]
+			forkAt: Processor userInterruptPriority.
 	"Wait for a shorter period than the other process"
-	(Delay forMilliseconds: 20) wait.
+	delay2 wait.
 	"We should have waited for the correct time, other proc is still waiting"
 	self expectDelay: 20 milliseconds for: Time microsecondClockValue.
 	self assertIsNil: endTime.
 	"Now wait long enough for it to be done"
-	(Delay forMilliseconds: 20) wait.
-	self expectDelay: 30 milliseconds for: endTime.
-	self expectDelay: 40 milliseconds for: Time microsecondClockValue!
+	delay3 wait.
+	endTime2 := Time microsecondClockValue.
+	self expectDelay: delay duration for: endTime.
+	self expectDelay: delay2 duration + delay3 duration for: endTime2!
 
 testSignal
-	| endTime |
+	| endTime delay2 |
 	delay := Delay forMilliseconds: 20.
+	delay2 := Delay forMilliseconds: 10.
 	
-	[delay wait.
-	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
-	(Delay forMilliseconds: 10) wait.
+	[startTime := Time microsecondClockValue.
+	delay wait.
+	endTime := Time microsecondClockValue]
+			forkAt: Processor userInterruptPriority.
+	delay2 wait.
 	delay signal.
-	self expectDelay: 10 milliseconds for: endTime!
+	self expectDelay: delay2 duration for: endTime!
 
 testSimultaneousWaitAndSignal
 	| waitError signalError signalFinished endTime |
 	delay := Delay forMilliseconds: 20.
 	signalFinished := false.
 	Delay.AccessProtect wait.	"Ensure that the Delay wait will be blocked"
+	startTime := Time microsecondClockValue.
 	
 	[[delay wait] on: Error do: [:ex | waitError := ex].
 	endTime := Time microsecondClockValue] fork.	"Delay>>wait will calc a resumption time, then block"
@@ -104,7 +123,7 @@ testSimultaneousWaitAndSignal
 	signalFinished := true]
 			forkAt: Processor userInterruptPriority.	"Will block on AccessProtect in #cancel too, but higher priority"
 	Delay.AccessProtect signal.	"Allow the bug to unfold"
-	OS.KernelLibrary default sleep: 10.	"Wait for both processes above to finish, without using the Delay mechanism"
+	OS.Kernel32 sleep: 10.	"Wait for both processes above to finish, without using the Delay mechanism"
 	self expectDelay: 0 milliseconds for: endTime.	"Process should not have actually waited on the delay"
 	self assertIsNil: waitError.
 	self assert: signalFinished.

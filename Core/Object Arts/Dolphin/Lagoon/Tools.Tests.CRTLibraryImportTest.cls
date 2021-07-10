@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.CRTLibraryImportTest'
 	instanceVariableNames: ''
@@ -36,7 +36,7 @@ testStubCrtExports
 	"Ensure that .def files include proper CRTLibrary imports (#183)."
 
 	| expected |
-	self skipUnless: [VMLibrary default versionInfo fileVersion >= self minimumVmVersion].
+	self skipUnless: [VM versionInfo fileVersion >= self minimumVmVersion].
 	expected := self devOnlyCrtFunctions.
 	self stubNames do: 
 			[:eachStubName |

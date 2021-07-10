@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Magnitude subclass: #'Core.Character'
 	instanceVariableNames: 'code'
@@ -132,7 +132,7 @@ asLowercase
 
 	| ucp |
 	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (OS.UserLibrary default charLower: ucp)]
+		ifTrue: [self class codePoint: (OS.User32 charLower: ucp)]
 		ifFalse: [self]!
 
 asString
@@ -154,7 +154,7 @@ asUppercase
 
 	| ucp |
 	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (OS.UserLibrary default charUpper: ucp)]
+		ifTrue: [self class codePoint: (OS.User32 charUpper: ucp)]
 		ifFalse: [self]!
 
 asUtf16String
@@ -180,15 +180,15 @@ basicShallowCopy
 classify: anInteger
 	<primitive: 225>
 	| str charType |
-	#todo. "This is temporary, and to be replaced with an implementation based on ICU in order to yield correct results for all Unicode characters."
+	#todo.	"This is temporary, and to be replaced with an implementation based on ICU in order to yield correct results for all Unicode characters."
 	str := Utf16String with: self.
 	"If outside BMP, we ignore the 2nd surrogate, as all valid surrogates have a CT_CTYPE1 of just C1_DEFINED (i.e. known, but not of any other type). The API isn't really designed correctly to report the classifications for characters outside the BMP, because it operates at a code unit level, and the code units are UTF-16"
 	charType := ByteArray newFixed: 2.
-	(OS.KernelLibrary default
+	(OS.Kernel32
 		getStringType: anInteger
 		lpSrcStr: str
 		cchSrc: 1
-		lpCharType: charType) ifFalse: [OS.KernelLibrary default systemError].
+		lpCharType: charType) ifFalse: [OS.Kernel32 systemError].
 	^charType wordAtOffset: 0!
 
 code
@@ -213,6 +213,12 @@ codePoint
 		ifFalse: 
 			["If this is a UTF-8 or UTF-16 surrogate, the code point will be invalid"
 			code bitAnd: 16rFFFFFF]!
+
+codePointString
+	"Answer the Unicode code string for the receiver as typically shown in tables of Unicode characters, e.g. U+0061 for $a"
+
+	^'U+'
+		, (self codePoint printStringBase: 16 nDigits: ((self codePoint numberOfDigitsInBase: 16) max: 4))!
 
 codeUnit
 	"Answer the <integer> character code for the character in its native encoding. This can
@@ -541,6 +547,7 @@ to: aCharacter
 !Core.Character categoriesFor: #classify:!helpers!private! !
 !Core.Character categoriesFor: #code!accessing!private! !
 !Core.Character categoriesFor: #codePoint!accessing!public! !
+!Core.Character categoriesFor: #codePointString!printing!public! !
 !Core.Character categoriesFor: #codeUnit!accessing!public! !
 !Core.Character categoriesFor: #deepCopy!copying!public! !
 !Core.Character categoriesFor: #digitValue!accessing!public! !
@@ -744,8 +751,7 @@ null
 
 onStartup
 	| utf ansiCharacters |
-	AnsiCodePage := (VMLibrary default getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]])
-				dwordAtOffset: 0.
+	AnsiCodePage := (VM getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]]) dwordAtOffset: 0.
 	utf := self byteCharacterSet asUtf16String.
 	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf wordAtOffset: each])
 				isImmutable: true;
@@ -757,8 +763,7 @@ onStartup
 	AnsiCharacters := ansiCharacters.
 	"In practice the replacement character is always $\xFFFD, but we fetch it from the VM (which in turn has retrieved it from Windows) just in case"
 	Utf8Default := Character
-				codePoint: ((VMLibrary default getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]])
-						wordAtOffset: 0)!
+				codePoint: ((VM getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]]) wordAtOffset: 0)!
 
 replacement
 	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."

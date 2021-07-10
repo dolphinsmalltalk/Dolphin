@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest'
 	instanceVariableNames: ''
@@ -30,7 +30,7 @@ testCreateHandle
 
 testCreateHandleRealizesIcon
 	| icon |
-	icon := Icon fromId: 43 in: ShellLibrary default.
+	icon := Icon fromId: 43 in: Shell32.
 	model icon: icon.
 	self assertIsNil: icon basicHandle.
 	model createHandle.

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.UtfEncodedString variableByteSubclass: #'Core.Utf16String'
 	instanceVariableNames: ''
@@ -33,7 +33,7 @@ _beginsString: aString
 	comperand := aString asUtf16String.
 	size := self size.
 	^size <= comperand size
-		and: [(OS.CRTLibrary default
+		and: [(OS.Ucrt
 				memcmp: comperand
 				buf2: self
 				count: size * 2) == 0]!
@@ -44,7 +44,7 @@ asByteString: aClass
 	| bytes buf size |
 	(size := self size) == 0 ifTrue: [^aClass empty].	"Avoid 'The Parameter is Incorrect' error"
 	buf := aClass new: size * 4.
-	bytes := OS.KernelLibrary default
+	bytes := OS.Kernel32
 				wideCharToMultiByte: aClass codePage
 				dwFlags: 0
 				lpWideCharStr: self
@@ -53,7 +53,7 @@ asByteString: aClass
 				cchMultiByte: buf size
 				lpDefaultChar: nil
 				lpUsedDefaultChar: nil.
-	bytes == 0 ifTrue: [^OS.KernelLibrary default systemError].
+	bytes == 0 ifTrue: [^OS.Kernel32 systemError].
 	buf resize: bytes.
 	^buf!
 
@@ -63,7 +63,7 @@ asLowercase
 
 	| copy |
 	copy := self shallowCopy.
-	OS.UserLibrary default charLowerBuffW: copy cchLength: copy size.
+	OS.User32 charLowerBuffW: copy cchLength: copy size.
 	^copy!
 
 asUppercase
@@ -72,7 +72,7 @@ asUppercase
 
 	| copy |
 	copy := self shallowCopy.
-	OS.UserLibrary default charUpperBuffW: copy cchLength: copy size.
+	OS.User32 charUpperBuffW: copy cchLength: copy size.
 	^copy!
 
 asUtf16String
@@ -105,7 +105,7 @@ byteSize
 	^self basicSize + 1 bitShift: 1!
 
 copyToBuffer: anAddress ofSize: anInteger
-	OS.CRTLibrary default
+	OS.Ucrt
 		wcsncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
@@ -330,13 +330,12 @@ stbSaveOn: anSTBOutFiler
 	^self asUtf8String stbSaveOn: anSTBOutFiler!
 
 strcspn: aString start: anInteger
-	^OS.CRTLibrary default wcscspn: self yourAddress + ((anInteger - 1) * 2)
-		strCharSet: aString asUtf16String!
+	^OS.Ucrt wcscspn: self yourAddress + ((anInteger - 1) * 2) strCharSet: aString asUtf16String!
 
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^OS.KernelLibrary default lstrlenW: self!
+	^OS.Kernel32 lstrlenW: self!
 
 wordAtOffset: anInteger
 	"Private - Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the receiver. 
@@ -426,7 +425,7 @@ fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
 	| len |
-	len := OS.KernelLibrary default lstrlenW: anAddress.
+	len := OS.Kernel32 lstrlenW: anAddress.
 	^self fromAddress: anAddress length: len!
 
 fromAddress: anAddress length: anInteger
@@ -448,7 +447,7 @@ fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."
 
 	| atomName |
-	^(atomName := self new: 255) leftString: (OS.KernelLibrary default
+	^(atomName := self new: 255) leftString: (OS.Kernel32
 				getAtomName: anInteger
 				lpBuffer: atomName
 				nSize: atomName size)!
@@ -456,20 +455,19 @@ fromAtomId: anInteger
 fromBytes: aByteArray codePage: anInteger
 	"Answer an instance of the receiver constructed from the specified byte-string assumed to be encoded per the specified code page."
 
-	| kernel cch cb answer |
-	kernel := OS.KernelLibrary default.
+	| cch cb answer |
 	cb := aByteArray size.
 	cb = 0 ifTrue: [^self empty].
-	cch := kernel
+	cch := OS.Kernel32
 				multiByteToWideChar: anInteger
 				dwFlags: 0
 				lpMultiByteStr: aByteArray
 				cchMultiByte: cb
 				lpWideCharStr: nil
 				cchWideChar: 0.
-	cch <= 0 ifTrue: [^kernel systemError].
+	cch <= 0 ifTrue: [^OS.Kernel32 systemError].
 	answer := self new: cch.
-	kernel
+	OS.Kernel32
 		multiByteToWideChar: anInteger
 		dwFlags: 0
 		lpMultiByteStr: aByteArray
@@ -487,7 +485,7 @@ initialize
 	empty := self new
 				isImmutable: true;
 				yourself.
-	VMLibrary default registryAt: #Utf16String put: self.
+	VM registryAt: #Utf16String put: self.
 	self extraInstanceSpec: EncodingUtf16.
 	self addClassConstant: 'LeadOffset' value: Character.Utf16LeadMask - (16r10000 >> 10).
 	self addClassConstant: 'SurrogateOffset'

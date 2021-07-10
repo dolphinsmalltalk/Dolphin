@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.Package'
 	instanceVariableNames: 'name packagePathname comment classNames methodNames variableNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedVariables changeIndex properties preDeclareClassesOnLoad'
@@ -1891,7 +1891,7 @@ vmVersionCheck: verWhenSaved
 	in order to work - it should load OK though."
 
 	| versionString verOnLoad |
-	verOnLoad := VMLibrary default bytecodeVersion.
+	verOnLoad := VM bytecodeVersion.
 	verWhenSaved = verOnLoad ifTrue: [^self].
 	versionString := verWhenSaved > 0
 				ifTrue: [verWhenSaved highWord displayString , '.' , verWhenSaved lowWord displayString]

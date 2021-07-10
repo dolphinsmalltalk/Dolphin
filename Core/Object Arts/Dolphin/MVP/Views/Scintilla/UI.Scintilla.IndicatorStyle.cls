@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
 	instanceVariableNames: 'forecolor style layer name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
@@ -118,6 +118,9 @@ basicHoverStyle: anInteger
 basicId
 	^id ifNil: [name isInteger ifTrue: [id := name]]!
 
+basicStrokeWidth
+	^strokeWidth!
+
 basicStrokeWidth: anInteger
 	strokeWidth := anInteger!
 
@@ -211,12 +214,19 @@ name: anObject
 				ifFalse: [anObject isEmpty ifFalse: [anObject asSymbol]]!
 
 strokeWidth
-	"Answer the stroke width used to draw the indicators with this style in hundreds of a pixel. If nil then the default, 100 (i.e. 1 pel), is used."
+	"Answer the stroke width used to draw the indicators where 1 is 1 pel, 0.5 is half a pel."
 
-	^strokeWidth!
+	^strokeWidth
+		ifNotNil: 
+			[:hundredths |
+			| width fraction |
+			"Try and provide an integer, if the stroke width is whole"
+			width := hundredths / 100.0.
+			fraction := width asApproximateFraction.
+			fraction isInteger ifTrue: [fraction] ifFalse: [width]]!
 
-strokeWidth: anInteger
-	self basicStrokeWidth: anInteger.
+strokeWidth: aNumberOrNil
+	self basicStrokeWidth: (aNumberOrNil ifNotNil: [:i | (i * 100) rounded]).
 	self updateViewProperty: #strokeWidth!
 
 style
@@ -246,6 +256,7 @@ validateAlpha: anInteger
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicId!accessing!private! !
+!UI.Scintilla.IndicatorStyle categoriesFor: #basicStrokeWidth!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStrokeWidth:!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle!accessing!private! !
 !UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
@@ -278,13 +289,18 @@ validateAlpha: anInteger
 buildPropertyMap
 	"Some magic numbers for default values are from the Scintilla code - no consts for these"
 
-	HoverStyle := PropertyDescriptor
+	| sortedStyles |
+	sortedStyles := IndicatorStyles copy sort.
+	HoverStyle := (EnumPropertyDescriptor
 				getSelector: #basicHoverStyle
 				defaultValue: INDIC_SQUIGGLE
 				setMessage: SCI_INDICSETHOVERSTYLE
 				setSelector: #basicHoverStyle:
-				getMessage: SCI_INDICGETHOVERSTYLE.
-	HoverForecolor := ColorPropertyDescriptor
+				getMessage: SCI_INDICGETHOVERSTYLE)
+				values: sortedStyles;
+				nilChoice: '<None>';
+				yourself.
+	HoverForecolor := ColourPropertyDescriptor
 				getSelector: #hoverForecolor
 				defaultValue: Color black
 				setMessage: SCI_INDICSETHOVERFORE
@@ -292,58 +308,66 @@ buildPropertyMap
 				getMessage: SCI_INDICGETHOVERFORE.
 	^IdentityDictionary new
 		at: #forecolor
-			put: (ColorPropertyDescriptor
+			put: (ColourPropertyDescriptor
 					getSelector: #forecolor
 					defaultValue: Color black
 					setMessage: SCI_INDICSETFORE
 					setSelector: #basicForecolor:
 					getMessage: SCI_INDICGETFORE);
 		at: #style
-			put: ((PropertyDescriptor
+			put: ((EnumPropertyDescriptor
 					getSelector: #basicStyle
 					defaultValue: nil
 					setMessage: SCI_INDICSETSTYLE
 					setSelector: #basicStyle:
 					getMessage: SCI_INDICGETSTYLE)
-					printSelector: #style;
+					values: sortedStyles;
 					yourself);
 		at: #hoverStyle put: HoverStyle;
 		at: #isUnderText
-			put: (PropertyDescriptor
+			put: (BoolPropertyDescriptor
 					getSelector: #layer
 					defaultValue: 0
 					setMessage: SCI_INDICSETUNDER
 					setSelector: #layer:
 					getMessage: SCI_INDICGETUNDER);
 		at: #alpha
-			put: (PropertyDescriptor
+			put: ((IntPropertyDescriptor
 					getSelector: #alpha
 					defaultValue: 30
 					setMessage: SCI_INDICSETALPHA
 					setSelector: #basicAlpha:
-					getMessage: SCI_INDICGETALPHA);
+					getMessage: SCI_INDICGETALPHA)
+					beNullable;
+					yourself);
 		at: #hoverForecolor put: HoverForecolor;
 		at: #flags
-			put: (PropertyDescriptor
+			put: ((IntPropertyDescriptor
 					getSelector: #flags
 					defaultValue: 0
 					setMessage: SCI_INDICSETFLAGS
 					setSelector: #flags:
-					getMessage: SCI_INDICGETFLAGS);
+					getMessage: SCI_INDICGETFLAGS)
+					beNullable;
+					yourself);
 		at: #foreAlpha
-			put: (PropertyDescriptor
+			put: ((IntPropertyDescriptor
 					getSelector: #foreAlpha
 					defaultValue: 50
 					setMessage: SCI_INDICSETOUTLINEALPHA
 					setSelector: #basicForeAlpha:
-					getMessage: SCI_INDICSETOUTLINEALPHA);
+					getMessage: SCI_INDICGETOUTLINEALPHA)
+					beNullable;
+					yourself);
 		at: #strokeWidth
-			put: (PropertyDescriptor
-					getSelector: #strokeWidth
+			put: ((FloatPropertyDescriptor
+					getSelector: #basicStrokeWidth
 					defaultValue: 100
 					setMessage: SCI_INDICSETSTROKEWIDTH
 					setSelector: #basicStrokeWidth:
-					getMessage: SCI_INDICGETSTROKEWIDTH);
+					getMessage: SCI_INDICGETSTROKEWIDTH)
+					beNullable;
+					yourself);
 		shrink;
 		yourself!
 

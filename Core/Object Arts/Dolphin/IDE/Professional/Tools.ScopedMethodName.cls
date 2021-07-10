@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'

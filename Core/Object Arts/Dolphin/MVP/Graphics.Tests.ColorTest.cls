@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
 	instanceVariableNames: ''
@@ -23,7 +23,9 @@ testActualColor
 	subject := ThemeColor name: #test actualColor: subject.
 	self assert: subject actualColor identicalTo: Color purple.
 	subject := ThemeColor name: #test actualColor: subject.
-	self assert: subject actualColor identicalTo: Color purple!
+	self assert: subject actualColor identicalTo: Color purple.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) actualColor
+		equals: ((Color named: #gradientActiveCaption) asRGB alpha: 64)!
 
 testAlpha
 	self assert: Color red alpha equals: 255.
@@ -31,7 +33,8 @@ testAlpha
 	self assert: (Color yellow alpha: 128) alpha equals: 128.
 	self assert: IndexedColor brown alpha equals: 255.
 	self shouldRaiseNotARealColorError: [Color default alpha].
-	self assert: Color face3d alpha equals: 255!
+	self assert: Color face3d alpha equals: 255.
+	self assert: (Color face3d alpha: 123) alpha equals: 123!
 
 testArgbCode
 	self assert: Color white argbCode equals: 16rFFFFFFFF.
@@ -42,7 +45,9 @@ testArgbCode
 	self assert: IndexedColor darkCyan argbCode equals: 16rFF008080.
 	self assert: (Color orchid alpha: 64) argbCode equals: 16r40DA70D6.
 	self assert: (Color fromArgbCode: 16rFFDA70D6) equals: Color orchid.
-	self assert: (Color fromArgbCode: 16r40DA70D6) equals: (Color orchid alpha: 64)!
+	self assert: (Color fromArgbCode: 16r40DA70D6) equals: (Color orchid alpha: 64).
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) argbCode
+		equals: ((Color named: #gradientActiveCaption) asRGB alpha: 64) argbCode!
 
 testAsColorRef
 	self assert: Color orchid asColorRef identicalTo: Color orchid.
@@ -60,7 +65,9 @@ testAsCOLORREF
 	self assert: Color none asCOLORREF equals: Win32Constants.CLR_NONE.
 	self assert: Color default asCOLORREF equals: Win32Constants.CLR_DEFAULT.
 	"Alpha of ARGB is lost"
-	self assert: (Color orchid alpha: 99) asCOLORREF equals: 16rD670DA!
+	self assert: (Color orchid alpha: 99) asCOLORREF equals: 16rD670DA.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) asCOLORREF
+		equals: (Color named: #gradientActiveCaption) asCOLORREF!
 
 testAsRGB
 	self assert: Color orchid asRGB identicalTo: Color orchid.
@@ -68,7 +75,9 @@ testAsRGB
 	self shouldRaiseNotARealColorError: [Color none asRGB].
 	self shouldRaiseNotARealColorError: [Color default asRGB].
 	"Alpha of ARGB is lost"
-	self assert: (Color orchid alpha: 99) asRGB equals: Color orchid!
+	self assert: (Color orchid alpha: 99) asRGB equals: Color orchid.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) asRGB
+		equals: (Color named: #gradientActiveCaption) asRGB!
 
 testBlue
 	self assert: Color blue blue equals: 255.
@@ -77,14 +86,19 @@ testBlue
 	self assert: IndexedColor darkBlue blue equals: 128.
 	self shouldRaiseNotARealColorError: [Color default blue].
 	self assert: Color none blue equals: 255.
-	self assert: Color window blue equals: Color window asRGB blue!
+	self assert: (Color named: #gradientActiveCaption) blue
+		equals: (Color named: #gradientActiveCaption) asRGB blue.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) blue
+		equals: (Color named: #gradientActiveCaption) blue!
 
 testBrightness
 	{Color white. Color red. Color blue. Color green. Color yellow. IndexedColor yellow. Color none}
 		do: [:each | self assert: each brightness equals: 1.0].
 	self assert: Color black brightness equals: 0.0.
 	self assert: (Color gray brightness roundTo: 0.01) equals: 0.5.
-	self assert: Color face3d brightness equals: Color face3d asRGB brightness!
+	self assert: Color face3d brightness equals: Color face3d asRGB brightness.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) brightness
+		equals: (Color named: #gradientActiveCaption) brightness!
 
 testBrush
 	| bmp rect current |
@@ -98,7 +112,8 @@ testBrush
 		Color black.
 		Color orchid.
 		IndexedColor brown.
-		Color face3d} do: 
+		Color face3d.
+		(Color named: #gradientActiveCaption) alpha: 64} do: 
 				[:each |
 				| brush |
 				brush := each brush.
@@ -111,11 +126,13 @@ testBrush
 
 testChroma
 	{Color red. Color blue. Color green} do: [:each | self assert: each chroma equals: 1].
-	{Color black. Color white. Color none. Color brightness: 0.5} do: [:each | self assert: each chroma equals: 0].
+	{Color black. Color white. Color none. Color brightness: 0.5}
+		do: [:each | self assert: each chroma equals: 0].
 	{Color navy. Color commonGreen} do: [:each | self assert: (each chroma roundTo: 0.01) equals: 0.5].
 	self shouldRaiseNotARealColorError: [Color default chroma].
-	self assert: Color caption chroma equals: Color caption asRGB chroma
-!
+	self assert: Color caption chroma equals: Color caption asRGB chroma.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) chroma
+		equals: (Color named: #gradientActiveCaption) chroma!
 
 testClassBlack
 	self assert: Color black isKindOf: RGB.
@@ -217,7 +234,10 @@ testEquals
 		assert: (IndexedColor.InstancesByIndex allSatisfy: 
 					[:each |
 					each ~= Color default
-						and: [Color default ~= each and: [each ~= Color none and: [Color none ~= each]]]])!
+						and: [Color default ~= each and: [each ~= Color none and: [Color none ~= each]]]]).
+	self assert: ((Color named: #gradientActiveCaption) alpha: 63)
+		equals: ((Color named: #gradientActiveCaption) asRGB alpha: 63).
+	self deny: ((Color named: #gradientActiveCaption) alpha: 0) equals: Color none!
 
 testFaded
 	self assert: Color red faded
@@ -240,7 +260,9 @@ testFaded
 				a: 100
 				r: 237
 				g: 184
-				b: 235)!
+				b: 235).
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) faded
+		equals: ((Color named: #gradientActiveCaption) asRGB alpha: 100) faded!
 
 testGreen
 	self assert: Color green green equals: 255.
@@ -249,7 +271,10 @@ testGreen
 	self assert: IndexedColor brown green equals: 128.
 	self shouldRaiseNotARealColorError: [Color default green].
 	self assert: Color none green equals: 255.
-	self assert: Color window green equals: Color window asRGB green!
+	self assert: (Color named: #gradientActiveCaption) green
+		equals: (Color named: #gradientActiveCaption) asRGB green.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) green
+		equals: (Color named: #gradientActiveCaption) green!
 
 testHash
 	| themeColor |
@@ -285,7 +310,10 @@ testHls
 			hls := each hls.
 			actual := Color hls: hls.
 			self assert: actual equals: each].
-	self assert: (Color hls: Color none hls) equals: Color white!
+	self assert: (Color hls: Color none hls) equals: Color white.
+
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) hls
+		equals: (Color named: #gradientActiveCaption) hls!
 
 testHsv
 	self assert: (Color
@@ -306,14 +334,18 @@ testHsv
 			actual := Color hsv: hsv.
 			self assert: actual equals: each].
 	self assert: (Color hsv: Color none hsv) equals: Color white.
-	self assert: (Color hsv: IndexedColor yellow hsv) equals: Color yellow!
+	self assert: (Color hsv: IndexedColor yellow hsv) equals: Color yellow.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) hsv
+		equals: (Color named: #gradientActiveCaption) hsv!
 
 testHue
 	self assert: (Color
 				r: 128
 				g: 128
 				b: 255) hue equals: 240.
-	self assert: IndexedColor yellow hue equals: 60.0!
+	self assert: IndexedColor yellow hue equals: 60.0.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) hue
+		equals: (Color named: #gradientActiveCaption) hue!
 
 testIntensity
 	| halfOrchid |
@@ -329,7 +361,9 @@ testIntensity
 	self assert: ((Color orchid alpha: 100) intensity: 0.5) equals: (halfOrchid alpha: 100).
 	self assert: (Color face3d intensity: 0.75) equals: (Color face3d asRGB intensity: 0.75).
 	self assert: (IndexedColor yellow intensity: 0.5) equals: Color olive.
-	self assert: (Color none intensity: 0.5) equals: (Color gray alpha: 0)!
+	self assert: (Color none intensity: 0.5) equals: (Color gray alpha: 0).
+	self assert: (((Color named: #gradientActiveCaption) alpha: 100) intensity: 0.5)
+		equals: ((Color named: #gradientActiveCaption) intensity: 0.5)!
 
 testIsDefault
 	self deny: Color orchid isDefault.
@@ -338,7 +372,8 @@ testIsDefault
 	self deny: Color face3d isDefault.
 	self assert: Color default isDefault.
 	self deny: (Color named: #smalltalkSystem) isDefault.
-	self deny: (Color orchid alpha: 100) isDefault!
+	self deny: (Color orchid alpha: 100) isDefault.
+	self deny: ((Color named: #gradientActiveCaption) alpha: 100) isDefault!
 
 testIsGrayscale
 	self assert: Color silver isGrayscale.
@@ -357,7 +392,8 @@ testIsGrayscale
 	"It isn't absolutely guaranteed that the SystemColor grayText is actually a gray, but it is a fairly safe assumption that is is."
 	self assert: Color grayText isGrayscale.
 	"Not absolutely guaranteed either, but we're unlikely to choose grey for the main Dolphin accent colour."
-	self deny: (Color named: #smalltalkSystem) isGrayscale!
+	self deny: (Color named: #smalltalkSystem) isGrayscale.
+	self deny: ((Color named: #gradientActiveCaption) alpha: 64) isGrayscale!
 
 testIsNone
 	self deny: Color orchid isNone.
@@ -371,20 +407,32 @@ testIsNone
 	self assert: (Color white alpha: 0) isNone.
 	self assert: ARGB none isNone.
 	self deny: (Color named: #smalltalkSystem) isNone.
-	self deny: Color default isNone!
+	self deny: Color default isNone.
+	self deny: ((Color named: #gradientActiveCaption) alpha: 64) isNone!
 
 testIsSymbolic
 	self assert: Color window isSymbolic.
 	self assert: (Color named: #smalltalkWorkspace) isSymbolic.
 	self assert: (PluggableColor with: [Color black]) isSymbolic.
 	self deny: Color black isSymbolic.
-	self deny: (Color purple alpha: 63) isSymbolic!
+	self deny: (Color purple alpha: 63) isSymbolic.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 100) isSymbolic!
 
 testIsTransparent
-	{Color red. IndexedColor yellow. Color named: #smalltalkWorkspace. Color chocolate alpha: 128}
-		do: [:each | self deny: each isTransparent].
-	{Color chocolate alpha: 0. Color none. Color black alpha: 0}
-		do: [:each | self assert: each isTransparent]!
+	{Color red.
+		IndexedColor yellow.
+		Color named: #smalltalkWorkspace.
+		Color chocolate alpha: 128.
+		(Color named: #gradientActiveCaption) alpha: 64} do: [:each | self deny: each isTransparent].
+	{Color chocolate alpha: 0.
+		Color none.
+		Color black alpha: 0.
+		(Color named: #gradientActiveCaption) alpha: 0} do: [:each | self assert: each isTransparent]!
+
+testName
+	self assert: Color highlight name identicalTo: #highlight.
+	self assertIsNil: Color highlight asRGB name.
+	self assertIsNil: (Color highlight alpha: 63) name!
 
 testNormalizedAlpha
 	self assert: Color red normalizedAlpha equals: 1.
@@ -392,7 +440,8 @@ testNormalizedAlpha
 	self assert: (Color yellow alpha: 128) normalizedAlpha equals: 128 / 255.
 	self assert: IndexedColor brown normalizedAlpha equals: 1.
 	self shouldRaiseNotARealColorError: [Color default normalizedAlpha].
-	self assert: Color face3d normalizedAlpha equals: 1!
+	self assert: Color face3d normalizedAlpha equals: 1.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) normalizedAlpha equals: 64 / 255!
 
 testNormalizedBlue
 	self assert: Color blue normalizedBlue equals: 1.
@@ -400,15 +449,20 @@ testNormalizedBlue
 	self assert: (Color purple alpha: 100) normalizedBlue equals: 128 / 255.
 	self assert: IndexedColor darkBlue normalizedBlue equals: 128 / 255.
 	self shouldRaiseNotARealColorError: [Color default normalizedBlue].
-	self assert: Color window normalizedBlue equals: Color window asRGB normalizedBlue!
+	self assert: (Color named: #gradientActiveCaption) normalizedBlue
+		equals: (Color named: #gradientActiveCaption) asRGB normalizedBlue.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) normalizedBlue
+		equals: (Color named: #gradientActiveCaption) asRGB normalizedBlue!
 
 testNormalizedGreen
 	self assert: Color green normalizedGreen equals: 1.
 	self assert: Color blue normalizedGreen equals: 0.
 	self assert: (Color yellow alpha: 128) normalizedGreen equals: 1.
 	self assert: IndexedColor brown normalizedGreen equals: 128 / 255.
-	self shouldRaiseNotARealColorError: [Color default normalizedGreen].
-	self assert: Color window normalizedGreen equals: Color window asRGB normalizedGreen!
+	self assert: (Color named: #gradientActiveCaption) normalizedGreen
+		equals: (Color named: #gradientActiveCaption) asRGB normalizedGreen.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) normalizedGreen
+		equals: (Color named: #gradientActiveCaption) asRGB normalizedGreen!
 
 testNormalizedRed
 	self assert: Color red normalizedRed equals: 1.
@@ -416,7 +470,10 @@ testNormalizedRed
 	self assert: (Color yellow alpha: 128) normalizedRed equals: 1.
 	self assert: IndexedColor brown normalizedRed equals: 128 / 255.
 	self shouldRaiseNotARealColorError: [Color default normalizedRed].
-	self assert: Color window normalizedRed equals: Color window asRGB normalizedRed!
+	self assert: (Color named: #gradientActiveCaption) normalizedRed
+		equals: (Color named: #gradientActiveCaption) asRGB normalizedRed.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) normalizedRed
+		equals: (Color named: #gradientActiveCaption) asRGB normalizedRed!
 
 testPen
 	| bmp rect |
@@ -430,7 +487,8 @@ testPen
 		Color black.
 		Color orchid.
 		IndexedColor brown.
-		Color face3d} do: 
+		Color face3d.
+		(Color named: #gradientActiveCaption) alpha: 64} do: 
 				[:each |
 				| pen |
 				pen := each pen.
@@ -453,7 +511,11 @@ testPrintString
 	self assert: (Color red fadedBy: 2) printString equals: '(Color r: 255 g: 128 b: 128)'.
 	self assert: (Color orchid alpha: 100) printString equals: '(Color a: 100 r: 218 g: 112 b: 214)'.
 	self assert: Color face3d printString equals: 'Color face3d'.
-	self assert: (Color named: #smalltalkSystem) printString equals: '(Color named: #smalltalkSystem)'!
+	self assert: (Color named: #smalltalkSystem) printString equals: '(Color named: #smalltalkSystem)'.
+	self assert: (PluggableColor with: ##([Color orchid alpha: 64])) printString
+		equals: 'PluggableColor with: [Color orchid alpha: 64]'.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) printString
+		equals: '((Color named: #gradientActiveCaption) alpha: 64)'!
 
 testRed
 	self assert: Color red red equals: 255.
@@ -462,14 +524,19 @@ testRed
 	self assert: IndexedColor brown red equals: 128.
 	self shouldRaiseNotARealColorError: [Color default red].
 	self assert: Color none red equals: 255.
-	self assert: Color window red equals: Color window asRGB red!
+	self assert: (Color named: #gradientActiveCaption) red
+		equals: (Color named: #gradientActiveCaption) asRGB red.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) red
+		equals: (Color named: #gradientActiveCaption) red!
 
 testRgb
 	self assert: Color white rgb equals: #(255 255 255).
 	self assert: Color orchid rgb equals: #(16rDA 16r70 16rD6).
 	self assert: Color none rgb equals: Color white rgb.
 	self shouldRaiseNotARealColorError: [Color default rgb].
-	self assert: IndexedColor darkCyan rgb equals: #(16r00 16r80 16r80)!
+	self assert: IndexedColor darkCyan rgb equals: #(16r00 16r80 16r80).
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) rgb
+		equals: (Color named: #gradientActiveCaption) rgb!
 
 testRgbaCode
 	self assert: Color white rgbaCode equals: 16rFFFFFFFF.
@@ -480,7 +547,11 @@ testRgbaCode
 	self assert: IndexedColor darkCyan rgbaCode equals: 16rFF808000.
 	self assert: (Color orchid alpha: 64) rgbaCode equals: 16r40D670DA.
 	self assert: (Color fromRgbaCode: 16rFFD670DA) equals: Color orchid.
-	self assert: (Color fromRgbaCode: 16r40D670DA) equals: (Color orchid alpha: 64)!
+	self assert: (Color fromRgbaCode: 16r40D670DA) equals: (Color orchid alpha: 64).
+	self assert: (PluggableColor with: [Color orchid alpha: 64]) rgbaCode
+		equals: (Color orchid alpha: 64) rgbaCode.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) rgbaCode
+		equals: ((Color named: #gradientActiveCaption) asRGB alpha: 64) rgbaCode!
 
 testRgbCode
 	self assert: Color white rgbCode equals: 16rFFFFFF.
@@ -493,7 +564,10 @@ testRgbCode
 	self assert: IndexedColor white rgbCode equals: 16rFFFFFF.
 	self assert: IndexedColor darkCyan rgbCode equals: 16r808000.
 	self assert: (Color fromRgbCode: 16rD670DA) equals: Color orchid.
-	self assert: (Color fromRgbCode: 16rFFD670DA) equals: Color orchid!
+	self assert: (Color fromRgbCode: 16rFFD670DA) equals: Color orchid.
+	self assert: (PluggableColor with: [Color orchid]) rgbCode equals: Color orchid rgbCode.
+	self assert: ((Color named: #gradientActiveCaption) alpha: 64) rgbCode
+		equals: (Color named: #gradientActiveCaption) rgbCode!
 
 testRGBNamedColors
 	self assert: Color magenta equals: (Color r: 255 g: 0 b: 255).
@@ -533,19 +607,57 @@ testSingletons
 testStlRoundTrip
 	| subject stl rehydrated |
 	"Various types of named colour"
-	{Color red. Color face3d. Color named: #smalltalkSystem. Color none. Color default} do: 
-			[:each |
-			| array |
-			array := Object fromLiteralStoreArray: {each. 'blah'. each} literalStoreArray.
-			self assert: array first identicalTo: each.
-			self assert: array last identicalTo: each].
+	{Color red.
+		Color face3d.
+		Color named: #smalltalkSystem.
+		Color none.
+		Color default.
+		Color named: #gradientActiveCaption} do: 
+				[:each |
+				| array |
+				array := Object fromLiteralStoreArray: {each. 'blah'. each} literalStoreArray.
+				self assert: array first identicalTo: each.
+				self assert: array last identicalTo: each].
 	subject := IndexedColor gray.
 	stl := {subject. Color silver. subject} literalStoreArray.
 	"self assert: stl equals: #(#'!!STL' 4 34 3 327686 ##(Color) #silver 418 #silver 418 #silver)."
 	rehydrated := Object fromLiteralStoreArray: stl.
 	self assert: rehydrated first identicalTo: Color silver.
-	self assert: rehydrated last identicalTo: Color silver.
+	self assert: rehydrated last identicalTo: Color silver!
 
+testStlRoundTripColourAlpha
+	| subject rehydrated |
+	"ColorAlpha"
+	subject := (Color named: #gradientActiveCaption) alpha: 63.
+	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
+	self assert: rehydrated isKindOf: ColorAlpha.
+	self assert: rehydrated equals: subject.
+	self assert: rehydrated actualColor
+		equals: ((Color named: #gradientActiveCaption) alpha: 63) actualColor!
+
+testStlRoundTripPluggableColor
+	| subject stl rehydrated |
+	"PluggableColor"
+	subject := PluggableColor with: [Color window].
+	self assert: subject actualColor identicalTo: Color window.
+	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
+	self assert: rehydrated isKindOf: PluggableColor.
+	self assert: rehydrated equals: subject.
+	self assert: rehydrated actualColor identicalTo: Color window!
+
+testStlRoundTripUnnamedARGB
+	| subject rehydrated |
+	subject := Color
+				a: 128
+				r: 50
+				g: 100
+				b: 200.
+	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
+	self assert: rehydrated equals: subject.
+	self assert: rehydrated isKindOf: ARGB!
+
+testStlRoundTripUnnamedRGB
+	| subject rehydrated |
 	"Unnamed RGB"
 	subject := Color
 				r: 50
@@ -555,19 +667,7 @@ testStlRoundTrip
 	self assert: rehydrated first equals: subject.
 	self assert: rehydrated first isKindOf: RGB.
 	self assert: rehydrated last identicalTo: rehydrated first.
-	self assert: rehydrated second identicalTo: Color blue.
-	"Unnamed ARGB"
-	subject := subject alpha: 128.
-	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
-	self assert: rehydrated equals: subject.
-	self assert: rehydrated isKindOf: ARGB.
-	"PluggableColor"
-	subject := PluggableColor with: [Color window].
-	self assert: subject actualColor identicalTo: Color window.
-	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
-	self assert: rehydrated isKindOf: PluggableColor.
-	self assert: rehydrated equals: subject.
-	self assert: rehydrated actualColor identicalTo: Color window! !
+	self assert: rehydrated second identicalTo: Color blue! !
 !Graphics.Tests.ColorTest categoriesFor: #shouldRaiseNotARealColorError:!helpers!private! !
 !Graphics.Tests.ColorTest categoriesFor: #testActualColor!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testAlpha!public!unit tests! !
@@ -598,6 +698,7 @@ testStlRoundTrip
 !Graphics.Tests.ColorTest categoriesFor: #testIsNone!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testIsSymbolic!public! !
 !Graphics.Tests.ColorTest categoriesFor: #testIsTransparent!public!unit tests! !
+!Graphics.Tests.ColorTest categoriesFor: #testName!public! !
 !Graphics.Tests.ColorTest categoriesFor: #testNormalizedAlpha!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testNormalizedBlue!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testNormalizedGreen!public!unit tests! !
@@ -611,4 +712,8 @@ testStlRoundTrip
 !Graphics.Tests.ColorTest categoriesFor: #testRGBNamedColors!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testSingletons!public!unit tests! !
 !Graphics.Tests.ColorTest categoriesFor: #testStlRoundTrip!public! !
+!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripColourAlpha!public! !
+!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripPluggableColor!public! !
+!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripUnnamedARGB!public! !
+!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripUnnamedRGB!public! !
 

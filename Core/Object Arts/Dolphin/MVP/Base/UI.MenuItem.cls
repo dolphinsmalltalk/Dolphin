@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
@@ -79,7 +79,7 @@ insertIntoMenu: aMenu at: position info: aMENUITEMINFO
 	"Append the receiver to the menu, aMenu."
 
 	self populateItemInfo: aMENUITEMINFO.
-	(UserLibrary default
+	(User32
 		insertMenuItem: aMenu asParameter
 		uItem: position
 		fByPosition: true

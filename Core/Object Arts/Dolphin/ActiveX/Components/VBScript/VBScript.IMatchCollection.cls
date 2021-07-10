@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-IDispatch subclass: #IMatchCollection
+OS.COM.IDispatch subclass: #'VBScript.IMatchCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IMatchCollection guid: (IID fromString: '{3f4daca2-160d-11d2-a8e9-00104b365c9f}')!
-IMatchCollection comment: '`IMatchCollection` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatchCollection'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IMatchCollection guid: (OS.COM.IID fromString: '{3f4daca2-160d-11d2-a8e9-00104b365c9f}')!
+VBScript.IMatchCollection comment: '`IMatchCollection` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatchCollection'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -36,8 +37,8 @@ interface IMatchCollection : IDispatch
 };
 ```
 '!
-!IMatchCollection categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
-!IMatchCollection methodsFor!
+!VBScript.IMatchCollection categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+!VBScript.IMatchCollection methodsFor!
 
 _newEnum
 	"Answer the <IUnknown> value of the '_NewEnum' property of the receiver."
@@ -53,10 +54,10 @@ asArray
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver."
 
-	| answer |
-	answer := SDWORD new.
-	self get_Count: answer.
-	^answer asObject!
+	| buf |
+	buf := ByteArray newFixed: 4.
+	self get_Count: buf.
+	^buf sdwordAtOffset: 0!
 
 get__NewEnum: ppEnum
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -106,18 +107,18 @@ item: anInteger
 
 matchClass
 	^IMatch! !
-!IMatchCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IMatchCollection categoriesFor: #asArray!converting!public! !
-!IMatchCollection categoriesFor: #count!**auto generated**!properties!public! !
-!IMatchCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!IMatchCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!IMatchCollection categoriesFor: #get_Item:ppMatch:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!IMatchCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMatchCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMatchCollection categoriesFor: #item:!properties!public! !
-!IMatchCollection categoriesFor: #matchClass!constants!private! !
+!VBScript.IMatchCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
+!VBScript.IMatchCollection categoriesFor: #asArray!converting!public! !
+!VBScript.IMatchCollection categoriesFor: #count!properties!public! !
+!VBScript.IMatchCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+!VBScript.IMatchCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+!VBScript.IMatchCollection categoriesFor: #get_Item:ppMatch:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+!VBScript.IMatchCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
+!VBScript.IMatchCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!VBScript.IMatchCollection categoriesFor: #item:!properties!public! !
+!VBScript.IMatchCollection categoriesFor: #matchClass!constants!private! !
 
-!IMatchCollection class methodsFor!
+!VBScript.IMatchCollection class methodsFor!
 
 clsid
 	"Private - Answer the CLSID of the associated coclass, MatchCollection, which is
@@ -137,6 +138,6 @@ defineFunctions
 		defineFunction: #get__NewEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IMatchCollection class categoriesFor: #clsid!constants!private! !
-!IMatchCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.IMatchCollection class categoriesFor: #clsid!constants!private! !
+!VBScript.IMatchCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.UIntPtrBytes variableByteSubclass: #'External.Address'
 	instanceVariableNames: ''
@@ -376,7 +376,7 @@ fromInteger: anInteger
 	Implementation note: Override superclass to make use of the external call
 	primitive coercion trick."
 
-	^VMLibrary default addressFromInteger: anInteger! !
+	^VM addressFromInteger: anInteger! !
 !External.Address class categoriesFor: #alignment!constants!public! !
 !External.Address class categoriesFor: #fromAddress:!instance creation!public! !
 !External.Address class categoriesFor: #fromBytes:!instance creation!public! !

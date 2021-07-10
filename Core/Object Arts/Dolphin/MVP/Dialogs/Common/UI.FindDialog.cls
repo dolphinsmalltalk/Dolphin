@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.CommonDialog subclass: #'UI.FindDialog'
 	instanceVariableNames: 'findWhatBuf findDetails'
@@ -19,7 +19,7 @@ Instance Variables:
 basicShowModal
 	"Private - Create and show a new FindText dialog."
 
-	^ComDlgLibrary default findText: self winStruct asParameter!
+	^ComDlg32 findText: self winStruct asParameter!
 
 extractResult: anExternalHandle
 	"Private - Extract and apply the result from the parameter structure passed to the Win32 API
@@ -30,7 +30,7 @@ extractResult: anExternalHandle
 	dialog := self view.
 	self assert: [dialog handle = anExternalHandle].
 	dialog subclassWindow.
-	SessionManager inputState windowAt: anExternalHandle put: dialog!
+	SessionManager.Current inputState windowAt: anExternalHandle put: dialog!
 
 fdFlags
 	| fdFlags |

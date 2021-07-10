@@ -108,6 +108,7 @@ package methodNames
 	add: #VMLibrary -> #isWindows7SP1OrGreater;
 	add: #VMLibrary -> #isWindows8OrGreater;
 	add: #VMLibrary -> #isWindows8Point1OrGreater;
+	add: #VMLibrary -> #isWindowsServer;
 	add: #VMLibrary -> #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:;
 	add: #VMLibrary -> #isWindowsVistaOrGreater;
 	add: #VMLibrary -> #isWindowsVistaSP1OrGreater;
@@ -133,6 +134,7 @@ package methodNames
 	add: 'File class' -> #change:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
 	add: 'FunctionDescriptor class' -> #fromString:;
+	add: 'NTLibrary class' -> #isWine;
 	add: 'SortAlgorithm class' -> #sortBlock:;
 	add: 'SortedCollection class' -> #value:value:;
 	add: 'STBClassProxy class' -> #for:;
@@ -844,6 +846,13 @@ warning
 !MessageBoxAbstract categoriesFor: #notify!modes!public! !
 !MessageBoxAbstract categoriesFor: #warning!modes!public! !
 
+!NTLibrary class methodsFor!
+
+isWine
+	Notification deprecated.	"Use `NtDll isWine`"
+	^self default isWine! !
+!NTLibrary class categoriesFor: #isWine!public!testing! !
+
 !Package methodsFor!
 
 addGlobalNamed: globalName
@@ -1084,6 +1093,10 @@ isWindows8Point1OrGreater
 	Notification deprecated.
 	^KernelLibrary default isWindows8Point1OrGreater!
 
+isWindowsServer
+	Notification deprecated.
+	^KernelLibrary default isWindowsServer!
+
 isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
 	Notification deprecated.
 	^KernelLibrary default
@@ -1116,6 +1129,7 @@ shortName
 !VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows8OrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindows8Point1OrGreater!public!win32 functions-version helpers! !
+!VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVistaOrGreater!public!win32 functions-version helpers! !
 !VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !

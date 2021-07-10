@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.UtfEncodedString variableByteSubclass: #'Core.Utf8String'
 	instanceVariableNames: ''
@@ -33,7 +33,7 @@ _beginsString: aString
 	comperand := aString asUtf8String.
 	size := self size.
 	^size <= comperand size
-		and: [(OS.CRTLibrary default
+		and: [(OS.Ucrt
 				memcmp: comperand
 				buf2: self
 				count: size) == 0]!
@@ -44,7 +44,7 @@ asLowercase
 
 	| utf16 |
 	utf16 := self asUtf16String.
-	OS.UserLibrary default charLowerBuffW: utf16 cchLength: utf16 size.
+	OS.User32 charLowerBuffW: utf16 cchLength: utf16 size.
 	^utf16 asUtf8String!
 
 asUppercase
@@ -53,7 +53,7 @@ asUppercase
 
 	| utf16 |
 	utf16 := self asUtf16String.
-	OS.UserLibrary default charUpperBuffW: utf16 cchLength: utf16 size.
+	OS.User32 charUpperBuffW: utf16 cchLength: utf16 size.
 	^utf16 asUtf8String!
 
 asUtf8String
@@ -78,7 +78,7 @@ bom
 	^Bom!
 
 copyToBuffer: anAddress ofSize: anInteger
-	OS.CRTLibrary default
+	OS.Ucrt
 		strncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
@@ -451,7 +451,7 @@ reversedFrom: startInteger to: stopInteger
 strlen
 	"Private - Answer the length of the receiver in code units (not code points) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^OS.CRTLibrary default strlen: self!
+	^OS.Ucrt strlen: self!
 
 urlEncoded
 	"Percent encode the receiver as described in RFC 3986 (https://tools.ietf.org/html/rfc3986) Section 2.
@@ -505,13 +505,12 @@ codePage
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	^anAddress isNull
-		ifFalse: [self fromAddress: anAddress length: (OS.CRTLibrary default strlen: anAddress)]!
+	^anAddress isNull ifFalse: [self fromAddress: anAddress length: (OS.Ucrt strlen: anAddress)]!
 
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
-	VMLibrary default registryAt: #Utf8String put: self! !
+	VM registryAt: #Utf8String put: self! !
 !Core.Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !Core.Utf8String class categoriesFor: #codePage!instance creation!public! !
 !Core.Utf8String class categoriesFor: #fromAddress:!instance creation!public! !

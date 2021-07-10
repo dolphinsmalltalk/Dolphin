@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
@@ -383,13 +383,9 @@ completeWordAt: anInteger with: aString
 	^addSpace!
 
 completionListSortBlock
-	| crt |
-	crt := OS.CRTLibrary default.
-	"Note that we must use str[i]cmp to ensure the same comparison order as Scintilla uses when
-	searching for items in the list."
 	^self isAutoCompletionCaseInsensitive
-		ifTrue: [[:a :b | (crt _stricmp: a displayString string2: b displayString) <= 0]]
-		ifFalse: [[:a :b | (crt strcmp: a displayString string2: b displayString) <= 0]]!
+		ifTrue: [[:a :b | (OS.Ucrt _stricmp: a displayString string2: b displayString) <= 0]]
+		ifFalse: [[:a :b | (OS.Ucrt strcmp: a displayString string2: b displayString) <= 0]]!
 
 completionStringFor: aString at: anInteger
 	| rawContents answer |
@@ -967,7 +963,7 @@ onHoverEnd: aPoint
 	self view cancelCallTip!
 
 onHoverStart: aPoint
-	| indicators index scintilla style range tokenText |
+	| indicators index scintilla style range |
 	scintilla := self view.
 	scintilla isAutoCompletionActive ifTrue: [^self].
 	indicators := scintilla indicatorsUnder: aPoint.
@@ -980,27 +976,18 @@ onHoverStart: aPoint
 	index <= 0 ifTrue: [^self].
 	style := (view styleAt: index) name.
 	range := view tokenRangeAt: index.
-	tokenText := view plainTextRange: range.
+
 	"Can be useful to see a tip for Characters expressed in $\xNN[NN] form"
 	style == #literalCharacter
 		ifTrue: 
-			[| ch tip |
-			ch := (Scanner on: tokenText readStream) next value.
-			(ch isGraph
-				ifTrue: 
-					[tip := ch asUtf8String.
-					tip = (tokenText copyFrom: 2)]
-				ifFalse: 
-					[tip := ch printString.
-					tip = tokenText])
-					ifFalse: [self view showCallTip: 'Character: ' , tip at: range stop].
+			[self showTipForCharacter: range.
 			^self].
 	(#(#identifier #tempDecl #argDecl #blockArgDecl) identityIncludes: style)
 		ifTrue: 
 			[self showTipForIdentifier: (StIdentifierToken
 						start: range start
 						comments: nil
-						value: tokenText)]!
+						value: (view plainTextRange: range))]!
 
 onRightButtonReleased: aMouseEvent 
 	"If the right button is clicked outside the selection range, then change the caret position
@@ -1487,6 +1474,21 @@ showSymbolCompletionListAt: posInteger maxItems: maxInteger
 	quoted ifTrue: [symbols := symbols collect: [:each | each displayString printString]].
 	self showCompletionList: symbols prefixLength: prefixLength!
 
+showTipForCharacter: anInterval
+	| representation ch tokenText tip |
+	tokenText := view plainTextRange: anInterval.
+	ch := (Scanner on: tokenText readStream) next value.
+	tip := (ch isGraph
+				ifTrue: 
+					[representation := ch asUtf8String.
+					representation = (tokenText copyFrom: 2)]
+				ifFalse: 
+					[representation := ch printString.
+					representation = tokenText])
+					ifTrue: ['Codepoint: ' , ch codePointString]
+					ifFalse: ['Character: ' , representation].
+	self view showCallTip: tip at: anInterval stop!
+
 showTipForIdentifier: anStIdentifierToken
 	(self resolveVariable: anStIdentifierToken)
 		ifNotNil: 
@@ -1763,6 +1765,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !Tools.SmalltalkWorkspace categoriesFor: #showResult:at:!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
+!Tools.SmalltalkWorkspace categoriesFor: #showTipForCharacter:!event handling!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showTipForIdentifier:!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #showTipForIndicators:!helpers!private! !
 !Tools.SmalltalkWorkspace categoriesFor: #startAutocompleteTimer!autocompletion!helpers!private! !
@@ -1804,13 +1807,12 @@ annotationMode: anObject
 	AnnotationMode := anObject!
 
 autoCompleteDwell
-	"Answer the <integer> number of milliseconds that must elapse between characters being typed
-	before the workspace will attempt to display an auto-completion list."
+	"Answer the `Duration` that must elapse between characters being typed before the workspace will attempt to display an auto-completion list."
 
 	^AutoCompleteDwell!
 
-autoCompleteDwell: anInteger 
-	AutoCompleteDwell := anInteger!
+autoCompleteDwell: aDuration
+	AutoCompleteDwell := aDuration!
 
 customEditorKeyBindings
 	| bindings |
@@ -1834,7 +1836,7 @@ defaultAdditionalAccelerators
 defaultBackcolor
 	"Answer the default background to use for instances of the receiver"
 
-	^(Color named: #smalltalkWorkspace) actualColor!
+	^(Color named: #smalltalkWorkspace) basicActualColor!
 
 defaultBackcolor: aColorOrNil
 	"Set the default background to use for instances of the receiver"
@@ -1948,6 +1950,16 @@ defaultKeywordCompletions
 		at: 'timesRepeat:' put: 'timesRepeat: [??]';
 		shrink;
 		yourself!
+
+defaultSelectionColor
+	"Answer the default selection colour to use for instances of the receiver"
+
+	^(Color named: #workspaceSelection) basicActualColor!
+
+defaultSelectionColor: aColorOrNil
+	"Set the default selection colour to use for instances of the receiver"
+
+	(Color named: #workspaceSelection) actualColor: (aColorOrNil ifNil: [Color highlight alpha: 60])!
 
 defaultTabWidth
 	^DefaultTabWidth!
@@ -2165,7 +2177,7 @@ indicatorStyles: aCollectionOfScintillaIndicatorStyles
 
 indicatorStylesAspect
 	^(Aspect sequenceableCollection: #indicatorStyles
-		addEvaluationFrom: {IndicatorStyle name , ' new'})
+		addEvaluationFrom: [{IndicatorStyle shortName , ' new'}])
 		beImmutable;
 		yourself!
 
@@ -2178,7 +2190,7 @@ initialize
 	DefaultFont := Font name: 'Segoe UI' pointSize: 10.
 	WordWrap := true.
 	DefaultTabWidth := 8.
-	AutoCompleteDwell := 30.
+	AutoCompleteDwell := 30 milliseconds.
 	KeywordCompletions := self defaultKeywordCompletions.
 	StandardUnaryReturnTypes := self defaultUnaryReturnTypes.
 	IsAutoCompletionCaseInsensitive := false.
@@ -2259,18 +2271,18 @@ publishedAspects
 	answer := super publishedAspects.
 	#(#isAutoCompletionEnabled #isAutoCompletionCaseInsensitive #isAutoCompletionTruncating #useDirectWrite)
 		do: [:each | answer add: (Aspect boolean: each)].
-	#(#defaultTabWidth #autoCompleteDwell #maxAutoCompletionListSize)
-		do: [:each | answer add: (Aspect integer: each)].
-	#(#defaultBackcolor #defaultCaretColor) do: [:each | answer add: (Aspect color: each)].
+	#(#defaultTabWidth #maxAutoCompletionListSize) do: [:each | answer add: (Aspect integer: each)].
+	answer add: (Aspect duration: #autoCompleteDwell).
+	#(#defaultBackcolor #defaultCaretColor #defaultSelectionColor) do: [:each | answer add: (Aspect color: each)].
 	^answer
-		add: (Aspect choice: #annotationMode from: ScintillaView annotationModes);
-		add: (Aspect choice: #wrapIndentMode from: ScintillaView wrapIndentModes);
-		add: (Aspect sequenceableCollection: #editorKeyBindings
-					addEvaluationFrom: {KeyBinding name , ' new'}) beImmutable;
+		add: (Aspect symbol: #annotationMode from: ScintillaView annotationModes);
+		add: (Aspect symbol: #wrapIndentMode from: ScintillaView wrapIndentModes);
+		add: (Aspect sequenceableCollection: #editorKeyBindings addEvaluationFrom: [{KeyBinding shortName , ' new'}])
+					beImmutable;
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;
-		add: (Aspect choice: #fontQuality from: ScintillaView fontQualities);
+		add: (Aspect symbol: #fontQuality from: ScintillaView fontQualities);
 		add: (Aspect font: #defaultFont);
 		yourself!
 
@@ -2291,7 +2303,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 1245702 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 461638 4 ##(UI.Menu) nil true 34 13 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditUndo.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 ##(Graphics.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions...' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References...' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1949376404 1049094 ##(UI.NullConverter) nil nil 9 2116324833 170 192 34 4 #callTip 1444934 1 ##(UI.Scintilla.TextStyle) 77 917510 ##(Graphics.Color) #gray 2786 #white 1 nil nil nil nil #callTip nil nil nil #normal 2754 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 ##(Tools.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Core.IdentitySet) 2896 nil 170 176 2896 nil nil nil 170 176 34 2 81 2786 #windowText nil nil nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 208 nil 170 192 2896 nil nil 170 192 34 6 #Warning 2754 1027 2786 #darkGoldenrod 2786 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 2754 1029 nil 2786 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 2754 1031 2786 #firebrick 2786 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 9 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 3474 461 311 416 3426 #contextMenu: 34 1 592 416 3426 #sciSetMouseDwellTime: 8 #(500) 416 3426 #wordWrap: 8 #(true) 416 3426 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 3666 3 416 1 nil nil 67108863 nil nil 3666 5 416 1 nil nil nil nil nil 416 3426 #tabWidth: 8 #(4) 416 3426 #maxCompletionListHeight: 8 #(9) 416 3426 #hasAdditionalSelectionTyping: 8 #(true) 416 3426 #sciSetSelectionLayer: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3474 193 193 nil 35 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 1245702 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 461638 4 ##(UI.Menu) nil true 34 13 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditUndo.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 ##(Graphics.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions…' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References…' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 2064654817 1049094 ##(UI.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1444934 1 ##(UI.Scintilla.TextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 2754 77 917510 ##(Graphics.Color) #gray 2802 #white 1 nil nil nil nil #callTip nil nil nil nil 2032902 ##(Tools.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Core.IdentitySet) 2896 nil 170 176 2896 nil nil nil 170 176 34 4 81 2802 #windowText 23 546 #workspaceSelection nil 34 1 2360326 ##(UI.Scintilla.CharacterRepresentation) $\x2028 nil 33 3040 2162950 ##(UI.Scintilla.NullScintillaLibrary) nil 65 nil nil 170 192 34 6 #specialCharacter 8 '()[]<>' #literalBytes 8 '[]' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 208 nil 170 192 2896 nil nil 170 192 34 6 #Notification 2754 1029 nil 2802 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2754 1027 2802 #darkGoldenrod 2802 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2754 1031 2802 #firebrick 2802 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 34 9 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 12287 21 3554 461 311 416 3506 #contextMenu: 34 1 592 416 3506 #sciSetMouseDwellTime: 8 #(500) 416 3506 #wordWrap: 8 #(true) 416 3506 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 3746 3 416 1 nil nil 67108863 nil nil 3746 5 416 1 nil nil nil nil nil 416 3506 #tabWidth: 8 #(4) 416 3506 #maxCompletionListHeight: 8 #(9) 416 3506 #hasAdditionalSelectionTyping: 8 #(true) 416 3506 #sciSetSelectionLayer: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 229 24 0 0 165 0 0 0] 8 #() 3554 193 193 nil 35 )!
 
 setAdditionalKeyBindings: anArray
 	additionalKeyBindings := anArray ifNotNil: [anArray]!
@@ -2318,6 +2330,7 @@ textStylesAspect
 			(StylesCollectionPresenter createIn: p on: m)
 				defaultStyle: self defaultTextStyle;
 				yourself])
+		type: SequenceableCollection;
 		beImmutable;
 		yourself!
 
@@ -2330,7 +2343,7 @@ useDirectWrite
 	"Answer whether to use DirectWrite for drawing text in the workspace. This offers improved quality, coloured emoji's, and hardware acceleration, but may not 
 	work well in all circumstances, so it can be turned off."
 
-	^UseDirectWrite and: [OS.KernelLibrary default isWindowsVistaOrGreater]!
+	^UseDirectWrite and: [OS.Kernel32 isWindowsVistaOrGreater]!
 
 useDirectWrite: aBoolean
 	| tech |
@@ -2373,6 +2386,8 @@ wrapIndentMode: aSymbol
 !Tools.SmalltalkWorkspace class categoriesFor: #defaultFont:!accessing!options!public! !
 !Tools.SmalltalkWorkspace class categoriesFor: #defaultIndicatorStyles!constants!public! !
 !Tools.SmalltalkWorkspace class categoriesFor: #defaultKeywordCompletions!autocompletion!private! !
+!Tools.SmalltalkWorkspace class categoriesFor: #defaultSelectionColor!accessing!options!public! !
+!Tools.SmalltalkWorkspace class categoriesFor: #defaultSelectionColor:!accessing!options!public! !
 !Tools.SmalltalkWorkspace class categoriesFor: #defaultTabWidth!accessing!public! !
 !Tools.SmalltalkWorkspace class categoriesFor: #defaultTabWidth:!accessing!public! !
 !Tools.SmalltalkWorkspace class categoriesFor: #defaultTextStyle!private! !

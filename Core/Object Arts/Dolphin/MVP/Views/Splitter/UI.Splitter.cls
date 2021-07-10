@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'UI.Splitter'
 	instanceVariableNames: ''
@@ -12,6 +12,9 @@ UI.Splitter guid: (Core.GUID fromString: '{87b4c716-026e-11d3-9fd7-00a0cc3e4a32}
 UI.Splitter comment: 'Splitter is a <view> used for implementing "splitter bars" for resizing adjacent views within a <compositeView>. Normally, a Splitter requires that the parent view in which it is placed is under the control of a ProprtionalLayout manager.'!
 !UI.Splitter categoriesForClass!MVP-Resources-Splitters!MVP-Views! !
 !UI.Splitter methodsFor!
+
+applyFont
+	"Nothing to do here as the receiver cannot display text."!
 
 calculateExtent: aLayoutContext 
 	"Private - Answer the calculated extent of the receiver that should be used by a
@@ -203,6 +206,7 @@ startTrackingAt: aPoint
 	position := self constrainPosition: aPoint.
 	self drawTrackingAt: position.
 	^position! !
+!UI.Splitter categoriesFor: #applyFont!font!private!updating! !
 !UI.Splitter categoriesFor: #calculateExtent:!operations!private! !
 !UI.Splitter categoriesFor: #cancelTrackingAt:!private!tracking! !
 !UI.Splitter categoriesFor: #constrainPosition:!operations!private! !
@@ -218,7 +222,7 @@ startTrackingAt: aPoint
 !UI.Splitter categoriesFor: #hasFlatAppearance!accessing-styles!public! !
 !UI.Splitter categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
 !UI.Splitter categoriesFor: #isHot!public!testing! !
-!UI.Splitter categoriesFor: #isSplitter!accessing!public!testing! !
+!UI.Splitter categoriesFor: #isSplitter!public!testing! !
 !UI.Splitter categoriesFor: #isVertical!public!testing! !
 !UI.Splitter categoriesFor: #onEraseRequired:!event handling!public! !
 !UI.Splitter categoriesFor: #onGetCursor:!event handling!public! !

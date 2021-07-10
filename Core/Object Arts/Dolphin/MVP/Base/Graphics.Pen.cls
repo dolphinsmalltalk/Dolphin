@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.GraphicsTool subclass: #'Graphics.Pen'
 	instanceVariableNames: 'logPen'
@@ -28,7 +28,7 @@ createHandle
 	"Private - Answer an <ExternalHandle> to a new pen as described by the receiver's
 	<LOGPEN> structure."
 
-	^GDILibrary default createPenIndirect: logPen!
+	^Gdi32 createPenIndirect: logPen!
 
 handle: anExternalHandle
 	"Private - Set the handle for the receiver and query its logical info."

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.LayoutManager subclass: #'UI.FlowLayout'
 	instanceVariableNames: 'horizontalGap verticalGap flags'
@@ -200,7 +200,8 @@ initialize
 		self initialize
 	"
 
-	AlignmentMap := IdentityDictionary new
+	self addClassConstant: 'AlignmentMap'
+		value: (IdentityDictionary new
 				at: #leftCenter put: AlignLeft | AlignVCenter;
 				at: #rightCenter put: AlignRight | AlignVCenter;
 				at: #topCenter put: AlignHCenter | AlignTop;
@@ -210,7 +211,8 @@ initialize
 				at: #topRight put: AlignRight | AlignTop;
 				at: #bottomLeft put: AlignLeft | AlignBottom;
 				at: #bottomRight put: AlignRight | AlignBottom;
-				shrink!
+				shrink;
+				yourself)!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier schema.

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
 	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable'

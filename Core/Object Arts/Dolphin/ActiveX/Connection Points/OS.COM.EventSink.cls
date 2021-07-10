@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.AbstractDispatchImplementation subclass: #'OS.COM.EventSink'
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'

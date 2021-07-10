@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.SessionManagerTest'
 	instanceVariableNames: ''
@@ -31,7 +31,7 @@ testSystemDirectory
 	| actual |
 	actual := SessionManager current systemDirectory.
 	self assert: (File isDirectory: actual).
-	self assert: (KernelLibrary default fileName asUppercase beginsWith: actual asUppercase)!
+	self assert: (Kernel32 fileName asUppercase beginsWith: actual asUppercase)!
 
 testUsername
 	"Assumes that getenv: is working"

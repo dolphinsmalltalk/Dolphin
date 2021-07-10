@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure subclass: #'OS.MIB_TCPROW'
 	instanceVariableNames: ''
@@ -67,11 +67,11 @@ dwState
 	^bytes dwordAtOffset: _OffsetOf_dwState!
 
 port
-	^WS2_32Library default htons: self dwLocalPort lowWord!
+	^Ws2_32 htons: self dwLocalPort lowWord!
 
 portName
 	| psrvent |
-	psrvent := WS2_32Library default getservbyport: self dwLocalPort proto: 'tcp'.
+	psrvent := Ws2_32 getservbyport: self dwLocalPort proto: 'tcp'.
 	^psrvent isNull ifFalse: [psrvent s_name]! !
 !OS.MIB_TCPROW categoriesFor: #displayOn:!public! !
 !OS.MIB_TCPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !

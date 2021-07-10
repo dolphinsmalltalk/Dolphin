@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Warning subclass: #'Refactory.Browser.RefactoringWarning'
 	instanceVariableNames: 'refactoring'

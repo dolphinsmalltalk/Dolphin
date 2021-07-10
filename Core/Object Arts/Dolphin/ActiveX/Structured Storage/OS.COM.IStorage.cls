@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.IUnknown subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
@@ -35,7 +35,7 @@ clsid
 
 	| answer |
 	answer := CLSID newNull.
-	OLELibrary default readClassStg: self pclsid: answer.
+	Ole32 readClassStg: self pclsid: answer.
 	^answer!
 
 clsid: aCLSID 
@@ -155,7 +155,7 @@ doAutoConvert
 
 	| answer |
 	answer := CLSID new.
-	OLELibrary default oleDoAutoConvert: self pClsidNew: answer.
+	Ole32 oleDoAutoConvert: self pClsidNew: answer.
 	^answer!
 
 EnumElements: reserved1 reserved2: reserved2 reserved3: reserved3 ppenum: ppenum
@@ -194,7 +194,7 @@ getCLIPFORMATAndUserType
 	| cf pszUserType answer |
 	cf := WORD new.
 	pszUserType := TaskMemory new.
-	OLELibrary default
+	Ole32
 		readFmtUserTypeStg: self
 		pcf: cf
 		lplpszUserType: pszUserType.
@@ -218,13 +218,13 @@ iEnumStats
 isAutoConvert
 	"Answer whether the receiver has the auto convert class bit set."
 
-	^(OLELibrary default getConvertStg: self) == S_OK!
+	^(Ole32 getConvertStg: self) == S_OK!
 
 isAutoConvert: aBoolean
 	"Mark the receiver for conversion to a different class on next load,
 	depending on the <boolean> argument, aBoolean."
 
-	^OLELibrary default setConvertStg: self fConvert: aBoolean!
+	^Ole32 setConvertStg: self fConvert: aBoolean!
 
 move: elementName to: anIStorage 
 	"Move the named element in the receiver (which may be a sub-storage or stream)
@@ -428,7 +428,7 @@ SetClass: clsid
 setCLIPFORMAT: cf userType: aString
 	"Set the clipboard format and user type for the receiver."
 
-	OLELibrary default
+	Ole32
 		writeFmtUserTypeStg: self
 		cf: cf
 		lpszUserType: aString asUtf16String!
@@ -542,7 +542,7 @@ create: fileName mode: stgMode
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		stgCreateDocfile: fileName asUtf16String
 		grfMode: stgMode
 		reserved: 0
@@ -565,7 +565,7 @@ createOnILockBytes: anILockBytes mode: grfMode
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		stgCreateDocfileOnILockBytes: anILockBytes
 		grfMode: grfMode
 		reserved: 0
@@ -672,7 +672,7 @@ onILockBytes: anILockBytes mode: grfMode
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		stgCreateDocfileOnILockBytes: anILockBytes
 		grfMode: grfMode
 		reserved: 0
@@ -710,7 +710,7 @@ open: pathName mode: stgMode
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		stgOpenStorage: pathName asUtf16String
 		pstgPriority: nil
 		grfMode: stgMode
@@ -732,7 +732,7 @@ openOnILockBytes: anILockBytes mode: grfMode
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		stgOpenStorageOnILockBytes: anILockBytes
 		pstgPriority: nil
 		grfMode: grfMode

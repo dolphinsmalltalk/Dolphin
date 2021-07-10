@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.CommandPolicy'
 	instanceVariableNames: 'source path'
@@ -178,7 +178,7 @@ route: aCommandDescription
 
 	| query |
 	query := self query: aCommandDescription.
-	query canPerform ifTrue: [query perform] ifFalse: [OS.UserLibrary default messageBeep: 0].
+	query canPerform ifTrue: [query perform] ifFalse: [User32 messageBeep: 0].
 	^0	"Suppress default processing"!
 
 routeFrom: sourceView

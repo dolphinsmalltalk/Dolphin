@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.COM.Tests.VARIANTTest'
 	instanceVariableNames: ''
@@ -63,7 +63,7 @@ testBSTR
 	self isValidNullString: var value.
 	var bstr: ''.
 	self isValidNullString: var value.
-	var := (OLEAutLibrary default sysAllocString: '') asVariant.
+	var := (OleAut32 sysAllocString: '') asVariant.
 	"Make sure there is a junk value in the free list"
 	'abc' copy.
 	self isValidNullString: var value	"yourAddress asExternalAddress at: 1"!

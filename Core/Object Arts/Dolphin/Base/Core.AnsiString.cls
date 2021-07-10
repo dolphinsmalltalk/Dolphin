@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.String variableByteSubclass: #'Core.AnsiString'
 	instanceVariableNames: ''
@@ -21,7 +21,7 @@ _beginsString: aString
 	comperand := aString asAnsiString.
 	size := self size.
 	^size <= comperand size
-		and: [(OS.CRTLibrary default
+		and: [(OS.Ucrt
 				memcmp: comperand
 				buf2: self
 				count: size) == 0]!
@@ -39,7 +39,7 @@ asLowercase
 
 	| copy |
 	copy := self shallowCopy.
-	OS.UserLibrary default charLowerBuffA: copy cchLength: copy size.
+	OS.User32 charLowerBuffA: copy cchLength: copy size.
 	^copy!
 
 asUppercase
@@ -51,7 +51,7 @@ asUppercase
 
 	| copy |
 	copy := self shallowCopy.
-	OS.UserLibrary default charUpperBuffA: copy cchLength: copy size.
+	OS.User32 charUpperBuffA: copy cchLength: copy size.
 	^copy!
 
 codePointsDo: operation
@@ -60,7 +60,7 @@ codePointsDo: operation
 	1 to: self size do: [:i | operation value: (self at: i)]!
 
 copyToBuffer: anAddress ofSize: anInteger
-	OS.CRTLibrary default
+	OS.Ucrt
 		strncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
@@ -186,13 +186,13 @@ fromAddress: anAddress
 	job for us by performing a simple nop which returns the original pointer (_strninc()
 	has the useful property that it returns NULL for NULL argument too)."
 
-	^VMLibrary default stringFromAddress: anAddress!
+	^VM stringFromAddress: anAddress!
 
 initialize
 	empty := self new
 				isImmutable: true;
 				yourself.
-	VMLibrary default registryAt: #AnsiString put: self.
+	VM registryAt: #AnsiString put: self.
 	self extraInstanceSpec: EncodingAnsi!
 
 with: aCharacter

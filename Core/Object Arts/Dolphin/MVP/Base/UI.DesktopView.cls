@@ -1,8 +1,8 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current ProgmanClassAtom'
+	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -58,7 +58,7 @@ assumeDesktopHandle
 	Note that we associate with both the true desktop handle and null."
 
 	self attachHandle: self class desktopHandle.
-	SessionManager inputState windowAt: 0 put: self!
+	SessionManager.Current inputState windowAt: 0 put: self!
 
 basicActualBackcolor
 	"Private - Answer the <Color> to be applied as the receiver's background colour."
@@ -151,7 +151,7 @@ invalidateRect: aRectangle erase: aBoolean
 	"Invalidates the specified desktop rectangle (a RECTL, Rectangle, or nil for the whole client window).
 	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
 
-	^UserLibrary default
+	^User32
 		invalidate: handle
 		lpRect: aRectangle asParameter
 		bErase: aBoolean asParameter!
@@ -209,8 +209,7 @@ onStartup
 	"Make sure the receiver represents the desktop window handle."
 
 	self assumeDesktopHandle.
-	resolution := nil.
-	self class getProgmanClass!
+	resolution := nil!
 
 onViewActivated: anEvent
 	"Default handler for window activation.
@@ -265,7 +264,7 @@ refresh
 	"Redraw the entire desktop and all windows (i.e. a complete screen refresh). This will cause
 	a lot of flashing!!"
 
-	^UserLibrary default
+	^User32
 		invalidate: nil
 		lpRect: nil
 		bErase: true!
@@ -299,7 +298,7 @@ setDefaultButton: button state: setDefault
 	!
 
 setFocus
-	^UserLibrary default setFocus: handle!
+	^User32 setFocus: handle!
 
 topShell
 	"Answer the first <topPresenter> located in the parent chain of the receiver."
@@ -362,6 +361,7 @@ workArea
 !UI.DesktopView categoriesFor: #performCommand:!commands!public! !
 !UI.DesktopView categoriesFor: #queryContextMenu!menus!public! !
 !UI.DesktopView categoriesFor: #refresh!drawing!public! !
+!UI.DesktopView categoriesFor: #repositionShell:!helpers!private! !
 !UI.DesktopView categoriesFor: #resolution!accessing!public! !
 !UI.DesktopView categoriesFor: #screenRectangle!geometry!public! !
 !UI.DesktopView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
@@ -387,13 +387,6 @@ current: aDesktopView
 
 	Current := aDesktopView!
 
-getProgmanClass
-	| user |
-	user := UserLibrary default.
-	ProgmanClassAtom := user
-				getClassLongPtr: (user findWindow: 'Progman' asUtf16String lpWindowName: nil)
-				nIndex: GCW_ATOM!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -405,12 +398,6 @@ initialize
 	Current := self new
 			assumeDesktopHandle;
 			yourself!
-
-isProgramManager: hWnd
-	"Private - Answer whether the argument is the window handle of the Windows program manager. Here we are relying on the undocumented fact that the 'program manager' (main Windows shell) has a specific name for its Window class, and has done so since the very earliest versions of Windows. It seems unlikely to change, but if it does will fail safe for most purposes."
-
-	^(UserLibrary default getClassLongPtr: hWnd asParameter nIndex: Win32Constants.GCW_ATOM)
-		== ProgmanClassAtom!
 
 stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) instance
@@ -436,17 +423,15 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current isNil ifTrue: [^self].
-	SessionManager inputState removeWindowAt: 0.
+	SessionManager.Current inputState removeWindowAt: 0.
 	Current
 		winFinalize;
 		handle: nil.
 	Current := nil! !
 !UI.DesktopView class categoriesFor: #current!accessing!public! !
 !UI.DesktopView class categoriesFor: #current:!accessing!public! !
-!UI.DesktopView class categoriesFor: #getProgmanClass!initializing!private! !
 !UI.DesktopView class categoriesFor: #icon!constants!public! !
 !UI.DesktopView class categoriesFor: #initialize!development!initializing!private! !
-!UI.DesktopView class categoriesFor: #isProgramManager:!enquiries!private! !
 !UI.DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !UI.DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

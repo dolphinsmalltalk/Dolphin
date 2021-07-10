@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.WindowsEvent subclass: #'UI.ScrollEvent'
 	instanceVariableNames: ''
@@ -70,7 +70,7 @@ pos
 	struct := SCROLLINFO new
 				maskIn: SIF_TRACKPOS;
 				yourself.
-	^(UserLibrary default
+	^(User32
 		getScrollInfo: self hwnd
 		fnBar: (message = WM_HSCROLL ifTrue: [SB_HORZ] ifFalse: [SB_VERT])
 		lpsi: struct) ifTrue: [struct nTrackPos] ifFalse: [wParam highWord]!
@@ -79,7 +79,7 @@ scrollBar
 	"Answer the View which received the scroll command or the ScrollBar
 	if the scrollBar is a scroll bar control."
 
-	^SessionManager inputState windowAt: self lParam ifAbsent: []!
+	^SessionManager.Current inputState lookupWindow: self lParam!
 
 scrollCode
 	"Answer the scroll bar value."

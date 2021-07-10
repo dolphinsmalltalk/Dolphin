@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ListView subclass: #EditableListView
 	instanceVariableNames: 'activeEditorCoords originalColumns _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
@@ -577,6 +577,18 @@ onItem: anObject removedAtIndex: anInteger
 
 	^super onItem: anObject removedAtIndex: anInteger !
 
+onItems: aSequenceableCollection addedAtIndex: anInteger 
+
+	anInteger > self activeEditorModelIndex ifFalse: 
+		["Adjustment needed"
+		self activeEditorModelIndex = self itemCount 
+			ifTrue: [self activeEditorModelIndex: 0]
+			ifFalse: [self activeEditorModelIndex: self activeEditorModelIndex + aSequenceableCollection size]].
+
+	self hideActiveEditor.
+
+	^super onItems: aSequenceableCollection addedAtIndex: anInteger !
+
 onLeftButtonDoubleClicked: aMouseEvent
 
 	self onLeftButtonPressed: aMouseEvent.
@@ -973,6 +985,7 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #onHeaderBeginTrack!event handling!public! !
 !EditableListView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
 !EditableListView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
+!EditableListView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
 !EditableListView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
 !EditableListView categoriesFor: #onLeftButtonPressed:!event handling!public! !
 !EditableListView categoriesFor: #onMouseLeave:!event handling!public! !

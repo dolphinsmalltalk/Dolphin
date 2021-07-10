@@ -374,7 +374,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, pri
 									char32_t c;
 									auto next = i;
 									
-									U8_NEXT(s, next, to, c)
+									U8_NEXT(s, next, to, c);
 
 									if (c == codePoint)
 									{
@@ -415,7 +415,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, pri
 								{
 									char32_t c;
 									size_t next = i;
-									U16_NEXT_UNSAFE(s, next, c)
+									U16_NEXT_UNSAFE(s, next, c);
 									if (c == codePoint)
 									{
 										*(sp - 3) = ObjectMemoryIntegerObjectOf(i + 1);

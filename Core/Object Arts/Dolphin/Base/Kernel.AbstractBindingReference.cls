@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.AbstractBindingReference'
 	instanceVariableNames: ''
@@ -100,7 +100,7 @@ declare: anObject
 	"Create a binding in the target namespace that would be resolved by the receiver, if none currently exists.
 	Set the value of the new or existing binding to the argument."
 
-	self declare value: anObject!
+	self declare setValue: anObject!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."

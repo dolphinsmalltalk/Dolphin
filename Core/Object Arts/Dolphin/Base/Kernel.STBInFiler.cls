@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.STBFiler subclass: #'Kernel.STBInFiler'
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'

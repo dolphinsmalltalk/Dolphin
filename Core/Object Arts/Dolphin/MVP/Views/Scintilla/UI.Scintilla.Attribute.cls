@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.Scintilla.Attribute'
 	instanceVariableNames: 'id'
@@ -70,15 +70,14 @@ printOn: aStream
 printPropertiesOn: aStream
 	self class propertyMap keysAndValuesDo: 
 			[:name :descriptor |
-			| printString |
-			printString := descriptor getPrintString: self.
-			(printString notNil or: [descriptor alwaysPrint])
-				ifTrue: 
-					[aStream
+			(descriptor getPrintString: name of: self)
+				ifNotNil: 
+					[:value |
+					aStream
 						nextPutAll: ', ';
 						nextPutAll: name;
-						nextPutAll: '=';
-						display: printString]]!
+						nextPut: $=;
+						display: value]]!
 
 storeableProperties
 	^{#basicId} , self class propertyMap keys asArray!

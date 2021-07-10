@@ -24,7 +24,6 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\ActiveX\Deprecated\ActiveX (Old Names)'
 	'..\Base\Dolphin'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'

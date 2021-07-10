@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.PermanentLibrary subclass: #'Kernel.VMLibrary'
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
@@ -74,7 +74,7 @@ basePatchLevel
 
 bytecodeVersion
 	"Answer the <integer> bytecode version number.
-		VMLibrary default bytecodeVersion
+		VM bytecodeVersion
 	"
 
 	^Integer fromString: (self versionInfo at: 'PrivateBuild')!
@@ -91,7 +91,7 @@ crashDump: message
 	unexpected situation and want the sort of information available in the crash
 	dump (the stack state at the time, etc), but you don't actually want to raise a
 	non-continuable exception.
-		VMLibrary default crashDump: 'Hello'
+		VM crashDump: 'Hello'
 	N.B. In order for a crash dump to be produced the registry on the machine
 	must be appropriately configured."
 
@@ -99,7 +99,7 @@ crashDump: message
 	parms := ByteArray new: VMConstants.IntPtrSize.
 	str := message asUtf16String.
 	parms intPtrAtOffset: 0 put: str yourAddress.
-	KernelLibrary default
+	Kernel32
 		raiseException: 16r20000002
 		dwExceptionFlags: 0
 		nNumberOfArguments: 1
@@ -120,30 +120,31 @@ debugDump: msgString
 	^self invalidCall: _failureCode!
 
 defaultProductDetails
-	"Private - Answers an eight element<Array> describing the default
-	 version of the development environment as based on the VM version.
+	"Private - Answers a <LookupTable> describing the default version of the development environment as based on the VM version information.
 
-	1. <readableString> Product name 
-	2. <readableString> Short product name
-	3. <Float> Version number
-	4. <readableString> Version special
-	5. <Integer> Image patch level
-	6 <readableString> Very short name
-	7 <readableString> Serial number
-	8 <readableString> Boot source version information"
+	- Product name (includes major version)
+	- Short product name
+	- Product version in SemVer form (M.N.P[-prerel+buildmeta])
+	- Special build information (usually empty)
+	- Image patch level (usually zero as the image patching feature is no longer used)
+	- Abbreviated (very short) product name
+	- Serial number (no longer used)
+	- Boot source version information
+	- Registry version number - used to form a key for saving/restoring settings in registry."
 
 	| version |
 	version := self versionInfo.
-	^(Array new: 8)
-		at: 1 put: (version formatVersionString: '%1 %2!!d!!');
-		at: 2 put: (version formatVersionString: '%1');
-		at: 3 put: (Float fromString: (version formatVersionString: '%3!!d!!.%4!!d!!'));
-		at: 4 put: version specialBuild;
-		at: 5 put: self basePatchLevel;
-		at: 6 put: 'D7';
-		at: 7 put: nil;
-		at: 8 put: nil;
-		yourself	"Serial #"	"Boot info"!
+	^LookupTable new
+		at: #productName put: (version formatVersionString: '%1 %2!!d!!');
+		at: #shortProductName put: (version formatVersionString: '%1');
+		at: #productVersionString put: version productVersionString;
+		at: #specialBuild put: version specialBuild;
+		at: #basePatchLevel put: self basePatchLevel;
+		at: #abbreviatedProductName put: 'D8';
+		at: #serialNumber put: nil;
+		at: #bootInfo put: nil;
+		at: #registryVersion put: (version at: 'RegistryVersion');
+		yourself!
 
 dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesInteger
 	"Write a VM state log to the file with <readableString> path, pathString, with the 
@@ -178,7 +179,9 @@ errorIntegerMoreThan32Bits: anInteger
 fullVersion
 	"Answer a String which describes the full name and version number of the VM."
 
-	^self versionInfo formatVersionString: '%1 %2!!d!! release %3!!d!!.%4!!d!!%5!!d!!'!
+	| verinfo |
+	verinfo := self versionInfo.
+	^verinfo productName , ' ' , (verinfo productVersionString readStream upTo: $+)!
 
 getDlgProc
 	"Private - Answer a pointer to the VM's dialog window procedure.
@@ -194,8 +197,7 @@ getGenericCallback
 
 	genericCallback isNil
 		ifTrue: 
-			[genericCallback := KernelLibrary default getProcAddressDWORD: self asParameter
-						lpProcName: 'GenericCallback'].
+			[genericCallback := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'GenericCallback'].
 	^genericCallback!
 
 getVTable
@@ -214,7 +216,7 @@ getWndProc
 	"There is not point throwing an error here if it fails, because that will be terminal anyway."
 
 	wndProc isNil
-		ifTrue: [wndProc := KernelLibrary default getProcAddressDWORD: self asParameter lpProcName: 'WndProc'].
+		ifTrue: [wndProc := Kernel32 getProcAddressDWORD: self asParameter lpProcName: 'WndProc'].
 	^wndProc!
 
 handleFromInteger: anInteger
@@ -259,10 +261,10 @@ indexOfSpecialSelector: aSymbol ifAbsent: exceptionHandler
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
-	^(UserLibrary default getSystemMetrics: SM_SLOWMACHINE) ~~ 0
+	^(User32 getSystemMetrics: SM_SLOWMACHINE) ~~ 0
 
 	"
-	VMLibrary default isSlowMachine
+	VM isSlowMachine
 "!
 
 isUserBreakRequested
@@ -272,25 +274,6 @@ isUserBreakRequested
 
 	<cdecl: bool IsUserBreakRequested>
 	^self invalidCall: _failureCode!
-
-isWindowsServer
-	"Answers whether the current OS is a Windows Server release."
-
-	"Implementation Note: This is the equivalent of the IsWindowsServer() version helper
-	function, which is provided as an inline function in VersionHelpers.h in the Windows SDK."
-
-	| osvi |
-	osvi := OSVERSIONINFOEXW new
-				wProductType: VER_NT_WORKSTATION;
-				yourself.
-	^(KernelLibrary default
-		verifyVersionInfo: osvi
-		dwTypeMask: VER_PRODUCT_TYPE
-		dwlConditionMask: (KernelLibrary default
-				verSetConditionMask: 0
-				typeMask: VER_PRODUCT_TYPE
-				condition: VER_EQUAL))
-			not!
 
 kernelHandle
 	"Private - Answer the handle of the KernelLibrary. This cannot be obtained in the normal way
@@ -412,7 +395,7 @@ signedFromUnsigned: anInteger
 
 specialSelectors
 	"Private - Answer all special messages that have their own individual bytecodes.
-		VMLibrary default specialSelectors
+		VM specialSelectors
 	"
 
 	| selectors |
@@ -478,13 +461,13 @@ utf16StringFromAddress: pointer
 
 	<stdcall: lpwstr AnswerDWORD lpvoid>
 	| len |
-	len := KernelLibrary default lstrlenW: pointer.
+	len := Kernel32 lstrlenW: pointer.
 	^Utf16String fromAddress: pointer length: len!
 
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
-	^'%3!!d!!.%4!!d!!%5!!d!!'! !
+	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'! !
 !Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:!helpers!private! !
 !Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
 !Kernel.VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
@@ -512,7 +495,6 @@ versionFormatString
 !Kernel.VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
 !Kernel.VMLibrary categoriesFor: #isSlowMachine!environment!public! !
 !Kernel.VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
 !Kernel.VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
 !Kernel.VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
 !Kernel.VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !
@@ -659,7 +641,10 @@ open
 registryKeys
 	"Private - Answer the map between symbolic names and VM registry indices."
 
-	^RegistryKeys! !
+	^RegistryKeys!
+
+sharedVariableName
+	^#{VM}! !
 !Kernel.VMLibrary class categoriesFor: #fileName!constants!public! !
 !Kernel.VMLibrary class categoriesFor: #hasBytecodeRepresentation:!helpers!private! !
 !Kernel.VMLibrary class categoriesFor: #initialize!development!initializing!private! !
@@ -669,4 +654,5 @@ registryKeys
 !Kernel.VMLibrary class categoriesFor: #maxTemps!limits!public! !
 !Kernel.VMLibrary class categoriesFor: #open!instance creation!public! !
 !Kernel.VMLibrary class categoriesFor: #registryKeys!constants!private! !
+!Kernel.VMLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

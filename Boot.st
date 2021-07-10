@@ -20,6 +20,8 @@ Package manager install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.
 Object owningPackage 
 	packageVersion: VMLibrary default versionString!
 
+Package manager install: 'Core\Object Arts\Dolphin\System\SemVer\Dolphin SemVer.pax'!
+
 "Load standard Dolphin products"
 Package manager install: 'Core\Object Arts\Dolphin\Installation Manager\Dolphin Products.pax'!
 
@@ -55,16 +57,19 @@ Tools.DevelopmentSessionManager installNew!
 
 SessionManager current defaultResourceLibrary loadFlags: 0!
 
-| info |
-info := [ | process outputPipe |
+| semver sesh |
+semver := [ | process outputPipe |
 	process := ExternalProcess new.
-	process commandLine: 'git describe --tags'.
+	process commandLine: 'git describe --tags --long --always'.
 	outputPipe := process stdoutPipe.
 	process executeSync.
 	[process isTerminated] whileFalse: [].
-	outputPipe readStream contents
+	SemVer fromGitDescription: outputPipe readStream contents
 ] on: ExternalProcessExecuteError do: [:ex | nil].
-SessionManager current bootInfo: (info isEmpty ifFalse: [info])!
+sesh := SessionManager current.
+sesh bootInfo: semver.
+"Patch up the messed up version inserted by DolphinProduct classes"
+sesh productDetails at: #productVersionString put: (VMLibrary default defaultProductDetails at: #productVersionString)!
 
 "Mark all the booted packages as base"
 Package manager markAllPackagesAsBase!

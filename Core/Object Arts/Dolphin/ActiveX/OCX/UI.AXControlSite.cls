@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ControlView subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
@@ -65,7 +65,7 @@ aboutControl
 				[:e |
 				| caption |
 				caption := self progId.
-				caption size > 50 ifTrue: [caption := (caption leftString: 50) , '...'].
+				caption size > 50 ifTrue: [caption := (caption leftString: 50) , '…'].
 				MessageBox warning: 'Sorry, the control refused to show its about box.' caption: caption]!
 
 allowContextMenu
@@ -150,7 +150,7 @@ binaryStoreControlOnIStream: target
 						ifNone: [unkControl queryInterface: IPersistStream].
 			ips isNull
 				ifFalse: 
-					[OLELibrary default oleSaveToStream: ips pStm: target.
+					[Ole32 oleSaveToStream: ips pStm: target.
 					^self]].
 	target nextPutCLSID: self clsid!
 
@@ -808,7 +808,7 @@ state
 				selector: #controlBinaryStoreBytes:
 				argument: self controlBinaryStoreBytes).
 	#todo.	"Need more control over addition to MessageSequence (e.g. add:afterIndex:) in the meantime use private #list accessor"
-	sequence list addAll: controlState afterIndex: 1.
+	sequence messages addAll: controlState afterIndex: 1.
 	^sequence!
 
 supportedInterfaces
@@ -941,9 +941,9 @@ chooseControl: defaultProgId
 				create: 'Extensible choice prompter'
 				on: controlReg asValue
 				choices: choices
-				caption: 'Please choose a control...'.
+				caption: 'Please choose a control…'.
 	prompter
-		newCaption: 'Other Active-X control...';
+		newCaption: 'Other Active-X control…';
 		newPrompt: 'Please enter a Prog Id:';
 		newBlock: [:aString | ObjectRegistration clsid: (CLSID fromString: aString)].
 	imageManager := ImageManager new.
@@ -1143,8 +1143,8 @@ onStartup
 	"The system is starting: Initialize the host window class and register the window message
 	used for communicating with it."
 
-	VMLibrary default axWinInit.
-	WM_ATLGETHOST := UserLibrary default registerWindowMessage: 'WM_ATLGETHOST'!
+	VM axWinInit.
+	WM_ATLGETHOST := User32 registerWindowMessage: 'WM_ATLGETHOST'!
 
 progId: aString 
 	"Answer a new instance of the receiver hosting the OCX with the specified prog id (which may also be 

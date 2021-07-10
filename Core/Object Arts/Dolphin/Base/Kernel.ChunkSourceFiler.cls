@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.AbstractChunkSourceFiler subclass: #'Kernel.ChunkSourceFiler'
 	instanceVariableNames: 'sourceFileIndex environment'
@@ -10,6 +10,19 @@ Kernel.ChunkSourceFiler guid: (Core.GUID fromString: '{f6955c37-fa6c-4624-8c16-c
 Kernel.ChunkSourceFiler comment: '`ChunkSourceFiler` is the standard chunk-format `SourceFiler` that stores packages and classes in Dolphin 8 (paxVersion 2.1) format.'!
 !Kernel.ChunkSourceFiler categoriesForClass!Development! !
 !Kernel.ChunkSourceFiler methodsFor!
+
+emitClassName: aClass
+	| classEnv |
+	classEnv := aClass environment.
+	(classEnv == aClass baseEnvironment and: 
+			[| localEnv |
+			localEnv := self environment ?? Smalltalk.
+			classEnv == localEnv or: 
+					[| var |
+					var := localEnv fullBindingFor: aClass name.
+					var notNil and: [var value == aClass]]])
+		ifTrue: [stream nextPutAll: aClass name]
+		ifFalse: [aClass printFullNameOn: stream]!
 
 environment
 	^environment
@@ -23,6 +36,7 @@ sourceFileIndex: anInteger
 	"Private - Set the <integer> source file index associated with the receiver."
 
 	sourceFileIndex := anInteger! !
+!Kernel.ChunkSourceFiler categoriesFor: #emitClassName:!private!source filing-file out! !
 !Kernel.ChunkSourceFiler categoriesFor: #environment!accessing!public! !
 !Kernel.ChunkSourceFiler categoriesFor: #environment:!accessing!public! !
 !Kernel.ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !

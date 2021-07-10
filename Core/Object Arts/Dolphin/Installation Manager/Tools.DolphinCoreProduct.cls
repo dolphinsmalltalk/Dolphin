@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.DolphinProduct subclass: #'Tools.DolphinCoreProduct'
 	instanceVariableNames: ''
@@ -50,6 +50,7 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog.pax' #plain #imageBased);
 		yourself.
 
@@ -99,7 +100,6 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\Dolphin Sockets (Old Names).pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\Sockets\Sockets Connection.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Sockets\WinInet.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\ADO\ADODB (Old Names).pax' #plain #imageBased);
@@ -129,12 +129,7 @@ defaultSystemFolderColor
 	"Private - Reference Color indirectly to eliminate hard dependency on Dolphin MVP Base.
 	This method will only be called if SmalltalkSystemShell is loaded, in which case Color will be as well."
 
-	"Distinguish 7.2. Probably not a permanent change."
-	^#{Graphics.Color} value seaGreen.
-	"^#{Graphics.Color} value
-		r: 41
-		g: 124
-		b: 182."!
+	^#{Graphics.Color} value seaGreen!
 
 defaultSystemFolderExtent
 	^860 @ 225!
@@ -150,11 +145,6 @@ fullName
 
 !Tools.DolphinCoreProduct class methodsFor!
 
-productLevel
-	"Private - Answer the product ID for the receiver"
-
-	^0!
-
 productName
 	"Answer the product name"
 	
@@ -164,7 +154,6 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
-!Tools.DolphinCoreProduct class categoriesFor: #productLevel!constants!private! !
 !Tools.DolphinCoreProduct class categoriesFor: #productName!accessing!public! !
 !Tools.DolphinCoreProduct class categoriesFor: #shortProductName!accessing!public! !
 

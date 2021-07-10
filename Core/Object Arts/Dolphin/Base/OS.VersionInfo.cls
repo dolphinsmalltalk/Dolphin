@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'OS.VersionInfo'
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
@@ -114,8 +114,10 @@ printOn: aStream
 	aStream
 		nextPut: $(;
 		print: self fileDescription;
-		nextPutAll: ', ';
-		nextPutAll: self fileVersionString;
+		nextPutAll: ', File: ';
+		print: self fileVersionString;
+		nextPutAll: ', Product: ';
+		print: self productVersionString;
 		nextPut: $)!
 
 productMajor
@@ -134,6 +136,7 @@ productName
 	^self at: 'ProductName'!
 
 productVersionString
+	"Answer the ProductVersion field of the version info. Preferably this will be in SemVer form (M.N.P[-prerel+buildmeta])"
 
 	^self at: 'ProductVersion'!
 

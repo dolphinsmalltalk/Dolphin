@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Database.DBExceptionDetails'
 	instanceVariableNames: 'errors hEnv hDBC hStmt code'
@@ -43,17 +43,16 @@ buildErrorInfo
 buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	"Private - Retrieve all error information available from the ODBC Driver for <anExternalHandle>, which is of type <anIntegerHandleType>"
 
-	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber odbc |
+	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber |
 	szSqlState := Utf16String newFixed: SQL_SQLSTATE_SIZE.
 	szErrorMsg := Utf16String new: 128.
 	cbErrorMsg := External.SWORD new.
 	fNativeError := External.SDWORD new.
 	recNumber := 1.
-	odbc := OS.ODBCLibrary default.
 	
 	[| ret |
 	
-	[ret := odbc
+	[ret := OS.Odbc32
 				sqlGetDiagRec: anIntegerHandleType
 				handle: anExternalHandle
 				recNumber: recNumber

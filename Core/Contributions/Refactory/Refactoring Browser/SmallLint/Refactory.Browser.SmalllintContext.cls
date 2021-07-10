@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.SmalllintContext'
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
@@ -13,7 +13,7 @@ Refactory.Browser.SmalllintContext comment: ''!
 
 addImplementationSpecificLiterals
 	#rbFix.	"Dolphin's VM references symbols"
-	VMLibrary default registry do: [:each | each isSymbol ifTrue: [literals add: each]]!
+	VM registry do: [:each | each isSymbol ifTrue: [literals add: each]]!
 
 buildParseTree
 	| tree |
@@ -162,7 +162,7 @@ signalProcesses: aSemaphore
 specialSelectors
 	#rbFix.
 	"	^(OpcodePool at: #SpecialSelectorDictionary) keys"
-	^VMLibrary default specialSelectors!
+	^VM specialSelectors!
 
 superMessages
 	superMessages isNil ifTrue: [self computeMessages].

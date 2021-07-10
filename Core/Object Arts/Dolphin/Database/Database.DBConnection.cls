@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Database.DBConnection'
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
@@ -34,13 +34,11 @@ allocStmtHandle: aDBStatement
 
 	| hStmt ret |
 	hStmt := External.Handle new.
-
-	ret := OS.ODBCLibrary default
-		sqlAllocHandle: SQL_HANDLE_STMT
-		inputHandle: self asParameter
-		outputHandlePtr: hStmt.
+	ret := OS.Odbc32
+				sqlAllocHandle: SQL_HANDLE_STMT
+				inputHandle: self asParameter
+				outputHandlePtr: hStmt.
 	self dbCheckException: ret.
-
 	self statements add: aDBStatement.
 	^hStmt!
 
@@ -57,7 +55,7 @@ basicConnect
 
 	
 	[| ret |
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlConnect: self getHandle
 				serverName: dsn
 				nameLength1: SQL_NTS
@@ -65,7 +63,7 @@ basicConnect
 				nameLength2: SQL_NTS
 				authentication: pwd
 				nameLength3: SQL_NTS.
-	self dbCheckException: ret] 
+	self dbCheckException: ret]
 			ifCurtailed: [self free]!
 
 beginRWTxn
@@ -289,11 +287,12 @@ disconnect
 	about to become invalid). Client objects should send close
 	instead."
 
-	handle isNull ifFalse: [ | ret |
-		self invalidateAllStmts.
-		ret := OS.ODBCLibrary default sqlDisconnect: handle.
-		self dbCheckException: ret]
-!
+	handle isNull
+		ifFalse: 
+			[| ret |
+			self invalidateAllStmts.
+			ret := OS.Odbc32 sqlDisconnect: handle.
+			self dbCheckException: ret]!
 
 driverHDBC
 	"Private - Answer the handle to the driver connection"
@@ -369,36 +368,34 @@ free
 freeNoFail
 	"Private - Free the connection handle ignoring any errors."
 
-	^OS.ODBCLibrary default sqlFreeHandle: SQL_HANDLE_DBC handle: handle.
-!
+	^OS.Odbc32 sqlFreeHandle: SQL_HANDLE_DBC handle: handle!
 
 freeStmtHandle: aDBAbstractStatement
 	| ret |
 	handle isNull ifTrue: [^self].
-	ret := OS.ODBCLibrary default sqlFreeHandle: SQL_HANDLE_STMT handle: aDBAbstractStatement handle.
-	ret ~= SQL_SUCCESS
-		ifTrue: [DBError signalWith: (aDBAbstractStatement exceptionDetails: ret)]!
+	ret := OS.Odbc32 sqlFreeHandle: SQL_HANDLE_STMT handle: aDBAbstractStatement handle.
+	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBAbstractStatement exceptionDetails: ret)]!
 
 getBoolInfo: anInteger
 	"Private - Answer a <Boolean> indicating the receiver's info attribute described by anInteger."
 
 	| value |
 	value := Utf16String newFixed: 1.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
-				bufferLength: ##(1+1*2 "Byte size including implict null char")
-				stringLengthPtr: nil).
+				bufferLength: ##((1 + 1) * 2	"Byte size including implict null char")
+				stringLengthPtr: nil).	"Byte size including implict null char"
 	^value = ##($Y asUtf16String)!
 
-getDWordAttribute: anInteger 
+getDWordAttribute: anInteger
 	"Private - Answer an <Integer> containing the 32-bit unsigned integer value of the 
 	connection attribute identified by the <integer> argument."
 
 	| buffer ret |
 	buffer := ByteArray newFixed: 4.
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlGetConnectAttr: self asParameter
 				attribute: anInteger
 				valuePtr: buffer
@@ -412,7 +409,7 @@ getDWordInfo: anInteger
 
 	| value |
 	value := ByteArray newFixed: 4.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
@@ -434,7 +431,7 @@ getHandle
 getHandle: anInteger
 	| value |
 	value := External.Handle new.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
@@ -447,12 +444,12 @@ getStringAttribute: anInteger
 
 	| buffer |
 	buffer := Utf16String newFixed: SQL_MAX_OPTION_STRING_LENGTH.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetConnectAttr: self asParameter
 				attribute: anInteger
 				valuePtr: buffer
-				bufferLength: ##(SQL_MAX_OPTION_STRING_LENGTH + 1 * 2) "Byte size including implicit null terminator"
-				stringLengthPtr: nil).
+				bufferLength: ##((SQL_MAX_OPTION_STRING_LENGTH + 1) * 2)
+				stringLengthPtr: nil).	"Byte size including implicit null terminator"
 	"N.B. The SQL server driver never seems to populate the stringLengthPtr argument, so we are forced to trim up to the nulls."
 	^buffer trimNulls!
 
@@ -462,11 +459,11 @@ getStringInfo: anInteger
 	| value len |
 	value := Utf16String newFixed: SQL_MAX_MESSAGE_LENGTH.
 	len := ByteArray newFixed: 2.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
-				bufferLength: ##(SQL_MAX_MESSAGE_LENGTH + 1 * 2)
+				bufferLength: ##((SQL_MAX_MESSAGE_LENGTH + 1) * 2)
 				stringLengthPtr: len).
 	^value resize: ((len swordAtOffset: 0) bitShift: -1)!
 
@@ -475,7 +472,7 @@ getWordInfo: anInteger
 
 	| value |
 	value := ByteArray newFixed: 2.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetInfo: self asParameter
 				infoType: anInteger
 				infoValuePtr: value
@@ -675,19 +672,19 @@ open
 	"#1306: From MSDN, 'Applications should allocate at least 1,024 characters for [the connection string] buffer'"
 	connSz := Utf16String newFixed: 2048.
 	lenConnSz := External.SWORD new.
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlDriverConnect: self getHandle
-				windowHandle: OS.UserLibrary default getActiveWindow
+				windowHandle: OS.User32 getActiveWindow
 				inConnectionString: self connectString
 				stringLength1: SQL_NTS
 				outConnectionString: connSz
 				bufferLength: connSz size + 1
 				stringLength2Ptr: lenConnSz
-				driverCompletion: (self useDriverCompletion 
+				driverCompletion: (self useDriverCompletion
 						ifTrue: [SQL_DRIVER_COMPLETE]
 						ifFalse: [SQL_DRIVER_NOPROMPT]).
-	ret == SQL_NO_DATA ifTrue: [^nil "cancelled"].
-	self dbCheckException: ret] 
+	ret == SQL_NO_DATA ifTrue: [^nil	"cancelled"].
+	self dbCheckException: ret]
 			ifCurtailed: [self free].
 	self connectString: (connSz copyFrom: 1 to: (lenConnSz value min: connSz size))!
 
@@ -851,11 +848,11 @@ serverName
 
 	^self getStringInfo: SQL_SERVER_NAME!
 
-setAttribute: idInteger value: anIntegerOrStringOrBytes size: sizeInteger 
+setAttribute: idInteger value: anIntegerOrStringOrBytes size: sizeInteger
 	"Private - Set the an attribute of the receiver's connection."
 
 	| ret |
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlSetConnectAttr: self asParameter
 				attribute: idInteger
 				valuePtr: anIntegerOrStringOrBytes
@@ -1266,10 +1263,10 @@ allocHandle
 
 	| hDBC ret |
 	hDBC := External.Handle new.
-	ret := OS.ODBCLibrary default
-			sqlAllocHandle: SQL_HANDLE_DBC
-			inputHandle: self environmentHandle
-			outputHandlePtr: hDBC.
+	ret := OS.Odbc32
+				sqlAllocHandle: SQL_HANDLE_DBC
+				inputHandle: self environmentHandle
+				outputHandlePtr: hDBC.
 	self dbCheckException: ret.
 	^hDBC!
 
@@ -1315,15 +1312,14 @@ enumerateDataSources
 	"Answers an array of associations of all the data sources and
 	 their descriptions"
 
-	| dsn description dsnLength descriptionLength hEnv odbc ret sources |
+	| dsn description dsnLength descriptionLength hEnv ret sources |
 	dsn := Utf16String newFixed: SQL_MAX_DSN_LENGTH.
 	description := Utf16String newFixed: 4.
 	dsnLength := External.SWORD new.
 	descriptionLength := External.SWORD new.
 	hEnv := self environmentHandle.
-	odbc := OS.ODBCLibrary default.
 	
-	[ret := odbc
+	[ret := OS.Odbc32
 				sqlDataSources: hEnv
 				direction: SQL_FETCH_FIRST
 				serverName: dsn
@@ -1339,7 +1335,7 @@ enumerateDataSources
 			[sources nextPut: (Association key: (dsn copyFrom: 1 to: dsnLength value)
 						value: (description copyFrom: 1 to: descriptionLength value)).
 			
-			[ret := odbc
+			[ret := OS.Odbc32
 						sqlDataSources: hEnv
 						direction: SQL_FETCH_NEXT
 						serverName: dsn
@@ -1357,15 +1353,15 @@ environmentHandle
 	"Private - Answer the environment handle.
 	Create it if we haven't done so already."
 
-	HEnv isNull 
+	HEnv isNull
 		ifTrue: 
 			[| ret |
 			HEnv := External.Handle new.
-			ret := OS.ODBCLibrary default 
+			ret := OS.Odbc32
 						sqlAllocHandle: SQL_HANDLE_ENV
 						inputHandle: nil
 						outputHandlePtr: HEnv.
-			ret = SQL_SUCCESS 
+			ret = SQL_SUCCESS
 				ifFalse: 
 					[HEnv := nil.
 					^self dbCheckException: ret].
@@ -1395,10 +1391,10 @@ freeAll
 freeEnvironment
 	"Private - Free the environment"
 
-	HEnv isNull 
+	HEnv isNull
 		ifFalse: 
 			[| ret |
-			ret := OS.ODBCLibrary default sqlFreeHandle: SQL_HANDLE_ENV handle: HEnv.
+			ret := OS.Odbc32 sqlFreeHandle: SQL_HANDLE_ENV handle: HEnv.
 			self dbCheckException: ret.
 			HEnv := nil]!
 
@@ -1430,11 +1426,10 @@ invalidateHandle: anExternalHandle
 	This is used by DBConnection class to free a connection handle
 	when it only knows the handle"
 
-	| ret odbc |
-	odbc := OS.ODBCLibrary default.
-	ret := odbc sqlDisconnect: anExternalHandle.
+	| ret |
+	ret := OS.Odbc32 sqlDisconnect: anExternalHandle.
 	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)].
-	ret := odbc sqlFreeHandle: SQL_HANDLE_DBC handle: anExternalHandle.
+	ret := OS.Odbc32 sqlFreeHandle: SQL_HANDLE_DBC handle: anExternalHandle.
 	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)]!
 
 new
@@ -1449,12 +1444,11 @@ newConnections
 	Connections := WeakSet new!
 
 odbcVersion
-
 	"self odbcVersion"
 
 	| version |
 	version := ByteArray newFixed: 2.
-	self dbCheckException: (OS.ODBCLibrary default
+	self dbCheckException: (OS.Odbc32
 				sqlGetEnvAttr: HEnv
 				infoType: SQL_ATTR_ODBC_VERSION
 				infoValuePtr: version
@@ -1464,7 +1458,7 @@ odbcVersion
 
 setDefaultEnvAttrs
 	| ret |
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlSetEnvAttr: HEnv
 				attribute: SQL_ATTR_ODBC_VERSION
 				valuePtr: SQL_OV_ODBC3
@@ -1478,7 +1472,7 @@ transact: aDBConnection action: anInteger
 	 all connections within the environment."
 
 	| ret |
-	ret := OS.ODBCLibrary default
+	ret := OS.Odbc32
 				sqlEndTran: SQL_HANDLE_DBC
 				handle: aDBConnection asParameter
 				completionType: anInteger.

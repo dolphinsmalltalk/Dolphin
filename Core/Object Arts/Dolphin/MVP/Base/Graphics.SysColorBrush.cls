@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.StockBrush subclass: #'Graphics.SysColorBrush'
 	instanceVariableNames: ''
@@ -25,7 +25,7 @@ color
 createHandle
 	"Private - Get the handle of the system color brush with the receiver's id."
 
-	^UserLibrary default getSysColorBrush: id!
+	^User32 getSysColorBrush: id!
 
 printOn: aStream 
 	"Put an ASCII representation of receiver onto aStream."

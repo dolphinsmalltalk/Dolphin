@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SocketAbstract subclass: #ServerSocket
 	instanceVariableNames: 'acceptSemaphore'
@@ -11,7 +11,7 @@ ServerSocket comment: '** This class is part of the old asynchronous Sockets Con
 This class is used by a server to listen for a connection request from a client. 
 
 A ServerSocket is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the ServerSocket to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient #accept calls have not been issued then additional client connections are rejected.'!
-!ServerSocket categoriesForClass!Windows Sockets! !
+!ServerSocket categoriesForClass!Deprecated!Windows Sockets! !
 !ServerSocket methodsFor!
 
 accept

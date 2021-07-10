@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.VirtualColor subclass: #'Graphics.ThemeColor'
 	instanceVariableNames: 'name actualColor'
@@ -25,6 +25,9 @@ actualColor
 
 actualColor: aColor
 	actualColor := aColor!
+
+basicActualColor
+	^actualColor!
 
 name
 	^name!
@@ -69,6 +72,7 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler nextPut: self name! !
 !Graphics.ThemeColor categoriesFor: #actualColor!accessing!public! !
 !Graphics.ThemeColor categoriesFor: #actualColor:!accessing!public! !
+!Graphics.ThemeColor categoriesFor: #basicActualColor!accessing!private! !
 !Graphics.ThemeColor categoriesFor: #name!printing!public! !
 !Graphics.ThemeColor categoriesFor: #printOn:!printing!public! !
 !Graphics.ThemeColor categoriesFor: #setName:actualColor:!initializing!private! !

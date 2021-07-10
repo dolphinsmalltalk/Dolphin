@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.MessageBoxAbstract subclass: #'UI.MessageBox'
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
@@ -260,7 +260,7 @@ showIndirect
 		ifFalse: 
 			[iconIdentifier := icon identifier.
 			hInstance := icon instanceHandle asParameter].
-	button := UserLibrary default
+	button := User32
 				messageBox: self ownerHandle
 				text: self text
 				caption: self caption
@@ -274,15 +274,15 @@ showSuppressible
 	"Implementation Note: SHMessageBoxCheck does not seem to suffer from the same bug as the normal message box of re-enabling a disabled owner."
 
 	self assertStylesValid.
-	button := ShlwapiLibrary default
+	button := Shlwapi
 				shMessageBoxCheck: self ownerHandle
 				pszText: self text
 				pszTitle: self caption
 				uType: styleFlags
 				iDefault: (self idOfButtonAt: self defaultButton)
 				pszRegVal: self globallyUniqueId.
-	button == -1 ifTrue: [ShlwapiLibrary default systemError].
-	NTLibrary isWine ifFalse: [^self].
+	button == -1 ifTrue: [Shlwapi systemError].
+	NtDll isWine ifFalse: [^self].
 	#wineFix.
 	"Suppressible message boxes under Wine have a bug where they ignore the buttonStyles #yesNo and #yesNoCancel and will always answer #ok or #cancel instead. Here we map the return button ids to the correct values"
 	(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel])

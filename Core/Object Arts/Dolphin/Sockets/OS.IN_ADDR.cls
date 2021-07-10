@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''

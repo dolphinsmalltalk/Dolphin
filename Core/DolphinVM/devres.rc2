@@ -1,0 +1,52 @@
+//
+// devres.rcs - resources Microsoft Visual C++ does not edit directly
+//
+#pragma code_page(65001)
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION DOLPHIN_VERINFO_VERSION
+ PRODUCTVERSION DOLPHIN_VERINFO_VERSION
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x2bL
+#else
+ FILEFLAGS 0x2aL
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+			VALUE "CompanyName", "Object Arts Ltd."
+			VALUE "FileDescription", "Dolphin IDE Resources"
+			VALUE "FileVersion", DOLPHIN_SEMANTIC_VERSION
+			VALUE "InternalName", "DolphinDevRes"
+            VALUE "LegalCopyright", "Portions Copyright © Object Arts Ltd 1997-2021."
+			VALUE "OriginalFilename", "DolphinDR8.dll"
+			VALUE "ProductName", "Dolphin Smalltalk"
+			VALUE "ProductVersion", GIT_TAG
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////

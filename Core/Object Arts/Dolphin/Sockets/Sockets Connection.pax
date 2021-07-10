@@ -7,7 +7,7 @@ Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) 
 
 This package provides an interface to TCP/IP sockets. 
 
-**This is the original Dolphin Sockets Connection package that makes use of the asynchronous messaging version of the Windows Sockets API in WSOCK32.DLL. A more efficient and reliable approach is implemented by the more recent WS2_32.DLL which makes use of true threaded blocking calls. New applications should make use of this latter (somewhat different) approach by using the classes in the Dolphin Sockets package.**
+**This is the original Dolphin Sockets Connection package that makes use of the asynchronous messaging version of the Windows Sockets API in WSOCK32.DLL, and it is deprecated. A more efficient and reliable approach is implemented by the more recent WS2_32.DLL which makes use of true threaded blocking calls. New applications should make use of this latter (somewhat different) approach by using the classes in the Dolphin Sockets package.**
 
 For documentation evaluate:
 	SmalltalkSystem help: ''tcp.ipsocketsconnectivity'''.

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.CommonDialog subclass: #'UI.ColorDialog'
 	instanceVariableNames: 'validationBlock'
@@ -26,7 +26,7 @@ basicShowModal
 	"Private - Create and show a new Colour dialog. Hang it off the receiver's parentView.
 	Answer a <Color> based on the dialog selection, or nil if no selection was made. "
 
-	^ComDlgLibrary default chooseColor: self winStruct asParameter!
+	^ComDlg32 chooseColor: self winStruct asParameter!
 
 defaultColor
 	^ColorRef defaultColorRepresentation!
@@ -57,7 +57,7 @@ prepareStruct
 	color := self value.
 	(color isNil or: [color isDefault]) ifTrue: [color := self defaultColor].
 	self winStruct
-		hInstance: VMLibrary default applicationHandle;
+		hInstance: VM applicationHandle;
 		rgbResult: color rgbCode;
 		maskIn: CC_RGBINIT;
 		lpCustColors: customColors!
@@ -139,7 +139,7 @@ onStartup
 
 registerColorOkMessage
 	WM_COLOROK notNil ifTrue: [hookHandlers removeKey: WM_COLOROK ifAbsent: []].
-	WM_COLOROK := UserLibrary default registerWindowMessage: 'commdlg_ColorOK'.
+	WM_COLOROK := User32 registerWindowMessage: 'commdlg_ColorOK'.
 	hookHandlers at: WM_COLOROK put: #wmColorOk:wParam:lParam:!
 
 resetCustomColors

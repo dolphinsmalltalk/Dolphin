@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.EventMessageSendTest'
 	instanceVariableNames: ''
@@ -12,42 +12,88 @@ Kernel.Tests.EventMessageSendTest comment: ''!
 !Kernel.Tests.EventMessageSendTest methodsFor!
 
 testNoArguments
-	| m |
-	m := EventMessageSend receiver: true selector: #yourself.
-	self should: [m value]!
+	| subject |
+	subject := EventMessageSend receiver: 1 selector: #yourself.
+	self assert: subject value equals: 1.
+	self assert: (subject valueWithArguments: #()) equals: 1.
+	self assert: (subject value: 2) equals: 1.
+	self assert: (subject valueWithArguments: #(2)) equals: 1.
+	self assert: (subject value: 2 value: 3) equals: 1.
+	self assert: (subject valueWithArguments: #(2 3)) equals: 1!
 
 testOneArgument
-	| m |
-	m := EventMessageSend
+	| subject |
+	subject := EventMessageSend
 				receiver: Array
 				selector: #with:
 				argument: 1.
 	MemoryManager current collectGarbage.
-	self should: [m value = #(1)]!
+	self assert: subject value equals: #(1).
+	self assert: (subject valueWithArguments: #()) equals: #(1).
+	self assert: (subject value: 2) equals: #(2).
+	self assert: (subject valueWithArguments: #(2)) equals: #(2).
+	self assert: (subject value: 2 value: 3) equals: #(2).
+	self assert: (subject valueWithArguments: #(2 3)) equals: #(2)!
 
 testOneArgumentWithGC
-	| m |
-	m := EventMessageSend
+	| subject |
+	subject := EventMessageSend
 				receiver: OrderedCollection new
 				selector: #addAll:
 				arguments: {Object new}.
 	MemoryManager current collectGarbage.
-	self should: [m value] raise: MessageNotUnderstood!
+	self should: [subject value] raise: MessageNotUnderstood!
 
 testReceiverWithGC
-	| m |
-	m := EventMessageSend receiver: Object new selector: #yourself.
+	| subject |
+	subject := EventMessageSend receiver: Object new selector: #yourself.
 	MemoryManager current collectGarbage.
-	self assert: m value equals: DeadObject current!
+	self assert: subject value equals: DeadObject current!
 
 testTwoArguments
-	| m |
-	m := EventMessageSend
+	| subject |
+	subject := EventMessageSend
 				receiver: Array
 				selector: #with:with:
 				arguments: #(1 2).
 	MemoryManager current collectGarbage.
-	self should: [m value = #(1 2)]! !
+	self assert: subject value equals: #(1 2).
+	self assert: (subject value: 3) equals: #(3 2).
+	self assert: (subject valueWithArguments: #(3)) equals: #(3 2).
+	self assert: (subject valueWithArguments: #(3 4)) equals: #(3 4).
+	self assert: (subject valueWithArguments: #(3 4 5)) equals: #(3 4).
+	subject := EventMessageSend
+				receiver: Array
+				selector: #with:with:
+				arguments: #(1).
+	self assert: subject value equals: #(1 nil).
+	self assert: (subject valueWithArguments: #()) equals: #(1 nil).
+	self assert: (subject value: 2) equals: #(2 nil).
+	self assert: (subject valueWithArguments: #(2)) equals: #(2 nil).
+	self assert: (subject value: 2 value: 3) equals: #(2 3).
+	self assert: (subject valueWithArguments: #(2 3)) equals: #(2 3).
+	self assert: (subject
+				value: 2
+				value: 3
+				value: 4)
+		equals: #(2 3).
+	self assert: (subject valueWithArguments: #(2 3 4)) equals: #(2 3).
+	subject := EventMessageSend
+				receiver: Array
+				selector: #with:with:
+				arguments: #().
+	self assert: subject value equals: #(nil nil).
+	self assert: (subject valueWithArguments: #()) equals: #(nil nil).
+	self assert: (subject value: 2) equals: #(2 nil).
+	self assert: (subject valueWithArguments: #(2)) equals: #(2 nil).
+	self assert: (subject value: 2 value: 3) equals: #(2 3).
+	self assert: (subject valueWithArguments: #(2 3)) equals: #(2 3).
+	self assert: (subject
+				value: 2
+				value: 3
+				value: 4)
+		equals: #(2 3).
+	self assert: (subject valueWithArguments: #(2 3 4)) equals: #(2 3)! !
 !Kernel.Tests.EventMessageSendTest categoriesFor: #testNoArguments!public!testing! !
 !Kernel.Tests.EventMessageSendTest categoriesFor: #testOneArgument!public!testing! !
 !Kernel.Tests.EventMessageSendTest categoriesFor: #testOneArgumentWithGC!public!testing! !

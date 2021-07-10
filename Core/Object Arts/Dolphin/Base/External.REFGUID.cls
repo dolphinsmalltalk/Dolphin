@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Address variableByteSubclass: #'External.REFGUID'
 	instanceVariableNames: ''
@@ -23,7 +23,7 @@ REFGUID fromAddress: Object guid yourAddress'!
 
 	| status answer |
 	status := ByteArray newFixed: 4.
-	answer := RPCLibrary default
+	answer := Rpcrt4
 				uuidCompare: self
 				uuid2: aGUID
 				status: status.

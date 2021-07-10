@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.ArrayedCollection variableSubclass: #'Core.Array'
 	instanceVariableNames: ''
@@ -176,7 +176,7 @@ empty
 	^#()!
 
 initialize
-	VMLibrary default registryAt: #ArrayBinding put: self binding!
+	VM registryAt: #ArrayBinding put: self binding!
 
 newFromStack: aSmallInteger
 	"Private - Answer an instance of the receiver with the specified number of instance

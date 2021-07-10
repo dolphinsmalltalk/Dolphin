@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.TabView subclass: #'UI.TabViewXP'
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
@@ -188,7 +188,7 @@ paintTabLabelsOn: aCanvas
 				on: aCanvas
 				in: (rect translateBy: 0 @ (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated])).
 			self hasFocus
-				ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
+				ifTrue: [User32 drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
 	selectedIndex + 1 to: itemCount
 		do: 
 			[:i |
@@ -202,7 +202,7 @@ paintTabLabelsOn: aCanvas
 
 paintThemedBackgroundOn: aCanvas in: aRectangle
 	| bkColor |
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
@@ -216,18 +216,17 @@ paintThemedBackgroundOn: aCanvas in: aRectangle
 			aCanvas fillRectangle: (aCanvas clipBox subtract: aRectangle) color: bkColor]!
 
 paintThemedTabsOn: aCanvas offset: aMonadicValuable
-	| selected hot numItems themeLib dc part rcItem hTheme |
+	| selected hot numItems dc part rcItem hTheme |
 	numItems := self itemCount.
 	numItems <= 0 ifTrue: [^self].
 	"Paint all the tabs except for the selected one (assuming there is one; in very unusual circumstances there may not be)"
 	hot := self itemFromPoint: self cursorPosition.
 	selected := self selectionByIndex.
-	themeLib := ThemeLibrary default.
 	dc := aCanvas asParameter.
 	hTheme := self theme.
 	selected == 1
 		ifFalse: 
-			[themeLib
+			[UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEMLEFTEDGE
@@ -237,7 +236,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 	2 to: selected - 1
 		do: 
 			[:i |
-			themeLib
+			UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEM
@@ -247,7 +246,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 	(selected + 1 max: 2) to: numItems - 1
 		do: 
 			[:i |
-			themeLib
+			UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEM
@@ -258,7 +257,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 		ifFalse: 
 			[| anInteger |
 			anInteger := TABP_TABITEMRIGHTEDGE.
-			themeLib
+			UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: anInteger
@@ -279,7 +278,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 
 					"selected == numItems ifTrue: [TABP_TABITEMRIGHTEDGE] ifFalse: [TABP_TABITEM]"
 					TABP_TABITEM].
-	themeLib
+	UxTheme
 		drawThemeBackground: hTheme
 		hdc: dc
 		iPartId: part
@@ -345,7 +344,7 @@ paintVerticalTabLabelsOn: aCanvas
 		on: aCanvas
 		in: (rect translateBy: (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated]) @ 0).
 	self hasFocus
-		ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter].
+		ifTrue: [User32 drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter].
 	selectedIndex + 1 to: itemCount
 		do: 
 			[:i |

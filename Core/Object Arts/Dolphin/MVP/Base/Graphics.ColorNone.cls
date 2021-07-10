@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.ColorRef subclass: #'Graphics.ColorNone'
 	instanceVariableNames: ''
@@ -20,6 +20,12 @@ alpha
 	the opacity of the colour, with 0 being completely transparent and 255 completely opaque."
 
 	^0!
+
+alpha: anAlphaInteger
+	"Answer a `Color` which has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
+	As the receiver is already completely transparent, the application of further alpha make no difference."
+
+	^self!
 
 alphaMask
 	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
@@ -104,6 +110,7 @@ shallowCopy
 
 	^self! !
 !Graphics.ColorNone categoriesFor: #alpha!accessing!public! !
+!Graphics.ColorNone categoriesFor: #alpha:!accessing!public! !
 !Graphics.ColorNone categoriesFor: #alphaMask!accessing!private! !
 !Graphics.ColorNone categoriesFor: #argbCode!accessing!public! !
 !Graphics.ColorNone categoriesFor: #brush!converting!public! !

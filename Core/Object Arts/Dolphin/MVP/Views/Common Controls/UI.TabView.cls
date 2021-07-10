@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.IconicListAbstract subclass: #'UI.TabView'
 	instanceVariableNames: 'viewMode'
@@ -22,6 +22,12 @@ Class Variables:
 '!
 !UI.TabView categoriesForClass!MVP-Views! !
 !UI.TabView methodsFor!
+
+applyFont
+	"Private - The receiver's font has been changed, this will affect the tab geometry."
+
+	super applyFont.
+	self invalidateLayout!
 
 applyImageLists
 	"Private - Set the receiver's image list from the image manager."
@@ -131,16 +137,8 @@ ensureVisible: anIntegerOrHandle
 
 	"Nothing to do (or nothing we can do)"!
 
-fontChanged
-	"Private - The receiver's font has been changed, this will affect the tab geometry."
-
-	super fontChanged.
-	self invalidateLayout!
-
 getEditControl
-	^self shouldNotImplement
-
-!
+	^self shouldNotImplement!
 
 getItem: anInteger
 	| tcItem |
@@ -606,6 +604,7 @@ viewMode
 viewModeChanged
 	super viewModeChanged.
 	self invalidateLayout! !
+!UI.TabView categoriesFor: #applyFont!font!private!updating! !
 !UI.TabView categoriesFor: #applyImageLists!image management!private! !
 !UI.TabView categoriesFor: #basicAdd:atIndex:!adding!private! !
 !UI.TabView categoriesFor: #basicClear!public!removing! !
@@ -622,7 +621,6 @@ viewModeChanged
 !UI.TabView categoriesFor: #defaultWindowStyle!constants!public! !
 !UI.TabView categoriesFor: #dragOver:!drag & drop!public! !
 !UI.TabView categoriesFor: #ensureVisible:!public! !
-!UI.TabView categoriesFor: #fontChanged!public!updating! !
 !UI.TabView categoriesFor: #getEditControl!accessing!private! !
 !UI.TabView categoriesFor: #getItem:!helpers!private! !
 !UI.TabView categoriesFor: #getSelectionsByIndex!private!selection! !

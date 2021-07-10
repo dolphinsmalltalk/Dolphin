@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #SocketAbstract
 	instanceVariableNames: 'port descriptor asyncError events'
@@ -10,7 +10,7 @@ SocketAbstract isNonInstantiable: true!
 SocketAbstract comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
-!SocketAbstract categoriesForClass!Windows Sockets! !
+!SocketAbstract categoriesForClass!Deprecated!Windows Sockets! !
 !SocketAbstract methodsFor!
 
 allowAsyncEvents

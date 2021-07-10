@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.IniFileAbstract subclass: #'OS.IniFile'
 	instanceVariableNames: ''
@@ -33,7 +33,7 @@ at: keyString put: valueDictionary
 				nextPut: $\0].
 	kvps nextPut: $\0.
 	kvps := kvps contents.
-	(KernelLibrary default
+	(Kernel32
 		writePrivateProfileSection: keyString asUtf16String shallowCopy
 		lpString: kvps
 		lpFileName: filename) == 0
@@ -48,14 +48,14 @@ getValue: aString
 	^IniFileSection open: filename section: aString!
 
 hasSectionNamed: aString
-	^(KernelLibrary default
+	^(Kernel32
 		getPrivateProfileSection: aString
 		lpReturnedString: (Utf16String newFixed: 3)
 		nSize: 3
 		lpFileName: filename) ~~ 0
 		or: 
 			["Special case of empty section is OK"
-			KernelLibrary default getLastError == 0]!
+			Kernel32 getLastError == 0]!
 
 includesKey: aString
 	"Answer whether the receiver has a section with the specified name."
@@ -67,11 +67,10 @@ includesKey: aString
 keysDo: operation
 	"Evaluate the <monadicValuable>, operation, for each of the receiver's section names."
 
-	| buf lib count start end |
+	| buf count start end |
 	buf := Utf16String newFixed: 512.
-	lib := KernelLibrary default.
 	
-	[count := lib
+	[count := Kernel32
 				getPrivateProfileSectionNames: buf
 				nSize: buf size
 				lpFileName: filename.
@@ -97,7 +96,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 	key := aString asUtf16String shallowCopy.
 	(self hasSectionNamed: key) ifFalse: [^aNiladicValuable value].
 	value := self getValue: key.
-	^(KernelLibrary default
+	^(Kernel32
 		writePrivateProfileSection: key
 		lpString: nil
 		lpFileName: filename) ifTrue: [value] ifFalse: [Win32Error signal]! !

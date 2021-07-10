@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValuePresenter subclass: #'UI.CollectionPresenter'
 	instanceVariableNames: 'addItemBlock listPresenter changing flags'
@@ -146,7 +146,7 @@ promptForExpression: promptString caption: captionString
 					[| mb |
 					mb := MessageBox new.
 					mb buttonStyle: #yesNo.
-					mb caption: 'Error evaluating expression...'.
+					mb caption: 'Error evaluating expression…'.
 					(mb errorMsg: ('<1d><n><n>Try again?' expandMacrosWithArguments: {error} locale: Locale smalltalk))
 						== #yes]]]
 			whileTrue.

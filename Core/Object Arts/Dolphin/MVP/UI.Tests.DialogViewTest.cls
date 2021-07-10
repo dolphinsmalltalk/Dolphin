@@ -1,7 +1,7 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'UI.Tests.DialogViewTest'
-	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
+UI.Tests.AbstractShellViewTest subclass: #'UI.Tests.DialogViewTest'
+	instanceVariableNames: 'owner shell2'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,7 +12,10 @@ UI.Tests.DialogViewTest comment: ''!
 !UI.Tests.DialogViewTest methodsFor!
 
 createShell: aRectangle text: aString
-	^ShellView new
+	| shell |
+	shell := ShellView new.
+	shells addLast: shell.
+	^shell
 		create;
 		rectangle: aRectangle;
 		text: aString;
@@ -55,29 +58,6 @@ evaluateInModalDialog: aBlock owner: ownerView centered: aBoolean
 	dialog isInProc: true.
 	dialog showModalTo: ownerView.
 	self deny: dialog isOpen!
-
-getSecondaryMonitorIfAvailable
-	"Private - Attempt to find a non-primary monitor, which will only be possible if more than one display monitor is attached."
-
-	| monitors |
-	monitors := DisplayMonitor desktopMonitors.
-	^monitors size > 1 ifTrue: [monitors detect: [:each | each isPrimary not]] ifFalse: [monitors first]!
-
-setUpFakeUserLibrary
-	fakeUser32 := FakeUserLibrary new.
-	fakeUser32
-		initializeForDesktopActive;
-		getCursorPosBlock: 
-				[:pointl |
-				pointl value: cursorPos.
-				1];
-		open!
-
-tearDown
-	fakeUser32 ifNotNil: [fakeUser32 close].
-	owner ifNotNil: [owner destroy].
-	shell2 ifNotNil: [shell2 destroy].
-	super tearDown!
 
 testCenteringInOwner
 	"Test that a modal dialog is centered in its owner."
@@ -125,6 +105,32 @@ testCenteringInOwnerModeless
 				<= 1.
 	dialog destroy!
 
+testInplaceNotRepositioned
+	| desktopMonitors position dialog leftMonitor ownerRect |
+	desktopMonitors := DisplayMonitor desktopMonitors.
+	leftMonitor := desktopMonitors first.
+	"This test requires multiple monitors arranged in a typical horizontal configuration. It could be made to work in a vertical configuration, but there much value."
+	self skipUnless: 
+			[desktopMonitors size > 1
+				and: [(desktopMonitors at: 2) workArea origin >= leftMonitor workArea topRight]].
+	"We need a view that is mainly on the left-most monitor, and partially on the next"
+	ownerRect := (leftMonitor workArea corner x - 400) @ 100 extent: 640 @ 480.
+	owner := self createShell: ownerRect text: self printString , ' owner'.
+	self assert: owner displayMonitor equals: leftMonitor.
+	dialog := DialogView new
+				isInitiallyCentered: false;
+				create;
+				yourself.
+	"Position the dialog on the 2nd monitor, but still over the owner view, before we show it"
+	dialog rectangle: (ownerRect corner - self dialogExtent + 50 extent: self dialogExtent).
+	self deny: dialog displayMonitor equals: leftMonitor.
+	position := dialog position.
+	"Show the dialog - it shouldn't get moved"
+	dialog showModeless: owner.
+	self deny: dialog displayMonitor equals: leftMonitor.
+	self assert: dialog position equals: position.
+	dialog destroy!
+
 testNearOwnerModal
 	"Test that a modal dialog that is not initially centred is at least shown on the same display as its owner."
 
@@ -153,6 +159,7 @@ testNearOwnerModeless
 	secondary := self getSecondaryMonitorIfAvailable.
 	self createTestShells: secondary.
 	dialog := self createSubjectDialog: false.
+	self assert: dialog displayMonitor equals: DisplayMonitor primary.
 	position := dialog position.
 	dialog showModeless: owner.
 	self assert: dialog displayMonitor equals: secondary.
@@ -199,22 +206,16 @@ testRemainsOnScreen
 		owner: owner
 		centered: true.
 	self assert: rect origin
-		equals: (self workAreaNearest: workArea topRight) topRight - (self dialogExtent x @ 0)!
-
-workAreaNearest: aPoint
-	^(DisplayMonitor nearestPoint: aPoint) workArea! !
-!UI.Tests.DialogViewTest categoriesFor: #createShell:text:!helpers!private! !
+		equals: (self workAreaNearest: workArea topRight) topRight - (self dialogExtent x @ 0)! !
+!UI.Tests.DialogViewTest categoriesFor: #createShell:text:!private! !
 !UI.Tests.DialogViewTest categoriesFor: #createSubjectDialog:!helpers!private! !
 !UI.Tests.DialogViewTest categoriesFor: #createTestShells:!helpers!private! !
 !UI.Tests.DialogViewTest categoriesFor: #dialogExtent!constants!private! !
 !UI.Tests.DialogViewTest categoriesFor: #evaluateInModalDialog:owner:centered:!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #getSecondaryMonitorIfAvailable!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #setUpFakeUserLibrary!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #tearDown!public!running! !
 !UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwner!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwnerModeless!public!unit tests! !
+!UI.Tests.DialogViewTest categoriesFor: #testInplaceNotRepositioned!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModal!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModeless!public!unit tests! !
 !UI.Tests.DialogViewTest categoriesFor: #testRemainsOnScreen!public!unit tests! !
-!UI.Tests.DialogViewTest categoriesFor: #workAreaNearest:!helpers!private! !
 

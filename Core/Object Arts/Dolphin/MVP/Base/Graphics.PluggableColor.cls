@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.VirtualColor subclass: #'Graphics.PluggableColor'
 	instanceVariableNames: 'valuable'
@@ -20,7 +20,12 @@ actualColor
 	^valuable value actualColor!
 
 printOn: aPuttableStream
-	self basicPrintOn: aPuttableStream!
+	aPuttableStream
+		print: self class;
+		space;
+		display: #with:;
+		space;
+		print: valuable!
 
 setValuable: aNiladicValuable 
 	valuable := aNiladicValuable!
@@ -36,14 +41,8 @@ stbSaveOn: anSTBOutFiler
 
 !Graphics.PluggableColor class methodsFor!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
-	"Override back to default implementation"
-
-	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion!
-
 with: aNiladicValuable 
 	<primitive: 157>
 	^self basicNew setValuable: aNiladicValuable! !
-!Graphics.PluggableColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Graphics.PluggableColor class categoriesFor: #with:!instance creation!public! !
 

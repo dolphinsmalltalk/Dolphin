@@ -1,0 +1,45 @@
+// Compiler resources Microsoft Visual C++ does not edit directly
+//
+#pragma code_page(65001)
+
+#ifdef APSTUDIO_INVOKED
+#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION DOLPHIN_VERINFO_VERSION
+PRODUCTVERSION DOLPHIN_VERINFO_VERSION
+ FILEFLAGSMASK 0x1fL
+#ifdef _DEBUG
+ FILEFLAGS 0x3L
+#else
+ FILEFLAGS 0x2L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "Object Arts Ltd."
+            VALUE "FileDescription", "Dolphin Smalltalk Compiler"
+            VALUE "FileVersion", DOLPHIN_FILE_VERSION
+            VALUE "InternalName", "Dolphin"
+            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2021"
+            VALUE "OriginalFilename", "DolphinCR8.DLL"
+            VALUE "ProductName", "Dolphin Smalltalk"
+            VALUE "ProductVersion", DOLPHIN_PRODUCT_VERSION
+		END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

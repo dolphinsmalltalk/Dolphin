@@ -53,6 +53,7 @@ package setClassNames: #(
 	#{Core.Tests.NumberTest}
 	#{Core.Tests.ObjectTest}
 	#{Core.Tests.OrderedCollectionTest}
+	#{Core.Tests.PairTest}
 	#{Core.Tests.PositionableStreamTest}
 	#{Core.Tests.ProcessTest}
 	#{Core.Tests.ReadStreamTest}
@@ -111,6 +112,7 @@ package setClassNames: #(
 	#{Kernel.Tests.BindingReferenceTest}
 	#{Kernel.Tests.BlockClosureTest}
 	#{Kernel.Tests.CaseInsensitiveSearchPolicyTest}
+	#{Kernel.Tests.ChunkSourceFilerTest}
 	#{Kernel.Tests.ClassBuilderTest}
 	#{Kernel.Tests.ClassBuilderTestClasses}
 	#{Kernel.Tests.CommandLineTest}
@@ -155,7 +157,6 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{External.PermanentLibrary class} #setDefault:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
 	#(#{Tools.SmalltalkSystem} #baselinedSlowTests)
 	#(#{Tools.SmalltalkSystem} #regressionTestsLogFilename)
@@ -191,6 +192,7 @@ package setPrerequisites: #(
 	'..\Dolphin Source Fileout'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
 	'..\..\ActiveX\COM\OLE COM'
+	'..\..\..\Samples\MVP\Scribble\Scribble'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
@@ -305,6 +307,12 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.CharacterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.NlsConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.ChunkSourceFilerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.ClassBuilderTest'
@@ -501,6 +509,12 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageManagerTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageTest'
 	instanceVariableNames: 'loadedPackages checkTimestamps'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Core.Tests.PairTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1090,14 +1104,6 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 
 
 "Loose Methods"!
-
-!External.PermanentLibrary class methodsFor!
-
-setDefault: anExternalLibrary
-	"Set the default instance of the receiver. For testing purposes only. The 'default' instance of permanent libraries should not normally be changed."
-
-	default := anExternalLibrary! !
-!External.PermanentLibrary class categoriesFor: #setDefault:!accessing!public! !
 
 !OS.CRTLibraryNonBlocking methodsFor!
 

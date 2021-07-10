@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.StaticView subclass: #'UI.ImageViewAbstract'
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
@@ -52,7 +52,7 @@ default: imageExtent in: displayRect
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."
 
-	^UserLibrary default
+	^User32
 		defWindowProc: handle
 		msg: message
 		wParam: wParam
@@ -157,7 +157,7 @@ invalidateRect: aRectangle erase: aBoolean
 						ifFalse: [self mapRectangle: aRectangle to: self parentView])
 				erase: aBoolean]
 		ifFalse: 
-			[UserLibrary default
+			[User32
 				invalidate: handle
 				lpRect: aRectangle asParameter
 				bErase: aBoolean asParameter]!

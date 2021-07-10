@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.CompiledCode variableSubclass: #'Kernel.CompiledExpression'
 	instanceVariableNames: ''
@@ -82,8 +82,7 @@ value
 	^self value: nil!
 
 value: anObject
-	"Evaluate the receiver with the argument, anObject, 
-	as its receiver, answering the result."
+	"Evaluate the receiver with the argument, anObject, as its receiver, answering the result."
 
 	^self value: anObject withArguments: #()! !
 !Kernel.CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!private! !

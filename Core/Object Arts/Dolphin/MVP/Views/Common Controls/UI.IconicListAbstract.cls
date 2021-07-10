@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ListControlView subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
@@ -30,7 +30,7 @@ applyImageLists
 !
 
 attachEditControl: hWnd
-	^SessionManager inputState windowAt: hWnd
+	^SessionManager.Current inputState windowAt: hWnd
 		ifAbsent: 
 			[| editView |
 			editView := (#{TextEdit} valueOrNil ?? ControlView) new.	"Attach a Smalltalk window so that keyboard accelerator keys will work in the in-place edit
@@ -535,7 +535,7 @@ nmEndLabelEdit: pNMHDR
 	changed. N.B. This notification is not necessarily sent by all subclasses."
 
 	| item object text |
-	SessionManager inputState removeWindowAt: self getEditControl.
+	SessionManager.Current inputState removeWindowAt: self getEditControl.
 	item := self itemFromNMHDRW: pNMHDR.
 	text := item pszText.
 	self canEditLabels ifFalse: [self disableLabelEdit].

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'OS.COM.ObjectRegistration'
 	instanceVariableNames: 'clsid name toolboxImage'
@@ -56,7 +56,7 @@ getUserType: form
 
 	| mem answer hresult |
 	mem := TaskMemory new.
-	hresult := OLELibrary default
+	hresult := Ole32
 				oleRegGetUserType: clsid
 				dwFormOfType: form
 				pszUserType: mem.
@@ -114,7 +114,7 @@ toolboxImage
 						ifFalse: 
 							[| resLib |
 							path := File pathBuffer.
-							KernelLibrary default
+							Kernel32
 								expandEnvironmentStrings: pathAndId first
 								lpDst: path
 								nSize: path size + 1.

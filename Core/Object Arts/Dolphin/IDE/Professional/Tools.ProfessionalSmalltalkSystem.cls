@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.CommunityEditionSmalltalkSystem subclass: #'Tools.ProfessionalSmalltalkSystem'
 	instanceVariableNames: 'systemBrowserClass ideaSpaceClass packagedResourceIdentifierDialogClass'
@@ -88,7 +88,12 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect choice: #defaultBrowserClass from: {self hierarchyBrowserClass. self systemBrowserClass});
+		add: ((Aspect
+					choice: #defaultBrowserClass
+					from: {self hierarchyBrowserClass. self systemBrowserClass}
+					type: ClassBrowserAbstract class)
+					icon: ClassBrowserAbstract icon;
+					yourself);
 		yourself!
 
 queryCommand: aCommandQuery
@@ -168,8 +173,11 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#packagedResourceIdentifierDialogClass #ideaSpaceClass #systemBrowserClass)
-		do: [:each | aspects add: (Aspect name: each)].
+	#(#packagedResourceIdentifierDialogClass #ideaSpaceClass #systemBrowserClass) do: 
+			[:each |
+			aspects add: ((Aspect name: each type: Presenter class)
+						icon: SmalltalkToolShell icon;
+						yourself)].
 	^aspects!
 
 uninitialize

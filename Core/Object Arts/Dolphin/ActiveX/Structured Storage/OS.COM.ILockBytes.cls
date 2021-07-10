@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.IUnknown subclass: #'OS.COM.ILockBytes'
 	instanceVariableNames: ''
@@ -63,7 +63,7 @@ handle
 
 	| hglobal |
 	hglobal := External.Handle new.
-	OLELibrary default getHGlobalFromILockBytes: self phglobal: hglobal.
+	Ole32 getHGlobalFromILockBytes: self phglobal: hglobal.
 	^hglobal!
 
 LockRegion: libOffset cb: cb dwLockType: dwLockType
@@ -253,7 +253,7 @@ onHGLOBAL: hGlobal
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		createILockBytesOnHGlobal: hGlobal
 		fDeleteOnRelease: true
 		pplkbyt: answer.

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'External.Structure'
 	instanceVariableNames: 'bytes'
@@ -45,7 +45,7 @@ _deepenShallowCopy: clone trail: copiesDictionary
 					[| isNull |
 					(isNull := self isNull) == anExternalStructure isNull and: 
 							[isNull or: 
-									[(CRTLibrary default
+									[(Ucrt
 										memcmp: self
 										buf2: anExternalStructure
 										count: self comparisonSize) == 0]]]]!
@@ -249,7 +249,7 @@ hash
 	In order for internal structure to have the same value as pointer structures
 	we use the VM export here."
 
-	^VMLibrary default hashBytes: bytes count: self comparisonSize!
+	^VM hashBytes: bytes count: self comparisonSize!
 
 heapPointerClass
 	"Private - Answer the default class to use as a heap pointer"
@@ -675,7 +675,7 @@ init: buffer
 	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type
 	described by the receiver. Assumes that the memory is completely uninitialized."
 
-	KernelLibrary default zeroMemory: buffer length: self byteSize!
+	Kernel32 zeroMemory: buffer length: self byteSize!
 
 initializeAfterLoad
 	"Private - Ensure the template is removed. This could have been incorrectly initialised

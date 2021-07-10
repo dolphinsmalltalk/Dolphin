@@ -20,6 +20,7 @@ package setPrerequisites: #(
 	'Database Connection Base'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
+	'..\Base\Dolphin Legacy Date & Time'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'

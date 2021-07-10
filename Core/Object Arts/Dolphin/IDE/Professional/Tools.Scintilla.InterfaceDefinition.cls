@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.Scintilla.InterfaceDefinition'
 	instanceVariableNames: 'id name isDeprecated comment selector constName'
@@ -62,8 +62,8 @@ selector
 icon
 	^UI.Scintilla.ScintillaView icon!
 
-id: anInteger name: nameString retType: retString 
-	^self new 
+id: anInteger name: nameString retType: retString
+	^self new
 		id: anInteger
 		name: nameString
 		retType: retString!

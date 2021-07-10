@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Security.DolphinSureCertificateInfo'
 	instanceVariableNames: 'serial owner details issued expiry publicKey'

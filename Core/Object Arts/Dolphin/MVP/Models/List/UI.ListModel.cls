@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SequencedGrowableCollection subclass: #'UI.ListModel'
 	instanceVariableNames: 'list events searchPolicy'
@@ -51,6 +51,16 @@ addAll: newElements
 
 	newElements do: [ :each | self add: each ].
 	^newElements!
+
+addAll: aCollection afterIndex: anInteger
+	"Add all of the elements in the <collection>, aCollection, after the existing element of the receiver at the  one-based <integer> index, anInteger. Answer the newly added elements."
+
+	self list addAll: aCollection afterIndex: anInteger.
+	self
+		trigger: #items:addedAtIndex:
+		with: aCollection
+		with: anInteger + 1.
+	^aCollection!
 
 addAnsweringIndex: newObject
 	"Append newObject as the last element of the receiver. 
@@ -310,6 +320,7 @@ stbSaveOn: anSTBOutFiler
 !UI.ListModel categoriesFor: #add:!adding!public! !
 !UI.ListModel categoriesFor: #add:afterIndex:!adding!public! !
 !UI.ListModel categoriesFor: #addAll:!adding!public! !
+!UI.ListModel categoriesFor: #addAll:afterIndex:!adding!public! !
 !UI.ListModel categoriesFor: #addAnsweringIndex:!adding!public! !
 !UI.ListModel categoriesFor: #at:!accessing!public! !
 !UI.ListModel categoriesFor: #at:put:!accessing!public! !

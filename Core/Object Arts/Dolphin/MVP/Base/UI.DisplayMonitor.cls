@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.DisplayMonitor'
 	instanceVariableNames: 'handle info devices'
@@ -43,7 +43,7 @@ devices
 			i := 0.
 			device := DISPLAY_DEVICEW newBuffer.
 			
-			[UserLibrary default
+			[User32
 				enumDisplayDevices: self deviceName
 				iDevNum: i
 				lpDisplayDevice: device
@@ -66,7 +66,7 @@ info
 	^info
 		ifNil: 
 			[info := MONITORINFOEXW newBuffer.
-			(UserLibrary default getMonitorInfo: handle lpmi: info) ifFalse: [Win32Error signal].
+			(User32 getMonitorInfo: handle lpmi: info) ifFalse: [Win32Error signal].
 			info]!
 
 isAttachedToDesktop
@@ -118,14 +118,11 @@ workArea
 !UI.DisplayMonitor class methodsFor!
 
 active
-	"Answer an instance of the receiver representing the monitor that is most likely to be the one the user might consider active. There is no completely reliable way to determine this, so we use the heuristic that the monitor of the foreground window (whether that is a Dolphin window or not) is likely to be the one with the users' interest.
-	An exception is if the 'Progman' window is the foreground window, which will be the case if the user has clicked on the desktop (at least in any version of Windows that is currently relevant)."
+	"Answer an instance of the receiver representing the monitor that is most likely to be the one the user might consider active. There is no completely reliable way to determine this, so we use the heuristic that the monitor of the foreground window is to be used if that is a Dolphin window, otherwise the monitor over which the cursor is hovering. The reason for making this distinction is that the foreground window may be some part of the Windows shell if the user clicked on the desktop background or the taskbar, which are always considered as being on the primary monitor only. Up until Windows 11 it was possible to detect this case reasonably well by detecting that the window with focus was the 'Program Manager', but this no longer holds in Windows 11. Therefore we just go for the simpler option of tracking the cursor when the active window is not a Dolphin window."
 
-	UserLibrary default getForegroundWindow
-		ifNotNil: [:hWnd | (DesktopView isProgramManager: hWnd) ifFalse: [^self displayingView: hWnd]].
-
-	"We want to return the display with the mouse cursor if the desktop (really the program manager) has focus, or in the unlikely event that GetForegroundWindow returns null, which according to the docs it can do if activation is in transition."
-	^self containingPoint: Cursor position!
+	^View active
+		ifNil: [self containingPoint: Cursor position]
+		ifNotNil: [:hWnd | self displayingView: hWnd]!
 
 allIntersecting: aRectangle
 	"Answer a `<collection>` containing instances of the receiver describing all the display monitors with display areas that intersect the specified virtual screen area (i.e. desktop area)."
@@ -141,7 +138,7 @@ containingPoint: aPoint
 	"Answer an instance of the receiver describing the monitor on which the specified 'Point' in the screen co-ordinate space would appear. If the View is outside the display area of any of the connected monitors, answer nil.
 	Note that there may be areas of the virtual screen area that are not visible, depending on the relative sizes and positioning of the monitors in the Windows display settings, i.e. a Point within the virtual screen area may not actually be displayed on any monitor."
 
-	^(UserLibrary default monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONULL)
+	^(User32 monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONULL)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
 
 desktopMonitors
@@ -153,7 +150,7 @@ displayingView: aViewOrHandle
 	"Answer an instance of the receiver describing the monitor on which the specified `View`/window is (at least mostly) displayed. Note that for the desktop window, the primary monitor will be returned.
 	If the window is outside the visible display area, answer nil."
 
-	^(UserLibrary default monitorFromWindow: aViewOrHandle asParameter dwFlags: MONITOR_DEFAULTTONULL)
+	^(User32 monitorFromWindow: aViewOrHandle asParameter dwFlags: MONITOR_DEFAULTTONULL)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
 
 forCanvas: aCanvas intersecting: aRectangle
@@ -173,7 +170,7 @@ forCanvas: aCanvas intersecting: aRectangle
 
 forCanvas: aCanvas intersecting: aRectangle do: aMonadicValuable
 	| user32 callback answer |
-	user32 := UserLibrary default.
+	user32 := User32.
 	callback := External.Callback block: 
 					[:hMonitor :hdc :lprect :lparam |
 					aMonadicValuable value: (DisplayMonitor fromHandle: hMonitor).
@@ -201,27 +198,27 @@ icon
 intersecting: aRectangle
 	"Answer an instance of the receiver describing the monitor which has the largest intersection with the specified `Rectangle` of the screen co-ordinate space, or nil if there is no intersection."
 
-	^(UserLibrary default monitorFromRect: aRectangle asParameter dwFlags: MONITOR_DEFAULTTONULL)
+	^(User32 monitorFromRect: aRectangle asParameter dwFlags: MONITOR_DEFAULTTONULL)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
 
 nearestPoint: aPoint
 	"Answer an instance of the receiver describing the monitor to which the specified `Point` (expressing a position in the screen co-ordinate space) is nearest."
 
-	^(UserLibrary default monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
+	^(User32 monitorFromPoint: aPoint asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]
 		ifNil: [Win32Error signal]!
 
 nearestView: aView
 	"Answer an instance of the receiver describing the monitor on which the specified `View` is either mostly displayed, or, if off-screen, to which it is nearest."
 
-	^(UserLibrary default monitorFromWindow: aView asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
+	^(User32 monitorFromWindow: aView asParameter dwFlags: MONITOR_DEFAULTTONEAREST)
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]
 		ifNil: [Win32Error signal]!
 
 primary
 	"Answer an instance of the receiver describing the primary display monitor."
 
-	^(UserLibrary default monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
+	^(User32 monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
 		ifNil: [Win32Error signal]
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]! !
 !UI.DisplayMonitor class categoriesFor: #active!instance creation!public! !

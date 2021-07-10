@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SequenceableCollection subclass: #'OS.COM.Enumerable'
 	instanceVariableNames: 'interface'

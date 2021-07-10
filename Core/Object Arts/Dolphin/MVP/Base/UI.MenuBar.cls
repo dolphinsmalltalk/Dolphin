@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Menu subclass: #'UI.MenuBar'
 	instanceVariableNames: ''
@@ -15,7 +15,7 @@ UI.MenuBar comment: 'MenuBar represents the special class of menus drawn horizon
 createHandle
 	"Private - Answer an external handle to a new menu."
 
-	^UserLibrary default createMenu!
+	^User32 createMenu!
 
 isMenuBar
 	"Answer whether the receiver is a menu bar rather

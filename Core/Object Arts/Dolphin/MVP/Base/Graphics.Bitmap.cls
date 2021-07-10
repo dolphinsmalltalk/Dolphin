@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Image subclass: #'Graphics.Bitmap'
 	instanceVariableNames: 'hdc flags extent'
@@ -87,7 +87,7 @@ asByteArray
 	byte of each DWORD being unused."
 
 	| bmi canvas ret height bits byteSize size width |
-	canvas := Canvas withOwnedDC: (GDILibrary default createCompatibleDC: nil).
+	canvas := Canvas withOwnedDC: (Gdi32 createCompatibleDC: nil).
 	self freeDC.
 	size := self extent.
 	height := size y.
@@ -102,7 +102,7 @@ asByteArray
 		biCompression: BI_RGB;
 		biSizeImage: byteSize.
 	bits := ByteArray newFixed: byteSize.
-	ret := GDILibrary default
+	ret := Gdi32
 				getDIBits: canvas asParameter
 				hbm: self asParameter
 				uStartScan: 0
@@ -144,8 +144,8 @@ canvas
 
 	hdc isNil
 		ifTrue: 
-			[hdc := GDILibrary default createCompatibleDC: nil.
-			GDILibrary default selectObject: hdc hgdiobj: self asParameter].
+			[hdc := Gdi32 createCompatibleDC: nil.
+			Gdi32 selectObject: hdc hgdiobj: self asParameter].
 	^Canvas withNonOwnedDC: hdc!
 
 clearCached
@@ -212,7 +212,7 @@ createPalette
 				startingAt: 1.
 			palEntries length: len.
 			lp palNumEntries: len.
-			GDILibrary default createPalette: lp]!
+			Gdi32 createPalette: lp]!
 
 createWatermarkAlphaPercent: percent backcolor: backcolor
 	| blend combined transparentColor mask rect watermark hasAlpha |
@@ -293,7 +293,7 @@ detachHandle
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
 
-	^UserLibrary default
+	^User32
 		drawState: aCanvas asParameter
 		hbr: nil
 		lpOutputFunc: nil
@@ -381,7 +381,7 @@ freeDC
 	Implementation Note: The hdc is lazily created by #canvas so needs to be tested first."
 
 	hdc isNil ifTrue: [^self].
-	GDILibrary default deleteDC: hdc.	"Ignore errors"
+	Gdi32 deleteDC: hdc.	"Ignore errors"
 	hdc := nil!
 
 getColorTable
@@ -476,7 +476,7 @@ loadFromFile: pathString extent: anObject
 	| fuLoad |
 	fuLoad := self baseLoadFlags bitOr: LR_LOADFROMFILE.
 	self getMap3DColors ifTrue: [fuLoad := fuLoad bitOr: LR_LOADMAP3DCOLORS].
-	^UserLibrary default
+	^User32
 		loadImage: 0
 		lpszName: pathString asResourceId
 		uType: self imageType
@@ -489,7 +489,7 @@ loadFromInstance: hModule
 	Answers the bitmaps handle, or nil if the bitmap could not be loaded."
 
 	extent := nil.	"Any old cached extent may be invalid and no longer match the loaded resource."
-	^UserLibrary default
+	^User32
 		loadImage: hModule asParameter
 		lpszName: identifier asResourceId
 		uType: self imageType
@@ -592,7 +592,7 @@ compatible: canvas width: width height: height
 	"Answer a new instance of the receiver with suitable dimensions and
 	available colours the same as canvas."
 
-	^self fromOwnedHandle: (GDILibrary default
+	^self fromOwnedHandle: (Gdi32
 				createCompatibleBitmap: canvas asParameter
 				nWidth: width
 				nHeight: height)!
@@ -629,7 +629,7 @@ fromId: anIntegerOrStringId inFile: aString flags: anInteger
 
 	| reslib icon |
 	reslib := External.ResourceLibrary open: aString.
-	icon := self fromOwnedHandle: (UserLibrary default
+	icon := self fromOwnedHandle: (User32
 						loadImage: reslib asParameter
 						lpszName: anIntegerOrStringId asResourceId
 						uType: IMAGE_BITMAP
@@ -719,7 +719,7 @@ width: widthInteger height: heightInteger depth: depthInteger
 width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bpsInteger bits: anExternalAddressOrNil
 	"Answer a new instance of the receiver with suitable dimensions."
 
-	^self fromOwnedHandle: (GDILibrary default
+	^self fromOwnedHandle: (Gdi32
 				createBitmap: widthInteger
 				nHeight: heightInteger
 				cPlanes: planesInteger

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.DBSchemaStatement subclass: #'Database.DBTablesStatement'
 	instanceVariableNames: 'tableType'
@@ -15,7 +15,7 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^OS.ODBCLibrary default 
+	^OS.Odbc32
 		sqlTables: self allocatedHandle
 		szTableQualifier: catalogName
 		cbTableQualifier: SQL_NTS

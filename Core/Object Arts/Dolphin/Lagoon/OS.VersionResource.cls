@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'OS.VersionResource'
 	instanceVariableNames: 'fixedInfo stringTables translations'
@@ -211,22 +211,21 @@ unpackVarFileInfo: aZVersionBlockHeader
 			self unpackVar: varHeader.
 			offset := offset + varHeader wLength]!
 
-updateFile: aString 
-	KernelLibrary default updateResourcesOf: aString do: [:hUpdate | self updateResource: hUpdate]!
+updateFile: aString
+	Kernel32 updateResourcesOf: aString do: [:hUpdate | self updateResource: hUpdate]!
 
 updateResource: anExternalHandle
 	"Update the version resource of the module on which the argument, anExternalHandle, is a resource update handle."
 
 	| resourceBytes |
 	resourceBytes := self pack.
-	(KernelLibrary default
+	(Kernel32
 		updateResource: anExternalHandle
 		lpType: RT_VERSION
 		lpName: 1
 		wLanguage: self languageId
 		lpData: resourceBytes
-		cbData: resourceBytes size)
-			ifFalse: [KernelLibrary default systemError]!
+		cbData: resourceBytes size) ifFalse: [Kernel32 systemError]!
 
 writeBinaryHeaderTo: aWriteStream key: keyString value: valueBytes
 	"Private - Append a VS_VERSION_INFO header block of wType 1 (text) to the <puttableStream>, 
@@ -433,22 +432,18 @@ getVersionResourceOfModule: anExternalResourceLibrary
 	"Private - Answer a pointer to the version resource in the specified module, or null if it doesn't have one.
 	Note that there is no explicit call to unlock version resources."
 
-	| kernel hFind hRes address |
-	kernel := KernelLibrary default.
-	(hFind := kernel 
+	| hFind hRes address |
+	(hFind := Kernel32
 				findResource: anExternalResourceLibrary asParameter
 				lpName: 1
-				lpType: RT_VERSION) isNull 
+				lpType: RT_VERSION) isNull
 		ifTrue: [^nil].
-	(hRes := kernel loadResource: anExternalResourceLibrary asParameter hResInfo: hFind) 
-		isNull 
-			ifTrue: 
-				[self error: 'Unable to load version resource from module: ' 
-							, anExternalResourceLibrary printString].
-	(address := (kernel lockResource: hRes) asExternalAddress) isNull 
+	(hRes := Kernel32 loadResource: anExternalResourceLibrary asParameter hResInfo: hFind) isNull
 		ifTrue: 
-			[self error: 'Unable to lock version resource from module: ' 
-						, anExternalResourceLibrary printString].
+			[self error: 'Unable to load version resource from module: ' , anExternalResourceLibrary printString].
+	(address := (Kernel32 lockResource: hRes) asExternalAddress) isNull
+		ifTrue: 
+			[self error: 'Unable to lock version resource from module: ' , anExternalResourceLibrary printString].
 	^address!
 
 new

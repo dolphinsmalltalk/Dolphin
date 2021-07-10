@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object variableSubclass: #'Kernel.BlockClosure'
 	instanceVariableNames: 'outer method initialIP info receiver'
@@ -502,7 +502,7 @@ postToInputQueue
 	"Queue the receiver as a deferred action to be evaluated by the main UI process
 	when the Windows message queue is empty."
 
-	SessionManager inputState queueDeferredAction: self!
+	SessionManager.Current inputState queueDeferredAction: self!
 
 postToMessageQueue
 	"Queue the receiver as a deferred action to be evaluated by the main UI process in
@@ -513,7 +513,7 @@ postToMessageQueue
 	deferred actions are treated as a lower priority than any Windows messages. Also it will
 	work even when a modal message loop (such as the menu processing loop) is active."
 
-	SessionManager inputState postAction: self!
+	SessionManager.Current inputState postAction: self!
 
 printOn: aStream 
 	"Append, to aStream, a <String> whose characters are a description of the receiver."
@@ -589,14 +589,13 @@ tempCount
 ticksToRun
 	"Private - Answer the number of performance counter ticks consumed by the evaluation of the receiver (including the overhead). The length of a counter tick is system dependent, but usually it is 100nS."
 
-	| startTime endTime lib endTimeAddress |
+	| startTime endTime endTimeAddress |
 	startTime := LargeInteger new64.
 	endTime := LargeInteger new64.
 	endTimeAddress := endTime basicYourAddress.
-	lib := KernelLibrary default.
-	lib queryPerformanceCounter: startTime basicYourAddress.
+	Kernel32 queryPerformanceCounter: startTime basicYourAddress.
 	self value.
-	lib queryPerformanceCounter: endTimeAddress.
+	Kernel32 queryPerformanceCounter: endTimeAddress.
 	^endTime normalize - startTime normalize!
 
 timeToRepeat: anInteger

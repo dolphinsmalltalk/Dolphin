@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.ImageAttributes'
 	instanceVariableNames: ''
@@ -15,10 +15,10 @@ basicFree
 	"Private - Free up external resources held by the receiver.
 	Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDisposeImageAttributes: handle!
+	Gdip gdipDisposeImageAttributes: handle!
 
 colorKeys: aColorAdjustTypeConstant colorLow: lowARGB colorHigh: highARGB
-	GdiplusLibrary default
+	Gdip
 		gdipSetImageAttributesColorKeys: self asParameter
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE
@@ -36,7 +36,7 @@ colorMatrix: aColorMatrix
 colorMatrix: aColorMatrix type: aColorAdjustTypeConstant mode: aColorMatrixFlagsConstant
 	"Set the receiver's color-adjustment matrix for a specified category."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetImageAttributesColorMatrix: self asParameter
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE
@@ -52,14 +52,14 @@ gamma: aFloat
 gamma: aFloat type: aColorAdjustTypeConstant
 	"Set the receiver's gamma value for the specified color adjustment category."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetImageAttributesGamma: self asParameter
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE
 		gamma: aFloat!
 
 outputChannel: aColorAdjustTypeConstant channelFlags: channelFlags
-	GdiplusLibrary default
+	Gdip
 		gdipSetImageAttributesOutputChannel: self asParameter
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE
@@ -74,7 +74,7 @@ remapColor: oldColor to: newColor type: anInteger
 	colorMapping
 		oldColor: oldColor argbCode;
 		newColor: newColor argbCode.
-	GdiplusLibrary default
+	Gdip
 		gdipSetImageAttributesRemapTable: self asParameter
 		type: anInteger
 		enableFlag: TRUE
@@ -85,7 +85,7 @@ remapTable: aColorMapArray
 	^self remapTable: aColorMapArray type: ColorAdjustTypeDefault!
 
 remapTable: aColorMapArray type: aColorAdjustTypeConstant
-	GdiplusLibrary default
+	Gdip
 		gdipSetImageAttributesRemapTable: self asParameter
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE
@@ -100,7 +100,7 @@ threshold: aFloat
 threshold: aFloat type: aColorAdjustTypeConstant
 	"Set the receiver's threshold (transparency range) for a specified category."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetImageAttributesThreshold: self asParameter
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE

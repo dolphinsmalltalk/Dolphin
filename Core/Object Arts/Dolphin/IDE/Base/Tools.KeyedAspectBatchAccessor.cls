@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.BatchAspectAccessor subclass: #'Tools.KeyedAspectBatchAccessor'
 	instanceVariableNames: ''
@@ -15,27 +15,30 @@ aspectClass
 	^KeyedAspect!
 
 getBatchAccessors
-	"Answer an <OrderedCollection> of the <AspectAccessors> on the batch of
-	<KeyedAspect>s represented by the receiver"
+	"Answer an `Array` of the `AspectAccessors` on the batch of `KeyedAspect`s represented by the receiver"
 
 	| accessors absentCookie start end subj keys |
 	start := self startKey.
 	keys := self keys.
 	end := start + self batchSize - 1 min: keys size.
-	accessors := OrderedCollection new: end - start + 1.
+	accessors := Array writeStream: end - start + 1.
 	absentCookie := Object new.
 	subj := self subject.
-	keys 
+	keys
 		from: start
 		to: end
 		do: 
-			[:eachKey | 
+			[:eachKey |
 			| item |
 			item := subj at: eachKey ifAbsent: [absentCookie].
-			item == absentCookie 
-				ifFalse: [accessors add: ((item newAspect: eachKey class: self aspectClass) accessorFor: subj)]].
-	(self nextBatch: end+1) ifNotNil: [:nextBatch | accessors add: nextBatch].
-	^accessors!
+			item == absentCookie
+				ifFalse: 
+					[accessors
+						nextPut: (((item newAspect: eachKey class: self aspectClass)
+								type: nil;
+								yourself) accessorFor: subj)]].
+	(self nextBatch: end + 1) ifNotNil: [:nextBatch | accessors nextPut: nextBatch].
+	^accessors grabContents!
 
 publishedAspects
     	"Answer a <LookupTable> of the <Aspect>s published by the receiver.

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Path'
 	instanceVariableNames: ''
@@ -17,7 +17,7 @@ addArc: aRectangle angles: aPoint
 	"Add an arc to the receiver whose bounds are aRectangle and whose start and sweep 
 	angles are specified by aPoint."
 
-	GdiplusLibrary default
+	Gdip
 		gdipAddPathArcI: self asParameter
 		x: aRectangle left
 		y: aRectangle top
@@ -27,14 +27,14 @@ addArc: aRectangle angles: aPoint
 		sweepAngle: aPoint y!
 
 addClosedCurve: aPointsCollection
-	GdiplusLibrary default
+	Gdip
 		gdipAddPathClosedCurveI: self asParameter
 		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
 				elementClass: POINTL)
 		count: aPointsCollection size!
 
 addCurve: aPointsCollection
-	GdiplusLibrary default
+	Gdip
 		gdipAddPathCurveI: self asParameter
 		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
 				elementClass: POINTL)
@@ -43,7 +43,7 @@ addCurve: aPointsCollection
 addEllipse: aRectangle
 	"Add an ellipse to the receiver whose bounds are aRectangle."
 
-	GdiplusLibrary default
+	Gdip
 		gdipAddPathEllipseI: self asParameter
 		x: aRectangle left
 		y: aRectangle top
@@ -51,7 +51,7 @@ addEllipse: aRectangle
 		height: aRectangle height!
 
 addLineFrom: startPoint to: endPoint
-	GdiplusLibrary default
+	Gdip
 		gdipAddPathLineI: self asParameter
 		x1: startPoint x
 		y1: startPoint y
@@ -63,14 +63,14 @@ addLines: aPointsCollection
 		do: [:i | self addLineFrom: (aPointsCollection at: i) to: (aPointsCollection at: i + 1)]!
 
 addPolygon: aPointsCollection
-	GdiplusLibrary default
+	Gdip
 		gdipAddPathPolygonI: self asParameter
 		points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
 				elementClass: POINTL)
 		count: aPointsCollection size!
 
 addRectangle: aRectangle
-	GdiplusLibrary default
+	Gdip
 		gdipAddPathRectangleI: self asParameter
 		x: aRectangle left
 		y: aRectangle top
@@ -80,7 +80,7 @@ addRectangle: aRectangle
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeletePath: handle!
+	Gdip gdipDeletePath: handle!
 
 bounds
 	"Answer a bounding Rectangle for the receiver."
@@ -88,20 +88,20 @@ bounds
 	^self getBounds: nil pen: nil!
 
 closeFigure
-	GdiplusLibrary default gdipClosePathFigure: self asParameter!
+	Gdip gdipClosePathFigure: self asParameter!
 
 fillMode
 	"Answer the receiver's fillMode, a FillMode constant."
 
 	| fillMode |
 	fillMode := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPathFillMode: self asParameter fillMode: fillMode.
+	Gdip gdipGetPathFillMode: self asParameter fillMode: fillMode.
 	^fillMode sdwordAtOffset: 0!
 
 fillMode: aFillModeConstant
 	"Set the receiver's fillMode to aFillModeConstant."
 
-	GdiplusLibrary default gdipSetPathFillMode: self asParameter fillMode: aFillModeConstant!
+	Gdip gdipSetPathFillMode: self asParameter fillMode: aFillModeConstant!
 
 getBounds: aGdiplusMatrix pen: aGdiplusPen
 	"Private - Answer a bounding Rectangle for the receiver.  aGdiplusMatrix specifies a temporary 
@@ -111,7 +111,7 @@ getBounds: aGdiplusMatrix pen: aGdiplusPen
 
 	| rect |
 	rect := RECTL new.
-	GdiplusLibrary default
+	Gdip
 		gdipGetPathWorldBoundsI: self asParameter
 		bounds: rect
 		matrix: aGdiplusMatrix asParameter
@@ -123,11 +123,11 @@ pointCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetPointCount: self asParameter count: count.
+	Gdip gdipGetPointCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 startFigure
-	GdiplusLibrary default gdipStartPathFigure: self asParameter! !
+	Gdip gdipStartPathFigure: self asParameter! !
 !Graphics.Gdiplus.Path categoriesFor: #addArc:angles:!operations!public! !
 !Graphics.Gdiplus.Path categoriesFor: #addClosedCurve:!operations!public! !
 !Graphics.Gdiplus.Path categoriesFor: #addCurve:!operations!public! !

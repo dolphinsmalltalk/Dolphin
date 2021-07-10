@@ -41,6 +41,7 @@ package setClassNames: #(
 	#{Graphics.Brush}
 	#{Graphics.Canvas}
 	#{Graphics.Color}
+	#{Graphics.ColorAlpha}
 	#{Graphics.ColorDefault}
 	#{Graphics.ColorNone}
 	#{Graphics.ColorRef}
@@ -87,6 +88,7 @@ package setClassNames: #(
 	#{OS.DRAWITEMSTRUCT}
 	#{OS.DTBGOPTS}
 	#{OS.DwmApiLibrary}
+	#{OS.ENUMLOGFONTW}
 	#{OS.FLASHWINFO}
 	#{OS.GDILibrary}
 	#{OS.GRADIENT_RECT}
@@ -385,6 +387,18 @@ package setMethodNames: #(
 	#(#{UI.ResourceIdentifier} #loadWithContext:)
 	#(#{UI.ResourceIdentifier} #loadWithContext:forEdit:)
 	#(#{UI.ResourceIdentifier} #show)
+).
+
+package setVariableNames: #(
+	#{OS.ComCtl32}
+	#{OS.Gdi32}
+	#{OS.UxTheme}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.ComCtl32}
+	#{OS.Gdi32}
+	#{OS.UxTheme}
 ).
 
 package setPrerequisites: #(
@@ -1587,6 +1601,12 @@ Graphics.ColorRef subclass: #'Graphics.RGB'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Graphics.VirtualColor subclass: #'Graphics.ColorAlpha'
+	instanceVariableNames: 'color alpha'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Graphics.VirtualColor subclass: #'Graphics.PluggableColor'
 	instanceVariableNames: 'valuable'
 	classVariableNames: ''
@@ -1643,7 +1663,7 @@ External.DynamicLinkLibrary subclass: #'OS.DwmApiLibrary'
 	classConstants: {}!
 External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
-	classVariableNames: 'IsAppThemed'
+	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -2677,6 +2697,15 @@ OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
 	classConstants: {
 		'_OffsetOf_lfFaceName' -> 16r1C
 	}!
+OS.LOGFONTW subclass: #'OS.ENUMLOGFONTW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elfFullName' -> 16r5C.
+		'_OffsetOf_elfStyle' -> 16rDC
+	}!
 OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2751,7 +2780,7 @@ UI.View subclass: #'UI.ControlView'
 	classConstants: {}!
 UI.View subclass: #'UI.DesktopView'
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current ProgmanClassAtom'
+	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

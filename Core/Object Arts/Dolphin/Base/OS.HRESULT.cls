@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.INTEGER subclass: #'OS.HRESULT'
 	instanceVariableNames: ''
@@ -36,10 +36,10 @@ displayOn: aPuttableStream
 				ifTrue: 
 					[flags := flags bitOr: FORMAT_MESSAGE_FROM_HMODULE.
 					code := code bitAnd: ##(FACILITY_NT_BIT bitInvert).
-					NTLibrary default asParameter asInteger].
+					NtDll asParameter asInteger].
 	lcid := aPuttableStream locale primary lcid.
 	
-	[len := KernelLibrary default
+	[len := Kernel32
 				formatMessage: flags
 				lpSource: hModule
 				dwMessageId: code

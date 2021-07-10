@@ -105,10 +105,8 @@ styleNames
 currentLineAlpha: alphaInteger
 	"Set background alpha of the caret line."
 
-	#deprecated.	"Use a currentLineBackcolor with alpha"
-	self
-		currentLineBackcolor: (self currentLineBackcolor alpha: alphaInteger);
-		currentLineBackcolorLayer: (alphaInteger < 255 ifTrue: [#underText] ifFalse: [#base])!
+	Notification deprecated.	"Use a currentLineBackcolor with a Color with alpha"
+	self currentLineBackcolor: (self currentLineBackcolor alpha: alphaInteger)!
 
 firstVisibleLine: anInteger
 	"Scroll so that a display line is at the top of the display."
@@ -155,52 +153,42 @@ isDrawingTwoPhase
 	"Is drawing done in two phases with backgrounds drawn before foregrounds?"
 
 	#deprecated.
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETTWOPHASEDRAW
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETTWOPHASEDRAW
+		wParam: 0
+		lParam: 0!
 
 isDrawingTwoPhase: twoPhaseBoolean
 	"In twoPhaseDraw mode, drawing is performed in two phases, first the background and then the
 	foreground. This avoids chopping off characters that overlap the next run."
 
 	#deprecated.
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETTWOPHASEDRAW
-				wParam: twoPhaseBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETTWOPHASEDRAW
+		wParam: twoPhaseBoolean asParameter
+		lParam: 0!
 
 isKeyboardInputUnicode
 	"Are keys always interpreted as Unicode?"
 
 	#deprecated.
-	^this
-		ifNil: [false]
-		ifNotNil: 
-			[(Library
-				directFunction: this
-				msg: SCI_GETKEYSUNICODE
-				wParam: 0
-				lParam: 0) asBoolean]!
+	^library
+		directBooleanFunction: this
+		msg: SCI_GETKEYSUNICODE
+		wParam: 0
+		lParam: 0!
 
 isKeyboardInputUnicode: keysUnicodeBoolean
 	"Deprecated in 3.5.5 Always interpret keyboard input as Unicode"
 
 	#deprecated.
-	this
-		ifNotNil: 
-			[Library
-				directFunction: this
-				msg: SCI_SETKEYSUNICODE
-				wParam: keysUnicodeBoolean asParameter
-				lParam: 0]!
+	library
+		directFunction: this
+		msg: SCI_SETKEYSUNICODE
+		wParam: keysUnicodeBoolean asParameter
+		lParam: 0!
 
 marginCount
 	"Answer the maximum number of margins that can be displayed. As of Scintilla 3.7.0

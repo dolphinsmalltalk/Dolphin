@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.AbstractInterfaceFunction subclass: #'OS.COM.InterfaceFunction'
 	instanceVariableNames: 'selector descriptor'

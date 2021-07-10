@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SessionManager subclass: #'Kernel.BootSessionManager'
 	instanceVariableNames: 'productDetails startTime'
@@ -16,8 +16,7 @@ allocConsole
 
 	"Attach to the existing console so that the output goes to the build log"
 
-	(KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS)
-		ifFalse: [KernelLibrary default allocConsole]!
+	(Kernel32 attachConsole: ATTACH_PARENT_PROCESS) ifFalse: [Kernel32 allocConsole]!
 
 basicTertiaryStartup
 	"Perform tertiary system startup operations."
@@ -71,7 +70,7 @@ logError: anException
 
 	"Write to the crash dump log - this always works"
 
-	VMLibrary default
+	VM
 		dump: anException description
 		path: nil
 		stackDepth: -1
@@ -135,7 +134,7 @@ openSources
 	self stdout
 		nextPutAll: 'Dolphin Smalltalk Boot';
 		cr;
-		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2018.';
+		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2021.';
 		cr;
 		flush!
 
@@ -147,30 +146,15 @@ primaryStartup
 	self openSources!
 
 productDetails
-	"Private - Answers an eight element<Array> describing this version of the development environment
-
-	1. <readableString> Product name 
-	2. <readableString> Short product name
-	3. <Float> Version number
-	4. <readableString> Version special
-	5. <Integer> Image patch level
-	6 <readableString> Very short product name
-	7 <readableString> Serial number
-	8 <readableString> Boot source info"
-
-	productDetails isNil ifTrue: [productDetails := VMLibrary default defaultProductDetails].
+	productDetails isNil ifTrue: [productDetails := VM defaultProductDetails].
 	^productDetails!
 
-productDetails: anArray
-	"Private - Sets the receiver's product details to an eight element<Array> 
-	describing this version of the development environment"
-
-	productDetails := anArray!
+productDetails: aLookupTable
+	productDetails := aLookupTable!
 
 productVersion
-	"Answers the <Float> version of this product"
-
-	^VMLibrary default defaultProductDetails at: 3!
+	#todo.	"Revise the Dolphin Product package handling of version numbers to not expect a Float version"
+	^Float fromString: (VM defaultProductDetails at: #registryVersion)!
 
 quit: anInteger
 	"Private - Force a close down of the session with the specified exit code."
@@ -368,6 +352,6 @@ updateBootImage
 imageExtension
 	"Answer the suffix for an executable image file"
 
-	^'img7'.! !
+	^'img8'.! !
 !Kernel.BootSessionManager class categoriesFor: #imageExtension!constants!public! !
 

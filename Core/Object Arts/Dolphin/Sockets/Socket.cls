@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SocketAbstract subclass: #Socket
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'
@@ -13,7 +13,7 @@ This class represents a socket for one end of a TCP/IP network communication lin
 When connected, a Socket can be used to transfer ByteArrays or (rather more inefficiently) individual bytes across the network using #sendByteArray:, #sendByte:, receiveByteArray: and #receiveByte: methods. For more flexible and efficient transfers, a Socket maintains buffered read and write streams that are accessible via the #readStream and #writeStream methods respectively. To transfer entire objects, an appropriate STBFiler may be opened on the streams. The #send: and #receive methods provide a default implementation for use when single or relatively infrequent object transfers are required.
 
 Most operations (connect, read or write) will block while waiting for data to arrive or be sent. In general such calls should be made from within a background process. It is, however,  possible to use a Socket from the main user interface process without blocking by making use of the #connected and  #dataRead events that are triggered.'!
-!Socket categoriesForClass!Windows Sockets! !
+!Socket categoriesForClass!Deprecated!Windows Sockets! !
 !Socket methodsFor!
 
 address

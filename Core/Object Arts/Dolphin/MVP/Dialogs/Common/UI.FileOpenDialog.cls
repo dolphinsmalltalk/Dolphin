@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.FileDialog subclass: #'UI.FileOpenDialog'
 	instanceVariableNames: 'maxFileCount'
@@ -27,7 +27,7 @@ dialog
 basicShowModal
 	"Private - Show a Open File dialog for the receiver."
 
-	^ComDlgLibrary default getOpenFileName: winStruct!
+	^ComDlg32 getOpenFileName: winStruct!
 
 defaultMaxFileCount
 	"Private - Answers the default number of selections that are expected to fit into the buffer. If the maxFileCount is not set, then the FileOpenDialog is operated in single file mode."

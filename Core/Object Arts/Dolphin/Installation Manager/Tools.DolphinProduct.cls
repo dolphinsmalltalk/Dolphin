@@ -1,7 +1,7 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.DolphinProduct'
-	instanceVariableNames: 'versionMask encryptedClasses'
+	instanceVariableNames: 'version encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -75,6 +75,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Fileout.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Core.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Package Fileout.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\SemVer\Dolphin SemVer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Conformant Array Fields.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Deprecated\Dolphin Legacy Package Support.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time.pax' #plain #imageBase);
@@ -211,11 +212,6 @@ fullName
 
 	^self subclassResponsibility!
 
-imageLevel
-	"Answer the <Integer> imageLevel for this product in this version of Dolphin"
-
-	^(self versionMask << 8) | self class productMask!
-
 installProductDetails
 	"Private - Informs the development system of the details of the receiver"
 
@@ -276,12 +272,12 @@ loadShrinkAndCompress
 majorVersion
 	"Answer the receiver's major version <Integer>"
 
-	^versionMask >> 4!
+	^version major!
 
 minorVersion
 	"Answer the receiver's minor version <Integer>"
 
-	^versionMask bitAnd: 16r0F!
+	^version minor!
 
 name
 	"Answer the product name associated with the receiver"
@@ -314,29 +310,19 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(;
 		print: self name;
-		nextPut: $,;
-		print: self version;
-		nextPut: $)!
+		nextPutAll: ', ''';
+		display: self version;
+		nextPutAll: ''')'!
 
 productDetails
 	"Answers the product details for the receiver"
 
-	| array |
-	array := VMLibrary default defaultProductDetails.
-	8 < array size ifTrue: [array := array , (Array new: 8) copyFrom: 1 to: 8].
-	^array
-		at: 1 put: self fullName;
-		at: 2 put: self name;
-		at: 3 put: self version;
-		at: 6 put: self shortProductName;
-		at: 7 put: nil;
-		at: 8 put: nil;
+	^VM defaultProductDetails
+		at: #productName put: self fullName;
+		at: #shortProductName put: self name;
+		at: #productVersionString put: self version displayString;
+		at: #abbreviatedProductName put: self shortProductName;
 		yourself!
-
-productLevel
-	"Answer the <Integer> productLevel for the receiver"
-
-	^self class productLevel!
 
 removeUnlistedPackages
 	"Private - Removes the non-required packages from the image for the receiver. "
@@ -395,19 +381,12 @@ unwantedClasses
 	^#(#BootSessionManager #DolphinOAEdition)!
 
 version
-	"Answer the receiver's version <Float>"
+	"Answer a `SemVer` describing the receiver's version."
 
-	^(self majorVersion + (self minorVersion / 10)) asFloat!
+	^version!
 
-versionMask
-	"Private - Answer the receiver's version mask"
-
-	^versionMask!
-
-versionMask: anInteger
-	"Private - Initialise the receiver from anInteger version mask"
-
-	versionMask := anInteger!
+version: aSemVer
+	version := aSemVer!
 
 warnOfUnlistedContent
 ! !
@@ -426,7 +405,6 @@ warnOfUnlistedContent
 !Tools.DolphinProduct categoriesFor: #encryptedPackageNames!accessing!public! !
 !Tools.DolphinProduct categoriesFor: #foldLiterals!private! !
 !Tools.DolphinProduct categoriesFor: #fullName!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #imageLevel!constants!public! !
 !Tools.DolphinProduct categoriesFor: #installProductDetails!operations!private! !
 !Tools.DolphinProduct categoriesFor: #installProductSounds!operations!private! !
 !Tools.DolphinProduct categoriesFor: #installSplash!private! !
@@ -445,7 +423,6 @@ warnOfUnlistedContent
 !Tools.DolphinProduct categoriesFor: #preShrink!private! !
 !Tools.DolphinProduct categoriesFor: #printOn:!printing!public! !
 !Tools.DolphinProduct categoriesFor: #productDetails!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #productLevel!constants!public! !
 !Tools.DolphinProduct categoriesFor: #removeUnlistedPackages!operations!private! !
 !Tools.DolphinProduct categoriesFor: #resizeSymbolTable!operations!public! !
 !Tools.DolphinProduct categoriesFor: #shortProductName!accessing!public! !
@@ -458,8 +435,7 @@ warnOfUnlistedContent
 !Tools.DolphinProduct categoriesFor: #unlistedPrerequisites!public! !
 !Tools.DolphinProduct categoriesFor: #unwantedClasses!constants!public! !
 !Tools.DolphinProduct categoriesFor: #version!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #versionMask!accessing!private! !
-!Tools.DolphinProduct categoriesFor: #versionMask:!accessing!initializing!private! !
+!Tools.DolphinProduct categoriesFor: #version:!private! !
 !Tools.DolphinProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
 
 !Tools.DolphinProduct class methodsFor!
@@ -484,8 +460,8 @@ fromString: aString
 	(aString beginsWith: self productPrefix) ifFalse: [self errorInvalidProductDescription: aString].
 	stm := aString readStream.
 	stm position: self productPrefix size + 1.
-	version := Float readFrom: stm.
-	version = 0.0 ifTrue: [self errorInvalidProductDescription: aString].
+	version := SemVer readFrom: stm.
+	version ifNil: [self errorInvalidProductDescription: aString].
 	stm skipSeparators.
 	sub := stm upToEnd.
 	^(EditionsMap at: sub) version: version!
@@ -513,18 +489,6 @@ new
 	"Answers an instance of the receiver for this version of Dolphin"
 
 	^self version: SessionManager current productVersion!
-
-ofImageLevel: imageLevel
-	| versionMask productMask |
-	productMask := imageLevel bitAnd: 255.
-	versionMask := imageLevel >> 8.
-	^(self allSubclasses detect: [:each | each productMask = productMask]) 
-		versionMask: versionMask!
-
-ofSerialNumber: serialNo
-	"Private - Answers an instance of the receiver that pertains to <DolphinSerialNumber> serialNo."
-
-	^self ofImageLevel: serialNo imageLevel!
 
 packages: wildcard under: directory encrypted: aBoolean
 	| base answer |
@@ -558,16 +522,6 @@ paxesUnder: directory encrypted: aBoolean
 		under: directory
 		encrypted: aBoolean!
 
-productLevel
-	"Private - Answer the product ID for the receiver"
-
-	self subclassResponsibility!
-
-productMask
-	"Private - Answer the <byte> mask product for the receiver"
-
-	^self productLevel << 4!
-
 productName
 	"Answer the product name"
 	
@@ -588,19 +542,11 @@ shortProductName
 	
 	^self subclassResponsibility!
 
-version: version
-	"Answers an instance of the receiver  with <Float> version"
+version: aSemVer
+	"Answers an instance of the receiver with `SemVer` version"
 
-	| versionMask |
-	versionMask := (version floor << 4) |  (version fractionPart * 10) asInteger.
-	^self versionMask: versionMask
-!
-
-versionMask: versionMask 
-	"Private - Answers an instance of the receiver with <Integer> versionMask"
-
-	^(super new)
-		versionMask: versionMask;
+	^self basicNew
+		version: aSemVer;
 		yourself! !
 !Tools.DolphinProduct class categoriesFor: #boot!operations!public! !
 !Tools.DolphinProduct class categoriesFor: #current!accessing!public! !
@@ -610,17 +556,12 @@ versionMask: versionMask
 !Tools.DolphinProduct class categoriesFor: #initialize!initializing!private! !
 !Tools.DolphinProduct class categoriesFor: #loadAndShrink!operations!public! !
 !Tools.DolphinProduct class categoriesFor: #new!instance creation!public! !
-!Tools.DolphinProduct class categoriesFor: #ofImageLevel:!instance creation!private! !
-!Tools.DolphinProduct class categoriesFor: #ofSerialNumber:!instance creation!private! !
 !Tools.DolphinProduct class categoriesFor: #packages:under:encrypted:!private! !
 !Tools.DolphinProduct class categoriesFor: #pacsUnder:encrypted:!private! !
 !Tools.DolphinProduct class categoriesFor: #paxesUnder:encrypted:!private! !
-!Tools.DolphinProduct class categoriesFor: #productLevel!constants!private! !
-!Tools.DolphinProduct class categoriesFor: #productMask!accessing!private! !
 !Tools.DolphinProduct class categoriesFor: #productName!accessing!public! !
 !Tools.DolphinProduct class categoriesFor: #productPrefix!instance creation!public! !
 !Tools.DolphinProduct class categoriesFor: #release!operations!public! !
 !Tools.DolphinProduct class categoriesFor: #shortProductName!accessing!public! !
 !Tools.DolphinProduct class categoriesFor: #version:!instance creation!public! !
-!Tools.DolphinProduct class categoriesFor: #versionMask:!instance creation!private! !
 

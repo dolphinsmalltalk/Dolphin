@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Link variableSubclass: #'Core.Process'
 	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _unused12 _unused13 debugger name debugStream'
@@ -263,7 +263,7 @@ isMain
 	"Answer whether the receiver is the main user I/F process (i.e. it
 	manages the input queue)."
 
-	^SessionManager inputState main == self!
+	^SessionManager.Current inputState main == self!
 
 isReady
 	"Answer whether the receiver is Ready to run but inactive"
@@ -308,7 +308,7 @@ lastError
 	"Answer the value of the Win32 error code (i.e. the result of GetLastError()) run in the
 	context of the overlapped external call thread associated with the receiver."
 
-	^OS.KernelLibrary default threadGetLastError!
+	^OS.Kernel32 threadGetLastError!
 
 name
 	"Answer the 'name' of the Process. This is usually defined by the creator of the process.
@@ -405,12 +405,11 @@ queueInterrupt: anInteger with: anObject
 	^self primitiveFailed: _failureCode!
 
 resetFloatingPoint
-	OS.CRTLibrary default
+	OS.Ucrt
 		_clearfp;
 		_control87: fpControl
-			mask: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._MCW_EM
-					| OS.CRTConstants._MCW_IC | OS.CRTConstants._MCW_PC
-					| OS.CRTConstants._MCW_RC)!
+			mask: ##(OS.CRTConstants._MCW_DN | OS.CRTConstants._MCW_EM | OS.CRTConstants._MCW_IC
+					| OS.CRTConstants._MCW_PC | OS.CRTConstants._MCW_RC)!
 
 resume
 	"Change the state of the receiver from Suspended to Ready (by placing it at the end of the Processor's queue for the receiver's priority). Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor). See #resume: for further details (sending this message is equivalent to sending #resume: with nil as the argument)."

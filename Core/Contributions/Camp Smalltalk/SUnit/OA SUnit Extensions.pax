@@ -309,7 +309,7 @@ skipIfCiBuild
 skipIfWin32
 	"Skip if running on 32-bit Windows"
 
-	self skipUnless: [OS.KernelLibrary default isWow64]!
+	self skipUnless: [OS.Kernel32 isWow64]!
 
 skipUnless: aNiladicValuable
 	" If the assumption in the <niladicValuable> argument evaluates to false, abandon the running test and mark it as skipped."

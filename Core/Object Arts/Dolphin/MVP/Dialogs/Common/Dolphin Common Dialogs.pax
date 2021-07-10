@@ -37,6 +37,14 @@ package setMethodNames: #(
 	#(#{Graphics.Font class} #choose)
 ).
 
+package setVariableNames: #(
+	#{OS.ComDlg32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.ComDlg32}
+).
+
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin MVP Base'
@@ -334,7 +342,7 @@ titleOf: aString
 	configuration."
 
 	| buf lib len |
-	lib := ComDlgLibrary default.
+	lib := ComDlg32.
 	(len := lib
 				getFileTitle: aString
 				lpszTitle: nil

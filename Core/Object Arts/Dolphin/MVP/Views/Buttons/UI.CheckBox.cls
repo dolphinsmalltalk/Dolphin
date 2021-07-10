@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.CheckButton subclass: #'UI.CheckBox'
 	instanceVariableNames: ''
@@ -31,7 +31,7 @@ is3State: aBoolean
 
 paintTransparentBackgroundOn: aCanvas
 	self isThemed ifFalse: [^self].
-	ThemeLibrary default
+	UxTheme
 		drawThemeParentBackground: self asParameter
 		hdc: aCanvas asParameter
 		prc: nil! !

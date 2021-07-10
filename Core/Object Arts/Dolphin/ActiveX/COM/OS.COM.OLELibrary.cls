@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
@@ -223,7 +223,7 @@ coUninitialize
 initialize
 	"Private - Initialize the receiver using the specified default task
 	allocator (usually nil). This initialization will be automatically
-	run if you make any references to 'OLELibrary default', and therefore
+	run if you make any references to `Ole32` or `OLELibrary default`, and therefore
 	you must either set up the DefaultIMalloc BEFORE any calls to OLELibrary,
 	OR set the default library using #default:, OR perform a subsequent
 	initialize passing the IMalloc you want to use."
@@ -235,7 +235,7 @@ initialize
 initialize: anIMallocOrNil
 	"Private - Initialize the receiver using the specified default task
 	allocator (usually nil). This initialization will be automatically
-	run if you make any references to 'OLELibrary default', and therefore
+	run if you make any references to `Ole32` or `OLELibrary default`, and therefore
 	you must either set up the DefaultIMalloc BEFORE any calls to OLELibrary,
 	OR set the default library using #default:, OR perform a subsequent
 	initialize passing the IMalloc you want to use."
@@ -288,7 +288,7 @@ supportsDCOM
 	"Answer whether the host OS supports DCOM (i.e. remote servers).
 	This is the officially recognised test!!"
 
-	^(KernelLibrary default getProcAddress: self asParameter lpProcName: 'CoInitializeEx') notNull!
+	^(Kernel32 getProcAddress: self asParameter lpProcName: 'CoInitializeEx') notNull!
 
 uninitialize
 	"Private - Reverse the initialize"
@@ -331,6 +331,10 @@ fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
 
-	^'OLE32'! !
+	^'OLE32'!
+
+sharedVariableName
+	^#{Ole32}! !
 !OS.COM.OLELibrary class categoriesFor: #fileName!constants!public! !
+!OS.COM.OLELibrary class categoriesFor: #sharedVariableName!constants!private! !
 

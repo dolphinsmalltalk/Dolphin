@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.FontFamily'
 	instanceVariableNames: ''
@@ -16,14 +16,14 @@ Graphics.Gdiplus.FontFamily comment: 'GdiplusFontFamily represents a set of font
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteFontFamily: handle!
+	Gdip gdipDeleteFontFamily: handle!
 
 clone
 	"Answer a copy of the receiver."
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle.
+	Gdip gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -31,7 +31,7 @@ clone
 getName: anInteger
 	| name |
 	name := Utf16String newFixed: LF_FACESIZE.
-	GdiplusLibrary default
+	Gdip
 		gdipGetFamilyName: self asParameter
 		name: name
 		language: anInteger.
@@ -42,7 +42,7 @@ lineSpacing
 
 	| lineSpacing |
 	lineSpacing := ByteArray newFixed: 2.
-	GdiplusLibrary default
+	Gdip
 		gdipGetLineSpacing: self asParameter
 		style: 0
 		lineSpacing: lineSpacing.

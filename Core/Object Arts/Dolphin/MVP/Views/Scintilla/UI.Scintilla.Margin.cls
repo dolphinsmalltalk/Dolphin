@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
@@ -44,13 +44,13 @@ The margin `#style` can be one of the following:
 !UI.Scintilla.Margin methodsFor!
 
 backcolor
-	"Answer the background colour used to draw the margin to the <Color> argument. Can be nil, indicatoring that the colour is unspecified, in which case Scintilla's default margin colour (black) is used, but only when the margin has the #color type."
+	"Answer the background colour used to draw the margin to the <Color> argument. Can be nil, indicatoring that the colour is unspecified, in which case Scintilla's default margin colour (black) is used.
+	Note that this only has any effect for margins of #color type."
 
 	^backcolor!
 
 backcolor: aColorOrNil
-	"Set the background <Color> for the margin, which is used to paint the background of the margin when it has the #color type. If the argument is nil, then the control's default margin background colour will be used (black).
-	although typically this value should only be nil when the margin is not using the #color type."
+	"Set the background <Color> for the margin, which is used to paint the background of the margin when it has the #color type. If the argument is nil, then the control's default margin background colour will be used (black), although typically this value should only be nil when the margin is not using the #color type (in which case the setting has no effect)."
 
 	self basicBackcolor: aColorOrNil.
 	self updateViewProperty: #backcolor!
@@ -99,7 +99,9 @@ basicWidth: anIntegerOrNil
 cursorType
 	"The symbolic name of the Scintilla cursor type."
 
-	^self basicCursorType ifNotNil: [:t | CursorTypes at: t]!
+	^self basicCursorType 
+		ifNil: [#reverseArrow]
+		ifNotNil: [:t | CursorTypes at: t]!
 
 cursorType: aSymbol
 	"Set the margin's cursor to be that named."
@@ -217,46 +219,50 @@ width: anInteger
 buildPropertyMap
 	^IdentityDictionary new
 		at: #isSensitive
-			put: (PropertyDescriptor
+			put: (BoolPropertyDescriptor
 					getSelector: #basicIsSensitive
 					defaultValue: 0
 					setMessage: SCI_SETMARGINSENSITIVEN
 					setSelector: #basicIsSensitive:
 					getMessage: SCI_GETMARGINSENSITIVEN);
 		at: #mask
-			put: ((PropertyDescriptor
+			put: ((IntPropertyDescriptor
 					getSelector: #mask
 					defaultValue: 0
 					setMessage: SCI_SETMARGINMASKN
 					setSelector: #mask:
 					getMessage: SCI_GETMARGINMASKN)
+					beNullable;
 					printSelector: #maskPrintString;
 					yourself);
 		at: #type
-			put: ((PropertyDescriptor
+			put: ((EnumPropertyDescriptor
 					getSelector: #basicType
 					defaultValue: SC_MARGIN_SYMBOL
 					setMessage: SCI_SETMARGINTYPEN
 					setSelector: #basicType:
 					getMessage: SCI_GETMARGINTYPEN)
-					printSelector: #type;
+					values: MarginTypes copy sort;
+					alwaysPrint: true;
 					yourself);
 		at: #width
-			put: (PropertyDescriptor
+			put: (IntPropertyDescriptor
 					getSelector: #basicWidth
 					defaultValue: nil
 					setMessage: SCI_SETMARGINWIDTHN
 					setSelector: #basicWidth:
 					getMessage: SCI_GETMARGINWIDTHN);
 		at: #cursorType
-			put: (PropertyDescriptor
+			put: ((EnumPropertyDescriptor
 					getSelector: #basicCursorType
 					defaultValue: SC_CURSORREVERSEARROW
 					setMessage: SCI_SETMARGINCURSORN
 					setSelector: #basicCursorType:
-					getMessage: SCI_GETMARGINCURSORN);
+					getMessage: SCI_GETMARGINCURSORN)
+					values: CursorTypes values asArray sort;
+					yourself);
 		at: #backcolor
-			put: (ColorPropertyDescriptor
+			put: (ColourPropertyDescriptor
 					getSelector: #backcolor
 					defaultValue: Color black
 					setMessage: SCI_SETMARGINBACKN
@@ -270,9 +276,6 @@ initialize
 		self initialize
 	"
 
-	propertyMap := self buildPropertyMap
-				isImmutable: true;
-				yourself.
 	self addClassConstant: 'MarginTypes'
 		value: #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color).
 	self addClassConstant: 'CursorTypes'
@@ -283,7 +286,10 @@ initialize
 				at: SC_CURSORNORMAL put: #normal;
 				shrink;
 				isImmutable: true;
-				yourself)!
+				yourself).
+	propertyMap := self buildPropertyMap
+				isImmutable: true;
+				yourself!
 
 stbConvertFrom: anSTBClassFormat
 	^

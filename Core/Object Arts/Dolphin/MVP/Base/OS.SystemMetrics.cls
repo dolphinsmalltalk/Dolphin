@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'OS.SystemMetrics'
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
@@ -65,15 +65,14 @@ edgeExtent
 getDefaultColorDepth
 	"Private - Answer the default color depth based on that of the current screen driver."
 
-	| gdi hDC |
-	gdi := GDILibrary default.
-	hDC := gdi
+	| hDC |
+	hDC := Gdi32
 				createDC: 'DISPLAY'
 				lpszDevice: nil
 				lpszOutput: nil
 				lpInitData: nil.
-	^[(gdi getDeviceCaps: hDC nIndex: BITSPIXEL) * (gdi getDeviceCaps: hDC nIndex: PLANES) max: 4]
-		ensure: [gdi deleteDC: hDC]!
+	^[(Gdi32 getDeviceCaps: hDC nIndex: BITSPIXEL) * (Gdi32 getDeviceCaps: hDC nIndex: PLANES) max: 4]
+		ensure: [Gdi32 deleteDC: hDC]!
 
 getIconTitleFont
 	"Private - Answer a <Font> which is that used for icon titles on the desktop.
@@ -87,7 +86,7 @@ getIconTitleFont
 				ifError: [^Graphics.Font system])!
 
 getMetric: anInteger
-	^UserLibrary default getSystemMetrics: anInteger!
+	^User32 getSystemMetrics: anInteger!
 
 getMetric: anInteger1 pair: anInteger2 
 	^(self getMetric: anInteger1) @ (self getMetric: anInteger2)!
@@ -95,7 +94,7 @@ getMetric: anInteger1 pair: anInteger2
 getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(UserLibrary default
+	(User32
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
@@ -118,12 +117,12 @@ getSysParamStruct: anInteger type: anExternalStructureClass
 	^self
 		getSysParam: anInteger
 		type: anExternalStructureClass
-		ifError: [UserLibrary default systemError]!
+		ifError: [User32 systemError]!
 
 getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(UserLibrary default
+	(User32
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
@@ -197,7 +196,7 @@ hasSmoothScrollingLists
 		ifTrue: 
 			[| bool |
 			bool := DWORDBytes new.
-			hasSmoothScrollingLists := (UserLibrary default
+			hasSmoothScrollingLists := (User32
 						systemParametersInfo: SPI_GETLISTBOXSMOOTHSCROLLING
 						uiParam: 0
 						pvParam: bool
@@ -235,8 +234,8 @@ initialize
 
 	"So many capabilities depend on these flag, we may as well query them immediately. These also cannot change because of a Windows settings change."
 
-	isVistaOrLater := KernelLibrary default isWindowsVistaOrGreater.
-	isNotWine := NTLibrary isWine not.
+	isVistaOrLater := Kernel32 isWindowsVistaOrGreater.
+	isNotWine := NtDll isWine not.
 	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
 	availble under Vista and later. Hence we don't allow this to be called even if the Windows
 	version indicates Vista is available."
@@ -257,7 +256,7 @@ largeIconExtent
 	^largeIconExtent ifNil: [largeIconExtent := self getMetric: SM_CXICON pair: SM_CYICON]!
 
 menuBarColor
-	^ThemeLibrary default isAppThemed ifTrue: [Graphics.Color menuBar] ifFalse: [Graphics.Color menu]!
+	^UxTheme isAppThemed ifTrue: [Graphics.Color menuBar] ifFalse: [Graphics.Color menu]!
 
 menuBarHeight
 	"Answer the height of a menu item as currently configured."
@@ -333,7 +332,7 @@ nonClientMetrics
 			nonClientMetrics := self
 						getSysParamW: SPI_GETNONCLIENTMETRICS
 						type: NONCLIENTMETRICSW
-						ifError: [UserLibrary default systemError]].
+						ifError: [User32 systemError]].
 	^nonClientMetrics!
 
 onSettingChanged: anArray
@@ -377,7 +376,7 @@ scrollThumbExtent
 	^scrollThumbExtent ifNil: [scrollThumbExtent := self getMetric: SM_CXHTHUMB pair: SM_CYVTHUMB]!
 
 setSysParamBool: anInteger value: aBoolean
-	^UserLibrary default
+	^User32
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: aBoolean asInteger

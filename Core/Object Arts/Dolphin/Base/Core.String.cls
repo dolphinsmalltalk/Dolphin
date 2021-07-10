@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.ArrayedCollection variableByteSubclass: #'Core.String'
 	instanceVariableNames: ''
@@ -118,7 +118,7 @@ _sameAsString: aString
 	| string1 string2 |
 	string1 := self asUtf16String.
 	string2 := comparand asUtf16String.
-	^(OS.KernelLibrary default
+	^(OS.Kernel32
 		compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
 		dwCmpFlags: 0
 		lpString1: string1
@@ -138,7 +138,7 @@ _sameAsString: aString
 	"The primitive works with any supported string encoding (ANSI, UTF-8 and UTF-16) and invokes the OS StringCompare function, in essence as follows:"
 	string1 := self asUtf16String.
 	string2 := aString asUtf16String.
-	^(OS.KernelLibrary default
+	^(OS.Kernel32
 		compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
 		dwCmpFlags: OS.NlsConstants.NORM_IGNORECASE
 		lpString1: string1
@@ -342,7 +342,7 @@ beginsWith: aString ignoreCase: aBoolean
 	string2 := aString asUtf16String.
 	cch := string2 size.
 	^cch <= string1 size and: 
-			[(OS.KernelLibrary default
+			[(OS.Kernel32
 				compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
 				dwCmpFlags: (aBoolean ifTrue: [OS.NlsConstants.NORM_IGNORECASE] ifFalse: [0])
 				lpString1: string1
@@ -670,7 +670,7 @@ formatWithArguments: aCollection
 	"Note that although the #formatWith:&c family of methods have not been deprecated in Dolphin
 	6, we recommend that, where possible, you use #expandMacrosXXX by preference."
 
-	^OS.KernelLibrary default
+	^OS.Kernel32
 		formatMessage: 0
 		source: self
 		flags: OS.Win32Constants.FORMAT_MESSAGE_FROM_STRING
@@ -1065,13 +1065,12 @@ sprintfWith: arg1
 
 	Note: This is much faster than formatWith:."
 
-	| n crt buf size format |
-	crt := VMLibrary default.
+	| n buf size format |
 	size := self size + 64.
 	format := self asUtf8String.
 	
 	[buf := Utf8String new: size.
-	n := crt
+	n := VM
 				_snprintf_s: buf
 				bufferSize: size + 1
 				count: size
@@ -1091,13 +1090,12 @@ sprintfWith: arg1 with: arg2
 
 	Note: This is much faster than formatWith:with:."
 
-	| written lib buf size format |
-	lib := VMLibrary default.
+	| written buf size format |
 	size := self size + 128.
 	format := self asUtf8String.
 	
 	[buf := Utf8String new: size.
-	written := lib
+	written := VM
 				_snprintf_s: buf
 				bufferSize: size + 1
 				count: size
@@ -1115,12 +1113,12 @@ storeOn: aStream
 	self printOn: aStream!
 
 strcspn: aString start: anInteger
-	^OS.CRTLibrary default strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
+	^OS.Ucrt strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
 
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^OS.CRTLibrary default strlen: self!
+	^OS.Ucrt strlen: self!
 
 subStrings
 	"Answer an Array containing the substrings of the receiver which are separated by one or 
@@ -1172,19 +1170,18 @@ subStringsAnsi: separators
 titleCased
 	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
 
-	| kernel src dest len |
-	kernel := OS.KernelLibrary default.
+	| src dest len |
 	src := self asUtf16String.
-	len := kernel
+	len := OS.Kernel32
 				lcMapString: OS.NlsConstants.LOCALE_USER_DEFAULT
 				dwMapFlags: OS.NlsConstants.LCMAP_TITLECASE
 				lpScrStr: src
 				cchSrc: src size
 				lpDestStr: nil
 				cchDest: 0.
-	len == 0 ifTrue: [kernel systemError].
+	len == 0 ifTrue: [OS.Kernel32 systemError].
 	dest := Utf16String newFixed: len.
-	kernel
+	OS.Kernel32
 		lcMapString: OS.NlsConstants.LOCALE_USER_DEFAULT
 		dwMapFlags: OS.NlsConstants.LCMAP_TITLECASE
 		lpScrStr: src
@@ -1458,7 +1455,7 @@ formatSystemMessage: anIntegerId withArguments: arguments
 	specified id in the specified module, with arguments substituted from
 	argumentCollection."
 
-	^OS.KernelLibrary default
+	^OS.Kernel32
 		formatMessage: anIntegerId
 		source: 0
 		flags: OS.Win32Constants.FORMAT_MESSAGE_FROM_SYSTEM
@@ -1533,10 +1530,9 @@ fromByteArray: aByteArray startingAt: indexInteger
 fromGlobalHandle: anExternalHandle
 	"Answer a new String instantiated from the contents of the global heap block with the specified handle."
 
-	| kernel p |
-	kernel := OS.KernelLibrary default.
-	p := kernel globalLock: anExternalHandle.
-	^[self fromAddress: p] ensure: [kernel globalUnlock: anExternalHandle]!
+	| p |
+	p := OS.Kernel32 globalLock: anExternalHandle.
+	^[self fromAddress: p] ensure: [OS.Kernel32 globalUnlock: anExternalHandle]!
 
 fromResourceId: anInteger
 	"Answer a new String loaded from resources."
@@ -1548,12 +1544,12 @@ fromResourceId: resourceId in: anExternalLibraryOrHandle
 
 	| len pch |
 	pch := External.Address new.
-	(len := OS.UserLibrary default
+	(len := OS.User32
 				loadString: anExternalLibraryOrHandle asParameter
 				uID: resourceId asResourceId
 				lpBuffer: pch basicYourAddress
 				nBufferMax: 0) isZero
-		ifTrue: [OS.UserLibrary default systemError].
+		ifTrue: [OS.User32 systemError].
 	^Utf16String fromAddress: pch length: len!
 
 fromString: aString
@@ -1565,9 +1561,8 @@ fromUtf16String: anAddressOrUtf16String
 	"Answer a byte-encoded String representation of the UTF16 string at the specified
 	address."
 
-	| answer size lib |
-	lib := OS.KernelLibrary default.
-	(size := lib
+	| answer size |
+	(size := OS.Kernel32
 				wideCharToMultiByte: OS.NlsConstants.CP_UTF8
 				dwFlags: 0
 				lpWideCharStr: anAddressOrUtf16String
@@ -1576,9 +1571,9 @@ fromUtf16String: anAddressOrUtf16String
 				cchMultiByte: 0
 				lpDefaultChar: nil
 				lpUsedDefaultChar: nil) == 0
-		ifTrue: [lib systemError].
+		ifTrue: [OS.Kernel32 systemError].
 	answer := self new: size - 1.
-	lib
+	OS.Kernel32
 		wideCharToMultiByte: OS.NlsConstants.CP_UTF8
 		dwFlags: 0
 		lpWideCharStr: anAddressOrUtf16String
@@ -1690,15 +1685,14 @@ systemCodePages: anInteger
 	anInteger. Note that this will take a while to run first time through as it causes the OS to
 	load all the code page information."
 
-	| enum ids kernel |
+	| enum ids |
 	ids := OrderedCollection new: 30.
 	enum := External.Callback block: 
 					[:codePage |
 					ids addLast: codePage.
 					true]
 				descriptor: (External.FunctionDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
-	kernel := OS.KernelLibrary default.
-	kernel enumSystemCodePages: enum asParameter dwFlags: anInteger.
+	OS.Kernel32 enumSystemCodePages: enum asParameter dwFlags: anInteger.
 	enum free.
 	^ids collect: [:each | OS.CPINFOEXW codePage: (Integer fromString: each)]!
 

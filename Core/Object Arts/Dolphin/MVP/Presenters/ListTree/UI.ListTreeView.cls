@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ListView subclass: #'UI.ListTreeView'
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
@@ -84,15 +84,11 @@ Instances can be set not to collapse the entire subtree below a node in response
 !UI.ListTreeView categoriesForClass!MVP-Views! !
 !UI.ListTreeView methodsFor!
 
-addAll: aCollection afterIndex: anIndex
+addAll: aCollection afterIndex: anInteger
 	"private -- add all the objects in aCollection after the given index in the displayed list"
 
-	| index |
-
-	index := anIndex.
-	aCollection do: [:each |
-		self addItem: each afterIndex: index.
-		index := index + 1].!
+	self model addAll: aCollection afterIndex: anInteger.
+	aCollection do: [:each | self notifyNodeAdded: each]!
 
 addExpanded: anObject
 	"private -- ensure that anObject is on our list of expanded
@@ -183,9 +179,7 @@ basicCollapse: anObject
 	"collapse the node and collapse and remove any children.
 	Someday I may activate the redraw-suppression code configurably"
 
-	"self disableRedraw. [ Cursor wait showWhile: ["
-	self veryBasicCollapse: anObject.
-	"] ] ensure: [self enableRedraw]."
+	self noRedrawDo: [self veryBasicCollapse: anObject].
 
 	"as with #expand: we allow the tree model to say that an object has children even if
 	the actual set thereof is zero-sized, hence we display a #Closed image even if there
@@ -901,6 +895,11 @@ invalidateItemAt: anInteger
 	"private -- envalidate the item with the 1-based integer index"
 
 	self invalidateRect: (self itemRect: anInteger textOnly: false)!
+
+isExpanded: anObject
+	"Answers if the node associated with anObject is expanded."
+
+	^self isItemExpanded: anObject!
 
 isItemDisplayed: anObject
 	"answer whether anObject is currently displayed (i.e. either it is a root or
@@ -2009,6 +2008,7 @@ wantExtendedSelection
 !UI.ListTreeView categoriesFor: #inOrder:parent:!do copy!private!sorting! !
 !UI.ListTreeView categoriesFor: #inRootOrder:!do copy!private!sorting! !
 !UI.ListTreeView categoriesFor: #invalidateItemAt:!do copy!helpers!private! !
+!UI.ListTreeView categoriesFor: #isExpanded:!public! !
 !UI.ListTreeView categoriesFor: #isItemDisplayed:!do copy!public!testing! !
 !UI.ListTreeView categoriesFor: #isItemExpandable:!do copy!public!testing! !
 !UI.ListTreeView categoriesFor: #isItemExpanded:!do copy!public!testing! !
@@ -2217,7 +2217,7 @@ fillStateImageManagerThemed
 	| extent treeViewTheme image rect canvas |
 	extent := self stateImageExtent.
 	rect := RECTL extent: extent.
-	treeViewTheme := ThemeLibrary default openThemeData: nil pszClassList: 'Explorer::TreeView'.
+	treeViewTheme := UxTheme openThemeData: nil pszClassList: 'Explorer::TreeView'.
 	stateImageManager maskcolor: Color white.
 
 	"image for state leaf"
@@ -2229,7 +2229,7 @@ fillStateImageManagerThemed
 	"image for state expanded"
 	image := Bitmap displayCompatibleWithExtent: extent.
 	canvas := image canvas.
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: treeViewTheme
 		hdc: canvas asParameter
 		iPartId: ThemeConstants.TVP_GLYPH
@@ -2242,7 +2242,7 @@ fillStateImageManagerThemed
 	"image for state collapsed"
 	image := Bitmap displayCompatibleWithExtent: extent.
 	canvas := image canvas.
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: treeViewTheme
 		hdc: canvas asParameter
 		iPartId: ThemeConstants.TVP_GLYPH
@@ -2251,7 +2251,7 @@ fillStateImageManagerThemed
 		pClipRect: nil.
 	stateImageManager addImage: image.
 	image freeDC.
-	ThemeLibrary default closeThemeData: treeViewTheme!
+	UxTheme closeThemeData: treeViewTheme!
 
 internalListModelClass
 	"answer the factory object to use for our instances' internally
@@ -2320,7 +2320,7 @@ stateImageManager
 					ex return: nil].
 			image isNil
 				ifTrue: 
-					[ThemeLibrary isAppThemed
+					[UxTheme isAppThemed
 						ifTrue: [self fillStateImageManagerThemed]
 						ifFalse: [self fillStateImageManager]]
 				ifFalse: [self fillStateImageManagerFrom: image]].

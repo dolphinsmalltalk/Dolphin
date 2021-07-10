@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Color subclass: #'Graphics.IndexedColor'
 	instanceVariableNames: 'index'
@@ -92,12 +92,12 @@ rgbCodeFromPalette: aPalette
 
 	| paletteEntry |
 	paletteEntry := ByteArray newFixed: 4.
-	^(GDILibrary default
+	^(Gdi32
 		getPaletteEntries: aPalette asParameter
 		iStartIndex: index
 		nEntries: 1
 		lppe: paletteEntry) == 0
-		ifTrue: [GDILibrary default systemError]
+		ifTrue: [Gdi32 systemError]
 		ifFalse: [(paletteEntry dwordAtOffset: 0) bitAnd: 16rFFFFFF]!
 
 rgbCodeFromStdPalette

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'OS.AdvApiLibrary'
 	instanceVariableNames: ''
@@ -67,6 +67,10 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 fileName
 	"Answer the host system file name for the library"
 
-	^'ADVAPI32'! !
+	^'ADVAPI32'!
+
+sharedVariableName
+	^#{AdvApi32}! !
 !OS.AdvApiLibrary class categoriesFor: #fileName!constants!public! !
+!OS.AdvApiLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

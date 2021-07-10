@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.FILETIME'
 	instanceVariableNames: ''
@@ -34,10 +34,9 @@ asLocalTime
 	N.B. There is no way of knowing if the receiver is already in local time
 	(though this will always be the case for FILETIMEs provided by the OS)."
 
-	| lib answer |
+	| answer |
 	answer := LocalFILETIME new.
-	lib := KernelLibrary default.
-	(lib fileTimeToLocalTime: self lpLocalFileTime: answer) ifFalse: [lib systemError].
+	(Kernel32 fileTimeToLocalTime: self lpLocalFileTime: answer) ifFalse: [Kernel32 systemError].
 	^answer!
 
 asSYSTEMTIME
@@ -49,8 +48,7 @@ asSYSTEMTIME
 
 	| local |
 	local := self class new.
-	(KernelLibrary default fileTimeToLocalTime: self lpLocalFileTime: local)
-		ifFalse: [^KernelLibrary default systemError].
+	(Kernel32 fileTimeToLocalTime: self lpLocalFileTime: local) ifFalse: [^Kernel32 systemError].
 	^local basicAsSYSTEMTIME!
 
 asUTC
@@ -61,10 +59,9 @@ asUTC
 basicAsSYSTEMTIME
 	"Private - Answer the receiver converted to a <SYSTEMTIME>."
 
-	| lib answer |
+	| answer |
 	answer := SYSTEMTIME new.
-	lib := KernelLibrary default.
-	(lib fileTimeToSystemTime: self lpSystemTime: answer) ifFalse: [lib systemError].
+	(Kernel32 fileTimeToSystemTime: self lpSystemTime: answer) ifFalse: [Kernel32 systemError].
 	^answer!
 
 displayOn: aPuttableStream
@@ -114,8 +111,8 @@ fromLocalTime: aLocalFILETIME
 
 	| answer |
 	answer := self new.
-	(KernelLibrary default localFileTimeToFileTime: aLocalFILETIME lpFileTime: answer)
-		ifFalse: [^KernelLibrary default systemError].
+	(Kernel32 localFileTimeToFileTime: aLocalFILETIME lpFileTime: answer)
+		ifFalse: [^Kernel32 systemError].
 	^answer!
 
 fromSYSTEMTIME: aSYSTEMTIME
@@ -154,7 +151,7 @@ now
 	| answer |
 	answer := self new.
 	"Note that avoiding GetSystemTimePreciseAsFileTime is deliberate, as the less precise value from GetSystemTimeAsFileTime is that used to update file write times, etc."
-	KernelLibrary default getSystemTimeAsFileTime: answer.
+	Kernel32 getSystemTimeAsFileTime: answer.
 	^answer! !
 !OS.FILETIME class categoriesFor: #defineFields!public!template definition! !
 !OS.FILETIME class categoriesFor: #fromInteger:!instance creation!public! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompilerTest'
 	instanceVariableNames: 'defaultCompileFlags'
@@ -1267,7 +1267,7 @@ testTempPairing
 testTextMapOfEmptyBlock
 	| block method debugMethod |
 	block := Compiler evaluate: '| x | x := []. x'.
-	self assert: block identicalTo: VMLibrary default emptyBlock.
+	self assert: block identicalTo: VM emptyBlock.
 	method := block method.
 	self assert: method byteCodes
 		equals: (ByteArray
@@ -1495,7 +1495,7 @@ verifyTempsMapOf: aCompiledMethod
 							self assert: (temps
 										anySatisfy: [:tempInfo | tempInfo second == actual key and: [tempInfo last == actual value]])]]].
 	"Check that there is a temps map entry for the initalIP of each clean block in the literal frame"
-	emptyBlock := VMLibrary default emptyBlock.
+	emptyBlock := VM emptyBlock.
 	method literalsDo: 
 			[:each |
 			((each isKindOf: BlockClosure) and: [each ~~ emptyBlock])

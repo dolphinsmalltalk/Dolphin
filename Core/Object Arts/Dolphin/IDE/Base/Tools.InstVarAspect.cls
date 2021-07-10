@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.KeyedAspect subclass: #'Tools.InstVarAspect'
 	instanceVariableNames: ''
@@ -39,7 +39,7 @@ instVarName: anObject
 	| fixedSize index |
 	(index := self key) = 0 ifTrue: [^#self].
 	fixedSize := anObject class instSize.
-	^index <= fixedSize ifTrue: [anObject class allInstVarNames at: index] ifFalse: [index - fixedSize]!
+	^index <= fixedSize ifTrue: [anObject class instVarName: index] ifFalse: [index - fixedSize]!
 
 nameIn: anObject
 	"Private - Answer the 'name' of the aspect of the <Object> argument described by the receiver."

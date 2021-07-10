@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Behavior subclass: #'Core.ClassDescription'
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
@@ -73,15 +73,13 @@ allClassVarNames
 	self withAllSuperclassesDo: [:c | answer addAll: c classBindingNames].
 	^answer!
 
-allGetters
-	"Private - Answer a <Set> of the instance variable getter methods in the receiver"
+allGettersDo: aMonadicAvaluable
+	"Private - Evaluate the <monadicValuable> argument for each of the instance variable getter methods in the receiver."
 
-	| getters |
-	getters := IdentitySet new.
 	self withAllSuperclassesDo: 
 			[:eachClass |
-			eachClass methodDictionary do: [:eachMethod | eachMethod isGetter ifTrue: [getters add: eachMethod]]].
-	^getters!
+			eachClass methodDictionary
+				do: [:eachMethod | eachMethod isGetter ifTrue: [aMonadicAvaluable value: eachMethod]]]!
 
 allInstances
 	"Answer an <Array> of all direct instances of the receiver."
@@ -568,10 +566,21 @@ instanceVariableString: aString
 
 	instanceVariables := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
 
+instVarName: anInteger
+	"Answer the name of the receiver's instance variable with the specified index."
+
+	| current ancestor |
+	current := self.
+	
+	[ancestor := current superclass.
+	ancestor isNil or: [anInteger > ancestor instSize]]
+			whileFalse: [current := ancestor].
+	^current instVarNames at: anInteger - ancestor instSize!
+
 instVarNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable names."
 
-	instanceVariables isNil ifTrue: [^#()].
+	instanceVariables ifNil: [^#()].
 	^instanceVariables isString
 		ifTrue: [($\x20 split: instanceVariables) reject: [:each | each isEmpty]]
 		ifFalse: [instanceVariables]!
@@ -1028,7 +1037,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #addProtocol:!private!protocols! !
 !Core.ClassDescription categoriesFor: #addSharedPool:!pool variables!public! !
 !Core.ClassDescription categoriesFor: #allClassVarNames!class variables!public! !
-!Core.ClassDescription categoriesFor: #allGetters!accessing!private! !
+!Core.ClassDescription categoriesFor: #allGettersDo:!accessing!private! !
 !Core.ClassDescription categoriesFor: #allInstances!instances!public! !
 !Core.ClassDescription categoriesFor: #allInstVarNames!instance variables!public! !
 !Core.ClassDescription categoriesFor: #allMethodsDo:!enumerating!public! !
@@ -1086,6 +1095,7 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesFor: #instanceClass!accessing!public! !
 !Core.ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
 !Core.ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
+!Core.ClassDescription categoriesFor: #instVarName:!accessing!public! !
 !Core.ClassDescription categoriesFor: #instVarNames!instance variables!public! !
 !Core.ClassDescription categoriesFor: #isAnonymous!public!testing! !
 !Core.ClassDescription categoriesFor: #isChanged!public!source filing!testing! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Image subclass: #'Graphics.Metafile'
 	instanceVariableNames: 'header'
@@ -32,25 +32,25 @@ addToImageList: anImageList mask: aColorOrNil
 	bmp free!
 
 basicFree
-	GDILibrary default deleteEnhMetaFile: handle!
+	Gdi32 deleteEnhMetaFile: handle!
 
 clearCached
 	header := nil.
 	^super clearCached!
 
 copyHandle
-	^GDILibrary default copyEnhMetaFile: self asParameter lpszFile: nil!
+	^Gdi32 copyEnhMetaFile: self asParameter lpszFile: nil!
 
 description
 	"Return the description string associated with the receiver, if any."
 
 	| count strings |
-	count := GDILibrary default
+	count := Gdi32
 				getEnhMetaFileDescription: self asParameter
 				cchBuffer: 0
 				lpszDescription: nil.
 	strings := Utf16String newFixed: count.
-	GDILibrary default
+	Gdi32
 		getEnhMetaFileDescription: self asParameter
 		cchBuffer: count
 		lpszDescription: strings.
@@ -66,7 +66,7 @@ drawOn: aCanvas at: aPoint extent: sizePoint
 
 	| rect |
 	rect := RECTL origin: aPoint extent: sizePoint.
-	(GDILibrary default
+	(Gdi32
 		playEnhMetaFile: aCanvas asParameter
 		hemf: self asParameter
 		lpRect: rect)
@@ -80,7 +80,7 @@ extent
 	^self header rclBounds extent!
 
 getData: aWinStruct
-	^GDILibrary default
+	^Gdi32
 		getEnhMetaFileBits: self asParameter
 		cbBuffer: aWinStruct byteSize
 		lpbBuffer: aWinStruct!
@@ -91,7 +91,7 @@ header
 	header isNil
 		ifTrue: 
 			[header := ENHMETAHEADER new.
-			GDILibrary default
+			Gdi32
 				getEnhMetaFileHeader: self asParameter
 				cbBuffer: header byteSize
 				lpemnh: header].
@@ -108,7 +108,7 @@ loadFromFile: pathString extent: aPoint
 	function intended specifically for this purpose (though LoadImage should work), and the
 	specified extent is ignored."
 
-	^GDILibrary default getEnhMetaFile: pathString!
+	^Gdi32 getEnhMetaFile: pathString!
 
 play: operation on: aCanvas at: originPoint extent: sizePoint
 	"Play the records in the metafile through the triadic valuable, operation, onto the
@@ -131,7 +131,7 @@ play: operation on: aCanvas at: originPoint extent: sizePoint
 				descriptor: (External.FunctionDescriptor returnType: 'int'
 						argumentTypes: 'handle lpvoid lpvoid sdword lpvoid').
 	lpRect := RECTL origin: originPoint extent: sizePoint.
-	answer := GDILibrary default
+	answer := Gdi32
 				enumEnhMetaFile: aCanvas asParameter
 				hemf: self asParameter
 				lpEnhMetaFunc: callback asParameter
@@ -168,7 +168,7 @@ saveAsFile: pathString
 	"Save this Metafile to a file at the specified path, any existing file at that path is
 	overwritten."
 
-	GDILibrary default copyEnhMetaFile: self asParameter lpszFile: pathString! !
+	Gdi32 copyEnhMetaFile: self asParameter lpszFile: pathString! !
 !Graphics.Metafile categoriesFor: #addToImageList:mask:!private!testing! !
 !Graphics.Metafile categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.Metafile categoriesFor: #clearCached!private!realizing/unrealizing! !
@@ -190,7 +190,7 @@ saveAsFile: pathString
 playRecord: anENHMETARECORD on: aCanvas handleTable: aHandleArray
 	"Play an individual metafile record on to the specified <Canvas> and with the specified array of GDI object handles."
 
-	GDILibrary default
+	Gdi32
 		playEnhMetaFileRecord: aCanvas asParameter
 		lpHandletable: aHandleArray
 		lpEnhMetaRecord: anENHMETARECORD

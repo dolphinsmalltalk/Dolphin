@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.InputState subclass: #'UI.GuiInputState'
 	instanceVariableNames: ''
@@ -20,16 +20,16 @@ allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
 				descriptor: EnumHandlesDescriptor.
-	answer := UserLibrary default enumWindows: callback asParameter lParam: 0.
+	answer := User32 enumWindows: callback asParameter lParam: 0.
 	callback free.
 	^answer!
 
 getLastInputInfo
 	| lastInputInfo |
 	lastInputInfo := LASTINPUTINFO new.
-	^(UserLibrary default getLastInputInfo: lastInputInfo)
+	^(User32 getLastInputInfo: lastInputInfo)
 		ifTrue: [lastInputInfo dwTime]
-		ifFalse: [UserLibrary default systemError]!
+		ifFalse: [User32 systemError]!
 
 guiStartup
 	"Private - System startup has entered the second stage, and it is time to reinitialize the
@@ -42,17 +42,17 @@ guiStartup
 	oldWindows notNil ifTrue: [oldWindows do: [:w | w onStartup]].
 	self createPostedActionWindow!
 
-isDolphinWindow: hWnd 
+isDolphinWindow: hWnd
 	"Answer whether the window with handle, hWnd, is a Dolphin window or not."
 
-	^(self windowAt: hWnd ifAbsent: []) notNil!
+	^(self lookupWindow: hWnd) notNil!
 
 topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
 				descriptor: EnumHandlesDescriptor.
-	answer := UserLibrary default
-				enumThreadWindows: KernelLibrary default getCurrentThreadId
+	answer := User32
+				enumThreadWindows: Kernel32 getCurrentThreadId
 				lpfn: callback asParameter
 				lParam: 0.
 	callback free.
@@ -89,7 +89,7 @@ topLevelWindowsInZOrder
 	views := OrderedCollection new: 20.
 	self topLevelWindowHandlesDo: 
 			[:hwnd |
-			(self windowAt: hwnd ifAbsent: []) ifNotNil: [:view | views addLast: view].
+			(self lookupWindow: hwnd) ifNotNil: [:view | views addLast: view].
 			true].
 	^views!
 
@@ -112,7 +112,7 @@ uiIdle: aShellWindow
 	"Private - If the argument is one of the receiver's currently visible windows, then request
 	it to update its UI."
 
-	(UserLibrary default isWindowVisible: aShellWindow asParameter) ifTrue: [aShellWindow enterIdle]!
+	(User32 isWindowVisible: aShellWindow asParameter) ifTrue: [aShellWindow enterIdle]!
 
 userSessionIdleMs
 	"Answer the <integer> number of milliseconds that the user session has been idle.
@@ -120,7 +120,7 @@ userSessionIdleMs
 	"
 
 	| currentTime lastInputTime |
-	currentTime := KernelLibrary default getTickCount.
+	currentTime := Kernel32 getTickCount.
 	lastInputTime := self getLastInputInfo.
 	currentTime < lastInputTime ifTrue: [^currentTime].	"In case of 49.7-day wrap, we understate the idle time"
 	^currentTime - lastInputTime!
@@ -132,14 +132,14 @@ visibleWindows
 	the existing View classes. This might be important to those wanting to implement their own
 	window class hieararchy."
 
-	| hDesktop user |
-	user := UserLibrary default.
-	hDesktop := user getDesktopWindow.
+	| hDesktop |
+	hDesktop := User32 getDesktopWindow.
 	^windows select: 
 			[:each |
 			| hWnd |
 			hWnd := each asParameter.
-			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]! !
+			hWnd notNil
+				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]! !
 !UI.GuiInputState categoriesFor: #aboutToForkUI!idling!private! !
 !UI.GuiInputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
 !UI.GuiInputState categoriesFor: #getLastInputInfo!helpers!private! !

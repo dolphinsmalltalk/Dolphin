@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Brush subclass: #'Graphics.HatchBrush'
 	instanceVariableNames: 'id color'
@@ -21,7 +21,7 @@ HatchBrushes are not normally instantiated directly, but rather through one of t
 !Graphics.HatchBrush methodsFor!
 
 createHandle
-	^GDILibrary default createHatchBrush: id color: color asCOLORREF!
+	^Gdi32 createHatchBrush: id color: color asCOLORREF!
 
 name
 	"Answer the symbolic name of this hatched brush."

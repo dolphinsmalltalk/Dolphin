@@ -1,9 +1,9 @@
 ﻿| package |
 package := Package name: 'VBScript Regular Expressions'.
-package paxVersion: 1;
+package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: '# Dolphin Smalltalk VBScript Regular Expressions Package
-Copyright © Object Arts Ltd, 2004.
+Copyright © Object Arts Ltd, 2004-2021
 
 ## Example:
 
@@ -26,76 +26,82 @@ Copyright © Object Arts Ltd, 2004.
 package basicPackageVersion: '5.5'.
 
 
-package classNames
-	add: #IMatch;
-	add: #IMatch2;
-	add: #IMatchCollection;
-	add: #IMatchCollection2;
-	add: #IRegExp;
-	add: #IRegExp2;
-	add: #IRegExpAbstract;
-	add: #ISubMatches;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{VBScript}
+	#{VBScript.IMatch}
+	#{VBScript.IMatch2}
+	#{VBScript.IMatchCollection}
+	#{VBScript.IMatchCollection2}
+	#{VBScript.IRegExp}
+	#{VBScript.IRegExp2}
+	#{VBScript.IRegExpAbstract}
+	#{VBScript.ISubMatches}
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
-	'..\..\..\Base\Dolphin').
+	'..\..\..\Base\Dolphin'
+	'..\..\COM\OLE COM'
+).
 
 package!
 
 "Class Definitions"!
 
-IDispatch subclass: #IMatch
+Kernel.Namespace subclass: #VBScript
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IMatchCollection
+	imports: #(#{OS.COM private} #{OS private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'VBScript.IMatch'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IDispatch subclass: #IRegExpAbstract
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'VBScript.IMatchCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IDispatch subclass: #ISubMatches
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'VBScript.IRegExpAbstract'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IMatch subclass: #IMatch2
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IDispatch subclass: #'VBScript.ISubMatches'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IMatchCollection subclass: #IMatchCollection2
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IMatch subclass: #'VBScript.IMatch2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IRegExpAbstract subclass: #IRegExp
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IMatchCollection subclass: #'VBScript.IMatchCollection2'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IRegExpAbstract subclass: #IRegExp2
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IRegExpAbstract subclass: #'VBScript.IRegExp'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+VBScript.IRegExpAbstract subclass: #'VBScript.IRegExp2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

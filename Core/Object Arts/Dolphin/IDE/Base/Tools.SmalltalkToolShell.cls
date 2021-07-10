@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Shell subclass: #'Tools.SmalltalkToolShell'
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
@@ -403,10 +403,10 @@ buildIdeaSpacePopup
 	popup := Menu new.
 	popup
 		addCommand: (Message selector: #newIdeaSpace) description: 'New IdeaSpace';
-		addCommand: (Message selector: #openIdeaSpace) description: 'Open IdeaSpace from Template...';
+		addCommand: (Message selector: #openIdeaSpace) description: 'Open IdeaSpace from Template…';
 		addSeparator;
 		addCommand: (Message selector: #saveIdeaSpace) description: 'Save IdeaSpace Template';
-		addCommand: (Message selector: #saveIdeaSpaceAs) description: 'Save IdeaSpace Template as...';
+		addCommand: (Message selector: #saveIdeaSpaceAs) description: 'Save IdeaSpace Template as…';
 		addCommand: (Message selector: #revertIdeaSpace) description: 'Revert IdeaSpace to Template';
 		addSeparator;
 		addCommand: (Message selector: #addToNewIdeaSpace) description: 'Add to New IdeaSpace';
@@ -549,8 +549,13 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect choice: #defaultView from: self resourceNames);
-		add: (Aspect name: #defaultExtent);
+		add: ((Aspect
+					choice: #defaultView
+					from: [self resourceNames]
+					type: String)
+					icon: UI.ResourceIdentifier icon;
+					yourself);
+		add: (Aspect extent: #defaultExtent);
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: (Aspect integer: #historyDwellTime);
 		add: (Aspect integer: #searchFieldFlashes);

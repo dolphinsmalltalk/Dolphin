@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.Magnitude'
 	instanceVariableNames: ''
@@ -29,6 +29,13 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 	Implemented in terms of #<, which must be implemented by subclasses."
 
 	^(operand isNaN or: [operand < self]) not!
+
+<=> aMagnitude
+	"Answer the receiver's <integer> collation order with respect to the <Number> argument. Colloquially known as the spaceship operator.
+	The answer is < 0 if the receiver should collate before the argument, 0 if they have the same collation order, or > 0 if the receiver should collate after the argument.
+	N.B. Gives an incorrect answer if either operand is a NaN."
+
+	^self = aMagnitude ifTrue: [0] ifFalse: [self < aMagnitude ifTrue: [-1] ifFalse: [1]]!
 
 = aMagnitude
 	"Answer whether the receiver is equivalent to the argument, aMagnitude."
@@ -99,6 +106,7 @@ printString
 	^stream contents! !
 !Core.Magnitude categoriesFor: #<!comparing!public! !
 !Core.Magnitude categoriesFor: #<=!comparing!public! !
+!Core.Magnitude categoriesFor: #<=>!comparing!public! !
 !Core.Magnitude categoriesFor: #=!comparing!public! !
 !Core.Magnitude categoriesFor: #>!comparing!public! !
 !Core.Magnitude categoriesFor: #>=!comparing!public! !

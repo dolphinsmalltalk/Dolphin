@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Color subclass: #'Graphics.SystemColor'
 	instanceVariableNames: 'id'
@@ -87,7 +87,7 @@ printOn: aPuttableStream
 rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
-	^UserLibrary default getSysColor: self id!
+	^User32 getSysColor: self id!
 
 setId: anInteger
 	"Private - Set the receiver's index to anInteger."

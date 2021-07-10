@@ -272,24 +272,24 @@ publishedAspectsOfInstances
 		add: ((Aspect name: #styledPen
 					chooseFrom: #('nil' 'StyledPen solid' 'StyledPen dotted' 'StyledPen dashed' 'StyledPen dashDot' 'StyledPen dashDotDot'))
 					beImmutable;
-					isNullable: true;
+					beNullable;
 					yourself);
 		add: ((Aspect name: #styledShadow chooseFrom: #('nil' 'StyledShadow new'))
 					beImmutable;
-					isNullable: true;
+					beNullable;
 					yourself);
 		add: ((Aspect name: #styledBrush
 					chooseFrom: #('nil' 'StyledGradientBrush black' 'StyledGradientBrush white' 'StyledGradientBrush face3dTopToBottomFade' 'StyledGradientBrush face3dLeftToRightFade' 'StyledGradientBrush face3dTopLeftToBottomRightFade'))
-					isNullable: true;
+					beNullable;
 					yourself);
 		add: ((Aspect name: #cornerRadii)
-					isNullable: false;
+					beNonNullable;
 					beImmutable;
 					yourself);
 		add: (Aspect boolean: #isAntialiased);
 		add: ((Aspect collection: #edges addEvaluationFrom: #('#left' '#right' '#top' '#bottom'))
 					beImmutable;
-					isNullable: false;
+					beNonNullable;
 					yourself).
 	^aspects! !
 !StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
@@ -473,7 +473,7 @@ publishedAspectsOfInstances
 		do: [:each | aspects removeKey: each].
 	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated)
 		do: [:each | aspects add: (Aspect boolean: each)].
-	aspects add: (Aspect choice: #animation from: Animations keys asSortedCollection).
+	aspects add: (Aspect symbol: #animation from: ##(Animations keys asArray sort)).
 	^aspects! !
 !UI.SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
 !UI.SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !

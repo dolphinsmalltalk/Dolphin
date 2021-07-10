@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.PermanentLibrary subclass: #'OS.CRTLibrary'
 	instanceVariableNames: ''
@@ -350,8 +350,12 @@ nonblocking
 open
 	"Answer a new instance of the receiver to represent the CRT DLL."
 
-	^(self fromHandle: VMLibrary default crtHandle) initialize! !
+	^(self fromHandle: VM crtHandle) initialize!
+
+sharedVariableName
+	^#{Ucrt}! !
 !OS.CRTLibrary class categoriesFor: #fileName!constants!public! !
 !OS.CRTLibrary class categoriesFor: #nonblocking!accessing!public! !
 !OS.CRTLibrary class categoriesFor: #open!instance creation!public! !
+!OS.CRTLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

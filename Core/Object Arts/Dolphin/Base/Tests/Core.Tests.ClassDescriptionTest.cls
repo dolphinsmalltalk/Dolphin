@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.ClassDescriptionTest'
 	instanceVariableNames: ''
@@ -15,6 +15,14 @@ Core.Tests.ClassDescriptionTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	self subclassResponsibility!
 
+testInstVarName
+	Smalltalk allClasses do: 
+			[:each |
+			| expected actual |
+			expected := each allInstVarNames.
+			actual := (1 to: expected size) collect: [:i | each instVarName: i].
+			self assert: actual equals: expected]!
+
 testLessOrEqual
 	self subclassResponsibility!
 
@@ -27,6 +35,7 @@ testSubclasses
 			each subclasses do: [:subclass | self assert: subclass superclass identicalTo: each].
 			self assert: each subclasses equals: each subclasses distinct]! !
 !Core.Tests.ClassDescriptionTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
+!Core.Tests.ClassDescriptionTest categoriesFor: #testInstVarName!public!unit tests! !
 !Core.Tests.ClassDescriptionTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !Core.Tests.ClassDescriptionTest categoriesFor: #testStoreOn!public!unit tests! !
 !Core.Tests.ClassDescriptionTest categoriesFor: #testSubclasses!public!unit tests! !

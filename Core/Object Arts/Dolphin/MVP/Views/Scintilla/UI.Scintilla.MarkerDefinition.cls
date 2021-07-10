@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth layerCode _reserved11 _reserved12'
@@ -68,7 +68,10 @@ basicId
 basicSelectionBackcolor: aColorOrNil
 	selectionBackcolor := aColorOrNil!
 
-basicSetStrokeWidth: anInteger
+basicStrokeWidth
+	^strokeWidth!
+
+basicStrokeWidth: anInteger
 	strokeWidth := anInteger!
 
 code
@@ -93,17 +96,19 @@ glyphName
 			[:c |
 			c < SC_MARK_CHARACTER
 				ifTrue: [self class glyphNames at: c + 1]
-				ifFalse: [(Character codePoint: c - SC_MARK_CHARACTER) asSymbol]]!
+				ifFalse: [Character codePoint: c - SC_MARK_CHARACTER]]!
 
-glyphName: aSymbol
-	self code: (aSymbol isNil
+glyphName: aSymbolOrCharacter
+	"Set the glyph to be displayed for the marker in the margin. There are a range of named symbols, and any Unicode character may be used."
+
+	self code: (aSymbolOrCharacter isNil
 				ifFalse: 
-					[(self class glyphNames indexOf: aSymbol
-						ifAbsent: 
-							[(aSymbol size = 1 and: [aSymbol first isGraph])
-								ifTrue: [aSymbol first codePoint + SC_MARK_CHARACTER + 1]
-								ifFalse: [^self error: 'Invalid glyph  ' , aSymbol printString]])
-							- 1]).
+					[aSymbolOrCharacter isSymbol
+						ifTrue: [(self class glyphNames indexOf: aSymbolOrCharacter ifAbsent: [SC_MARK_EMPTY + 1]) - 1]
+						ifFalse: 
+							[(aSymbolOrCharacter isCharacter and: [aSymbolOrCharacter isGraph])
+								ifTrue: [aSymbolOrCharacter codePoint + SC_MARK_CHARACTER]
+								ifFalse: [^self error: 'Invalid glyph  ' , aSymbolOrCharacter printString]]]).
 	self updateViewProperty: #glyphName!
 
 layer
@@ -145,12 +150,19 @@ storeableProperties
 	^{#name} , super storeableProperties!
 
 strokeWidth
-	"The stroke width used to draw the marker in hundredths of a pixel. If nil then the default width, 100 (i.e. 1 pixel), is used."
+	"The stroke width used to draw the marker expressed in pixels."
 
-	^strokeWidth!
+	^strokeWidth
+		ifNotNil: 
+			[:hundredths |
+			| width fraction |
+			"Try and provide an integer, if the stroke width is whole"
+			width := hundredths / 100.0.
+			fraction := width asApproximateFraction.
+			fraction isInteger ifTrue: [fraction] ifFalse: [width]]!
 
-strokeWidth: anInteger
-	self basicSetStrokeWidth: anInteger.
+strokeWidth: aNumberOrNil
+	self basicStrokeWidth: (aNumberOrNil ifNotNil: [:i | (i * 100) rounded]).
 	self updateViewProperty: #strokeWidth!
 
 view
@@ -167,7 +179,8 @@ view: aScintillaView
 !UI.Scintilla.MarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #basicId!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #basicSetStrokeWidth:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #basicStrokeWidth!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesFor: #basicStrokeWidth:!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #code!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #code:!accessing!private! !
 !UI.Scintilla.MarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
@@ -298,43 +311,47 @@ boxTree
 buildPropertyMap
 	^IdentityDictionary new
 		at: #backcolor
-			put: (ColorAlphaPropertyDescriptor
+			put: (ColourAlphaPropertyDescriptor
 					getSelector: #backcolor
 					defaultValue: Color white
 					setMessage: SCI_MARKERSETBACKTRANSLUCENT);
 		at: #forecolor
-			put: (ColorAlphaPropertyDescriptor
+			put: (ColourAlphaPropertyDescriptor
 					getSelector: #forecolor
 					defaultValue: Color black
 					setMessage: SCI_MARKERSETFORETRANSLUCENT);
 		at: #glyphName
-			put: ((PropertyDescriptor
+			put: ((EnumPropertyDescriptor
 					getSelector: #code
-					defaultValue: 0
+					defaultValue: SC_MARK_CIRCLE
 					setMessage: SCI_MARKERDEFINE)
+					values: self glyphNames , self visibleCharacterGlyphs;
 					alwaysPrint: true;
-					printSelector: #glyphName;
 					yourself);
 		at: #alpha
-			put: (PropertyDescriptor
+			put: (IntPropertyDescriptor
 					getSelector: #alpha
 					defaultValue: SC_ALPHA_NOALPHA
 					setMessage: SCI_MARKERSETALPHA);
 		at: #selectionBackcolor
-			put: (ColorAlphaPropertyDescriptor
+			put: (ColourAlphaPropertyDescriptor
 					getSelector: #selectionBackcolor
 					defaultValue: Color red
 					setMessage: SCI_MARKERSETBACKSELECTEDTRANSLUCENT);
 		at: #strokeWidth
-			put: (PropertyDescriptor
-					getSelector: #strokeWidth
+			put: ((FloatPropertyDescriptor
+					getSelector: #basicStrokeWidth
 					defaultValue: 100
-					setMessage: SCI_MARKERSETSTROKEWIDTH);
+					setMessage: SCI_MARKERSETSTROKEWIDTH)
+					beNullable;
+					yourself);
 		at: #layer
-			put: (PropertyDescriptor
+			put: ((EnumPropertyDescriptor
 					getSelector: #layerCode
 					defaultValue: SC_LAYER_BASE
-					setMessage: SCI_MARKERSETLAYER);
+					setMessage: SCI_MARKERSETLAYER)
+					values: ScintillaView layerNames;
+					yourself);
 		shrink;
 		yourself!
 
@@ -536,8 +553,8 @@ stbVersion
 	^2!
 
 visibleCharacterGlyphs
-	^(Character byteCharacterSet select: [:each | each isGraph]) asArray
-		collect: [:each | each asSymbol]! !
+	#todo.	"Select a better range of characters more likely to be useful as markers by using the Unicode classifications, e.g. geometric shapes."
+	^(Character byteCharacterSet select: [:each | each isGraph]) asArray! !
 !UI.Scintilla.MarkerDefinition class categoriesFor: #arrows!constants!public! !
 !UI.Scintilla.MarkerDefinition class categoriesFor: #boxTree!constants!public! !
 !UI.Scintilla.MarkerDefinition class categoriesFor: #buildPropertyMap!constants!must not strip!private! !

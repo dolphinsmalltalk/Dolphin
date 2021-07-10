@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 View subclass: #ScribbleView
 	instanceVariableNames: ''
@@ -18,6 +18,7 @@ connectModel
 	self model 
 		when: #listChanged send: #refreshContents to: self;
 		when: #item:addedAtIndex: send: #onItem:addedAtIndex: to: self;
+		when: #items:addedAtIndex: send: #onItems:addedAtIndex: to: self;
 		when: #item:removedAtIndex: send: #refreshContents to: self;
 		when: #item:updatedAtIndex: send: #refreshContents to: self.!
 
@@ -30,6 +31,9 @@ onItem: anInkStroke addedAtIndex: anIntegerIndex
 	
 !
 
+onItems: aSequenceableCollection addedAtIndex: anIntegerIndex
+	aSequenceableCollection do: [:each | each drawOn: self canvas]!
+
 onPaintRequired: aPaintEvent
 	"Handler for paint event. Show the scribble"
 
@@ -38,6 +42,7 @@ onPaintRequired: aPaintEvent
 	self model do: [:each | each drawOn: canvas ].	! !
 !ScribbleView categoriesFor: #connectModel!models!public! !
 !ScribbleView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
+!ScribbleView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
 !ScribbleView categoriesFor: #onPaintRequired:!event handling!public! !
 
 !ScribbleView class methodsFor!

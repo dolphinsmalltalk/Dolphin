@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalLibrary subclass: #WSockLibrary
 	instanceVariableNames: 'wsaData'
@@ -10,7 +10,7 @@ WSockLibrary comment: '** This class is part of the old asynchronous Sockets Con
 
 This is the ExternalLibrary class to represent the Win32 System DLL, WSOCK32.DLL. 
 This library contains functions pertaining to the use of TCP/IP sockets under Windows.'!
-!WSockLibrary categoriesForClass!External-Libraries-Sockets!Windows Sockets! !
+!WSockLibrary categoriesForClass!Deprecated!External-Libraries-Sockets!Windows Sockets! !
 !WSockLibrary methodsFor!
 
 accept: p1 addr: p2 addrlen: p3

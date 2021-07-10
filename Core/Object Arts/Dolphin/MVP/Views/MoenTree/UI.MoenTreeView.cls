@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.View subclass: #'UI.MoenTreeView'
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
@@ -62,6 +62,12 @@ addTreeFor: anObject parentNode: aMoenTreeNode
 
 anchorNode
 	^anchorNode!
+
+applyFont
+	"Private - The receiver's font has been changed. We need to regenerate
+	our contours as it is likely that the text extents will have changed."
+
+	self invalidateGeometry!
 
 attachParent: aMoenTreeNode height: anInteger
 	"Private - Extend the branch contour to enclose the <MoenTreeNode>, tNode."
@@ -464,12 +470,6 @@ findNodeForObject: anObject
 				in: anchorNode
 				ifAbsent: []]!
 
-fontChanged
-	"Private - The receiver's font has been changed. We need to regenerate
-	our contours as it is likely that the text extents will have changed."
-
-	self invalidateGeometry!
-
 generateAbsolutes
 	"Private - Generate the absolute positions of each tree and the preferred view extent.
 	Also cache clip rectangles which enclose a node and all its sub-nodes."
@@ -722,6 +722,11 @@ isAutoExpanding
 
 isAutoExpanding: aBoolean
 	mtvFlags := mtvFlags mask: AutoExpandingMask set: aBoolean!
+
+isExpanded: anObject
+	"Answers if the node associated with anObject is expanded."
+
+	^anObject notNil and: [(self nodeForObject: anObject) isExpanded]!
 
 itemFromPoint: aPoint 
 	"Private - Answer the node of the receiver under the <Point> argument or nil if none."
@@ -1411,7 +1416,7 @@ paintNode: aMoenTreeNode on: aCanvas
 	isSel ifTrue: [aCanvas restore]!
 
 paintThemeButton: aRectangle on: aCanvas isExpanded: aBoolean
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TVP_GLYPH
@@ -1782,6 +1787,7 @@ zip: aMoenTreeNode
 	self zip: aMoenTreeNode parent! !
 !UI.MoenTreeView categoriesFor: #addTreeFor:parentNode:!adding!private! !
 !UI.MoenTreeView categoriesFor: #anchorNode!accessing!private! !
+!UI.MoenTreeView categoriesFor: #applyFont!font!private!updating! !
 !UI.MoenTreeView categoriesFor: #attachParent:height:!private!tree layout! !
 !UI.MoenTreeView categoriesFor: #autoExpandNode:!adding!private! !
 !UI.MoenTreeView categoriesFor: #basicExpandNode:!operations!private! !
@@ -1818,7 +1824,6 @@ zip: aMoenTreeNode
 !UI.MoenTreeView categoriesFor: #expandNode:!operations!private! !
 !UI.MoenTreeView categoriesFor: #expandSubtree:!operations!private! !
 !UI.MoenTreeView categoriesFor: #findNodeForObject:!private!searching! !
-!UI.MoenTreeView categoriesFor: #fontChanged!private!updating! !
 !UI.MoenTreeView categoriesFor: #generateAbsolutes!geometry!private! !
 !UI.MoenTreeView categoriesFor: #generateNodeClipRects!private!tree layout! !
 !UI.MoenTreeView categoriesFor: #generatePosition:absolute:!geometry!private! !
@@ -1849,6 +1854,7 @@ zip: aMoenTreeNode
 !UI.MoenTreeView categoriesFor: #invalidateTree:imagesOnly:!painting!private! !
 !UI.MoenTreeView categoriesFor: #isAutoExpanding!accessing-styles!public!testing! !
 !UI.MoenTreeView categoriesFor: #isAutoExpanding:!accessing!public! !
+!UI.MoenTreeView categoriesFor: #isExpanded:!testing!public! !
 !UI.MoenTreeView categoriesFor: #itemFromPoint:!helpers!private! !
 !UI.MoenTreeView categoriesFor: #join:!private!tree layout! !
 !UI.MoenTreeView categoriesFor: #layoutLeaf:!private!tree layout! !

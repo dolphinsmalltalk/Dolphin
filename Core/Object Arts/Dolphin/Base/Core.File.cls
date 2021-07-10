@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.File'
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
@@ -54,7 +54,7 @@ basicFree
 	| fh |
 	fh := handle.
 	handle := nil.
-	(KernelLibrary default closeHandle: fh) ifFalse: [self signalOsError: false]!
+	(Kernel32 closeHandle: fh) ifFalse: [self signalOsError: false]!
 
 beSparse
 	"Instruct Windows to store the file in sparse form. This allows very very large files to be
@@ -63,7 +63,7 @@ beSparse
 
 	| bytesReturnedBuf |
 	bytesReturnedBuf := External.DWORDBytes new.
-	(KernelLibrary default
+	(Kernel32
 		deviceIoControl: self asParameter
 		dwIoControlCode: FSCTL_SET_SPARSE
 		lpInBuffer: nil
@@ -71,7 +71,7 @@ beSparse
 		lpOutBuffer: nil
 		nOutBufferSize: 0
 		lpBytesReturned: bytesReturnedBuf
-		lpoverlapped: nil) ifFalse: [KernelLibrary default systemError]!
+		lpoverlapped: nil) ifFalse: [Kernel32 systemError]!
 
 checkBoundsOf: aStringOrByteArray startingAt: startIndex for: bytesToTransferInteger
 	"Private - Signal a FileException if the bounds of the transfer are out of range."
@@ -108,8 +108,7 @@ delete
 	self class delete: spec!
 
 fileType
-	^#(#disk #char #pipe) at: ((KernelLibrary default getFileType: self handle) bitAnd: 16rFFF)
-		ifAbsent: [#unknown]!
+	^#(#disk #char #pipe) at: ((Kernel32 getFileType: self handle) bitAnd: 16rFFF) ifAbsent: [#unknown]!
 
 flags: anInteger
 	"Private - Save away the Win32 access and open flags."
@@ -120,7 +119,7 @@ flush
 	"Force write modifications to disk (where possible).
 	Signal a FileException if the operation fails."
 
-	(KernelLibrary default flushFileBuffers: handle) ifFalse: [self signalOsError: false]!
+	(Kernel32 flushFileBuffers: handle) ifFalse: [self signalOsError: false]!
 
 free
 	"Private - Close the file if it is not already closed.
@@ -134,11 +133,11 @@ getTimes: ctime atime: atime mtime: mtime
 	all answered through the FILETIME arguments (which are treated as value holders
 	and updated directly)."
 
-	(KernelLibrary default
+	(Kernel32
 		getFileTime: self asParameter
 		lpCreationTime: ctime
 		lpLastAccessTime: atime
-		lpLastWriteTime: mtime) ifFalse: [KernelLibrary default systemError]!
+		lpLastWriteTime: mtime) ifFalse: [Kernel32 systemError]!
 
 handle
 	"Answer the file handle."
@@ -195,7 +194,7 @@ open
 
 	| fh |
 	
-	[fh := KernelLibrary default
+	[fh := Kernel32
 				createFile: spec
 				dwDesiredAccess: self accessFlags
 				dwSharedMode: shareFlags
@@ -271,15 +270,14 @@ openFlags
 pathName
 	"Answer the actual path name of the open file."
 
-	| kernel size buf |
-	kernel := KernelLibrary default.
-	size := kernel
+	| size buf |
+	size := Kernel32
 				getFinalPathNameByHandle: handle
 				lpszFilePath: nil
 				cchFilePath: 0
 				dwFlags: 0.
 	buf := Utf16String newFixed: size - 1.
-	kernel
+	Kernel32
 		getFinalPathNameByHandle: handle
 		lpszFilePath: buf
 		cchFilePath: size
@@ -328,7 +326,7 @@ read: anAddress count: bytesToReadInteger
 	Answer the number of bytes read or signal a <FileException> if the operation fails."
 
 	bytesToReadInteger == 0 ifTrue: [^0].
-	^(KernelLibrary default
+	^(Kernel32
 		readFile: handle
 		lpBuffer: anAddress
 		nNumberOfBytesToRead: bytesToReadInteger
@@ -389,7 +387,7 @@ seek: offsetInteger sense: senseFlag
 	"Note that it is not an error to advance the file position beyond the end of file, even for
 	a file opened in read-only mode."
 
-	^(KernelLibrary default
+	^(Kernel32
 		setFilePointerEx: handle
 		liDistanceToMove: offsetInteger
 		lpNewFilePointer: intBuffer
@@ -431,7 +429,7 @@ signalOsError: aBoolean
 size
 	"Answer the size of the file in bytes or signal a <FileException> if the operation fails."
 
-	^(KernelLibrary default getFileSizeEx: handle lpFileSize: intBuffer)
+	^(Kernel32 getFileSizeEx: handle lpFileSize: intBuffer)
 		ifTrue: [intBuffer qwordAtOffset: 0]
 		ifFalse: [self signalOsError: false]!
 
@@ -440,7 +438,7 @@ size: anInteger
 	(can be used to truncate or extend a file)."
 
 	self position: anInteger.
-	(KernelLibrary default setEndOfFile: handle) ifFalse: [self signalOsError: false]!
+	(Kernel32 setEndOfFile: handle) ifFalse: [self signalOsError: false]!
 
 sniffEncoding
 	| ituResult buf count |
@@ -451,7 +449,7 @@ sniffEncoding
 	ituResult := (ByteArray newFixed: 4)
 				sdwordAtOffset: 0 put: -1;
 				yourself.
-	^((AdvApiLibrary default
+	^((AdvApi32
 		isTextUnicode: buf
 		iSize: count
 		lpiResult: ituResult) and: 
@@ -498,7 +496,7 @@ write: aStringOrByteArrayOrAddress count: bytesToWriteInteger
 	Answer the number of bytes written or signal a <FileException> if the operation fails."
 
 	bytesToWriteInteger == 0 ifTrue: [^0].
-	^(KernelLibrary default
+	^(Kernel32
 		writeFile: handle
 		lpBuffer: aStringOrByteArrayOrAddress
 		nNumberOfBytesToWrite: bytesToWriteInteger
@@ -587,7 +585,7 @@ appendPathDelimiter: aString
 	^aString copyWith: self pathDelimiter!
 
 attributes: aFileNameString
-	^KernelLibrary default getFileAttributes: aFileNameString!
+	^Kernel32 getFileAttributes: aFileNameString!
 
 commonPrefixOf: pathString1 and: pathString2
 	"Answer the <readableString> common prefix shared between the two paths.
@@ -596,13 +594,13 @@ commonPrefixOf: pathString1 and: pathString2
 	| prefix len path1 path2 |
 	path1 := pathString1 asUtf16String.
 	path2 := pathString2 asUtf16String.
-	len := ShlwapiLibrary default
+	len := Shlwapi
 				pathCommonPrefix: path1
 				pszFile2: path2
 				achPath: nil.
 	len == 0 ifTrue: [^''].
 	prefix := Utf16String newFixed: len.
-	ShlwapiLibrary default
+	Shlwapi
 		pathCommonPrefix: path1
 		pszFile2: path2
 		achPath: prefix.
@@ -619,7 +617,7 @@ composePath: path subPath: subpath
 
 	| buffer |
 	buffer := self pathBuffer.
-	^ShlwapiLibrary default
+	^Shlwapi
 		pathCombine: buffer
 		lpszDir: path
 		lpszFile: subpath!
@@ -644,7 +642,7 @@ composeStem: aStemString extension: anExtensionString
 	how file names are constructed is warranted. Note that the dot separator may be
 	specified in the extension, or not."
 
-	^anExtensionString first == $.
+	^(anExtensionString at: 1) == $.
 		ifTrue: [aStemString, anExtensionString]
 		ifFalse: [aStemString, '.', anExtensionString]!
 
@@ -653,11 +651,10 @@ copy: oldFileNameString to: newFileNameString
 	Signal a HostSystemError if the copy fails."
 
 	#todo.	"Due to a VM bug, auto-conversion of Strings is not thread-safe in overlapped calls, so convert explicitly."
-	(KernelLibrary default
+	(Kernel32
 		copyFile: oldFileNameString asUtf16String
 		lpNewFileName: newFileNameString asUtf16String
-		bfailIfExists: false)
-			ifFalse: [KernelLibrary default systemError: Processor activeProcess lastError]!
+		bfailIfExists: false) ifFalse: [Kernel32 systemError: Processor activeProcess lastError]!
 
 createDirectory: path
 	"Create a directory with the specified path.
@@ -665,12 +662,10 @@ createDirectory: path
 	Raise a Win32Error if the call fails for any other reason than that the
 	directory already exists."
 
-	| kernel |
-	kernel := KernelLibrary default.
-	^(kernel createDirectory: path lpSecurityAttributes: nil) or: 
+	^(Kernel32 createDirectory: path lpSecurityAttributes: nil) or: 
 			[| err |
-			err := kernel getLastError.
-			err = Win32Errors.ERROR_ALREADY_EXISTS ifFalse: [^kernel systemError: err].
+			err := Kernel32 getLastError.
+			err = Win32Errors.ERROR_ALREADY_EXISTS ifFalse: [^Kernel32 systemError: err].
 			false	"already existed"]!
 
 createDirectoryPath: path
@@ -744,7 +739,7 @@ delete: aFileNameString
 	"Deletes the file whose name is specified by aFileNameString.
 	Signal a Win32Error if the operation fails."
 
-	(KernelLibrary default deleteFile: aFileNameString) ifFalse: [KernelLibrary default systemError]!
+	(Kernel32 deleteFile: aFileNameString) ifFalse: [Kernel32 systemError]!
 
 deleteDirectory: aString
 	"Recursively delete all files and folders within the specified directory, and
@@ -803,27 +798,26 @@ for: matchString in: dirString do: operation
 	in the directory named, dirString, evaluate the monadic valuable, operation, with 
 	a WIN32_FIND_DATA describing the file/directory as the argument."
 
-	| lib handle findStruct |
-	lib := KernelLibrary default.
+	| handle findStruct |
 	findStruct := WIN32_FIND_DATAW new.
 	findStruct directory: dirString.
-	handle := lib findFirstFile: (File composePath: dirString subPath: matchString)
+	handle := Kernel32 findFirstFile: (File composePath: dirString subPath: matchString)
 				lpFindFileData: findStruct.
 	handle = INVALID_HANDLE_VALUE
 		ifTrue: 
 			[| err |
-			err := lib getLastError.
+			err := Kernel32 getLastError.
 			^(err == Win32Errors.ERROR_FILE_NOT_FOUND or: [err == Win32Errors.ERROR_ACCESS_DENIED])
 				ifTrue: [self]
-				ifFalse: [lib systemError: err]].
+				ifFalse: [Kernel32 systemError: err]].
 	
 	[| error |
 	
 	[operation value: findStruct.
-	lib findNextFile: handle lpFindFileData: findStruct] whileTrue.
-	error := lib getLastError.
-	error == Win32Errors.ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]]
-			ensure: [lib findClose: handle]!
+	Kernel32 findNextFile: handle lpFindFileData: findStruct] whileTrue.
+	error := Kernel32 getLastError.
+	error == Win32Errors.ERROR_NO_MORE_FILES ifFalse: [^Kernel32 systemError: error]]
+			ensure: [Kernel32 findClose: handle]!
 
 forAll: matchString in: dirString do: operation
 	"For each file or directory matching the wildcarded path string, fileSpec, 
@@ -911,23 +905,22 @@ fromHandle: aHandle
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| fullpath len path kernel |
+	| fullpath len path |
 	path := aPathnameString asUtf16String.
-	kernel := KernelLibrary default.
-	(len := kernel
+	(len := Kernel32
 				getFullPathName: path
 				nBufferLength: 0
 				lpBuffer: nil
 				lpFilePart: nil) == 0
-		ifTrue: [kernel systemError].
+		ifTrue: [Kernel32 systemError].
 	"Note: Returns the length including the terminating null"
 	fullpath := Utf16String newFixed: len - 1.
-	(kernel
+	(Kernel32
 		getFullPathName: path
 		nBufferLength: len
 		lpBuffer: fullpath
 		lpFilePart: nil) == 0
-		ifTrue: [kernel systemError].
+		ifTrue: [Kernel32 systemError].
 	^fullpath!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
@@ -995,12 +988,12 @@ isDirectory: aString
 isRelativePath: aFileNameString
 	"Answers true if aFileNameString is a relative path with no absolute components"
 
-	^ShlwapiLibrary default pathIsRelative: aFileNameString!
+	^Shlwapi pathIsRelative: aFileNameString!
 
 isRootPath: aString
 	"Answer whether the <String> argument is a root path, e.g. 'c:\'"
 
-	^ShlwapiLibrary default pathIsRoot: aString!
+	^Shlwapi pathIsRoot: aString!
 
 isWriteable: aString
 	"Answer whether the file at the specified path is writeable. If there is no such file, then
@@ -1010,18 +1003,18 @@ isWriteable: aString
 	writing may fail."
 
 	| attributes |
-	attributes := KernelLibrary default getFileAttributes: aString.
+	attributes := Kernel32 getFileAttributes: aString.
 	^(attributes ~= -1 and: [attributes allMask: FILE_ATTRIBUTE_READONLY]) not!
 
 isWriteable: aString set: aBoolean
 	"Set the writeable state of the file with path, aString, to aBoolean. Answers true if the operation succeeds"
 
-	| kernel attributes |
-	kernel := KernelLibrary default.
-	attributes := kernel getFileAttributes: aString.
-	attributes == -1 ifTrue: [kernel systemError].
-	(kernel setFileAttributes: aString
-		value: (attributes mask: FILE_ATTRIBUTE_READONLY set: aBoolean not)) ifFalse: [kernel systemError]!
+	| attributes |
+	attributes := Kernel32 getFileAttributes: aString.
+	attributes == -1 ifTrue: [Kernel32 systemError].
+	(Kernel32 setFileAttributes: aString
+		value: (attributes mask: FILE_ATTRIBUTE_READONLY set: aBoolean not))
+			ifFalse: [Kernel32 systemError]!
 
 lastWriteTime: aString
 	"Answer a <FILETIME> representing the time when the file with the specified filename was
@@ -1082,7 +1075,7 @@ makePath: anArray
 			ext := e asUtf8String.
 			size := size + ext size + 1].
 	path := Utf8String newFixed: size.
-	^(errno := CRTLibrary default
+	^(errno := Ucrt
 				_makepath_s: path
 				bufferSize: size + 1
 				drive: drive
@@ -1227,7 +1220,7 @@ relativePathOf: aPathString to: aBasePathString
 	| relPath toPath |
 	relPath := self pathBuffer.
 	toPath := aPathString asUtf16String.
-	relPath := (ShlwapiLibrary default
+	relPath := (Shlwapi
 				pathRelativePathTo: relPath
 				pszFrom: aBasePathString
 				dwAttrFrom: 0
@@ -1238,16 +1231,15 @@ relativePathOf: aPathString to: aBasePathString
 		ifFalse: [relPath trimNulls]!
 
 removeDirectory: aString
-	(KernelLibrary default removeDirectory: aString) ifFalse: [KernelLibrary default systemError]!
+	(Kernel32 removeDirectory: aString) ifFalse: [Kernel32 systemError]!
 
 removeExtension: aString
 	"Answer a <readableString> which is the path argument with the extension component removed."
 
-	| drive dir fname errno max path crt |
+	| drive dir fname errno max path |
 	path := aString asUtf8String.
 	max := path size.
-	crt := CRTLibrary default.
-	(errno := crt
+	(errno := Ucrt
 				_splitpath_s: path
 				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1259,7 +1251,7 @@ removeExtension: aString
 				extLen: 0) == 0
 		ifTrue: 
 			[| unextended |
-			(errno := crt
+			(errno := Ucrt
 						_makepath_s: (unextended := Utf8String new: max)
 						bufferSize: max + 1
 						drive: drive
@@ -1281,8 +1273,8 @@ rename: oldFileNameString to: newFileNameString
 	"Rename the file specified in oldFileNameString to newFileNameString.
 	Signal a HostSystemError if the operation fails."
 
-	(KernelLibrary default moveFile: oldFileNameString lpNewFileName: newFileNameString)
-		ifFalse: [KernelLibrary default systemError]!
+	(Kernel32 moveFile: oldFileNameString lpNewFileName: newFileNameString)
+		ifFalse: [Kernel32 systemError]!
 
 replacePath: filePath with: newPath
 	"Replace the path component of the full path name, filePath, with the new path name,
@@ -1339,11 +1331,11 @@ shortPathOf: aPathnameString
 	path := aPathnameString asUtf16String.
 	len := path size.
 	shortpath := Utf16String newFixed: len.
-	(KernelLibrary default
+	(Kernel32
 		getShortPathName: path
 		lpszShortPath: shortpath
 		cchBuffer: len + 1) == 0
-		ifTrue: [KernelLibrary default systemError].
+		ifTrue: [Kernel32 systemError].
 	^shortpath trimNulls!
 
 sniffEncoding: aString
@@ -1365,7 +1357,7 @@ splitDriveFrom: aString
 	Answers an empty string if there is no drive component in the path."
 
 	| drive errno |
-	^(errno := CRTLibrary default
+	^(errno := Ucrt
 				_splitpath_s: aString asUtf8String
 				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1385,7 +1377,7 @@ splitExtensionFrom: aString
 	| ext errno path len crt |
 	path := aString asUtf8String.
 	(len := path size) == 0 ifTrue: [^''].
-	crt := CRTLibrary default.
+	crt := Ucrt.
 	(errno := crt
 				_splitpath_s: path
 				drive: nil
@@ -1407,7 +1399,7 @@ splitFilenameFrom: aString
 	| fname ext errno max path |
 	path := aString asUtf8String.
 	max := path size.
-	(errno := CRTLibrary default
+	(errno := Ucrt
 				_splitpath_s: path
 				drive: nil
 				driveLen: 0
@@ -1418,7 +1410,7 @@ splitFilenameFrom: aString
 				ext: (ext := Utf8String new: max)
 				extLen: max + 1) == 0
 		ifTrue: 
-			[(errno := CRTLibrary default
+			[(errno := Ucrt
 						strcat_s: fname
 						bufferSize: max + 1
 						strSource: ext) == 0
@@ -1431,15 +1423,14 @@ splitPath: aString
 	Note: We use the C-runtime library to implement this, hence either backward or forward
 	slashes (i.e. $\ or $/) are acceptable as pathname delimiters."
 
-	| max path drive dir fname ext errno crt |
+	| max path drive dir fname ext errno |
 	"To avoid problems with long filenames, we use the length of the input string as the buffer
 	sizes - clearly the component parts can never be larger than this.  In order to support
 	Unicode paths, we work in UTF-8."
 	path := aString asUtf8String.
 	max := path size.
 	max = 0 ifTrue: [^{''. ''. ''. ''}].
-	crt := CRTLibrary default.
-	^(errno := crt
+	^(errno := Ucrt
 				_splitpath_s: path
 				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1469,7 +1460,7 @@ splitPathFrom: aPathnameString
 	path := aPathnameString asUtf8String.
 	len := path size.
 	"Deliberately allocate extra space for the drive letter buffer so we can strcat to it later."
-	(errno := CRTLibrary default
+	(errno := Ucrt
 				_splitpath_s: path
 				drive: (drive := Utf8String new: len)
 				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
@@ -1480,7 +1471,7 @@ splitPathFrom: aPathnameString
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: 
-			[(errno := CRTLibrary default
+			[(errno := Ucrt
 						strcat_s: drive
 						bufferSize: len + 1
 						strSource: dir) == 0
@@ -1494,7 +1485,7 @@ splitStemFrom: aString
 	| fname errno path len |
 	path := aString asUtf8String.
 	len := path size.
-	^(errno := CRTLibrary default
+	^(errno := Ucrt
 				_splitpath_s: path
 				drive: nil
 				driveLen: 0
@@ -1529,22 +1520,21 @@ temporaryFilenameWithPrefix: prefixString
 
 	| returnBuf |
 	returnBuf := self pathBuffer.
-	(KernelLibrary default
+	(Kernel32
 		getTempFileName: self tempPath
 		lpPrefixString: prefixString
 		uUnique: 0
 		lpTempFileName: returnBuf) == 0
-		ifTrue: [^KernelLibrary default systemError].
+		ifTrue: [^Kernel32 systemError].
 	^returnBuf trimNulls!
 
 tempPath
 	"Answer the path of the directory designated for temporary files on the host system."
 
-	| buf len lib |
-	lib := KernelLibrary default.
-	(len := lib getTempPath: 0 lpBuffer: nil) == 0 ifTrue: [lib systemError].
+	| buf len |
+	(len := Kernel32 getTempPath: 0 lpBuffer: nil) == 0 ifTrue: [Kernel32 systemError].
 	buf := Utf16String newFixed: len - 1.
-	(lib getTempPath: len lpBuffer: buf) == 0 ifTrue: [lib systemError].
+	(Kernel32 getTempPath: len lpBuffer: buf) == 0 ifTrue: [Kernel32 systemError].
 	^buf!
 
 windowsDirectory
@@ -1553,27 +1543,25 @@ windowsDirectory
 	Windows directory. See MSDN KB281316  for further information."
 
 	| len path |
-	len := KernelLibrary default getSystemWindowsDirectory: nil uSize: 0.
-	len == 0 ifTrue: [^KernelLibrary default systemError].
+	len := Kernel32 getSystemWindowsDirectory: nil uSize: 0.
+	len == 0 ifTrue: [^Kernel32 systemError].
 	path := Utf16String newFixed: len - 1.
-	len := KernelLibrary default getSystemWindowsDirectory: path uSize: len.
+	len := Kernel32 getSystemWindowsDirectory: path uSize: len.
 	^path!
 
 workingDirectory
 	"Answer the current working directory. The result always has a trailing separator."
 
-	| kernel len buf |
-	kernel := KernelLibrary default.
-	(len := kernel getCurrentDirectory: 0 lpBuffer: nil) == 0 ifTrue: [^kernel systemError].
-	buf := Utf16String newFixed: len-1.
-	(kernel getCurrentDirectory: len lpBuffer: buf) == 0 ifTrue: [^kernel systemError].
-	^(buf at: len-1) = $\ ifTrue: [buf] ifFalse: [buf copyWith: $\]
-!
+	| len buf |
+	(len := Kernel32 getCurrentDirectory: 0 lpBuffer: nil) == 0 ifTrue: [^Kernel32 systemError].
+	buf := Utf16String newFixed: len - 1.
+	(Kernel32 getCurrentDirectory: len lpBuffer: buf) == 0 ifTrue: [^Kernel32 systemError].
+	^(buf at: len - 1) = $\ ifTrue: [buf] ifFalse: [buf copyWith: $\]!
 
 workingDirectory: aString
 	"Set the current working directory."
 
-	^KernelLibrary default setCurrentDirectory: aString! !
+	^Kernel32 setCurrentDirectory: aString! !
 !Core.File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
 !Core.File class categoriesFor: #attributes:!file operations!public! !
 !Core.File class categoriesFor: #commonPrefixOf:and:!filename manipulation!public! !

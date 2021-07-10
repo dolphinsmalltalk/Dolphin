@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.TIME_ZONE_INFORMATION'
 	instanceVariableNames: 'zoneId offset'

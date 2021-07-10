@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.MENUITEMINFOW'
 	instanceVariableNames: 'text bitmap'
@@ -31,7 +31,7 @@ basicText: aString
 
 	text := aString asUtf16String.
 	self dwTypeData: text
-	"It has never been necessary to set the text size"
+	"It has never been necessary to set the text size - the documentation is explicit about this, stating 'cch is ignored when the content of a menu item is set by calling SetMenuItemInfo.'"
 	"self cch: text size"!
 
 cch: anInteger

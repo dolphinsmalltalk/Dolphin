@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SessionManager subclass: #'UI.GUISessionManager'
 	instanceVariableNames: 'savedWindows'
@@ -24,18 +24,15 @@ Instance Variables:
 allocConsole
 	"Private - Open a console window for this session."
 
-	| kernel |
-	kernel := KernelLibrary default.
-	(self isUnattended and: [kernel attachConsole: ATTACH_PARENT_PROCESS])
+	(self isUnattended and: [Kernel32 attachConsole: ATTACH_PARENT_PROCESS])
 		ifFalse: 
-			[| hMenu user |
-			kernel allocConsole.
+			[| hMenu |
+			Kernel32 allocConsole.
 			"Remove the close button from the console window as otherwise if the user
 			closes it Windows will kill this process with no way to intercept."
-			hConsole := kernel getConsoleWindow.
-			user := UserLibrary default.
-			hMenu := user getSystemMenu: hConsole bRevert: false.
-			user
+			hConsole := Kernel32 getConsoleWindow.
+			hMenu := User32 getSystemMenu: hConsole bRevert: false.
+			User32
 				deleteMenu: hMenu
 				uPosition: SC_CLOSE
 				uFlags: MF_BYCOMMAND]!
@@ -81,7 +78,7 @@ commandLineParser
 disableWindowGhosting
 	"Disable the Windows feature where if the process stops processing messages from the message queue for 5 seconds, it replaces all the top-level windows with so-called 'ghost' windows. For general applications this is probably not appropriate, but in some cases, such as a development system, the window ghosting is undesirable as it prevents the application receiving any asynchronous keyboard interrupt, and therefore prevents the Dolphin interrupt key sequence from being recognised, making runaway operations uninterruptable."
 
-	UserLibrary default disableProcessWindowsGhosting!
+	User32 disableProcessWindowsGhosting!
 
 inputStateClass
 	^GuiInputState!

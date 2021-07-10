@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Interactor subclass: #'UI.CapturingInteractor'
 	instanceVariableNames: 'oldInteractor stateFlags'
@@ -35,7 +35,7 @@ buttonsReleased
 captureMouse
 	self setCapture.
 	"Don't return until capture is released"
-	SessionManager inputState loopWhile: [View capture == self view]!
+	SessionManager.Current inputState loopWhile: [View capture == self view]!
 
 captureReleased
 	self buttonsReleased.

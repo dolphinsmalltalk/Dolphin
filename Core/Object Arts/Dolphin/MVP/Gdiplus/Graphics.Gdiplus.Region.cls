@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.Region'
 	instanceVariableNames: ''
@@ -14,12 +14,12 @@ Graphics.Gdiplus.Region comment: 'An instance of GdiplusRegion describes an area
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteRegion: handle!
+	Gdip gdipDeleteRegion: handle!
 
 bounds: graphics
 	| rect |
 	rect := RECTL new.
-	GdiplusLibrary default
+	Gdip
 		gdipGetRegionBoundsI: self asParameter
 		graphics: graphics asParameter
 		rect: rect.
@@ -30,25 +30,25 @@ clone
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipCloneRegion: self asParameter cloneRegion: gpHandle.
+	Gdip gdipCloneRegion: self asParameter cloneRegion: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
 
 combinePath: aPath mode: aCombineModeConstant
-	GdiplusLibrary default
+	Gdip
 		gdipCombineRegionPath: self asParameter
 		path: aPath asParameter
 		combineMode: aCombineModeConstant!
 
 combineRectangle: aRectangle mode: aCombineModeConstant
-	GdiplusLibrary default
+	Gdip
 		gdipCombineRegionRectI: self asParameter
 		rect: aRectangle asParameter
 		combineMode: aCombineModeConstant!
 
 combineRegion: aRegion mode: aCombineModeConstant
-	GdiplusLibrary default
+	Gdip
 		gdipCombineRegionRegion: self asParameter
 		region2: aRegion asParameter
 		combineMode: aCombineModeConstant!
@@ -73,7 +73,7 @@ isVisible: aPoint graphics: aGraphics
 
 	| result |
 	result := ByteArray newFixed: 4.
-	GdiplusLibrary default
+	Gdip
 		gdipIsVisibleRegionPointI: self asParameter
 		x: aPoint x
 		y: aPoint y
@@ -84,12 +84,12 @@ isVisible: aPoint graphics: aGraphics
 makeEmpty
 	"Update the receiver to an empty region, i.e., so that it occupies no space on the display device."
 
-	GdiplusLibrary default gdipSetEmpty: self asParameter!
+	Gdip gdipSetEmpty: self asParameter!
 
 makeInfinite
 	"Update the receiver to an infinite region, i.e., so that it occupies all the space on the display device."
 
-	GdiplusLibrary default gdipSetInfinite: self asParameter!
+	Gdip gdipSetInfinite: self asParameter!
 
 unionRegion: aRegion
 	self combineRegion: aRegion mode: CombineModeUnion!

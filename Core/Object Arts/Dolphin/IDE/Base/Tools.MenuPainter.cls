@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.MenuPainter'
 	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
@@ -74,7 +74,7 @@ drawCheckOn: aCanvas in: aRectangle
 		on: aCanvas
 		in: DFCS_MENUCHECK!
 
-drawGlyph: aRectangle on: aCanvas in: anInteger 
+drawGlyph: aRectangle on: aCanvas in: anInteger
 	"Implementation Note: DrawFrameControl draws a black on white mask bitmap on the destination
 	context. We convert this to the correct colours by using an intermediate mono bitmap, which,
 	when blt'd onto a colour bitmap has white pixels translated to the destination's background
@@ -82,17 +82,17 @@ drawGlyph: aRectangle on: aCanvas in: anInteger
 
 	| mono rect extent |
 	extent := aRectangle extent.
-	mono := Bitmap 
+	mono := Bitmap
 				width: extent x
 				height: extent y
 				depth: 1.
 	rect := 0 @ 0 extent: extent.
-	UserLibrary default 
+	User32
 		drawFrameControl: mono canvas asParameter
 		lprc: rect asParameter
 		uType: DFC_MENU
 		uState: anInteger.
-	aCanvas 
+	aCanvas
 		bitBlt: mono canvas
 		rectangle: rect
 		to: aRectangle origin
@@ -207,10 +207,10 @@ paint: aMenuItem on: aCanvas in: aRectangle
 paintBackgroundOn: aCanvas in: aRectangle 
 	aCanvas fillRectangle: aRectangle color: aCanvas backcolor!
 
-paintEdgeOn: aCanvas in: aRectangle 
+paintEdgeOn: aCanvas in: aRectangle
 	"Private - Paint the receiver's 3-d shadow border."
 
-	UserLibrary default 
+	User32
 		drawEdge: aCanvas asParameter
 		qrc: aRectangle asParameter
 		edge: EDGE_RAISED

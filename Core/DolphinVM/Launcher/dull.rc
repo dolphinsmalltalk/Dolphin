@@ -70,6 +70,7 @@ BEGIN
                             "Unable to establish link between calling application and Dolphin image (Error %1!#d! unmarshalling application interface)"
     IDP_FAILTOSTARTTHREAD   "Failed to start Dolphin thread"
     IDP_UNRECOGNISEDIMAGEVERSION "Unrecognised image version %2!d!: %1"
+    IDP_UNSUPPORTEDIMAGEVERSION "Unrecognised image version %2!d!: %1"
 END
 
 STRINGTABLE
@@ -79,7 +80,7 @@ BEGIN
     IDP_INVALIDIMAGETYPE    "Image file '%1' is of unrecognised type '%2!.4s!'"
     IDP_OPENIMAGEFAILURE    "Fail to open image file '%1'"
     IDP_VERSIONMISMATCH     "The image '%9' was saved by a version %1!u!.%2!u!.x VM, but this VM is version %5!u!.%6!u!.%7!u!.%8!u!%nThe image may not load and will probably not run successfully%n%nDo you want to attempt to load it in any case?"
-    IDS_VERSIONMISMATCH     "Dolphin Smalltalk: Image version mismatch"
+    IDS_VERSIONMISMATCH     "Unsupported image version %2!d!: %1. You must start this image with a suitable pre-7.0 Dolphin installation."
 END
 
 #endif    // English (United Kingdom) resources

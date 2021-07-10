@@ -1,0 +1,41 @@
+﻿| package |
+package := Package name: 'Dolphin SemVer'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Semantic Versions
+Copyright © Object Arts Ltd, 2021.
+'.
+
+
+package setClassNames: #(
+	#{Core.SemVer}
+	#{Kernel.SemVerParser}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object subclass: #'Kernel.SemVerParser'
+	instanceVariableNames: 'stream last next classification'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AlphaMask' -> 16r10.
+		'ClassificationTable' -> #[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 16 0 0 1 2 3 4 5 6 7 8 9 10 0 0 0 0 0 0 0 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 0 0 0 0 0 0 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 0 0 0 0 0 0].
+		'DigitMask' -> 16rF.
+		'IdentifierMask' -> 16r1F
+	}!
+Core.Magnitude subclass: #'Core.SemVer'
+	instanceVariableNames: 'major minor patch prerelease buildmetadata'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

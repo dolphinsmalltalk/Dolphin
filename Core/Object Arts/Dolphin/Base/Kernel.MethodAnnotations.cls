@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SequenceableCollection variableSubclass: #'Kernel.MethodAnnotations'
 	instanceVariableNames: ''
@@ -52,11 +52,6 @@ first
 	"Answer the first annotation <Message> in the receiver. The receiver should not be empty, but raise an error if it is."
 
 	^Message selector: (self basicAt: 1) arguments: (self basicAt: 2)!
-
-nextIdentityIndexOf: anObject from: startInteger to: stopInteger
-	<primitive: 59>
-	startInteger to: stopInteger do: [:i | (self at: i) == anObject ifTrue: [^i]].
-	^0!
 
 printOn: aStream
 	self basicPrintOn: aStream.
@@ -113,7 +108,6 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !Kernel.MethodAnnotations categoriesFor: #do:!enumerating!public! !
 !Kernel.MethodAnnotations categoriesFor: #environment!public!searching! !
 !Kernel.MethodAnnotations categoriesFor: #first!enumerating!public! !
-!Kernel.MethodAnnotations categoriesFor: #nextIdentityIndexOf:from:to:!private!searching! !
 !Kernel.MethodAnnotations categoriesFor: #printOn:!printing!public! !
 !Kernel.MethodAnnotations categoriesFor: #refersTo:asLiteralOf:!private!testing! !
 !Kernel.MethodAnnotations categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
@@ -140,13 +134,13 @@ initialize
 		self initialize
 	"
 
-	VMLibrary default registryAt: self name put: self.
-	VMLibrary default registryAtIndex: 152 put: (self fromPairs: {{#namespace:. {Smalltalk}}})!
+	VM registryAt: self name put: self.
+	VM registryAtIndex: 152 put: (self fromPairs: {{#namespace:. {Smalltalk}}})!
 
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
-	VMLibrary default
+	VM
 		registryAt: self name put: nil;
 		registryAtIndex: 152 put: nil! !
 !Kernel.MethodAnnotations class categoriesFor: #fromPairs:!instance creation!public! !

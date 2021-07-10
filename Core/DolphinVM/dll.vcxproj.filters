@@ -27,7 +27,4 @@
       <UniqueIdentifier>{2def1405-80f5-49fd-af81-e3bc915c023a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="rc_vm.h" />
-  </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Address variableByteSubclass: #'External.MemoryMappedFileView'
 	instanceVariableNames: ''
@@ -20,12 +20,12 @@ basicFree
 		print: self;
 		cr."
 
-	KernelLibrary default unmapViewOfFile: self!
+	Kernel32 unmapViewOfFile: self!
 
 flush
 	"Flush any modifications to the data in the range represented by this view to the underlying file."
 
-	KernelLibrary default flushViewOfFile: self dwNumberOfBytesToFlush: 0!
+	Kernel32 flushViewOfFile: self dwNumberOfBytesToFlush: 0!
 
 free
 	"Free external resources held by the receiver, and leave in a clean state."

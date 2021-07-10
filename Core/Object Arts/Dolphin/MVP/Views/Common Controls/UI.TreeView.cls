@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.IconicListAbstract subclass: #'UI.TreeView'
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
@@ -59,7 +59,7 @@ addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 									tvItem
 										image: index - 1;
 										selectedImage: index - 1]].
-					hItem := UserLibrary default
+					hItem := User32
 								sendMessageU: handle
 								msg: TVM_INSERTITEMW
 								wParam: 0
@@ -76,13 +76,11 @@ addRoot: anObject
 addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 	aTVINSERTSTRUCT item allCallbacks.
 	self withOldWndProc: 
-			[| user |
-			"Add items with subclassing removed so don't receive TVM_INSERTITEMs"
-			user := UserLibrary default.
+			["Add items with subclassing removed so don't receive TVM_INSERTITEMs"
 			aCollection do: 
 					[:each |
 					| hItem |
-					hItem := user
+					hItem := User32
 								sendMessageU: handle
 								msg: TVM_INSERTITEMW
 								wParam: 0
@@ -372,7 +370,7 @@ getSelectionsByIndex
 
 getSingleSelection
 	"Private - Answer the 'index' (or in the case of the receiver, the handle) of the selected object in 
-	the receiver, or nil if there is no selection."
+	the receiver, or zero if there is no selection."
 
 	^self tvmGetNextItem: nil code: TVGN_CARET!
 
@@ -684,7 +682,7 @@ onDisplayDetailsRequired: aTVITEM
 	| object requestMask saveDetails |
 	object := handleObjectMap lookup: aTVITEM handle.
 	"The TreeView sometimes asks for display details for items that are being removed"
-	object isNil ifTrue: [^0].
+	object ifNil: [^0].
 	requestMask := aTVITEM mask.
 	saveDetails := tvFlags anyMask: UpdateModeMask.
 	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons])
@@ -809,6 +807,12 @@ onItem: anObject updatedAtIndex: anInteger
 
 	^self shouldNotImplement!
 
+onItems: anObject addedAtIndex: anIntegerIndex 
+	"Event received when anObject has been added to the receiver's
+	model at anIntegerIndex. Trees use #onItem:addedInParent:"
+
+	^self shouldNotImplement!
+
 onItemUpdated: anObject 
 	"Event received when anObject has been updated.
 	Refresh the tree representation of this object"
@@ -880,7 +884,7 @@ onViewCreated
 
 	super onViewCreated.
 	self newMaps.
-	self fontChanged.
+	self applyFont.
 	self refreshContents.
 	self viewMode: self viewMode.
 	indentSeparation ifNotNil: [self updateIndentation]!
@@ -1080,7 +1084,7 @@ tvmGetItemRect: aHandle textOnly: aBoolean
 tvmGetNextItem: aHandle code: anInteger
 	"Private - Send TVM_GETNEXTITEM with anInteger and aHandle to the tree view."
 
-	^UserLibrary default
+	^User32
 		sendMessageU: handle
 		msg: TVM_GETNEXTITEM
 		wParam: anInteger
@@ -1091,7 +1095,7 @@ tvmSetImageList: aWinImageList type: anIntegerImageType
 	 Answer the receiver's previous <Imagelist>."
 
 	^ImageList
-		fromHandle: (UserLibrary default
+		fromHandle: (User32
 				sendMessageU: handle
 				msg: TVM_SETIMAGELIST
 				wParam: anIntegerImageType
@@ -1191,7 +1195,7 @@ updateMode
 		#dynamic	- display details re-requested by callback on every paint
 		#lazy		- display details initially requested by callback on first paint only
 		#static	- tree nodes fully populated with display details when first added
-	The display details referred to are the label test, icon, and whether or not the node has children."
+	The display details referred to are the label text, icon, and whether or not the node has children."
 
 	^UpdateModes at: ((tvFlags bitAnd: UpdateModeMask) bitShift: -1) + 1!
 
@@ -1320,6 +1324,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !UI.TreeView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
 !UI.TreeView categoriesFor: #onItem:removedFromParent:!event handling!public! !
 !UI.TreeView categoriesFor: #onItem:updatedAtIndex:!event handling!public! !
+!UI.TreeView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
 !UI.TreeView categoriesFor: #onItemUpdated:!event handling!public! !
 !UI.TreeView categoriesFor: #onSelChanging:!event handling!private! !
 !UI.TreeView categoriesFor: #onSelChangingFrom:to:cause:!event handling!helpers!private! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Bitmap subclass: #'Graphics.DIBSection'
 	instanceVariableNames: 'depth imageBits'
@@ -42,9 +42,9 @@ copyToGlobalHeap
 	colorTable := header biBitCount <= 8 ifTrue: [self getColorTable bytes] ifFalse: [#[]].
 	headerSize := header byteSize.
 	imageSize := header biSizeImage.
-	hGlobal := KernelLibrary default globalAlloc: ##(GHND | GMEM_DDESHARE)
+	hGlobal := Kernel32 globalAlloc: ##(GHND | GMEM_DDESHARE)
 				dwBytes: headerSize + colorTable size + imageSize.
-	pGlobal := KernelLibrary default globalLock: hGlobal.
+	pGlobal := Kernel32 globalLock: hGlobal.
 	pGlobal
 		replaceFrom: 1
 		to: headerSize
@@ -60,7 +60,7 @@ copyToGlobalHeap
 		to: endHeader + imageSize
 		with: ds dsBm bmBits
 		startingAt: 1.
-	KernelLibrary default globalUnlock: hGlobal.
+	Kernel32 globalUnlock: hGlobal.
 	^hGlobal!
 
 createHandle
@@ -85,7 +85,7 @@ createHandle
 	depth > 8
 		ifTrue: 
 			["RGB usage"
-			dibSection := GDILibrary default
+			dibSection := Gdi32
 						createDIBSection: 0
 						pbmi: info
 						iUsage: DIB_RGB_COLORS
@@ -103,7 +103,7 @@ createHandle
 						bitsPerPixel: depth
 						bits: bits.
 			canvas := palBitmap canvas.
-			dibSection := GDILibrary default
+			dibSection := Gdi32
 						createDIBSection: canvas asParameter
 						pbmi: info
 						iUsage: DIB_PAL_COLORS
@@ -139,7 +139,7 @@ getColorTable
 	size := 2 raisedToInteger: bits.
 	quads := StructureArray length: size elementClass: RGBQUAD.
 	canvas := self canvas.
-	size := GDILibrary default
+	size := Gdi32
 				getDIBColorTable: canvas asParameter
 				uStartIndex: 0
 				cEntries: size
@@ -175,7 +175,7 @@ setColorTable: anRGBQUADArray
 			["Inappropriate colour table size"
 			self errorInappropriateColorTable: anRGBQUADArray].
 	canvas := self canvas.
-	newSize := GDILibrary default
+	newSize := Gdi32
 				setDIBColorTable: canvas asParameter
 				uStartIndex: 0
 				cEntries: size
@@ -215,7 +215,7 @@ fromGlobalHandle: anExternalHandle
 	followed by the image bits."
 
 	| pBitmap header offset dibSection |
-	pBitmap := KernelLibrary default globalLock: anExternalHandle.
+	pBitmap := Kernel32 globalLock: anExternalHandle.
 	header := BITMAPINFOHEADER fromAddress: pBitmap.
 	dibSection := self
 				width: header biWidth
@@ -237,7 +237,7 @@ fromGlobalHandle: anExternalHandle
 		to: header biSizeImage
 		with: pBitmap
 		startingAt: offset.
-	KernelLibrary default globalUnlock: anExternalHandle.
+	Kernel32 globalUnlock: anExternalHandle.
 	^dibSection!
 
 width: width height: height

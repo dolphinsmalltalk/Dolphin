@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SearchPolicy subclass: #'Core.PluggableSearchPolicy'
 	instanceVariableNames: 'compareBlock hashBlock'

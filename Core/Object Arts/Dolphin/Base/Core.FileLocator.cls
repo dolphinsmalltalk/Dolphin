@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.FileLocator'
 	instanceVariableNames: ''
@@ -97,8 +97,7 @@ default
 	"Answers an instance of the receiver that can be used to locate external files
 	relative to the current image directory."
 
-	^self imageRelative
-!
+	^ImageRelativeFileLocator current!
 
 folderRelative: aString
 	^FolderRelativeFileLocator basePath: aString!

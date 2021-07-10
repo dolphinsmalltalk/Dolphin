@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Random subclass: #'OS.RandomCRT'
 	instanceVariableNames: 'next'
@@ -18,7 +18,7 @@ next
 	of numbers generated is only 15 bits. The only plus point is speed."
 
 	^next isNil
-		ifTrue: [(seed := CRTLibrary default rand asFloat) / ##(RAND_MAX + 1 asFloat)]
+		ifTrue: [(seed := Ucrt rand asFloat) / ##(RAND_MAX + 1 asFloat)]
 		ifFalse: 
 			[| answer |
 			answer := next.
@@ -31,12 +31,12 @@ peek
 
 	"Implementation Note: We use the next inst. var as a buffer for the next value."
 
-	^next ifNil: [next := CRTLibrary default rand / ##(RAND_MAX + 1 asFloat)]!
+	^next ifNil: [next := Ucrt rand / ##(RAND_MAX + 1 asFloat)]!
 
 seed: anInteger
 	"Set the seed of the Random stream to anInteger (or 1 if zero)."
 
-	CRTLibrary default srand: anInteger.
+	Ucrt srand: anInteger.
 	super seed: anInteger! !
 !OS.RandomCRT categoriesFor: #next!accessing!public! !
 !OS.RandomCRT categoriesFor: #peek!accessing!public! !

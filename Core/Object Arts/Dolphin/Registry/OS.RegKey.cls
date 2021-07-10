@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.RegKeyAbstract variableSubclass: #'OS.RegKey'
 	instanceVariableNames: ''

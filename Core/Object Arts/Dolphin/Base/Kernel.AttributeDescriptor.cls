@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.AttributeDescriptor'
 	instanceVariableNames: 'flags'
@@ -29,7 +29,7 @@ beCompiled
 	flags := flags maskSet: ##(AccessorMask | MutatorMask)!
 
 beImmutable
-	flags := flags maskClear: MutableMask!
+	flags := flags bitAnd: ##(MutableMask bitInvert)!
 
 beInaccessible
 	"Set the receiver's flag to specify that it is inaccessible.
@@ -49,6 +49,14 @@ beNonBrowsable
 
 	flags := flags maskSet: NonBrowsableMask!
 
+beNonNullable
+	flags := flags bitAnd: ##(NullableMask bitInvert).
+	^self!
+
+beNullable
+	flags := flags bitOr: NullableMask.
+	^self!
+
 beOverride
 	"Set the receiver's flags to specify it as an override attribute
 	(i.e. one for which compiled accessors will be generated, even if defined
@@ -61,7 +69,7 @@ beReadOnly
 	"Set the receiver's flags to specify it as a 'read only' attribute.
 	Answer the receiver."
 
-	flags := (flags maskClear: WriteableMask) maskSet: ReadableMask!
+	flags := (flags bitAnd: ##(WriteableMask bitInvert)) bitOr: ReadableMask!
 
 beUncompiled
 	"Set the receiver's flags to specify it as an uncompiled attribute
@@ -102,6 +110,12 @@ canGenerateMutator
 defaultFlags
 	^##(WriteableMask | ReadableMask | AccessorMask | MutatorMask | NullableMask)!
 
+flags
+	^flags!
+
+flags: anInteger
+	flags := anInteger!
+
 initialize
 	"Private - Initialize the receiver.
 	By default attributes support read/write and compiled accessors."
@@ -137,8 +151,10 @@ isNullable
 
 	^flags allMask: ##(WriteableMask | NullableMask)!
 
-isNullable: aBoolean 
-	flags := flags mask: NullableMask set: aBoolean!
+isNullable: aBoolean
+	flags := aBoolean
+				ifTrue: [flags bitOr: NullableMask]
+				ifFalse: [flags bitAnd: ##(NullableMask bitInvert)]!
 
 isOverride
 	"Answer whether the receiver is an attribute which overrides
@@ -172,6 +188,8 @@ writeInto: subjectObject value: valueObject
 !Kernel.AttributeDescriptor categoriesFor: #beInaccessible!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beMutable!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beNonBrowsable!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beNonNullable!accessing!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #beNullable!accessing!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beOverride!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beReadOnly!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #beUncompiled!modes!public! !
@@ -180,13 +198,15 @@ writeInto: subjectObject value: valueObject
 !Kernel.AttributeDescriptor categoriesFor: #canGenerateAccessors!private!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #canGenerateMutator!private!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #defaultFlags!initializing!private! !
+!Kernel.AttributeDescriptor categoriesFor: #flags!accessing!private! !
+!Kernel.AttributeDescriptor categoriesFor: #flags:!initializing!private! !
 !Kernel.AttributeDescriptor categoriesFor: #initialize!initializing!private! !
 !Kernel.AttributeDescriptor categoriesFor: #isBrowsable!public!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #isInaccessible!public!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #isMutable!public!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #isNonBrowsable!public!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #isNullable!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isNullable:!modes!public! !
+!Kernel.AttributeDescriptor categoriesFor: #isNullable:!accessing!modes!public! !
 !Kernel.AttributeDescriptor categoriesFor: #isOverride!public!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #isReadable!public!testing! !
 !Kernel.AttributeDescriptor categoriesFor: #isWriteable!public!testing! !

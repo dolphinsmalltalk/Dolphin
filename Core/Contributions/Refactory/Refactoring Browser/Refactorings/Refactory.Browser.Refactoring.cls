@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
@@ -151,7 +151,7 @@ getOptionVariableTypes: types selected: selected
 	| classSelected |
 	selected.
 	classSelected := UI.ChoicePrompter choices: types asOrderedCollection
-				caption: 'Select class of new method...'.
+				caption: 'Select class of new method…'.
 	^classSelected notNil ifTrue: [{classSelected}] ifFalse: [nil]!
 
 model

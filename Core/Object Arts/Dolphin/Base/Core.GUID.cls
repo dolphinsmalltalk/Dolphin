@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object variableByteSubclass: #'Core.GUID'
 	instanceVariableNames: ''
@@ -30,7 +30,7 @@ Class Variables:
 
 	| status answer |
 	status := ByteArray newFixed: 4.
-	answer := OS.RPCLibrary default
+	answer := OS.Rpcrt4
 				uuidCompare: self
 				uuid2: aGUID
 				status: status.
@@ -70,10 +70,9 @@ asString
 
 	"Implementation Note: We want to use the standard COM string representation, so we need to add curly brackets. We could use the COM function, but that would mean creating a dependency on OLELibrary."
 
-	| pSz lib string |
+	| pSz string |
 	pSz := External.Address new.
-	lib := OS.RPCLibrary default.
-	lib uuidToString: self stringUuid: pSz.
+	OS.Rpcrt4 uuidToString: self stringUuid: pSz.
 	string := (Utf8String new: StringSize)
 				at: 1 put: ${;
 				replaceFrom: 2
@@ -82,7 +81,7 @@ asString
 					startingAt: 1;
 				at: StringSize put: $};
 				yourself.
-	lib rpcStringFree: pSz.
+	OS.Rpcrt4 rpcStringFree: pSz.
 	^string!
 
 displayOn: aPuttableStream
@@ -109,12 +108,11 @@ idlString
 		self newUnique idlString
 	"
 
-	| pSz lib answer |
+	| pSz answer |
 	pSz := External.Address new.
-	lib := OS.RPCLibrary default.
-	lib uuidToString: self stringUuid: pSz.
+	OS.Rpcrt4 uuidToString: self stringUuid: pSz.
 	answer := Utf8String fromAddress: pSz.
-	lib rpcStringFree: pSz.
+	OS.Rpcrt4 rpcStringFree: pSz.
 	^answer!
 
 isNull
@@ -298,7 +296,7 @@ fromIdlString: aString
 
 	| answer |
 	answer := self newNull.
-	OS.RPCLibrary default uuidFromString: aString uuid: answer.
+	OS.Rpcrt4 uuidFromString: aString uuid: answer.
 	^answer!
 
 fromString: aString
@@ -306,7 +304,7 @@ fromString: aString
 
 	| answer |
 	answer := self newNull.
-	OS.RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1) uuid: answer.
+	OS.Rpcrt4 uuidFromString: (aString copyFrom: 2 to: aString size - 1) uuid: answer.
 	^answer!
 
 init: addressOrBytes
@@ -317,8 +315,9 @@ initialize
 	"Private - Initialize the receiver's class variables.
 		GUID initialize
 	"
+
 	self extraInstanceSpec: ByteSize.
-	VMLibrary default registryAt: self name put: self!
+	VM registryAt: self name put: self!
 
 new
 	"Answer a new, null, instance of the receiver."
@@ -342,7 +341,7 @@ newUnique
 
 	| answer |
 	answer := self new: ByteSize.
-	OS.RPCLibrary default uuidCreate: answer.
+	OS.Rpcrt4 uuidCreate: answer.
 	^answer!
 
 null
@@ -359,7 +358,7 @@ uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
 	Null := nil.
-	VMLibrary default registryAt: self name put: nil! !
+	VM registryAt: self name put: nil! !
 !Core.GUID class categoriesFor: #alignment!constants!private! !
 !Core.GUID class categoriesFor: #atAddress:!instance creation!public! !
 !Core.GUID class categoriesFor: #basicByteSize!public! !

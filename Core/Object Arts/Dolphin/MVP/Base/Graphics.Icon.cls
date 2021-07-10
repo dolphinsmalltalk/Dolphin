@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Image subclass: #'Graphics.Icon'
 	instanceVariableNames: ''
@@ -68,7 +68,7 @@ basicFree
 	"Private - Free the receiver's Icon resource handle.
 	Ignore any error return."
 
-	UserLibrary default destroyIcon: handle!
+	User32 destroyIcon: handle!
 
 createHandle
 	"Private - Answer an external handle to the image represented by the receiver.
@@ -85,7 +85,7 @@ createHandle
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
 
-	^UserLibrary default
+	^User32
 		drawState: aCanvas asParameter
 		hbr: nil
 		lpOutputFunc: nil
@@ -136,7 +136,7 @@ drawOn: aCanvas at: aPoint extent: sizePoint frame: anInteger background: aBrush
 
 	^self valueWithHandle: 
 			[:hIcon |
-			UserLibrary default
+			User32
 				drawIconEx: aCanvas asParameter
 				xLeft: aPoint x
 				yTop: aPoint y
@@ -182,8 +182,7 @@ getIconInfo
 
 	| info |
 	info := ICONINFO new.
-	(UserLibrary default getIconInfo: self asParameter piconinfo: info)
-		ifFalse: [UserLibrary default systemError].
+	(User32 getIconInfo: self asParameter piconinfo: info) ifFalse: [User32 systemError].
 	^info!
 
 hotspot
@@ -217,15 +216,15 @@ includesFrame: frameNumber
 	the receiver is not an animated cursor."
 
 	| hDC includes screenDC |
-	screenDC := UserLibrary default getDC: nil.
-	hDC := GDILibrary default createCompatibleDC: screenDC.
+	screenDC := User32 getDC: nil.
+	hDC := Gdi32 createCompatibleDC: screenDC.
 	includes := self
 				drawOn: hDC
 				at: Point.Zero
 				frame: frameNumber
 				background: nil.
-	GDILibrary default deleteDC: hDC.
-	UserLibrary default releaseDC: nil hDC: screenDC.
+	Gdi32 deleteDC: hDC.
+	User32 releaseDC: nil hDC: screenDC.
 	^includes!
 
 load: anObject fromInstance: hModule extent: aPoint
@@ -235,7 +234,7 @@ load: anObject fromInstance: hModule extent: aPoint
 		ifTrue: 
 			[| hIcon |
 			hIcon := External.Handle new.
-			(CommCtrlLibrary default
+			(ComCtl32
 				loadIconWithScaleDown: hModule
 				pszName: anObject asResourceId
 				cx: aPoint x
@@ -244,9 +243,9 @@ load: anObject fromInstance: hModule extent: aPoint
 				ifTrue: [hIcon]]
 		ifFalse: 
 			[hModule == 0
-				ifTrue: [UserLibrary default loadIcon: 0 lpIconName: anObject]
+				ifTrue: [User32 loadIcon: 0 lpIconName: anObject]
 				ifFalse: 
-					[UserLibrary default
+					[User32
 						loadImage: hModule
 						lpszName: anObject asResourceId
 						uType: self imageType
@@ -264,7 +263,7 @@ loadFromInstance: hModule
 		ifTrue: 
 			[| hIcon |
 			hIcon := External.Handle new.
-			(CommCtrlLibrary default
+			(ComCtl32
 				loadIconMetric: hModule asParameter
 				pszName: identifier asResourceId
 				lims: LIM_LARGE
@@ -272,7 +271,7 @@ loadFromInstance: hModule
 				ifTrue: [hIcon]]
 		ifFalse: 
 			["I would have expected the User32 loadImage function to be capable of this but it does not appear to work properly for instance 0; the system. Hence, try the old way. "
-			UserLibrary default loadIcon: hModule asParameter lpIconName: identifier asResourceId]!
+			User32 loadIcon: hModule asParameter lpIconName: identifier asResourceId]!
 
 valueWithHandle: operation forExtent: aPoint
 	"Private - Evaluate the <monadicValuable>, operation, with a handle for the receiver's icon at the best possible rendering for the specified extent. On Vista and later platforms the icon will be scaled down from the next largest icon if the requested size is not available, which generally yields a better result than scaling up."
@@ -293,7 +292,7 @@ valueWithHandle: operation forExtent: aPoint
 					[:hIcon |
 					| answer |
 					answer := operation value: hIcon.
-					UserLibrary default destroyIcon: hIcon.
+					User32 destroyIcon: hIcon.
 					^answer]]
 		ifFalse: 
 			[(self
@@ -304,7 +303,7 @@ valueWithHandle: operation forExtent: aPoint
 						[:hIcon |
 						| answer |
 						answer := operation value: hIcon.
-						UserLibrary default destroyIcon: hIcon.
+						User32 destroyIcon: hIcon.
 						^answer]].
 	^operation value: self asParameter! !
 !Graphics.Icon categoriesFor: #addToImageList:mask:!double dispatch!private! !

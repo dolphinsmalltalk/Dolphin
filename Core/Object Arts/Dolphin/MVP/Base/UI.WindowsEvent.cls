@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Event subclass: #'UI.WindowsEvent'
 	instanceVariableNames: 'message wParam lParam lResult'

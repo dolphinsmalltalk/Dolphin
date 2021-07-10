@@ -41,11 +41,16 @@ package setClassNames: #(
 	#{UI.Scintilla}
 	#{UI.Scintilla.Annotation}
 	#{UI.Scintilla.Attribute}
+	#{UI.Scintilla.BoolPropertyDescriptor}
 	#{UI.Scintilla.CallTipStyle}
-	#{UI.Scintilla.ColorAlphaPropertyDescriptor}
-	#{UI.Scintilla.ColorPropertyDescriptor}
+	#{UI.Scintilla.CharacterRepresentation}
+	#{UI.Scintilla.ColourAlphaPropertyDescriptor}
+	#{UI.Scintilla.ColourPropertyDescriptor}
+	#{UI.Scintilla.EnumPropertyDescriptor}
+	#{UI.Scintilla.FloatPropertyDescriptor}
 	#{UI.Scintilla.Indicator}
 	#{UI.Scintilla.IndicatorStyle}
+	#{UI.Scintilla.IntPropertyDescriptor}
 	#{UI.Scintilla.KeyBinding}
 	#{UI.Scintilla.LexerMetadata}
 	#{UI.Scintilla.LexerNamedStyle}
@@ -55,6 +60,7 @@ package setClassNames: #(
 	#{UI.Scintilla.Margin}
 	#{UI.Scintilla.Marker}
 	#{UI.Scintilla.MarkerDefinition}
+	#{UI.Scintilla.NullScintillaLibrary}
 	#{UI.Scintilla.NullStyler}
 	#{UI.Scintilla.PropertyDescriptor}
 	#{UI.Scintilla.QueryableAttribute}
@@ -401,6 +407,9 @@ UI subclass: #'UI.Scintilla'
 		'SC_PRINT_INVERTLIGHT' -> 16r1.
 		'SC_PRINT_NORMAL' -> 16r0.
 		'SC_PRINT_SCREENCOLOURS' -> 16r5.
+		'SC_REPRESENTATION_BLOB' -> 16r1.
+		'SC_REPRESENTATION_COLOUR' -> 16r10.
+		'SC_REPRESENTATION_PLAIN' -> 16r0.
 		'SC_SEL_LINES' -> 16r2.
 		'SC_SEL_RECTANGLE' -> 16r1.
 		'SC_SEL_STREAM' -> 16r0.
@@ -552,6 +561,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_CLEAR' -> 16r884.
 		'SCI_CLEARALL' -> 16r7D4.
 		'SCI_CLEARALLCMDKEYS' -> 16r818.
+		'SCI_CLEARALLREPRESENTATIONS' -> 16rAD2.
 		'SCI_CLEARCMDKEY' -> 16r817.
 		'SCI_CLEARDOCUMENTSTYLE' -> 16r7D5.
 		'SCI_CLEARREGISTEREDIMAGES' -> 16r968.
@@ -653,6 +663,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_GETDEFAULTFOLDDISPLAYTEXT' -> 16rAA3.
 		'SCI_GETDIRECTFUNCTION' -> 16r888.
 		'SCI_GETDIRECTPOINTER' -> 16r889.
+		'SCI_GETDIRECTSTATUSFUNCTION' -> 16rAD4.
 		'SCI_GETDOCPOINTER' -> 16r935.
 		'SCI_GETDOCUMENTOPTIONS' -> 16r94B.
 		'SCI_GETEDGECOLOUR' -> 16r93C.
@@ -751,6 +762,8 @@ UI subclass: #'UI.Scintilla'
 		'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 16rA21.
 		'SCI_GETRECTANGULARSELECTIONMODIFIER' -> 16rA27.
 		'SCI_GETREPRESENTATION' -> 16rA6A.
+		'SCI_GETREPRESENTATIONAPPEARANCE' -> 16rACF.
+		'SCI_GETREPRESENTATIONCOLOUR' -> 16rAD1.
 		'SCI_GETSCROLLWIDTH' -> 16r8E3.
 		'SCI_GETSCROLLWIDTHTRACKING' -> 16r9D5.
 		'SCI_GETSEARCHFLAGS' -> 16r897.
@@ -955,6 +968,7 @@ UI subclass: #'UI.Scintilla'
 		'SCI_RELEASEALLEXTENDEDSTYLES' -> 16r9F8.
 		'SCI_RELEASEDOCUMENT' -> 16r949.
 		'SCI_RELEASELINECHARACTERINDEX' -> 16rA98.
+		'SCI_REPLACERECTANGULAR' -> 16rAD3.
 		'SCI_REPLACESEL' -> 16r87A.
 		'SCI_REPLACETARGET' -> 16r892.
 		'SCI_REPLACETARGETRE' -> 16r893.
@@ -1081,6 +1095,8 @@ UI subclass: #'UI.Scintilla'
 		'SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE' -> 16rA20.
 		'SCI_SETRECTANGULARSELECTIONMODIFIER' -> 16rA26.
 		'SCI_SETREPRESENTATION' -> 16rA69.
+		'SCI_SETREPRESENTATIONAPPEARANCE' -> 16rACE.
+		'SCI_SETREPRESENTATIONCOLOUR' -> 16rAD0.
 		'SCI_SETSAVEPOINT' -> 16r7DE.
 		'SCI_SETSCROLLWIDTH' -> 16r8E2.
 		'SCI_SETSCROLLWIDTHTRACKING' -> 16r9D4.
@@ -1317,6 +1333,12 @@ Core.Object subclass: #'UI.Scintilla.Attribute'
 	imports: #()
 	classInstanceVariableNames: 'propertyMap'
 	classConstants: {}!
+Core.Object subclass: #'UI.Scintilla.CharacterRepresentation'
+	instanceVariableNames: 'character representation appearance color'
+	classVariableNames: 'DefaultRepresentations'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Object subclass: #'UI.Scintilla.Indicator'
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
@@ -1353,7 +1375,9 @@ Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AlwaysPrintMask' -> 16r1
+		'AlwaysPrintMask' -> 16r1.
+		'NonBrowsableMask' -> 16r4.
+		'NullableMask' -> 16r2
 	}!
 Core.Object subclass: #'UI.Scintilla.Styler'
 	instanceVariableNames: ''
@@ -1420,6 +1444,12 @@ External.DynamicLinkLibrary subclass: #'UI.Scintilla.ScintillaLibrary'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.Scintilla.ScintillaLibrary subclass: #'UI.Scintilla.NullScintillaLibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.Scintilla.LexerMetadata subclass: #'UI.Scintilla.LexerNamedStyle'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
@@ -1450,13 +1480,37 @@ UI.ValuePresenter subclass: #'UI.Scintilla.TextStylePresenter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColorAlphaPropertyDescriptor'
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.BoolPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColorPropertyDescriptor'
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColourAlphaPropertyDescriptor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ColourPropertyDescriptor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.EnumPropertyDescriptor'
+	instanceVariableNames: 'values nilChoice type'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.FloatPropertyDescriptor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.IntPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1498,8 +1552,8 @@ UI.Scintilla.Styler subclass: #'UI.Scintilla.NullStyler'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.MultilineTextEdit subclass: #'UI.Scintilla.ScintillaView'
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime _unused30 _unused31 indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
-	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords Library'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups elementColors caretBlinkTime characterRepresentations library indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles _unused47 _unused48 annotationStyles _unused50 _unused51 edgeColor'
+	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles LexerKeywords'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {

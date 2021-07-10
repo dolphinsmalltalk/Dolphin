@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Shell subclass: #'UI.AbstractDocumentShell'
 	instanceVariableNames: 'filename'
@@ -254,7 +254,7 @@ saveDocumentAs
 	newFilename := (FileSaveDialog on: self filename asValue)
 				fileTypes: self class fileTypes;
 				defaultExtension: self class defaultFileExtension;
-				caption: 'Save Document As...';
+				caption: 'Save Document As…';
 				showModal.
 	(proceed := newFilename notNil and: 
 					[(File exists: newFilename) not or: 

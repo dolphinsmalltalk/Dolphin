@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.DBSchemaStatement subclass: #'Database.DBSpecialColumnsStatement'
 	instanceVariableNames: 'columnType scope nullable'
@@ -21,7 +21,7 @@ executeStatement
 	"Private - Execute the database command that the receiver represents.
 	Answer the <integer> return code."
 
-	^OS.ODBCLibrary default 
+	^OS.Odbc32
 		sqlSpecialColumns: self allocatedHandle
 		identifierType: self columnType
 		catalogName: self catalogName

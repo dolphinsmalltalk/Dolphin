@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.GdiplusBase subclass: #'Graphics.Gdiplus.StringFormat'
 	instanceVariableNames: ''
@@ -19,18 +19,18 @@ alignment
 
 	| answer |
 	answer := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetStringFormatAlign: self asParameter align: answer.
+	Gdip gdipGetStringFormatAlign: self asParameter align: answer.
 	^answer sdwordAtOffset: 0!
 
 alignment: aStringAlignmentConstant
 	"Set how the receiver will align characters of a string horizontally within a layout rectangle."
 
-	GdiplusLibrary default gdipSetStringFormatAlign: self asParameter align: aStringAlignmentConstant!
+	Gdip gdipSetStringFormatAlign: self asParameter align: aStringAlignmentConstant!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
-	GdiplusLibrary default gdipDeleteStringFormat: handle!
+	Gdip gdipDeleteStringFormat: handle!
 
 centered
 	"Set the receiver so that text will be centered horizontally and vertically in a layout rectangle."
@@ -44,7 +44,7 @@ clone
 
 	| gpHandle |
 	gpHandle := Handle new.
-	GdiplusLibrary default gdipCloneStringFormat: self asParameter newFormat: gpHandle.
+	Gdip gdipCloneStringFormat: self asParameter newFormat: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -59,7 +59,7 @@ flags
 
 	| buf |
 	buf := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetStringFormatFlags: self asParameter flags: buf.
+	Gdip gdipGetStringFormatFlags: self asParameter flags: buf.
 	^buf sdwordAtOffset: 0!
 
 flags: anInteger
@@ -68,7 +68,7 @@ flags: anInteger
 	representation of characters that are not supported by a font).  anInteger represents zero or
 	more StringFormatFlags constants."
 
-	GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger!
+	Gdip gdipSetStringFormatFlags: self asParameter flags: anInteger!
 
 getTabOffsets
 	"Private - Answer a <Pair>, the first element containing the receiver's initial 
@@ -78,7 +78,7 @@ getTabOffsets
 	count := self tabStopCount.
 	first := ByteArray newFixed: 4.
 	array := FLOATArray new: count.
-	GdiplusLibrary default
+	Gdip
 		gdipGetStringFormatTabStops: self asParameter
 		count: count
 		firstTabOffset: first
@@ -88,14 +88,13 @@ getTabOffsets
 lineAlignment
 	| buf |
 	buf := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetStringFormatLineAlign: self asParameter align: buf.
+	Gdip gdipGetStringFormatLineAlign: self asParameter align: buf.
 	^buf sdwordAtOffset: 0!
 
 lineAlignment: aStringAlignmentConstant
 	"Set how the receiver will align a string vertically in a layout rectangle."
 
-	GdiplusLibrary default gdipSetStringFormatLineAlign: self asParameter
-		align: aStringAlignmentConstant!
+	Gdip gdipSetStringFormatLineAlign: self asParameter align: aStringAlignmentConstant!
 
 near
 	"Set the receiver so that text will be horizontally near aligned in a layout rectangle."
@@ -124,7 +123,7 @@ printOn: aStream
 setTabStops: aRealArray first: aReal
 	"Private - Set the receiver's tab-stops."
 
-	GdiplusLibrary default
+	Gdip
 		gdipSetStringFormatTabStops: self asParameter
 		firstTabOffset: aReal asParameter
 		count: aRealArray size
@@ -150,7 +149,7 @@ tabStopCount
 
 	| count |
 	count := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetStringFormatTabStopCount: self asParameter count: count.
+	Gdip gdipGetStringFormatTabStopCount: self asParameter count: count.
 	^count sdwordAtOffset: 0!
 
 trimming
@@ -159,15 +158,14 @@ trimming
 
 	| answer |
 	answer := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetStringFormatTrimming: self asParameter trimming: answer.
+	Gdip gdipGetStringFormatTrimming: self asParameter trimming: answer.
 	^answer sdwordAtOffset: 0!
 
 trimming: aStringTrimmingConstant
 	"Set the receiver's trimming style to aStringTrimmingConstant.  This indicates how the 
 	receiver will trim characters from a string that's too large to fit in a layout rectangle."
 
-	GdiplusLibrary default gdipSetStringFormatTrimming: self asParameter
-		trimming: aStringTrimmingConstant! !
+	Gdip gdipSetStringFormatTrimming: self asParameter trimming: aStringTrimmingConstant! !
 !Graphics.Gdiplus.StringFormat categoriesFor: #alignment!accessing!public! !
 !Graphics.Gdiplus.StringFormat categoriesFor: #alignment:!accessing!public! !
 !Graphics.Gdiplus.StringFormat categoriesFor: #basicFree!private!realizing/unrealizing! !

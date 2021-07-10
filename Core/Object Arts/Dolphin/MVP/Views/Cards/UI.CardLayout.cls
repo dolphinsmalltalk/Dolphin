@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.LayoutManager subclass: #'UI.CardLayout'
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'

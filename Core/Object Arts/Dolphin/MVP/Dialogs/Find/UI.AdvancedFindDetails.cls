@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.FindDetails subclass: #'UI.AdvancedFindDetails'
 	instanceVariableNames: ''
@@ -55,7 +55,7 @@ regularExpression
 !UI.AdvancedFindDetails class methodsFor!
 
 regexpClass
-	^Smalltalk.IRegExp2!
+	^VBScript.IRegExp2!
 
 searchModes
 	^super searchModes copyWith: #regularExpression! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure subclass: #'OS.AbstractIN_ADDR'
 	instanceVariableNames: ''
@@ -21,7 +21,7 @@ displayOn: aPuttableStream
 		ifFalse: 
 			[| buf |
 			buf := AnsiString newFixed: WinSocketConstants.INET6_ADDRSTRLEN.
-			aPuttableStream nextPutAll: (WS2_32Library default
+			aPuttableStream nextPutAll: (Ws2_32
 						inet_ntop: self class addressFamily
 						pAddr: self
 						pStringBuf: buf
@@ -38,10 +38,9 @@ addressFamily
 	^self subclassResponsibility!
 
 fromString: aString
-	| answer ret lib |
+	| answer ret |
 	answer := self newBuffer.
-	lib := WS2_32Library default.
-	ret := lib
+	ret := Ws2_32
 				inet_pton: self addressFamily
 				pszAddrString: aString
 				pAddrBuf: answer.
@@ -49,7 +48,7 @@ fromString: aString
 		ifTrue: 
 			[ret == 0
 				ifTrue: [InvalidFormat signalWith: self]
-				ifFalse: [Net.SocketError signalWith: lib wsaGetLastError]].
+				ifFalse: [Net.SocketError signalWith: Ws2_32 wsaGetLastError]].
 	^answer! !
 !OS.AbstractIN_ADDR class categoriesFor: #addressFamily!constants!public! !
 !OS.AbstractIN_ADDR class categoriesFor: #fromString:!public! !

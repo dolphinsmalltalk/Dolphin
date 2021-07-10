@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestFailure subclass: #'XProgramming.SUnit.ResumableTestFailure'
 	instanceVariableNames: ''

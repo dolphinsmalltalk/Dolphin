@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.ByteCodeDispatcher'
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'
@@ -327,13 +327,13 @@ selectorOfSpecialSend: anInteger
 	"Private - Answer the selector which corresponds to the special send with the specified offset from the start
 	of the special send instructions."
 
-	^VMLibrary default selectorOfSpecialSend: anInteger!
+	^VM selectorOfSpecialSend: anInteger!
 
 selectorOfSpecialSendEx: anInteger
 	"Private - Answer the selector which corresponds to the special send with the specified offset from the start
 	of the extra special send instructions."
 
-	^VMLibrary default selectorOfSpecialSendEx: anInteger!
+	^VM selectorOfSpecialSendEx: anInteger!
 
 sendsSpecialSelector: anInteger
 	"Answer whether the method which the receiver is interpreting sends the special selector
@@ -349,19 +349,18 @@ sendsSpecialSelector: anInteger
 specialMessages
 	"Private - Answer the set of special message sends in the byte code stream."
 
-	| answer vmlib count |
+	| answer count |
 	answer := IdentitySet new: 4.
-	vmlib := VMLibrary default.
 	self reset.
 	count := byteCodes basicSize.
 	[ip > count] whileFalse: 
 			[| op |
 			op := instructions at: self next + 1.
 			op == #shortSpecialSend:
-				ifTrue: [answer add: (vmlib selectorOfSpecialSend: byteCode - ShortSpecialSend)]
+				ifTrue: [answer add: (VM selectorOfSpecialSend: byteCode - ShortSpecialSend)]
 				ifFalse: 
 					[op == #shortSpecialSendEx:
-						ifTrue: [answer add: (vmlib selectorOfSpecialSendEx: byteCode - ShortSpecialSendEx)]]].
+						ifTrue: [answer add: (VM selectorOfSpecialSendEx: byteCode - ShortSpecialSendEx)]]].
 	^answer!
 
 writesInstVarAt: anInteger 

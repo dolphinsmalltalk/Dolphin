@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.GraphicsTool subclass: #'Graphics.Image'
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
@@ -50,7 +50,7 @@ copy
 copyHandle
 	"Private - Answer an external handle to the image which is a copy of that represented by the receiver."
 
-	^UserLibrary default
+	^User32
 		copyImage: self handle
 		uType: self imageType
 		cxDesired: 0
@@ -199,7 +199,7 @@ loadFromFile: pathString extent: aPoint
 	"Private - Attempts to load an image of the receivers type from a disk file.
 	Answers the image's handle, or nil if the image could not be loaded."
 
-	^UserLibrary default
+	^User32
 		loadImage: 0
 		lpszName: pathString asResourceId
 		uType: self imageType
@@ -297,7 +297,7 @@ fromFile: aFilename usingLocator: aFileLocator
 fromId: anIntegerOrStringId
 	"Answer a new instance with a resource Id of anIntegerOrStringId."
 
-	^self fromId: anIntegerOrStringId in: SessionManager current defaultResourceLibrary!
+	^self fromId: anIntegerOrStringId in: SessionManager.Current defaultResourceLibrary!
 
 fromId: anIntegerOrStringId in: anInstanceHandle
 	"Answer a new instance with a resourceID of anIntegerOrStringId

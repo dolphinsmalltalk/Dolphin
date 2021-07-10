@@ -9,10 +9,12 @@
 *.pax eol=crlf
 *.st  eol=crlf
 *.cls eol=crlf 
+*.svg eol=lf
 *.cls linguist-language=Smalltalk
 *.st linguist-language=Smalltalk
 *.pax linguist-language=Smalltalk
 *.img7 filter=lfs diff=lfs merge=lfs -text
+*.img8 filter=lfs diff=lfs merge=lfs -text
 Scintilla.dll filter=lfs diff=lfs merge=lfs -text
 Lexilla.dll filter=lfs diff=lfs merge=lfs -text
 *.psd filter=lfs diff=lfs merge=lfs -text

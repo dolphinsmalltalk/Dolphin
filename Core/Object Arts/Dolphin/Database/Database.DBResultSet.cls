@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.SequenceableCollection subclass: #'Database.DBResultSet'
 	instanceVariableNames: 'statement buffer columns'
@@ -218,14 +218,14 @@ describeCols: anArray
 			columns := statement describeCols: columnNumbers].
 	^columns!
 
-fetchScroll: orientationInteger offset: offsetInteger 
+fetchScroll: orientationInteger offset: offsetInteger
 	"Private - Fetch the specified row from the receiver's
 	result set. Answers true if a row was successfully
 	fetched, false for end of result set, and throws an
 	DBError exception if an error occurs"
 
 	| ret |
-	ret := OS.ODBCLibrary default 
+	ret := OS.Odbc32
 				sqlFetchScroll: self statementHandle
 				fetchOrientation: orientationInteger
 				fetchOffset: offsetInteger.

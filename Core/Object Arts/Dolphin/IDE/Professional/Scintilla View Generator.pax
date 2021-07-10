@@ -10,12 +10,22 @@ It is suggested that you run the generator in preview mode, which is the default
 
 package setClassNames: #(
 	#{Tools.Scintilla}
+	#{Tools.Scintilla.BoolTypeReference}
+	#{Tools.Scintilla.ColourAlphaTypeReference}
+	#{Tools.Scintilla.ColourTypeReference}
+	#{Tools.Scintilla.EnumTypeReference}
 	#{Tools.Scintilla.EventDefinition}
 	#{Tools.Scintilla.FunctionDefinition}
 	#{Tools.Scintilla.InterfaceDefinition}
+	#{Tools.Scintilla.IntTypeReference}
+	#{Tools.Scintilla.KeyModTypeReference}
+	#{Tools.Scintilla.LineTypeReference}
 	#{Tools.Scintilla.ParameterDefinition}
+	#{Tools.Scintilla.PointerTypeReference}
+	#{Tools.Scintilla.PositionTypeReference}
 	#{Tools.Scintilla.ScintillaViewGenerator}
 	#{Tools.Scintilla.TypeReference}
+	#{Tools.Scintilla.VoidTypeReference}
 ).
 
 package setPrerequisites: #(
@@ -56,14 +66,14 @@ Core.Object subclass: #'Tools.Scintilla.ParameterDefinition'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
-	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
+	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions defaultReturnValues'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Tools.Scintilla.TypeReference'
-	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
-	classVariableNames: 'TypeMap'
+	instanceVariableNames: ''
+	classVariableNames: 'Enums TypeMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -75,6 +85,66 @@ Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.EventDefinition'
 	classConstants: {}!
 Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.FunctionDefinition'
 	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.BoolTypeReference'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.ColourTypeReference'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.IntTypeReference'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.PointerTypeReference'
+	instanceVariableNames: 'name objectClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.TypeReference subclass: #'Tools.Scintilla.VoidTypeReference'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.ColourTypeReference subclass: #'Tools.Scintilla.ColourAlphaTypeReference'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.EnumTypeReference'
+	instanceVariableNames: 'name prefix values defaultValueName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.KeyModTypeReference'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.IntTypeReference subclass: #'Tools.Scintilla.PositionTypeReference'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Scintilla.PositionTypeReference subclass: #'Tools.Scintilla.LineTypeReference'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

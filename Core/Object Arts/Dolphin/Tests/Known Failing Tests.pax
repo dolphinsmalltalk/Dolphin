@@ -286,7 +286,7 @@ testInterruptPendingOverlappedCall
 	"Test sending a VM interrupt to a Process blocked waiting on an overlapped call"
 
 	| evt continue |
-	evt := KernelLibrary default
+	evt := Kernel32
 				createEvent: nil
 				bManualReset: false
 				bInitialState: false
@@ -298,7 +298,7 @@ testInterruptPendingOverlappedCall
 	proc := 
 			[
 			[wait := wait + 1.
-			KernelLibrary default waitForSingleObject: evt dwMilliseconds: -1.
+			Kernel32 waitForSingleObject: evt dwMilliseconds: -1.
 			continue]
 					whileTrue]
 					forkAt: 7.
@@ -308,7 +308,7 @@ testInterruptPendingOverlappedCall
 	proc interruptWith: [done := true].
 	self assert: done.
 	self assert: 1 equals: wait.
-	KernelLibrary default setEvent: evt.
+	Kernel32 setEvent: evt.
 	self assert: 2 equals: wait.
 	"Interrupt is waiting when the overlapped call completes (but cannot return)"
 	sem := Semaphore new.
@@ -316,7 +316,7 @@ testInterruptPendingOverlappedCall
 			[done := false.
 			sem wait.
 			done := 2].
-	KernelLibrary default setEvent: evt.
+	Kernel32 setEvent: evt.
 	self deny: done.
 	self assert: 2 equals: wait.
 	"Allow interrupt to complete - and the overlapped method to return"
@@ -325,14 +325,14 @@ testInterruptPendingOverlappedCall
 	self assert: 3 equals: wait]
 			ensure: 
 				[continue := false.
-				(KernelLibrary default)
+				Kernel32
 					setEvent: evt;
 					closeHandle: evt]!
 
 testOverlappedCallsSuspendAndTerminate2
 	| proc a win32Event maxRetries busyWaitForSignal retries sleep |
 	self assert: Processor pendingTerminations isEmpty.
-	win32Event := KernelLibrary default
+	win32Event := Kernel32
 				createEvent: nil
 				bManualReset: false
 				bInitialState: false
@@ -344,7 +344,7 @@ testOverlappedCallsSuspendAndTerminate2
 			[5 timesRepeat: 
 					[| ret |
 					a := a + 1.
-					ret := KernelLibrary default waitForSingleObject: win32Event dwMilliseconds: sleep.
+					ret := Kernel32 waitForSingleObject: win32Event dwMilliseconds: sleep.
 					Transcript
 						display: 'Wait returned ';
 						print: ret;
@@ -363,7 +363,7 @@ testOverlappedCallsSuspendAndTerminate2
 	self assert: proc threadSync equals: proc suspendingList.
 	proc suspend.	"suspend it while blocked on the Win32 event, i.e. before the call on the overlapped thread returns."
 	self assert: proc isSuspended.	"Allow overlapped call to complete"
-	KernelLibrary default setEvent: win32Event.
+	Kernel32 setEvent: win32Event.
 
 	"Wait for the overlapped call to complete, at which point the VM should signal the
 	Semaphore, even though the process is not waiting on it anymore. If it doesn't do this, then
@@ -409,7 +409,7 @@ testOverlappedCallsSuspendAndTerminate2
 	self assert: proc isTerminated.
 	self assert: a == 3.
 	self assert: Processor pendingTerminations isEmpty]
-			ensure: [KernelLibrary default closeHandle: win32Event]! !
+			ensure: [Kernel32 closeHandle: win32Event]! !
 !VMTest categoriesFor: #testInterruptPendingOverlappedCall!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate2!public!unit tests! !
 

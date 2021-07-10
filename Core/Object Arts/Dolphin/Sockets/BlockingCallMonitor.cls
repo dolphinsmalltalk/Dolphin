@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #BlockingCallMonitor
 	instanceVariableNames: 'callBlock completionBlock errorBlock monitorProcess priority'
@@ -15,7 +15,7 @@ A BlockingCallMonitor must always be provided with a callBlock but does provide 
 By default, the monitor process is run at the same priority as the process that instantiated the BlockingCallMonitor object. This can, however, be changed using #priority: prior to commencement of monitoring. Once started, an active monitor process should always be terminated to ensure that the BlockingCallMonitor can be successfully garbage collected.
 
 This class is useful in situations where a known blocking call is to be made, either singly or repeatedly, and you need to be informed when the call has completed or signalled an error. It simplifies the requirement to start a backgound process to perform and monitor the call by encapulating it within a re-useable class.'!
-!BlockingCallMonitor categoriesForClass!Windows Sockets! !
+!BlockingCallMonitor categoriesForClass!Deprecated!Windows Sockets! !
 !BlockingCallMonitor methodsFor!
 
 callBlock: aNiladicValuable 

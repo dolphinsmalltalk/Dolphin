@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.FILETIME subclass: #'OS.LocalFILETIME'
 	instanceVariableNames: ''
@@ -37,8 +37,7 @@ fromSYSTEMTIME: aSYSTEMTIME
 
 	| answer |
 	answer := self new.
-	(KernelLibrary default systemTimeToFileTime: aSYSTEMTIME lpFileTime: answer)
-		ifFalse: [^KernelLibrary default systemError].
+	(Kernel32 systemTimeToFileTime: aSYSTEMTIME lpFileTime: answer) ifFalse: [^Kernel32 systemError].
 	^answer!
 
 now
@@ -48,12 +47,11 @@ now
 		LocalFILETIME now
 	"
 
-	| lib answer |
-	lib := KernelLibrary default.
+	| answer |
 	answer := LocalFILETIME new.
-	lib getSystemTimePreciseAsFileTime: answer.
+	Kernel32 getSystemTimePreciseAsFileTime: answer.
 	"We can get away with passing in the same buffer for output as the input"
-	(lib fileTimeToLocalTime: answer lpLocalFileTime: answer) ifFalse: [lib systemError].
+	(Kernel32 fileTimeToLocalTime: answer lpLocalFileTime: answer) ifFalse: [Kernel32 systemError].
 	^answer! !
 !OS.LocalFILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
 !OS.LocalFILETIME class categoriesFor: #now!instance creation!public! !

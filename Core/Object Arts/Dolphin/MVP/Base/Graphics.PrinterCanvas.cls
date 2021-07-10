@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Canvas subclass: #'Graphics.PrinterCanvas'
 	instanceVariableNames: ''
@@ -20,12 +20,12 @@ basicFree
 endDoc
 	"Signal the end of the current document."
 
-	GDILibrary default endDoc: self asParameter!
+	Gdi32 endDoc: self asParameter!
 
 endPage
 	"Signal the end of the current page."
 
-	GDILibrary default endPage: self asParameter!
+	Gdi32 endPage: self asParameter!
 
 startDoc
 	"Signal the start of a new document."
@@ -36,12 +36,12 @@ startDocNamed: aString
 	| struct |
 	struct := DOCINFOW new.
 	struct docName: aString.
-	GDILibrary default startDoc: self asParameter lpdi: struct!
+	Gdi32 startDoc: self asParameter lpdi: struct!
 
 startPage
 	"Signal the start of a new page."
 
-	GDILibrary default startPage: self asParameter! !
+	Gdi32 startPage: self asParameter! !
 !Graphics.PrinterCanvas categoriesFor: #basicFree!private!realizing/unrealizing! !
 !Graphics.PrinterCanvas categoriesFor: #endDoc!operations!public! !
 !Graphics.PrinterCanvas categoriesFor: #endPage!operations!public! !

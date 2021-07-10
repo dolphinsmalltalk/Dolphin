@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 WinHttpServer.HTTP_RESPONSE_V1 subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
 	instanceVariableNames: ''

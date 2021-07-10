@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 "Class Definitions"!
 
@@ -1054,6 +1054,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'GA_ROOT' -> 16r2.
 		'GA_ROOTOWNER' -> 16r3.
 		'GCL_WNDPROC' -> -16r18.
+		'GCW_ATOM' -> -16r20.
 		'GENERIC_READ' -> 16r80000000.
 		'GENERIC_WRITE' -> 16r40000000.
 		'GHND' -> 16r42.
@@ -3167,8 +3168,8 @@ External.PermanentLibrary subclass: #'OS.KernelLibrary'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.PermanentLibrary subclass: #'OS.NTLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'IsWine'
+	instanceVariableNames: 'isWine'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -3460,6 +3461,12 @@ Kernel.RelativeFileLocator subclass: #'Kernel.InstallRelativeFileLocator'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.RelativeFileLocator subclass: #'Kernel.PackageRelativeFileLocator'
+	instanceVariableNames: 'packageName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.InstructionInterpreter subclass: #'Kernel.MessageSendCollector'
 	instanceVariableNames: 'messageBlock superMessageBlock'
 	classVariableNames: ''
@@ -3634,7 +3641,7 @@ Core.MessageSequenceAbstract subclass: #'Kernel.EventMessageSequence'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.MessageSequenceAbstract subclass: #'Core.MessageSequence'
-	instanceVariableNames: 'list'
+	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -4354,6 +4361,12 @@ OS.Win32Structure subclass: #'OS.WIN32_FIND_DATAW'
 	}!
 OS.FILETIME subclass: #'OS.LocalFILETIME'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.ProtoObject subclass: #'External.DynamicLinkLibraryStub'
+	instanceVariableNames: 'libraryClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

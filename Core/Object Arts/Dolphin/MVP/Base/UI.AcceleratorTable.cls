@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.GraphicsTool subclass: #'UI.AcceleratorTable'
 	instanceVariableNames: 'commands'
@@ -30,7 +30,7 @@ basicFree
 	"Private - Free up the Accelerator resource handle.
 	Ignore any error return (e.g. due to an invalid handle)."
 
-	UserLibrary default destroyAcceleratorTable: handle!
+	User32 destroyAcceleratorTable: handle!
 
 commands
 	^commands!
@@ -59,7 +59,7 @@ createHandle
 				key: (vkey bitAnd: 16rFF);
 				cmd: command id.	"Always add virtual key flag, or modifiers ignored"
 			i := i + 1].
-	^UserLibrary default createAcceleratorTable: accels cEntries: count!
+	^User32 createAcceleratorTable: accels cEntries: count!
 
 includes: commandSymbol 
 	"Answer whether there is an entry in the accelerator table for commandSymbol."

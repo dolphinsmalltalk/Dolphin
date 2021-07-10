@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
@@ -28,7 +28,7 @@ beep
 
 	| iStyle |
 	iStyle := self iconStyleFlag.
-	iStyle = 0 ifFalse: [UserLibrary default messageBeep: iStyle]!
+	iStyle = 0 ifFalse: [User32 messageBeep: iStyle]!
 
 caption
 	"Answer the receiver's current caption."
@@ -98,7 +98,7 @@ owner: aViewOrHandle
 
 ownerHandle
 	| handle |
-	handle := owner ifNil: [UserLibrary default getActiveWindow] ifNotNil: [owner].
+	handle := owner ifNil: [User32 getActiveWindow] ifNotNil: [owner].
 	^handle notNil ifTrue: [handle asParameter] ifFalse: [0]!
 
 text
@@ -175,7 +175,7 @@ initialize
 
 	"Where there is no entry in the table for the message box type, the application name is used."
 	DefaultCaptions := IdentityDictionary new
-				at: #confirm put: 'Please confirm...';
+				at: #confirm put: 'Please confirm…';
 				at: #notify put: 'Note';
 				shrink;
 				yourself	"Use the Windows default caption"!

@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Kernel.Tests.StIdentifierTokenTest}
 	#{Kernel.Tests.StLiteralArrayTokenTest}
 	#{Kernel.Tests.StLiteralTokenTest}
+	#{Kernel.Tests.StLiteralValueNodeTest}
 	#{Kernel.Tests.StNumberLiteralTokenTest}
 	#{Kernel.Tests.StOptimizedTokenTest}
 	#{Kernel.Tests.StSpecialCharacterTokenTest}
@@ -65,6 +66,12 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.StLiteralValueNodeTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.StTokenTest'

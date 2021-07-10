@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ContainerView subclass: #'UI.ScrollingDecorator'
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
@@ -56,7 +56,7 @@ getScrollPage: anInteger
 	struct := SCROLLINFO new
 				maskIn: SIF_PAGE;
 				yourself.
-	UserLibrary default
+	User32
 		getScrollInfo: handle
 		fnBar: anInteger
 		lpsi: struct.
@@ -67,7 +67,7 @@ getScrollRange: anInteger
 	struct := SCROLLINFO new
 				maskIn: SIF_RANGE;
 				yourself.
-	UserLibrary default
+	User32
 		getScrollInfo: handle
 		fnBar: anInteger
 		lpsi: struct.
@@ -180,7 +180,7 @@ preTranslateKeyboardInput: aMSG
 	"First ask the original view for its input mask"
 
 	| msg mask vk |
-	mask := UserLibrary default
+	mask := User32
 				sendMessage: aMSG hwnd
 				msg: WM_GETDLGCODE
 				wParam: 0
@@ -264,17 +264,16 @@ scrollPages: anInteger
 	^self verticalScrollTo: self scrollOffset y + (anInteger * pageHeight)!
 
 setScrollInfo: aPoint
-	| lib scrollinfo |
-	lib := UserLibrary default.
+	| scrollinfo |
 	scrollinfo := SCROLLINFO newBuffer.
 	scrollinfo pos: aPoint x.
-	lib
+	User32
 		setScrollInfo: handle
 		fnBar: SB_HORZ
 		lpsi: scrollinfo
 		fRedraw: true.
 	scrollinfo pos: aPoint y.
-	lib
+	User32
 		setScrollInfo: handle
 		fnBar: SB_VERT
 		lpsi: scrollinfo
@@ -289,7 +288,7 @@ setScrollInfo: barInteger position: positionInteger range: rangeInterval page: p
 				pos: positionInteger;
 				page: pageInteger;
 				yourself.
-	UserLibrary default
+	User32
 		setScrollInfo: handle
 		fnBar: barInteger
 		lpsi: scrollinfo

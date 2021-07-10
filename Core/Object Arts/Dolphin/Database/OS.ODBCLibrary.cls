@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'OS.ODBCLibrary'
 	instanceVariableNames: ''
@@ -493,7 +493,12 @@ fileName
 onStartup2
 	"Private - Ensure that old external resources are cleared so that they will be re-created."
 
-	Database.DBResultSet onStartup! !
+	super onStartup2.
+	Database.DBResultSet onStartup!
+
+sharedVariableName
+	^#{Odbc32}! !
 !OS.ODBCLibrary class categoriesFor: #fileName!constants!public! !
 !OS.ODBCLibrary class categoriesFor: #onStartup2!event handling!private! !
+!OS.ODBCLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.FontCollection subclass: #'Graphics.Gdiplus.PrivateFontCollection'
 	instanceVariableNames: ''
@@ -16,7 +16,7 @@ Graphics.Gdiplus.PrivateFontCollection comment: 'GdiplusPrivateFontCollection is
 addFontFile: aFilename
 	"Adds a font file to this private font collection."
 
-	GdiplusLibrary default gdipPrivateAddFontFile: self asParameter filename: aFilename! !
+	Gdip gdipPrivateAddFontFile: self asParameter filename: aFilename! !
 !Graphics.Gdiplus.PrivateFontCollection categoriesFor: #addFontFile:!operations!public! !
 
 !Graphics.Gdiplus.PrivateFontCollection class methodsFor!

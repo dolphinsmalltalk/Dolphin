@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
@@ -32,6 +32,11 @@ addToCommandRoute: route
 
 	^nil!
 
+ambientFontChanged
+	"Private - The desktop font has been changed (ignore it)."
+
+	!
+
 asParameter
 	"Answer the receiver in a form suitable for passing to an external
 	function call (in this case the receiver's window handle).
@@ -45,7 +50,7 @@ asParameter
 beActive
 	"Make the receiver the active window."
 
-	^UserLibrary default setActiveWindow: self asParameter!
+	^User32 setActiveWindow: self asParameter!
 
 currentProgress
 	"Private - Answer the number of objects remaining in the image to be used as a measure of
@@ -60,11 +65,11 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 	our own DialogProc() (dialog procs are not WndProcs), which just returns false
 	to get the DefDlgProc() to do its stuff."
 
-	^UserLibrary default 
+	^User32
 		defDlgProc: handle
-			msg: message 
-			wParam: wParam 
-			lParam: lParam!
+		msg: message
+		wParam: wParam
+		lParam: lParam!
 
 defaultWindowStyle
 	"Private - Answer the default basic window creation style"
@@ -78,7 +83,7 @@ destroy
 	for WM_CLOSE is to call DestroyWindow)."
 
 	self stopProcess.
-	^UserLibrary default destroyWindow: handle!
+	^User32 destroyWindow: handle!
 
 detail: aString
 	"Report aString as the current status detail (we ignore here to avoid slowing things
@@ -110,10 +115,6 @@ dispatchMessage: message wParam: wParam lParam: lParam
 enterIdle
 	^true!
 
-fontChanged
-	"Private - The desktop font has been changed (ignore it)."
-!
-
 forecolorChanged
 	"Private - The desktop foreground color has been changed (ignore it)."
 !
@@ -126,11 +127,12 @@ forkProgressMonitor
 	pollingInterval := self monitorProgressPeriod.
 	progressProcess := 
 			[
-			[KernelLibrary default overlappedSleepEx: pollingInterval bAlertable: true.
-			self progress: self currentProgress] repeat]
+			[Kernel32 overlappedSleepEx: pollingInterval bAlertable: true.
+			self progress: self currentProgress]
+					repeat]
 					forkAt: Processor userInterruptPriority!
 
-getItemHandle: anInteger ifAbsent: exceptionHandler 
+getItemHandle: anInteger ifAbsent: exceptionHandler
 	"Private - Answer the handle of the receiver's sub view with the specified ID, 
 	or if there is no such child, then answer the result of evaluating the niladic 
 	valuable, exceptionHandler.
@@ -140,21 +142,19 @@ getItemHandle: anInteger ifAbsent: exceptionHandler
 	child windows unique id's."
 
 	| hwnd |
-	hwnd := UserLibrary default getDlgItem: handle nIDDlgItem: anInteger.
+	hwnd := User32 getDlgItem: handle nIDDlgItem: anInteger.
 	^hwnd ifNil: [exceptionHandler value]!
 
 isEnabled
 	"Private - Answer whether the receiver is enabled for input"
 
-	^UserLibrary default isWindowEnabled: self asParameter
-!
+	^User32 isWindowEnabled: self asParameter!
 
 isEnabled: aBoolean
 	"Set or reset whether the receiver is enabled for user input.
 	Sent to views when a modal dialog is opened on top of them."
 
-	UserLibrary default enableWindow: self asParameter bEnable: aBoolean
-!
+	User32 enableWindow: self asParameter bEnable: aBoolean!
 
 isPersistentView
 	"Answer whether the receiver has persistent state which can and should
@@ -173,8 +173,7 @@ isWindowVisible
 	"Answer whether both the receiver and its parent have the WS_VISIBLE style,  it is therefore possible
 	that this method will answer true even if the receiver is totally obscured by other windows."
 
-	^UserLibrary default isWindowVisible: handle
-!
+	^User32 isWindowVisible: handle!
 
 monitorProgressPeriod
 	"Private - Answer the number of milliseconds to wait between progress monitoring updates"
@@ -185,7 +184,7 @@ monitorProgressPeriod
 notify: aString
 	"Report aString as the current status"
 
-	UserLibrary default setWindowText: status lpString: aString.
+	User32 setWindowText: status lpString: aString.
 	SessionManager inputState pumpMessages!
 
 onStartup
@@ -222,12 +221,12 @@ primHookWindowCreate: hookBoolean
 	<primitive: 108>
 	^self primitiveFailed: _failureCode!
 
-progress: anInteger 
+progress: anInteger
 	"Private - Report anInteger as the current level of progress"
 
 	| i |
 	i := (self progressRange last - anInteger) * 100 // self progressRange size.
-	UserLibrary default 
+	User32
 		sendMessage: progress
 		msg: 1026
 		wParam: i asInteger
@@ -253,7 +252,7 @@ resourceLib
 setItem: anInteger font: aFontOrHandle
 	"Private - Set the font of the receiver's control with the specified id."
 
-	UserLibrary default
+	User32
 		sendMessage: (self getItemHandle: anInteger ifAbsent: [])
 		msg: WM_SETFONT
 		wParam: aFontOrHandle asParameter
@@ -262,8 +261,10 @@ setItem: anInteger font: aFontOrHandle
 setItem: anInteger text: aString
 	"Private - Set the text of the receiver's control with the specified id."
 
-	(UserLibrary default setDlgItemText: handle nIDDlgItem: anInteger lpString: aString)
-		ifFalse: [UserLibrary default systemError]!
+	(User32
+		setDlgItemText: handle
+		nIDDlgItem: anInteger
+		lpString: aString) ifFalse: [User32 systemError]!
 
 show
 	| hWnd |
@@ -272,15 +273,15 @@ show
 	an attempt is being made to load a dialog template from a resource library that
 	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
 	can only be loaded from DLLs that have been loaded as normal code modules."
-	hWnd := UserLibrary default 
+	hWnd := User32
 				createDialog: self resourceLib asParameter
 				lpTemplate: self template asResourceId
 				hWndParent: nil
-				lpDialogFunc: VMLibrary default getDlgProc
+				lpDialogFunc: VM getDlgProc
 				dwInitParam: 0.
 	self primHookWindowCreate: false.
 	hWnd isNull ifTrue: [self error: 'Failed to create window'].
-	UserLibrary default showWindow: handle nCmdShow: SW_SHOWNORMAL!
+	User32 showWindow: handle nCmdShow: SW_SHOWNORMAL!
 
 stopProcess
 	"Private - Stop the progress monitor process"
@@ -298,15 +299,15 @@ subclassWindow: anIntegerOrHandle
 	SessionManager inputState windowAt: anIntegerOrHandle put: self.
 	oldWndProc := VMConstants.IsWin64
 				ifTrue: 
-					[UserLibrary default
+					[User32
 						setWindowULongPtr: handle
 						nIndex: GWL_WNDPROC
-						dwNewLong: VMLibrary default getWndProc]
+						dwNewLong: VM getWndProc]
 				ifFalse: 
-					[UserLibrary default
+					[User32
 						setWindowULong: handle
 						nIndex: GWL_WNDPROC
-						dwNewLong: VMLibrary default getWndProc]!
+						dwNewLong: VM getWndProc]!
 
 template
 	^140!
@@ -315,7 +316,7 @@ update
 	"Repaint the receiver as necessary, immediately.
 	N.B. This causes a callback as Windows sends a WM_PAINT directly."
 
-	UserLibrary default updateWindow: self asParameter!
+	User32 updateWindow: self asParameter!
 
 validateUserInterface
 	"Validates the user interface for the receiver. Usually performed at idle time
@@ -337,22 +338,22 @@ wmCreate: message wParam: wParam lParam: lParam
 wmCtlColor: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_CTLCOLORXXX message."
 
-	^(UserLibrary default getSysColorBrush: COLOR_WINDOW) asInteger!
+	^(User32 getSysColorBrush: COLOR_WINDOW) asInteger!
 
-wmInitDialog: message wParam: wParam lParam: lParam 
+wmInitDialog: message wParam: wParam lParam: lParam
 	"Private - A WM_INITDIALOG message was sent by the dialog proc. Answer false if the focus has been set,
 	or true if leaving that to Windows."
 
 	| bkcolor |
-	cursor := UserLibrary default loadCursor: 0 lpCursorName: IDC_WAIT.
+	cursor := User32 loadCursor: 0 lpCursorName: IDC_WAIT.
 	self setItem: CaptionId text: 'Application Deployment in Progress'.
 	self setItem: ExplanationId
 		text: 'The deployment process may take up to a minute depending on the deployment options. 
 
 This progress dialog will disappear some seconds before deployment is complete. A message box will appear informing you when the procedure is finished and, once confirmed, the development image will exit.'.
 	progress := self getItemHandle: ProgressId ifAbsent: [].
-	bkcolor := UserLibrary default getSysColor: COLOR_WINDOW.
-	UserLibrary default 
+	bkcolor := User32 getSysColor: COLOR_WINDOW.
+	User32
 		sendMessage: progress
 		msg: 8193
 		wParam: 0
@@ -380,9 +381,11 @@ wmSetCursor: message wParam: wParam lParam: lParam
 	"Private - Handle the Win32 WM_SETCURSOR message."
 
 	"Set the wait cursor"
-	UserLibrary default setCursor: cursor. 
-	^0.! !
+
+	User32 setCursor: cursor.
+	^0! !
 !ImageStripperProgress categoriesFor: #addToCommandRoute:!commands!public! !
+!ImageStripperProgress categoriesFor: #ambientFontChanged!private!updating! !
 !ImageStripperProgress categoriesFor: #asParameter!converting!public! !
 !ImageStripperProgress categoriesFor: #beActive!operations!public! !
 !ImageStripperProgress categoriesFor: #currentProgress!operations!private! !
@@ -392,7 +395,6 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !ImageStripperProgress categoriesFor: #detail:!accessing!public! !
 !ImageStripperProgress categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
 !ImageStripperProgress categoriesFor: #enterIdle!event handling-win32!private! !
-!ImageStripperProgress categoriesFor: #fontChanged!private!updating! !
 !ImageStripperProgress categoriesFor: #forecolorChanged!private!updating! !
 !ImageStripperProgress categoriesFor: #forkProgressMonitor!operations!private! !
 !ImageStripperProgress categoriesFor: #getItemHandle:ifAbsent:!hierarchy!private! !

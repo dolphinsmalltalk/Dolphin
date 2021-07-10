@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.SERVENT'
 	instanceVariableNames: ''
@@ -49,7 +49,7 @@ aliases
 port
 	"Answer the <integer> port number."
 
-	^WS2_32Library default ntohs: self s_port!
+	^Ws2_32 ntohs: self s_port!
 
 printFieldsOn: aStream
 	super printFieldsOn: aStream.
@@ -106,22 +106,19 @@ fromInteger: anInteger
 		(self fromInteger: 80) 
 	"
 
-	| answer lib port |
-	lib := WS2_32Library default.
-	"Flip port number into network order"
+	| answer port |
 	port := (anInteger << 8 bitOr: anInteger >> 8) bitAnd: 16rFFFF.
-	answer := lib getservbyport: port proto: nil.
-	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+	answer := Ws2_32 getservbyport: port proto: nil.
+	^answer isNull ifTrue: [Net.SocketError signalWith: Ws2_32 wsaGetLastError] ifFalse: [answer]!
 
 fromString: aString
 	"Answer the static (per-thread) SERVENT instance populated with data for the named service.
 		(self fromString: 'http')
 	"
 
-	| answer lib |
-	lib := WS2_32Library default.
-	answer := lib getservbyname: aString proto: nil.
-	^answer isNull ifTrue: [Net.SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+	| answer |
+	answer := Ws2_32 getservbyname: aString proto: nil.
+	^answer isNull ifTrue: [Net.SocketError signalWith: Ws2_32 wsaGetLastError] ifFalse: [answer]!
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !

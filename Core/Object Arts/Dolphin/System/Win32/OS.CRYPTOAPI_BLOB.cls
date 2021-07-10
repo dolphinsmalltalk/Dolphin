@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure subclass: #'OS.CRYPTOAPI_BLOB'
 	instanceVariableNames: 'localData'
@@ -31,7 +31,7 @@ struct tagCRYPTOAPI_BLOB {
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	KernelLibrary default localFree: self basicPbData!
+	Kernel32 localFree: self basicPbData!
 
 basicPbData
 	^bytes intPtrAtOffset:_OffsetOf_pbData!

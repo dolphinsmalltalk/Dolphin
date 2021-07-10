@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.HashedCollectionPresenter subclass: #'UI.DictionaryPresenter'
 	instanceVariableNames: ''
@@ -20,7 +20,7 @@ defaultAddItem
 	[(KeyValuePrompter
 		createOn: pair
 		prompt: 'Enter key and value expressions:'
-		caption: 'Add Field...') showModal
+		caption: 'Add Field…') showModal
 		notNil and: 
 				[| error |
 				error := nil.
@@ -38,8 +38,8 @@ defaultAddItem
 						[| mb |
 						mb := MessageBox new.
 						mb buttonStyle: #yesNo.
-						mb caption: 'Error evaluating expression...'.
-						(mb errorMsg: ('<1d><n><n>Try again?' expandMacrosWith: {error})) == #yes]]]
+						mb caption: 'Error evaluating expression…'.
+						(mb errorMsg: '<1d><n><n>Try again?' << error) == #yes]]]
 			whileTrue.
 	^result!
 

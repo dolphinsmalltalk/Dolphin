@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'UI.CommonDialog'
 	instanceVariableNames: 'winStruct hook'
@@ -36,7 +36,7 @@ basicShowModal
 
 checkError
 	| err |
-	err := ComDlgLibrary default commDlgExtendedError.
+	err := ComDlg32 commDlgExtendedError.
 	^err = 0 ifFalse: [self error: ('Common dialog error: <1d>' expandMacrosWith: err)]!
 
 createHook
@@ -104,17 +104,17 @@ showModal
 	owner := self ownerView ifNil: [View activeOrDesktop].
 	wasEnabled := owner isEnabled.
 	apiResult := 
-			[SessionManager inputState startIdleTimer: owner.
+			[SessionManager.Current inputState startIdleTimer: owner.
 			hook notNil ifTrue: [view := nil].
 			self basicShowModal]
-					ensure: [SessionManager inputState stopIdleTimer: owner].
+					ensure: [SessionManager.Current inputState stopIdleTimer: owner].
 	hitType := wasEnabled
 				ifTrue: [HTCLIENT]
 				ifFalse: 
 					[owner isEnabled: false.
 					HTERROR].
 	"Reset the view's cursor in case control does not return to message loop"
-	UserLibrary default
+	User32
 		sendMessage: owner asParameter
 		msg: WM_SETCURSOR
 		wParam: 0

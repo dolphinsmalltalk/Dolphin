@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.MemoryManager'
 	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration _unused13 events'
@@ -242,7 +242,7 @@ forkUndertaker
 	data inside a critical section against the mutex with a supersend, implement 
 	elementsExpired: repairing the shared data inside the mutex)."
 
-	Notification signal: self class name , ': Restarting Undertaker process...'.
+	Notification signal: self class name , ': Restarting Undertaker process…'.
 	[self undertakerMain] forkAt: Processor highIOPriority!
 
 gcInterval
@@ -399,7 +399,7 @@ primInstanceStats: anArrayOrNil
 registerObjects
 	"Private - Register the finalize and bereavement queue Semaphores with the VM."
 
-	VMLibrary default
+	VM
 		registryAt: #memoryManager put: self;
 		registryAt: #Corpse put: DeadObject current;
 		registryAt: #FinalizeQueue put: hospice;

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Structure subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
@@ -119,8 +119,7 @@ getExtendedErrorInfo: excep
 	| errorInfo |
 	self supportsErrorInfo ifFalse: [^self].
 	errorInfo := IErrorInfo newPointer.
-	(OLEAutLibrary default getErrorInfo: 0 pperrinfo: errorInfo) == S_OK
-		ifTrue: [excep errorInfo: errorInfo]!
+	(OleAut32 getErrorInfo: 0 pperrinfo: errorInfo) == S_OK ifTrue: [excep errorInfo: errorInfo]!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
@@ -171,7 +170,7 @@ initialize: anInteger
 	interface is registered."
 
 	super initialize: anInteger.
-	self vtbl: VMLibrary default getVTable.
+	self vtbl: VM getVTable.
 	self argSizes: self class argSizes yourAddress!
 
 initializeAtAddress: anAddress
@@ -714,7 +713,7 @@ getObject: aString
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default
+	Ole32
 		coGetObject: aString
 		pBindOptions: nil
 		riid: self iid
@@ -902,7 +901,7 @@ onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: li
 			pServerInfo hostName: hostNameString.
 			dwClsContext := dwClsContext bitOr: CLSCTX_REMOTE_SERVER].
 	pFactory := IClassFactory newPointer.
-	OLELibrary default
+	Ole32
 		coGetClassObject: aCLSID
 		dwClsContext: dwClsContext
 		pServerInfo: pServerInfo

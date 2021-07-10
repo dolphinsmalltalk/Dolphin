@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.ArrayPointerField subclass: #'External.StructureArrayPointerField'
 	instanceVariableNames: ''

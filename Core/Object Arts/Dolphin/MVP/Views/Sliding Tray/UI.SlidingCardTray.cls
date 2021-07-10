@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.CardContainer subclass: #'UI.SlidingCardTray'
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
@@ -149,7 +149,7 @@ openTheme
 	pinSize := SystemMetrics current smallIconExtent asParameter.
 	self isThemed
 		ifTrue: 
-			[ThemeLibrary default
+			[UxTheme
 				getThemePartSize: self theme
 				hdc: nil
 				iPartId: EBP_HEADERPIN
@@ -165,7 +165,7 @@ paintClassicBackgroundOn: aCanvas
 paintClassicEdgesOn: aCanvas
 	self isPinned ifTrue: [^nil].
 	"Note that we omit one line of the top-edge in order to give the same appearance as the tab control when pinned"
-	UserLibrary default
+	User32
 		drawEdge: aCanvas asParameter
 		qrc: (0 @ -1 corner: self extent) asParameter
 		edge: (self isResizable ifTrue: [EDGE_RAISED] ifFalse: [EDGE_ETCHED])
@@ -189,7 +189,7 @@ paintEdgesOn: aCanvas
 		ifFalse: [self paintClassicEdgesOn: aCanvas]!
 
 paintThemedBackgroundOn: aCanvas
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: self headerBackgroundPart
@@ -199,7 +199,7 @@ paintThemedBackgroundOn: aCanvas
 
 paintThemedEdgesOn: aCanvas
 	self isPinned ifTrue: [^nil].
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: tabs theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
@@ -212,7 +212,7 @@ paintThemedOn: aCanvas
 	self paintThemedPinOn: aCanvas!
 
 paintThemedPinOn: aCanvas
-	ThemeLibrary default
+	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: EBP_HEADERPIN

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.ObjectTest'
 	instanceVariableNames: ''
@@ -16,9 +16,9 @@ newEventSource
 
 testAssert
 	self shouldnt: [Object assert: [true]] raise: Error.
-	self should: [Object assert: true] raise: MessageNotUnderstood.
+	self shouldnt: [Object assert: true] raise: MessageNotUnderstood.
 	self should: [Object assert: [false]] raise: Error.
-	self should: [Object assert: false] raise: MessageNotUnderstood!
+	self should: [Object assert: false] raise: Error!
 
 testBecome
 	| a b aIdHash bIdHash aHash bHash c |
@@ -268,6 +268,11 @@ testTwoArgEvent
 		matching: [:arg1 :arg2 | arg1 = 1 & (arg2 = 2)]
 		against: source!
 
+testValue
+	| subject |
+	subject := Object new.
+	self assert: subject value identicalTo: subject!
+
 testZeroArgEvent
 	| source |
 	source := self newEventSource.
@@ -347,6 +352,7 @@ verifyWeakRegistry: aWeakIdentitDictionary
 !Core.Tests.ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testThreeArgEvent!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testTwoArgEvent!public!unit tests! !
+!Core.Tests.ObjectTest categoriesFor: #testValue!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #testZeroArgEvent!public!unit tests! !
 !Core.Tests.ObjectTest categoriesFor: #verifyWeakRegistry:!public!unit tests! !
 

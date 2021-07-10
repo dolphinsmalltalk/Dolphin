@@ -397,7 +397,7 @@ getMetafileIfNone: exceptionHandler
 
 	^self apply: 
 			[| hemf |
-			hemf := UserLibrary default getClipboardData: CF_ENHMETAFILE.
+			hemf := User32 getClipboardData: CF_ENHMETAFILE.
 			hemf isNull ifTrue: [exceptionHandler value] ifFalse: [(Metafile fromHandle: hemf) copy]]! !
 !UI.Clipboard categoriesFor: #getMetafile!accessing!public! !
 !UI.Clipboard categoriesFor: #getMetafileIfNone:!accessing!public! !

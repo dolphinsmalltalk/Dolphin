@@ -28,7 +28,7 @@ Follow these instructions to create the product image and launch Dolphin Smallta
 
 * First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any supported version of Windows should be suitable, and at the moment that means Windows 10. Dolphin _may_ run on older Windows versions, but there should be no expectation that it will, or will continue to do so.
 
-* The master branch is on the bleeding edge and current is in an unstable state while version 7.2 is in development, although the tests should always be passing. If you need a stable build then you should use the `release/7.1` branch.
+* The master branch is on the bleeding edge and current is in an unstable state while version 8.0 is in development, although the tests should always be passing. If you need a stable build then you should use the `release/7.1` branch.
 
 * Next you will need to build the binaries as described above, or fetch the VM binaries. For convenience a batch file, `FetchVM.CMD` is supplied that will determine the correct VM version and invoke the helper PowerShell script `FetchVM.ps1` to download it. If you want to download an alternative VM (which is not usually recommended) then this can be done by invoking `FetchVM.ps1` with a parameter..
 
@@ -36,11 +36,11 @@ Follow these instructions to create the product image and launch Dolphin Smallta
 
 * If you do not have a Visual Studio 2019 installed on your machine, then depending on what other software you have you may also need to install the [VC++ runtime distribution](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads), specifically https://aka.ms/vs/16/release/vc_redist.x86.exe. This is required by the VM. If Dolphin fails to start, try installing this first.
 
-* In the root folder of the repo you will find the `BootDPRO.cmd` script and a small boot image, `DBOOT.img7`. Double-click `BootDPRO.cmd` or run it from a console window. The boot process takes a minute or two to load all the Smalltalk code, and when completed you should see a `DPRO.img7` file in your directory. IMG7 is the image extension for Dolphin 7, and DPRO stands for _Dolphin Professional_.
+* In the root folder of the repo you will find the `BootDPRO.cmd` script and a small boot image, `DBOOT.img8`. Double-click `BootDPRO.cmd` or run it from a console window. The boot process takes a minute or two to load all the Smalltalk code, and when completed you should see a `DPRO.img7` file in your directory. IMG7 is the image extension for Dolphin 7, and DPRO stands for _Dolphin Professional_.
 
 * Should you wish to test your booted image before proceeding with your own changes or work, you may want to run the standard regression test suite. This is recommended, and easy to do. Just run the `TestDPRO.cmd` script in the root folder. This will launch Dolphin, load the tests, and then execute them. As it runs you will see results being reported as console output. The complete test run should take no more than a couple of minutes. When complete a summary will state whether there were any failures. You should expect there to be none, but check the [AppVeyor build](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master) to see the current build status.
 
-* To launch the image you can right click on `DPRO.img7` and choose _Open With_, selecting `Dolphin7.exe` as the executable to be permanently associated with this file type.
+* To launch the image you can right click on `DPRO.img8` and choose _Open With_, selecting `Dolphin8.exe` as the executable to be permanently associated with this file type.
 
 You should see Dolphin Professional 7 launch successfully. You can now continue with the Dolphin [Getting Started](http://object-arts.com/gettingstarted.html) introduction if you wish.
 

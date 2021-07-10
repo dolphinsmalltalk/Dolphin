@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Color subclass: #'Graphics.VirtualColor'
 	instanceVariableNames: ''
@@ -11,6 +11,15 @@ Graphics.VirtualColor isNonInstantiable: true!
 Graphics.VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an indirectly stored or calculated color value that can vary at run time.'!
 !Graphics.VirtualColor categoriesForClass!Drawing! !
 !Graphics.VirtualColor methodsFor!
+
+actualColor
+	^self subclassResponsibility!
+
+alpha
+	"Answer the receiver's alpha component (a SmallInteger in the range 0..255). This specifies
+	the opacity of the colour, with 0 being completely transparent and 255 completely opaque."
+
+	^self actualColor alpha!
 
 argbCode
 	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order."
@@ -42,15 +51,31 @@ isSymbolic
 
 	^true!
 
+rgbaCode
+	"Answer the receiver's colour value in 32-bit RGBA encoding (or ABGR if you prefer), i.e. red | (green << 8) | (blue << 16) | (alpha << 24)."
+
+	^self actualColor rgbaCode!
+
 rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
 	^self actualColor rgbCode! !
+!Graphics.VirtualColor categoriesFor: #actualColor!accessing!private! !
+!Graphics.VirtualColor categoriesFor: #alpha!accessing!public! !
 !Graphics.VirtualColor categoriesFor: #argbCode!converting!public! !
 !Graphics.VirtualColor categoriesFor: #asParameter!converting!public! !
 !Graphics.VirtualColor categoriesFor: #asRGB!converting!public! !
 !Graphics.VirtualColor categoriesFor: #isDefault!public!testing! !
 !Graphics.VirtualColor categoriesFor: #isNone!public!testing! !
 !Graphics.VirtualColor categoriesFor: #isSymbolic!public!testing! !
+!Graphics.VirtualColor categoriesFor: #rgbaCode!accessing!public! !
 !Graphics.VirtualColor categoriesFor: #rgbCode!converting!public! !
+
+!Graphics.VirtualColor class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+	"Override back to default implementation"
+
+	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion! !
+!Graphics.VirtualColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 

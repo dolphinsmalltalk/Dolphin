@@ -6804,7 +6804,7 @@ Press Yes to move the class, No to leave it where it is, or Cancel to abort'
 						expandMacrosWith: aVariableBinding key
 						with: hisPackage
 						with: myPackage).
-			mb caption: ('Dolphin Type Library Analyzer: Generating <1s>...' expandMacrosWith: self name).
+			mb caption: 'Dolphin Type Library Analyzer: Generating <1s>…' << self name.
 			resp := mb open.
 			resp == #cancel ifTrue: [self abortGeneration].
 			resp == #yes ifTrue: [self addVariableToPackage: aVariableBinding]].
@@ -7200,9 +7200,9 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #defineFunctionTables);
 		add: (Aspect boolean: #defineMethodProtocols);
 		add: (Aspect string: #namespaceName);
-		add: (Aspect choice: #highLevelWrappers from: self highLevelWrapperStyles);
-		add: (Aspect choice: #classComments from: self classCommentStyles);
-		add: (Aspect choice: #tracing from: self tracingStyles);
+		add: (Aspect symbol: #highLevelWrappers from: self highLevelWrapperStyles);
+		add: (Aspect symbol: #classComments from: self classCommentStyles);
+		add: (Aspect symbol: #tracing from: self tracingStyles);
 		add: (Aspect name: #aliasMap);
 		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
 		add: (Aspect sequenceableCollection: #coclasses) beReadOnly;
@@ -7227,7 +7227,7 @@ registerTypeLib
 			do: 
 				[:each |
 				UI.MessageBox new
-					caption: 'Unable to register type library...';
+					caption: 'Unable to register type library…';
 					errorMsg: each description]!
 
 stonAllInstVarNames

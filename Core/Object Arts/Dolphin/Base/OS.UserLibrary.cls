@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.PermanentLibrary subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
@@ -408,7 +408,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 				ifTrue: [0]
 				ifFalse: 
 					["#2107: getActiveWindow may return nil, e.g. in a headless app with no windows"
-					anExternalHandle ifNil: [UserLibrary default getActiveWindow ?? 0]].
+					anExternalHandle ifNil: [User32 getActiveWindow ?? 0]].
 	struct := MSGBOXPARAMSW new.
 	dwStyle := styleInteger.
 	struct text: textString.
@@ -434,11 +434,11 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 			"Ensure owner is (temporarily) enabled to prevent losing activation when box is closed"
 			(wasDisabled := (self isWindowEnabled: hWnd) not) ifTrue: [self enableWindow: hWnd bEnable: true].
 			response := 
-					[SessionManager inputState startIdleTimer: hWnd.
+					[SessionManager.Current inputState startIdleTimer: hWnd.
 					"Task modal only disables windows in the calling thread, so we can't use an
 					overlapped call here."
 					self messageBoxIndirect: struct]
-							ensure: [SessionManager inputState stopIdleTimer: hWnd]]
+							ensure: [SessionManager.Current inputState stopIdleTimer: hWnd]]
 		ifFalse: 
 			[wasDisabled := (self isWindowEnabled: hWnd) not.
 			"MessageBoxIndirect is called using an overlapped call on a separate thread to avoid
@@ -783,7 +783,11 @@ fileName
 	"Answer the host system file name of the external library which 
 	the receiver represents."
 
-	^'USER32'! !
+	^'USER32'!
+
+sharedVariableName
+	^#{User32}! !
 !OS.UserLibrary class categoriesFor: #clear!initializing!private! !
 !OS.UserLibrary class categoriesFor: #fileName!constants!public! !
+!OS.UserLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

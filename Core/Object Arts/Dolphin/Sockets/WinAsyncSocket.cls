@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'
@@ -22,8 +22,11 @@ Class Variables:
 	DefaultInstance		<WinAsyncSocket> which is the singleton instance of this class.
 
 '!
-!WinAsyncSocket categoriesForClass!Windows Sockets! !
+!WinAsyncSocket categoriesForClass!Deprecated!Windows Sockets! !
 !WinAsyncSocket methodsFor!
+
+applyFont
+	"Nothing to do here as the receiver cannot display text."!
 
 cancelSocket: aSocket 
 	"Private - Cancel any outstanding asynchronous calls."
@@ -87,6 +90,7 @@ wsaEvent: message wParam: wParam lParam: lParam
 	event := lParam lowWord.
 	selector := SocketMessageMap at: event ifAbsent: nil.
 	selector notNil ifTrue: [socket perform: selector]! !
+!WinAsyncSocket categoriesFor: #applyFont!font!private!updating! !
 !WinAsyncSocket categoriesFor: #cancelSocket:!operations!private! !
 !WinAsyncSocket categoriesFor: #defaultExtent!constants!public! !
 !WinAsyncSocket categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.SolidBrush'
 	instanceVariableNames: ''
@@ -14,11 +14,11 @@ Graphics.Gdiplus.SolidBrush comment: 'A solid brush paints a single, constant co
 color
 	| color |
 	color := ByteArray newFixed: 4.
-	GdiplusLibrary default gdipGetSolidFillColor: self asParameter color: color.
+	Gdip gdipGetSolidFillColor: self asParameter color: color.
 	^Color fromArgbCode: (color dwordAtOffset: 0)!
 
 color: aColor
-	GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: aColor argbCode! !
+	Gdip gdipSetSolidFillColor: self asParameter color: aColor argbCode! !
 !Graphics.Gdiplus.SolidBrush categoriesFor: #color!accessing!public! !
 !Graphics.Gdiplus.SolidBrush categoriesFor: #color:!accessing!public! !
 

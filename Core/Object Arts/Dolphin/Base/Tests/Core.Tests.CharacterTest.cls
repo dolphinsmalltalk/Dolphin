@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.CharacterTest'
 	instanceVariableNames: ''
@@ -219,6 +219,10 @@ testCodePoint
 			ch := utf16 at: i.
 			self assert: ch isSurrogate.
 			self assert: ch codePoint equals: each]!
+
+testCodePointString
+	#($a 'U+0061' $£ 'U+00A3' $€ 'U+20AC' $\x1F42C 'U+1F42C' $ÿ 'U+00FF' $\x100 'U+0100' $\xFFF 'U+0FFF' $\x1000 'U+1000' $\xFFFD 'U+FFFD' $\x10000 'U+10000' $\x10FFFD 'U+10FFFD')
+		pairsDo: [:char :expected | self assert: char codePointString equals: expected]!
 
 testDigitValue
 	self assert: Character null digitValue equals: -1!
@@ -667,6 +671,7 @@ testStb
 !Core.Tests.CharacterTest categoriesFor: #testClassify!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testClassNewCode!public! !
 !Core.Tests.CharacterTest categoriesFor: #testCodePoint!public!unit tests! !
+!Core.Tests.CharacterTest categoriesFor: #testCodePointString!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testDigitValue!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testEquals!public!unit tests! !
 !Core.Tests.CharacterTest categoriesFor: #testIdentity!public!unit tests! !

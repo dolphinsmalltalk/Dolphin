@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.SYSTEMTIME'
 	instanceVariableNames: ''
@@ -215,7 +215,7 @@ now
 
 	| answer |
 	answer := self new.
-	KernelLibrary default getLocalTime: answer.
+	Kernel32 getLocalTime: answer.
 	^answer!
 
 nowUTC
@@ -223,7 +223,7 @@ nowUTC
 
 	| answer |
 	answer := self new.
-	KernelLibrary default getSystemTime: answer.
+	Kernel32 getSystemTime: answer.
 	^answer! !
 !OS.SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
 !OS.SYSTEMTIME class categoriesFor: #defineFields!public!template definition! !

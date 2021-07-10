@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.MIB_TCPTABLE subclass: #'OS.MIB_TCPEXTABLE'
 	instanceVariableNames: ''

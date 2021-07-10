@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.Delay'
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
@@ -76,6 +76,11 @@ delta: anInteger
 	image reload to base off a new millisecond clock relative to the old)."
 
 	resumptionTime := resumptionTime + anInteger!
+
+duration
+	"Answer the duration of the delay."
+
+	^duration microseconds!
 
 duration: anInteger
 	"Private - Initialize the receiver to be a Delay for the number of microseconds specified by
@@ -218,6 +223,7 @@ wakeup
 !Core.Delay categoriesFor: #calcResumptionTime!accessing!private! !
 !Core.Delay categoriesFor: #cancel!process synchronisation!public! !
 !Core.Delay categoriesFor: #delta:!operations!private! !
+!Core.Delay categoriesFor: #duration!accessing!public! !
 !Core.Delay categoriesFor: #duration:!accessing!private! !
 !Core.Delay categoriesFor: #getDuration!accessing!private! !
 !Core.Delay categoriesFor: #hasExpired!private!testing! !
@@ -318,7 +324,7 @@ forSeconds: anInteger
 getTicksToNanos
 	| freq |
 	freq := LargeInteger new64.
-	(OS.KernelLibrary default queryPerformanceFrequency: freq basicYourAddress)
+	(OS.Kernel32 queryPerformanceFrequency: freq basicYourAddress)
 		ifFalse: [self error: 'performance counter not available'].
 	^1e9 / freq normalize!
 
@@ -345,7 +351,7 @@ initializeTimingSemaphore
 	"Private - Create the timing semaphore used for communication with the VM's timer services."
 
 	TimingSemaphore isNil ifTrue: [TimingSemaphore := Semaphore new].
-	VMLibrary default registryAt: #TimingSemaphore put: TimingSemaphore!
+	VM registryAt: #TimingSemaphore put: TimingSemaphore!
 
 keepAlive
 	"Private - Ensure that there is a timing process, and that it is in a runnable state."
@@ -419,7 +425,7 @@ queryOsTimerResolution
 	min := ByteArray newFixed: 4.
 	max := ByteArray newFixed: 4.
 	actual := ByteArray newFixed: 4.
-	(OS.NTLibrary default
+	(OS.NtDll
 		ntQueryTimerResolution: min
 		maximum: max
 		actual: actual) == 0
@@ -478,7 +484,7 @@ timerResolution: aDuration set: aBoolean
 
 	| actualResolution |
 	actualResolution := External.DWORDBytes new.
-	OS.NTLibrary default
+	OS.NtDll
 		setTimerResolution: aDuration asNanoseconds // 100
 		set: aBoolean
 		actualResolution: actualResolution.

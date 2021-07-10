@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'OS.DiskVolumeInformation'
 	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
@@ -101,12 +101,12 @@ getDiskFreeSpace
 	bytesPerSectorBuf := DWORD new.
 	numberOfFreeClustersBuf := DWORD new.
 	totalNumberOfClustersBuf := DWORD new.
-	(KernelLibrary default
+	(Kernel32
 		getDiskFreeSpace: self rootPath
 		lpSectorsPerCluster: sectorsPerClusterBuf
 		lpBytesPerSector: bytesPerSectorBuf
 		lpNumberOfFreeClusters: numberOfFreeClustersBuf
-		lpTotalNumberOfClusters: totalNumberOfClustersBuf) ifFalse: [KernelLibrary default systemError].
+		lpTotalNumberOfClusters: totalNumberOfClustersBuf) ifFalse: [Kernel32 systemError].
 	sectorsPerCluster := sectorsPerClusterBuf value.
 	bytesPerSector := bytesPerSectorBuf value.
 	freeClusters := freeBytes isNil
@@ -127,11 +127,11 @@ getDiskFreeSpaceEx
 	freeBytesAvailableBuf := ULARGE_INTEGER new.
 	totalNumberOfBytesBuf := ULARGE_INTEGER new.
 	totalNumberOfFreeBytesBuf := ULARGE_INTEGER new.
-	(KernelLibrary default
+	(Kernel32
 		getDiskFreeSpaceEx: path
 		lpFreeBytesAvailable: freeBytesAvailableBuf
 		lpTotalNumberOfBytes: totalNumberOfBytesBuf
-		lpTotalNumberOfFreeBytes: totalNumberOfFreeBytesBuf) ifFalse: [KernelLibrary default systemError].
+		lpTotalNumberOfFreeBytes: totalNumberOfFreeBytesBuf) ifFalse: [Kernel32 systemError].
 	freeBytes := freeBytesAvailableBuf value.
 	totalFreeBytes := totalNumberOfFreeBytesBuf value.
 	totalBytes := totalNumberOfBytesBuf value!
@@ -158,7 +158,7 @@ getVolumeInformation
 	maximumComponentLengthBuffer := DWORDBytes new.
 	fileSystemFlagsBuffer := DWORDBytes new.
 	fileSystemNameBuffer := volumeNameBuffer copy.
-	(KernelLibrary default
+	(Kernel32
 		getVolumeInformation: self rootPath
 		lpVolumeNameBuffer: volumeNameBuffer
 		nVolumeNameSize: volumeNameBuffer size + 1
@@ -166,7 +166,7 @@ getVolumeInformation
 		lpMaximumComponentLength: maximumComponentLengthBuffer
 		lpFileSystemFlags: fileSystemFlagsBuffer
 		lpFileSystemNameBuffer: fileSystemNameBuffer
-		nFileSystemNameSize: fileSystemNameBuffer size + 1) ifFalse: [KernelLibrary default systemError].
+		nFileSystemNameSize: fileSystemNameBuffer size + 1) ifFalse: [Kernel32 systemError].
 	label := volumeNameBuffer trimNulls.
 	serialNumber := volumeSerialNumber value.
 	maxComponentLength := maximumComponentLengthBuffer value.
@@ -188,8 +188,8 @@ label
 label: newLabelString
 	"Set the label of this disk volume."
 
-	(KernelLibrary default setVolumeLabel: self rootPath lpVolumeName: newLabelString)
-		ifFalse: [KernelLibrary default systemError].
+	(Kernel32 setVolumeLabel: self rootPath lpVolumeName: newLabelString)
+		ifFalse: [Kernel32 systemError].
 	label := newLabelString!
 
 maxComponentLength

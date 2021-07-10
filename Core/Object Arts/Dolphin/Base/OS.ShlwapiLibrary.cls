@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.DynamicLinkLibrary subclass: #'OS.ShlwapiLibrary'
 	instanceVariableNames: ''
@@ -139,6 +139,10 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 fileName
 	"Answer the host system file name for the library"
 
-	^'SHLWAPI'! !
+	^'SHLWAPI'!
+
+sharedVariableName
+	^#{Shlwapi}! !
 !OS.ShlwapiLibrary class categoriesFor: #fileName!constants!public! !
+!OS.ShlwapiLibrary class categoriesFor: #sharedVariableName!constants!private! !
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.TextStyle subclass: #'UI.Scintilla.CallTipStyle'
 	instanceVariableNames: ''
@@ -27,7 +27,7 @@ initialize
 
 	propertyMap := self buildPropertyMap
 				at: #forecolor
-					put: (ColorPropertyDescriptor
+					put: (ColourPropertyDescriptor
 							getSelector: #forecolor
 							defaultValue: Color gray
 							setMessage: SCI_STYLESETFORE);

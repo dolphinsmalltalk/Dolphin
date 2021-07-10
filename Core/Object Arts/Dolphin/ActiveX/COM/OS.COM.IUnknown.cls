@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.COM.Interface subclass: #'OS.COM.IUnknown'
 	instanceVariableNames: ''
@@ -122,7 +122,7 @@ on: server outerUnknown: pUnkOuter
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	VMLibrary default registryAt: self name put: nil! !
+	VM registryAt: self name put: nil! !
 !OS.COM.IUnknown class categoriesFor: #defineFunctions!initializing!public! !
 !OS.COM.IUnknown class categoriesFor: #on:outerUnknown:!instance creation!private! !
 !OS.COM.IUnknown class categoriesFor: #uninitialize!class hierarchy-removing!private! !

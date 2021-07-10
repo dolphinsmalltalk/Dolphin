@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.Keyboard'
 	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
@@ -25,7 +25,7 @@ UI.Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and
 asyncKeyState: virtualKeyCodeInteger
 	"Private - Answer the state of the specified virtual key."
 
-	^UserLibrary default getAsyncKeyState: virtualKeyCodeInteger!
+	^User32 getAsyncKeyState: virtualKeyCodeInteger!
 
 buildVKeyMaps
 	"Private - Answer a <dictionary> mapping from the localised key names in the current keyboard layout to the corresponding virtual key code."
@@ -65,9 +65,7 @@ getState
 	"Private - Refresh the cached Win32 asynchronous keyboard state ByteArray and answer it."
 
 	state ifNil: [state := ByteArray new: 256].
-	^(UserLibrary default getKeyboardState: state)
-		ifTrue: [state]
-		ifFalse: [UserLibrary default systemError]!
+	^(User32 getKeyboardState: state) ifTrue: [state] ifFalse: [User32 systemError]!
 
 isAltDown
 	"Answer whether the <ALT> key is down."
@@ -122,7 +120,7 @@ keyNameFromLParam: anInteger
 
 	| buf len |
 	buf := Utf16String newFixed: 32.
-	len := UserLibrary default
+	len := User32
 				getKeyNameText: anInteger
 				lpString: buf
 				nSize: buf basicSize + 1.	"includes null term"
@@ -150,7 +148,7 @@ keyNames
 keyState: virtualKeyCodeInteger
 	"Private - Answer the state of the specified virtual key."
 
-	^UserLibrary default getKeyState: virtualKeyCodeInteger!
+	^User32 getKeyState: virtualKeyCodeInteger!
 
 modifierKeys
 	"Answer a <dictionary> mapping from the <readableString> modifier key names (e.g. CTRL, ALT, SHIFT) in this keyboard layout, to the associated <integer> key modifier flag."
@@ -184,7 +182,7 @@ setKeyState: virtualKeyCodeInteger to: byteMask
 setState
 	"Private - Modify Win32's keyboard state to that currently cached."
 
-	state ifNotNil: [UserLibrary default setKeyboardState: state]!
+	state ifNotNil: [User32 setKeyboardState: state]!
 
 virtualKeyFromString: aString
 	"Answer the <integer> virtual key code for the named key from this keyboard layout."
@@ -208,7 +206,7 @@ virtualKeys: aLookupTableOfInteger
 vKeyToScanCode: anInteger
 	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if there isn't one."
 
-	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
+	^User32 mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
 !UI.Keyboard categoriesFor: #asyncKeyState:!helpers!private! !
 !UI.Keyboard categoriesFor: #buildVKeyMaps!helpers!private! !
 !UI.Keyboard categoriesFor: #buttonKeys!constants!private! !
@@ -381,19 +379,16 @@ layoutName
 
 	| buf |
 	buf := Utf16String newFixed: KL_NAMELENGTH.
-	^(UserLibrary default getKeyboardLayoutName: buf)
-		ifTrue: [buf trimNulls]
-		ifFalse: [UserLibrary default systemError]!
+	^(User32 getKeyboardLayoutName: buf) ifTrue: [buf trimNulls] ifFalse: [User32 systemError]!
 
 layoutName: aString
 	"Set the current keyboard layout by <readableString> name, answering whether this was accepted.
 	Note that this will only work if the Dolphin process owns the window with keyboard focus."
 
 	^self layoutName = aString or: 
-			[(UserLibrary default loadKeyboardLayout: aString flags: ##(KLF_ACTIVATE | KLF_SETFORPROCESS))
-				notNil and: 
-						[DefaultInstance := nil.
-						true]]!
+			[(User32 loadKeyboardLayout: aString flags: ##(KLF_ACTIVATE | KLF_SETFORPROCESS)) notNil and: 
+					[DefaultInstance := nil.
+					true]]!
 
 onPreStripImage
 	"Private - The image is about to be stripped."

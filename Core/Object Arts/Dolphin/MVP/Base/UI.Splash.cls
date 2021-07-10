@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ShellView subclass: #'UI.Splash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'

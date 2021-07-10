@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.StaticText subclass: #'UI.StaticPath'
 	instanceVariableNames: 'text'
@@ -44,7 +44,7 @@ plainText: pathString
 setWindowText: pathString
 	"Private - Sets the text of the receiver"
 
-	ShlwapiLibrary default
+	Shlwapi
 		pathSetDlgItemPath: self parentView asParameter
 		id: self id
 		pszPath: pathString.

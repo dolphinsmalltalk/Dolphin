@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MSXML.IXMLDOMDocument2 subclass: #'MSXML.IXMLDOMDocument3'
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Brush subclass: #'Graphics.Gdiplus.TextureBrush'
 	instanceVariableNames: ''
@@ -20,7 +20,7 @@ rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
-	GdiplusLibrary default
+	Gdip
 		gdipRotateTextureTransform: self asParameter
 		angle: aRealAngle
 		order: aMatrixOrderConstant!
@@ -28,7 +28,7 @@ rotateTransform: aRealAngle order: aMatrixOrderConstant
 transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
-	GdiplusLibrary default gdipSetTextureTransform: self asParameter matrix: aGdiplusMatrix asParameter! !
+	Gdip gdipSetTextureTransform: self asParameter matrix: aGdiplusMatrix asParameter! !
 !Graphics.Gdiplus.TextureBrush categoriesFor: #rotateTransform:!operations!public! !
 !Graphics.Gdiplus.TextureBrush categoriesFor: #rotateTransform:order:!operations!public! !
 !Graphics.Gdiplus.TextureBrush categoriesFor: #transform:!accessing!public! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.ClassBuilder'
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables imports comment flags categories classConstants environment'
@@ -827,8 +827,7 @@ updateVMRegistryWith: aClass
 			[:index |
 			| current |
 			current := VMLibrary.Registry at: index.
-			(current isNil or: [current class isMetaclass])
-				ifTrue: [VMLibrary default registryAtIndex: index put: aClass]]!
+			(current isNil or: [current class isMetaclass]) ifTrue: [VM registryAtIndex: index put: aClass]]!
 
 validateClass
 	"Private - Ensure that currentClass is a valid Behavior."

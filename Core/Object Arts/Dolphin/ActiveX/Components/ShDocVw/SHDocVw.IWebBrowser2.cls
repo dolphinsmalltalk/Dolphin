@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SHDocVw.IWebBrowserApp subclass: #'SHDocVw.IWebBrowser2'
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListControlTest'
 	instanceVariableNames: 'selectionChanged selectionChanging timedout events clicks'
@@ -84,11 +84,11 @@ sendClickEvent: aMouseEvent
 	| pos |
 	"The mouse needs to be outside any Dolphin window in order to cause the control's WM_?BUTTONDOWN handler to block in the way described in #898"
 	pos := POINTL new.
-	UserLibrary default
+	User32
 		getCursorPos: pos;
 		setCursorPosX: 0 y: 0.
 	self sendMouseEvents: {aMouseEvent. self mouseUpForMouseDown: aMouseEvent}.
-	UserLibrary default setCursorPosX: pos x y: pos y!
+	User32 setCursorPosX: pos x y: pos y!
 
 sendMouseEvents: aSequencedReadableCollection
 	| keyState newKeyState aMouseEvent |
@@ -106,7 +106,7 @@ sendMouseEvents: aSequencedReadableCollection
 	presenter view setTimer: aMouseEvent message interval: 500.
 	"Dispatch the posted mouse down/up messages to the control"
 	
-	[newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: newKeyState].
+	[newKeyState = keyState ifFalse: [User32 setKeyboardState: newKeyState].
 	"Dispatch the posted messages to the control"
 	false
 		ifTrue: 
@@ -116,7 +116,7 @@ sendMouseEvents: aSequencedReadableCollection
 					[Sound bell.
 					(i := i - 1) > 0]]
 		ifFalse: [SessionManager inputState pumpMessages]]
-			ensure: [newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: keyState]].
+			ensure: [newKeyState = keyState ifFalse: [User32 setKeyboardState: keyState]].
 	presenter view killTimer: aMouseEvent message.
 	"If this fires, it means the control did not return from the call to its window proc to handle the button down event in ListView>>onButtonPressed:"
 	self deny: timedout description: 'Control blocked in mouse down handler'!
@@ -177,7 +177,7 @@ testEventsFromClickSelectionChangePrompted
 			events addLast: selChanging.
 			"Snaffle the mouse up as the control will lose focus/activation as soon as the prompt is opened"
 			msg := MSG new.
-			UserLibrary default
+			User32
 				getMessage: msg
 				hWnd: presenter view handle
 				wMsgFilterMin: WM_LBUTTONUP

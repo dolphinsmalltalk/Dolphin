@@ -60,7 +60,7 @@
     <IntDir>$(TargetName)\$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>DolphinDR7</TargetName>
+    <TargetName>DolphinDR8</TargetName>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
@@ -68,7 +68,7 @@
     <IntDir>$(TargetName)\$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>DolphinDR7</TargetName>
+    <TargetName>DolphinDR8</TargetName>
     <PreBuildEventUseInBuild />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -76,7 +76,7 @@
     <IntDir>$(TargetName)\$(Configuration)\</IntDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>DolphinDR7</TargetName>
+    <TargetName>DolphinDR8</TargetName>
     <PreBuildEventUseInBuild />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -530,6 +530,7 @@
     <Image Include="Res\XML.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="devres.rc2" />
     <None Include="Res\hsplit.cur" />
     <None Include="Res\vsplit.cur" />
   </ItemGroup>

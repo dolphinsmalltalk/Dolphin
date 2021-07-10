@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.ProcessorScheduler'
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
@@ -177,7 +177,7 @@ crtFault: aByteArray
 	record, the first argument of which is the fault code. An example of where this is fired is
 	when an invalid parameter is passed to any CRT function, e.g. attempting to close an invalid
 	file descriptor as follows: 
-		CRTLibrary default _close: -1
+		Ucrt _close: -1
 	"
 
 	| exceptionRecord |
@@ -298,7 +298,7 @@ idlePanic: interruptArg
 	is in a state of 'idle panic'. The argument is the interrupt enable/disable status. We take
 	the remedial action of starting another idle process."
 
-	SessionManager inputState idlePanic.
+	SessionManager.Current inputState idlePanic.
 	self enableInterrupts!
 
 idleProcess
@@ -492,7 +492,7 @@ systemProcessOwner
 	"Private - Answer the object responsible for maintaining the system processes (excluding
 	those which belong to the memory manager."
 
-	^SessionManager inputState!
+	^SessionManager.Current inputState!
 
 terminate: interruptArg
 	"Private - The current active process has been sent a terminate interrupt, terminate it."

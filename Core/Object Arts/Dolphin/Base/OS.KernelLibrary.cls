@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.PermanentLibrary subclass: #'OS.KernelLibrary'
 	instanceVariableNames: ''
@@ -116,7 +116,7 @@ copyMemory: destination source: source length: length
 	"CopyMemory is a macro defined to RtlCopyMemory, which in turn is a macro defined to memcpy"
 
 	| errno |
-	(errno := CRTLibrary default
+	(errno := Ucrt
 				memcpy_s: destination
 				destSize: length
 				src: source
@@ -931,7 +931,7 @@ getThreadUILanguage
 
 getTickCount
 	"
-	KernelLibrary default getTickCount.
+	Kernel32 getTickCount.
 
 The return value is the number of milliseconds that have elapsed since the system was started.
 
@@ -2014,7 +2014,11 @@ open
 	VM object registry on startup."
 
 	WinVerOrGreaterMask := nil.
-	^self fromHandle: VMLibrary default kernelHandle! !
+	^self fromHandle: VM kernelHandle!
+
+sharedVariableName
+	^#{Kernel32}! !
 !OS.KernelLibrary class categoriesFor: #fileName!constants!public! !
 !OS.KernelLibrary class categoriesFor: #open!instance creation!public! !
+!OS.KernelLibrary class categoriesFor: #sharedVariableName!constants!initializing!private! !
 

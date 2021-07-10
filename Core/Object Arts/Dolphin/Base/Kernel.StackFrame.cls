@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.StackFrame'
 	instanceVariableNames: 'process index'
@@ -75,17 +75,18 @@ asInteger
 	^index!
 
 at: anInteger
-	"Private - Answer the stack temporary indexed, anInteger, from the receivers stack frame."
+	"Private - Answer the stack temporary indexed, anInteger, from the receivers stack frame.
+	We allow access at 0, as this will return the receiver from the frame, which is at bp - 1."
 	
-	^(anInteger between: 1 and: self localCount)
+	^(anInteger between: 0 and: self localCount)
 		ifTrue: [process at: self bp + anInteger - 1] 
 		ifFalse: [self errorSubscriptBounds: anInteger]!
 
 at: anInteger put: anObject
-	"Private - Replace the stack temporary indexed, anInteger, in the 
-	receiver's stack frame with anObject."
+	"Private - Replace the stack temporary indexed, anInteger, in the receiver's stack frame with anObject.
+	To be used with care."
 	
-	^(anInteger between: 1 and: self localCount)
+	^(anInteger between: 0 and: self localCount)
 		ifTrue: [process at: self bp + anInteger - 1 put: anObject] 
 		ifFalse: [self errorSubscriptBounds: anInteger]!
 

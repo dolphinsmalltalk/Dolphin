@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.AbstractChunkSourceFiler subclass: #'Kernel.LegacyChunkSourceFiler'
 	instanceVariableNames: ''
@@ -144,15 +144,24 @@ emitPackageNameSet: aCollectionOfBindingReferences initializer: aSymbol
 		cr!
 
 emitPackagePrerequisiteNames: aPackage
-	| basePath prereqs |
+	| basePath prereqs oldNames aliasedByOldNames |
 	stream
 		nextPutAll: 'package ';
 		nextPutAll: #setPrerequisites:;
 		nextPutAll: ' #(';
 		cr.
 	basePath := aPackage path.
-	"Hack out the (Old Names) packages that contain aliases from new namespaced class names back into Smalltalk for compatibility."
-	prereqs := aPackage prerequisites reject: [:each | each name endsWith: '(Old Names)'].
+	"Replace the (Old Names) packages, that contain aliases from new namespaced class names back into Smalltalk, with the name of the underlying package.
+	This should give us a legacy package file on disk that is identical to the 7.1 fileout of the same package in most cases."
+	prereqs := aPackage prerequisites.
+	oldNames := prereqs select: [:each | each name endsWith: '(Old Names)'].
+	aliasedByOldNames := Set new.
+	oldNames do: 
+			[:each |
+			aliasedByOldNames add: (each manager
+						packageNamed: (each name copyFrom: 1 to: each name size - ##('(Old Names)' size + 1))
+						ifNone: [])].
+	prereqs := (prereqs difference: oldNames) union: aliasedByOldNames.
 	(prereqs asSortedCollection: [:a :b | a name <==> b name < 0]) do: 
 			[:each |
 			stream

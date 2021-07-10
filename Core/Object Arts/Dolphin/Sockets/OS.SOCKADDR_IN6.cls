@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
 	instanceVariableNames: ''
@@ -41,22 +41,22 @@ struct tagSOCKADDR_IN6 {
 flowInfo
 	"Answer the <integer> flow info."
 
-	^WS2_32Library default ntohl: self sin6_flowinfo!
+	^Ws2_32 ntohl: self sin6_flowinfo!
 
 flowInfo: anInteger
 	"Set the <integer> flow info."
 
-	self sin6_flowinfo: (WS2_32Library default htonl: anInteger)!
+	self sin6_flowinfo: (Ws2_32 htonl: anInteger)!
 
 port
 	"Answer the <integer> port number."
 
-	^WS2_32Library default ntohs: self sin6_port!
+	^Ws2_32 ntohs: self sin6_port!
 
 port: anInteger
 	"Set the <integer> port number."
 
-	self sin6_port: (WS2_32Library default htons: anInteger)!
+	self sin6_port: (Ws2_32 htons: anInteger)!
 
 sin6_addr
 	"Answer the <IN6_ADDR> value of the receiver's 'sin6_addr' field."

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.OrderedCollection variableSubclass: #'Core.SortedCollection'
 	instanceVariableNames: 'algorithm'
@@ -117,6 +117,7 @@ addLast: anObject
 algorithm
 	"Answer the SortAlgorithm which the receiver is currently using to sort its elements."
 
+	<nonBrowsable>
 	^algorithm!
 
 algorithm: aSortAlgorithm 
@@ -335,7 +336,7 @@ stbSaveOn: anSTBOutFiler
 !Core.SortedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
 !Core.SortedCollection categoriesFor: #addFirst:!adding!public! !
 !Core.SortedCollection categoriesFor: #addLast:!adding!public! !
-!Core.SortedCollection categoriesFor: #algorithm!accessing!non browsable!public! !
+!Core.SortedCollection categoriesFor: #algorithm!accessing!public! !
 !Core.SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
 !Core.SortedCollection categoriesFor: #anyIndexOf:!public!searching! !
 !Core.SortedCollection categoriesFor: #asOrderedCollection!converting!public! !

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.Utf8StringTest subclass: #'Core.Tests.SymbolTest'
 	instanceVariableNames: ''
@@ -93,7 +93,7 @@ testPrintString
 
 	"Unquoted"
 
-	(#('at:' 'a') union: VMLibrary default specialSelectors) do: 
+	(#('at:' 'a') union: VM specialSelectors) do: 
 			[:each |
 			| print sym |
 			sym := each asSymbol.
@@ -130,6 +130,9 @@ testReplaceIdentityWith
 testResize
 	self should: [super testResize] raise: Processor constWriteSignal!
 
+testSpecies
+	self assert: self collectionClass empty species sameAs: Symbol!
+
 testSymbolTable
 	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !
 !Core.Tests.SymbolTest categoriesFor: #assimilateString:!helpers!private! !
@@ -149,5 +152,6 @@ testSymbolTable
 !Core.Tests.SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !Core.Tests.SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
 !Core.Tests.SymbolTest categoriesFor: #testResize!public!unit tests! !
+!Core.Tests.SymbolTest categoriesFor: #testSpecies!public!unit tests! !
 !Core.Tests.SymbolTest categoriesFor: #testSymbolTable!public!unit tests! !
 
