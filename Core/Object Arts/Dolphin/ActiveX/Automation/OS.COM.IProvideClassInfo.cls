@@ -32,8 +32,10 @@ GetClassInfo: ppTI
 
 	<virtual stdcall: hresult 4 ITypeInfo**>
 	^self invalidCall: _failureCode! !
-!OS.COM.IProvideClassInfo categoriesFor: #getClassInfo!**auto generated**!public! !
-!OS.COM.IProvideClassInfo categoriesFor: #GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
+!OS.COM.IProvideClassInfo categoriesForMethods!
+getClassInfo!**auto generated**!public! !
+GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
+!
 
 OS.COM.IProvideClassInfo methodProtocol: #IProvideClassInfo attributes: #(#readOnly) selectors: #(#GetClassInfo:)!
 
@@ -48,5 +50,7 @@ defineFunctions
 		defineFunction: #GetClassInfo:
 			argumentTypes: 'ITypeInfo**'
 ! !
-!OS.COM.IProvideClassInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IProvideClassInfo class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

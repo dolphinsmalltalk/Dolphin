@@ -81,18 +81,20 @@ text
 	"Private - Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^''! !
-!UI.DividerMenuItem categoriesFor: #acceleratorKey!accessing!private! !
-!UI.DividerMenuItem categoriesFor: #acceleratorKey:!accessing!private! !
-!UI.DividerMenuItem categoriesFor: #command!accessing!private! !
-!UI.DividerMenuItem categoriesFor: #commandDescription!accessing!private! !
-!UI.DividerMenuItem categoriesFor: #displayOn:!displaying!public! !
-!UI.DividerMenuItem categoriesFor: #id!accessing!public! !
-!UI.DividerMenuItem categoriesFor: #isDivider!public!testing! !
-!UI.DividerMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!UI.DividerMenuItem categoriesFor: #queryAlong:!operations!public! !
-!UI.DividerMenuItem categoriesFor: #styleName!accessing!public! !
-!UI.DividerMenuItem categoriesFor: #styleName:!accessing!private! !
-!UI.DividerMenuItem categoriesFor: #text!accessing!private! !
+!UI.DividerMenuItem categoriesForMethods!
+acceleratorKey!accessing!private! !
+acceleratorKey:!accessing!private! !
+command!accessing!private! !
+commandDescription!accessing!private! !
+displayOn:!displaying!public! !
+id!accessing!public! !
+isDivider!public!testing! !
+populateItemInfo:!private!realizing/unrealizing! !
+queryAlong:!operations!public! !
+styleName!accessing!public! !
+styleName:!accessing!private! !
+text!accessing!private! !
+!
 
 !UI.DividerMenuItem class methodsFor!
 
@@ -161,13 +163,15 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	BarBreak := Break := Separator := nil! !
-!UI.DividerMenuItem class categoriesFor: #barBreak!instance creation!public! !
-!UI.DividerMenuItem class categoriesFor: #break!instance creation!public! !
-!UI.DividerMenuItem class categoriesFor: #initialize!development!initializing!private! !
-!UI.DividerMenuItem class categoriesFor: #new!instance creation!public! !
-!UI.DividerMenuItem class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.DividerMenuItem class categoriesFor: #separator!instance creation!public! !
-!UI.DividerMenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.DividerMenuItem class categoriesFor: #styleNameChoices!constants!public! !
-!UI.DividerMenuItem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.DividerMenuItem class categoriesForMethods!
+barBreak!instance creation!public! !
+break!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+separator!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+styleNameChoices!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -2046,77 +2046,79 @@ UnenableRouter: pOverlapped lpdwEnableCount: lpdwEnableCount
 
 	<stdcall: dword UnenableRouter  OVERLAPPED* dword*>
 	^self invalidCall! !
-!OS.IPHlpApiLibrary categoriesFor: #AddIPAddress:ipMask:ifIndex:nteContext:nteInstance:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #AllocateAndGetTcpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #AllocateAndGetUdpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #CancelIPChangeNotify:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #CreateIpForwardEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #CreateIpNetEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #CreateProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #DeleteIPAddress:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #DeleteIpForwardEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #DeleteIpNetEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #DeleteProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #DisableMediaSense:pOverlapped:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #EnableRouter:pOverlapped:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #FlushIpNetTable:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetAdapterIndex:ifIndex:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetAdapterOrderMap!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getAdaptersInfo!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetAdaptersInfo:pOutBufLen:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetBestInterface:pdwBestIfIndex:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetBestRoute:dwSourceAddr:pBestRoute:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetFriendlyIfIndex:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getIcmpStatistics!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIcmpStatistics:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIcmpStatisticsEx:dwFamily:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIfEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getIfTable!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIfTable:pdwSize:bOrder:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getInterfaceInfo!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetInterfaceInfo:dwOutBufLen:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getIpAddrTable!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIpAddrTable:pdwSize:bOrder:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIpErrorString:buffer:size:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getIpForwardTable!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIpForwardTable:pdwSize:bOrder:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getIpNetTable!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIpNetTable:pdwSize:bOrder:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getIpStatistics!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIpStatistics:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetIpStatisticsEx:dwFamily:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetNetworkParams:pOutBufLen:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetNumberOfInterfaces:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getPerAdapterInfo:!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetPerAdapterInfo:pPerAdapterInfo:pOutBufLen:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetRTTAndHopCount:hopCount:maxHops:rtt:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getTcpExTable!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getTcpStatistics!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetTcpStatistics:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetTcpStatisticsEx:dwFamily:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getTcpTable!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetTcpTable:pdwSize:bOrder:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getUdpStatistics!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetUdpStatistics:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetUdpStatisticsEx:dwFamily:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getUdpTable!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetUdpTable:pdwSize:bOrder:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #getUniDirectionalAdapterInfo!enquiries!public! !
-!OS.IPHlpApiLibrary categoriesFor: #GetUniDirectionalAdapterInfo:dwOutBufLen:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #IpReleaseAddress:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #IpRenewAddress:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #NhpAllocateAndGetInterfaceInfoFromStack:pdwCount:bOrder:hHeap:dwFlags:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #NotifyAddrChange:overlapped:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #NotifyRouteChange:overlapped:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #RestoreMediaSense:lpdwEnableCount:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #SendARP:srcIP:pMacAddr:phyAddrLen:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #SetIfEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #SetIpForwardEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #SetIpNetEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #SetIpStatistics:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #SetIpTTL:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #SetTcpEntry:!**auto generated**!public! !
-!OS.IPHlpApiLibrary categoriesFor: #UnenableRouter:lpdwEnableCount:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesForMethods!
+AddIPAddress:ipMask:ifIndex:nteContext:nteInstance:!**auto generated**!public! !
+AllocateAndGetTcpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
+AllocateAndGetUdpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !
+CancelIPChangeNotify:!**auto generated**!public! !
+CreateIpForwardEntry:!**auto generated**!public! !
+CreateIpNetEntry:!**auto generated**!public! !
+CreateProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
+DeleteIPAddress:!**auto generated**!public! !
+DeleteIpForwardEntry:!**auto generated**!public! !
+DeleteIpNetEntry:!**auto generated**!public! !
+DeleteProxyArpEntry:dwMask:dwIfIndex:!**auto generated**!public! !
+DisableMediaSense:pOverlapped:!**auto generated**!public! !
+EnableRouter:pOverlapped:!**auto generated**!public! !
+FlushIpNetTable:!**auto generated**!public! !
+GetAdapterIndex:ifIndex:!**auto generated**!public! !
+GetAdapterOrderMap!**auto generated**!public! !
+getAdaptersInfo!enquiries!public! !
+GetAdaptersInfo:pOutBufLen:!**auto generated**!public! !
+GetBestInterface:pdwBestIfIndex:!**auto generated**!public! !
+GetBestRoute:dwSourceAddr:pBestRoute:!**auto generated**!public! !
+GetFriendlyIfIndex:!**auto generated**!public! !
+getIcmpStatistics!enquiries!public! !
+GetIcmpStatistics:!**auto generated**!public! !
+GetIcmpStatisticsEx:dwFamily:!**auto generated**!public! !
+GetIfEntry:!**auto generated**!public! !
+getIfTable!enquiries!public! !
+GetIfTable:pdwSize:bOrder:!**auto generated**!public! !
+getInterfaceInfo!enquiries!public! !
+GetInterfaceInfo:dwOutBufLen:!**auto generated**!public! !
+getIpAddrTable!enquiries!public! !
+GetIpAddrTable:pdwSize:bOrder:!**auto generated**!public! !
+GetIpErrorString:buffer:size:!**auto generated**!public! !
+getIpForwardTable!enquiries!public! !
+GetIpForwardTable:pdwSize:bOrder:!**auto generated**!public! !
+getIpNetTable!enquiries!public! !
+GetIpNetTable:pdwSize:bOrder:!**auto generated**!public! !
+getIpStatistics!enquiries!public! !
+GetIpStatistics:!**auto generated**!public! !
+GetIpStatisticsEx:dwFamily:!**auto generated**!public! !
+GetNetworkParams:pOutBufLen:!**auto generated**!public! !
+GetNumberOfInterfaces:!**auto generated**!public! !
+getPerAdapterInfo:!enquiries!public! !
+GetPerAdapterInfo:pPerAdapterInfo:pOutBufLen:!**auto generated**!public! !
+GetRTTAndHopCount:hopCount:maxHops:rtt:!**auto generated**!public! !
+getTcpExTable!enquiries!public! !
+getTcpStatistics!enquiries!public! !
+GetTcpStatistics:!**auto generated**!public! !
+GetTcpStatisticsEx:dwFamily:!**auto generated**!public! !
+getTcpTable!enquiries!public! !
+GetTcpTable:pdwSize:bOrder:!**auto generated**!public! !
+getUdpStatistics!enquiries!public! !
+GetUdpStatistics:!**auto generated**!public! !
+GetUdpStatisticsEx:dwFamily:!**auto generated**!public! !
+getUdpTable!enquiries!public! !
+GetUdpTable:pdwSize:bOrder:!**auto generated**!public! !
+getUniDirectionalAdapterInfo!enquiries!public! !
+GetUniDirectionalAdapterInfo:dwOutBufLen:!**auto generated**!public! !
+IpReleaseAddress:!**auto generated**!public! !
+IpRenewAddress:!**auto generated**!public! !
+NhpAllocateAndGetInterfaceInfoFromStack:pdwCount:bOrder:hHeap:dwFlags:!**auto generated**!public! !
+NotifyAddrChange:overlapped:!**auto generated**!public! !
+NotifyRouteChange:overlapped:!**auto generated**!public! !
+RestoreMediaSense:lpdwEnableCount:!**auto generated**!public! !
+SendARP:srcIP:pMacAddr:phyAddrLen:!**auto generated**!public! !
+SetIfEntry:!**auto generated**!public! !
+SetIpForwardEntry:!**auto generated**!public! !
+SetIpNetEntry:!**auto generated**!public! !
+SetIpStatistics:!**auto generated**!public! !
+SetIpTTL:!**auto generated**!public! !
+SetTcpEntry:!**auto generated**!public! !
+UnenableRouter:lpdwEnableCount:!**auto generated**!public! !
+!
 
 "End of package definition"!
 

@@ -37,15 +37,19 @@ setScope: anStLexicalScope binding: aVariableBinding
 	scope := anStLexicalScope.
 	binding := aVariableBinding.
 	self initialize! !
-!Kernel.StStaticVariable categoriesFor: #binding!public! !
-!Kernel.StStaticVariable categoriesFor: #isConstant!public!testing! !
-!Kernel.StStaticVariable categoriesFor: #isStaticVariable!constants!public! !
-!Kernel.StStaticVariable categoriesFor: #name!accessing!public! !
-!Kernel.StStaticVariable categoriesFor: #setScope:binding:!initializing!private! !
+!Kernel.StStaticVariable categoriesForMethods!
+binding!public! !
+isConstant!public!testing! !
+isStaticVariable!constants!public! !
+name!accessing!public! !
+setScope:binding:!initializing!private! !
+!
 
 !Kernel.StStaticVariable class methodsFor!
 
 scope: anStLexicalScope binding: aVariableBinding
 	^self new setScope: anStLexicalScope binding: aVariableBinding! !
-!Kernel.StStaticVariable class categoriesFor: #scope:binding:!public! !
+!Kernel.StStaticVariable class categoriesForMethods!
+scope:binding:!public! !
+!
 

@@ -196,7 +196,9 @@ axWinInit
 
 	<stdcall: bool AtlAxWinInit>
 	^self invalidCall: _failureCode! !
-!Kernel.VMLibrary categoriesFor: #axWinInit!initializing!public! !
+!Kernel.VMLibrary categoriesForMethods!
+axWinInit!initializing!public! !
+!
 
 "End of package definition"!
 

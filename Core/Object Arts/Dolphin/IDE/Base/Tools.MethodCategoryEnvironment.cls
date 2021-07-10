@@ -89,16 +89,18 @@ storeOn: aStream
 		space.
 	(categories asArray collect: [:each | each name]) storeOn: aStream.
 	aStream nextPut: $)! !
-!Tools.MethodCategoryEnvironment categoriesFor: #categories:!accessing!private! !
-!Tools.MethodCategoryEnvironment categoriesFor: #categoryNames:!accessing!private! !
-!Tools.MethodCategoryEnvironment categoriesFor: #classesAndSelectorsDo:!enumerating!public! !
-!Tools.MethodCategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Tools.MethodCategoryEnvironment categoriesFor: #includesClass:!public!testing! !
-!Tools.MethodCategoryEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Tools.MethodCategoryEnvironment categoriesFor: #isEmpty!public!testing! !
-!Tools.MethodCategoryEnvironment categoriesFor: #postCopy!copying!public! !
-!Tools.MethodCategoryEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
-!Tools.MethodCategoryEnvironment categoriesFor: #storeOn:!printing!public! !
+!Tools.MethodCategoryEnvironment categoriesForMethods!
+categories:!accessing!private! !
+categoryNames:!accessing!private! !
+classesAndSelectorsDo:!enumerating!public! !
+defaultLabel!constants!private! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+isEmpty!public!testing! !
+postCopy!copying!public! !
+selectorsForClass:do:!enumerating!public! !
+storeOn:!printing!public! !
+!
 
 !Tools.MethodCategoryEnvironment class methodsFor!
 
@@ -117,6 +119,8 @@ referencesTo: aLiteral in: anEnvironment
 		label: label;
 		searchStrings: {literalName};
 		yourself! !
-!Tools.MethodCategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
-!Tools.MethodCategoryEnvironment class categoriesFor: #referencesTo:in:!instance creation!public! !
+!Tools.MethodCategoryEnvironment class categoriesForMethods!
+onEnvironment:categories:!instance creation!public! !
+referencesTo:in:!instance creation!public! !
+!
 

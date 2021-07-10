@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.CompiledExpressionTest'
 	instanceVariableNames: ''
@@ -52,7 +52,9 @@ testGetDebugInfoWithCustomEnvironment
 	self deny: debugInfo method identicalTo: expr.
 	self assert: debugInfo method environment identicalTo: self class environment.
 	self assert: (debugInfo method value: Object name) identicalTo: self class! !
-!Kernel.Tests.CompiledExpressionTest categoriesFor: #testAsDebugMethodNoCustomEnvironment!public! !
-!Kernel.Tests.CompiledExpressionTest categoriesFor: #testAsDebugMethodWithCustomEnvironment!public! !
-!Kernel.Tests.CompiledExpressionTest categoriesFor: #testGetDebugInfoWithCustomEnvironment!public! !
+!Kernel.Tests.CompiledExpressionTest categoriesForMethods!
+testAsDebugMethodNoCustomEnvironment!public! !
+testAsDebugMethodWithCustomEnvironment!public! !
+testGetDebugInfoWithCustomEnvironment!public! !
+!
 

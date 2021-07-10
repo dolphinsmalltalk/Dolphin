@@ -24,6 +24,8 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^'method'! !
-!Tools.CompiledMethodSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!Tools.CompiledMethodSearchPolicy categoriesFor: #name!accessing!public! !
+!Tools.CompiledMethodSearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+name!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.AbstractTextEditTest subclass: #'UI.Tests.TextEditTest'
 	instanceVariableNames: ''
@@ -44,8 +44,10 @@ testCalculateExtent
 
 text
 	^'The quick brown fox jumped over the lazy dog'! !
-!UI.Tests.TextEditTest categoriesFor: #classToTest!constants!private! !
-!UI.Tests.TextEditTest categoriesFor: #margins!constants!private! !
-!UI.Tests.TextEditTest categoriesFor: #testCalculateExtent!public!unit tests! !
-!UI.Tests.TextEditTest categoriesFor: #text!constants!private! !
+!UI.Tests.TextEditTest categoriesForMethods!
+classToTest!constants!private! !
+margins!constants!private! !
+testCalculateExtent!public!unit tests! !
+text!constants!private! !
+!
 

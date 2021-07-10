@@ -104,18 +104,20 @@ transform
 	self copyImportsTo: clone.
 	self copyMethodsFrom: class to: clone.
 	self copyMethodsFrom: class metaclass to: clone metaclass! !
-!Tools.CopyClassRefactoring categoriesFor: #className:newName:superclass:!initializing!private! !
-!Tools.CopyClassRefactoring categoriesFor: #copyClass!private!transforming! !
-!Tools.CopyClassRefactoring categoriesFor: #copyClassVarsTo:!private!transforming! !
-!Tools.CopyClassRefactoring categoriesFor: #copyImportsTo:!private!transforming! !
-!Tools.CopyClassRefactoring categoriesFor: #copyInstVarsTo:!private!transforming! !
-!Tools.CopyClassRefactoring categoriesFor: #copyMethodsFrom:to:!private!transforming! !
-!Tools.CopyClassRefactoring categoriesFor: #displayOn:!displaying!public! !
-!Tools.CopyClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Tools.CopyClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!Tools.CopyClassRefactoring categoriesFor: #superclass!accessing!private! !
-!Tools.CopyClassRefactoring categoriesFor: #superclass:!accessing!private! !
-!Tools.CopyClassRefactoring categoriesFor: #transform!public!transforming! !
+!Tools.CopyClassRefactoring categoriesForMethods!
+className:newName:superclass:!initializing!private! !
+copyClass!private!transforming! !
+copyClassVarsTo:!private!transforming! !
+copyImportsTo:!private!transforming! !
+copyInstVarsTo:!private!transforming! !
+copyMethodsFrom:to:!private!transforming! !
+displayOn:!displaying!public! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+superclass!accessing!private! !
+superclass:!accessing!private! !
+transform!public!transforming! !
+!
 
 !Tools.CopyClassRefactoring class methodsFor!
 
@@ -126,6 +128,8 @@ model: aRBNamespace clone: aClass as: aNewName superclass: superClass
 	^self new
 		model: aRBNamespace;
 		className: aClass fullName newName: aNewName superclass: superClass! !
-!Tools.CopyClassRefactoring class categoriesFor: #clone:as:superclass:!instance creation!public! !
-!Tools.CopyClassRefactoring class categoriesFor: #model:clone:as:superclass:!instance creation!public! !
+!Tools.CopyClassRefactoring class categoriesForMethods!
+clone:as:superclass:!instance creation!public! !
+model:clone:as:superclass:!instance creation!public! !
+!
 

@@ -137,19 +137,21 @@ validateUserInterface
 	when the UI has been flagged as being invalid"
 
 	self referee presenter validateUserInterface! !
-!UI.ReferenceView categoriesFor: #clearReferee!event handling!private! !
-!UI.ReferenceView categoriesFor: #configureReferee!helpers!private! !
-!UI.ReferenceView categoriesFor: #createDelegate!event handling!private! !
-!UI.ReferenceView categoriesFor: #filerProxy!binary filing!private! !
-!UI.ReferenceView categoriesFor: #loadReferee!helpers!private! !
-!UI.ReferenceView categoriesFor: #nonReferenceAncestor!accessing!public! !
-!UI.ReferenceView categoriesFor: #presenterConnectionPoint!public! !
-!UI.ReferenceView categoriesFor: #printOn:!development!printing!public! !
-!UI.ReferenceView categoriesFor: #referee!accessing!public! !
-!UI.ReferenceView categoriesFor: #resource!operations!public! !
-!UI.ReferenceView categoriesFor: #resourceIdentifier!accessing!private! !
-!UI.ReferenceView categoriesFor: #resourceIdentifier:!accessing!private! !
-!UI.ReferenceView categoriesFor: #validateUserInterface!operations!public! !
+!UI.ReferenceView categoriesForMethods!
+clearReferee!event handling!private! !
+configureReferee!helpers!private! !
+createDelegate!event handling!private! !
+filerProxy!binary filing!private! !
+loadReferee!helpers!private! !
+nonReferenceAncestor!accessing!public! !
+presenterConnectionPoint!public! !
+printOn:!development!printing!public! !
+referee!accessing!public! !
+resource!operations!public! !
+resourceIdentifier!accessing!private! !
+resourceIdentifier:!accessing!private! !
+validateUserInterface!operations!public! !
+!
 
 !UI.ReferenceView class methodsFor!
 
@@ -191,9 +193,11 @@ stbConvertFromVersion9: anArray
 	rid := array at: 13.
 	rid owningClass == #{Toolbar} valueOrNil ifTrue: [array at: 6 put: Color face3d].
 	^array! !
-!UI.ReferenceView class categoriesFor: #icon!constants!public! !
-!UI.ReferenceView class categoriesFor: #new!development!instance creation!public! !
-!UI.ReferenceView class categoriesFor: #resourceIdentifier:!instance creation!public! !
-!UI.ReferenceView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!UI.ReferenceView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!UI.ReferenceView class categoriesForMethods!
+icon!constants!public! !
+new!development!instance creation!public! !
+resourceIdentifier:!instance creation!public! !
+stbConvertFromVersion12:!binary filing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+!
 

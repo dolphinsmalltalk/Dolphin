@@ -12,5 +12,7 @@ ConformantArrayField comment: 'ConformantArrayField is now deprecated, and shoul
 
 type: aClass length: aSymbol
 	^ArrayField type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ConformantArrayField class categoriesFor: #type:length:!instance creation!public! !
+!ConformantArrayField class categoriesForMethods!
+type:length:!instance creation!public! !
+!
 

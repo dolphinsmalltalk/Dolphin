@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.BrushTest'
 	instanceVariableNames: ''
@@ -93,8 +93,10 @@ testStbConversion2
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
 	self assert: brush logBrush lbStyle equals: BS_HATCHED! !
-!Graphics.Tests.BrushTest categoriesFor: #testBitmapBrush!public!unit tests! !
-!Graphics.Tests.BrushTest categoriesFor: #testPrintString!public!unit tests! !
-!Graphics.Tests.BrushTest categoriesFor: #testStbConversion!public!unit tests! !
-!Graphics.Tests.BrushTest categoriesFor: #testStbConversion2!public!unit tests! !
+!Graphics.Tests.BrushTest categoriesForMethods!
+testBitmapBrush!public!unit tests! !
+testPrintString!public!unit tests! !
+testStbConversion!public!unit tests! !
+testStbConversion2!public!unit tests! !
+!
 

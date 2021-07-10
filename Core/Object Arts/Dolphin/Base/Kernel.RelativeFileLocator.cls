@@ -18,5 +18,7 @@ relativePathTo: aString
 	specified <readableString> path from the receiver's base path."
 
 	^self relativePathIfSubPath: aString! !
-!Kernel.RelativeFileLocator categoriesFor: #relativePathTo:!accessing!public! !
+!Kernel.RelativeFileLocator categoriesForMethods!
+relativePathTo:!accessing!public! !
+!
 

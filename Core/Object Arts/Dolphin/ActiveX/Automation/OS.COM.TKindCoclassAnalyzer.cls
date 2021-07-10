@@ -129,21 +129,23 @@ sourceInterfaces
 	^((1 to: self attributes cImplTypes) 
 		select: [:i | (piTI getImplTypeFlags: i - 1) allMask: IMPLTYPEFLAG_FSOURCE]) 
 			collect: [:i | self getImplTypeInfoAt: i]! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #classDesc!accessing!constants!private! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #clsid!accessing!public! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #defaultSourceInterface!enquiries!public! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #interfaceFlags!enumerating!public! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #interfaces!enumerating!public! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #isAggregatable!public!testing! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #isAppObject!public!testing! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #isControl!public!testing! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #isInstantiable!public!testing! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #isLicensed!public!testing! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #nonSourceInterfaces!enumerating!public! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #notInstantiable!public!testing! !
-!OS.COM.TKindCoclassAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
+!OS.COM.TKindCoclassAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+classDesc!accessing!constants!private! !
+clsid!accessing!public! !
+defaultInterface!enquiries!public! !
+defaultSourceInterface!enquiries!public! !
+interfaceFlags!enumerating!public! !
+interfaces!enumerating!public! !
+isAggregatable!public!testing! !
+isAppObject!public!testing! !
+isControl!public!testing! !
+isInstantiable!public!testing! !
+isLicensed!public!testing! !
+nonSourceInterfaces!enumerating!public! !
+notInstantiable!public!testing! !
+sourceInterfaces!enumerating!public! !
+!
 
 !OS.COM.TKindCoclassAnalyzer class methodsFor!
 
@@ -151,5 +153,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_COCLASS! !
-!OS.COM.TKindCoclassAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindCoclassAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

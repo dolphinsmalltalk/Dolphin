@@ -36,8 +36,10 @@ Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
-!WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesFor: #Type!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesFor: #Type:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE categoriesForMethods!
+Type!**compiled accessors**!public! !
+Type:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE class methodsFor!
 
@@ -65,7 +67,9 @@ fromAddress: anAddress
 
 getFieldNames
 	^#(#Type)! !
-!WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesFor: #fromAddress:!instance creation!public! !
-!WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+fromAddress:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

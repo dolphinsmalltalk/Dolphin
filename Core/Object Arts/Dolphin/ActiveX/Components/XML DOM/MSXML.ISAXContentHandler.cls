@@ -198,17 +198,19 @@ StartPrefixMapping: pwchPrefix cchPrefix: cchPrefix pwchUri: pwchUri cchUri: cch
 
 	<virtual stdcall: hresult 7 word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXContentHandler categoriesFor: #Characters:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #EndElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #EndPrefixMapping:cchPrefix:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #IgnorableWhitespace:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #ProcessingInstruction:cchTarget:pwchData:cchData:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #PutDocumentLocator:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #SkippedEntity:cchName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #StartDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #StartElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:pAttributes:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
-!MSXML.ISAXContentHandler categoriesFor: #StartPrefixMapping:cchPrefix:pwchUri:cchUri:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!MSXML.ISAXContentHandler categoriesForMethods!
+Characters:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+EndDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+EndElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+EndPrefixMapping:cchPrefix:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+IgnorableWhitespace:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+ProcessingInstruction:cchTarget:pwchData:cchData:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+PutDocumentLocator:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+SkippedEntity:cchName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+StartDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+StartElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:pAttributes:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+StartPrefixMapping:cchPrefix:pwchUri:cchUri:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
+!
 
 !MSXML.ISAXContentHandler class methodsFor!
 
@@ -238,5 +240,7 @@ defineFunctions
 		defineFunction: #SkippedEntity:cchName:
 			argumentTypes: 'word* sdword'
 ! !
-!MSXML.ISAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXContentHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

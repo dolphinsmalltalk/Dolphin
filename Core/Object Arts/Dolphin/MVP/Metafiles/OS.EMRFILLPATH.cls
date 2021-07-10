@@ -39,8 +39,10 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRFILLPATH categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRFILLPATH categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRFILLPATH categoriesForMethods!
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMRFILLPATH class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_FILLPATH. EMR_STROKEANDFILLPATH. EMR_STROKEPATH}! !
-!OS.EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRFILLPATH class categoriesFor: #iTypes!constants!public! !
+!OS.EMRFILLPATH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

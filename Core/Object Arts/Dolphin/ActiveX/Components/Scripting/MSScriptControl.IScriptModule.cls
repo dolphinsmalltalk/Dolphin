@@ -160,23 +160,25 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self name! !
-!MSScriptControl.IScriptModule categoriesFor: #addCode:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptModule categoriesFor: #AddCode:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!MSScriptControl.IScriptModule categoriesFor: #codeObject!**auto generated**!properties!public! !
-!MSScriptControl.IScriptModule categoriesFor: #eval:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptModule categoriesFor: #Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!MSScriptControl.IScriptModule categoriesFor: #executeStatement:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptModule categoriesFor: #ExecuteStatement:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!MSScriptControl.IScriptModule categoriesFor: #get_CodeObject:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!MSScriptControl.IScriptModule categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!MSScriptControl.IScriptModule categoriesFor: #get_Procedures:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!MSScriptControl.IScriptModule categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSScriptControl.IScriptModule categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSScriptControl.IScriptModule categoriesFor: #name!**auto generated**!properties!public! !
-!MSScriptControl.IScriptModule categoriesFor: #procedures!**auto generated**!properties!public! !
-!MSScriptControl.IScriptModule categoriesFor: #run:parameters:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptModule categoriesFor: #Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!MSScriptControl.IScriptModule categoriesFor: #value!**auto generated**!properties!public! !
+!MSScriptControl.IScriptModule categoriesForMethods!
+addCode:!**auto generated**!methods!public! !
+AddCode:!**auto generated**!COM Interfaces-IScriptModule!private! !
+codeObject!**auto generated**!properties!public! !
+eval:!**auto generated**!methods!public! !
+Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
+executeStatement:!**auto generated**!methods!public! !
+ExecuteStatement:!**auto generated**!COM Interfaces-IScriptModule!private! !
+get_CodeObject:!**auto generated**!COM Interfaces-IScriptModule!private! !
+get_Name:!**auto generated**!COM Interfaces-IScriptModule!private! !
+get_Procedures:!**auto generated**!COM Interfaces-IScriptModule!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+name!**auto generated**!properties!public! !
+procedures!**auto generated**!properties!public! !
+run:parameters:!**auto generated**!methods!public! !
+Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
+value!**auto generated**!properties!public! !
+!
 
 !MSScriptControl.IScriptModule class methodsFor!
 
@@ -212,7 +214,9 @@ initializeTypeLib
 		IScriptModule initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!MSScriptControl.IScriptModule class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSScriptControl.IScriptModule class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSScriptControl.IScriptModule class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptModule class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreePresenterTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ UI.Tests.TreePresenterTest comment: ''!
 
 classToTest
 	^TreePresenter! !
-!UI.Tests.TreePresenterTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.TreePresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+!
 

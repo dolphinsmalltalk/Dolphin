@@ -63,10 +63,12 @@ verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: pu
 
 	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid dword*>
 	^self invalidCall: _failureCode! !
-!OS.VersionLibrary categoriesFor: #getFileVersionInfo:!helpers!private! !
-!OS.VersionLibrary categoriesFor: #getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
-!OS.VersionLibrary categoriesFor: #getFileVersionInfoSize:lpdwHandle:!private!win32 functions-file installation! !
-!OS.VersionLibrary categoriesFor: #verQueryValue:lpSubBlock:lplpBuffer:puLen:!private!win32 functions-file installation! !
+!OS.VersionLibrary categoriesForMethods!
+getFileVersionInfo:!helpers!private! !
+getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
+getFileVersionInfoSize:lpdwHandle:!private!win32 functions-file installation! !
+verQueryValue:lpSubBlock:lplpBuffer:puLen:!private!win32 functions-file installation! !
+!
 
 !OS.VersionLibrary class methodsFor!
 
@@ -75,5 +77,7 @@ fileName
 
 	^'Version'
 ! !
-!OS.VersionLibrary class categoriesFor: #fileName!constants!public! !
+!OS.VersionLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

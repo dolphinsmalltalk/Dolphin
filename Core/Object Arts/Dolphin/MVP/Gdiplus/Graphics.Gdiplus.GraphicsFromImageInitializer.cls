@@ -29,12 +29,16 @@ createHandle
 
 image: aGdiplusImage
 	image := aGdiplusImage! !
-!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesFor: #image:!initializing!private! !
+!Graphics.Gdiplus.GraphicsFromImageInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+image:!initializing!private! !
+!
 
 !Graphics.Gdiplus.GraphicsFromImageInitializer class methodsFor!
 
 image: aGdiplusImage
 	^self new image: aGdiplusImage! !
-!Graphics.Gdiplus.GraphicsFromImageInitializer class categoriesFor: #image:!instance creation!public! !
+!Graphics.Gdiplus.GraphicsFromImageInitializer class categoriesForMethods!
+image:!instance creation!public! !
+!
 

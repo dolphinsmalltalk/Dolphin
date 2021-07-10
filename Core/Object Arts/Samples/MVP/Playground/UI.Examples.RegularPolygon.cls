@@ -197,32 +197,34 @@ sides: anInteger
 	sides := anInteger.
 	self redraw.
 ! !
-!UI.Examples.RegularPolygon categoriesFor: #chooseColor!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #color!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #color:!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #defaultColor!constants!public! !
-!UI.Examples.RegularPolygon categoriesFor: #defaultPosition!constants!public! !
-!UI.Examples.RegularPolygon categoriesFor: #defaultRadius!constants!public! !
-!UI.Examples.RegularPolygon categoriesFor: #defaultRotation!constants!public! !
-!UI.Examples.RegularPolygon categoriesFor: #defaultSides!constants!public! !
-!UI.Examples.RegularPolygon categoriesFor: #drawOn:!drawing!private! !
-!UI.Examples.RegularPolygon categoriesFor: #growBy:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #initialize!initializing!private! !
-!UI.Examples.RegularPolygon categoriesFor: #moveBy:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #moveDown:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #moveLeft:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #moveRight:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #moveUp:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #position!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #position:!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #radius!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #radius:!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #rotateBy:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #rotation!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #rotation:!accessing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #shrinkBy:!operations!public! !
-!UI.Examples.RegularPolygon categoriesFor: #sides!accessing!initializing!public! !
-!UI.Examples.RegularPolygon categoriesFor: #sides:!accessing!public! !
+!UI.Examples.RegularPolygon categoriesForMethods!
+chooseColor!operations!public! !
+color!accessing!public! !
+color:!accessing!public! !
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+defaultRadius!constants!public! !
+defaultRotation!constants!public! !
+defaultSides!constants!public! !
+drawOn:!drawing!private! !
+growBy:!operations!public! !
+initialize!initializing!private! !
+moveBy:!operations!public! !
+moveDown:!operations!public! !
+moveLeft:!operations!public! !
+moveRight:!operations!public! !
+moveUp:!operations!public! !
+position!accessing!public! !
+position:!accessing!public! !
+radius!accessing!public! !
+radius:!accessing!public! !
+rotateBy:!operations!public! !
+rotation!accessing!public! !
+rotation:!accessing!public! !
+shrinkBy:!operations!public! !
+sides!accessing!initializing!public! !
+sides:!accessing!public! !
+!
 
 !UI.Examples.RegularPolygon class methodsFor!
 
@@ -230,5 +232,7 @@ new
 	"Create an instance of the receiver with a default number of sides"
 	
 	^super new initialize! !
-!UI.Examples.RegularPolygon class categoriesFor: #new!instance creation!public! !
+!UI.Examples.RegularPolygon class categoriesForMethods!
+new!instance creation!public! !
+!
 

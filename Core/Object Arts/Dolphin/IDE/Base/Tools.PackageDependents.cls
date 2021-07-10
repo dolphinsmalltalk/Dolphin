@@ -21,7 +21,9 @@ dependentPackage
 
 prerequisitePackage
 	^self selectedPair ifNotNil: [:association | association value key]! !
-!Tools.PackageDependents categoriesFor: #childrenFor:!helpers!private! !
-!Tools.PackageDependents categoriesFor: #dependentPackage!accessing!private! !
-!Tools.PackageDependents categoriesFor: #prerequisitePackage!accessing!private! !
+!Tools.PackageDependents categoriesForMethods!
+childrenFor:!helpers!private! !
+dependentPackage!accessing!private! !
+prerequisitePackage!accessing!private! !
+!
 

@@ -209,24 +209,26 @@ version
 	answer := BSTR new.
 	self get_version: answer.
 	^answer asObject! !
-!MSXML.ISchema categoriesFor: #attributeGroups!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #attributes!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #elements!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #get_attributeGroups:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_elements:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_modelGroups:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_notations:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_schemaLocations:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_targetNamespace:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_types:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #get_version:!**auto generated**!COM Interfaces-ISchema!private! !
-!MSXML.ISchema categoriesFor: #modelGroups!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #notations!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #schemaLocations!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #targetNamespace!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #types!**auto generated**!properties!public! !
-!MSXML.ISchema categoriesFor: #version!**auto generated**!properties!public! !
+!MSXML.ISchema categoriesForMethods!
+attributeGroups!**auto generated**!properties!public! !
+attributes!**auto generated**!properties!public! !
+elements!**auto generated**!properties!public! !
+get_attributeGroups:!**auto generated**!COM Interfaces-ISchema!private! !
+get_attributes:!**auto generated**!COM Interfaces-ISchema!private! !
+get_elements:!**auto generated**!COM Interfaces-ISchema!private! !
+get_modelGroups:!**auto generated**!COM Interfaces-ISchema!private! !
+get_notations:!**auto generated**!COM Interfaces-ISchema!private! !
+get_schemaLocations:!**auto generated**!COM Interfaces-ISchema!private! !
+get_targetNamespace:!**auto generated**!COM Interfaces-ISchema!private! !
+get_types:!**auto generated**!COM Interfaces-ISchema!private! !
+get_version:!**auto generated**!COM Interfaces-ISchema!private! !
+modelGroups!**auto generated**!properties!public! !
+notations!**auto generated**!properties!public! !
+schemaLocations!**auto generated**!properties!public! !
+targetNamespace!**auto generated**!properties!public! !
+types!**auto generated**!properties!public! !
+version!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchema class methodsFor!
 
@@ -254,5 +256,7 @@ defineFunctions
 		defineFunction: #get_schemaLocations:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
-!MSXML.ISchema class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchema class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

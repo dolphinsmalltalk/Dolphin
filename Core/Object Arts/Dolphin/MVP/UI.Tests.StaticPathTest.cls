@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.StaticPathTest'
 	instanceVariableNames: ''
@@ -46,7 +46,9 @@ testLayout
 	presenter ensureLayoutValid.
 	displayedText := presenter getWindowText.
 	self assert: (displayedText indexOfSubCollection: '...') identicalTo: 0! !
-!UI.Tests.StaticPathTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.StaticPathTest categoriesFor: #testCalculateExtent!public!unit tests! !
-!UI.Tests.StaticPathTest categoriesFor: #testLayout!public!unit tests! !
+!UI.Tests.StaticPathTest categoriesForMethods!
+classToTest!helpers!private! !
+testCalculateExtent!public!unit tests! !
+testLayout!public!unit tests! !
+!
 

@@ -107,20 +107,22 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!OS.TRIVERTEX categoriesFor: #alpha!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #alpha:!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #blue!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #blue:!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #color:!accessing!public! !
-!OS.TRIVERTEX categoriesFor: #green!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #green:!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #position:!accessing!public! !
-!OS.TRIVERTEX categoriesFor: #red!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #red:!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #x!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #x:!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #y!**compiled accessors**!public! !
-!OS.TRIVERTEX categoriesFor: #y:!**compiled accessors**!public! !
+!OS.TRIVERTEX categoriesForMethods!
+alpha!**compiled accessors**!public! !
+alpha:!**compiled accessors**!public! !
+blue!**compiled accessors**!public! !
+blue:!**compiled accessors**!public! !
+color:!accessing!public! !
+green!**compiled accessors**!public! !
+green:!**compiled accessors**!public! !
+position:!accessing!public! !
+red!**compiled accessors**!public! !
+red:!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !OS.TRIVERTEX class methodsFor!
 
@@ -150,6 +152,8 @@ defineFields
 
 getFieldNames
 	^#(#x #y #red #green #blue #alpha)! !
-!OS.TRIVERTEX class categoriesFor: #defineFields!public!template definition! !
-!OS.TRIVERTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TRIVERTEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #ExceptionSetANSITest
 	instanceVariableNames: ''
@@ -29,8 +29,10 @@ testXconcatenateOp
 testXhandlesX
 	" <exceptionSelector>#handles: "
 	#'Exception'.! !
-!ExceptionSetANSITest categoriesFor: #canonicalObject!public! !
-!ExceptionSetANSITest categoriesFor: #protocol!public! !
-!ExceptionSetANSITest categoriesFor: #testXconcatenateOp!public! !
-!ExceptionSetANSITest categoriesFor: #testXhandlesX!public! !
+!ExceptionSetANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXconcatenateOp!public! !
+testXhandlesX!public! !
+!
 

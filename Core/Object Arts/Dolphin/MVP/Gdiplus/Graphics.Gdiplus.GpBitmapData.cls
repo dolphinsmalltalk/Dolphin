@@ -84,16 +84,18 @@ Width: anInteger
 	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Width put: anInteger! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Height!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Height:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #PixelFormat!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #PixelFormat:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Scan0!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Scan0:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Stride!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Stride:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Width!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpBitmapData categoriesFor: #Width:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpBitmapData categoriesForMethods!
+Height!**compiled accessors**!public! !
+Height:!**compiled accessors**!public! !
+PixelFormat!**compiled accessors**!public! !
+PixelFormat:!**compiled accessors**!public! !
+Scan0!**compiled accessors**!public! !
+Scan0:!**compiled accessors**!public! !
+Stride!**compiled accessors**!public! !
+Stride:!**compiled accessors**!public! !
+Width!**compiled accessors**!public! !
+Width:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpBitmapData class methodsFor!
 
@@ -135,6 +137,8 @@ defineFields
 
 getFieldNames
 	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
-!Graphics.Gdiplus.GpBitmapData class categoriesFor: #defineFields!public!template definition! !
-!Graphics.Gdiplus.GpBitmapData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpBitmapData class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.ClassBrowserAbstractTest'
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
@@ -335,19 +335,21 @@ testSwitchFilterPane
 	self assert: (browser instVarNamed: 'methodBrowserPresenter') source equals: testMethod getSource!
 
 visibilityTestPlaceHolder! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #assertIsOnlyMethodVisible:!helpers!public! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #browser!accessing!private! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #browserClass!public!Running! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #deleteTestMethods:!helpers!private! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #inheritedMethodAddRemoveTests!helpers!private! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #setUp!private!Running! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #tearDown!private!Running! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testAddRemoveOfInheritedMethods!public!unit tests! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testEvaluationContext!public!unit tests! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testIsMethodVisible!public!unit tests! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleClassSide!public!unit tests! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleInObject!public!unit tests! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #testSwitchFilterPane!public!unit tests! !
-!Tools.Tests.ClassBrowserAbstractTest categoriesFor: #visibilityTestPlaceHolder!helpers!private! !
+!Tools.Tests.ClassBrowserAbstractTest categoriesForMethods!
+assertIsOnlyMethodVisible:!helpers!public! !
+browser!accessing!private! !
+browserClass!public!Running! !
+deleteTestMethods:!helpers!private! !
+inheritedMethodAddRemoveTests!helpers!private! !
+setUp!private!Running! !
+tearDown!private!Running! !
+testAddRemoveOfInheritedMethods!public!unit tests! !
+testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
+testEvaluationContext!public!unit tests! !
+testIsMethodVisible!public!unit tests! !
+testIsMethodVisibleClassSide!public!unit tests! !
+testIsMethodVisibleInObject!public!unit tests! !
+testSwitchFilterPane!public!unit tests! !
+visibilityTestPlaceHolder!helpers!private! !
+!
 

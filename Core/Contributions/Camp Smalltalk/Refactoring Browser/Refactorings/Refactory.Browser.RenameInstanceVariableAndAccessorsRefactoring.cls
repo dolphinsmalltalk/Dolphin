@@ -36,7 +36,9 @@ transform
 	super transform.
 	self performComponentRefactoring: accessorsRefactoring.
 			! !
-!Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring categoriesFor: #initializeAccessorsRefactoring!initialize-release!public! !
-!Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
-!Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring categoriesFor: #transform!public!transform! !
+!Refactory.Browser.RenameInstanceVariableAndAccessorsRefactoring categoriesForMethods!
+initializeAccessorsRefactoring!initialize-release!public! !
+rename:to:in:!initialize/release!public! !
+transform!public!transform! !
+!
 

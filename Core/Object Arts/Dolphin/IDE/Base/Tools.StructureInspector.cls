@@ -42,8 +42,10 @@ setField: anInteger to: anObject
 				setField: (self variableNamesList at: anInteger + self headerSize)
 				value: anObject]
 		ifFalse: [super setField: anInteger to: anObject]! !
-!Tools.StructureInspector categoriesFor: #fields!accessing!private! !
-!Tools.StructureInspector categoriesFor: #getField:!accessing!private! !
-!Tools.StructureInspector categoriesFor: #getFieldList!accessing!private! !
-!Tools.StructureInspector categoriesFor: #setField:to:!accessing!private! !
+!Tools.StructureInspector categoriesForMethods!
+fields!accessing!private! !
+getField:!accessing!private! !
+getFieldList!accessing!private! !
+setField:to:!accessing!private! !
+!
 

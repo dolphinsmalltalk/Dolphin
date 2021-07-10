@@ -16,5 +16,7 @@ drawItem: aCanvas bounding: boundingRectangle
 	"Private - A request to draw the receiver. As we are just a placeholder, we do nothing."
 
 	! !
-!UI.StatusBarNullItem categoriesFor: #drawItem:bounding:!drawing!private! !
+!UI.StatusBarNullItem categoriesForMethods!
+drawItem:bounding:!drawing!private! !
+!
 

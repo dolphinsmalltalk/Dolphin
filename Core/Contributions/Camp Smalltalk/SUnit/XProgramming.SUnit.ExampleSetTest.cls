@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ExampleSetTest'
 	instanceVariableNames: 'full empty'
@@ -41,11 +41,13 @@ testRemove
 	full remove: 5.
 	self assert: (full includes: #abc).
 	self deny: (full includes: 5)! !
-!XProgramming.SUnit.ExampleSetTest categoriesFor: #setUp!public!Running! !
-!XProgramming.SUnit.ExampleSetTest categoriesFor: #testAdd!public!Testing! !
-!XProgramming.SUnit.ExampleSetTest categoriesFor: #testGrow!public!Testing! !
-!XProgramming.SUnit.ExampleSetTest categoriesFor: #testIllegal!public!Testing! !
-!XProgramming.SUnit.ExampleSetTest categoriesFor: #testIncludes!public!Testing! !
-!XProgramming.SUnit.ExampleSetTest categoriesFor: #testOccurrences!public!Testing! !
-!XProgramming.SUnit.ExampleSetTest categoriesFor: #testRemove!public!Testing! !
+!XProgramming.SUnit.ExampleSetTest categoriesForMethods!
+setUp!public!Running! !
+testAdd!public!Testing! !
+testGrow!public!Testing! !
+testIllegal!public!Testing! !
+testIncludes!public!Testing! !
+testOccurrences!public!Testing! !
+testRemove!public!Testing! !
+!
 

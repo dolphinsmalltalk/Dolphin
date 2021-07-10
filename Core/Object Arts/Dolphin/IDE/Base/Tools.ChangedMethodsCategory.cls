@@ -27,8 +27,10 @@ includesMethod: aCompiledMethod
 	The 'All' methods category includes all methods!!"
 
 	^aCompiledMethod isChanged! !
-!Tools.ChangedMethodsCategory categoriesFor: #behaviorsDo:!enumerating!private! !
-!Tools.ChangedMethodsCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.ChangedMethodsCategory categoriesForMethods!
+behaviorsDo:!enumerating!private! !
+includesMethod:!public!testing! !
+!
 
 !Tools.ChangedMethodsCategory class methodsFor!
 
@@ -45,6 +47,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self removePseud: self pseudPrefix , 'changed'! !
-!Tools.ChangedMethodsCategory class categoriesFor: #initialize!initializing!private! !
-!Tools.ChangedMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.ChangedMethodsCategory class categoriesForMethods!
+initialize!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

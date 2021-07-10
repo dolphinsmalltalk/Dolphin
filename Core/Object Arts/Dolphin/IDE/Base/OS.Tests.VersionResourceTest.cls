@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.VersionResourceTest'
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
@@ -94,13 +94,15 @@ testVersionStrings
 	self assertResource: res atVersion: newVersion.
 	res bumpProductVersion.
 	self assertResource: res atVersion: '101.202.304.404'! !
-!OS.Tests.VersionResourceTest categoriesFor: #assertResource:atVersion:!public!unit tests! !
-!OS.Tests.VersionResourceTest categoriesFor: #assertVersionResource:equalTo:!private!unit tests! !
-!OS.Tests.VersionResourceTest categoriesFor: #modifyVersionResource:!public!unit tests! !
-!OS.Tests.VersionResourceTest categoriesFor: #setUp!private!Running! !
-!OS.Tests.VersionResourceTest categoriesFor: #sourcePath!constants!private! !
-!OS.Tests.VersionResourceTest categoriesFor: #tearDown!private!Running! !
-!OS.Tests.VersionResourceTest categoriesFor: #testRoundTripUnpackPack!public!unit tests! !
-!OS.Tests.VersionResourceTest categoriesFor: #testRoundTripUpdate!public!unit tests! !
-!OS.Tests.VersionResourceTest categoriesFor: #testVersionStrings!public!unit tests! !
+!OS.Tests.VersionResourceTest categoriesForMethods!
+assertResource:atVersion:!public!unit tests! !
+assertVersionResource:equalTo:!private!unit tests! !
+modifyVersionResource:!public!unit tests! !
+setUp!private!Running! !
+sourcePath!constants!private! !
+tearDown!private!Running! !
+testRoundTripUnpackPack!public!unit tests! !
+testRoundTripUpdate!public!unit tests! !
+testVersionStrings!public!unit tests! !
+!
 

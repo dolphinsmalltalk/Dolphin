@@ -121,9 +121,11 @@ compile: aString in: aClass environment: aNamespace categories: aSequenceableCol
 
 new
 	^AddPackagedMethodChange basicNew initialize! !
-!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:categories:!instance creation!public! !
-!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:environment:categories:package:!instance creation!public! !
-!Refactory.Browser.AddMethodChange class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.AddMethodChange class categoriesForMethods!
+compile:in:categories:!instance creation!public! !
+compile:in:environment:categories:package:!instance creation!public! !
+new!instance creation!public! !
+!
 
 !Refactory.Browser.CompositeRefactoryChange methodsFor!
 
@@ -138,10 +140,12 @@ removeClassConstant: anAssociation from: aClass
 
 removeImport: oldBindingReference from: aRBClass
 	^self addChange: (RemoveNamespaceImportChange remove: oldBindingReference from: aRBClass)! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addClassConstant:to:!private! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addImport:to:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassConstant:from:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeImport:from:!public!refactory/changes! !
+!Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
+addClassConstant:to:!private! !
+addImport:to:!public!refactory/changes! !
+removeClassConstant:from:!public!refactory/changes! !
+removeImport:from:!public!refactory/changes! !
+!
 
 "End of package definition"!
 

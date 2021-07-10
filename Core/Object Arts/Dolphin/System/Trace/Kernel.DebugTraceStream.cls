@@ -73,16 +73,18 @@ nextPutAll: insertString
 	"Append the <readableString>, insertString, to the text of the receiver."
 
 	^buffer nextPutAll: insertString! !
-!Kernel.DebugTraceStream categoriesFor: #atEnd!public!testing! !
-!Kernel.DebugTraceStream categoriesFor: #close!operations!public! !
-!Kernel.DebugTraceStream categoriesFor: #cr!adding!public! !
-!Kernel.DebugTraceStream categoriesFor: #flush!accessing!public! !
-!Kernel.DebugTraceStream categoriesFor: #initialize!initializing!private! !
-!Kernel.DebugTraceStream categoriesFor: #isEmpty!public! !
-!Kernel.DebugTraceStream categoriesFor: #isWriteable!public!testing! !
-!Kernel.DebugTraceStream categoriesFor: #locale!accessing!public! !
-!Kernel.DebugTraceStream categoriesFor: #nextPut:!adding!public! !
-!Kernel.DebugTraceStream categoriesFor: #nextPutAll:!adding!public! !
+!Kernel.DebugTraceStream categoriesForMethods!
+atEnd!public!testing! !
+close!operations!public! !
+cr!adding!public! !
+flush!accessing!public! !
+initialize!initializing!private! !
+isEmpty!public! !
+isWriteable!public!testing! !
+locale!accessing!public! !
+nextPut:!adding!public! !
+nextPutAll:!adding!public! !
+!
 
 Kernel.DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 
@@ -95,6 +97,8 @@ new
 	"Streams must be instantiated onto something."
 
 	^self basicNew initialize! !
-!Kernel.DebugTraceStream class categoriesFor: #current!instance creation!public! !
-!Kernel.DebugTraceStream class categoriesFor: #new!public! !
+!Kernel.DebugTraceStream class categoriesForMethods!
+current!instance creation!public! !
+new!public! !
+!
 

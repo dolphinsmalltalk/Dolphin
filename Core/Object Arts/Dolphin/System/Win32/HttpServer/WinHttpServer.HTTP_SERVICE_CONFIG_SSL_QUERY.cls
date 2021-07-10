@@ -49,10 +49,12 @@ KeyDesc: aSOCKADDR
 	"Set the receiver's 'KeyDesc' field to the value of the argument, aSOCKADDR"
 
 	bytes uintPtrAtOffset: _OffsetOf_KeyDesc put: aSOCKADDR yourAddress! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #KeyDesc:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY categoriesForMethods!
+dwToken!**compiled accessors**!public! !
+dwToken:!**compiled accessors**!public! !
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY class methodsFor!
 
@@ -77,6 +79,8 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

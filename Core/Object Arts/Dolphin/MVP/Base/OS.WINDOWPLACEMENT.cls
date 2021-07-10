@@ -46,11 +46,13 @@ showCmd: anInteger
 	"Set the receiver's 'showCmd' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_showCmd put: anInteger! !
-!OS.WINDOWPLACEMENT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.WINDOWPLACEMENT categoriesFor: #rcNormalPosition!**compiled accessors**!public! !
-!OS.WINDOWPLACEMENT categoriesFor: #rcNormalPosition:!**compiled accessors**!public! !
-!OS.WINDOWPLACEMENT categoriesFor: #showCmd!**compiled accessors**!public! !
-!OS.WINDOWPLACEMENT categoriesFor: #showCmd:!**compiled accessors**!public! !
+!OS.WINDOWPLACEMENT categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+rcNormalPosition!**compiled accessors**!public! !
+rcNormalPosition:!**compiled accessors**!public! !
+showCmd!**compiled accessors**!public! !
+showCmd:!**compiled accessors**!public! !
+!
 
 !OS.WINDOWPLACEMENT class methodsFor!
 
@@ -80,6 +82,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #showCmd #rcNormalPosition)! !
-!OS.WINDOWPLACEMENT class categoriesFor: #defineFields!public!template definition! !
-!OS.WINDOWPLACEMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WINDOWPLACEMENT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

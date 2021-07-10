@@ -503,36 +503,38 @@ verifySingleSelectionsByIndex
 		trigger: #selectionChanged
 		against: presenter.
 	self assert: presenter selectionsByIndex equals: #()! !
-!UI.Tests.ListControlTest categoriesFor: #assertCaretVisible!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #expectedSelectionsForSendShiftClickTests!constants!private! !
-!UI.Tests.ListControlTest categoriesFor: #isMultiSelect!private!testing! !
-!UI.Tests.ListControlTest categoriesFor: #mouseDownEventOnItem:buttons:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #mouseUpForMouseDown:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!constants!private! !
-!UI.Tests.ListControlTest categoriesFor: #onSelectionChanged!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #onSelectionChanging:!public! !
-!UI.Tests.ListControlTest categoriesFor: #onTimerTick:!event handling!private! !
-!UI.Tests.ListControlTest categoriesFor: #postMouseEvents:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #sendClickEvent:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #sendMouseEvents:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #setupClickIntercept!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #setUpForSelectionEventTesting!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #setUpForSelectionTesting!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #testEventsFromClickSelectionChange!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testEventsFromClickSelectionChangePrompted!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testNewSelectionNonLeftClicks!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testNewSelectionsBasicLeftClicks!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testNewSelectionsCtrlLeftClick!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testNewSelectionsInitialShiftClick!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testSelectionsByIndex!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
-!UI.Tests.ListControlTest categoriesFor: #verifyClicks:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #verifyEventsFromClickSelectionChangeAccepted:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #verifyEventsFromClickSelectionChangeRejected:!private! !
-!UI.Tests.ListControlTest categoriesFor: #verifyMultiSelectionsByIndex!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #verifySelectionsFromMouseDown:equals:!helpers!private! !
-!UI.Tests.ListControlTest categoriesFor: #verifySingleSelectionsByIndex!helpers!private! !
+!UI.Tests.ListControlTest categoriesForMethods!
+assertCaretVisible!helpers!private! !
+expectedSelectionsForSendShiftClickTests!constants!private! !
+isMultiSelect!private!testing! !
+mouseDownEventOnItem:buttons:!helpers!private! !
+mouseUpForMouseDown:!helpers!private! !
+newSelectionAfterLeftClickOutsideList:!constants!private! !
+onSelectionChanged!helpers!private! !
+onSelectionChanging:!public! !
+onTimerTick:!event handling!private! !
+postMouseEvents:!helpers!private! !
+sendClickEvent:!helpers!private! !
+sendMouseEvents:!helpers!private! !
+setupClickIntercept!helpers!private! !
+setUpForSelectionEventTesting!helpers!private! !
+setUpForSelectionTesting!helpers!private! !
+testEventsFromClickSelectionChange!public!unit tests! !
+testEventsFromClickSelectionChangePrompted!public!unit tests! !
+testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
+testNewSelectionNonLeftClicks!public!unit tests! !
+testNewSelectionsBasicLeftClicks!public!unit tests! !
+testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
+testNewSelectionsCtrlLeftClick!public!unit tests! !
+testNewSelectionsInitialShiftClick!public!unit tests! !
+testProgrammaticSelectionVisible!public!unit tests! !
+testSelectionsByIndex!public!unit tests! !
+testSelectionsPreservedOnRecreate!public!unit tests! !
+verifyClicks:!helpers!private! !
+verifyEventsFromClickSelectionChangeAccepted:!helpers!private! !
+verifyEventsFromClickSelectionChangeRejected:!private! !
+verifyMultiSelectionsByIndex!helpers!private! !
+verifySelectionsFromMouseDown:equals:!helpers!private! !
+verifySingleSelectionsByIndex!helpers!private! !
+!
 

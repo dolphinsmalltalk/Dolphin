@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #DictionaryFactoryANSITest
 	instanceVariableNames: ''
@@ -27,9 +27,11 @@ testXnewX
 testXwithAllX
 	" <Dictionary factory>#withAll: "
 	#'Collection'.! !
-!DictionaryFactoryANSITest categoriesFor: #canonicalObject!public! !
-!DictionaryFactoryANSITest categoriesFor: #protocol!public! !
-!DictionaryFactoryANSITest categoriesFor: #testXnew!public! !
-!DictionaryFactoryANSITest categoriesFor: #testXnewX!public! !
-!DictionaryFactoryANSITest categoriesFor: #testXwithAllX!public! !
+!DictionaryFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXnew!public! !
+testXnewX!public! !
+testXwithAllX!public! !
+!
 

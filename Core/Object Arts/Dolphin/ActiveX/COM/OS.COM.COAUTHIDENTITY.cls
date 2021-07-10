@@ -90,20 +90,22 @@ UserLength: anInteger
 	"Set the receiver's 'UserLength' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_UserLength put: anInteger! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #Domain!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #Domain:!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #DomainLength!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #DomainLength:!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #Flags!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #Flags:!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #Password!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #Password:!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #PasswordLength!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #PasswordLength:!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #User!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #User:!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #UserLength!**compiled accessors**!public! !
-!OS.COM.COAUTHIDENTITY categoriesFor: #UserLength:!**compiled accessors**!public! !
+!OS.COM.COAUTHIDENTITY categoriesForMethods!
+Domain!**compiled accessors**!public! !
+Domain:!**compiled accessors**!public! !
+DomainLength!**compiled accessors**!public! !
+DomainLength:!**compiled accessors**!public! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+Password!**compiled accessors**!public! !
+Password:!**compiled accessors**!public! !
+PasswordLength!**compiled accessors**!public! !
+PasswordLength:!**compiled accessors**!public! !
+User!**compiled accessors**!public! !
+User:!**compiled accessors**!public! !
+UserLength!**compiled accessors**!public! !
+UserLength:!**compiled accessors**!public! !
+!
 
 !OS.COM.COAUTHIDENTITY class methodsFor!
 
@@ -134,6 +136,8 @@ defineFields
 
 getFieldNames
 	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !
-!OS.COM.COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.COM.COAUTHIDENTITY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.COAUTHIDENTITY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

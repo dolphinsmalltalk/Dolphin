@@ -87,16 +87,18 @@ value: val
 	intVal := intVal asInteger.
 	self hi32: (intVal bitShift: -64).
 	self lo64: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
-!OS.COM.DECIMAL categoriesFor: #hi32!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #hi32:!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #lo64!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #lo64:!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #scale!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #scale:!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #sign!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #sign:!**compiled accessors**!public! !
-!OS.COM.DECIMAL categoriesFor: #value!accessing!public! !
-!OS.COM.DECIMAL categoriesFor: #value:!accessing!public! !
+!OS.COM.DECIMAL categoriesForMethods!
+hi32!**compiled accessors**!public! !
+hi32:!**compiled accessors**!public! !
+lo64!**compiled accessors**!public! !
+lo64:!**compiled accessors**!public! !
+scale!**compiled accessors**!public! !
+scale:!**compiled accessors**!public! !
+sign!**compiled accessors**!public! !
+sign:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !OS.COM.DECIMAL class methodsFor!
 
@@ -133,9 +135,11 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DECIMAL! !
-!OS.COM.DECIMAL class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.DECIMAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.COM.DECIMAL class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.DECIMAL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!OS.COM.DECIMAL class categoriesFor: #vt!constants!public! !
+!OS.COM.DECIMAL class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

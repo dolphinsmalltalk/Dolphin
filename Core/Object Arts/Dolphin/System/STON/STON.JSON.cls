@@ -64,11 +64,13 @@ toString: object
 
 toStringPretty: object
 	^STON toJsonStringPretty: object! !
-!STON.JSON class categoriesFor: #fromStream:!convenience!public! !
-!STON.JSON class categoriesFor: #fromString:!convenience!public! !
-!STON.JSON class categoriesFor: #icon!constants!public! !
-!STON.JSON class categoriesFor: #put:onStream:!convenience!public! !
-!STON.JSON class categoriesFor: #put:onStreamPretty:!convenience!public! !
-!STON.JSON class categoriesFor: #toString:!convenience!public! !
-!STON.JSON class categoriesFor: #toStringPretty:!convenience!public! !
+!STON.JSON class categoriesForMethods!
+fromStream:!convenience!public! !
+fromString:!convenience!public! !
+icon!constants!public! !
+put:onStream:!convenience!public! !
+put:onStreamPretty:!convenience!public! !
+toString:!convenience!public! !
+toStringPretty:!convenience!public! !
+!
 

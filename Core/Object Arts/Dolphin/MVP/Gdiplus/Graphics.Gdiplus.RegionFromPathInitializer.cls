@@ -22,13 +22,17 @@ isPersistent
 
 path: aPath
 	path := aPath! !
-!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #isPersistent!public! !
-!Graphics.Gdiplus.RegionFromPathInitializer categoriesFor: #path:!initializing!private! !
+!Graphics.Gdiplus.RegionFromPathInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+isPersistent!public! !
+path:!initializing!private! !
+!
 
 !Graphics.Gdiplus.RegionFromPathInitializer class methodsFor!
 
 fromPath: aPath
 	^self new path: aPath! !
-!Graphics.Gdiplus.RegionFromPathInitializer class categoriesFor: #fromPath:!instance creation!public! !
+!Graphics.Gdiplus.RegionFromPathInitializer class categoriesForMethods!
+fromPath:!instance creation!public! !
+!
 

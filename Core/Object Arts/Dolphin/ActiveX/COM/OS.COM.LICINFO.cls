@@ -38,9 +38,11 @@ fRuntimeKeyAvail
 	"Answer the <Boolean> value of the receiver's 'fRuntimeKeyAvail' field."
 
 	^(bytes dwordAtOffset: _OffsetOf_fRuntimeKeyAvail) asBoolean! !
-!OS.COM.LICINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.COM.LICINFO categoriesFor: #fLicVerified!**compiled accessors**!public! !
-!OS.COM.LICINFO categoriesFor: #fRuntimeKeyAvail!**compiled accessors**!public! !
+!OS.COM.LICINFO categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+fLicVerified!**compiled accessors**!public! !
+fRuntimeKeyAvail!**compiled accessors**!public! !
+!
 
 !OS.COM.LICINFO class methodsFor!
 
@@ -63,6 +65,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fRuntimeKeyAvail #fLicVerified)! !
-!OS.COM.LICINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.LICINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.LICINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

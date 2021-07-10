@@ -38,10 +38,12 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	^self subclassResponsibility! !
-!External.ArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
-!External.ArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!External.ArrayFieldLength categoriesFor: #isFixedSize!private!testing! !
-!External.ArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!External.ArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!External.ArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!External.ArrayFieldLength categoriesForMethods!
+allocationLength!accessing!private! !
+getElementCountOf:in:!indirect accessing!private! !
+isFixedSize!private!testing! !
+printElementCountExpressionFor:on:!automatic generation!private! !
+printSetSizeFor:on:!automatic generation!development!private! !
+setElementCount:of:in:!indirect accessing!private! !
+!
 

@@ -66,16 +66,18 @@ refuseBlock
 
 refuseBlock: aNiladicValuable
 	refuseBlock := aNiladicValuable! !
-!UI.ConfirmationRequiredWarning categoriesFor: #cancel!handler responses!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #cancelBlock!accessing!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #cancelBlock:!accessing!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #confirm!handler responses!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #confirmBlock!accessing!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #confirmBlock:!accessing!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #defaultAction!handling!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #refuse!handler responses!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #refuseBlock!accessing!public! !
-!UI.ConfirmationRequiredWarning categoriesFor: #refuseBlock:!accessing!public! !
+!UI.ConfirmationRequiredWarning categoriesForMethods!
+cancel!handler responses!public! !
+cancelBlock!accessing!public! !
+cancelBlock:!accessing!public! !
+confirm!handler responses!public! !
+confirmBlock!accessing!public! !
+confirmBlock:!accessing!public! !
+defaultAction!handling!public! !
+refuse!handler responses!public! !
+refuseBlock!accessing!public! !
+refuseBlock:!accessing!public! !
+!
 
 !UI.ConfirmationRequiredWarning class methodsFor!
 
@@ -89,5 +91,7 @@ signal: aString onYes: confirmValuable onNo: refuseValuable onCancel: cancelValu
 		refuseBlock: refuseValuable;
 		cancelBlock: cancelValuable;
 		signal: aString! !
-!UI.ConfirmationRequiredWarning class categoriesFor: #signal:onYes:onNo:onCancel:!instance creation!public! !
+!UI.ConfirmationRequiredWarning class categoriesForMethods!
+signal:onYes:onNo:onCancel:!instance creation!public! !
+!
 

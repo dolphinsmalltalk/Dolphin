@@ -138,33 +138,35 @@ setFlags: anInteger
 
 targetVariable
 	^self! !
-!Kernel.VariableBinding categoriesFor: #=!comparing!public! !
-!Kernel.VariableBinding categoriesFor: #absoluteName!accessing!public! !
-!Kernel.VariableBinding categoriesFor: #asQualifiedReference!converting!public! !
-!Kernel.VariableBinding categoriesFor: #displayOn:!printing!public! !
-!Kernel.VariableBinding categoriesFor: #displayString!displaying!public! !
-!Kernel.VariableBinding categoriesFor: #environment!accessing!public! !
-!Kernel.VariableBinding categoriesFor: #environment:!accessing!public! !
-!Kernel.VariableBinding categoriesFor: #flags!public! !
-!Kernel.VariableBinding categoriesFor: #fullName!accessing!public! !
-!Kernel.VariableBinding categoriesFor: #fullyQualifiedReference!converting!public! !
-!Kernel.VariableBinding categoriesFor: #isAlias!public! !
-!Kernel.VariableBinding categoriesFor: #isClassBinding!public!testing! !
-!Kernel.VariableBinding categoriesFor: #isClassVariable!public! !
-!Kernel.VariableBinding categoriesFor: #isClassVariable:!public! !
-!Kernel.VariableBinding categoriesFor: #isConstant!public! !
-!Kernel.VariableBinding categoriesFor: #isConstant:!public! !
-!Kernel.VariableBinding categoriesFor: #isDeprecated!public! !
-!Kernel.VariableBinding categoriesFor: #isDeprecated:!public! !
-!Kernel.VariableBinding categoriesFor: #isPrivate!public! !
-!Kernel.VariableBinding categoriesFor: #isPrivate:!public! !
-!Kernel.VariableBinding categoriesFor: #key:value:!initializing!private! !
-!Kernel.VariableBinding categoriesFor: #owningPackage!accessing!development!public! !
-!Kernel.VariableBinding categoriesFor: #owningPackage:!accessing!development!public! !
-!Kernel.VariableBinding categoriesFor: #refersTo:asLiteralOf:!private!testing! !
-!Kernel.VariableBinding categoriesFor: #refersToLiteral:from:!private!testing! !
-!Kernel.VariableBinding categoriesFor: #setFlags:!accessing!private! !
-!Kernel.VariableBinding categoriesFor: #targetVariable!accessing!public! !
+!Kernel.VariableBinding categoriesForMethods!
+=!comparing!public! !
+absoluteName!accessing!public! !
+asQualifiedReference!converting!public! !
+displayOn:!printing!public! !
+displayString!displaying!public! !
+environment!accessing!public! !
+environment:!accessing!public! !
+flags!public! !
+fullName!accessing!public! !
+fullyQualifiedReference!converting!public! !
+isAlias!public! !
+isClassBinding!public!testing! !
+isClassVariable!public! !
+isClassVariable:!public! !
+isConstant!public! !
+isConstant:!public! !
+isDeprecated!public! !
+isDeprecated:!public! !
+isPrivate!public! !
+isPrivate:!public! !
+key:value:!initializing!private! !
+owningPackage!accessing!development!public! !
+owningPackage:!accessing!development!public! !
+refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:from:!private!testing! !
+setFlags:!accessing!private! !
+targetVariable!accessing!public! !
+!
 
 !Kernel.VariableBinding class methodsFor!
 
@@ -189,6 +191,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^2! !
-!Kernel.VariableBinding class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Kernel.VariableBinding class categoriesFor: #stbVersion!binary filing!public! !
+!Kernel.VariableBinding class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

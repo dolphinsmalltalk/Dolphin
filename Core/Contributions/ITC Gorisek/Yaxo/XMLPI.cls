@@ -31,13 +31,15 @@ target
 
 target: aString
 	target := aString! !
-!XMLPI categoriesFor: #data!accessing!public! !
-!XMLPI categoriesFor: #data:!accessing!public! !
-!XMLPI categoriesFor: #isProcessingInstruction!public!testing! !
-!XMLPI categoriesFor: #name!accessing!public! !
-!XMLPI categoriesFor: #printXMLOn:!printing!public! !
-!XMLPI categoriesFor: #target!accessing!public! !
-!XMLPI categoriesFor: #target:!accessing!public! !
+!XMLPI categoriesForMethods!
+data!accessing!public! !
+data:!accessing!public! !
+isProcessingInstruction!public!testing! !
+name!accessing!public! !
+printXMLOn:!printing!public! !
+target!accessing!public! !
+target:!accessing!public! !
+!
 
 !XMLPI class methodsFor!
 
@@ -45,5 +47,7 @@ target: targetName data: aString
 	^self new
 		target: targetName;
 		data: aString! !
-!XMLPI class categoriesFor: #target:data:!instance creation!public! !
+!XMLPI class categoriesForMethods!
+target:data:!instance creation!public! !
+!
 

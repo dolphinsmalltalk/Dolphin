@@ -31,9 +31,11 @@ value
 	"Answer a new collection of class class and elements array."
 
 	^class withAll: array! !
-!Kernel.STBCollectionProxy categoriesFor: #array:!accessing!private! !
-!Kernel.STBCollectionProxy categoriesFor: #class:!accessing!private! !
-!Kernel.STBCollectionProxy categoriesFor: #value!converting!public! !
+!Kernel.STBCollectionProxy categoriesForMethods!
+array:!accessing!private! !
+class:!accessing!private! !
+value!converting!public! !
+!
 
 !Kernel.STBCollectionProxy class methodsFor!
 
@@ -51,6 +53,8 @@ forCollection: aCollection
 	"Answer a new instance representing aCollection."
 
 	^self class: aCollection class array: aCollection asArray! !
-!Kernel.STBCollectionProxy class categoriesFor: #class:array:!instance creation!public! !
-!Kernel.STBCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
+!Kernel.STBCollectionProxy class categoriesForMethods!
+class:array:!instance creation!public! !
+forCollection:!instance creation!public! !
+!
 

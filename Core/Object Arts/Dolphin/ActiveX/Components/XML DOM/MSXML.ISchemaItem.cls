@@ -181,22 +181,24 @@ WriteAnnotation: annotationSink isWritten: isWritten
 
 	<virtual stdcall: hresult 14 IUnknown* varbool*>
 	^self invalidCall: _failureCode! !
-!MSXML.ISchemaItem categoriesFor: #get_id:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!MSXML.ISchemaItem categoriesFor: #get_itemType:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!MSXML.ISchemaItem categoriesFor: #get_name:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!MSXML.ISchemaItem categoriesFor: #get_namespaceURI:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!MSXML.ISchemaItem categoriesFor: #get_schema:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!MSXML.ISchemaItem categoriesFor: #get_unhandledAttributes:!**auto generated**!COM Interfaces-ISchemaItem!private! !
-!MSXML.ISchemaItem categoriesFor: #id!**auto generated**!properties!public! !
-!MSXML.ISchemaItem categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.ISchemaItem categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.ISchemaItem categoriesFor: #itemType!**auto generated**!properties!public! !
-!MSXML.ISchemaItem categoriesFor: #name!**auto generated**!properties!public! !
-!MSXML.ISchemaItem categoriesFor: #namespaceURI!**auto generated**!properties!public! !
-!MSXML.ISchemaItem categoriesFor: #schema!**auto generated**!properties!public! !
-!MSXML.ISchemaItem categoriesFor: #unhandledAttributes!**auto generated**!properties!public! !
-!MSXML.ISchemaItem categoriesFor: #writeAnnotation:!**auto generated**!methods!public! !
-!MSXML.ISchemaItem categoriesFor: #WriteAnnotation:isWritten:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!MSXML.ISchemaItem categoriesForMethods!
+get_id:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+get_itemType:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+get_name:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+get_namespaceURI:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+get_schema:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+get_unhandledAttributes:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+id!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+itemType!**auto generated**!properties!public! !
+name!**auto generated**!properties!public! !
+namespaceURI!**auto generated**!properties!public! !
+schema!**auto generated**!properties!public! !
+unhandledAttributes!**auto generated**!properties!public! !
+writeAnnotation:!**auto generated**!methods!public! !
+WriteAnnotation:isWritten:!**auto generated**!COM Interfaces-ISchemaItem!private! !
+!
 
 !MSXML.ISchemaItem class methodsFor!
 
@@ -220,5 +222,7 @@ defineFunctions
 		defineFunction: #WriteAnnotation:isWritten:
 			argumentTypes: 'IUnknown* varbool*'
 ! !
-!MSXML.ISchemaItem class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaItem class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

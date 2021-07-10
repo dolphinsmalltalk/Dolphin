@@ -20,6 +20,8 @@ stbFixup: inFiler at: anInteger
 
 value
 	^string asSymbol! !
-!STBSymbolProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBSymbolProxy categoriesFor: #value!converting!public! !
+!STBSymbolProxy categoriesForMethods!
+stbFixup:at:!converting!public! !
+value!converting!public! !
+!
 

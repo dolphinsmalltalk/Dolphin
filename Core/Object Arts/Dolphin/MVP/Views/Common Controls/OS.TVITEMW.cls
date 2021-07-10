@@ -190,34 +190,36 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
-!OS.TVITEMW categoriesFor: #allCallbacks!accessing!public! !
-!OS.TVITEMW categoriesFor: #beStateExpandedOnce!accessing!public! !
-!OS.TVITEMW categoriesFor: #cChildren!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #cChildren:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
-!OS.TVITEMW categoriesFor: #children:!accessing!public! !
-!OS.TVITEMW categoriesFor: #childrenCallback!accessing!public! !
-!OS.TVITEMW categoriesFor: #dwState!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #getValidFields!accessing!private! !
-!OS.TVITEMW categoriesFor: #handle!accessing!public! !
-!OS.TVITEMW categoriesFor: #hItem!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #hItem:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #iImage!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #iSelectedImage!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #iSelectedImage:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #isStateExpandedOnce!public!testing! !
-!OS.TVITEMW categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #pszText!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #selectedImage:!accessing!public! !
-!OS.TVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
-!OS.TVITEMW categoriesFor: #textPointerOffset!constants!private! !
+!OS.TVITEMW categoriesForMethods!
+allCallbacks!accessing!public! !
+beStateExpandedOnce!accessing!public! !
+cChildren!**compiled accessors**!public! !
+cChildren:!**compiled accessors**!public! !
+cchTextMax!**compiled accessors**!public! !
+cchTextMax:!**compiled accessors**!public! !
+cchTextMaxOffset!constants!private! !
+children:!accessing!public! !
+childrenCallback!accessing!public! !
+dwState!**compiled accessors**!public! !
+dwState:!**compiled accessors**!public! !
+getValidFields!accessing!private! !
+handle!accessing!public! !
+hItem!**compiled accessors**!public! !
+hItem:!**compiled accessors**!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+iSelectedImage!**compiled accessors**!public! !
+iSelectedImage:!**compiled accessors**!public! !
+isStateExpandedOnce!public!testing! !
+lParam!**compiled accessors**!public! !
+lParam:!**compiled accessors**!public! !
+pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+selectedImage:!accessing!public! !
+stateMask!**compiled accessors**!public! !
+stateMask:!**compiled accessors**!public! !
+textPointerOffset!constants!private! !
+!
 
 !OS.TVITEMW class methodsFor!
 
@@ -260,6 +262,8 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
-!OS.TVITEMW class categoriesFor: #defineFields!public!template definition! !
-!OS.TVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TVITEMW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

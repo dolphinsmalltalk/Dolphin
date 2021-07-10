@@ -54,13 +54,15 @@ text: aString
 	It preserves whitespace, but has all of the enclosed entities expanded"
 
 	^self subclassResponsibility! !
-!XMLParser categoriesFor: #attribute:value:!callbacks!public! !
-!XMLParser categoriesFor: #beginStartTag:asPI:!callbacks!public! !
-!XMLParser categoriesFor: #endStartTag:!callbacks!public! !
-!XMLParser categoriesFor: #endTag:!callbacks!public! !
-!XMLParser categoriesFor: #handleCData:!handling tokens!public! !
-!XMLParser categoriesFor: #handleEndTag:!handling tokens!public! !
-!XMLParser categoriesFor: #handlePCData:!handling tokens!public! !
-!XMLParser categoriesFor: #handleStartTag:attributes:!handling tokens!public! !
-!XMLParser categoriesFor: #text:!callbacks!public! !
+!XMLParser categoriesForMethods!
+attribute:value:!callbacks!public! !
+beginStartTag:asPI:!callbacks!public! !
+endStartTag:!callbacks!public! !
+endTag:!callbacks!public! !
+handleCData:!handling tokens!public! !
+handleEndTag:!handling tokens!public! !
+handlePCData:!handling tokens!public! !
+handleStartTag:attributes:!handling tokens!public! !
+text:!callbacks!public! !
+!
 

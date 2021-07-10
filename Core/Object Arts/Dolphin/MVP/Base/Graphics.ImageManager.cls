@@ -201,31 +201,33 @@ stbSaveOn: anSTBOutFiler
 
 	self purgeImages.
 	super stbSaveOn: anSTBOutFiler! !
-!Graphics.ImageManager categoriesFor: #addImage:!adding!public! !
-!Graphics.ImageManager categoriesFor: #addImage:extent:!adding!public! !
-!Graphics.ImageManager categoriesFor: #addImage:extent:maskcolor:!adding!private! !
-!Graphics.ImageManager categoriesFor: #addImage:maskcolor:!adding!private! !
-!Graphics.ImageManager categoriesFor: #backcolor!accessing!public! !
-!Graphics.ImageManager categoriesFor: #backcolor:!accessing!public! !
-!Graphics.ImageManager categoriesFor: #basicAddImage:extent:maskcolor:!adding!private! !
-!Graphics.ImageManager categoriesFor: #buildImageListWithExtent:!helpers!private! !
-!Graphics.ImageManager categoriesFor: #imageAt:!accessing!public! !
-!Graphics.ImageManager categoriesFor: #imageAt:ifAbsent:!accessing!public! !
-!Graphics.ImageManager categoriesFor: #imageListWithExtent:!accessing!public! !
-!Graphics.ImageManager categoriesFor: #indexOfImage:!public!searching! !
-!Graphics.ImageManager categoriesFor: #initialize!initializing!private! !
-!Graphics.ImageManager categoriesFor: #maskcolor!accessing!public! !
-!Graphics.ImageManager categoriesFor: #maskcolor:!accessing!public! !
-!Graphics.ImageManager categoriesFor: #maximumImageIndex!helpers!private! !
-!Graphics.ImageManager categoriesFor: #newImageLists!private!removing! !
-!Graphics.ImageManager categoriesFor: #newImageListWithExtent:!helpers!private! !
-!Graphics.ImageManager categoriesFor: #newImages!private!removing! !
-!Graphics.ImageManager categoriesFor: #orderedImages!accessing!private! !
-!Graphics.ImageManager categoriesFor: #purge!public!removing! !
-!Graphics.ImageManager categoriesFor: #purgeImages!operations!private! !
-!Graphics.ImageManager categoriesFor: #purgeImagesWithExtent:!operations!private! !
-!Graphics.ImageManager categoriesFor: #size!accessing!public! !
-!Graphics.ImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.ImageManager categoriesForMethods!
+addImage:!adding!public! !
+addImage:extent:!adding!public! !
+addImage:extent:maskcolor:!adding!private! !
+addImage:maskcolor:!adding!private! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicAddImage:extent:maskcolor:!adding!private! !
+buildImageListWithExtent:!helpers!private! !
+imageAt:!accessing!public! !
+imageAt:ifAbsent:!accessing!public! !
+imageListWithExtent:!accessing!public! !
+indexOfImage:!public!searching! !
+initialize!initializing!private! !
+maskcolor!accessing!public! !
+maskcolor:!accessing!public! !
+maximumImageIndex!helpers!private! !
+newImageLists!private!removing! !
+newImageListWithExtent:!helpers!private! !
+newImages!private!removing! !
+orderedImages!accessing!private! !
+purge!public!removing! !
+purgeImages!operations!private! !
+purgeImagesWithExtent:!operations!private! !
+size!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !Graphics.ImageManager class methodsFor!
 
@@ -248,7 +250,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Graphics.ImageManager class categoriesFor: #new!instance creation!public! !
-!Graphics.ImageManager class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Graphics.ImageManager class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.ImageManager class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

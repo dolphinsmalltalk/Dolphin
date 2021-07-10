@@ -100,18 +100,20 @@ recordVisitTo: anObject
 
 visit: anObject
 	^anObject acceptProcessCopier: self! !
-!Kernel.ProcessCopier categoriesFor: #copyObject:!copying!public! !
-!Kernel.ProcessCopier categoriesFor: #copyStack:!copying!private! !
-!Kernel.ProcessCopier categoriesFor: #createBasicCopyOfStack:!copying!private! !
-!Kernel.ProcessCopier categoriesFor: #delta!accessing!public! !
-!Kernel.ProcessCopier categoriesFor: #existingCopyOf:!copying!public! !
-!Kernel.ProcessCopier categoriesFor: #hasVisited:!private!testing! !
-!Kernel.ProcessCopier categoriesFor: #initializeCopiedMap!copying!private! !
-!Kernel.ProcessCopier categoriesFor: #patchExceptionHandlers!copying!private! !
-!Kernel.ProcessCopier categoriesFor: #patchFrames!copying!private! !
-!Kernel.ProcessCopier categoriesFor: #patchStackSlots!copying!private! !
-!Kernel.ProcessCopier categoriesFor: #recordVisitTo:!copying!public! !
-!Kernel.ProcessCopier categoriesFor: #visit:!copying!public! !
+!Kernel.ProcessCopier categoriesForMethods!
+copyObject:!copying!public! !
+copyStack:!copying!private! !
+createBasicCopyOfStack:!copying!private! !
+delta!accessing!public! !
+existingCopyOf:!copying!public! !
+hasVisited:!private!testing! !
+initializeCopiedMap!copying!private! !
+patchExceptionHandlers!copying!private! !
+patchFrames!copying!private! !
+patchStackSlots!copying!private! !
+recordVisitTo:!copying!public! !
+visit:!copying!public! !
+!
 
 !Kernel.ProcessCopier class methodsFor!
 
@@ -120,5 +122,7 @@ copyStack: aStackFrame
 	the <StackFrame> argument. The answer will be suspended, but continuable."
 
 	^self new copyStack: aStackFrame! !
-!Kernel.ProcessCopier class categoriesFor: #copyStack:!operations!public! !
+!Kernel.ProcessCopier class categoriesForMethods!
+copyStack:!operations!public! !
+!
 

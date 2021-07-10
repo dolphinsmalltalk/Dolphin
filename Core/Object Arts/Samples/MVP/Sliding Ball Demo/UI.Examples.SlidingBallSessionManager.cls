@@ -15,7 +15,9 @@ main
 	"Start up the sample application"
 
 	self mainShellClass new show! !
-!UI.Examples.SlidingBallSessionManager categoriesFor: #main!operations-startup!public! !
+!UI.Examples.SlidingBallSessionManager categoriesForMethods!
+main!operations-startup!public! !
+!
 
 !UI.Examples.SlidingBallSessionManager class methodsFor!
 
@@ -23,5 +25,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^SlidingBallDemo! !
-!UI.Examples.SlidingBallSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.SlidingBallSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

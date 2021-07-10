@@ -15,7 +15,9 @@ description
 	"Answer a String describing the error which the receiver represents."
 
 	^'Socket wait cancelled'! !
-!Net.SocketWaitCancelled categoriesFor: #description!displaying!public! !
+!Net.SocketWaitCancelled categoriesForMethods!
+description!displaying!public! !
+!
 
 !Net.SocketWaitCancelled class methodsFor!
 
@@ -27,7 +29,9 @@ initialize
 
 uninitialize
 	ErrorClasses removeKey: self errorCode ifAbsent: []! !
-!Net.SocketWaitCancelled class categoriesFor: #errorCode!constants!private! !
-!Net.SocketWaitCancelled class categoriesFor: #initialize!initializing!public! !
-!Net.SocketWaitCancelled class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Net.SocketWaitCancelled class categoriesForMethods!
+errorCode!constants!private! !
+initialize!initializing!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

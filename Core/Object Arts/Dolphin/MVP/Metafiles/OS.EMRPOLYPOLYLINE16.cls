@@ -112,17 +112,19 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #aPolyCounts!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #aPolyCounts:!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #apts!accessing!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #apts:!accessing!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #aptsOffset!private! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #cpts!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #cpts:!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #nPolys!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #nPolys:!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE16 categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE16 categoriesForMethods!
+aPolyCounts!public! !
+aPolyCounts:!**compiled accessors**!public! !
+apts!accessing!public! !
+apts:!accessing!public! !
+aptsOffset!private! !
+cpts!**compiled accessors**!public! !
+cpts:!**compiled accessors**!public! !
+nPolys!**compiled accessors**!public! !
+nPolys:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMRPOLYPOLYLINE16 class methodsFor!
 
@@ -165,7 +167,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYPOLYLINE16. EMR_POLYPOLYGON16}! !
-!OS.EMRPOLYPOLYLINE16 class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRPOLYPOLYLINE16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRPOLYPOLYLINE16 class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYPOLYLINE16 class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

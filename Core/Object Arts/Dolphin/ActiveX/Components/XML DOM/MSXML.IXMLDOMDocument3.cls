@@ -80,10 +80,12 @@ ValidateNode: node errorObj: errorObj
 
 	<virtual stdcall: hresult 83 IXMLDOMNode* IXMLDOMParseError**>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMDocument3 categoriesFor: #importNode:deep:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument3 categoriesFor: #ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
-!MSXML.IXMLDOMDocument3 categoriesFor: #validateNode:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument3 categoriesFor: #ValidateNode:errorObj:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+!MSXML.IXMLDOMDocument3 categoriesForMethods!
+importNode:deep:!**auto generated**!methods!public! !
+ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+validateNode:!**auto generated**!methods!public! !
+ValidateNode:errorObj:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+!
 
 !MSXML.IXMLDOMDocument3 class methodsFor!
 
@@ -109,7 +111,9 @@ newFreeThreadedDOMDocument60
 
 	^self onCLSID: (CLSID fromString: '{88d96a06-f192-11d4-a65f-0040963251e5}')
 ! !
-!MSXML.IXMLDOMDocument3 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSXML.IXMLDOMDocument3 class categoriesFor: #newDOMDocument60!**auto generated**!instance creation!private! !
-!MSXML.IXMLDOMDocument3 class categoriesFor: #newFreeThreadedDOMDocument60!**auto generated**!instance creation!private! !
+!MSXML.IXMLDOMDocument3 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+newDOMDocument60!**auto generated**!instance creation!private! !
+newFreeThreadedDOMDocument60!**auto generated**!instance creation!private! !
+!
 

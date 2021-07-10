@@ -303,42 +303,44 @@ subtractFromDateAndTime: aDateAndTime
 
 wait
 	(Delay forDuration: self) wait! !
-!Core.Duration categoriesFor: #-!arithmetic!public! !
-!Core.Duration categoriesFor: #*!arithmetic!public! !
-!Core.Duration categoriesFor: #/!arithmetic!public! !
-!Core.Duration categoriesFor: #+!arithmetic!public! !
-!Core.Duration categoriesFor: #<!comparing!public! !
-!Core.Duration categoriesFor: #=!comparing!public! !
-!Core.Duration categoriesFor: #abs!arithmetic!public! !
-!Core.Duration categoriesFor: #asMicroseconds!converting!public! !
-!Core.Duration categoriesFor: #asMilliseconds!converting!public! !
-!Core.Duration categoriesFor: #asNanoseconds!converting!public! !
-!Core.Duration categoriesFor: #asParameter!converting!public! !
-!Core.Duration categoriesFor: #asSeconds!converting!public! !
-!Core.Duration categoriesFor: #days!accessing!public! !
-!Core.Duration categoriesFor: #displayOn:!printing!public! !
-!Core.Duration categoriesFor: #divideIntoDuration:!arithmetic!double dispatch!private! !
-!Core.Duration categoriesFor: #formatters!printing!private! !
-!Core.Duration categoriesFor: #hash!comparing!public! !
-!Core.Duration categoriesFor: #hours!accessing!public! !
-!Core.Duration categoriesFor: #humanReadablePrintString!printing!public! !
-!Core.Duration categoriesFor: #isZero!public!testing! !
-!Core.Duration categoriesFor: #microseconds!accessing!public! !
-!Core.Duration categoriesFor: #milliseconds!accessing!public! !
-!Core.Duration categoriesFor: #minutes!accessing!public! !
-!Core.Duration categoriesFor: #nanoseconds!accessing!public! !
-!Core.Duration categoriesFor: #negated!arithmetic!public! !
-!Core.Duration categoriesFor: #negative!public!testing! !
-!Core.Duration categoriesFor: #positive!public!testing! !
-!Core.Duration categoriesFor: #printHumanReadableOn:!printing!public! !
-!Core.Duration categoriesFor: #printOn:!printing!public! !
-!Core.Duration categoriesFor: #printOn:format:!printing!public! !
-!Core.Duration categoriesFor: #printStringFormat:!printing!public! !
-!Core.Duration categoriesFor: #seconds!accessing!public! !
-!Core.Duration categoriesFor: #setSeconds:!initializing!private! !
-!Core.Duration categoriesFor: #storeOn:!printing!public! !
-!Core.Duration categoriesFor: #subtractFromDateAndTime:!initializing!private! !
-!Core.Duration categoriesFor: #wait!process synchronisation!public! !
+!Core.Duration categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+=!comparing!public! !
+abs!arithmetic!public! !
+asMicroseconds!converting!public! !
+asMilliseconds!converting!public! !
+asNanoseconds!converting!public! !
+asParameter!converting!public! !
+asSeconds!converting!public! !
+days!accessing!public! !
+displayOn:!printing!public! !
+divideIntoDuration:!arithmetic!double dispatch!private! !
+formatters!printing!private! !
+hash!comparing!public! !
+hours!accessing!public! !
+humanReadablePrintString!printing!public! !
+isZero!public!testing! !
+microseconds!accessing!public! !
+milliseconds!accessing!public! !
+minutes!accessing!public! !
+nanoseconds!accessing!public! !
+negated!arithmetic!public! !
+negative!public!testing! !
+positive!public!testing! !
+printHumanReadableOn:!printing!public! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printStringFormat:!printing!public! !
+seconds!accessing!public! !
+setSeconds:!initializing!private! !
+storeOn:!printing!public! !
+subtractFromDateAndTime:!initializing!private! !
+wait!process synchronisation!public! !
+!
 
 Core.Duration methodProtocol: #Duration attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #~~ #~= #+ #< #<= #= #== #> #>= #abs #asSeconds #between:and: #class #copy #days #doesNotUnderstand: #error: #hash #hours #identityHash #isKindOf: #isMemberOf: #isNil #max: #min: #minutes #negated #negative #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #positive #printOn: #printString #respondsTo: #seconds #yourself)!
 
@@ -474,22 +476,24 @@ zero
 	"Answer a <Duration> representing an empty interval of time."
 
 	^Zero ifNil: [Zero := self seconds: 0]! !
-!Core.Duration class categoriesFor: #days:!instance creation!public! !
-!Core.Duration class categoriesFor: #days:hours:minutes:seconds:!instance creation!public! !
-!Core.Duration class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Core.Duration class categoriesFor: #fromString:!instance creation!public! !
-!Core.Duration class categoriesFor: #hours:!instance creation!public! !
-!Core.Duration class categoriesFor: #hours:minutes:!instance creation!public! !
-!Core.Duration class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Core.Duration class categoriesFor: #microseconds:!instance creation!public! !
-!Core.Duration class categoriesFor: #milliseconds:!instance creation!public! !
-!Core.Duration class categoriesFor: #minutes:!instance creation!public! !
-!Core.Duration class categoriesFor: #nanoseconds:!instance creation!public! !
-!Core.Duration class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Core.Duration class categoriesFor: #readFrom:!instance creation!public! !
-!Core.Duration class categoriesFor: #readFrom:sign:withDays:!helpers!private! !
-!Core.Duration class categoriesFor: #seconds:!instance creation!public! !
-!Core.Duration class categoriesFor: #zero!instance creation!public! !
+!Core.Duration class categoriesForMethods!
+days:!instance creation!public! !
+days:hours:minutes:seconds:!instance creation!public! !
+errorInvalidFormat!exceptions!private! !
+fromString:!instance creation!public! !
+hours:!instance creation!public! !
+hours:minutes:!instance creation!public! !
+hours:minutes:seconds:!instance creation!public! !
+microseconds:!instance creation!public! !
+milliseconds:!instance creation!public! !
+minutes:!instance creation!public! !
+nanoseconds:!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+readFrom:!instance creation!public! !
+readFrom:sign:withDays:!helpers!private! !
+seconds:!instance creation!public! !
+zero!instance creation!public! !
+!
 
 Core.Duration class methodProtocol: #'Duration factory' attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #days:hours:minutes:seconds: #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #seconds: #yourself #zero)!
 

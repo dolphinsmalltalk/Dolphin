@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ denyContains: anObject
 	sel := presenter selectionOrNil.
 	[self should: [presenter selection: anObject] raise: NotFoundError] 
 		ensure: [presenter selectionOrNil: sel]! !
-!UI.Tests.SelectableItemsTest categoriesFor: #assertContains:!helpers!private! !
-!UI.Tests.SelectableItemsTest categoriesFor: #denyContains:!helpers!private! !
+!UI.Tests.SelectableItemsTest categoriesForMethods!
+assertContains:!helpers!private! !
+denyContains:!helpers!private! !
+!
 

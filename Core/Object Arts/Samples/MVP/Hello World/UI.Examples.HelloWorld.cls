@@ -75,11 +75,13 @@ onPositionChanged: aPositionEvent
 
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent! !
-!UI.Examples.HelloWorld categoriesFor: #defaultExtent!constants!private! !
-!UI.Examples.HelloWorld categoriesFor: #helloWorldText!constants!public! !
-!UI.Examples.HelloWorld categoriesFor: #minExtent!accessing!public! !
-!UI.Examples.HelloWorld categoriesFor: #onPaintRequired:!event handling!public! !
-!UI.Examples.HelloWorld categoriesFor: #onPositionChanged:!event handling!public! !
+!UI.Examples.HelloWorld categoriesForMethods!
+defaultExtent!constants!private! !
+helloWorldText!constants!public! !
+minExtent!accessing!public! !
+onPaintRequired:!event handling!public! !
+onPositionChanged:!event handling!public! !
+!
 
 !UI.Examples.HelloWorld class methodsFor!
 
@@ -94,6 +96,8 @@ show
 	self new show
 
 	! !
-!UI.Examples.HelloWorld class categoriesFor: #icon!constants!public! !
-!UI.Examples.HelloWorld class categoriesFor: #show!instance creation!public! !
+!UI.Examples.HelloWorld class categoriesForMethods!
+icon!constants!public! !
+show!instance creation!public! !
+!
 

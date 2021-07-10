@@ -64,12 +64,14 @@ validateUserInterface
 	super validateUserInterface.
 	alwaysTrust view isEnabled: self model canBePermanentlyTrusted
 ! !
-!UI.DolphinSureTrustWarning categoriesFor: #alwaysTrust!accessing!public! !
-!UI.DolphinSureTrustWarning categoriesFor: #createComponents!initializing!public! !
-!UI.DolphinSureTrustWarning categoriesFor: #description:!accessing!private! !
-!UI.DolphinSureTrustWarning categoriesFor: #model:!accessing!public! !
-!UI.DolphinSureTrustWarning categoriesFor: #ok!commands!public! !
-!UI.DolphinSureTrustWarning categoriesFor: #validateUserInterface!operations!public! !
+!UI.DolphinSureTrustWarning categoriesForMethods!
+alwaysTrust!accessing!public! !
+createComponents!initializing!public! !
+description:!accessing!private! !
+model:!accessing!public! !
+ok!commands!public! !
+validateUserInterface!operations!public! !
+!
 
 !UI.DolphinSureTrustWarning class methodsFor!
 
@@ -99,7 +101,9 @@ showModalOn: aDolphinSureCertificate description: aStringDescription
 		description: aStringDescription;
 		showModal
 ! !
-!UI.DolphinSureTrustWarning class categoriesFor: #defaultModel!models!public! !
-!UI.DolphinSureTrustWarning class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.DolphinSureTrustWarning class categoriesFor: #showModalOn:description:!instance creation!public! !
+!UI.DolphinSureTrustWarning class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+showModalOn:description:!instance creation!public! !
+!
 

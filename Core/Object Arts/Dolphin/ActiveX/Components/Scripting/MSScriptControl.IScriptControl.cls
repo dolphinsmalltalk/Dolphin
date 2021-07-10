@@ -433,55 +433,57 @@ useSafeSubset: pfUseSafeSubset
 	Helpstring: Force script to execute in safe mode and disallow potentially harmful actions"
 
 	self put_UseSafeSubset: pfUseSafeSubset! !
-!MSScriptControl.IScriptControl categoriesFor: #_aboutBox!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #_AboutBox!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #addCode:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #AddCode:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #addObject:object:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #addObject:object:addMembers:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #AddObject:Object:AddMembers:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #allowUI!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #allowUI:!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #codeObject!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #error!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #eval:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #executeStatement:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #ExecuteStatement:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_CodeObject:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_Error:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_Modules:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_Procedures:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #get_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSScriptControl.IScriptControl categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSScriptControl.IScriptControl categoriesFor: #language!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #language:!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #modules!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #procedures!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #put_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #put_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #put_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #put_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #put_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #put_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #reset!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #Reset!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #run:parameters:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptControl categoriesFor: #Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
-!MSScriptControl.IScriptControl categoriesFor: #sitehWnd!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #sitehWnd:!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #state!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #state:!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #timeout!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #timeout:!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #useSafeSubset!**auto generated**!properties!public! !
-!MSScriptControl.IScriptControl categoriesFor: #useSafeSubset:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptControl categoriesForMethods!
+_aboutBox!**auto generated**!methods!public! !
+_AboutBox!**auto generated**!COM Interfaces-IScriptControl!private! !
+addCode:!**auto generated**!methods!public! !
+AddCode:!**auto generated**!COM Interfaces-IScriptControl!private! !
+addObject:object:!**auto generated**!methods!public! !
+addObject:object:addMembers:!**auto generated**!methods!public! !
+AddObject:Object:AddMembers:!**auto generated**!COM Interfaces-IScriptControl!private! !
+allowUI!**auto generated**!properties!public! !
+allowUI:!**auto generated**!properties!public! !
+codeObject!**auto generated**!properties!public! !
+error!**auto generated**!properties!public! !
+eval:!**auto generated**!methods!public! !
+Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
+executeStatement:!**auto generated**!methods!public! !
+ExecuteStatement:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_CodeObject:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_Error:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_Modules:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_Procedures:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
+get_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+language!**auto generated**!properties!public! !
+language:!**auto generated**!properties!public! !
+modules!**auto generated**!properties!public! !
+procedures!**auto generated**!properties!public! !
+put_AllowUI:!**auto generated**!COM Interfaces-IScriptControl!private! !
+put_Language:!**auto generated**!COM Interfaces-IScriptControl!private! !
+put_SitehWnd:!**auto generated**!COM Interfaces-IScriptControl!private! !
+put_State:!**auto generated**!COM Interfaces-IScriptControl!private! !
+put_Timeout:!**auto generated**!COM Interfaces-IScriptControl!private! !
+put_UseSafeSubset:!**auto generated**!COM Interfaces-IScriptControl!private! !
+reset!**auto generated**!methods!public! !
+Reset!**auto generated**!COM Interfaces-IScriptControl!private! !
+run:parameters:!**auto generated**!methods!public! !
+Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptControl!private! !
+sitehWnd!**auto generated**!properties!public! !
+sitehWnd:!**auto generated**!properties!public! !
+state!**auto generated**!properties!public! !
+state:!**auto generated**!properties!public! !
+timeout!**auto generated**!properties!public! !
+timeout:!**auto generated**!properties!public! !
+useSafeSubset!**auto generated**!properties!public! !
+useSafeSubset:!**auto generated**!properties!public! !
+!
 
 !MSScriptControl.IScriptControl class methodsFor!
 
@@ -547,7 +549,9 @@ initializeTypeLib
 		IScriptControl initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!MSScriptControl.IScriptControl class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSScriptControl.IScriptControl class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSScriptControl.IScriptControl class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptControl class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

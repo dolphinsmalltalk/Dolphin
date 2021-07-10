@@ -83,15 +83,17 @@ yHotspot
 	"Answer the <Integer> value of the receiver's 'yHotspot' field."
 
 	^bytes dwordAtOffset: _OffsetOf_yHotspot! !
-!OS.ICONINFO categoriesFor: #extent!accessing!public! !
-!OS.ICONINFO categoriesFor: #free!public!realizing/unrealizing! !
-!OS.ICONINFO categoriesFor: #hbmColor!**compiled accessors**!public! !
-!OS.ICONINFO categoriesFor: #hbmColor:!**compiled accessors**!public! !
-!OS.ICONINFO categoriesFor: #hbmMask!**compiled accessors**!public! !
-!OS.ICONINFO categoriesFor: #hbmMask:!**compiled accessors**!public! !
-!OS.ICONINFO categoriesFor: #initialize!initializing!private! !
-!OS.ICONINFO categoriesFor: #xHotspot!**compiled accessors**!public! !
-!OS.ICONINFO categoriesFor: #yHotspot!**compiled accessors**!public! !
+!OS.ICONINFO categoriesForMethods!
+extent!accessing!public! !
+free!public!realizing/unrealizing! !
+hbmColor!**compiled accessors**!public! !
+hbmColor:!**compiled accessors**!public! !
+hbmMask!**compiled accessors**!public! !
+hbmMask:!**compiled accessors**!public! !
+initialize!initializing!private! !
+xHotspot!**compiled accessors**!public! !
+yHotspot!**compiled accessors**!public! !
+!
 
 !OS.ICONINFO class methodsFor!
 
@@ -117,6 +119,8 @@ defineFields
 
 getFieldNames
 	^#(#fIcon #xHotspot #yHotspot #hbmMask #hbmColor)! !
-!OS.ICONINFO class categoriesFor: #defineFields!development!public!template definition! !
-!OS.ICONINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ICONINFO class categoriesForMethods!
+defineFields!development!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

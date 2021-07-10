@@ -78,23 +78,27 @@ valuable: aValuable
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
 	self subscriber: aValuable receiver.! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #action!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #action:!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #announcementClass!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #announcementClass:!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #announcer!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #announcer:!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #deliver:!announcing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #handlesAnnouncement:!error handling!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #makeStrong!converting!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #makeWeak!converting!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #subscriber!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #subscriber:!accessing!public! !
-!Kernel.WeakAnnouncementSubscription categoriesFor: #valuable:!accessing!public! !
+!Kernel.WeakAnnouncementSubscription categoriesForMethods!
+action!accessing!public! !
+action:!accessing!public! !
+announcementClass!accessing!public! !
+announcementClass:!accessing!public! !
+announcer!accessing!public! !
+announcer:!accessing!public! !
+deliver:!announcing!public! !
+handlesAnnouncement:!error handling!public! !
+makeStrong!converting!public! !
+makeWeak!converting!public! !
+subscriber!accessing!public! !
+subscriber:!accessing!public! !
+valuable:!accessing!public! !
+!
 
 !Kernel.WeakAnnouncementSubscription class methodsFor!
 
 new
 	^super new: 1! !
-!Kernel.WeakAnnouncementSubscription class categoriesFor: #new!public! !
+!Kernel.WeakAnnouncementSubscription class categoriesForMethods!
+new!public! !
+!
 

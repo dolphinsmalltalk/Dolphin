@@ -192,34 +192,36 @@ width: aNumber
 	"Set the width of the receiver's stroke."
 
 	Gdip gdipSetPenWidth: self asParameter width: aNumber! !
-!Graphics.Gdiplus.Pen categoriesFor: #alignment!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #alignment:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Pen categoriesFor: #brush!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #brush:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #color!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #color:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #compoundArray!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #compoundArray:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #compoundArrayCount!accessing!private! !
-!Graphics.Gdiplus.Pen categoriesFor: #customEndCap!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #customEndCap:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #customStartCap:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #dashCap:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #dashPattern!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #dashPattern:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #dashPatternCount!accessing!private! !
-!Graphics.Gdiplus.Pen categoriesFor: #dashStyle:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #endCap:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #lineCap:endCap:dashCap:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #lineJoin:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #resetTransform!operations!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #rotateTransform:order:!operations!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #scaleTransform:order:!operations!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #startCap:!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #transform:!operations!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #width!accessing!public! !
-!Graphics.Gdiplus.Pen categoriesFor: #width:!accessing!public! !
+!Graphics.Gdiplus.Pen categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+brush!accessing!public! !
+brush:!accessing!public! !
+color!accessing!public! !
+color:!accessing!public! !
+compoundArray!accessing!public! !
+compoundArray:!accessing!public! !
+compoundArrayCount!accessing!private! !
+customEndCap!accessing!public! !
+customEndCap:!accessing!public! !
+customStartCap:!accessing!public! !
+dashCap:!accessing!public! !
+dashPattern!accessing!public! !
+dashPattern:!accessing!public! !
+dashPatternCount!accessing!private! !
+dashStyle:!accessing!public! !
+endCap:!accessing!public! !
+lineCap:endCap:dashCap:!accessing!public! !
+lineJoin:!accessing!public! !
+resetTransform!operations!public! !
+rotateTransform:order:!operations!public! !
+scaleTransform:order:!operations!public! !
+startCap:!accessing!public! !
+transform:!operations!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !Graphics.Gdiplus.Pen class methodsFor!
 
@@ -547,23 +549,25 @@ new
 
 red
 	^self color: Color red! !
-!Graphics.Gdiplus.Pen class categoriesFor: #black!instance creation!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #blue!instance creation!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #brush:width:!instance creation!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #color:!instance creation!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #color:width:!instance creation!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPAttributes!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPCompoundArray!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPCustomCaps!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPDashCap!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPDashPattern!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPDrawing!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPFillWithTexture!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPJoiningLines!examples!public!sunit! !
-!Graphics.Gdiplus.Pen class categoriesFor: #exampleGdipPLineCaps!examples!public!unit tests! !
-!Graphics.Gdiplus.Pen class categoriesFor: #examplesWorkspace!examples!private! !
-!Graphics.Gdiplus.Pen class categoriesFor: #green!instance creation!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #icon!constants!development!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #new!instance creation!public! !
-!Graphics.Gdiplus.Pen class categoriesFor: #red!instance creation!public! !
+!Graphics.Gdiplus.Pen class categoriesForMethods!
+black!instance creation!public! !
+blue!instance creation!public! !
+brush:width:!instance creation!public! !
+color:!instance creation!public! !
+color:width:!instance creation!public! !
+exampleGdipPAttributes!examples!public!sunit! !
+exampleGdipPCompoundArray!examples!public!sunit! !
+exampleGdipPCustomCaps!examples!public!sunit! !
+exampleGdipPDashCap!examples!public!sunit! !
+exampleGdipPDashPattern!examples!public!sunit! !
+exampleGdipPDrawing!examples!public!sunit! !
+exampleGdipPFillWithTexture!examples!public!sunit! !
+exampleGdipPJoiningLines!examples!public!sunit! !
+exampleGdipPLineCaps!examples!public!unit tests! !
+examplesWorkspace!examples!private! !
+green!instance creation!public! !
+icon!constants!development!public! !
+new!instance creation!public! !
+red!instance creation!public! !
+!
 

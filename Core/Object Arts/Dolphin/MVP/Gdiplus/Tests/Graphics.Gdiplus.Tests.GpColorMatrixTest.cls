@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GpColorMatrixTest'
 	instanceVariableNames: 'matrix'
@@ -37,9 +37,11 @@ testConstruction
 testIdentity
 	self assert: (matrix atPoint: 1 @ 1) equals: 1.
 	self assertIsIdentity! !
-!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #assertIsIdentity!public!unit tests! !
-!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #setUp!public!setup! !
-!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #testAccessing!public!unit tests! !
-!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #testConstruction!public!unit tests! !
-!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesFor: #testIdentity!public!unit tests! !
+!Graphics.Gdiplus.Tests.GpColorMatrixTest categoriesForMethods!
+assertIsIdentity!public!unit tests! !
+setUp!public!setup! !
+testAccessing!public!unit tests! !
+testConstruction!public!unit tests! !
+testIdentity!public!unit tests! !
+!
 

@@ -64,12 +64,14 @@ value: anObject
 
 	self model value: anObject.
 ! !
-!UI.ValuePresenter categoriesFor: #findDetails!accessing!public! !
-!UI.ValuePresenter categoriesFor: #model:!accessing!public! !
-!UI.ValuePresenter categoriesFor: #onValueChanged!event handling!public! !
-!UI.ValuePresenter categoriesFor: #setValue:!accessing!private! !
-!UI.ValuePresenter categoriesFor: #value!accessing!public! !
-!UI.ValuePresenter categoriesFor: #value:!accessing!public! !
+!UI.ValuePresenter categoriesForMethods!
+findDetails!accessing!public! !
+model:!accessing!public! !
+onValueChanged!event handling!public! !
+setValue:!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 UI.ValuePresenter methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 UI.ValuePresenter methodProtocol: #valuePresenter attributes: #(#readOnly) selectors: #(#value #value:)!
@@ -87,6 +89,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!UI.ValuePresenter class categoriesFor: #defaultModel!models!public! !
-!UI.ValuePresenter class categoriesFor: #icon!constants!public! !
+!UI.ValuePresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

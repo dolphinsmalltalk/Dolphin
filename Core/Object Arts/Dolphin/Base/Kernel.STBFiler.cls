@@ -87,20 +87,22 @@ version
 
 version: anInteger
 	version := anInteger! !
-!Kernel.STBFiler categoriesFor: #atEnd!public!testing! !
-!Kernel.STBFiler categoriesFor: #context!accessing!public! !
-!Kernel.STBFiler categoriesFor: #context:!accessing!public! !
-!Kernel.STBFiler categoriesFor: #initialize!initializing!private! !
-!Kernel.STBFiler categoriesFor: #position:!operations!public! !
-!Kernel.STBFiler categoriesFor: #register:!helpers!public! !
-!Kernel.STBFiler categoriesFor: #registerPredefinedClasses!initializing!private! !
-!Kernel.STBFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
-!Kernel.STBFiler categoriesFor: #reset!initializing!private! !
-!Kernel.STBFiler categoriesFor: #setRefOffset:!initializing!private! !
-!Kernel.STBFiler categoriesFor: #stream!accessing!public! !
-!Kernel.STBFiler categoriesFor: #stream:!accessing!public! !
-!Kernel.STBFiler categoriesFor: #version!accessing!public! !
-!Kernel.STBFiler categoriesFor: #version:!accessing!public! !
+!Kernel.STBFiler categoriesForMethods!
+atEnd!public!testing! !
+context!accessing!public! !
+context:!accessing!public! !
+initialize!initializing!private! !
+position:!operations!public! !
+register:!helpers!public! !
+registerPredefinedClasses!initializing!private! !
+registerPredefinedObjects!initializing!private! !
+reset!initializing!private! !
+setRefOffset:!initializing!private! !
+stream!accessing!public! !
+stream:!accessing!public! !
+version!accessing!public! !
+version:!accessing!public! !
+!
 
 !Kernel.STBFiler class methodsFor!
 
@@ -170,10 +172,12 @@ version
 
 	^4
 ! !
-!Kernel.STBFiler class categoriesFor: #errorInconsistentSTB:!exceptions!private! !
-!Kernel.STBFiler class categoriesFor: #errorUnrecognisedClass:version:!exceptions!private! !
-!Kernel.STBFiler class categoriesFor: #fixedClasses!constants!public! !
-!Kernel.STBFiler class categoriesFor: #on:!instance creation!public! !
-!Kernel.STBFiler class categoriesFor: #signature!constants!private! !
-!Kernel.STBFiler class categoriesFor: #version!constants!private! !
+!Kernel.STBFiler class categoriesForMethods!
+errorInconsistentSTB:!exceptions!private! !
+errorUnrecognisedClass:version:!exceptions!private! !
+fixedClasses!constants!public! !
+on:!instance creation!public! !
+signature!constants!private! !
+version!constants!private! !
+!
 

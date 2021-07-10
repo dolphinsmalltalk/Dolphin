@@ -75,20 +75,22 @@ renameChangesForClass: aClassName to: newClassName
 				changeClassName: newClassName;
 				yourself].
 	^self! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClass!accessing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClass:!accessing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClassName!accessing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #changeClassName:!accessing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #classReference!accessing!private! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #displayClassName!printing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #executeNotifying:!private! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #isMeta!private! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #methodSourceFor:!accessing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #primitiveExecute!private! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RefactoryClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!Refactory.Browser.RefactoryClassChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+changeClass!accessing!public! !
+changeClass:!accessing!public! !
+changeClassName!accessing!public! !
+changeClassName:!accessing!public! !
+changeString!printing!public! !
+classReference!accessing!private! !
+displayClassName!printing!public! !
+executeNotifying:!private! !
+hash!comparing!public! !
+isMeta!private! !
+methodSourceFor:!accessing!public! !
+primitiveExecute!private! !
+printOn:!printing!public! !
+renameChangesForClass:to:!accessing!public! !
+!
 

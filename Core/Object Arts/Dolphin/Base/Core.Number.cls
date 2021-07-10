@@ -301,57 +301,59 @@ to: stop do: operation
 	the compiler, so this implementation is used only when #perform:'ed."
 
 	(self to: stop) do: operation! !
-!Core.Number categoriesFor: #arcCos!mathematical!public! !
-!Core.Number categoriesFor: #arcSin!mathematical!public! !
-!Core.Number categoriesFor: #arcTan!mathematical!public! !
-!Core.Number categoriesFor: #arcTan:!mathematical!public! !
-!Core.Number categoriesFor: #asFloat!converting!public! !
-!Core.Number categoriesFor: #asFloatD!converting!public! !
-!Core.Number categoriesFor: #asFloatE!converting!public! !
-!Core.Number categoriesFor: #asFloatQ!converting!public! !
-!Core.Number categoriesFor: #asFraction!converting!public! !
-!Core.Number categoriesFor: #asInteger!converting!public! !
-!Core.Number categoriesFor: #asScaledDecimal:!converting!public! !
-!Core.Number categoriesFor: #asTrueFraction!converting!public! !
-!Core.Number categoriesFor: #closeTo:!comparing!public! !
-!Core.Number categoriesFor: #closeTo:precision:!comparing!public! !
-!Core.Number categoriesFor: #copy!copying!public! !
-!Core.Number categoriesFor: #cos!mathematical!public! !
-!Core.Number categoriesFor: #days!converting!durations!public! !
-!Core.Number categoriesFor: #degreesToRadians!converting!public! !
-!Core.Number categoriesFor: #denominator!accessing!public! !
-!Core.Number categoriesFor: #divideByZero!exceptions!private! !
-!Core.Number categoriesFor: #divideIntoDuration:!double dispatch!durations!private! !
-!Core.Number categoriesFor: #even!public!testing! !
-!Core.Number categoriesFor: #exp!mathematical!public! !
-!Core.Number categoriesFor: #floorLog:!mathematical!public! !
-!Core.Number categoriesFor: #fractionPart!accessing!public! !
-!Core.Number categoriesFor: #hour!converting!durations!public! !
-!Core.Number categoriesFor: #hours!converting!durations!public! !
-!Core.Number categoriesFor: #integerPart!accessing!public! !
-!Core.Number categoriesFor: #isFloat!public!testing! !
-!Core.Number categoriesFor: #isFraction!public!testing! !
-!Core.Number categoriesFor: #isLiteral!public!testing! !
-!Core.Number categoriesFor: #isNumber!public!testing! !
-!Core.Number categoriesFor: #ln!mathematical!public! !
-!Core.Number categoriesFor: #log!mathematical!public! !
-!Core.Number categoriesFor: #log:!mathematical!public! !
-!Core.Number categoriesFor: #microseconds!converting!durations!public! !
-!Core.Number categoriesFor: #milliseconds!converting!durations!public! !
-!Core.Number categoriesFor: #minutes!converting!durations!public! !
-!Core.Number categoriesFor: #nanoseconds!converting!durations!public! !
-!Core.Number categoriesFor: #numerator!accessing!public! !
-!Core.Number categoriesFor: #odd!public!testing! !
-!Core.Number categoriesFor: #radiansToDegrees!converting!public! !
-!Core.Number categoriesFor: #raisedTo:!mathematical!public! !
-!Core.Number categoriesFor: #seconds!converting!durations!public! !
-!Core.Number categoriesFor: #sin!mathematical!public! !
-!Core.Number categoriesFor: #sqrt!mathematical!public! !
-!Core.Number categoriesFor: #tan!mathematical!public! !
-!Core.Number categoriesFor: #to:!enumerating!public! !
-!Core.Number categoriesFor: #to:by:!enumerating!public! !
-!Core.Number categoriesFor: #to:by:do:!enumerating!public! !
-!Core.Number categoriesFor: #to:do:!enumerating!public! !
+!Core.Number categoriesForMethods!
+arcCos!mathematical!public! !
+arcSin!mathematical!public! !
+arcTan!mathematical!public! !
+arcTan:!mathematical!public! !
+asFloat!converting!public! !
+asFloatD!converting!public! !
+asFloatE!converting!public! !
+asFloatQ!converting!public! !
+asFraction!converting!public! !
+asInteger!converting!public! !
+asScaledDecimal:!converting!public! !
+asTrueFraction!converting!public! !
+closeTo:!comparing!public! !
+closeTo:precision:!comparing!public! !
+copy!copying!public! !
+cos!mathematical!public! !
+days!converting!durations!public! !
+degreesToRadians!converting!public! !
+denominator!accessing!public! !
+divideByZero!exceptions!private! !
+divideIntoDuration:!double dispatch!durations!private! !
+even!public!testing! !
+exp!mathematical!public! !
+floorLog:!mathematical!public! !
+fractionPart!accessing!public! !
+hour!converting!durations!public! !
+hours!converting!durations!public! !
+integerPart!accessing!public! !
+isFloat!public!testing! !
+isFraction!public!testing! !
+isLiteral!public!testing! !
+isNumber!public!testing! !
+ln!mathematical!public! !
+log!mathematical!public! !
+log:!mathematical!public! !
+microseconds!converting!durations!public! !
+milliseconds!converting!durations!public! !
+minutes!converting!durations!public! !
+nanoseconds!converting!durations!public! !
+numerator!accessing!public! !
+odd!public!testing! !
+radiansToDegrees!converting!public! !
+raisedTo:!mathematical!public! !
+seconds!converting!durations!public! !
+sin!mathematical!public! !
+sqrt!mathematical!public! !
+tan!mathematical!public! !
+to:!enumerating!public! !
+to:by:!enumerating!public! !
+to:by:do:!enumerating!public! !
+to:do:!enumerating!public! !
+!
 
 Core.Number methodProtocol: #number attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
 Core.Number methodProtocol: #rational attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #denominator #floor #fractionPart #integerPart #max: #min: #negated #negative #numerator #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
@@ -625,20 +627,22 @@ zero
 	is the SmallInteger 0"
 
 	^0! !
-!Core.Number class categoriesFor: #errorExponentTooLarge:!parsing!private! !
-!Core.Number class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Core.Number class categoriesFor: #fromString:!instance creation!public! !
-!Core.Number class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
-!Core.Number class categoriesFor: #new!instance creation!public! !
-!Core.Number class categoriesFor: #one!instance creation!public! !
-!Core.Number class categoriesFor: #readDecimalIntegerFrom:allowPlus:!parsing!private! !
-!Core.Number class categoriesFor: #readExponentIntegerFrom:initialInteger:!parsing!private! !
-!Core.Number class categoriesFor: #readFractionFrom:initialInteger:!parsing!private! !
-!Core.Number class categoriesFor: #readFrom:!instance creation!public! !
-!Core.Number class categoriesFor: #readIntegerFrom:radix:!parsing!private! !
-!Core.Number class categoriesFor: #readRadixIntegerFrom:initialInteger:!parsing!private! !
-!Core.Number class categoriesFor: #readScaledDecimalFrom:mantissa:precision:!parsing!private! !
-!Core.Number class categoriesFor: #readSmalltalkRealFrom:initialInteger:!parsing!public! !
-!Core.Number class categoriesFor: #readSmalltalkSyntaxFrom:!parsing!private! !
-!Core.Number class categoriesFor: #zero!instance creation!public! !
+!Core.Number class categoriesForMethods!
+errorExponentTooLarge:!parsing!private! !
+errorInvalidFormat!exceptions!private! !
+fromString:!instance creation!public! !
+maxLiteralIntegerExponent!constants!private! !
+new!instance creation!public! !
+one!instance creation!public! !
+readDecimalIntegerFrom:allowPlus:!parsing!private! !
+readExponentIntegerFrom:initialInteger:!parsing!private! !
+readFractionFrom:initialInteger:!parsing!private! !
+readFrom:!instance creation!public! !
+readIntegerFrom:radix:!parsing!private! !
+readRadixIntegerFrom:initialInteger:!parsing!private! !
+readScaledDecimalFrom:mantissa:precision:!parsing!private! !
+readSmalltalkRealFrom:initialInteger:!parsing!public! !
+readSmalltalkSyntaxFrom:!parsing!private! !
+zero!instance creation!public! !
+!
 

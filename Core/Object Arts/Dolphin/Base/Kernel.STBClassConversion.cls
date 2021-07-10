@@ -79,17 +79,19 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	self isBytes: (anInteger allMask: STBPrefix.BytesMask).
 	isVariable := anInteger allMask: STBPrefix.VariableMask.
 	filer := anSTBInFiler! !
-!Kernel.STBClassConversion categoriesFor: #converterBlock!accessing!public! !
-!Kernel.STBClassConversion categoriesFor: #converterBlock:!accessing!public! !
-!Kernel.STBClassConversion categoriesFor: #dataClass!accessing!public! !
-!Kernel.STBClassConversion categoriesFor: #instSize!accessing!public! !
-!Kernel.STBClassConversion categoriesFor: #isBytes!public!testing! !
-!Kernel.STBClassConversion categoriesFor: #isBytes:!accessing!public! !
-!Kernel.STBClassConversion categoriesFor: #isUpgrading!public!testing! !
-!Kernel.STBClassConversion categoriesFor: #isVariable!public!testing! !
-!Kernel.STBClassConversion categoriesFor: #prefix:!accessing!public! !
-!Kernel.STBClassConversion categoriesFor: #version!accessing!public! !
-!Kernel.STBClassConversion categoriesFor: #version:prefix:filer:!accessing!private! !
+!Kernel.STBClassConversion categoriesForMethods!
+converterBlock!accessing!public! !
+converterBlock:!accessing!public! !
+dataClass!accessing!public! !
+instSize!accessing!public! !
+isBytes!public!testing! !
+isBytes:!accessing!public! !
+isUpgrading!public!testing! !
+isVariable!public!testing! !
+prefix:!accessing!public! !
+version!accessing!public! !
+version:prefix:filer:!accessing!private! !
+!
 
 !Kernel.STBClassConversion class methodsFor!
 
@@ -103,5 +105,7 @@ forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger
 				filer: anSTBInFiler.
 	format converterBlock: (aClass stbConvertFrom: format).
 	^format! !
-!Kernel.STBClassConversion class categoriesFor: #forFiler:class:version:prefix:!instance creation!public! !
+!Kernel.STBClassConversion class categoriesForMethods!
+forFiler:class:version:prefix:!instance creation!public! !
+!
 

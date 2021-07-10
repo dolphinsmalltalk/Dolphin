@@ -36,9 +36,11 @@ OnArrival: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
-!CDO.ISMTPOnArrival categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.ISMTPOnArrival categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.ISMTPOnArrival categoriesFor: #OnArrival:EventStatus:!**auto generated**!COM Interfaces-ISMTPOnArrival!public! !
+!CDO.ISMTPOnArrival categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+OnArrival:EventStatus:!**auto generated**!COM Interfaces-ISMTPOnArrival!public! !
+!
 
 !CDO.ISMTPOnArrival class methodsFor!
 
@@ -50,5 +52,7 @@ defineFunctions
 		defineFunction: #OnArrival:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
 ! !
-!CDO.ISMTPOnArrival class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.ISMTPOnArrival class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

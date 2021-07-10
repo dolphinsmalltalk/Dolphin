@@ -51,10 +51,12 @@ lgpl: aLOGPALETTE
 		from: ##(_OffsetOf_lgpl + 1)
 		to: ##(_OffsetOf_lgpl + LOGPALETTE basicByteSize)
 		startingAt: 1! !
-!OS.EMRCREATEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
-!OS.EMRCREATEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
-!OS.EMRCREATEPALETTE categoriesFor: #lgpl!**compiled accessors**!public! !
-!OS.EMRCREATEPALETTE categoriesFor: #lgpl:!**compiled accessors**!public! !
+!OS.EMRCREATEPALETTE categoriesForMethods!
+ihPal!**compiled accessors**!public! !
+ihPal:!**compiled accessors**!public! !
+lgpl!**compiled accessors**!public! !
+lgpl:!**compiled accessors**!public! !
+!
 
 !OS.EMRCREATEPALETTE class methodsFor!
 
@@ -88,7 +90,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEPALETTE}! !
-!OS.EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRCREATEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRCREATEPALETTE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATEPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -175,24 +175,26 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{IClassFactory}! !
-!OS.COM.ClassFactory categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.ClassFactory categoriesFor: #clear!initializing!private! !
-!OS.COM.ClassFactory categoriesFor: #clsid!accessing!public! !
-!OS.COM.ClassFactory categoriesFor: #clsid:!accessing!private! !
-!OS.COM.ClassFactory categoriesFor: #createInstance:!instance creation!private! !
-!OS.COM.ClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!private! !
-!OS.COM.ClassFactory categoriesFor: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!COM Interfaces-IClassFactory2!public! !
-!OS.COM.ClassFactory categoriesFor: #free!public!realizing/unrealizing! !
-!OS.COM.ClassFactory categoriesFor: #GetLicInfo:!COM Interfaces-IClassFactory2!public! !
-!OS.COM.ClassFactory categoriesFor: #LockServer:!COM Interfaces-IClassFactory!private! !
-!OS.COM.ClassFactory categoriesFor: #printOn:!development!printing!public! !
-!OS.COM.ClassFactory categoriesFor: #register!operations!private! !
-!OS.COM.ClassFactory categoriesFor: #registerInstance:!operations!private! !
-!OS.COM.ClassFactory categoriesFor: #RequestLicKey:pBstrKey:!COM Interfaces-IClassFactory2!public! !
-!OS.COM.ClassFactory categoriesFor: #revoke!private!realizing/unrealizing! !
-!OS.COM.ClassFactory categoriesFor: #serverClass!accessing!private! !
-!OS.COM.ClassFactory categoriesFor: #serverClass:!accessing!private! !
-!OS.COM.ClassFactory categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.ClassFactory categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+clear!initializing!private! !
+clsid!accessing!public! !
+clsid:!accessing!private! !
+createInstance:!instance creation!private! !
+CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!private! !
+CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!COM Interfaces-IClassFactory2!public! !
+free!public!realizing/unrealizing! !
+GetLicInfo:!COM Interfaces-IClassFactory2!public! !
+LockServer:!COM Interfaces-IClassFactory!private! !
+printOn:!development!printing!public! !
+register!operations!private! !
+registerInstance:!operations!private! !
+RequestLicKey:pBstrKey:!COM Interfaces-IClassFactory2!public! !
+revoke!private!realizing/unrealizing! !
+serverClass!accessing!private! !
+serverClass:!accessing!private! !
+supportedInterfaces!constants!public! !
+!
 
 !OS.COM.ClassFactory class methodsFor!
 
@@ -326,23 +328,25 @@ unregister: serverClass
 	| f |
 	f := Factories removeKey: serverClass ifAbsent: [^self].
 	f revoke! !
-!OS.COM.ClassFactory class categoriesFor: #basicOn:clsid:!instance creation!private! !
-!OS.COM.ClassFactory class categoriesFor: #canUnloadNow!private!testing! !
-!OS.COM.ClassFactory class categoriesFor: #clearAll!initializing!private! !
-!OS.COM.ClassFactory class categoriesFor: #decrementLockCount!accessing!private! !
-!OS.COM.ClassFactory class categoriesFor: #freeAll!operations!private! !
-!OS.COM.ClassFactory class categoriesFor: #incrementLockCount!accessing!private! !
-!OS.COM.ClassFactory class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.ClassFactory class categoriesFor: #initializeFactoryRegister!initializing!private! !
-!OS.COM.ClassFactory class categoriesFor: #lockCount!accessing!public! !
-!OS.COM.ClassFactory class categoriesFor: #on:!instance creation!public! !
-!OS.COM.ClassFactory class categoriesFor: #on:clsid:!instance creation!public! !
-!OS.COM.ClassFactory class categoriesFor: #onElementsExpired:!event handling!private! !
-!OS.COM.ClassFactory class categoriesFor: #onExit!event handling!private! !
-!OS.COM.ClassFactory class categoriesFor: #onStartup!event handling!private! !
-!OS.COM.ClassFactory class categoriesFor: #registerAll!operations!private! !
-!OS.COM.ClassFactory class categoriesFor: #revokeAll!operations!private! !
-!OS.COM.ClassFactory class categoriesFor: #revokeOn:!instance creation!public! !
-!OS.COM.ClassFactory class categoriesFor: #shutdownIfDead!operations-shutdown!private! !
-!OS.COM.ClassFactory class categoriesFor: #unregister:!instance creation!public! !
+!OS.COM.ClassFactory class categoriesForMethods!
+basicOn:clsid:!instance creation!private! !
+canUnloadNow!private!testing! !
+clearAll!initializing!private! !
+decrementLockCount!accessing!private! !
+freeAll!operations!private! !
+incrementLockCount!accessing!private! !
+initialize!development!initializing!private! !
+initializeFactoryRegister!initializing!private! !
+lockCount!accessing!public! !
+on:!instance creation!public! !
+on:clsid:!instance creation!public! !
+onElementsExpired:!event handling!private! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+registerAll!operations!private! !
+revokeAll!operations!private! !
+revokeOn:!instance creation!public! !
+shutdownIfDead!operations-shutdown!private! !
+unregister:!instance creation!public! !
+!
 

@@ -407,61 +407,63 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^'MMMM yyyy'! !
-!Kernel.SmalltalkLocale categoriesFor: #amDesignator!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #code!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #dayOfWeek:!mapping!public! !
-!Kernel.SmalltalkLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #dayOfWeekName:!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #decimalPlaces!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #decimalSeparator!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #displayDuration:on:!printing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #displayFloat:on:!printing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #displayInteger:on:!printing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #displayName!displaying!public! !
-!Kernel.SmalltalkLocale categoriesFor: #displayOn:!displaying!public! !
-!Kernel.SmalltalkLocale categoriesFor: #durationFormat!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #englishDisplayName!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #englishLanguageName!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #firstDayOfWeek!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #hasLeadingZero!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #indexOfMonth:!enquiries!public! !
-!Kernel.SmalltalkLocale categoriesFor: #infinity!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #integerBase!accessing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #integerBase:!accessing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #isInstalled!public!testing! !
-!Kernel.SmalltalkLocale categoriesFor: #iso639LanguageName!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #isValidLocale!public!testing! !
-!Kernel.SmalltalkLocale categoriesFor: #lastTwoDigitYear!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #lcid!accessing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #listSeparator!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #localizedDisplayName!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #longDateFormat!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #longTimeFormat!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #monthAbbreviation:!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #monthName:!enquiries!public! !
-!Kernel.SmalltalkLocale categoriesFor: #monthNames!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #name!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #nameOfDay:!enquiries!public! !
-!Kernel.SmalltalkLocale categoriesFor: #nan!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #nativeDigits!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #negativeInfinity!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #negativeNumberMode!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #negativeSign!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #numberGrouping!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #percentSymbol!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #primary!accessing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #printFloat:!printing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #printOn:!printing!public! !
-!Kernel.SmalltalkLocale categoriesFor: #shortAmDesignator!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #shortDateFormat!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #shortPmDesignator!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #shortTimeFormat!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #tag!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #thousandSeparator!constants!public! !
-!Kernel.SmalltalkLocale categoriesFor: #yearMonthFormat!constants!public! !
+!Kernel.SmalltalkLocale categoriesForMethods!
+amDesignator!constants!public! !
+code!constants!public! !
+dayOfWeek:!mapping!public! !
+dayOfWeekAbbreviation:!constants!public! !
+dayOfWeekName:!constants!public! !
+dayOfWeekShortAbbreviation:!constants!public! !
+decimalPlaces!constants!public! !
+decimalSeparator!constants!public! !
+displayDuration:on:!printing!public! !
+displayFloat:on:!printing!public! !
+displayInteger:on:!printing!public! !
+displayName!displaying!public! !
+displayOn:!displaying!public! !
+durationFormat!constants!public! !
+englishDisplayName!constants!public! !
+englishLanguageName!constants!public! !
+firstDayOfWeek!constants!public! !
+hasLeadingZero!constants!public! !
+indexOfMonth:!enquiries!public! !
+infinity!constants!public! !
+integerBase!accessing!public! !
+integerBase:!accessing!public! !
+isInstalled!public!testing! !
+iso639LanguageName!constants!public! !
+isValidLocale!public!testing! !
+lastTwoDigitYear!constants!public! !
+lcid!accessing!public! !
+listSeparator!constants!public! !
+localizedDisplayName!constants!public! !
+longDateFormat!constants!public! !
+longTimeFormat!constants!public! !
+monthAbbreviation:!constants!public! !
+monthName:!enquiries!public! !
+monthNames!constants!public! !
+name!constants!public! !
+nameOfDay:!enquiries!public! !
+nan!constants!public! !
+nativeDigits!constants!public! !
+negativeInfinity!constants!public! !
+negativeNumberMode!constants!public! !
+negativeSign!constants!public! !
+numberGrouping!constants!public! !
+percentSymbol!constants!public! !
+pmDesignator!constants!public! !
+primary!accessing!public! !
+printFloat:!printing!public! !
+printFloat:on:format:!printing!public! !
+printOn:!printing!public! !
+shortAmDesignator!constants!public! !
+shortDateFormat!constants!public! !
+shortPmDesignator!constants!public! !
+shortTimeFormat!constants!public! !
+tag!constants!public! !
+thousandSeparator!constants!public! !
+yearMonthFormat!constants!public! !
+!
 
 !Kernel.SmalltalkLocale class methodsFor!
 
@@ -482,7 +484,9 @@ initialize
 
 reset
 	Current ifNotNil: [:current | current numberFormat: nil]! !
-!Kernel.SmalltalkLocale class categoriesFor: #current!instance creation!public! !
-!Kernel.SmalltalkLocale class categoriesFor: #initialize!class initialization!public! !
-!Kernel.SmalltalkLocale class categoriesFor: #reset!initializing!private! !
+!Kernel.SmalltalkLocale class categoriesForMethods!
+current!instance creation!public! !
+initialize!class initialization!public! !
+reset!initializing!private! !
+!
 

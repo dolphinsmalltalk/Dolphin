@@ -17,11 +17,15 @@ addFontFile: aFilename
 	"Adds a font file to this private font collection."
 
 	Gdip gdipPrivateAddFontFile: self asParameter filename: aFilename! !
-!Graphics.Gdiplus.PrivateFontCollection categoriesFor: #addFontFile:!operations!public! !
+!Graphics.Gdiplus.PrivateFontCollection categoriesForMethods!
+addFontFile:!operations!public! !
+!
 
 !Graphics.Gdiplus.PrivateFontCollection class methodsFor!
 
 new
 	^self fromInitializer: PrivateFontCollectionInitializer default! !
-!Graphics.Gdiplus.PrivateFontCollection class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.PrivateFontCollection class categoriesForMethods!
+new!instance creation!public! !
+!
 

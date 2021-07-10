@@ -351,42 +351,44 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	response to the combo-box notifications."
 
 	^nil! !
-!UI.ComboBox categoriesFor: #actualHeight!accessing!geometry!private! !
-!UI.ComboBox categoriesFor: #adjustRectangle:!geometry!public! !
-!UI.ComboBox categoriesFor: #basicAdd:!adding!private! !
-!UI.ComboBox categoriesFor: #basicAdd:atIndex:!adding!private! !
-!UI.ComboBox categoriesFor: #basicClear!private!removing! !
-!UI.ComboBox categoriesFor: #basicRemoveAtIndex:!private!removing! !
-!UI.ComboBox categoriesFor: #canHScroll!accessing-styles!public! !
-!UI.ComboBox categoriesFor: #canHScroll:!accessing-styles!public! !
-!UI.ComboBox categoriesFor: #cbnDblClk!event handling-win32!private! !
-!UI.ComboBox categoriesFor: #cbnErrSpace!event handling-win32!private! !
-!UI.ComboBox categoriesFor: #cbnKillFocus!event handling-win32!private! !
-!UI.ComboBox categoriesFor: #cbnSelChange!event handling-win32!private!selection! !
-!UI.ComboBox categoriesFor: #cbnSetFocus!event handling-win32!private! !
-!UI.ComboBox categoriesFor: #command:id:!commands!private! !
-!UI.ComboBox categoriesFor: #cueBanner!event handling!public! !
-!UI.ComboBox categoriesFor: #cueBanner:!event handling!public! !
-!UI.ComboBox categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.ComboBox categoriesFor: #droppedHeight!accessing!public! !
-!UI.ComboBox categoriesFor: #droppedHeight:!accessing!public! !
-!UI.ComboBox categoriesFor: #editHwnd!accessing!private! !
-!UI.ComboBox categoriesFor: #editView!accessing!public! !
-!UI.ComboBox categoriesFor: #extent:!geometry!public! !
-!UI.ComboBox categoriesFor: #getSelectionsByIndex!private!selection! !
-!UI.ComboBox categoriesFor: #getSingleSelection!helpers!private!selection! !
-!UI.ComboBox categoriesFor: #initialize!initializing!private! !
-!UI.ComboBox categoriesFor: #itemCount!accessing!public! !
-!UI.ComboBox categoriesFor: #itemFromPoint:!enquiries!private! !
-!UI.ComboBox categoriesFor: #mode!accessing-styles!public! !
-!UI.ComboBox categoriesFor: #mode:!accessing-styles!public! !
-!UI.ComboBox categoriesFor: #onPositionChanged:!event handling!public! !
-!UI.ComboBox categoriesFor: #placement:!geometry!private! !
-!UI.ComboBox categoriesFor: #selectionByIndex!helpers!private!selection! !
-!UI.ComboBox categoriesFor: #setSingleSelection:!private!selection! !
-!UI.ComboBox categoriesFor: #textLimit:!accessing!public! !
-!UI.ComboBox categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
-!UI.ComboBox categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!private! !
+!UI.ComboBox categoriesForMethods!
+actualHeight!accessing!geometry!private! !
+adjustRectangle:!geometry!public! !
+basicAdd:!adding!private! !
+basicAdd:atIndex:!adding!private! !
+basicClear!private!removing! !
+basicRemoveAtIndex:!private!removing! !
+canHScroll!accessing-styles!public! !
+canHScroll:!accessing-styles!public! !
+cbnDblClk!event handling-win32!private! !
+cbnErrSpace!event handling-win32!private! !
+cbnKillFocus!event handling-win32!private! !
+cbnSelChange!event handling-win32!private!selection! !
+cbnSetFocus!event handling-win32!private! !
+command:id:!commands!private! !
+cueBanner!event handling!public! !
+cueBanner:!event handling!public! !
+defaultWindowStyle!constants!private! !
+droppedHeight!accessing!public! !
+droppedHeight:!accessing!public! !
+editHwnd!accessing!private! !
+editView!accessing!public! !
+extent:!geometry!public! !
+getSelectionsByIndex!private!selection! !
+getSingleSelection!helpers!private!selection! !
+initialize!initializing!private! !
+itemCount!accessing!public! !
+itemFromPoint:!enquiries!private! !
+mode!accessing-styles!public! !
+mode:!accessing-styles!public! !
+onPositionChanged:!event handling!public! !
+placement:!geometry!private! !
+selectionByIndex!helpers!private!selection! !
+setSingleSelection:!private!selection! !
+textLimit:!accessing!public! !
+wmKillFocus:wParam:lParam:!event handling-win32!private! !
+wmSetFocus:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.ComboBox class methodsFor!
 
@@ -403,7 +405,9 @@ winClassName
 
 	^'COMBOBOX'
 ! !
-!UI.ComboBox class categoriesFor: #icon!constants!public! !
-!UI.ComboBox class categoriesFor: #themePartName!constants!private! !
-!UI.ComboBox class categoriesFor: #winClassName!constants!private! !
+!UI.ComboBox class categoriesForMethods!
+icon!constants!public! !
+themePartName!constants!private! !
+winClassName!constants!private! !
+!
 

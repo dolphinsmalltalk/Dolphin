@@ -58,10 +58,12 @@ AddrList: aStructureArrayOfSOCKADDR_STORAGE
 		to: _OffsetOf_AddrList + size
 		startingAt: 1.
 	self AddrCount: aStructureArrayOfSOCKADDR_STORAGE size! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrCount!**compiled accessors**!private! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrCount:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrList!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrList:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesForMethods!
+AddrCount!**compiled accessors**!private! !
+AddrCount:!**compiled accessors**!private! !
+AddrList!**compiled accessors**!public! !
+AddrList:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class methodsFor!
 
@@ -84,6 +86,8 @@ defineFields
 
 getFieldNames
 	^#(#AddrCount #AddrList)! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -69,25 +69,29 @@ renameChangesForClass: aClassName to: newClassName
 	name to perform the compiles."
 
 	"No action required for most changes."! !
-!Refactory.Browser.RefactoryChange categoriesFor: #addClassChangeClass!constants!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #changes!accessing!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #changesSize!accessing!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #displayString!printing!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #execute!performing/changes!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #executeNotifying:!private! !
-!Refactory.Browser.RefactoryChange categoriesFor: #flattenedChanges!accessing!private! !
-!Refactory.Browser.RefactoryChange categoriesFor: #flattenOnto:!private! !
-!Refactory.Browser.RefactoryChange categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #name!accessing!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #name:!initialize/release!public! !
-!Refactory.Browser.RefactoryChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!Refactory.Browser.RefactoryChange categoriesForMethods!
+addClassChangeClass!constants!public! !
+changeForClass:selector:!accessing!public! !
+changeForMetaclass:selector:!accessing!public! !
+changes!accessing!public! !
+changesSize!accessing!public! !
+changeString!printing!public! !
+displayString!printing!public! !
+execute!performing/changes!public! !
+executeNotifying:!private! !
+flattenedChanges!accessing!private! !
+flattenOnto:!private! !
+initialize!initialize/release!public! !
+name!accessing!public! !
+name:!initialize/release!public! !
+renameChangesForClass:to:!accessing!public! !
+!
 
 !Refactory.Browser.RefactoryChange class methodsFor!
 
 new
 	^super new initialize! !
-!Refactory.Browser.RefactoryChange class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RefactoryChange class categoriesForMethods!
+new!instance creation!public! !
+!
 

@@ -47,13 +47,15 @@ numberSelectors
 storeOn: aStream
 	environment storeOn: aStream.
 	aStream nextPutAll: ' not'! !
-!Refactory.Browser.NotEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Refactory.Browser.NotEnvironment categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.NotEnvironment categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.NotEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.NotEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!Refactory.Browser.NotEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.NotEnvironment categoriesFor: #not!environments!public! !
-!Refactory.Browser.NotEnvironment categoriesFor: #numberSelectors!public! !
-!Refactory.Browser.NotEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.NotEnvironment categoriesForMethods!
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+not!environments!public! !
+numberSelectors!public! !
+storeOn:!printing!public! !
+!
 

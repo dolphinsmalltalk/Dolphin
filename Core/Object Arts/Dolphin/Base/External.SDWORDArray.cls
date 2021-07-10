@@ -19,8 +19,10 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes sdwordAtOffset: (indexInteger - 1) * 4 put: valueInteger! !
-!External.SDWORDArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.SDWORDArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.SDWORDArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.SDWORDArray class methodsFor!
 
@@ -28,5 +30,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^SDWORD! !
-!External.SDWORDArray class categoriesFor: #elementClass!constants!public! !
+!External.SDWORDArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

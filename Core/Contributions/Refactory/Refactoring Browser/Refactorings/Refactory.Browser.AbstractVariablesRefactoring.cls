@@ -154,21 +154,23 @@ transform
 						expandMacros].
 	self abstractInstanceVariables.
 	self abstractClassVariables! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractClassVariable:!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractClassVariables!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariable:!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariables!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #classVariableNames!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #computeVariablesToAbstract!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #hasVariablesToAbstract!public!testing! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #instanceVariableNames!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #parseTree!accessing!public! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #processAssignmentNode:!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #processReferenceNode:!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #removeDefinedClassVariables!public!transforming! !
-!Refactory.Browser.AbstractVariablesRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AbstractVariablesRefactoring categoriesForMethods!
+abstractClassVariable:!public!transforming! !
+abstractClassVariables!public!transforming! !
+abstractInstanceVariable:!public!transforming! !
+abstractInstanceVariables!public!transforming! !
+abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
+classVariableNames!public!transforming! !
+computeVariablesToAbstract!public!transforming! !
+hasVariablesToAbstract!public!testing! !
+instanceVariableNames!public!transforming! !
+parseTree!accessing!public! !
+preconditions!preconditions!public! !
+processAssignmentNode:!public!transforming! !
+processReferenceNode:!public!transforming! !
+removeDefinedClassVariables!public!transforming! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.AbstractVariablesRefactoring class methodsFor!
 
@@ -188,6 +190,8 @@ model: aRBNamespace abstractVariablesIn: aBRProgramNode from: fromBehavior toAll
 			toAll: behaviorCollection
 			ignoring: aVariableName;
 		yourself! !
-!Refactory.Browser.AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:!instance creation!public! !
-!Refactory.Browser.AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !
+!Refactory.Browser.AbstractVariablesRefactoring class categoriesForMethods!
+model:abstractVariablesIn:from:toAll:!instance creation!public! !
+model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !
+!
 

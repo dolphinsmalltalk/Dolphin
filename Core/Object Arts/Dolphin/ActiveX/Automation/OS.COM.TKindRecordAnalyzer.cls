@@ -15,5 +15,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_RECORD! !
-!OS.COM.TKindRecordAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindRecordAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

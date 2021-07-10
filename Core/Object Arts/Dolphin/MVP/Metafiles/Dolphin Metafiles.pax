@@ -368,19 +368,21 @@ setEnhMetaFileBits: cbBuffer lpData: lpData
 
 	<stdcall: handle SetEnhMetaFileBits dword byte*>
 	^self invalidCall: _failureCode! !
-!OS.GDILibrary categoriesFor: #closeEnhMetaFile:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #createEnhMetaFile:lpFileName:lpRect:lpDescription:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #deleteEnhMetaFile:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #getEnhMetaFile:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #getEnhMetaFileBits:cbBuffer:lpbBuffer:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #getEnhMetaFileDescription:cchBuffer:lpszDescription:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #getEnhMetaFileHeader:cbBuffer:lpemnh:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #getEnhMetaFilePaletteEntries:cbEntries:lppe:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #playEnhMetaFile:hemf:lpRect:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:!public!win32 functions-metafile! !
-!OS.GDILibrary categoriesFor: #setEnhMetaFileBits:lpData:!public!win32 functions-metafile! !
+!OS.GDILibrary categoriesForMethods!
+closeEnhMetaFile:!public!win32 functions-metafile! !
+copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !
+createEnhMetaFile:lpFileName:lpRect:lpDescription:!public!win32 functions-metafile! !
+deleteEnhMetaFile:!public!win32 functions-metafile! !
+enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:!public!win32 functions-metafile! !
+getEnhMetaFile:!public!win32 functions-metafile! !
+getEnhMetaFileBits:cbBuffer:lpbBuffer:!public!win32 functions-metafile! !
+getEnhMetaFileDescription:cchBuffer:lpszDescription:!public!win32 functions-metafile! !
+getEnhMetaFileHeader:cbBuffer:lpemnh:!public!win32 functions-metafile! !
+getEnhMetaFilePaletteEntries:cbEntries:lppe:!public!win32 functions-metafile! !
+playEnhMetaFile:hemf:lpRect:!public!win32 functions-metafile! !
+playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:!public!win32 functions-metafile! !
+setEnhMetaFileBits:lpData:!public!win32 functions-metafile! !
+!
 
 !UI.Clipboard methodsFor!
 
@@ -399,8 +401,10 @@ getMetafileIfNone: exceptionHandler
 			[| hemf |
 			hemf := User32 getClipboardData: CF_ENHMETAFILE.
 			hemf isNull ifTrue: [exceptionHandler value] ifFalse: [(Metafile fromHandle: hemf) copy]]! !
-!UI.Clipboard categoriesFor: #getMetafile!accessing!public! !
-!UI.Clipboard categoriesFor: #getMetafileIfNone:!accessing!public! !
+!UI.Clipboard categoriesForMethods!
+getMetafile!accessing!public! !
+getMetafileIfNone:!accessing!public! !
+!
 
 "End of package definition"!
 

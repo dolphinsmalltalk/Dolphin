@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveClassTest'
 	instanceVariableNames: ''
@@ -74,11 +74,13 @@ testRemoveSelfReferenced
 	self executeRefactoring: refactoring.
 	"Classes were unreferenced outside those being removed (within the scope) so should be gone"
 	classNames do: [:each | self assertIsNil: (model classNamed: each)]! !
-!Refactory.Browser.Tests.RemoveClassTest categoriesFor: #removableClassWithSubclasses!constants!private! !
-!Refactory.Browser.Tests.RemoveClassTest categoriesFor: #testBadName!failure tests!public! !
-!Refactory.Browser.Tests.RemoveClassTest categoriesFor: #testRemoveClass!public!tests! !
-!Refactory.Browser.Tests.RemoveClassTest categoriesFor: #testRemoveClassModelReferenced!failure tests!public! !
-!Refactory.Browser.Tests.RemoveClassTest categoriesFor: #testRemoveClassModelReferencedByFullName!public!tests! !
-!Refactory.Browser.Tests.RemoveClassTest categoriesFor: #testRemoveReferenced!failure tests!public! !
-!Refactory.Browser.Tests.RemoveClassTest categoriesFor: #testRemoveSelfReferenced!failure tests!public! !
+!Refactory.Browser.Tests.RemoveClassTest categoriesForMethods!
+removableClassWithSubclasses!constants!private! !
+testBadName!failure tests!public! !
+testRemoveClass!public!tests! !
+testRemoveClassModelReferenced!failure tests!public! !
+testRemoveClassModelReferencedByFullName!public!tests! !
+testRemoveReferenced!failure tests!public! !
+testRemoveSelfReferenced!failure tests!public! !
+!
 

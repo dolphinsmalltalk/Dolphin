@@ -16,11 +16,15 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipStringFormatGetGenericDefault: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.StringFormatGenericDefaultInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.StringFormatGenericDefaultInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.StringFormatGenericDefaultInitializer class methodsFor!
 
 uninitialize
 	GenericDefault := nil! !
-!Graphics.Gdiplus.StringFormatGenericDefaultInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormatGenericDefaultInitializer class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

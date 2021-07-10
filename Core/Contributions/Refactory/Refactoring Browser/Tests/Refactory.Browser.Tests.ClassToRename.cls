@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
@@ -19,9 +19,11 @@ method2
 
 selfReference
 	^ClassToRename new! !
-!Refactory.Browser.Tests.ClassToRename categoriesFor: #method1!performing!public! !
-!Refactory.Browser.Tests.ClassToRename categoriesFor: #method2!performing!public! !
-!Refactory.Browser.Tests.ClassToRename categoriesFor: #selfReference!performing!public! !
+!Refactory.Browser.Tests.ClassToRename categoriesForMethods!
+method1!performing!public! !
+method2!performing!public! !
+selfReference!performing!public! !
+!
 
 !Refactory.Browser.Tests.ClassToRename class methodsFor!
 
@@ -32,6 +34,8 @@ byteSize
 
 new
 	^super new initialize! !
-!Refactory.Browser.Tests.ClassToRename class categoriesFor: #byteSize!accessing!private! !
-!Refactory.Browser.Tests.ClassToRename class categoriesFor: #new!performing!public! !
+!Refactory.Browser.Tests.ClassToRename class categoriesForMethods!
+byteSize!accessing!private! !
+new!performing!public! !
+!
 

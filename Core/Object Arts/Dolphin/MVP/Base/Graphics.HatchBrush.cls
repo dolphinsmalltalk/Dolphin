@@ -50,10 +50,12 @@ printOn: aPuttableStream
 setId: anInteger color: aColor 
 	id := anInteger.
 	color := aColor! !
-!Graphics.HatchBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.HatchBrush categoriesFor: #name!accessing!public! !
-!Graphics.HatchBrush categoriesFor: #printOn:!printing!public! !
-!Graphics.HatchBrush categoriesFor: #setId:color:!initializing!private! !
+!Graphics.HatchBrush categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+name!accessing!public! !
+printOn:!printing!public! !
+setId:color:!initializing!private! !
+!
 
 !Graphics.HatchBrush class methodsFor!
 
@@ -61,5 +63,7 @@ fromId: anInteger color: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of the type identifiedby the <integer> argument, anInteger, which should be a code from the HS_xxx enumeration, in the <Color>, aColor."
 
 	^self new setId: anInteger color: aColor! !
-!Graphics.HatchBrush class categoriesFor: #fromId:color:!instance creation!public! !
+!Graphics.HatchBrush class categoriesForMethods!
+fromId:color:!instance creation!public! !
+!
 

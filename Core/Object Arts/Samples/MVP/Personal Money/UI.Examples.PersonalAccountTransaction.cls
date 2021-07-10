@@ -92,16 +92,18 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #actualAmount!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #amount!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #amount:!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #date!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #date:!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #description!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #description:!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #displayOn:!displaying!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #initialize!initializing!private! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #isDebit!accessing!public!testing! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #isDebit:!accessing!public! !
-!UI.Examples.PersonalAccountTransaction categoriesFor: #printOn:!printing!public! !
+!UI.Examples.PersonalAccountTransaction categoriesForMethods!
+actualAmount!accessing!public! !
+amount!accessing!public! !
+amount:!accessing!public! !
+date!accessing!public! !
+date:!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+initialize!initializing!private! !
+isDebit!accessing!public!testing! !
+isDebit:!accessing!public! !
+printOn:!printing!public! !
+!
 

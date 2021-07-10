@@ -66,20 +66,22 @@ value
 
 valueClass
 	^isByteArray ifTrue: [ByteArray] ifFalse: [Array]! !
-!Kernel.StLiteralArrayNode categoriesFor: #=!comparing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StLiteralArrayNode categoriesFor: #children!accessing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #contents!accessing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #contents:!accessing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #isForByteArray!public!testing! !
-!Kernel.StLiteralArrayNode categoriesFor: #isLiteralArray!public!testing! !
-!Kernel.StLiteralArrayNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #startPosition:contents:stopPosition:isByteArray:!initializing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #value!accessing!public! !
-!Kernel.StLiteralArrayNode categoriesFor: #valueClass!accessing!public! !
+!Kernel.StLiteralArrayNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+children!accessing!public! !
+childrenDo:!accessing!public! !
+contents!accessing!public! !
+contents:!accessing!public! !
+isForByteArray!public!testing! !
+isLiteralArray!public!testing! !
+postCopy!copying!public! !
+startPosition:contents:stopPosition:isByteArray:!initializing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+value!accessing!public! !
+valueClass!accessing!public! !
+!
 
 !Kernel.StLiteralArrayNode class methodsFor!
 
@@ -97,6 +99,8 @@ value: aValue
 		contents: (aValue asArray collect: [:each | StLiteralNode value: each])
 		stopPosition: nil
 		isByteArray: aValue class ~~ Array! !
-!Kernel.StLiteralArrayNode class categoriesFor: #startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
-!Kernel.StLiteralArrayNode class categoriesFor: #value:!instance creation!public! !
+!Kernel.StLiteralArrayNode class categoriesForMethods!
+startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
+value:!instance creation!public! !
+!
 

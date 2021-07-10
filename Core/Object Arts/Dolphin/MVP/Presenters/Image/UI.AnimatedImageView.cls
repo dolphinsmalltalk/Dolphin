@@ -47,11 +47,13 @@ value: anObject
 	"Set the receiver's model value to anObject"
 
 	self model value: anObject! !
-!UI.AnimatedImageView categoriesFor: #connectModel!models!public! !
-!UI.AnimatedImageView categoriesFor: #initialize!private! !
-!UI.AnimatedImageView categoriesFor: #render!operations!private! !
-!UI.AnimatedImageView categoriesFor: #value!accessing!public! !
-!UI.AnimatedImageView categoriesFor: #value:!accessing!public! !
+!UI.AnimatedImageView categoriesForMethods!
+connectModel!models!public! !
+initialize!private! !
+render!operations!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !UI.AnimatedImageView class methodsFor!
 
@@ -67,6 +69,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.AnimatedImageView) 34 14 nil nil 34 2 8 1409286144 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #white nil 5 nil nil nil 416 nil true 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 690 247 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 122 12 0 0 110 0 0 0] 8 #() 690 193 193 nil 27)! !
-!UI.AnimatedImageView class categoriesFor: #defaultModel!models!public! !
-!UI.AnimatedImageView class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.AnimatedImageView class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+!
 

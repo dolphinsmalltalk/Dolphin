@@ -180,29 +180,31 @@ systemUpdateEvent
 
 textPresenterClass
 	^SmalltalkSystem current workspaceClass! !
-!Tools.ClassAspectPlugin categoriesFor: #accept!commands!public! !
-!Tools.ClassAspectPlugin categoriesFor: #applyOptions!options!private! !
-!Tools.ClassAspectPlugin categoriesFor: #aspect!constants!private! !
-!Tools.ClassAspectPlugin categoriesFor: #backgroundUpdate!private!updating! !
-!Tools.ClassAspectPlugin categoriesFor: #caption!constants!private! !
-!Tools.ClassAspectPlugin categoriesFor: #createComponents!initializing!private! !
-!Tools.ClassAspectPlugin categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.ClassAspectPlugin categoriesFor: #currentClassUpdated!event handling!private! !
-!Tools.ClassAspectPlugin categoriesFor: #defaultHelpId!constants!public! !
-!Tools.ClassAspectPlugin categoriesFor: #displayOn:!displaying!public! !
-!Tools.ClassAspectPlugin categoriesFor: #foregroundUpdate!private!updating! !
-!Tools.ClassAspectPlugin categoriesFor: #icon!accessing!public! !
-!Tools.ClassAspectPlugin categoriesFor: #isModified!public!testing! !
-!Tools.ClassAspectPlugin categoriesFor: #modifiedModel!accessing!public! !
-!Tools.ClassAspectPlugin categoriesFor: #newAspectBufferOn:!helpers!private! !
-!Tools.ClassAspectPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
-!Tools.ClassAspectPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!Tools.ClassAspectPlugin categoriesFor: #onClassUpdated:!event handling!private! !
-!Tools.ClassAspectPlugin categoriesFor: #onShownInBrowser!event handling!private! !
-!Tools.ClassAspectPlugin categoriesFor: #promptToOverwrite!helpers!private! !
-!Tools.ClassAspectPlugin categoriesFor: #promptToSaveClassChanges:!helpers!public! !
-!Tools.ClassAspectPlugin categoriesFor: #queryCommand:!commands!private! !
-!Tools.ClassAspectPlugin categoriesFor: #refreshIcon!private!updating! !
-!Tools.ClassAspectPlugin categoriesFor: #systemUpdateEvent!constants!private! !
-!Tools.ClassAspectPlugin categoriesFor: #textPresenterClass!initializing!private! !
+!Tools.ClassAspectPlugin categoriesForMethods!
+accept!commands!public! !
+applyOptions!options!private! !
+aspect!constants!private! !
+backgroundUpdate!private!updating! !
+caption!constants!private! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!public! !
+currentClassUpdated!event handling!private! !
+defaultHelpId!constants!public! !
+displayOn:!displaying!public! !
+foregroundUpdate!private!updating! !
+icon!accessing!public! !
+isModified!public!testing! !
+modifiedModel!accessing!public! !
+newAspectBufferOn:!helpers!private! !
+onBrowserClassSelected!event handling!private! !
+onBrowserMethodSelected!event handling!private! !
+onClassUpdated:!event handling!private! !
+onShownInBrowser!event handling!private! !
+promptToOverwrite!helpers!private! !
+promptToSaveClassChanges:!helpers!public! !
+queryCommand:!commands!private! !
+refreshIcon!private!updating! !
+systemUpdateEvent!constants!private! !
+textPresenterClass!initializing!private! !
+!
 

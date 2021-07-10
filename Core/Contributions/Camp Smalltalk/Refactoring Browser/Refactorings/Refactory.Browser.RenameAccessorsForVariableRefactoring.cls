@@ -74,12 +74,14 @@ setSetterMethod
 
 	setterMethod isNil ifTrue: [setterMethod := self findSetterMethod]
 			! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #createGetterAccessor!public!transforming! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #createSetterAccessor!public!transforming! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #newName:!accessing!public! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #renameGetterRefactoring!public!transforming! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #renameSetterRefactoring!public!transforming! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #setGetterMethod!composite-accessing!public! !
-!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesFor: #setSetterMethod!composite-accessing!public! !
+!Refactory.Browser.RenameAccessorsForVariableRefactoring categoriesForMethods!
+createGetterAccessor!public!transforming! !
+createSetterAccessor!public!transforming! !
+newName:!accessing!public! !
+preconditions!preconditions!public! !
+renameGetterRefactoring!public!transforming! !
+renameSetterRefactoring!public!transforming! !
+setGetterMethod!composite-accessing!public! !
+setSetterMethod!composite-accessing!public! !
+!
 

@@ -56,12 +56,14 @@ imageIndexIn: aToolbar
 
 	^aToolbar addBitmap: self bitmap index: self bitmapIndex
 ! !
-!UI.ToolbarBitmapButton categoriesFor: #bitmap!accessing!public! !
-!UI.ToolbarBitmapButton categoriesFor: #bitmap:!accessing!public! !
-!UI.ToolbarBitmapButton categoriesFor: #bitmap:index:commandDescription:!initializing!private! !
-!UI.ToolbarBitmapButton categoriesFor: #bitmapIndex!accessing!public! !
-!UI.ToolbarBitmapButton categoriesFor: #bitmapIndex:!accessing!public! !
-!UI.ToolbarBitmapButton categoriesFor: #imageIndexIn:!operations!private! !
+!UI.ToolbarBitmapButton categoriesForMethods!
+bitmap!accessing!public! !
+bitmap:!accessing!public! !
+bitmap:index:commandDescription:!initializing!private! !
+bitmapIndex!accessing!public! !
+bitmapIndex:!accessing!public! !
+imageIndexIn:!operations!private! !
+!
 
 UI.ToolbarBitmapButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
@@ -79,6 +81,8 @@ new
 	"Answer a new default ToolbarButton"
 
 	^self dolphinImage: 35 command: #noCommand description: 'No command'! !
-!UI.ToolbarBitmapButton class categoriesFor: #bitmap:index:commandDescription:!instance creation!public! !
-!UI.ToolbarBitmapButton class categoriesFor: #new!instance creation!public! !
+!UI.ToolbarBitmapButton class categoriesForMethods!
+bitmap:index:commandDescription:!instance creation!public! !
+new!instance creation!public! !
+!
 

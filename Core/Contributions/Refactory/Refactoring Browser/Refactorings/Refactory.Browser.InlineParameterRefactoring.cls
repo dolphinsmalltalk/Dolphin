@@ -72,12 +72,14 @@ storeOn: aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector;
 		nextPut: $)! !
-!Refactory.Browser.InlineParameterRefactoring categoriesFor: #allExpressionsToInline!enquiries!private! !
-!Refactory.Browser.InlineParameterRefactoring categoriesFor: #expressionsToInlineFrom:!private! !
-!Refactory.Browser.InlineParameterRefactoring categoriesFor: #inlineParameter:in:selector:!initialize/release!public! !
-!Refactory.Browser.InlineParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!public!transforming! !
-!Refactory.Browser.InlineParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!Refactory.Browser.InlineParameterRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.InlineParameterRefactoring categoriesForMethods!
+allExpressionsToInline!enquiries!private! !
+expressionsToInlineFrom:!private! !
+inlineParameter:in:selector:!initialize/release!public! !
+modifyImplementorParseTree:in:!public!transforming! !
+myConditions!preconditions!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.InlineParameterRefactoring class methodsFor!
 
@@ -94,6 +96,8 @@ model: aRBNamespace inlineParameter: aString in: aClass selector: aSelector
 			in: aClass
 			selector: aSelector;
 		yourself! !
-!Refactory.Browser.InlineParameterRefactoring class categoriesFor: #inlineParameter:in:selector:!instance creation!public! !
-!Refactory.Browser.InlineParameterRefactoring class categoriesFor: #model:inlineParameter:in:selector:!instance creation!public! !
+!Refactory.Browser.InlineParameterRefactoring class categoriesForMethods!
+inlineParameter:in:selector:!instance creation!public! !
+model:inlineParameter:in:selector:!instance creation!public! !
+!
 

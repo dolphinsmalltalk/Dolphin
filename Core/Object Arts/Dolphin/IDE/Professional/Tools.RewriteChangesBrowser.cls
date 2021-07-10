@@ -176,33 +176,35 @@ setInitialFocus
 
 updateCaption
 	self caption: compositeChange displayString! !
-!Tools.RewriteChangesBrowser categoriesFor: #acceptAllChanges!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #acceptChanges!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #acceptChanges:!helpers!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #acceptClassChanges!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #acceptPackageChanges!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #browseIt!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #change!accessing!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #changes!accessing!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #createComponents!initializing!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #deferredSelectCaret!helpers!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #methodChanged:!helpers!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #model:!accessing!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #onChangeSelected!event handling!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #onMethodAdded:!event handling!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #onMethodRemoved:!event handling!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #onMethodUpdated:!event handling!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #onViewAvailable!event handling!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #queryCommand:!commands!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #removeChanges!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #removeChanges:!helpers!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #removeChangesMatching:!helpers!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #removeClassChanges!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #removePackageChanges!commands!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #selectCaret!helpers!private! !
-!Tools.RewriteChangesBrowser categoriesFor: #setInitialFocus!operations!public! !
-!Tools.RewriteChangesBrowser categoriesFor: #updateCaption!public!updating! !
+!Tools.RewriteChangesBrowser categoriesForMethods!
+acceptAllChanges!commands!public! !
+acceptChanges!commands!public! !
+acceptChanges:!helpers!private! !
+acceptClassChanges!commands!public! !
+acceptPackageChanges!commands!public! !
+browseIt!commands!public! !
+change!accessing!private! !
+changes!accessing!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+deferredSelectCaret!helpers!private! !
+methodChanged:!helpers!private! !
+model:!accessing!public! !
+onChangeSelected!event handling!public! !
+onMethodAdded:!event handling!public! !
+onMethodRemoved:!event handling!public! !
+onMethodUpdated:!event handling!public! !
+onViewAvailable!event handling!public! !
+queryCommand:!commands!private! !
+removeChanges!commands!public! !
+removeChanges:!helpers!private! !
+removeChangesMatching:!helpers!private! !
+removeClassChanges!commands!public! !
+removePackageChanges!commands!public! !
+selectCaret!helpers!private! !
+setInitialFocus!operations!public! !
+updateCaption!public!updating! !
+!
 
 !Tools.RewriteChangesBrowser class methodsFor!
 
@@ -230,7 +232,9 @@ resource_Default_view
 ((each changeClass compiledMethodAt: each selector ifAbsent:[])
 	ifNil: [each changeClass]
 	ifNotNil: [:method | method]) owningPackage]' 8 #[33 105 17 158 17 159 34 192 100 223 3 73 158 110 70 161 106] #changeClass #selector #compiledMethodAt:ifAbsent: #owningPackage 5088 4386 0 nil 4418 1 83886081 ##(Core.UndefinedObject) 8 'doIt' 34 2 8 '[]' nil 8 #[29 105 60 106] 5168 7 1 nil 7 65793 nil nil 3680 nil 1 nil nil 4578 8 'Change' 261 #left 4626 #yourself 8 #() 4626 #<= 5312 4626 #changeString 5312 nil 3680 nil 3 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 882 138 144 34 3 946 #createAt:extent: 34 2 674 1 1 674 1169 213 3680 946 #contextMenu: 34 1 3840 3680 946 #text: 34 1 8 'Class' 3680 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 106 0 0 0] 8 #() 1088 nil 35 5 3346 410 ##(UI.ReferenceView) 34 14 nil 3216 34 2 8 1140850688 131073 5632 nil nil nil 7 nil nil nil 5632 850 ##(UI.DifferencesPresenter) #resource_Default_view nil 882 138 144 34 1 946 #createAt:extent: 34 2 674 1 223 674 1169 321 5632 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 111 0 0 0 72 2 0 0 15 1 0 0] 1072 1088 nil 27 7 true 170 192 34 2 3680 8 'changes' nil 882 138 144 34 1 946 #createAt:extent: 34 2 674 1 101 674 1169 543 3216 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 50 0 0 0 72 2 0 0 65 1 0 0] 34 3 3680 3376 5632 1088 nil 27 170 192 34 4 2768 8 'statusbar' 528 8 'toolbar' nil 658246 4 ##(UI.MenuBar) nil true 34 6 3826 nil true 34 3 3874 1 2242 #saveImage 8 'Sa&ve Image' 1 1 2274 nil true 2320 8 'Snapshot.ico' 2368 nil nil 4082 4097 3874 1 2242 #exit 8 '&Close' 17639 1 1378630 1 ##(Graphics.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 51983 nil nil 3826 nil true 34 6 3874 1 2242 #copySelection 8 '&Copy' 9351 1 2274 nil true 2320 8 'EditCopy.ico' 2368 nil nil 3874 1 2242 #selectAll 8 'Select &All' 9347 1 nil nil nil 4082 4097 3874 1 2242 #find 8 '&Find…' 9357 1 2274 nil true 2320 47 983302 ##(OS.ShellLibrary) nil nil 3874 1 2242 #findNext 8 'Find &Next' 1253 1 2274 nil true 2320 8 'FindNext.ico' 2368 nil nil 3874 1 2242 #findReplace 8 '&Replace…' 9361 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 51995 nil nil 3826 nil true 34 10 3874 1 2242 #acceptChanges 8 '&Accept <1?Change:Changes>' 1 1 nil nil nil 3874 1 2242 #acceptClassChanges 8 'Accept &Class Changes' 1 1 nil nil nil 3874 1 2242 #acceptPackageChanges 8 'Accept &Package Changes' 1 1 nil nil nil 3874 1 2242 #acceptAllChanges 8 'Accept A&ll Changes' 1 1 nil nil nil 4082 4097 3874 1 2242 #removeChanges 8 '&Remove <1?Change:Changes>' 1 1 nil nil nil 3874 1 2242 #removeClassChanges 8 'R&emove Class Changes' 1 1 nil nil nil 3874 1 2242 #removePackageChanges 8 'Re&move Package Changes' 1 1 nil nil nil 4082 4097 3874 2097153 2242 #browseIt 8 '&Browse Method' 1 1 4320 nil nil 8 '&Change' nil 134217729 nil nil 52013 nil nil 3826 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 52015 nil nil 3826 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 52017 nil nil 3826 nil true 34 15 3874 1 2242 #helpContents 8 '&Contents' 1025 1 2274 nil true 2320 8 'Help.ico' 2368 nil nil 3874 1 2242 #help 8 'On this &Tool' 1249 1 nil nil nil 3874 1 2242 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 4082 4097 3874 1 2242 #learnSmalltalk 8 'Learn Smalltalk' 1 1 6354 $\x1F393 nil 706 #orchid 706 #white nil nil 1 nil nil nil nil 4082 4097 3874 1 2242 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 3874 1 2242 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 3874 1 2242 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 4082 4097 3874 1 2242 #objectArtsHomePage 8 'Object Arts Homepage' 1 1 2274 nil true 2320 8 '!!APPLICATION' 2368 nil nil 3874 1 2242 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 3874 1 2242 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 4082 4097 3874 1 2242 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 6354 $\x1F42C nil nil 706 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil 52041 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 882 138 144 34 2 946 #createAt:extent: 34 2 674 6143 21 674 1201 801 416 946 #text: 34 1 8 'Rewrite Results Browser' 416 1026 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 87 14 0 0 154 1 0 0] 34 3 528 3216 2768 1088 nil 27 )! !
-!Tools.RewriteChangesBrowser class categoriesFor: #icon!constants!public! !
-!Tools.RewriteChangesBrowser class categoriesFor: #publishedAspects!operations!public! !
-!Tools.RewriteChangesBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.RewriteChangesBrowser class categoriesForMethods!
+icon!constants!public! !
+publishedAspects!operations!public! !
+resource_Default_view!public!resources-views! !
+!
 

@@ -63,12 +63,14 @@ shapes
 	"Answer the collection of shapes held by the receiver"
 
 	^shapes! !
-!UI.Examples.Playground categoriesFor: #add:!adding!public! !
-!UI.Examples.Playground categoriesFor: #clear!operations!public! !
-!UI.Examples.Playground categoriesFor: #initialize!initializing!private! !
-!UI.Examples.Playground categoriesFor: #onPaintRequired:!event handling!public! !
-!UI.Examples.Playground categoriesFor: #remove:!public!removing! !
-!UI.Examples.Playground categoriesFor: #shapes!accessing!public! !
+!UI.Examples.Playground categoriesForMethods!
+add:!adding!public! !
+clear!operations!public! !
+initialize!initializing!private! !
+onPaintRequired:!event handling!public! !
+remove:!public!removing! !
+shapes!accessing!public! !
+!
 
 !UI.Examples.Playground class methodsFor!
 
@@ -81,6 +83,8 @@ new
 	"Create and show a new instance of the receiver. Answer the new instance"
 
 	^super new show caption: 'A Playground'.! !
-!UI.Examples.Playground class categoriesFor: #icon!constants!public! !
-!UI.Examples.Playground class categoriesFor: #new!instance creation!public! !
+!UI.Examples.Playground class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
 

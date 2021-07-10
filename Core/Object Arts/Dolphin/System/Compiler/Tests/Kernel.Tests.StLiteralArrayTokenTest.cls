@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.StValueTokenTest subclass: #'Kernel.Tests.StLiteralArrayTokenTest'
 	instanceVariableNames: ''
@@ -16,6 +16,8 @@ exampleSource
 
 subjectClass
 	^StLiteralArrayToken! !
-!Kernel.Tests.StLiteralArrayTokenTest categoriesFor: #exampleSource!constants!private! !
-!Kernel.Tests.StLiteralArrayTokenTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.StLiteralArrayTokenTest categoriesForMethods!
+exampleSource!constants!private! !
+subjectClass!constants!private! !
+!
 

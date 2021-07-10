@@ -114,15 +114,17 @@ visitSequenceNode: aSequenceNode
 			[currentScope unreferencedArguments
 				do: [:each | self signalError: CInfoUnreferencedArg forNode: each node]].
 	^answer! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #checkUnimplemented:!helpers!private! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #checkUnimplementedSubclassResponsibility:!helpers!private! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #contextBindingFor:!helpers!private! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #initialize!initializing!public! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #readStaticVariable:!helpers!private! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #targetOfMessage:!commands!private!refactoring! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!Tools.BrowserSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!Tools.BrowserSemanticAnalyser categoriesForMethods!
+checkHardBreakpoint:!helpers!private! !
+checkIfStubMessage:!helpers!private! !
+checkSupersend:!helpers!private! !
+checkUnimplemented:!helpers!private! !
+checkUnimplementedSubclassResponsibility:!helpers!private! !
+contextBindingFor:!helpers!private! !
+initialize!initializing!public! !
+readStaticVariable:!helpers!private! !
+targetOfMessage:!commands!private!refactoring! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+!
 

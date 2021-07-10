@@ -28,8 +28,10 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject basicAt: self key put: valueObject! !
-!Tools.BasicKeyedAspect categoriesFor: #getSelector!accessing!private! !
-!Tools.BasicKeyedAspect categoriesFor: #putSelector!accessing!private! !
-!Tools.BasicKeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!Tools.BasicKeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Tools.BasicKeyedAspect categoriesForMethods!
+getSelector!accessing!private! !
+putSelector!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

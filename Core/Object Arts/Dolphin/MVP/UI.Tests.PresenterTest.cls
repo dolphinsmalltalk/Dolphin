@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.PresenterTest'
 	instanceVariableNames: 'presenter'
@@ -56,10 +56,12 @@ tearDown
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
-!UI.Tests.PresenterTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.PresenterTest categoriesFor: #initializePresenter!public!Running! !
-!UI.Tests.PresenterTest categoriesFor: #leftClickAt:!private!unit tests! !
-!UI.Tests.PresenterTest categoriesFor: #setUp!public!Running! !
-!UI.Tests.PresenterTest categoriesFor: #tearDown!public!Running! !
-!UI.Tests.PresenterTest categoriesFor: #waitForInputIdle!private!unit tests! !
+!UI.Tests.PresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+initializePresenter!public!Running! !
+leftClickAt:!private!unit tests! !
+setUp!public!Running! !
+tearDown!public!Running! !
+waitForInputIdle!private!unit tests! !
+!
 

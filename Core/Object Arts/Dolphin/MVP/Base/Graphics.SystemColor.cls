@@ -98,16 +98,18 @@ shallowCopy
 	"The receiver's instances are unique for each named value."
 
 	^self! !
-!Graphics.SystemColor categoriesFor: #asParameter!converting!public! !
-!Graphics.SystemColor categoriesFor: #asRGB!converting!public! !
-!Graphics.SystemColor categoriesFor: #brushClass!constants!private! !
-!Graphics.SystemColor categoriesFor: #id!accessing!private! !
-!Graphics.SystemColor categoriesFor: #isSymbolic!public!testing! !
-!Graphics.SystemColor categoriesFor: #name!accessing!public! !
-!Graphics.SystemColor categoriesFor: #printOn:!development!printing!public! !
-!Graphics.SystemColor categoriesFor: #rgbCode!converting!public! !
-!Graphics.SystemColor categoriesFor: #setId:!accessing!private! !
-!Graphics.SystemColor categoriesFor: #shallowCopy!copying!public! !
+!Graphics.SystemColor categoriesForMethods!
+asParameter!converting!public! !
+asRGB!converting!public! !
+brushClass!constants!private! !
+id!accessing!private! !
+isSymbolic!public!testing! !
+name!accessing!public! !
+printOn:!development!printing!public! !
+rgbCode!converting!public! !
+setId:!accessing!private! !
+shallowCopy!copying!public! !
+!
 
 !Graphics.SystemColor class methodsFor!
 
@@ -148,7 +150,9 @@ withIndex: anInteger
 	"
 
 	^ColorsById at: anInteger + 1! !
-!Graphics.SystemColor class categoriesFor: #initialize!class initialization!development!public! !
-!Graphics.SystemColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Graphics.SystemColor class categoriesFor: #withIndex:!instance creation!public! !
+!Graphics.SystemColor class categoriesForMethods!
+initialize!class initialization!development!public! !
+stbReadFrom:format:!binary filing!public! !
+withIndex:!instance creation!public! !
+!
 

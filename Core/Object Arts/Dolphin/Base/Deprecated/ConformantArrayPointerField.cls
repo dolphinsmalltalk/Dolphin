@@ -12,5 +12,7 @@ ConformantArrayPointerField comment: 'ConformantArrayPointerField is now depreca
 
 type: aClass length: aSymbol
 	^ArrayPointerField type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ConformantArrayPointerField class categoriesFor: #type:length:!instance creation!public! !
+!ConformantArrayPointerField class categoriesForMethods!
+type:length:!instance creation!public! !
+!
 

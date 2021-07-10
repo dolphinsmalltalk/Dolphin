@@ -58,10 +58,12 @@ methodsInBehavior: aBehavior do: aMonadicValuable
 		ifFalse: 
 			[(dict keys difference: classified) 
 				do: [:each | aMonadicValuable value: (aBehavior compiledMethodAt: each)]]! !
-!Tools.UnclassifiedMethodsCategory categoriesFor: #acceptsAdditions!public!testing! !
-!Tools.UnclassifiedMethodsCategory categoriesFor: #addMethodSilently:!adding!private! !
-!Tools.UnclassifiedMethodsCategory categoriesFor: #includesMethod:!public!testing! !
-!Tools.UnclassifiedMethodsCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
+!Tools.UnclassifiedMethodsCategory categoriesForMethods!
+acceptsAdditions!public!testing! !
+addMethodSilently:!adding!private! !
+includesMethod:!public!testing! !
+methodsInBehavior:do:!enumerating!public! !
+!
 
 !Tools.UnclassifiedMethodsCategory class methodsFor!
 
@@ -81,6 +83,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self removePseud: self unclassifiedName! !
-!Tools.UnclassifiedMethodsCategory class categoriesFor: #initialize!initializing!private! !
-!Tools.UnclassifiedMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.UnclassifiedMethodsCategory class categoriesForMethods!
+initialize!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

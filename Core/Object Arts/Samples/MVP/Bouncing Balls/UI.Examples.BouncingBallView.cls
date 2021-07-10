@@ -97,16 +97,18 @@ step
 
 stepProcess
 	^stepProcess! !
-!UI.Examples.BouncingBallView categoriesFor: #ballExtent!constants!private! !
-!UI.Examples.BouncingBallView categoriesFor: #balls!accessing!private! !
-!UI.Examples.BouncingBallView categoriesFor: #defaultExtent!constants!private! !
-!UI.Examples.BouncingBallView categoriesFor: #frameRate!constants!public! !
-!UI.Examples.BouncingBallView categoriesFor: #initialize!initializing!private! !
-!UI.Examples.BouncingBallView categoriesFor: #numberOfBalls!constants!public! !
-!UI.Examples.BouncingBallView categoriesFor: #onDestroyed!event handling!private! !
-!UI.Examples.BouncingBallView categoriesFor: #render!operations!private! !
-!UI.Examples.BouncingBallView categoriesFor: #step!operations!public! !
-!UI.Examples.BouncingBallView categoriesFor: #stepProcess!accessing!private! !
+!UI.Examples.BouncingBallView categoriesForMethods!
+ballExtent!constants!private! !
+balls!accessing!private! !
+defaultExtent!constants!private! !
+frameRate!constants!public! !
+initialize!initializing!private! !
+numberOfBalls!constants!public! !
+onDestroyed!event handling!private! !
+render!operations!private! !
+step!operations!public! !
+stepProcess!accessing!private! !
+!
 
 !UI.Examples.BouncingBallView class methodsFor!
 
@@ -139,9 +141,11 @@ show
 	"Answer and show an instance of the receiver"
 
 	^super show topShell text: self displayString; yourself! !
-!UI.Examples.BouncingBallView class categoriesFor: #defaultModel!models!public! !
-!UI.Examples.BouncingBallView class categoriesFor: #displayOn:!displaying!public! !
-!UI.Examples.BouncingBallView class categoriesFor: #icon!constants!public! !
-!UI.Examples.BouncingBallView class categoriesFor: #initialize!development!initializing!private! !
-!UI.Examples.BouncingBallView class categoriesFor: #show!operations!public! !
+!UI.Examples.BouncingBallView class categoriesForMethods!
+defaultModel!models!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+show!operations!public! !
+!
 

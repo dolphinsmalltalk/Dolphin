@@ -27,8 +27,10 @@ sum
 	| sample |
 	sample :=self anyOne.
 	^(self inject: sample into: [:sum :each | sum + each]) - sample! !
-!Core.Collection categoriesFor: #max!arithmetic!public! !
-!Core.Collection categoriesFor: #sum!arithmetic!public! !
+!Core.Collection categoriesForMethods!
+max!arithmetic!public! !
+sum!arithmetic!public! !
+!
 
 "End of package definition"!
 

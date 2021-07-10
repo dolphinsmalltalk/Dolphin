@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Scintilla.Tests.ScintillaIndicatorTest'
 	instanceVariableNames: ''
@@ -31,5 +31,7 @@ testStyleNameRangeTag
 	self assert: indicator2 styleName identicalTo: #normal.
 	self assert: indicator2 range equals: (1 to: 10).
 	self assert: indicator2 tag identicalTo: tag! !
-!UI.Scintilla.Tests.ScintillaIndicatorTest categoriesFor: #testStyleNameRangeTag!public!unit tests! !
+!UI.Scintilla.Tests.ScintillaIndicatorTest categoriesForMethods!
+testStyleNameRangeTag!public!unit tests! !
+!
 

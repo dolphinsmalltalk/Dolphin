@@ -29,9 +29,11 @@ realScope
 	the receiver will actually be allocated."
 
 	^self outer realScope! !
-!Kernel.StOptimizedBlockScope categoriesFor: #hasFarReturn!accessing!public! !
-!Kernel.StOptimizedBlockScope categoriesFor: #markFarReturn!public!visiting! !
-!Kernel.StOptimizedBlockScope categoriesFor: #markNeedsSelf!public!visiting! !
-!Kernel.StOptimizedBlockScope categoriesFor: #needsSelf!accessing!public! !
-!Kernel.StOptimizedBlockScope categoriesFor: #realScope!public! !
+!Kernel.StOptimizedBlockScope categoriesForMethods!
+hasFarReturn!accessing!public! !
+markFarReturn!public!visiting! !
+markNeedsSelf!public!visiting! !
+needsSelf!accessing!public! !
+realScope!public! !
+!
 

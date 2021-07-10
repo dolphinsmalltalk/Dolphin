@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.FolderTest'
 	instanceVariableNames: 'c windows system root oa'
@@ -49,10 +49,12 @@ testParent
 	empty := Folder pathname: ''.
 	self assert: subject equals: empty.
 	self assertIsNil: empty parent! !
-!UI.Tests.FolderTest categoriesFor: #folderClass!constants!private! !
-!UI.Tests.FolderTest categoriesFor: #rootFolder!public!unit tests! !
-!UI.Tests.FolderTest categoriesFor: #setUp!public!Running! !
-!UI.Tests.FolderTest categoriesFor: #testFolderName!public!unit tests! !
-!UI.Tests.FolderTest categoriesFor: #testName!public!unit tests! !
-!UI.Tests.FolderTest categoriesFor: #testParent!public!unit tests! !
+!UI.Tests.FolderTest categoriesForMethods!
+folderClass!constants!private! !
+rootFolder!public!unit tests! !
+setUp!public!Running! !
+testFolderName!public!unit tests! !
+testName!public!unit tests! !
+testParent!public!unit tests! !
+!
 

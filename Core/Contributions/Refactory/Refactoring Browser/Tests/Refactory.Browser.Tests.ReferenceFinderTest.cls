@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ReferenceFinderTest'
 	instanceVariableNames: ''
@@ -48,9 +48,11 @@ testPathToInstance
 	path := ReferenceFinder findPathToInstanceOf: RefactoringManager.
 	self assert: path last class identicalTo: RefactoringManager.
 	self assert: path first identicalTo: Smalltalk! !
-!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testAllPaths!public!tests! !
-!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testAllPathsToInstance!public!tests! !
-!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testFound!public!tests! !
-!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testNotFound!public!tests! !
-!Refactory.Browser.Tests.ReferenceFinderTest categoriesFor: #testPathToInstance!public!tests! !
+!Refactory.Browser.Tests.ReferenceFinderTest categoriesForMethods!
+testAllPaths!public!tests! !
+testAllPathsToInstance!public!tests! !
+testFound!public!tests! !
+testNotFound!public!tests! !
+testPathToInstance!public!tests! !
+!
 

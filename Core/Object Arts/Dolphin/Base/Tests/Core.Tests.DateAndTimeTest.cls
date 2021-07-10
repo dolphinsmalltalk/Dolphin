@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.DateAndTimeTest'
 	instanceVariableNames: ''
@@ -728,47 +728,49 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 	"However they are really different time points."
 	self deny: subject1 equals: subject2.
 	self deny: subject1 asSeconds equals: subject2 asSeconds! !
-!Core.Tests.DateAndTimeTest categoriesFor: #canonicalInstance!constants!private! !
-!Core.Tests.DateAndTimeTest categoriesFor: #julianEpoch!constants!private! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAddDuration!public! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAsDate!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAsSeconds!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAsTime!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAsUnixTime!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testAsUTC!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfMonth!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfWeek!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfWeekAbbreviation!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfWeekName!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testDayOfYear!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testFromString!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testFromSYSTEMTIME!public! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testHour!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testHour12!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testHour24!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testIsLeapYear!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testJulianDate!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testJulianDayNumber!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testLilianDayNumber!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testMeridianAbbreviation!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testMidnight!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testMinute!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testMonth!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testMonthAbbreviation!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testMonthName!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testNowUtc!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testOffset!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testOffsetBy!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testPrintOn!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testRataDie!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testSecond!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testStbConvertFrom!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testStbConvertFrom0!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testStoreOn!public!testing! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testToday!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testYearMonthDay!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffset!public!unit tests! !
-!Core.Tests.DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffsetErrors!public!unit tests! !
+!Core.Tests.DateAndTimeTest categoriesForMethods!
+canonicalInstance!constants!private! !
+julianEpoch!constants!private! !
+testAddDuration!public! !
+testAsDate!public!unit tests! !
+testAsSeconds!public!unit tests! !
+testAsSYSTEMTIME!public!unit tests! !
+testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
+testAsTime!public!unit tests! !
+testAsUnixTime!public!unit tests! !
+testAsUTC!public!unit tests! !
+testDayOfMonth!public!unit tests! !
+testDayOfWeek!public!unit tests! !
+testDayOfWeekAbbreviation!public!unit tests! !
+testDayOfWeekName!public!unit tests! !
+testDayOfYear!public!unit tests! !
+testFromString!public!unit tests! !
+testFromSYSTEMTIME!public! !
+testHour!public!unit tests! !
+testHour12!public!unit tests! !
+testHour24!public!unit tests! !
+testIsLeapYear!public!unit tests! !
+testJulianDate!public!unit tests! !
+testJulianDayNumber!public!unit tests! !
+testLilianDayNumber!public!unit tests! !
+testMeridianAbbreviation!public!unit tests! !
+testMidnight!public!unit tests! !
+testMinute!public!unit tests! !
+testMonth!public!unit tests! !
+testMonthAbbreviation!public!unit tests! !
+testMonthName!public!unit tests! !
+testNowUtc!public!unit tests! !
+testOffset!public!unit tests! !
+testOffsetBy!public!unit tests! !
+testPrintOn!public!unit tests! !
+testRataDie!public!unit tests! !
+testSecond!public!unit tests! !
+testStbConvertFrom!public!unit tests! !
+testStbConvertFrom0!public!unit tests! !
+testStoreOn!public!testing! !
+testToday!public!unit tests! !
+testYearMonthDay!public!unit tests! !
+testYearMonthDayHourMinuteSecondOffset!public!unit tests! !
+testYearMonthDayHourMinuteSecondOffsetErrors!public!unit tests! !
+!
 

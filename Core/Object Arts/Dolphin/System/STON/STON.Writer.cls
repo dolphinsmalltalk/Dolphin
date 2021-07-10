@@ -386,59 +386,61 @@ writeSymbol: symbol
 	(self isSimpleSymbol: symbol)
 		ifTrue: [writeStream nextPutAll: symbol]
 		ifFalse: [self encodeString: symbol]! !
-!STON.Writer categoriesFor: #asciiOnly:!initialize/release!public! !
-!STON.Writer categoriesFor: #close!initialize/release!public! !
-!STON.Writer categoriesFor: #emitQuote!helpers!private! !
-!STON.Writer categoriesFor: #encodeCharacter:!helpers!private! !
-!STON.Writer categoriesFor: #encodeKey:value:!helpers!private! !
-!STON.Writer categoriesFor: #encodeList:!public!writing! !
-!STON.Writer categoriesFor: #encodeMap:!public!writing! !
-!STON.Writer categoriesFor: #encodeString:!helpers!private! !
-!STON.Writer categoriesFor: #encodeStringKeepingNewLines:!helpers!private! !
-!STON.Writer categoriesFor: #error:!error handling!public! !
-!STON.Writer categoriesFor: #escape:with:!initialize/release!public! !
-!STON.Writer categoriesFor: #escapeUnicode:!initialize/release!public! !
-!STON.Writer categoriesFor: #escapeUnicode4:!helpers!private! !
-!STON.Writer categoriesFor: #indentedDo:!helpers!private! !
-!STON.Writer categoriesFor: #initialize!initialize/release!private! !
-!STON.Writer categoriesFor: #instVarMapFor:!public!writing! !
-!STON.Writer categoriesFor: #isSimpleSymbol:!helpers!private! !
-!STON.Writer categoriesFor: #jsonMode!public!testing! !
-!STON.Writer categoriesFor: #keepNewLines:!initialize/release!public! !
-!STON.Writer categoriesFor: #listElementSeparator!helpers!private! !
-!STON.Writer categoriesFor: #mapElementSeparator!helpers!private! !
-!STON.Writer categoriesFor: #newLine:!initialize/release!public! !
-!STON.Writer categoriesFor: #newlineIndent!helpers!private! !
-!STON.Writer categoriesFor: #nextPut:!public!writing! !
-!STON.Writer categoriesFor: #on:!initialize/release!public! !
-!STON.Writer categoriesFor: #optimizeForLargeStructures!initialize/release!public! !
-!STON.Writer categoriesFor: #prettyPrintSpace!helpers!private! !
-!STON.Writer categoriesFor: #referencePolicy:!initialize/release!public! !
-!STON.Writer categoriesFor: #reset!initialize/release!public! !
-!STON.Writer categoriesFor: #shortListElementSeparator!helpers!private! !
-!STON.Writer categoriesFor: #with:do:!helpers!private! !
-!STON.Writer categoriesFor: #writeableStonCharacters!private!writing! !
-!STON.Writer categoriesFor: #writeAssociation:!public!writing! !
-!STON.Writer categoriesFor: #writeBoolean:!public!writing! !
-!STON.Writer categoriesFor: #writeFloat:!public!writing! !
-!STON.Writer categoriesFor: #writeFraction:!public!writing! !
-!STON.Writer categoriesFor: #writeInteger:!public!writing! !
-!STON.Writer categoriesFor: #writeList:!public!writing! !
-!STON.Writer categoriesFor: #writeMap:!public!writing! !
-!STON.Writer categoriesFor: #writeNull!public!writing! !
-!STON.Writer categoriesFor: #writeObject:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:do:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:extra:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:listSingleton:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:named:do:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:named:listSingleton:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:streamList:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:streamMap:!public!writing! !
-!STON.Writer categoriesFor: #writeObject:streamShortList:!public!writing! !
-!STON.Writer categoriesFor: #writeReference:!public!writing! !
-!STON.Writer categoriesFor: #writeScaledDecimal:!public!writing! !
-!STON.Writer categoriesFor: #writeString:!public!writing! !
-!STON.Writer categoriesFor: #writeSymbol:!public!writing! !
+!STON.Writer categoriesForMethods!
+asciiOnly:!initialize/release!public! !
+close!initialize/release!public! !
+emitQuote!helpers!private! !
+encodeCharacter:!helpers!private! !
+encodeKey:value:!helpers!private! !
+encodeList:!public!writing! !
+encodeMap:!public!writing! !
+encodeString:!helpers!private! !
+encodeStringKeepingNewLines:!helpers!private! !
+error:!error handling!public! !
+escape:with:!initialize/release!public! !
+escapeUnicode:!initialize/release!public! !
+escapeUnicode4:!helpers!private! !
+indentedDo:!helpers!private! !
+initialize!initialize/release!private! !
+instVarMapFor:!public!writing! !
+isSimpleSymbol:!helpers!private! !
+jsonMode!public!testing! !
+keepNewLines:!initialize/release!public! !
+listElementSeparator!helpers!private! !
+mapElementSeparator!helpers!private! !
+newLine:!initialize/release!public! !
+newlineIndent!helpers!private! !
+nextPut:!public!writing! !
+on:!initialize/release!public! !
+optimizeForLargeStructures!initialize/release!public! !
+prettyPrintSpace!helpers!private! !
+referencePolicy:!initialize/release!public! !
+reset!initialize/release!public! !
+shortListElementSeparator!helpers!private! !
+with:do:!helpers!private! !
+writeableStonCharacters!private!writing! !
+writeAssociation:!public!writing! !
+writeBoolean:!public!writing! !
+writeFloat:!public!writing! !
+writeFraction:!public!writing! !
+writeInteger:!public!writing! !
+writeList:!public!writing! !
+writeMap:!public!writing! !
+writeNull!public!writing! !
+writeObject:!public!writing! !
+writeObject:do:!public!writing! !
+writeObject:extra:!public!writing! !
+writeObject:listSingleton:!public!writing! !
+writeObject:named:do:!public!writing! !
+writeObject:named:listSingleton:!public!writing! !
+writeObject:streamList:!public!writing! !
+writeObject:streamMap:!public!writing! !
+writeObject:streamShortList:!public!writing! !
+writeReference:!public!writing! !
+writeScaledDecimal:!public!writing! !
+writeString:!public!writing! !
+writeSymbol:!public!writing! !
+!
 
 !STON.Writer class methodsFor!
 
@@ -486,11 +488,13 @@ on: writeStream
 	^ self new
 		on: writeStream;
 		yourself! !
-!STON.Writer class categoriesFor: #icon!constants!public! !
-!STON.Writer class categoriesFor: #initialize!class initialization!public! !
-!STON.Writer class categoriesFor: #initializeSTONCharacters!class initialization!public! !
-!STON.Writer class categoriesFor: #initializeSTONSimpleSymbolCharacters!class initialization!public! !
-!STON.Writer class categoriesFor: #isSimpleSymbolChar:!private! !
-!STON.Writer class categoriesFor: #new!public! !
-!STON.Writer class categoriesFor: #on:!instance creation!public! !
+!STON.Writer class categoriesForMethods!
+icon!constants!public! !
+initialize!class initialization!public! !
+initializeSTONCharacters!class initialization!public! !
+initializeSTONSimpleSymbolCharacters!class initialization!public! !
+isSimpleSymbolChar:!private! !
+new!public! !
+on:!instance creation!public! !
+!
 

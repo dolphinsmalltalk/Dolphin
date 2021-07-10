@@ -74,17 +74,19 @@ printOn: aStream
 		nextPut: $(;
 		print: self object;
 		nextPut: $)! !
-!UI.DragDropObject categoriesFor: #availableFormats!accessing!public! !
-!UI.DragDropObject categoriesFor: #format:!accessing!public! !
-!UI.DragDropObject categoriesFor: #format:data:!accessing!public!testing! !
-!UI.DragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
-!UI.DragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
-!UI.DragDropObject categoriesFor: #isObjectAvailable!public!testing! !
-!UI.DragDropObject categoriesFor: #isObjectKindAvailable:!public!testing! !
-!UI.DragDropObject categoriesFor: #object!accessing!public! !
-!UI.DragDropObject categoriesFor: #object:!accessing!public! !
-!UI.DragDropObject categoriesFor: #objectIfAbsent:!accessing!public! !
-!UI.DragDropObject categoriesFor: #printOn:!printing!public! !
+!UI.DragDropObject categoriesForMethods!
+availableFormats!accessing!public! !
+format:!accessing!public! !
+format:data:!accessing!public!testing! !
+format:ifAbsent:!accessing!public! !
+isFormatAvailable:!public!testing! !
+isObjectAvailable!public!testing! !
+isObjectKindAvailable:!public!testing! !
+object!accessing!public! !
+object:!accessing!public! !
+objectIfAbsent:!accessing!public! !
+printOn:!printing!public! !
+!
 
 !UI.DragDropObject class methodsFor!
 
@@ -99,6 +101,8 @@ object: anObject
 	^self new
 		object: anObject;
 		yourself! !
-!UI.DragDropObject class categoriesFor: #new!instance creation!public! !
-!UI.DragDropObject class categoriesFor: #object:!instance creation!public! !
+!UI.DragDropObject class categoriesForMethods!
+new!instance creation!public! !
+object:!instance creation!public! !
+!
 

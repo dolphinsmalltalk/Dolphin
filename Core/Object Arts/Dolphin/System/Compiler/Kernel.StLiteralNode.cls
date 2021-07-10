@@ -41,14 +41,16 @@ value
 
 valueClass
 	^self subclassResponsibility! !
-!Kernel.StLiteralNode categoriesFor: #=!comparing!public! !
-!Kernel.StLiteralNode categoriesFor: #hash!comparing!public! !
-!Kernel.StLiteralNode categoriesFor: #isImmediateNode!public!testing! !
-!Kernel.StLiteralNode categoriesFor: #isLiteralNode!public!testing! !
-!Kernel.StLiteralNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StLiteralNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StLiteralNode categoriesFor: #value!accessing!public! !
-!Kernel.StLiteralNode categoriesFor: #valueClass!accessing!public! !
+!Kernel.StLiteralNode categoriesForMethods!
+=!comparing!public! !
+hash!comparing!public! !
+isImmediateNode!public!testing! !
+isLiteralNode!public!testing! !
+needsParenthesis!public!testing! !
+precedence!accessing!public! !
+value!accessing!public! !
+valueClass!accessing!public! !
+!
 
 !Kernel.StLiteralNode class methodsFor!
 
@@ -56,5 +58,7 @@ value: aValue
 	^((aValue class == Array or: [aValue class == ByteArray])
 		ifTrue: [StLiteralArrayNode]
 		ifFalse: [StLiteralValueNode]) value: aValue! !
-!Kernel.StLiteralNode class categoriesFor: #value:!instance creation!public! !
+!Kernel.StLiteralNode class categoriesForMethods!
+value:!instance creation!public! !
+!
 

@@ -91,21 +91,23 @@ setSelector: aSymbol arguments: anArray
 	super setSelector: aSymbol arguments: anArray.
 	scopes := LookupTable new.
 	self addScope: BrowserEnvironment new name: 'Global'! !
-!Tools.ScopedMethodName categoriesFor: #addScope:!adding!public! !
-!Tools.ScopedMethodName categoriesFor: #addScope:name:!adding!public! !
-!Tools.ScopedMethodName categoriesFor: #addScopesForMethod:!initializing!private! !
-!Tools.ScopedMethodName categoriesFor: #defaultScope!initializing!public! !
-!Tools.ScopedMethodName categoriesFor: #hasNewSignature!commands!private! !
-!Tools.ScopedMethodName categoriesFor: #initializeForMethod:!initializing!private! !
-!Tools.ScopedMethodName categoriesFor: #methodClass!accessing!public! !
-!Tools.ScopedMethodName categoriesFor: #originalArguments!accessing!public! !
-!Tools.ScopedMethodName categoriesFor: #originalSelector!accessing!public! !
-!Tools.ScopedMethodName categoriesFor: #packages:!accessing!public! !
-!Tools.ScopedMethodName categoriesFor: #permutation!accessing!public! !
-!Tools.ScopedMethodName categoriesFor: #scope!accessing!public! !
-!Tools.ScopedMethodName categoriesFor: #scope:!accessing!public! !
-!Tools.ScopedMethodName categoriesFor: #scopeNames!constants!public! !
-!Tools.ScopedMethodName categoriesFor: #setSelector:arguments:!initializing!private! !
+!Tools.ScopedMethodName categoriesForMethods!
+addScope:!adding!public! !
+addScope:name:!adding!public! !
+addScopesForMethod:!initializing!private! !
+defaultScope!initializing!public! !
+hasNewSignature!commands!private! !
+initializeForMethod:!initializing!private! !
+methodClass!accessing!public! !
+originalArguments!accessing!public! !
+originalSelector!accessing!public! !
+packages:!accessing!public! !
+permutation!accessing!public! !
+scope!accessing!public! !
+scope:!accessing!public! !
+scopeNames!constants!public! !
+setSelector:arguments:!initializing!private! !
+!
 
 !Tools.ScopedMethodName class methodsFor!
 
@@ -113,5 +115,7 @@ fromMethod: aCompiledMethod
 	^(self new)
 		initializeForMethod: aCompiledMethod;
 		yourself! !
-!Tools.ScopedMethodName class categoriesFor: #fromMethod:!instance creation!public! !
+!Tools.ScopedMethodName class categoriesForMethods!
+fromMethod:!instance creation!public! !
+!
 

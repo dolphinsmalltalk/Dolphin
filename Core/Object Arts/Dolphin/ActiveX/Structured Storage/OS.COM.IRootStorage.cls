@@ -23,7 +23,9 @@ SwitchToFile: pszFile
 
 	<virtual stdcall: hresult 4 lpwstr>
 	^self invalidCall: _failureCode! !
-!OS.COM.IRootStorage categoriesFor: #SwitchToFile:!**auto generated**!COM Interfaces-OBJIDL.IRootStorage!primitives!public! !
+!OS.COM.IRootStorage categoriesForMethods!
+SwitchToFile:!**auto generated**!COM Interfaces-OBJIDL.IRootStorage!primitives!public! !
+!
 
 OS.COM.IRootStorage methodProtocol: #IRootStorage attributes: #(#readOnly) selectors: #(#SwitchToFile:)!
 
@@ -35,5 +37,7 @@ defineFunctions
 	"
 
 	self defineFunction: #SwitchToFile: argumentTypes: 'lpwstr'! !
-!OS.COM.IRootStorage class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IRootStorage class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

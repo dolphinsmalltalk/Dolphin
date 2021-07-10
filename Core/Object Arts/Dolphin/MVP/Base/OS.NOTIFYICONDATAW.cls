@@ -89,18 +89,20 @@ uID: anInteger
 	"Set the receiver's 'uID' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uID put: anInteger! !
-!OS.NOTIFYICONDATAW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #hIcon:!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #hWnd:!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #icon:!accessing!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #message:!accessing!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #szTip!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #szTip:!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #tipText:!accessing!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #uCallbackMessage:!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #uFlags!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #uFlags:!**compiled accessors**!public! !
-!OS.NOTIFYICONDATAW categoriesFor: #uID:!**compiled accessors**!public! !
+!OS.NOTIFYICONDATAW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+hIcon:!**compiled accessors**!public! !
+hWnd:!**compiled accessors**!public! !
+icon:!accessing!public! !
+message:!accessing!public! !
+szTip!**compiled accessors**!public! !
+szTip:!**compiled accessors**!public! !
+tipText:!accessing!public! !
+uCallbackMessage:!**compiled accessors**!public! !
+uFlags!**compiled accessors**!public! !
+uFlags:!**compiled accessors**!public! !
+uID:!**compiled accessors**!public! !
+!
 
 !OS.NOTIFYICONDATAW class methodsFor!
 
@@ -130,6 +132,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
-!OS.NOTIFYICONDATAW class categoriesFor: #defineFields!public!template definition! !
-!OS.NOTIFYICONDATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NOTIFYICONDATAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

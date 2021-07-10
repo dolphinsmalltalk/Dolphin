@@ -31,6 +31,8 @@ transform
 			(each withAllSubclasses 
 				anySatisfy: [:aClass | (aClass whichSelectorsReferToInstanceVariable: variableName) notEmpty]) 
 					ifTrue: [each addInstanceVariable: variableName]]! !
-!Refactory.Browser.PushDownInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.PushDownInstanceVariableRefactoring categoriesFor: #transform!public! !
+!Refactory.Browser.PushDownInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public! !
+!
 

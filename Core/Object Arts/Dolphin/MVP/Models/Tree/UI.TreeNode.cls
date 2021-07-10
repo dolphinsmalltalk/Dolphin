@@ -114,19 +114,21 @@ removeChildNode: aTreeNode ifAbsent: exceptionHandler
 
 
 ! !
-!UI.TreeNode categoriesFor: #addChildNode:!adding!public! !
-!UI.TreeNode categoriesFor: #beChildless!modes!public! !
-!UI.TreeNode categoriesFor: #children!accessing!public! !
-!UI.TreeNode categoriesFor: #children:!accessing!public! !
-!UI.TreeNode categoriesFor: #getChildren!accessing!private! !
-!UI.TreeNode categoriesFor: #newChildCollection!accessing!public! !
-!UI.TreeNode categoriesFor: #object!accessing!public! !
-!UI.TreeNode categoriesFor: #object:!accessing!private! !
-!UI.TreeNode categoriesFor: #parent!accessing!public! !
-!UI.TreeNode categoriesFor: #parent:!accessing!private! !
-!UI.TreeNode categoriesFor: #printOn:!printing!public! !
-!UI.TreeNode categoriesFor: #removeChildNode:!public!removing! !
-!UI.TreeNode categoriesFor: #removeChildNode:ifAbsent:!public!removing! !
+!UI.TreeNode categoriesForMethods!
+addChildNode:!adding!public! !
+beChildless!modes!public! !
+children!accessing!public! !
+children:!accessing!public! !
+getChildren!accessing!private! !
+newChildCollection!accessing!public! !
+object!accessing!public! !
+object:!accessing!private! !
+parent!accessing!public! !
+parent:!accessing!private! !
+printOn:!printing!public! !
+removeChildNode:!public!removing! !
+removeChildNode:ifAbsent:!public!removing! !
+!
 
 !UI.TreeNode class methodsFor!
 
@@ -134,5 +136,7 @@ for: anObject
 	"Answer an instance of the receiver that is to represent anObject"
 
 	^self new object: anObject! !
-!UI.TreeNode class categoriesFor: #for:!instance creation!public! !
+!UI.TreeNode class categoriesForMethods!
+for:!instance creation!public! !
+!
 

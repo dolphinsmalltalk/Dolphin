@@ -32,9 +32,11 @@ item
 	"Answer the 'item' which has been hit (in this case the handle of node)."
 
 	^self hItem! !
-!OS.TVHITTESTINFO categoriesFor: #handle!accessing!private! !
-!OS.TVHITTESTINFO categoriesFor: #hItem!**compiled accessors**!public! !
-!OS.TVHITTESTINFO categoriesFor: #item!accessing!public! !
+!OS.TVHITTESTINFO categoriesForMethods!
+handle!accessing!private! !
+hItem!**compiled accessors**!public! !
+item!accessing!public! !
+!
 
 !OS.TVHITTESTINFO class methodsFor!
 
@@ -55,6 +57,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #hItem)! !
-!OS.TVHITTESTINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.TVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TVHITTESTINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

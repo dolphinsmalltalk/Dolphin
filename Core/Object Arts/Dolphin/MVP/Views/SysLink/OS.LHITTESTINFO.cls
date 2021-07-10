@@ -32,9 +32,11 @@ pt: aPOINTL
 		from: ##(_OffsetOf_pt + 1)
 		to: ##(_OffsetOf_pt + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.LHITTESTINFO categoriesFor: #item!**compiled accessors**!public! !
-!OS.LHITTESTINFO categoriesFor: #pt!**compiled accessors**!public! !
-!OS.LHITTESTINFO categoriesFor: #pt:!**compiled accessors**!public! !
+!OS.LHITTESTINFO categoriesForMethods!
+item!**compiled accessors**!public! !
+pt!**compiled accessors**!public! !
+pt:!**compiled accessors**!public! !
+!
 
 !OS.LHITTESTINFO class methodsFor!
 
@@ -50,6 +52,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #item)! !
-!OS.LHITTESTINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.LHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LHITTESTINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

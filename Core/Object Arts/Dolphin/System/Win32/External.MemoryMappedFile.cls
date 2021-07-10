@@ -123,16 +123,18 @@ setFile: aFile owned: aBoolean name: aString
 	ownsFile := aBoolean.
 	name := aString.
 	maximumSize := 0! !
-!External.MemoryMappedFile categoriesFor: #asParameter!converting!public! !
-!External.MemoryMappedFile categoriesFor: #basicFree!private!realizing/unrealizing! !
-!External.MemoryMappedFile categoriesFor: #createMapping!helpers!private! !
-!External.MemoryMappedFile categoriesFor: #free!public!realizing/unrealizing! !
-!External.MemoryMappedFile categoriesFor: #isReadOnly!helpers!public!testing! !
-!External.MemoryMappedFile categoriesFor: #mapView!operations!public! !
-!External.MemoryMappedFile categoriesFor: #mapViewFrom:to:!operations!public! !
-!External.MemoryMappedFile categoriesFor: #maximumSize!accessing!public! !
-!External.MemoryMappedFile categoriesFor: #maximumSize:!accessing!public! !
-!External.MemoryMappedFile categoriesFor: #setFile:owned:name:!initializing!private! !
+!External.MemoryMappedFile categoriesForMethods!
+asParameter!converting!public! !
+basicFree!private!realizing/unrealizing! !
+createMapping!helpers!private! !
+free!public!realizing/unrealizing! !
+isReadOnly!helpers!public!testing! !
+mapView!operations!public! !
+mapViewFrom:to:!operations!public! !
+maximumSize!accessing!public! !
+maximumSize:!accessing!public! !
+setFile:owned:name:!initializing!private! !
+!
 
 !External.MemoryMappedFile class methodsFor!
 
@@ -184,10 +186,12 @@ open: aString mode: aSymbol check: aBoolean
 			owned: true
 			name: nil;
 		yourself! !
-!External.MemoryMappedFile class categoriesFor: #icon!constants!public! !
-!External.MemoryMappedFile class categoriesFor: #onFile:!instance creation!public! !
-!External.MemoryMappedFile class categoriesFor: #onFile:named:!instance creation!public! !
-!External.MemoryMappedFile class categoriesFor: #open:!instance creation!public! !
-!External.MemoryMappedFile class categoriesFor: #open:mode:!instance creation!public! !
-!External.MemoryMappedFile class categoriesFor: #open:mode:check:!instance creation!public! !
+!External.MemoryMappedFile class categoriesForMethods!
+icon!constants!public! !
+onFile:!instance creation!public! !
+onFile:named:!instance creation!public! !
+open:!instance creation!public! !
+open:mode:!instance creation!public! !
+open:mode:check:!instance creation!public! !
+!
 

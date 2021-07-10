@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.Tests.STONTestUser subclass: #'STON.Tests.STONTestUser3'
 	instanceVariableNames: ''
@@ -13,7 +13,9 @@ STON.Tests.STONTestUser3 comment: 'STONTestUser3 extends STONTestUser but wants 
 
 stonShouldWriteNilInstVars
 	^ true! !
-!STON.Tests.STONTestUser3 categoriesFor: #stonShouldWriteNilInstVars!public!ston/core! !
+!STON.Tests.STONTestUser3 categoriesForMethods!
+stonShouldWriteNilInstVars!public!ston/core! !
+!
 
 !STON.Tests.STONTestUser3 class methodsFor!
 
@@ -22,6 +24,8 @@ stonAllInstVarNames
 
 stonName
 	^ 'TestUser3'! !
-!STON.Tests.STONTestUser3 class categoriesFor: #stonAllInstVarNames!public!ston/core! !
-!STON.Tests.STONTestUser3 class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.STONTestUser3 class categoriesForMethods!
+stonAllInstVarNames!public!ston/core! !
+stonName!public!ston/core! !
+!
 

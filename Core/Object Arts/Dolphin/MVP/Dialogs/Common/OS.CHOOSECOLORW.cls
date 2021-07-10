@@ -106,19 +106,21 @@ rgbResult: anInteger
 	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_rgbResult put: anInteger! !
-!OS.CHOOSECOLORW categoriesFor: #color!accessing!public! !
-!OS.CHOOSECOLORW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #flags:!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #hookFlag!constants!public! !
-!OS.CHOOSECOLORW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #lpCustColors!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #lpCustColors:!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #ownerView:!accessing!public! !
-!OS.CHOOSECOLORW categoriesFor: #rgbResult!**compiled accessors**!public! !
-!OS.CHOOSECOLORW categoriesFor: #rgbResult:!**compiled accessors**!public! !
+!OS.CHOOSECOLORW categoriesForMethods!
+color!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+hookFlag!constants!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpCustColors!**compiled accessors**!public! !
+lpCustColors:!**compiled accessors**!public! !
+lpfnHook:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+rgbResult!**compiled accessors**!public! !
+rgbResult:!**compiled accessors**!public! !
+!
 
 !OS.CHOOSECOLORW class methodsFor!
 
@@ -173,6 +175,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
-!OS.CHOOSECOLORW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.CHOOSECOLORW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CHOOSECOLORW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -23,12 +23,16 @@ createHandle
 formatFlags: flagsNumber language: languageNumber
 	formatFlags := flagsNumber.
 	language := languageNumber! !
-!Graphics.Gdiplus.StringFormatFromFlagsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.StringFormatFromFlagsInitializer categoriesFor: #formatFlags:language:!initializing!private! !
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+formatFlags:language:!initializing!private! !
+!
 
 !Graphics.Gdiplus.StringFormatFromFlagsInitializer class methodsFor!
 
 formatFlags: flagsNumber language: languageNumber
 	^self new formatFlags: flagsNumber language: languageNumber! !
-!Graphics.Gdiplus.StringFormatFromFlagsInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
+!Graphics.Gdiplus.StringFormatFromFlagsInitializer class categoriesForMethods!
+formatFlags:language:!instance creation!public! !
+!
 

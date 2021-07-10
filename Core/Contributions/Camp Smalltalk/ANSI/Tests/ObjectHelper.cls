@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #ObjectHelper
 	instanceVariableNames: 'object'
@@ -296,36 +296,40 @@ testXyourself
 	anObject := self canonicalObject.
 	self value: [anObject yourself] should: [:r | r == anObject]
 		conformTo: self protocol selector: #'yourself'! !
-!ObjectHelper categoriesFor: #canonicalObject!public! !
-!ObjectHelper categoriesFor: #object:!public! !
-!ObjectHelper categoriesFor: #protocol!public! !
-!ObjectHelper categoriesFor: #testXclass!public! !
-!ObjectHelper categoriesFor: #testXcopy!public! !
-!ObjectHelper categoriesFor: #testXdoesNotUnderstandX!public! !
-!ObjectHelper categoriesFor: #testXequalityOp!public! !
-!ObjectHelper categoriesFor: #testXerrorX!public! !
-!ObjectHelper categoriesFor: #testXhash!public! !
-!ObjectHelper categoriesFor: #testXidentityHash!public! !
-!ObjectHelper categoriesFor: #testXidentityOp!public! !
-!ObjectHelper categoriesFor: #testXisKindOfX!public! !
-!ObjectHelper categoriesFor: #testXisMemberOfX!public! !
-!ObjectHelper categoriesFor: #testXisNil!public! !
-!ObjectHelper categoriesFor: #testXnotEqualityOp!public! !
-!ObjectHelper categoriesFor: #testXnotIdentityOp!public! !
-!ObjectHelper categoriesFor: #testXnotNil!public! !
-!ObjectHelper categoriesFor: #testXperformX!public! !
-!ObjectHelper categoriesFor: #testXperformXwithArgumentsX!public! !
-!ObjectHelper categoriesFor: #testXperformXwithX!public! !
-!ObjectHelper categoriesFor: #testXperformXwithXwithX!public! !
-!ObjectHelper categoriesFor: #testXperformXwithXwithXwithX!public! !
-!ObjectHelper categoriesFor: #testXprintOnX!public! !
-!ObjectHelper categoriesFor: #testXprintString!public! !
-!ObjectHelper categoriesFor: #testXrespondsToX!public! !
-!ObjectHelper categoriesFor: #testXyourself!public! !
+!ObjectHelper categoriesForMethods!
+canonicalObject!public! !
+object:!public! !
+protocol!public! !
+testXclass!public! !
+testXcopy!public! !
+testXdoesNotUnderstandX!public! !
+testXequalityOp!public! !
+testXerrorX!public! !
+testXhash!public! !
+testXidentityHash!public! !
+testXidentityOp!public! !
+testXisKindOfX!public! !
+testXisMemberOfX!public! !
+testXisNil!public! !
+testXnotEqualityOp!public! !
+testXnotIdentityOp!public! !
+testXnotNil!public! !
+testXperformX!public! !
+testXperformXwithArgumentsX!public! !
+testXperformXwithX!public! !
+testXperformXwithXwithX!public! !
+testXperformXwithXwithXwithX!public! !
+testXprintOnX!public! !
+testXprintString!public! !
+testXrespondsToX!public! !
+testXyourself!public! !
+!
 
 !ObjectHelper class methodsFor!
 
 initialize
 	super initialize! !
-!ObjectHelper class categoriesFor: #initialize!public! !
+!ObjectHelper class categoriesForMethods!
+initialize!public! !
+!
 

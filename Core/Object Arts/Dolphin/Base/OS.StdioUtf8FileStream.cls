@@ -62,18 +62,22 @@ upToEnd
 	the current position to the end)."
 
 	^super upToEnd asUtf8String! !
-!OS.StdioUtf8FileStream categoriesFor: #basicNext:!accessing!private! !
-!OS.StdioUtf8FileStream categoriesFor: #contents!accessing!public! !
-!OS.StdioUtf8FileStream categoriesFor: #contentsSpecies!constants!private! !
-!OS.StdioUtf8FileStream categoriesFor: #position!accessing!public! !
-!OS.StdioUtf8FileStream categoriesFor: #position:!positioning!public! !
-!OS.StdioUtf8FileStream categoriesFor: #size!accessing!public! !
-!OS.StdioUtf8FileStream categoriesFor: #translationMode!constants!private! !
-!OS.StdioUtf8FileStream categoriesFor: #upToEnd!accessing!public! !
+!OS.StdioUtf8FileStream categoriesForMethods!
+basicNext:!accessing!private! !
+contents!accessing!public! !
+contentsSpecies!constants!private! !
+position!accessing!public! !
+position:!positioning!public! !
+size!accessing!public! !
+translationMode!constants!private! !
+upToEnd!accessing!public! !
+!
 
 !OS.StdioUtf8FileStream class methodsFor!
 
 encodingType
 	^#utf8! !
-!OS.StdioUtf8FileStream class categoriesFor: #encodingType!constants!public! !
+!OS.StdioUtf8FileStream class categoriesForMethods!
+encodingType!constants!public! !
+!
 

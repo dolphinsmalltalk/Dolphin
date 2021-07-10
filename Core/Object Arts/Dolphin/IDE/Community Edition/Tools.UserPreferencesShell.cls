@@ -23,9 +23,11 @@ model: aListModelOfObjects
 
 selectionOrNil: aClass 
 	^preferencesPresenter selectionOrNil: aClass! !
-!Tools.UserPreferencesShell categoriesFor: #createComponents!private! !
-!Tools.UserPreferencesShell categoriesFor: #model:!public! !
-!Tools.UserPreferencesShell categoriesFor: #selectionOrNil:!public! !
+!Tools.UserPreferencesShell categoriesForMethods!
+createComponents!private! !
+model:!public! !
+selectionOrNil:!public! !
+!
 
 !Tools.UserPreferencesShell class methodsFor!
 
@@ -73,11 +75,13 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10580! !
-!Tools.UserPreferencesShell class categoriesFor: #defaultModel!public! !
-!Tools.UserPreferencesShell class categoriesFor: #displayOn:!public! !
-!Tools.UserPreferencesShell class categoriesFor: #icon!constants!public! !
-!Tools.UserPreferencesShell class categoriesFor: #initialize!initializing!private! !
-!Tools.UserPreferencesShell class categoriesFor: #publishedAspects!public! !
-!Tools.UserPreferencesShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.UserPreferencesShell class categoriesFor: #toolsFolderHelpId!private! !
+!Tools.UserPreferencesShell class categoriesForMethods!
+defaultModel!public! !
+displayOn:!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!private! !
+!
 

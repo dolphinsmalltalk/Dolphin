@@ -33,10 +33,12 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	^self subclassResponsibility! !
-!External.SCALAR categoriesFor: #=!comparing!public! !
-!External.SCALAR categoriesFor: #displayOn:!printing!public! !
-!External.SCALAR categoriesFor: #value!converting!public! !
-!External.SCALAR categoriesFor: #value:!public! !
+!External.SCALAR categoriesForMethods!
+=!comparing!public! !
+displayOn:!printing!public! !
+value!converting!public! !
+value:!public! !
+!
 
 !External.SCALAR class methodsFor!
 
@@ -45,6 +47,8 @@ defineFields
 
 getFieldNames
 	^#(#value)! !
-!External.SCALAR class categoriesFor: #defineFields!public!template definition! !
-!External.SCALAR class categoriesFor: #getFieldNames!constants!private! !
+!External.SCALAR class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!constants!private! !
+!
 

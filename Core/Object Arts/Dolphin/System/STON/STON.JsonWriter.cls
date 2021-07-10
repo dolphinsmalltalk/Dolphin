@@ -55,15 +55,17 @@ writeScaledDecimal: scaledDecimal
 
 writeSymbol: symbol
 	self writeString: symbol! !
-!STON.JsonWriter categoriesFor: #emitQuote!helpers!private! !
-!STON.JsonWriter categoriesFor: #encodeKey:value:!helpers!private! !
-!STON.JsonWriter categoriesFor: #initialize!initialize/release!public! !
-!STON.JsonWriter categoriesFor: #jsonMode!public!testing! !
-!STON.JsonWriter categoriesFor: #writeAssociation:!public!writing! !
-!STON.JsonWriter categoriesFor: #writeFraction:!public!writing! !
-!STON.JsonWriter categoriesFor: #writeNull!public!writing! !
-!STON.JsonWriter categoriesFor: #writeObject:do:!public!writing! !
-!STON.JsonWriter categoriesFor: #writeObject:named:do:!public!writing! !
-!STON.JsonWriter categoriesFor: #writeScaledDecimal:!public!writing! !
-!STON.JsonWriter categoriesFor: #writeSymbol:!public!writing! !
+!STON.JsonWriter categoriesForMethods!
+emitQuote!helpers!private! !
+encodeKey:value:!helpers!private! !
+initialize!initialize/release!public! !
+jsonMode!public!testing! !
+writeAssociation:!public!writing! !
+writeFraction:!public!writing! !
+writeNull!public!writing! !
+writeObject:do:!public!writing! !
+writeObject:named:do:!public!writing! !
+writeScaledDecimal:!public!writing! !
+writeSymbol:!public!writing! !
+!
 

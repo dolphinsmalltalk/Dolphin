@@ -17,7 +17,9 @@ basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
 	Gdip gdipDeleteCachedBitmap: handle! !
-!Graphics.Gdiplus.CachedBitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
+!Graphics.Gdiplus.CachedBitmap categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.CachedBitmap class methodsFor!
 
@@ -56,7 +58,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Bitmap icon! !
-!Graphics.Gdiplus.CachedBitmap class categoriesFor: #bitmap:graphics:!instance creation!public! !
-!Graphics.Gdiplus.CachedBitmap class categoriesFor: #exampleGdipCBPerformance!examples!public!sunit! !
-!Graphics.Gdiplus.CachedBitmap class categoriesFor: #icon!constants!development!public! !
+!Graphics.Gdiplus.CachedBitmap class categoriesForMethods!
+bitmap:graphics:!instance creation!public! !
+exampleGdipCBPerformance!examples!public!sunit! !
+icon!constants!development!public! !
+!
 

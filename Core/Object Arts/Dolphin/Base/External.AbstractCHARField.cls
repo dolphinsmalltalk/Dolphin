@@ -21,7 +21,9 @@ writeInto: anExternalStructure value: aCharacter
 	"Private - Write the code point of the <Character>, aCharacter, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^self basicWriteInto: anExternalStructure value: aCharacter codePoint! !
-!External.AbstractCHARField categoriesFor: #basicWriteInto:value:!accessing!public! !
-!External.AbstractCHARField categoriesFor: #valueType!automatic generation!constants!development!private! !
-!External.AbstractCHARField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.AbstractCHARField categoriesForMethods!
+basicWriteInto:value:!accessing!public! !
+valueType!automatic generation!constants!development!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

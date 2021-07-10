@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'External.Tests.StructureTest'
 	instanceVariableNames: ''
@@ -97,9 +97,11 @@ testIsNull
 	self assert: struct isNull not.
 	struct bytes: External.Address new.
 	self assert: struct isNull! !
-!External.Tests.StructureTest categoriesFor: #testCanUnderstand!public!unit tests! !
-!External.Tests.StructureTest categoriesFor: #testCompileDefinition!public!unit tests! !
-!External.Tests.StructureTest categoriesFor: #testDynamicSelectors!public!unit tests! !
-!External.Tests.StructureTest categoriesFor: #testEquals!public!unit tests! !
-!External.Tests.StructureTest categoriesFor: #testIsNull!public!unit tests! !
+!External.Tests.StructureTest categoriesForMethods!
+testCanUnderstand!public!unit tests! !
+testCompileDefinition!public!unit tests! !
+testDynamicSelectors!public!unit tests! !
+testEquals!public!unit tests! !
+testIsNull!public!unit tests! !
+!
 

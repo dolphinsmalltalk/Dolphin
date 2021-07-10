@@ -49,17 +49,19 @@ value
 
 valueOrNil
 	^className valueOrNil ifNotNil: [:class | class compiledMethodAt: selector ifAbsent: []]! !
-!Kernel.MethodName categoriesFor: #=!comparing!public! !
-!Kernel.MethodName categoriesFor: #className!accessing!public! !
-!Kernel.MethodName categoriesFor: #className:!initializing!public! !
-!Kernel.MethodName categoriesFor: #className:selector:!initializing!private! !
-!Kernel.MethodName categoriesFor: #hash!comparing!public! !
-!Kernel.MethodName categoriesFor: #methodClass!accessing!public! !
-!Kernel.MethodName categoriesFor: #printOn:!printing!public! !
-!Kernel.MethodName categoriesFor: #selector!accessing!public! !
-!Kernel.MethodName categoriesFor: #selector:!initializing!private! !
-!Kernel.MethodName categoriesFor: #value!evaluating!public! !
-!Kernel.MethodName categoriesFor: #valueOrNil!evaluating!public! !
+!Kernel.MethodName categoriesForMethods!
+=!comparing!public! !
+className!accessing!public! !
+className:!initializing!public! !
+className:selector:!initializing!private! !
+hash!comparing!public! !
+methodClass!accessing!public! !
+printOn:!printing!public! !
+selector!accessing!public! !
+selector:!initializing!private! !
+value!evaluating!public! !
+valueOrNil!evaluating!public! !
+!
 
 !Kernel.MethodName class methodsFor!
 
@@ -74,7 +76,9 @@ className: aBindingReference selector: aSymbol
 
 method: aCompiledMethod
 	^self className: aCompiledMethod methodClass fullyQualifiedReference selector: aCompiledMethod selector! !
-!Kernel.MethodName class categoriesFor: #class:selector:!public! !
-!Kernel.MethodName class categoriesFor: #className:selector:!public! !
-!Kernel.MethodName class categoriesFor: #method:!public! !
+!Kernel.MethodName class categoriesForMethods!
+class:selector:!public! !
+className:selector:!public! !
+method:!public! !
+!
 

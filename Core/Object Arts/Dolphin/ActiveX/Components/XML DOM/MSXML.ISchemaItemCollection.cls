@@ -150,18 +150,20 @@ length
 	answer := SDWORD new.
 	self get_length: answer.
 	^answer asObject! !
-!MSXML.ISchemaItemCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSXML.ISchemaItemCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!MSXML.ISchemaItemCollection categoriesFor: #get_item:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!MSXML.ISchemaItemCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!MSXML.ISchemaItemCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.ISchemaItemCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.ISchemaItemCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!MSXML.ISchemaItemCollection categoriesFor: #itemByName:!**auto generated**!methods!public! !
-!MSXML.ISchemaItemCollection categoriesFor: #ItemByName:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!MSXML.ISchemaItemCollection categoriesFor: #itemByQName:namespaceURI:!**auto generated**!methods!public! !
-!MSXML.ISchemaItemCollection categoriesFor: #ItemByQName:namespaceURI:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!MSXML.ISchemaItemCollection categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.ISchemaItemCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+get_item:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+get_length:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+itemByName:!**auto generated**!methods!public! !
+ItemByName:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+itemByQName:namespaceURI:!**auto generated**!methods!public! !
+ItemByQName:namespaceURI:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+length!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaItemCollection class methodsFor!
 
@@ -181,5 +183,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.ISchemaItemCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaItemCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

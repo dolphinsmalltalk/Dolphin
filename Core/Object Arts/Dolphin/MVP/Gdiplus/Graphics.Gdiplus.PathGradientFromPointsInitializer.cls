@@ -29,12 +29,16 @@ createHandle
 points: points wrapMode: aWrapModeConstant
 	pathPoints := points.
 	wrapMode := aWrapModeConstant! !
-!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!initializing!private! !
+!Graphics.Gdiplus.PathGradientFromPointsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+points:wrapMode:!initializing!private! !
+!
 
 !Graphics.Gdiplus.PathGradientFromPointsInitializer class methodsFor!
 
 points: points wrapMode: aWrapModeConstant
 	^self new points: points wrapMode: aWrapModeConstant! !
-!Graphics.Gdiplus.PathGradientFromPointsInitializer class categoriesFor: #points:wrapMode:!instance creation!public! !
+!Graphics.Gdiplus.PathGradientFromPointsInitializer class categoriesForMethods!
+points:wrapMode:!instance creation!public! !
+!
 

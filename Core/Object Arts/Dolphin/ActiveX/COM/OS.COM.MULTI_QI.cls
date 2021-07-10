@@ -46,12 +46,14 @@ pItf: anIUnknown
 	"Set the receiver's 'pItf' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_pItf put: anIUnknown yourAddress! !
-!OS.COM.MULTI_QI categoriesFor: #hr!**compiled accessors**!public! !
-!OS.COM.MULTI_QI categoriesFor: #hr:!**compiled accessors**!public! !
-!OS.COM.MULTI_QI categoriesFor: #pIID!**compiled accessors**!public! !
-!OS.COM.MULTI_QI categoriesFor: #pIID:!**compiled accessors**!public! !
-!OS.COM.MULTI_QI categoriesFor: #pItf!**compiled accessors**!public! !
-!OS.COM.MULTI_QI categoriesFor: #pItf:!**compiled accessors**!public! !
+!OS.COM.MULTI_QI categoriesForMethods!
+hr!**compiled accessors**!public! !
+hr:!**compiled accessors**!public! !
+pIID!**compiled accessors**!public! !
+pIID:!**compiled accessors**!public! !
+pItf!**compiled accessors**!public! !
+pItf:!**compiled accessors**!public! !
+!
 
 !OS.COM.MULTI_QI class methodsFor!
 
@@ -84,7 +86,9 @@ defineFields
 
 getFieldNames
 	^#(#pIID #pItf #hr)! !
-!OS.COM.MULTI_QI class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OS.COM.MULTI_QI class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.MULTI_QI class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.MULTI_QI class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

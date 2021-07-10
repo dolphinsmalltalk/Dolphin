@@ -71,14 +71,16 @@ yNum: anInteger
 	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yNum put: anInteger! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom!**compiled accessors**!public! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom:!**compiled accessors**!public! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum!**compiled accessors**!public! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum:!**compiled accessors**!public! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom!**compiled accessors**!public! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom:!**compiled accessors**!public! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum!**compiled accessors**!public! !
-!OS.EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum:!**compiled accessors**!public! !
+!OS.EMRSCALEVIEWPORTEXTEX categoriesForMethods!
+xDenom!**compiled accessors**!public! !
+xDenom:!**compiled accessors**!public! !
+xNum!**compiled accessors**!public! !
+xNum:!**compiled accessors**!public! !
+yDenom!**compiled accessors**!public! !
+yDenom:!**compiled accessors**!public! !
+yNum!**compiled accessors**!public! !
+yNum:!**compiled accessors**!public! !
+!
 
 !OS.EMRSCALEVIEWPORTEXTEX class methodsFor!
 
@@ -120,7 +122,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SCALEVIEWPORTEXTEX. EMR_SCALEWINDOWEXTEX}! !
-!OS.EMRSCALEVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSCALEVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSCALEVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSCALEVIEWPORTEXTEX class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

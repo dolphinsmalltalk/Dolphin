@@ -35,8 +35,10 @@ cb
 	"Private - Answer the <Integer> value of the receiver's 'cb' field."
 
 	^bytes wordAtOffset: _OffsetOf_cb! !
-!OS.SHITEMID categoriesFor: #abID!**compiled accessors**!public! !
-!OS.SHITEMID categoriesFor: #cb!**compiled accessors**!private! !
+!OS.SHITEMID categoriesForMethods!
+abID!**compiled accessors**!public! !
+cb!**compiled accessors**!private! !
+!
 
 !OS.SHITEMID class methodsFor!
 
@@ -69,7 +71,9 @@ packing
 	"Uses byte packing"
 
 	^1! !
-!OS.SHITEMID class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.SHITEMID class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.SHITEMID class categoriesFor: #packing!constants!public! !
+!OS.SHITEMID class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

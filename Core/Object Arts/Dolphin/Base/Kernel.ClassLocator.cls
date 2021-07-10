@@ -151,25 +151,27 @@ printOn: aStream
 		nextPutAll: ', ';
 		print: key;
 		nextPut: $)! !
-!Kernel.ClassLocator categoriesFor: #codeBase!accessing!public! !
-!Kernel.ClassLocator categoriesFor: #codeBase:!initializing!private! !
-!Kernel.ClassLocator categoriesFor: #copyWithCodeBase!copying!private! !
-!Kernel.ClassLocator categoriesFor: #errorClassCircularityDetected!exceptions!private! !
-!Kernel.ClassLocator categoriesFor: #errorClassNotFound!exceptions!private! !
-!Kernel.ClassLocator categoriesFor: #findAvailableClass!operations!public! !
-!Kernel.ClassLocator categoriesFor: #findResidentClass!operations!private! !
-!Kernel.ClassLocator categoriesFor: #fullClassKey!helpers!private! !
-!Kernel.ClassLocator categoriesFor: #fullPackageKey!accessing!public! !
-!Kernel.ClassLocator categoriesFor: #hasPackageName!accessing!private! !
-!Kernel.ClassLocator categoriesFor: #initialize!initializing!private! !
-!Kernel.ClassLocator categoriesFor: #installImportedClass:!operations!private! !
-!Kernel.ClassLocator categoriesFor: #key!accessing!public! !
-!Kernel.ClassLocator categoriesFor: #key:!initializing!private! !
-!Kernel.ClassLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!Kernel.ClassLocator categoriesFor: #locateClass!operations!public! !
-!Kernel.ClassLocator categoriesFor: #packageName!accessing!public! !
-!Kernel.ClassLocator categoriesFor: #packageName:!initializing!private! !
-!Kernel.ClassLocator categoriesFor: #printOn:!printing!public! !
+!Kernel.ClassLocator categoriesForMethods!
+codeBase!accessing!public! !
+codeBase:!initializing!private! !
+copyWithCodeBase!copying!private! !
+errorClassCircularityDetected!exceptions!private! !
+errorClassNotFound!exceptions!private! !
+findAvailableClass!operations!public! !
+findResidentClass!operations!private! !
+fullClassKey!helpers!private! !
+fullPackageKey!accessing!public! !
+hasPackageName!accessing!private! !
+initialize!initializing!private! !
+installImportedClass:!operations!private! !
+key!accessing!public! !
+key:!initializing!private! !
+localFileSpecFor:!accessing!public! !
+locateClass!operations!public! !
+packageName!accessing!public! !
+packageName:!initializing!private! !
+printOn:!printing!public! !
+!
 
 !Kernel.ClassLocator class methodsFor!
 
@@ -277,19 +279,21 @@ uninitialize
 
 	ImportedClasses := ImportedClassesMutex := nil.
 	SessionManager current removeEventsTriggeredFor: self! !
-!Kernel.ClassLocator class categoriesFor: #addAlias:forClass:!accessing!public! !
-!Kernel.ClassLocator class categoriesFor: #binaryPackageExtension!constants!public! !
-!Kernel.ClassLocator class categoriesFor: #codeBase:!instance creation!public! !
-!Kernel.ClassLocator class categoriesFor: #codeBase:packageName:!instance creation!public! !
-!Kernel.ClassLocator class categoriesFor: #codeBase:packageName:key:!instance creation!public! !
-!Kernel.ClassLocator class categoriesFor: #default!accessing!public! !
-!Kernel.ClassLocator class categoriesFor: #importedClassesMutex!accessing!private! !
-!Kernel.ClassLocator class categoriesFor: #initialize!development!initializing!private! !
-!Kernel.ClassLocator class categoriesFor: #isImportedClass:!public!testing! !
-!Kernel.ClassLocator class categoriesFor: #new!instance creation!public! !
-!Kernel.ClassLocator class categoriesFor: #onStartup!events-session!private! !
-!Kernel.ClassLocator class categoriesFor: #removeAlias:!accessing!public! !
-!Kernel.ClassLocator class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Kernel.ClassLocator class categoriesFor: #stbVersion!binary filing!public! !
-!Kernel.ClassLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.ClassLocator class categoriesForMethods!
+addAlias:forClass:!accessing!public! !
+binaryPackageExtension!constants!public! !
+codeBase:!instance creation!public! !
+codeBase:packageName:!instance creation!public! !
+codeBase:packageName:key:!instance creation!public! !
+default!accessing!public! !
+importedClassesMutex!accessing!private! !
+initialize!development!initializing!private! !
+isImportedClass:!public!testing! !
+new!instance creation!public! !
+onStartup!events-session!private! !
+removeAlias:!accessing!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

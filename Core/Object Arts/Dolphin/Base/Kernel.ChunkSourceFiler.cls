@@ -36,14 +36,18 @@ sourceFileIndex: anInteger
 	"Private - Set the <integer> source file index associated with the receiver."
 
 	sourceFileIndex := anInteger! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitClassName:!private!source filing-file out! !
-!Kernel.ChunkSourceFiler categoriesFor: #environment!accessing!public! !
-!Kernel.ChunkSourceFiler categoriesFor: #environment:!accessing!public! !
-!Kernel.ChunkSourceFiler categoriesFor: #sourceFileIndex:!accessing!private! !
+!Kernel.ChunkSourceFiler categoriesForMethods!
+emitClassName:!private!source filing-file out! !
+environment!accessing!public! !
+environment:!accessing!public! !
+sourceFileIndex:!accessing!private! !
+!
 
 !Kernel.ChunkSourceFiler class methodsFor!
 
 fileOutExtensionForClass: aClass
 	^'cls'! !
-!Kernel.ChunkSourceFiler class categoriesFor: #fileOutExtensionForClass:!enquiries!public! !
+!Kernel.ChunkSourceFiler class categoriesForMethods!
+fileOutExtensionForClass:!enquiries!public! !
+!
 

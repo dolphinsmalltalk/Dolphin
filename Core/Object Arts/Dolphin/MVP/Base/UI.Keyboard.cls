@@ -207,34 +207,36 @@ vKeyToScanCode: anInteger
 	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if there isn't one."
 
 	^User32 mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
-!UI.Keyboard categoriesFor: #asyncKeyState:!helpers!private! !
-!UI.Keyboard categoriesFor: #buildVKeyMaps!helpers!private! !
-!UI.Keyboard categoriesFor: #buttonKeys!constants!private! !
-!UI.Keyboard categoriesFor: #getKeyNameFromVKey:ifNone:!helpers!private! !
-!UI.Keyboard categoriesFor: #getState!helpers!private! !
-!UI.Keyboard categoriesFor: #isAltDown!public!testing! !
-!UI.Keyboard categoriesFor: #isButtonDown:!public!testing! !
-!UI.Keyboard categoriesFor: #isCancelDown!public!testing! !
-!UI.Keyboard categoriesFor: #isCancelPressed!public!testing! !
-!UI.Keyboard categoriesFor: #isCtrlDown!public!testing! !
-!UI.Keyboard categoriesFor: #isKeyDown:!private!testing! !
-!UI.Keyboard categoriesFor: #isKeyPressed:!private!testing! !
-!UI.Keyboard categoriesFor: #isModifierDown!public!testing! !
-!UI.Keyboard categoriesFor: #isShiftDown!public!testing! !
-!UI.Keyboard categoriesFor: #keyNameFromLParam:!helpers!private! !
-!UI.Keyboard categoriesFor: #keyNameFromScanCode:!helpers!private! !
-!UI.Keyboard categoriesFor: #keyNameFromVKey:ifNone:!helpers!private! !
-!UI.Keyboard categoriesFor: #keyNames!accessing!private! !
-!UI.Keyboard categoriesFor: #keyState:!helpers!private! !
-!UI.Keyboard categoriesFor: #modifierKeys!accessing!private! !
-!UI.Keyboard categoriesFor: #resetCancel!operations!public! !
-!UI.Keyboard categoriesFor: #resetKey:!helpers!private! !
-!UI.Keyboard categoriesFor: #setKeyState:to:!helpers!private! !
-!UI.Keyboard categoriesFor: #setState!helpers!private! !
-!UI.Keyboard categoriesFor: #virtualKeyFromString:!enquiries!public! !
-!UI.Keyboard categoriesFor: #virtualKeys!accessing!private! !
-!UI.Keyboard categoriesFor: #virtualKeys:!initializing!private! !
-!UI.Keyboard categoriesFor: #vKeyToScanCode:!helpers!private! !
+!UI.Keyboard categoriesForMethods!
+asyncKeyState:!helpers!private! !
+buildVKeyMaps!helpers!private! !
+buttonKeys!constants!private! !
+getKeyNameFromVKey:ifNone:!helpers!private! !
+getState!helpers!private! !
+isAltDown!public!testing! !
+isButtonDown:!public!testing! !
+isCancelDown!public!testing! !
+isCancelPressed!public!testing! !
+isCtrlDown!public!testing! !
+isKeyDown:!private!testing! !
+isKeyPressed:!private!testing! !
+isModifierDown!public!testing! !
+isShiftDown!public!testing! !
+keyNameFromLParam:!helpers!private! !
+keyNameFromScanCode:!helpers!private! !
+keyNameFromVKey:ifNone:!helpers!private! !
+keyNames!accessing!private! !
+keyState:!helpers!private! !
+modifierKeys!accessing!private! !
+resetCancel!operations!public! !
+resetKey:!helpers!private! !
+setKeyState:to:!helpers!private! !
+setState!helpers!private! !
+virtualKeyFromString:!enquiries!public! !
+virtualKeys!accessing!private! !
+virtualKeys:!initializing!private! !
+vKeyToScanCode:!helpers!private! !
+!
 
 !UI.Keyboard class methodsFor!
 
@@ -410,15 +412,17 @@ virtualKey: aString
 	"Answer the <integer> virtual key code corresponding to the key with invariant (UK English) name, aString."
 
 	^self invariant virtualKeyFromString: aString! !
-!UI.Keyboard class categoriesFor: #default!accessing!public! !
-!UI.Keyboard class categoriesFor: #default:!accessing!public! !
-!UI.Keyboard class categoriesFor: #initialize!development!initializing!private! !
-!UI.Keyboard class categoriesFor: #invariant!accessing!public! !
-!UI.Keyboard class categoriesFor: #invariantVKeyMap!constants!private! !
-!UI.Keyboard class categoriesFor: #layoutName!accessing!public! !
-!UI.Keyboard class categoriesFor: #layoutName:!accessing!public! !
-!UI.Keyboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.Keyboard class categoriesFor: #onSettingChanged:!event handling-win32!private! !
-!UI.Keyboard class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!UI.Keyboard class categoriesFor: #virtualKey:!enquiries!public! !
+!UI.Keyboard class categoriesForMethods!
+default!accessing!public! !
+default:!accessing!public! !
+initialize!development!initializing!private! !
+invariant!accessing!public! !
+invariantVKeyMap!constants!private! !
+layoutName!accessing!public! !
+layoutName:!accessing!public! !
+onPreStripImage!class hierarchy-removing!private! !
+onSettingChanged:!event handling-win32!private! !
+uninitialize!class hierarchy-removing!private! !
+virtualKey:!enquiries!public! !
+!
 

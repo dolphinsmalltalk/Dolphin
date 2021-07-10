@@ -19,13 +19,17 @@ changeString
 
 primitiveExecute
 	self environment declareVariable: variable! !
-!Tools.AddSharedVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!Tools.AddSharedVariableChange categoriesFor: #changeString!printing!public! !
-!Tools.AddSharedVariableChange categoriesFor: #primitiveExecute!private! !
+!Tools.AddSharedVariableChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+primitiveExecute!private! !
+!
 
 !Tools.AddSharedVariableChange class methodsFor!
 
 addSharedVariable: aString to: aNamespace
 	^self new setVariable: aString environment: aNamespace! !
-!Tools.AddSharedVariableChange class categoriesFor: #addSharedVariable:to:!instance creation!public! !
+!Tools.AddSharedVariableChange class categoriesForMethods!
+addSharedVariable:to:!instance creation!public! !
+!
 

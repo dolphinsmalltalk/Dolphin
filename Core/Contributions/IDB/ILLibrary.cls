@@ -189,45 +189,47 @@ selectOnly: anILImage
 
 sortImages: aCollection
 	^aCollection asSortedCollection: [:a :b | (images indexOf: a) < (images indexOf: b)]! !
-!ILLibrary categoriesFor: #addImage:!adding!public! !
-!ILLibrary categoriesFor: #beModified!accessing!public! !
-!ILLibrary categoriesFor: #beNotModified!accessing!public! !
-!ILLibrary categoriesFor: #clearBitmapCache!helpers!public! !
-!ILLibrary categoriesFor: #deleteImage!commands!operations!public! !
-!ILLibrary categoriesFor: #editImageWithBackcolor:!operations!public! !
-!ILLibrary categoriesFor: #exportBitmapTo:!operations!public! !
-!ILLibrary categoriesFor: #exportCursorTo:!operations!public! !
-!ILLibrary categoriesFor: #exportExeTo:!operations!public! !
-!ILLibrary categoriesFor: #exportIconTo:!operations!public! !
-!ILLibrary categoriesFor: #hasImages!public!testing! !
-!ILLibrary categoriesFor: #hasMultipleImages!public!testing! !
-!ILLibrary categoriesFor: #hasSelection!public!testing! !
-!ILLibrary categoriesFor: #hasSingleSelection!public!testing! !
-!ILLibrary categoriesFor: #imageCount!accessing!public! !
-!ILLibrary categoriesFor: #images!accessing!public! !
-!ILLibrary categoriesFor: #imageSizes!accessing!public! !
-!ILLibrary categoriesFor: #import:!operations!public! !
-!ILLibrary categoriesFor: #initialize!initializing!public! !
-!ILLibrary categoriesFor: #isModified!public!testing! !
-!ILLibrary categoriesFor: #isSelected:!public!testing! !
-!ILLibrary categoriesFor: #move:!operations!public! !
-!ILLibrary categoriesFor: #moveDown!operations!public! !
-!ILLibrary categoriesFor: #moveTo:!operations!public! !
-!ILLibrary categoriesFor: #moveToEnd!operations!public! !
-!ILLibrary categoriesFor: #moveToStart!operations!public! !
-!ILLibrary categoriesFor: #moveUp!operations!public! !
-!ILLibrary categoriesFor: #onAddImage:!event handling!public! !
-!ILLibrary categoriesFor: #onReplaceImage:!event handling!public! !
-!ILLibrary categoriesFor: #resetAfterImport!helpers!public! !
-!ILLibrary categoriesFor: #resetAfterLoad!helpers!public! !
-!ILLibrary categoriesFor: #resetAfterSave:!helpers!public! !
-!ILLibrary categoriesFor: #resetBeforeSave!helpers!public! !
-!ILLibrary categoriesFor: #selectAll!operations!public! !
-!ILLibrary categoriesFor: #selectBetween:and:!operations!public! !
-!ILLibrary categoriesFor: #selectedImage!operations!public! !
-!ILLibrary categoriesFor: #selectInvert:!operations!public! !
-!ILLibrary categoriesFor: #selectOnly:!operations!public! !
-!ILLibrary categoriesFor: #sortImages:!helpers!public! !
+!ILLibrary categoriesForMethods!
+addImage:!adding!public! !
+beModified!accessing!public! !
+beNotModified!accessing!public! !
+clearBitmapCache!helpers!public! !
+deleteImage!commands!operations!public! !
+editImageWithBackcolor:!operations!public! !
+exportBitmapTo:!operations!public! !
+exportCursorTo:!operations!public! !
+exportExeTo:!operations!public! !
+exportIconTo:!operations!public! !
+hasImages!public!testing! !
+hasMultipleImages!public!testing! !
+hasSelection!public!testing! !
+hasSingleSelection!public!testing! !
+imageCount!accessing!public! !
+images!accessing!public! !
+imageSizes!accessing!public! !
+import:!operations!public! !
+initialize!initializing!public! !
+isModified!public!testing! !
+isSelected:!public!testing! !
+move:!operations!public! !
+moveDown!operations!public! !
+moveTo:!operations!public! !
+moveToEnd!operations!public! !
+moveToStart!operations!public! !
+moveUp!operations!public! !
+onAddImage:!event handling!public! !
+onReplaceImage:!event handling!public! !
+resetAfterImport!helpers!public! !
+resetAfterLoad!helpers!public! !
+resetAfterSave:!helpers!public! !
+resetBeforeSave!helpers!public! !
+selectAll!operations!public! !
+selectBetween:and:!operations!public! !
+selectedImage!operations!public! !
+selectInvert:!operations!public! !
+selectOnly:!operations!public! !
+sortImages:!helpers!public! !
+!
 
 !ILLibrary class methodsFor!
 
@@ -254,7 +256,9 @@ importIco: icoFilename exportExe: exeFilename
 
 new
 	^super new initialize! !
-!ILLibrary class categoriesFor: #defaultExtents!constants!public! !
-!ILLibrary class categoriesFor: #importIco:exportExe:!operations!public! !
-!ILLibrary class categoriesFor: #new!object creation!public! !
+!ILLibrary class categoriesForMethods!
+defaultExtents!constants!public! !
+importIco:exportExe:!operations!public! !
+new!object creation!public! !
+!
 

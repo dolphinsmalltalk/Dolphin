@@ -304,40 +304,42 @@ uniqueId
 
 uniqueId: anObject
 	uniqueId := anObject displayString: Locale invariant! !
-!UI.MessageBox categoriesFor: #assertStylesValid!helpers!private! !
-!UI.MessageBox categoriesFor: #basicOpen!displaying!private! !
-!UI.MessageBox categoriesFor: #beFatalError!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #beSystemModal!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #beTaskModal!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #buttonIds!accessing!private! !
-!UI.MessageBox categoriesFor: #buttonStyle!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #buttonStyle:!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #buttonStyleValue!accessing!private! !
-!UI.MessageBox categoriesFor: #confirm:!operations!public! !
-!UI.MessageBox categoriesFor: #confirm:onYes:onNo:onCancel:!displaying!public! !
-!UI.MessageBox categoriesFor: #confirmOrCancel:!displaying!public! !
-!UI.MessageBox categoriesFor: #defaultButton!accessing!public! !
-!UI.MessageBox categoriesFor: #defaultButton:!initializing!public! !
-!UI.MessageBox categoriesFor: #globallyUniqueId!helpers!private! !
-!UI.MessageBox categoriesFor: #hasOwner!displaying!private! !
-!UI.MessageBox categoriesFor: #icon:!accessing!public! !
-!UI.MessageBox categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!UI.MessageBox categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!UI.MessageBox categoriesFor: #idOfButtonAt:!helpers!private! !
-!UI.MessageBox categoriesFor: #initialize!initializing!private! !
-!UI.MessageBox categoriesFor: #isSuppressible!public!testing! !
-!UI.MessageBox categoriesFor: #isSuppressible:!initializing!public! !
-!UI.MessageBox categoriesFor: #isTaskModal!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #modality!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #modality:!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #open!displaying!public! !
-!UI.MessageBox categoriesFor: #result!accessing!public!wine fix! !
-!UI.MessageBox categoriesFor: #setForeground!accessing-styles!public! !
-!UI.MessageBox categoriesFor: #setStyle:maskedBy:!accessing-styles!private! !
-!UI.MessageBox categoriesFor: #showIndirect!displaying!private! !
-!UI.MessageBox categoriesFor: #showSuppressible!operations!private! !
-!UI.MessageBox categoriesFor: #uniqueId!accessing!public! !
-!UI.MessageBox categoriesFor: #uniqueId:!initializing!public! !
+!UI.MessageBox categoriesForMethods!
+assertStylesValid!helpers!private! !
+basicOpen!displaying!private! !
+beFatalError!accessing-styles!public! !
+beSystemModal!accessing-styles!public! !
+beTaskModal!accessing-styles!public! !
+buttonIds!accessing!private! !
+buttonStyle!accessing-styles!public! !
+buttonStyle:!accessing-styles!public! !
+buttonStyleValue!accessing!private! !
+confirm:!operations!public! !
+confirm:onYes:onNo:onCancel:!displaying!public! !
+confirmOrCancel:!displaying!public! !
+defaultButton!accessing!public! !
+defaultButton:!initializing!public! !
+globallyUniqueId!helpers!private! !
+hasOwner!displaying!private! !
+icon:!accessing!public! !
+iconStyleFlag!accessing-styles!private! !
+iconStyleFlag:!accessing-styles!private! !
+idOfButtonAt:!helpers!private! !
+initialize!initializing!private! !
+isSuppressible!public!testing! !
+isSuppressible:!initializing!public! !
+isTaskModal!accessing-styles!public! !
+modality!accessing-styles!public! !
+modality:!accessing-styles!public! !
+open!displaying!public! !
+result!accessing!public!wine fix! !
+setForeground!accessing-styles!public! !
+setStyle:maskedBy:!accessing-styles!private! !
+showIndirect!displaying!private! !
+showSuppressible!operations!private! !
+uniqueId!accessing!public! !
+uniqueId:!initializing!public! !
+!
 
 !UI.MessageBox class methodsFor!
 
@@ -415,8 +417,10 @@ initialize
 				at: #system put: MB_SYSTEMMODAL;
 				shrink;
 				yourself! !
-!UI.MessageBox class categoriesFor: #confirm:!instance creation!public! !
-!UI.MessageBox class categoriesFor: #confirm:caption:!instance creation!public! !
-!UI.MessageBox class categoriesFor: #confirm:onYes:onNo:onCancel:!instance creation!public! !
-!UI.MessageBox class categoriesFor: #initialize!development!initializing!private! !
+!UI.MessageBox class categoriesForMethods!
+confirm:!instance creation!public! !
+confirm:caption:!instance creation!public! !
+confirm:onYes:onNo:onCancel:!instance creation!public! !
+initialize!development!initializing!private! !
+!
 

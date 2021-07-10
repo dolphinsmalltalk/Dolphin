@@ -139,22 +139,24 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array! !
-!Core.RunArray categoriesFor: #allSatisfy:!enumerating!public! !
-!Core.RunArray categoriesFor: #anySatisfy:!enumerating!public! !
-!Core.RunArray categoriesFor: #asRunArray!converting!public! !
-!Core.RunArray categoriesFor: #at:!accessing!public! !
-!Core.RunArray categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.RunArray categoriesFor: #at:put:!accessing!public! !
-!Core.RunArray categoriesFor: #copyingClass!copying!private! !
-!Core.RunArray categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Core.RunArray categoriesFor: #postCopy!copying!public! !
-!Core.RunArray categoriesFor: #resize:!mutating!public! !
-!Core.RunArray categoriesFor: #runs:values:!accessing!private! !
-!Core.RunArray categoriesFor: #runsAndValuesDo:!enumerating!public! !
-!Core.RunArray categoriesFor: #runStartAndValueAt:!accessing!private! !
-!Core.RunArray categoriesFor: #runStartAt:!accessing!public! !
-!Core.RunArray categoriesFor: #size!accessing!public! !
-!Core.RunArray categoriesFor: #species!accessing!public! !
+!Core.RunArray categoriesForMethods!
+allSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
+asRunArray!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+copyingClass!copying!private! !
+decodeNextFrom:!encode/decode!private! !
+postCopy!copying!public! !
+resize:!mutating!public! !
+runs:values:!accessing!private! !
+runsAndValuesDo:!enumerating!public! !
+runStartAndValueAt:!accessing!private! !
+runStartAt:!accessing!public! !
+size!accessing!public! !
+species!accessing!public! !
+!
 
 !Core.RunArray class methodsFor!
 
@@ -222,14 +224,16 @@ withAll: aCollection
 			[runs nextPut: runLength.
 			values nextPut: current].
 	^self runs: runs contents values: values contents! !
-!Core.RunArray class categoriesFor: #new!instance creation!public! !
-!Core.RunArray class categoriesFor: #new:!instance creation!public! !
-!Core.RunArray class categoriesFor: #new:withAll:!instance creation!public! !
-!Core.RunArray class categoriesFor: #runs:values:!instance creation!public! !
-!Core.RunArray class categoriesFor: #with:!instance creation!public! !
-!Core.RunArray class categoriesFor: #with:with:!instance creation!public! !
-!Core.RunArray class categoriesFor: #with:with:with:!instance creation!public! !
-!Core.RunArray class categoriesFor: #with:with:with:with:!instance creation!public! !
-!Core.RunArray class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!Core.RunArray class categoriesFor: #withAll:!instance creation!public! !
+!Core.RunArray class categoriesForMethods!
+new!instance creation!public! !
+new:!instance creation!public! !
+new:withAll:!instance creation!public! !
+runs:values:!instance creation!public! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 

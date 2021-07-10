@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.CompilerErrorTest'
 	instanceVariableNames: ''
@@ -149,18 +149,20 @@ writtenNotReadRange: aString
 	| start |
 	start := aString indexOf: $_.
 	^start to: start + 3! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #defaultCompileFlags!constants!private! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #parserClass!constants!private! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsBadPools!public!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsLexicalExpectCodePoint!public!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
-!Kernel.Tests.CompilerErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
+!Kernel.Tests.CompilerErrorTest categoriesForMethods!
+defaultCompileFlags!constants!private! !
+parseExpression:in:!helpers!private! !
+parseMethod:in:!helpers!private! !
+parserClass!constants!private! !
+skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
+tempWarningRangeIn:!helpers!private! !
+testErrorsBadContext!public!unit tests! !
+testErrorsBadPools!public!unit tests! !
+testErrorsLexicalBadCodePoint!public!unit tests! !
+testErrorsLexicalExpectCodePoint!public!unit tests! !
+testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
+testErrorsNonsenseAtEndOfExpression!public!unit tests! !
+testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+writtenNotReadRange:!helpers!private! !
+!
 

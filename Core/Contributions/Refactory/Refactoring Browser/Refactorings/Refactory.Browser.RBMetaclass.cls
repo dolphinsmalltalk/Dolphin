@@ -67,22 +67,24 @@ unqualifiedName
 	"Answer the unqualified name of the non-metaclass."
 
 	^self nonMetaclass unqualifiedName! !
-!Refactory.Browser.RBMetaclass categoriesFor: #allClassVariableNames!accessing!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #allImports!accessing!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #classBindingNames!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!Refactory.Browser.RBMetaclass categoriesFor: #directlyImportsNamespace:!public!testing! !
-!Refactory.Browser.RBMetaclass categoriesFor: #environment!accessing!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #fullyQualifiedReference!converting!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #isMeta!public!testing! !
-!Refactory.Browser.RBMetaclass categoriesFor: #localBindingFor:!binding!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #metaclass!accessing!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #nonMetaclass!accessing!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #nonMetaclass:!accessing!initializing!private! !
-!Refactory.Browser.RBMetaclass categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #realName:!initialize/release!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.RBMetaclass categoriesFor: #unqualifiedName!accessing!public! !
+!Refactory.Browser.RBMetaclass categoriesForMethods!
+allClassVariableNames!accessing!public! !
+allImports!accessing!public! !
+classBindingNames!public! !
+directlyDefinesClassVariable:!public!testing! !
+directlyImportsNamespace:!public!testing! !
+environment!accessing!public! !
+fullyQualifiedReference!converting!public! !
+isMeta!public!testing! !
+localBindingFor:!binding!public! !
+metaclass!accessing!public! !
+nonMetaclass!accessing!public! !
+nonMetaclass:!accessing!initializing!private! !
+printOn:!printing!public! !
+realName:!initialize/release!public! !
+storeOn:!printing!public! !
+unqualifiedName!accessing!public! !
+!
 
 !Refactory.Browser.RBMetaclass class methodsFor!
 
@@ -93,5 +95,7 @@ existing: aBehavior
 	^(self named: class fullName)
 		realClass: meta;
 		yourself! !
-!Refactory.Browser.RBMetaclass class categoriesFor: #existing:!instance creation!public! !
+!Refactory.Browser.RBMetaclass class categoriesForMethods!
+existing:!instance creation!public! !
+!
 

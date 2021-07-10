@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.PositionableStreamTest subclass: #'Core.Tests.ReadStreamTest'
 	instanceVariableNames: ''
@@ -29,7 +29,9 @@ testPositionBoundsError
 		should: [stream position: pos]
 		raise: BoundsError
 		matching: [:e | e receiver == stream and: [e tag == 5]]! !
-!Core.Tests.ReadStreamTest categoriesFor: #streamClass!helpers!private! !
-!Core.Tests.ReadStreamTest categoriesFor: #streamWith:!helpers!private! !
-!Core.Tests.ReadStreamTest categoriesFor: #testPositionBoundsError!public!unit tests! !
+!Core.Tests.ReadStreamTest categoriesForMethods!
+streamClass!helpers!private! !
+streamWith:!helpers!private! !
+testPositionBoundsError!public!unit tests! !
+!
 

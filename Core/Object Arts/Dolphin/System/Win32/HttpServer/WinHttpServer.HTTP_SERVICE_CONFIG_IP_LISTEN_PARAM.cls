@@ -57,12 +57,14 @@ pAddress: aSOCKADDR
 	"Set the receiver's 'pAddress' field to the value of the argument, aSOCKADDR"
 
 	bytes uintPtrAtOffset: _OffsetOf_pAddress put: aSOCKADDR yourAddress! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address!accessing!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address:!accessing!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength!**compiled accessors**!private! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForMethods!
+address!accessing!public! !
+address:!accessing!public! !
+AddrLength!**compiled accessors**!private! !
+AddrLength:!**compiled accessors**!private! !
+pAddress!**compiled accessors**!public! !
+pAddress:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class methodsFor!
 
@@ -85,6 +87,8 @@ defineFields
 
 getFieldNames
 	^#(#AddrLength #pAddress)! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

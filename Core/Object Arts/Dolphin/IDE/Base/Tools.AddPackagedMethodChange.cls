@@ -82,19 +82,21 @@ primitiveExecute
 
 source
 	^source! !
-!Tools.AddPackagedMethodChange categoriesFor: #captureCurrentState!accessing!private! !
-!Tools.AddPackagedMethodChange categoriesFor: #categories!accessing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #changeString!printing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #class:protocol:source:!initialize/release!private! !
-!Tools.AddPackagedMethodChange categoriesFor: #class:source:!initialize/release!private! !
-!Tools.AddPackagedMethodChange categoriesFor: #compilationFlags!accessing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #compilationFlags:!accessing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #currentProtocols!converting!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #environment!accessing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #environment:!accessing!private! !
-!Tools.AddPackagedMethodChange categoriesFor: #method!accessing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #package!accessing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #package:!accessing!public! !
-!Tools.AddPackagedMethodChange categoriesFor: #primitiveExecute!operations!private! !
-!Tools.AddPackagedMethodChange categoriesFor: #source!accessing!public! !
+!Tools.AddPackagedMethodChange categoriesForMethods!
+captureCurrentState!accessing!private! !
+categories!accessing!public! !
+changeString!printing!public! !
+class:protocol:source:!initialize/release!private! !
+class:source:!initialize/release!private! !
+compilationFlags!accessing!public! !
+compilationFlags:!accessing!public! !
+currentProtocols!converting!public! !
+environment!accessing!public! !
+environment:!accessing!private! !
+method!accessing!public! !
+package!accessing!public! !
+package:!accessing!public! !
+primitiveExecute!operations!private! !
+source!accessing!public! !
+!
 

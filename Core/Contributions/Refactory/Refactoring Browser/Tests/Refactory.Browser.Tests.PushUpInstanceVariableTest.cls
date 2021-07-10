@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushUpInstanceVariableTest'
 	instanceVariableNames: ''
@@ -24,6 +24,8 @@ testPullUpInstVar
 testPullUpVariableNotDefined
 	self
 		shouldFail: (PullUpInstanceVariableRefactoring variable: 'notDefinedVariable' class: LintRuleTest)! !
-!Refactory.Browser.Tests.PushUpInstanceVariableTest categoriesFor: #testPullUpInstVar!public!tests! !
-!Refactory.Browser.Tests.PushUpInstanceVariableTest categoriesFor: #testPullUpVariableNotDefined!failure tests!public! !
+!Refactory.Browser.Tests.PushUpInstanceVariableTest categoriesForMethods!
+testPullUpInstVar!public!tests! !
+testPullUpVariableNotDefined!failure tests!public! !
+!
 

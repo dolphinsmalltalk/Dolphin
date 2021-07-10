@@ -17,7 +17,9 @@ Public Domain Freeware'!
 addToCommandRoute: route
 	super addToCommandRoute: route.
 	route appendTarget: Smalltalk developmentSystem! !
-!IdbToolShell categoriesFor: #addToCommandRoute:!commands!public! !
+!IdbToolShell categoriesForMethods!
+addToCommandRoute:!commands!public! !
+!
 
 !IdbToolShell class methodsFor!
 
@@ -33,6 +35,8 @@ initializeOptionFlags
 	"Private - Set the default option flags."
 
 	optionFlags := ReuseIfOpenMask! !
-!IdbToolShell class categoriesFor: #initializeAfterLoad!initializing!public! !
-!IdbToolShell class categoriesFor: #initializeOptionFlags!initializing!private! !
+!IdbToolShell class categoriesForMethods!
+initializeAfterLoad!initializing!public! !
+initializeOptionFlags!initializing!private! !
+!
 

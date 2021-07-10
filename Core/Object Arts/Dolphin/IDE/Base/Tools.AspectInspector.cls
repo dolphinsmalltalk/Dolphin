@@ -220,31 +220,33 @@ setAspectValue: anObject
 	instance variable name to anObject."
 
 	^self subclassResponsibility! !
-!Tools.AspectInspector categoriesFor: #aspectAccessor!accessing!private! !
-!Tools.AspectInspector categoriesFor: #aspectAccessor:!public! !
-!Tools.AspectInspector categoriesFor: #aspectTreePresenter!public! !
-!Tools.AspectInspector categoriesFor: #aspectValue!accessing!private! !
-!Tools.AspectInspector categoriesFor: #beLargeIcons!operations!public! !
-!Tools.AspectInspector categoriesFor: #beSmallIcons!operations!public! !
-!Tools.AspectInspector categoriesFor: #canNilAspect!operations!private! !
-!Tools.AspectInspector categoriesFor: #canSetAspect!operations!private! !
-!Tools.AspectInspector categoriesFor: #copyAspect!commands!public! !
-!Tools.AspectInspector categoriesFor: #copyOfAccessorValue:!accessing!private! !
-!Tools.AspectInspector categoriesFor: #createComponents!initializing!public! !
-!Tools.AspectInspector categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.AspectInspector categoriesFor: #expandBatchAccessor:!event handling!private! !
-!Tools.AspectInspector categoriesFor: #inspecteeSelection!accessing!private! !
-!Tools.AspectInspector categoriesFor: #inspectReferences!commands!public! !
-!Tools.AspectInspector categoriesFor: #model:!accessing!public! !
-!Tools.AspectInspector categoriesFor: #nilAspect!commands!public! !
-!Tools.AspectInspector categoriesFor: #onAspectSelected!event handling!private! !
-!Tools.AspectInspector categoriesFor: #onDragObjectRef:!event handling!private! !
-!Tools.AspectInspector categoriesFor: #onViewAvailable!event handling!public! !
-!Tools.AspectInspector categoriesFor: #onViewOpened!event handling!public! !
-!Tools.AspectInspector categoriesFor: #pasteAspect!commands!public! !
-!Tools.AspectInspector categoriesFor: #queryCommand:!commands!private! !
-!Tools.AspectInspector categoriesFor: #refresh!commands!public! !
-!Tools.AspectInspector categoriesFor: #setAspectValue:!accessing!private! !
+!Tools.AspectInspector categoriesForMethods!
+aspectAccessor!accessing!private! !
+aspectAccessor:!public! !
+aspectTreePresenter!public! !
+aspectValue!accessing!private! !
+beLargeIcons!operations!public! !
+beSmallIcons!operations!public! !
+canNilAspect!operations!private! !
+canSetAspect!operations!private! !
+copyAspect!commands!public! !
+copyOfAccessorValue:!accessing!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+expandBatchAccessor:!event handling!private! !
+inspecteeSelection!accessing!private! !
+inspectReferences!commands!public! !
+model:!accessing!public! !
+nilAspect!commands!public! !
+onAspectSelected!event handling!private! !
+onDragObjectRef:!event handling!private! !
+onViewAvailable!event handling!public! !
+onViewOpened!event handling!public! !
+pasteAspect!commands!public! !
+queryCommand:!commands!private! !
+refresh!commands!public! !
+setAspectValue:!accessing!private! !
+!
 
 !Tools.AspectInspector class methodsFor!
 
@@ -281,10 +283,12 @@ treeUpdateMode
 
 treeUpdateMode: aSymbol
 	treeUpdateMode := aSymbol! !
-!Tools.AspectInspector class categoriesFor: #publishedAspects!public! !
-!Tools.AspectInspector class categoriesFor: #registerAsToolWith:!operations!public! !
-!Tools.AspectInspector class categoriesFor: #treeHasGridLines!accessing!private! !
-!Tools.AspectInspector class categoriesFor: #treeHasGridLines:!accessing!private! !
-!Tools.AspectInspector class categoriesFor: #treeUpdateMode!accessing!private! !
-!Tools.AspectInspector class categoriesFor: #treeUpdateMode:!accessing!private! !
+!Tools.AspectInspector class categoriesForMethods!
+publishedAspects!public! !
+registerAsToolWith:!operations!public! !
+treeHasGridLines!accessing!private! !
+treeHasGridLines:!accessing!private! !
+treeUpdateMode!accessing!private! !
+treeUpdateMode:!accessing!private! !
+!
 

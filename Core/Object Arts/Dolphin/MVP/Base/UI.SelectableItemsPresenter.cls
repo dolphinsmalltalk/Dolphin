@@ -130,24 +130,26 @@ selections: aCollection ifAbsent: exceptionHandler
 		ifAbsent: 
 			[self resetForItems: aCollection.
 			self selectableItems selections: aCollection ifAbsent: exceptionHandler]! !
-!UI.SelectableItemsPresenter categoriesFor: #ensureSelectionVisible!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #hasSelection!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #hasSingleSelection!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #onSelectionChanged!event handling!public! !
-!UI.SelectableItemsPresenter categoriesFor: #onSelectionChanging:!event handling!public! !
-!UI.SelectableItemsPresenter categoriesFor: #resetForItem:!event handling!private! !
-!UI.SelectableItemsPresenter categoriesFor: #resetForItems:!event handling!private! !
-!UI.SelectableItemsPresenter categoriesFor: #resetSelection!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selectableItems!private!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selection!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selection:!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selection:ifAbsent:!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selectionIfNone:!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selectionOrNil!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selectionOrNil:!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selections!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selections:!public!selection! !
-!UI.SelectableItemsPresenter categoriesFor: #selections:ifAbsent:!public!selection! !
+!UI.SelectableItemsPresenter categoriesForMethods!
+ensureSelectionVisible!public!selection! !
+hasSelection!public!selection! !
+hasSingleSelection!public!selection! !
+onSelectionChanged!event handling!public! !
+onSelectionChanging:!event handling!public! !
+resetForItem:!event handling!private! !
+resetForItems:!event handling!private! !
+resetSelection!public!selection! !
+selectableItems!private!selection! !
+selection!public!selection! !
+selection:!public!selection! !
+selection:ifAbsent:!public!selection! !
+selectionIfNone:!public!selection! !
+selectionOrNil!public!selection! !
+selectionOrNil:!public!selection! !
+selections!public!selection! !
+selections:!public!selection! !
+selections:ifAbsent:!public!selection! !
+!
 
 UI.SelectableItemsPresenter methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!
 

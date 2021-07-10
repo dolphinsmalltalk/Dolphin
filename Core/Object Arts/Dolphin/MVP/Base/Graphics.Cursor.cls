@@ -86,13 +86,15 @@ showWhile: aBlock
 	^aBlock ensure: 
 			[Current := previous.
 			User32 setCursor: actual]! !
-!Graphics.Cursor categoriesFor: #imageType!constants!private! !
-!Graphics.Cursor categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
-!Graphics.Cursor categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Graphics.Cursor categoriesFor: #makeCurrent!operations!public! !
-!Graphics.Cursor categoriesFor: #printOn:!development!printing!public! !
-!Graphics.Cursor categoriesFor: #setCursor!operations!private! !
-!Graphics.Cursor categoriesFor: #showWhile:!operations!public! !
+!Graphics.Cursor categoriesForMethods!
+imageType!constants!private! !
+load:fromInstance:extent:!private!realizing/unrealizing! !
+loadFromInstance:!private!realizing/unrealizing! !
+makeCurrent!operations!public! !
+printOn:!development!printing!public! !
+setCursor!operations!private! !
+showWhile:!operations!public! !
+!
 
 !Graphics.Cursor class methodsFor!
 
@@ -320,40 +322,42 @@ wait
 
 	Wait isNil ifTrue: [Wait := self fromSystemId: IDC_WAIT].
 	^Wait! !
-!Graphics.Cursor class categoriesFor: #appStarting!accessing!public! !
-!Graphics.Cursor class categoriesFor: #arrow!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #cross!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #current!accessing!public! !
-!Graphics.Cursor class categoriesFor: #current:!accessing!private! !
-!Graphics.Cursor class categoriesFor: #ddCopy!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #ddCopyScroll!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #ddLink!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #ddLinkScroll!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #ddMove!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #ddMoveScroll!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #ddNone!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #defaultExtent!constants!public! !
-!Graphics.Cursor class categoriesFor: #filesType!constants!private! !
-!Graphics.Cursor class categoriesFor: #hand!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #help!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #hide!operations!public! !
-!Graphics.Cursor class categoriesFor: #iBeam!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #icon!constants!public! !
-!Graphics.Cursor class categoriesFor: #no!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Graphics.Cursor class categoriesFor: #position!accessing!public! !
-!Graphics.Cursor class categoriesFor: #position:!accessing!public! !
-!Graphics.Cursor class categoriesFor: #reset!initializing!public! !
-!Graphics.Cursor class categoriesFor: #show!operations!public! !
-!Graphics.Cursor class categoriesFor: #show:!operations!public! !
-!Graphics.Cursor class categoriesFor: #sizeAll!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #sizeNESW!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #sizeNS!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #sizeNWSE!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #sizeWE!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #splitHorizontal!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #splitVertical!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Graphics.Cursor class categoriesFor: #upArrow!instance creation!public! !
-!Graphics.Cursor class categoriesFor: #wait!instance creation!public! !
+!Graphics.Cursor class categoriesForMethods!
+appStarting!accessing!public! !
+arrow!instance creation!public! !
+cross!instance creation!public! !
+current!accessing!public! !
+current:!accessing!private! !
+ddCopy!instance creation!public! !
+ddCopyScroll!instance creation!public! !
+ddLink!instance creation!public! !
+ddLinkScroll!instance creation!public! !
+ddMove!instance creation!public! !
+ddMoveScroll!instance creation!public! !
+ddNone!instance creation!public! !
+defaultExtent!constants!public! !
+filesType!constants!private! !
+hand!instance creation!public! !
+help!instance creation!public! !
+hide!operations!public! !
+iBeam!instance creation!public! !
+icon!constants!public! !
+no!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+position!accessing!public! !
+position:!accessing!public! !
+reset!initializing!public! !
+show!operations!public! !
+show:!operations!public! !
+sizeAll!instance creation!public! !
+sizeNESW!instance creation!public! !
+sizeNS!instance creation!public! !
+sizeNWSE!instance creation!public! !
+sizeWE!instance creation!public! !
+splitHorizontal!instance creation!public! !
+splitVertical!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+upArrow!instance creation!public! !
+wait!instance creation!public! !
+!
 

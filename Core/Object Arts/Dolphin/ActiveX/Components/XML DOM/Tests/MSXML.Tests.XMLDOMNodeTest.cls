@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'MSXML.Tests.XMLDOMNodeTest'
 	instanceVariableNames: ''
@@ -43,7 +43,9 @@ testSetNodeTypeAndValue
 	elem setNodeTypeAndValue: false.
 	self assert: elem dataType equals: 'boolean'.
 	self assert: elem nodeTypedValue not! !
-!MSXML.Tests.XMLDOMNodeTest categoriesFor: #testDisplayOn!public!unit tests! !
-!MSXML.Tests.XMLDOMNodeTest categoriesFor: #testDownCast!public!unit tests! !
-!MSXML.Tests.XMLDOMNodeTest categoriesFor: #testSetNodeTypeAndValue!public!unit tests! !
+!MSXML.Tests.XMLDOMNodeTest categoriesForMethods!
+testDisplayOn!public!unit tests! !
+testDownCast!public!unit tests! !
+testSetNodeTypeAndValue!public!unit tests! !
+!
 

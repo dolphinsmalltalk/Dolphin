@@ -25,7 +25,9 @@ initialKeywordStyle
 
 initialUnaryStyle
 	^#identifier! !
-!Tools.SmalltalkExpressionStyler categoriesFor: #initialBinaryStyle:!constants!private! !
-!Tools.SmalltalkExpressionStyler categoriesFor: #initialKeywordStyle!constants!private! !
-!Tools.SmalltalkExpressionStyler categoriesFor: #initialUnaryStyle!constants!private! !
+!Tools.SmalltalkExpressionStyler categoriesForMethods!
+initialBinaryStyle:!constants!private! !
+initialKeywordStyle!constants!private! !
+initialUnaryStyle!constants!private! !
+!
 

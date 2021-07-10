@@ -42,9 +42,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#QueryInterface:ppvObject:! !
-!OS.COM.QueryInterfaceFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!OS.COM.QueryInterfaceFunction categoriesFor: #descriptor!accessing!private! !
-!OS.COM.QueryInterfaceFunction categoriesFor: #selector!accessing!private! !
+!OS.COM.QueryInterfaceFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+descriptor!accessing!private! !
+selector!accessing!private! !
+!
 
 !OS.COM.QueryInterfaceFunction class methodsFor!
 
@@ -66,6 +68,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!OS.COM.QueryInterfaceFunction class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.QueryInterfaceFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.QueryInterfaceFunction class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

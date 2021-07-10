@@ -101,14 +101,16 @@ sortBlock
 	not be the actual sort block, although in many cases it will be."
 
 	^self subclassResponsibility! !
-!Core.SortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!Core.SortAlgorithm categoriesFor: #copyWithSortBlock:!copying!private! !
-!Core.SortAlgorithm categoriesFor: #heapsort:from:to:!operations!private! !
-!Core.SortAlgorithm categoriesFor: #insertionSort:from:to:!operations!private! !
-!Core.SortAlgorithm categoriesFor: #quicksortRecursionLimit:!helpers!private! !
-!Core.SortAlgorithm categoriesFor: #sift:from:between:and:!helpers!private! !
-!Core.SortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
-!Core.SortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!Core.SortAlgorithm categoriesForMethods!
+compare:with:!comparing!public! !
+copyWithSortBlock:!copying!private! !
+heapsort:from:to:!operations!private! !
+insertionSort:from:to:!operations!private! !
+quicksortRecursionLimit:!helpers!private! !
+sift:from:between:and:!helpers!private! !
+sort:from:to:!operations!public! !
+sortBlock!accessing!public! !
+!
 
 !Core.SortAlgorithm class methodsFor!
 
@@ -120,7 +122,9 @@ introSort: aDyadicValuable
 
 newSortBlock: aDyadicValuable
 	^self subclassResponsibility! !
-!Core.SortAlgorithm class categoriesFor: #defaultSort:!instance creation!public! !
-!Core.SortAlgorithm class categoriesFor: #introSort:!instance creation!public! !
-!Core.SortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
+!Core.SortAlgorithm class categoriesForMethods!
+defaultSort:!instance creation!public! !
+introSort:!instance creation!public! !
+newSortBlock:!instance creation!public! !
+!
 

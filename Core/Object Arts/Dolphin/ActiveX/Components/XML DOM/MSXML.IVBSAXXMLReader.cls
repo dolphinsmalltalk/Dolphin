@@ -401,43 +401,45 @@ setErrorHandler: oHandler
 	Helpstring: Allow an application to register an error event handler or look up the current error event handler."
 
 	self putref_errorHandler: oHandler! !
-!MSXML.IVBSAXXMLReader categoriesFor: #baseURL!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #baseURL:!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #contentHandler!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #dtdHandler!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #entityResolver!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #errorHandler!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #get_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #get_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #get_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #get_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #get_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #get_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #getFeature:!**auto generated**!methods!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #GetFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #GetProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXXMLReader categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IVBSAXXMLReader categoriesFor: #parse!**auto generated**!methods!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #parse:!**auto generated**!methods!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #Parse:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #ParseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #put_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #put_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #PutFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #putProperty:varValue:!**auto generated**!methods!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #PutProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #putref_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #putref_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #putref_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #putref_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!MSXML.IVBSAXXMLReader categoriesFor: #secureBaseURL!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #secureBaseURL:!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #setContentHandler:!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #setDtdHandler:!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #setEntityResolver:!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLReader categoriesFor: #setErrorHandler:!**auto generated**!properties!public! !
+!MSXML.IVBSAXXMLReader categoriesForMethods!
+baseURL!**auto generated**!properties!public! !
+baseURL:!**auto generated**!properties!public! !
+contentHandler!**auto generated**!properties!public! !
+dtdHandler!**auto generated**!properties!public! !
+entityResolver!**auto generated**!properties!public! !
+errorHandler!**auto generated**!properties!public! !
+get_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+getFeature:!**auto generated**!methods!public! !
+GetFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+GetProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+getProperty_:!**auto generated**!methods!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+parse!**auto generated**!methods!public! !
+parse:!**auto generated**!methods!public! !
+Parse:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+ParseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
+put_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+put_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+PutFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
+putProperty:varValue:!**auto generated**!methods!public! !
+PutProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+secureBaseURL!**auto generated**!properties!public! !
+secureBaseURL:!**auto generated**!properties!public! !
+setContentHandler:!**auto generated**!properties!public! !
+setDtdHandler:!**auto generated**!properties!public! !
+setEntityResolver:!**auto generated**!properties!public! !
+setErrorHandler:!**auto generated**!properties!public! !
+!
 
 !MSXML.IVBSAXXMLReader class methodsFor!
 
@@ -489,6 +491,8 @@ defineFunctions
 		defineFunction: #ParseURL:
 			argumentTypes: 'bstr'
 ! !
-!MSXML.IVBSAXXMLReader class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSXML.IVBSAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXXMLReader class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

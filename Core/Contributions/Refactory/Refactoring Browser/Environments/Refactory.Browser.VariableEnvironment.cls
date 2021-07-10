@@ -329,48 +329,50 @@ storeOn: aStream
 			(self perform: each) storeOn: aStream.
 			aStream nextPutAll: '; '].
 	aStream nextPutAll: ' yourself)'! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #accessorMethods!constants!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:classVariable:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:instanceVariable:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:instanceVariableReader:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #addClass:instanceVariableWriter:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #allClassesDo:!enumerating!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #classForName:!helpers!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #classNamesWithVariables!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #classVariables!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #classVariables:!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #classVariableSelectorsFor:!helpers!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #classVariablesFor:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #computeSelectorCacheFor:!helpers!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #copyDictionary:!copying!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #environmentForClassVariable:in:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #environmentForInstanceVariable:in:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #flushCachesFor:!helpers!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableReaders!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableReaders:!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariables!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariables:!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableSelectorsFor:!helpers!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableWriters!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instanceVariableWriters:!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #instVarsFor:in:!helpers!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #lookupTableClass!constants!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #numberVariables!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:classVariable:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:instanceVariable:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:instanceVariableReader:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #removeClass:instanceVariableWriter:!accessing!public! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #selectorCacheFor:!accessing!private! !
-!Refactory.Browser.VariableEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.VariableEnvironment categoriesForMethods!
+accessorMethods!constants!private! !
+addClass:classVariable:!accessing!public! !
+addClass:instanceVariable:!accessing!public! !
+addClass:instanceVariableReader:!accessing!public! !
+addClass:instanceVariableWriter:!accessing!public! !
+allClassesDo:!enumerating!private! !
+classForName:!helpers!private! !
+classNamesWithVariables!accessing!public! !
+classVariables!accessing!private! !
+classVariables:!accessing!private! !
+classVariableSelectorsFor:!helpers!private! !
+classVariablesFor:!accessing!public! !
+computeSelectorCacheFor:!helpers!private! !
+copyDictionary:!copying!public! !
+environmentForClassVariable:in:!accessing!public! !
+environmentForInstanceVariable:in:!accessing!public! !
+flushCachesFor:!helpers!private! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+initialize!initialize/release!public! !
+instanceVariableReaders!accessing!private! !
+instanceVariableReaders:!public! !
+instanceVariables!accessing!private! !
+instanceVariables:!accessing!private! !
+instanceVariableSelectorsFor:!helpers!private! !
+instanceVariablesFor:!accessing!public! !
+instanceVariableWriters!accessing!private! !
+instanceVariableWriters:!accessing!private! !
+instVarsFor:in:!helpers!private! !
+isEmpty!public!testing! !
+lookupTableClass!constants!private! !
+numberVariables!accessing!public! !
+postCopy!copying!public! !
+problemCount!accessing!public! !
+removeClass:classVariable:!accessing!public! !
+removeClass:instanceVariable:!accessing!public! !
+removeClass:instanceVariableReader:!accessing!public! !
+removeClass:instanceVariableWriter:!accessing!public! !
+selectorCacheFor:!accessing!private! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.VariableEnvironment class methodsFor!
 
@@ -421,12 +423,14 @@ writersOfInstanceVariable: aString in: aClass
 		on: BrowserEnvironment new
 		writersOfInstanceVariable: aString
 		in: aClass! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #on:readersOfInstanceVariable:in:!instance creation!public! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #on:referencesToClassVariable:in:!instance creation!public! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #on:referencesToInstanceVariable:in:!instance creation!public! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #on:writersOfInstanceVariable:in:!instance creation!public! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #readersOfInstanceVariable:in:!instance creation!public! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #referencesToClassVariable:in:!instance creation!public! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #referencesToInstanceVariable:in:!instance creation!public! !
-!Refactory.Browser.VariableEnvironment class categoriesFor: #writersOfInstanceVariable:in:!instance creation!public! !
+!Refactory.Browser.VariableEnvironment class categoriesForMethods!
+on:readersOfInstanceVariable:in:!instance creation!public! !
+on:referencesToClassVariable:in:!instance creation!public! !
+on:referencesToInstanceVariable:in:!instance creation!public! !
+on:writersOfInstanceVariable:in:!instance creation!public! !
+readersOfInstanceVariable:in:!instance creation!public! !
+referencesToClassVariable:in:!instance creation!public! !
+referencesToInstanceVariable:in:!instance creation!public! !
+writersOfInstanceVariable:in:!instance creation!public! !
+!
 

@@ -32,8 +32,10 @@ SplitText: offset rightHandTextNode: rightHandTextNode
 
 	<virtual stdcall: hresult 52 sdword IXMLDOMText**>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMText categoriesFor: #splitText:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMText categoriesFor: #SplitText:rightHandTextNode:!**auto generated**!COM Interfaces-IXMLDOMText!private! !
+!MSXML.IXMLDOMText categoriesForMethods!
+splitText:!**auto generated**!methods!public! !
+SplitText:rightHandTextNode:!**auto generated**!COM Interfaces-IXMLDOMText!private! !
+!
 
 !MSXML.IXMLDOMText class methodsFor!
 
@@ -45,5 +47,7 @@ defineFunctions
 		defineFunction: #SplitText:rightHandTextNode:
 			argumentTypes: 'sdword IXMLDOMText**'
 ! !
-!MSXML.IXMLDOMText class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMText class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

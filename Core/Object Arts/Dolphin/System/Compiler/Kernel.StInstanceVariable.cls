@@ -37,14 +37,18 @@ setIndex: anInteger name: aString
 	index := anInteger.
 	name := aString.
 	self initialize! !
-!Kernel.StInstanceVariable categoriesFor: #index!accessing!public! !
-!Kernel.StInstanceVariable categoriesFor: #isInstanceVariable!public!testing! !
-!Kernel.StInstanceVariable categoriesFor: #name!accessing!public! !
-!Kernel.StInstanceVariable categoriesFor: #setIndex:name:!initializing!private! !
+!Kernel.StInstanceVariable categoriesForMethods!
+index!accessing!public! !
+isInstanceVariable!public!testing! !
+name!accessing!public! !
+setIndex:name:!initializing!private! !
+!
 
 !Kernel.StInstanceVariable class methodsFor!
 
 index: anInteger name: aString
 	^self new setIndex: anInteger name: aString! !
-!Kernel.StInstanceVariable class categoriesFor: #index:name:!public! !
+!Kernel.StInstanceVariable class categoriesForMethods!
+index:name:!public! !
+!
 

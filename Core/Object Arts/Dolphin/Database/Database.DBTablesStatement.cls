@@ -38,8 +38,10 @@ tableType
 
 tableType: aString
 	tableType := aString! !
-!Database.DBTablesStatement categoriesFor: #executeStatement!operations!private! !
-!Database.DBTablesStatement categoriesFor: #initialize:!initializing!private!searching! !
-!Database.DBTablesStatement categoriesFor: #tableType!accessing!public!searching! !
-!Database.DBTablesStatement categoriesFor: #tableType:!accessing!public!searching! !
+!Database.DBTablesStatement categoriesForMethods!
+executeStatement!operations!private! !
+initialize:!initializing!private!searching! !
+tableType!accessing!public!searching! !
+tableType:!accessing!public!searching! !
+!
 

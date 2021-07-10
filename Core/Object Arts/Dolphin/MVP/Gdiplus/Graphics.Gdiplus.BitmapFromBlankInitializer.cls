@@ -43,8 +43,10 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	height := heightInteger.
 	format := aPixelFormat.
 	^self! !
-!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesFor: #width:height:format:!initializing!private! !
+!Graphics.Gdiplus.BitmapFromBlankInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+width:height:format:!initializing!private! !
+!
 
 !Graphics.Gdiplus.BitmapFromBlankInitializer class methodsFor!
 
@@ -53,5 +55,7 @@ width: width height: height format: aPixelFormat
 		width: width
 		height: height
 		format: aPixelFormat! !
-!Graphics.Gdiplus.BitmapFromBlankInitializer class categoriesFor: #width:height:format:!instance creation!public! !
+!Graphics.Gdiplus.BitmapFromBlankInitializer class categoriesForMethods!
+width:height:format:!instance creation!public! !
+!
 

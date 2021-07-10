@@ -93,29 +93,33 @@ rules
 
 viewResults
 	self subclassResponsibility! !
-!Refactory.Browser.LintRule categoriesFor: #allRules!accessing!public! !
-!Refactory.Browser.LintRule categoriesFor: #checkClass:!accessing!public! !
-!Refactory.Browser.LintRule categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.LintRule categoriesFor: #displayName!printing!public! !
-!Refactory.Browser.LintRule categoriesFor: #displayOn:!printing!public! !
-!Refactory.Browser.LintRule categoriesFor: #failedMethodsSorted!accessing!private! !
-!Refactory.Browser.LintRule categoriesFor: #failedRules!private! !
-!Refactory.Browser.LintRule categoriesFor: #hasConflicts!public!testing! !
-!Refactory.Browser.LintRule categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.LintRule categoriesFor: #isComposite!public!testing! !
-!Refactory.Browser.LintRule categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.LintRule categoriesFor: #name!accessing!public! !
-!Refactory.Browser.LintRule categoriesFor: #name:!accessing!public! !
-!Refactory.Browser.LintRule categoriesFor: #notEmpty!public!testing! !
-!Refactory.Browser.LintRule categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.LintRule categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.LintRule categoriesFor: #resetResult!initialize/release!public! !
-!Refactory.Browser.LintRule categoriesFor: #rules!accessing!public! !
-!Refactory.Browser.LintRule categoriesFor: #viewResults!private! !
+!Refactory.Browser.LintRule categoriesForMethods!
+allRules!accessing!public! !
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+displayName!printing!public! !
+displayOn:!printing!public! !
+failedMethodsSorted!accessing!private! !
+failedRules!private! !
+hasConflicts!public!testing! !
+initialize!initialize/release!public! !
+isComposite!public!testing! !
+isEmpty!public!testing! !
+name!accessing!public! !
+name:!accessing!public! !
+notEmpty!public!testing! !
+printOn:!printing!public! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+rules!accessing!public! !
+viewResults!private! !
+!
 
 !Refactory.Browser.LintRule class methodsFor!
 
 new
 	^super new initialize! !
-!Refactory.Browser.LintRule class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.LintRule class categoriesForMethods!
+new!instance creation!public! !
+!
 

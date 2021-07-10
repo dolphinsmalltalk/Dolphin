@@ -14,7 +14,9 @@ Tools.PackagedResourceIdentifierDialog comment: 'PackagedResourceIdentifierDialo
 
 classesPresenterClass
 	^PackagedClassSelector! !
-!Tools.PackagedResourceIdentifierDialog categoriesFor: #classesPresenterClass!constants!private! !
+!Tools.PackagedResourceIdentifierDialog categoriesForMethods!
+classesPresenterClass!constants!private! !
+!
 
 !Tools.PackagedResourceIdentifierDialog class methodsFor!
 
@@ -34,6 +36,8 @@ uninitialize
 			[:devsys |
 			devsys packagedResourceIdentifierDialogClass == self
 				ifTrue: [devsys packagedResourceIdentifierDialogClass: nil]]! !
-!Tools.PackagedResourceIdentifierDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.PackagedResourceIdentifierDialog class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Tools.PackagedResourceIdentifierDialog class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+uninitialize!class hierarchy-removing!public! !
+!
 

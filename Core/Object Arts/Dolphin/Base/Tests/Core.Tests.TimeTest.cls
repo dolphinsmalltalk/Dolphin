@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.TimeTest'
 	instanceVariableNames: 'savedLocale'
@@ -288,24 +288,26 @@ testStoreOn
 						seconds: 58).
 	stored := collection storeString.
 	self assert: (Compiler evaluate: stored) equals: collection! !
-!Core.Tests.TimeTest categoriesFor: #comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
-!Core.Tests.TimeTest categoriesFor: #hoursShould:for:!comparing!private! !
-!Core.Tests.TimeTest categoriesFor: #millisecondsShould:for:!comparing!private! !
-!Core.Tests.TimeTest categoriesFor: #minutesShould:for:!comparing!private! !
-!Core.Tests.TimeTest categoriesFor: #secondsShould:for:!comparing!private! !
-!Core.Tests.TimeTest categoriesFor: #setUp!private!running! !
-!Core.Tests.TimeTest categoriesFor: #tearDown!private!running! !
-!Core.Tests.TimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
-!Core.Tests.TimeTest categoriesFor: #testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
-!Core.Tests.TimeTest categoriesFor: #testClassReadFrom!public!unit tests! !
-!Core.Tests.TimeTest categoriesFor: #testFromDuration!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testHours!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testMilliseconds!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testMinutes!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testPrintNegativeTime!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testPrintOnFormat!public!unit tests! !
-!Core.Tests.TimeTest categoriesFor: #testPrintPositiveTime!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testSeconds!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testStb!public!testing! !
-!Core.Tests.TimeTest categoriesFor: #testStoreOn!public!testing! !
+!Core.Tests.TimeTest categoriesForMethods!
+comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
+hoursShould:for:!comparing!private! !
+millisecondsShould:for:!comparing!private! !
+minutesShould:for:!comparing!private! !
+secondsShould:for:!comparing!private! !
+setUp!private!running! !
+tearDown!private!running! !
+testAsSYSTEMTIME!public!unit tests! !
+testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
+testClassReadFrom!public!unit tests! !
+testFromDuration!public!testing! !
+testHours!public!testing! !
+testMilliseconds!public!testing! !
+testMinutes!public!testing! !
+testPrintNegativeTime!public!testing! !
+testPrintOnFormat!public!unit tests! !
+testPrintPositiveTime!public!testing! !
+testSeconds!public!testing! !
+testStb!public!testing! !
+testStoreOn!public!testing! !
+!
 

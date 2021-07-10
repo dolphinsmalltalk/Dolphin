@@ -57,15 +57,17 @@ prcExclude: aRECTL
 	"Set the receiver's 'prcExclude' field to the value of the argument, aRECTL"
 
 	bytes uintPtrAtOffset: _OffsetOf_prcExclude put: aRECTL yourAddress! !
-!OS.BP_PAINTPARAMS categoriesFor: #blendFunction!accessing!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #blendFunction:!accessing!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #pBlendFunction!**compiled accessors**!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #pBlendFunction:!**compiled accessors**!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #prcExclude!**compiled accessors**!public! !
-!OS.BP_PAINTPARAMS categoriesFor: #prcExclude:!**compiled accessors**!public! !
+!OS.BP_PAINTPARAMS categoriesForMethods!
+blendFunction!accessing!public! !
+blendFunction:!accessing!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+pBlendFunction!**compiled accessors**!public! !
+pBlendFunction:!**compiled accessors**!public! !
+prcExclude!**compiled accessors**!public! !
+prcExclude:!**compiled accessors**!public! !
+!
 
 !OS.BP_PAINTPARAMS class methodsFor!
 
@@ -91,6 +93,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #prcExclude #pBlendFunction)! !
-!OS.BP_PAINTPARAMS class categoriesFor: #defineFields!public!template definition! !
-!OS.BP_PAINTPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BP_PAINTPARAMS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

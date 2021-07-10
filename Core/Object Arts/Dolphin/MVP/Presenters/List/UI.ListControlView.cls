@@ -610,88 +610,90 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	! !
-!UI.ListControlView categoriesFor: #addSelections:!public!selection! !
-!UI.ListControlView categoriesFor: #addSelections:ifAbsent:!public!selection! !
-!UI.ListControlView categoriesFor: #addSelectionsByIndex:!public!selection! !
-!UI.ListControlView categoriesFor: #anchorIndex!public!selection! !
-!UI.ListControlView categoriesFor: #basicAdd:atIndex:!adding!private! !
-!UI.ListControlView categoriesFor: #basicClear!private!removing! !
-!UI.ListControlView categoriesFor: #basicRefreshContents!private!updating! !
-!UI.ListControlView categoriesFor: #basicRemoveAtIndex:!private!removing! !
-!UI.ListControlView categoriesFor: #basicResetSelection!private!selection! !
-!UI.ListControlView categoriesFor: #basicSelectionsByIndex:!private!selection! !
-!UI.ListControlView categoriesFor: #caretIndex!public!selection! !
-!UI.ListControlView categoriesFor: #connectModel!models!public! !
-!UI.ListControlView categoriesFor: #defaultGetTextBlock!constants!private! !
-!UI.ListControlView categoriesFor: #dispatchRegistered:wParam:lParam:!operations!private! !
-!UI.ListControlView categoriesFor: #ensureSelectionVisible!public!selection! !
-!UI.ListControlView categoriesFor: #errorNoSelection!exceptions!private! !
-!UI.ListControlView categoriesFor: #errorNotMultiSelect!private!selection! !
-!UI.ListControlView categoriesFor: #getInfoTipBlock!accessing!public! !
-!UI.ListControlView categoriesFor: #getInfoTipBlock:!accessing!public! !
-!UI.ListControlView categoriesFor: #getSelectionsByIndex!private!selection! !
-!UI.ListControlView categoriesFor: #getTextBlock!adapters!public! !
-!UI.ListControlView categoriesFor: #getTextBlock:!adapters!public! !
-!UI.ListControlView categoriesFor: #handleFromObject:!accessing!private! !
-!UI.ListControlView categoriesFor: #handleFromObject:ifAbsent:!accessing!private! !
-!UI.ListControlView categoriesFor: #handlesFromObjects:whenAbsent:!helpers!private! !
-!UI.ListControlView categoriesFor: #hasSelection!public!selection! !
-!UI.ListControlView categoriesFor: #hasSingleSelection!public!selection! !
-!UI.ListControlView categoriesFor: #initialize!initializing!private! !
-!UI.ListControlView categoriesFor: #isMultiSelect!public!selection!testing! !
-!UI.ListControlView categoriesFor: #isVirtual!accessing-styles!public! !
-!UI.ListControlView categoriesFor: #itemCount!accessing!public! !
-!UI.ListControlView categoriesFor: #itemFromPoint:!enquiries!private! !
-!UI.ListControlView categoriesFor: #lastSelIndices!private! !
-!UI.ListControlView categoriesFor: #list!accessing!public! !
-!UI.ListControlView categoriesFor: #list:!accessing!public! !
-!UI.ListControlView categoriesFor: #newSelectionsFromEvent:!event handling!private! !
-!UI.ListControlView categoriesFor: #noSelection!constants!private! !
-!UI.ListControlView categoriesFor: #objectFromHandle:!accessing!private! !
-!UI.ListControlView categoriesFor: #objectFromHandle:ifAbsent:!accessing!private! !
-!UI.ListControlView categoriesFor: #onActionPerformed!event handling!public! !
-!UI.ListControlView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!UI.ListControlView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!UI.ListControlView categoriesFor: #onItem:updatedAtIndex:!event handling!public! !
-!UI.ListControlView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
-!UI.ListControlView categoriesFor: #onListChanged!event handling!public! !
-!UI.ListControlView categoriesFor: #onSelChanged!private! !
-!UI.ListControlView categoriesFor: #onSelChanged:!event handling!private! !
-!UI.ListControlView categoriesFor: #onSelectionChanged!event handling!public! !
-!UI.ListControlView categoriesFor: #onSelectionChanging:!event handling!public! !
-!UI.ListControlView categoriesFor: #primarySelectionIndex!public!selection! !
-!UI.ListControlView categoriesFor: #refreshContents!public!updating! !
-!UI.ListControlView categoriesFor: #requestDragObjects:!drag & drop!public! !
-!UI.ListControlView categoriesFor: #resetSelection!public!selection! !
-!UI.ListControlView categoriesFor: #revertSelection!helpers!private!selection! !
-!UI.ListControlView categoriesFor: #selectedCount!public!selection! !
-!UI.ListControlView categoriesFor: #selectIndex:set:!private!selection! !
-!UI.ListControlView categoriesFor: #selectIndices:set:!private!selection! !
-!UI.ListControlView categoriesFor: #selection!public!selection! !
-!UI.ListControlView categoriesFor: #selection:!public!selection! !
-!UI.ListControlView categoriesFor: #selection:ifAbsent:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionByIndex!public!selection! !
-!UI.ListControlView categoriesFor: #selectionByIndex:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionByIndexIfNone:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionIfNone:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionOrNil!public!selection! !
-!UI.ListControlView categoriesFor: #selectionOrNil:!public!selection! !
-!UI.ListControlView categoriesFor: #selections!public!selection! !
-!UI.ListControlView categoriesFor: #selections:!public!selection! !
-!UI.ListControlView categoriesFor: #selections:ifAbsent:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionsByIndex!public!selection! !
-!UI.ListControlView categoriesFor: #selectionsByIndex:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
-!UI.ListControlView categoriesFor: #selectionState!accessing!private! !
-!UI.ListControlView categoriesFor: #setSingleSelection:!public!selection! !
-!UI.ListControlView categoriesFor: #size!accessing!public! !
-!UI.ListControlView categoriesFor: #state!accessing!private! !
-!UI.ListControlView categoriesFor: #updateAll!public!updating! !
-!UI.ListControlView categoriesFor: #updateAllNonVirtual!private!updating! !
-!UI.ListControlView categoriesFor: #updateAllVirtual!private!updating! !
-!UI.ListControlView categoriesFor: #updateItem:atIndex:!event handling!public! !
-!UI.ListControlView categoriesFor: #updateSelectionCache!helpers!private!selection! !
+!UI.ListControlView categoriesForMethods!
+addSelections:!public!selection! !
+addSelections:ifAbsent:!public!selection! !
+addSelectionsByIndex:!public!selection! !
+anchorIndex!public!selection! !
+basicAdd:atIndex:!adding!private! !
+basicClear!private!removing! !
+basicRefreshContents!private!updating! !
+basicRemoveAtIndex:!private!removing! !
+basicResetSelection!private!selection! !
+basicSelectionsByIndex:!private!selection! !
+caretIndex!public!selection! !
+connectModel!models!public! !
+defaultGetTextBlock!constants!private! !
+dispatchRegistered:wParam:lParam:!operations!private! !
+ensureSelectionVisible!public!selection! !
+errorNoSelection!exceptions!private! !
+errorNotMultiSelect!private!selection! !
+getInfoTipBlock!accessing!public! !
+getInfoTipBlock:!accessing!public! !
+getSelectionsByIndex!private!selection! !
+getTextBlock!adapters!public! !
+getTextBlock:!adapters!public! !
+handleFromObject:!accessing!private! !
+handleFromObject:ifAbsent:!accessing!private! !
+handlesFromObjects:whenAbsent:!helpers!private! !
+hasSelection!public!selection! !
+hasSingleSelection!public!selection! !
+initialize!initializing!private! !
+isMultiSelect!public!selection!testing! !
+isVirtual!accessing-styles!public! !
+itemCount!accessing!public! !
+itemFromPoint:!enquiries!private! !
+lastSelIndices!private! !
+list!accessing!public! !
+list:!accessing!public! !
+newSelectionsFromEvent:!event handling!private! !
+noSelection!constants!private! !
+objectFromHandle:!accessing!private! !
+objectFromHandle:ifAbsent:!accessing!private! !
+onActionPerformed!event handling!public! !
+onItem:addedAtIndex:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onItem:updatedAtIndex:!event handling!public! !
+onItems:addedAtIndex:!event handling!public! !
+onListChanged!event handling!public! !
+onSelChanged!private! !
+onSelChanged:!event handling!private! !
+onSelectionChanged!event handling!public! !
+onSelectionChanging:!event handling!public! !
+primarySelectionIndex!public!selection! !
+refreshContents!public!updating! !
+requestDragObjects:!drag & drop!public! !
+resetSelection!public!selection! !
+revertSelection!helpers!private!selection! !
+selectedCount!public!selection! !
+selectIndex:set:!private!selection! !
+selectIndices:set:!private!selection! !
+selection!public!selection! !
+selection:!public!selection! !
+selection:ifAbsent:!public!selection! !
+selectionByIndex!public!selection! !
+selectionByIndex:!public!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionByIndexIfNone:!public!selection! !
+selectionIfNone:!public!selection! !
+selectionOrNil!public!selection! !
+selectionOrNil:!public!selection! !
+selections!public!selection! !
+selections:!public!selection! !
+selections:ifAbsent:!public!selection! !
+selectionsByIndex!public!selection! !
+selectionsByIndex:!public!selection! !
+selectionsByIndex:ifAbsent:!public!selection! !
+selectionState!accessing!private! !
+setSingleSelection:!public!selection! !
+size!accessing!public! !
+state!accessing!private! !
+updateAll!public!updating! !
+updateAllNonVirtual!private!updating! !
+updateAllVirtual!private!updating! !
+updateItem:atIndex:!event handling!public! !
+updateSelectionCache!helpers!private!selection! !
+!
 
 UI.ListControlView methodProtocol: #indexSelectableItems attributes: #(#readOnly) selectors: #(#selectionByIndex #selectionByIndex: #selectionByIndex:ifAbsent: #selectionByIndexIfNone:)!
 UI.ListControlView methodProtocol: #listView attributes: #(#readOnly) selectors: #(#list #list: #onItem:addedAtIndex: #onItem:removedAtIndex: #onItem:updatedAtIndex: #onListChanged)!
@@ -714,7 +716,9 @@ onStartup
 	the fact."
 
 	RevertSelMessage := self registerMessage: 'RevertSelection'! !
-!UI.ListControlView class categoriesFor: #defaultModel!models!public! !
-!UI.ListControlView class categoriesFor: #icon!constants!public! !
-!UI.ListControlView class categoriesFor: #onStartup!events-session!public! !
+!UI.ListControlView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+onStartup!events-session!public! !
+!
 

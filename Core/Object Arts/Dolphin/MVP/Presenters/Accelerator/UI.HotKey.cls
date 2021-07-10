@@ -152,23 +152,25 @@ wmSysKeyUp: message wParam: wParam lParam: lParam
 
 	self updateModel.
 	^false! !
-!UI.HotKey categoriesFor: #currentModifiers!accessing!private! !
-!UI.HotKey categoriesFor: #defaultExtent!accessing!constants!private! !
-!UI.HotKey categoriesFor: #defaultKeyMask!accessing!public! !
-!UI.HotKey categoriesFor: #defaultKeyMask:!accessing!public! !
-!UI.HotKey categoriesFor: #displayValue!private!updating! !
-!UI.HotKey categoriesFor: #displayValue:!private!updating! !
-!UI.HotKey categoriesFor: #initialize!initializing!private! !
-!UI.HotKey categoriesFor: #invalidCombinationsMask!accessing!public! !
-!UI.HotKey categoriesFor: #invalidCombinationsMask:!accessing!public! !
-!UI.HotKey categoriesFor: #onViewCreated!event handling!public! !
-!UI.HotKey categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!UI.HotKey categoriesFor: #setHotKey:!accessing!private! !
-!UI.HotKey categoriesFor: #setHotKey:modifiers:!accessing!private! !
-!UI.HotKey categoriesFor: #setRules!accessing!private! !
-!UI.HotKey categoriesFor: #wmKeyDown:wParam:lParam:!event handling!event handling-win32!private! !
-!UI.HotKey categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
-!UI.HotKey categoriesFor: #wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
+!UI.HotKey categoriesForMethods!
+currentModifiers!accessing!private! !
+defaultExtent!accessing!constants!private! !
+defaultKeyMask!accessing!public! !
+defaultKeyMask:!accessing!public! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+initialize!initializing!private! !
+invalidCombinationsMask!accessing!public! !
+invalidCombinationsMask:!accessing!public! !
+onViewCreated!event handling!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+setHotKey:!accessing!private! !
+setHotKey:modifiers:!accessing!private! !
+setRules!accessing!private! !
+wmKeyDown:wParam:lParam:!event handling!event handling-win32!private! !
+wmKeyUp:wParam:lParam:!event handling-win32!private! !
+wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.HotKey class methodsFor!
 
@@ -181,6 +183,8 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_hotkey32'! !
-!UI.HotKey class categoriesFor: #icon!constants!public! !
-!UI.HotKey class categoriesFor: #winClassName!constants!private! !
+!UI.HotKey class categoriesForMethods!
+icon!constants!public! !
+winClassName!constants!private! !
+!
 

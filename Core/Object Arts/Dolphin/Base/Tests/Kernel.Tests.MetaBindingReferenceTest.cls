@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
 	instanceVariableNames: ''
@@ -87,15 +87,17 @@ testRefersToLiteral
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #nameSuffix!constants!private! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #subjectClass!constants!private! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testEqualityOfMetaAndInstance!public!unit tests! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLiteral!public! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testLiteralImplicitEnvironmentRelative!public! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testMeta!public!unit tests! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!Kernel.Tests.MetaBindingReferenceTest categoriesFor: #valueOfBinding:!helpers!private! !
+!Kernel.Tests.MetaBindingReferenceTest categoriesForMethods!
+nameSuffix!constants!private! !
+printStringTestCases!constants!private! !
+subjectClass!constants!private! !
+testEqualityOfMetaAndInstance!public!unit tests! !
+testInstance!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+testLiteral!public! !
+testLiteralImplicitEnvironmentRelative!public! !
+testMeta!public!unit tests! !
+testRefersToLiteral!public!unit tests! !
+valueOfBinding:!helpers!private! !
+!
 

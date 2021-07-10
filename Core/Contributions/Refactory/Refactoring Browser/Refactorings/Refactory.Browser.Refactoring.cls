@@ -299,61 +299,63 @@ whichVariableNode: aParseTree inInterval: anInterval name: aName
 		matches: aName do: block;
 		matchesArgument: aName do: block.
 	^matcher executeTree: aParseTree initialAnswer: nil! !
-!Refactory.Browser.Refactoring categoriesFor: #associationForClassVariable:in:ifAbsent:!public!utilities! !
-!Refactory.Browser.Refactoring categoriesFor: #browseEnvironments:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #canReferenceVariable:in:!public!testing! !
-!Refactory.Browser.Refactoring categoriesFor: #changes!accessing!public! !
-!Refactory.Browser.Refactoring categoriesFor: #checkClass:selector:using:!public!support! !
-!Refactory.Browser.Refactoring categoriesFor: #checkInstanceVariableName:in:!public!utilities! !
-!Refactory.Browser.Refactoring categoriesFor: #checkMethodName:in:!public!utilities! !
-!Refactory.Browser.Refactoring categoriesFor: #checkPreconditions!preconditions!public! !
-!Refactory.Browser.Refactoring categoriesFor: #checkPreconditions:!preconditions!public! !
-!Refactory.Browser.Refactoring categoriesFor: #classObjectFor:!accessing!private! !
-!Refactory.Browser.Refactoring categoriesFor: #convertAllReferencesTo:using:!public!support! !
-!Refactory.Browser.Refactoring categoriesFor: #convertAllReferencesToClass:using:!public!support! !
-!Refactory.Browser.Refactoring categoriesFor: #convertClasses:select:using:!public!support! !
-!Refactory.Browser.Refactoring categoriesFor: #convertMethod:using:!public!support! !
-!Refactory.Browser.Refactoring categoriesFor: #copyOptionsFrom:!accessing!public! !
-!Refactory.Browser.Refactoring categoriesFor: #defaultEnvironment!public!transforming! !
-!Refactory.Browser.Refactoring categoriesFor: #execute!public!transforming! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionAlreadyDefined:selector:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionBrowseEnvironments:!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionExtractAssignment:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionInlineExpression:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionMethodName:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionOpenBrowser:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionSelfArgumentName!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionUseExistingMethod:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionVariableToMoveToOf:in:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #getOptionVariableTypes:selected:!options!public! !
-!Refactory.Browser.Refactoring categoriesFor: #model!public!transforming! !
-!Refactory.Browser.Refactoring categoriesFor: #model:!initialize/release!public! !
-!Refactory.Browser.Refactoring categoriesFor: #onError:do:!exceptions!private! !
-!Refactory.Browser.Refactoring categoriesFor: #openBrowserOn:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #options!accessing!public! !
-!Refactory.Browser.Refactoring categoriesFor: #options:!accessing!public! !
-!Refactory.Browser.Refactoring categoriesFor: #performComponentRefactoring:!public!transforming! !
-!Refactory.Browser.Refactoring categoriesFor: #poolVariableNamesFor:!public!utilities! !
-!Refactory.Browser.Refactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.Refactoring categoriesFor: #primitiveExecute!operations!private! !
-!Refactory.Browser.Refactoring categoriesFor: #refactoringAborted:!exceptions!private! !
-!Refactory.Browser.Refactoring categoriesFor: #refactoringError:!exceptions!private! !
-!Refactory.Browser.Refactoring categoriesFor: #refactoringError:with:!exceptions!private! !
-!Refactory.Browser.Refactoring categoriesFor: #refactoringWarning:!exceptions!private! !
-!Refactory.Browser.Refactoring categoriesFor: #requestImplementorToInline:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #requestMethodNameFor:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #requestSelfArgumentName!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #safeMethodNameFor:basedOn:!public!utilities! !
-!Refactory.Browser.Refactoring categoriesFor: #selectVariableToMoveMethodTo:class:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #selectVariableTypesFrom:selected:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #setOption:toUse:!accessing!public! !
-!Refactory.Browser.Refactoring categoriesFor: #shouldExtractAssignmentTo:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #shouldInlineExpression:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #shouldOverride:in:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #shouldUseExistingMethod:!public!requests! !
-!Refactory.Browser.Refactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.Refactoring categoriesFor: #uniqueMethodNameFor:!helpers!private! !
-!Refactory.Browser.Refactoring categoriesFor: #whichVariableNode:inInterval:name:!public!utilities! !
+!Refactory.Browser.Refactoring categoriesForMethods!
+associationForClassVariable:in:ifAbsent:!public!utilities! !
+browseEnvironments:!public!requests! !
+canReferenceVariable:in:!public!testing! !
+changes!accessing!public! !
+checkClass:selector:using:!public!support! !
+checkInstanceVariableName:in:!public!utilities! !
+checkMethodName:in:!public!utilities! !
+checkPreconditions!preconditions!public! !
+checkPreconditions:!preconditions!public! !
+classObjectFor:!accessing!private! !
+convertAllReferencesTo:using:!public!support! !
+convertAllReferencesToClass:using:!public!support! !
+convertClasses:select:using:!public!support! !
+convertMethod:using:!public!support! !
+copyOptionsFrom:!accessing!public! !
+defaultEnvironment!public!transforming! !
+execute!public!transforming! !
+getOptionAlreadyDefined:selector:!options!public! !
+getOptionBrowseEnvironments:!public! !
+getOptionExtractAssignment:!options!public! !
+getOptionInlineExpression:!options!public! !
+getOptionMethodName:!options!public! !
+getOptionOpenBrowser:!options!public! !
+getOptionSelfArgumentName!options!public! !
+getOptionUseExistingMethod:!options!public! !
+getOptionVariableToMoveToOf:in:!options!public! !
+getOptionVariableTypes:selected:!options!public! !
+model!public!transforming! !
+model:!initialize/release!public! !
+onError:do:!exceptions!private! !
+openBrowserOn:!public!requests! !
+options!accessing!public! !
+options:!accessing!public! !
+performComponentRefactoring:!public!transforming! !
+poolVariableNamesFor:!public!utilities! !
+preconditions!preconditions!public! !
+primitiveExecute!operations!private! !
+refactoringAborted:!exceptions!private! !
+refactoringError:!exceptions!private! !
+refactoringError:with:!exceptions!private! !
+refactoringWarning:!exceptions!private! !
+requestImplementorToInline:!public!requests! !
+requestMethodNameFor:!public!requests! !
+requestSelfArgumentName!public!requests! !
+safeMethodNameFor:basedOn:!public!utilities! !
+selectVariableToMoveMethodTo:class:!public!requests! !
+selectVariableTypesFrom:selected:!public!requests! !
+setOption:toUse:!accessing!public! !
+shouldExtractAssignmentTo:!public!requests! !
+shouldInlineExpression:!public!requests! !
+shouldOverride:in:!public!requests! !
+shouldUseExistingMethod:!public!requests! !
+transform!public!transforming! !
+uniqueMethodNameFor:!helpers!private! !
+whichVariableNode:inInterval:name:!public!utilities! !
+!
 
 !Refactory.Browser.Refactoring class methodsFor!
 
@@ -408,14 +410,16 @@ setDefaultOption: aSymbol toMessage: aSelector
 uninitialize
 	#rbFix. "Assist uninstallation of Dolphin package."
 	RefactoringOptions := nil! !
-!Refactory.Browser.Refactoring class categoriesFor: #abortSignal!accessing!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #initialize!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #initializeRefactoringOptions!accessing!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #preconditionSignal!accessing signal!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #refactoringOptions!accessing!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #setDefaultOption:to:!accessing!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #setDefaultOption:toMessage:!accessing!public! !
-!Refactory.Browser.Refactoring class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Refactory.Browser.Refactoring class categoriesForMethods!
+abortSignal!accessing!public! !
+initialize!public! !
+initializeRefactoringOptions!accessing!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!public! !
+preconditionSignal!accessing signal!public! !
+refactoringOptions!accessing!public! !
+setDefaultOption:to:!accessing!public! !
+setDefaultOption:toMessage:!accessing!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

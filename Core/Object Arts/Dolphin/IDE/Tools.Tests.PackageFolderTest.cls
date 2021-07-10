@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.FolderTest subclass: #'Tools.Tests.PackageFolderTest'
 	instanceVariableNames: ''
@@ -24,7 +24,9 @@ testForPackage
 	dolphin := self folderClass forPackage: dolphinPackage.
 	self assert: dolphin name equals: 'Base'.
 	self assert: dolphin folderName equals: '$\' , dolphinPackageFolder! !
-!Tools.Tests.PackageFolderTest categoriesFor: #folderClass!constants!private! !
-!Tools.Tests.PackageFolderTest categoriesFor: #rootFolder!public!unit tests! !
-!Tools.Tests.PackageFolderTest categoriesFor: #testForPackage!public!unit tests! !
+!Tools.Tests.PackageFolderTest categoriesForMethods!
+folderClass!constants!private! !
+rootFolder!public!unit tests! !
+testForPackage!public!unit tests! !
+!
 

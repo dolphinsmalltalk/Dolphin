@@ -49,15 +49,17 @@ setInstruction: aSymbol arguments: anArray ip: aSmallInteger
 	args := anArray.
 	ip := aSmallInteger.
 ! !
-!Kernel.Bytecode categoriesFor: #args!accessing!public! !
-!Kernel.Bytecode categoriesFor: #instruction!accessing!public! !
-!Kernel.Bytecode categoriesFor: #instruction:!accessing!public! !
-!Kernel.Bytecode categoriesFor: #ip!accessing!public! !
-!Kernel.Bytecode categoriesFor: #ip:!accessing!public! !
-!Kernel.Bytecode categoriesFor: #jumpOffset:!accessing!public! !
-!Kernel.Bytecode categoriesFor: #jumpTarget!accessing!public! !
-!Kernel.Bytecode categoriesFor: #jumpTarget:!accessing!public! !
-!Kernel.Bytecode categoriesFor: #setInstruction:arguments:ip:!initializing!private! !
+!Kernel.Bytecode categoriesForMethods!
+args!accessing!public! !
+instruction!accessing!public! !
+instruction:!accessing!public! !
+ip!accessing!public! !
+ip:!accessing!public! !
+jumpOffset:!accessing!public! !
+jumpTarget!accessing!public! !
+jumpTarget:!accessing!public! !
+setInstruction:arguments:ip:!initializing!private! !
+!
 
 !Kernel.Bytecode class methodsFor!
 
@@ -66,5 +68,7 @@ instruction: bytecodeInteger arguments: anArray ip: aSmallInteger
 		setInstruction: bytecodeInteger
 		arguments: anArray
 		ip: aSmallInteger! !
-!Kernel.Bytecode class categoriesFor: #instruction:arguments:ip:!instance creation!public! !
+!Kernel.Bytecode class categoriesForMethods!
+instruction:arguments:ip:!instance creation!public! !
+!
 

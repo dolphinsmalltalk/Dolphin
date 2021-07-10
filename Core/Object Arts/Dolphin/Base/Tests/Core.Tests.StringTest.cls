@@ -1068,60 +1068,62 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 
 withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
-!Core.Tests.StringTest categoriesFor: #afterTestCases!constants!private! !
-!Core.Tests.StringTest categoriesFor: #assimilate:!helpers!private! !
-!Core.Tests.StringTest categoriesFor: #assimilateString:!helpers!private! !
-!Core.Tests.StringTest categoriesFor: #beforeTestCases!constants!private! !
-!Core.Tests.StringTest categoriesFor: #caseConversionCases!constants!private! !
-!Core.Tests.StringTest categoriesFor: #equalityTestCases!constants!private! !
-!Core.Tests.StringTest categoriesFor: #findActualIndicesOf:in:!helpers!private! !
-!Core.Tests.StringTest categoriesFor: #indexOfTestCases!constants!private! !
-!Core.Tests.StringTest categoriesFor: #lengthTestCases!constants!private! !
-!Core.Tests.StringTest categoriesFor: #newNumericArray:!helpers!private! !
-!Core.Tests.StringTest categoriesFor: #reverseTestCases!constants!private! !
-!Core.Tests.StringTest categoriesFor: #testAfter!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testAsByteArray!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testAt!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testBefore!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testBeginsWithEmbeddedNulls!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testBeginsWithMixedEncodings!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testBinarySelectorExpandMacrosWith!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testBinarySelectorExpandMacrosWithCollection!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testCapitalized!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testCaseConversions!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testClassFromAddress!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testCopyWithout!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testEmpty!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testEquals!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testExpandMacrosWith!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testExpandMacrosWithArguments!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testHash!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testIndexOfStartingAt!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testLastIndexOf!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testLength!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testLines!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testMutableCopy!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testReverse!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testReversedFromTo!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testReverseDo!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testSpecies!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testSplitByCharacterArray!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testSplitByString!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testSplitSingle!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testSubStringsByString!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testTrimNulls!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testUrlDecoded!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testUrlEncoded!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testWithAll!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
-!Core.Tests.StringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
-!Core.Tests.StringTest categoriesFor: #withAllTestCases!constants!private! !
+!Core.Tests.StringTest categoriesForMethods!
+afterTestCases!constants!private! !
+assimilate:!helpers!private! !
+assimilateString:!helpers!private! !
+beforeTestCases!constants!private! !
+caseConversionCases!constants!private! !
+equalityTestCases!constants!private! !
+findActualIndicesOf:in:!helpers!private! !
+indexOfTestCases!constants!private! !
+lengthTestCases!constants!private! !
+newNumericArray:!helpers!private! !
+reverseTestCases!constants!private! !
+testAfter!public!unit tests! !
+testAsByteArray!public!unit tests! !
+testAt!public!unit tests! !
+testBefore!public!unit tests! !
+testBeginsWithEmbeddedNulls!public!unit tests! !
+testBeginsWithMixedEncodings!public!unit tests! !
+testBinarySelectorExpandMacrosWith!public!unit tests! !
+testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
+testBinarySelectorExpandMacrosWithCollection!public!unit tests! !
+testCapitalized!public!unit tests! !
+testCaseConversions!public!unit tests! !
+testClassFromAddress!public!unit tests! !
+testClassReadFrom!public!unit tests! !
+testCopyWithout!public!unit tests! !
+testEmpty!public!unit tests! !
+testEquals!public!unit tests! !
+testExpandMacrosWith!public!unit tests! !
+testExpandMacrosWithArguments!public!unit tests! !
+testFindStringStartingAt!public!unit tests! !
+testFindStringStartingAtIgnoreCase!public!unit tests! !
+testHash!public!unit tests! !
+testIndexOfStartingAt!public!unit tests! !
+testInvalidComparisons!public!unit tests! !
+testLastIndexOf!public!unit tests! !
+testLength!public!unit tests! !
+testLines!public!unit tests! !
+testMutableCopy!public!unit tests! !
+testRefersToLiteral!public!unit tests! !
+testReverse!public!unit tests! !
+testReversedFromTo!public!unit tests! !
+testReverseDo!public!unit tests! !
+testSpecies!public!unit tests! !
+testSplitByCharacterArray!public!unit tests! !
+testSplitByString!public!unit tests! !
+testSplitSingle!public!unit tests! !
+testStreamUtfRoundTrip!public!unit tests! !
+testSubStringsByCharacter!public!unit tests! !
+testSubStringsByString!public!unit tests! !
+testTrimNulls!public!unit tests! !
+testUrlDecoded!public!unit tests! !
+testUrlEncoded!public!unit tests! !
+testWithAll!public!unit tests! !
+testWithNormalizedLineDelimiters!public!unit tests! !
+verifyConcatenationResult:of:with:!helpers!private! !
+withAllTestCases!constants!private! !
+!
 

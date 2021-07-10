@@ -142,21 +142,23 @@ selectionEnvironment
 
 slideyPinNames
 	^super slideyPinNames , #('packagesSlidey')! !
-!Tools.SystemBrowserShell categoriesFor: #canSaveMethod!commands!private! !
-!Tools.SystemBrowserShell categoriesFor: #createComponents!initializing!public! !
-!Tools.SystemBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.SystemBrowserShell categoriesFor: #hasPackageSelected!public!testing! !
-!Tools.SystemBrowserShell categoriesFor: #isEditableMethod:!modes!public! !
-!Tools.SystemBrowserShell categoriesFor: #onPackageSelected!event handling!private! !
-!Tools.SystemBrowserShell categoriesFor: #packageForNewMethod!operations!private! !
-!Tools.SystemBrowserShell categoriesFor: #packageNames!accessing!public! !
-!Tools.SystemBrowserShell categoriesFor: #packages!accessing!public! !
-!Tools.SystemBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!Tools.SystemBrowserShell categoriesFor: #resetForFoundClass:!commands!private! !
-!Tools.SystemBrowserShell categoriesFor: #saveStateOn:!private!saved state! !
-!Tools.SystemBrowserShell categoriesFor: #searchForPackage:!operations!public! !
-!Tools.SystemBrowserShell categoriesFor: #selectionEnvironment!accessing!public! !
-!Tools.SystemBrowserShell categoriesFor: #slideyPinNames!accessing!private! !
+!Tools.SystemBrowserShell categoriesForMethods!
+canSaveMethod!commands!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+hasPackageSelected!public!testing! !
+isEditableMethod:!modes!public! !
+onPackageSelected!event handling!private! !
+packageForNewMethod!operations!private! !
+packageNames!accessing!public! !
+packages!accessing!public! !
+queryCommand:!commands!private! !
+resetForFoundClass:!commands!private! !
+saveStateOn:!private!saved state! !
+searchForPackage:!operations!public! !
+selectionEnvironment!accessing!public! !
+slideyPinNames!accessing!private! !
+!
 
 !Tools.SystemBrowserShell class methodsFor!
 
@@ -216,13 +218,15 @@ uninitialize
 
 	SmalltalkSystem.Current
 		ifNotNil: [:devsys | devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil]]! !
-!Tools.SystemBrowserShell class categoriesFor: #autoSelectPackages!accessing!private! !
-!Tools.SystemBrowserShell class categoriesFor: #autoSelectPackages:!accessing!private! !
-!Tools.SystemBrowserShell class categoriesFor: #displayOn:!displaying!public! !
-!Tools.SystemBrowserShell class categoriesFor: #icon!constants!public! !
-!Tools.SystemBrowserShell class categoriesFor: #initialize!initializing!private! !
-!Tools.SystemBrowserShell class categoriesFor: #publishedAspects!public! !
-!Tools.SystemBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.SystemBrowserShell class categoriesFor: #toolsFolderHelpId!constants!public! !
-!Tools.SystemBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.SystemBrowserShell class categoriesForMethods!
+autoSelectPackages!accessing!private! !
+autoSelectPackages:!accessing!private! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

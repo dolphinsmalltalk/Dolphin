@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineAllMethodTest'
 	instanceVariableNames: ''
@@ -40,6 +40,8 @@ testRecursiveMethod
 				in: class).
 	self assert: (class parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^self foo').
 	self assert: (class parseTreeFor: #bar) equals: (RBParser parseMethod: 'bar ^self foo')! !
-!Refactory.Browser.Tests.InlineAllMethodTest categoriesFor: #testInlineMethodWithMultipleSendersInMethod!public!tests! !
-!Refactory.Browser.Tests.InlineAllMethodTest categoriesFor: #testRecursiveMethod!public!tests! !
+!Refactory.Browser.Tests.InlineAllMethodTest categoriesForMethods!
+testInlineMethodWithMultipleSendersInMethod!public!tests! !
+testRecursiveMethod!public!tests! !
+!
 

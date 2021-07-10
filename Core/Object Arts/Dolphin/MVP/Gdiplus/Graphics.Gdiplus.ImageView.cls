@@ -116,17 +116,19 @@ paintImageOn: aCanvas
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
-!Graphics.Gdiplus.ImageView categoriesFor: #default:in:!geometry!private! !
-!Graphics.Gdiplus.ImageView categoriesFor: #imageAttributes!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #imageAttributes:!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #imagePadding!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #imagePadding:!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #initialize!initializing!private! !
-!Graphics.Gdiplus.ImageView categoriesFor: #interpolationMode!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #interpolationMode:!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #isEraseBackground!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #isEraseBackground:!accessing!public! !
-!Graphics.Gdiplus.ImageView categoriesFor: #paintImageOn:!drawing!private! !
+!Graphics.Gdiplus.ImageView categoriesForMethods!
+default:in:!geometry!private! !
+imageAttributes!accessing!public! !
+imageAttributes:!accessing!public! !
+imagePadding!accessing!public! !
+imagePadding:!accessing!public! !
+initialize!initializing!private! !
+interpolationMode!accessing!public! !
+interpolationMode:!accessing!public! !
+isEraseBackground!accessing!public! !
+isEraseBackground:!accessing!public! !
+paintImageOn:!drawing!private! !
+!
 
 !Graphics.Gdiplus.ImageView class methodsFor!
 
@@ -195,9 +197,11 @@ stbConvertFromVersion13: anArray
 
 stbVersion
 	^14! !
-!Graphics.Gdiplus.ImageView class categoriesFor: #interpolationStyles!constants!public! !
-!Graphics.Gdiplus.ImageView class categoriesFor: #interpolationStyleTable!constants!public! !
-!Graphics.Gdiplus.ImageView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
-!Graphics.Gdiplus.ImageView class categoriesFor: #stbConvertFromVersion13:!public! !
-!Graphics.Gdiplus.ImageView class categoriesFor: #stbVersion!public! !
+!Graphics.Gdiplus.ImageView class categoriesForMethods!
+interpolationStyles!constants!public! !
+interpolationStyleTable!constants!public! !
+stbConvert:fromVersion:!binary filing!public! !
+stbConvertFromVersion13:!public! !
+stbVersion!public! !
+!
 

@@ -400,47 +400,49 @@ wmInitDialog: message wParam: wParam lParam: lParam
 	self defaultButtonId isNil ifTrue: [self setDefId: 0].
 
 	^self onInitDialog! !
-!UI.DialogView categoriesFor: #answer!accessing!public! !
-!UI.DialogView categoriesFor: #answer:!accessing!not an aspect!public! !
-!UI.DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
-!UI.DialogView categoriesFor: #cancel!commands!public! !
-!UI.DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
-!UI.DialogView categoriesFor: #defaultExtent!constants!public! !
-!UI.DialogView categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
-!UI.DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!UI.DialogView categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.DialogView categoriesFor: #destroy!public!realizing/unrealizing! !
-!UI.DialogView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!UI.DialogView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!UI.DialogView categoriesFor: #enableItem:state:!accessing!private! !
-!UI.DialogView categoriesFor: #endDialog:!operations!public! !
-!UI.DialogView categoriesFor: #getItemText:!accessing!private! !
-!UI.DialogView categoriesFor: #has3dLook!accessing!public! !
-!UI.DialogView categoriesFor: #has3dLook:!accessing!public! !
-!UI.DialogView categoriesFor: #initialize!initializing!private! !
-!UI.DialogView categoriesFor: #isInProc!public!testing! !
-!UI.DialogView categoriesFor: #isInProc:!accessing!public! !
-!UI.DialogView categoriesFor: #isModal!accessing!private! !
-!UI.DialogView categoriesFor: #isModal:!accessing!private! !
-!UI.DialogView categoriesFor: #isPersistentView!public!testing! !
-!UI.DialogView categoriesFor: #isPropertyPage!public!testing! !
-!UI.DialogView categoriesFor: #oldWndProc:!accessing!private! !
-!UI.DialogView categoriesFor: #onInitDialog!event handling!public! !
-!UI.DialogView categoriesFor: #performCommand:!commands!public! !
-!UI.DialogView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!UI.DialogView categoriesFor: #resourceLib!constants!public! !
-!UI.DialogView categoriesFor: #runModalInProcessLoop!operations!private! !
-!UI.DialogView categoriesFor: #runModalLoop!operations!private! !
-!UI.DialogView categoriesFor: #setItem:font:!accessing!private! !
-!UI.DialogView categoriesFor: #setItem:icon:!accessing!private! !
-!UI.DialogView categoriesFor: #setItem:int:!accessing!private! !
-!UI.DialogView categoriesFor: #setItem:text:!accessing!private! !
-!UI.DialogView categoriesFor: #showModal!private!realizing/unrealizing! !
-!UI.DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
-!UI.DialogView categoriesFor: #showModeless:!private!realizing/unrealizing! !
-!UI.DialogView categoriesFor: #subclassWindow:!operations!private! !
-!UI.DialogView categoriesFor: #templateId!constants!private! !
-!UI.DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!must not strip!public! !
+!UI.DialogView categoriesForMethods!
+answer!accessing!public! !
+answer:!accessing!not an aspect!public! !
+basicCreateAt:extent:!private!realizing/unrealizing! !
+cancel!commands!public! !
+defaultBackcolor!colors!constants!private! !
+defaultExtent!constants!public! !
+defaultPositionWithin:forExtent:!geometry!private! !
+defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+defaultWindowStyle!constants!private! !
+destroy!public!realizing/unrealizing! !
+dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
+dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
+enableItem:state:!accessing!private! !
+endDialog:!operations!public! !
+getItemText:!accessing!private! !
+has3dLook!accessing!public! !
+has3dLook:!accessing!public! !
+initialize!initializing!private! !
+isInProc!public!testing! !
+isInProc:!accessing!public! !
+isModal!accessing!private! !
+isModal:!accessing!private! !
+isPersistentView!public!testing! !
+isPropertyPage!public!testing! !
+oldWndProc:!accessing!private! !
+onInitDialog!event handling!public! !
+performCommand:!commands!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+resourceLib!constants!public! !
+runModalInProcessLoop!operations!private! !
+runModalLoop!operations!private! !
+setItem:font:!accessing!private! !
+setItem:icon:!accessing!private! !
+setItem:int:!accessing!private! !
+setItem:text:!accessing!private! !
+showModal!private!realizing/unrealizing! !
+showModalTo:!private!realizing/unrealizing! !
+showModeless:!private!realizing/unrealizing! !
+subclassWindow:!operations!private! !
+templateId!constants!private! !
+wmInitDialog:wParam:lParam:!event handling-win32!must not strip!public! !
+!
 
 !UI.DialogView class methodsFor!
 
@@ -465,9 +467,11 @@ on: aSubjectModel
 
 uninitialize
 	View unregisterMessageMappings: {WM_INITDIALOG}! !
-!UI.DialogView class categoriesFor: #icon!constants!public! !
-!UI.DialogView class categoriesFor: #initialize!initializing!private! !
-!UI.DialogView class categoriesFor: #new!instance creation!public! !
-!UI.DialogView class categoriesFor: #on:!instance creation!public! !
-!UI.DialogView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.DialogView class categoriesForMethods!
+icon!constants!public! !
+initialize!initializing!private! !
+new!instance creation!public! !
+on:!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

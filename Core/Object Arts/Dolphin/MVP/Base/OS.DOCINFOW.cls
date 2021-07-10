@@ -47,12 +47,14 @@ lpszOutput: anUtf16String
 	"Set the receiver's 'lpszOutput' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpszOutput put: anUtf16String yourAddress! !
-!OS.DOCINFOW categoriesFor: #docName:!accessing!public! !
-!OS.DOCINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.DOCINFOW categoriesFor: #fwType:!**compiled accessors**!public! !
-!OS.DOCINFOW categoriesFor: #lpszDatatype:!**compiled accessors**!public! !
-!OS.DOCINFOW categoriesFor: #lpszDocName:!**compiled accessors**!public! !
-!OS.DOCINFOW categoriesFor: #lpszOutput:!**compiled accessors**!public! !
+!OS.DOCINFOW categoriesForMethods!
+docName:!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+fwType:!**compiled accessors**!public! !
+lpszDatatype:!**compiled accessors**!public! !
+lpszDocName:!**compiled accessors**!public! !
+lpszOutput:!**compiled accessors**!public! !
+!
 
 !OS.DOCINFOW class methodsFor!
 
@@ -78,6 +80,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !
-!OS.DOCINFOW class categoriesFor: #defineFields!public!template definition! !
-!OS.DOCINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DOCINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

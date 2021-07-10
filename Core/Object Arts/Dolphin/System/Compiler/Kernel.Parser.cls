@@ -1223,104 +1223,106 @@ validateTemp: aVariableNode of: aNode temps: anOrderedCollection
 
 variableNodeClass
 	^StVariableNode! !
-!Kernel.Parser categoriesFor: #addCommentsTo:!helpers!private! !
-!Kernel.Parser categoriesFor: #assignmentNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #atEnd!public!testing! !
-!Kernel.Parser categoriesFor: #blockNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #braceArrayNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
-!Kernel.Parser categoriesFor: #cascadeNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #environment:!initializing!public! !
-!Kernel.Parser categoriesFor: #errorBlock:!accessing!public! !
-!Kernel.Parser categoriesFor: #errorPosition!error handling!public! !
-!Kernel.Parser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
-!Kernel.Parser categoriesFor: #initialize!initializing!public! !
-!Kernel.Parser categoriesFor: #initializeParserWith:!initializing!private! !
-!Kernel.Parser categoriesFor: #line!accessing!public! !
-!Kernel.Parser categoriesFor: #literalArrayNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #literalValueNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #messageNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #methodClass:!accessing!public! !
-!Kernel.Parser categoriesFor: #methodNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #nextToken!helpers!private! !
-!Kernel.Parser categoriesFor: #optimizedNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #parameterNodeClass!parsing!private! !
-!Kernel.Parser categoriesFor: #parseAnnotationArgument!parsing!private! !
-!Kernel.Parser categoriesFor: #parseAssignment!parsing!private! !
-!Kernel.Parser categoriesFor: #parseBinaryMessage!parsing!private! !
-!Kernel.Parser categoriesFor: #parseBinaryMessageWith:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseBinaryPattern!parsing!private! !
-!Kernel.Parser categoriesFor: #parseBlock!parsing!private! !
-!Kernel.Parser categoriesFor: #parseBlockArgsInto:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseBlockParameter!parsing!private! !
-!Kernel.Parser categoriesFor: #parseBraceArray!parsing!private! !
-!Kernel.Parser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseCascadeMessage!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExpression:!parsing!public! !
-!Kernel.Parser categoriesFor: #parseExternalArgType!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExternalArgTypeQualifier!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExternalCall:startingAt:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExternalCallArgList!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExternalCallArgs:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExternalCallingConvention!parsing!private! !
-!Kernel.Parser categoriesFor: #parseExternalCallName!parsing!private! !
-!Kernel.Parser categoriesFor: #parseKeywordAnnotation:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseKeywordMessage!parsing!private! !
-!Kernel.Parser categoriesFor: #parseKeywordMessageWith:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseKeywordPattern!parsing!private! !
-!Kernel.Parser categoriesFor: #parseKeywordTag:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseLiteralArray!parsing!private! !
-!Kernel.Parser categoriesFor: #parseLiteralArrayObject!parsing!private! !
-!Kernel.Parser categoriesFor: #parseLiteralByteArray!parsing!private! !
-!Kernel.Parser categoriesFor: #parseLiteralByteArrayObject!parsing!private! !
-!Kernel.Parser categoriesFor: #parseMessagePattern!parsing!private! !
-!Kernel.Parser categoriesFor: #parseMethod!parsing!private! !
-!Kernel.Parser categoriesFor: #parseMethod:!accessing!private! !
-!Kernel.Parser categoriesFor: #parseMethod:in:environment:errorBlock:!parsing!public! !
-!Kernel.Parser categoriesFor: #parseMethodParameter!parsing!private! !
-!Kernel.Parser categoriesFor: #parseNumberLiteral!parsing!private! !
-!Kernel.Parser categoriesFor: #parseOptimizedExpression!parsing!private! !
-!Kernel.Parser categoriesFor: #parseOverlappedCall:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseParenthesizedExpression!parsing!private! !
-!Kernel.Parser categoriesFor: #parsePrimitive:!parsing!private! !
-!Kernel.Parser categoriesFor: #parsePrimitiveIdentifier:!parsing!private! !
-!Kernel.Parser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
-!Kernel.Parser categoriesFor: #parsePrimitiveObject!parsing!private! !
-!Kernel.Parser categoriesFor: #parsePrimitiveValueLiteral!parsing!private! !
-!Kernel.Parser categoriesFor: #parseQualifiedReference!parsing!private! !
-!Kernel.Parser categoriesFor: #parseQualifiedRefModifiers:!parsing!private! !
-!Kernel.Parser categoriesFor: #parserError:!error handling!private! !
-!Kernel.Parser categoriesFor: #parserError:range:!error handling!private! !
-!Kernel.Parser categoriesFor: #parserError:range:extra:!error handling!private! !
-!Kernel.Parser categoriesFor: #parserError:range:extras:!error handling!private! !
-!Kernel.Parser categoriesFor: #parseStatementList:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseStatementsOf:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseTag:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseTags!parsing!private! !
-!Kernel.Parser categoriesFor: #parseTempDecl!parsing!private! !
-!Kernel.Parser categoriesFor: #parseTempsOf:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseUnaryMessage!parsing!private! !
-!Kernel.Parser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseUnaryPattern!parsing!private! !
-!Kernel.Parser categoriesFor: #parseUnaryTag:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseVariableNode:!parsing!private! !
-!Kernel.Parser categoriesFor: #parseVirtualCall:!parsing!private! !
-!Kernel.Parser categoriesFor: #patchFunctionDescriptorClose!parsing!private! !
-!Kernel.Parser categoriesFor: #patchLiteralArrayToken!parsing!private! !
-!Kernel.Parser categoriesFor: #patchLiteralMessage!helpers!private! !
-!Kernel.Parser categoriesFor: #patchNegativeLiteral!helpers!private! !
-!Kernel.Parser categoriesFor: #qualifiedReferenceNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
-!Kernel.Parser categoriesFor: #returnNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #scanner:!accessing!public! !
-!Kernel.Parser categoriesFor: #scannerClass!constants!private! !
-!Kernel.Parser categoriesFor: #sequenceNodeClass!constants!private! !
-!Kernel.Parser categoriesFor: #source!accessing!private! !
-!Kernel.Parser categoriesFor: #step!parsing!private! !
-!Kernel.Parser categoriesFor: #tempDeclClass!parsing!private! !
-!Kernel.Parser categoriesFor: #validateArg:args:!parsing!private! !
-!Kernel.Parser categoriesFor: #validateTemp:of:temps:!parsing!private! !
-!Kernel.Parser categoriesFor: #variableNodeClass!constants!private! !
+!Kernel.Parser categoriesForMethods!
+addCommentsTo:!helpers!private! !
+assignmentNodeClass!constants!private! !
+atEnd!public!testing! !
+blockNodeClass!constants!private! !
+braceArrayNodeClass!constants!private! !
+canHaveStatementsAfterReturn!public!testing! !
+cascadeNodeClass!constants!private! !
+environment:!initializing!public! !
+errorBlock:!accessing!public! !
+errorPosition!error handling!public! !
+externalReferenceTypeFor:!parsing!private! !
+initialize!initializing!public! !
+initializeParserWith:!initializing!private! !
+line!accessing!public! !
+literalArrayNodeClass!constants!private! !
+literalValueNodeClass!constants!private! !
+messageNodeClass!constants!private! !
+methodClass:!accessing!public! !
+methodNodeClass!constants!private! !
+nextToken!helpers!private! !
+optimizedNodeClass!constants!private! !
+parameterNodeClass!parsing!private! !
+parseAnnotationArgument!parsing!private! !
+parseAssignment!parsing!private! !
+parseBinaryMessage!parsing!private! !
+parseBinaryMessageWith:!parsing!private! !
+parseBinaryPattern!parsing!private! !
+parseBlock!parsing!private! !
+parseBlockArgsInto:!parsing!private! !
+parseBlockParameter!parsing!private! !
+parseBraceArray!parsing!private! !
+parseCascadedMessageFor:!parsing!private! !
+parseCascadeMessage!parsing!private! !
+parseExpression:!parsing!public! !
+parseExternalArgType!parsing!private! !
+parseExternalArgTypeQualifier!parsing!private! !
+parseExternalCall:startingAt:!parsing!private! !
+parseExternalCallArgList!parsing!private! !
+parseExternalCallArgs:!parsing!private! !
+parseExternalCallingConvention!parsing!private! !
+parseExternalCallName!parsing!private! !
+parseKeywordAnnotation:!parsing!private! !
+parseKeywordMessage!parsing!private! !
+parseKeywordMessageWith:!parsing!private! !
+parseKeywordPattern!parsing!private! !
+parseKeywordTag:!parsing!private! !
+parseLiteralArray!parsing!private! !
+parseLiteralArrayObject!parsing!private! !
+parseLiteralByteArray!parsing!private! !
+parseLiteralByteArrayObject!parsing!private! !
+parseMessagePattern!parsing!private! !
+parseMethod!parsing!private! !
+parseMethod:!accessing!private! !
+parseMethod:in:environment:errorBlock:!parsing!public! !
+parseMethodParameter!parsing!private! !
+parseNumberLiteral!parsing!private! !
+parseOptimizedExpression!parsing!private! !
+parseOverlappedCall:!parsing!private! !
+parseParenthesizedExpression!parsing!private! !
+parsePrimitive:!parsing!private! !
+parsePrimitiveIdentifier:!parsing!private! !
+parsePrimitiveLiteral!parsing!private! !
+parsePrimitiveObject!parsing!private! !
+parsePrimitiveValueLiteral!parsing!private! !
+parseQualifiedReference!parsing!private! !
+parseQualifiedRefModifiers:!parsing!private! !
+parserError:!error handling!private! !
+parserError:range:!error handling!private! !
+parserError:range:extra:!error handling!private! !
+parserError:range:extras:!error handling!private! !
+parseStatementList:!parsing!private! !
+parseStatementsOf:!parsing!private! !
+parseTag:!parsing!private! !
+parseTags!parsing!private! !
+parseTempDecl!parsing!private! !
+parseTempsOf:!parsing!private! !
+parseUnaryMessage!parsing!private! !
+parseUnaryMessageWith:!parsing!private! !
+parseUnaryPattern!parsing!private! !
+parseUnaryTag:!parsing!private! !
+parseVariableNode:!parsing!private! !
+parseVirtualCall:!parsing!private! !
+patchFunctionDescriptorClose!parsing!private! !
+patchLiteralArrayToken!parsing!private! !
+patchLiteralMessage!helpers!private! !
+patchNegativeLiteral!helpers!private! !
+qualifiedReferenceNodeClass!constants!private! !
+reportError:at:line:range:extras:!error handling!private! !
+returnNodeClass!constants!private! !
+scanner:!accessing!public! !
+scannerClass!constants!private! !
+sequenceNodeClass!constants!private! !
+source!accessing!private! !
+step!parsing!private! !
+tempDeclClass!parsing!private! !
+validateArg:args:!parsing!private! !
+validateTemp:of:temps:!parsing!private! !
+variableNodeClass!constants!private! !
+!
 
 Kernel.Parser methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
 
@@ -1464,29 +1466,31 @@ parseRewriteMethod: aString
 
 warningClass
 	^CompilerWarningNotification! !
-!Kernel.Parser class categoriesFor: #allowEmptyStatements!accessing!public! !
-!Kernel.Parser class categoriesFor: #allowEmptyStatements:!accessing!public! !
-!Kernel.Parser class categoriesFor: #errorClass!constants!public! !
-!Kernel.Parser class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.Parser class categoriesFor: #new!instance creation!public! !
-!Kernel.Parser class categoriesFor: #notificationClass!constants!public! !
-!Kernel.Parser class categoriesFor: #parseExistingMethodNoError:!commands!public! !
-!Kernel.Parser class categoriesFor: #parseExpression:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseExpression:in:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseExpression:in:environment:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseExpression:in:environment:onError:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseExpression:in:onError:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseExpression:onError:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseExpressionNoError:in:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethod:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethod:in:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethod:in:environment:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethod:in:environment:onError:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethod:onError:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethodNoError:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethodNoError:in:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseMethodPattern:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseRewriteExpression:!parsing!public! !
-!Kernel.Parser class categoriesFor: #parseRewriteMethod:!parsing!public! !
-!Kernel.Parser class categoriesFor: #warningClass!constants!public! !
+!Kernel.Parser class categoriesForMethods!
+allowEmptyStatements!accessing!public! !
+allowEmptyStatements:!accessing!public! !
+errorClass!constants!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+notificationClass!constants!public! !
+parseExistingMethodNoError:!commands!public! !
+parseExpression:!parsing!public! !
+parseExpression:in:!parsing!public! !
+parseExpression:in:environment:!parsing!public! !
+parseExpression:in:environment:onError:!parsing!public! !
+parseExpression:in:onError:!parsing!public! !
+parseExpression:onError:!parsing!public! !
+parseExpressionNoError:in:!parsing!public! !
+parseMethod:!parsing!public! !
+parseMethod:in:!parsing!public! !
+parseMethod:in:environment:!parsing!public! !
+parseMethod:in:environment:onError:!parsing!public! !
+parseMethod:onError:!parsing!public! !
+parseMethodNoError:!parsing!public! !
+parseMethodNoError:in:!parsing!public! !
+parseMethodPattern:!parsing!public! !
+parseRewriteExpression:!parsing!public! !
+parseRewriteMethod:!parsing!public! !
+warningClass!constants!public! !
+!
 

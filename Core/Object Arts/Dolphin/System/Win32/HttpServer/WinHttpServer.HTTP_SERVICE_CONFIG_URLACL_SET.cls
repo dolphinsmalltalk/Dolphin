@@ -48,10 +48,12 @@ ParamDesc: anUtf16String
 	"Set the receiver's 'ParamDesc' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_ParamDesc put: anUtf16String yourAddress! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET categoriesForMethods!
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+ParamDesc!**compiled accessors**!public! !
+ParamDesc:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET class methodsFor!
 
@@ -74,6 +76,8 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

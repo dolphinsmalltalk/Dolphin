@@ -124,12 +124,14 @@ signal
 
 	Processor activeProcess == owner ifTrue: [
 		owner := nil. semaphore signal]! !
-!Core.Mutex categoriesFor: #critical:!debugger-step over!process synchronisation!public! !
-!Core.Mutex categoriesFor: #critical:ifLocked:!process synchronisation!public! !
-!Core.Mutex categoriesFor: #initialize!initializing!private! !
-!Core.Mutex categoriesFor: #owner!accessing!private! !
-!Core.Mutex categoriesFor: #printOn:!printing!public! !
-!Core.Mutex categoriesFor: #signal!private!process synchronisation! !
+!Core.Mutex categoriesForMethods!
+critical:!debugger-step over!process synchronisation!public! !
+critical:ifLocked:!process synchronisation!public! !
+initialize!initializing!private! !
+owner!accessing!private! !
+printOn:!printing!public! !
+signal!private!process synchronisation! !
+!
 
 Core.Mutex methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #(#critical:)!
 
@@ -139,5 +141,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!Core.Mutex class categoriesFor: #new!instance creation!public! !
+!Core.Mutex class categoriesForMethods!
+new!instance creation!public! !
+!
 

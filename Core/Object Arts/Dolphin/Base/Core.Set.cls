@@ -400,51 +400,53 @@ uncheckedAdd: newObject
 
 	tally := tally + 1.
 	^self basicAt: (self findElementOrNil: newObject) put: newObject! !
-!Core.Set categoriesFor: #-!public!removing! !
-!Core.Set categoriesFor: #_deepCopy:!copying!private! !
-!Core.Set categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
-!Core.Set categoriesFor: #=!comparing!public! !
-!Core.Set categoriesFor: #add:!adding!public! !
-!Core.Set categoriesFor: #addIfAbsent:!adding!public! !
-!Core.Set categoriesFor: #addNewElement:!adding!public! !
-!Core.Set categoriesFor: #approxSize!accessing!private! !
-!Core.Set categoriesFor: #asSet!converting!public! !
-!Core.Set categoriesFor: #at:!accessing!public! !
-!Core.Set categoriesFor: #at:put:!accessing!public! !
-!Core.Set categoriesFor: #averageProbesPerElement!development!public!statistics! !
-!Core.Set categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Core.Set categoriesFor: #collisions!development!public!statistics! !
-!Core.Set categoriesFor: #copyElementsInto:!mutating!private! !
-!Core.Set categoriesFor: #copyWithoutDuplicates!copying!public! !
-!Core.Set categoriesFor: #distinct!public!set operations! !
-!Core.Set categoriesFor: #do:!enumerating!public! !
-!Core.Set categoriesFor: #elements!accessing!private! !
-!Core.Set categoriesFor: #elements:!initializing!private! !
-!Core.Set categoriesFor: #equals:!comparing!public! !
-!Core.Set categoriesFor: #find:!public!searching! !
-!Core.Set categoriesFor: #find:ifAbsent:!public!searching! !
-!Core.Set categoriesFor: #findElementOrNil:!private!searching! !
-!Core.Set categoriesFor: #fixCollisionsFrom:!private!removing! !
-!Core.Set categoriesFor: #grow!helpers!private! !
-!Core.Set categoriesFor: #hash:max:!private!searching! !
-!Core.Set categoriesFor: #identityIncludes:!public!searching! !
-!Core.Set categoriesFor: #includes:!public!searching! !
-!Core.Set categoriesFor: #initialize!initializing!private! !
-!Core.Set categoriesFor: #isHealthy!public! !
-!Core.Set categoriesFor: #moveFrom:to:!private!removing! !
-!Core.Set categoriesFor: #occurrencesOf:!public!searching! !
-!Core.Set categoriesFor: #postResize:!adding!private! !
-!Core.Set categoriesFor: #preResize:!adding!private! !
-!Core.Set categoriesFor: #privateAt:put:!accessing!private! !
-!Core.Set categoriesFor: #rehash!operations!public! !
-!Core.Set categoriesFor: #remove:ifAbsent:!public!removing! !
-!Core.Set categoriesFor: #removeAll!public! !
-!Core.Set categoriesFor: #removeIndex:!private!removing! !
-!Core.Set categoriesFor: #resize:!mutating!private! !
-!Core.Set categoriesFor: #shrink!mutating!public! !
-!Core.Set categoriesFor: #size!accessing!public! !
-!Core.Set categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.Set categoriesFor: #uncheckedAdd:!adding!private! !
+!Core.Set categoriesForMethods!
+-!public!removing! !
+_deepCopy:!copying!private! !
+_deepCopyElementsInto:trail:!copying!private! !
+=!comparing!public! !
+add:!adding!public! !
+addIfAbsent:!adding!public! !
+addNewElement:!adding!public! !
+approxSize!accessing!private! !
+asSet!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+averageProbesPerElement!development!public!statistics! !
+bestSlotFor:boundedBy:!development!private!statistics! !
+collisions!development!public!statistics! !
+copyElementsInto:!mutating!private! !
+copyWithoutDuplicates!copying!public! !
+distinct!public!set operations! !
+do:!enumerating!public! !
+elements!accessing!private! !
+elements:!initializing!private! !
+equals:!comparing!public! !
+find:!public!searching! !
+find:ifAbsent:!public!searching! !
+findElementOrNil:!private!searching! !
+fixCollisionsFrom:!private!removing! !
+grow!helpers!private! !
+hash:max:!private!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+initialize!initializing!private! !
+isHealthy!public! !
+moveFrom:to:!private!removing! !
+occurrencesOf:!public!searching! !
+postResize:!adding!private! !
+preResize:!adding!private! !
+privateAt:put:!accessing!private! !
+rehash!operations!public! !
+remove:ifAbsent:!public!removing! !
+removeAll!public! !
+removeIndex:!private!removing! !
+resize:!mutating!private! !
+shrink!mutating!public! !
+size!accessing!public! !
+stbSaveOn:!binary filing!public! !
+uncheckedAdd:!adding!private! !
+!
 
 Core.Set methodProtocol: #Set attributes: #(#ansi #readOnly) selectors: #(#add: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
 
@@ -542,12 +544,14 @@ sizeFor: anInteger
 	low > high]
 			whileFalse: [(PrimeSizes at: index) < n ifTrue: [low := index + 1] ifFalse: [high := index - 1]].
 	^PrimeSizes at: low! !
-!Core.Set class categoriesFor: #defaultCapacity!constants!private! !
-!Core.Set class categoriesFor: #initialize!development!initializing!private! !
-!Core.Set class categoriesFor: #new!instance creation!public! !
-!Core.Set class categoriesFor: #new:!instance creation!public! !
-!Core.Set class categoriesFor: #preferredSizesFrom:!development!initializing!private! !
-!Core.Set class categoriesFor: #sizeFor:!instance creation!private! !
+!Core.Set class categoriesForMethods!
+defaultCapacity!constants!private! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+preferredSizesFrom:!development!initializing!private! !
+sizeFor:!instance creation!private! !
+!
 
 Core.Set class methodProtocol: #'Set factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

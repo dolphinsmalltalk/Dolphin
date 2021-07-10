@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.ImageTests subclass: #'Graphics.Gdiplus.Tests.ImageTest'
 	instanceVariableNames: ''
@@ -19,6 +19,8 @@ testLoadingBmp
 	model := Image fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model handle.
 	self assertPersistedValid! !
-!Graphics.Gdiplus.Tests.ImageTest categoriesFor: #setUp!public!setup! !
-!Graphics.Gdiplus.Tests.ImageTest categoriesFor: #testLoadingBmp!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageTest categoriesForMethods!
+setUp!public!setup! !
+testLoadingBmp!public!unit tests! !
+!
 

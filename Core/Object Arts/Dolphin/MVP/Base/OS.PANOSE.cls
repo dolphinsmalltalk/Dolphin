@@ -71,16 +71,18 @@ bXHeight
 	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
 	^bytes byteAtOffset: _OffsetOf_bXHeight! !
-!OS.PANOSE categoriesFor: #bArmStyle!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bContrast!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bFamilyType!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bLetterform!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bMidline!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bProportion!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bSerifStyle!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bStrokeVariation!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bWeight!**compiled accessors**!public! !
-!OS.PANOSE categoriesFor: #bXHeight!**compiled accessors**!public! !
+!OS.PANOSE categoriesForMethods!
+bArmStyle!**compiled accessors**!public! !
+bContrast!**compiled accessors**!public! !
+bFamilyType!**compiled accessors**!public! !
+bLetterform!**compiled accessors**!public! !
+bMidline!**compiled accessors**!public! !
+bProportion!**compiled accessors**!public! !
+bSerifStyle!**compiled accessors**!public! !
+bStrokeVariation!**compiled accessors**!public! !
+bWeight!**compiled accessors**!public! !
+bXHeight!**compiled accessors**!public! !
+!
 
 !OS.PANOSE class methodsFor!
 
@@ -117,6 +119,8 @@ defineFields
 
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
-!OS.PANOSE class categoriesFor: #defineFields!public!template definition! !
-!OS.PANOSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PANOSE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

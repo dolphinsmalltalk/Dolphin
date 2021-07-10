@@ -20,6 +20,8 @@ preconditions
 
 transform
 	class addClassVariable: variableName! !
-!Refactory.Browser.AddClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.AddClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AddClassVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

@@ -57,9 +57,11 @@ Delete: index
 
 	<virtual stdcall: hresult 12 variant>
 	^self invalidCall: _failureCode! !
-!ADODB._DynaCollection categoriesFor: #Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
-!ADODB._DynaCollection categoriesFor: #delete:!**auto generated**!methods!public! !
-!ADODB._DynaCollection categoriesFor: #Delete:!**auto generated**!COM Interfaces-_DynaCollection!private! !
+!ADODB._DynaCollection categoriesForMethods!
+Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
+delete:!**auto generated**!methods!public! !
+Delete:!**auto generated**!COM Interfaces-_DynaCollection!private! !
+!
 
 !ADODB._DynaCollection class methodsFor!
 
@@ -73,5 +75,7 @@ defineFunctions
 		defineFunction: #Delete:
 			argumentTypes: 'variant'
 ! !
-!ADODB._DynaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB._DynaCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

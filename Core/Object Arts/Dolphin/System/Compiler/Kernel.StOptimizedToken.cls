@@ -25,11 +25,13 @@ stop
 
 stop: anInteger
 	stopPosition := anInteger! !
-!Kernel.StOptimizedToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StOptimizedToken categoriesFor: #isOptimized!public!testing! !
-!Kernel.StOptimizedToken categoriesFor: #length!accessing!private! !
-!Kernel.StOptimizedToken categoriesFor: #stop!accessing!public! !
-!Kernel.StOptimizedToken categoriesFor: #stop:!initializing!private! !
+!Kernel.StOptimizedToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isOptimized!public!testing! !
+length!accessing!private! !
+stop!accessing!public! !
+stop:!initializing!private! !
+!
 
 !Kernel.StOptimizedToken class methodsFor!
 
@@ -40,5 +42,7 @@ start: anInteger comments: aCollectionOrNil stop: stopInteger
 		comments: aCollectionOrNil;
 		stop: stopInteger;
 		yourself! !
-!Kernel.StOptimizedToken class categoriesFor: #start:comments:stop:!instance creation!public! !
+!Kernel.StOptimizedToken class categoriesForMethods!
+start:comments:stop:!instance creation!public! !
+!
 

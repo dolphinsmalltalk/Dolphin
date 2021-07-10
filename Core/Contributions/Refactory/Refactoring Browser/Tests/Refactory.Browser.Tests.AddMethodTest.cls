@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddMethodTest'
 	instanceVariableNames: ''
@@ -67,11 +67,13 @@ testModelInheritedSelector
 				toClass: (model classNamed: #Bar)
 				inProtocols: #(#accessing).
 	self shouldFail: refactoring! !
-!Refactory.Browser.Tests.AddMethodTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testAddMethod!public!tests! !
-!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testBadMethod!failure tests!public! !
-!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
-!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testModelAddMethod!public!tests! !
-!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testModelExistingSelector!failure tests!public! !
-!Refactory.Browser.Tests.AddMethodTest categoriesFor: #testModelInheritedSelector!failure tests!public! !
+!Refactory.Browser.Tests.AddMethodTest categoriesForMethods!
+setUp!public!set up! !
+testAddMethod!public!tests! !
+testBadMethod!failure tests!public! !
+testExistingSelector!failure tests!public! !
+testModelAddMethod!public!tests! !
+testModelExistingSelector!failure tests!public! !
+testModelInheritedSelector!failure tests!public! !
+!
 

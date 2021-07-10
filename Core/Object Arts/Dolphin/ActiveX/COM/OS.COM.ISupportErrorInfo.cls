@@ -31,8 +31,10 @@ supportsErrorInfo: interface
 	or interface class."
 
 	^(self InterfaceSupportsErrorInfo: interface iid) = S_OK! !
-!OS.COM.ISupportErrorInfo categoriesFor: #InterfaceSupportsErrorInfo:!**auto generated**!COM Interfaces-OAIDL.ISupportErrorInfo!private! !
-!OS.COM.ISupportErrorInfo categoriesFor: #supportsErrorInfo:!public!testing! !
+!OS.COM.ISupportErrorInfo categoriesForMethods!
+InterfaceSupportsErrorInfo:!**auto generated**!COM Interfaces-OAIDL.ISupportErrorInfo!private! !
+supportsErrorInfo:!public!testing! !
+!
 
 OS.COM.ISupportErrorInfo methodProtocol: #ISupportErrorInfo attributes: #(#readOnly) selectors: #(#InterfaceSupportsErrorInfo:)!
 
@@ -47,5 +49,7 @@ defineFunctions
 		defineFunction: #InterfaceSupportsErrorInfo:
 			argumentTypes: 'GUID*'
 ! !
-!OS.COM.ISupportErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
+!OS.COM.ISupportErrorInfo class categoriesForMethods!
+defineFunctions!**auto generated**!public! !
+!
 

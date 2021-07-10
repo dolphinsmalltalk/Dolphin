@@ -70,17 +70,19 @@ red
 rgbCode
 	^((code bitShift: -16) bitAnd: 16rFF)
 		bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16))! !
-!Graphics.ARGB categoriesFor: #alpha!accessing!public! !
-!Graphics.ARGB categoriesFor: #alpha:!accessing!public! !
-!Graphics.ARGB categoriesFor: #alphaMask!accessing!private! !
-!Graphics.ARGB categoriesFor: #argb!converting!public! !
-!Graphics.ARGB categoriesFor: #argbCode!accessing!public! !
-!Graphics.ARGB categoriesFor: #asRGB!converting!public! !
-!Graphics.ARGB categoriesFor: #blue!accessing!public! !
-!Graphics.ARGB categoriesFor: #isNone!public!testing! !
-!Graphics.ARGB categoriesFor: #normalizedAlpha!accessing!public! !
-!Graphics.ARGB categoriesFor: #red!accessing!public! !
-!Graphics.ARGB categoriesFor: #rgbCode!public! !
+!Graphics.ARGB categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+alphaMask!accessing!private! !
+argb!converting!public! !
+argbCode!accessing!public! !
+asRGB!converting!public! !
+blue!accessing!public! !
+isNone!public!testing! !
+normalizedAlpha!accessing!public! !
+red!accessing!public! !
+rgbCode!public! !
+!
 
 !Graphics.ARGB class methodsFor!
 
@@ -148,13 +150,15 @@ red: redValue green: greenValue blue: blueValue
 
 transparent
 	^self none! !
-!Graphics.ARGB class categoriesFor: #a:r:g:b:!instance creation!public! !
-!Graphics.ARGB class categoriesFor: #alpha:red:green:blue:!instance creation!public! !
-!Graphics.ARGB class categoriesFor: #default!instance creation!public! !
-!Graphics.ARGB class categoriesFor: #fromArgbCode:!instance creation!public! !
-!Graphics.ARGB class categoriesFor: #fromInteger:!instance creation!private! !
-!Graphics.ARGB class categoriesFor: #none!instance creation!public! !
-!Graphics.ARGB class categoriesFor: #r:g:b:!instance creation!public! !
-!Graphics.ARGB class categoriesFor: #red:green:blue:!instance creation!public! !
-!Graphics.ARGB class categoriesFor: #transparent!instance creation!public! !
+!Graphics.ARGB class categoriesForMethods!
+a:r:g:b:!instance creation!public! !
+alpha:red:green:blue:!instance creation!public! !
+default!instance creation!public! !
+fromArgbCode:!instance creation!public! !
+fromInteger:!instance creation!private! !
+none!instance creation!public! !
+r:g:b:!instance creation!public! !
+red:green:blue:!instance creation!public! !
+transparent!instance creation!public! !
+!
 

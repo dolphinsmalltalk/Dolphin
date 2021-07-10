@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractBindingReferenceTest'
 	instanceVariableNames: ''
@@ -361,40 +361,42 @@ testValueOrNil
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #bindingTestCases!constants!private! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #nameSuffix!constants!private! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #printStringTestCases!constants!private! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #subjectClass!constants!private! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testAppend!public! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testAsQualifiedReference!public! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testAsString!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testAsSymbol!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBinding!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBindingOrNil!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBindingOrNilInContext!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testBindingScope!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testEnvironmentName!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testEquals!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testHash!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testHome!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testIfDefined!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testIfDefinedIfNotDefined!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testInstance!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testIsDefined!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testIsLiteral!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testIsRelative!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testMeta!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testPath!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testPathString!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testPrintString!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testPrivate!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testShortName!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testStoreString!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testUnqualifiedName!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testValue!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #testValueOrNil!public!unit tests! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesFor: #valueOfBinding:!helpers!private! !
+!Kernel.Tests.AbstractBindingReferenceTest categoriesForMethods!
+bindingTestCases!constants!private! !
+nameSuffix!constants!private! !
+printStringTestCases!constants!private! !
+subjectClass!constants!private! !
+testAppend!public! !
+testAsQualifiedReference!public! !
+testAsString!public!unit tests! !
+testAsSymbol!public!unit tests! !
+testBinding!public!unit tests! !
+testBindingOrNil!public!unit tests! !
+testBindingOrNilInContext!public!unit tests! !
+testBindingScope!public!unit tests! !
+testEnvironmentName!public!unit tests! !
+testEquals!public!unit tests! !
+testHash!public!unit tests! !
+testHome!public!unit tests! !
+testIfDefined!public!unit tests! !
+testIfDefinedIfNotDefined!public!unit tests! !
+testInstance!public!unit tests! !
+testIsDefined!public!unit tests! !
+testIsLiteral!public!unit tests! !
+testIsRelative!public!unit tests! !
+testIsSelfEvaluating!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+testMeta!public!unit tests! !
+testPath!public!unit tests! !
+testPathString!public!unit tests! !
+testPrintString!public!unit tests! !
+testPrivate!public!unit tests! !
+testRefersToLiteral!public!unit tests! !
+testShortName!public!unit tests! !
+testStoreString!public!unit tests! !
+testUnqualifiedName!public!unit tests! !
+testValue!public!unit tests! !
+testValueOrNil!public!unit tests! !
+valueOfBinding:!helpers!private! !
+!
 

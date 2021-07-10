@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MsgReturnSpec subclass: #MsgReturnRuleSpec
 	instanceVariableNames: 'ruleSourceCode ruleBlock'
@@ -73,16 +73,18 @@ ruleBlock
 
 	ruleBlock isNil ifTrue: [ruleBlock := Compiler evaluate: ruleSourceCode].
 	^ruleBlock! !
-!MsgReturnRuleSpec categoriesFor: #isConformingReturnClass:ruleReceiver:!public! !
-!MsgReturnRuleSpec categoriesFor: #isConformingReturnClass:ruleReceiver:operand:!public! !
-!MsgReturnRuleSpec categoriesFor: #newRetValRuleSourceCode:!public! !
-!MsgReturnRuleSpec categoriesFor: #printOn:!public! !
-!MsgReturnRuleSpec categoriesFor: #returnProtocolName:!public! !
-!MsgReturnRuleSpec categoriesFor: #returnValueAliasingAttribute!public! !
-!MsgReturnRuleSpec categoriesFor: #returnValueProtocolNames!public! !
-!MsgReturnRuleSpec categoriesFor: #returnValueRuleBlockSource!public! !
-!MsgReturnRuleSpec categoriesFor: #returnValueRuleBlockSource:!public! !
-!MsgReturnRuleSpec categoriesFor: #ruleBlock!public! !
+!MsgReturnRuleSpec categoriesForMethods!
+isConformingReturnClass:ruleReceiver:!public! !
+isConformingReturnClass:ruleReceiver:operand:!public! !
+newRetValRuleSourceCode:!public! !
+printOn:!public! !
+returnProtocolName:!public! !
+returnValueAliasingAttribute!public! !
+returnValueProtocolNames!public! !
+returnValueRuleBlockSource!public! !
+returnValueRuleBlockSource:!public! !
+ruleBlock!public! !
+!
 
 !MsgReturnRuleSpec class methodsFor!
 
@@ -98,6 +100,8 @@ privateNewRetValRuleSourceCode: ruleBlockSource
 		ifFalse: [self error: 'Protocol msg. return value rule block source not a String.'].
 	^ self basicNew newRetValRuleSourceCode: ruleBlockSource;
 	 yourself! !
-!MsgReturnRuleSpec class categoriesFor: #newRetValRuleSourceCode:!public! !
-!MsgReturnRuleSpec class categoriesFor: #privateNewRetValRuleSourceCode:!public! !
+!MsgReturnRuleSpec class categoriesForMethods!
+newRetValRuleSourceCode:!public! !
+privateNewRetValRuleSourceCode:!public! !
+!
 

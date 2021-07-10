@@ -21,6 +21,8 @@ initialize
 	"Private - Initialize the receiver's instance variables"
 
 	messageText := 'Not implemented'! !
-!Kernel.SubclassResponsibilityError categoriesFor: #hresult!accessing!public! !
-!Kernel.SubclassResponsibilityError categoriesFor: #initialize!initializing!private! !
+!Kernel.SubclassResponsibilityError categoriesForMethods!
+hresult!accessing!public! !
+initialize!initializing!private! !
+!
 

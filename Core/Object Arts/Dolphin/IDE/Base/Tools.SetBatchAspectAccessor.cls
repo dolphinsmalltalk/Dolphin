@@ -30,6 +30,8 @@ getBatchAccessors
 			i := i + 1].
 	(self nextBatch: i) ifNotNil: [:nextBatch | accessors add: nextBatch].
 	^accessors! !
-!Tools.SetBatchAspectAccessor categoriesFor: #aspectClass!public! !
-!Tools.SetBatchAspectAccessor categoriesFor: #getBatchAccessors!public! !
+!Tools.SetBatchAspectAccessor categoriesForMethods!
+aspectClass!public! !
+getBatchAccessors!public! !
+!
 

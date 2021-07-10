@@ -17,5 +17,7 @@ defaultAction: exception
 	Implementation Note: forward to the SessionManager for application specific handling."
 
 	^SessionManager current onUnhandledWarning: exception! !
-!Core.WarningSignal categoriesFor: #defaultAction:!handling!private! !
+!Core.WarningSignal categoriesForMethods!
+defaultAction:!handling!private! !
+!
 

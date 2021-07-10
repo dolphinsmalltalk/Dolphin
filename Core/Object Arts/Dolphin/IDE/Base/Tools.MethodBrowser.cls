@@ -1075,131 +1075,133 @@ togglePrivate
 
 updateMethodNamespace
 	namespaceModel value: (self parseContext ifNotNil: [:context | context environment])! !
-!Tools.MethodBrowser categoriesFor: #addMethods:toCategory:!commands!private! !
-!Tools.MethodBrowser categoriesFor: #addToCommandRoute:!commands!public! !
-!Tools.MethodBrowser categoriesFor: #applyOptions!operations!options!public! !
-!Tools.MethodBrowser categoriesFor: #browseCompilationFailures!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseCompilationIssues!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseContainingText!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseDefinitions!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseDefinitionsMatching:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseDefinitionsOfSelector:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseHierarchy!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseIt!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseItCommand!browsing!helpers!private! !
-!Tools.MethodBrowser categoriesFor: #browseMessage!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseMessageDefinitions!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseMessageDefinitions:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseMessageReferences!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseMessageReferences:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseMessagesIn:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseMessagesMatching:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseMethodClasses!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseMethodInheritanceChain!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseMethodPackages!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseMethodsIn:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseMethodsMatching:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browsePackages!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseReferences!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseReferencesMatching:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browseReferencesToGlobal!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseReferencesToLiteral:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #browserEnvironment!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #browseSystem!browsing!commands!public! !
-!Tools.MethodBrowser categoriesFor: #browseVariableReferences:in:!browsing!private! !
-!Tools.MethodBrowser categoriesFor: #buildAddCategoryMenu:!menus!private! !
-!Tools.MethodBrowser categoriesFor: #buildParseTree!helpers!private! !
-!Tools.MethodBrowser categoriesFor: #buildRemoveCategoryMenu:!menus!private! !
-!Tools.MethodBrowser categoriesFor: #canSaveMethod!helpers!private!testing! !
-!Tools.MethodBrowser categoriesFor: #categorizeMethods!commands!public! !
-!Tools.MethodBrowser categoriesFor: #clearErrors!operations!public! !
-!Tools.MethodBrowser categoriesFor: #clearSelection!commands!public! !
-!Tools.MethodBrowser categoriesFor: #commandPolicy!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #createComponents!initializing!public! !
-!Tools.MethodBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.MethodBrowser categoriesFor: #customDrawMethodClass:!helpers!private! !
-!Tools.MethodBrowser categoriesFor: #customDrawSelector:!helpers!private! !
-!Tools.MethodBrowser categoriesFor: #deleteItCommand!helpers!private! !
-!Tools.MethodBrowser categoriesFor: #enableSource:!modes!private! !
-!Tools.MethodBrowser categoriesFor: #ensureSourceVisible!operations!public! !
-!Tools.MethodBrowser categoriesFor: #errorModel!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #errorModel:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #evaluationContext!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #filter!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #filter:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #findDetails:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #findNextMatch!commands!public!searching! !
-!Tools.MethodBrowser categoriesFor: #findSelector:!public!searching! !
-!Tools.MethodBrowser categoriesFor: #hasEditableMethodSelected!public!testing! !
-!Tools.MethodBrowser categoriesFor: #hasEditableMethodsSelected!public!testing! !
-!Tools.MethodBrowser categoriesFor: #hasMethods!public!testing! !
-!Tools.MethodBrowser categoriesFor: #hasMethodSelected!public!testing! !
-!Tools.MethodBrowser categoriesFor: #hasMethodsSelected!public!testing! !
-!Tools.MethodBrowser categoriesFor: #initialize!initializing!private! !
-!Tools.MethodBrowser categoriesFor: #inspectIt!commands!public! !
-!Tools.MethodBrowser categoriesFor: #isEditableMethod:!public!testing! !
-!Tools.MethodBrowser categoriesFor: #isModified!public!testing! !
-!Tools.MethodBrowser categoriesFor: #isSourceReadOnly!private!testing! !
-!Tools.MethodBrowser categoriesFor: #list:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #method!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #method:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #methodCategorizationPolicy!constants!private! !
-!Tools.MethodBrowser categoriesFor: #methodPackage!commands!public! !
-!Tools.MethodBrowser categoriesFor: #methods:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #methodsPresenter!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #model:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #modifiedModel!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #modifiedModel:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #namespaceModel!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #newMethod!commands!public! !
-!Tools.MethodBrowser categoriesFor: #noMethodsView!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
-!Tools.MethodBrowser categoriesFor: #onCloseRequested:!event handling!public! !
-!Tools.MethodBrowser categoriesFor: #onDrag:!event handling!public! !
-!Tools.MethodBrowser categoriesFor: #onDragCut:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onDragOver:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onDropOver:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onMethod:updatedTo:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onMethodAdded:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onMethodCategorized:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onMethodRemoved:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onMethodSelected!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onMethodSelectionChanging:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onMethodUpdated:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onPromptToSaveChanges:!private!testing! !
-!Tools.MethodBrowser categoriesFor: #onTipTextRequired:!event handling!private! !
-!Tools.MethodBrowser categoriesFor: #onViewClosed!event handling!public! !
-!Tools.MethodBrowser categoriesFor: #onViewOpened!event handling!public! !
-!Tools.MethodBrowser categoriesFor: #parseContext!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #parseTree!helpers!private! !
-!Tools.MethodBrowser categoriesFor: #promptToCopyChanges!event handling!public! !
-!Tools.MethodBrowser categoriesFor: #promptToSaveChanges!helpers!private! !
-!Tools.MethodBrowser categoriesFor: #queryCommand:!commands!private! !
-!Tools.MethodBrowser categoriesFor: #refactoringTool!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #refactoringTool:!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #removeMethod!commands!public! !
-!Tools.MethodBrowser categoriesFor: #saveMethod:in:environment:categories:package:!operations!private! !
-!Tools.MethodBrowser categoriesFor: #saveNewMethod:!helpers!public! !
-!Tools.MethodBrowser categoriesFor: #searchEnvironment!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #searchEnvironment:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #selectableItems!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #selectedMethod!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #selectedMethods!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #selectedNode!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #selectedWord!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #selection:ifAbsent:!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #selectionEnvironment!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #selectMethod:!operations!public! !
-!Tools.MethodBrowser categoriesFor: #setInitialFocus!operations!public! !
-!Tools.MethodBrowser categoriesFor: #sortBlock!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #sortBlock:!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #source!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #sourcePresenter!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #sourcePresenter:!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #sourceSelection!accessing!public! !
-!Tools.MethodBrowser categoriesFor: #systemModel!accessing!private! !
-!Tools.MethodBrowser categoriesFor: #togglePrivate!commands!private! !
-!Tools.MethodBrowser categoriesFor: #updateMethodNamespace!event handling!private! !
+!Tools.MethodBrowser categoriesForMethods!
+addMethods:toCategory:!commands!private! !
+addToCommandRoute:!commands!public! !
+applyOptions!operations!options!public! !
+browseCompilationFailures!browsing!commands!public! !
+browseCompilationIssues!browsing!commands!public! !
+browseContainingText!browsing!commands!public! !
+browseDefinitions!browsing!commands!public! !
+browseDefinitionsMatching:in:!browsing!private! !
+browseDefinitionsOfSelector:in:!browsing!private! !
+browseHierarchy!browsing!commands!public! !
+browseIt!browsing!commands!public! !
+browseItCommand!browsing!helpers!private! !
+browseMessage!commands!public! !
+browseMessageDefinitions!commands!public! !
+browseMessageDefinitions:in:!browsing!private! !
+browseMessageReferences!commands!public! !
+browseMessageReferences:in:!browsing!private! !
+browseMessagesIn:!browsing!private! !
+browseMessagesMatching:in:!browsing!private! !
+browseMethodClasses!browsing!commands!public! !
+browseMethodInheritanceChain!browsing!commands!public! !
+browseMethodPackages!browsing!commands!public! !
+browseMethodsIn:!browsing!private! !
+browseMethodsMatching:in:!browsing!private! !
+browsePackages!browsing!commands!public! !
+browseReferences!browsing!commands!public! !
+browseReferencesMatching:in:!browsing!private! !
+browseReferencesToGlobal!browsing!commands!public! !
+browseReferencesToLiteral:in:!browsing!private! !
+browserEnvironment!accessing!public! !
+browseSystem!browsing!commands!public! !
+browseVariableReferences:in:!browsing!private! !
+buildAddCategoryMenu:!menus!private! !
+buildParseTree!helpers!private! !
+buildRemoveCategoryMenu:!menus!private! !
+canSaveMethod!helpers!private!testing! !
+categorizeMethods!commands!public! !
+clearErrors!operations!public! !
+clearSelection!commands!public! !
+commandPolicy!accessing!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+customDrawMethodClass:!helpers!private! !
+customDrawSelector:!helpers!private! !
+deleteItCommand!helpers!private! !
+enableSource:!modes!private! !
+ensureSourceVisible!operations!public! !
+errorModel!accessing!public! !
+errorModel:!accessing!public! !
+evaluationContext!accessing!private! !
+filter!accessing!public! !
+filter:!accessing!public! !
+findDetails:!accessing!public! !
+findNextMatch!commands!public!searching! !
+findSelector:!public!searching! !
+hasEditableMethodSelected!public!testing! !
+hasEditableMethodsSelected!public!testing! !
+hasMethods!public!testing! !
+hasMethodSelected!public!testing! !
+hasMethodsSelected!public!testing! !
+initialize!initializing!private! !
+inspectIt!commands!public! !
+isEditableMethod:!public!testing! !
+isModified!public!testing! !
+isSourceReadOnly!private!testing! !
+list:!accessing!public! !
+method!accessing!public! !
+method:!accessing!public! !
+methodCategorizationPolicy!constants!private! !
+methodPackage!commands!public! !
+methods:!accessing!public! !
+methodsPresenter!accessing!private! !
+model:!accessing!public! !
+modifiedModel!accessing!public! !
+modifiedModel:!accessing!public! !
+namespaceModel!accessing!public! !
+newMethod!commands!public! !
+noMethodsView!accessing!private! !
+onAboutToDisplayMenu:!event handling!menus!public! !
+onCloseRequested:!event handling!public! !
+onDrag:!event handling!public! !
+onDragCut:!event handling!private! !
+onDragOver:!event handling!private! !
+onDropOver:!event handling!private! !
+onMethod:updatedTo:!event handling!private! !
+onMethodAdded:!event handling!private! !
+onMethodCategorized:!event handling!private! !
+onMethodRemoved:!event handling!private! !
+onMethodSelected!event handling!private! !
+onMethodSelectionChanging:!event handling!private! !
+onMethodUpdated:!event handling!private! !
+onPromptToSaveChanges:!private!testing! !
+onTipTextRequired:!event handling!private! !
+onViewClosed!event handling!public! !
+onViewOpened!event handling!public! !
+parseContext!accessing!public! !
+parseTree!helpers!private! !
+promptToCopyChanges!event handling!public! !
+promptToSaveChanges!helpers!private! !
+queryCommand:!commands!private! !
+refactoringTool!accessing!public! !
+refactoringTool:!accessing!private! !
+removeMethod!commands!public! !
+saveMethod:in:environment:categories:package:!operations!private! !
+saveNewMethod:!helpers!public! !
+searchEnvironment!accessing!public! !
+searchEnvironment:!accessing!public! !
+selectableItems!accessing!private! !
+selectedMethod!accessing!public! !
+selectedMethods!accessing!public! !
+selectedNode!accessing!private! !
+selectedWord!accessing!public! !
+selection:ifAbsent:!accessing!public! !
+selectionEnvironment!accessing!public! !
+selectMethod:!operations!public! !
+setInitialFocus!operations!public! !
+sortBlock!accessing!private! !
+sortBlock:!accessing!private! !
+source!accessing!public! !
+sourcePresenter!accessing!private! !
+sourcePresenter:!accessing!private! !
+sourceSelection!accessing!public! !
+systemModel!accessing!private! !
+togglePrivate!commands!private! !
+updateMethodNamespace!event handling!private! !
+!
 
 !Tools.MethodBrowser class methodsFor!
 
@@ -1309,22 +1311,24 @@ wordWrap: aBoolean
 	"Sets the word wrapping state for instances of the receiver to aBoolean."
 
 	WordWrap := aBoolean! !
-!Tools.MethodBrowser class categoriesFor: #autoFormat!accessing!public! !
-!Tools.MethodBrowser class categoriesFor: #autoFormat:!accessing!public! !
-!Tools.MethodBrowser class categoriesFor: #defaultModel!models!public! !
-!Tools.MethodBrowser class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
-!Tools.MethodBrowser class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!Tools.MethodBrowser class categoriesFor: #hasInfoTips!accessing!options!public! !
-!Tools.MethodBrowser class categoriesFor: #hasInfoTips:!accessing!options!public! !
-!Tools.MethodBrowser class categoriesFor: #icon!constants!public! !
-!Tools.MethodBrowser class categoriesFor: #initialize!initializing!private! !
-!Tools.MethodBrowser class categoriesFor: #publishedAspects!public! !
-!Tools.MethodBrowser class categoriesFor: #publishedEventsOfInstances!events!public! !
-!Tools.MethodBrowser class categoriesFor: #resource_Class_browser_method_list!public!resources-views! !
-!Tools.MethodBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.MethodBrowser class categoriesFor: #resource_Method_browser_method_list!public!resources-views! !
-!Tools.MethodBrowser class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
-!Tools.MethodBrowser class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
-!Tools.MethodBrowser class categoriesFor: #wordWrap!accessing!options!public! !
-!Tools.MethodBrowser class categoriesFor: #wordWrap:!accessing!options!public! !
+!Tools.MethodBrowser class categoriesForMethods!
+autoFormat!accessing!public! !
+autoFormat:!accessing!public! !
+defaultModel!models!public! !
+getAdditionalKeyBindings!accessing!private! !
+getCommandQueryHandlers!accessing!private! !
+hasInfoTips!accessing!options!public! !
+hasInfoTips:!accessing!options!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+publishedEventsOfInstances!events!public! !
+resource_Class_browser_method_list!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_Method_browser_method_list!public!resources-views! !
+setAdditionalKeyBindings:!accessing!private! !
+setCommandQueryHandlers:!accessing!private! !
+wordWrap!accessing!options!public! !
+wordWrap:!accessing!options!public! !
+!
 

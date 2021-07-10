@@ -158,9 +158,11 @@ testPrintOnUnsigned
 	| subject |
 	subject := DWORD fromInteger: 123.
 	self assert: subject printString equals: 'a DWORD(16r7B)'! !
-!External.Tests.INTEGERTest categoriesFor: #testPrintOnNull!public!unit tests! !
-!External.Tests.INTEGERTest categoriesFor: #testPrintOnSigned!public!unit tests! !
-!External.Tests.INTEGERTest categoriesFor: #testPrintOnUnsigned!public!unit tests! !
+!External.Tests.INTEGERTest categoriesForMethods!
+testPrintOnNull!public!unit tests! !
+testPrintOnSigned!public!unit tests! !
+testPrintOnUnsigned!public!unit tests! !
+!
 
 !Kernel.Tests.ParserErrorTest methodsFor!
 
@@ -272,13 +274,15 @@ testWarnUnimplementedAbstractMethod
 					start := source indexOfSubCollection: msg.
 					start to: start + msg size - 1]
 				code: CWarnUnimplementedAbstractMethod]! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testInfoUnreferencedArg!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningUsesBooleanClass!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnMsgUnimplemented!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
+!Kernel.Tests.ParserErrorTest categoriesForMethods!
+testInfoHardBreakpoint!public!unit tests! !
+testInfoSupersendsOther!public!unit tests! !
+testInfoUnreferencedArg!public!unit tests! !
+testWarningUsesBooleanClass!public!unit tests! !
+testWarnMsgUnimplemented!public!unit tests! !
+testWarnUndefinedSelector!public!unit tests! !
+testWarnUnimplementedAbstractMethod!public!unit tests! !
+!
 
 !UI.Scintilla.Tests.ScintillaViewTest methodsFor!
 
@@ -295,7 +299,9 @@ testTokensFromTo
 			expected := (Scanner on: presenter text readStream) contents
 						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
 			self assert: tokens equals: expected]! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
+!UI.Scintilla.Tests.ScintillaViewTest categoriesForMethods!
+testTokensFromTo!public!unit tests! !
+!
 
 !UI.Tests.BorderLayoutTest methodsFor!
 
@@ -317,7 +323,9 @@ testResourceBrowserPreview
 	resources := resourceView viewNamed: 'resources'.
 	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x.
 	resourceView destroy! !
-!UI.Tests.BorderLayoutTest categoriesFor: #testResourceBrowserPreview!public!unit tests! !
+!UI.Tests.BorderLayoutTest categoriesForMethods!
+testResourceBrowserPreview!public!unit tests! !
+!
 
 "End of package definition"!
 

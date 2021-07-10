@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.BagTest'
 	instanceVariableNames: ''
@@ -19,5 +19,7 @@ testDeepCopy
 			copy := bag deepCopy.
 			any := copy detect: [:each | true].
 			self assert: (copy includes: any)]! !
-!Core.Tests.BagTest categoriesFor: #testDeepCopy!public! !
+!Core.Tests.BagTest categoriesForMethods!
+testDeepCopy!public! !
+!
 

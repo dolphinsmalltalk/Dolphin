@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Core.Tests.CollectionCombinator'
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
@@ -47,6 +47,8 @@ forArrays: anArray processWith: aBlock
 	resultProcessingBlock := aBlock.
 	buffer := Array new: anArray size.
 	self combineFromIdx: 1! !
-!Core.Tests.CollectionCombinator categoriesFor: #combineFromIdx:!helpers!private! !
-!Core.Tests.CollectionCombinator categoriesFor: #forArrays:processWith:!helpers!private! !
+!Core.Tests.CollectionCombinator categoriesForMethods!
+combineFromIdx:!helpers!private! !
+forArrays:processWith:!helpers!private! !
+!
 

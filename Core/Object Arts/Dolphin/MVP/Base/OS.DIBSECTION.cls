@@ -85,15 +85,17 @@ dsOffset: anInteger
 	"Set the receiver's 'dsOffset' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dsOffset put: anInteger! !
-!OS.DIBSECTION categoriesFor: #dsBitfields!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dsBm!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dsBm:!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dsBmih!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dsBmih:!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dshSection!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dshSection:!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dsOffset!**compiled accessors**!public! !
-!OS.DIBSECTION categoriesFor: #dsOffset:!**compiled accessors**!public! !
+!OS.DIBSECTION categoriesForMethods!
+dsBitfields!**compiled accessors**!public! !
+dsBm!**compiled accessors**!public! !
+dsBm:!**compiled accessors**!public! !
+dsBmih!**compiled accessors**!public! !
+dsBmih:!**compiled accessors**!public! !
+dshSection!**compiled accessors**!public! !
+dshSection:!**compiled accessors**!public! !
+dsOffset!**compiled accessors**!public! !
+dsOffset:!**compiled accessors**!public! !
+!
 
 !OS.DIBSECTION class methodsFor!
 
@@ -120,6 +122,8 @@ defineFields
 
 getFieldNames
 	^#(#dsBm #dsBmih #dsBitfields #dshSection #dsOffset)! !
-!OS.DIBSECTION class categoriesFor: #defineFields!public!template definition! !
-!OS.DIBSECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DIBSECTION class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

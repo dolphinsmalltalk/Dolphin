@@ -99,14 +99,16 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^self subclassResponsibility! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #argumentCount!accessing!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #argumentsSize!accessing!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #argumentTypes!accessing!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #callingConvention!accessing!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #descriptor!accessing!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #messageSelectorAndArgumentNames!accessing!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #printOn:!development!printing!public! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #returnType!accessing!private! !
-!OS.COM.AbstractInterfaceFunction categoriesFor: #selector!accessing!private! !
+!OS.COM.AbstractInterfaceFunction categoriesForMethods!
+argumentCount!accessing!private! !
+argumentsSize!accessing!private! !
+argumentTypes!accessing!private! !
+callback:interface:withArgumentsAt:!evaluating!private! !
+callingConvention!accessing!private! !
+descriptor!accessing!private! !
+messageSelectorAndArgumentNames!accessing!private! !
+printOn:!development!printing!public! !
+returnType!accessing!private! !
+selector!accessing!private! !
+!
 

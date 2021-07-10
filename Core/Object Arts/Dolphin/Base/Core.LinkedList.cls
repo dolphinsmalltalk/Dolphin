@@ -180,17 +180,19 @@ removeLastIfAbsent: exceptionHandler
 			temp nextLink: nil.
 			lastLink := temp].
 	^aLink! !
-!Core.LinkedList categoriesFor: #addFirst:!adding!public! !
-!Core.LinkedList categoriesFor: #addLast:!adding!public! !
-!Core.LinkedList categoriesFor: #approxSize!accessing!private! !
-!Core.LinkedList categoriesFor: #at:!accessing!public! !
-!Core.LinkedList categoriesFor: #at:put:!accessing!public! !
-!Core.LinkedList categoriesFor: #do:!enumerating!public! !
-!Core.LinkedList categoriesFor: #isEmpty!public!testing! !
-!Core.LinkedList categoriesFor: #remove:ifAbsent:!public!removing! !
-!Core.LinkedList categoriesFor: #removeAll!public!removing! !
-!Core.LinkedList categoriesFor: #removeAllSuchThat:!public!removing! !
-!Core.LinkedList categoriesFor: #removeAtIndex:!public!removing! !
-!Core.LinkedList categoriesFor: #removeFirstIfAbsent:!public!removing! !
-!Core.LinkedList categoriesFor: #removeLastIfAbsent:!public!removing! !
+!Core.LinkedList categoriesForMethods!
+addFirst:!adding!public! !
+addLast:!adding!public! !
+approxSize!accessing!private! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+do:!enumerating!public! !
+isEmpty!public!testing! !
+remove:ifAbsent:!public!removing! !
+removeAll!public!removing! !
+removeAllSuchThat:!public!removing! !
+removeAtIndex:!public!removing! !
+removeFirstIfAbsent:!public!removing! !
+removeLastIfAbsent:!public!removing! !
+!
 

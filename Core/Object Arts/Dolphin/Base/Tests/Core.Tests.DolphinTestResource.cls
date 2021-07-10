@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestResource subclass: #'Core.Tests.DolphinTestResource'
 	instanceVariableNames: ''
@@ -22,6 +22,8 @@ setUp
 	super setUp.
 	Package manager defaultPackage isNil
 		ifFalse: [self error: 'Creating test classes with the default package set is a bad idea']! !
-!Core.Tests.DolphinTestResource categoriesFor: #createPackage:!helpers!private! !
-!Core.Tests.DolphinTestResource categoriesFor: #setUp!Init / Release!public! !
+!Core.Tests.DolphinTestResource categoriesForMethods!
+createPackage:!helpers!private! !
+setUp!Init / Release!public! !
+!
 

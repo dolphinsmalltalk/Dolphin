@@ -119,24 +119,26 @@ setSelector: aSymbol getMessage: anInteger
 
 valueFromLResult: anObject 
 	^anObject! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #alwaysPrint!public!testing! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #alwaysPrint:!accessing!public! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #beNullable!modes!public! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #defaultFlags!constants!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #getAttribute:ofView:!operations!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #getPrintString:of:!helpers!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #getSelector:defaultValue:setMessage:!initializing!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #initialize!initializing!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #isNonBrowsable!modes!public!testing! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #isNonBrowsable:!modes!public! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #isNullable!modes!public!testing! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #isNullable:!modes!public! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #printOn:!displaying!public! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #printSelector:!initializing!public! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #setAttribute:ofView:initializing:!operations!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #setSelector:getMessage:!initializing!private! !
-!UI.Scintilla.PropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
+!UI.Scintilla.PropertyDescriptor categoriesForMethods!
+alwaysPrint!public!testing! !
+alwaysPrint:!accessing!public! !
+beNullable!modes!public! !
+defaultFlags!constants!private! !
+getAttribute:ofView:!operations!private! !
+getPrintString:of:!helpers!private! !
+getSelector:defaultValue:setMessage:!initializing!private! !
+initialize!initializing!private! !
+isNonBrowsable!modes!public!testing! !
+isNonBrowsable:!modes!public! !
+isNullable!modes!public!testing! !
+isNullable:!modes!public! !
+lParamFromAttributeValue:!helpers!private! !
+printOn:!displaying!public! !
+printSelector:!initializing!public! !
+setAttribute:ofView:initializing:!operations!private! !
+setSelector:getMessage:!initializing!private! !
+valueFromLResult:!helpers!private! !
+!
 
 !UI.Scintilla.PropertyDescriptor class methodsFor!
 
@@ -154,7 +156,9 @@ getSelector: getSymbol defaultValue: anObject setMessage: setInteger setSelector
 
 icon
 	^ScintillaView icon! !
-!UI.Scintilla.PropertyDescriptor class categoriesFor: #getSelector:defaultValue:setMessage:!instance creation!public! !
-!UI.Scintilla.PropertyDescriptor class categoriesFor: #getSelector:defaultValue:setMessage:setSelector:getMessage:!instance creation!public! !
-!UI.Scintilla.PropertyDescriptor class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.PropertyDescriptor class categoriesForMethods!
+getSelector:defaultValue:setMessage:!instance creation!public! !
+getSelector:defaultValue:setMessage:setSelector:getMessage:!instance creation!public! !
+icon!constants!development!public! !
+!
 

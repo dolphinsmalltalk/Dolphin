@@ -79,16 +79,18 @@ peRed: anInteger
 
 rgbCode
 	^(bytes dwordAtOffset: 0) bitAnd: 16rFFFFFF! !
-!OS.PALETTEENTRY categoriesFor: #asColor!converting!public! !
-!OS.PALETTEENTRY categoriesFor: #peBlue!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #peBlue:!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #peFlags!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #peFlags:!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #peGreen!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #peGreen:!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #peRed!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #peRed:!**compiled accessors**!public! !
-!OS.PALETTEENTRY categoriesFor: #rgbCode!accessing!public! !
+!OS.PALETTEENTRY categoriesForMethods!
+asColor!converting!public! !
+peBlue!**compiled accessors**!public! !
+peBlue:!**compiled accessors**!public! !
+peFlags!**compiled accessors**!public! !
+peFlags:!**compiled accessors**!public! !
+peGreen!**compiled accessors**!public! !
+peGreen:!**compiled accessors**!public! !
+peRed!**compiled accessors**!public! !
+peRed:!**compiled accessors**!public! !
+rgbCode!accessing!public! !
+!
 
 !OS.PALETTEENTRY class methodsFor!
 
@@ -139,7 +141,9 @@ threeThreeTwo
 					pe peGreen: ((i bitShift: -2) bitAnd: 2r111) * 255 // 7.
 					pe peBlue: (i bitAnd: 2r11) * 255 // 3].
 	^palette! !
-!OS.PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.PALETTEENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.PALETTEENTRY class categoriesFor: #threeThreeTwo!instance creation!public! !
+!OS.PALETTEENTRY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+threeThreeTwo!instance creation!public! !
+!
 

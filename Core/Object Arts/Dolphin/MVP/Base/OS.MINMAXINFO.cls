@@ -59,10 +59,12 @@ ptMinTrackSize: aPOINTL
 		from: ##(_OffsetOf_ptMinTrackSize + 1)
 		to: ##(_OffsetOf_ptMinTrackSize + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.MINMAXINFO categoriesFor: #ptMaxTrackSize!**compiled accessors**!public! !
-!OS.MINMAXINFO categoriesFor: #ptMaxTrackSize:!**compiled accessors**!public! !
-!OS.MINMAXINFO categoriesFor: #ptMinTrackSize!**compiled accessors**!public! !
-!OS.MINMAXINFO categoriesFor: #ptMinTrackSize:!**compiled accessors**!public! !
+!OS.MINMAXINFO categoriesForMethods!
+ptMaxTrackSize!**compiled accessors**!public! !
+ptMaxTrackSize:!**compiled accessors**!public! !
+ptMinTrackSize!**compiled accessors**!public! !
+ptMinTrackSize:!**compiled accessors**!public! !
+!
 
 !OS.MINMAXINFO class methodsFor!
 
@@ -88,6 +90,8 @@ defineFields
 
 getFieldNames
 	^#(#ptMaxSize #ptMaxPosition #ptMinTrackSize #ptMaxTrackSize)! !
-!OS.MINMAXINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.MINMAXINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MINMAXINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

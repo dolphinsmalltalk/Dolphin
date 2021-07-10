@@ -52,9 +52,11 @@ SchemaElementDecl: oSchemaElement
 
 	<virtual stdcall: hresult 8 ISchemaElement*>
 	^self invalidCall: _failureCode! !
-!MSXML.IMXSchemaDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IMXSchemaDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IMXSchemaDeclHandler categoriesFor: #SchemaElementDecl:!**auto generated**!COM Interfaces-IMXSchemaDeclHandler!public! !
+!MSXML.IMXSchemaDeclHandler categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+SchemaElementDecl:!**auto generated**!COM Interfaces-IMXSchemaDeclHandler!public! !
+!
 
 !MSXML.IMXSchemaDeclHandler class methodsFor!
 
@@ -66,5 +68,7 @@ defineFunctions
 		defineFunction: #SchemaElementDecl:
 			argumentTypes: 'ISchemaElement*'
 ! !
-!MSXML.IMXSchemaDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IMXSchemaDeclHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

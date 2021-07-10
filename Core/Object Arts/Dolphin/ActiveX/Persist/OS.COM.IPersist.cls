@@ -46,10 +46,12 @@ IsDirty
 	"Private - Invoke the IsDirty() method of the COM object wrapped by the receiver."
 
 	^self subclassResponsibility! !
-!OS.COM.IPersist categoriesFor: #clsid!accessing!public! !
-!OS.COM.IPersist categoriesFor: #GetClassID:!**auto generated**!COM Interfaces-OBJIDL.IPersist!primitives!public! !
-!OS.COM.IPersist categoriesFor: #isDirty!public!testing! !
-!OS.COM.IPersist categoriesFor: #IsDirty!private!testing! !
+!OS.COM.IPersist categoriesForMethods!
+clsid!accessing!public! !
+GetClassID:!**auto generated**!COM Interfaces-OBJIDL.IPersist!primitives!public! !
+isDirty!public!testing! !
+IsDirty!private!testing! !
+!
 
 OS.COM.IPersist methodProtocol: #IPersist attributes: #(#readOnly) selectors: #(#GetClassID:)!
 
@@ -64,5 +66,7 @@ defineFunctions
 		defineFunction: #GetClassID:
 			argumentTypes: 'GUID*'
 ! !
-!OS.COM.IPersist class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IPersist class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

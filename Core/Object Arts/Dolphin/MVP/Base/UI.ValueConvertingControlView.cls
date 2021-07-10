@@ -141,23 +141,25 @@ value: anObject
 	"Set the receiver's model value to anObject"
 
 	self model value: anObject! !
-!UI.ValueConvertingControlView categoriesFor: #connectModel!models!public! !
-!UI.ValueConvertingControlView categoriesFor: #defaultExtent!constants!private! !
-!UI.ValueConvertingControlView categoriesFor: #defaultTypeConverter!accessing!public! !
-!UI.ValueConvertingControlView categoriesFor: #defaultTypeConverterClass!initializing!private! !
-!UI.ValueConvertingControlView categoriesFor: #displayValue!private!updating! !
-!UI.ValueConvertingControlView categoriesFor: #displayValue:!private!updating! !
-!UI.ValueConvertingControlView categoriesFor: #initializeNewTypeConverter:!accessing!private! !
-!UI.ValueConvertingControlView categoriesFor: #onViewCreated!event handling!public! !
-!UI.ValueConvertingControlView categoriesFor: #refreshContents!public!updating! !
-!UI.ValueConvertingControlView categoriesFor: #typeconverter!accessing!public! !
-!UI.ValueConvertingControlView categoriesFor: #typeconverter:!accessing!public! !
-!UI.ValueConvertingControlView categoriesFor: #typeconverterClass!accessing!public! !
-!UI.ValueConvertingControlView categoriesFor: #typeconverterClass:!accessing!public! !
-!UI.ValueConvertingControlView categoriesFor: #updateModel!private!updating! !
-!UI.ValueConvertingControlView categoriesFor: #updateModel:!private!updating! !
-!UI.ValueConvertingControlView categoriesFor: #value!accessing!public! !
-!UI.ValueConvertingControlView categoriesFor: #value:!accessing!public! !
+!UI.ValueConvertingControlView categoriesForMethods!
+connectModel!models!public! !
+defaultExtent!constants!private! !
+defaultTypeConverter!accessing!public! !
+defaultTypeConverterClass!initializing!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+initializeNewTypeConverter:!accessing!private! !
+onViewCreated!event handling!public! !
+refreshContents!public!updating! !
+typeconverter!accessing!public! !
+typeconverter:!accessing!public! !
+typeconverterClass!accessing!public! !
+typeconverterClass:!accessing!public! !
+updateModel!private!updating! !
+updateModel:!private!updating! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 UI.ValueConvertingControlView methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 UI.ValueConvertingControlView methodProtocol: #valueView attributes: #(#readOnly) selectors: #(#value #value:)!
@@ -173,6 +175,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!UI.ValueConvertingControlView class categoriesFor: #defaultModel!models!public! !
-!UI.ValueConvertingControlView class categoriesFor: #icon!constants!public! !
+!UI.ValueConvertingControlView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

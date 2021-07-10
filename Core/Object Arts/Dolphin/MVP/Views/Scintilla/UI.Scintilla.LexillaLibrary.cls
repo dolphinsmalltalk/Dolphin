@@ -42,10 +42,12 @@ getLexerNames
 				name: buf
 				buflength: bufsize.
 			buf trimNulls]! !
-!UI.Scintilla.LexillaLibrary categoriesFor: #createLexer:!operations!public! !
-!UI.Scintilla.LexillaLibrary categoriesFor: #getLexerCount!operations!public! !
-!UI.Scintilla.LexillaLibrary categoriesFor: #getLexerName:name:buflength:!operations!public! !
-!UI.Scintilla.LexillaLibrary categoriesFor: #getLexerNames!enquiries!public! !
+!UI.Scintilla.LexillaLibrary categoriesForMethods!
+createLexer:!operations!public! !
+getLexerCount!operations!public! !
+getLexerName:name:buflength:!operations!public! !
+getLexerNames!enquiries!public! !
+!
 
 !UI.Scintilla.LexillaLibrary class methodsFor!
 
@@ -53,5 +55,7 @@ fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
 	^'Lexilla'! !
-!UI.Scintilla.LexillaLibrary class categoriesFor: #fileName!constants!public! !
+!UI.Scintilla.LexillaLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

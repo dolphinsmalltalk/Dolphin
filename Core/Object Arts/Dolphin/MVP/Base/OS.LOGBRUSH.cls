@@ -78,17 +78,19 @@ lbStyle: anInteger
 	"Set the receiver's 'lbStyle' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_lbStyle put: anInteger! !
-!OS.LOGBRUSH categoriesFor: #color!accessing!public! !
-!OS.LOGBRUSH categoriesFor: #color:!accessing!public! !
-!OS.LOGBRUSH categoriesFor: #hatch!accessing!public! !
-!OS.LOGBRUSH categoriesFor: #hatch:!accessing!public! !
-!OS.LOGBRUSH categoriesFor: #hatchStyleName!accessing!public! !
-!OS.LOGBRUSH categoriesFor: #lbColor!**compiled accessors**!public! !
-!OS.LOGBRUSH categoriesFor: #lbColor:!**compiled accessors**!public! !
-!OS.LOGBRUSH categoriesFor: #lbHatch!**compiled accessors**!public! !
-!OS.LOGBRUSH categoriesFor: #lbHatch:!**compiled accessors**!public! !
-!OS.LOGBRUSH categoriesFor: #lbStyle!**compiled accessors**!public! !
-!OS.LOGBRUSH categoriesFor: #lbStyle:!**compiled accessors**!public! !
+!OS.LOGBRUSH categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+hatch!accessing!public! !
+hatch:!accessing!public! !
+hatchStyleName!accessing!public! !
+lbColor!**compiled accessors**!public! !
+lbColor:!**compiled accessors**!public! !
+lbHatch!**compiled accessors**!public! !
+lbHatch:!**compiled accessors**!public! !
+lbStyle!**compiled accessors**!public! !
+lbStyle:!**compiled accessors**!public! !
+!
 
 !OS.LOGBRUSH class methodsFor!
 
@@ -125,8 +127,10 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!OS.LOGBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.LOGBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.LOGBRUSH class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!OS.LOGBRUSH class categoriesFor: #stbVersion!binary filing!public! !
+!OS.LOGBRUSH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

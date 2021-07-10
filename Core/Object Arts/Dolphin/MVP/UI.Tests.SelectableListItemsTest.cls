@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableListItemsTest'
 	instanceVariableNames: ''
@@ -346,17 +346,19 @@ testUpdateSelectedObject
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #autoSelectsFirst!private!testing! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #objectsToTest!helpers!private! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #removingResetsSelection!private!testing! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testAddDoesNotChangeSelection!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testAddRemove!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testRemoveAllSelection!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testRemoveDoesNotAffectSelection!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testRemoveSelection!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testResetSelection!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testSelection!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testSelectionByIndex!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
-!UI.Tests.SelectableListItemsTest categoriesFor: #testUpdateSelectedObject!public!unit tests! !
+!UI.Tests.SelectableListItemsTest categoriesForMethods!
+autoSelectsFirst!private!testing! !
+objectsToTest!helpers!private! !
+removingResetsSelection!private!testing! !
+testAddDoesNotChangeSelection!public!unit tests! !
+testAddRemove!public!unit tests! !
+testRemoveAllSelection!public!unit tests! !
+testRemoveDoesNotAffectSelection!public!unit tests! !
+testRemoveSelection!public!unit tests! !
+testResetSelection!public!unit tests! !
+testSelection!public!unit tests! !
+testSelectionByIndex!public!unit tests! !
+testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+testUpdateSelectedObject!public!unit tests! !
+!
 

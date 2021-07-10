@@ -243,34 +243,36 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]! !
-!UI.BasicListAbstract categoriesFor: #basicAdd:!adding!private! !
-!UI.BasicListAbstract categoriesFor: #basicRefreshContents!private!updating! !
-!UI.BasicListAbstract categoriesFor: #basicResetSelection!private!selection! !
-!UI.BasicListAbstract categoriesFor: #canHScroll!public! !
-!UI.BasicListAbstract categoriesFor: #canHScroll:!public! !
-!UI.BasicListAbstract categoriesFor: #defaultExtent!constants!private! !
-!UI.BasicListAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
-!UI.BasicListAbstract categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.BasicListAbstract categoriesFor: #displayStringFor:!adding!private! !
-!UI.BasicListAbstract categoriesFor: #ensureSelectionVisible!public!selection! !
-!UI.BasicListAbstract categoriesFor: #initialize!initializing!public! !
-!UI.BasicListAbstract categoriesFor: #lastSelIndices!private! !
-!UI.BasicListAbstract categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!UI.BasicListAbstract categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!UI.BasicListAbstract categoriesFor: #onKeyTyped:!event handling!public! !
-!UI.BasicListAbstract categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!UI.BasicListAbstract categoriesFor: #onSelChanged:!event handling!private! !
-!UI.BasicListAbstract categoriesFor: #onSelChanging!event handling!private! !
-!UI.BasicListAbstract categoriesFor: #onSelChanging:cause:!event handling!private! !
-!UI.BasicListAbstract categoriesFor: #onViewCreated!event handling!public! !
-!UI.BasicListAbstract categoriesFor: #refreshContents!public!updating! !
-!UI.BasicListAbstract categoriesFor: #selectionByIndex!public!selection! !
-!UI.BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
-!UI.BasicListAbstract categoriesFor: #selectionsByIndex!public!selection! !
-!UI.BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
-!UI.BasicListAbstract categoriesFor: #setSelectionsByIndex:!private!selection! !
-!UI.BasicListAbstract categoriesFor: #updateItem:atIndex:!event handling!public! !
-!UI.BasicListAbstract categoriesFor: #updateSelectionCache!helpers!private!selection! !
+!UI.BasicListAbstract categoriesForMethods!
+basicAdd:!adding!private! !
+basicRefreshContents!private!updating! !
+basicResetSelection!private!selection! !
+canHScroll!public! !
+canHScroll:!public! !
+defaultExtent!constants!private! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+displayStringFor:!adding!private! !
+ensureSelectionVisible!public!selection! !
+initialize!initializing!public! !
+lastSelIndices!private! !
+onItem:addedAtIndex:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onSelChanged:!event handling!private! !
+onSelChanging!event handling!private! !
+onSelChanging:cause:!event handling!private! !
+onViewCreated!event handling!public! !
+refreshContents!public!updating! !
+selectionByIndex!public!selection! !
+selections:ifAbsent:!public!selection! !
+selectionsByIndex!public!selection! !
+selectionsByIndex:ifAbsent:!public!selection! !
+setSelectionsByIndex:!private!selection! !
+updateItem:atIndex:!event handling!public! !
+updateSelectionCache!helpers!private!selection! !
+!
 
 !UI.BasicListAbstract class methodsFor!
 
@@ -287,7 +289,9 @@ value: anObject
 	valuable, mainly to save space in view resources."
 
 	^anObject displayString! !
-!UI.BasicListAbstract class categoriesFor: #initialize!development!initializing!private! !
-!UI.BasicListAbstract class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!UI.BasicListAbstract class categoriesFor: #value:!evaluating!private! !
+!UI.BasicListAbstract class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+value:!evaluating!private! !
+!
 

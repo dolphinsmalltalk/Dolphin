@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.LayoutManagerTest subclass: #'UI.Tests.ProportionalLayoutTest'
 	instanceVariableNames: ''
@@ -77,6 +77,8 @@ testSplitterVisibility
 	self deny: s3 isWindowVisible.
 	self deny: s4 isWindowVisible.
 	self assert: s5 isWindowVisible! !
-!UI.Tests.ProportionalLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!UI.Tests.ProportionalLayoutTest categoriesFor: #testSplitterVisibility!public!unit tests! !
+!UI.Tests.ProportionalLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+testSplitterVisibility!public!unit tests! !
+!
 

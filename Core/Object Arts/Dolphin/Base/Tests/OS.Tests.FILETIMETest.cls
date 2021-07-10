@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.FILETIMETest'
 	instanceVariableNames: ''
@@ -27,6 +27,8 @@ testFromInteger
 	self assertFromIntegerInvertible: -2 ** 31.
 	self assertFromIntegerInvertible: -2 ** 32.
 	self assertFromIntegerInvertible: -2 ** 63! !
-!OS.Tests.FILETIMETest categoriesFor: #assertFromIntegerInvertible:!helpers!private! !
-!OS.Tests.FILETIMETest categoriesFor: #testFromInteger!public!unit tests! !
+!OS.Tests.FILETIMETest categoriesForMethods!
+assertFromIntegerInvertible:!helpers!private! !
+testFromInteger!public!unit tests! !
+!
 

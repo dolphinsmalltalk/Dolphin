@@ -144,24 +144,26 @@ visualObjectAt: aPoint
 			| localPoint |
 			localPoint := View desktop mapPoint: aPoint to: viewUnderCursor.
 			viewUnderCursor visualObjectAtPoint: localPoint]! !
-!Tools.VisualObjectFinder categoriesFor: #browseObject!accessing!private! !
-!Tools.VisualObjectFinder categoriesFor: #cancelTrackingAt:!private!tracking! !
-!Tools.VisualObjectFinder categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!Tools.VisualObjectFinder categoriesFor: #createComponents!initializing!private! !
-!Tools.VisualObjectFinder categoriesFor: #createSchematicWiring!initializing!private! !
-!Tools.VisualObjectFinder categoriesFor: #displayOn:!displaying!public! !
-!Tools.VisualObjectFinder categoriesFor: #endTrackingAt:!private!tracking! !
-!Tools.VisualObjectFinder categoriesFor: #findObject!commands!public! !
-!Tools.VisualObjectFinder categoriesFor: #foundView!public! !
-!Tools.VisualObjectFinder categoriesFor: #inspecteeSelection!accessing!private! !
-!Tools.VisualObjectFinder categoriesFor: #model:!accessing!public! !
-!Tools.VisualObjectFinder categoriesFor: #onDragOver:!event handling!public! !
-!Tools.VisualObjectFinder categoriesFor: #onDropOver:!event handling!public! !
-!Tools.VisualObjectFinder categoriesFor: #onValueChanged!accessing!private! !
-!Tools.VisualObjectFinder categoriesFor: #onViewOpened!event handling!private! !
-!Tools.VisualObjectFinder categoriesFor: #startTrackingAt:!private!tracking! !
-!Tools.VisualObjectFinder categoriesFor: #viewFromPoint:!helpers!private! !
-!Tools.VisualObjectFinder categoriesFor: #visualObjectAt:!helpers!private! !
+!Tools.VisualObjectFinder categoriesForMethods!
+browseObject!accessing!private! !
+cancelTrackingAt:!private!tracking! !
+continueTrackingAt:from:!private!tracking! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+displayOn:!displaying!public! !
+endTrackingAt:!private!tracking! !
+findObject!commands!public! !
+foundView!public! !
+inspecteeSelection!accessing!private! !
+model:!accessing!public! !
+onDragOver:!event handling!public! !
+onDropOver:!event handling!public! !
+onValueChanged!accessing!private! !
+onViewOpened!event handling!private! !
+startTrackingAt:!private!tracking! !
+viewFromPoint:!helpers!private! !
+visualObjectAt:!helpers!private! !
+!
 
 Tools.VisualObjectFinder methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -204,14 +206,16 @@ resource_Default_view
 
 unregisterAsToolWith: aSmalltalkSystem
 ! !
-!Tools.VisualObjectFinder class categoriesFor: #findNonDolphinWindows!accessing!public! !
-!Tools.VisualObjectFinder class categoriesFor: #findNonDolphinWindows:!accessing!public! !
-!Tools.VisualObjectFinder class categoriesFor: #icon!constants!public! !
-!Tools.VisualObjectFinder class categoriesFor: #initialize!initializing!private! !
-!Tools.VisualObjectFinder class categoriesFor: #publishedAspects!constants!public! !
-!Tools.VisualObjectFinder class categoriesFor: #registerAsToolWith:!operations!public! !
-!Tools.VisualObjectFinder class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.VisualObjectFinder class categoriesFor: #unregisterAsToolWith:!operations!public! !
+!Tools.VisualObjectFinder class categoriesForMethods!
+findNonDolphinWindows!accessing!public! !
+findNonDolphinWindows:!accessing!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!constants!public! !
+registerAsToolWith:!operations!public! !
+resource_Default_view!public!resources-views! !
+unregisterAsToolWith:!operations!public! !
+!
 
 Tools.VisualObjectFinder class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

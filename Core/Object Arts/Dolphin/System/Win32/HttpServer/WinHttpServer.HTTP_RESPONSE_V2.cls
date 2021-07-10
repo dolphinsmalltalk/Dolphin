@@ -53,10 +53,12 @@ ResponseInfoCount: anInteger
 	"Set the receiver's 'ResponseInfoCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_ResponseInfoCount put: anInteger! !
-!WinHttpServer.HTTP_RESPONSE_V2 categoriesFor: #pResponseInfo!**compiled accessors**!public! !
-!WinHttpServer.HTTP_RESPONSE_V2 categoriesFor: #pResponseInfo:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_RESPONSE_V2 categoriesFor: #ResponseInfoCount!**compiled accessors**!private! !
-!WinHttpServer.HTTP_RESPONSE_V2 categoriesFor: #ResponseInfoCount:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_RESPONSE_V2 categoriesForMethods!
+pResponseInfo!**compiled accessors**!public! !
+pResponseInfo:!**compiled accessors**!public! !
+ResponseInfoCount!**compiled accessors**!private! !
+ResponseInfoCount:!**compiled accessors**!private! !
+!
 
 !WinHttpServer.HTTP_RESPONSE_V2 class methodsFor!
 
@@ -81,6 +83,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks #ResponseInfoCount #pResponseInfo)! !
-!WinHttpServer.HTTP_RESPONSE_V2 class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_RESPONSE_V2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_RESPONSE_V2 class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

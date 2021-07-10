@@ -25,6 +25,8 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
-!OS.COM.TaskMemory class categoriesFor: #allocator!accessing!private! !
-!OS.COM.TaskMemory class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.TaskMemory class categoriesForMethods!
+allocator!accessing!private! !
+initialize!development!initializing!private! !
+!
 

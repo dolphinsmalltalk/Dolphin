@@ -15,5 +15,7 @@ name
 	"Answer the <readableString> identifier of the variable described by the receiver."
 
 	^'thisContext'! !
-!Kernel.StThisContextVariable categoriesFor: #name!accessing!public! !
+!Kernel.StThisContextVariable categoriesForMethods!
+name!accessing!public! !
+!
 

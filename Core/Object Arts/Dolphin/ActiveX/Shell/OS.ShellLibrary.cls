@@ -205,24 +205,26 @@ shGetStockIconInfo: siid uFlags: uFlags psii: psii
 
 	<stdcall: hresult SHGetStockIconInfo sdword dword SHSTOCKICONINFO*>
 	^self invalidCall: _failureCode! !
-!OS.ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #dragFinish:!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #dragQueryPoint:lppt:!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #findExecutable:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #findExecutable:directory:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #getSpecialFolderLocation:!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #isUserAnAdmin!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #myPictures!accessing!public! !
-!OS.ShellLibrary categoriesFor: #SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #shellOpen:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #shellOpen:directory:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #shellOpen:directory:parameters:!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
-!OS.ShellLibrary categoriesFor: #shGetStockIconInfo:uFlags:psii:!**auto generated**!public!win32 functions-shell library! !
+!OS.ShellLibrary categoriesForMethods!
+dragAcceptFiles:fAccept:!**auto generated**!public!win32 functions-shell library! !
+dragFinish:!**auto generated**!public!win32 functions-shell library! !
+dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public!win32 functions-shell library! !
+dragQueryPoint:lppt:!**auto generated**!public!win32 functions-shell library! !
+extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public!win32 functions-shell library! !
+findExecutable:!public!win32 functions-shell library! !
+findExecutable:directory:!public!win32 functions-shell library! !
+findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
+getSpecialFolderLocation:!**auto generated**!public!win32 functions-shell library! !
+isUserAnAdmin!**auto generated**!public!win32 functions-shell library! !
+myPictures!accessing!public! !
+SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
+shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
+shellOpen:!public!win32 functions-shell library! !
+shellOpen:directory:!public!win32 functions-shell library! !
+shellOpen:directory:parameters:!public!win32 functions-shell library! !
+shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
+shGetStockIconInfo:uFlags:psii:!**auto generated**!public!win32 functions-shell library! !
+!
 
 !OS.ShellLibrary class methodsFor!
 
@@ -233,6 +235,8 @@ fileName
 
 sharedVariableName
 	^#{Shell32}! !
-!OS.ShellLibrary class categoriesFor: #fileName!constants!public! !
-!OS.ShellLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.ShellLibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

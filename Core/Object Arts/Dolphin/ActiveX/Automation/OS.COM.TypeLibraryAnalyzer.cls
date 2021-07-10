@@ -582,68 +582,70 @@ vtblInterfaces
 	described by the receiver. This will include dual interfaces."
 
 	^self selectTypes: [:t | t typekind == TKIND_INTERFACE]! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #=!comparing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #aliasMap!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #at:!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #at:ifAbsent:!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #attributes!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #basicName!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #basicTypeInfoAt:!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #buildTypeAnalyzers!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #classBindingForGuid:!helpers!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #clearCachedAnalyzers!initializing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #coclasses!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #customInterfaces!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #defaultGenerationFlags!constants!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #dispatchableInterfaces!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #dispinterfaces!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #displayOn:!displaying!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #documentation!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #documentationAt:!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #documentationAt:ifAbsent:!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #dualInterfaces!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #enums!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #find:count:!public!searching! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #fullNameFor:!helpers!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #getLibAttr!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #hash!comparing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAfterLoad!initializing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #initializeAliasMap!initializing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #interfaces!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #isName:!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #isRegistered!public!testing! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #libid!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #loadTypeLib!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #modules!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #namedStructs!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #namedUnions!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #names!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #namespaceName:!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #path!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #registration!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #reset!initializing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #selectTypeKind:!enumerating!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #selectTypes:!enumerating!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #setTypeLib:attributes:!initializing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #stbSaveOn:!binary filing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #structs!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #suggestBindingForType:!constants!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #suggestedBinding!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #suggestedConstantsPoolBinding!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeAnalyzerAt:!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeAnalyzers!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #typedefs!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeInfoAt:!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeInfoCount!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #typeInfoForGuid:ifNone:!accessing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #uninitialize!initializing!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #unions!enumerating!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #variableNameFrom:!accessing!helpers!private! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #versionString!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer categoriesFor: #vtblInterfaces!enumerating!public! !
+!OS.COM.TypeLibraryAnalyzer categoriesForMethods!
+=!comparing!public! !
+aliasMap!accessing!private! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+attributes!accessing!public! !
+basicName!accessing!public! !
+basicTypeInfoAt:!accessing!private! !
+buildTypeAnalyzers!accessing!private! !
+classBindingForGuid:!helpers!private! !
+clearCachedAnalyzers!initializing!public! !
+coclasses!enumerating!public! !
+customInterfaces!enumerating!public! !
+defaultGenerationFlags!constants!public! !
+dispatchableInterfaces!enumerating!public! !
+dispinterfaces!enumerating!public! !
+displayOn:!displaying!public! !
+documentation!accessing!public! !
+documentationAt:!accessing!private! !
+documentationAt:ifAbsent:!accessing!private! !
+dualInterfaces!enumerating!public! !
+enums!enumerating!public! !
+find:count:!public!searching! !
+fullNameFor:!helpers!public! !
+getLibAttr!accessing!private! !
+hash!comparing!public! !
+initializeAfterLoad!initializing!public! !
+initializeAliasMap!initializing!public! !
+interfaces!enumerating!public! !
+isName:!accessing!public! !
+isRegistered!public!testing! !
+libid!accessing!public! !
+loadTypeLib!accessing!private! !
+modules!enumerating!public! !
+namedStructs!enumerating!public! !
+namedUnions!enumerating!public! !
+names!enumerating!public! !
+namespaceName!accessing!public! !
+namespaceName:!accessing!public! !
+path!accessing!public! !
+realize!private!realizing/unrealizing! !
+registration!accessing!public! !
+reset!initializing!public! !
+selectTypeKind:!enumerating!private! !
+selectTypes:!enumerating!private! !
+setTypeLib:attributes:!initializing!private! !
+sourceInterfaces!enumerating!public! !
+stbSaveOn:!binary filing!public! !
+structs!enumerating!public! !
+suggestBindingForType:!constants!private! !
+suggestedBinding!private! !
+suggestedConstantsPoolBinding!private! !
+typeAnalyzerAt:!accessing!public! !
+typeAnalyzers!accessing!private! !
+typedefs!enumerating!public! !
+typeInfoAt:!accessing!private! !
+typeInfoCount!accessing!public! !
+typeInfoForGuid:ifNone:!accessing!private! !
+uninitialize!initializing!private! !
+unions!enumerating!public! !
+variableNameFrom:!accessing!helpers!private! !
+versionString!accessing!public! !
+vtblInterfaces!enumerating!public! !
+!
 
 !OS.COM.TypeLibraryAnalyzer class methodsFor!
 
@@ -796,20 +798,22 @@ uninitialize
 
 	TypeLibs := WeakLookupTable new.
 	SessionManager current removeEventsTriggeredFor: self! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #allOpenableTypeLibs!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #allTypeLibs!accessing!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #fromRegistration:!instance creation!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #load:major:minor:locale:!instance creation!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #new!instance creation!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #onStartup!event handling!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #onTypeLib:!instance creation!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #open:!instance creation!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion2:!binary filing!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion3:!binary filing!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #stbVersion!binary filing!public! !
-!OS.COM.TypeLibraryAnalyzer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.TypeLibraryAnalyzer class categoriesForMethods!
+allOpenableTypeLibs!accessing!public! !
+allTypeLibs!accessing!public! !
+fromRegistration:!instance creation!public! !
+initialize!development!initializing!private! !
+load:major:minor:locale:!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+onStartup!event handling!public! !
+onTypeLib:!instance creation!public! !
+open:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!public! !
+stbConvertToVersion2:!binary filing!public! !
+stbConvertToVersion3:!binary filing!public! !
+stbVersion!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

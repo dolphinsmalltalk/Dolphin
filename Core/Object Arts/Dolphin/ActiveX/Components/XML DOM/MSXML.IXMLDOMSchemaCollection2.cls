@@ -121,15 +121,17 @@ validateOnLoad: validateOnLoad
 	"Set the 'validateOnLoad' property of the receiver to the <varbool> value of the argument."
 
 	self put_validateOnLoad: validateOnLoad! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #getDeclaration:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #GetDeclaration:item:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #getSchema:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #GetSchema:schema:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #put_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #Validate!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!public! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMSchemaCollection2 categoriesForMethods!
+get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+getDeclaration:!**auto generated**!methods!public! !
+GetDeclaration:item:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+getSchema:!**auto generated**!methods!public! !
+GetSchema:schema:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+put_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+Validate!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!public! !
+validateOnLoad!**auto generated**!properties!public! !
+validateOnLoad:!**auto generated**!properties!public! !
+!
 
 !MSXML.IXMLDOMSchemaCollection2 class methodsFor!
 
@@ -154,6 +156,8 @@ defineFunctions
 		defineFunction: #GetDeclaration:item:
 			argumentTypes: 'IXMLDOMNode* ISchemaItem**'
 ! !
-!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSXML.IXMLDOMSchemaCollection2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMSchemaCollection2 class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

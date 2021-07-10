@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.LintRuleTest subclass: #'Refactory.Browser.Tests.BasicLintRuleTest'
 	instanceVariableNames: 'classBlock methodBlock result'
@@ -50,18 +50,20 @@ resultClass: aClass
 
 viewResults
 	result openEditor! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #checkClass:!accessing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #classBlock:!initialize/release!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #methodBlock:!initialize/release!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #resetResult!initialize/release!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #result!accessing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #result:!initialize/release!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #resultClass:!initialize/release!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesFor: #viewResults!private! !
+!Refactory.Browser.Tests.BasicLintRuleTest categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+classBlock:!initialize/release!public! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+methodBlock:!initialize/release!public! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+result!accessing!public! !
+result:!initialize/release!public! !
+resultClass:!initialize/release!public! !
+viewResults!private! !
+!
 
 !Refactory.Browser.Tests.BasicLintRuleTest class methodsFor!
 
@@ -1131,75 +1133,77 @@ yourselfNotUsed
 			(addSearcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #abstractClass!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #addRemoveDependents!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #anySatisfy!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #assignmentInBlock!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #assignmentInIfTrue!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #atIfAbsent!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #badMessage!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #badSelectors!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #booleanPrecedence!bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #canCall:in:from:!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #classNameInSelector!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #classNotReferenced!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #classShouldNotOverride!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #collectionCopyEmpty!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #collectionMessagesToExternalObject!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #collectionProtocol!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #consistencyCheck!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #createMatcherFor:method:!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #createParseTreeRule:method:name:!instance creation!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #createParseTreeRule:name:!instance creation!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #definesEqualNotHash!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #detectAnySatisfy!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #endTrueFalse!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #equalsTrue!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #equivalentSuperclassMethods!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #extraBlock!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #fileBlocks!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #fullBlocks!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #guardingClause!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #ifTrueBlocks!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #ifTrueReturns!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #implementedNotSent!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #instVarInSubclasses!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #justSendsSuper!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #lintProtocols!accessing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #longMethods!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #longMethodSize!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #metaclassShouldNotOverride!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #minMax!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #missingSubclassResponsibility!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #missingYourself!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #modifiesCollection!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #new!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #onlyReadOrWritten!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #overridesSpecialMessage!bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #precedence!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #refersToClass!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #returnsBooleanAndOther!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #returnsIfTrue!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #sendsDifferentSuper!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #sentNotImplemented!bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #sentNotImplementedInApplication!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #sizeCheck!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #stringConcatenation!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #subclassOf:overrides:!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #subclassResponsibilityNotDefined!bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #superMessages!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #superSends!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #tempsReadBeforeWritten!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #tempVarOverridesInstVar!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #threeElementPoint!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #toDo!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #unreferencedVariables!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #usesAdd!possible bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #usesTrue!bugs!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #utilityMethods!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #utilityProtocols!private! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #variableAssignedLiteral!miscellaneous!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #variableReferencedOnce!public!unnecessary code! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #whileTrue!intention revealing!public! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesFor: #yourselfNotUsed!miscellaneous!public! !
+!Refactory.Browser.Tests.BasicLintRuleTest class categoriesForMethods!
+abstractClass!possible bugs!public! !
+addRemoveDependents!possible bugs!public! !
+anySatisfy!intention revealing!public! !
+assignmentInBlock!miscellaneous!public! !
+assignmentInIfTrue!intention revealing!public! !
+atIfAbsent!intention revealing!public! !
+badMessage!miscellaneous!public! !
+badSelectors!private! !
+booleanPrecedence!bugs!public! !
+canCall:in:from:!private! !
+classNameInSelector!miscellaneous!public! !
+classNotReferenced!public!unnecessary code! !
+classShouldNotOverride!private! !
+collectionCopyEmpty!possible bugs!public! !
+collectionMessagesToExternalObject!intention revealing!public! !
+collectionProtocol!intention revealing!public! !
+consistencyCheck!intention revealing!public! !
+createMatcherFor:method:!private! !
+createParseTreeRule:method:name:!instance creation!public! !
+createParseTreeRule:name:!instance creation!public! !
+definesEqualNotHash!possible bugs!public! !
+detectAnySatisfy!intention revealing!public! !
+endTrueFalse!public!unnecessary code! !
+equalsTrue!public!unnecessary code! !
+equivalentSuperclassMethods!public!unnecessary code! !
+extraBlock!public!unnecessary code! !
+fileBlocks!possible bugs!public! !
+fullBlocks!miscellaneous!public! !
+guardingClause!intention revealing!public! !
+ifTrueBlocks!miscellaneous!public! !
+ifTrueReturns!intention revealing!public! !
+implementedNotSent!public!unnecessary code! !
+instVarInSubclasses!miscellaneous!public! !
+justSendsSuper!public!unnecessary code! !
+lintProtocols!accessing!public! !
+longMethods!miscellaneous!public! !
+longMethodSize!private! !
+metaclassShouldNotOverride!private! !
+minMax!intention revealing!public! !
+missingSubclassResponsibility!intention revealing!public! !
+missingYourself!possible bugs!public! !
+modifiesCollection!possible bugs!public! !
+new!private! !
+onlyReadOrWritten!public!unnecessary code! !
+overridesSpecialMessage!bugs!public! !
+precedence!miscellaneous!public! !
+refersToClass!miscellaneous!public! !
+returnsBooleanAndOther!possible bugs!public! !
+returnsIfTrue!possible bugs!public! !
+sendsDifferentSuper!possible bugs!public! !
+sentNotImplemented!bugs!public! !
+sentNotImplementedInApplication!possible bugs!public! !
+sizeCheck!intention revealing!public! !
+stringConcatenation!miscellaneous!public! !
+subclassOf:overrides:!private! !
+subclassResponsibilityNotDefined!bugs!public! !
+superMessages!private! !
+superSends!possible bugs!public! !
+tempsReadBeforeWritten!possible bugs!public! !
+tempVarOverridesInstVar!possible bugs!public! !
+threeElementPoint!possible bugs!public! !
+toDo!intention revealing!public! !
+unreferencedVariables!public!unnecessary code! !
+usesAdd!possible bugs!public! !
+usesTrue!bugs!public! !
+utilityMethods!miscellaneous!public! !
+utilityProtocols!private! !
+variableAssignedLiteral!miscellaneous!public! !
+variableReferencedOnce!public!unnecessary code! !
+whileTrue!intention revealing!public! !
+yourselfNotUsed!miscellaneous!public! !
+!
 

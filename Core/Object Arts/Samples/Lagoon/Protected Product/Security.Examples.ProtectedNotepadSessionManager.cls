@@ -29,9 +29,11 @@ serialNumberClass
 	"Answer the class of the <ProtectedProductSerialNumber> used to encrypt the receiver"
 
 	^AnotherCompanySerialNumber! !
-!Security.Examples.ProtectedNotepadSessionManager categoriesFor: #encryptedPackageNames!constants!public! !
-!Security.Examples.ProtectedNotepadSessionManager categoriesFor: #productRegistrationKey!constants!public! !
-!Security.Examples.ProtectedNotepadSessionManager categoriesFor: #serialNumberClass!constants!public! !
+!Security.Examples.ProtectedNotepadSessionManager categoriesForMethods!
+encryptedPackageNames!constants!public! !
+productRegistrationKey!constants!public! !
+serialNumberClass!constants!public! !
+!
 
 !Security.Examples.ProtectedNotepadSessionManager class methodsFor!
 
@@ -39,5 +41,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^UI.Examples.Notepad! !
-!Security.Examples.ProtectedNotepadSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!Security.Examples.ProtectedNotepadSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

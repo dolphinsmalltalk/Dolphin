@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.RichTextEditTest'
 	instanceVariableNames: 'savedLocale'
@@ -143,13 +143,15 @@ text
 	"As of v2.0 of the RichEdit control, it strips out CRs internally, and so positions will be out relative to the original text"
 
 	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'! !
-!UI.Tests.RichTextEditTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.RichTextEditTest categoriesFor: #margins!private!unit tests! !
-!UI.Tests.RichTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
-!UI.Tests.RichTextEditTest categoriesFor: #setUp!private!unit tests! !
-!UI.Tests.RichTextEditTest categoriesFor: #tearDown!private!running! !
-!UI.Tests.RichTextEditTest categoriesFor: #testCharNearestPosition!public!unit tests! !
-!UI.Tests.RichTextEditTest categoriesFor: #testStreamInAnsiText!public!unit tests! !
-!UI.Tests.RichTextEditTest categoriesFor: #testStreamInUtfText!public!unit tests! !
-!UI.Tests.RichTextEditTest categoriesFor: #text!public! !
+!UI.Tests.RichTextEditTest categoriesForMethods!
+classToTest!helpers!private! !
+margins!private!unit tests! !
+nonProportionalFont!constants!private! !
+setUp!private!unit tests! !
+tearDown!private!running! !
+testCharNearestPosition!public!unit tests! !
+testStreamInAnsiText!public!unit tests! !
+testStreamInUtfText!public!unit tests! !
+text!public! !
+!
 

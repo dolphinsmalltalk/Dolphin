@@ -50,10 +50,12 @@ familyCount
 	count := ByteArray newFixed: 4.
 	Gdip gdipGetFontCollectionFamilyCount: self asParameter numFound: count.
 	^count sdwordAtOffset: 0! !
-!Graphics.Gdiplus.FontCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.FontCollection categoriesFor: #families!accessing!public! !
-!Graphics.Gdiplus.FontCollection categoriesFor: #families:!public! !
-!Graphics.Gdiplus.FontCollection categoriesFor: #familyCount!accessing!public! !
+!Graphics.Gdiplus.FontCollection categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+families!accessing!public! !
+families:!public! !
+familyCount!accessing!public! !
+!
 
 !Graphics.Gdiplus.FontCollection class methodsFor!
 
@@ -61,5 +63,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Graphics.Font icon! !
-!Graphics.Gdiplus.FontCollection class categoriesFor: #icon!constants!development!public! !
+!Graphics.Gdiplus.FontCollection class categoriesForMethods!
+icon!constants!development!public! !
+!
 

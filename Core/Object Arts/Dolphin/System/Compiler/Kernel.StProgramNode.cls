@@ -402,93 +402,95 @@ whoDefines: aName
 	^(self defines: aName) 
 		ifTrue: [self]
 		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]! !
-!Kernel.StProgramNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StProgramNode categoriesFor: #addComments:!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #addStatementCommentsTo:!helpers!private! !
-!Kernel.StProgramNode categoriesFor: #allArgumentVariableNodesDo:!enumerating!public! !
-!Kernel.StProgramNode categoriesFor: #allArgumentVariables!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #allDefinedVariableNodes!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #allDefinedVariableNodesDo:!enumerating!public! !
-!Kernel.StProgramNode categoriesFor: #allDefinedVariables!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #allTemporaryVariableNodes!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #allTemporaryVariableNodesDo:!enumerating!public! !
-!Kernel.StProgramNode categoriesFor: #allTemporaryVariables!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #assigns:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #bestNodeFor:!public!querying! !
-!Kernel.StProgramNode categoriesFor: #blockVariables!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #cascadeListCharacter!meta variable/accessing!public! !
-!Kernel.StProgramNode categoriesFor: #children!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #collect:!enumerating!public! !
-!Kernel.StProgramNode categoriesFor: #comments!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #comments:!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #containedBy:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #containsReturn!public!testing! !
-!Kernel.StProgramNode categoriesFor: #copyCommentsFrom:!copying!public! !
-!Kernel.StProgramNode categoriesFor: #defines:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #directlyUses:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #displayOn:!printing!public! !
-!Kernel.StProgramNode categoriesFor: #do:!enumerating!public! !
-!Kernel.StProgramNode categoriesFor: #equalTo:exceptForVariables:!comparing!public! !
-!Kernel.StProgramNode categoriesFor: #evaluatedFirst:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #formattedCode!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #formatterClass!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #hashForCollection:!comparing!private! !
-!Kernel.StProgramNode categoriesFor: #intersectsInterval:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isAssignment!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isBlock!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isCascade!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isDirectlyUsed!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isDynamicArray!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isEvaluatedFirst!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isImmediateNode!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isLast:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isList!public!testing/matching! !
-!Kernel.StProgramNode categoriesFor: #isLiteralArray!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isLiteralNode!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isMessage!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isMethod!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isPatternNode!public!testing/matching! !
-!Kernel.StProgramNode categoriesFor: #isQualifiedReference!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isReturn!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isSelfVariable!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isSequence!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isSpecialVariable!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isSuperVariable!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isUsed!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isValue!public!testing! !
-!Kernel.StProgramNode categoriesFor: #isVariable!public!testing! !
-!Kernel.StProgramNode categoriesFor: #lastIsReturn!public!testing! !
-!Kernel.StProgramNode categoriesFor: #listCharacter!meta variable/accessing!public! !
-!Kernel.StProgramNode categoriesFor: #literalCharacter!meta variable/accessing!public! !
-!Kernel.StProgramNode categoriesFor: #methodComments!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #methodNode!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #newSource!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #nodesDo:!iterating!public! !
-!Kernel.StProgramNode categoriesFor: #outer!public! !
-!Kernel.StProgramNode categoriesFor: #parent!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #parent:!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StProgramNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #printOn:!printing!public! !
-!Kernel.StProgramNode categoriesFor: #recurseInto!public!testing/matching! !
-!Kernel.StProgramNode categoriesFor: #recurseIntoCharacter!meta variable/accessing!public! !
-!Kernel.StProgramNode categoriesFor: #scope!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #scope:!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #sentMessages!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #size!enumerating!public! !
-!Kernel.StProgramNode categoriesFor: #source!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #sourceInterval!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #start!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #statementCharacter!meta variable/accessing!public! !
-!Kernel.StProgramNode categoriesFor: #statementComments!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #statementNode!public!querying! !
-!Kernel.StProgramNode categoriesFor: #stop!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #temporaryVariables!accessing!public! !
-!Kernel.StProgramNode categoriesFor: #uses:!public!testing! !
-!Kernel.StProgramNode categoriesFor: #whichNodeIsContainedBy:!public!querying! !
-!Kernel.StProgramNode categoriesFor: #whoDefines:!public!querying! !
+!Kernel.StProgramNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+addComments:!accessing!public! !
+addStatementCommentsTo:!helpers!private! !
+allArgumentVariableNodesDo:!enumerating!public! !
+allArgumentVariables!accessing!public! !
+allDefinedVariableNodes!accessing!public! !
+allDefinedVariableNodesDo:!enumerating!public! !
+allDefinedVariables!accessing!public! !
+allTemporaryVariableNodes!accessing!public! !
+allTemporaryVariableNodesDo:!enumerating!public! !
+allTemporaryVariables!accessing!public! !
+assigns:!public!testing! !
+bestNodeFor:!public!querying! !
+blockVariables!accessing!public! !
+cascadeListCharacter!meta variable/accessing!public! !
+children!accessing!public! !
+childrenDo:!accessing!public! !
+collect:!enumerating!public! !
+comments!accessing!public! !
+comments:!accessing!public! !
+containedBy:!public!testing! !
+containsReturn!public!testing! !
+copyCommentsFrom:!copying!public! !
+defines:!public!testing! !
+directlyUses:!public!testing! !
+displayOn:!printing!public! !
+do:!enumerating!public! !
+equalTo:exceptForVariables:!comparing!public! !
+evaluatedFirst:!public!testing! !
+formattedCode!accessing!public! !
+formatterClass!accessing!public! !
+hashForCollection:!comparing!private! !
+intersectsInterval:!public!testing! !
+isAssignment!public!testing! !
+isBlock!public!testing! !
+isCascade!public!testing! !
+isDirectlyUsed!public!testing! !
+isDynamicArray!public!testing! !
+isEvaluatedFirst!public!testing! !
+isImmediateNode!public!testing! !
+isLast:!public!testing! !
+isList!public!testing/matching! !
+isLiteralArray!public!testing! !
+isLiteralNode!public!testing! !
+isMessage!public!testing! !
+isMethod!public!testing! !
+isPatternNode!public!testing/matching! !
+isQualifiedReference!public!testing! !
+isReturn!public!testing! !
+isSelfVariable!public!testing! !
+isSequence!public!testing! !
+isSpecialVariable!public!testing! !
+isSuperVariable!public!testing! !
+isUsed!public!testing! !
+isValue!public!testing! !
+isVariable!public!testing! !
+lastIsReturn!public!testing! !
+listCharacter!meta variable/accessing!public! !
+literalCharacter!meta variable/accessing!public! !
+methodComments!accessing!public! !
+methodNode!accessing!public! !
+newSource!accessing!public! !
+nodesDo:!iterating!public! !
+outer!public! !
+parent!accessing!public! !
+parent:!accessing!public! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+printOn:!printing!public! !
+recurseInto!public!testing/matching! !
+recurseIntoCharacter!meta variable/accessing!public! !
+scope!accessing!public! !
+scope:!accessing!public! !
+sentMessages!accessing!public! !
+size!enumerating!public! !
+source!accessing!public! !
+sourceInterval!accessing!public! !
+start!accessing!public! !
+startWithoutParentheses!accessing!public! !
+statementCharacter!meta variable/accessing!public! !
+statementComments!accessing!public! !
+statementNode!public!querying! !
+stop!accessing!public! !
+temporaryVariables!accessing!public! !
+uses:!public!testing! !
+whichNodeIsContainedBy:!public!querying! !
+whoDefines:!public!querying! !
+!
 
 !Kernel.StProgramNode class methodsFor!
 
@@ -516,10 +518,12 @@ inlinedBlockSelectors
 
 optimizedSelectors
 	^OptimizedSelectors! !
-!Kernel.StProgramNode class categoriesFor: #defaultFormatterClass!constants!public! !
-!Kernel.StProgramNode class categoriesFor: #formatterClass!accessing!public! !
-!Kernel.StProgramNode class categoriesFor: #formatterClass:!accessing!public! !
-!Kernel.StProgramNode class categoriesFor: #initialize!class initialization!development!public! !
-!Kernel.StProgramNode class categoriesFor: #inlinedBlockSelectors!constants!public! !
-!Kernel.StProgramNode class categoriesFor: #optimizedSelectors!constants!public! !
+!Kernel.StProgramNode class categoriesForMethods!
+defaultFormatterClass!constants!public! !
+formatterClass!accessing!public! !
+formatterClass:!accessing!public! !
+initialize!class initialization!development!public! !
+inlinedBlockSelectors!constants!public! !
+optimizedSelectors!constants!public! !
+!
 

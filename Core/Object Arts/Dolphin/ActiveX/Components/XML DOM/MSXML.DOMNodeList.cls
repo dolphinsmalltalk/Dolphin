@@ -99,21 +99,23 @@ xml
 	stream := String writeStream: 64.
 	self do: [:each | stream nextPutAll: each xml].
 	^stream contents! !
-!MSXML.DOMNodeList categoriesFor: #add:!adding!public! !
-!MSXML.DOMNodeList categoriesFor: #at:!accessing!public! !
-!MSXML.DOMNodeList categoriesFor: #at:put:!accessing!public! !
-!MSXML.DOMNodeList categoriesFor: #basicFree!private!realizing/unrealizing! !
-!MSXML.DOMNodeList categoriesFor: #copyingClass!copying!private! !
-!MSXML.DOMNodeList categoriesFor: #free!public!realizing/unrealizing! !
-!MSXML.DOMNodeList categoriesFor: #interface!accessing!private! !
-!MSXML.DOMNodeList categoriesFor: #interface:!accessing!private! !
-!MSXML.DOMNodeList categoriesFor: #item:!properties!public! !
-!MSXML.DOMNodeList categoriesFor: #length!properties!public! !
-!MSXML.DOMNodeList categoriesFor: #nextNode!methods!public! !
-!MSXML.DOMNodeList categoriesFor: #reset!methods!public! !
-!MSXML.DOMNodeList categoriesFor: #size!accessing!public! !
-!MSXML.DOMNodeList categoriesFor: #species!accessing!public! !
-!MSXML.DOMNodeList categoriesFor: #xml!accessing!public! !
+!MSXML.DOMNodeList categoriesForMethods!
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+copyingClass!copying!private! !
+free!public!realizing/unrealizing! !
+interface!accessing!private! !
+interface:!accessing!private! !
+item:!properties!public! !
+length!properties!public! !
+nextNode!methods!public! !
+reset!methods!public! !
+size!accessing!public! !
+species!accessing!public! !
+xml!accessing!public! !
+!
 
 !MSXML.DOMNodeList class methodsFor!
 
@@ -125,5 +127,7 @@ on: anIXMLDOMNodeList
 		interface: anIXMLDOMNodeList
 
 	! !
-!MSXML.DOMNodeList class categoriesFor: #on:!instance creation!public! !
+!MSXML.DOMNodeList class categoriesForMethods!
+on:!instance creation!public! !
+!
 

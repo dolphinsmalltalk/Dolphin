@@ -50,10 +50,12 @@ BufferSize: anInteger
 	"Set the receiver's 'BufferSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_BufferSize put: anInteger! !
-!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #Buffer!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #Buffer:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize!**compiled accessors**!private! !
-!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W categoriesForMethods!
+Buffer!**compiled accessors**!public! !
+Buffer:!**compiled accessors**!public! !
+BufferSize!**compiled accessors**!private! !
+BufferSize:!**compiled accessors**!private! !
+!
 
 !WinHttpServer.HTTP_SERVICE_BINDING_W class methodsFor!
 
@@ -78,6 +80,8 @@ defineFields
 
 getFieldNames
 	^#(#Type #Buffer #BufferSize)! !
-!WinHttpServer.HTTP_SERVICE_BINDING_W class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_BINDING_W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_BINDING_W class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

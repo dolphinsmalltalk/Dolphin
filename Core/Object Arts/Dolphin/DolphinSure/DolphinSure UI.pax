@@ -109,9 +109,11 @@ show
 	"Shows the receiver as a splash screen"
 
 	(UI.Splash bitmap: self image) show	! !
-!Security.DolphinSureCertificate categoriesFor: #image!drawing!public! !
-!Security.DolphinSureCertificate categoriesFor: #imagePrint:on:labelBox:textBox:!drawing!helpers!private! !
-!Security.DolphinSureCertificate categoriesFor: #show!operations!public! !
+!Security.DolphinSureCertificate categoriesForMethods!
+image!drawing!public! !
+imagePrint:on:labelBox:textBox:!drawing!helpers!private! !
+show!operations!public! !
+!
 
 "End of package definition"!
 

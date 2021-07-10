@@ -299,30 +299,32 @@ versionString
 	(typically N.N Build N, but see #versionFormatString)."
 
 	^self versionInfo formatVersionString: self versionFormatString! !
-!External.DynamicLinkLibrary categoriesFor: #asParameter!converting!public! !
-!External.DynamicLinkLibrary categoriesFor: #basicOpen:!private!realizing/unrealizing! !
-!External.DynamicLinkLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!External.DynamicLinkLibrary categoriesFor: #fileName!accessing!public! !
-!External.DynamicLinkLibrary categoriesFor: #formatMessage:with:!accessing!public! !
-!External.DynamicLinkLibrary categoriesFor: #getProcAddress:!accessing!private! !
-!External.DynamicLinkLibrary categoriesFor: #getProcAddress:ifAbsent:!accessing!private! !
-!External.DynamicLinkLibrary categoriesFor: #handle!accessing!private! !
-!External.DynamicLinkLibrary categoriesFor: #handle:!accessing!private! !
-!External.DynamicLinkLibrary categoriesFor: #invalidArgErrorClass!constants!private! !
-!External.DynamicLinkLibrary categoriesFor: #invalidCall:!exceptions!public! !
-!External.DynamicLinkLibrary categoriesFor: #isOpen!public!testing! !
-!External.DynamicLinkLibrary categoriesFor: #loadFlags!constants!private! !
-!External.DynamicLinkLibrary categoriesFor: #loadString:!accessing!public! !
-!External.DynamicLinkLibrary categoriesFor: #moduleFileName!accessing!private! !
-!External.DynamicLinkLibrary categoriesFor: #open!private!realizing/unrealizing! !
-!External.DynamicLinkLibrary categoriesFor: #open:!private!realizing/unrealizing! !
-!External.DynamicLinkLibrary categoriesFor: #printOn:!printing!public! !
-!External.DynamicLinkLibrary categoriesFor: #stbSaveOn:!binary filing!public! !
-!External.DynamicLinkLibrary categoriesFor: #systemError!exceptions!public! !
-!External.DynamicLinkLibrary categoriesFor: #systemError:!exceptions!public! !
-!External.DynamicLinkLibrary categoriesFor: #versionFormatString!constants!private! !
-!External.DynamicLinkLibrary categoriesFor: #versionInfo!accessing-version!public! !
-!External.DynamicLinkLibrary categoriesFor: #versionString!accessing-version!public! !
+!External.DynamicLinkLibrary categoriesForMethods!
+asParameter!converting!public! !
+basicOpen:!private!realizing/unrealizing! !
+close!public!realizing/unrealizing! !
+fileName!accessing!public! !
+formatMessage:with:!accessing!public! !
+getProcAddress:!accessing!private! !
+getProcAddress:ifAbsent:!accessing!private! !
+handle!accessing!private! !
+handle:!accessing!private! !
+invalidArgErrorClass!constants!private! !
+invalidCall:!exceptions!public! !
+isOpen!public!testing! !
+loadFlags!constants!private! !
+loadString:!accessing!public! !
+moduleFileName!accessing!private! !
+open!private!realizing/unrealizing! !
+open:!private!realizing/unrealizing! !
+printOn:!printing!public! !
+stbSaveOn:!binary filing!public! !
+systemError!exceptions!public! !
+systemError:!exceptions!public! !
+versionFormatString!constants!private! !
+versionInfo!accessing-version!public! !
+versionString!accessing-version!public! !
+!
 
 !External.DynamicLinkLibrary class methodsFor!
 
@@ -500,28 +502,30 @@ versionInfo
 	"Answer a <VersionInfo> containing the version details from the receiver."
 
 	^VersionInfo forPath: self fileName! !
-!External.DynamicLinkLibrary class categoriesFor: #clear!initializing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #closeAllDefaults!finalizing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!External.DynamicLinkLibrary class categoriesFor: #default!accessing!instance creation!public! !
-!External.DynamicLinkLibrary class categoriesFor: #default:!accessing!public! !
-!External.DynamicLinkLibrary class categoriesFor: #fileName!constants!public! !
-!External.DynamicLinkLibrary class categoriesFor: #fromHandle:!instance creation!public! !
-!External.DynamicLinkLibrary class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #initializeSubclasses!initializing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #load:flags:!private!realizing/unrealizing! !
-!External.DynamicLinkLibrary class categoriesFor: #moduleFileName:!helpers!private! !
-!External.DynamicLinkLibrary class categoriesFor: #onExit!finalizing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #onStartup!event handling!private! !
-!External.DynamicLinkLibrary class categoriesFor: #onStartup2!event handling!private! !
-!External.DynamicLinkLibrary class categoriesFor: #open!instance creation!public! !
-!External.DynamicLinkLibrary class categoriesFor: #open:!instance creation!public! !
-!External.DynamicLinkLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
-!External.DynamicLinkLibrary class categoriesFor: #setDefault:!initializing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #sharedVariableName!constants!private! !
-!External.DynamicLinkLibrary class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!External.DynamicLinkLibrary class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!External.DynamicLinkLibrary class categoriesFor: #versionInfo!accessing-version!public! !
+!External.DynamicLinkLibrary class categoriesForMethods!
+clear!initializing!private! !
+closeAllDefaults!finalizing!private! !
+closeDefault!private!realizing/unrealizing! !
+default!accessing!instance creation!public! !
+default:!accessing!public! !
+fileName!constants!public! !
+fromHandle:!instance creation!public! !
+initializeAfterBinaryLoad!initializing!private! !
+initializeSubclasses!initializing!private! !
+load:flags:!private!realizing/unrealizing! !
+moduleFileName:!helpers!private! !
+onExit!finalizing!private! !
+onPreStripImage!class hierarchy-removing!private! !
+onStartup!event handling!private! !
+onStartup2!event handling!private! !
+open!instance creation!public! !
+open:!instance creation!public! !
+openDefault!instance creation!private!realizing/unrealizing! !
+setDefault:!initializing!private! !
+sharedVariableName!constants!private! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+versionInfo!accessing-version!public! !
+!
 

@@ -61,9 +61,11 @@ PutParent: pReader
 
 	<virtual stdcall: hresult 23 ISAXXMLReader*>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXXMLFilter categoriesFor: #getParent!**auto generated**!methods!public! !
-!MSXML.ISAXXMLFilter categoriesFor: #GetParent:!**auto generated**!COM Interfaces-ISAXXMLFilter!private! !
-!MSXML.ISAXXMLFilter categoriesFor: #PutParent:!**auto generated**!COM Interfaces-ISAXXMLFilter!public! !
+!MSXML.ISAXXMLFilter categoriesForMethods!
+getParent!**auto generated**!methods!public! !
+GetParent:!**auto generated**!COM Interfaces-ISAXXMLFilter!private! !
+PutParent:!**auto generated**!COM Interfaces-ISAXXMLFilter!public! !
+!
 
 !MSXML.ISAXXMLFilter class methodsFor!
 
@@ -77,5 +79,7 @@ defineFunctions
 		defineFunction: #PutParent:
 			argumentTypes: 'ISAXXMLReader*'
 ! !
-!MSXML.ISAXXMLFilter class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXXMLFilter class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

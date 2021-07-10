@@ -169,33 +169,35 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self subclassResponsibility! !
-!UI.MenuItem categoriesFor: #acceleratorKey!accessing!public! !
-!UI.MenuItem categoriesFor: #acceleratorKey:!accessing!private! !
-!UI.MenuItem categoriesFor: #allItems!accessing!public! !
-!UI.MenuItem categoriesFor: #command!commands!public! !
-!UI.MenuItem categoriesFor: #commandDescription!accessing!private! !
-!UI.MenuItem categoriesFor: #edit!accessing!operations!private! !
-!UI.MenuItem categoriesFor: #flags!accessing!private! !
-!UI.MenuItem categoriesFor: #flags:!accessing!private! !
-!UI.MenuItem categoriesFor: #hasSubmenu!menus!private! !
-!UI.MenuItem categoriesFor: #id!accessing!private! !
-!UI.MenuItem categoriesFor: #image!accessing!public! !
-!UI.MenuItem categoriesFor: #insertIntoMenu:at:info:!public!realizing/unrealizing! !
-!UI.MenuItem categoriesFor: #isDefault!public!testing! !
-!UI.MenuItem categoriesFor: #isDefault:!accessing!public! !
-!UI.MenuItem categoriesFor: #isDivider!public!testing! !
-!UI.MenuItem categoriesFor: #items!accessing!public! !
-!UI.MenuItem categoriesFor: #itemsDo:!accessing!private! !
-!UI.MenuItem categoriesFor: #itemWithId:!accessing!public! !
-!UI.MenuItem categoriesFor: #menuFromHandle:!accessing!public! !
-!UI.MenuItem categoriesFor: #name!public! !
-!UI.MenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!UI.MenuItem categoriesFor: #printOn:!printing!public! !
-!UI.MenuItem categoriesFor: #queryAlong:!operations!public! !
-!UI.MenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
-!UI.MenuItem categoriesFor: #styleFlags!accessing!private! !
-!UI.MenuItem categoriesFor: #styleFlags:!accessing!not an aspect!private! !
-!UI.MenuItem categoriesFor: #text!accessing!public! !
+!UI.MenuItem categoriesForMethods!
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!private! !
+allItems!accessing!public! !
+command!commands!public! !
+commandDescription!accessing!private! !
+edit!accessing!operations!private! !
+flags!accessing!private! !
+flags:!accessing!private! !
+hasSubmenu!menus!private! !
+id!accessing!private! !
+image!accessing!public! !
+insertIntoMenu:at:info:!public!realizing/unrealizing! !
+isDefault!public!testing! !
+isDefault:!accessing!public! !
+isDivider!public!testing! !
+items!accessing!public! !
+itemsDo:!accessing!private! !
+itemWithId:!accessing!public! !
+menuFromHandle:!accessing!public! !
+name!public! !
+populateItemInfo:!private!realizing/unrealizing! !
+printOn:!printing!public! !
+queryAlong:!operations!public! !
+registerAcceleratorKeyIn:!menus!public! !
+styleFlags!accessing!private! !
+styleFlags:!accessing!not an aspect!private! !
+text!accessing!public! !
+!
 
 UI.MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
@@ -270,10 +272,12 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!UI.MenuItem class categoriesFor: #errorIllegalMenuString:!exceptions!private! !
-!UI.MenuItem class categoriesFor: #fromString:!instance creation!public! !
-!UI.MenuItem class categoriesFor: #initialize!development!initializing!private! !
-!UI.MenuItem class categoriesFor: #new!instance creation!private! !
-!UI.MenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.MenuItem class categoriesFor: #stbVersion!binary filing!public! !
+!UI.MenuItem class categoriesForMethods!
+errorIllegalMenuString:!exceptions!private! !
+fromString:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

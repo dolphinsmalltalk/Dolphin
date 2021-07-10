@@ -467,7 +467,9 @@ copyToCOMTaskMemory
 		to: size
 		with: self
 		startingAt: 1! !
-!Core.ByteArray categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!Core.ByteArray categoriesForMethods!
+copyToCOMTaskMemory!copying!public! !
+!
 
 !Core.SessionManager methodsFor!
 
@@ -481,7 +483,9 @@ comStartup
 	COM.IUnknown onStartup.
 	"Attach the outer unknown passed by the stub, if any"
 	self outer notNull ifTrue: [startupArgs at: 2 put: (COM.IUnknown attach: self outer)]! !
-!Core.SessionManager categoriesFor: #comStartup!operations-startup!private! !
+!Core.SessionManager categoriesForMethods!
+comStartup!operations-startup!private! !
+!
 
 !Core.String methodsFor!
 
@@ -496,8 +500,10 @@ copyToCOMTaskMemory
 	characters."
 
 	^OS.COM.TaskMemory fromString: self! !
-!Core.String categoriesFor: #asBSTR!converting!public! !
-!Core.String categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!Core.String categoriesForMethods!
+asBSTR!converting!public! !
+copyToCOMTaskMemory!copying!public! !
+!
 
 !External.Memory class methodsFor!
 
@@ -512,7 +518,9 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	^interfaceClass == COM.IMalloc
 		ifTrue: [interfaceClass on: self]
 		ifFalse: [exceptionHandler value]! !
-!External.Memory class categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+!External.Memory class categoriesForMethods!
+queryInterface:ifNone:!accessing-interfaces!public! !
+!
 
 !External.Structure methodsFor!
 
@@ -524,7 +532,9 @@ copyToCOMTaskMemory
 		copy: COM.TaskMemory
 		from: 1
 		to: self byteSize! !
-!External.Structure categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!External.Structure categoriesForMethods!
+copyToCOMTaskMemory!copying!public! !
+!
 
 !Kernel.ProcessorScheduler methodsFor!
 
@@ -555,9 +565,11 @@ unregisterCOMStub: cookie
 
 	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
 	comStubs removeAtIndex: cookie! !
-!Kernel.ProcessorScheduler categoriesFor: #comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
-!Kernel.ProcessorScheduler categoriesFor: #registerCOMStub:!accessing!private! !
-!Kernel.ProcessorScheduler categoriesFor: #unregisterCOMStub:!callbacks!private! !
+!Kernel.ProcessorScheduler categoriesForMethods!
+comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
+registerCOMStub:!accessing!private! !
+unregisterCOMStub:!callbacks!private! !
+!
 
 "End of package definition"!
 

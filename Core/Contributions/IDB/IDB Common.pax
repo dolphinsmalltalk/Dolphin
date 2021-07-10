@@ -75,7 +75,9 @@ idbDefaultIconName
 		composePath: SessionManager current idbResourcesFolder
 		stem: self name
 		extension: 'ico'! !
-!ClassDescription categoriesFor: #idbDefaultIconName!constants!idb goodies!public! !
+!ClassDescription categoriesForMethods!
+idbDefaultIconName!constants!idb goodies!public! !
+!
 
 !SessionManager methodsFor!
 
@@ -96,9 +98,11 @@ idbResourcesFolder
 
 	#idbAdded.
 	^FileLocator imageRelative localFileSpecFor: 'Core\Contributions\Idb\Resources'! !
-!SessionManager categoriesFor: #idbDocumentationFolder!accessing!idb goodies!public! !
-!SessionManager categoriesFor: #idbPackageFolder!accessing!idb goodies!public! !
-!SessionManager categoriesFor: #idbResourcesFolder!accessing!idb goodies!public! !
+!SessionManager categoriesForMethods!
+idbDocumentationFolder!accessing!idb goodies!public! !
+idbPackageFolder!accessing!idb goodies!public! !
+idbResourcesFolder!accessing!idb goodies!public! !
+!
 
 "End of package definition"!
 

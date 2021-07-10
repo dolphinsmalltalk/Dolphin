@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.ListControlTest subclass: #'UI.Tests.ListViewTest'
 	instanceVariableNames: 'nmClick'
@@ -371,30 +371,32 @@ verifyClicks: anArray
 
 verifyColumnWidths: widths
 	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]! !
-!UI.Tests.ListViewTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #forceColumnResize!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #getColumns!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #getItem:!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!constants!private! !
-!UI.Tests.ListViewTest categoriesFor: #newSelectionsFromEvent:!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #setColumns:!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #setupClickIntercept!private! !
-!UI.Tests.ListViewTest categoriesFor: #setUpForSelectionTesting!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #sortSelections!helpers!public! !
-!UI.Tests.ListViewTest categoriesFor: #test1071!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testAutoResizeColumns!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testAutoResizeColumnsPositionChangedAddingScrollbar!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testAutoResizeColumnsWithChangedBorderStyles!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testAutoResizeColumnsWithLargeNumberOfItems!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testBackImage!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testChangeViewMode!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testCheckBoxes!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testColumnsList!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testNilRow!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
-!UI.Tests.ListViewTest categoriesFor: #verifyClicks:!helpers!private! !
-!UI.Tests.ListViewTest categoriesFor: #verifyColumnWidths:!helpers!private! !
+!UI.Tests.ListViewTest categoriesForMethods!
+classToTest!helpers!private! !
+forceColumnResize!helpers!private! !
+getColumns!helpers!private! !
+getItem:!helpers!private! !
+newSelectionAfterLeftClickOutsideList:!constants!private! !
+newSelectionsFromEvent:!helpers!private! !
+setColumns:!helpers!private! !
+setupClickIntercept!private! !
+setUpForSelectionTesting!helpers!private! !
+sortSelections!helpers!public! !
+test1071!public!unit tests! !
+testAutoResizeColumns!public!unit tests! !
+testAutoResizeColumnsPositionChangedAddingScrollbar!public!unit tests! !
+testAutoResizeColumnsWithChangedBorderStyles!public!unit tests! !
+testAutoResizeColumnsWithLargeNumberOfItems!public!unit tests! !
+testBackImage!public!unit tests! !
+testChangeViewMode!public!unit tests! !
+testCheckBoxes!public!unit tests! !
+testColumnsList!public!unit tests! !
+testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
+testNilRow!public!unit tests! !
+testSelectionRemainsVisibleOnSort!public!unit tests! !
+testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+testSetTextImageDoesNotAffectSelection!public!unit tests! !
+verifyClicks:!helpers!private! !
+verifyColumnWidths:!helpers!private! !
+!
 

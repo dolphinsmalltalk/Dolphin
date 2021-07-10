@@ -63,10 +63,12 @@ s_addr: anInteger
 	"Set the receiver's 's_addr' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_s_addr put: anInteger! !
-!OS.IN_ADDR categoriesFor: #address!accessing!public! !
-!OS.IN_ADDR categoriesFor: #address:!accessing!public! !
-!OS.IN_ADDR categoriesFor: #s_addr!**compiled accessors**!public! !
-!OS.IN_ADDR categoriesFor: #s_addr:!**compiled accessors**!public! !
+!OS.IN_ADDR categoriesForMethods!
+address!accessing!public! !
+address:!accessing!public! !
+s_addr!**compiled accessors**!public! !
+s_addr:!**compiled accessors**!public! !
+!
 
 !OS.IN_ADDR class methodsFor!
 
@@ -113,8 +115,10 @@ defineFields
 
 getFieldNames
 	^#(#s_addr)! !
-!OS.IN_ADDR class categoriesFor: #address:!instance creation!public! !
-!OS.IN_ADDR class categoriesFor: #addressFamily!constants!public! !
-!OS.IN_ADDR class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.IN_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IN_ADDR class categoriesForMethods!
+address:!instance creation!public! !
+addressFamily!constants!public! !
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -38,10 +38,12 @@ printOn: aStream
 				basicPrint: self;
 				nextPutAll: ' for ';
 				print: block]! !
-!Kernel.Context categoriesFor: #block!accessing!private! !
-!Kernel.Context categoriesFor: #frameClass!constants!public! !
-!Kernel.Context categoriesFor: #home!accessing!public! !
-!Kernel.Context categoriesFor: #outer!accessing!private! !
-!Kernel.Context categoriesFor: #outer:!accessing!private! !
-!Kernel.Context categoriesFor: #printOn:!printing!public! !
+!Kernel.Context categoriesForMethods!
+block!accessing!private! !
+frameClass!constants!public! !
+home!accessing!public! !
+outer!accessing!private! !
+outer:!accessing!private! !
+printOn:!printing!public! !
+!
 

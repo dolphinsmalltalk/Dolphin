@@ -289,11 +289,13 @@ secureFileItIn: aString
 	a warning is given to see if the user wished to continue with the file in."
 
 	self secureFileInFrom: aString readStream! !
-!Kernel.SourceManager categoriesFor: #emitSecureChunk:description:publisherCertificate:privateKey:on:!private!source filing! !
-!Kernel.SourceManager categoriesFor: #secureChunkMarker!constants!private! !
-!Kernel.SourceManager categoriesFor: #secureFileIn:!public!source filing! !
-!Kernel.SourceManager categoriesFor: #secureFileInFrom:!private!source filing! !
-!Kernel.SourceManager categoriesFor: #secureFileItIn:!public!source filing! !
+!Kernel.SourceManager categoriesForMethods!
+emitSecureChunk:description:publisherCertificate:privateKey:on:!private!source filing! !
+secureChunkMarker!constants!private! !
+secureFileIn:!public!source filing! !
+secureFileInFrom:!private!source filing! !
+secureFileItIn:!public!source filing! !
+!
 
 "End of package definition"!
 

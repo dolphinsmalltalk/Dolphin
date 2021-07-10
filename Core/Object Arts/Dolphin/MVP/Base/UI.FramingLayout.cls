@@ -109,13 +109,15 @@ resolutionScaledBy: aPoint
 	scale."
 
 	framings do: [:each | each resolutionScaledBy: aPoint]! !
-!UI.FramingLayout categoriesFor: #arrangementOf:!accessing!public! !
-!UI.FramingLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!UI.FramingLayout categoriesFor: #initialize!initializing!private! !
-!UI.FramingLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!UI.FramingLayout categoriesFor: #newConstraintFor:!helpers!private! !
-!UI.FramingLayout categoriesFor: #removeSubView:!public!removing! !
-!UI.FramingLayout categoriesFor: #reposition:to:!geometry!private! !
-!UI.FramingLayout categoriesFor: #resize:to:!geometry!public! !
-!UI.FramingLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!UI.FramingLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+newConstraintFor:!helpers!private! !
+removeSubView:!public!removing! !
+reposition:to:!geometry!private! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+!
 

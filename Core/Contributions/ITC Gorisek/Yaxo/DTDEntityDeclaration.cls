@@ -56,19 +56,21 @@ value: aString
 
 valueForContext: aContext
 	^self perform: (self class behaviorForContext: aContext)! !
-!DTDEntityDeclaration categoriesFor: #bypass!behaviors!public! !
-!DTDEntityDeclaration categoriesFor: #forbidden!behaviors!public! !
-!DTDEntityDeclaration categoriesFor: #include!behaviors!public! !
-!DTDEntityDeclaration categoriesFor: #includedInLiteral!behaviors!public! !
-!DTDEntityDeclaration categoriesFor: #name!accessing!public! !
-!DTDEntityDeclaration categoriesFor: #name:!accessing!public! !
-!DTDEntityDeclaration categoriesFor: #ndata!accessing!public! !
-!DTDEntityDeclaration categoriesFor: #ndata:!accessing!public! !
-!DTDEntityDeclaration categoriesFor: #reference!behaviors!public! !
-!DTDEntityDeclaration categoriesFor: #registerIn:!invocation!public! !
-!DTDEntityDeclaration categoriesFor: #value!accessing!public! !
-!DTDEntityDeclaration categoriesFor: #value:!accessing!public! !
-!DTDEntityDeclaration categoriesFor: #valueForContext:!invocation!public! !
+!DTDEntityDeclaration categoriesForMethods!
+bypass!behaviors!public! !
+forbidden!behaviors!public! !
+include!behaviors!public! !
+includedInLiteral!behaviors!public! !
+name!accessing!public! !
+name:!accessing!public! !
+ndata!accessing!public! !
+ndata:!accessing!public! !
+reference!behaviors!public! !
+registerIn:!invocation!public! !
+value!accessing!public! !
+value:!accessing!public! !
+valueForContext:!invocation!public! !
+!
 
 !DTDEntityDeclaration class methodsFor!
 
@@ -99,9 +101,11 @@ name: aString value: aValueString
 		name: aString;
 		value: aValueString;
 		yourself! !
-!DTDEntityDeclaration class categoriesFor: #behaviorForContext:!accessing!public! !
-!DTDEntityDeclaration class categoriesFor: #contextBehavior!accessing!public! !
-!DTDEntityDeclaration class categoriesFor: #initialize!class initialization!public! !
-!DTDEntityDeclaration class categoriesFor: #leadIn!accessing!public! !
-!DTDEntityDeclaration class categoriesFor: #name:value:!instance creation!public! !
+!DTDEntityDeclaration class categoriesForMethods!
+behaviorForContext:!accessing!public! !
+contextBehavior!accessing!public! !
+initialize!class initialization!public! !
+leadIn!accessing!public! !
+name:value:!instance creation!public! !
+!
 

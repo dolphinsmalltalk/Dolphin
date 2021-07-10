@@ -93,17 +93,19 @@ rightToLeft: anObject
 	Must be overridden by subclasses to perform specific conversions"
 
 	^self subclassResponsibility! !
-!UI.TypeConverter categoriesFor: #convertFromLeftToRight:!converting!public! !
-!UI.TypeConverter categoriesFor: #convertFromRightToLeft:!converting!public! !
-!UI.TypeConverter categoriesFor: #inverted!operations!public! !
-!UI.TypeConverter categoriesFor: #isLeftNullValue:!private!testing! !
-!UI.TypeConverter categoriesFor: #isRightNullValue:!private!testing! !
-!UI.TypeConverter categoriesFor: #leftNullValue!accessing!public! !
-!UI.TypeConverter categoriesFor: #leftNullValue:!accessing!public! !
-!UI.TypeConverter categoriesFor: #leftToRight:!operations!private! !
-!UI.TypeConverter categoriesFor: #rightNullValue!accessing!public! !
-!UI.TypeConverter categoriesFor: #rightNullValue:!accessing!public! !
-!UI.TypeConverter categoriesFor: #rightToLeft:!operations!private! !
+!UI.TypeConverter categoriesForMethods!
+convertFromLeftToRight:!converting!public! !
+convertFromRightToLeft:!converting!public! !
+inverted!operations!public! !
+isLeftNullValue:!private!testing! !
+isRightNullValue:!private!testing! !
+leftNullValue!accessing!public! !
+leftNullValue:!accessing!public! !
+leftToRight:!operations!private! !
+rightNullValue!accessing!public! !
+rightNullValue:!accessing!public! !
+rightToLeft:!operations!private! !
+!
 
 UI.TypeConverter methodProtocol: #typeConverter attributes: #(#readOnly) selectors: #(#convertFromLeftToRight: #convertFromRightToLeft: #inverted #leftNullValue #leftNullValue: #rightNullValue #rightNullValue:)!
 
@@ -118,6 +120,8 @@ new
 	"Answer a new instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
-!UI.TypeConverter class categoriesFor: #icon!constants!public! !
-!UI.TypeConverter class categoriesFor: #new!instance creation!public! !
+!UI.TypeConverter class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
 

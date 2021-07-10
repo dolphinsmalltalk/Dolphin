@@ -113,27 +113,31 @@ when: anAnnouncementClass send: aSelector to: anObject
     are passed as argument"
 
 	^ self subscribe: anAnnouncementClass send: aSelector to: anObject! !
-!Kernel.Announcer categoriesFor: #announce:!announce!public! !
-!Kernel.Announcer categoriesFor: #basicSubscribe:!private! !
-!Kernel.Announcer categoriesFor: #hasSubscriber:!public! !
-!Kernel.Announcer categoriesFor: #initialize!initialization!public! !
-!Kernel.Announcer categoriesFor: #numberOfSubscriptions!public!statistics! !
-!Kernel.Announcer categoriesFor: #on:do:!public! !
-!Kernel.Announcer categoriesFor: #on:send:to:!public! !
-!Kernel.Announcer categoriesFor: #removeSubscription:!public!subscription! !
-!Kernel.Announcer categoriesFor: #replace:with:!private! !
-!Kernel.Announcer categoriesFor: #subscribe:do:!public!subscription! !
-!Kernel.Announcer categoriesFor: #subscribe:send:to:!public!subscription! !
-!Kernel.Announcer categoriesFor: #subscriptions!public! !
-!Kernel.Announcer categoriesFor: #unsubscribe:!public!subscription! !
-!Kernel.Announcer categoriesFor: #weak!public!weak! !
-!Kernel.Announcer categoriesFor: #when:do:!convenience!public! !
-!Kernel.Announcer categoriesFor: #when:do:for:!convenience!public! !
-!Kernel.Announcer categoriesFor: #when:send:to:!convenience!public! !
+!Kernel.Announcer categoriesForMethods!
+announce:!announce!public! !
+basicSubscribe:!private! !
+hasSubscriber:!public! !
+initialize!initialization!public! !
+numberOfSubscriptions!public!statistics! !
+on:do:!public! !
+on:send:to:!public! !
+removeSubscription:!public!subscription! !
+replace:with:!private! !
+subscribe:do:!public!subscription! !
+subscribe:send:to:!public!subscription! !
+subscriptions!public! !
+unsubscribe:!public!subscription! !
+weak!public!weak! !
+when:do:!convenience!public! !
+when:do:for:!convenience!public! !
+when:send:to:!convenience!public! !
+!
 
 !Kernel.Announcer class methodsFor!
 
 new	
 	^super new initialize! !
-!Kernel.Announcer class categoriesFor: #new!public! !
+!Kernel.Announcer class categoriesForMethods!
+new!public! !
+!
 

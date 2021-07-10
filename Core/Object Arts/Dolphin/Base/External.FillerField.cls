@@ -48,13 +48,15 @@ writeInto: anExternal value: anObject
 	appropriate format for the receiver"
 
 	^self shouldNotImplement! !
-!External.FillerField categoriesFor: #alignment!constants!public! !
-!External.FillerField categoriesFor: #byteSize!accessing!private! !
-!External.FillerField categoriesFor: #byteSize:!accessing!private! !
-!External.FillerField categoriesFor: #canGenerateAccessors!private!testing! !
-!External.FillerField categoriesFor: #initialize!initializing!private! !
-!External.FillerField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.FillerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.FillerField categoriesForMethods!
+alignment!constants!public! !
+byteSize!accessing!private! !
+byteSize:!accessing!private! !
+canGenerateAccessors!private!testing! !
+initialize!initializing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.FillerField class methodsFor!
 
@@ -62,5 +64,7 @@ byteSize: anInteger
 	"Answer a FillerField of the specified number of bytes"
 
 	^(self new) byteSize: anInteger; yourself! !
-!External.FillerField class categoriesFor: #byteSize:!instance creation!public! !
+!External.FillerField class categoriesForMethods!
+byteSize:!instance creation!public! !
+!
 

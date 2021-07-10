@@ -49,10 +49,12 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!MSXML.IXMLDOMImplementation categoriesFor: #hasFeature:version:!methods!public! !
-!MSXML.IXMLDOMImplementation categoriesFor: #HasFeature:version:hasFeature:!**auto generated**!COM Interfaces-IXMLDOMImplementation!private! !
-!MSXML.IXMLDOMImplementation categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IXMLDOMImplementation categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IXMLDOMImplementation categoriesForMethods!
+hasFeature:version:!methods!public! !
+HasFeature:version:hasFeature:!**auto generated**!COM Interfaces-IXMLDOMImplementation!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !MSXML.IXMLDOMImplementation class methodsFor!
 
@@ -64,5 +66,7 @@ defineFunctions
 		defineFunction: #HasFeature:version:hasFeature:
 			argumentTypes: 'bstr bstr varbool*'
 ! !
-!MSXML.IXMLDOMImplementation class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMImplementation class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

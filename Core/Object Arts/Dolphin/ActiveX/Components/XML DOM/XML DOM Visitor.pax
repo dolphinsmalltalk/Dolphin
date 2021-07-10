@@ -49,73 +49,97 @@ Core.Object subclass: #'MSXML.XmlDomVisitor'
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitAttribute: self! !
-!MSXML.IXMLDOMAttribute categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMAttribute categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMCDATASection methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitCDATA: self! !
-!MSXML.IXMLDOMCDATASection categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMCDATASection categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMComment methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitComment: self! !
-!MSXML.IXMLDOMComment categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMComment categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMDocument methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocument: self! !
-!MSXML.IXMLDOMDocument categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMDocument categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMDocumentType methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocumentType: self! !
-!MSXML.IXMLDOMDocumentType categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMDocumentType categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMElement methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitElement: self! !
-!MSXML.IXMLDOMElement categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMElement categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMEntity methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntity: self! !
-!MSXML.IXMLDOMEntity categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMEntity categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMEntityReference methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntityReference: self! !
-!MSXML.IXMLDOMEntityReference categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMEntityReference categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMNode methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDomNode: self! !
-!MSXML.IXMLDOMNode categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMNotation methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitNotation: self! !
-!MSXML.IXMLDOMNotation categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMNotation categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMProcessingInstruction methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitProcessingInstruction: self! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMProcessingInstruction categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !MSXML.IXMLDOMText methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitText: self! !
-!MSXML.IXMLDOMText categoriesFor: #acceptVisitor:!public!visitor! !
+!MSXML.IXMLDOMText categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 "End of package definition"!
 

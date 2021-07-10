@@ -66,23 +66,27 @@ value
 
 valueClass
 	^BindingReference! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #isMeta!public!testing! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #isMeta:!accessing!public!testing! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #isPrivate!public!testing! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #isPrivate:!accessing!public!testing! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #isQualifiedReference!public!testing! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #pathString!accessing!public! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #pathString:start:!initializing!private! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #stop:!accessing!public! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #value!accessing!public! !
-!Kernel.StQualifiedReferenceNode categoriesFor: #valueClass!accessing!public! !
+!Kernel.StQualifiedReferenceNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isMeta!public!testing! !
+isMeta:!accessing!public!testing! !
+isPrivate!public!testing! !
+isPrivate:!accessing!public!testing! !
+isQualifiedReference!public!testing! !
+pathString!accessing!public! !
+pathString:start:!initializing!private! !
+startWithoutParentheses!accessing!public! !
+stop:!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+value!accessing!public! !
+valueClass!accessing!public! !
+!
 
 !Kernel.StQualifiedReferenceNode class methodsFor!
 
 pathString: aString start: startInteger
 	^self new pathString: aString start: startInteger! !
-!Kernel.StQualifiedReferenceNode class categoriesFor: #pathString:start:!instance creation!public! !
+!Kernel.StQualifiedReferenceNode class categoriesForMethods!
+pathString:start:!instance creation!public! !
+!
 

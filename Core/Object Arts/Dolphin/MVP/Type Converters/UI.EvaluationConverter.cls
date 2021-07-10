@@ -21,6 +21,8 @@ rightToLeft: anObject
 	"Private - Answers the #storeString of anObject, which can often be converted back to an equal object by evaluating it."
 
 	^anObject storeString! !
-!UI.EvaluationConverter categoriesFor: #leftToRight:!operations!private! !
-!UI.EvaluationConverter categoriesFor: #rightToLeft:!operations!private! !
+!UI.EvaluationConverter categoriesForMethods!
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 

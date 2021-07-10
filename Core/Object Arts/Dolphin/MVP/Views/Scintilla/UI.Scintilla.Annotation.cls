@@ -43,13 +43,15 @@ text
 	"Answer the text  of the annotation."
 
 	^text! !
-!UI.Scintilla.Annotation categoriesFor: #=!comparing!public! !
-!UI.Scintilla.Annotation categoriesFor: #hash!comparing!public! !
-!UI.Scintilla.Annotation categoriesFor: #line!public! !
-!UI.Scintilla.Annotation categoriesFor: #printOn:!printing!public! !
-!UI.Scintilla.Annotation categoriesFor: #setLine:text:styles:!initializing!private! !
-!UI.Scintilla.Annotation categoriesFor: #styles!accessing!public! !
-!UI.Scintilla.Annotation categoriesFor: #text!accessing!public! !
+!UI.Scintilla.Annotation categoriesForMethods!
+=!comparing!public! !
+hash!comparing!public! !
+line!public! !
+printOn:!printing!public! !
+setLine:text:styles:!initializing!private! !
+styles!accessing!public! !
+text!accessing!public! !
+!
 
 !UI.Scintilla.Annotation class methodsFor!
 
@@ -68,7 +70,9 @@ line: anInteger text: aString styles: aSequencedReadableCollectionOfSymbol
 			text: aString
 			styles: aSequencedReadableCollectionOfSymbol;
 		yourself! !
-!UI.Scintilla.Annotation class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.Annotation class categoriesFor: #line:text:style:!public! !
-!UI.Scintilla.Annotation class categoriesFor: #line:text:styles:!initializing!private! !
+!UI.Scintilla.Annotation class categoriesForMethods!
+icon!constants!development!public! !
+line:text:style:!public! !
+line:text:styles:!initializing!private! !
+!
 

@@ -85,15 +85,17 @@ queryCommand: aCommandQuery
 			[aCommandQuery isEnabled: imageModel value notNil.
 			^true].
 	^super queryCommand: aCommandQuery ! !
-!Tools.MenuItemDialog categoriesFor: #chooseIcon!commands!private! !
-!Tools.MenuItemDialog categoriesFor: #clearIcon!commands!private! !
-!Tools.MenuItemDialog categoriesFor: #createComponents!public! !
-!Tools.MenuItemDialog categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.MenuItemDialog categoriesFor: #model:!public! !
-!Tools.MenuItemDialog categoriesFor: #onCardChanged!event handling!private! !
-!Tools.MenuItemDialog categoriesFor: #onInspecteeChanged!event handling!private! !
-!Tools.MenuItemDialog categoriesFor: #onViewOpened!event handling!public! !
-!Tools.MenuItemDialog categoriesFor: #queryCommand:!public! !
+!Tools.MenuItemDialog categoriesForMethods!
+chooseIcon!commands!private! !
+clearIcon!commands!private! !
+createComponents!public! !
+createSchematicWiring!initializing!public! !
+model:!public! !
+onCardChanged!event handling!private! !
+onInspecteeChanged!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!public! !
+!
 
 !Tools.MenuItemDialog class methodsFor!
 
@@ -102,5 +104,7 @@ icon
 
 	^Menu icon
 ! !
-!Tools.MenuItemDialog class categoriesFor: #icon!constants!public! !
+!Tools.MenuItemDialog class categoriesForMethods!
+icon!constants!public! !
+!
 

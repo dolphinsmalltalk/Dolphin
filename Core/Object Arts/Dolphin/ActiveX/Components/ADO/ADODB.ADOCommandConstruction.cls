@@ -46,10 +46,12 @@ put_OLEDBCommand: ppOLEDBCommand
 
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode! !
-!ADODB.ADOCommandConstruction categoriesFor: #get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
-!ADODB.ADOCommandConstruction categoriesFor: #oledbCommand!**auto generated**!properties!public! !
-!ADODB.ADOCommandConstruction categoriesFor: #oledbCommand:!**auto generated**!properties!public! !
-!ADODB.ADOCommandConstruction categoriesFor: #put_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+!ADODB.ADOCommandConstruction categoriesForMethods!
+get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+oledbCommand!**auto generated**!properties!public! !
+oledbCommand:!**auto generated**!properties!public! !
+put_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+!
 
 !ADODB.ADOCommandConstruction class methodsFor!
 
@@ -63,5 +65,7 @@ defineFunctions
 		defineFunction: #put_OLEDBCommand:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODB.ADOCommandConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.ADOCommandConstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

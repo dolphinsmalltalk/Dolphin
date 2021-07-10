@@ -204,17 +204,19 @@ totalProportionsOf: viewCollection
 	^viewCollection inject: 0 into: [:total :aView |
 			total + (self arrangementOf: aView)].
 ! !
-!UI.ProportionalLayout categoriesFor: #arrangementOf:!accessing!public! !
-!UI.ProportionalLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!UI.ProportionalLayout categoriesFor: #hasFixedSize:!private!testing! !
-!UI.ProportionalLayout categoriesFor: #hideShowSplitters:context:!helpers!private! !
-!UI.ProportionalLayout categoriesFor: #initialize!initializing!private! !
-!UI.ProportionalLayout categoriesFor: #isVertical!public!testing! !
-!UI.ProportionalLayout categoriesFor: #isVertical:!accessing!public! !
-!UI.ProportionalLayout categoriesFor: #layoutContainer:context:!helpers!private! !
-!UI.ProportionalLayout categoriesFor: #nearestResizableViewFrom:inViews:by:!helpers!private! !
-!UI.ProportionalLayout categoriesFor: #proportions!accessing!private! !
-!UI.ProportionalLayout categoriesFor: #removeSubView:!public!removing! !
-!UI.ProportionalLayout categoriesFor: #reposition:to:!operations!private! !
-!UI.ProportionalLayout categoriesFor: #totalProportionsOf:!helpers!private! !
+!UI.ProportionalLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+hasFixedSize:!private!testing! !
+hideShowSplitters:context:!helpers!private! !
+initialize!initializing!private! !
+isVertical!public!testing! !
+isVertical:!accessing!public! !
+layoutContainer:context:!helpers!private! !
+nearestResizableViewFrom:inViews:by:!helpers!private! !
+proportions!accessing!private! !
+removeSubView:!public!removing! !
+reposition:to:!operations!private! !
+totalProportionsOf:!helpers!private! !
+!
 

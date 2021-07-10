@@ -516,57 +516,59 @@ toTrace: anInteger
 		cr.
 	self raisingFrame printStackOn: traceStream depth: anInteger.
 	traceStream flush! !
-!Core.Exception categoriesFor: #_descriptionArguments!displaying!public! !
-!Core.Exception categoriesFor: #_descriptionFormat!displaying!public! !
-!Core.Exception categoriesFor: #_evaluateHandler:in:!debugger-step through!handling!private! !
-!Core.Exception categoriesFor: #_propagate!debugger-step through!handling!private! !
-!Core.Exception categoriesFor: #_propagateFrom:!debugger-step through!handling!private! !
-!Core.Exception categoriesFor: #abort!handler responses!public! !
-!Core.Exception categoriesFor: #abortRetryIgnore!handler responses!public! !
-!Core.Exception categoriesFor: #abortRetryOrIgnore!handling!public! !
-!Core.Exception categoriesFor: #beep!parping!public! !
-!Core.Exception categoriesFor: #defaultAction!handling!public! !
-!Core.Exception categoriesFor: #description!displaying!public! !
-!Core.Exception categoriesFor: #displayOn:!printing!public! !
-!Core.Exception categoriesFor: #exit:!handler responses!public! !
-!Core.Exception categoriesFor: #hasTag!public!testing! !
-!Core.Exception categoriesFor: #hresult!accessing!public! !
-!Core.Exception categoriesFor: #ignore!handler responses!public! !
-!Core.Exception categoriesFor: #isNested!public!testing! !
-!Core.Exception categoriesFor: #isResumable!public!testing! !
-!Core.Exception categoriesFor: #isSuppressible!accessing!public! !
-!Core.Exception categoriesFor: #isUserResumable!public!testing! !
-!Core.Exception categoriesFor: #messageText!accessing!public! !
-!Core.Exception categoriesFor: #messageText:!accessing!debugger-step over!public! !
-!Core.Exception categoriesFor: #okCancel!handler responses!public! !
-!Core.Exception categoriesFor: #okToContinue!public!testing! !
-!Core.Exception categoriesFor: #outer!handler responses!public! !
-!Core.Exception categoriesFor: #pass!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #postCopy!copying!public! !
-!Core.Exception categoriesFor: #printOn:!printing!public! !
-!Core.Exception categoriesFor: #printTraceOn:!printing!public! !
-!Core.Exception categoriesFor: #printTraceOn:depth:!printing!public! !
-!Core.Exception categoriesFor: #raisingFrame!accessing!private! !
-!Core.Exception categoriesFor: #resignalAs:!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #resume!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #resume:!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #retry!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #retryUsing:!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #return!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #return:!debugger-step through!handler responses!public! !
-!Core.Exception categoriesFor: #severityClass!constants!public! !
-!Core.Exception categoriesFor: #showMessage:style:!helpers!private! !
-!Core.Exception categoriesFor: #signal!debugger-step through!public!signalling! !
-!Core.Exception categoriesFor: #signal:!debugger-step through!public!signalling! !
-!Core.Exception categoriesFor: #signal:with:!public!signalling! !
-!Core.Exception categoriesFor: #signalFrame!accessing!private! !
-!Core.Exception categoriesFor: #signalType!accessing!private! !
-!Core.Exception categoriesFor: #signalWith:!public!signalling! !
-!Core.Exception categoriesFor: #stackTrace:!accessing!private! !
-!Core.Exception categoriesFor: #tag!accessing!public! !
-!Core.Exception categoriesFor: #tag:!accessing!private! !
-!Core.Exception categoriesFor: #toTrace!accessing!public! !
-!Core.Exception categoriesFor: #toTrace:!accessing!public! !
+!Core.Exception categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+_evaluateHandler:in:!debugger-step through!handling!private! !
+_propagate!debugger-step through!handling!private! !
+_propagateFrom:!debugger-step through!handling!private! !
+abort!handler responses!public! !
+abortRetryIgnore!handler responses!public! !
+abortRetryOrIgnore!handling!public! !
+beep!parping!public! !
+defaultAction!handling!public! !
+description!displaying!public! !
+displayOn:!printing!public! !
+exit:!handler responses!public! !
+hasTag!public!testing! !
+hresult!accessing!public! !
+ignore!handler responses!public! !
+isNested!public!testing! !
+isResumable!public!testing! !
+isSuppressible!accessing!public! !
+isUserResumable!public!testing! !
+messageText!accessing!public! !
+messageText:!accessing!debugger-step over!public! !
+okCancel!handler responses!public! !
+okToContinue!public!testing! !
+outer!handler responses!public! !
+pass!debugger-step through!handler responses!public! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+printTraceOn:!printing!public! !
+printTraceOn:depth:!printing!public! !
+raisingFrame!accessing!private! !
+resignalAs:!debugger-step through!handler responses!public! !
+resume!debugger-step through!handler responses!public! !
+resume:!debugger-step through!handler responses!public! !
+retry!debugger-step through!handler responses!public! !
+retryUsing:!debugger-step through!handler responses!public! !
+return!debugger-step through!handler responses!public! !
+return:!debugger-step through!handler responses!public! !
+severityClass!constants!public! !
+showMessage:style:!helpers!private! !
+signal!debugger-step through!public!signalling! !
+signal:!debugger-step through!public!signalling! !
+signal:with:!public!signalling! !
+signalFrame!accessing!private! !
+signalType!accessing!private! !
+signalWith:!public!signalling! !
+stackTrace:!accessing!private! !
+tag!accessing!public! !
+tag:!accessing!private! !
+toTrace!accessing!public! !
+toTrace:!accessing!public! !
+!
 
 Core.Exception methodProtocol: #Exception attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 Core.Exception methodProtocol: #exceptionBuilder attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isResumable #messageText #messageText: #signal #signal: #tag)!
@@ -644,15 +646,17 @@ signalWith: signallerTag
 	resumable, and the handler which catches it directs that it should be resumed."
 
 	^self signal: nil with: signallerTag! !
-!Core.Exception class categoriesFor: #,!filtering!public! !
-!Core.Exception class categoriesFor: #beep!parping!public! !
-!Core.Exception class categoriesFor: #handles:!filtering!public! !
-!Core.Exception class categoriesFor: #mbIconId!constants!private! !
-!Core.Exception class categoriesFor: #new!debugger-step through!instance creation!public! !
-!Core.Exception class categoriesFor: #signal!instance creation!public! !
-!Core.Exception class categoriesFor: #signal:!debugger-step through!instance creation!public! !
-!Core.Exception class categoriesFor: #signal:with:!instance creation!public! !
-!Core.Exception class categoriesFor: #signalWith:!instance creation!public! !
+!Core.Exception class categoriesForMethods!
+,!filtering!public! !
+beep!parping!public! !
+handles:!filtering!public! !
+mbIconId!constants!private! !
+new!debugger-step through!instance creation!public! !
+signal!instance creation!public! !
+signal:!debugger-step through!instance creation!public! !
+signal:with:!instance creation!public! !
+signalWith:!instance creation!public! !
+!
 
 Core.Exception class methodProtocol: #'Exception class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
 Core.Exception class methodProtocol: #exceptionInstantiator attributes: #(#ansi #readOnly) selectors: #(#, #handles: #new #signal #signal:)!

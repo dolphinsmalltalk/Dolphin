@@ -19,7 +19,9 @@ close
 	because it will break the VM and everything else."
 
 	^self ~~ self class default and: [super close]! !
-!External.PermanentLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!External.PermanentLibrary categoriesForMethods!
+close!public!realizing/unrealizing! !
+!
 
 !External.PermanentLibrary class methodsFor!
 
@@ -60,10 +62,12 @@ onStartup2
 	may get called."
 
 	self allSubclassesDo: [:c | c openDefault]! !
-!External.PermanentLibrary class categoriesFor: #clear!initializing!private! !
-!External.PermanentLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!External.PermanentLibrary class categoriesFor: #default!accessing!public! !
-!External.PermanentLibrary class categoriesFor: #default:!accessing!public! !
-!External.PermanentLibrary class categoriesFor: #onStartup!event handling!private! !
-!External.PermanentLibrary class categoriesFor: #onStartup2!event handling!private! !
+!External.PermanentLibrary class categoriesForMethods!
+clear!initializing!private! !
+closeDefault!private!realizing/unrealizing! !
+default!accessing!public! !
+default:!accessing!public! !
+onStartup!event handling!private! !
+onStartup2!event handling!private! !
+!
 

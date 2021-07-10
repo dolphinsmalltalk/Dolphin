@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'External.Tests.MemoryMappedFileTest'
 	instanceVariableNames: ''
@@ -86,7 +86,9 @@ testReadOnly
 	view free.
 	mmf free.
 	File delete: fname! !
-!External.Tests.MemoryMappedFileTest categoriesFor: #testDoubleArray!public! !
-!External.Tests.MemoryMappedFileTest categoriesFor: #testMaximumSize!public! !
-!External.Tests.MemoryMappedFileTest categoriesFor: #testReadOnly!public! !
+!External.Tests.MemoryMappedFileTest categoriesForMethods!
+testDoubleArray!public! !
+testMaximumSize!public! !
+testReadOnly!public! !
+!
 

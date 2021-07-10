@@ -20,7 +20,9 @@ lParamFromAttributeValue: aColor
 
 valueFromLResult: anInteger
 	^Color fromRgbaCode: anInteger! !
-!UI.Scintilla.ColourAlphaPropertyDescriptor categoriesFor: #defaultFlags!constants!private! !
-!UI.Scintilla.ColourAlphaPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
-!UI.Scintilla.ColourAlphaPropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
+!UI.Scintilla.ColourAlphaPropertyDescriptor categoriesForMethods!
+defaultFlags!constants!private! !
+lParamFromAttributeValue:!helpers!private! !
+valueFromLResult:!helpers!private! !
+!
 

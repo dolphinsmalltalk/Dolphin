@@ -55,13 +55,15 @@ useColorBytes
 
 useMaskBytes
 	useMaskBytes := true! !
-!ILImportIconProxy categoriesFor: #colorBytes!accessing!public! !
-!ILImportIconProxy categoriesFor: #colorDepth!accessing!public! !
-!ILImportIconProxy categoriesFor: #colorTable!accessing!public! !
-!ILImportIconProxy categoriesFor: #height!accessing!public! !
-!ILImportIconProxy categoriesFor: #imageBytes!accessing!public! !
-!ILImportIconProxy categoriesFor: #maskBytes!accessing!public! !
-!ILImportIconProxy categoriesFor: #setBitmapInfoHeader:colorTable:imageBytes:!initializing!public! !
-!ILImportIconProxy categoriesFor: #useColorBytes!accessing!public! !
-!ILImportIconProxy categoriesFor: #useMaskBytes!accessing!public! !
+!ILImportIconProxy categoriesForMethods!
+colorBytes!accessing!public! !
+colorDepth!accessing!public! !
+colorTable!accessing!public! !
+height!accessing!public! !
+imageBytes!accessing!public! !
+maskBytes!accessing!public! !
+setBitmapInfoHeader:colorTable:imageBytes:!initializing!public! !
+useColorBytes!accessing!public! !
+useMaskBytes!accessing!public! !
+!
 

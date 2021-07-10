@@ -73,18 +73,22 @@ setNode: anStVariableNode
 
 storage
 	^storage! !
-!Kernel.StLocalVariable categoriesFor: #addAssignment:fromScope:!public! !
-!Kernel.StLocalVariable categoriesFor: #addRead:fromScope:!public! !
-!Kernel.StLocalVariable categoriesFor: #isLocalVariable!public!testing! !
-!Kernel.StLocalVariable categoriesFor: #markNestedRead!private! !
-!Kernel.StLocalVariable categoriesFor: #name!accessing!public! !
-!Kernel.StLocalVariable categoriesFor: #node!accessing!public! !
-!Kernel.StLocalVariable categoriesFor: #setNode:!accessing!initializing!private! !
-!Kernel.StLocalVariable categoriesFor: #storage!accessing!private! !
+!Kernel.StLocalVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
+addRead:fromScope:!public! !
+isLocalVariable!public!testing! !
+markNestedRead!private! !
+name!accessing!public! !
+node!accessing!public! !
+setNode:!accessing!initializing!private! !
+storage!accessing!private! !
+!
 
 !Kernel.StLocalVariable class methodsFor!
 
 node: anStTempDecl
 	^self new setNode: anStTempDecl! !
-!Kernel.StLocalVariable class categoriesFor: #node:!public! !
+!Kernel.StLocalVariable class categoriesForMethods!
+node:!public! !
+!
 

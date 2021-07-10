@@ -27,9 +27,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sqwordAtOffset: offset put: anInteger! !
-!External.SQWORDField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.SQWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.SQWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.SQWORDField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.SQWORDField class methodsFor!
 
@@ -38,5 +40,7 @@ byteSize
 	A QWORD is always 8 bytes."
 
 	^8! !
-!External.SQWORDField class categoriesFor: #byteSize!constants!private! !
+!External.SQWORDField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

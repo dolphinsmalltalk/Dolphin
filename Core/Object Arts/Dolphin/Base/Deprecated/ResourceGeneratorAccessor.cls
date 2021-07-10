@@ -32,10 +32,12 @@ save: anObject as: aResource
 	"Save out anObject in the format dictated by aResourceClass."
 
 	^self shouldNotImplement! !
-!ResourceGeneratorAccessor categoriesFor: #canSave!public!testing! !
-!ResourceGeneratorAccessor categoriesFor: #class:selector:!instance creation!public! !
-!ResourceGeneratorAccessor categoriesFor: #loadWithContext:forEdit:!operations!public! !
-!ResourceGeneratorAccessor categoriesFor: #save:as:!operations!public! !
+!ResourceGeneratorAccessor categoriesForMethods!
+canSave!public!testing! !
+class:selector:!instance creation!public! !
+loadWithContext:forEdit:!operations!public! !
+save:as:!operations!public! !
+!
 
 !ResourceGeneratorAccessor class methodsFor!
 
@@ -50,6 +52,8 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!ResourceGeneratorAccessor class categoriesFor: #class:selector:!instance creation!public! !
-!ResourceGeneratorAccessor class categoriesFor: #stbVersion!instance creation!public! !
+!ResourceGeneratorAccessor class categoriesForMethods!
+class:selector:!instance creation!public! !
+stbVersion!instance creation!public! !
+!
 

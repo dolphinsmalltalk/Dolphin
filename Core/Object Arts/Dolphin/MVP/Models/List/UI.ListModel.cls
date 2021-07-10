@@ -317,45 +317,47 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!UI.ListModel categoriesFor: #add:!adding!public! !
-!UI.ListModel categoriesFor: #add:afterIndex:!adding!public! !
-!UI.ListModel categoriesFor: #addAll:!adding!public! !
-!UI.ListModel categoriesFor: #addAll:afterIndex:!adding!public! !
-!UI.ListModel categoriesFor: #addAnsweringIndex:!adding!public! !
-!UI.ListModel categoriesFor: #at:!accessing!public! !
-!UI.ListModel categoriesFor: #at:put:!accessing!public! !
-!UI.ListModel categoriesFor: #beSorted!public!sorting! !
-!UI.ListModel categoriesFor: #beSorted:!public!sorting! !
-!UI.ListModel categoriesFor: #beUnsorted!public!sorting! !
-!UI.ListModel categoriesFor: #copyingClass!copying!private! !
-!UI.ListModel categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!UI.ListModel categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!UI.ListModel categoriesFor: #getEvents!events!private! !
-!UI.ListModel categoriesFor: #includes:!public!searching! !
-!UI.ListModel categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!UI.ListModel categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!UI.ListModel categoriesFor: #list!accessing!public! !
-!UI.ListModel categoriesFor: #list:!accessing!public! !
-!UI.ListModel categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!UI.ListModel categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!UI.ListModel categoriesFor: #notifyItem:updatedAtIndex:!private!updating! !
-!UI.ListModel categoriesFor: #notifyListChanged!private!updating! !
-!UI.ListModel categoriesFor: #postCopy!copying!public! !
-!UI.ListModel categoriesFor: #refresh:!public!updating! !
-!UI.ListModel categoriesFor: #refresh:ifAbsent:!public!updating! !
-!UI.ListModel categoriesFor: #refreshAtIndex:!public!updating! !
-!UI.ListModel categoriesFor: #removeAll!public!removing! !
-!UI.ListModel categoriesFor: #removeAtIndex:!public!removing! !
-!UI.ListModel categoriesFor: #resize:!mutating!private! !
-!UI.ListModel categoriesFor: #searchPolicy!accessing!public! !
-!UI.ListModel categoriesFor: #searchPolicy:!accessing!public! !
-!UI.ListModel categoriesFor: #select:!enumerating!public! !
-!UI.ListModel categoriesFor: #setEvents:!events!private! !
-!UI.ListModel categoriesFor: #setList:searchPolicy:!initializing!private! !
-!UI.ListModel categoriesFor: #size!accessing!public! !
-!UI.ListModel categoriesFor: #sortAlgorithmClass!public!sorting! !
-!UI.ListModel categoriesFor: #species!constants!public! !
-!UI.ListModel categoriesFor: #stbSaveOn:!binary filing!public! !
+!UI.ListModel categoriesForMethods!
+add:!adding!public! !
+add:afterIndex:!adding!public! !
+addAll:!adding!public! !
+addAll:afterIndex:!adding!public! !
+addAnsweringIndex:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+beSorted!public!sorting! !
+beSorted:!public!sorting! !
+beUnsorted!public!sorting! !
+copyingClass!copying!private! !
+from:keysAndValuesDo:!enumerating!public! !
+from:to:keysAndValuesDo:!enumerating!public! !
+getEvents!events!private! !
+includes:!public!searching! !
+keyAtValue:ifAbsent:!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+list!accessing!public! !
+list:!accessing!public! !
+nextIdentityIndexOf:from:to:!public!searching! !
+nextIndexOf:from:to:!public!searching! !
+notifyItem:updatedAtIndex:!private!updating! !
+notifyListChanged!private!updating! !
+postCopy!copying!public! !
+refresh:!public!updating! !
+refresh:ifAbsent:!public!updating! !
+refreshAtIndex:!public!updating! !
+removeAll!public!removing! !
+removeAtIndex:!public!removing! !
+resize:!mutating!private! !
+searchPolicy!accessing!public! !
+searchPolicy:!accessing!public! !
+select:!enumerating!public! !
+setEvents:!events!private! !
+setList:searchPolicy:!initializing!private! !
+size!accessing!public! !
+sortAlgorithmClass!public!sorting! !
+species!constants!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 UI.ListModel methodProtocol: #listModel attributes: #(#readOnly) selectors: #(#list #list:)!
 UI.ListModel methodProtocol: #model attributes: #(#readOnly) selectors: #()!
@@ -416,13 +418,15 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^2! !
-!UI.ListModel class categoriesFor: #defaultSearchPolicy!constants!public! !
-!UI.ListModel class categoriesFor: #new!instance creation!public! !
-!UI.ListModel class categoriesFor: #new:!instance creation!public! !
-!UI.ListModel class categoriesFor: #newEquality!instance creation!public! !
-!UI.ListModel class categoriesFor: #newWithSearchPolicy:!instance creation!public! !
-!UI.ListModel class categoriesFor: #on:!instance creation!public! !
-!UI.ListModel class categoriesFor: #on:searchPolicy:!instance creation!public! !
-!UI.ListModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.ListModel class categoriesFor: #stbVersion!binary filing!public! !
+!UI.ListModel class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+new!instance creation!public! !
+new:!instance creation!public! !
+newEquality!instance creation!public! !
+newWithSearchPolicy:!instance creation!public! !
+on:!instance creation!public! !
+on:searchPolicy:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

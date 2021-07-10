@@ -22,9 +22,11 @@ window
 	must be a registered Dolphin window."
 
 	^window! !
-!UI.Event categoriesFor: #hwnd!accessing!private! !
-!UI.Event categoriesFor: #setSource:!initializing!private! !
-!UI.Event categoriesFor: #window!accessing!public! !
+!UI.Event categoriesForMethods!
+hwnd!accessing!private! !
+setSource:!initializing!private! !
+window!accessing!public! !
+!
 
 !UI.Event class methodsFor!
 
@@ -37,6 +39,8 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
-!UI.Event class categoriesFor: #forSource:!instance creation!public! !
-!UI.Event class categoriesFor: #icon!constants!public! !
+!UI.Event class categoriesForMethods!
+forSource:!instance creation!public! !
+icon!constants!public! !
+!
 

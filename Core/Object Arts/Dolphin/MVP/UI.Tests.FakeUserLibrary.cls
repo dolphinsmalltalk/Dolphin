@@ -58,20 +58,24 @@ open
 	handle := user32 handle.
 	self beFinalizable.
 	UserLibrary setDefault: self! !
-!UI.Tests.FakeUserLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!UI.Tests.FakeUserLibrary categoriesFor: #free!finalizing!public!realizing/unrealizing! !
-!UI.Tests.FakeUserLibrary categoriesFor: #getActiveWindow!public!win32 functions-keyboard input! !
-!UI.Tests.FakeUserLibrary categoriesFor: #getActiveWindowBlock:!initializing!private! !
-!UI.Tests.FakeUserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
-!UI.Tests.FakeUserLibrary categoriesFor: #getCursorPosBlock:!initializing!private! !
-!UI.Tests.FakeUserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
-!UI.Tests.FakeUserLibrary categoriesFor: #getForegroundWindowBlock:!initializing!private! !
-!UI.Tests.FakeUserLibrary categoriesFor: #initializeForDesktopActive!initializing!public! !
-!UI.Tests.FakeUserLibrary categoriesFor: #open!private!realizing/unrealizing! !
+!UI.Tests.FakeUserLibrary categoriesForMethods!
+close!public!realizing/unrealizing! !
+free!finalizing!public!realizing/unrealizing! !
+getActiveWindow!public!win32 functions-keyboard input! !
+getActiveWindowBlock:!initializing!private! !
+getCursorPos:!public!win32 functions-cursor! !
+getCursorPosBlock:!initializing!private! !
+getForegroundWindow!public!win32 functions-keyboard input! !
+getForegroundWindowBlock:!initializing!private! !
+initializeForDesktopActive!initializing!public! !
+open!private!realizing/unrealizing! !
+!
 
 !UI.Tests.FakeUserLibrary class methodsFor!
 
 openDefault
 	"Do nothing - we don't want to overwrite the real UserLibrary on startup"! !
-!UI.Tests.FakeUserLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
+!UI.Tests.FakeUserLibrary class categoriesForMethods!
+openDefault!instance creation!private!realizing/unrealizing! !
+!
 

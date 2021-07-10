@@ -101,14 +101,16 @@ length
 	answer := SDWORD new.
 	self get_length: answer.
 	^answer asObject! !
-!MSXML.ISchemaStringCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSXML.ISchemaStringCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!MSXML.ISchemaStringCollection categoriesFor: #get_item:bstr:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!MSXML.ISchemaStringCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!MSXML.ISchemaStringCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.ISchemaStringCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.ISchemaStringCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!MSXML.ISchemaStringCollection categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.ISchemaStringCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+get_item:bstr:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+get_length:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaStringCollection class methodsFor!
 
@@ -124,5 +126,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.ISchemaStringCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaStringCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -75,12 +75,14 @@ lfFaceName: anUtf16String
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_lfFaceName + size put: 0! !
-!OS.LOGFONTW categoriesFor: #createFont!private!realizing/unrealizing! !
-!OS.LOGFONTW categoriesFor: #faceName!accessing!public! !
-!OS.LOGFONTW categoriesFor: #faceName:!accessing!public! !
-!OS.LOGFONTW categoriesFor: #getData:!helpers!private! !
-!OS.LOGFONTW categoriesFor: #lfFaceName!**compiled accessors**!public! !
-!OS.LOGFONTW categoriesFor: #lfFaceName:!**compiled accessors**!public! !
+!OS.LOGFONTW categoriesForMethods!
+createFont!private!realizing/unrealizing! !
+faceName!accessing!public! !
+faceName:!accessing!public! !
+getData:!helpers!private! !
+lfFaceName!**compiled accessors**!public! !
+lfFaceName:!**compiled accessors**!public! !
+!
 
 !OS.LOGFONTW class methodsFor!
 
@@ -91,5 +93,7 @@ defineFields
 
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: Utf16String length: LF_FACESIZE)! !
-!OS.LOGFONTW class categoriesFor: #defineFields!public!template definition! !
+!OS.LOGFONTW class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

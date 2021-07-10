@@ -46,13 +46,15 @@ setLeftToRightBlock: leftMonadicValuable rightToLeftBlock: rightMonadicValuable
 	noop := [:obj | obj].
 	leftToRightBlock := leftMonadicValuable ?? noop.
 	rightToLeftBlock := rightMonadicValuable ?? noop! !
-!UI.PluggableTypeConverter categoriesFor: #leftToRight:!operations!private! !
-!UI.PluggableTypeConverter categoriesFor: #leftToRightBlock!accessing!public! !
-!UI.PluggableTypeConverter categoriesFor: #leftToRightBlock:!accessing!public! !
-!UI.PluggableTypeConverter categoriesFor: #rightToLeft:!operations!private! !
-!UI.PluggableTypeConverter categoriesFor: #rightToLeftBlock!accessing!public! !
-!UI.PluggableTypeConverter categoriesFor: #rightToLeftBlock:!accessing!public! !
-!UI.PluggableTypeConverter categoriesFor: #setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
+!UI.PluggableTypeConverter categoriesForMethods!
+leftToRight:!operations!private! !
+leftToRightBlock!accessing!public! !
+leftToRightBlock:!accessing!public! !
+rightToLeft:!operations!private! !
+rightToLeftBlock!accessing!public! !
+rightToLeftBlock:!accessing!public! !
+setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
+!
 
 !UI.PluggableTypeConverter class methodsFor!
 
@@ -68,6 +70,8 @@ leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable
 
 new
 	^self leftToRight: [:left | left] rightToLeft: [:right | right]! !
-!UI.PluggableTypeConverter class categoriesFor: #leftToRight:rightToLeft:!instance creation!public! !
-!UI.PluggableTypeConverter class categoriesFor: #new!public! !
+!UI.PluggableTypeConverter class categoriesForMethods!
+leftToRight:rightToLeft:!instance creation!public! !
+new!public! !
+!
 

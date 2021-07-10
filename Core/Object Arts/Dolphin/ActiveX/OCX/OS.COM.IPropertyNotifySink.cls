@@ -41,5 +41,7 @@ defineFunctions
 		defineFunction: #OnRequestEdit:
 			argumentTypes: 'sdword'
 ! !
-!OS.COM.IPropertyNotifySink class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IPropertyNotifySink class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

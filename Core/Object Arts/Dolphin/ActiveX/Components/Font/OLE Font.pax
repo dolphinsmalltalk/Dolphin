@@ -53,7 +53,9 @@ fromOleFont: pFont
 	<IFont>|<IFontDisp> argument, anIFont, is an interface."
 
 	^self fromLogFont: (LOGFONTW fromOleFont: pFont)! !
-!Graphics.Font class categoriesFor: #fromOleFont:!instance creation!public! !
+!Graphics.Font class categoriesForMethods!
+fromOleFont:!instance creation!public! !
+!
 
 !OS.AbstractLOGFONT class methodsFor!
 
@@ -79,7 +81,9 @@ fromOleFont: pFont
 		lfQuality:
 		lfPitchAndFamily:
 "! !
-!OS.AbstractLOGFONT class categoriesFor: #fromOleFont:!instance creation!public! !
+!OS.AbstractLOGFONT class categoriesForMethods!
+fromOleFont:!instance creation!public! !
+!
 
 "End of package definition"!
 

@@ -51,10 +51,12 @@ receiver
 
 receiver: anObject
 	receiver := anObject! !
-!UI.ClosedCommandDescription categoriesFor: #queryBlock:!accessing!public! !
-!UI.ClosedCommandDescription categoriesFor: #queryCommand:!commands!public! !
-!UI.ClosedCommandDescription categoriesFor: #receiver!accessing!public! !
-!UI.ClosedCommandDescription categoriesFor: #receiver:!accessing!public! !
+!UI.ClosedCommandDescription categoriesForMethods!
+queryBlock:!accessing!public! !
+queryCommand:!commands!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 
 !UI.ClosedCommandDescription class methodsFor!
 
@@ -86,7 +88,9 @@ command: commandMessage description: aString receiver: anObject
 	always be sent to anObject."
 
 	^self command: commandMessage description: aString queryBlock: nil receiver: anObject! !
-!UI.ClosedCommandDescription class categoriesFor: #command:description:queryBlock:!instance creation!public! !
-!UI.ClosedCommandDescription class categoriesFor: #command:description:queryBlock:receiver:!instance creation!public! !
-!UI.ClosedCommandDescription class categoriesFor: #command:description:receiver:!instance creation!public! !
+!UI.ClosedCommandDescription class categoriesForMethods!
+command:description:queryBlock:!instance creation!public! !
+command:description:queryBlock:receiver:!instance creation!public! !
+command:description:receiver:!instance creation!public! !
+!
 

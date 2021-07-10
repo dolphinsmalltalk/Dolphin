@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #FractionANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
@@ -990,57 +990,59 @@ testXtruncated
 		conformTo: #'number' selector: #'truncated'.
 	self value: [(-1/2) truncated] should: [:r | r = 0]
 		conformTo: #'number' selector: #'truncated'.! !
-!FractionANSITest categoriesFor: #canonicalObject!public! !
-!FractionANSITest categoriesFor: #protocol!public! !
-!FractionANSITest categoriesFor: #setUp!public! !
-!FractionANSITest categoriesFor: #testXabs!public! !
-!FractionANSITest categoriesFor: #testXasFloat!public! !
-!FractionANSITest categoriesFor: #testXasFloatD!public! !
-!FractionANSITest categoriesFor: #testXasFloatE!public! !
-!FractionANSITest categoriesFor: #testXasFloatQ!public! !
-!FractionANSITest categoriesFor: #testXasFraction!public! !
-!FractionANSITest categoriesFor: #testXasInteger!public! !
-!FractionANSITest categoriesFor: #testXasScaledDecimalX!public! !
-!FractionANSITest categoriesFor: #testXbetweenXandX!public! !
-!FractionANSITest categoriesFor: #testXceiling!public! !
-!FractionANSITest categoriesFor: #testXcopy!public! !
-!FractionANSITest categoriesFor: #testXdenominator!public! !
-!FractionANSITest categoriesFor: #testXequalityOp!public! !
-!FractionANSITest categoriesFor: #testXfloor!public! !
-!FractionANSITest categoriesFor: #testXfractionPart!public! !
-!FractionANSITest categoriesFor: #testXgreaterThanOp!public! !
-!FractionANSITest categoriesFor: #testXgreaterThanOrEqualToOp!public! !
-!FractionANSITest categoriesFor: #testXhash!public! !
-!FractionANSITest categoriesFor: #testXidentityHash!public! !
-!FractionANSITest categoriesFor: #testXidentityOp!public! !
-!FractionANSITest categoriesFor: #testXintegerDivideOp!public! !
-!FractionANSITest categoriesFor: #testXintegerPart!public! !
-!FractionANSITest categoriesFor: #testXisKindOfX!public! !
-!FractionANSITest categoriesFor: #testXisMemberOfX!public! !
-!FractionANSITest categoriesFor: #testXlessThanOp!public! !
-!FractionANSITest categoriesFor: #testXlessThanOrEqualToOp!public! !
-!FractionANSITest categoriesFor: #testXmaxX!public! !
-!FractionANSITest categoriesFor: #testXminX!public! !
-!FractionANSITest categoriesFor: #testXnegated!public! !
-!FractionANSITest categoriesFor: #testXnegative!public! !
-!FractionANSITest categoriesFor: #testXnotEqualityOp!public! !
-!FractionANSITest categoriesFor: #testXnotIdentityOp!public! !
-!FractionANSITest categoriesFor: #testXnumerator!public! !
-!FractionANSITest categoriesFor: #testXpositive!public! !
-!FractionANSITest categoriesFor: #testXprintString!public! !
-!FractionANSITest categoriesFor: #testXquoX!public! !
-!FractionANSITest categoriesFor: #testXraisedToIntegerX!public! !
-!FractionANSITest categoriesFor: #testXraisedToX!public! !
-!FractionANSITest categoriesFor: #testXreciprocal!public! !
-!FractionANSITest categoriesFor: #testXremX!public! !
-!FractionANSITest categoriesFor: #testXrounded!public! !
-!FractionANSITest categoriesFor: #testXsign!public! !
-!FractionANSITest categoriesFor: #testXsqrt!public! !
-!FractionANSITest categoriesFor: #testXsquared!public! !
-!FractionANSITest categoriesFor: #testXstrictlyPositive!public! !
-!FractionANSITest categoriesFor: #testXtoX!public! !
-!FractionANSITest categoriesFor: #testXtoXbyX!public! !
-!FractionANSITest categoriesFor: #testXtoXbyXdoX!public! !
-!FractionANSITest categoriesFor: #testXtoXdoX!public! !
-!FractionANSITest categoriesFor: #testXtruncated!public! !
+!FractionANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testXabs!public! !
+testXasFloat!public! !
+testXasFloatD!public! !
+testXasFloatE!public! !
+testXasFloatQ!public! !
+testXasFraction!public! !
+testXasInteger!public! !
+testXasScaledDecimalX!public! !
+testXbetweenXandX!public! !
+testXceiling!public! !
+testXcopy!public! !
+testXdenominator!public! !
+testXequalityOp!public! !
+testXfloor!public! !
+testXfractionPart!public! !
+testXgreaterThanOp!public! !
+testXgreaterThanOrEqualToOp!public! !
+testXhash!public! !
+testXidentityHash!public! !
+testXidentityOp!public! !
+testXintegerDivideOp!public! !
+testXintegerPart!public! !
+testXisKindOfX!public! !
+testXisMemberOfX!public! !
+testXlessThanOp!public! !
+testXlessThanOrEqualToOp!public! !
+testXmaxX!public! !
+testXminX!public! !
+testXnegated!public! !
+testXnegative!public! !
+testXnotEqualityOp!public! !
+testXnotIdentityOp!public! !
+testXnumerator!public! !
+testXpositive!public! !
+testXprintString!public! !
+testXquoX!public! !
+testXraisedToIntegerX!public! !
+testXraisedToX!public! !
+testXreciprocal!public! !
+testXremX!public! !
+testXrounded!public! !
+testXsign!public! !
+testXsqrt!public! !
+testXsquared!public! !
+testXstrictlyPositive!public! !
+testXtoX!public! !
+testXtoXbyX!public! !
+testXtoXbyXdoX!public! !
+testXtoXdoX!public! !
+testXtruncated!public! !
+!
 

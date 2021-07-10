@@ -13,5 +13,7 @@ Kernel.QueryEnvironmentNotification comment: ''!
 
 defaultAction
 	^tag environment! !
-!Kernel.QueryEnvironmentNotification categoriesFor: #defaultAction!handling!public! !
+!Kernel.QueryEnvironmentNotification categoriesForMethods!
+defaultAction!handling!public! !
+!
 

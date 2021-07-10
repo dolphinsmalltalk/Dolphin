@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.AdjustableArrowCapTest'
 	instanceVariableNames: ''
@@ -35,9 +35,11 @@ testMiddleInset
 testWidth
 	model width: 17.
 	self assert: model width equals: 17! !
-!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #setUp!public!setup! !
-!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testHeight!public!unit tests! !
-!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testIsFilled!public!unit tests! !
-!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testMiddleInset!public!unit tests! !
-!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesFor: #testWidth!public!unit tests! !
+!Graphics.Gdiplus.Tests.AdjustableArrowCapTest categoriesForMethods!
+setUp!public!setup! !
+testHeight!public!unit tests! !
+testIsFilled!public!unit tests! !
+testMiddleInset!public!unit tests! !
+testWidth!public!unit tests! !
+!
 

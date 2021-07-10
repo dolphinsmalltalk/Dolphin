@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ParseNodeVisitor subclass: #'Tools.Tests.StStyler'
 	instanceVariableNames: 'view arrayDepth'
@@ -256,33 +256,35 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	view applyStyle: #identifier toNext: aVariableNode name size! !
-!Tools.Tests.StStyler categoriesFor: #acceptLiteralByteArrayNode:!public!unit tests! !
-!Tools.Tests.StStyler categoriesFor: #colorComments:!helpers!private! !
-!Tools.Tests.StStyler categoriesFor: #colourBefore:!helpers!private! !
-!Tools.Tests.StStyler categoriesFor: #emitWhitespaceBefore:!private!unit tests! !
-!Tools.Tests.StStyler categoriesFor: #emitWhitespaceFrom:to:!helpers!private! !
-!Tools.Tests.StStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
-!Tools.Tests.StStyler categoriesFor: #prepareToStyleView:!event handling!public! !
-!Tools.Tests.StStyler categoriesFor: #style:in:!operations!public! !
-!Tools.Tests.StStyler categoriesFor: #styleIntersticesUpTo:!private!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #styleInterstitialSpaceBefore:!private!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #styleMethodPatternFor:!private!unit tests! !
-!Tools.Tests.StStyler categoriesFor: #styleNameFor:!private!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #styleSelectorAndArguments:!private!unit tests! !
-!Tools.Tests.StStyler categoriesFor: #styleTemporaries:!private!unit tests! !
-!Tools.Tests.StStyler categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitNode:!public!visiting! !
-!Tools.Tests.StStyler categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!Tools.Tests.StStyler categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!Tools.Tests.StStyler categoriesForMethods!
+acceptLiteralByteArrayNode:!public!unit tests! !
+colorComments:!helpers!private! !
+colourBefore:!helpers!private! !
+emitWhitespaceBefore:!private!unit tests! !
+emitWhitespaceFrom:to:!helpers!private! !
+onStyleNeeded:from:to:!event handling!public! !
+prepareToStyleView:!event handling!public! !
+style:in:!operations!public! !
+styleIntersticesUpTo:!private!visitor/double dispatching! !
+styleInterstitialSpaceBefore:!private!visitor/double dispatching! !
+styleMethodPatternFor:!private!unit tests! !
+styleNameFor:!private!visitor/double dispatching! !
+styleSelectorAndArguments:!private!unit tests! !
+styleTemporaries:!private!unit tests! !
+visitAnnotationNode:!public!visitor/double dispatching! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitExternalCallNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitMethodNode:!public!visitor/double dispatching! !
+visitNode:!public!visiting! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitPrimitiveNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+visitVariableNode:!public!visitor/double dispatching! !
+!
 

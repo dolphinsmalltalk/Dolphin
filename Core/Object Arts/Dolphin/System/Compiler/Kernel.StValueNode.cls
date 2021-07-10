@@ -51,14 +51,16 @@ stop
 
 stopWithoutParentheses
 	^self subclassResponsibility! !
-!Kernel.StValueNode categoriesFor: #addParenthesis:!accessing!public! !
-!Kernel.StValueNode categoriesFor: #containedBy:!public!testing! !
-!Kernel.StValueNode categoriesFor: #hasParentheses!public!testing! !
-!Kernel.StValueNode categoriesFor: #isValue!public!testing! !
-!Kernel.StValueNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StValueNode categoriesFor: #parentheses!accessing!public! !
-!Kernel.StValueNode categoriesFor: #start!accessing!public! !
-!Kernel.StValueNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StValueNode categoriesFor: #stop!accessing!public! !
-!Kernel.StValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!Kernel.StValueNode categoriesForMethods!
+addParenthesis:!accessing!public! !
+containedBy:!public!testing! !
+hasParentheses!public!testing! !
+isValue!public!testing! !
+needsParenthesis!public!testing! !
+parentheses!accessing!public! !
+start!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stop!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+!
 

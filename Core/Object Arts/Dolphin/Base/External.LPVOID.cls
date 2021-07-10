@@ -31,9 +31,11 @@ value: anExternalAddress
 	"Set the receiver's 'value' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anExternalAddress! !
-!External.LPVOID categoriesFor: #asExternalAddress!converting!public! !
-!External.LPVOID categoriesFor: #value!**compiled accessors**!public! !
-!External.LPVOID categoriesFor: #value:!**compiled accessors**!public! !
+!External.LPVOID categoriesForMethods!
+asExternalAddress!converting!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.LPVOID class methodsFor!
 
@@ -62,8 +64,10 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.LPVOID class categoriesFor: #defineFields!public!template definition! !
-!External.LPVOID class categoriesFor: #initialize!development!initializing!private! !
-!External.LPVOID class categoriesFor: #new!instance creation!public! !
-!External.LPVOID class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.LPVOID class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

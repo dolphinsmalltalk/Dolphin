@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
@@ -1228,52 +1228,54 @@ testRemoveSelection
 	treeModel remove: 'A'.
 	"Selection moves to parent"
 	self assert: treeView selection equals: 'ROOT2'! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertChildNode:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertCollapsedChild:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertCollapsedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertCorrectlyPopulatedNode:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertExpandedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertInitialState!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertNodeInTree:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertPopulatedChild:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertPopulatedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertRootNode:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertRootsInOrder!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnexpandedChild:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnexpandedNode:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnexpandedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #assertUnlinkedNode:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #createModel!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #createTree!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #createView!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #destroyTree!private!Running! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:of:toRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:of:toUnexpandedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:toChildlessRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveChild:toRootWithChildren:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveChildToUnexpandedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveRoots:toRoots:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveRootsToUnexpandedRoots:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChild:toUnexpandedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChildOfUnexpandedParentToRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChildToRoot:target:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedChildToUnexpandedChild!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedRoot:toUnexpandedRoot:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedRootsToRoots:!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #moveUnexpandedRootsToUnexpandedChildren!helpers!private! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #runCase!public!Running! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #setUp!helpers!public! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #tearDown!public!Running! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveChildToChildlessRoot!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveChildToRootWithChildren!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveChildToUnexpandedRoot!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveRootsToRoots!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveRootsToUnexpandedRoots!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveSelectionDown!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedChildToRoot!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedChildToUnexpandedRoot!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToRoots!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToUnexpandedChildren!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testMoveUnexpandedRootsToUnexpandedRoots!public!unit tests! !
-!UI.Tests.MoenTreeViewTest categoriesFor: #testRemoveSelection!public!unit tests! !
+!UI.Tests.MoenTreeViewTest categoriesForMethods!
+assertChildNode:!helpers!private! !
+assertCollapsedChild:!helpers!private! !
+assertCollapsedRoot:!helpers!private! !
+assertCorrectlyPopulatedNode:!helpers!private! !
+assertExpandedRoot:!helpers!private! !
+assertInitialState!helpers!private! !
+assertNodeInTree:!helpers!private! !
+assertPopulatedChild:!helpers!private! !
+assertPopulatedRoot:!helpers!private! !
+assertRootNode:!helpers!private! !
+assertRootsInOrder!helpers!private! !
+assertUnexpandedChild:!helpers!private! !
+assertUnexpandedNode:!helpers!private! !
+assertUnexpandedRoot:!helpers!private! !
+assertUnlinkedNode:!helpers!private! !
+createModel!helpers!private! !
+createTree!helpers!private! !
+createView!helpers!private! !
+destroyTree!private!Running! !
+moveChild:of:toRoot:!helpers!private! !
+moveChild:of:toUnexpandedRoot:!helpers!private! !
+moveChild:toChildlessRoot:!helpers!private! !
+moveChild:toRootWithChildren:!helpers!private! !
+moveChildToUnexpandedRoot:!helpers!private! !
+moveRoots:toRoots:!helpers!private! !
+moveRootsToUnexpandedRoots:!helpers!private! !
+moveUnexpandedChild:toUnexpandedRoot:!helpers!private! !
+moveUnexpandedChildOfUnexpandedParentToRoot:!helpers!private! !
+moveUnexpandedChildToRoot:target:!helpers!private! !
+moveUnexpandedChildToUnexpandedChild!helpers!private! !
+moveUnexpandedRoot:toUnexpandedRoot:!helpers!private! !
+moveUnexpandedRootsToRoots:!helpers!private! !
+moveUnexpandedRootsToUnexpandedChildren!helpers!private! !
+runCase!public!Running! !
+setUp!helpers!public! !
+tearDown!public!Running! !
+testMoveChildToChildlessRoot!public!unit tests! !
+testMoveChildToRootWithChildren!public!unit tests! !
+testMoveChildToUnexpandedRoot!public!unit tests! !
+testMoveRootsToRoots!public!unit tests! !
+testMoveRootsToUnexpandedRoots!public!unit tests! !
+testMoveSelectionDown!public!unit tests! !
+testMoveUnexpandedChildToRoot!public!unit tests! !
+testMoveUnexpandedChildToUnexpandedRoot!public!unit tests! !
+testMoveUnexpandedRootsToRoots!public!unit tests! !
+testMoveUnexpandedRootsToUnexpandedChildren!public!unit tests! !
+testMoveUnexpandedRootsToUnexpandedRoots!public!unit tests! !
+testRemoveSelection!public!unit tests! !
+!
 

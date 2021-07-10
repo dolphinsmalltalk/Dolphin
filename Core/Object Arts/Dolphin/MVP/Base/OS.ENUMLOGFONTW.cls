@@ -38,8 +38,10 @@ elfStyle
 	"Answer the <Utf16String> value of the receiver's 'elfStyle' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_elfStyle! !
-!OS.ENUMLOGFONTW categoriesFor: #elfFullName!**compiled accessors**!public! !
-!OS.ENUMLOGFONTW categoriesFor: #elfStyle!**compiled accessors**!public! !
+!OS.ENUMLOGFONTW categoriesForMethods!
+elfFullName!**compiled accessors**!public! !
+elfStyle!**compiled accessors**!public! !
+!
 
 !OS.ENUMLOGFONTW class methodsFor!
 
@@ -64,6 +66,8 @@ defineFields
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName #elfFullName #elfStyle)! !
-!OS.ENUMLOGFONTW class categoriesFor: #defineFields!public!template definition! !
-!OS.ENUMLOGFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ENUMLOGFONTW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

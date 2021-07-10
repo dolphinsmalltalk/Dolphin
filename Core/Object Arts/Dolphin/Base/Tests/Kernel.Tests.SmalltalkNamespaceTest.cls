@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.SystemNamespaceTest subclass: #'Kernel.Tests.SmalltalkNamespaceTest'
 	instanceVariableNames: ''
@@ -47,13 +47,15 @@ testWellFormed
 			self assert: each isKindOf: VariableBinding.
 			self assert: each environment identicalTo: Smalltalk.
 			self deny: each isClassVariable]! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #subject!constants!private! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testAbsoluteName!public!unit tests! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testAbsoluteNameOfIdentifier!public!unit tests! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testAbsoluteReference!public!unit tests! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testAllClasses!public!unit tests! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testAllEnvironments!public!unit tests! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testEnvironment!public!unit tests! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testIncludesKey!public!unit tests! !
-!Kernel.Tests.SmalltalkNamespaceTest categoriesFor: #testWellFormed!public!unit tests! !
+!Kernel.Tests.SmalltalkNamespaceTest categoriesForMethods!
+subject!constants!private! !
+testAbsoluteName!public!unit tests! !
+testAbsoluteNameOfIdentifier!public!unit tests! !
+testAbsoluteReference!public!unit tests! !
+testAllClasses!public!unit tests! !
+testAllEnvironments!public!unit tests! !
+testEnvironment!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testWellFormed!public!unit tests! !
+!
 

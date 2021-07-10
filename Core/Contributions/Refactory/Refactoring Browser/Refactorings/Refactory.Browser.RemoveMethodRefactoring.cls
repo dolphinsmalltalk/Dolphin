@@ -100,15 +100,17 @@ superclassEquivalentlyDefines: aSelector
 
 transform
 	selectors do: [:each | class removeMethod: each]! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #checkReferencesToAnyOf:!preconditions!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #checkSuperMethods!preconditions!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #justSendsSuper:!preconditions!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #removeMethods:from:!initialize/release!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #superclassEquivalentlyDefines:!preconditions!public! !
-!Refactory.Browser.RemoveMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RemoveMethodRefactoring categoriesForMethods!
+checkReferencesToAnyOf:!preconditions!public! !
+checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
+checkSuperMethods!preconditions!public! !
+justSendsSuper:!preconditions!public! !
+preconditions!preconditions!public! !
+removeMethods:from:!initialize/release!public! !
+storeOn:!printing!public! !
+superclassEquivalentlyDefines:!preconditions!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.RemoveMethodRefactoring class methodsFor!
 
@@ -120,6 +122,8 @@ model: aRBNamespace removeMethods: selectorCollection from: aClass
 
 removeMethods: selectorCollection from: aClass
 	^self new removeMethods: selectorCollection from: aClass! !
-!Refactory.Browser.RemoveMethodRefactoring class categoriesFor: #model:removeMethods:from:!instance creation!public! !
-!Refactory.Browser.RemoveMethodRefactoring class categoriesFor: #removeMethods:from:!instance creation!public! !
+!Refactory.Browser.RemoveMethodRefactoring class categoriesForMethods!
+model:removeMethods:from:!instance creation!public! !
+removeMethods:from:!instance creation!public! !
+!
 

@@ -253,27 +253,29 @@ setProperty_: name value: value
 	Helpstring: set the value of the named property"
 
 	^self SetProperty: name value: value asVariant! !
-!MSXML.IXMLDOMSelection categoriesFor: #clone!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #Clone:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #context!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #expr!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #expr:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #get_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #get_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #matches:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #Matches:ppNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #peekNode!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #PeekNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #put_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #putref_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #RemoveAll!**auto generated**!COM Interfaces-IXMLDOMSelection!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #removeNext!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #RemoveNext:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #setContext:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSelection categoriesFor: #SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
-!MSXML.IXMLDOMSelection categoriesFor: #setProperty_:value:!**auto generated**!methods!public! !
+!MSXML.IXMLDOMSelection categoriesForMethods!
+clone!**auto generated**!methods!public! !
+Clone:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+context!**auto generated**!properties!public! !
+expr!**auto generated**!properties!public! !
+expr:!**auto generated**!properties!public! !
+get_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+get_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+getProperty_:!**auto generated**!methods!public! !
+matches:!**auto generated**!methods!public! !
+Matches:ppNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+peekNode!**auto generated**!methods!public! !
+PeekNode:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+put_expr:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+putref_context:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+RemoveAll!**auto generated**!COM Interfaces-IXMLDOMSelection!public! !
+removeNext!**auto generated**!methods!public! !
+RemoveNext:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+setContext:!**auto generated**!properties!public! !
+SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMSelection!private! !
+setProperty_:value:!**auto generated**!methods!public! !
+!
 
 !MSXML.IXMLDOMSelection class methodsFor!
 
@@ -304,5 +306,7 @@ defineFunctions
 		defineFunction: #SetProperty:value:
 			argumentTypes: 'bstr variant'
 ! !
-!MSXML.IXMLDOMSelection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMSelection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

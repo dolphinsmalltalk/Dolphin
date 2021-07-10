@@ -84,15 +84,17 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self name! !
-!MSScriptControl.IScriptProcedure categoriesFor: #get_HasReturnValue:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
-!MSScriptControl.IScriptProcedure categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
-!MSScriptControl.IScriptProcedure categoriesFor: #get_NumArgs:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
-!MSScriptControl.IScriptProcedure categoriesFor: #hasReturnValue!**auto generated**!properties!public! !
-!MSScriptControl.IScriptProcedure categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSScriptControl.IScriptProcedure categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSScriptControl.IScriptProcedure categoriesFor: #name!**auto generated**!properties!public! !
-!MSScriptControl.IScriptProcedure categoriesFor: #numArgs!**auto generated**!properties!public! !
-!MSScriptControl.IScriptProcedure categoriesFor: #value!**auto generated**!properties!public! !
+!MSScriptControl.IScriptProcedure categoriesForMethods!
+get_HasReturnValue:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
+get_Name:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
+get_NumArgs:!**auto generated**!COM Interfaces-IScriptProcedure!private! !
+hasReturnValue!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+name!**auto generated**!properties!public! !
+numArgs!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+!
 
 !MSScriptControl.IScriptProcedure class methodsFor!
 
@@ -120,7 +122,9 @@ initializeTypeLib
 		IScriptProcedure initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!MSScriptControl.IScriptProcedure class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSScriptControl.IScriptProcedure class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSScriptControl.IScriptProcedure class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptProcedure class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

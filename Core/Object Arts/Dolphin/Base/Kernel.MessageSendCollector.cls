@@ -57,15 +57,17 @@ superMessagesDo: aBlockClosure
 
 supersendSelector: aSymbol 
 	superMessageBlock value: aSymbol! !
-!Kernel.MessageSendCollector categoriesFor: #dispatchNext!interpreting!private! !
-!Kernel.MessageSendCollector categoriesFor: #initialize!initializing!private! !
-!Kernel.MessageSendCollector categoriesFor: #messagesDo:!enumerating!public! !
-!Kernel.MessageSendCollector categoriesFor: #sendSelector:args:!interpreting!private! !
-!Kernel.MessageSendCollector categoriesFor: #sendSelfSelector:args:!interpreting!private! !
-!Kernel.MessageSendCollector categoriesFor: #shortSpecialSend:!instructions-sending!public! !
-!Kernel.MessageSendCollector categoriesFor: #shortSpecialSendEx:!instructions-sending!public! !
-!Kernel.MessageSendCollector categoriesFor: #superMessagesDo:!enumerating!public! !
-!Kernel.MessageSendCollector categoriesFor: #supersendSelector:!interpreting!private! !
+!Kernel.MessageSendCollector categoriesForMethods!
+dispatchNext!interpreting!private! !
+initialize!initializing!private! !
+messagesDo:!enumerating!public! !
+sendSelector:args:!interpreting!private! !
+sendSelfSelector:args:!interpreting!private! !
+shortSpecialSend:!instructions-sending!public! !
+shortSpecialSendEx:!instructions-sending!public! !
+superMessagesDo:!enumerating!public! !
+supersendSelector:!interpreting!private! !
+!
 
 !Kernel.MessageSendCollector class methodsFor!
 
@@ -78,6 +80,8 @@ dispatcher: aByteCodeDispatcher
 initialize
 	self addClassConstant: 'SendInstructions'
 		value: (ByteCodeDispatcher instructions collect: [:each | ('*send*' match: each) ifTrue: [each]])! !
-!Kernel.MessageSendCollector class categoriesFor: #dispatcher:!instance creation!public! !
-!Kernel.MessageSendCollector class categoriesFor: #initialize!class initialization!development!public! !
+!Kernel.MessageSendCollector class categoriesForMethods!
+dispatcher:!instance creation!public! !
+initialize!class initialization!development!public! !
+!
 

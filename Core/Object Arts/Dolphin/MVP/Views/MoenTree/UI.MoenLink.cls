@@ -37,10 +37,12 @@ y
 	"Private - Answer the y-coordinate."
 
 	^y! !
-!UI.MoenLink categoriesFor: #printOn:!development!printing!public! !
-!UI.MoenLink categoriesFor: #setX:y:!initializing!private! !
-!UI.MoenLink categoriesFor: #x!accessing!private! !
-!UI.MoenLink categoriesFor: #y!accessing!private! !
+!UI.MoenLink categoriesForMethods!
+printOn:!development!printing!public! !
+setX:y:!initializing!private! !
+x!accessing!private! !
+y!accessing!private! !
+!
 
 !UI.MoenLink class methodsFor!
 
@@ -48,5 +50,7 @@ x: x y: y nextLink: aLink
 	"Answer a new, initialized, instance of the receiver."
 
 	^(self nextLink: aLink) setX: x y: y! !
-!UI.MoenLink class categoriesFor: #x:y:nextLink:!instance creation!public! !
+!UI.MoenLink class categoriesForMethods!
+x:y:nextLink:!instance creation!public! !
+!
 

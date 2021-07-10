@@ -383,60 +383,62 @@ upToEnd
 
 visit: anObject do: aNiladicValue
 	aNiladicValue value! !
-!Core.Stream categoriesFor: #<<!accessing!public! !
-!Core.Stream categoriesFor: #atEnd!public!testing! !
-!Core.Stream categoriesFor: #basicContentsSpecies!accessing!private! !
-!Core.Stream categoriesFor: #basicNext!accessing!public! !
-!Core.Stream categoriesFor: #basicNext:!accessing!private! !
-!Core.Stream categoriesFor: #basicNext:into:startingAt:!accessing!private! !
-!Core.Stream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
-!Core.Stream categoriesFor: #basicNextAvailable:!accessing!private! !
-!Core.Stream categoriesFor: #basicNextPut:!accessing!private! !
-!Core.Stream categoriesFor: #basicNextPutAll:!accessing!private! !
-!Core.Stream categoriesFor: #basicPrint:!public! !
-!Core.Stream categoriesFor: #binaryStore:!binary filing!public!storing! !
-!Core.Stream categoriesFor: #close!operations!public! !
-!Core.Stream categoriesFor: #contentsSpecies!constants!private! !
-!Core.Stream categoriesFor: #cr!accessing!public! !
-!Core.Stream categoriesFor: #crtab!accessing!public! !
-!Core.Stream categoriesFor: #crtab:!accessing!public! !
-!Core.Stream categoriesFor: #display:!printing!public! !
-!Core.Stream categoriesFor: #do:!enumerating!public! !
-!Core.Stream categoriesFor: #elementSize!constants!public! !
-!Core.Stream categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!Core.Stream categoriesFor: #encoding!constants!encode/decode!public! !
-!Core.Stream categoriesFor: #errorEndOfStream!exceptions!public! !
-!Core.Stream categoriesFor: #errorNotPositionable!exceptions!private! !
-!Core.Stream categoriesFor: #errorNotReadable!exceptions!private! !
-!Core.Stream categoriesFor: #errorNotWriteable!exceptions!private! !
-!Core.Stream categoriesFor: #isPositionable!public!testing! !
-!Core.Stream categoriesFor: #isReadable!public!testing! !
-!Core.Stream categoriesFor: #isWriteable!public!testing! !
-!Core.Stream categoriesFor: #locale!accessing!public! !
-!Core.Stream categoriesFor: #next!accessing!public! !
-!Core.Stream categoriesFor: #next:!accessing!public! !
-!Core.Stream categoriesFor: #next:into:startingAt:!accessing!public! !
-!Core.Stream categoriesFor: #next:put:!accessing!public! !
-!Core.Stream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!Core.Stream categoriesFor: #nextAvailable!accessing!public! !
-!Core.Stream categoriesFor: #nextAvailable:!accessing!public! !
-!Core.Stream categoriesFor: #nextDWORDPut:!binary filing!public! !
-!Core.Stream categoriesFor: #nextInto:!accessing!public! !
-!Core.Stream categoriesFor: #nextMatchFor:!accessing!public! !
-!Core.Stream categoriesFor: #nextPut:!accessing!public! !
-!Core.Stream categoriesFor: #nextPutAll:!accessing!public! !
-!Core.Stream categoriesFor: #nextSDWORDPut:!binary filing!public! !
-!Core.Stream categoriesFor: #print:!printing!public! !
-!Core.Stream categoriesFor: #skip:!positioning!public! !
-!Core.Stream categoriesFor: #skipThrough:!positioning!public! !
-!Core.Stream categoriesFor: #skipTo:!positioning!public! !
-!Core.Stream categoriesFor: #space!constants!public! !
-!Core.Stream categoriesFor: #store:!printing!public! !
-!Core.Stream categoriesFor: #tab!accessing!public! !
-!Core.Stream categoriesFor: #tab:!accessing!public! !
-!Core.Stream categoriesFor: #upTo:!accessing!public! !
-!Core.Stream categoriesFor: #upToEnd!accessing!public! !
-!Core.Stream categoriesFor: #visit:do:!public! !
+!Core.Stream categoriesForMethods!
+<<!accessing!public! !
+atEnd!public!testing! !
+basicContentsSpecies!accessing!private! !
+basicNext!accessing!public! !
+basicNext:!accessing!private! !
+basicNext:into:startingAt:!accessing!private! !
+basicNext:putAll:startingAt:!accessing!private! !
+basicNextAvailable:!accessing!private! !
+basicNextPut:!accessing!private! !
+basicNextPutAll:!accessing!private! !
+basicPrint:!public! !
+binaryStore:!binary filing!public!storing! !
+close!operations!public! !
+contentsSpecies!constants!private! !
+cr!accessing!public! !
+crtab!accessing!public! !
+crtab:!accessing!public! !
+display:!printing!public! !
+do:!enumerating!public! !
+elementSize!constants!public! !
+encodedSizeOf:!encode/decode!public! !
+encoding!constants!encode/decode!public! !
+errorEndOfStream!exceptions!public! !
+errorNotPositionable!exceptions!private! !
+errorNotReadable!exceptions!private! !
+errorNotWriteable!exceptions!private! !
+isPositionable!public!testing! !
+isReadable!public!testing! !
+isWriteable!public!testing! !
+locale!accessing!public! !
+next!accessing!public! !
+next:!accessing!public! !
+next:into:startingAt:!accessing!public! !
+next:put:!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextAvailable!accessing!public! !
+nextAvailable:!accessing!public! !
+nextDWORDPut:!binary filing!public! !
+nextInto:!accessing!public! !
+nextMatchFor:!accessing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+nextSDWORDPut:!binary filing!public! !
+print:!printing!public! !
+skip:!positioning!public! !
+skipThrough:!positioning!public! !
+skipTo:!positioning!public! !
+space!constants!public! !
+store:!printing!public! !
+tab!accessing!public! !
+tab:!accessing!public! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+visit:do:!public! !
+!
 
 !Core.Stream class methodsFor!
 
@@ -460,7 +462,9 @@ new
 	"Streams must be instantiated onto something."
 
 	^self shouldNotImplement! !
-!Core.Stream class categoriesFor: #endOfStreamSignal!constants!public! !
-!Core.Stream class categoriesFor: #initialize!development!initializing!private! !
-!Core.Stream class categoriesFor: #new!instance creation!public! !
+!Core.Stream class categoriesForMethods!
+endOfStreamSignal!constants!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+!
 

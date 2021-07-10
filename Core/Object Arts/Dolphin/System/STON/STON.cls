@@ -220,20 +220,22 @@ toStringPretty: object
 
 writer
 	^Writer new! !
-!STON class categoriesFor: #associationClass!accessing!public! !
-!STON class categoriesFor: #classNameKey!accessing!public! !
-!STON class categoriesFor: #fromStream:!convenience!public! !
-!STON class categoriesFor: #fromStreamWithComments:!convenience!public! !
-!STON class categoriesFor: #fromString:!convenience!public! !
-!STON class categoriesFor: #fromStringWithComments:!convenience!public! !
-!STON class categoriesFor: #listClass!accessing!public! !
-!STON class categoriesFor: #mapClass!accessing!public! !
-!STON class categoriesFor: #prettyPrinter!private! !
-!STON class categoriesFor: #put:onStream:!convenience!public! !
-!STON class categoriesFor: #put:onStreamPretty:!convenience!public! !
-!STON class categoriesFor: #reader!accessing!public! !
-!STON class categoriesFor: #readFrom:!convenience!public! !
-!STON class categoriesFor: #toString:!convenience!public! !
-!STON class categoriesFor: #toStringPretty:!convenience!public! !
-!STON class categoriesFor: #writer!accessing!public! !
+!STON class categoriesForMethods!
+associationClass!accessing!public! !
+classNameKey!accessing!public! !
+fromStream:!convenience!public! !
+fromStreamWithComments:!convenience!public! !
+fromString:!convenience!public! !
+fromStringWithComments:!convenience!public! !
+listClass!accessing!public! !
+mapClass!accessing!public! !
+prettyPrinter!private! !
+put:onStream:!convenience!public! !
+put:onStreamPretty:!convenience!public! !
+reader!accessing!public! !
+readFrom:!convenience!public! !
+toString:!convenience!public! !
+toStringPretty:!convenience!public! !
+writer!accessing!public! !
+!
 

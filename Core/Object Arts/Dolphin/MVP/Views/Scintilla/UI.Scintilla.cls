@@ -1219,5 +1219,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ScintillaView icon! !
-!UI.Scintilla class categoriesFor: #icon!constants!public! !
+!UI.Scintilla class categoriesForMethods!
+icon!constants!public! !
+!
 

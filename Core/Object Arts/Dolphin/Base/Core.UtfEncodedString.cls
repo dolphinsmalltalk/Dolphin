@@ -473,59 +473,61 @@ with: otherCollection do: aDyadicValuable
 				ifNil: [self errorCollectionsOfDifferentSizes]
 				ifNotNil: [:ch | aDyadicValuable value: ch value: each]].
 	stream atEnd ifFalse: [^self errorCollectionsOfDifferentSizes]! !
-!Core.UtfEncodedString categoriesFor: #after:ifAbsent:!public!searching! !
-!Core.UtfEncodedString categoriesFor: #allButFirst:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #allButLast:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #allSatisfy:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #anySatisfy:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #asArray!converting!public! !
-!Core.UtfEncodedString categoriesFor: #before:ifAbsent:!public!searching! !
-!Core.UtfEncodedString categoriesFor: #bom!constants!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #codePointAt:!debugger-step through!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #codePointsDo:!debugger-step through!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #codeUnitsDo:!debugger-step through!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #collect:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #copyWith:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #copyWith:atIndex:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #copyWithoutIndex:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #detect:ifNone:!public!searching! !
-!Core.UtfEncodedString categoriesFor: #do:!debugger-step through!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #do:separatedBy:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #errorIntraCharacterIndex:!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #fifth!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #findFirst:!public!searching! !
-!Core.UtfEncodedString categoriesFor: #findLast:!public!searching! !
-!Core.UtfEncodedString categoriesFor: #first!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #first:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #fourth!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #growSize!accessing!private! !
-!Core.UtfEncodedString categoriesFor: #indexOfLast:!accessing!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #indexOfNth:!accessing!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #inject:into:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
-!Core.UtfEncodedString categoriesFor: #keys!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #keysAndValuesDo:!debugger-step through!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #last!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #last:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #leftString:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #length!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #maxEncoding!constants!private! !
-!Core.UtfEncodedString categoriesFor: #midString:from:!copying!public! !
-!Core.UtfEncodedString categoriesFor: #pairsDo:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #reverseDo:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #second!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #select:!enumerating!public! !
-!Core.UtfEncodedString categoriesFor: #sixth!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!Core.UtfEncodedString categoriesFor: #strlen!accessing!private! !
-!Core.UtfEncodedString categoriesFor: #third!accessing!public! !
-!Core.UtfEncodedString categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
-!Core.UtfEncodedString categoriesFor: #with:do:!enumerating!public! !
+!Core.UtfEncodedString categoriesForMethods!
+after:ifAbsent:!public!searching! !
+allButFirst:!copying!public! !
+allButLast:!copying!public! !
+allSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
+asArray!converting!public! !
+before:ifAbsent:!public!searching! !
+bom!constants!encode/decode!private! !
+codePointAt:!debugger-step through!enumerating!public! !
+codePointsDo:!debugger-step through!enumerating!public! !
+codeUnitsDo:!debugger-step through!enumerating!public! !
+collect:!enumerating!public! !
+copyWith:!copying!public! !
+copyWith:atIndex:!copying!public! !
+copyWithoutIndex:!copying!public! !
+decodeFrom:upTo:!encode/decode!private! !
+detect:ifNone:!public!searching! !
+do:!debugger-step through!enumerating!public! !
+do:separatedBy:!enumerating!public! !
+emitEncodingMarkerOn:!accessing!public! !
+encodedAt:put:!accessing!encode/decode!private! !
+encodedSizeOf:!encode/decode!private! !
+encodeOn:next:putAll:startingAt:!encode/decode!private! !
+errorIntraCharacterIndex:!encode/decode!private! !
+fifth!accessing!public! !
+findFirst:!public!searching! !
+findLast:!public!searching! !
+first!accessing!public! !
+first:!copying!public! !
+fourth!accessing!public! !
+growSize!accessing!private! !
+indexOfLast:!accessing!encode/decode!private! !
+indexOfNth:!accessing!encode/decode!private! !
+inject:into:!enumerating!public! !
+isLeadCodeUnit:!encode/decode!public!testing! !
+keys!accessing!public! !
+keysAndValuesDo:!debugger-step through!enumerating!public! !
+last!accessing!public! !
+last:!copying!public! !
+leftString:!copying!public! !
+length!accessing!public! !
+maxEncoding!constants!private! !
+midString:from:!copying!public! !
+pairsDo:!enumerating!public! !
+reverseDo:!enumerating!public! !
+second!accessing!public! !
+select:!enumerating!public! !
+sixth!accessing!public! !
+skipEncodingMarkerFrom:!encode/decode!private! !
+strlen!accessing!private! !
+third!accessing!public! !
+uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+with:do:!enumerating!public! !
+!
 
 !Core.UtfEncodedString class methodsFor!
 
@@ -542,6 +544,8 @@ new: anInteger withAll: aCharacter
 	stream := self writeStream: anInteger.
 	anInteger timesRepeat: [stream nextPut: aCharacter].
 	^stream contents! !
-!Core.UtfEncodedString class categoriesFor: #codePage!constants!public! !
-!Core.UtfEncodedString class categoriesFor: #new:withAll:!instance creation!public! !
+!Core.UtfEncodedString class categoriesForMethods!
+codePage!constants!public! !
+new:withAll:!instance creation!public! !
+!
 

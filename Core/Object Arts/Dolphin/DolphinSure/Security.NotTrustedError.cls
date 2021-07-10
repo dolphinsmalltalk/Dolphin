@@ -18,5 +18,7 @@ _descriptionFormat
 
 	^'The use of the untrusted content (%1) has been prevented.'
 ! !
-!Security.NotTrustedError categoriesFor: #_descriptionFormat!displaying!public! !
+!Security.NotTrustedError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

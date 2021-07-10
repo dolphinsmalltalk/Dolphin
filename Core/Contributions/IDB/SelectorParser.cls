@@ -136,16 +136,18 @@ parse: aString
 			self keywordOrArgumentTokenFrom: readStream.
 			token := self keywordOrArgumentTokenFrom: readStream].
 	^writeStream contents! !
-!SelectorParser categoriesFor: #binaryTokenFrom:!operations!public! !
-!SelectorParser categoriesFor: #firstTokenFrom:!operations!public! !
-!SelectorParser categoriesFor: #isBinaryDelimiter:!public!testing! !
-!SelectorParser categoriesFor: #isBinaryStarter:!public!testing! !
-!SelectorParser categoriesFor: #isKeyword:!public!testing! !
-!SelectorParser categoriesFor: #isKeywordStarter:!public!testing! !
-!SelectorParser categoriesFor: #isNonBinaryDelimiter:!public!testing! !
-!SelectorParser categoriesFor: #keywordOrArgumentTokenFrom:!operations!public! !
-!SelectorParser categoriesFor: #keywordOrUnaryTokenFrom:!operations!public! !
-!SelectorParser categoriesFor: #parse:!operations!public! !
+!SelectorParser categoriesForMethods!
+binaryTokenFrom:!operations!public! !
+firstTokenFrom:!operations!public! !
+isBinaryDelimiter:!public!testing! !
+isBinaryStarter:!public!testing! !
+isKeyword:!public!testing! !
+isKeywordStarter:!public!testing! !
+isNonBinaryDelimiter:!public!testing! !
+keywordOrArgumentTokenFrom:!operations!public! !
+keywordOrUnaryTokenFrom:!operations!public! !
+parse:!operations!public! !
+!
 
 !SelectorParser class methodsFor!
 
@@ -153,5 +155,7 @@ parse: aString
 	"Shortcut to create the receiver and perform the parsing "
 
 	^self new parse: aString! !
-!SelectorParser class categoriesFor: #parse:!instance creation!public! !
+!SelectorParser class categoriesForMethods!
+parse:!instance creation!public! !
+!
 

@@ -44,8 +44,10 @@ Bytes: anExternalArray
 		from: ##(_OffsetOf_Bytes + 1)
 		to: size
 		startingAt: 1! !
-!OS.IN6_ADDR categoriesFor: #Bytes!**compiled accessors**!public! !
-!OS.IN6_ADDR categoriesFor: #Bytes:!**compiled accessors**!public! !
+!OS.IN6_ADDR categoriesForMethods!
+Bytes!**compiled accessors**!public! !
+Bytes:!**compiled accessors**!public! !
+!
 
 !OS.IN6_ADDR class methodsFor!
 
@@ -73,7 +75,9 @@ defineFields
 
 getFieldNames
 	^#(#Bytes)! !
-!OS.IN6_ADDR class categoriesFor: #addressFamily!constants!public! !
-!OS.IN6_ADDR class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.IN6_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IN6_ADDR class categoriesForMethods!
+addressFamily!constants!public! !
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

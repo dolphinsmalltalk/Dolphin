@@ -22,8 +22,10 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes wordAtOffset: indexInteger + indexInteger - 2 put: valueInteger! !
-!External.WORDArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.WORDArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.WORDArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.WORDArray class methodsFor!
 
@@ -31,5 +33,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^WORD! !
-!External.WORDArray class categoriesFor: #elementClass!constants!public! !
+!External.WORDArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

@@ -31,8 +31,10 @@ writeInto: subjectObject value: valueObject
 			[:ex |
 			MessageBox errorMsg: ex description
 				caption: ('Error setting property <1p>' expandMacrosWith: self name)]! !
-!Tools.DispatchAspect categoriesFor: #dispid!accessing!public! !
-!Tools.DispatchAspect categoriesFor: #dispid:!accessing!private! !
-!Tools.DispatchAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!Tools.DispatchAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Tools.DispatchAspect categoriesForMethods!
+dispid!accessing!public! !
+dispid:!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

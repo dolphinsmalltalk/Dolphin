@@ -411,67 +411,69 @@ virtualScreenRectangle
 	"Answer the rectangle of the virtual screen, i.e. including desktops on all monitors"
 
 	^self virtualScreenOrigin extent: self virtualScreenExtent! !
-!OS.SystemMetrics categoriesFor: #borderExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #cursorExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #defaultColorDepth!accessing!public! !
-!OS.SystemMetrics categoriesFor: #dialogFrameExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #dragHysteresis!constants!public! !
-!OS.SystemMetrics categoriesFor: #dragImageColorDepth!accessing!private! !
-!OS.SystemMetrics categoriesFor: #edgeExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #getDefaultColorDepth!accessing!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getIconTitleFont!geometry!private! !
-!OS.SystemMetrics categoriesFor: #getMetric:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getMetric:pair:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getSysParam:type:ifError:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getSysParamBool:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getSysParamDword:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getSysParamSdword:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getSysParamStruct:type:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #getSysParamW:type:ifError:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #hasButtonNotes!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasDesktopComposition!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasEnhancedThemes!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasFlatMenus!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasGdiPalettes!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasIconScaleDown!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasImageListDragCursors!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasInternetExplorerControl!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasLinkButtons!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasMenuBitmaps!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasSmoothScrollingLists!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasTextBoxMargins!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasThemes!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #hasTreeViewHotTracking!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #iconTitleFont!geometry!public! !
-!OS.SystemMetrics categoriesFor: #initialize!initializing!private! !
-!OS.SystemMetrics categoriesFor: #isSlowMachine!public!testing! !
-!OS.SystemMetrics categoriesFor: #largeIconExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuBarColor!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuBarHeight!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuCheckExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuDividerHeight!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuFont!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuHeight!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuImageExtent!accessing!public! !
-!OS.SystemMetrics categoriesFor: #menuImageTextGap!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuTextAcceleratorGap!constants!public! !
-!OS.SystemMetrics categoriesFor: #menuWidth!constants!public! !
-!OS.SystemMetrics categoriesFor: #minimumTreeViewIndent!constants!public! !
-!OS.SystemMetrics categoriesFor: #monitorCount!accessing!public! !
-!OS.SystemMetrics categoriesFor: #mouseHoverTime!constants!public! !
-!OS.SystemMetrics categoriesFor: #nonClientMetrics!constants!public! !
-!OS.SystemMetrics categoriesFor: #onSettingChanged:!event handling-win32!private! !
-!OS.SystemMetrics categoriesFor: #paddedBorderThickness!constants!public! !
-!OS.SystemMetrics categoriesFor: #scrollbarHeight!constants!public! !
-!OS.SystemMetrics categoriesFor: #scrollbarWidth!constants!public! !
-!OS.SystemMetrics categoriesFor: #scrollThumbExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #setSysParamBool:value:!helpers!private! !
-!OS.SystemMetrics categoriesFor: #sizingFrameExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #smallIconExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #supportsAlphaBlending!capability enquiries!public! !
-!OS.SystemMetrics categoriesFor: #virtualScreenExtent!constants!public! !
-!OS.SystemMetrics categoriesFor: #virtualScreenOrigin!constants!public! !
-!OS.SystemMetrics categoriesFor: #virtualScreenRectangle!constants!public! !
+!OS.SystemMetrics categoriesForMethods!
+borderExtent!constants!public! !
+cursorExtent!constants!public! !
+defaultColorDepth!accessing!public! !
+dialogFrameExtent!constants!public! !
+dragHysteresis!constants!public! !
+dragImageColorDepth!accessing!private! !
+edgeExtent!constants!public! !
+getDefaultColorDepth!accessing!helpers!private! !
+getIconTitleFont!geometry!private! !
+getMetric:!helpers!private! !
+getMetric:pair:!helpers!private! !
+getSysParam:type:ifError:!helpers!private! !
+getSysParamBool:!helpers!private! !
+getSysParamDword:!helpers!private! !
+getSysParamSdword:!helpers!private! !
+getSysParamStruct:type:!helpers!private! !
+getSysParamW:type:ifError:!helpers!private! !
+hasButtonNotes!capability enquiries!public! !
+hasDesktopComposition!capability enquiries!public! !
+hasEnhancedThemes!capability enquiries!public! !
+hasFlatMenus!capability enquiries!public! !
+hasGdiPalettes!capability enquiries!public! !
+hasIconScaleDown!capability enquiries!public! !
+hasImageListDragCursors!capability enquiries!public! !
+hasInternetExplorerControl!capability enquiries!public! !
+hasLinkButtons!capability enquiries!public! !
+hasMenuBitmaps!capability enquiries!public! !
+hasSmoothScrollingLists!capability enquiries!public! !
+hasTextBoxMargins!capability enquiries!public! !
+hasThemes!capability enquiries!public! !
+hasTreeViewHotTracking!capability enquiries!public! !
+iconTitleFont!geometry!public! !
+initialize!initializing!private! !
+isSlowMachine!public!testing! !
+largeIconExtent!constants!public! !
+menuBarColor!constants!public! !
+menuBarHeight!constants!public! !
+menuCheckExtent!constants!public! !
+menuDividerHeight!constants!public! !
+menuFont!constants!public! !
+menuHeight!constants!public! !
+menuImageExtent!accessing!public! !
+menuImageTextGap!constants!public! !
+menuTextAcceleratorGap!constants!public! !
+menuWidth!constants!public! !
+minimumTreeViewIndent!constants!public! !
+monitorCount!accessing!public! !
+mouseHoverTime!constants!public! !
+nonClientMetrics!constants!public! !
+onSettingChanged:!event handling-win32!private! !
+paddedBorderThickness!constants!public! !
+scrollbarHeight!constants!public! !
+scrollbarWidth!constants!public! !
+scrollThumbExtent!constants!public! !
+setSysParamBool:value:!helpers!private! !
+sizingFrameExtent!constants!public! !
+smallIconExtent!constants!public! !
+supportsAlphaBlending!capability enquiries!public! !
+virtualScreenExtent!constants!public! !
+virtualScreenOrigin!constants!public! !
+virtualScreenRectangle!constants!public! !
+!
 
 !OS.SystemMetrics class methodsFor!
 
@@ -496,9 +498,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset! !
-!OS.SystemMetrics class categoriesFor: #current!instance creation!public! !
-!OS.SystemMetrics class categoriesFor: #new!instance creation!public! !
-!OS.SystemMetrics class categoriesFor: #onPreStripImage!event handling!public! !
-!OS.SystemMetrics class categoriesFor: #reset!initializing!public! !
-!OS.SystemMetrics class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.SystemMetrics class categoriesForMethods!
+current!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!event handling!public! !
+reset!initializing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.ResourceBrowserTest'
 	instanceVariableNames: 'resourceBrowser testClass'
@@ -63,13 +63,15 @@ testBasicContents
 	self assert: self resourceList size > 100.
 	self assert: (self resourceList includes: (ResourceIdentifier class: Shell)).
 	self assert: (self resourceList includes: (ResourceIdentifier class: SystemBrowserShell))! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #getShellResource!private!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceBrowser!private!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceDisplayList!private!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceList!private!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #resourceToolboxPresenter!private!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #setUp!private!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #tearDown!private!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #testAddRemoveResource!public!unit tests! !
-!Tools.Tests.ResourceBrowserTest categoriesFor: #testBasicContents!public!unit tests! !
+!Tools.Tests.ResourceBrowserTest categoriesForMethods!
+getShellResource!private!unit tests! !
+resourceBrowser!private!unit tests! !
+resourceDisplayList!private!unit tests! !
+resourceList!private!unit tests! !
+resourceToolboxPresenter!private!unit tests! !
+setUp!private!unit tests! !
+tearDown!private!unit tests! !
+testAddRemoveResource!public!unit tests! !
+testBasicContents!public!unit tests! !
+!
 

@@ -415,44 +415,46 @@ widthOfItemText: aMenuItem using: aCanvas
 				flags: self drawTextFlags]
 					ensure: [aCanvas font: oldFont].
 	^size x! !
-!Tools.MenuPainter categoriesFor: #borderInset!constants!private! !
-!Tools.MenuPainter categoriesFor: #calculateGeometry:!public!updating! !
-!Tools.MenuPainter categoriesFor: #conflictingAccelerators:!accessing!public! !
-!Tools.MenuPainter categoriesFor: #createDragImage:using:!painting!public! !
-!Tools.MenuPainter categoriesFor: #drawArrawOn:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #drawBulletOn:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #drawCheckOn:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #drawGlyph:on:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #drawTextFlags!painting!private! !
-!Tools.MenuPainter categoriesFor: #findMnemonicConflicts!helpers!private! !
-!Tools.MenuPainter categoriesFor: #horizontalSpacer!constants!private! !
-!Tools.MenuPainter categoriesFor: #imageExtent!constants!private! !
-!Tools.MenuPainter categoriesFor: #imageMargin!constants!private! !
-!Tools.MenuPainter categoriesFor: #initializeCanvas:!painting!private! !
-!Tools.MenuPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!Tools.MenuPainter categoriesFor: #itemHeight!constants!private! !
-!Tools.MenuPainter categoriesFor: #itemRect:using:!helpers!public! !
-!Tools.MenuPainter categoriesFor: #menu:!initializing!private! !
-!Tools.MenuPainter categoriesFor: #menuColor!constants!private! !
-!Tools.MenuPainter categoriesFor: #menuFont!constants!private! !
-!Tools.MenuPainter categoriesFor: #menuTextColor!constants!private! !
-!Tools.MenuPainter categoriesFor: #offsetForSubmenu:canvas:!helpers!public! !
-!Tools.MenuPainter categoriesFor: #paint:on:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintBackgroundOn:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintItem:on:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintItemImage:on:at:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintItemsOn:selected:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintItemText:on:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintMenuOn:in:selected:!painting!public! !
-!Tools.MenuPainter categoriesFor: #paintSelectedItem:on:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintSmudge:on:!painting!private! !
-!Tools.MenuPainter categoriesFor: #paintSmudgeFor:on:in:!painting!private! !
-!Tools.MenuPainter categoriesFor: #setHighlightColors:!painting!private! !
-!Tools.MenuPainter categoriesFor: #splitMenuText:!helpers!private! !
-!Tools.MenuPainter categoriesFor: #widthOfItemAccelerator:using:!helpers!private! !
-!Tools.MenuPainter categoriesFor: #widthOfItemText:using:!helpers!private! !
+!Tools.MenuPainter categoriesForMethods!
+borderInset!constants!private! !
+calculateGeometry:!public!updating! !
+conflictingAccelerators:!accessing!public! !
+createDragImage:using:!painting!public! !
+drawArrawOn:in:!painting!private! !
+drawBulletOn:in:!painting!private! !
+drawCheckOn:in:!painting!private! !
+drawGlyph:on:in:!painting!private! !
+drawTextFlags!painting!private! !
+findMnemonicConflicts!helpers!private! !
+horizontalSpacer!constants!private! !
+imageExtent!constants!private! !
+imageMargin!constants!private! !
+initializeCanvas:!painting!private! !
+insertBefore:position:canvas:!public!testing! !
+itemHeight!constants!private! !
+itemRect:using:!helpers!public! !
+menu:!initializing!private! !
+menuColor!constants!private! !
+menuFont!constants!private! !
+menuTextColor!constants!private! !
+offsetForSubmenu:canvas:!helpers!public! !
+paint:on:in:!painting!private! !
+paintBackgroundOn:in:!painting!private! !
+paintEdgeOn:in:!painting!private! !
+paintItem:on:in:!painting!private! !
+paintItemImage:on:at:!painting!private! !
+paintItemsOn:selected:!painting!private! !
+paintItemText:on:in:!painting!private! !
+paintMenuOn:in:selected:!painting!public! !
+paintSelectedItem:on:in:!painting!private! !
+paintSeparatorOn:in:!painting!private! !
+paintSmudge:on:!painting!private! !
+paintSmudgeFor:on:in:!painting!private! !
+setHighlightColors:!painting!private! !
+splitMenuText:!helpers!private! !
+widthOfItemAccelerator:using:!helpers!private! !
+widthOfItemText:using:!helpers!private! !
+!
 
 Tools.MenuPainter methodProtocol: #menuPainter attributes: #() selectors: #(#calculateGeometry: #conflictingAccelerators: #createDragImage:using: #insertBefore:position:canvas: #itemRect:using: #offsetForSubmenu:canvas: #paintMenuOn:in:selected:)!
 
@@ -467,6 +469,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Menu icon! !
-!Tools.MenuPainter class categoriesFor: #forMenu:!public! !
-!Tools.MenuPainter class categoriesFor: #icon!constants!public! !
+!Tools.MenuPainter class categoriesForMethods!
+forMenu:!public! !
+icon!constants!public! !
+!
 

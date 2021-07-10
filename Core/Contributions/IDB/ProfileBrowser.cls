@@ -244,28 +244,30 @@ updateIndicatorLimit
 	scaling (see #onUpdateIndicator:of:"
 
 	^65000! !
-!ProfileBrowser categoriesFor: #about!commands!public! !
-!ProfileBrowser categoriesFor: #createComponents!initializing!public! !
-!ProfileBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!ProfileBrowser categoriesFor: #deleteAllSampleSets!commands!public! !
-!ProfileBrowser categoriesFor: #deleteSampleSet!commands!public! !
-!ProfileBrowser categoriesFor: #filterDolphinXXX!commands!public! !
-!ProfileBrowser categoriesFor: #filterPercentage:symbol:!helpers!private! !
-!ProfileBrowser categoriesFor: #filterSelector!commands!public! !
-!ProfileBrowser categoriesFor: #isSampleSetSelected!public!testing! !
-!ProfileBrowser categoriesFor: #onSampleSetSelectionChanged!event handling!public! !
-!ProfileBrowser categoriesFor: #onSampleSetUpdated:atIndex:!event handling!public! !
-!ProfileBrowser categoriesFor: #onSelectorSelectionChanged!event handling!public! !
-!ProfileBrowser categoriesFor: #onUpdateIndicator:of:!event handling!public! !
-!ProfileBrowser categoriesFor: #onViewOpened!event handling!public! !
-!ProfileBrowser categoriesFor: #queryCommand:!commands!public! !
-!ProfileBrowser categoriesFor: #refreshSampleSets!commands!public! !
-!ProfileBrowser categoriesFor: #refreshTabsFor:!helpers!private! !
-!ProfileBrowser categoriesFor: #report!commands!public! !
-!ProfileBrowser categoriesFor: #resetSelectorFilter!helpers!private! !
-!ProfileBrowser categoriesFor: #sampleSetUpdated!helpers!private! !
-!ProfileBrowser categoriesFor: #startProfiler!commands!public! !
-!ProfileBrowser categoriesFor: #updateIndicatorLimit!constants!public! !
+!ProfileBrowser categoriesForMethods!
+about!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+deleteAllSampleSets!commands!public! !
+deleteSampleSet!commands!public! !
+filterDolphinXXX!commands!public! !
+filterPercentage:symbol:!helpers!private! !
+filterSelector!commands!public! !
+isSampleSetSelected!public!testing! !
+onSampleSetSelectionChanged!event handling!public! !
+onSampleSetUpdated:atIndex:!event handling!public! !
+onSelectorSelectionChanged!event handling!public! !
+onUpdateIndicator:of:!event handling!public! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!public! !
+refreshSampleSets!commands!public! !
+refreshTabsFor:!helpers!private! !
+report!commands!public! !
+resetSelectorFilter!helpers!private! !
+sampleSetUpdated!helpers!private! !
+startProfiler!commands!public! !
+updateIndicatorLimit!constants!public! !
+!
 
 !ProfileBrowser class methodsFor!
 
@@ -300,11 +302,13 @@ showCounts
 
 showCounts: aBooleanOrNil 
 	ShowCounts := aBooleanOrNil! !
-!ProfileBrowser class categoriesFor: #defaultShowCounts!constants!public! !
-!ProfileBrowser class categoriesFor: #displayOn:!operations!public! !
-!ProfileBrowser class categoriesFor: #icon!constants!public! !
-!ProfileBrowser class categoriesFor: #publishedAspects!constants!public! !
-!ProfileBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!ProfileBrowser class categoriesFor: #showCounts!accessing!public! !
-!ProfileBrowser class categoriesFor: #showCounts:!accessing!public! !
+!ProfileBrowser class categoriesForMethods!
+defaultShowCounts!constants!public! !
+displayOn:!operations!public! !
+icon!constants!public! !
+publishedAspects!constants!public! !
+resource_Default_view!public!resources-views! !
+showCounts!accessing!public! !
+showCounts:!accessing!public! !
+!
 

@@ -198,40 +198,42 @@ stopWithoutParentheses
 
 value
 	^self selector! !
-!Kernel.StMessageNode categoriesFor: #=!comparing!public! !
-!Kernel.StMessageNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StMessageNode categoriesFor: #argument!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #argumentCount!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #arguments!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #arguments:!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #bestNodeFor:!public!querying! !
-!Kernel.StMessageNode categoriesFor: #buildSelector!helpers!private! !
-!Kernel.StMessageNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #hash!comparing!public! !
-!Kernel.StMessageNode categoriesFor: #isBinary!public!testing! !
-!Kernel.StMessageNode categoriesFor: #isCascaded!public!testing! !
-!Kernel.StMessageNode categoriesFor: #isFirstCascaded!public!testing! !
-!Kernel.StMessageNode categoriesFor: #isInlineable!public! !
-!Kernel.StMessageNode categoriesFor: #isKeyword!public!testing! !
-!Kernel.StMessageNode categoriesFor: #isMessage!public!testing! !
-!Kernel.StMessageNode categoriesFor: #isUnary!public!testing! !
-!Kernel.StMessageNode categoriesFor: #lastIsReturn!public!testing! !
-!Kernel.StMessageNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StMessageNode categoriesFor: #numArgs!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StMessageNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #receiver!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #receiver:!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #receiver:selectorParts:arguments:!initializing!public! !
-!Kernel.StMessageNode categoriesFor: #renameSelector:andArguments:!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #selector!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #selector:!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #selectorParts!accessing!private! !
-!Kernel.StMessageNode categoriesFor: #selectorParts:!accessing!private! !
-!Kernel.StMessageNode categoriesFor: #sentMessages!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StMessageNode categoriesFor: #value!accessing!public! !
+!Kernel.StMessageNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+argument!accessing!public! !
+argumentCount!accessing!public! !
+arguments!accessing!public! !
+arguments:!accessing!public! !
+bestNodeFor:!public!querying! !
+buildSelector!helpers!private! !
+childrenDo:!accessing!public! !
+hash!comparing!public! !
+isBinary!public!testing! !
+isCascaded!public!testing! !
+isFirstCascaded!public!testing! !
+isInlineable!public! !
+isKeyword!public!testing! !
+isMessage!public!testing! !
+isUnary!public!testing! !
+lastIsReturn!public!testing! !
+needsParenthesis!public!testing! !
+numArgs!accessing!public! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+receiver:selectorParts:arguments:!initializing!public! !
+renameSelector:andArguments:!accessing!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+selectorParts!accessing!private! !
+selectorParts:!accessing!private! !
+sentMessages!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+value!accessing!public! !
+!
 
 !Kernel.StMessageNode class methodsFor!
 
@@ -254,7 +256,9 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 			selectorParts: keywordTokens
 			arguments: valueNodes;
 		yourself! !
-!Kernel.StMessageNode class categoriesFor: #receiver:selector:!instance creation!public! !
-!Kernel.StMessageNode class categoriesFor: #receiver:selector:arguments:!instance creation!public! !
-!Kernel.StMessageNode class categoriesFor: #receiver:selectorParts:arguments:!instance creation!public! !
+!Kernel.StMessageNode class categoriesForMethods!
+receiver:selector:!instance creation!public! !
+receiver:selector:arguments:!instance creation!public! !
+receiver:selectorParts:arguments:!instance creation!public! !
+!
 

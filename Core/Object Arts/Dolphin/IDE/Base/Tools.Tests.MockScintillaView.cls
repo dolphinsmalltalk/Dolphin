@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Tools.Tests.MockScintillaView'
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
@@ -124,20 +124,22 @@ tokens
 					[lastStyle := style.
 					answer addLast: {each first. style. self plainTextRange: each first}]].
 	^answer! !
-!Tools.Tests.MockScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
-!Tools.Tests.MockScintillaView categoriesFor: #characterAt:!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #maxStyle!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #plainTextFrom:to:!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #plainTextRange:!accessing!public! !
-!Tools.Tests.MockScintillaView categoriesFor: #setCurrentTextStyles:!private!style definition! !
-!Tools.Tests.MockScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
-!Tools.Tests.MockScintillaView categoriesFor: #startStylingFrom:!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #styleNamed:!accessing!public!styling! !
-!Tools.Tests.MockScintillaView categoriesFor: #styleNext:mask:!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #styleWithId:!accessing!public!style definition! !
-!Tools.Tests.MockScintillaView categoriesFor: #stylingPosition!accessing!public! !
-!Tools.Tests.MockScintillaView categoriesFor: #text:!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #textLength!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #textStyles:!public!unit tests! !
-!Tools.Tests.MockScintillaView categoriesFor: #tokens!public!unit tests! !
+!Tools.Tests.MockScintillaView categoriesForMethods!
+applyStyle:toNext:!public!styling! !
+characterAt:!public!unit tests! !
+maxStyle!public!unit tests! !
+plainTextFrom:to:!public!unit tests! !
+plainTextRange:!accessing!public! !
+setCurrentTextStyles:!private!style definition! !
+setIndicator:from:length:!indicators!public! !
+startStylingFrom:!public!unit tests! !
+styleNamed:!accessing!public!styling! !
+styleNext:mask:!public!unit tests! !
+styleWithId:!accessing!public!style definition! !
+stylingPosition!accessing!public! !
+text:!public!unit tests! !
+textLength!public!unit tests! !
+textStyles:!public!unit tests! !
+tokens!public!unit tests! !
+!
 

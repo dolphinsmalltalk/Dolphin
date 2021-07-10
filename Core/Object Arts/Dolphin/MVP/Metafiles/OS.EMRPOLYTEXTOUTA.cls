@@ -109,18 +109,20 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #aemrtext!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #aemrtext:!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #cStrings!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #cStrings:!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #exScale!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #exScale:!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #eyScale!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #eyScale:!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRPOLYTEXTOUTA categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYTEXTOUTA categoriesForMethods!
+aemrtext!**compiled accessors**!public! !
+aemrtext:!**compiled accessors**!public! !
+cStrings!**compiled accessors**!public! !
+cStrings:!**compiled accessors**!public! !
+exScale!**compiled accessors**!public! !
+exScale:!**compiled accessors**!public! !
+eyScale!**compiled accessors**!public! !
+eyScale:!**compiled accessors**!public! !
+iGraphicsMode!**compiled accessors**!public! !
+iGraphicsMode:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMRPOLYTEXTOUTA class methodsFor!
 
@@ -169,7 +171,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYTEXTOUTA. EMR_POLYTEXTOUTW}! !
-!OS.EMRPOLYTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRPOLYTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRPOLYTEXTOUTA class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYTEXTOUTA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

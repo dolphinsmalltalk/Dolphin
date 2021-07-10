@@ -69,20 +69,24 @@ storeOn: aStream
 		nextPutAll: ' protocols: '.
 	protocols asArray storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #class:protocols:!initialize/release!public! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.ProtocolEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.ProtocolEnvironment categoriesForMethods!
+class:protocols:!initialize/release!public! !
+defaultLabel!constants!private! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+isEmpty!public!testing! !
+postCopy!copying!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.ProtocolEnvironment class methodsFor!
 
 onEnvironment: anEnvironment class: aClass protocols: aCollection
 	^(self onEnvironment: anEnvironment)
 		class: aClass protocols: aCollection; yourself! !
-!Refactory.Browser.ProtocolEnvironment class categoriesFor: #onEnvironment:class:protocols:!instance creation!public! !
+!Refactory.Browser.ProtocolEnvironment class categoriesForMethods!
+onEnvironment:class:protocols:!instance creation!public! !
+!
 

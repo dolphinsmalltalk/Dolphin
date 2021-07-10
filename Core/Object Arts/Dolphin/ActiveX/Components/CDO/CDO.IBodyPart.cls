@@ -425,52 +425,54 @@ SaveToFile: fileName
 
 	<virtual stdcall: hresult 24 bstr>
 	^self invalidCall: _failureCode! !
-!CDO.IBodyPart categoriesFor: #addBodyPart!**auto generated**!methods!public! !
-!CDO.IBodyPart categoriesFor: #addBodyPart:!**auto generated**!methods!public! !
-!CDO.IBodyPart categoriesFor: #AddBodyPart:ppPart:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #bodyParts!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #charset!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #charset:!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentClass!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentClass:!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentClassName!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentClassName:!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentMediaType!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentMediaType:!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentTransferEncoding!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #contentTransferEncoding:!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #dataSource!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #fields!properties!public! !
-!CDO.IBodyPart categoriesFor: #fileName!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #get_BodyParts:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_FileName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #get_Parent:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #getDecodedContentStream!**auto generated**!methods!public! !
-!CDO.IBodyPart categoriesFor: #GetDecodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #getEncodedContentStream!**auto generated**!methods!public! !
-!CDO.IBodyPart categoriesFor: #GetEncodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #getFieldParameter:parameter:!**auto generated**!methods!public! !
-!CDO.IBodyPart categoriesFor: #GetFieldParameter:Parameter:pbstrValue:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #getInterface:!**auto generated**!methods!public! !
-!CDO.IBodyPart categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #getStream!**auto generated**!methods!public! !
-!CDO.IBodyPart categoriesFor: #GetStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.IBodyPart categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.IBodyPart categoriesFor: #parent!**auto generated**!properties!public! !
-!CDO.IBodyPart categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #put_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #put_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #put_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #put_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDO.IBodyPart categoriesFor: #SaveToFile:!**auto generated**!COM Interfaces-IBodyPart!public! !
+!CDO.IBodyPart categoriesForMethods!
+addBodyPart!**auto generated**!methods!public! !
+addBodyPart:!**auto generated**!methods!public! !
+AddBodyPart:ppPart:!**auto generated**!COM Interfaces-IBodyPart!private! !
+bodyParts!**auto generated**!properties!public! !
+charset!**auto generated**!properties!public! !
+charset:!**auto generated**!properties!public! !
+contentClass!**auto generated**!properties!public! !
+contentClass:!**auto generated**!properties!public! !
+contentClassName!**auto generated**!properties!public! !
+contentClassName:!**auto generated**!properties!public! !
+contentMediaType!**auto generated**!properties!public! !
+contentMediaType:!**auto generated**!properties!public! !
+contentTransferEncoding!**auto generated**!properties!public! !
+contentTransferEncoding:!**auto generated**!properties!public! !
+dataSource!**auto generated**!properties!public! !
+fields!properties!public! !
+fileName!**auto generated**!properties!public! !
+get_BodyParts:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_DataSource:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_Fields:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_FileName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_Parent:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getDecodedContentStream!**auto generated**!methods!public! !
+GetDecodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getEncodedContentStream!**auto generated**!methods!public! !
+GetEncodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getFieldParameter:parameter:!**auto generated**!methods!public! !
+GetFieldParameter:Parameter:pbstrValue:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getInterface:!**auto generated**!methods!public! !
+GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getStream!**auto generated**!methods!public! !
+GetStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+parent!**auto generated**!properties!public! !
+put_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
+SaveToFile:!**auto generated**!COM Interfaces-IBodyPart!public! !
+!
 
 !CDO.IBodyPart class methodsFor!
 
@@ -524,5 +526,7 @@ defineFunctions
 		defineFunction: #GetInterface:ppUnknown:
 			argumentTypes: 'bstr IDispatch**'
 ! !
-!CDO.IBodyPart class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.IBodyPart class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

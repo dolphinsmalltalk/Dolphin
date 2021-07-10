@@ -136,16 +136,18 @@ testSimultaneousWaitAndSignalWithOtherLongerDelay
 testSimultaneousWaitAndSignalWithOtherShorterDelay
 	[(Delay forMilliseconds: 15) wait] forkAt: Processor userInterruptPriority.
 	self testSimultaneousWaitAndSignal! !
-!Core.Tests.DelayTest categoriesFor: #expectDelay:for:!helpers!private! !
-!Core.Tests.DelayTest categoriesFor: #setUp!private!running! !
-!Core.Tests.DelayTest categoriesFor: #tearDown!private!running! !
-!Core.Tests.DelayTest categoriesFor: #testBasicWait!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testCancel!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testCancelWithOtherShorterDelay!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testSchedulingMultipleDelays!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testSchedulingMultipleDelaysLongerFirst!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testSignal!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testSimultaneousWaitAndSignal!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherLongerDelay!public!unit tests! !
-!Core.Tests.DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherShorterDelay!public!unit tests! !
+!Core.Tests.DelayTest categoriesForMethods!
+expectDelay:for:!helpers!private! !
+setUp!private!running! !
+tearDown!private!running! !
+testBasicWait!public!unit tests! !
+testCancel!public!unit tests! !
+testCancelWithOtherShorterDelay!public!unit tests! !
+testSchedulingMultipleDelays!public!unit tests! !
+testSchedulingMultipleDelaysLongerFirst!public!unit tests! !
+testSignal!public!unit tests! !
+testSimultaneousWaitAndSignal!public!unit tests! !
+testSimultaneousWaitAndSignalWithOtherLongerDelay!public!unit tests! !
+testSimultaneousWaitAndSignalWithOtherShorterDelay!public!unit tests! !
+!
 

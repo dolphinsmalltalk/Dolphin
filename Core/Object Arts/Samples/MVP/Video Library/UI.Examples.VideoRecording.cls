@@ -131,19 +131,21 @@ title: titleString
 	Accessor Method"
 
 	title := titleString! !
-!UI.Examples.VideoRecording categoriesFor: #date!accessing!public! !
-!UI.Examples.VideoRecording categoriesFor: #date:!accessing!public! !
-!UI.Examples.VideoRecording categoriesFor: #defaultLength!constants!private! !
-!UI.Examples.VideoRecording categoriesFor: #defaultTitle!constants!private! !
-!UI.Examples.VideoRecording categoriesFor: #displayOn:!printing!public! !
-!UI.Examples.VideoRecording categoriesFor: #initialize!initializing!private! !
-!UI.Examples.VideoRecording categoriesFor: #length!accessing!public! !
-!UI.Examples.VideoRecording categoriesFor: #length:!accessing!public! !
-!UI.Examples.VideoRecording categoriesFor: #printOn:!printing!public! !
-!UI.Examples.VideoRecording categoriesFor: #time!accessing!public! !
-!UI.Examples.VideoRecording categoriesFor: #time:!accessing!public! !
-!UI.Examples.VideoRecording categoriesFor: #title!accessing!public! !
-!UI.Examples.VideoRecording categoriesFor: #title:!accessing!public! !
+!UI.Examples.VideoRecording categoriesForMethods!
+date!accessing!public! !
+date:!accessing!public! !
+defaultLength!constants!private! !
+defaultTitle!constants!private! !
+displayOn:!printing!public! !
+initialize!initializing!private! !
+length!accessing!public! !
+length:!accessing!public! !
+printOn:!printing!public! !
+time!accessing!public! !
+time:!accessing!public! !
+title!accessing!public! !
+title:!accessing!public! !
+!
 
 !UI.Examples.VideoRecording class methodsFor!
 
@@ -160,6 +162,8 @@ new
 	"
 
 	^super new initialize! !
-!UI.Examples.VideoRecording class categoriesFor: #icon!constants!public! !
-!UI.Examples.VideoRecording class categoriesFor: #new!instance creation!public! !
+!UI.Examples.VideoRecording class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
 

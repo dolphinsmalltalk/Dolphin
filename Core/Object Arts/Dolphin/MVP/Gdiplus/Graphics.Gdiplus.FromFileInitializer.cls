@@ -18,12 +18,16 @@ absoluteFilename
 filename: aFilename fileLocator: aFileLocator
 	filename := aFilename.
 	fileLocator := aFileLocator! !
-!Graphics.Gdiplus.FromFileInitializer categoriesFor: #absoluteFilename!enquiries!public! !
-!Graphics.Gdiplus.FromFileInitializer categoriesFor: #filename:fileLocator:!initializing!private! !
+!Graphics.Gdiplus.FromFileInitializer categoriesForMethods!
+absoluteFilename!enquiries!public! !
+filename:fileLocator:!initializing!private! !
+!
 
 !Graphics.Gdiplus.FromFileInitializer class methodsFor!
 
 filename: aFilename fileLocator: aFileLocator
 	^self new filename: aFilename fileLocator: aFileLocator! !
-!Graphics.Gdiplus.FromFileInitializer class categoriesFor: #filename:fileLocator:!instance creation!public! !
+!Graphics.Gdiplus.FromFileInitializer class categoriesForMethods!
+filename:fileLocator:!instance creation!public! !
+!
 

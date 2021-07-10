@@ -16,6 +16,8 @@ canIntercept
 
 value
 	^true! !
-!UI.SelectionChangedEvent categoriesFor: #canIntercept!public!testing! !
-!UI.SelectionChangedEvent categoriesFor: #value!accessing!public! !
+!UI.SelectionChangedEvent categoriesForMethods!
+canIntercept!public!testing! !
+value!accessing!public! !
+!
 

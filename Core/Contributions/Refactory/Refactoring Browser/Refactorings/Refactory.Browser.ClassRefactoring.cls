@@ -16,8 +16,10 @@ className
 
 className: aString 
 	className := aString asSymbol! !
-!Refactory.Browser.ClassRefactoring categoriesFor: #className!accessing!public! !
-!Refactory.Browser.ClassRefactoring categoriesFor: #className:!accessing!public! !
+!Refactory.Browser.ClassRefactoring categoriesForMethods!
+className!accessing!public! !
+className:!accessing!public! !
+!
 
 !Refactory.Browser.ClassRefactoring class methodsFor!
 
@@ -29,6 +31,8 @@ model: aRBNamespace className: aName
 		model: aRBNamespace;
 		className: aName;
 		yourself! !
-!Refactory.Browser.ClassRefactoring class categoriesFor: #className:!instance creation!public! !
-!Refactory.Browser.ClassRefactoring class categoriesFor: #model:className:!instance creation!public! !
+!Refactory.Browser.ClassRefactoring class categoriesForMethods!
+className:!instance creation!public! !
+model:className:!instance creation!public! !
+!
 

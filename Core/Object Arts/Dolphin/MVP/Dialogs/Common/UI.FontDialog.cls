@@ -58,11 +58,13 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^CHOOSEFONTW! !
-!UI.FontDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.FontDialog categoriesFor: #extractResult:!helpers!private! !
-!UI.FontDialog categoriesFor: #initialize!public! !
-!UI.FontDialog categoriesFor: #model:!public! !
-!UI.FontDialog categoriesFor: #winStructClass!constants!private! !
+!UI.FontDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+extractResult:!helpers!private! !
+initialize!public! !
+model:!public! !
+winStructClass!constants!private! !
+!
 
 !UI.FontDialog class methodsFor!
 
@@ -83,7 +85,9 @@ initialize
 
 	hookHandlers := IdentityDictionary new.
 	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:! !
-!UI.FontDialog class categoriesFor: #defaultModel!models!public! !
-!UI.FontDialog class categoriesFor: #icon!constants!public! !
-!UI.FontDialog class categoriesFor: #initialize!development!initializing!private! !
+!UI.FontDialog class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+!
 

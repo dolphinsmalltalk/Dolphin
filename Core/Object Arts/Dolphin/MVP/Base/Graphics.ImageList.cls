@@ -265,35 +265,37 @@ setExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growByInteg
 	initialSize := sizeInteger.
 	growBy := growByInteger.
 	createFlags := (aBoolean ifTrue: [ILC_MASK] ifFalse: [0]) bitOr: bppInteger! !
-!Graphics.ImageList categoriesFor: #addBitmap:!adding!public! !
-!Graphics.ImageList categoriesFor: #addBitmap:mask:!adding!public! !
-!Graphics.ImageList categoriesFor: #addIcon:!adding!public! !
-!Graphics.ImageList categoriesFor: #addImage:!adding!public! !
-!Graphics.ImageList categoriesFor: #addTransparentBitmap:!adding!public! !
-!Graphics.ImageList categoriesFor: #backcolor!accessing!public! !
-!Graphics.ImageList categoriesFor: #backcolor:!accessing!public! !
-!Graphics.ImageList categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.ImageList categoriesFor: #beginDragImage:hotSpotX:hotSpotY:!modes!public! !
-!Graphics.ImageList categoriesFor: #copy!copying!public! !
-!Graphics.ImageList categoriesFor: #copyHandle!private!realizing/unrealizing! !
-!Graphics.ImageList categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.ImageList categoriesFor: #depth!accessing!public! !
-!Graphics.ImageList categoriesFor: #dragEnter:at:!drag & drop!public! !
-!Graphics.ImageList categoriesFor: #dragLeave:!drag & drop!public! !
-!Graphics.ImageList categoriesFor: #dragMoveTo:!drag & drop!public! !
-!Graphics.ImageList categoriesFor: #dragShow:!drag & drop!public! !
-!Graphics.ImageList categoriesFor: #draw:on:at:!drawing!public! !
-!Graphics.ImageList categoriesFor: #draw:on:at:backcolor:forecolor:flags:!drawing-bitmaps!public! !
-!Graphics.ImageList categoriesFor: #draw:on:at:flags:!drawing-bitmaps!public! !
-!Graphics.ImageList categoriesFor: #endDrag!drag & drop!public! !
-!Graphics.ImageList categoriesFor: #extent!accessing!public! !
-!Graphics.ImageList categoriesFor: #getIcon:style:!accessing!public! !
-!Graphics.ImageList categoriesFor: #getImageCount!accessing!public! !
-!Graphics.ImageList categoriesFor: #hasMask!private!testing! !
-!Graphics.ImageList categoriesFor: #initialize!initializing!public! !
-!Graphics.ImageList categoriesFor: #isPersistent!private!testing! !
-!Graphics.ImageList categoriesFor: #setDragCursorImage:hotSpotX:hotSpotY:!modes!public! !
-!Graphics.ImageList categoriesFor: #setExtent:depth:initialSize:growBy:masked:!accessing!private! !
+!Graphics.ImageList categoriesForMethods!
+addBitmap:!adding!public! !
+addBitmap:mask:!adding!public! !
+addIcon:!adding!public! !
+addImage:!adding!public! !
+addTransparentBitmap:!adding!public! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+beginDragImage:hotSpotX:hotSpotY:!modes!public! !
+copy!copying!public! !
+copyHandle!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+depth!accessing!public! !
+dragEnter:at:!drag & drop!public! !
+dragLeave:!drag & drop!public! !
+dragMoveTo:!drag & drop!public! !
+dragShow:!drag & drop!public! !
+draw:on:at:!drawing!public! !
+draw:on:at:backcolor:forecolor:flags:!drawing-bitmaps!public! !
+draw:on:at:flags:!drawing-bitmaps!public! !
+endDrag!drag & drop!public! !
+extent!accessing!public! !
+getIcon:style:!accessing!public! !
+getImageCount!accessing!public! !
+hasMask!private!testing! !
+initialize!initializing!public! !
+isPersistent!private!testing! !
+setDragCursorImage:hotSpotX:hotSpotY:!modes!public! !
+setExtent:depth:initialSize:growBy:masked:!accessing!private! !
+!
 
 !Graphics.ImageList class methodsFor!
 
@@ -377,15 +379,17 @@ newExtent: aPoint masked: aBoolean
 		newExtent: aPoint
 		initialSize: self defaultInitialSize
 		masked: aBoolean! !
-!Graphics.ImageList class categoriesFor: #defaultColorDepth!constants!public! !
-!Graphics.ImageList class categoriesFor: #defaultGrowthGranularity!constants!public! !
-!Graphics.ImageList class categoriesFor: #defaultIconFlags!constants!public! !
-!Graphics.ImageList class categoriesFor: #defaultImageFlags!constants!public! !
-!Graphics.ImageList class categoriesFor: #defaultInitialSize!constants!public! !
-!Graphics.ImageList class categoriesFor: #icon!constants!public! !
-!Graphics.ImageList class categoriesFor: #newExtent:!instance creation!public! !
-!Graphics.ImageList class categoriesFor: #newExtent:depth:initialSize:growBy:masked:!instance creation!public! !
-!Graphics.ImageList class categoriesFor: #newExtent:depth:masked:!instance creation!public! !
-!Graphics.ImageList class categoriesFor: #newExtent:initialSize:masked:!instance creation!public! !
-!Graphics.ImageList class categoriesFor: #newExtent:masked:!instance creation!public! !
+!Graphics.ImageList class categoriesForMethods!
+defaultColorDepth!constants!public! !
+defaultGrowthGranularity!constants!public! !
+defaultIconFlags!constants!public! !
+defaultImageFlags!constants!public! !
+defaultInitialSize!constants!public! !
+icon!constants!public! !
+newExtent:!instance creation!public! !
+newExtent:depth:initialSize:growBy:masked:!instance creation!public! !
+newExtent:depth:masked:!instance creation!public! !
+newExtent:initialSize:masked:!instance creation!public! !
+newExtent:masked:!instance creation!public! !
+!
 

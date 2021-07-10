@@ -47,12 +47,14 @@ pt
 	"Answer the <POINTL> value of the receiver's 'pt' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_pt! !
-!OS.NMMOUSE categoriesFor: #dwHitInfo!**compiled accessors**!public! !
-!OS.NMMOUSE categoriesFor: #dwItemData!**compiled accessors**!public! !
-!OS.NMMOUSE categoriesFor: #dwItemSpec!**compiled accessors**!public! !
-!OS.NMMOUSE categoriesFor: #iItem!accessing!public! !
-!OS.NMMOUSE categoriesFor: #position!accessing!public! !
-!OS.NMMOUSE categoriesFor: #pt!**compiled accessors**!public! !
+!OS.NMMOUSE categoriesForMethods!
+dwHitInfo!**compiled accessors**!public! !
+dwItemData!**compiled accessors**!public! !
+dwItemSpec!**compiled accessors**!public! !
+iItem!accessing!public! !
+position!accessing!public! !
+pt!**compiled accessors**!public! !
+!
 
 !OS.NMMOUSE class methodsFor!
 
@@ -70,6 +72,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !
-!OS.NMMOUSE class categoriesFor: #defineFields!public!template definition! !
-!OS.NMMOUSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMMOUSE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -89,13 +89,15 @@ NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumberParameters! !
-!OS.EXCEPTION_RECORD categoriesFor: #ExceptionAddress!**compiled accessors**!public! !
-!OS.EXCEPTION_RECORD categoriesFor: #ExceptionCode!**compiled accessors**!public! !
-!OS.EXCEPTION_RECORD categoriesFor: #ExceptionFlags!**compiled accessors**!public! !
-!OS.EXCEPTION_RECORD categoriesFor: #ExceptionRecord!**compiled accessors**!public! !
-!OS.EXCEPTION_RECORD categoriesFor: #information!accessing!public! !
-!OS.EXCEPTION_RECORD categoriesFor: #moduleFileName!accessing!public! !
-!OS.EXCEPTION_RECORD categoriesFor: #NumberParameters!**compiled accessors**!public! !
+!OS.EXCEPTION_RECORD categoriesForMethods!
+ExceptionAddress!**compiled accessors**!public! !
+ExceptionCode!**compiled accessors**!public! !
+ExceptionFlags!**compiled accessors**!public! !
+ExceptionRecord!**compiled accessors**!public! !
+information!accessing!public! !
+moduleFileName!accessing!public! !
+NumberParameters!**compiled accessors**!public! !
+!
 
 !OS.EXCEPTION_RECORD class methodsFor!
 
@@ -138,6 +140,8 @@ defineFields
 
 getFieldNames
 	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
-!OS.EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EXCEPTION_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EXCEPTION_RECORD class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

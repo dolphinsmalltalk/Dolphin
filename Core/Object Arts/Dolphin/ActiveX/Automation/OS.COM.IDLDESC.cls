@@ -41,10 +41,12 @@ wIDLFlags
 	"Answer the <Integer> value of the receiver's 'wIDLFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wIDLFlags! !
-!OS.COM.IDLDESC categoriesFor: #isIn!public!testing! !
-!OS.COM.IDLDESC categoriesFor: #isOut!public!testing! !
-!OS.COM.IDLDESC categoriesFor: #isRetVal!public!testing! !
-!OS.COM.IDLDESC categoriesFor: #wIDLFlags!**compiled accessors**!public! !
+!OS.COM.IDLDESC categoriesForMethods!
+isIn!public!testing! !
+isOut!public!testing! !
+isRetVal!public!testing! !
+wIDLFlags!**compiled accessors**!public! !
+!
 
 !OS.COM.IDLDESC class methodsFor!
 
@@ -67,6 +69,8 @@ defineFields
 
 getFieldNames
 	^#(#wIDLFlags)! !
-!OS.COM.IDLDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.IDLDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.IDLDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

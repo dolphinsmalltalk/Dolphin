@@ -15,5 +15,7 @@ _descriptionFormat
 	"Private - Answer a string which is the message format for the receiver's description."
 
 	^'Invalid format for %2'! !
-!Core.InvalidFormat categoriesFor: #_descriptionFormat!displaying!private! !
+!Core.InvalidFormat categoriesForMethods!
+_descriptionFormat!displaying!private! !
+!
 

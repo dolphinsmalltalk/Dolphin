@@ -90,16 +90,18 @@ priority: anInteger
 	"Set the <Process> priority at which the deferred values will be calculated."
 
 	priority := anInteger! !
-!Core.DeferredValueTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #at:ifAbsentPutClean:!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #at:put:!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #do:!enumerating!public! !
-!Core.DeferredValueTable categoriesFor: #initialize!initializing!private! !
-!Core.DeferredValueTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Core.DeferredValueTable categoriesFor: #lookup:!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #priority!accessing!public! !
-!Core.DeferredValueTable categoriesFor: #priority:!accessing!public! !
+!Core.DeferredValueTable categoriesForMethods!
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:ifAbsentPutClean:!accessing!public! !
+at:put:!accessing!public! !
+do:!enumerating!public! !
+initialize!initializing!private! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+lookup:!accessing!public! !
+priority!accessing!public! !
+priority:!accessing!public! !
+!
 

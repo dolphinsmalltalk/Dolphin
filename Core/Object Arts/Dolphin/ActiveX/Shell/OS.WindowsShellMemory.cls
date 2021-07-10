@@ -25,6 +25,8 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
-!OS.WindowsShellMemory class categoriesFor: #allocator!accessing!private! !
-!OS.WindowsShellMemory class categoriesFor: #initialize!development!initializing!private! !
+!OS.WindowsShellMemory class categoriesForMethods!
+allocator!accessing!private! !
+initialize!development!initializing!private! !
+!
 

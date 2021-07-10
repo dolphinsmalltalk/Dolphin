@@ -34,7 +34,9 @@ dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
-!OS.MIB_TCPEXROW categoriesFor: #dwProcessId!**compiled accessors**!public! !
+!OS.MIB_TCPEXROW categoriesForMethods!
+dwProcessId!**compiled accessors**!public! !
+!
 
 !OS.MIB_TCPEXROW class methodsFor!
 
@@ -62,6 +64,8 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort #dwProcessId)! !
-!OS.MIB_TCPEXROW class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_TCPEXROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_TCPEXROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

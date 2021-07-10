@@ -26,15 +26,19 @@ iStream
 
 setBytes: aByteArray 
 	bytes := aByteArray! !
-!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #=!comparing!public! !
-!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #bytes!accessing!public! !
-!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #hash!comparing!public! !
-!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #iStream!public!realizing/unrealizing! !
-!Graphics.Gdiplus.FromBytesInitializer categoriesFor: #setBytes:!initializing!private! !
+!Graphics.Gdiplus.FromBytesInitializer categoriesForMethods!
+=!comparing!public! !
+bytes!accessing!public! !
+hash!comparing!public! !
+iStream!public!realizing/unrealizing! !
+setBytes:!initializing!private! !
+!
 
 !Graphics.Gdiplus.FromBytesInitializer class methodsFor!
 
 bytes: aByteArray 
 	^self new setBytes: aByteArray! !
-!Graphics.Gdiplus.FromBytesInitializer class categoriesFor: #bytes:!instance creation!public! !
+!Graphics.Gdiplus.FromBytesInitializer class categoriesForMethods!
+bytes:!instance creation!public! !
+!
 

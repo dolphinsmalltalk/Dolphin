@@ -22,6 +22,8 @@ removeAtIndex: index
 	Raise a <BoundsError> if there is no element with that index."
 
 	^interface Delete: (index-1) asVariant! !
-!ADODB.ADODynaCollection categoriesFor: #add:!adding!public! !
-!ADODB.ADODynaCollection categoriesFor: #removeAtIndex:!public!removing! !
+!ADODB.ADODynaCollection categoriesForMethods!
+add:!adding!public! !
+removeAtIndex:!public!removing! !
+!
 

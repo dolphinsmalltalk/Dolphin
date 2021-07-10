@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.ArrayTest'
 	instanceVariableNames: ''
@@ -191,17 +191,19 @@ testWithWithWithWithWith
 	"Invoke the method directly so we don't need to install it."
 	array2 := testMethod value: Array withArguments: #(1 2 3 4 5).
 	self assert: array2 equals: array! !
-!Core.Tests.ArrayTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
-!Core.Tests.ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testLiteralStoreOn!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testLiteralStoreString!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testMixedConcatenation!public! !
-!Core.Tests.ArrayTest categoriesFor: #testNonLiteralStoreString!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testWith!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testWithWith!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testWithWithWith!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testWithWithWithWith!public!unit tests! !
-!Core.Tests.ArrayTest categoriesFor: #testWithWithWithWithWith!public!unit tests! !
+!Core.Tests.ArrayTest categoriesForMethods!
+collectionClass!helpers!private! !
+testCyclicRefPrinting!public! !
+testIsLiteral!public!unit tests! !
+testIsSelfEvaluating!public!unit tests! !
+testLiteralStoreOn!public!unit tests! !
+testLiteralStoreString!public!unit tests! !
+testMixedConcatenation!public! !
+testNonLiteralStoreString!public!unit tests! !
+testWith!public!unit tests! !
+testWithWith!public!unit tests! !
+testWithWithWith!public!unit tests! !
+testWithWithWithWith!public!unit tests! !
+testWithWithWithWithWith!public!unit tests! !
+!
 

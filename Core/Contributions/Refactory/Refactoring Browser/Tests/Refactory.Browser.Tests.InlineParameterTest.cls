@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineParameterTest'
 	instanceVariableNames: ''
@@ -31,6 +31,8 @@ testInlineLiteralArray
 	self assert: (class parseTreeFor: #sendInlineParameterMethod)
 		equals: (RBParser parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
 	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)! !
-!Refactory.Browser.Tests.InlineParameterTest categoriesFor: #testInlineBlockFailure!failure tests!public! !
-!Refactory.Browser.Tests.InlineParameterTest categoriesFor: #testInlineLiteralArray!public!tests! !
+!Refactory.Browser.Tests.InlineParameterTest categoriesForMethods!
+testInlineBlockFailure!failure tests!public! !
+testInlineLiteralArray!public!tests! !
+!
 

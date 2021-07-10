@@ -26,6 +26,8 @@ preconditions
 
 transform
 	class removeInstanceVariable: variableName! !
-!Refactory.Browser.RemoveInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RemoveInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RemoveInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

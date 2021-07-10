@@ -61,12 +61,14 @@ nextIndexOf: anElement in: collection from: start to: stop
 	answer 0."
 
 	^collection nextIndexOf: anElement from: start to: stop! !
-!Kernel.EqualitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!Kernel.EqualitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!Kernel.EqualitySearchPolicy categoriesFor: #isEquality!public!testing! !
-!Kernel.EqualitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!Kernel.EqualitySearchPolicy categoriesFor: #name!accessing!public! !
-!Kernel.EqualitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!Kernel.EqualitySearchPolicy categoriesFor: #newSet!operations!public! !
-!Kernel.EqualitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+!Kernel.EqualitySearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:max:!comparing!public! !
+isEquality!public!testing! !
+keyAtValue:in:ifAbsent:!public!searching! !
+name!accessing!public! !
+newLookupTable!operations!public! !
+newSet!operations!public! !
+nextIndexOf:in:from:to:!public!searching! !
+!
 

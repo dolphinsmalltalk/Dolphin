@@ -96,14 +96,16 @@ typeInfo: lcid ifNone: exceptionHandler
 			(lcid isNull or: [lcid asParameter = locale asParameter])
 				ifFalse: [^exceptionHandler value]].
 	^piTypeInfo! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #interface!accessing!public! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #interface:!accessing!private! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #interfaceClass!accessing!public! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #piTypeInfo:!accessing!private! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #supportedInterfaces!constants!public! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #typeInfo!accessing!private! !
-!OS.COM.DualInterfaceImplementation categoriesFor: #typeInfo:ifNone:!accessing!private! !
+!OS.COM.DualInterfaceImplementation categoriesForMethods!
+GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
+GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
+interface!accessing!public! !
+interface:!accessing!private! !
+interfaceClass!accessing!public! !
+Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
+piTypeInfo:!accessing!private! !
+supportedInterfaces!constants!public! !
+typeInfo!accessing!private! !
+typeInfo:ifNone:!accessing!private! !
+!
 

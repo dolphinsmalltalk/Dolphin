@@ -134,22 +134,24 @@ state
 					selector: #range:
 					argument: self range);
 		yourself! !
-!UI.ProgressBar categoriesFor: #backcolorChanged!helpers!private! !
-!UI.ProgressBar categoriesFor: #barPosition!accessing!private! !
-!UI.ProgressBar categoriesFor: #barPosition:!accessing!private! !
-!UI.ProgressBar categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.ProgressBar categoriesFor: #deltaBarPosition:!positioning!private! !
-!UI.ProgressBar categoriesFor: #displayValue!private!updating! !
-!UI.ProgressBar categoriesFor: #displayValue:!private!updating! !
-!UI.ProgressBar categoriesFor: #forecolor:!accessing!public! !
-!UI.ProgressBar categoriesFor: #incrementBy:!positioning!public! !
-!UI.ProgressBar categoriesFor: #isSmooth!accessing-styles!public!updating! !
-!UI.ProgressBar categoriesFor: #isSmooth:!accessing-styles!public!updating! !
-!UI.ProgressBar categoriesFor: #onViewCreated!accessing!public! !
-!UI.ProgressBar categoriesFor: #range!accessing!public! !
-!UI.ProgressBar categoriesFor: #range:!accessing!public! !
-!UI.ProgressBar categoriesFor: #setControlBackcolor:!accessing!private! !
-!UI.ProgressBar categoriesFor: #state!accessing!private! !
+!UI.ProgressBar categoriesForMethods!
+backcolorChanged!helpers!private! !
+barPosition!accessing!private! !
+barPosition:!accessing!private! !
+defaultWindowStyle!constants!private! !
+deltaBarPosition:!positioning!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+forecolor:!accessing!public! !
+incrementBy:!positioning!public! !
+isSmooth!accessing-styles!public!updating! !
+isSmooth:!accessing-styles!public!updating! !
+onViewCreated!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+setControlBackcolor:!accessing!private! !
+state!accessing!private! !
+!
 
 !UI.ProgressBar class methodsFor!
 
@@ -182,10 +184,12 @@ winClassName
 
 	^'msctls_progress32'
 ! !
-!UI.ProgressBar class categoriesFor: #defaultModel!models!public! !
-!UI.ProgressBar class categoriesFor: #icon!constants!public! !
-!UI.ProgressBar class categoriesFor: #initialize!development!initializing!private! !
-!UI.ProgressBar class categoriesFor: #themePartName!constants!private! !
-!UI.ProgressBar class categoriesFor: #validRange!constants!private! !
-!UI.ProgressBar class categoriesFor: #winClassName!constants!private! !
+!UI.ProgressBar class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+themePartName!constants!private! !
+validRange!constants!private! !
+winClassName!constants!private! !
+!
 

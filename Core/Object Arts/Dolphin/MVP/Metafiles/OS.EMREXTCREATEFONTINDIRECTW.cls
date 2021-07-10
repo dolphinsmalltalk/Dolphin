@@ -51,10 +51,12 @@ ihFont: anInteger
 	"Set the receiver's 'ihFont' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihFont put: anInteger! !
-!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw!**compiled accessors**!public! !
-!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw:!**compiled accessors**!public! !
-!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont!**compiled accessors**!public! !
-!OS.EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont:!**compiled accessors**!public! !
+!OS.EMREXTCREATEFONTINDIRECTW categoriesForMethods!
+elfw!**compiled accessors**!public! !
+elfw:!**compiled accessors**!public! !
+ihFont!**compiled accessors**!public! !
+ihFont:!**compiled accessors**!public! !
+!
 
 !OS.EMREXTCREATEFONTINDIRECTW class methodsFor!
 
@@ -88,7 +90,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTCREATEFONTINDIRECTW}! !
-!OS.EMREXTCREATEFONTINDIRECTW class categoriesFor: #defineFields!public!template definition! !
-!OS.EMREXTCREATEFONTINDIRECTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMREXTCREATEFONTINDIRECTW class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTCREATEFONTINDIRECTW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

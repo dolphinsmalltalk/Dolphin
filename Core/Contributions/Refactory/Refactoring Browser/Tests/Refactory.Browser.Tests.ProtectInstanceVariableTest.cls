@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ProtectInstanceVariableTest'
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ testVariableNotDefined
 	| refactoring |
 	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite' class: SubclassOfClassToRename.
 	self shouldFail: refactoring! !
-!Refactory.Browser.Tests.ProtectInstanceVariableTest categoriesFor: #testProtectInstanceVariable!public!tests! !
-!Refactory.Browser.Tests.ProtectInstanceVariableTest categoriesFor: #testVariableNotDefined!failure tests!public! !
+!Refactory.Browser.Tests.ProtectInstanceVariableTest categoriesForMethods!
+testProtectInstanceVariable!public!tests! !
+testVariableNotDefined!failure tests!public! !
+!
 

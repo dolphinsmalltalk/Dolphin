@@ -44,9 +44,11 @@ printFields: aCollection on: aStream
 		print: self MajorVersion;
 		nextPut: $.;
 		print: self MinorVersion! !
-!WinHttpServer.HTTP_VERSION categoriesFor: #MajorVersion!**compiled accessors**!public! !
-!WinHttpServer.HTTP_VERSION categoriesFor: #MinorVersion!**compiled accessors**!public! !
-!WinHttpServer.HTTP_VERSION categoriesFor: #printFields:on:!development!printing!private! !
+!WinHttpServer.HTTP_VERSION categoriesForMethods!
+MajorVersion!**compiled accessors**!public! !
+MinorVersion!**compiled accessors**!public! !
+printFields:on:!development!printing!private! !
+!
 
 !WinHttpServer.HTTP_VERSION class methodsFor!
 
@@ -69,6 +71,8 @@ defineFields
 
 getFieldNames
 	^#(#MajorVersion #MinorVersion)! !
-!WinHttpServer.HTTP_VERSION class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_VERSION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_VERSION class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

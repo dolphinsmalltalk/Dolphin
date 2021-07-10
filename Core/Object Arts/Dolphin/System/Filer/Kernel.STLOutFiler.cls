@@ -56,14 +56,16 @@ writeInteger: anInteger
 
 writeNil
 	stream nextPut: nil! !
-!Kernel.STLOutFiler categoriesFor: #putCharacter:!helpers!private! !
-!Kernel.STLOutFiler categoriesFor: #putLiteral:!private! !
-!Kernel.STLOutFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
-!Kernel.STLOutFiler categoriesFor: #resetStream!initializing!private! !
-!Kernel.STLOutFiler categoriesFor: #serializeObject:!operations!private! !
-!Kernel.STLOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
-!Kernel.STLOutFiler categoriesFor: #writeInteger:!helpers!private! !
-!Kernel.STLOutFiler categoriesFor: #writeNil!operations!private! !
+!Kernel.STLOutFiler categoriesForMethods!
+putCharacter:!helpers!private! !
+putLiteral:!private! !
+registerPredefinedObjects!initializing!private! !
+resetStream!initializing!private! !
+serializeObject:!operations!private! !
+writeClass:withLocator:!operations!private! !
+writeInteger:!helpers!private! !
+writeNil!operations!private! !
+!
 
 !Kernel.STLOutFiler class methodsFor!
 
@@ -72,5 +74,7 @@ signature
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
-!Kernel.STLOutFiler class categoriesFor: #signature!constants!private! !
+!Kernel.STLOutFiler class categoriesForMethods!
+signature!constants!private! !
+!
 

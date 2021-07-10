@@ -34,9 +34,11 @@ testSubclasses
 			[:each |
 			each subclasses do: [:subclass | self assert: subclass superclass identicalTo: each].
 			self assert: each subclasses equals: each subclasses distinct]! !
-!Core.Tests.ClassDescriptionTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!Core.Tests.ClassDescriptionTest categoriesFor: #testInstVarName!public!unit tests! !
-!Core.Tests.ClassDescriptionTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!Core.Tests.ClassDescriptionTest categoriesFor: #testStoreOn!public!unit tests! !
-!Core.Tests.ClassDescriptionTest categoriesFor: #testSubclasses!public!unit tests! !
+!Core.Tests.ClassDescriptionTest categoriesForMethods!
+allClassHierarchyInstancesDo:!helpers!private! !
+testInstVarName!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+testStoreOn!public!unit tests! !
+testSubclasses!public!unit tests! !
+!
 

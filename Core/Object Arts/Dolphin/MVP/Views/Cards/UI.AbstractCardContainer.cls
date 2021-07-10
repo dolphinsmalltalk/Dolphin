@@ -143,23 +143,25 @@ validateSubViewLayouts: aLayoutContext
 	"Private - Validate the layout of the visible sub-views of the receiver."
 
 	self currentCard ifNotNil: [:card | card validateLayout: aLayoutContext]! !
-!UI.AbstractCardContainer categoriesFor: #cardLayout!accessing!private! !
-!UI.AbstractCardContainer categoriesFor: #cards!accessing!public! !
-!UI.AbstractCardContainer categoriesFor: #currentCard!accessing!public! !
-!UI.AbstractCardContainer categoriesFor: #cycleNextCard!commands!public! !
-!UI.AbstractCardContainer categoriesFor: #cyclePreviousCard!commands!public! !
-!UI.AbstractCardContainer categoriesFor: #defaultLayoutManager!initializing!private! !
-!UI.AbstractCardContainer categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!UI.AbstractCardContainer categoriesFor: #firstCard!commands!public! !
-!UI.AbstractCardContainer categoriesFor: #lastCard!commands!public! !
-!UI.AbstractCardContainer categoriesFor: #nextCard!commands!public! !
-!UI.AbstractCardContainer categoriesFor: #onCurrentCardChanged!event handling!private! !
-!UI.AbstractCardContainer categoriesFor: #onSubViewAdded:!event handling!private! !
-!UI.AbstractCardContainer categoriesFor: #onViewCreated!event handling!private! !
-!UI.AbstractCardContainer categoriesFor: #previousCard!commands!public! !
-!UI.AbstractCardContainer categoriesFor: #queryCommand:!commands!private! !
-!UI.AbstractCardContainer categoriesFor: #tabOntoCurrentCard!operations!private! !
-!UI.AbstractCardContainer categoriesFor: #validateSubViewLayouts:!geometry!private! !
+!UI.AbstractCardContainer categoriesForMethods!
+cardLayout!accessing!private! !
+cards!accessing!public! !
+currentCard!accessing!public! !
+cycleNextCard!commands!public! !
+cyclePreviousCard!commands!public! !
+defaultLayoutManager!initializing!private! !
+ensureSubViewVisible:!public!sub views! !
+firstCard!commands!public! !
+lastCard!commands!public! !
+nextCard!commands!public! !
+onCurrentCardChanged!event handling!private! !
+onSubViewAdded:!event handling!private! !
+onViewCreated!event handling!private! !
+previousCard!commands!public! !
+queryCommand:!commands!private! !
+tabOntoCurrentCard!operations!private! !
+validateSubViewLayouts:!geometry!private! !
+!
 
 UI.AbstractCardContainer methodProtocol: #cardView attributes: #(#readOnly) selectors: #(#currentCard #cycleNextCard #cyclePreviousCard #firstCard #lastCard #nextCard #onCurrentCardChanged #previousCard)!
 

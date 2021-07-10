@@ -57,11 +57,13 @@ rcWork
 	"Answer the <RECTL> value of the receiver's 'rcWork' field."
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcWork! !
-!OS.MONITORINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.MONITORINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.MONITORINFO categoriesFor: #isPrimary!public!testing! !
-!OS.MONITORINFO categoriesFor: #rcMonitor!**compiled accessors**!public! !
-!OS.MONITORINFO categoriesFor: #rcWork!**compiled accessors**!public! !
+!OS.MONITORINFO categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+isPrimary!public!testing! !
+rcMonitor!**compiled accessors**!public! !
+rcWork!**compiled accessors**!public! !
+!
 
 !OS.MONITORINFO class methodsFor!
 
@@ -88,6 +90,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags)! !
-!OS.MONITORINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.MONITORINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MONITORINFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

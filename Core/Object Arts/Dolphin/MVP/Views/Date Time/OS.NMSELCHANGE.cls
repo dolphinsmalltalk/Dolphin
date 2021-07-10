@@ -23,8 +23,10 @@ stSelStart
 	"Answer the <SYSTEMTIME> value of the receiver's 'stSelStart' field."
 
 	^SYSTEMTIME fromAddress: bytes yourAddress + _OffsetOf_stSelStart! !
-!OS.NMSELCHANGE categoriesFor: #stSelEnd!**compiled accessors**!public! !
-!OS.NMSELCHANGE categoriesFor: #stSelStart!**compiled accessors**!public! !
+!OS.NMSELCHANGE categoriesForMethods!
+stSelEnd!**compiled accessors**!public! !
+stSelStart!**compiled accessors**!public! !
+!
 
 !OS.NMSELCHANGE class methodsFor!
 
@@ -40,6 +42,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
-!OS.NMSELCHANGE class categoriesFor: #defineFields!public!template definition! !
-!OS.NMSELCHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMSELCHANGE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

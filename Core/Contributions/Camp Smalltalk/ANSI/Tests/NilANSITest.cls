@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #NilANSITest
 	instanceVariableNames: ''
@@ -21,7 +21,9 @@ testXprintString
 	#'Fundamental'.
 	self value: [nil printString] should: [:r | r = 'nil']
 		conformTo: #'nil' selector: #'printString'.! !
-!NilANSITest categoriesFor: #canonicalObject!public! !
-!NilANSITest categoriesFor: #protocol!public! !
-!NilANSITest categoriesFor: #testXprintString!public! !
+!NilANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXprintString!public! !
+!
 

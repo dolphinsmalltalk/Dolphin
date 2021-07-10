@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS subclass: #'OS.Tests'
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^XProgramming.SUnit.TestCase icon! !
-!OS.Tests class categoriesFor: #icon!constants!public! !
+!OS.Tests class categoriesForMethods!
+icon!constants!public! !
+!
 

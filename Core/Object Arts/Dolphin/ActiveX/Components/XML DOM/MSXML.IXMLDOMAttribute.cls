@@ -99,17 +99,19 @@ value: attributeValue
 	Helpstring: string value of the attribute"
 
 	self put_value: attributeValue asVariant! !
-!MSXML.IXMLDOMAttribute categoriesFor: #<=!comparing!public! !
-!MSXML.IXMLDOMAttribute categoriesFor: #=!comparing!public! !
-!MSXML.IXMLDOMAttribute categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!MSXML.IXMLDOMAttribute categoriesFor: #get_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!MSXML.IXMLDOMAttribute categoriesFor: #key!accessing!public! !
-!MSXML.IXMLDOMAttribute categoriesFor: #key:!accessing!public! !
-!MSXML.IXMLDOMAttribute categoriesFor: #name!**auto generated**!properties!public! !
-!MSXML.IXMLDOMAttribute categoriesFor: #printValueOn:!printing!private! !
-!MSXML.IXMLDOMAttribute categoriesFor: #put_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!MSXML.IXMLDOMAttribute categoriesFor: #value!**auto generated**!properties!public! !
-!MSXML.IXMLDOMAttribute categoriesFor: #value:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMAttribute categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+get_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+key!accessing!public! !
+key:!accessing!public! !
+name!**auto generated**!properties!public! !
+printValueOn:!printing!private! !
+put_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+!
 
 MSXML.IXMLDOMAttribute methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -127,5 +129,7 @@ defineFunctions
 		defineFunction: #put_value:
 			argumentTypes: 'variant'
 ! !
-!MSXML.IXMLDOMAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMAttribute class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

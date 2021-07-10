@@ -26,8 +26,10 @@ value
 	"Answers the value of the receiver"
 	
 	^value! !
-!UI.ValueHolder categoriesFor: #setValue:!accessing!private! !
-!UI.ValueHolder categoriesFor: #value!accessing!public! !
+!UI.ValueHolder categoriesForMethods!
+setValue:!accessing!private! !
+value!accessing!public! !
+!
 
 !UI.ValueHolder class methodsFor!
 
@@ -40,6 +42,8 @@ with: anObject
 	"Answers an instance of the receiver holding anObject as its value"
 
 	^(self new) setValue: anObject; yourself! !
-!UI.ValueHolder class categoriesFor: #icon!constants!public! !
-!UI.ValueHolder class categoriesFor: #with:!instance creation!public! !
+!UI.ValueHolder class categoriesForMethods!
+icon!constants!public! !
+with:!instance creation!public! !
+!
 

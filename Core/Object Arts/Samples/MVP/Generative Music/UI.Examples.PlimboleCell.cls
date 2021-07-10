@@ -98,24 +98,26 @@ x
 
 y
 	^self location y! !
-!UI.Examples.PlimboleCell categoriesFor: #arrowImage!private! !
-!UI.Examples.PlimboleCell categoriesFor: #color!accessing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #direction!accessing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #directionIndex!accessing!private! !
-!UI.Examples.PlimboleCell categoriesFor: #directions!constants!private! !
-!UI.Examples.PlimboleCell categoriesFor: #drawOn:inView:!drawing!private! !
-!UI.Examples.PlimboleCell categoriesFor: #location!accessing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #location:!accessing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #palette!accessing!private! !
-!UI.Examples.PlimboleCell categoriesFor: #palette:!accessing!private! !
-!UI.Examples.PlimboleCell categoriesFor: #printOn:!printing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #reverse!operations!public! !
-!UI.Examples.PlimboleCell categoriesFor: #rotate!operations!public! !
-!UI.Examples.PlimboleCell categoriesFor: #setLocation:direction:!initializing!private! !
-!UI.Examples.PlimboleCell categoriesFor: #velocity!accessing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #velocity:!accessing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #x!accessing!public! !
-!UI.Examples.PlimboleCell categoriesFor: #y!accessing!public! !
+!UI.Examples.PlimboleCell categoriesForMethods!
+arrowImage!private! !
+color!accessing!public! !
+direction!accessing!public! !
+directionIndex!accessing!private! !
+directions!constants!private! !
+drawOn:inView:!drawing!private! !
+location!accessing!public! !
+location:!accessing!public! !
+palette!accessing!private! !
+palette:!accessing!private! !
+printOn:!printing!public! !
+reverse!operations!public! !
+rotate!operations!public! !
+setLocation:direction:!initializing!private! !
+velocity!accessing!public! !
+velocity:!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 
 !UI.Examples.PlimboleCell class methodsFor!
 
@@ -130,7 +132,9 @@ location: aLocationPoint direction: directionIndex
 	^(super new)
 		setLocation: aLocationPoint direction: directionIndex;
 		yourself! !
-!UI.Examples.PlimboleCell class categoriesFor: #arrowIcon!public! !
-!UI.Examples.PlimboleCell class categoriesFor: #icon!constants!public! !
-!UI.Examples.PlimboleCell class categoriesFor: #location:direction:!instance creation!public! !
+!UI.Examples.PlimboleCell class categoriesForMethods!
+arrowIcon!public! !
+icon!constants!public! !
+location:direction:!instance creation!public! !
+!
 

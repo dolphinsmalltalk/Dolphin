@@ -51,10 +51,12 @@ RequestQueueHandle: aHandle
 	"Set the receiver's 'RequestQueueHandle' field to the value of the argument, aHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_RequestQueueHandle put: aHandle! !
-!WinHttpServer.HTTP_BINDING_INFO categoriesFor: #requestQueueHandle!accessing!public! !
-!WinHttpServer.HTTP_BINDING_INFO categoriesFor: #RequestQueueHandle!**compiled accessors**!public! !
-!WinHttpServer.HTTP_BINDING_INFO categoriesFor: #requestQueueHandle:!accessing!public! !
-!WinHttpServer.HTTP_BINDING_INFO categoriesFor: #RequestQueueHandle:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_BINDING_INFO categoriesForMethods!
+requestQueueHandle!accessing!public! !
+RequestQueueHandle!**compiled accessors**!public! !
+requestQueueHandle:!accessing!public! !
+RequestQueueHandle:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_BINDING_INFO class methodsFor!
 
@@ -80,7 +82,9 @@ getFieldNames
 
 propertyId
 	^HttpServerBindingProperty! !
-!WinHttpServer.HTTP_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_BINDING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_BINDING_INFO class categoriesFor: #propertyId!public! !
+!WinHttpServer.HTTP_BINDING_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

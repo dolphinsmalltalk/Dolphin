@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #ErrorClassANSITest
 	instanceVariableNames: ''
@@ -57,16 +57,18 @@ testXsubclasses
 testXsuperclass
 	" <classDescription>#superclass "
 	#'Exception'.! !
-!ErrorClassANSITest categoriesFor: #canonicalObject!public! !
-!ErrorClassANSITest categoriesFor: #protocol!public! !
-!ErrorClassANSITest categoriesFor: #testXallSubclasses!public! !
-!ErrorClassANSITest categoriesFor: #testXallSuperclasses!public! !
-!ErrorClassANSITest categoriesFor: #testXconcatenateOp!public! !
-!ErrorClassANSITest categoriesFor: #testXhandlesX!public! !
-!ErrorClassANSITest categoriesFor: #testXname!public! !
-!ErrorClassANSITest categoriesFor: #testXnew!public! !
-!ErrorClassANSITest categoriesFor: #testXsignal!public! !
-!ErrorClassANSITest categoriesFor: #testXsignalX!public! !
-!ErrorClassANSITest categoriesFor: #testXsubclasses!public! !
-!ErrorClassANSITest categoriesFor: #testXsuperclass!public! !
+!ErrorClassANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXallSubclasses!public! !
+testXallSuperclasses!public! !
+testXconcatenateOp!public! !
+testXhandlesX!public! !
+testXname!public! !
+testXnew!public! !
+testXsignal!public! !
+testXsignalX!public! !
+testXsubclasses!public! !
+testXsuperclass!public! !
+!
 

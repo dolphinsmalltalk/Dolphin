@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StValueTokenTest'
 	instanceVariableNames: ''
@@ -42,7 +42,9 @@ testInstanceCreation
 	self assert: token2 stop equals: 20 + self exampleSource size - 1.
 	self assertIsNil: token2 comments.
 	self assert: token2 value equals: self exampleValue! !
-!Kernel.Tests.StValueTokenTest categoriesFor: #exampleSource!constants!private! !
-!Kernel.Tests.StValueTokenTest categoriesFor: #exampleValue!constants!private! !
-!Kernel.Tests.StValueTokenTest categoriesFor: #testInstanceCreation!public!unit tests! !
+!Kernel.Tests.StValueTokenTest categoriesForMethods!
+exampleSource!constants!private! !
+exampleValue!constants!private! !
+testInstanceCreation!public!unit tests! !
+!
 

@@ -217,36 +217,38 @@ tdesc
 	retval argument, the return type of the function (usually HRESULT)."
 
 	^self elemDesc tdesc! !
-!OS.COM.MemberDesc categoriesFor: #=!comparing!public! !
-!OS.COM.MemberDesc categoriesFor: #argumentCount!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #arguments!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #argumentTypes!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.MemberDesc categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!OS.COM.MemberDesc categoriesFor: #classDesc!accessing!private! !
-!OS.COM.MemberDesc categoriesFor: #cParams!accessing!private! !
-!OS.COM.MemberDesc categoriesFor: #customAttributes!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #documentation!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #elemDesc!accessing!private! !
-!OS.COM.MemberDesc categoriesFor: #flags!accessing!private! !
-!OS.COM.MemberDesc categoriesFor: #getAllCustData!accessing!private! !
-!OS.COM.MemberDesc categoriesFor: #hash!comparing!public! !
-!OS.COM.MemberDesc categoriesFor: #helpstring!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #idlId!printing-IDL!private! !
-!OS.COM.MemberDesc categoriesFor: #index!accessing!private! !
-!OS.COM.MemberDesc categoriesFor: #isBindable!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isDefaultBind!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isDisplayBind!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isHidden!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isNonBrowsable!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isReadOnly!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isRequestEdit!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isRestricted!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isSource!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isUIDefault!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #isValueProperty!public!testing! !
-!OS.COM.MemberDesc categoriesFor: #memid!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #name!accessing!public! !
-!OS.COM.MemberDesc categoriesFor: #setAnalyzer:index:!accessing!initializing!private! !
-!OS.COM.MemberDesc categoriesFor: #tdesc!accessing!private! !
+!OS.COM.MemberDesc categoriesForMethods!
+=!comparing!public! !
+argumentCount!accessing!public! !
+arguments!accessing!public! !
+argumentTypes!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+basicIdlAttributes!printing-IDL!private! !
+classDesc!accessing!private! !
+cParams!accessing!private! !
+customAttributes!accessing!public! !
+documentation!accessing!public! !
+elemDesc!accessing!private! !
+flags!accessing!private! !
+getAllCustData!accessing!private! !
+hash!comparing!public! !
+helpstring!accessing!public! !
+idlId!printing-IDL!private! !
+index!accessing!private! !
+isBindable!public!testing! !
+isDefaultBind!public!testing! !
+isDisplayBind!public!testing! !
+isHidden!public!testing! !
+isNonBrowsable!public!testing! !
+isReadOnly!public!testing! !
+isRequestEdit!public!testing! !
+isRestricted!public!testing! !
+isSource!public!testing! !
+isUIDefault!public!testing! !
+isValueProperty!public!testing! !
+memid!accessing!public! !
+name!accessing!public! !
+setAnalyzer:index:!accessing!initializing!private! !
+tdesc!accessing!private! !
+!
 

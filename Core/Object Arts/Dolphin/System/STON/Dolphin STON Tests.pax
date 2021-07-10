@@ -71,7 +71,9 @@ asDictionary
 	It is here only for the STON tests."
 
 	^Dictionary withAll: self! !
-!Core.Array categoriesFor: #asDictionary!private! !
+!Core.Array categoriesForMethods!
+asDictionary!private! !
+!
 
 !Core.Collection methodsFor!
 
@@ -81,7 +83,9 @@ atRandom
 	i := 1.
 	self do: [:each | i == r ifTrue: [^each]].
 	^self errorEmptyCollection! !
-!Core.Collection categoriesFor: #atRandom!public! !
+!Core.Collection categoriesForMethods!
+atRandom!public! !
+!
 
 !Core.Integer methodsFor!
 
@@ -89,7 +93,9 @@ atRandom
 	"Answer a random integer from 1 to self."
 
 	^(Random default next * self) truncated + 1! !
-!Core.Integer categoriesFor: #atRandom!public! !
+!Core.Integer categoriesForMethods!
+atRandom!public! !
+!
 
 !Core.SequenceableCollection methodsFor!
 
@@ -106,22 +112,28 @@ doWithIndex: aDyadicValuable
 	"For Pharo compatibility; #keysAndValuesDo: is preferred (and faster)"
 
 	self keysAndValuesDo: [:index :value | aDyadicValuable value: value value: index]! !
-!Core.SequenceableCollection categoriesFor: #asFloatArray!public! !
-!Core.SequenceableCollection categoriesFor: #asIntegerArray!public! !
-!Core.SequenceableCollection categoriesFor: #atRandom!public! !
-!Core.SequenceableCollection categoriesFor: #doWithIndex:!public! !
+!Core.SequenceableCollection categoriesForMethods!
+asFloatArray!public! !
+asIntegerArray!public! !
+atRandom!public! !
+doWithIndex:!public! !
+!
 
 !Core.String class methodsFor!
 
 crlf
 	^##(AnsiString with: $\r with: $\n)! !
-!Core.String class categoriesFor: #crlf!public! !
+!Core.String class categoriesForMethods!
+crlf!public! !
+!
 
 !Core.Symbol class methodsFor!
 
 hasInterned: aString ifTrue: aMonadicValuable 
 	^(self findInterned: aString) ifNil: [false] ifNotNil: [:symbol | aMonadicValuable value: symbol. true]! !
-!Core.Symbol class categoriesFor: #hasInterned:ifTrue:!public! !
+!Core.Symbol class categoriesForMethods!
+hasInterned:ifTrue:!public! !
+!
 
 !Core.Tests.ByteArrayTest methodsFor!
 
@@ -131,7 +143,9 @@ testHex
 		equals: '97c1f2ddf9209948b329319a30c16386'.
 	self assert: (ByteArray readHexFrom: '7A2BD507') equals: #[122 43 213 7].
 	self assert: (ByteArray readHexFrom: '7a2bd507') equals: #[122 43 213 7]! !
-!Core.Tests.ByteArrayTest categoriesFor: #testHex!public! !
+!Core.Tests.ByteArrayTest categoriesForMethods!
+testHex!public! !
+!
 
 !Core.Time class methodsFor!
 
@@ -140,8 +154,10 @@ hour: anInteger minute: anInteger2 second: anInteger3
 
 hour: hoursInteger minute: minutesInteger second: secondsInteger nanoSecond: nanosInteger
 	^self fromSeconds: (hoursInteger * 60 + minutesInteger) * 60 + secondsInteger + (nanosInteger / 1e9)! !
-!Core.Time class categoriesFor: #hour:minute:second:!public! !
-!Core.Time class categoriesFor: #hour:minute:second:nanoSecond:!public! !
+!Core.Time class categoriesForMethods!
+hour:minute:second:!public! !
+hour:minute:second:nanoSecond:!public! !
+!
 
 !STON.Tests.ReaderTest methodsFor!
 
@@ -170,9 +186,11 @@ testSymbolMultiByte
 	self assert: (self materialize: '#''€''') equals: Character euro asSymbol.
 	self assert: (self materialize: '#''你好''') equals: #'你好'.
 	self assert: (self materialize: '#''🐬''') equals: #'🐬'! !
-!STON.Tests.ReaderTest categoriesFor: #testColorInvalid!public!tests! !
-!STON.Tests.ReaderTest categoriesFor: #testReferenceCycle2!public!tests! !
-!STON.Tests.ReaderTest categoriesFor: #testSymbolMultiByte!public!tests! !
+!STON.Tests.ReaderTest categoriesForMethods!
+testColorInvalid!public!tests! !
+testReferenceCycle2!public!tests! !
+testSymbolMultiByte!public!tests! !
+!
 
 !STON.Tests.STONTestUser class methodsFor!
 
@@ -180,7 +198,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STONTest icon! !
-!STON.Tests.STONTestUser class categoriesFor: #icon!constants!public! !
+!STON.Tests.STONTestUser class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STON.Tests.TestDomainObject class methodsFor!
 
@@ -188,7 +208,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STONTest icon! !
-!STON.Tests.TestDomainObject class categoriesFor: #icon!constants!public! !
+!STON.Tests.TestDomainObject class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STON.Tests.TestKnownObject class methodsFor!
 
@@ -196,7 +218,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STONTest icon! !
-!STON.Tests.TestKnownObject class categoriesFor: #icon!constants!public! !
+!STON.Tests.TestKnownObject class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STON.Tests.WriteReadTest methodsFor!
 
@@ -258,16 +282,18 @@ testSearchPolicy
 
 testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
-!STON.Tests.WriteReadTest categoriesFor: #testBindingReferences!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testCompiledMethodsAndBlocks!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testDynamicLinkLibraries!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testExtendedCharacters!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testFramingCalculation!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testNamedColors!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testPluggableColors!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testProcessor!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testSearchPolicy!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testSystemDictionary!public!tests! !
+!STON.Tests.WriteReadTest categoriesForMethods!
+testBindingReferences!public!tests! !
+testCompiledMethodsAndBlocks!public!tests! !
+testDynamicLinkLibraries!public!tests! !
+testExtendedCharacters!public!tests! !
+testFramingCalculation!public!tests! !
+testNamedColors!public!tests! !
+testPluggableColors!public!tests! !
+testProcessor!public!tests! !
+testSearchPolicy!public!tests! !
+testSystemDictionary!public!tests! !
+!
 
 !STON.Tests.WriterTest methodsFor!
 
@@ -303,12 +329,14 @@ testSymbolMultiByte
 	self assert: (self serialize: Character euro asSymbol) equals: '#''€'''.
 	self assert: (self serialize: #'你好') equals: '#''你好'''.
 	self assert: (self serialize: #'🐬') equals: '#''🐬'''! !
-!STON.Tests.WriterTest categoriesFor: #testFramingCalculation!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testIsSimpleSymbol2!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testLegacyDate!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testProcessor!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testSearchPolicy!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testSymbolMultiByte!public!tests! !
+!STON.Tests.WriterTest categoriesForMethods!
+testFramingCalculation!public!tests! !
+testIsSimpleSymbol2!public!tests! !
+testLegacyDate!public!tests! !
+testProcessor!public!tests! !
+testSearchPolicy!public!tests! !
+testSymbolMultiByte!public!tests! !
+!
 
 "End of package definition"!
 

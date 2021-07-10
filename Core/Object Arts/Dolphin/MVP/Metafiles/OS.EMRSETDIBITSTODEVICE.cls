@@ -195,34 +195,36 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cScans!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cScans:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cxSrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cySrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #cySrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #iStartScan!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #iStartScan:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #xDest!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #xDest:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #xSrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #xSrc:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #yDest!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #yDest:!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #ySrc!**compiled accessors**!public! !
-!OS.EMRSETDIBITSTODEVICE categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRSETDIBITSTODEVICE categoriesForMethods!
+cbBitsSrc!**compiled accessors**!public! !
+cbBitsSrc:!**compiled accessors**!public! !
+cbBmiSrc!**compiled accessors**!public! !
+cbBmiSrc:!**compiled accessors**!public! !
+cScans!**compiled accessors**!public! !
+cScans:!**compiled accessors**!public! !
+cxSrc!**compiled accessors**!public! !
+cxSrc:!**compiled accessors**!public! !
+cySrc!**compiled accessors**!public! !
+cySrc:!**compiled accessors**!public! !
+iStartScan!**compiled accessors**!public! !
+iStartScan:!**compiled accessors**!public! !
+iUsageSrc!**compiled accessors**!public! !
+iUsageSrc:!**compiled accessors**!public! !
+offBitsSrc!**compiled accessors**!public! !
+offBitsSrc:!**compiled accessors**!public! !
+offBmiSrc!**compiled accessors**!public! !
+offBmiSrc:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+xDest!**compiled accessors**!public! !
+xDest:!**compiled accessors**!public! !
+xSrc!**compiled accessors**!public! !
+xSrc:!**compiled accessors**!public! !
+yDest!**compiled accessors**!public! !
+yDest:!**compiled accessors**!public! !
+ySrc!**compiled accessors**!public! !
+ySrc:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETDIBITSTODEVICE class methodsFor!
 
@@ -304,7 +306,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETDIBITSTODEVICE}! !
-!OS.EMRSETDIBITSTODEVICE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETDIBITSTODEVICE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETDIBITSTODEVICE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETDIBITSTODEVICE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

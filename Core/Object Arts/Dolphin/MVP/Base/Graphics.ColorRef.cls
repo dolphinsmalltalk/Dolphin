@@ -48,12 +48,14 @@ red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
 	^code bitAnd: 16rFF! !
-!Graphics.ColorRef categoriesFor: #asColorRef!converting!public! !
-!Graphics.ColorRef categoriesFor: #asCOLORREF!accessing!public! !
-!Graphics.ColorRef categoriesFor: #asRGB!converting!public! !
-!Graphics.ColorRef categoriesFor: #blue!accessing!public! !
-!Graphics.ColorRef categoriesFor: #errorNotARealColor!exceptions!private! !
-!Graphics.ColorRef categoriesFor: #red!accessing!public! !
+!Graphics.ColorRef categoriesForMethods!
+asColorRef!converting!public! !
+asCOLORREF!accessing!public! !
+asRGB!converting!public! !
+blue!accessing!public! !
+errorNotARealColor!exceptions!private! !
+red!accessing!public! !
+!
 
 !Graphics.ColorRef class methodsFor!
 
@@ -88,7 +90,9 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := self fromCOLORREF: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
-!Graphics.ColorRef class categoriesFor: #defaultColorRepresentation!constants!private! !
-!Graphics.ColorRef class categoriesFor: #fromCOLORREF:!instance creation!private! !
-!Graphics.ColorRef class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Graphics.ColorRef class categoriesForMethods!
+defaultColorRepresentation!constants!private! !
+fromCOLORREF:!instance creation!private! !
+stbReadFrom:format:!binary filing!public! !
+!
 

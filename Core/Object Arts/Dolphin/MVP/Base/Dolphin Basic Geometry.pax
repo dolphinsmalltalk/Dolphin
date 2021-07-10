@@ -112,9 +112,11 @@ _offsetRectangle: aRectangle
 	Double-dispatched from the Rectangle itself."
 
 	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self! !
-!Core.ArithmeticValue categoriesFor: #_expandRectangle:!double dispatch!private! !
-!Core.ArithmeticValue categoriesFor: #_insetRectangle:!double dispatch!private! !
-!Core.ArithmeticValue categoriesFor: #_offsetRectangle:!double dispatch!private! !
+!Core.ArithmeticValue categoriesForMethods!
+_expandRectangle:!double dispatch!private! !
+_insetRectangle:!double dispatch!private! !
+_offsetRectangle:!double dispatch!private! !
+!
 
 !Core.Number methodsFor!
 
@@ -135,9 +137,11 @@ asPoint3D
 	"Answer a Point with the receiver as all three co-ordinates."
 
 	^self @ self @ self! !
-!Core.Number categoriesFor: #@!converting!public! !
-!Core.Number categoriesFor: #asPoint!converting!public! !
-!Core.Number categoriesFor: #asPoint3D!converting!public! !
+!Core.Number categoriesForMethods!
+@!converting!public! !
+asPoint!converting!public! !
+asPoint3D!converting!public! !
+!
 
 !External.DWORD class methodsFor!
 
@@ -151,14 +155,18 @@ fromPoint: aPoint
 		lowSWord: aPoint x;
 		highSWord: aPoint y;
 		yourself! !
-!External.DWORD class categoriesFor: #fromPoint:!instance creation!private! !
+!External.DWORD class categoriesForMethods!
+fromPoint:!instance creation!private! !
+!
 
 !OS.UserLibrary methodsFor!
 
 subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
 	<stdcall: bool SubtractRect RECTL* RECTL* RECTL*>
 	^self invalidCall: _failureCode! !
-!OS.UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
+!OS.UserLibrary categoriesForMethods!
+subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
+!
 
 "End of package definition"!
 

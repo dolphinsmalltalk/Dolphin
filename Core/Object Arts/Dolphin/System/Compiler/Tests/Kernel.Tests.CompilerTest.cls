@@ -1533,91 +1533,93 @@ verifyTextMapsOf: each
 				ifFalse: 
 					[byte := debugMethod byteCodes at: ip.
 					self deny: byte equals: 0]]! !
-!Kernel.Tests.CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #compilationWarningClass!constants!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #compileExpression:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #compileExpression:in:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #compileMethod:in:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #defaultCompileFlags!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #evalTestMethod:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #getTestMethod:!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #messageFromError:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #scan:class:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #scanNonNumericEnd:class:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #scanScaledDecimal:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #scanSmallIntegerNonNumericEnd:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #setInteractiveCompile!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #setUp!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #shortPushOne!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #test1054!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testBlockTempsMap!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testBraceArrays!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testCharacterScanning!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testConstExpressionReferences!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testCopyingBlocks1!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testCopyingBlocks2!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testDecrementPushTempOptimisation!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testDecrementTempOptimisation!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testEmpty!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testEmptyIfInLoop!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testFarReturnFromBlock!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testFloatScanning!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNil!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNil!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNilNoArg!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNilNoArgUnused!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNilifNotNilUnused!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNilUnused!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNil!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNil!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNilNoArg!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNilNoArgUnused!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilifNilUnused!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilNoArg!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilNoArgUnused!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIfNotNilUnused!public! !
-!Kernel.Tests.CompilerTest categoriesFor: #testImmutableLiterals!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIncrementDecrementOptimisation!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIncrementTempOptimisation!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIntegerScanning!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testIntegerScanningBoundaries!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testKeywordAnnotations!public!unit tests-known failures! !
-!Kernel.Tests.CompilerTest categoriesFor: #testLiteralArray!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testLiteralStringEncoding!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testMutableAnnotation!public!unit tests-known failures! !
-!Kernel.Tests.CompilerTest categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testQualifiedReference!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testRadixInteger!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testReturnImmediate!exceptions!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testReturnPseudoVar!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testScanningScaledDecimals!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testScope!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testSharedOuterTemps!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
-!Kernel.Tests.CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testTextMapOfEmptyBlock!public! !
-!Kernel.Tests.CompilerTest categoriesFor: #testTextMapsOfCleanBlocks!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testToByDo!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testToByDoWithFloatSteps!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testWhileFalse!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
-!Kernel.Tests.CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
-!Kernel.Tests.CompilerTest categoriesFor: #verifyTempsMapOf:!helpers!private! !
-!Kernel.Tests.CompilerTest categoriesFor: #verifyTextMapsOf:!helpers!private!unit tests-long running! !
+!Kernel.Tests.CompilerTest categoriesForMethods!
+assertBlocksOptimized:!helpers!private! !
+checkCompileError:range:code:line:source:!helpers!private! !
+compilationErrorClass!constants!private! !
+compilationWarningClass!constants!private! !
+compileExpression:!helpers!private! !
+compileExpression:in:!helpers!private! !
+compileMethod:in:!helpers!private! !
+defaultCompileFlags!helpers!private! !
+evalTestMethod:!helpers!private! !
+evalTestMethod:withArgs:!helpers!private! !
+evaluateExpression:!helpers!private! !
+getTestMethod:!private! !
+messageFromError:!helpers!private! !
+scan:class:!helpers!private! !
+scanNonNumericEnd:class:!helpers!private! !
+scanScaledDecimal:!helpers!private! !
+scanSmallIntegerNonNumericEnd:!helpers!private! !
+setInteractiveCompile!helpers!private! !
+setUp!helpers!private! !
+shortPushOne!helpers!private! !
+test1054!public!unit tests! !
+testBlockTempsMap!public!unit tests! !
+testBlockWithAllTempTypes!public!unit tests! !
+testBraceArrays!public!unit tests! !
+testByteArraysInLiteralArrays!public!unit tests! !
+testCharacterScanning!public!unit tests! !
+testCompileTimeExpressions!public!unit tests! !
+testConstExpressionReferences!public!unit tests! !
+testCopyingBlocks1!public!unit tests! !
+testCopyingBlocks2!public!unit tests! !
+testDecrementPushTempOptimisation!public!unit tests! !
+testDecrementTempOptimisation!public!unit tests! !
+testEmpty!public!unit tests! !
+testEmptyIfInLoop!public!unit tests! !
+testFarReturnFromBlock!public!unit tests! !
+testFloatScanning!public!unit tests! !
+testIfNil!public!unit tests! !
+testIfNilifNotNil!public!unit tests! !
+testIfNilifNotNilNoArg!public!unit tests! !
+testIfNilifNotNilNoArgUnused!public!unit tests! !
+testIfNilifNotNilUnused!public!unit tests! !
+testIfNilUnused!public!unit tests! !
+testIfNotNil!public!unit tests! !
+testIfNotNilifNil!public!unit tests! !
+testIfNotNilifNilNoArg!public!unit tests! !
+testIfNotNilifNilNoArgUnused!public!unit tests! !
+testIfNotNilifNilUnused!public!unit tests! !
+testIfNotNilNoArg!public!unit tests! !
+testIfNotNilNoArgUnused!public!unit tests! !
+testIfNotNilUnused!public! !
+testImmutableLiterals!public!unit tests! !
+testIncrementDecrementOptimisation!public!unit tests! !
+testIncrementPushTempOptimisation!public!unit tests! !
+testIncrementTempOptimisation!public!unit tests! !
+testIntegerScanning!public!unit tests! !
+testIntegerScanningBoundaries!public!unit tests! !
+testKeywordAnnotations!public!unit tests-known failures! !
+testLiteralArray!public!unit tests! !
+testLiteralStringEncoding!public!unit tests! !
+testMutableAnnotation!public!unit tests-known failures! !
+testNestedCopyingBlocks!public!unit tests! !
+testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
+testQualifiedReference!public!unit tests! !
+testRadixInteger!public!unit tests! !
+testReturnFromOptimizedBlock!public!unit tests! !
+testReturnImmediate!exceptions!public!unit tests! !
+testReturnPseudoVar!public!unit tests! !
+testScanningScaledDecimals!public!unit tests! !
+testScope!public!unit tests! !
+testSharedOuterTemps!public!unit tests! !
+testSpecialLiteralsAsUnarySelectors!public! !
+testSymbolScanning!public!unit tests! !
+testTempMaps!public!unit tests! !
+testTempPairing!public!unit tests! !
+testTextMapOfEmptyBlock!public! !
+testTextMapsOfCleanBlocks!public!unit tests! !
+testTimesRepeat!public!unit tests! !
+testTimesRepeatResult!public!unit tests! !
+testToByDo!public!unit tests! !
+testToByDoWithFloatSteps!public!unit tests! !
+testWhileFalse!public!unit tests! !
+testWhileTrue!public!unit tests! !
+testWriteAccessor!public!unit tests!unit tests-known failures! !
+verifyTempsMapOf:!helpers!private! !
+verifyTextMapsOf:!helpers!private!unit tests-long running! !
+!
 
 !Kernel.Tests.CompilerTest class methodsFor!
 
@@ -1660,7 +1662,9 @@ initialize
 
 resources
 	^{CompilerTestClasses}! !
-!Kernel.Tests.CompilerTest class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
-!Kernel.Tests.CompilerTest class categoriesFor: #initialize!public!unit tests-long running! !
-!Kernel.Tests.CompilerTest class categoriesFor: #resources!Accessing!public! !
+!Kernel.Tests.CompilerTest class categoriesForMethods!
+buildSuiteFromSelectors!Building Suites!public! !
+initialize!public!unit tests-long running! !
+resources!Accessing!public! !
+!
 

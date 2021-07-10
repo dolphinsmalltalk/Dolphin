@@ -45,14 +45,16 @@ width
 
 width: anObject
 	bytes sdwordAtOffset: _OffsetOf_cx put: anObject! !
-!OS.SIZEL categoriesFor: #cx!**compiled accessors**!public! !
-!OS.SIZEL categoriesFor: #cx:!**compiled accessors**!public! !
-!OS.SIZEL categoriesFor: #cy!**compiled accessors**!public! !
-!OS.SIZEL categoriesFor: #cy:!**compiled accessors**!public! !
-!OS.SIZEL categoriesFor: #height!accessing!public! !
-!OS.SIZEL categoriesFor: #height:!accessing!public! !
-!OS.SIZEL categoriesFor: #width!accessing!public! !
-!OS.SIZEL categoriesFor: #width:!accessing!public! !
+!OS.SIZEL categoriesForMethods!
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+cy!**compiled accessors**!public! !
+cy:!**compiled accessors**!public! !
+height!accessing!public! !
+height:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !OS.SIZEL class methodsFor!
 
@@ -85,7 +87,9 @@ width: cx height: cy
 				sdwordAtOffset: 0 put: cx;
 				sdwordAtOffset: 4 put: cy;
 				yourself)! !
-!OS.SIZEL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.SIZEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.SIZEL class categoriesFor: #width:height:!instance creation!public! !
+!OS.SIZEL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+width:height:!instance creation!public! !
+!
 

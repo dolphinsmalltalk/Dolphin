@@ -109,18 +109,20 @@ superInterface
 	"Answer a <TKindInterfaceAnalyzer> describing the <COMInterface> from which the receiver is derived, or nil if the receiver describes IUnknown."
 
 	^self isDerived ifTrue: [self getImplTypeInfoAt: 1]! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #classDesc!accessing!private! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #clsid!accessing!public! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #iid!accessing!public! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #inheritedFunctions!enumerating!private! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isDerived!private!testing! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isDual!public!testing! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isExtensible!public!testing! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isSource!public!testing! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #isVBCollection!private!testing! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #methods!enumerating!public! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #protocol!accessing!private! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!OS.COM.InterfaceTypeAnalyzer categoriesFor: #superInterface!enumerating!public! !
+!OS.COM.InterfaceTypeAnalyzer categoriesForMethods!
+classDesc!accessing!private! !
+clsid!accessing!public! !
+defaultInterface!enquiries!public! !
+iid!accessing!public! !
+inheritedFunctions!enumerating!private! !
+isDerived!private!testing! !
+isDual!public!testing! !
+isExtensible!public!testing! !
+isSource!public!testing! !
+isVBCollection!private!testing! !
+methods!enumerating!public! !
+protocol!accessing!private! !
+suggestedBinding!accessing!private! !
+superInterface!enumerating!public! !
+!
 

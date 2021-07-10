@@ -70,12 +70,14 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRGLSBOUNDEDRECORD categoriesFor: #cbData!**compiled accessors**!public! !
-!OS.EMRGLSBOUNDEDRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
-!OS.EMRGLSBOUNDEDRECORD categoriesFor: #Data!**compiled accessors**!public! !
-!OS.EMRGLSBOUNDEDRECORD categoriesFor: #Data:!**compiled accessors**!public! !
-!OS.EMRGLSBOUNDEDRECORD categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRGLSBOUNDEDRECORD categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRGLSBOUNDEDRECORD categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMRGLSBOUNDEDRECORD class methodsFor!
 
@@ -113,7 +115,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GLSBOUNDEDRECORD}! !
-!OS.EMRGLSBOUNDEDRECORD class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRGLSBOUNDEDRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRGLSBOUNDEDRECORD class categoriesFor: #iTypes!constants!public! !
+!OS.EMRGLSBOUNDEDRECORD class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

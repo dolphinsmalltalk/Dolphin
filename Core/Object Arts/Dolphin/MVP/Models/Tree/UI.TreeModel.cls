@@ -248,35 +248,37 @@ size
 	"Answer the number of elements in the receiver"
 
 	^objectNodeMap size! !
-!UI.TreeModel categoriesFor: #add:asChildOf:!adding!public! !
-!UI.TreeModel categoriesFor: #add:asChildOfNode:!adding!private! !
-!UI.TreeModel categoriesFor: #addChild:parentNode:!adding!private! !
-!UI.TreeModel categoriesFor: #approxSize!accessing!private! !
-!UI.TreeModel categoriesFor: #asBag!converting!public! !
-!UI.TreeModel categoriesFor: #asSet!converting!public! !
-!UI.TreeModel categoriesFor: #basicRoots:!accessing!private! !
-!UI.TreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
-!UI.TreeModel categoriesFor: #clear!public!removing! !
-!UI.TreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
-!UI.TreeModel categoriesFor: #depthOf:!hierarchy!public! !
-!UI.TreeModel categoriesFor: #forgetChildrenOfNode:!operations!private! !
-!UI.TreeModel categoriesFor: #forgetNode:!operations!private! !
-!UI.TreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
-!UI.TreeModel categoriesFor: #getNodeFor:!hierarchy!private! !
-!UI.TreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!UI.TreeModel categoriesFor: #includes:!hierarchy!public!searching! !
-!UI.TreeModel categoriesFor: #initialize!initializing!private! !
-!UI.TreeModel categoriesFor: #lookupNode:!operations!private! !
-!UI.TreeModel categoriesFor: #move:asChildOf:!public!updating! !
-!UI.TreeModel categoriesFor: #newNode:!adding!private! !
-!UI.TreeModel categoriesFor: #nodeClass!constants!public! !
-!UI.TreeModel categoriesFor: #parentNodeOf:!hierarchy!private! !
-!UI.TreeModel categoriesFor: #parentOf:!hierarchy!public! !
-!UI.TreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
-!UI.TreeModel categoriesFor: #reset!private!removing! !
-!UI.TreeModel categoriesFor: #rootNodes!hierarchy!private! !
-!UI.TreeModel categoriesFor: #roots!hierarchy!public! !
-!UI.TreeModel categoriesFor: #size!accessing!public! !
+!UI.TreeModel categoriesForMethods!
+add:asChildOf:!adding!public! !
+add:asChildOfNode:!adding!private! !
+addChild:parentNode:!adding!private! !
+approxSize!accessing!private! !
+asBag!converting!public! !
+asSet!converting!public! !
+basicRoots:!accessing!private! !
+childrenOfNode:!hierarchy!private! !
+clear!public!removing! !
+collapse:ifAbsent:!public!removing! !
+depthOf:!hierarchy!public! !
+forgetChildrenOfNode:!operations!private! !
+forgetNode:!operations!private! !
+getChildrenOf:!hierarchy!private! !
+getNodeFor:!hierarchy!private! !
+hasChildren:!hierarchy!public!testing! !
+includes:!hierarchy!public!searching! !
+initialize!initializing!private! !
+lookupNode:!operations!private! !
+move:asChildOf:!public!updating! !
+newNode:!adding!private! !
+nodeClass!constants!public! !
+parentNodeOf:!hierarchy!private! !
+parentOf:!hierarchy!public! !
+remove:ifAbsent:!public!removing! !
+reset!private!removing! !
+rootNodes!hierarchy!private! !
+roots!hierarchy!public! !
+size!accessing!public! !
+!
 
 !UI.TreeModel class methodsFor!
 
@@ -324,7 +326,9 @@ stbConvertFromVersion2: anArray
 		with: anArray
 		startingAt: 5.
 	^answer! !
-!UI.TreeModel class categoriesFor: #new!instance creation!public! !
-!UI.TreeModel class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!UI.TreeModel class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
+!UI.TreeModel class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+!
 

@@ -52,10 +52,12 @@ ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 		from: ##(_OffsetOf_ParamDesc + 1)
 		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
 		startingAt: 1! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET categoriesForMethods!
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+ParamDesc!**compiled accessors**!public! !
+ParamDesc:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET class methodsFor!
 
@@ -78,6 +80,8 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

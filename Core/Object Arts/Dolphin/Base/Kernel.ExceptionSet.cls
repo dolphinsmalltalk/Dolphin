@@ -42,11 +42,13 @@ selectors: anObject
 	This method was automatically generated, but may be modified."
 
 	selectors := anObject! !
-!Kernel.ExceptionSet categoriesFor: #,!adding!public! !
-!Kernel.ExceptionSet categoriesFor: #handles:!accessing!public! !
-!Kernel.ExceptionSet categoriesFor: #initialize!initializing!public! !
-!Kernel.ExceptionSet categoriesFor: #selectors!accessing!public! !
-!Kernel.ExceptionSet categoriesFor: #selectors:!accessing!public! !
+!Kernel.ExceptionSet categoriesForMethods!
+,!adding!public! !
+handles:!accessing!public! !
+initialize!initializing!public! !
+selectors!accessing!public! !
+selectors:!accessing!public! !
+!
 
 Kernel.ExceptionSet methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 Kernel.ExceptionSet methodProtocol: #exceptionSet attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
@@ -65,6 +67,8 @@ selectors: anArray
 	^self basicNew
 		selectors: anArray;
 		yourself! !
-!Kernel.ExceptionSet class categoriesFor: #new!instance creation!public! !
-!Kernel.ExceptionSet class categoriesFor: #selectors:!instance creation!private! !
+!Kernel.ExceptionSet class categoriesForMethods!
+new!instance creation!public! !
+selectors:!instance creation!private! !
+!
 

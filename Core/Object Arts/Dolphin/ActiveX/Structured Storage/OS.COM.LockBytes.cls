@@ -80,14 +80,16 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
-!OS.COM.LockBytes categoriesFor: #bytes:!accessing!private! !
-!OS.COM.LockBytes categoriesFor: #contents!accessing!public! !
-!OS.COM.LockBytes categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytes categoriesFor: #initialize!initializing!private! !
-!OS.COM.LockBytes categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytes categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytes categoriesFor: #size!accessing!public! !
-!OS.COM.LockBytes categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytes categoriesForMethods!
+bytes:!accessing!private! !
+contents!accessing!public! !
+copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+initialize!initializing!private! !
+replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+resize:!COM Interfaces-ILockBytes!private! !
+size!accessing!public! !
+WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!
 
 !OS.COM.LockBytes class methodsFor!
 
@@ -98,5 +100,7 @@ on: bytes
 	^self basicNew
 		bytes: bytes;
 		queryInterface: ILockBytes! !
-!OS.COM.LockBytes class categoriesFor: #on:!instance creation!public! !
+!OS.COM.LockBytes class categoriesForMethods!
+on:!instance creation!public! !
+!
 

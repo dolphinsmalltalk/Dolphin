@@ -141,25 +141,27 @@ updatePackage
 		ifFalse: 
 			[usePackagePresenter value: true.
 			packagesPresenter selection: package]! !
-!Tools.CreateSubclassDialog categoriesFor: #canApply!private!testing! !
-!Tools.CreateSubclassDialog categoriesFor: #chooseSuperclass!commands!public! !
-!Tools.CreateSubclassDialog categoriesFor: #createComponents!initializing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #environment!constants!private! !
-!Tools.CreateSubclassDialog categoriesFor: #isPackaged!commands!private! !
-!Tools.CreateSubclassDialog categoriesFor: #model:!accessing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #onPackageSelected!event handling!private! !
-!Tools.CreateSubclassDialog categoriesFor: #onSuperclassChanged!event handling!private! !
-!Tools.CreateSubclassDialog categoriesFor: #onViewOpened!event handling!public! !
-!Tools.CreateSubclassDialog categoriesFor: #package!accessing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #package:!accessing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #queryCommand:!commands!private! !
-!Tools.CreateSubclassDialog categoriesFor: #subclasses!accessing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #subclassName!accessing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #subclassName:!accessing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #superclass!accessing!public! !
-!Tools.CreateSubclassDialog categoriesFor: #toggleSetPackage!commands!private! !
-!Tools.CreateSubclassDialog categoriesFor: #updatePackage!private!updating! !
+!Tools.CreateSubclassDialog categoriesForMethods!
+canApply!private!testing! !
+chooseSuperclass!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+environment!constants!private! !
+isPackaged!commands!private! !
+model:!accessing!public! !
+onPackageSelected!event handling!private! !
+onSuperclassChanged!event handling!private! !
+onViewOpened!event handling!public! !
+package!accessing!public! !
+package:!accessing!public! !
+queryCommand:!commands!private! !
+subclasses!accessing!public! !
+subclassName!accessing!public! !
+subclassName:!accessing!public! !
+superclass!accessing!public! !
+toggleSetPackage!commands!private! !
+updatePackage!private!updating! !
+!
 
 !Tools.CreateSubclassDialog class methodsFor!
 
@@ -208,10 +210,12 @@ subclassOf: aClassOrNil inPackage: aPackage
 	^dialog
 		showModal;
 		yourself! !
-!Tools.CreateSubclassDialog class categoriesFor: #icon!accessing!constants!public! !
-!Tools.CreateSubclassDialog class categoriesFor: #newSubclassOf:inPackage:!instance creation!public! !
-!Tools.CreateSubclassDialog class categoriesFor: #refactoringView!constants!private! !
-!Tools.CreateSubclassDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.CreateSubclassDialog class categoriesFor: #resource_Refactoring_view!public!resources-views! !
-!Tools.CreateSubclassDialog class categoriesFor: #subclassOf:inPackage:!operations!public! !
+!Tools.CreateSubclassDialog class categoriesForMethods!
+icon!accessing!constants!public! !
+newSubclassOf:inPackage:!instance creation!public! !
+refactoringView!constants!private! !
+resource_Default_view!public!resources-views! !
+resource_Refactoring_view!public!resources-views! !
+subclassOf:inPackage:!operations!public! !
+!
 

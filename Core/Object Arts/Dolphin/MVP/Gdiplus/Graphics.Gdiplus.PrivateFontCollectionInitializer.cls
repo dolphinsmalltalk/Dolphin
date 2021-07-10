@@ -16,7 +16,9 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipNewPrivateFontCollection: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.PrivateFontCollectionInitializer class methodsFor!
 
@@ -31,7 +33,9 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesFor: #default!instance creation!private! !
-!Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesFor: #new!development!instance creation!public! !
-!Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.PrivateFontCollectionInitializer class categoriesForMethods!
+default!instance creation!private! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

@@ -65,16 +65,18 @@ value: anObject
 	"Set the unsigned <integer> value stored in the receiver."
 
 	self uintPtrAtOffset: 0 put: anObject! !
-!External.UIntPtrBytes categoriesFor: #asInteger!converting!public! !
-!External.UIntPtrBytes categoriesFor: #asSignedInteger!converting!public! !
-!External.UIntPtrBytes categoriesFor: #asUIntPtr!converting!public! !
-!External.UIntPtrBytes categoriesFor: #highPart!accessing!public! !
-!External.UIntPtrBytes categoriesFor: #highPart:!accessing!public! !
-!External.UIntPtrBytes categoriesFor: #highPartSigned!accessing!public! !
-!External.UIntPtrBytes categoriesFor: #lowPart!accessing!public! !
-!External.UIntPtrBytes categoriesFor: #lowPart:!accessing!public! !
-!External.UIntPtrBytes categoriesFor: #lowPartSigned!accessing!public! !
-!External.UIntPtrBytes categoriesFor: #value:!accessing!public! !
+!External.UIntPtrBytes categoriesForMethods!
+asInteger!converting!public! !
+asSignedInteger!converting!public! !
+asUIntPtr!converting!public! !
+highPart!accessing!public! !
+highPart:!accessing!public! !
+highPartSigned!accessing!public! !
+lowPart!accessing!public! !
+lowPart:!accessing!public! !
+lowPartSigned!accessing!public! !
+value:!accessing!public! !
+!
 
 !External.UIntPtrBytes class methodsFor!
 
@@ -85,6 +87,8 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !
-!External.UIntPtrBytes class categoriesFor: #elementSize!constants!private! !
-!External.UIntPtrBytes class categoriesFor: #valueAtAddress:!instance creation!private! !
+!External.UIntPtrBytes class categoriesForMethods!
+elementSize!constants!private! !
+valueAtAddress:!instance creation!private! !
+!
 

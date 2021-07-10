@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.ExternalArrayTest subclass: #'External.Tests.SWORDArrayTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ External.Tests.SWORDArrayTest comment: ''!
 
 arrayClass
 	^SWORDArray! !
-!External.Tests.SWORDArrayTest categoriesFor: #arrayClass!constants!private! !
+!External.Tests.SWORDArrayTest categoriesForMethods!
+arrayClass!constants!private! !
+!
 

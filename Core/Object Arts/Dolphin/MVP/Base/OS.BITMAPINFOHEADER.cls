@@ -155,30 +155,32 @@ numQuads
 				ifTrue: [0]
 				ifFalse: [3]]
 ! !
-!OS.BITMAPINFOHEADER categoriesFor: #biBitCount!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biBitCount:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biClrImportant!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biClrImportant:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biClrUsed!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biClrUsed:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biCompression!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biCompression:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biHeight!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biHeight:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biPlanes!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biPlanes:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biSizeImage!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biSizeImage:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biWidth!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biWidth:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biXPelsPerMeter!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biXPelsPerMeter:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biYPelsPerMeter!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #biYPelsPerMeter:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #depth!accessing!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #extent!accessing!public! !
-!OS.BITMAPINFOHEADER categoriesFor: #numQuads!initializing!public! !
+!OS.BITMAPINFOHEADER categoriesForMethods!
+biBitCount!**compiled accessors**!public! !
+biBitCount:!**compiled accessors**!public! !
+biClrImportant!**compiled accessors**!public! !
+biClrImportant:!**compiled accessors**!public! !
+biClrUsed!**compiled accessors**!public! !
+biClrUsed:!**compiled accessors**!public! !
+biCompression!**compiled accessors**!public! !
+biCompression:!**compiled accessors**!public! !
+biHeight!**compiled accessors**!public! !
+biHeight:!**compiled accessors**!public! !
+biPlanes!**compiled accessors**!public! !
+biPlanes:!**compiled accessors**!public! !
+biSizeImage!**compiled accessors**!public! !
+biSizeImage:!**compiled accessors**!public! !
+biWidth!**compiled accessors**!public! !
+biWidth:!**compiled accessors**!public! !
+biXPelsPerMeter!**compiled accessors**!public! !
+biXPelsPerMeter:!**compiled accessors**!public! !
+biYPelsPerMeter!**compiled accessors**!public! !
+biYPelsPerMeter:!**compiled accessors**!public! !
+depth!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+extent!accessing!public! !
+numQuads!initializing!public! !
+!
 
 !OS.BITMAPINFOHEADER class methodsFor!
 
@@ -202,6 +204,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #biWidth #biHeight #biPlanes #biBitCount #biCompression #biSizeImage #biXPelsPerMeter #biYPelsPerMeter #biClrUsed #biClrImportant)! !
-!OS.BITMAPINFOHEADER class categoriesFor: #defineFields!public!template definition! !
-!OS.BITMAPINFOHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BITMAPINFOHEADER class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

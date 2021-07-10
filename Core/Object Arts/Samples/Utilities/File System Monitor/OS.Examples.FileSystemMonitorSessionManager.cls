@@ -19,7 +19,9 @@ main
 			[| path |
 			path := self argv at: 2.
 			(File isDirectory: path) ifTrue: [fsm directory: path]]! !
-!OS.Examples.FileSystemMonitorSessionManager categoriesFor: #main!operations!public! !
+!OS.Examples.FileSystemMonitorSessionManager categoriesForMethods!
+main!operations!public! !
+!
 
 !OS.Examples.FileSystemMonitorSessionManager class methodsFor!
 
@@ -27,5 +29,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^FileSystemMonitor! !
-!OS.Examples.FileSystemMonitorSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!OS.Examples.FileSystemMonitorSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

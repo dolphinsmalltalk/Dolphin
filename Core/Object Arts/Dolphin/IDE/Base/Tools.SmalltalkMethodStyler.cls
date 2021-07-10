@@ -24,8 +24,10 @@ initialLiteralStyle: aStLiteralToken
 
 initialUnaryStyle
 	^#unarySelector! !
-!Tools.SmalltalkMethodStyler categoriesFor: #initialBinaryStyle:!constants!private! !
-!Tools.SmalltalkMethodStyler categoriesFor: #initialKeywordStyle!constants!private! !
-!Tools.SmalltalkMethodStyler categoriesFor: #initialLiteralStyle:!helpers!private! !
-!Tools.SmalltalkMethodStyler categoriesFor: #initialUnaryStyle!constants!private! !
+!Tools.SmalltalkMethodStyler categoriesForMethods!
+initialBinaryStyle:!constants!private! !
+initialKeywordStyle!constants!private! !
+initialLiteralStyle:!helpers!private! !
+initialUnaryStyle!constants!private! !
+!
 

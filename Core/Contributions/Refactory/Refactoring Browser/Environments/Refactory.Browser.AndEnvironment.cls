@@ -73,18 +73,20 @@ storeOn: aStream
 	aStream nextPutAll: ' & '.
 	andedEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.AndEnvironment categoriesFor: #andedEnvironment!accessing!private! !
-!Refactory.Browser.AndEnvironment categoriesFor: #andedEnvironment:!initialize/release!public! !
-!Refactory.Browser.AndEnvironment categoriesFor: #classesDo:!accessing!public! !
-!Refactory.Browser.AndEnvironment categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.AndEnvironment categoriesFor: #includesCategory:!public! !
-!Refactory.Browser.AndEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.AndEnvironment categoriesFor: #includesProtocol:in:!public! !
-!Refactory.Browser.AndEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.AndEnvironment categoriesFor: #numberSelectors!accessing!public! !
-!Refactory.Browser.AndEnvironment categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.AndEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!Refactory.Browser.AndEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.AndEnvironment categoriesForMethods!
+andedEnvironment!accessing!private! !
+andedEnvironment:!initialize/release!public! !
+classesDo:!accessing!public! !
+definesClass:!public!testing! !
+includesCategory:!public! !
+includesClass:!public!testing! !
+includesProtocol:in:!public! !
+includesSelector:in:!public!testing! !
+numberSelectors!accessing!public! !
+problemCount!accessing!public! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.AndEnvironment class methodsFor!
 
@@ -92,5 +94,7 @@ onEnvironment: anEnvironment and: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		andedEnvironment: anotherEnvironment;
 		yourself! !
-!Refactory.Browser.AndEnvironment class categoriesFor: #onEnvironment:and:!instance creation!public! !
+!Refactory.Browser.AndEnvironment class categoriesForMethods!
+onEnvironment:and:!instance creation!public! !
+!
 

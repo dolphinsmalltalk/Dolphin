@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MSXML subclass: #'MSXML.Tests'
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!MSXML.Tests class categoriesFor: #icon!constants!public! !
+!MSXML.Tests class categoriesForMethods!
+icon!constants!public! !
+!
 

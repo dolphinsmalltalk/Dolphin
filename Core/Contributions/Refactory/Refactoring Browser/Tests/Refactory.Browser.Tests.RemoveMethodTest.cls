@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveMethodTest'
 	instanceVariableNames: ''
@@ -41,8 +41,10 @@ testRemoveReferenced
 
 testRemoveSameMethodButSendsSuper
 	self shouldWarn: (RemoveMethodRefactoring removeMethods: #(#new) from: BasicLintRuleTest class)! !
-!Refactory.Browser.Tests.RemoveMethodTest categoriesFor: #testModelRecursiveMethodThatIsNotReferencedFromOtherMethods!public!tests! !
-!Refactory.Browser.Tests.RemoveMethodTest categoriesFor: #testRemoveMethod!public!tests! !
-!Refactory.Browser.Tests.RemoveMethodTest categoriesFor: #testRemoveReferenced!failure tests!public! !
-!Refactory.Browser.Tests.RemoveMethodTest categoriesFor: #testRemoveSameMethodButSendsSuper!failure tests!public! !
+!Refactory.Browser.Tests.RemoveMethodTest categoriesForMethods!
+testModelRecursiveMethodThatIsNotReferencedFromOtherMethods!public!tests! !
+testRemoveMethod!public!tests! !
+testRemoveReferenced!failure tests!public! !
+testRemoveSameMethodButSendsSuper!failure tests!public! !
+!
 

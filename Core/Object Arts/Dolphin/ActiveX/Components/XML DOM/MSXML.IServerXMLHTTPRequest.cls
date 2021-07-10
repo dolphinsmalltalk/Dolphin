@@ -122,14 +122,16 @@ WaitForResponse: timeoutInSeconds isSuccessful: isSuccessful
 
 	<virtual stdcall: hresult 23 variant varbool*>
 	^self invalidCall: _failureCode! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #getOption:!**auto generated**!methods!public! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #setOption:value:!**auto generated**!methods!public! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #SetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!public! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #waitForResponse!**auto generated**!methods!public! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #waitForResponse:!**auto generated**!methods!public! !
-!MSXML.IServerXMLHTTPRequest categoriesFor: #WaitForResponse:isSuccessful:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+!MSXML.IServerXMLHTTPRequest categoriesForMethods!
+getOption:!**auto generated**!methods!public! !
+GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+setOption:value:!**auto generated**!methods!public! !
+SetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!public! !
+waitForResponse!**auto generated**!methods!public! !
+waitForResponse:!**auto generated**!methods!public! !
+WaitForResponse:isSuccessful:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+!
 
 !MSXML.IServerXMLHTTPRequest class methodsFor!
 
@@ -147,5 +149,7 @@ defineFunctions
 		defineFunction: #SetOption:value:
 			argumentTypes: 'sdword variant'
 ! !
-!MSXML.IServerXMLHTTPRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IServerXMLHTTPRequest class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

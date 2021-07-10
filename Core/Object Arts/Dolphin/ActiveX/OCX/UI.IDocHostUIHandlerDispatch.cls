@@ -359,30 +359,32 @@ UpdateUI
 
 	<virtual stdcall: hresult 12>
 	^self invalidCall: _failureCode! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #EnableModeless:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #filterDataObject:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #FilterDataObject:ppDORet:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #getDropTarget:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #GetDropTarget:ppDropTarget:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #getExternal!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #GetExternal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #getHostInfo:pdwDoubleClick:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #GetHostInfo:pdwDoubleClick:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #getOptionKeyPath:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #GetOptionKeyPath:dw:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #HideUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #OnDocWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #OnFrameWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #ResizeBorder:top:right:bottom:pUIWindow:fFrameWindow:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #showContextMenu:x:y:pcmdtReserved:pdispReserved:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #ShowContextMenu:x:y:pcmdtReserved:pdispReserved:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #showUI:pActiveObject:pCommandTarget:pFrame:pDoc:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #ShowUI:pActiveObject:pCommandTarget:pFrame:pDoc:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #translateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #TranslateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #translateUrl:bstrURLIn:!**auto generated**!methods!public! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #TranslateUrl:bstrURLIn:pbstrURLOut:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!UI.IDocHostUIHandlerDispatch categoriesFor: #UpdateUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+!UI.IDocHostUIHandlerDispatch categoriesForMethods!
+EnableModeless:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+filterDataObject:!**auto generated**!methods!public! !
+FilterDataObject:ppDORet:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getDropTarget:!**auto generated**!methods!public! !
+GetDropTarget:ppDropTarget:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getExternal!**auto generated**!methods!public! !
+GetExternal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getHostInfo:pdwDoubleClick:!**auto generated**!methods!public! !
+GetHostInfo:pdwDoubleClick:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getOptionKeyPath:!**auto generated**!methods!public! !
+GetOptionKeyPath:dw:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+HideUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+OnDocWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+OnFrameWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+ResizeBorder:top:right:bottom:pUIWindow:fFrameWindow:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+showContextMenu:x:y:pcmdtReserved:pdispReserved:!**auto generated**!methods!public! !
+ShowContextMenu:x:y:pcmdtReserved:pdispReserved:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+showUI:pActiveObject:pCommandTarget:pFrame:pDoc:!**auto generated**!methods!public! !
+ShowUI:pActiveObject:pCommandTarget:pFrame:pDoc:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+translateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:!**auto generated**!methods!public! !
+TranslateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+translateUrl:bstrURLIn:!**auto generated**!methods!public! !
+TranslateUrl:bstrURLIn:pbstrURLOut:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+UpdateUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+!
 
 !UI.IDocHostUIHandlerDispatch class methodsFor!
 
@@ -420,5 +422,7 @@ defineFunctions
 		defineFunction: #FilterDataObject:ppDORet:
 			argumentTypes: 'IUnknown* IUnknown**'
 ! !
-!UI.IDocHostUIHandlerDispatch class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!UI.IDocHostUIHandlerDispatch class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

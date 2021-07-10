@@ -98,18 +98,20 @@ Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Reserved put: anInteger! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #BoundingBox!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #BoundingBox:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Checksum!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Checksum:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Hmf!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Hmf:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Inch!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Inch:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Key!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Key:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Reserved!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesFor: #Reserved:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader categoriesForMethods!
+BoundingBox!**compiled accessors**!public! !
+BoundingBox:!**compiled accessors**!public! !
+Checksum!**compiled accessors**!public! !
+Checksum:!**compiled accessors**!public! !
+Hmf!**compiled accessors**!public! !
+Hmf:!**compiled accessors**!public! !
+Inch!**compiled accessors**!public! !
+Inch:!**compiled accessors**!public! !
+Key!**compiled accessors**!public! !
+Key:!**compiled accessors**!public! !
+Reserved!**compiled accessors**!public! !
+Reserved:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpWmfPlaceableFileHeader class methodsFor!
 
@@ -151,6 +153,8 @@ defineFields
 
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpWmfPlaceableFileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpWmfPlaceableFileHeader class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

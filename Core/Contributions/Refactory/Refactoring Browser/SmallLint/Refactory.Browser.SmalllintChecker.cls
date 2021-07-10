@@ -50,15 +50,17 @@ run
 			[:aClass | 
 			self checkClass: aClass.
 			self checkMethodsForClass: aClass]! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #checkClass:!private! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #checkMethodsForClass:!private! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #context:!accessing!public! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #environment:!accessing!public! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #methodBlock:!accessing!public! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #release!initialize/release!public! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #rule:!accessing!public! !
-!Refactory.Browser.SmalllintChecker categoriesFor: #run!actions!public! !
+!Refactory.Browser.SmalllintChecker categoriesForMethods!
+checkClass:!private! !
+checkMethodsForClass:!private! !
+context:!accessing!public! !
+environment:!accessing!public! !
+initialize!initialize/release!public! !
+methodBlock:!accessing!public! !
+release!initialize/release!public! !
+rule:!accessing!public! !
+run!actions!public! !
+!
 
 !Refactory.Browser.SmalllintChecker class methodsFor!
 
@@ -78,7 +80,9 @@ runRule: aLintRule onEnvironment: aBrowserEnvironment
 		environment: aBrowserEnvironment;
 		run.
 	^aLintRule! !
-!Refactory.Browser.SmalllintChecker class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.SmalllintChecker class categoriesFor: #newWithContext!instance creation!public! !
-!Refactory.Browser.SmalllintChecker class categoriesFor: #runRule:onEnvironment:!instance creation!public! !
+!Refactory.Browser.SmalllintChecker class categoriesForMethods!
+new!instance creation!public! !
+newWithContext!instance creation!public! !
+runRule:onEnvironment:!instance creation!public! !
+!
 

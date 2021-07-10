@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'External.Tests.ExternalArrayTest'
 	instanceVariableNames: ''
@@ -204,14 +204,16 @@ testWithDo
 				matching: [:ex | ex description = 'collections are of different sizes']].
 	subject := self newNumericArray: 0.
 	subject with: (1 to: 0) do: [:a :b | self assert: false]! !
-!External.Tests.ExternalArrayTest categoriesFor: #arrayClass!constants!private! !
-!External.Tests.ExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
-!External.Tests.ExternalArrayTest categoriesFor: #canonicalizeValue:!private!unit tests! !
-!External.Tests.ExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
-!External.Tests.ExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
-!External.Tests.ExternalArrayTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
-!External.Tests.ExternalArrayTest categoriesFor: #newNumericArray:!helpers!private! !
-!External.Tests.ExternalArrayTest categoriesFor: #testAtAndAtPut!public!unit tests! !
-!External.Tests.ExternalArrayTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
-!External.Tests.ExternalArrayTest categoriesFor: #testWithDo!public!unit tests! !
+!External.Tests.ExternalArrayTest categoriesForMethods!
+arrayClass!constants!private! !
+arrayValueString:!private!unit tests! !
+canonicalizeValue:!private!unit tests! !
+elementFromValue:!private!unit tests! !
+elementToValue:!private!unit tests! !
+newArrayOfIntegers:!helpers!private! !
+newNumericArray:!helpers!private! !
+testAtAndAtPut!public!unit tests! !
+testFromToKeysAndValuesDo!public!unit tests! !
+testWithDo!public!unit tests! !
+!
 

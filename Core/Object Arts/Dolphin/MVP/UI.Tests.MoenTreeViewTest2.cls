@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.MoenTreeViewTest2'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ UI.Tests.MoenTreeViewTest2 comment: 'SUnitBrowser openOnTestCase: self'!
 
 classToTest
 	^MoenTreeView! !
-!UI.Tests.MoenTreeViewTest2 categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.MoenTreeViewTest2 categoriesForMethods!
+classToTest!helpers!private! !
+!
 

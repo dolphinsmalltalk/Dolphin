@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AbstractInstanceVariableTest'
 	instanceVariableNames: ''
@@ -123,11 +123,13 @@ testMetaclassInstanceVariables
 
 testNonExistantName
 	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTest)! !
-!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testAbstractInstanceVariable!public!tests! !
-!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testAbstractWithAssignmentUsed!public!tests! !
-!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testAbstractWithDefaultNamesUsed!public!tests! !
-!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testInheritedName!failure tests!public! !
-!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testMetaclassInstanceVariables!public!tests! !
-!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesForMethods!
+setUp!public!set up! !
+testAbstractInstanceVariable!public!tests! !
+testAbstractWithAssignmentUsed!public!tests! !
+testAbstractWithDefaultNamesUsed!public!tests! !
+testInheritedName!failure tests!public! !
+testMetaclassInstanceVariables!public!tests! !
+testNonExistantName!failure tests!public! !
+!
 

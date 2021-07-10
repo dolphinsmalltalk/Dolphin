@@ -28,7 +28,9 @@ defaultSides
 	Circles effectively have many sides"
 
 	^100! !
-!UI.Examples.Circle categoriesFor: #defaultColor!constants!public! !
-!UI.Examples.Circle categoriesFor: #defaultPosition!constants!public! !
-!UI.Examples.Circle categoriesFor: #defaultSides!constants!public! !
+!UI.Examples.Circle categoriesForMethods!
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+defaultSides!constants!public! !
+!
 

@@ -29,7 +29,9 @@ stats
 	"Answer the <MIBICMPINFO> value of the receiver's 'stats' field."
 
 	^MIBICMPINFO fromAddress: bytes yourAddress! !
-!OS.MIB_ICMP categoriesFor: #stats!**compiled accessors**!public! !
+!OS.MIB_ICMP categoriesForMethods!
+stats!**compiled accessors**!public! !
+!
 
 !OS.MIB_ICMP class methodsFor!
 
@@ -53,6 +55,8 @@ defineFields
 
 getFieldNames
 	^#(#stats)! !
-!OS.MIB_ICMP class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_ICMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_ICMP class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

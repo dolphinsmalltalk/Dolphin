@@ -306,30 +306,32 @@ valueWithHandle: operation forExtent: aPoint
 						User32 destroyIcon: hIcon.
 						^answer]].
 	^operation value: self asParameter! !
-!Graphics.Icon categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Graphics.Icon categoriesFor: #asAlphaBitmap:!converting!public! !
-!Graphics.Icon categoriesFor: #asCursor!public! !
-!Graphics.Icon categoriesFor: #asIcon!public! !
-!Graphics.Icon categoriesFor: #asMenuBitmap!converting!public! !
-!Graphics.Icon categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Icon categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Icon categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.Icon categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!Graphics.Icon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.Icon categoriesFor: #drawOn:at:extent:frame:background:!drawing-bitmaps!public! !
-!Graphics.Icon categoriesFor: #drawOn:at:extent:frame:background:flags:!drawing-bitmaps!public! !
-!Graphics.Icon categoriesFor: #drawOn:at:frame:background:!drawing-bitmaps!public! !
-!Graphics.Icon categoriesFor: #extent!accessing!public! !
-!Graphics.Icon categoriesFor: #getIconInfo!helpers!private! !
-!Graphics.Icon categoriesFor: #hotspot!accessing!public! !
-!Graphics.Icon categoriesFor: #icon!constants!public! !
-!Graphics.Icon categoriesFor: #imageIndex!accessing!public! !
-!Graphics.Icon categoriesFor: #imageType!constants!private! !
-!Graphics.Icon categoriesFor: #includesFrame:!public!searching! !
-!Graphics.Icon categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
-!Graphics.Icon categoriesFor: #loadFlags!private!realizing/unrealizing! !
-!Graphics.Icon categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Graphics.Icon categoriesFor: #valueWithHandle:forExtent:!helpers!private!wine fix! !
+!Graphics.Icon categoriesForMethods!
+addToImageList:mask:!double dispatch!private! !
+asAlphaBitmap:!converting!public! !
+asCursor!public! !
+asIcon!public! !
+asMenuBitmap!converting!public! !
+basicFree!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+drawOn:at:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOn:at:extent:frame:background:!drawing-bitmaps!public! !
+drawOn:at:extent:frame:background:flags:!drawing-bitmaps!public! !
+drawOn:at:frame:background:!drawing-bitmaps!public! !
+extent!accessing!public! !
+getIconInfo!helpers!private! !
+hotspot!accessing!public! !
+icon!constants!public! !
+imageIndex!accessing!public! !
+imageType!constants!private! !
+includesFrame:!public!searching! !
+load:fromInstance:extent:!private!realizing/unrealizing! !
+loadFlags!private!realizing/unrealizing! !
+loadFromInstance:!private!realizing/unrealizing! !
+valueWithHandle:forExtent:!helpers!private!wine fix! !
+!
 
 !Graphics.Icon class methodsFor!
 
@@ -454,27 +456,29 @@ window
 
 	WinLogo isNil ifTrue: [WinLogo := self fromSystemId: IDI_WINLOGO].
 	^WinLogo! !
-!Graphics.Icon class categoriesFor: #asterisk!instance creation!public! !
-!Graphics.Icon class categoriesFor: #blank!instance creation!public! !
-!Graphics.Icon class categoriesFor: #clear!initializing!public! !
-!Graphics.Icon class categoriesFor: #defaultApplication!instance creation!public! !
-!Graphics.Icon class categoriesFor: #defaultExtent!constants!public! !
-!Graphics.Icon class categoriesFor: #error!instance creation!public! !
-!Graphics.Icon class categoriesFor: #exclamation!instance creation!public! !
-!Graphics.Icon class categoriesFor: #extraLargeExtent!constants!public! !
-!Graphics.Icon class categoriesFor: #filesType!constants!private! !
-!Graphics.Icon class categoriesFor: #hand!instance creation!public! !
-!Graphics.Icon class categoriesFor: #icon!constants!public! !
-!Graphics.Icon class categoriesFor: #imageManager!accessing!public! !
-!Graphics.Icon class categoriesFor: #information!instance creation!public! !
-!Graphics.Icon class categoriesFor: #largeExtent!constants!public! !
-!Graphics.Icon class categoriesFor: #null!instance creation!public! !
-!Graphics.Icon class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Graphics.Icon class categoriesFor: #onStartup2!event handling!private! !
-!Graphics.Icon class categoriesFor: #question!instance creation!public! !
-!Graphics.Icon class categoriesFor: #smallExtent!constants!public! !
-!Graphics.Icon class categoriesFor: #tileExtent!constants!public! !
-!Graphics.Icon class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Graphics.Icon class categoriesFor: #warning!instance creation!public! !
-!Graphics.Icon class categoriesFor: #window!instance creation!public! !
+!Graphics.Icon class categoriesForMethods!
+asterisk!instance creation!public! !
+blank!instance creation!public! !
+clear!initializing!public! !
+defaultApplication!instance creation!public! !
+defaultExtent!constants!public! !
+error!instance creation!public! !
+exclamation!instance creation!public! !
+extraLargeExtent!constants!public! !
+filesType!constants!private! !
+hand!instance creation!public! !
+icon!constants!public! !
+imageManager!accessing!public! !
+information!instance creation!public! !
+largeExtent!constants!public! !
+null!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+onStartup2!event handling!private! !
+question!instance creation!public! !
+smallExtent!constants!public! !
+tileExtent!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+warning!instance creation!public! !
+window!instance creation!public! !
+!
 

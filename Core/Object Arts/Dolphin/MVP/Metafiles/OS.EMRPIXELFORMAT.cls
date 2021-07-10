@@ -39,8 +39,10 @@ pfd: aPIXELFORMATDESCRIPTOR
 		from: ##(_OffsetOf_pfd + 1)
 		to: ##(_OffsetOf_pfd + PIXELFORMATDESCRIPTOR basicByteSize)
 		startingAt: 1! !
-!OS.EMRPIXELFORMAT categoriesFor: #pfd!**compiled accessors**!public! !
-!OS.EMRPIXELFORMAT categoriesFor: #pfd:!**compiled accessors**!public! !
+!OS.EMRPIXELFORMAT categoriesForMethods!
+pfd!**compiled accessors**!public! !
+pfd:!**compiled accessors**!public! !
+!
 
 !OS.EMRPIXELFORMAT class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_PIXELFORMAT}! !
-!OS.EMRPIXELFORMAT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRPIXELFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRPIXELFORMAT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPIXELFORMAT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

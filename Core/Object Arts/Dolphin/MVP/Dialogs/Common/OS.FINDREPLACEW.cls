@@ -142,28 +142,30 @@ wReplaceWithLen: anInteger
 	"Set the receiver's 'wReplaceWithLen' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
-!OS.FINDREPLACEW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #findDetails!event handling!public! !
-!OS.FINDREPLACEW categoriesFor: #findWhat!accessing!public! !
-!OS.FINDREPLACEW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #flags:!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #hookFlag!accessing!public! !
-!OS.FINDREPLACEW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #isCaseSensitive!public!testing! !
-!OS.FINDREPLACEW categoriesFor: #isClosing!public!testing! !
-!OS.FINDREPLACEW categoriesFor: #isForwards!public!testing! !
-!OS.FINDREPLACEW categoriesFor: #isReplace!public!testing! !
-!OS.FINDREPLACEW categoriesFor: #isReplaceAll!public!testing! !
-!OS.FINDREPLACEW categoriesFor: #isWholeWord!public!testing! !
-!OS.FINDREPLACEW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #lpstrFindWhat!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #lpstrFindWhat:!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #lpstrReplaceWith!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #lpstrReplaceWith:!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #ownerView:!accessing!public! !
-!OS.FINDREPLACEW categoriesFor: #replaceWith!accessing!public! !
-!OS.FINDREPLACEW categoriesFor: #wFindWhatLen:!**compiled accessors**!public! !
-!OS.FINDREPLACEW categoriesFor: #wReplaceWithLen:!**compiled accessors**!public! !
+!OS.FINDREPLACEW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+findDetails!event handling!public! !
+findWhat!accessing!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hookFlag!accessing!public! !
+hwndOwner:!**compiled accessors**!public! !
+isCaseSensitive!public!testing! !
+isClosing!public!testing! !
+isForwards!public!testing! !
+isReplace!public!testing! !
+isReplaceAll!public!testing! !
+isWholeWord!public!testing! !
+lpfnHook:!**compiled accessors**!public! !
+lpstrFindWhat!**compiled accessors**!public! !
+lpstrFindWhat:!**compiled accessors**!public! !
+lpstrReplaceWith!**compiled accessors**!public! !
+lpstrReplaceWith:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+replaceWith!accessing!public! !
+wFindWhatLen:!**compiled accessors**!public! !
+wReplaceWithLen:!**compiled accessors**!public! !
+!
 
 !OS.FINDREPLACEW class methodsFor!
 
@@ -201,6 +203,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
-!OS.FINDREPLACEW class categoriesFor: #defineFields!public!template definition! !
-!OS.FINDREPLACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FINDREPLACEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

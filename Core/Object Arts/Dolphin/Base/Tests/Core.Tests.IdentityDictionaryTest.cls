@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.LookupTableTest subclass: #'Core.Tests.IdentityDictionaryTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ Core.Tests.IdentityDictionaryTest comment: ''!
 
 collectionClass
 	^IdentityDictionary! !
-!Core.Tests.IdentityDictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!Core.Tests.IdentityDictionaryTest categoriesForMethods!
+collectionClass!helpers!private! !
+!
 

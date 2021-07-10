@@ -44,10 +44,12 @@ storeOn: aStream
 
 transform
 	class compile: source classified: protocols! !
-!Refactory.Browser.AddMethodRefactoring categoriesFor: #addMethod:toClass:inProtocols:!initialize/release!public! !
-!Refactory.Browser.AddMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.AddMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.AddMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AddMethodRefactoring categoriesForMethods!
+addMethod:toClass:inProtocols:!initialize/release!public! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.AddMethodRefactoring class methodsFor!
 
@@ -63,6 +65,8 @@ model: aRBNamespace addMethod: aString toClass: aClass inProtocols: protocolList
 			toClass: aClass
 			inProtocols: protocolList;
 		yourself! !
-!Refactory.Browser.AddMethodRefactoring class categoriesFor: #addMethod:toClass:inProtocols:!instance creation!public! !
-!Refactory.Browser.AddMethodRefactoring class categoriesFor: #model:addMethod:toClass:inProtocols:!instance creation!public! !
+!Refactory.Browser.AddMethodRefactoring class categoriesForMethods!
+addMethod:toClass:inProtocols:!instance creation!public! !
+model:addMethod:toClass:inProtocols:!instance creation!public! !
+!
 

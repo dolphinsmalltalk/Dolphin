@@ -65,11 +65,13 @@ storeOn: aStream
 transform
 	selectors do: [:each | self pushDown: each].
 	selectors do: [:each | class removeMethod: each]! !
-!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #pushDown:!public!transforming! !
-!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #pushDown:from:!initialize/release!public! !
-!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.PushDownMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PushDownMethodRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+pushDown:!public!transforming! !
+pushDown:from:!initialize/release!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.PushDownMethodRefactoring class methodsFor!
 
@@ -81,6 +83,8 @@ model: aRBNamespace pushDown: selectorCollection from: aClass
 
 pushDown: selectorCollection from: aClass 
 	^self new pushDown: selectorCollection from: aClass! !
-!Refactory.Browser.PushDownMethodRefactoring class categoriesFor: #model:pushDown:from:!instance creation!public! !
-!Refactory.Browser.PushDownMethodRefactoring class categoriesFor: #pushDown:from:!instance creation!public! !
+!Refactory.Browser.PushDownMethodRefactoring class categoriesForMethods!
+model:pushDown:from:!instance creation!public! !
+pushDown:from:!instance creation!public! !
+!
 

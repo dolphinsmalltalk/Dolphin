@@ -58,11 +58,13 @@ value: aString
 	"Avoid side effect on argument if it is already a <BSTR>"
 	bstr == aString ifTrue: [bstr := bstr copy].
 	super value: bstr detach! !
-!OS.COM.LPBSTR categoriesFor: #asString!converting!public! !
-!OS.COM.LPBSTR categoriesFor: #asUtf16String!converting!public! !
-!OS.COM.LPBSTR categoriesFor: #asUtf8String!converting!public! !
-!OS.COM.LPBSTR categoriesFor: #value!accessing!public! !
-!OS.COM.LPBSTR categoriesFor: #value:!accessing!public! !
+!OS.COM.LPBSTR categoriesForMethods!
+asString!converting!public! !
+asUtf16String!converting!public! !
+asUtf8String!converting!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !OS.COM.LPBSTR class methodsFor!
 
@@ -77,6 +79,8 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!OS.COM.LPBSTR class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.LPBSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.LPBSTR class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

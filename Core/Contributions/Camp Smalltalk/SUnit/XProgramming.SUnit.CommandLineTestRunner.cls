@@ -78,24 +78,28 @@ update: anObject with: argument from: originator
 
 verbose: aBoolean
 	verbose := aBoolean! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #addLogger:!initializing!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #finishRun:knownSlowTests:!operations!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #initialize!initializing!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #logFinishedCase:!private!updating! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #logStartingCase:!logging!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #logStartingRun:!logging!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #newStdOutLogger!logging!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #result!accessing!public! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #runSuite:knownSlowTests:!operations!public! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #startRun:!operations!private! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #update:with:from:!private!updating! !
-!XProgramming.SUnit.CommandLineTestRunner categoriesFor: #verbose:!accessing!public! !
+!XProgramming.SUnit.CommandLineTestRunner categoriesForMethods!
+addLogger:!initializing!private! !
+finishRun:knownSlowTests:!operations!private! !
+initialize!initializing!private! !
+logFinishedCase:!private!updating! !
+logStartingCase:!logging!private! !
+logStartingRun:!logging!private! !
+newStdOutLogger!logging!private! !
+result!accessing!public! !
+resultFor:!helpers!private! !
+runSuite:!operations!public! !
+runSuite:knownSlowTests:!operations!public! !
+startRun:!operations!private! !
+update:with:from:!private!updating! !
+verbose:!accessing!public! !
+!
 
 !XProgramming.SUnit.CommandLineTestRunner class methodsFor!
 
 new
 	^super new initialize! !
-!XProgramming.SUnit.CommandLineTestRunner class categoriesFor: #new!instance creation!public! !
+!XProgramming.SUnit.CommandLineTestRunner class categoriesForMethods!
+new!instance creation!public! !
+!
 

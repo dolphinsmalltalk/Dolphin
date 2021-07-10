@@ -797,119 +797,121 @@ viewModel
 	donate a different model to the view"
 
 	^self model! !
-!UI.Presenter categoriesFor: #add:!public!subpresenters! !
-!UI.Presenter categoriesFor: #add:name:!public!subpresenters! !
-!UI.Presenter categoriesFor: #add:name:helpId:!public!subpresenters! !
-!UI.Presenter categoriesFor: #additionalAccelerators!constants!public! !
-!UI.Presenter categoriesFor: #additionalKeyBindings!constants!private! !
-!UI.Presenter categoriesFor: #addToCommandRoute:!commands!public! !
-!UI.Presenter categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!UI.Presenter categoriesFor: #allSubPresentersDo:!enumerating!public! !
-!UI.Presenter categoriesFor: #asParameter!converting!public! !
-!UI.Presenter categoriesFor: #attachSubPresenterViews:!accessing!private! !
-!UI.Presenter categoriesFor: #basicOnViewOpened!event handling!public! !
-!UI.Presenter categoriesFor: #commandPolicy!commands!public! !
-!UI.Presenter categoriesFor: #commandSource!accessing!public! !
-!UI.Presenter categoriesFor: #connectView!operations!private! !
-!UI.Presenter categoriesFor: #createComponents!initializing!public! !
-!UI.Presenter categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.Presenter categoriesFor: #createView:!operations!private! !
-!UI.Presenter categoriesFor: #defaultHelpId!constants!public! !
-!UI.Presenter categoriesFor: #defaultNameOf:!helpers!private! !
-!UI.Presenter categoriesFor: #destroy!operations!public! !
-!UI.Presenter categoriesFor: #dragCut:!drag & drop!public! !
-!UI.Presenter categoriesFor: #dragEnter:!event handling!public! !
-!UI.Presenter categoriesFor: #dragLeave:!event handling!public! !
-!UI.Presenter categoriesFor: #dragOver:!event handling!public! !
-!UI.Presenter categoriesFor: #drop:!event handling!public! !
-!UI.Presenter categoriesFor: #ensureVisible!accessing!public! !
-!UI.Presenter categoriesFor: #errorDuplicateName:!exceptions!public! !
-!UI.Presenter categoriesFor: #extent:!accessing!public! !
-!UI.Presenter categoriesFor: #getEvents!events!private! !
-!UI.Presenter categoriesFor: #hasFocus!public!testing! !
-!UI.Presenter categoriesFor: #hasFocusDeeply!public!testing! !
-!UI.Presenter categoriesFor: #hasView!public!testing! !
-!UI.Presenter categoriesFor: #helpId!accessing!public! !
-!UI.Presenter categoriesFor: #helpId:!accessing!public! !
-!UI.Presenter categoriesFor: #hide!operations!public! !
-!UI.Presenter categoriesFor: #initialize!initializing!private! !
-!UI.Presenter categoriesFor: #invalidateUserInterface!accessing!public! !
-!UI.Presenter categoriesFor: #isOpen!public!testing! !
-!UI.Presenter categoriesFor: #isReadOnly!public!testing! !
-!UI.Presenter categoriesFor: #isReadOnly:!accessing!public! !
-!UI.Presenter categoriesFor: #model!accessing!public! !
-!UI.Presenter categoriesFor: #model:!accessing!public! !
-!UI.Presenter categoriesFor: #name:as:!public!subpresenters! !
-!UI.Presenter categoriesFor: #nameOf:!public!subpresenters! !
-!UI.Presenter categoriesFor: #on:!initializing!private! !
-!UI.Presenter categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!UI.Presenter categoriesFor: #onActionPerformed!event handling!public! !
-!UI.Presenter categoriesFor: #onCaptureChanged:!event handling!public! !
-!UI.Presenter categoriesFor: #onCloseRequested!event handling!public! !
-!UI.Presenter categoriesFor: #onGetCursor:!event handling!public! !
-!UI.Presenter categoriesFor: #onHotKey:!event handling!public! !
-!UI.Presenter categoriesFor: #onIdleEntered!event handling!public! !
-!UI.Presenter categoriesFor: #onInputLanguageChanged:!event handling!public! !
-!UI.Presenter categoriesFor: #onInputMaskRequired:!event handling!public! !
-!UI.Presenter categoriesFor: #onKeyPressed:!event handling!public! !
-!UI.Presenter categoriesFor: #onKeyReleased:!event handling!public! !
-!UI.Presenter categoriesFor: #onKeyTyped:!event handling!public! !
-!UI.Presenter categoriesFor: #onKillFocus!event handling!public! !
-!UI.Presenter categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!UI.Presenter categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!UI.Presenter categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!UI.Presenter categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
-!UI.Presenter categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!UI.Presenter categoriesFor: #onMiddleButtonReleased:!event handling!public! !
-!UI.Presenter categoriesFor: #onMouseHovering:!event handling!public! !
-!UI.Presenter categoriesFor: #onMouseLeave:!event handling!public! !
-!UI.Presenter categoriesFor: #onMouseMoved:!event handling!public! !
-!UI.Presenter categoriesFor: #onMouseWheeled:!event handling!public! !
-!UI.Presenter categoriesFor: #onPositionChanged:!event handling!public! !
-!UI.Presenter categoriesFor: #onPositionChanging:!event handling!public! !
-!UI.Presenter categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
-!UI.Presenter categoriesFor: #onRightButtonPressed:!event handling!public! !
-!UI.Presenter categoriesFor: #onRightButtonReleased:!event handling!public! !
-!UI.Presenter categoriesFor: #onSetFocus!event handling!public! !
-!UI.Presenter categoriesFor: #onSysKeyPressed:!event handling!public! !
-!UI.Presenter categoriesFor: #onSysKeyReleased:!event handling!public! !
-!UI.Presenter categoriesFor: #onSysKeyTyped:!event handling!public! !
-!UI.Presenter categoriesFor: #onTipDetailsRequired:!event handling!public! !
-!UI.Presenter categoriesFor: #onTipTextRequired:!event handling!public! !
-!UI.Presenter categoriesFor: #onViewAvailable!event handling!public! !
-!UI.Presenter categoriesFor: #onViewClosed!event handling!public! !
-!UI.Presenter categoriesFor: #onViewCreated!event handling!public! !
-!UI.Presenter categoriesFor: #onViewDestroyed!event handling!public! !
-!UI.Presenter categoriesFor: #onViewOpened!event handling!public! !
-!UI.Presenter categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
-!UI.Presenter categoriesFor: #onXButtonPressed:!event handling!public! !
-!UI.Presenter categoriesFor: #onXButtonReleased:!event handling!public! !
-!UI.Presenter categoriesFor: #parentPresenter!accessing!public! !
-!UI.Presenter categoriesFor: #parentPresenter:!accessing!private! !
-!UI.Presenter categoriesFor: #performAction!operations!public! !
-!UI.Presenter categoriesFor: #position:!accessing!public! !
-!UI.Presenter categoriesFor: #presenterNamed:!public!subpresenters! !
-!UI.Presenter categoriesFor: #presenterNamed:ifNone:!public!subpresenters! !
-!UI.Presenter categoriesFor: #queryCommand:!commands!private! !
-!UI.Presenter categoriesFor: #queryCommandHandlers:!commands!private! !
-!UI.Presenter categoriesFor: #remove:!public!subpresenters! !
-!UI.Presenter categoriesFor: #requestDragImages:!drag & drop!public! !
-!UI.Presenter categoriesFor: #requestDragObjects:!drag & drop!public! !
-!UI.Presenter categoriesFor: #requestDropOperations:!drag & drop!public! !
-!UI.Presenter categoriesFor: #routeCommand:!commands!public! !
-!UI.Presenter categoriesFor: #setEvents:!events!private! !
-!UI.Presenter categoriesFor: #setFocus!operations!public! !
-!UI.Presenter categoriesFor: #setView:!initializing!public! !
-!UI.Presenter categoriesFor: #show!operations!public! !
-!UI.Presenter categoriesFor: #showNewView!operations!private! !
-!UI.Presenter categoriesFor: #showShell!operations!public! !
-!UI.Presenter categoriesFor: #stbSaveOn:!binary filing!public! !
-!UI.Presenter categoriesFor: #subPresenters!accessing!public!subpresenters! !
-!UI.Presenter categoriesFor: #topShell!accessing!public! !
-!UI.Presenter categoriesFor: #validateUserInterface!operations!public! !
-!UI.Presenter categoriesFor: #view!accessing!public! !
-!UI.Presenter categoriesFor: #view:!accessing!public! !
-!UI.Presenter categoriesFor: #viewModel!accessing!private! !
+!UI.Presenter categoriesForMethods!
+add:!public!subpresenters! !
+add:name:!public!subpresenters! !
+add:name:helpId:!public!subpresenters! !
+additionalAccelerators!constants!public! !
+additionalKeyBindings!constants!private! !
+addToCommandRoute:!commands!public! !
+addToImageList:mask:!double dispatch!private! !
+allSubPresentersDo:!enumerating!public! !
+asParameter!converting!public! !
+attachSubPresenterViews:!accessing!private! !
+basicOnViewOpened!event handling!public! !
+commandPolicy!commands!public! !
+commandSource!accessing!public! !
+connectView!operations!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+createView:!operations!private! !
+defaultHelpId!constants!public! !
+defaultNameOf:!helpers!private! !
+destroy!operations!public! !
+dragCut:!drag & drop!public! !
+dragEnter:!event handling!public! !
+dragLeave:!event handling!public! !
+dragOver:!event handling!public! !
+drop:!event handling!public! !
+ensureVisible!accessing!public! !
+errorDuplicateName:!exceptions!public! !
+extent:!accessing!public! !
+getEvents!events!private! !
+hasFocus!public!testing! !
+hasFocusDeeply!public!testing! !
+hasView!public!testing! !
+helpId!accessing!public! !
+helpId:!accessing!public! !
+hide!operations!public! !
+initialize!initializing!private! !
+invalidateUserInterface!accessing!public! !
+isOpen!public!testing! !
+isReadOnly!public!testing! !
+isReadOnly:!accessing!public! !
+model!accessing!public! !
+model:!accessing!public! !
+name:as:!public!subpresenters! !
+nameOf:!public!subpresenters! !
+on:!initializing!private! !
+onAboutToDisplayMenu:!event handling!public! !
+onActionPerformed!event handling!public! !
+onCaptureChanged:!event handling!public! !
+onCloseRequested!event handling!public! !
+onGetCursor:!event handling!public! !
+onHotKey:!event handling!public! !
+onIdleEntered!event handling!public! !
+onInputLanguageChanged:!event handling!public! !
+onInputMaskRequired:!event handling!public! !
+onKeyPressed:!event handling!public! !
+onKeyReleased:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onKillFocus!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onLeftButtonReleased:!event handling!public! !
+onMiddleButtonDoubleClicked:!event handling!public! !
+onMiddleButtonPressed:!event handling!public! !
+onMiddleButtonReleased:!event handling!public! !
+onMouseHovering:!event handling!public! !
+onMouseLeave:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onPositionChanged:!event handling!public! !
+onPositionChanging:!event handling!public! !
+onRightButtonDoubleClicked:!event handling!public! !
+onRightButtonPressed:!event handling!public! !
+onRightButtonReleased:!event handling!public! !
+onSetFocus!event handling!public! !
+onSysKeyPressed:!event handling!public! !
+onSysKeyReleased:!event handling!public! !
+onSysKeyTyped:!event handling!public! !
+onTipDetailsRequired:!event handling!public! !
+onTipTextRequired:!event handling!public! !
+onViewAvailable!event handling!public! !
+onViewClosed!event handling!public! !
+onViewCreated!event handling!public! !
+onViewDestroyed!event handling!public! !
+onViewOpened!event handling!public! !
+onXButtonDoubleClicked:!event handling!public! !
+onXButtonPressed:!event handling!public! !
+onXButtonReleased:!event handling!public! !
+parentPresenter!accessing!public! !
+parentPresenter:!accessing!private! !
+performAction!operations!public! !
+position:!accessing!public! !
+presenterNamed:!public!subpresenters! !
+presenterNamed:ifNone:!public!subpresenters! !
+queryCommand:!commands!private! !
+queryCommandHandlers:!commands!private! !
+remove:!public!subpresenters! !
+requestDragImages:!drag & drop!public! !
+requestDragObjects:!drag & drop!public! !
+requestDropOperations:!drag & drop!public! !
+routeCommand:!commands!public! !
+setEvents:!events!private! !
+setFocus!operations!public! !
+setView:!initializing!public! !
+show!operations!public! !
+showNewView!operations!private! !
+showShell!operations!public! !
+stbSaveOn:!binary filing!public! !
+subPresenters!accessing!public!subpresenters! !
+topShell!accessing!public! !
+validateUserInterface!operations!public! !
+view!accessing!public! !
+view:!accessing!public! !
+viewModel!accessing!private! !
+!
 
 UI.Presenter methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 UI.Presenter methodProtocol: #compositePresenter attributes: #(#readOnly) selectors: #(#add: #add:name: #createComponents #createSchematicWiring #name:as: #nameOf: #presenterNamed: #presenterNamed:ifNone: #remove: #subPresenters)!
@@ -1148,39 +1150,41 @@ showOn: aModel
 
 	^(self createOn: aModel) showShell.
 	! !
-!UI.Presenter class categoriesFor: #acceleratorKeyBindings!constants!public! !
-!UI.Presenter class categoriesFor: #acceleratorKeyBindings:!constants!public! !
-!UI.Presenter class categoriesFor: #addCommandQueryHandler:!accessing!public! !
-!UI.Presenter class categoriesFor: #additionalKeyBindings!accessing!private! !
-!UI.Presenter class categoriesFor: #commandQueryHandlers!accessing!private! !
-!UI.Presenter class categoriesFor: #create!instance creation!public! !
-!UI.Presenter class categoriesFor: #create:!instance creation!public! !
-!UI.Presenter class categoriesFor: #create:in:!instance creation!public! !
-!UI.Presenter class categoriesFor: #create:in:on:!instance creation!public! !
-!UI.Presenter class categoriesFor: #create:on:!instance creation!public! !
-!UI.Presenter class categoriesFor: #createIn:!instance creation!public! !
-!UI.Presenter class categoriesFor: #createIn:on:!instance creation!public! !
-!UI.Presenter class categoriesFor: #createOn:!instance creation!public! !
-!UI.Presenter class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!UI.Presenter class categoriesFor: #defaultModel!models!public! !
-!UI.Presenter class categoriesFor: #defaultResourceIdentifier!constants!public! !
-!UI.Presenter class categoriesFor: #defaultView!constants!public! !
-!UI.Presenter class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
-!UI.Presenter class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!UI.Presenter class categoriesFor: #icon!constants!public! !
-!UI.Presenter class categoriesFor: #loadViewResource:inContext:!operations!private! !
-!UI.Presenter class categoriesFor: #new!instance creation!public! !
-!UI.Presenter class categoriesFor: #on:!instance creation!public! !
-!UI.Presenter class categoriesFor: #removeCommandQueryHandler:!accessing!public! !
-!UI.Presenter class categoriesFor: #resource_Container_view!public!resources-views! !
-!UI.Presenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Presenter class categoriesFor: #setAdditionalAccelerators:!accessing!private! !
-!UI.Presenter class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
-!UI.Presenter class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
-!UI.Presenter class categoriesFor: #show!instance creation!public! !
-!UI.Presenter class categoriesFor: #show:!instance creation!public! !
-!UI.Presenter class categoriesFor: #show:on:!instance creation!public! !
-!UI.Presenter class categoriesFor: #showOn:!instance creation!public! !
+!UI.Presenter class categoriesForMethods!
+acceleratorKeyBindings!constants!public! !
+acceleratorKeyBindings:!constants!public! !
+addCommandQueryHandler:!accessing!public! !
+additionalKeyBindings!accessing!private! !
+commandQueryHandlers!accessing!private! !
+create!instance creation!public! !
+create:!instance creation!public! !
+create:in:!instance creation!public! !
+create:in:on:!instance creation!public! !
+create:on:!instance creation!public! !
+createIn:!instance creation!public! !
+createIn:on:!instance creation!public! !
+createOn:!instance creation!public! !
+defaultAdditionalAccelerators!constants!private! !
+defaultModel!models!public! !
+defaultResourceIdentifier!constants!public! !
+defaultView!constants!public! !
+getAdditionalKeyBindings!accessing!private! !
+getCommandQueryHandlers!accessing!private! !
+icon!constants!public! !
+loadViewResource:inContext:!operations!private! !
+new!instance creation!public! !
+on:!instance creation!public! !
+removeCommandQueryHandler:!accessing!public! !
+resource_Container_view!public!resources-views! !
+resource_Default_view!public!resources-views! !
+setAdditionalAccelerators:!accessing!private! !
+setAdditionalKeyBindings:!accessing!private! !
+setCommandQueryHandlers:!accessing!private! !
+show!instance creation!public! !
+show:!instance creation!public! !
+show:on:!instance creation!public! !
+showOn:!instance creation!public! !
+!
 
 UI.Presenter class methodProtocol: #'presenter factory' attributes: #(#readOnly) selectors: #(#create #create: #create:in: #create:in:on: #create:on: #createIn: #createIn:on: #createOn: #defaultModel #defaultView #on: #show #show: #show:on: #showOn:)!
 

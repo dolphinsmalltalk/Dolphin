@@ -144,24 +144,26 @@ valueWithArguments: triggerArguments
 	than that required, then the subclass determines which take precedence."
 
 	^self forwardTo: self receiver withArguments: triggerArguments! !
-!Core.MessageSendAbstract categoriesFor: #=!comparing!public! !
-!Core.MessageSendAbstract categoriesFor: #cull:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #cull:cull:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #cull:cull:cull:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #deferredValue!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #deferredValueAt:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #forwardTo:!operations!public! !
-!Core.MessageSendAbstract categoriesFor: #hash!comparing!public! !
-!Core.MessageSendAbstract categoriesFor: #printOn:!printing!public! !
-!Core.MessageSendAbstract categoriesFor: #receiver!accessing!public! !
-!Core.MessageSendAbstract categoriesFor: #receiver:!accessing!public! !
-!Core.MessageSendAbstract categoriesFor: #value!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #value:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #value:value:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #value:value:value:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #value:value:value:value:!evaluating!public! !
-!Core.MessageSendAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
+!Core.MessageSendAbstract categoriesForMethods!
+=!comparing!public! !
+cull:!evaluating!public! !
+cull:cull:!evaluating!public! !
+cull:cull:cull:!evaluating!public! !
+cull:cull:cull:cull:!evaluating!public! !
+deferredValue!evaluating!public! !
+deferredValueAt:!evaluating!public! !
+forwardTo:!operations!public! !
+hash!comparing!public! !
+printOn:!printing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+value!evaluating!public! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+value:value:value:!evaluating!public! !
+value:value:value:value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 Core.MessageSendAbstract methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
 
@@ -201,8 +203,10 @@ selector: aSymbol arguments: anArray
 		receiver: nil
 		selector: aSymbol
 		arguments: anArray! !
-!Core.MessageSendAbstract class categoriesFor: #receiver:selector:!instance creation!public! !
-!Core.MessageSendAbstract class categoriesFor: #receiver:selector:argument:!instance creation!public! !
-!Core.MessageSendAbstract class categoriesFor: #receiver:selector:arguments:!instance creation!public! !
-!Core.MessageSendAbstract class categoriesFor: #selector:arguments:!instance creation!public! !
+!Core.MessageSendAbstract class categoriesForMethods!
+receiver:selector:!instance creation!public! !
+receiver:selector:argument:!instance creation!public! !
+receiver:selector:arguments:!instance creation!public! !
+selector:arguments:!instance creation!public! !
+!
 

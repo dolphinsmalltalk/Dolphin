@@ -25,9 +25,11 @@ initialize: aString
 
 isMatch
 	^self identity1AsClass isNil! !
-!ChunkBrowserClassDeleteChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserClassDeleteChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserClassDeleteChunk categoriesFor: #isMatch!public!testing! !
+!ChunkBrowserClassDeleteChunk categoriesForMethods!
+browseTarget!operations!public! !
+initialize:!initializing!public! !
+isMatch!public!testing! !
+!
 
 !ChunkBrowserClassDeleteChunk class methodsFor!
 
@@ -40,6 +42,8 @@ isChunkClassFor: aString
 	| firstSpaceIndex |
 	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
 		and: [(aString indexOfSubCollection: ' removeFromSystem') = firstSpaceIndex]! !
-!ChunkBrowserClassDeleteChunk class categoriesFor: #chunkType!constants!public! !
-!ChunkBrowserClassDeleteChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserClassDeleteChunk class categoriesForMethods!
+chunkType!constants!public! !
+isChunkClassFor:!public!testing! !
+!
 

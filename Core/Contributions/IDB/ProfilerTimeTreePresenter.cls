@@ -23,6 +23,8 @@ treeValueFor: aProfilerTreeNode
 	"Answers the value of the field for the receivers type of tree"
 
 	^aProfilerTreeNode time! !
-!ProfilerTimeTreePresenter categoriesFor: #total!accessing!public! !
-!ProfilerTimeTreePresenter categoriesFor: #treeValueFor:!accessing!public! !
+!ProfilerTimeTreePresenter categoriesForMethods!
+total!accessing!public! !
+treeValueFor:!accessing!public! !
+!
 

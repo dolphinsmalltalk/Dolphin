@@ -54,11 +54,13 @@ rightToLeft: aString
 	"Answers the result of converting aString to a Date"
 
 	^Date fromString: aString format: self actualFormat! !
-!UI.DateToText categoriesFor: #actualFormat!accessing!private! !
-!UI.DateToText categoriesFor: #format!accessing!public! !
-!UI.DateToText categoriesFor: #format:!accessing!public! !
-!UI.DateToText categoriesFor: #leftToRight:!operations!public! !
-!UI.DateToText categoriesFor: #rightToLeft:!operations!public! !
+!UI.DateToText categoriesForMethods!
+actualFormat!accessing!private! !
+format!accessing!public! !
+format:!accessing!public! !
+leftToRight:!operations!public! !
+rightToLeft:!operations!public! !
+!
 
 !UI.DateToText class methodsFor!
 
@@ -74,6 +76,8 @@ yearPivot: anInteger
 	Years less than the pivot will be assumed to be in the next century"
 
 	Date yearPivot: anInteger! !
-!UI.DateToText class categoriesFor: #yearPivot!accessing!public! !
-!UI.DateToText class categoriesFor: #yearPivot:!accessing!public! !
+!UI.DateToText class categoriesForMethods!
+yearPivot!accessing!public! !
+yearPivot:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.Tests.DBConnectionTestResource subclass: #'Database.Tests.AccessNorthwindDB'
 	instanceVariableNames: 'filename'
@@ -27,7 +27,9 @@ createDatabase
 dropDatabase
 	super dropDatabase.
 	File delete: filename! !
-!Database.Tests.AccessNorthwindDB categoriesFor: #connectString!private! !
-!Database.Tests.AccessNorthwindDB categoriesFor: #createDatabase!private! !
-!Database.Tests.AccessNorthwindDB categoriesFor: #dropDatabase!private! !
+!Database.Tests.AccessNorthwindDB categoriesForMethods!
+connectString!private! !
+createDatabase!private! !
+dropDatabase!private! !
+!
 

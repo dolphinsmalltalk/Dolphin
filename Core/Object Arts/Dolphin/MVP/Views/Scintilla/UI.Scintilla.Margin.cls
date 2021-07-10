@@ -189,30 +189,32 @@ width: anInteger
 
 	self basicWidth: (anInteger ifNotNil: [anInteger]).
 	self updateViewProperty: #width! !
-!UI.Scintilla.Margin categoriesFor: #backcolor!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #backcolor:!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #basicBackcolor:!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicCursorType!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicCursorType:!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicIsSensitive!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicIsSensitive:!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicType!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicType:!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicWidth!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #basicWidth:!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #cursorType!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #cursorType:!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #isFolders!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #isFolders:!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #isSensitive!public!testing! !
-!UI.Scintilla.Margin categoriesFor: #isSensitive:!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #mask!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #mask:!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #maskPrintString!accessing!private! !
-!UI.Scintilla.Margin categoriesFor: #type!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #type:!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #width!accessing!public! !
-!UI.Scintilla.Margin categoriesFor: #width:!accessing!public! !
+!UI.Scintilla.Margin categoriesForMethods!
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicBackcolor:!accessing!private! !
+basicCursorType!accessing!private! !
+basicCursorType:!accessing!private! !
+basicIsSensitive!accessing!private! !
+basicIsSensitive:!accessing!private! !
+basicType!accessing!private! !
+basicType:!accessing!private! !
+basicWidth!accessing!private! !
+basicWidth:!accessing!private! !
+cursorType!accessing!public! !
+cursorType:!accessing!public! !
+isFolders!accessing!public! !
+isFolders:!accessing!public! !
+isSensitive!public!testing! !
+isSensitive:!accessing!public! !
+mask!accessing!public! !
+mask:!accessing!public! !
+maskPrintString!accessing!private! !
+type!accessing!public! !
+type:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !UI.Scintilla.Margin class methodsFor!
 
@@ -303,8 +305,10 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^3! !
-!UI.Scintilla.Margin class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!UI.Scintilla.Margin class categoriesFor: #initialize!development!initializing!public! !
-!UI.Scintilla.Margin class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!UI.Scintilla.Margin class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.Margin class categoriesForMethods!
+buildPropertyMap!constants!must not strip!private! !
+initialize!development!initializing!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

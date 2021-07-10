@@ -31,9 +31,11 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sbyteAtOffset: _OffsetOf_value put: anInteger! !
-!External.SBYTE categoriesFor: #isSigned!public!testing! !
-!External.SBYTE categoriesFor: #value!**compiled accessors**!public! !
-!External.SBYTE categoriesFor: #value:!**compiled accessors**!public! !
+!External.SBYTE categoriesForMethods!
+isSigned!public!testing! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.SBYTE class methodsFor!
 
@@ -54,7 +56,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.SBYTE class categoriesFor: #defineFields!public!template definition! !
-!External.SBYTE class categoriesFor: #initialize!development!initializing!private! !
-!External.SBYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.SBYTE class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

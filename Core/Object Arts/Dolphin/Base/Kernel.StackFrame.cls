@@ -448,66 +448,68 @@ textMap
 	"Private - Answer the map between source text and ip values for the receiver's method."
 
 	^self method textMap! !
-!Kernel.StackFrame categoriesFor: #=!comparing!public! !
-!Kernel.StackFrame categoriesFor: #argAt:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #argsOffset!accessing!private! !
-!Kernel.StackFrame categoriesFor: #argumentCount!accessing!private! !
-!Kernel.StackFrame categoriesFor: #arguments!accessing!private! !
-!Kernel.StackFrame categoriesFor: #asInteger!accessing!private! !
-!Kernel.StackFrame categoriesFor: #at:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #at:put:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicBP!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicBP:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicIP!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicIP:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicSender!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicSender:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicSP!accessing!private! !
-!Kernel.StackFrame categoriesFor: #basicSP:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #bp!accessing!private! !
-!Kernel.StackFrame categoriesFor: #bp:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #callstackDo:depth:!private! !
-!Kernel.StackFrame categoriesFor: #displayOn:!printing!public! !
-!Kernel.StackFrame categoriesFor: #environment!accessing!private! !
-!Kernel.StackFrame categoriesFor: #environment:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #frameAddress!accessing!private! !
-!Kernel.StackFrame categoriesFor: #frameSize!constants!private! !
-!Kernel.StackFrame categoriesFor: #getFrames:!public! !
-!Kernel.StackFrame categoriesFor: #getOuter:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #hash!comparing!public! !
-!Kernel.StackFrame categoriesFor: #homeContext!accessing!private! !
-!Kernel.StackFrame categoriesFor: #homeFrame!accessing!private! !
-!Kernel.StackFrame categoriesFor: #index!accessing!private! !
-!Kernel.StackFrame categoriesFor: #index:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #ip!accessing!private! !
-!Kernel.StackFrame categoriesFor: #ip:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #ipBias!constants!private! !
-!Kernel.StackFrame categoriesFor: #isBlockFrame!private!testing! !
-!Kernel.StackFrame categoriesFor: #isDead!printing!private! !
-!Kernel.StackFrame categoriesFor: #isRestartable!development!private!testing! !
-!Kernel.StackFrame categoriesFor: #localAt:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #localCount!accessing!private! !
-!Kernel.StackFrame categoriesFor: #method!accessing!private! !
-!Kernel.StackFrame categoriesFor: #method:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #outer!accessing!private! !
-!Kernel.StackFrame categoriesFor: #prevIP!accessing!private! !
-!Kernel.StackFrame categoriesFor: #printOn:!public! !
-!Kernel.StackFrame categoriesFor: #printStackOn:depth:!public! !
-!Kernel.StackFrame categoriesFor: #process!accessing!private! !
-!Kernel.StackFrame categoriesFor: #process:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #receiver!accessing!private! !
-!Kernel.StackFrame categoriesFor: #return:!operations!public! !
-!Kernel.StackFrame categoriesFor: #sender!accessing!private! !
-!Kernel.StackFrame categoriesFor: #sender:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #setProcess:index:!initializing!private! !
-!Kernel.StackFrame categoriesFor: #sp!accessing!private! !
-!Kernel.StackFrame categoriesFor: #sp:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #stackTrace:!printing!private! !
-!Kernel.StackFrame categoriesFor: #temp:at:!accessing!private! !
-!Kernel.StackFrame categoriesFor: #tempNames!accessing!development!private! !
-!Kernel.StackFrame categoriesFor: #temps!accessing!development!private! !
-!Kernel.StackFrame categoriesFor: #tempsBeforeIp:!accessing!development!private! !
-!Kernel.StackFrame categoriesFor: #textMap!accessing!development!private! !
+!Kernel.StackFrame categoriesForMethods!
+=!comparing!public! !
+argAt:!accessing!private! !
+argsOffset!accessing!private! !
+argumentCount!accessing!private! !
+arguments!accessing!private! !
+asInteger!accessing!private! !
+at:!accessing!private! !
+at:put:!accessing!private! !
+basicBP!accessing!private! !
+basicBP:!accessing!private! !
+basicIP!accessing!private! !
+basicIP:!accessing!private! !
+basicSender!accessing!private! !
+basicSender:!accessing!private! !
+basicSP!accessing!private! !
+basicSP:!accessing!private! !
+bp!accessing!private! !
+bp:!accessing!private! !
+callstackDo:depth:!private! !
+displayOn:!printing!public! !
+environment!accessing!private! !
+environment:!accessing!private! !
+frameAddress!accessing!private! !
+frameSize!constants!private! !
+getFrames:!public! !
+getOuter:!accessing!private! !
+hash!comparing!public! !
+homeContext!accessing!private! !
+homeFrame!accessing!private! !
+index!accessing!private! !
+index:!accessing!private! !
+ip!accessing!private! !
+ip:!accessing!private! !
+ipBias!constants!private! !
+isBlockFrame!private!testing! !
+isDead!printing!private! !
+isRestartable!development!private!testing! !
+localAt:!accessing!private! !
+localCount!accessing!private! !
+method!accessing!private! !
+method:!accessing!private! !
+outer!accessing!private! !
+prevIP!accessing!private! !
+printOn:!public! !
+printStackOn:depth:!public! !
+process!accessing!private! !
+process:!accessing!private! !
+receiver!accessing!private! !
+return:!operations!public! !
+sender!accessing!private! !
+sender:!accessing!private! !
+setProcess:index:!initializing!private! !
+sp!accessing!private! !
+sp:!accessing!private! !
+stackTrace:!printing!private! !
+temp:at:!accessing!private! !
+tempNames!accessing!development!private! !
+temps!accessing!development!private! !
+tempsBeforeIp:!accessing!development!private! !
+textMap!accessing!development!private! !
+!
 
 !Kernel.StackFrame class methodsFor!
 
@@ -543,8 +545,10 @@ process: aProcess index: anInteger
 
 	^(self frameClassFor: aProcess at: anInteger)
 		ifNotNil: [:frameClass | frameClass onProcess: aProcess index: anInteger]! !
-!Kernel.StackFrame class categoriesFor: #findIP:inTextMap:!helpers!private! !
-!Kernel.StackFrame class categoriesFor: #frameClassFor:at:!instance creation!private! !
-!Kernel.StackFrame class categoriesFor: #onProcess:index:!instance creation!private! !
-!Kernel.StackFrame class categoriesFor: #process:index:!instance creation!public! !
+!Kernel.StackFrame class categoriesForMethods!
+findIP:inTextMap:!helpers!private! !
+frameClassFor:at:!instance creation!private! !
+onProcess:index:!instance creation!private! !
+process:index:!instance creation!public! !
+!
 

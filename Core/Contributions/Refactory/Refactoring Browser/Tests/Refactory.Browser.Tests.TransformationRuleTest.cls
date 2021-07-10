@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.FooLintRuleTest subclass: #'Refactory.Browser.Tests.TransformationRuleTest'
 	instanceVariableNames: 'rewriteRule builder class'
@@ -55,14 +55,16 @@ viewResults
 
 	builder inspect.
 	self resetResult! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #hasConflicts!public!testing! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #resetResult!accessing!public! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #rewriteUsing:!initialize/release!public! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #superSends!public!rules! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesFor: #viewResults!private! !
+!Refactory.Browser.Tests.TransformationRuleTest categoriesForMethods!
+checkMethod:!accessing!public! !
+hasConflicts!public!testing! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+resetResult!accessing!public! !
+rewriteUsing:!initialize/release!public! !
+superSends!public!rules! !
+viewResults!private! !
+!
 
 !Refactory.Browser.Tests.TransformationRuleTest class methodsFor!
 
@@ -290,18 +292,20 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] valueOnUnwindDo: ``@block'))
 		methods: false
 		name: 'Move assignment out of valueNowOrUnwindDo: blocks'! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #assignmentInIfTrue!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #atIfAbsent!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #betweenAnd!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #detectIfNone!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #equalNil!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #guardClause!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #initializeAfterLoad1!class initialization!public! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #minMax!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #notElimination!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #nuke!class initialization!public! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #rewrite:methods:name:!instance creation!public! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #showWhileBlocks!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #superSends!public!transformations! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesFor: #unwindBlocks!public!transformations! !
+!Refactory.Browser.Tests.TransformationRuleTest class categoriesForMethods!
+assignmentInIfTrue!public!transformations! !
+atIfAbsent!public!transformations! !
+betweenAnd!public!transformations! !
+detectIfNone!public!transformations! !
+equalNil!public!transformations! !
+guardClause!public!transformations! !
+initializeAfterLoad1!class initialization!public! !
+minMax!public!transformations! !
+notElimination!public!transformations! !
+nuke!class initialization!public! !
+rewrite:methods:name:!instance creation!public! !
+showWhileBlocks!public!transformations! !
+superSends!public!transformations! !
+unwindBlocks!public!transformations! !
+!
 

@@ -75,10 +75,12 @@ Delete: index
 
 	<virtual stdcall: hresult 13 variant>
 	^self invalidCall: _failureCode! !
-!ADODB.Fields20 categoriesFor: #_append:type:!**auto generated**!methods!public! !
-!ADODB.Fields20 categoriesFor: #_Append:Type:DefinedSize:Attrib:!**auto generated**!COM Interfaces-Fields20!public! !
-!ADODB.Fields20 categoriesFor: #delete:!**auto generated**!methods!public! !
-!ADODB.Fields20 categoriesFor: #Delete:!**auto generated**!COM Interfaces-Fields20!private! !
+!ADODB.Fields20 categoriesForMethods!
+_append:type:!**auto generated**!methods!public! !
+_Append:Type:DefinedSize:Attrib:!**auto generated**!COM Interfaces-Fields20!public! !
+delete:!**auto generated**!methods!public! !
+Delete:!**auto generated**!COM Interfaces-Fields20!private! !
+!
 
 !ADODB.Fields20 class methodsFor!
 
@@ -92,5 +94,7 @@ defineFunctions
 		defineFunction: #Delete:
 			argumentTypes: 'variant'
 ! !
-!ADODB.Fields20 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Fields20 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

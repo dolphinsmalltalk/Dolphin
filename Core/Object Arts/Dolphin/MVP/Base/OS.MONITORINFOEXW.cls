@@ -34,7 +34,9 @@ szDevice
 	"Answer the <Utf16String> value of the receiver's 'szDevice' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDevice! !
-!OS.MONITORINFOEXW categoriesFor: #szDevice!**compiled accessors**!public! !
+!OS.MONITORINFOEXW categoriesForMethods!
+szDevice!**compiled accessors**!public! !
+!
 
 !OS.MONITORINFOEXW class methodsFor!
 
@@ -62,6 +64,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags #szDevice)! !
-!OS.MONITORINFOEXW class categoriesFor: #defineFields!public!template definition! !
-!OS.MONITORINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MONITORINFOEXW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

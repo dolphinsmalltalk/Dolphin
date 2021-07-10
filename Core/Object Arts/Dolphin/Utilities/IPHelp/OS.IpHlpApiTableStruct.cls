@@ -20,8 +20,10 @@ dwNumEntries
 
 table
 	^self subclassResponsibility! !
-!OS.IpHlpApiTableStruct categoriesFor: #dwNumEntries!**compiled accessors**!public! !
-!OS.IpHlpApiTableStruct categoriesFor: #table!accessing!public! !
+!OS.IpHlpApiTableStruct categoriesForMethods!
+dwNumEntries!**compiled accessors**!public! !
+table!accessing!public! !
+!
 
 !OS.IpHlpApiTableStruct class methodsFor!
 
@@ -34,6 +36,8 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries)! !
-!OS.IpHlpApiTableStruct class categoriesFor: #defineFields!initializing!public! !
-!OS.IpHlpApiTableStruct class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IpHlpApiTableStruct class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

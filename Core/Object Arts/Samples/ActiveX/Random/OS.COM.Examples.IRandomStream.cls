@@ -153,22 +153,24 @@ upperBound: pVal
 
 	self put_UpperBound: pVal
 ! !
-!OS.COM.Examples.IRandomStream categoriesFor: #get_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!OS.COM.Examples.IRandomStream categoriesFor: #get_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!OS.COM.Examples.IRandomStream categoriesFor: #get_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!OS.COM.Examples.IRandomStream categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!OS.COM.Examples.IRandomStream categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!OS.COM.Examples.IRandomStream categoriesFor: #lowerBound!**auto generated**!properties!public! !
-!OS.COM.Examples.IRandomStream categoriesFor: #lowerBound:!**auto generated**!properties!public! !
-!OS.COM.Examples.IRandomStream categoriesFor: #next!**auto generated**!methods!public! !
-!OS.COM.Examples.IRandomStream categoriesFor: #Next:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!OS.COM.Examples.IRandomStream categoriesFor: #put_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!OS.COM.Examples.IRandomStream categoriesFor: #put_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!OS.COM.Examples.IRandomStream categoriesFor: #put_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!OS.COM.Examples.IRandomStream categoriesFor: #seed!**auto generated**!properties!public! !
-!OS.COM.Examples.IRandomStream categoriesFor: #seed:!**auto generated**!properties!public! !
-!OS.COM.Examples.IRandomStream categoriesFor: #upperBound!**auto generated**!properties!public! !
-!OS.COM.Examples.IRandomStream categoriesFor: #upperBound:!**auto generated**!properties!public! !
+!OS.COM.Examples.IRandomStream categoriesForMethods!
+get_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+get_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
+get_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+lowerBound!**auto generated**!properties!public! !
+lowerBound:!**auto generated**!properties!public! !
+next!**auto generated**!methods!public! !
+Next:!**auto generated**!COM Interfaces-IRandomStream!private! !
+put_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+put_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
+put_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+seed!**auto generated**!properties!public! !
+seed:!**auto generated**!properties!public! !
+upperBound!**auto generated**!properties!public! !
+upperBound:!**auto generated**!properties!public! !
+!
 
 !OS.COM.Examples.IRandomStream class methodsFor!
 
@@ -204,7 +206,9 @@ initializeTypeLib
 		IRandomStream initializeTypeLib"
 
 	typeLib := RANDOMLib! !
-!OS.COM.Examples.IRandomStream class categoriesFor: #clsid!**auto generated**!constants!private! !
-!OS.COM.Examples.IRandomStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!OS.COM.Examples.IRandomStream class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!OS.COM.Examples.IRandomStream class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

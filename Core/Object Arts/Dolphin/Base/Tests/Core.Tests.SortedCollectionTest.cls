@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.OrderedCollectionTest subclass: #'Core.Tests.SortedCollectionTest'
 	instanceVariableNames: ''
@@ -70,17 +70,19 @@ verifyConcatenation: b with: a
 		ifTrue: [self assert: ((a symmetricDifference: result) noDifference: b)]
 		ifFalse: [super verifyConcatenation: b with: a].
 	^result! !
-!Core.Tests.SortedCollectionTest categoriesFor: #collectionClass!constants!private! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testBinaryIncludes!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testResize!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !
-!Core.Tests.SortedCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
-!Core.Tests.SortedCollectionTest categoriesFor: #verifyConcatenation:with:!helpers!public! !
+!Core.Tests.SortedCollectionTest categoriesForMethods!
+collectionClass!constants!private! !
+testAddAllFirst!public!unit tests! !
+testAddAllFirst2!public!unit tests! !
+testAddAllLast!public!unit tests! !
+testAddFirst!public!unit tests! !
+testBinaryIncludes!public!unit tests! !
+testCopyReplaceAllWith!public!unit tests! !
+testCopyWithAtIndex!public!unit tests! !
+testReplaceFromToWithStartingAt!public!unit tests! !
+testResize!public!unit tests! !
+testStrongTalkTests!public!unit tests! !
+unsortedCollectionClass!constants!private! !
+verifyConcatenation:with:!helpers!public! !
+!
 

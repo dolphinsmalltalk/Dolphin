@@ -23,7 +23,9 @@ IsDirty
 
 	<virtual stdcall: hresult 8>
 	^self invalidCall: _failureCode! !
-!OS.COM.IPersistPropertyBag2 categoriesFor: #IsDirty!**auto generated**!COM Interfaces-IPersistPropertyBag2!private! !
+!OS.COM.IPersistPropertyBag2 categoriesForMethods!
+IsDirty!**auto generated**!COM Interfaces-IPersistPropertyBag2!private! !
+!
 
 OS.COM.IPersistPropertyBag2 methodProtocol: #IPersistPropertyBag2 attributes: #(#readOnly) selectors: #(#InitNew #IsDirty #Save:fClearDirty:fSaveAllProperties:)!
 
@@ -48,5 +50,7 @@ defineFunctions
 		defineFunction: #IsDirty
 			returnType: 'sdword'
 ! !
-!OS.COM.IPersistPropertyBag2 class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistPropertyBag2 class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

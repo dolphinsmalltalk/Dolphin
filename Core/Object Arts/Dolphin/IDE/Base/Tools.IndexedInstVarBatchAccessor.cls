@@ -37,10 +37,12 @@ keys
 
 subjectIncludesKey: nextKey
 	^nextKey <= self subject basicSize! !
-!Tools.IndexedInstVarBatchAccessor categoriesFor: #aspectClass!public! !
-!Tools.IndexedInstVarBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
-!Tools.IndexedInstVarBatchAccessor categoriesFor: #keys!accessing!public! !
-!Tools.IndexedInstVarBatchAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
+!Tools.IndexedInstVarBatchAccessor categoriesForMethods!
+aspectClass!public! !
+getBatchAccessors!accessing!public! !
+keys!accessing!public! !
+subjectIncludesKey:!accessing!private! !
+!
 
 !Tools.IndexedInstVarBatchAccessor class methodsFor!
 
@@ -53,5 +55,7 @@ subject: anObject batchSize: sizeInteger
 		keys: (1 to: anObject basicSize)
 		startingAt: 1
 		batchSize: sizeInteger! !
-!Tools.IndexedInstVarBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
+!Tools.IndexedInstVarBatchAccessor class categoriesForMethods!
+subject:batchSize:!instance creation!public! !
+!
 

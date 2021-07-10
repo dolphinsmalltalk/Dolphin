@@ -84,20 +84,22 @@ view
 
 view: anObject
 	view := anObject! !
-!UI.Scintilla.Marker categoriesFor: #addToView:!helpers!public! !
-!UI.Scintilla.Marker categoriesFor: #cacheCurrentLine!accessing!public! !
-!UI.Scintilla.Marker categoriesFor: #currentLine!accessing!public! !
-!UI.Scintilla.Marker categoriesFor: #currentPosition!accessing!public! !
-!UI.Scintilla.Marker categoriesFor: #currentRange!accessing!public! !
-!UI.Scintilla.Marker categoriesFor: #definition!helpers!public! !
-!UI.Scintilla.Marker categoriesFor: #handle!accessing!private! !
-!UI.Scintilla.Marker categoriesFor: #line!accessing!public! !
-!UI.Scintilla.Marker categoriesFor: #removedFromView!private!removing! !
-!UI.Scintilla.Marker categoriesFor: #removeFromView!public!removing! !
-!UI.Scintilla.Marker categoriesFor: #setDefinition:line:!initializing!private! !
-!UI.Scintilla.Marker categoriesFor: #type!accessing!public! !
-!UI.Scintilla.Marker categoriesFor: #view!accessing!private! !
-!UI.Scintilla.Marker categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.Marker categoriesForMethods!
+addToView:!helpers!public! !
+cacheCurrentLine!accessing!public! !
+currentLine!accessing!public! !
+currentPosition!accessing!public! !
+currentRange!accessing!public! !
+definition!helpers!public! !
+handle!accessing!private! !
+line!accessing!public! !
+removedFromView!private!removing! !
+removeFromView!public!removing! !
+setDefinition:line:!initializing!private! !
+type!accessing!public! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !UI.Scintilla.Marker class methodsFor!
 
@@ -108,6 +110,8 @@ definition: aScintillaMarkerDefinition line: anInteger
 
 icon
 	^ScintillaView icon! !
-!UI.Scintilla.Marker class categoriesFor: #definition:line:!instance creation!public! !
-!UI.Scintilla.Marker class categoriesFor: #icon!constants!development!public! !
+!UI.Scintilla.Marker class categoriesForMethods!
+definition:line:!instance creation!public! !
+icon!constants!development!public! !
+!
 

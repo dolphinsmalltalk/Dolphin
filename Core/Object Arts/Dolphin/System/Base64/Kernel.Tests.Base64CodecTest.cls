@@ -98,10 +98,12 @@ testVM
 	decoded := ByteArray writeStream.
 	Base64Codec decodeFrom: encoded contents readStream onto: decoded.
 	self assert: decoded contents equals: f contents! !
-!Kernel.Tests.Base64CodecTest categoriesFor: #roundTrip:!helpers!private! !
-!Kernel.Tests.Base64CodecTest categoriesFor: #testLineLength!public!unit tests! !
-!Kernel.Tests.Base64CodecTest categoriesFor: #testPadding!public!unit tests! !
-!Kernel.Tests.Base64CodecTest categoriesFor: #testRFC2440!public!unit tests! !
-!Kernel.Tests.Base64CodecTest categoriesFor: #testSmokeTest!public!unit tests! !
-!Kernel.Tests.Base64CodecTest categoriesFor: #testVM!public!unit tests! !
+!Kernel.Tests.Base64CodecTest categoriesForMethods!
+roundTrip:!helpers!private! !
+testLineLength!public!unit tests! !
+testPadding!public!unit tests! !
+testRFC2440!public!unit tests! !
+testSmokeTest!public!unit tests! !
+testVM!public!unit tests! !
+!
 

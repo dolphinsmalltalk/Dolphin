@@ -102,21 +102,23 @@ tagsNamed: aSymbol ifReceiverOrChildDo: aOneArgumentBlock
 	"Recurse all children"
 
 	self contentsDo: [:each | each tagsNamed: aSymbol ifReceiverDo: aOneArgumentBlock]! !
-!XMLNode categoriesFor: #addContent:!accessing!public! !
-!XMLNode categoriesFor: #contentsDo:!enumerating!public! !
-!XMLNode categoriesFor: #firstTagNamed:!public!searching! !
-!XMLNode categoriesFor: #firstTagNamed:with:!public!searching! !
-!XMLNode categoriesFor: #isDocument!public!testing! !
-!XMLNode categoriesFor: #isProcessingInstruction!public!testing! !
-!XMLNode categoriesFor: #isTag!public!testing! !
-!XMLNode categoriesFor: #isText!public!testing! !
-!XMLNode categoriesFor: #printOn:!printing!public! !
-!XMLNode categoriesFor: #printXMLOn:!printing!public! !
-!XMLNode categoriesFor: #tagsNamed:childrenDo:!public!searching! !
-!XMLNode categoriesFor: #tagsNamed:childrenDoAndRecurse:!public!searching! !
-!XMLNode categoriesFor: #tagsNamed:contentsDo:!public!searching! !
-!XMLNode categoriesFor: #tagsNamed:do:!public!searching! !
-!XMLNode categoriesFor: #tagsNamed:ifReceiverDo:!public!searching! !
-!XMLNode categoriesFor: #tagsNamed:ifReceiverDoAndRecurse:!public!searching! !
-!XMLNode categoriesFor: #tagsNamed:ifReceiverOrChildDo:!public!searching! !
+!XMLNode categoriesForMethods!
+addContent:!accessing!public! !
+contentsDo:!enumerating!public! !
+firstTagNamed:!public!searching! !
+firstTagNamed:with:!public!searching! !
+isDocument!public!testing! !
+isProcessingInstruction!public!testing! !
+isTag!public!testing! !
+isText!public!testing! !
+printOn:!printing!public! !
+printXMLOn:!printing!public! !
+tagsNamed:childrenDo:!public!searching! !
+tagsNamed:childrenDoAndRecurse:!public!searching! !
+tagsNamed:contentsDo:!public!searching! !
+tagsNamed:do:!public!searching! !
+tagsNamed:ifReceiverDo:!public!searching! !
+tagsNamed:ifReceiverDoAndRecurse:!public!searching! !
+tagsNamed:ifReceiverOrChildDo:!public!searching! !
+!
 

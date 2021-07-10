@@ -77,17 +77,19 @@ text: buffer
 	Note that buffer should have been allocated from the fixed heap."
 
 	self lpstrText: (text := buffer) yourAddress! !
-!OS.TEXTRANGE categoriesFor: #cpMax!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #cpMax:!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #cpMin!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #cpMin:!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #lpstrText:!**compiled accessors**!public! !
-!OS.TEXTRANGE categoriesFor: #setFrom:to:text:!initializing!private! !
-!OS.TEXTRANGE categoriesFor: #size!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #start!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #stop!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #text!accessing!public! !
-!OS.TEXTRANGE categoriesFor: #text:!accessing!public! !
+!OS.TEXTRANGE categoriesForMethods!
+cpMax!accessing!public! !
+cpMax:!accessing!public! !
+cpMin!accessing!public! !
+cpMin:!accessing!public! !
+lpstrText:!**compiled accessors**!public! !
+setFrom:to:text:!initializing!private! !
+size!accessing!public! !
+start!accessing!public! !
+stop!accessing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 !OS.TEXTRANGE class methodsFor!
 
@@ -128,8 +130,10 @@ from: startInteger to: stopInteger type: aStringClass
 
 getFieldNames
 	^#(#chrg #lpstrText)! !
-!OS.TEXTRANGE class categoriesFor: #defineFields!public!template definition! !
-!OS.TEXTRANGE class categoriesFor: #from:to:text:!instance creation!public! !
-!OS.TEXTRANGE class categoriesFor: #from:to:type:!instance creation!public! !
-!OS.TEXTRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TEXTRANGE class categoriesForMethods!
+defineFields!public!template definition! !
+from:to:text:!instance creation!public! !
+from:to:type:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

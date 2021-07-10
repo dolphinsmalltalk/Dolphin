@@ -52,9 +52,11 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^[:text | match match: text ignoreCase: ignoreCase]! !
-!Tools.MethodSourceSearch categoriesFor: #methodFilter:!helpers!private! !
-!Tools.MethodSourceSearch categoriesFor: #methodReferenceFilter!helpers!private! !
-!Tools.MethodSourceSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
-!Tools.MethodSourceSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
-!Tools.MethodSourceSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
+!Tools.MethodSourceSearch categoriesForMethods!
+methodFilter:!helpers!private! !
+methodReferenceFilter!helpers!private! !
+regexpReferenceFilter!helpers!private! !
+simpleReferenceFilter!helpers!private! !
+wildcardReferenceFilter!helpers!private! !
+!
 

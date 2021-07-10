@@ -34,9 +34,11 @@ value
 	file path name."
 
 	^External.ResourceLibrary open: fileName! !
-!Kernel.STBExternalResourceLibraryProxy categoriesFor: #fileName:!accessing!private! !
-!Kernel.STBExternalResourceLibraryProxy categoriesFor: #stbFixup:at:!converting!public! !
-!Kernel.STBExternalResourceLibraryProxy categoriesFor: #value!converting!public! !
+!Kernel.STBExternalResourceLibraryProxy categoriesForMethods!
+fileName:!accessing!private! !
+stbFixup:at:!converting!public! !
+value!converting!public! !
+!
 
 !Kernel.STBExternalResourceLibraryProxy class methodsFor!
 
@@ -46,5 +48,7 @@ forLibrary: lib
 	^self basicNew
 		fileName: lib fileName;
 		yourself! !
-!Kernel.STBExternalResourceLibraryProxy class categoriesFor: #forLibrary:!instance creation!public! !
+!Kernel.STBExternalResourceLibraryProxy class categoriesForMethods!
+forLibrary:!instance creation!public! !
+!
 

@@ -23,6 +23,8 @@ Motivation example: Often the UI is built after/independently from the model. Yo
 handlesAnnouncement: anAnnouncement
 	"If any of the set handles the announcements, subscribers should receive it."
 	^ self anySatisfy: [ :each | each handlesAnnouncement: anAnnouncement ]! !
-!Kernel.AnnouncementSet categoriesFor: #,!adding!public! !
-!Kernel.AnnouncementSet categoriesFor: #handlesAnnouncement:!public!testing! !
+!Kernel.AnnouncementSet categoriesForMethods!
+,!adding!public! !
+handlesAnnouncement:!public!testing! !
+!
 

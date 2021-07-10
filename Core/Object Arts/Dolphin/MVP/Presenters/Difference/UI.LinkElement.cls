@@ -16,6 +16,8 @@ value
 
 value: aValue
 	value := aValue! !
-!UI.LinkElement categoriesFor: #value!accessing!public! !
-!UI.LinkElement categoriesFor: #value:!accessing!public! !
+!UI.LinkElement categoriesForMethods!
+value!accessing!public! !
+value:!accessing!public! !
+!
 

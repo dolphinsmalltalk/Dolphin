@@ -246,39 +246,41 @@ testCaseSelectionChanged
 useDisplayNames
 
 	self model toggleUseDisplayNames! !
-!SUnitAbsBrowser categoriesFor: #addToCommandRoute:!commands!private! !
-!SUnitAbsBrowser categoriesFor: #callbackResetList!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #callbackSelectedItems:!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #callbackToggledUseDisplayNames!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #canSaveState!private!saved state! !
-!SUnitAbsBrowser categoriesFor: #createComponents!initializing!public! !
-!SUnitAbsBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!SUnitAbsBrowser categoriesFor: #delete!commands!private! !
-!SUnitAbsBrowser categoriesFor: #helpAbout!commands!private! !
-!SUnitAbsBrowser categoriesFor: #helpString!commands!private! !
-!SUnitAbsBrowser categoriesFor: #label!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #labelTextPresenter!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #labelTextPresenter:!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #listModel!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #listModel:!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #listPresenter!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #listPresenter:!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #queryCommand:!commands!private! !
-!SUnitAbsBrowser categoriesFor: #refreshItemAtIndex:!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #refreshList!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #refreshList:!private! !
-!SUnitAbsBrowser categoriesFor: #reset!commands!private! !
-!SUnitAbsBrowser categoriesFor: #saveStateOn:!private!saved state! !
-!SUnitAbsBrowser categoriesFor: #sbBrowseResources!commands!private! !
-!SUnitAbsBrowser categoriesFor: #selectionChanged!event handling!private! !
-!SUnitAbsBrowser categoriesFor: #setDetailState!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #setResultDisplay!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #setStatusColorsOn:!model callbacks!private! !
-!SUnitAbsBrowser categoriesFor: #status!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #statusTextPresenter!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #statusTextPresenter:!accessing!private! !
-!SUnitAbsBrowser categoriesFor: #testCaseSelectionChanged!event handling!private! !
-!SUnitAbsBrowser categoriesFor: #useDisplayNames!commands!private! !
+!SUnitAbsBrowser categoriesForMethods!
+addToCommandRoute:!commands!private! !
+callbackResetList!model callbacks!private! !
+callbackSelectedItems:!model callbacks!private! !
+callbackToggledUseDisplayNames!model callbacks!private! !
+canSaveState!private!saved state! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+delete!commands!private! !
+helpAbout!commands!private! !
+helpString!commands!private! !
+label!accessing!private! !
+labelTextPresenter!accessing!private! !
+labelTextPresenter:!accessing!private! !
+listModel!accessing!private! !
+listModel:!accessing!private! !
+listPresenter!accessing!private! !
+listPresenter:!accessing!private! !
+queryCommand:!commands!private! !
+refreshItemAtIndex:!model callbacks!private! !
+refreshList!model callbacks!private! !
+refreshList:!private! !
+reset!commands!private! !
+saveStateOn:!private!saved state! !
+sbBrowseResources!commands!private! !
+selectionChanged!event handling!private! !
+setDetailState!model callbacks!private! !
+setResultDisplay!model callbacks!private! !
+setStatusColorsOn:!model callbacks!private! !
+status!accessing!private! !
+statusTextPresenter!accessing!private! !
+statusTextPresenter:!accessing!private! !
+testCaseSelectionChanged!event handling!private! !
+useDisplayNames!commands!private! !
+!
 
 !SUnitAbsBrowser class methodsFor!
 
@@ -320,10 +322,12 @@ useDisplayNames
 useDisplayNames: aBoolean
 
 	^self  defaultModelClass useDisplayNames: aBoolean! !
-!SUnitAbsBrowser class categoriesFor: #icon!constants!public! !
-!SUnitAbsBrowser class categoriesFor: #initializeToolClass:!initializing!must strip!private! !
-!SUnitAbsBrowser class categoriesFor: #publishedAspects!development!public! !
-!SUnitAbsBrowser class categoriesFor: #toolsFolderIcon!accessing!public! !
-!SUnitAbsBrowser class categoriesFor: #useDisplayNames!configuring!public! !
-!SUnitAbsBrowser class categoriesFor: #useDisplayNames:!configuring!public! !
+!SUnitAbsBrowser class categoriesForMethods!
+icon!constants!public! !
+initializeToolClass:!initializing!must strip!private! !
+publishedAspects!development!public! !
+toolsFolderIcon!accessing!public! !
+useDisplayNames!configuring!public! !
+useDisplayNames:!configuring!public! !
+!
 

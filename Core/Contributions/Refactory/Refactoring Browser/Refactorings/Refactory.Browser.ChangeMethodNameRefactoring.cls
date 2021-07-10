@@ -127,17 +127,19 @@ transform
 	self removeRenamedImplementors
 
 ! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #implementors!accessing!private! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #modifyImplementorParseTree:in:!public! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #myConditions!preconditions!public! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #newSelector!accessing!public! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #parseTreeRewriter!accessing!private! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #removeRenamedImplementors!public!transforming! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #renameImplementors!public!transforming! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #renameMessageSends!public!transforming! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #renameMethod:in:to:permutation:!initialize/release!public! !
-!Refactory.Browser.ChangeMethodNameRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesForMethods!
+hasPermutedArguments!public!testing! !
+implementors!accessing!private! !
+implementorsCanBePrimitives!public!testing! !
+modifyImplementorParseTree:in:!public! !
+myConditions!preconditions!public! !
+newSelector!accessing!public! !
+parseTreeRewriter!accessing!private! !
+preconditions!preconditions!public! !
+removeRenamedImplementors!public!transforming! !
+renameImplementors!public!transforming! !
+renameMessageSends!public!transforming! !
+renameMethod:in:to:permutation:!initialize/release!public! !
+transform!public!transforming! !
+!
 

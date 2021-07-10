@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.DateTest'
 	instanceVariableNames: ''
@@ -81,8 +81,10 @@ testYyyymmdd
 				month: 2
 				day: 28.
 	self assert: subject yyyymmdd equals: '-0005-02-28'! !
-!Core.Tests.DateTest categoriesFor: #testFromDays!public!unit tests! !
-!Core.Tests.DateTest categoriesFor: #testFromSeconds!public!unit tests! !
-!Core.Tests.DateTest categoriesFor: #testStoreOn!public!testing! !
-!Core.Tests.DateTest categoriesFor: #testYyyymmdd!public!unit tests! !
+!Core.Tests.DateTest categoriesForMethods!
+testFromDays!public!unit tests! !
+testFromSeconds!public!unit tests! !
+testStoreOn!public!testing! !
+testYyyymmdd!public!unit tests! !
+!
 

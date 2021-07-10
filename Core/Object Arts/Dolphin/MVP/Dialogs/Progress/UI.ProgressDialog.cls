@@ -202,27 +202,29 @@ value: progressValue
 	progressValue."
 
 	progressPresenter value: progressValue! !
-!UI.ProgressDialog categoriesFor: #allowCancel!accessing!public! !
-!UI.ProgressDialog categoriesFor: #allowCancel:!accessing!public! !
-!UI.ProgressDialog categoriesFor: #answer!accessing!public! !
-!UI.ProgressDialog categoriesFor: #cancel!commands!public! !
-!UI.ProgressDialog categoriesFor: #createComponents!initializing!public! !
-!UI.ProgressDialog categoriesFor: #defaultOperation!operations!private! !
-!UI.ProgressDialog categoriesFor: #deferredClose!operations!private! !
-!UI.ProgressDialog categoriesFor: #forkOperation!operations!public! !
-!UI.ProgressDialog categoriesFor: #initialize!initializing!private! !
-!UI.ProgressDialog categoriesFor: #isReusable!accessing!public! !
-!UI.ProgressDialog categoriesFor: #isReusable:!accessing!public! !
-!UI.ProgressDialog categoriesFor: #operation!accessing!public! !
-!UI.ProgressDialog categoriesFor: #operation:!accessing!public! !
-!UI.ProgressDialog categoriesFor: #priority!accessing!public! !
-!UI.ProgressDialog categoriesFor: #priority:!accessing!public! !
-!UI.ProgressDialog categoriesFor: #progress!accessing!public! !
-!UI.ProgressDialog categoriesFor: #queryCommand:!commands!private! !
-!UI.ProgressDialog categoriesFor: #show!operations!public! !
-!UI.ProgressDialog categoriesFor: #showModal!operations!public! !
-!UI.ProgressDialog categoriesFor: #text:!accessing!public! !
-!UI.ProgressDialog categoriesFor: #value:!accessing!public! !
+!UI.ProgressDialog categoriesForMethods!
+allowCancel!accessing!public! !
+allowCancel:!accessing!public! !
+answer!accessing!public! !
+cancel!commands!public! !
+createComponents!initializing!public! !
+defaultOperation!operations!private! !
+deferredClose!operations!private! !
+forkOperation!operations!public! !
+initialize!initializing!private! !
+isReusable!accessing!public! !
+isReusable:!accessing!public! !
+operation!accessing!public! !
+operation:!accessing!public! !
+priority!accessing!public! !
+priority:!accessing!public! !
+progress!accessing!public! !
+queryCommand:!commands!private! !
+show!operations!public! !
+showModal!operations!public! !
+text:!accessing!public! !
+value:!accessing!public! !
+!
 
 !UI.ProgressDialog class methodsFor!
 
@@ -370,17 +372,19 @@ showModalWhile: operation
 	runs to completion, then the answer is result of the evaluation."
 
 	^self showModal: self defaultView while: operation! !
-!UI.ProgressDialog class categoriesFor: #create:operation:!instance creation!public! !
-!UI.ProgressDialog class categoriesFor: #defaultModel!models!public! !
-!UI.ProgressDialog class categoriesFor: #example1!examples!public! !
-!UI.ProgressDialog class categoriesFor: #example2!examples!public! !
-!UI.ProgressDialog class categoriesFor: #example3!examples!public! !
-!UI.ProgressDialog class categoriesFor: #icon!constants!public! !
-!UI.ProgressDialog class categoriesFor: #operation:!instance creation!public! !
-!UI.ProgressDialog class categoriesFor: #resource_Compact_view!public!resources-views! !
-!UI.ProgressDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.ProgressDialog class categoriesFor: #resource_No_cancel_view!public!resources-views! !
-!UI.ProgressDialog class categoriesFor: #resource_Numeric_progress_dialog!public!resources-views! !
-!UI.ProgressDialog class categoriesFor: #showModal:while:!instance creation!public! !
-!UI.ProgressDialog class categoriesFor: #showModalWhile:!instance creation!public! !
+!UI.ProgressDialog class categoriesForMethods!
+create:operation:!instance creation!public! !
+defaultModel!models!public! !
+example1!examples!public! !
+example2!examples!public! !
+example3!examples!public! !
+icon!constants!public! !
+operation:!instance creation!public! !
+resource_Compact_view!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_No_cancel_view!public!resources-views! !
+resource_Numeric_progress_dialog!public!resources-views! !
+showModal:while:!instance creation!public! !
+showModalWhile:!instance creation!public! !
+!
 

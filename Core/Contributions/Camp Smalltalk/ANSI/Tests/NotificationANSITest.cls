@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #NotificationANSITest
 	instanceVariableNames: ''
@@ -93,24 +93,26 @@ testXsignalX
 testXtag
 	" <exceptionDescription>#tag "
 	#'Exception'.! !
-!NotificationANSITest categoriesFor: #canonicalObject!public! !
-!NotificationANSITest categoriesFor: #protocol!public! !
-!NotificationANSITest categoriesFor: #testXdefaultAction!public! !
-!NotificationANSITest categoriesFor: #testXdescription!public! !
-!NotificationANSITest categoriesFor: #testXisNested!public! !
-!NotificationANSITest categoriesFor: #testXisResumable!public! !
-!NotificationANSITest categoriesFor: #testXmessageText!public! !
-!NotificationANSITest categoriesFor: #testXmessageTextX!public! !
-!NotificationANSITest categoriesFor: #testXouter!public! !
-!NotificationANSITest categoriesFor: #testXpass!public! !
-!NotificationANSITest categoriesFor: #testXresignalAsX!public! !
-!NotificationANSITest categoriesFor: #testXresume!public! !
-!NotificationANSITest categoriesFor: #testXresumeX!public! !
-!NotificationANSITest categoriesFor: #testXretry!public! !
-!NotificationANSITest categoriesFor: #testXretryUsingX!public! !
-!NotificationANSITest categoriesFor: #testXreturn!public! !
-!NotificationANSITest categoriesFor: #testXreturnX!public! !
-!NotificationANSITest categoriesFor: #testXsignal!public! !
-!NotificationANSITest categoriesFor: #testXsignalX!public! !
-!NotificationANSITest categoriesFor: #testXtag!public! !
+!NotificationANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXdefaultAction!public! !
+testXdescription!public! !
+testXisNested!public! !
+testXisResumable!public! !
+testXmessageText!public! !
+testXmessageTextX!public! !
+testXouter!public! !
+testXpass!public! !
+testXresignalAsX!public! !
+testXresume!public! !
+testXresumeX!public! !
+testXretry!public! !
+testXretryUsingX!public! !
+testXreturn!public! !
+testXreturnX!public! !
+testXsignal!public! !
+testXsignalX!public! !
+testXtag!public! !
+!
 

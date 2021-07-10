@@ -21,8 +21,10 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!Kernel.SingletonSearchPolicy categoriesFor: #name!accessing!public! !
-!Kernel.SingletonSearchPolicy categoriesFor: #stbSaveOn:!binary filing!public! !
+!Kernel.SingletonSearchPolicy categoriesForMethods!
+name!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !Kernel.SingletonSearchPolicy class methodsFor!
 
@@ -49,8 +51,10 @@ uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
 	current := nil! !
-!Kernel.SingletonSearchPolicy class categoriesFor: #current!instance creation!public! !
-!Kernel.SingletonSearchPolicy class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Kernel.SingletonSearchPolicy class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Kernel.SingletonSearchPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.SingletonSearchPolicy class categoriesForMethods!
+current!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

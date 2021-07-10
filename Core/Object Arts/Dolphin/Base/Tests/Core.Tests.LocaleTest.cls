@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.LocaleTest'
 	instanceVariableNames: 'savedLocale'
@@ -132,14 +132,16 @@ testPrintFloatSeparators
 	"Test printing with specific decimal and group separators."
 
 	self subclassResponsibility! !
-!Core.Tests.LocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!Core.Tests.LocaleTest categoriesFor: #setUp!private!running! !
-!Core.Tests.LocaleTest categoriesFor: #tearDown!private!running! !
-!Core.Tests.LocaleTest categoriesFor: #testDisplayFloatOn!public!unit tests! !
-!Core.Tests.LocaleTest categoriesFor: #testPrimary!public!unit tests! !
-!Core.Tests.LocaleTest categoriesFor: #testPrintDateTimeOnFormat!public!unit tests! !
-!Core.Tests.LocaleTest categoriesFor: #testPrintDurationOnFormat!public!unit tests! !
-!Core.Tests.LocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
-!Core.Tests.LocaleTest categoriesFor: #testPrintFloatNumDigits!public!unit tests! !
-!Core.Tests.LocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
+!Core.Tests.LocaleTest categoriesForMethods!
+defaultSubject!helpers!private! !
+setUp!private!running! !
+tearDown!private!running! !
+testDisplayFloatOn!public!unit tests! !
+testPrimary!public!unit tests! !
+testPrintDateTimeOnFormat!public!unit tests! !
+testPrintDurationOnFormat!public!unit tests! !
+testPrintFloatGrouping!public!unit tests! !
+testPrintFloatNumDigits!public!unit tests! !
+testPrintFloatSeparators!public!unit tests! !
+!
 

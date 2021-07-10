@@ -52,12 +52,14 @@ pwszName: anUtf16String
 	"Set the receiver's 'pwszName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszName put: anUtf16String yourAddress! !
-!OS.COM.COSERVERINFO categoriesFor: #hostName!accessing!public! !
-!OS.COM.COSERVERINFO categoriesFor: #hostName:!accessing!public! !
-!OS.COM.COSERVERINFO categoriesFor: #pAuthInfo!**compiled accessors**!public! !
-!OS.COM.COSERVERINFO categoriesFor: #pAuthInfo:!**compiled accessors**!public! !
-!OS.COM.COSERVERINFO categoriesFor: #pwszName!**compiled accessors**!public! !
-!OS.COM.COSERVERINFO categoriesFor: #pwszName:!**compiled accessors**!public! !
+!OS.COM.COSERVERINFO categoriesForMethods!
+hostName!accessing!public! !
+hostName:!accessing!public! !
+pAuthInfo!**compiled accessors**!public! !
+pAuthInfo:!**compiled accessors**!public! !
+pwszName!**compiled accessors**!public! !
+pwszName:!**compiled accessors**!public! !
+!
 
 !OS.COM.COSERVERINFO class methodsFor!
 
@@ -82,6 +84,8 @@ defineFields
 
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !
-!OS.COM.COSERVERINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.COSERVERINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.COSERVERINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -117,14 +117,16 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #error:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #Error:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #fatalError:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #FatalError:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #ignorableWarning:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #IgnorableWarning:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXErrorHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXErrorHandler categoriesForMethods!
+error:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+Error:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+fatalError:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+FatalError:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+ignorableWarning:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+IgnorableWarning:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !MSXML.IVBSAXErrorHandler class methodsFor!
 
@@ -140,5 +142,7 @@ defineFunctions
 		defineFunction: #IgnorableWarning:strErrorMessage:nErrorCode:
 			argumentTypes: 'IVBSAXLocator* bstr* sdword'
 ! !
-!MSXML.IVBSAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXErrorHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

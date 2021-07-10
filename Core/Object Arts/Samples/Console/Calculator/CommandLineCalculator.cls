@@ -44,5 +44,7 @@ main
 								display: x;
 								cr;
 								flush]]! !
-!CommandLineCalculator categoriesFor: #main!operations-startup!public! !
+!CommandLineCalculator categoriesForMethods!
+main!operations-startup!public! !
+!
 

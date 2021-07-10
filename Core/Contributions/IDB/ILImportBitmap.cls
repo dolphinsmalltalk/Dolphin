@@ -47,14 +47,18 @@ requestImageSize
 	^(ILBitmapExtentDialog create)
 		bitmapExtent: bitmap width @ bitmap height;
 		showModal! !
-!ILImportBitmap categoriesFor: #images!operations!public! !
-!ILImportBitmap categoriesFor: #initializeFrom:!initializing!public! !
-!ILImportBitmap categoriesFor: #proxyClass!constants!public! !
-!ILImportBitmap categoriesFor: #requestImageSize!helpers!public! !
+!ILImportBitmap categoriesForMethods!
+images!operations!public! !
+initializeFrom:!initializing!public! !
+proxyClass!constants!public! !
+requestImageSize!helpers!public! !
+!
 
 !ILImportBitmap class methodsFor!
 
 isResponsibleFor: aStream
 	^(aStream next: 2) = 'BM' asByteArray! !
-!ILImportBitmap class categoriesFor: #isResponsibleFor:!public!testing! !
+!ILImportBitmap class categoriesForMethods!
+isResponsibleFor:!public!testing! !
+!
 

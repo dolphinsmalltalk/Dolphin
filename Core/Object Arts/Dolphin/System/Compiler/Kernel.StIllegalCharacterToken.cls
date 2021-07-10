@@ -16,6 +16,8 @@ acceptVisitor: aTokenVisitor
 
 length
 	^1! !
-!Kernel.StIllegalCharacterToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StIllegalCharacterToken categoriesFor: #length!accessing!private! !
+!Kernel.StIllegalCharacterToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+length!accessing!private! !
+!
 

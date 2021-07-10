@@ -19,12 +19,16 @@ createHandle
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
-!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesFor: #rectangle:!initializing!private! !
+!Graphics.Gdiplus.RegionFromRectangleInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+rectangle:!initializing!private! !
+!
 
 !Graphics.Gdiplus.RegionFromRectangleInitializer class methodsFor!
 
 fromRectangle: aRectangle
 	^self new rectangle: aRectangle! !
-!Graphics.Gdiplus.RegionFromRectangleInitializer class categoriesFor: #fromRectangle:!instance creation!public! !
+!Graphics.Gdiplus.RegionFromRectangleInitializer class categoriesForMethods!
+fromRectangle:!instance creation!public! !
+!
 

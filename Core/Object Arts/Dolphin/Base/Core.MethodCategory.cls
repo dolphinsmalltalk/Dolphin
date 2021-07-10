@@ -142,26 +142,28 @@ selectorsInBehavior: aBehavior
 	"Answer a <sequencedReadableCollection> of <Symbol>s being the selectors of methods in the <Behavior> argument which are members of the receiver."
 
 	^aBehavior selectorsInCategory: self! !
-!Core.MethodCategory categoriesFor: #addClass:!adding!public! !
-!Core.MethodCategory categoriesFor: #addMethod:!adding!public! !
-!Core.MethodCategory categoriesFor: #addMethods:!adding!public! !
-!Core.MethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!Core.MethodCategory categoriesFor: #asMethodCategory!converting!public! !
-!Core.MethodCategory categoriesFor: #behaviors!enumerating!private! !
-!Core.MethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
-!Core.MethodCategory categoriesFor: #contents!enumerating!public! !
-!Core.MethodCategory categoriesFor: #includesBehavior:!development!enumerating!public! !
-!Core.MethodCategory categoriesFor: #includesMethod:!public!testing! !
-!Core.MethodCategory categoriesFor: #isEmpty!public!testing! !
-!Core.MethodCategory categoriesFor: #isPrivacy!private!testing! !
-!Core.MethodCategory categoriesFor: #methods!enumerating!public! !
-!Core.MethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!Core.MethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!Core.MethodCategory categoriesFor: #removeClass:!development!public!removing! !
-!Core.MethodCategory categoriesFor: #removeMethod:!public!removing! !
-!Core.MethodCategory categoriesFor: #removeMethods:!public!removing! !
-!Core.MethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
-!Core.MethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
+!Core.MethodCategory categoriesForMethods!
+addClass:!adding!public! !
+addMethod:!adding!public! !
+addMethods:!adding!public! !
+addMethodSilently:!adding!private! !
+asMethodCategory!converting!public! !
+behaviors!enumerating!private! !
+behaviorsDo:!enumerating!public! !
+contents!enumerating!public! !
+includesBehavior:!development!enumerating!public! !
+includesMethod:!public!testing! !
+isEmpty!public!testing! !
+isPrivacy!private!testing! !
+methods!enumerating!public! !
+methodsInBehavior:!enumerating!public! !
+methodsInBehavior:do:!enumerating!public! !
+removeClass:!development!public!removing! !
+removeMethod:!public!removing! !
+removeMethods:!public!removing! !
+removeMethodSilently:!private!removing! !
+selectorsInBehavior:!enumerating!public! !
+!
 
 !Core.MethodCategory class methodsFor!
 
@@ -279,19 +281,21 @@ uninitialize
 
 	Pseuds := Set new.
 	Table := WeakLookupTable new! !
-!Core.MethodCategory class categoriesFor: #addPseud:!adding!public! !
-!Core.MethodCategory class categoriesFor: #allMethodCategories!accessing!public! !
-!Core.MethodCategory class categoriesFor: #deprecatedMethods!instance creation!public! !
-!Core.MethodCategory class categoriesFor: #initialize!initializing!private! !
-!Core.MethodCategory class categoriesFor: #name:!instance creation!public! !
-!Core.MethodCategory class categoriesFor: #primitives!instance creation!public! !
-!Core.MethodCategory class categoriesFor: #private!instance creation!public! !
-!Core.MethodCategory class categoriesFor: #pseudoCategories!constants!public! !
-!Core.MethodCategory class categoriesFor: #pseudPrefix!constants!private! !
-!Core.MethodCategory class categoriesFor: #public!instance creation!public! !
-!Core.MethodCategory class categoriesFor: #removeCategory:!public!removing! !
-!Core.MethodCategory class categoriesFor: #removePseud:!public!removing! !
-!Core.MethodCategory class categoriesFor: #setMethod:categories:!helpers!private! !
-!Core.MethodCategory class categoriesFor: #unclassifiedName!constants!private! !
-!Core.MethodCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Core.MethodCategory class categoriesForMethods!
+addPseud:!adding!public! !
+allMethodCategories!accessing!public! !
+deprecatedMethods!instance creation!public! !
+initialize!initializing!private! !
+name:!instance creation!public! !
+primitives!instance creation!public! !
+private!instance creation!public! !
+pseudoCategories!constants!public! !
+pseudPrefix!constants!private! !
+public!instance creation!public! !
+removeCategory:!public!removing! !
+removePseud:!public!removing! !
+setMethod:categories:!helpers!private! !
+unclassifiedName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

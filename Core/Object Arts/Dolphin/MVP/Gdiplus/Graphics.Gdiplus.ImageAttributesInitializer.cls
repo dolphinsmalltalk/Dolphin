@@ -23,7 +23,9 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipCreateImageAttributes: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.ImageAttributesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageAttributesInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.ImageAttributesInitializer class methodsFor!
 
@@ -38,7 +40,9 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!Graphics.Gdiplus.ImageAttributesInitializer class categoriesFor: #default!instance creation!private! !
-!Graphics.Gdiplus.ImageAttributesInitializer class categoriesFor: #new!development!instance creation!public! !
-!Graphics.Gdiplus.ImageAttributesInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.ImageAttributesInitializer class categoriesForMethods!
+default!instance creation!private! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

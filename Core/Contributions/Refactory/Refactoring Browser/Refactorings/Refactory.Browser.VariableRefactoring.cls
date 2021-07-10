@@ -27,8 +27,10 @@ variable: aVarName class: aClass
 	variableName := aVarName.
 	class := self classObjectFor: aClass.
 ! !
-!Refactory.Browser.VariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.VariableRefactoring categoriesFor: #variable:class:!initialize/release!public! !
+!Refactory.Browser.VariableRefactoring categoriesForMethods!
+storeOn:!printing!public! !
+variable:class:!initialize/release!public! !
+!
 
 !Refactory.Browser.VariableRefactoring class methodsFor!
 
@@ -40,6 +42,8 @@ model: aRBNamespace variable: aVarName class: aClass
 
 variable: aVarName class: aClass
 	^self new variable: aVarName class: aClass! !
-!Refactory.Browser.VariableRefactoring class categoriesFor: #model:variable:class:!instance creation!public! !
-!Refactory.Browser.VariableRefactoring class categoriesFor: #variable:class:!instance creation!public! !
+!Refactory.Browser.VariableRefactoring class categoriesForMethods!
+model:variable:class:!instance creation!public! !
+variable:class:!instance creation!public! !
+!
 

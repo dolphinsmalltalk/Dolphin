@@ -46,7 +46,9 @@ publishedAspects
 	self columns 
 		do: [:each | aspects add: ((self at: each name) newAspect: each name class: Tools.KeyedAspect)].
 	^aspects! !
-!Database.DBAbstractRow categoriesFor: #publishedAspects!constants!development!public! !
+!Database.DBAbstractRow categoriesForMethods!
+publishedAspects!constants!development!public! !
+!
 
 !Database.DBResultSet methodsFor!
 
@@ -58,8 +60,10 @@ publishedKeyedAspectsBatchSize
 
 	^10
 ! !
-!Database.DBResultSet categoriesFor: #debugPrintOn:!development!printing!public! !
-!Database.DBResultSet categoriesFor: #publishedKeyedAspectsBatchSize!constants!development!private! !
+!Database.DBResultSet categoriesForMethods!
+debugPrintOn:!development!printing!public! !
+publishedKeyedAspectsBatchSize!constants!development!private! !
+!
 
 !Database.DBResultSet class methodsFor!
 
@@ -78,8 +82,10 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Tools.Aspect name: #statement);
 		yourself! !
-!Database.DBResultSet class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
-!Database.DBResultSet class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!Database.DBResultSet class categoriesForMethods!
+newInstanceAspect:class:!adapters!development!private! !
+publishedAspectsOfInstances!constants!development!public! !
+!
 
 "End of package definition"!
 

@@ -31,7 +31,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_UDPEXROW! !
-!OS.MIB_UDPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
+!OS.MIB_UDPEXTABLE categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !OS.MIB_UDPEXTABLE class methodsFor!
 
@@ -57,5 +59,7 @@ defineFields
 					yourself)
 			offset: 4.
 	self byteSize: 16! !
-!OS.MIB_UDPEXTABLE class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_UDPEXTABLE class categoriesForMethods!
+defineFields!initializing!public! !
+!
 

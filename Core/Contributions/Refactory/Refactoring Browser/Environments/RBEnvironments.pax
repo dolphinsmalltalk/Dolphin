@@ -114,7 +114,9 @@ Refactory.Browser.BrowserEnvironmentWrapper subclass: #'Refactory.Browser.Variab
 
 binding
 	^self! !
-!Core.Association categoriesFor: #binding!public!testing! !
+!Core.Association categoriesForMethods!
+binding!public!testing! !
+!
 
 !Core.Behavior methodsFor!
 
@@ -128,8 +130,10 @@ selectorsAndMethodsDo: aDyadicValuable
 	the receiver's method dictionary."
 
 	^methodDictionary ifNotNil: [methodDictionary keysAndValuesDo: aDyadicValuable]! !
-!Core.Behavior categoriesFor: #numberSelectors!enumerating!public! !
-!Core.Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
+!Core.Behavior categoriesForMethods!
+numberSelectors!enumerating!public! !
+selectorsAndMethodsDo:!enumerating!public! !
+!
 
 !Core.ClassDescription methodsFor!
 
@@ -158,10 +162,12 @@ withAllSubBehaviorsDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubBehaviorsDo: aMonadicValuable! !
-!Core.ClassDescription categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
-!Core.ClassDescription categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
-!Core.ClassDescription categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
-!Core.ClassDescription categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
+!Core.ClassDescription categoriesForMethods!
+allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
+allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
+subBehaviors!class hierarchy-accessing!public! !
+withAllSubBehaviorsDo:!enumerating!public! !
+!
 
 !Core.Metaclass methodsFor!
 
@@ -171,7 +177,9 @@ soleInstance
 	#rbFix. "Dolphin normally uses #instanceClass"
 	^instanceClass
 ! !
-!Core.Metaclass categoriesFor: #soleInstance!accessing!public! !
+!Core.Metaclass categoriesForMethods!
+soleInstance!accessing!public! !
+!
 
 !Core.Object methodsFor!
 
@@ -180,7 +188,9 @@ isVariableBinding
 	to #key and #value methods."
 
 	^false! !
-!Core.Object categoriesFor: #isVariableBinding!public!testing! !
+!Core.Object categoriesForMethods!
+isVariableBinding!public!testing! !
+!
 
 !Kernel.CompiledCode methodsFor!
 
@@ -189,7 +199,9 @@ allLiterals
 
 	#rbFix. "Dolphin uses #literals"
 	^self literals! !
-!Kernel.CompiledCode categoriesFor: #allLiterals!accessing!private! !
+!Kernel.CompiledCode categoriesForMethods!
+allLiterals!accessing!private! !
+!
 
 !Kernel.VariableBinding methodsFor!
 
@@ -203,8 +215,10 @@ isVariableBinding
 	to #key and #value methods."
 
 	^true! !
-!Kernel.VariableBinding categoriesFor: #isUnbound!public!testing! !
-!Kernel.VariableBinding categoriesFor: #isVariableBinding!public!testing! !
+!Kernel.VariableBinding categoriesForMethods!
+isUnbound!public!testing! !
+isVariableBinding!public!testing! !
+!
 
 "End of package definition"!
 

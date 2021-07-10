@@ -30,11 +30,13 @@ setKeys: aSequencedReadableCollection batchSize: anInteger accessorClass: aClass
 	keys := aSequencedReadableCollection.
 	batchSize := anInteger.
 	accessorClass := aClass! !
-!Tools.KeyedAspectBatch categoriesFor: #accessorClass!constants!public! !
-!Tools.KeyedAspectBatch categoriesFor: #batchSize!accessing!public! !
-!Tools.KeyedAspectBatch categoriesFor: #keys!accessing!public! !
-!Tools.KeyedAspectBatch categoriesFor: #readFrom:!public! !
-!Tools.KeyedAspectBatch categoriesFor: #setKeys:batchSize:accessorClass:!private! !
+!Tools.KeyedAspectBatch categoriesForMethods!
+accessorClass!constants!public! !
+batchSize!accessing!public! !
+keys!accessing!public! !
+readFrom:!public! !
+setKeys:batchSize:accessorClass:!private! !
+!
 
 !Tools.KeyedAspectBatch class methodsFor!
 
@@ -46,5 +48,7 @@ keys: aSequencedReadableCollection startingAt: startInteger batchSize: sizeInteg
 			batchSize: sizeInteger
 			accessorClass: aClass;
 		yourself! !
-!Tools.KeyedAspectBatch class categoriesFor: #keys:startingAt:batchSize:accessorClass:!public! !
+!Tools.KeyedAspectBatch class categoriesForMethods!
+keys:startingAt:batchSize:accessorClass:!public! !
+!
 

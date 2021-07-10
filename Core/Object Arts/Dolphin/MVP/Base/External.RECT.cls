@@ -115,28 +115,30 @@ width
 	"Answer the width of the receiver."
 
 	^self right - self left! !
-!External.RECT categoriesFor: #area!accessing!public! !
-!External.RECT categoriesFor: #asObject!converting!public! !
-!External.RECT categoriesFor: #asRectangle!converting!public! !
-!External.RECT categoriesFor: #bottom!accessing!public! !
-!External.RECT categoriesFor: #bottom:!accessing!public! !
-!External.RECT categoriesFor: #bottomRight!accessing!public! !
-!External.RECT categoriesFor: #center!accessing!public! !
-!External.RECT categoriesFor: #centerX!accessing!public! !
-!External.RECT categoriesFor: #centerY!accessing!public! !
-!External.RECT categoriesFor: #corner!accessing!public! !
-!External.RECT categoriesFor: #extent!accessing!public! !
-!External.RECT categoriesFor: #extent:!accessing!public! !
-!External.RECT categoriesFor: #height!accessing!public! !
-!External.RECT categoriesFor: #left!accessing!public! !
-!External.RECT categoriesFor: #left:!accessing!public! !
-!External.RECT categoriesFor: #origin!accessing!public! !
-!External.RECT categoriesFor: #right!accessing!public! !
-!External.RECT categoriesFor: #right:!accessing!public! !
-!External.RECT categoriesFor: #top!accessing!public! !
-!External.RECT categoriesFor: #top:!accessing!public! !
-!External.RECT categoriesFor: #topLeft!accessing!public! !
-!External.RECT categoriesFor: #width!accessing!public! !
+!External.RECT categoriesForMethods!
+area!accessing!public! !
+asObject!converting!public! !
+asRectangle!converting!public! !
+bottom!accessing!public! !
+bottom:!accessing!public! !
+bottomRight!accessing!public! !
+center!accessing!public! !
+centerX!accessing!public! !
+centerY!accessing!public! !
+corner!accessing!public! !
+extent!accessing!public! !
+extent:!accessing!public! !
+height!accessing!public! !
+left!accessing!public! !
+left:!accessing!public! !
+origin!accessing!public! !
+right!accessing!public! !
+right:!accessing!public! !
+top!accessing!public! !
+top:!accessing!public! !
+topLeft!accessing!public! !
+width!accessing!public! !
+!
 
 !External.RECT class methodsFor!
 
@@ -195,11 +197,13 @@ origin: originPoint extent: extentPoint
 		top: originPoint y
 		width: extentPoint x
 		height: extentPoint y! !
-!External.RECT class categoriesFor: #extent:!instance creation!public! !
-!External.RECT class categoriesFor: #fromRectangle:!instance creation!public! !
-!External.RECT class categoriesFor: #icon!constants!public! !
-!External.RECT class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!External.RECT class categoriesFor: #left:top:width:height:!instance creation!public! !
-!External.RECT class categoriesFor: #origin:corner:!instance creation!public! !
-!External.RECT class categoriesFor: #origin:extent:!instance creation!public! !
+!External.RECT class categoriesForMethods!
+extent:!instance creation!public! !
+fromRectangle:!instance creation!public! !
+icon!constants!public! !
+left:top:right:bottom:!instance creation!public! !
+left:top:width:height:!instance creation!public! !
+origin:corner:!instance creation!public! !
+origin:extent:!instance creation!public! !
+!
 

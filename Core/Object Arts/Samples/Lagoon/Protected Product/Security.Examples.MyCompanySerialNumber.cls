@@ -39,7 +39,9 @@ lockedMethodDecodingKeyHash
 
 	^ 1149340459812121771490846453905007528758311757049.
 	! !
-!Security.Examples.MyCompanySerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
-!Security.Examples.MyCompanySerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
-!Security.Examples.MyCompanySerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
+!Security.Examples.MyCompanySerialNumber class categoriesForMethods!
+instanceDecodingKey!constants!private! !
+lockedMethodDecodingKey!constants!private! !
+lockedMethodDecodingKeyHash!constants!private! !
+!
 

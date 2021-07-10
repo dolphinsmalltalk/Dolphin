@@ -44,8 +44,10 @@ searchPath
 		composePath: self path
 		stem: '*'
 		extension: '*'! !
-!FileBrowserFolder categoriesFor: #children!accessing!public! !
-!FileBrowserFolder categoriesFor: #files!accessing!public! !
-!FileBrowserFolder categoriesFor: #getChildren!accessing!public! !
-!FileBrowserFolder categoriesFor: #searchPath!accessing!public! !
+!FileBrowserFolder categoriesForMethods!
+children!accessing!public! !
+files!accessing!public! !
+getChildren!accessing!public! !
+searchPath!accessing!public! !
+!
 

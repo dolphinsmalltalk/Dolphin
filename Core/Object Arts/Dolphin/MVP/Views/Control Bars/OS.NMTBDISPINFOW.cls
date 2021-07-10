@@ -109,20 +109,22 @@ text: aString
 	text := aString displayString asUtf16String.
 	self pszText: text.
 	^text! !
-!OS.NMTBDISPINFOW categoriesFor: #cchText!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #cchText:!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #dwMask!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #dwMask:!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #idCommand!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #idCommand:!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #iImage!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #iImage:!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #lParam:!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #pszText!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #pszText:!**compiled accessors**!public! !
-!OS.NMTBDISPINFOW categoriesFor: #text!accessing!public! !
-!OS.NMTBDISPINFOW categoriesFor: #text:!accessing!public! !
+!OS.NMTBDISPINFOW categoriesForMethods!
+cchText!**compiled accessors**!public! !
+cchText:!**compiled accessors**!public! !
+dwMask!**compiled accessors**!public! !
+dwMask:!**compiled accessors**!public! !
+idCommand!**compiled accessors**!public! !
+idCommand:!**compiled accessors**!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+lParam:!**compiled accessors**!public! !
+pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 !OS.NMTBDISPINFOW class methodsFor!
 
@@ -155,6 +157,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwMask #idCommand #lParam #iImage #pszText #cchText)! !
-!OS.NMTBDISPINFOW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.NMTBDISPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTBDISPINFOW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

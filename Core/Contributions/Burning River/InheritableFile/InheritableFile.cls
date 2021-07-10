@@ -34,5 +34,7 @@ open
 
 	self beFinalizable.	
 ! !
-!InheritableFile categoriesFor: #open!operations!public! !
+!InheritableFile categoriesForMethods!
+open!operations!public! !
+!
 

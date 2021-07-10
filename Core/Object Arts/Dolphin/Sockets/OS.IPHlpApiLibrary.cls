@@ -254,7 +254,9 @@ parseNetworkString: networkString types: types addressInfo: addressInfo portNumb
 
 	<stdcall: dword ParseNetworkString lpwstr dword NET_ADDRESS_INFO* word* byte*>
 	^self invalidCall: _failureCode! !
-!OS.IPHlpApiLibrary categoriesFor: #parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
+!OS.IPHlpApiLibrary categoriesForMethods!
+parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
+!
 
 !OS.IPHlpApiLibrary class methodsFor!
 
@@ -263,5 +265,7 @@ fileName
 
 	^'iphlpapi'
 ! !
-!OS.IPHlpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!OS.IPHlpApiLibrary class categoriesForMethods!
+fileName!**auto generated**!constants!public! !
+!
 

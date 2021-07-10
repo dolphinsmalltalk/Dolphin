@@ -15,5 +15,7 @@ _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
 	^'STBFiler - %1'! !
-!Kernel.STBError categoriesFor: #_descriptionFormat!displaying!public! !
+!Kernel.STBError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

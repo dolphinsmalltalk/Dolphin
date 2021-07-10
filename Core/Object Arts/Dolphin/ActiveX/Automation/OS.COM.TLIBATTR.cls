@@ -89,17 +89,19 @@ wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
 	^bytes wordAtOffset: _OffsetOf_wMinorVerNum! !
-!OS.COM.TLIBATTR categoriesFor: #comparisonSize!accessing!private! !
-!OS.COM.TLIBATTR categoriesFor: #guid!**compiled accessors**!public! !
-!OS.COM.TLIBATTR categoriesFor: #hasDiskImage!public!testing! !
-!OS.COM.TLIBATTR categoriesFor: #isControl!public!testing! !
-!OS.COM.TLIBATTR categoriesFor: #isHidden!public!testing! !
-!OS.COM.TLIBATTR categoriesFor: #isRestricted!public!testing! !
-!OS.COM.TLIBATTR categoriesFor: #lcid!**compiled accessors**!public! !
-!OS.COM.TLIBATTR categoriesFor: #version!accessing-version!public! !
-!OS.COM.TLIBATTR categoriesFor: #wLibFlags!**compiled accessors**!public! !
-!OS.COM.TLIBATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
-!OS.COM.TLIBATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
+!OS.COM.TLIBATTR categoriesForMethods!
+comparisonSize!accessing!private! !
+guid!**compiled accessors**!public! !
+hasDiskImage!public!testing! !
+isControl!public!testing! !
+isHidden!public!testing! !
+isRestricted!public!testing! !
+lcid!**compiled accessors**!public! !
+version!accessing-version!public! !
+wLibFlags!**compiled accessors**!public! !
+wMajorVerNum!**compiled accessors**!public! !
+wMinorVerNum!**compiled accessors**!public! !
+!
 
 !OS.COM.TLIBATTR class methodsFor!
 
@@ -143,6 +145,8 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
-!OS.COM.TLIBATTR class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.TLIBATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.TLIBATTR class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

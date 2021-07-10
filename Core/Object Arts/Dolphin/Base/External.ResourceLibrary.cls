@@ -63,12 +63,14 @@ stbSaveOn: anSTBOutFiler
 	Use a special proxy in order to share a common instance on reload."
 
 	anSTBOutFiler saveObject: self as: (STBExternalResourceLibraryProxy forLibrary: self)! !
-!External.ResourceLibrary categoriesFor: #attemptToOpen:!helpers!instance creation!private! !
-!External.ResourceLibrary categoriesFor: #fileName!accessing!public! !
-!External.ResourceLibrary categoriesFor: #loadFlags!constants!private! !
-!External.ResourceLibrary categoriesFor: #loadFlags:!accessing!private! !
-!External.ResourceLibrary categoriesFor: #open:!helpers!private! !
-!External.ResourceLibrary categoriesFor: #stbSaveOn:!binary filing!instance creation!public! !
+!External.ResourceLibrary categoriesForMethods!
+attemptToOpen:!helpers!instance creation!private! !
+fileName!accessing!public! !
+loadFlags!constants!private! !
+loadFlags:!accessing!private! !
+open:!helpers!private! !
+stbSaveOn:!binary filing!instance creation!public! !
+!
 
 !External.ResourceLibrary class methodsFor!
 
@@ -167,14 +169,16 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!External.ResourceLibrary class categoriesFor: #aliasFor:!enquiries!public! !
-!External.ResourceLibrary class categoriesFor: #defaultLoadFlags!constants!private! !
-!External.ResourceLibrary class categoriesFor: #initialize!development!private! !
-!External.ResourceLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!External.ResourceLibrary class categoriesFor: #open:!instance creation!public! !
-!External.ResourceLibrary class categoriesFor: #open:withAlias:!instance creation!public! !
-!External.ResourceLibrary class categoriesFor: #open:withAliases:!instance creation!public! !
-!External.ResourceLibrary class categoriesFor: #open:withAliases:flags:!instance creation!public! !
-!External.ResourceLibrary class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!External.ResourceLibrary class categoriesFor: #stbVersion!binary filing!public! !
+!External.ResourceLibrary class categoriesForMethods!
+aliasFor:!enquiries!public! !
+defaultLoadFlags!constants!private! !
+initialize!development!private! !
+onPreStripImage!class hierarchy-removing!private! !
+open:!instance creation!public! !
+open:withAlias:!instance creation!public! !
+open:withAliases:!instance creation!public! !
+open:withAliases:flags:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

@@ -48,11 +48,13 @@ type: statisticsTypeInteger
 
 unique: aBoolean 
 	self type: (aBoolean ifTrue: [SQL_INDEX_UNIQUE] ifFalse: [SQL_INDEX_ALL])! !
-!Database.DBStatisticsStatement categoriesFor: #accurate!accessing!public! !
-!Database.DBStatisticsStatement categoriesFor: #accurate:!accessing!public! !
-!Database.DBStatisticsStatement categoriesFor: #executeStatement!operations!private! !
-!Database.DBStatisticsStatement categoriesFor: #initialize:!initializing!private!searching! !
-!Database.DBStatisticsStatement categoriesFor: #type!accessing!public! !
-!Database.DBStatisticsStatement categoriesFor: #type:!accessing!public! !
-!Database.DBStatisticsStatement categoriesFor: #unique:!accessing!public! !
+!Database.DBStatisticsStatement categoriesForMethods!
+accurate!accessing!public! !
+accurate:!accessing!public! !
+executeStatement!operations!private! !
+initialize:!initializing!private!searching! !
+type!accessing!public! !
+type:!accessing!public! !
+unique:!accessing!public! !
+!
 

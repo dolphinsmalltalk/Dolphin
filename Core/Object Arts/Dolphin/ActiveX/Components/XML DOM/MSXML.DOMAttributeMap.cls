@@ -21,6 +21,8 @@ createNamedNode: key
 	"Private - Instantiate and answer a new named node of the type contained in the receiver."
 
 	^parentNode ownerDocument createAttribute: key! !
-!MSXML.DOMAttributeMap categoriesFor: #associationClass!constants!private! !
-!MSXML.DOMAttributeMap categoriesFor: #createNamedNode:!helpers!private! !
+!MSXML.DOMAttributeMap categoriesForMethods!
+associationClass!constants!private! !
+createNamedNode:!helpers!private! !
+!
 

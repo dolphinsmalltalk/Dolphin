@@ -71,12 +71,14 @@ s_proto
 	"Answer the <AnsiString> value of the receiver's 's_proto' field."
 
 	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_proto)! !
-!OS.SERVENT categoriesFor: #aliases!public! !
-!OS.SERVENT categoriesFor: #port!accessing!public! !
-!OS.SERVENT categoriesFor: #printFieldsOn:!development!printing!private! !
-!OS.SERVENT categoriesFor: #s_name!**compiled accessors**!public! !
-!OS.SERVENT categoriesFor: #s_port!**compiled accessors**!public! !
-!OS.SERVENT categoriesFor: #s_proto!**compiled accessors**!public! !
+!OS.SERVENT categoriesForMethods!
+aliases!public! !
+port!accessing!public! !
+printFieldsOn:!development!printing!private! !
+s_name!**compiled accessors**!public! !
+s_port!**compiled accessors**!public! !
+s_proto!**compiled accessors**!public! !
+!
 
 !OS.SERVENT class methodsFor!
 
@@ -122,8 +124,10 @@ fromString: aString
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
-!OS.SERVENT class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.SERVENT class categoriesFor: #fromInteger:!public! !
-!OS.SERVENT class categoriesFor: #fromString:!public! !
-!OS.SERVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SERVENT class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+fromInteger:!public! !
+fromString:!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -55,17 +55,19 @@ selectorSymbol
 setSelector: aSymbol arguments: anArray 
 	selector := aSymbol.
 	arguments := anArray! !
-!Refactory.Browser.RBMethodName categoriesFor: #arguments!accessing!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #arguments:!accessing!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #isValid!public!testing! !
-!Refactory.Browser.RBMethodName categoriesFor: #methodClass!accessing!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #moveArgument:before:!accessing!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #scope!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #selector!accessing!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #selector:!accessing!public! !
-!Refactory.Browser.RBMethodName categoriesFor: #selectorSymbol!public!refactoring! !
-!Refactory.Browser.RBMethodName categoriesFor: #setSelector:arguments:!public! !
+!Refactory.Browser.RBMethodName categoriesForMethods!
+arguments!accessing!public! !
+arguments:!accessing!public! !
+isValid!public!testing! !
+methodClass!accessing!public! !
+moveArgument:before:!accessing!public! !
+postCopy!copying!public! !
+scope!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+selectorSymbol!public!refactoring! !
+setSelector:arguments:!public! !
+!
 
 !Refactory.Browser.RBMethodName class methodsFor!
 
@@ -76,6 +78,8 @@ selector: aSymbol arguments: stringCollection
 	^(self basicNew)
 		setSelector: aSymbol arguments: stringCollection;
 		yourself! !
-!Refactory.Browser.RBMethodName class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.RBMethodName class categoriesFor: #selector:arguments:!instance creation!public! !
+!Refactory.Browser.RBMethodName class categoriesForMethods!
+new!instance creation!public! !
+selector:arguments:!instance creation!public! !
+!
 

@@ -335,42 +335,44 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 		yourself) lookup: ##(CDN_FIRST + 1) - (ptr sdwordAtOffset: 8))
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
-!UI.FileDialog categoriesFor: #allFilesType!constants!private! !
-!UI.FileDialog categoriesFor: #averageFilenameLength!constants!private! !
-!UI.FileDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.FileDialog categoriesFor: #caption:!accessing!public! !
-!UI.FileDialog categoriesFor: #cdnFileOk:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #cdnFolderChange:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #cdnHelp:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #cdnIncludeItem:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #cdnInitDone:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #cdnSelChange:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #cdnShareViolation:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #cdnTypeChange:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #commonDialogSelector!constants!private! !
-!UI.FileDialog categoriesFor: #defaultExtension!accessing!public! !
-!UI.FileDialog categoriesFor: #defaultExtension:!accessing!public! !
-!UI.FileDialog categoriesFor: #defaultStyle!constants!public! !
-!UI.FileDialog categoriesFor: #extractPathNames:!helpers!private! !
-!UI.FileDialog categoriesFor: #extractResult:!helpers!private! !
-!UI.FileDialog categoriesFor: #fileTypes!accessing!public! !
-!UI.FileDialog categoriesFor: #fileTypes:!accessing!public! !
-!UI.FileDialog categoriesFor: #fileTypesStringFromSpecs:!helpers!private! !
-!UI.FileDialog categoriesFor: #filterIndex!accessing!public! !
-!UI.FileDialog categoriesFor: #filterIndex:!accessing!public! !
-!UI.FileDialog categoriesFor: #getFilePath!operations!private! !
-!UI.FileDialog categoriesFor: #getFileSpec!operations!private! !
-!UI.FileDialog categoriesFor: #initialDirectory:!accessing!public! !
-!UI.FileDialog categoriesFor: #initialize!initializing!private! !
-!UI.FileDialog categoriesFor: #maxFileCount!accessing!public! !
-!UI.FileDialog categoriesFor: #prepareStruct!helpers!private! !
-!UI.FileDialog categoriesFor: #style!accessing!public! !
-!UI.FileDialog categoriesFor: #style:!accessing!public! !
-!UI.FileDialog categoriesFor: #validationBlock!accessing!public! !
-!UI.FileDialog categoriesFor: #validationBlock:!initializing!public! !
-!UI.FileDialog categoriesFor: #winStructClass!accessing!private! !
-!UI.FileDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
-!UI.FileDialog categoriesFor: #wmNotify:wParam:lParam:!private! !
+!UI.FileDialog categoriesForMethods!
+allFilesType!constants!private! !
+averageFilenameLength!constants!private! !
+basicShowModal!private!realizing/unrealizing! !
+caption:!accessing!public! !
+cdnFileOk:!event handling-win32!private! !
+cdnFolderChange:!event handling-win32!private! !
+cdnHelp:!event handling-win32!private! !
+cdnIncludeItem:!event handling-win32!private! !
+cdnInitDone:!event handling-win32!private! !
+cdnSelChange:!event handling-win32!private! !
+cdnShareViolation:!event handling-win32!private! !
+cdnTypeChange:!event handling-win32!private! !
+commonDialogSelector!constants!private! !
+defaultExtension!accessing!public! !
+defaultExtension:!accessing!public! !
+defaultStyle!constants!public! !
+extractPathNames:!helpers!private! !
+extractResult:!helpers!private! !
+fileTypes!accessing!public! !
+fileTypes:!accessing!public! !
+fileTypesStringFromSpecs:!helpers!private! !
+filterIndex!accessing!public! !
+filterIndex:!accessing!public! !
+getFilePath!operations!private! !
+getFileSpec!operations!private! !
+initialDirectory:!accessing!public! !
+initialize!initializing!private! !
+maxFileCount!accessing!public! !
+prepareStruct!helpers!private! !
+style!accessing!public! !
+style:!accessing!public! !
+validationBlock!accessing!public! !
+validationBlock:!initializing!public! !
+winStructClass!accessing!private! !
+wmInitDialog:wParam:lParam:!event handling-win32!private! !
+wmNotify:wParam:lParam:!private! !
+!
 
 !UI.FileDialog class methodsFor!
 
@@ -394,9 +396,11 @@ initializeDefaultHooks
 
 textFilesType
 	^#('Text Files (*.txt)' '*.txt')! !
-!UI.FileDialog class categoriesFor: #allFilesType!constants!private! !
-!UI.FileDialog class categoriesFor: #defaultModel!models!public! !
-!UI.FileDialog class categoriesFor: #icon!constants!public! !
-!UI.FileDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
-!UI.FileDialog class categoriesFor: #textFilesType!public! !
+!UI.FileDialog class categoriesForMethods!
+allFilesType!constants!private! !
+defaultModel!models!public! !
+icon!constants!public! !
+initializeDefaultHooks!initializing!must not strip!private! !
+textFilesType!public! !
+!
 

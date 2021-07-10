@@ -21,5 +21,7 @@ printOn: aStream
 		on: Error do: [:e | aStream nextPut: $(; print: bytes; nextPut: $)]
 
 ! !
-!MSXML.IXMLDOMComment categoriesFor: #printOn:!development!printing!public! !
+!MSXML.IXMLDOMComment categoriesForMethods!
+printOn:!development!printing!public! !
+!
 

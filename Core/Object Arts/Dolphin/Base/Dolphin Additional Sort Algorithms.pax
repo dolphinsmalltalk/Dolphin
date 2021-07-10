@@ -94,11 +94,13 @@ quickSort: aDyadicValuable
 
 shellSort: aDyadicValuable
 	^ShellsortAlgorithm newSortBlock: aDyadicValuable! !
-!Core.SortAlgorithm class categoriesFor: #heapSort:!instance creation!public! !
-!Core.SortAlgorithm class categoriesFor: #insertionSort:!instance creation!public! !
-!Core.SortAlgorithm class categoriesFor: #mergeSort:!instance creation!public! !
-!Core.SortAlgorithm class categoriesFor: #quickSort:!instance creation!public! !
-!Core.SortAlgorithm class categoriesFor: #shellSort:!instance creation!public! !
+!Core.SortAlgorithm class categoriesForMethods!
+heapSort:!instance creation!public! !
+insertionSort:!instance creation!public! !
+mergeSort:!instance creation!public! !
+quickSort:!instance creation!public! !
+shellSort:!instance creation!public! !
+!
 
 "End of package definition"!
 

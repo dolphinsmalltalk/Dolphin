@@ -33,10 +33,12 @@ value: anObject
 	(-1 for true, 0 for false)."
 
 	super value: (anObject asBoolean ifTrue: [-1] ifFalse: [0])! !
-!OS.COM.VARIANT_BOOL categoriesFor: #asBoolean!converting!public! !
-!OS.COM.VARIANT_BOOL categoriesFor: #displayOn:!printing!public! !
-!OS.COM.VARIANT_BOOL categoriesFor: #value!accessing!public! !
-!OS.COM.VARIANT_BOOL categoriesFor: #value:!accessing!public! !
+!OS.COM.VARIANT_BOOL categoriesForMethods!
+asBoolean!converting!public! !
+displayOn:!printing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !OS.COM.VARIANT_BOOL class methodsFor!
 
@@ -67,9 +69,11 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^AutomationConstants.VT_BOOL! !
-!OS.COM.VARIANT_BOOL class categoriesFor: #icon!constants!public! !
-!OS.COM.VARIANT_BOOL class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.VARIANT_BOOL class categoriesFor: #typeName!constants!private! !
-!OS.COM.VARIANT_BOOL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!OS.COM.VARIANT_BOOL class categoriesFor: #vt!constants!private! !
+!OS.COM.VARIANT_BOOL class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+typeName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!private! !
+!
 

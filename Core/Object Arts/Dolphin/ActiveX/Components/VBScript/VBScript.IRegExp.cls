@@ -109,11 +109,13 @@ Test: sourceString pMatch: pMatch
 
 	<virtual stdcall: hresult 15 bstr varbool*>
 	^self invalidCall: _failureCode! !
-!VBScript.IRegExp categoriesFor: #Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp!private! !
-!VBScript.IRegExp categoriesFor: #matchCollectionClass!constants!private! !
-!VBScript.IRegExp categoriesFor: #replace:replaceString:!operations!public! !
-!VBScript.IRegExp categoriesFor: #Replace:replaceString:pDestString:!**auto generated**!COM Interfaces-IRegExp!private! !
-!VBScript.IRegExp categoriesFor: #Test:pMatch:!**auto generated**!COM Interfaces-IRegExp!private! !
+!VBScript.IRegExp categoriesForMethods!
+Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp!private! !
+matchCollectionClass!constants!private! !
+replace:replaceString:!operations!public! !
+Replace:replaceString:pDestString:!**auto generated**!COM Interfaces-IRegExp!private! !
+Test:pMatch:!**auto generated**!COM Interfaces-IRegExp!private! !
+!
 
 !VBScript.IRegExp class methodsFor!
 
@@ -141,5 +143,7 @@ defineFunctions
 		defineFunction: #Replace:replaceString:pDestString:
 			argumentTypes: 'bstr bstr bstr*'
 ! !
-!VBScript.IRegExp class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.IRegExp class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -35,8 +35,10 @@ ihObject: anInteger
 	"Set the receiver's 'ihObject' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihObject put: anInteger! !
-!OS.EMRSELECTOBJECT categoriesFor: #ihObject!**compiled accessors**!public! !
-!OS.EMRSELECTOBJECT categoriesFor: #ihObject:!**compiled accessors**!public! !
+!OS.EMRSELECTOBJECT categoriesForMethods!
+ihObject!**compiled accessors**!public! !
+ihObject:!**compiled accessors**!public! !
+!
 
 !OS.EMRSELECTOBJECT class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SELECTOBJECT. EMR_DELETEOBJECT}! !
-!OS.EMRSELECTOBJECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSELECTOBJECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSELECTOBJECT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSELECTOBJECT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

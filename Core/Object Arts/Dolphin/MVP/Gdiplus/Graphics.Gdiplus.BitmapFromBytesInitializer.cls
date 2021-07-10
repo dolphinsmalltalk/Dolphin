@@ -27,5 +27,7 @@ createHandle
 	self library gdipCreateBitmapFromStream: stm bitmap: gpHandle.
 	stm free.
 	^gpHandle! !
-!Graphics.Gdiplus.BitmapFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromBytesInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 

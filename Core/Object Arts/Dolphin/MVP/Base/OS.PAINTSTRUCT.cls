@@ -27,8 +27,10 @@ rcPaint
 	"Answer the <RECTL> value of the receiver's 'rcPaint' field."
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcPaint! !
-!OS.PAINTSTRUCT categoriesFor: #fErase!**compiled accessors**!public! !
-!OS.PAINTSTRUCT categoriesFor: #rcPaint!**compiled accessors**!public! !
+!OS.PAINTSTRUCT categoriesForMethods!
+fErase!**compiled accessors**!public! !
+rcPaint!**compiled accessors**!public! !
+!
 
 !OS.PAINTSTRUCT class methodsFor!
 
@@ -48,6 +50,8 @@ defineFields
 
 getFieldNames
 	^#(#hdc #fErase #rcPaint)! !
-!OS.PAINTSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!OS.PAINTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PAINTSTRUCT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

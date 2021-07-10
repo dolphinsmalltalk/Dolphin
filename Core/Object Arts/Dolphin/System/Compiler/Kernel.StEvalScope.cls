@@ -25,12 +25,16 @@ lookupVariable: anStVariableNode
 
 setPools: anArray
 	pools := anArray! !
-!Kernel.StEvalScope categoriesFor: #lookupVariable:!operations!public! !
-!Kernel.StEvalScope categoriesFor: #setPools:!initializing!private! !
+!Kernel.StEvalScope categoriesForMethods!
+lookupVariable:!operations!public! !
+setPools:!initializing!private! !
+!
 
 !Kernel.StEvalScope class methodsFor!
 
 pools: pools
 	^self new setPools: pools! !
-!Kernel.StEvalScope class categoriesFor: #pools:!instance creation!public! !
+!Kernel.StEvalScope class categoriesForMethods!
+pools:!instance creation!public! !
+!
 

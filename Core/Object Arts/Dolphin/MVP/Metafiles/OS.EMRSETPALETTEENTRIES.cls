@@ -81,14 +81,16 @@ iStart: anInteger
 	"Set the receiver's 'iStart' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iStart put: anInteger! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #aPalEntries!**compiled accessors**!public! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #aPalEntries:!**compiled accessors**!public! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #cEntries!**compiled accessors**!public! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #cEntries:!**compiled accessors**!public! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #ihPal!**compiled accessors**!public! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #ihPal:!**compiled accessors**!public! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #iStart!**compiled accessors**!public! !
-!OS.EMRSETPALETTEENTRIES categoriesFor: #iStart:!**compiled accessors**!public! !
+!OS.EMRSETPALETTEENTRIES categoriesForMethods!
+aPalEntries!**compiled accessors**!public! !
+aPalEntries:!**compiled accessors**!public! !
+cEntries!**compiled accessors**!public! !
+cEntries:!**compiled accessors**!public! !
+ihPal!**compiled accessors**!public! !
+ihPal:!**compiled accessors**!public! !
+iStart!**compiled accessors**!public! !
+iStart:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETPALETTEENTRIES class methodsFor!
 
@@ -129,7 +131,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETPALETTEENTRIES}! !
-!OS.EMRSETPALETTEENTRIES class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRSETPALETTEENTRIES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETPALETTEENTRIES class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETPALETTEENTRIES class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

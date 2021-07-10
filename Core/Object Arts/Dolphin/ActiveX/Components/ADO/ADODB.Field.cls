@@ -50,8 +50,10 @@ status
 	answer := SDWORD new.
 	self get_Status: answer.
 	^answer asObject! !
-!ADODB.Field categoriesFor: #get_Status:!**auto generated**!COM Interfaces-Field!private! !
-!ADODB.Field categoriesFor: #status!**auto generated**!properties!public! !
+!ADODB.Field categoriesForMethods!
+get_Status:!**auto generated**!COM Interfaces-Field!private! !
+status!**auto generated**!properties!public! !
+!
 
 !ADODB.Field class methodsFor!
 
@@ -63,5 +65,7 @@ defineFunctions
 		defineFunction: #get_Status:
 			argumentTypes: 'sdword*'
 ! !
-!ADODB.Field class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Field class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

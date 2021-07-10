@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestResource subclass: #'Database.Tests.DBConnectionTestResource'
 	instanceVariableNames: 'connection isAvailable'
@@ -53,14 +53,16 @@ setUp
 
 tearDown
 	self dropDatabase! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #canConnect!private! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #connect!private! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #connection!private! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #connectString!private! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #createConnection!public! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #createDatabase!private! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #dropDatabase!private! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #newConnection!public! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #setUp!public! !
-!Database.Tests.DBConnectionTestResource categoriesFor: #tearDown!public! !
+!Database.Tests.DBConnectionTestResource categoriesForMethods!
+canConnect!private! !
+connect!private! !
+connection!private! !
+connectString!private! !
+createConnection!public! !
+createDatabase!private! !
+dropDatabase!private! !
+newConnection!public! !
+setUp!public! !
+tearDown!public! !
+!
 

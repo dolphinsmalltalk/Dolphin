@@ -101,14 +101,16 @@ stylesheet
 	answer := IXMLDOMNode newPointer.
 	self get_stylesheet: answer.
 	^answer asObject! !
-!MSXML.IXSLTemplate categoriesFor: #createProcessor!**auto generated**!methods!public! !
-!MSXML.IXSLTemplate categoriesFor: #CreateProcessor:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!MSXML.IXSLTemplate categoriesFor: #get_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!MSXML.IXSLTemplate categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IXSLTemplate categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IXSLTemplate categoriesFor: #putref_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!MSXML.IXSLTemplate categoriesFor: #setStylesheet:!**auto generated**!properties!public! !
-!MSXML.IXSLTemplate categoriesFor: #stylesheet!**auto generated**!properties!public! !
+!MSXML.IXSLTemplate categoriesForMethods!
+createProcessor!**auto generated**!methods!public! !
+CreateProcessor:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+get_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+putref_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+setStylesheet:!**auto generated**!properties!public! !
+stylesheet!**auto generated**!properties!public! !
+!
 
 !MSXML.IXSLTemplate class methodsFor!
 
@@ -130,6 +132,8 @@ defineFunctions
 		defineFunction: #CreateProcessor:
 			argumentTypes: 'IXSLProcessor**'
 ! !
-!MSXML.IXSLTemplate class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSXML.IXSLTemplate class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXSLTemplate class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

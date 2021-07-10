@@ -145,19 +145,21 @@ sourceInterface
 	answer := IID new.
 	self GetGUID: answer.
 	^answer! !
-!OS.COM.IErrorInfo categoriesFor: #description!accessing!public! !
-!OS.COM.IErrorInfo categoriesFor: #excepInfo!accessing!public! !
-!OS.COM.IErrorInfo categoriesFor: #GetDescription:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!OS.COM.IErrorInfo categoriesFor: #GetGUID:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!OS.COM.IErrorInfo categoriesFor: #GetHelpContext:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!OS.COM.IErrorInfo categoriesFor: #GetHelpFile:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!OS.COM.IErrorInfo categoriesFor: #GetSource:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!OS.COM.IErrorInfo categoriesFor: #guid!accessing!public! !
-!OS.COM.IErrorInfo categoriesFor: #helpContext!accessing!public! !
-!OS.COM.IErrorInfo categoriesFor: #helpFile!accessing!public! !
-!OS.COM.IErrorInfo categoriesFor: #printOn:!printing!public! !
-!OS.COM.IErrorInfo categoriesFor: #source!accessing!public! !
-!OS.COM.IErrorInfo categoriesFor: #sourceInterface!accessing!public! !
+!OS.COM.IErrorInfo categoriesForMethods!
+description!accessing!public! !
+excepInfo!accessing!public! !
+GetDescription:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetGUID:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetHelpContext:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetHelpFile:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetSource:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+guid!accessing!public! !
+helpContext!accessing!public! !
+helpFile!accessing!public! !
+printOn:!printing!public! !
+source!accessing!public! !
+sourceInterface!accessing!public! !
+!
 
 !OS.COM.IErrorInfo class methodsFor!
 
@@ -178,5 +180,7 @@ defineFunctions
 		defineFunction: #GetHelpContext:
 			argumentTypes: 'dword*'
 ! !
-!OS.COM.IErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
+!OS.COM.IErrorInfo class categoriesForMethods!
+defineFunctions!**auto generated**!public! !
+!
 

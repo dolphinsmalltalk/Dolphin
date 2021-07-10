@@ -133,21 +133,23 @@ setRecordInfo: anIRecordInfo owner: dataOwner
 
 	recordInfo := anIRecordInfo.
 	owner := dataOwner! !
-!OS.COM.Record categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.Record categoriesFor: #byteSize!accessing!public! !
-!OS.COM.Record categoriesFor: #displayOn:!displaying!public! !
-!OS.COM.Record categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!OS.COM.Record categoriesFor: #getField:!accessing!public! !
-!OS.COM.Record categoriesFor: #getField:ifAbsent:!accessing!public! !
-!OS.COM.Record categoriesFor: #getValidFields!accessing!private! !
-!OS.COM.Record categoriesFor: #initialize!initializing!private! !
-!OS.COM.Record categoriesFor: #initialize:!initializing!private! !
-!OS.COM.Record categoriesFor: #initializePointer!initializing!private! !
-!OS.COM.Record categoriesFor: #needsFree!private!realizing/unrealizing! !
-!OS.COM.Record categoriesFor: #recordInfo!accessing!public! !
-!OS.COM.Record categoriesFor: #setField:value:!accessing!public! !
-!OS.COM.Record categoriesFor: #setField:value:ifAbsent:!accessing!public! !
-!OS.COM.Record categoriesFor: #setRecordInfo:owner:!accessing!private! !
+!OS.COM.Record categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+byteSize!accessing!public! !
+displayOn:!displaying!public! !
+doesNotUnderstand:!exceptions!public! !
+getField:!accessing!public! !
+getField:ifAbsent:!accessing!public! !
+getValidFields!accessing!private! !
+initialize!initializing!private! !
+initialize:!initializing!private! !
+initializePointer!initializing!private! !
+needsFree!private!realizing/unrealizing! !
+recordInfo!accessing!public! !
+setField:value:!accessing!public! !
+setField:value:ifAbsent:!accessing!public! !
+setRecordInfo:owner:!accessing!private! !
+!
 
 !OS.COM.Record class methodsFor!
 
@@ -187,9 +189,11 @@ newWithRecordInfo: recInfo
 		setRecordInfo: recInfo owner: nil;
 		initialize;
 		yourself! !
-!OS.COM.Record class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OS.COM.Record class categoriesFor: #fromAddress:!instance creation!public! !
-!OS.COM.Record class categoriesFor: #fromAddress:recordInfo:owner:!instance creation!public! !
-!OS.COM.Record class categoriesFor: #newBuffer!instance creation!public! !
-!OS.COM.Record class categoriesFor: #newWithRecordInfo:!instance creation!public! !
+!OS.COM.Record class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+fromAddress:!instance creation!public! !
+fromAddress:recordInfo:owner:!instance creation!public! !
+newBuffer!instance creation!public! !
+newWithRecordInfo:!instance creation!public! !
+!
 

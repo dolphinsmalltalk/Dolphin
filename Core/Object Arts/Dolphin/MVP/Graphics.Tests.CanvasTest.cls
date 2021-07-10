@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.CanvasTest'
 	instanceVariableNames: ''
@@ -55,6 +55,8 @@ testOutlineTextMetrics
 			self assert: otm fullName equals: 'Microsoft Comic Sans'].
 	self assert: otm faceName equals: font name.
 	self assert: otm familyName equals: font name! !
-!Graphics.Tests.CanvasTest categoriesFor: #testFont!public!unit tests! !
-!Graphics.Tests.CanvasTest categoriesFor: #testOutlineTextMetrics!public!unit tests! !
+!Graphics.Tests.CanvasTest categoriesForMethods!
+testFont!public!unit tests! !
+testOutlineTextMetrics!public!unit tests! !
+!
 

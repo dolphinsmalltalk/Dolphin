@@ -83,12 +83,14 @@ Release
 
 	<virtual stdcall: dword 3>
 	^self invalidCall: _failureCode! !
-!OS.COM.IUnknown categoriesFor: #addRef!methods!public! !
-!OS.COM.IUnknown categoriesFor: #AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
-!OS.COM.IUnknown categoriesFor: #asObject!converting!public! !
-!OS.COM.IUnknown categoriesFor: #displayOn:!printing!public! !
-!OS.COM.IUnknown categoriesFor: #QueryInterface:ppvObject:!methods!public! !
-!OS.COM.IUnknown categoriesFor: #Release!**auto generated**!COM Interfaces-IUnknown!private! !
+!OS.COM.IUnknown categoriesForMethods!
+addRef!methods!public! !
+AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
+asObject!converting!public! !
+displayOn:!printing!public! !
+QueryInterface:ppvObject:!methods!public! !
+Release!**auto generated**!COM Interfaces-IUnknown!private! !
+!
 
 !OS.COM.IUnknown class methodsFor!
 
@@ -123,7 +125,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!OS.COM.IUnknown class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IUnknown class categoriesFor: #on:outerUnknown:!instance creation!private! !
-!OS.COM.IUnknown class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.IUnknown class categoriesForMethods!
+defineFunctions!initializing!public! !
+on:outerUnknown:!instance creation!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

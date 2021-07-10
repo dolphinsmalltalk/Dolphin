@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.ListViewTest subclass: #'UI.Tests.MultiSelectListViewTest'
 	instanceVariableNames: ''
@@ -161,11 +161,13 @@ testNewSelectionsShiftClickWithSelectionMark
 			self verifySelectionsFromMouseDown: event equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
 	self verifySelectionsFromMouseDown: event equals: #(3)! !
-!UI.Tests.MultiSelectListViewTest categoriesFor: #initializePresenter!public!Running! !
-!UI.Tests.MultiSelectListViewTest categoriesFor: #marqueeSelectionEventsToItem:!helpers!private! !
-!UI.Tests.MultiSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
-!UI.Tests.MultiSelectListViewTest categoriesFor: #testEventsFromMarqueeSelectionChange!public!unit tests! !
-!UI.Tests.MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
-!UI.Tests.MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
-!UI.Tests.MultiSelectListViewTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
+!UI.Tests.MultiSelectListViewTest categoriesForMethods!
+initializePresenter!public!Running! !
+marqueeSelectionEventsToItem:!helpers!private! !
+sortSelections!private!unit tests! !
+testEventsFromMarqueeSelectionChange!public!unit tests! !
+testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
+testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
+testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
+!
 

@@ -18,6 +18,8 @@ _descriptionFormat
 
 messageText
 	^messageText ifNil: ['The variable is not bindable by unqualified name from Smalltalk.']! !
-!Kernel.SourceFormatNotSupportedError categoriesFor: #_descriptionFormat!displaying!private! !
-!Kernel.SourceFormatNotSupportedError categoriesFor: #messageText!initializing!public! !
+!Kernel.SourceFormatNotSupportedError categoriesForMethods!
+_descriptionFormat!displaying!private! !
+messageText!initializing!public! !
+!
 

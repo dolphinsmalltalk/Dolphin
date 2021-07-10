@@ -25,9 +25,11 @@ asUTC
 	"Answer the receiver as a UTC FILETIME."
 
 	^FILETIME fromLocalTime: self! !
-!OS.LocalFILETIME categoriesFor: #asLocalTime!converting!public! !
-!OS.LocalFILETIME categoriesFor: #asSYSTEMTIME!converting!public! !
-!OS.LocalFILETIME categoriesFor: #asUTC!converting!public! !
+!OS.LocalFILETIME categoriesForMethods!
+asLocalTime!converting!public! !
+asSYSTEMTIME!converting!public! !
+asUTC!converting!public! !
+!
 
 !OS.LocalFILETIME class methodsFor!
 
@@ -53,6 +55,8 @@ now
 	"We can get away with passing in the same buffer for output as the input"
 	(Kernel32 fileTimeToLocalTime: answer lpLocalFileTime: answer) ifFalse: [Kernel32 systemError].
 	^answer! !
-!OS.LocalFILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!OS.LocalFILETIME class categoriesFor: #now!instance creation!public! !
+!OS.LocalFILETIME class categoriesForMethods!
+fromSYSTEMTIME:!instance creation!public! !
+now!instance creation!public! !
+!
 

@@ -41,13 +41,15 @@ text
 
 text: aString
 	text := aString! !
-!UI.LabelEditEvent categoriesFor: #cancel!accessing!public! !
-!UI.LabelEditEvent categoriesFor: #cancel:!public! !
-!UI.LabelEditEvent categoriesFor: #item!accessing!public! !
-!UI.LabelEditEvent categoriesFor: #item:!accessing!private! !
-!UI.LabelEditEvent categoriesFor: #object!accessing!public! !
-!UI.LabelEditEvent categoriesFor: #object:!initialization!private! !
-!UI.LabelEditEvent categoriesFor: #setSource:!initializing!private! !
-!UI.LabelEditEvent categoriesFor: #text!accessing!public! !
-!UI.LabelEditEvent categoriesFor: #text:!accessing!public! !
+!UI.LabelEditEvent categoriesForMethods!
+cancel!accessing!public! !
+cancel:!public! !
+item!accessing!public! !
+item:!accessing!private! !
+object!accessing!public! !
+object:!initialization!private! !
+setSource:!initializing!private! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 

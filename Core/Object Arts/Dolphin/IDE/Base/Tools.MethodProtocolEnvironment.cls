@@ -52,11 +52,13 @@ storeOn: aStream
 		space.
 	(protocols asArray collect: [:each | each name]) storeOn: aStream.
 	aStream nextPut: $)! !
-!Tools.MethodProtocolEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Tools.MethodProtocolEnvironment categoriesFor: #includesClass:!public!testing! !
-!Tools.MethodProtocolEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Tools.MethodProtocolEnvironment categoriesFor: #protocols:!accessing!private! !
-!Tools.MethodProtocolEnvironment categoriesFor: #storeOn:!printing!public! !
+!Tools.MethodProtocolEnvironment categoriesForMethods!
+defaultLabel!constants!private! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+protocols:!accessing!private! !
+storeOn:!printing!public! !
+!
 
 !Tools.MethodProtocolEnvironment class methodsFor!
 
@@ -64,5 +66,7 @@ onEnvironment: anEnvironment protocols: aCollection
 	^(self onEnvironment: anEnvironment)
 		protocols: aCollection;
 		yourself! !
-!Tools.MethodProtocolEnvironment class categoriesFor: #onEnvironment:protocols:!instance creation!public! !
+!Tools.MethodProtocolEnvironment class categoriesForMethods!
+onEnvironment:protocols:!instance creation!public! !
+!
 

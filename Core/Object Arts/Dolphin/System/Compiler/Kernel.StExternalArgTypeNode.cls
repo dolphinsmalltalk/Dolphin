@@ -43,15 +43,17 @@ typeOrdinal
 
 typeOrdinal: anInteger 
 	typeOrdinal := anInteger! !
-!Kernel.StExternalArgTypeNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StExternalArgTypeNode categoriesFor: #indirections!accessing!private! !
-!Kernel.StExternalArgTypeNode categoriesFor: #indirections:!accessing!private! !
-!Kernel.StExternalArgTypeNode categoriesFor: #start!accessing!public! !
-!Kernel.StExternalArgTypeNode categoriesFor: #start:!accessing!private! !
-!Kernel.StExternalArgTypeNode categoriesFor: #stop!accessing!public! !
-!Kernel.StExternalArgTypeNode categoriesFor: #stop:!accessing!private! !
-!Kernel.StExternalArgTypeNode categoriesFor: #structClass!accessing!private! !
-!Kernel.StExternalArgTypeNode categoriesFor: #structClass:!accessing!private! !
-!Kernel.StExternalArgTypeNode categoriesFor: #typeOrdinal!accessing!private! !
-!Kernel.StExternalArgTypeNode categoriesFor: #typeOrdinal:!accessing!private! !
+!Kernel.StExternalArgTypeNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+indirections!accessing!private! !
+indirections:!accessing!private! !
+start!accessing!public! !
+start:!accessing!private! !
+stop!accessing!public! !
+stop:!accessing!private! !
+structClass!accessing!private! !
+structClass:!accessing!private! !
+typeOrdinal!accessing!private! !
+typeOrdinal:!accessing!private! !
+!
 

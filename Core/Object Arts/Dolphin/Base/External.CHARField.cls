@@ -19,8 +19,10 @@ readFrom: anExternalStructure
 	<ExternalStructure> argument."
 
 	^Character ansiValue: (anExternalStructure bytes byteAtOffset: offset)! !
-!External.CHARField categoriesFor: #basicWriteInto:value:!accessing!private! !
-!External.CHARField categoriesFor: #readFrom:!indirect accessing!private! !
+!External.CHARField categoriesForMethods!
+basicWriteInto:value:!accessing!private! !
+readFrom:!indirect accessing!private! !
+!
 
 !External.CHARField class methodsFor!
 
@@ -28,5 +30,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
-!External.CHARField class categoriesFor: #byteSize!constants!private! !
+!External.CHARField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

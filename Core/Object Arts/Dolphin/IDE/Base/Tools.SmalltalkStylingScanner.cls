@@ -103,9 +103,11 @@ scanQualifiedReference
 		comments: nil
 		value: bindingRef
 		stop: self previousStepPosition! !
-!Tools.SmalltalkStylingScanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
-!Tools.SmalltalkStylingScanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
-!Tools.SmalltalkStylingScanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
-!Tools.SmalltalkStylingScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
-!Tools.SmalltalkStylingScanner categoriesFor: #scanQualifiedReference!private!scanning! !
+!Tools.SmalltalkStylingScanner categoriesForMethods!
+newFloatToken:precision:exponent:!helpers!private! !
+newIntegerToken:exponent:!helpers!private! !
+newScaledDecimalToken:precision:scale:!helpers!private! !
+reportError:at:line:range:extras:!error handling!private! !
+scanQualifiedReference!private!scanning! !
+!
 

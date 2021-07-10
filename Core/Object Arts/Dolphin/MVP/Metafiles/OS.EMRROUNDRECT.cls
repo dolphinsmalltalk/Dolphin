@@ -55,10 +55,12 @@ szlCorner: aSIZE
 		from: ##(_OffsetOf_szlCorner + 1)
 		to: ##(_OffsetOf_szlCorner + SIZEL basicByteSize)
 		startingAt: 1! !
-!OS.EMRROUNDRECT categoriesFor: #rclBox!**compiled accessors**!public! !
-!OS.EMRROUNDRECT categoriesFor: #rclBox:!**compiled accessors**!public! !
-!OS.EMRROUNDRECT categoriesFor: #szlCorner!**compiled accessors**!public! !
-!OS.EMRROUNDRECT categoriesFor: #szlCorner:!**compiled accessors**!public! !
+!OS.EMRROUNDRECT categoriesForMethods!
+rclBox!**compiled accessors**!public! !
+rclBox:!**compiled accessors**!public! !
+szlCorner!**compiled accessors**!public! !
+szlCorner:!**compiled accessors**!public! !
+!
 
 !OS.EMRROUNDRECT class methodsFor!
 
@@ -92,7 +94,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ROUNDRECT}! !
-!OS.EMRROUNDRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRROUNDRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRROUNDRECT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRROUNDRECT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

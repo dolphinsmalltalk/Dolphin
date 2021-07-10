@@ -48,10 +48,12 @@ StartingOffset: anInteger
 	"Set the receiver's 'StartingOffset' field to the value of the argument, anInteger"
 
 	bytes qwordAtOffset: _OffsetOf_StartingOffset put: anInteger! !
-!WinHttpServer.HTTP_BYTE_RANGE categoriesFor: #Length!**compiled accessors**!public! !
-!WinHttpServer.HTTP_BYTE_RANGE categoriesFor: #Length:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_BYTE_RANGE categoriesFor: #StartingOffset!**compiled accessors**!public! !
-!WinHttpServer.HTTP_BYTE_RANGE categoriesFor: #StartingOffset:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_BYTE_RANGE categoriesForMethods!
+Length!**compiled accessors**!public! !
+Length:!**compiled accessors**!public! !
+StartingOffset!**compiled accessors**!public! !
+StartingOffset:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_BYTE_RANGE class methodsFor!
 
@@ -74,6 +76,8 @@ defineFields
 
 getFieldNames
 	^#(#StartingOffset #Length)! !
-!WinHttpServer.HTTP_BYTE_RANGE class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_BYTE_RANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_BYTE_RANGE class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

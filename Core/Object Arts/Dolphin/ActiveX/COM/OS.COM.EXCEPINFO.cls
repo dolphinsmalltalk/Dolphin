@@ -208,37 +208,39 @@ wstrSource
 	"Answer the receiver's bstrSource field as a <Utf16String>."
 
 	^Utf16String fromAddress: self pwszSource! !
-!OS.COM.EXCEPINFO categoriesFor: #_deepCopy:!copying!private! !
-!OS.COM.EXCEPINFO categoriesFor: #bstrDescription!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #bstrDescription:!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #bstrHelpFile!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #bstrHelpFile:!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #bstrSource!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #bstrSource:!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #copy!copying!public! !
-!OS.COM.EXCEPINFO categoriesFor: #description!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #description:!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #dwHelpContext!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #dwHelpContext:!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #helpFile!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #helpFile:!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #hresult!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #pfnDeferredFillIn!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #pwszDescription!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #pwszDescription:!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #pwszHelpFile!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #pwszHelpFile:!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #pwszSource!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #pwszSource:!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #scode!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #scode:!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #source!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #source:!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #wCode!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #wCode:!**compiled accessors**!public! !
-!OS.COM.EXCEPINFO categoriesFor: #wstrDescription!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #wstrHelpFile!accessing!public! !
-!OS.COM.EXCEPINFO categoriesFor: #wstrSource!accessing!public! !
+!OS.COM.EXCEPINFO categoriesForMethods!
+_deepCopy:!copying!private! !
+bstrDescription!accessing!public! !
+bstrDescription:!accessing!public! !
+bstrHelpFile!accessing!public! !
+bstrHelpFile:!accessing!public! !
+bstrSource!accessing!public! !
+bstrSource:!accessing!public! !
+copy!copying!public! !
+description!accessing!public! !
+description:!accessing!public! !
+dwHelpContext!**compiled accessors**!public! !
+dwHelpContext:!**compiled accessors**!public! !
+helpFile!accessing!public! !
+helpFile:!accessing!public! !
+hresult!accessing!public! !
+pfnDeferredFillIn!**compiled accessors**!public! !
+pwszDescription!**compiled accessors**!public! !
+pwszDescription:!**compiled accessors**!public! !
+pwszHelpFile!**compiled accessors**!public! !
+pwszHelpFile:!**compiled accessors**!public! !
+pwszSource!**compiled accessors**!public! !
+pwszSource:!**compiled accessors**!public! !
+scode!**compiled accessors**!public! !
+scode:!**compiled accessors**!public! !
+source!accessing!public! !
+source:!accessing!public! !
+wCode!**compiled accessors**!public! !
+wCode:!**compiled accessors**!public! !
+wstrDescription!accessing!public! !
+wstrHelpFile!accessing!public! !
+wstrSource!accessing!public! !
+!
 
 !OS.COM.EXCEPINFO class methodsFor!
 
@@ -282,7 +284,9 @@ defineFields
 
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
-!OS.COM.EXCEPINFO class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OS.COM.EXCEPINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.EXCEPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.EXCEPINFO class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

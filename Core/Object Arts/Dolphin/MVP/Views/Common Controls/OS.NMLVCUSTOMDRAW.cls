@@ -105,22 +105,24 @@ subItem
 	row := self item.
 	self column ifNotNil: [:col | col getContentsBlock ifNotNil: [:getblock | ^getblock value: row]].
 	^row! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #clrText:!**compiled accessors**!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #clrTextBk!**compiled accessors**!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #column!accessing!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #column:!accessing!private! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #font!accessing!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #reset!public! !
-!OS.NMLVCUSTOMDRAW categoriesFor: #subItem!accessing!public! !
+!OS.NMLVCUSTOMDRAW categoriesForMethods!
+applyFont!operations!private! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+clrText!**compiled accessors**!public! !
+clrText:!**compiled accessors**!public! !
+clrTextBk!**compiled accessors**!public! !
+clrTextBk:!**compiled accessors**!public! !
+column!accessing!public! !
+column:!accessing!private! !
+font!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+iSubItem!**compiled accessors**!public! !
+itemHandle!accessing!private! !
+reset!public! !
+subItem!accessing!public! !
+!
 
 !OS.NMLVCUSTOMDRAW class methodsFor!
 
@@ -137,6 +139,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !
-!OS.NMLVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMLVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLVCUSTOMDRAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

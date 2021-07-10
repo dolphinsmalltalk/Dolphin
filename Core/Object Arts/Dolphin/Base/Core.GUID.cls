@@ -186,23 +186,25 @@ value: guidBytes
 	"Set the raw binary value of the receiver from those of the argument."
 
 	guidBytes replaceBytesOf: self from: 1 to: self class byteSize startingAt: 1! !
-!Core.GUID categoriesFor: #<=>!comparing!public! !
-!Core.GUID categoriesFor: #=!comparing!public! !
-!Core.GUID categoriesFor: #asByteArray!converting!public! !
-!Core.GUID categoriesFor: #asInteger!converting!public! !
-!Core.GUID categoriesFor: #asObject!accessing!public! !
-!Core.GUID categoriesFor: #asString!converting!public! !
-!Core.GUID categoriesFor: #displayOn:!printing!public! !
-!Core.GUID categoriesFor: #hash!comparing!public! !
-!Core.GUID categoriesFor: #idlString!converting!public! !
-!Core.GUID categoriesFor: #isNull!public!testing! !
-!Core.GUID categoriesFor: #isSelfEvaluating!public!testing! !
-!Core.GUID categoriesFor: #notNull!public!testing! !
-!Core.GUID categoriesFor: #printOn:!development!printing!public! !
-!Core.GUID categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!Core.GUID categoriesFor: #species!accessing!public! !
-!Core.GUID categoriesFor: #stringSize!constants!public! !
-!Core.GUID categoriesFor: #value:!accessing!public! !
+!Core.GUID categoriesForMethods!
+<=>!comparing!public! !
+=!comparing!public! !
+asByteArray!converting!public! !
+asInteger!converting!public! !
+asObject!accessing!public! !
+asString!converting!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+idlString!converting!public! !
+isNull!public!testing! !
+isSelfEvaluating!public!testing! !
+notNull!public!testing! !
+printOn:!development!printing!public! !
+replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+species!accessing!public! !
+stringSize!constants!public! !
+value:!accessing!public! !
+!
 
 !Core.GUID class methodsFor!
 
@@ -359,26 +361,28 @@ uninitialize
 
 	Null := nil.
 	VM registryAt: self name put: nil! !
-!Core.GUID class categoriesFor: #alignment!constants!private! !
-!Core.GUID class categoriesFor: #atAddress:!instance creation!public! !
-!Core.GUID class categoriesFor: #basicByteSize!public! !
-!Core.GUID class categoriesFor: #byteSize!constants!public! !
-!Core.GUID class categoriesFor: #clear:!public!realizing/unrealizing! !
-!Core.GUID class categoriesFor: #defineFields!public!template definition! !
-!Core.GUID class categoriesFor: #elementSize!accessing!private! !
-!Core.GUID class categoriesFor: #fromAddress:!instance creation!public! !
-!Core.GUID class categoriesFor: #fromBytes:!instance creation!public! !
-!Core.GUID class categoriesFor: #fromIdlString:!instance creation!public! !
-!Core.GUID class categoriesFor: #fromString:!instance creation!public! !
-!Core.GUID class categoriesFor: #init:!initializing!public! !
-!Core.GUID class categoriesFor: #initialize!development!initializing!private! !
-!Core.GUID class categoriesFor: #new!instance creation!public! !
-!Core.GUID class categoriesFor: #newBuffer!instance creation!public! !
-!Core.GUID class categoriesFor: #newNull!instance creation!public! !
-!Core.GUID class categoriesFor: #newUnique!instance creation!public! !
-!Core.GUID class categoriesFor: #null!constants!public! !
-!Core.GUID class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Core.GUID class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Core.GUID class categoriesForMethods!
+alignment!constants!private! !
+atAddress:!instance creation!public! !
+basicByteSize!public! !
+byteSize!constants!public! !
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+elementSize!accessing!private! !
+fromAddress:!instance creation!public! !
+fromBytes:!instance creation!public! !
+fromIdlString:!instance creation!public! !
+fromString:!instance creation!public! !
+init:!initializing!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+newBuffer!instance creation!public! !
+newNull!instance creation!public! !
+newUnique!instance creation!public! !
+null!constants!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 
 Core.GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
 

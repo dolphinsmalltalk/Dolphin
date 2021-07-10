@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.Tests.STONTestUser subclass: #'STON.Tests.STONTestUser2'
 	instanceVariableNames: ''
@@ -24,12 +24,16 @@ stonOn: stonWriter
 			at: #username put: username;
 			at: #password put: password;
 			at: #enabled put: enabled ]! !
-!STON.Tests.STONTestUser2 categoriesFor: #fromSton:!public!ston/core! !
-!STON.Tests.STONTestUser2 categoriesFor: #stonOn:!public!ston/core! !
+!STON.Tests.STONTestUser2 categoriesForMethods!
+fromSton:!public!ston/core! !
+stonOn:!public!ston/core! !
+!
 
 !STON.Tests.STONTestUser2 class methodsFor!
 
 stonName
 	^ #TestUser2! !
-!STON.Tests.STONTestUser2 class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.STONTestUser2 class categoriesForMethods!
+stonName!public!ston/core! !
+!
 

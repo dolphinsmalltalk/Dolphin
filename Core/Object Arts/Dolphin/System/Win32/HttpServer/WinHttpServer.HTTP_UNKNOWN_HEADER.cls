@@ -74,14 +74,16 @@ RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #NameLength!**compiled accessors**!private! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #NameLength:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pName:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pRawValue!**compiled accessors**!public! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #pRawValue:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #RawValueLength!**compiled accessors**!private! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesFor: #RawValueLength:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER categoriesForMethods!
+NameLength!**compiled accessors**!private! !
+NameLength:!**compiled accessors**!private! !
+pName!**compiled accessors**!public! !
+pName:!**compiled accessors**!public! !
+pRawValue!**compiled accessors**!public! !
+pRawValue:!**compiled accessors**!public! !
+RawValueLength!**compiled accessors**!private! !
+RawValueLength:!**compiled accessors**!private! !
+!
 
 !WinHttpServer.HTTP_UNKNOWN_HEADER class methodsFor!
 
@@ -108,6 +110,8 @@ defineFields
 
 getFieldNames
 	^#(#NameLength #RawValueLength #pName #pRawValue)! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_UNKNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_UNKNOWN_HEADER class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

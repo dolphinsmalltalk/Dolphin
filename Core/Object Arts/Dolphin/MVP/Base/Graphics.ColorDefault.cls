@@ -80,17 +80,19 @@ shallowCopy
 
 species
 	^##(self)! !
-!Graphics.ColorDefault categoriesFor: #=!comparing!public! !
-!Graphics.ColorDefault categoriesFor: #alpha!public! !
-!Graphics.ColorDefault categoriesFor: #blue!accessing!public! !
-!Graphics.ColorDefault categoriesFor: #brush!converting!public! !
-!Graphics.ColorDefault categoriesFor: #green!accessing!public! !
-!Graphics.ColorDefault categoriesFor: #hash!comparing!public! !
-!Graphics.ColorDefault categoriesFor: #isDefault!public!testing! !
-!Graphics.ColorDefault categoriesFor: #name!accessing!public! !
-!Graphics.ColorDefault categoriesFor: #normalizedAlpha!public! !
-!Graphics.ColorDefault categoriesFor: #pen!converting!public! !
-!Graphics.ColorDefault categoriesFor: #red!accessing!public! !
-!Graphics.ColorDefault categoriesFor: #shallowCopy!copying!public! !
-!Graphics.ColorDefault categoriesFor: #species!accessing!public! !
+!Graphics.ColorDefault categoriesForMethods!
+=!comparing!public! !
+alpha!public! !
+blue!accessing!public! !
+brush!converting!public! !
+green!accessing!public! !
+hash!comparing!public! !
+isDefault!public!testing! !
+name!accessing!public! !
+normalizedAlpha!public! !
+pen!converting!public! !
+red!accessing!public! !
+shallowCopy!copying!public! !
+species!accessing!public! !
+!
 

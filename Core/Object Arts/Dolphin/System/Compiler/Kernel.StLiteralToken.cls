@@ -50,16 +50,18 @@ stop: anInteger
 
 valueClass
 	^self value basicClass! !
-!Kernel.StLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StLiteralToken categoriesFor: #formatOn:source:!printing!public! !
-!Kernel.StLiteralToken categoriesFor: #formattedFrom:!printing!public! !
-!Kernel.StLiteralToken categoriesFor: #isLiteralToken!public!testing! !
-!Kernel.StLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
-!Kernel.StLiteralToken categoriesFor: #length!accessing!private! !
-!Kernel.StLiteralToken categoriesFor: #realValue!accessing!public! !
-!Kernel.StLiteralToken categoriesFor: #stop!accessing!public! !
-!Kernel.StLiteralToken categoriesFor: #stop:!initializing!private! !
-!Kernel.StLiteralToken categoriesFor: #valueClass!accessing!public! !
+!Kernel.StLiteralToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+formatOn:source:!printing!public! !
+formattedFrom:!printing!public! !
+isLiteralToken!public!testing! !
+isMultiKeyword!public!testing! !
+length!accessing!private! !
+realValue!accessing!public! !
+stop!accessing!public! !
+stop:!initializing!private! !
+valueClass!accessing!public! !
+!
 
 !Kernel.StLiteralToken class methodsFor!
 
@@ -83,6 +85,8 @@ value: anObject
 		comments: nil
 		value: literal
 		stop: nil! !
-!Kernel.StLiteralToken class categoriesFor: #start:comments:value:stop:!instance creation!public! !
-!Kernel.StLiteralToken class categoriesFor: #value:!instance creation!public! !
+!Kernel.StLiteralToken class categoriesForMethods!
+start:comments:value:stop:!instance creation!public! !
+value:!instance creation!public! !
+!
 

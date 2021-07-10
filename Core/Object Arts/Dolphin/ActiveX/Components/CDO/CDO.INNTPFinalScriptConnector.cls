@@ -25,8 +25,10 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDO.INNTPFinalScriptConnector categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.INNTPFinalScriptConnector categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.INNTPFinalScriptConnector categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !CDO.INNTPFinalScriptConnector class methodsFor!
 
@@ -35,5 +37,7 @@ clsid
 
 	^CLSID fromString: '{cd000010-8b95-11d1-82db-00c04fb1625d}'
 ! !
-!CDO.INNTPFinalScriptConnector class categoriesFor: #clsid!**auto generated**!constants!private! !
+!CDO.INNTPFinalScriptConnector class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+!
 

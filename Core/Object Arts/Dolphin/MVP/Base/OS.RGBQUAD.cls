@@ -65,13 +65,15 @@ rgbRed: anInteger
 	"Set the receiver's 'rgbRed' field to the value of the argument, anInteger"
 
 	bytes byteAtOffset: _OffsetOf_rgbRed put: anInteger! !
-!OS.RGBQUAD categoriesFor: #asColor!converting!public! !
-!OS.RGBQUAD categoriesFor: #rgbBlue!**compiled accessors**!public! !
-!OS.RGBQUAD categoriesFor: #rgbBlue:!**compiled accessors**!public! !
-!OS.RGBQUAD categoriesFor: #rgbGreen!**compiled accessors**!public! !
-!OS.RGBQUAD categoriesFor: #rgbGreen:!**compiled accessors**!public! !
-!OS.RGBQUAD categoriesFor: #rgbRed!**compiled accessors**!public! !
-!OS.RGBQUAD categoriesFor: #rgbRed:!**compiled accessors**!public! !
+!OS.RGBQUAD categoriesForMethods!
+asColor!converting!public! !
+rgbBlue!**compiled accessors**!public! !
+rgbBlue:!**compiled accessors**!public! !
+rgbGreen!**compiled accessors**!public! !
+rgbGreen:!**compiled accessors**!public! !
+rgbRed!**compiled accessors**!public! !
+rgbRed:!**compiled accessors**!public! !
+!
 
 !OS.RGBQUAD class methodsFor!
 
@@ -103,7 +105,9 @@ fromColor: aColor
 
 getFieldNames
 	^#(#rgbBlue #rgbGreen #rgbRed)! !
-!OS.RGBQUAD class categoriesFor: #defineFields!public!template definition! !
-!OS.RGBQUAD class categoriesFor: #fromColor:!instance creation!public! !
-!OS.RGBQUAD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.RGBQUAD class categoriesForMethods!
+defineFields!public!template definition! !
+fromColor:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -486,72 +486,74 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self getStringInfo: LOCALE_SYEARMONTH! !
-!OS.WindowsLocale categoriesFor: #amDesignator!constants!public! !
-!OS.WindowsLocale categoriesFor: #asParameter!converting!public! !
-!OS.WindowsLocale categoriesFor: #buildDayNamesMap!helpers!private! !
-!OS.WindowsLocale categoriesFor: #buildMonthNamesMap!helpers!private! !
-!OS.WindowsLocale categoriesFor: #calendarId!constants!public! !
-!OS.WindowsLocale categoriesFor: #code!constants!public! !
-!OS.WindowsLocale categoriesFor: #currency!constants!public! !
-!OS.WindowsLocale categoriesFor: #dayOfWeek:!mapping!public! !
-!OS.WindowsLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!OS.WindowsLocale categoriesFor: #dayOfWeekName:!constants!public! !
-!OS.WindowsLocale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!OS.WindowsLocale categoriesFor: #decimalPlaces!constants!public! !
-!OS.WindowsLocale categoriesFor: #decimalSeparator!constants!public! !
-!OS.WindowsLocale categoriesFor: #displayName!displaying!public! !
-!OS.WindowsLocale categoriesFor: #displayOn:!displaying!public! !
-!OS.WindowsLocale categoriesFor: #durationFormat!constants!public! !
-!OS.WindowsLocale categoriesFor: #englishDisplayName!displaying!public! !
-!OS.WindowsLocale categoriesFor: #englishLanguageName!constants!public! !
-!OS.WindowsLocale categoriesFor: #firstDayOfWeek!constants!public! !
-!OS.WindowsLocale categoriesFor: #getCalendarInfoInteger:!helpers!private! !
-!OS.WindowsLocale categoriesFor: #getCalendarInfoString:!helpers!private! !
-!OS.WindowsLocale categoriesFor: #getDateFormats:!helpers!private! !
-!OS.WindowsLocale categoriesFor: #getIntegerInfo:!helpers!private! !
-!OS.WindowsLocale categoriesFor: #getLocaleInfoInteger:!helpers!private! !
-!OS.WindowsLocale categoriesFor: #getLocaleInfoString:!helpers!private! !
-!OS.WindowsLocale categoriesFor: #getStringInfo:!helpers!private! !
-!OS.WindowsLocale categoriesFor: #getTimeFormats!helpers!private! !
-!OS.WindowsLocale categoriesFor: #hasLeadingZero!constants!public! !
-!OS.WindowsLocale categoriesFor: #indexOfMonth:!enquiries!public! !
-!OS.WindowsLocale categoriesFor: #infinity!constants!public! !
-!OS.WindowsLocale categoriesFor: #isInstalled!public!testing! !
-!OS.WindowsLocale categoriesFor: #iso639LanguageName!constants!public! !
-!OS.WindowsLocale categoriesFor: #isValidLocale!public!testing! !
-!OS.WindowsLocale categoriesFor: #lastTwoDigitYear!constants!public! !
-!OS.WindowsLocale categoriesFor: #lcid!accessing!public! !
-!OS.WindowsLocale categoriesFor: #lcid:!initializing!private! !
-!OS.WindowsLocale categoriesFor: #listSeparator!constants!public! !
-!OS.WindowsLocale categoriesFor: #localizedDisplayName!constants!public! !
-!OS.WindowsLocale categoriesFor: #longDateFormat!constants!public! !
-!OS.WindowsLocale categoriesFor: #longDateFormats!constants!public! !
-!OS.WindowsLocale categoriesFor: #longTimeFormat!constants!public! !
-!OS.WindowsLocale categoriesFor: #monthAbbreviation:!constants!public! !
-!OS.WindowsLocale categoriesFor: #monthName:!enquiries!public! !
-!OS.WindowsLocale categoriesFor: #name!constants!public! !
-!OS.WindowsLocale categoriesFor: #nameOfDay:!enquiries!public! !
-!OS.WindowsLocale categoriesFor: #nan!constants!public! !
-!OS.WindowsLocale categoriesFor: #nativeDigits!constants!public! !
-!OS.WindowsLocale categoriesFor: #negativeInfinity!constants!public! !
-!OS.WindowsLocale categoriesFor: #negativeNumberMode!constants!public! !
-!OS.WindowsLocale categoriesFor: #negativeSign!constants!public! !
-!OS.WindowsLocale categoriesFor: #nlsLib!constants!private! !
-!OS.WindowsLocale categoriesFor: #numberGrouping!constants!public! !
-!OS.WindowsLocale categoriesFor: #parentName!constants!public! !
-!OS.WindowsLocale categoriesFor: #percentSymbol!constants!public! !
-!OS.WindowsLocale categoriesFor: #pmDesignator!constants!public! !
-!OS.WindowsLocale categoriesFor: #primary!printing!public! !
-!OS.WindowsLocale categoriesFor: #printOn:!development!printing!public! !
-!OS.WindowsLocale categoriesFor: #shortAmDesignator!constants!public! !
-!OS.WindowsLocale categoriesFor: #shortDateFormat!constants!public! !
-!OS.WindowsLocale categoriesFor: #shortDateFormats!constants!public! !
-!OS.WindowsLocale categoriesFor: #shortPmDesignator!constants!public! !
-!OS.WindowsLocale categoriesFor: #shortTimeFormat!constants!public! !
-!OS.WindowsLocale categoriesFor: #tag!constants!public! !
-!OS.WindowsLocale categoriesFor: #thousandSeparator!constants!public! !
-!OS.WindowsLocale categoriesFor: #timeFormats!constants!public! !
-!OS.WindowsLocale categoriesFor: #yearMonthFormat!constants!public! !
+!OS.WindowsLocale categoriesForMethods!
+amDesignator!constants!public! !
+asParameter!converting!public! !
+buildDayNamesMap!helpers!private! !
+buildMonthNamesMap!helpers!private! !
+calendarId!constants!public! !
+code!constants!public! !
+currency!constants!public! !
+dayOfWeek:!mapping!public! !
+dayOfWeekAbbreviation:!constants!public! !
+dayOfWeekName:!constants!public! !
+dayOfWeekShortAbbreviation:!constants!public! !
+decimalPlaces!constants!public! !
+decimalSeparator!constants!public! !
+displayName!displaying!public! !
+displayOn:!displaying!public! !
+durationFormat!constants!public! !
+englishDisplayName!displaying!public! !
+englishLanguageName!constants!public! !
+firstDayOfWeek!constants!public! !
+getCalendarInfoInteger:!helpers!private! !
+getCalendarInfoString:!helpers!private! !
+getDateFormats:!helpers!private! !
+getIntegerInfo:!helpers!private! !
+getLocaleInfoInteger:!helpers!private! !
+getLocaleInfoString:!helpers!private! !
+getStringInfo:!helpers!private! !
+getTimeFormats!helpers!private! !
+hasLeadingZero!constants!public! !
+indexOfMonth:!enquiries!public! !
+infinity!constants!public! !
+isInstalled!public!testing! !
+iso639LanguageName!constants!public! !
+isValidLocale!public!testing! !
+lastTwoDigitYear!constants!public! !
+lcid!accessing!public! !
+lcid:!initializing!private! !
+listSeparator!constants!public! !
+localizedDisplayName!constants!public! !
+longDateFormat!constants!public! !
+longDateFormats!constants!public! !
+longTimeFormat!constants!public! !
+monthAbbreviation:!constants!public! !
+monthName:!enquiries!public! !
+name!constants!public! !
+nameOfDay:!enquiries!public! !
+nan!constants!public! !
+nativeDigits!constants!public! !
+negativeInfinity!constants!public! !
+negativeNumberMode!constants!public! !
+negativeSign!constants!public! !
+nlsLib!constants!private! !
+numberGrouping!constants!public! !
+parentName!constants!public! !
+percentSymbol!constants!public! !
+pmDesignator!constants!public! !
+primary!printing!public! !
+printOn:!development!printing!public! !
+shortAmDesignator!constants!public! !
+shortDateFormat!constants!public! !
+shortDateFormats!constants!public! !
+shortPmDesignator!constants!public! !
+shortTimeFormat!constants!public! !
+tag!constants!public! !
+thousandSeparator!constants!public! !
+timeFormats!constants!public! !
+yearMonthFormat!constants!public! !
+!
 
 !OS.WindowsLocale class methodsFor!
 
@@ -602,9 +604,11 @@ systemLocales: anInteger
 	Kernel32 enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
-!OS.WindowsLocale class categoriesFor: #initialize!class initialization!development!public! !
-!OS.WindowsLocale class categoriesFor: #installedUILanguages:!enquiries!private! !
-!OS.WindowsLocale class categoriesFor: #named:!instance creation!public! !
-!OS.WindowsLocale class categoriesFor: #reset!initializing!private! !
-!OS.WindowsLocale class categoriesFor: #systemLocales:!enquiries!private! !
+!OS.WindowsLocale class categoriesForMethods!
+initialize!class initialization!development!public! !
+installedUILanguages:!enquiries!private! !
+named:!instance creation!public! !
+reset!initializing!private! !
+systemLocales:!enquiries!private! !
+!
 

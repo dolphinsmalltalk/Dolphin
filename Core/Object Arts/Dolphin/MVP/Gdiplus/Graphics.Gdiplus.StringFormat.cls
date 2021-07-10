@@ -166,25 +166,27 @@ trimming: aStringTrimmingConstant
 	receiver will trim characters from a string that's too large to fit in a layout rectangle."
 
 	Gdip gdipSetStringFormatTrimming: self asParameter trimming: aStringTrimmingConstant! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #alignment!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #alignment:!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #centered!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #clone!copying!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #far!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #flags!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #flags:!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #getTabOffsets!accessing!private! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #lineAlignment!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #lineAlignment:!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #near!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #printOn:!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #setTabStops:first:!accessing!private! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #tabOffsets!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #tabOffsets:!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #tabStopCount!accessing!private! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #trimming!accessing!public! !
-!Graphics.Gdiplus.StringFormat categoriesFor: #trimming:!accessing!public! !
+!Graphics.Gdiplus.StringFormat categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+centered!accessing!public! !
+clone!copying!public! !
+far!accessing!public! !
+flags!accessing!public! !
+flags:!accessing!public! !
+getTabOffsets!accessing!private! !
+lineAlignment!accessing!public! !
+lineAlignment:!accessing!public! !
+near!accessing!public! !
+printOn:!public! !
+setTabStops:first:!accessing!private! !
+tabOffsets!accessing!public! !
+tabOffsets:!accessing!public! !
+tabStopCount!accessing!private! !
+trimming!accessing!public! !
+trimming:!accessing!public! !
+!
 
 !Graphics.Gdiplus.StringFormat class methodsFor!
 
@@ -358,18 +360,20 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #centered!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFFormatText!examples!public!sunit! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFGenerics!examples!public!sunit! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFTabs!examples!public!sunit! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #exampleGdipSFTrimming!examples!public!sunit! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #far!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #flags:!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #flags:language:!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #genericDefault!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #genericTypographic!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #near!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #new!instance creation!public! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Graphics.Gdiplus.StringFormat class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormat class categoriesForMethods!
+centered!instance creation!public! !
+exampleGdipSFFormatText!examples!public!sunit! !
+exampleGdipSFGenerics!examples!public!sunit! !
+exampleGdipSFTabs!examples!public!sunit! !
+exampleGdipSFTrimming!examples!public!sunit! !
+far!instance creation!public! !
+flags:!instance creation!public! !
+flags:language:!instance creation!public! !
+genericDefault!instance creation!public! !
+genericTypographic!instance creation!public! !
+near!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -30,12 +30,14 @@ primitiveIndex
 
 primitiveIndex: anInteger 
 	primitiveIndex := anInteger! !
-!Kernel.StPrimitiveNode categoriesFor: #=!comparing!public! !
-!Kernel.StPrimitiveNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StPrimitiveNode categoriesFor: #errorTemp!accessing!public! !
-!Kernel.StPrimitiveNode categoriesFor: #errorTemp:!accessing!private! !
-!Kernel.StPrimitiveNode categoriesFor: #primitiveIndex!accessing!public! !
-!Kernel.StPrimitiveNode categoriesFor: #primitiveIndex:!accessing!private! !
+!Kernel.StPrimitiveNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+errorTemp!accessing!public! !
+errorTemp:!accessing!private! !
+primitiveIndex!accessing!public! !
+primitiveIndex:!accessing!private! !
+!
 
 !Kernel.StPrimitiveNode class methodsFor!
 
@@ -43,5 +45,7 @@ primitiveIndex: anInteger
 	^self new
 		primitiveIndex: anInteger;
 		yourself! !
-!Kernel.StPrimitiveNode class categoriesFor: #primitiveIndex:!instance creation!public! !
+!Kernel.StPrimitiveNode class categoriesForMethods!
+primitiveIndex:!instance creation!public! !
+!
 

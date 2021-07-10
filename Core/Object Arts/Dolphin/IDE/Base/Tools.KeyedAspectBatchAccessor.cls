@@ -46,9 +46,11 @@ publishedAspects
 	for this node (without this one gets a + and can expand it)."
 
 	^LookupTable new! !
-!Tools.KeyedAspectBatchAccessor categoriesFor: #aspectClass!public! !
-!Tools.KeyedAspectBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
-!Tools.KeyedAspectBatchAccessor categoriesFor: #publishedAspects!constants!public! !
+!Tools.KeyedAspectBatchAccessor categoriesForMethods!
+aspectClass!public! !
+getBatchAccessors!accessing!public! !
+publishedAspects!constants!public! !
+!
 
 !Tools.KeyedAspectBatchAccessor class methodsFor!
 
@@ -61,5 +63,7 @@ subject: anObject batchSize: sizeInteger
 		keys: anObject keys
 		startingAt: 1
 		batchSize: sizeInteger! !
-!Tools.KeyedAspectBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
+!Tools.KeyedAspectBatchAccessor class categoriesForMethods!
+subject:batchSize:!instance creation!public! !
+!
 

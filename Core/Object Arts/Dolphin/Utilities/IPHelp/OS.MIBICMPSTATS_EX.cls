@@ -43,9 +43,11 @@ rgdwTypeCount
 	"Answer the <DWORDArray> value of the receiver's 'rgdwTypeCount' field."
 
 	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_rgdwTypeCount length: 256! !
-!OS.MIBICMPSTATS_EX categoriesFor: #dwErrors!**compiled accessors**!public! !
-!OS.MIBICMPSTATS_EX categoriesFor: #dwMsgs!**compiled accessors**!public! !
-!OS.MIBICMPSTATS_EX categoriesFor: #rgdwTypeCount!**compiled accessors**!public! !
+!OS.MIBICMPSTATS_EX categoriesForMethods!
+dwErrors!**compiled accessors**!public! !
+dwMsgs!**compiled accessors**!public! !
+rgdwTypeCount!**compiled accessors**!public! !
+!
 
 !OS.MIBICMPSTATS_EX class methodsFor!
 
@@ -77,6 +79,8 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #rgdwTypeCount)! !
-!OS.MIBICMPSTATS_EX class categoriesFor: #defineFields!initializing!public! !
-!OS.MIBICMPSTATS_EX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIBICMPSTATS_EX class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

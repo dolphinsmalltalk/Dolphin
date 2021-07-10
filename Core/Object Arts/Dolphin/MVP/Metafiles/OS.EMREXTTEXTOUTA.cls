@@ -46,8 +46,10 @@ text: anObject
 		to: _OffsetOf_text + size
 		startingAt: 1.
 	bytes byteAtOffset: _OffsetOf_text + size put: 0! !
-!OS.EMREXTTEXTOUTA categoriesFor: #text!accessing!public! !
-!OS.EMREXTTEXTOUTA categoriesFor: #text:!accessing!public! !
+!OS.EMREXTTEXTOUTA categoriesForMethods!
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 !OS.EMREXTTEXTOUTA class methodsFor!
 
@@ -67,7 +69,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTTEXTOUTA}! !
-!OS.EMREXTTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
-!OS.EMREXTTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMREXTTEXTOUTA class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTTEXTOUTA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

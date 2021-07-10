@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ExamplesTest'
 	instanceVariableNames: ''
@@ -485,101 +485,103 @@ testExampleGdipTBTilingAShape
 	"This method was auto-generated"
 
 	TextureBrush exampleGdipTBTilingAShape! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipBFromBitmap!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipBFromByteArray!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipBFromDIB!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipBFromXPIcon!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipBResize1!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipBResize2!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipBResize3!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipCBPerformance!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipFFClone!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipFontHeight!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGAlphaBlending!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGCropAndScale!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGDrawingALine!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGDrawingAString!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGDrawingShapes!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGFromCanvas!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGMeasureString!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGPCreatingFigures!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGPFillingFigures!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGRotate!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGTransformations!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipGTransformPoints!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipHBFillAShape!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipHBFillAString!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipHBStyles!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAAlphaBlending!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAColorKey!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAColorMatrix!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAColorRemap!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAGamma!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAOutputChannel!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAScaleColors!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAShearColors!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIAThreshold!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIATranslateColors!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIDecoders!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIEncoderClsid!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIEncoderParameters!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIEncoders!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIEncoderValues!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIFCEnumerating!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIFlags!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIInterpMode!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIJPEGCompression!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipILoadImage!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipILoadImages!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipILosslessRotation!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIMetadata!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIMetadata2!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIMultiFrame!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIMultiFrame2!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIPropertiesCopy!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIPropertyItem!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipISkewing!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipIThumbnails!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipLGChangingColors!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipLGCustom!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipLGDiagonal!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipLGHorizontal!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipLGModeConstants!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipLGTiling!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipMShadows!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipMShear!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipMTranslate!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipNestedContainers!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPAttributes!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPCompoundArray!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPCustomCaps!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPDashCap!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPDashPattern!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPDrawing!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPFillWithTexture!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGBlendColors!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGBlendFactors!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGBounds!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGCenterColor!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGCenterPoint!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGFocusScales!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGGamma!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGMultiply!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGScale!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGSurroundColors!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGSurroundColors2!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGTransform!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGTranslate!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPGWrapMode!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipPJoiningLines!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipRClipWithRegion!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipSBFillAShape!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipSFFormatText!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipSFGenerics!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipSFTabs!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipSFTrimming!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipTBFillAShape!**auto generated**!public! !
-!Graphics.Gdiplus.Tests.ExamplesTest categoriesFor: #testExampleGdipTBTilingAShape!**auto generated**!public! !
+!Graphics.Gdiplus.Tests.ExamplesTest categoriesForMethods!
+testExampleGdipBFromBitmap!**auto generated**!public! !
+testExampleGdipBFromByteArray!**auto generated**!public! !
+testExampleGdipBFromDIB!**auto generated**!public! !
+testExampleGdipBFromXPIcon!**auto generated**!public! !
+testExampleGdipBResize1!**auto generated**!public! !
+testExampleGdipBResize2!**auto generated**!public! !
+testExampleGdipBResize3!**auto generated**!public! !
+testExampleGdipCBPerformance!**auto generated**!public! !
+testExampleGdipFFClone!**auto generated**!public! !
+testExampleGdipFontHeight!**auto generated**!public! !
+testExampleGdipGAlphaBlending!**auto generated**!public! !
+testExampleGdipGCropAndScale!**auto generated**!public! !
+testExampleGdipGDrawingALine!**auto generated**!public! !
+testExampleGdipGDrawingAString!**auto generated**!public! !
+testExampleGdipGDrawingShapes!**auto generated**!public! !
+testExampleGdipGFromCanvas!**auto generated**!public! !
+testExampleGdipGMeasureString!**auto generated**!public! !
+testExampleGdipGPCreatingFigures!**auto generated**!public! !
+testExampleGdipGPFillingFigures!**auto generated**!public! !
+testExampleGdipGRotate!**auto generated**!public! !
+testExampleGdipGTransformations!**auto generated**!public! !
+testExampleGdipGTransformPoints!**auto generated**!public! !
+testExampleGdipHBFillAShape!**auto generated**!public! !
+testExampleGdipHBFillAString!**auto generated**!public! !
+testExampleGdipHBStyles!**auto generated**!public! !
+testExampleGdipIAAlphaBlending!**auto generated**!public! !
+testExampleGdipIAColorKey!**auto generated**!public! !
+testExampleGdipIAColorMatrix!**auto generated**!public! !
+testExampleGdipIAColorRemap!**auto generated**!public! !
+testExampleGdipIAGamma!**auto generated**!public! !
+testExampleGdipIAOutputChannel!**auto generated**!public! !
+testExampleGdipIAScaleColors!**auto generated**!public! !
+testExampleGdipIAShearColors!**auto generated**!public! !
+testExampleGdipIAThreshold!**auto generated**!public! !
+testExampleGdipIATranslateColors!**auto generated**!public! !
+testExampleGdipIDecoders!**auto generated**!public! !
+testExampleGdipIEncoderClsid!**auto generated**!public! !
+testExampleGdipIEncoderParameters!**auto generated**!public! !
+testExampleGdipIEncoders!**auto generated**!public! !
+testExampleGdipIEncoderValues!**auto generated**!public! !
+testExampleGdipIFCEnumerating!**auto generated**!public! !
+testExampleGdipIFlags!**auto generated**!public! !
+testExampleGdipIInterpMode!**auto generated**!public! !
+testExampleGdipIJPEGCompression!**auto generated**!public! !
+testExampleGdipILoadImage!**auto generated**!public! !
+testExampleGdipILoadImages!**auto generated**!public! !
+testExampleGdipILosslessRotation!**auto generated**!public! !
+testExampleGdipIMetadata!**auto generated**!public! !
+testExampleGdipIMetadata2!**auto generated**!public! !
+testExampleGdipIMultiFrame!**auto generated**!public! !
+testExampleGdipIMultiFrame2!**auto generated**!public! !
+testExampleGdipIPropertiesCopy!**auto generated**!public! !
+testExampleGdipIPropertyItem!**auto generated**!public! !
+testExampleGdipISkewing!**auto generated**!public! !
+testExampleGdipIThumbnails!**auto generated**!public! !
+testExampleGdipLGChangingColors!**auto generated**!public! !
+testExampleGdipLGCustom!**auto generated**!public! !
+testExampleGdipLGDiagonal!**auto generated**!public! !
+testExampleGdipLGHorizontal!**auto generated**!public! !
+testExampleGdipLGModeConstants!**auto generated**!public! !
+testExampleGdipLGTiling!**auto generated**!public! !
+testExampleGdipMShadows!**auto generated**!public! !
+testExampleGdipMShear!**auto generated**!public! !
+testExampleGdipMTranslate!**auto generated**!public! !
+testExampleGdipNestedContainers!**auto generated**!public! !
+testExampleGdipPAttributes!**auto generated**!public! !
+testExampleGdipPCompoundArray!**auto generated**!public! !
+testExampleGdipPCustomCaps!**auto generated**!public! !
+testExampleGdipPDashCap!**auto generated**!public! !
+testExampleGdipPDashPattern!**auto generated**!public! !
+testExampleGdipPDrawing!**auto generated**!public! !
+testExampleGdipPFillWithTexture!**auto generated**!public! !
+testExampleGdipPGBlendColors!**auto generated**!public! !
+testExampleGdipPGBlendFactors!**auto generated**!public! !
+testExampleGdipPGBounds!**auto generated**!public! !
+testExampleGdipPGCenterColor!**auto generated**!public! !
+testExampleGdipPGCenterPoint!**auto generated**!public! !
+testExampleGdipPGFocusScales!**auto generated**!public! !
+testExampleGdipPGGamma!**auto generated**!public! !
+testExampleGdipPGMultiply!**auto generated**!public! !
+testExampleGdipPGScale!**auto generated**!public! !
+testExampleGdipPGSurroundColors!**auto generated**!public! !
+testExampleGdipPGSurroundColors2!**auto generated**!public! !
+testExampleGdipPGTransform!**auto generated**!public! !
+testExampleGdipPGTranslate!**auto generated**!public! !
+testExampleGdipPGWrapMode!**auto generated**!public! !
+testExampleGdipPJoiningLines!**auto generated**!public! !
+testExampleGdipRClipWithRegion!**auto generated**!public! !
+testExampleGdipSBFillAShape!**auto generated**!public! !
+testExampleGdipSFFormatText!**auto generated**!public! !
+testExampleGdipSFGenerics!**auto generated**!public! !
+testExampleGdipSFTabs!**auto generated**!public! !
+testExampleGdipSFTrimming!**auto generated**!public! !
+testExampleGdipTBFillAShape!**auto generated**!public! !
+testExampleGdipTBTilingAShape!**auto generated**!public! !
+!
 
 !Graphics.Gdiplus.Tests.ExamplesTest class methodsFor!
 
@@ -624,5 +626,7 @@ buildTestCase
 							space;
 							display: each selector.
 						self compile: stream contents categories: {autoCategory}]]! !
-!Graphics.Gdiplus.Tests.ExamplesTest class categoriesFor: #buildTestCase!helpers!public! !
+!Graphics.Gdiplus.Tests.ExamplesTest class categoriesForMethods!
+buildTestCase!helpers!public! !
+!
 

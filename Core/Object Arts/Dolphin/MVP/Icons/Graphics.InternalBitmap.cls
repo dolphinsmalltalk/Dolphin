@@ -159,30 +159,32 @@ printOn: aStream
 
 setBitmap: aGdiplusBitmap 
 	gdiplusBitmap := aGdiplusBitmap! !
-!Graphics.InternalBitmap categoriesFor: #=!comparing!comparison!public! !
-!Graphics.InternalBitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Graphics.InternalBitmap categoriesFor: #asBitmap!public! !
-!Graphics.InternalBitmap categoriesFor: #asByteArray!converting!public! !
-!Graphics.InternalBitmap categoriesFor: #asIcon!public! !
-!Graphics.InternalBitmap categoriesFor: #asSharedCopy!converting!public! !
-!Graphics.InternalBitmap categoriesFor: #bitmap!accessing!public! !
-!Graphics.InternalBitmap categoriesFor: #bounds!accessing!public! !
-!Graphics.InternalBitmap categoriesFor: #doDrawWithCanvas:!drawing-bitmaps!public! !
-!Graphics.InternalBitmap categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!Graphics.InternalBitmap categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!Graphics.InternalBitmap categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.InternalBitmap categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!Graphics.InternalBitmap categoriesFor: #extent!accessing!public! !
-!Graphics.InternalBitmap categoriesFor: #fullIdentifier!public! !
-!Graphics.InternalBitmap categoriesFor: #gdiplusBitmap!initializing!private! !
-!Graphics.InternalBitmap categoriesFor: #graphics!accessing!drawing-gdiplus!public! !
-!Graphics.InternalBitmap categoriesFor: #handle!public! !
-!Graphics.InternalBitmap categoriesFor: #hash!comparing!comparison!public! !
-!Graphics.InternalBitmap categoriesFor: #imageType!public! !
-!Graphics.InternalBitmap categoriesFor: #internalize!public! !
-!Graphics.InternalBitmap categoriesFor: #isShared:!public! !
-!Graphics.InternalBitmap categoriesFor: #printOn:!printing!public! !
-!Graphics.InternalBitmap categoriesFor: #setBitmap:!initializing!private! !
+!Graphics.InternalBitmap categoriesForMethods!
+=!comparing!comparison!public! !
+addToImageList:mask:!double dispatch!private! !
+asBitmap!public! !
+asByteArray!converting!public! !
+asIcon!public! !
+asSharedCopy!converting!public! !
+bitmap!accessing!public! !
+bounds!accessing!public! !
+doDrawWithCanvas:!drawing-bitmaps!public! !
+drawOn:!drawing-bitmaps!public! !
+drawOn:at:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+extent!accessing!public! !
+fullIdentifier!public! !
+gdiplusBitmap!initializing!private! !
+graphics!accessing!drawing-gdiplus!public! !
+handle!public! !
+hash!comparing!comparison!public! !
+imageType!public! !
+internalize!public! !
+isShared:!public! !
+printOn:!printing!public! !
+setBitmap:!initializing!private! !
+!
 
 !Graphics.InternalBitmap class methodsFor!
 
@@ -228,12 +230,14 @@ new
 
 withExtent: aPointExtent 
 	^self fromGdiplusBitmap: (Gdiplus.Bitmap extent: aPointExtent) internalize! !
-!Graphics.InternalBitmap class categoriesFor: #chooseFile!public! !
-!Graphics.InternalBitmap class categoriesFor: #fromBytes:!instance creation!public! !
-!Graphics.InternalBitmap class categoriesFor: #fromFile:!instance creation!public! !
-!Graphics.InternalBitmap class categoriesFor: #fromGdiplusBitmap:!instance creation!public! !
-!Graphics.InternalBitmap class categoriesFor: #icon!public! !
-!Graphics.InternalBitmap class categoriesFor: #imageManager!accessing!private! !
-!Graphics.InternalBitmap class categoriesFor: #new!private! !
-!Graphics.InternalBitmap class categoriesFor: #withExtent:!instance creation!public! !
+!Graphics.InternalBitmap class categoriesForMethods!
+chooseFile!public! !
+fromBytes:!instance creation!public! !
+fromFile:!instance creation!public! !
+fromGdiplusBitmap:!instance creation!public! !
+icon!public! !
+imageManager!accessing!private! !
+new!private! !
+withExtent:!instance creation!public! !
+!
 

@@ -112,17 +112,19 @@ subValues
 			handle: self handle;
 			yourself
 	! !
-!OS.RegKey categoriesFor: #at:ifAbsent:!accessing!public! !
-!OS.RegKey categoriesFor: #at:put:!accessing!public! !
-!OS.RegKey categoriesFor: #fileOutOn:!public!storing! !
-!OS.RegKey categoriesFor: #includesKey:!public!searching! !
-!OS.RegKey categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OS.RegKey categoriesFor: #keysDo:!enumerating!public! !
-!OS.RegKey categoriesFor: #privateAt:!accessing!private! !
-!OS.RegKey categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!OS.RegKey categoriesFor: #size!accessing!public! !
-!OS.RegKey categoriesFor: #subKeys!accessing!public! !
-!OS.RegKey categoriesFor: #subValues!accessing!public! !
+!OS.RegKey categoriesForMethods!
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+fileOutOn:!public!storing! !
+includesKey:!public!searching! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+privateAt:!accessing!private! !
+removeKey:ifAbsent:!public!removing! !
+size!accessing!public! !
+subKeys!accessing!public! !
+subValues!accessing!public! !
+!
 
 !OS.RegKey class methodsFor!
 
@@ -130,5 +132,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
-!OS.RegKey class categoriesFor: #icon!constants!public! !
+!OS.RegKey class categoriesForMethods!
+icon!constants!public! !
+!
 

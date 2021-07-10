@@ -37,9 +37,11 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
-!Security.DolphinSurePersonalCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!Security.DolphinSurePersonalCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!Security.DolphinSurePersonalCertificate categoriesFor: #purpose!accessing!public! !
+!Security.DolphinSurePersonalCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+imageAttributes!drawing!helpers!private! !
+purpose!accessing!public! !
+!
 
 !Security.DolphinSurePersonalCertificate class methodsFor!
 
@@ -48,5 +50,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!Security.DolphinSurePersonalCertificate class categoriesFor: #validYears!constants!private! !
+!Security.DolphinSurePersonalCertificate class categoriesForMethods!
+validYears!constants!private! !
+!
 

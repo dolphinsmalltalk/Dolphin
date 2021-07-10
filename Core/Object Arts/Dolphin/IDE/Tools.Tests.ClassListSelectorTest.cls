@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassListSelectorTest'
 	instanceVariableNames: ''
@@ -144,14 +144,16 @@ testAddRemoveListItems
 
 treeModel
 	^presenter selectableItems treeModel! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #assertContains:!helpers!private! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #classToTest!helpers!private! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #denyContains:!helpers!private! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #initializePresenter!public!Running! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #listModel!accessing!private! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #listPresenter!public!unit tests! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #testAddRemoveListItems!public!unit tests! !
-!Tools.Tests.ClassListSelectorTest categoriesFor: #treeModel!accessing!private! !
+!Tools.Tests.ClassListSelectorTest categoriesForMethods!
+assertContains:!helpers!private! !
+classToTest!helpers!private! !
+denyContains:!helpers!private! !
+initializePresenter!public!Running! !
+listModel!accessing!private! !
+listPresenter!public!unit tests! !
+removalOfSelectionLeaves:!helpers!private! !
+resetSelection!helpers!private! !
+testAddRemoveListItems!public!unit tests! !
+treeModel!accessing!private! !
+!
 

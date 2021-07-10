@@ -209,32 +209,34 @@ viewClass: aClass
 	"Set the class of <View> of which the receiver is representing an instance."
 
 	viewClass := aClass! !
-!UI.STBViewProxy categoriesFor: #beTopView!accessing!public! !
-!UI.STBViewProxy categoriesFor: #clearSubViews!accessing!public! !
-!UI.STBViewProxy categoriesFor: #connectModel!models!public! !
-!UI.STBViewProxy categoriesFor: #getEvents!events!private! !
-!UI.STBViewProxy categoriesFor: #icon!accessing!private! !
-!UI.STBViewProxy categoriesFor: #instVars!accessing!public! !
-!UI.STBViewProxy categoriesFor: #instVars:!accessing!public! !
-!UI.STBViewProxy categoriesFor: #isTopView!accessing!private! !
-!UI.STBViewProxy categoriesFor: #nameOf:!accessing!public! !
-!UI.STBViewProxy categoriesFor: #parentView:!accessing!private! !
-!UI.STBViewProxy categoriesFor: #placement!accessing!public! !
-!UI.STBViewProxy categoriesFor: #printOn:!development!printing!public! !
-!UI.STBViewProxy categoriesFor: #resolution!accessing!private! !
-!UI.STBViewProxy categoriesFor: #resolution:!accessing!private! !
-!UI.STBViewProxy categoriesFor: #restoreFromProxy:!binary filing!private! !
-!UI.STBViewProxy categoriesFor: #restoreTopView!converting!private! !
-!UI.STBViewProxy categoriesFor: #restoreView!converting!private! !
-!UI.STBViewProxy categoriesFor: #setEvents:!events!private! !
-!UI.STBViewProxy categoriesFor: #setView:!accessing!public! !
-!UI.STBViewProxy categoriesFor: #state!accessing!public! !
-!UI.STBViewProxy categoriesFor: #stbFixup:at:!converting!public! !
-!UI.STBViewProxy categoriesFor: #subViews!accessing!public! !
-!UI.STBViewProxy categoriesFor: #version!accessing!public! !
-!UI.STBViewProxy categoriesFor: #version:!accessing!public! !
-!UI.STBViewProxy categoriesFor: #viewClass!accessing!public! !
-!UI.STBViewProxy categoriesFor: #viewClass:!accessing!public! !
+!UI.STBViewProxy categoriesForMethods!
+beTopView!accessing!public! !
+clearSubViews!accessing!public! !
+connectModel!models!public! !
+getEvents!events!private! !
+icon!accessing!private! !
+instVars!accessing!public! !
+instVars:!accessing!public! !
+isTopView!accessing!private! !
+nameOf:!accessing!public! !
+parentView:!accessing!private! !
+placement!accessing!public! !
+printOn:!development!printing!public! !
+resolution!accessing!private! !
+resolution:!accessing!private! !
+restoreFromProxy:!binary filing!private! !
+restoreTopView!converting!private! !
+restoreView!converting!private! !
+setEvents:!events!private! !
+setView:!accessing!public! !
+state!accessing!public! !
+stbFixup:at:!converting!public! !
+subViews!accessing!public! !
+version!accessing!public! !
+version:!accessing!public! !
+viewClass!accessing!public! !
+viewClass:!accessing!public! !
+!
 
 !UI.STBViewProxy class methodsFor!
 
@@ -303,8 +305,10 @@ stbVersion
 	 so if you are changing this number, THINK AGAIN."
 
 	^10! !
-!UI.STBViewProxy class categoriesFor: #forView:!instance creation!public! !
-!UI.STBViewProxy class categoriesFor: #initialize!development!initializing!public! !
-!UI.STBViewProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.STBViewProxy class categoriesFor: #stbVersion!binary filing!public! !
+!UI.STBViewProxy class categoriesForMethods!
+forView:!instance creation!public! !
+initialize!development!initializing!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

@@ -46,8 +46,10 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 		from: ##(_OffsetOf_KnownHeaders + 1)
 		to: _OffsetOf_KnownHeaders + size
 		startingAt: 1! !
-!WinHttpServer.HTTP_RESPONSE_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
-!WinHttpServer.HTTP_RESPONSE_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_RESPONSE_HEADERS categoriesForMethods!
+KnownHeaders!**compiled accessors**!public! !
+KnownHeaders:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_RESPONSE_HEADERS class methodsFor!
 
@@ -84,7 +86,9 @@ indexToHeaderMap
 		at: HttpHeaderVary put: 'Vary';
 		at: HttpHeaderWwwAuthenticate put: 'WWW-Authenticate';
 		yourself)! !
-!WinHttpServer.HTTP_RESPONSE_HEADERS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_RESPONSE_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_RESPONSE_HEADERS class categoriesFor: #indexToHeaderMap!public! !
+!WinHttpServer.HTTP_RESPONSE_HEADERS class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+indexToHeaderMap!public! !
+!
 

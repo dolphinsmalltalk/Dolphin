@@ -19,6 +19,8 @@ readFrom: anExternalStructure
 
 valueType
 	^Address! !
-!External.LPVOIDField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.LPVOIDField categoriesFor: #valueType!automatic generation!constants!development!private! !
+!External.LPVOIDField categoriesForMethods!
+readFrom:!indirect accessing!private! !
+valueType!automatic generation!constants!development!private! !
+!
 

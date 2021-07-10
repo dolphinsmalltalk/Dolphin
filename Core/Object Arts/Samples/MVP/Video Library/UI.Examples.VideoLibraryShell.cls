@@ -139,23 +139,25 @@ tape: aVideoTapeOrNil
 	"Sets the current selected tape in the receiver to aVideoTapeOrNil"
 
 	^tapesPresenter selectionOrNil: aVideoTapeOrNil! !
-!UI.Examples.VideoLibraryShell categoriesFor: #addTape!commands!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #createComponents!initializing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #editRecording!commands!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #erase!commands!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #hasSelectedRecording!accessing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #hasSelectedTape!accessing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #model:!accessing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #onTapeSelected!event handling!private! !
-!UI.Examples.VideoLibraryShell categoriesFor: #onViewOpened!event handling!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #queryCommand:!commands!private! !
-!UI.Examples.VideoLibraryShell categoriesFor: #record!commands!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #recording!accessing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #recording:!accessing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #removeTape!commands!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #tape!accessing!public! !
-!UI.Examples.VideoLibraryShell categoriesFor: #tape:!accessing!public! !
+!UI.Examples.VideoLibraryShell categoriesForMethods!
+addTape!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+editRecording!commands!public! !
+erase!commands!public! !
+hasSelectedRecording!accessing!public! !
+hasSelectedTape!accessing!public! !
+model:!accessing!public! !
+onTapeSelected!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+record!commands!public! !
+recording!accessing!public! !
+recording:!accessing!public! !
+removeTape!commands!public! !
+tape!accessing!public! !
+tape:!accessing!public! !
+!
 
 !UI.Examples.VideoLibraryShell class methodsFor!
 
@@ -203,10 +205,12 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!UI.Examples.VideoLibraryShell class categoriesFor: #defaultModel!models!public! !
-!UI.Examples.VideoLibraryShell class categoriesFor: #displayOn:!displaying!public! !
-!UI.Examples.VideoLibraryShell class categoriesFor: #icon!constants!public! !
-!UI.Examples.VideoLibraryShell class categoriesFor: #initialize!development!initializing!private! !
-!UI.Examples.VideoLibraryShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Examples.VideoLibraryShell class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.Examples.VideoLibraryShell class categoriesForMethods!
+defaultModel!models!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 

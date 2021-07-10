@@ -183,29 +183,31 @@ dwRoutingDiscards
 	"Answer the <Integer> value of the receiver's 'dwRoutingDiscards' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwRoutingDiscards! !
-!OS.MIB_IPSTATS categoriesFor: #dwDefaultTTL!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwForwarding!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwForwDatagrams!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwFragCreates!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwFragFails!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwFragOks!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwInAddrErrors!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwInDelivers!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwInDiscards!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwInHdrErrors!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwInReceives!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwInUnknownProtos!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwNumAddr!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwNumIf!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwNumRoutes!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwOutDiscards!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwOutNoRoutes!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwOutRequests!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwReasmFails!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwReasmOks!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwReasmReqds!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwReasmTimeout!**compiled accessors**!public! !
-!OS.MIB_IPSTATS categoriesFor: #dwRoutingDiscards!**compiled accessors**!public! !
+!OS.MIB_IPSTATS categoriesForMethods!
+dwDefaultTTL!**compiled accessors**!public! !
+dwForwarding!**compiled accessors**!public! !
+dwForwDatagrams!**compiled accessors**!public! !
+dwFragCreates!**compiled accessors**!public! !
+dwFragFails!**compiled accessors**!public! !
+dwFragOks!**compiled accessors**!public! !
+dwInAddrErrors!**compiled accessors**!public! !
+dwInDelivers!**compiled accessors**!public! !
+dwInDiscards!**compiled accessors**!public! !
+dwInHdrErrors!**compiled accessors**!public! !
+dwInReceives!**compiled accessors**!public! !
+dwInUnknownProtos!**compiled accessors**!public! !
+dwNumAddr!**compiled accessors**!public! !
+dwNumIf!**compiled accessors**!public! !
+dwNumRoutes!**compiled accessors**!public! !
+dwOutDiscards!**compiled accessors**!public! !
+dwOutNoRoutes!**compiled accessors**!public! !
+dwOutRequests!**compiled accessors**!public! !
+dwReasmFails!**compiled accessors**!public! !
+dwReasmOks!**compiled accessors**!public! !
+dwReasmReqds!**compiled accessors**!public! !
+dwReasmTimeout!**compiled accessors**!public! !
+dwRoutingDiscards!**compiled accessors**!public! !
+!
 
 !OS.MIB_IPSTATS class methodsFor!
 
@@ -269,6 +271,8 @@ defineFields
 
 getFieldNames
 	^#(#dwForwarding #dwDefaultTTL #dwInReceives #dwInHdrErrors #dwInAddrErrors #dwForwDatagrams #dwInUnknownProtos #dwInDiscards #dwInDelivers #dwOutRequests #dwRoutingDiscards #dwOutDiscards #dwOutNoRoutes #dwReasmTimeout #dwReasmReqds #dwReasmOks #dwReasmFails #dwFragOks #dwFragFails #dwFragCreates #dwNumIf #dwNumAddr #dwNumRoutes)! !
-!OS.MIB_IPSTATS class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_IPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IPSTATS class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

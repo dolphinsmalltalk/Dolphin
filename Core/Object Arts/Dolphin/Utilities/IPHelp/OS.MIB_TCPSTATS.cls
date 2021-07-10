@@ -127,21 +127,23 @@ dwRtoMin
 	"Answer the <Integer> value of the receiver's 'dwRtoMin' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwRtoMin! !
-!OS.MIB_TCPSTATS categoriesFor: #dwActiveOpens!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwAttemptFails!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwCurrEstab!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwEstabResets!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwInErrs!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwInSegs!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwMaxConn!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwNumConns!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwOutRsts!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwOutSegs!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwPassiveOpens!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwRetransSegs!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwRtoAlgorithm!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwRtoMax!**compiled accessors**!public! !
-!OS.MIB_TCPSTATS categoriesFor: #dwRtoMin!**compiled accessors**!public! !
+!OS.MIB_TCPSTATS categoriesForMethods!
+dwActiveOpens!**compiled accessors**!public! !
+dwAttemptFails!**compiled accessors**!public! !
+dwCurrEstab!**compiled accessors**!public! !
+dwEstabResets!**compiled accessors**!public! !
+dwInErrs!**compiled accessors**!public! !
+dwInSegs!**compiled accessors**!public! !
+dwMaxConn!**compiled accessors**!public! !
+dwNumConns!**compiled accessors**!public! !
+dwOutRsts!**compiled accessors**!public! !
+dwOutSegs!**compiled accessors**!public! !
+dwPassiveOpens!**compiled accessors**!public! !
+dwRetransSegs!**compiled accessors**!public! !
+dwRtoAlgorithm!**compiled accessors**!public! !
+dwRtoMax!**compiled accessors**!public! !
+dwRtoMin!**compiled accessors**!public! !
+!
 
 !OS.MIB_TCPSTATS class methodsFor!
 
@@ -219,6 +221,8 @@ defineFields
 
 getFieldNames
 	^#(#dwRtoAlgorithm #dwRtoMin #dwRtoMax #dwMaxConn #dwActiveOpens #dwPassiveOpens #dwAttemptFails #dwEstabResets #dwCurrEstab #dwInSegs #dwOutSegs #dwRetransSegs #dwInErrs #dwOutRsts #dwNumConns)! !
-!OS.MIB_TCPSTATS class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_TCPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_TCPSTATS class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -26,7 +26,9 @@ resource_Default_view
 
 scribblePresenterClass
 	^EtchASketch! !
-!UI.Examples.EtchASketchDocument class categoriesFor: #fileType!constants!public! !
-!UI.Examples.EtchASketchDocument class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Examples.EtchASketchDocument class categoriesFor: #scribblePresenterClass!constants!private! !
+!UI.Examples.EtchASketchDocument class categoriesForMethods!
+fileType!constants!public! !
+resource_Default_view!public!resources-views! !
+scribblePresenterClass!constants!private! !
+!
 

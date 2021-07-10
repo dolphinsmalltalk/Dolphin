@@ -93,15 +93,17 @@ paintSeparatorOn: aCanvas in: aRectangle
 		pen: Color highlight3d pen;
 		lineFrom: position + (1 @ 0) to: position + (1 @ cy)] 
 			ensure: [aCanvas pen: oldPen]! !
-!Tools.MenuBarPainter categoriesFor: #borderInset!constants!private! !
-!Tools.MenuBarPainter categoriesFor: #calculateGeometry:!public!updating! !
-!Tools.MenuBarPainter categoriesFor: #drawTextFlags!painting!private! !
-!Tools.MenuBarPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!Tools.MenuBarPainter categoriesFor: #itemHeight!constants!private! !
-!Tools.MenuBarPainter categoriesFor: #itemRect:using:!helpers!public! !
-!Tools.MenuBarPainter categoriesFor: #menuColor!private!tracking! !
-!Tools.MenuBarPainter categoriesFor: #offsetForSubmenu:canvas:!helpers!public! !
-!Tools.MenuBarPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
-!Tools.MenuBarPainter categoriesFor: #paintItem:on:in:!painting!private! !
-!Tools.MenuBarPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
+!Tools.MenuBarPainter categoriesForMethods!
+borderInset!constants!private! !
+calculateGeometry:!public!updating! !
+drawTextFlags!painting!private! !
+insertBefore:position:canvas:!public!testing! !
+itemHeight!constants!private! !
+itemRect:using:!helpers!public! !
+menuColor!private!tracking! !
+offsetForSubmenu:canvas:!helpers!public! !
+paintEdgeOn:in:!painting!private! !
+paintItem:on:in:!painting!private! !
+paintSeparatorOn:in:!painting!private! !
+!
 

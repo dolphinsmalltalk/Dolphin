@@ -34,7 +34,9 @@ free
 		self beUnfinalizable.
 		self basicFree.
 		self clear]! !
-!External.MemoryMappedFileView categoriesFor: #basicFree!private!realizing/unrealizing! !
-!External.MemoryMappedFileView categoriesFor: #flush!operations!public! !
-!External.MemoryMappedFileView categoriesFor: #free!public!realizing/unrealizing! !
+!External.MemoryMappedFileView categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+flush!operations!public! !
+free!public!realizing/unrealizing! !
+!
 

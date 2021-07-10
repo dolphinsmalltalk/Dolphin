@@ -176,34 +176,36 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self commandDescription menuText! !
-!UI.CommandMenuItem categoriesFor: #acceleratorKey!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #acceleratorKey:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #acceleratorKeyString!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #acceleratorKeyString:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #command:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #commandDescription!accessing!private! !
-!UI.CommandMenuItem categoriesFor: #commandDescription:!accessing!private! !
-!UI.CommandMenuItem categoriesFor: #commandString!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #description!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #description:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #displayOn:!displaying!public! !
-!UI.CommandMenuItem categoriesFor: #id!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #image!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #image:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #isDefault!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #isDefault:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #isModalCommand!public!testing! !
-!UI.CommandMenuItem categoriesFor: #isModalCommand:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #isRadioButtonStyle!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #isRadioButtonStyle:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #itemWithId:!accessing!public! !
-!UI.CommandMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!UI.CommandMenuItem categoriesFor: #postCopy!copying!public! !
-!UI.CommandMenuItem categoriesFor: #queryAlong:!operations!public! !
-!UI.CommandMenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
-!UI.CommandMenuItem categoriesFor: #stbSaveOn:!binary filing!public! !
-!UI.CommandMenuItem categoriesFor: #text!accessing!public! !
+!UI.CommandMenuItem categoriesForMethods!
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!public! !
+acceleratorKeyDisplayString!accessing!public! !
+acceleratorKeyString!accessing!public! !
+acceleratorKeyString:!accessing!public! !
+command:!accessing!public! !
+commandDescription!accessing!private! !
+commandDescription:!accessing!private! !
+commandString!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+id!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+isDefault!accessing!public! !
+isDefault:!accessing!public! !
+isModalCommand!public!testing! !
+isModalCommand:!accessing!public! !
+isRadioButtonStyle!accessing!public! !
+isRadioButtonStyle:!accessing!public! !
+itemWithId:!accessing!public! !
+populateItemInfo:!private!realizing/unrealizing! !
+postCopy!copying!public! !
+queryAlong:!operations!public! !
+registerAcceleratorKeyIn:!menus!public! !
+stbSaveOn:!binary filing!public! !
+text!accessing!public! !
+!
 
 UI.CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
@@ -240,9 +242,11 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!UI.CommandMenuItem class categoriesFor: #command:description:!instance creation!public! !
-!UI.CommandMenuItem class categoriesFor: #command:description:image:!instance creation!public! !
-!UI.CommandMenuItem class categoriesFor: #commandDescription:!instance creation!public! !
-!UI.CommandMenuItem class categoriesFor: #new!instance creation!public! !
-!UI.CommandMenuItem class categoriesFor: #stbVersion!binary filing!public! !
+!UI.CommandMenuItem class categoriesForMethods!
+command:description:!instance creation!public! !
+command:description:image:!instance creation!public! !
+commandDescription:!instance creation!public! !
+new!instance creation!public! !
+stbVersion!binary filing!public! !
+!
 

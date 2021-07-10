@@ -143,18 +143,20 @@ setCommandStream: pvStream
 	"Set the 'CommandStream' property of the receiver to the <IUnknown*> value of the argument."
 
 	self putref_CommandStream: pvStream! !
-!ADODB._Command categoriesFor: #commandStream!**auto generated**!properties!public! !
-!ADODB._Command categoriesFor: #dialect!**auto generated**!properties!public! !
-!ADODB._Command categoriesFor: #dialect:!**auto generated**!properties!public! !
-!ADODB._Command categoriesFor: #get_CommandStream:!**auto generated**!COM Interfaces-_Command!private! !
-!ADODB._Command categoriesFor: #get_Dialect:!**auto generated**!COM Interfaces-_Command!private! !
-!ADODB._Command categoriesFor: #get_NamedParameters:!**auto generated**!COM Interfaces-_Command!private! !
-!ADODB._Command categoriesFor: #namedParameters!**auto generated**!properties!public! !
-!ADODB._Command categoriesFor: #namedParameters:!**auto generated**!properties!public! !
-!ADODB._Command categoriesFor: #put_Dialect:!**auto generated**!COM Interfaces-_Command!private! !
-!ADODB._Command categoriesFor: #put_NamedParameters:!**auto generated**!COM Interfaces-_Command!private! !
-!ADODB._Command categoriesFor: #putref_CommandStream:!**auto generated**!COM Interfaces-_Command!private! !
-!ADODB._Command categoriesFor: #setCommandStream:!**auto generated**!properties!public! !
+!ADODB._Command categoriesForMethods!
+commandStream!**auto generated**!properties!public! !
+dialect!**auto generated**!properties!public! !
+dialect:!**auto generated**!properties!public! !
+get_CommandStream:!**auto generated**!COM Interfaces-_Command!private! !
+get_Dialect:!**auto generated**!COM Interfaces-_Command!private! !
+get_NamedParameters:!**auto generated**!COM Interfaces-_Command!private! !
+namedParameters!**auto generated**!properties!public! !
+namedParameters:!**auto generated**!properties!public! !
+put_Dialect:!**auto generated**!COM Interfaces-_Command!private! !
+put_NamedParameters:!**auto generated**!COM Interfaces-_Command!private! !
+putref_CommandStream:!**auto generated**!COM Interfaces-_Command!private! !
+setCommandStream:!**auto generated**!properties!public! !
+!
 
 !ADODB._Command class methodsFor!
 
@@ -182,6 +184,8 @@ defineFunctions
 		defineFunction: #get_NamedParameters:
 			argumentTypes: 'varbool*'
 ! !
-!ADODB._Command class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB._Command class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB._Command class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

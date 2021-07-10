@@ -42,6 +42,8 @@ drawBackgroundOn: aCanvas
 			lprc: self clientRectangle asParameter
 			uType: DFC_BUTTON 
 			uState: self uState]! !
-!EmulatedPushButton categoriesFor: #defaultTransitionDurations!accessing!public! !
-!EmulatedPushButton categoriesFor: #drawBackgroundOn:!drawing!private! !
+!EmulatedPushButton categoriesForMethods!
+defaultTransitionDurations!accessing!public! !
+drawBackgroundOn:!drawing!private! !
+!
 

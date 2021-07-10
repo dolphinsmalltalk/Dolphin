@@ -98,21 +98,23 @@ xorRegion: aRegion
 	"Update the receiver to the nonintersecting portions of itself and aRegion."
 
 	self combineRegion: aRegion mode: CombineModeXor! !
-!Graphics.Gdiplus.Region categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Region categoriesFor: #bounds:!accessing!public! !
-!Graphics.Gdiplus.Region categoriesFor: #clone!copying!public! !
-!Graphics.Gdiplus.Region categoriesFor: #combinePath:mode:!operations!public! !
-!Graphics.Gdiplus.Region categoriesFor: #combineRectangle:mode:!operations!public! !
-!Graphics.Gdiplus.Region categoriesFor: #combineRegion:mode:!operations!public! !
-!Graphics.Gdiplus.Region categoriesFor: #complementPath:!helpers!public! !
-!Graphics.Gdiplus.Region categoriesFor: #complementRegion:!helpers!public! !
-!Graphics.Gdiplus.Region categoriesFor: #intersectRegion:!helpers!public! !
-!Graphics.Gdiplus.Region categoriesFor: #isVisible:!public!testing! !
-!Graphics.Gdiplus.Region categoriesFor: #isVisible:graphics:!public!testing! !
-!Graphics.Gdiplus.Region categoriesFor: #makeEmpty!operations!public! !
-!Graphics.Gdiplus.Region categoriesFor: #makeInfinite!operations!public! !
-!Graphics.Gdiplus.Region categoriesFor: #unionRegion:!helpers!public! !
-!Graphics.Gdiplus.Region categoriesFor: #xorRegion:!helpers!public! !
+!Graphics.Gdiplus.Region categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+bounds:!accessing!public! !
+clone!copying!public! !
+combinePath:mode:!operations!public! !
+combineRectangle:mode:!operations!public! !
+combineRegion:mode:!operations!public! !
+complementPath:!helpers!public! !
+complementRegion:!helpers!public! !
+intersectRegion:!helpers!public! !
+isVisible:!public!testing! !
+isVisible:graphics:!public!testing! !
+makeEmpty!operations!public! !
+makeInfinite!operations!public! !
+unionRegion:!helpers!public! !
+xorRegion:!helpers!public! !
+!
 
 !Graphics.Gdiplus.Region class methodsFor!
 
@@ -232,11 +234,13 @@ new
 	"Answer an instance of the receiver that is infinite."
 
 	^self fromInitializer: RegionInitializer default! !
-!Graphics.Gdiplus.Region class categoriesFor: #exampleClippingSimple!examples!private! !
-!Graphics.Gdiplus.Region class categoriesFor: #exampleClippingSimple2!examples!private! !
-!Graphics.Gdiplus.Region class categoriesFor: #exampleGdipRClipWithRegion!examples!public!sunit! !
-!Graphics.Gdiplus.Region class categoriesFor: #exampleGdipRHitTesting!examples!public! !
-!Graphics.Gdiplus.Region class categoriesFor: #fromPath:!instance creation!public! !
-!Graphics.Gdiplus.Region class categoriesFor: #fromRectangle:!instance creation!public! !
-!Graphics.Gdiplus.Region class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.Region class categoriesForMethods!
+exampleClippingSimple!examples!private! !
+exampleClippingSimple2!examples!private! !
+exampleGdipRClipWithRegion!examples!public!sunit! !
+exampleGdipRHitTesting!examples!public! !
+fromPath:!instance creation!public! !
+fromRectangle:!instance creation!public! !
+new!instance creation!public! !
+!
 

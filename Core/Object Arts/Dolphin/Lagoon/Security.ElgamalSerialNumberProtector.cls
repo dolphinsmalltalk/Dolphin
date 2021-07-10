@@ -61,8 +61,10 @@ stringFromData: anArrayOfLargeIntegers
 		do: [:each | stream nextPutAll: (self class readableStringFromInteger: each)]
 		separatedBy: [stream nextPutAll: '/'].
 	^ stream contents.! !
-!Security.ElgamalSerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
-!Security.ElgamalSerialNumberProtector categoriesFor: #decrypt:!operations!public! !
-!Security.ElgamalSerialNumberProtector categoriesFor: #encrypt:!operations!public! !
-!Security.ElgamalSerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
+!Security.ElgamalSerialNumberProtector categoriesForMethods!
+dataFromString:!helpers!private! !
+decrypt:!operations!public! !
+encrypt:!operations!public! !
+stringFromData:!helpers!public! !
+!
 

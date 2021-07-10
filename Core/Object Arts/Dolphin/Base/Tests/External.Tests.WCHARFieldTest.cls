@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.ExternalFieldTest subclass: #'External.Tests.WCHARFieldTest'
 	instanceVariableNames: ''
@@ -41,6 +41,8 @@ testWriteInto
 	subject writeInto: struct value: (dolphinString at: 2).
 	actual := Utf16String fromByteArray: struct bytes.
 	self assert: actual equals: dolphinString! !
-!External.Tests.WCHARFieldTest categoriesFor: #testReadFrom!public! !
-!External.Tests.WCHARFieldTest categoriesFor: #testWriteInto!public! !
+!External.Tests.WCHARFieldTest categoriesForMethods!
+testReadFrom!public! !
+testWriteInto!public! !
+!
 

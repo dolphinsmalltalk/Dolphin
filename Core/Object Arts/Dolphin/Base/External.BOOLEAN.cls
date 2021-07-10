@@ -20,8 +20,10 @@ value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
-!External.BOOLEAN categoriesFor: #value!**compiled accessors**!public! !
-!External.BOOLEAN categoriesFor: #value:!**compiled accessors**!public! !
+!External.BOOLEAN categoriesForMethods!
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.BOOLEAN class methodsFor!
 
@@ -30,5 +32,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: BOOLEANField new beOverride! !
-!External.BOOLEAN class categoriesFor: #defineFields!public!template definition! !
+!External.BOOLEAN class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

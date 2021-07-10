@@ -36,8 +36,10 @@ icmpOutStats
 	"Answer the <MIBICMPSTATS_EX> value of the receiver's 'icmpOutStats' field."
 
 	^MIBICMPSTATS_EX fromAddress: bytes yourAddress + _OffsetOf_icmpOutStats! !
-!OS.MIB_ICMP_EX categoriesFor: #icmpInStats!**compiled accessors**!public! !
-!OS.MIB_ICMP_EX categoriesFor: #icmpOutStats!**compiled accessors**!public! !
+!OS.MIB_ICMP_EX categoriesForMethods!
+icmpInStats!**compiled accessors**!public! !
+icmpOutStats!**compiled accessors**!public! !
+!
 
 !OS.MIB_ICMP_EX class methodsFor!
 
@@ -67,6 +69,8 @@ defineFields
 
 getFieldNames
 	^#(#icmpInStats #icmpOutStats)! !
-!OS.MIB_ICMP_EX class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_ICMP_EX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_ICMP_EX class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

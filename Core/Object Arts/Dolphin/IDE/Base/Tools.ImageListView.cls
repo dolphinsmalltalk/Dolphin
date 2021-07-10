@@ -35,5 +35,7 @@ paintImageOn: aCanvas
 				on: aCanvas
 				at: origin + ((i \\ perRow * cx) @ (i // perRow * cy))].
 	^displayRect origin: origin extent: (perRow * cx) @ (rows * cy)! !
-!Tools.ImageListView categoriesFor: #paintImageOn:!drawing!event handling!private! !
+!Tools.ImageListView categoriesForMethods!
+paintImageOn:!drawing!event handling!private! !
+!
 

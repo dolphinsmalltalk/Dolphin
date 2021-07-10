@@ -51,7 +51,9 @@ testInvalidateOnResize
 				lpRect: rect
 				bErase: false).
 	self assert: rect extent equals: extent * 2 - (50 @ 100)! !
-!UI.Tests.ImageViewAbstractTest categoriesFor: #image!private!Running! !
-!UI.Tests.ImageViewAbstractTest categoriesFor: #setUp!private!Running! !
-!UI.Tests.ImageViewAbstractTest categoriesFor: #testInvalidateOnResize!public! !
+!UI.Tests.ImageViewAbstractTest categoriesForMethods!
+image!private!Running! !
+setUp!private!Running! !
+testInvalidateOnResize!public! !
+!
 

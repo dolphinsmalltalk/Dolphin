@@ -45,9 +45,11 @@ showIn: aWindow position: aPos
 	"Private - Show the receiver in aWindow at aPos."
 
 	^self shouldNotImplement! !
-!UI.MenuBar categoriesFor: #createHandle!private!realizing/unrealizing! !
-!UI.MenuBar categoriesFor: #isMenuBar!public!testing! !
-!UI.MenuBar categoriesFor: #printOn:!printing!public! !
-!UI.MenuBar categoriesFor: #queryAlong:!operations!public! !
-!UI.MenuBar categoriesFor: #showIn:position:!drawing!private! !
+!UI.MenuBar categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+isMenuBar!public!testing! !
+printOn:!printing!public! !
+queryAlong:!operations!public! !
+showIn:position:!drawing!private! !
+!
 

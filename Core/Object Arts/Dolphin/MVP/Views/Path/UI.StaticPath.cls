@@ -49,11 +49,13 @@ setWindowText: pathString
 		id: self id
 		pszPath: pathString.
 	^true! !
-!UI.StaticPath categoriesFor: #isSingleLine!private!testing! !
-!UI.StaticPath categoriesFor: #layout:!geometry!private! !
-!UI.StaticPath categoriesFor: #plainText!accessing!public! !
-!UI.StaticPath categoriesFor: #plainText:!private!updating! !
-!UI.StaticPath categoriesFor: #setWindowText:!accessing!private! !
+!UI.StaticPath categoriesForMethods!
+isSingleLine!private!testing! !
+layout:!geometry!private! !
+plainText!accessing!public! !
+plainText:!private!updating! !
+setWindowText:!accessing!private! !
+!
 
 !UI.StaticPath class methodsFor!
 
@@ -61,5 +63,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!UI.StaticPath class categoriesFor: #icon!constants!public! !
+!UI.StaticPath class categoriesForMethods!
+icon!constants!public! !
+!
 

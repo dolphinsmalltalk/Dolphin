@@ -118,25 +118,27 @@ sourceDescriptor
 
 sourceFileIndex
 	^methodClass sourceManager sourceIndexFromDescriptor: sourceDescriptor! !
-!MethodVersion categoriesFor: #=!comparing!public! !
-!MethodVersion categoriesFor: #displayOn:!printing!public! !
-!MethodVersion categoriesFor: #environment!accessing!public! !
-!MethodVersion categoriesFor: #forCompiledMethod:!initializing!public! !
-!MethodVersion categoriesFor: #forSource:at:in:!initializing!public! !
-!MethodVersion categoriesFor: #getSource!accessing!public! !
-!MethodVersion categoriesFor: #hash!comparing!public! !
-!MethodVersion categoriesFor: #hasSameSourceAs:!public!testing! !
-!MethodVersion categoriesFor: #isFromChanges!public!testing! !
-!MethodVersion categoriesFor: #isFromSources!public!testing! !
-!MethodVersion categoriesFor: #isLoaded!public!testing! !
-!MethodVersion categoriesFor: #load!operations!public! !
-!MethodVersion categoriesFor: #loadedMethod!accessing!public! !
-!MethodVersion categoriesFor: #methodClass!accessing!public! !
-!MethodVersion categoriesFor: #methodClass:!accessing!private! !
-!MethodVersion categoriesFor: #printOn:!printing!public! !
-!MethodVersion categoriesFor: #selector!accessing!public! !
-!MethodVersion categoriesFor: #sourceDescriptor!accessing!public! !
-!MethodVersion categoriesFor: #sourceFileIndex!accessing!public! !
+!MethodVersion categoriesForMethods!
+=!comparing!public! !
+displayOn:!printing!public! !
+environment!accessing!public! !
+forCompiledMethod:!initializing!public! !
+forSource:at:in:!initializing!public! !
+getSource!accessing!public! !
+hash!comparing!public! !
+hasSameSourceAs:!public!testing! !
+isFromChanges!public!testing! !
+isFromSources!public!testing! !
+isLoaded!public!testing! !
+load!operations!public! !
+loadedMethod!accessing!public! !
+methodClass!accessing!public! !
+methodClass:!accessing!private! !
+printOn:!printing!public! !
+selector!accessing!public! !
+sourceDescriptor!accessing!public! !
+sourceFileIndex!accessing!public! !
+!
 
 !MethodVersion class methodsFor!
 
@@ -147,6 +149,8 @@ forCompiledMethod: aCompiledMethod
 forSource: aString at: anInteger in: aSourceFiler
 
 	^self new forSource: aString at: anInteger in: aSourceFiler! !
-!MethodVersion class categoriesFor: #forCompiledMethod:!instance creation!public! !
-!MethodVersion class categoriesFor: #forSource:at:in:!instance creation!public! !
+!MethodVersion class categoriesForMethods!
+forCompiledMethod:!instance creation!public! !
+forSource:at:in:!instance creation!public! !
+!
 

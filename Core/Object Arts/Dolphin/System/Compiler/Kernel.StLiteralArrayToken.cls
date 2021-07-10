@@ -19,7 +19,9 @@ isForByteArray
 
 isLiteralArrayToken
 	^true! !
-!Kernel.StLiteralArrayToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StLiteralArrayToken categoriesFor: #isForByteArray!public!testing! !
-!Kernel.StLiteralArrayToken categoriesFor: #isLiteralArrayToken!public!testing! !
+!Kernel.StLiteralArrayToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isForByteArray!public!testing! !
+isLiteralArrayToken!public!testing! !
+!
 

@@ -47,9 +47,11 @@ validationBlock: aMonadicValuable
 
 	validationBlock := aMonadicValuable.
 ! !
-!Kernel.ValidatingClassLocator categoriesFor: #copyWithCodeBase!copying!private! !
-!Kernel.ValidatingClassLocator categoriesFor: #findResidentClass!operations!private! !
-!Kernel.ValidatingClassLocator categoriesFor: #initialize!initializing!private! !
-!Kernel.ValidatingClassLocator categoriesFor: #validationBlock!accessing!public! !
-!Kernel.ValidatingClassLocator categoriesFor: #validationBlock:!accessing!public! !
+!Kernel.ValidatingClassLocator categoriesForMethods!
+copyWithCodeBase!copying!private! !
+findResidentClass!operations!private! !
+initialize!initializing!private! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 

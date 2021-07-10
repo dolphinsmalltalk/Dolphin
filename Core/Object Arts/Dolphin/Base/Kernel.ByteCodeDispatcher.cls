@@ -387,43 +387,45 @@ writesStatic: anAssociation
 						or: 
 							[(#(#longPopStoreStatic:with: #longStoreStatic:with:) identityIncludes: selector) 
 								and: [offset == (args first + (args last * 256))]]]]! !
-!Kernel.ByteCodeDispatcher categoriesFor: #accessesInstVarAt:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #accessesInstVarAtAnyOf:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #accessToInstVarAt:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #atEnd!private!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #byteCodes!accessing!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #containsInstruction:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #dispatchAll!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #dispatchNext!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #fetch!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #indexOfInstVarAccess:!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #indexOfInstVarRead:!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #indexOfInstVarWrite:!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #indexOfIP:!accessing!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #instruction:do:!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #instructions!interpreting!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #instructions:!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #instructionsDo:!interpreting!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #interpreter:!accessing!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #ip!accessing!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #ip:!accessing!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #method!accessing!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #method:!accessing!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #next!accessing!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #nextInstructionDo:!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #peekForSelector!interpreting!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #prevIP:!accessing!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #readsInstVarAt:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #readsStatic:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #reset!interpreting!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #segments!accessing!public! !
-!Kernel.ByteCodeDispatcher categoriesFor: #selectorOfMessageSend:!interpreting!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #selectorOfSpecialSendEx:!accessing!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #sendsSpecialSelector:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #specialMessages!accessing!private! !
-!Kernel.ByteCodeDispatcher categoriesFor: #writesInstVarAt:!public!testing! !
-!Kernel.ByteCodeDispatcher categoriesFor: #writesStatic:!public!testing! !
+!Kernel.ByteCodeDispatcher categoriesForMethods!
+accessesInstVarAt:!public!testing! !
+accessesInstVarAtAnyOf:!public!testing! !
+accessToInstVarAt:!public!testing! !
+atEnd!private!testing! !
+byteCodes!accessing!public! !
+containsInstruction:!public!testing! !
+dispatchAll!interpreting!private! !
+dispatchNext!interpreting!private! !
+fetch!interpreting!private! !
+indexOfInstVarAccess:!interpreting!private! !
+indexOfInstVarRead:!interpreting!private! !
+indexOfInstVarWrite:!interpreting!private! !
+indexOfIP:!accessing!private! !
+instruction:do:!interpreting!private! !
+instructions!interpreting!public! !
+instructions:!public! !
+instructionsDo:!interpreting!public! !
+interpreter:!accessing!private! !
+ip!accessing!public! !
+ip:!accessing!public! !
+method!accessing!public! !
+method:!accessing!private! !
+next!accessing!public! !
+nextInstructionDo:!interpreting!private! !
+peekForSelector!interpreting!public! !
+prevIP:!accessing!public! !
+readsInstVarAt:!public!testing! !
+readsStatic:!public!testing! !
+reset!interpreting!public! !
+segments!accessing!public! !
+selectorOfMessageSend:!interpreting!private! !
+selectorOfSpecialSend:!enquiries!private! !
+selectorOfSpecialSendEx:!accessing!private! !
+sendsSpecialSelector:!public!testing! !
+specialMessages!accessing!private! !
+writesInstVarAt:!public!testing! !
+writesStatic:!public!testing! !
+!
 
 !Kernel.ByteCodeDispatcher class methodsFor!
 
@@ -493,12 +495,14 @@ on: aCompiledCode for: anInstructionInterpreter
 	^(self on: aCompiledCode)
 		interpreter: anInstructionInterpreter;
 		yourself! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #bytecodeRuns!constants!must not strip!private! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #indexOfIP:in:!interpreting!private! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #instructions!accessing!public! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #lengthOfInstruction:!interpreting!private! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #on:!instance creation!public! !
-!Kernel.ByteCodeDispatcher class categoriesFor: #on:for:!instance creation!public! !
+!Kernel.ByteCodeDispatcher class categoriesForMethods!
+bytecodeRuns!constants!must not strip!private! !
+decodeLongJump:byte2:!helpers!public! !
+indexOfIP:in:!interpreting!private! !
+initialize!development!initializing!public! !
+instructions!accessing!public! !
+lengthOfInstruction:!interpreting!private! !
+on:!instance creation!public! !
+on:for:!instance creation!public! !
+!
 

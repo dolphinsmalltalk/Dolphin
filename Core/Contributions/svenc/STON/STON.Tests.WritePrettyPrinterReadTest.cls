@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.Tests.WriteReadTest subclass: #'STON.Tests.WritePrettyPrinterReadTest'
 	instanceVariableNames: ''
@@ -24,6 +24,8 @@ serializeJson: anObject
 			STON jsonPrettyPrinter
 				on: stream;
 				nextPut: anObject]! !
-!STON.Tests.WritePrettyPrinterReadTest categoriesFor: #serialize:!private! !
-!STON.Tests.WritePrettyPrinterReadTest categoriesFor: #serializeJson:!private! !
+!STON.Tests.WritePrettyPrinterReadTest categoriesForMethods!
+serialize:!private! !
+serializeJson:!private! !
+!
 

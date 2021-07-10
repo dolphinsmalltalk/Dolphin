@@ -89,11 +89,13 @@ nextBase64From: aGettableStream
 				ifTrue: [^value]
 				ifFalse: [value == 64 ifTrue: [^nil]]].
 	^nil! !
-!Kernel.Base64Codec categoriesFor: #decodeFrom:onto:!private! !
-!Kernel.Base64Codec categoriesFor: #encodeFrom:onto:!private! !
-!Kernel.Base64Codec categoriesFor: #initialize!initializing!private! !
-!Kernel.Base64Codec categoriesFor: #lineLength:!accessing!private! !
-!Kernel.Base64Codec categoriesFor: #nextBase64From:!helpers!private! !
+!Kernel.Base64Codec categoriesForMethods!
+decodeFrom:onto:!private! !
+encodeFrom:onto:!private! !
+initialize!initializing!private! !
+lineLength:!accessing!private! !
+nextBase64From:!helpers!private! !
+!
 
 !Kernel.Base64Codec class methodsFor!
 
@@ -128,8 +130,10 @@ new
 	^(super new)
 		initialize;
 		yourself! !
-!Kernel.Base64Codec class categoriesFor: #decodeFrom:onto:!operations!public! !
-!Kernel.Base64Codec class categoriesFor: #encodeFrom:onto:!operations!public! !
-!Kernel.Base64Codec class categoriesFor: #initialize!development!private! !
-!Kernel.Base64Codec class categoriesFor: #new!instance creation!private! !
+!Kernel.Base64Codec class categoriesForMethods!
+decodeFrom:onto:!operations!public! !
+encodeFrom:onto:!operations!public! !
+initialize!development!private! !
+new!instance creation!private! !
+!
 

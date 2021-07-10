@@ -26,7 +26,9 @@ hresult
 	"Answer the <HRESULT> error/status code associated with the receiver."
 
 	^HRESULT win32Error: ERROR_STACK_OVERFLOW! !
-!Kernel.StackOverflow categoriesFor: #_descriptionArguments!displaying!public! !
-!Kernel.StackOverflow categoriesFor: #defaultAction!handling!public! !
-!Kernel.StackOverflow categoriesFor: #hresult!accessing!public! !
+!Kernel.StackOverflow categoriesForMethods!
+_descriptionArguments!displaying!public! !
+defaultAction!handling!public! !
+hresult!accessing!public! !
+!
 

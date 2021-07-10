@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveInstanceVariableTest'
 	instanceVariableNames: ''
@@ -36,8 +36,10 @@ testRemoveInstVar
 	self assert: (class definesInstanceVariable: 'foo1').
 	self executeRefactoring: refactoring.
 	self deny: (class definesInstanceVariable: 'foo1')! !
-!Refactory.Browser.Tests.RemoveInstanceVariableTest categoriesFor: #testModelRemoveInstanceVariable!public!tests! !
-!Refactory.Browser.Tests.RemoveInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.RemoveInstanceVariableTest categoriesFor: #testReferencedVariable!failure tests!public! !
-!Refactory.Browser.Tests.RemoveInstanceVariableTest categoriesFor: #testRemoveInstVar!public!tests! !
+!Refactory.Browser.Tests.RemoveInstanceVariableTest categoriesForMethods!
+testModelRemoveInstanceVariable!public!tests! !
+testNonExistantName!failure tests!public! !
+testReferencedVariable!failure tests!public! !
+testRemoveInstVar!public!tests! !
+!
 

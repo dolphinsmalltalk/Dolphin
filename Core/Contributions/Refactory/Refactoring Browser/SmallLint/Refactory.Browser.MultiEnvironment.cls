@@ -59,17 +59,19 @@ removeClass: aClass selector: aSelector into: aValue
 
 selectEnvironment: aValue
 	environment := environmentDictionaries at: aValue ifAbsent: [SelectorEnvironment new]! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #addClass:into:!adding!public! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #addClass:selector:into:!adding!public! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #environmentNamed:!accessing!public! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #environments!accessing!public! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #removeClass:into:!public!removing! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #removeClass:selector:into:!public!removing! !
-!Refactory.Browser.MultiEnvironment categoriesFor: #selectEnvironment:!accessing!public! !
+!Refactory.Browser.MultiEnvironment categoriesForMethods!
+addClass:into:!adding!public! !
+addClass:selector:into:!adding!public! !
+definesClass:!public!testing! !
+environmentNamed:!accessing!public! !
+environments!accessing!public! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+removeClass:into:!public!removing! !
+removeClass:selector:into:!public!removing! !
+selectEnvironment:!accessing!public! !
+!
 

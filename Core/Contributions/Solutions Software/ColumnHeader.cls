@@ -154,26 +154,28 @@ style: anInteger
 		fmt: anInteger.
 
 	self parent hdmSetItem: item index: self index - 1! !
-!ColumnHeader categoriesFor: #alignment!public!style! !
-!ColumnHeader categoriesFor: #alignment:!public!style! !
-!ColumnHeader categoriesFor: #dropDownMenu!accessing!public! !
-!ColumnHeader categoriesFor: #dropDownMenu:!accessing!public! !
-!ColumnHeader categoriesFor: #index!accessing!private! !
-!ColumnHeader categoriesFor: #index:!accessing!private! !
-!ColumnHeader categoriesFor: #isChecked!public!testing! !
-!ColumnHeader categoriesFor: #isChecked:!public!state! !
-!ColumnHeader categoriesFor: #isCheckStyle!public!style! !
-!ColumnHeader categoriesFor: #isCheckStyle:!public!style! !
-!ColumnHeader categoriesFor: #isDropDownStyle!public!style! !
-!ColumnHeader categoriesFor: #isDropDownStyle:!public!style! !
-!ColumnHeader categoriesFor: #onDropDownButtonClicked!event handling!public! !
-!ColumnHeader categoriesFor: #parent!accessing!private! !
-!ColumnHeader categoriesFor: #parent:!accessing!private! !
-!ColumnHeader categoriesFor: #rectangle!geometry!public! !
-!ColumnHeader categoriesFor: #screenRectangle!geometry!public! !
-!ColumnHeader categoriesFor: #setIsChecked:!private!state! !
-!ColumnHeader categoriesFor: #sortIndicator!public!style! !
-!ColumnHeader categoriesFor: #sortIndicator:!public!style! !
-!ColumnHeader categoriesFor: #style!accessing!private! !
-!ColumnHeader categoriesFor: #style:!accessing!private! !
+!ColumnHeader categoriesForMethods!
+alignment!public!style! !
+alignment:!public!style! !
+dropDownMenu!accessing!public! !
+dropDownMenu:!accessing!public! !
+index!accessing!private! !
+index:!accessing!private! !
+isChecked!public!testing! !
+isChecked:!public!state! !
+isCheckStyle!public!style! !
+isCheckStyle:!public!style! !
+isDropDownStyle!public!style! !
+isDropDownStyle:!public!style! !
+onDropDownButtonClicked!event handling!public! !
+parent!accessing!private! !
+parent:!accessing!private! !
+rectangle!geometry!public! !
+screenRectangle!geometry!public! !
+setIsChecked:!private!state! !
+sortIndicator!public!style! !
+sortIndicator:!public!style! !
+style!accessing!private! !
+style:!accessing!private! !
+!
 

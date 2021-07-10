@@ -37,11 +37,13 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!Graphics.IconImageManager categoriesFor: #bitmapForIcon:extent:!public!searching! !
-!Graphics.IconImageManager categoriesFor: #initialize!initializing!private! !
-!Graphics.IconImageManager categoriesFor: #menuBitmapForIcon:!public!searching! !
-!Graphics.IconImageManager categoriesFor: #newImages!private!removing! !
-!Graphics.IconImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.IconImageManager categoriesForMethods!
+bitmapForIcon:extent:!public!searching! !
+initialize!initializing!private! !
+menuBitmapForIcon:!public!searching! !
+newImages!private!removing! !
+stbSaveOn:!binary filing!public! !
+!
 
 !Graphics.IconImageManager class methodsFor!
 
@@ -79,10 +81,12 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!Graphics.IconImageManager class categoriesFor: #current!instance creation!public! !
-!Graphics.IconImageManager class categoriesFor: #new!instance creation!private! !
-!Graphics.IconImageManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Graphics.IconImageManager class categoriesFor: #reset!operations!public! !
-!Graphics.IconImageManager class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Graphics.IconImageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.IconImageManager class categoriesForMethods!
+current!instance creation!public! !
+new!instance creation!private! !
+onPreStripImage!class hierarchy-removing!private! !
+reset!operations!public! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

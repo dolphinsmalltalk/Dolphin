@@ -295,42 +295,44 @@ truncated
 
 	^fraction truncated
 ! !
-!Core.ScaledDecimal categoriesFor: #-!arithmetic!public! !
-!Core.ScaledDecimal categoriesFor: #*!arithmetic!public! !
-!Core.ScaledDecimal categoriesFor: #/!arithmetic!public! !
-!Core.ScaledDecimal categoriesFor: #//!arithmetic!public! !
-!Core.ScaledDecimal categoriesFor: #+!arithmetic!public! !
-!Core.ScaledDecimal categoriesFor: #<!comparing!public! !
-!Core.ScaledDecimal categoriesFor: #=!comparing!public! !
-!Core.ScaledDecimal categoriesFor: #addToScaledDecimal:!double dispatch!private! !
-!Core.ScaledDecimal categoriesFor: #asFloat!converting!public! !
-!Core.ScaledDecimal categoriesFor: #asFraction!converting!public! !
-!Core.ScaledDecimal categoriesFor: #asScaledDecimal:!converting!public! !
-!Core.ScaledDecimal categoriesFor: #coerce:!coercing!private! !
-!Core.ScaledDecimal categoriesFor: #denominator!accessing!public! !
-!Core.ScaledDecimal categoriesFor: #displayOn:!printing!public! !
-!Core.ScaledDecimal categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
-!Core.ScaledDecimal categoriesFor: #equalToInteger:!double dispatch!private! !
-!Core.ScaledDecimal categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
-!Core.ScaledDecimal categoriesFor: #fractionPart!accessing!public! !
-!Core.ScaledDecimal categoriesFor: #generality!coercing!private! !
-!Core.ScaledDecimal categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
-!Core.ScaledDecimal categoriesFor: #hash!comparing!public! !
-!Core.ScaledDecimal categoriesFor: #integerPart!accessing!public! !
-!Core.ScaledDecimal categoriesFor: #isLiteral!public!testing! !
-!Core.ScaledDecimal categoriesFor: #isZero!public!testing! !
-!Core.ScaledDecimal categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
-!Core.ScaledDecimal categoriesFor: #negated!arithmetic!public! !
-!Core.ScaledDecimal categoriesFor: #numerator!accessing!public! !
-!Core.ScaledDecimal categoriesFor: #printOn:!printing!public! !
-!Core.ScaledDecimal categoriesFor: #raisedToInteger:!mathematical!public! !
-!Core.ScaledDecimal categoriesFor: #reciprocal!arithmetic!public! !
-!Core.ScaledDecimal categoriesFor: #scale!accessing!public! !
-!Core.ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !
-!Core.ScaledDecimal categoriesFor: #storeOn:!public!storing! !
-!Core.ScaledDecimal categoriesFor: #subtractFromInteger:!double dispatch!public! !
-!Core.ScaledDecimal categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
-!Core.ScaledDecimal categoriesFor: #truncated!public!truncation and round off! !
+!Core.ScaledDecimal categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+=!comparing!public! !
+addToScaledDecimal:!double dispatch!private! !
+asFloat!converting!public! !
+asFraction!converting!public! !
+asScaledDecimal:!converting!public! !
+coerce:!coercing!private! !
+denominator!accessing!public! !
+displayOn:!printing!public! !
+divideIntoScaledDecimal:!double dispatch!private! !
+equalToInteger:!double dispatch!private! !
+equalToScaledDecimal:!double dispatch!private! !
+fractionPart!accessing!public! !
+generality!coercing!private! !
+greaterThanScaledDecimal:!double dispatch!private! !
+hash!comparing!public! !
+integerPart!accessing!public! !
+isLiteral!public!testing! !
+isZero!public!testing! !
+multiplyByScaledDecimal:!double dispatch!private! !
+negated!arithmetic!public! !
+numerator!accessing!public! !
+printOn:!printing!public! !
+raisedToInteger:!mathematical!public! !
+reciprocal!arithmetic!public! !
+scale!accessing!public! !
+setFraction:scale:!initializing!private! !
+storeOn:!public!storing! !
+subtractFromInteger:!double dispatch!public! !
+subtractFromScaledDecimal:!double dispatch!private! !
+truncated!public!truncation and round off! !
+!
 
 Core.ScaledDecimal methodProtocol: #scaledDecimal attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #scale #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
 
@@ -372,9 +374,11 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
-!Core.ScaledDecimal class categoriesFor: #basicNewFromFraction:scale:!instance creation!private! !
-!Core.ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
-!Core.ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
-!Core.ScaledDecimal class categoriesFor: #one!instance creation!public! !
-!Core.ScaledDecimal class categoriesFor: #zero!instance creation!public! !
+!Core.ScaledDecimal class categoriesForMethods!
+basicNewFromFraction:scale:!instance creation!private! !
+maxPrecision!accessing!private! !
+newFromNumber:scale:!instance creation!public! !
+one!instance creation!public! !
+zero!instance creation!public! !
+!
 

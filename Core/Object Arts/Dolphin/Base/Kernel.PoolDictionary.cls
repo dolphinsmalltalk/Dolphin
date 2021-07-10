@@ -75,18 +75,20 @@ resolvePublicBinding: aBindingContext
 
 unqualifiedName
 	^self anonymousName! !
-!Kernel.PoolDictionary categoriesFor: #anonymousName!constants!private! !
-!Kernel.PoolDictionary categoriesFor: #asQualifiedReference!private! !
-!Kernel.PoolDictionary categoriesFor: #associationClass!constants!private! !
-!Kernel.PoolDictionary categoriesFor: #convertToSharedPool!development!private! !
-!Kernel.PoolDictionary categoriesFor: #displayOn:!public! !
-!Kernel.PoolDictionary categoriesFor: #environment!accessing!public! !
-!Kernel.PoolDictionary categoriesFor: #fullNameFor:!public! !
-!Kernel.PoolDictionary categoriesFor: #name!accessing!public! !
-!Kernel.PoolDictionary categoriesFor: #name:!accessing!private! !
-!Kernel.PoolDictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!Kernel.PoolDictionary categoriesFor: #resolvePublicBinding:!private! !
-!Kernel.PoolDictionary categoriesFor: #unqualifiedName!accessing!private! !
+!Kernel.PoolDictionary categoriesForMethods!
+anonymousName!constants!private! !
+asQualifiedReference!private! !
+associationClass!constants!private! !
+convertToSharedPool!development!private! !
+displayOn:!public! !
+environment!accessing!public! !
+fullNameFor:!public! !
+name!accessing!public! !
+name:!accessing!private! !
+newAssociation:value:!helpers!private! !
+resolvePublicBinding:!private! !
+unqualifiedName!accessing!private! !
+!
 
 Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #resolvePublicBinding:)!
 
@@ -101,6 +103,8 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
-!Kernel.PoolDictionary class categoriesFor: #forClass:!instance creation!public! !
-!Kernel.PoolDictionary class categoriesFor: #named:!instance creation!public! !
+!Kernel.PoolDictionary class categoriesForMethods!
+forClass:!instance creation!public! !
+named:!instance creation!public! !
+!
 

@@ -29,9 +29,11 @@ validateClassName
 
 validateSuperclassChainForCreate
 	"The superclass just validates that no superclass has the same name, which is not relevant for the unnamed."! !
-!Kernel.AnonymousClassBuilder categoriesFor: #installInSuperclass:!helpers!private! !
-!Kernel.AnonymousClassBuilder categoriesFor: #installNewClass!environment!private! !
-!Kernel.AnonymousClassBuilder categoriesFor: #superclass:!accessing!private! !
-!Kernel.AnonymousClassBuilder categoriesFor: #validateClassName!public! !
-!Kernel.AnonymousClassBuilder categoriesFor: #validateSuperclassChainForCreate!public! !
+!Kernel.AnonymousClassBuilder categoriesForMethods!
+installInSuperclass:!helpers!private! !
+installNewClass!environment!private! !
+superclass:!accessing!private! !
+validateClassName!public! !
+validateSuperclassChainForCreate!public! !
+!
 

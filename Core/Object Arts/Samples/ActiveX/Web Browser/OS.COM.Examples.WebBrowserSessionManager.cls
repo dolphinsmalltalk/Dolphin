@@ -22,8 +22,10 @@ objectArtsUrl
 	"Private - Answer the URL of the Object Arts home page"
 
 	^'http://www.object-arts.com'.! !
-!OS.COM.Examples.WebBrowserSessionManager categoriesFor: #main!operations!public! !
-!OS.COM.Examples.WebBrowserSessionManager categoriesFor: #objectArtsUrl!constants!private! !
+!OS.COM.Examples.WebBrowserSessionManager categoriesForMethods!
+main!operations!public! !
+objectArtsUrl!constants!private! !
+!
 
 !OS.COM.Examples.WebBrowserSessionManager class methodsFor!
 
@@ -31,5 +33,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^WebBrowserShell! !
-!OS.COM.Examples.WebBrowserSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!OS.COM.Examples.WebBrowserSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

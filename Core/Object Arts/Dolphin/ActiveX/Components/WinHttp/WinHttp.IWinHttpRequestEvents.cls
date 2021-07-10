@@ -80,10 +80,12 @@ OnResponseStart: status contentType: contentType
 
 	<virtual stdcall: void 4 sdword bstr>
 	^self invalidCall: _failureCode! !
-!WinHttp.IWinHttpRequestEvents categoriesFor: #OnError:errorDescription:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
-!WinHttp.IWinHttpRequestEvents categoriesFor: #OnResponseDataAvailable:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
-!WinHttp.IWinHttpRequestEvents categoriesFor: #OnResponseFinished!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
-!WinHttp.IWinHttpRequestEvents categoriesFor: #OnResponseStart:contentType:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+!WinHttp.IWinHttpRequestEvents categoriesForMethods!
+OnError:errorDescription:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+OnResponseDataAvailable:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+OnResponseFinished!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+OnResponseStart:contentType:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
+!
 
 !WinHttp.IWinHttpRequestEvents class methodsFor!
 
@@ -104,5 +106,7 @@ defineFunctions
 			returnType: 'void'
 			argumentTypes: 'sdword bstr'
 ! !
-!WinHttp.IWinHttpRequestEvents class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!WinHttp.IWinHttpRequestEvents class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

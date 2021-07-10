@@ -176,29 +176,31 @@ transform
 		pushUpMethods;
 		changeIsKindOfReferences;
 		reparentSubclasses! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #abstractSuperclass!accessing!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #addSuperclass!public!transforming! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #changeIsKindOfReferences!public!transforming! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #computeSubclassSupersOf:!methods!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #createSubclassResponsibilityFor:in:!methods!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #name:class:subclasses:!initialize/release!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassInstanceVariables!private!variables! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassVariables!private!variables! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpImports!private!variables! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pullUpInstanceVariables!private!variables! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUp:in:!methods!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethods!public!transforming! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethodsFrom:!methods!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #pushUpVariables!public!transforming! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #selectorsToPushUpFrom:!methods!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #shouldPushUp:from:!methods!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #subclasses!accessing!public! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #subclasses:!accessing!public! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #subclassResponsibilityFor:in:!methods!private! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring categoriesForMethods!
+abstractSuperclass!accessing!private! !
+addSuperclass!public!transforming! !
+changeIsKindOfReferences!public!transforming! !
+computeSubclassSupersOf:!methods!private! !
+createSubclassResponsibilityFor:in:!methods!private! !
+name:class:subclasses:!initialize/release!private! !
+preconditions!preconditions!public! !
+pullUpClassInstanceVariables!private!variables! !
+pullUpClassVariables!private!variables! !
+pullUpImports!private!variables! !
+pullUpInstanceVariables!private!variables! !
+pushUp:in:!methods!private! !
+pushUpMethods!public!transforming! !
+pushUpMethodsFrom:!methods!private! !
+pushUpVariables!public!transforming! !
+reparentSubclasses!public!transforming! !
+selectorsToPushUpFrom:!methods!private! !
+shouldPushUp:from:!methods!private! !
+storeOn:!printing!public! !
+subclasses!accessing!public! !
+subclasses:!accessing!public! !
+subclassResponsibilityFor:in:!methods!private! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.ChildrenToSiblingsRefactoring class methodsFor!
 
@@ -216,6 +218,8 @@ name: aClassName class: aClass subclasses: subclassCollection
 			class: aClass
 			subclasses: subclassCollection;
 		yourself! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring class categoriesFor: #model:name:class:subclasses:!instance creation!public! !
-!Refactory.Browser.ChildrenToSiblingsRefactoring class categoriesFor: #name:class:subclasses:!instance creation!public! !
+!Refactory.Browser.ChildrenToSiblingsRefactoring class categoriesForMethods!
+model:name:class:subclasses:!instance creation!public! !
+name:class:subclasses:!instance creation!public! !
+!
 

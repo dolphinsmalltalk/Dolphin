@@ -42,7 +42,9 @@ interface IMatchCollection2 : IDispatch
 
 matchClass
 	^IMatch2! !
-!VBScript.IMatchCollection2 categoriesFor: #matchClass!constants!private! !
+!VBScript.IMatchCollection2 categoriesForMethods!
+matchClass!constants!private! !
+!
 
 !VBScript.IMatchCollection2 class methodsFor!
 
@@ -50,5 +52,7 @@ defineFunctions
 	"Declare the virtual function table for the COM interface 'VBScript_RegExp_55.IMatchCollection'
 		IMatchCollection2 defineTemplate"
 ! !
-!VBScript.IMatchCollection2 class categoriesFor: #defineFunctions!initializing!public! !
+!VBScript.IMatchCollection2 class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

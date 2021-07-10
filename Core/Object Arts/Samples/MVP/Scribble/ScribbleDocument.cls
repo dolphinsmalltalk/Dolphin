@@ -54,13 +54,15 @@ streamOut: aStream
 	"Private - Stream the receiver's model out to aStream"
 
 	self getDocumentData binaryStoreOn: aStream! !
-!ScribbleDocument categoriesFor: #createComponents!initializing!public! !
-!ScribbleDocument categoriesFor: #fileNew!commands!public! !
-!ScribbleDocument categoriesFor: #isModified!public!testing! !
-!ScribbleDocument categoriesFor: #isModified:!modes!not an aspect!public! !
-!ScribbleDocument categoriesFor: #model:!accessing!public! !
-!ScribbleDocument categoriesFor: #streamIn:!private!streaming! !
-!ScribbleDocument categoriesFor: #streamOut:!private!streaming! !
+!ScribbleDocument categoriesForMethods!
+createComponents!initializing!public! !
+fileNew!commands!public! !
+isModified!public!testing! !
+isModified:!modes!not an aspect!public! !
+model:!accessing!public! !
+streamIn:!private!streaming! !
+streamOut:!private!streaming! !
+!
 
 !ScribbleDocument class methodsFor!
 
@@ -103,12 +105,14 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!ScribbleDocument class categoriesFor: #defaultFileExtension!constants!public! !
-!ScribbleDocument class categoriesFor: #defaultModel!models!public! !
-!ScribbleDocument class categoriesFor: #fileType!constants!public! !
-!ScribbleDocument class categoriesFor: #fileTypes!constants!public! !
-!ScribbleDocument class categoriesFor: #icon!public! !
-!ScribbleDocument class categoriesFor: #resource_Default_view!public!resources-views! !
-!ScribbleDocument class categoriesFor: #scribblePresenterClass!constants!private! !
-!ScribbleDocument class categoriesFor: #shutdownOnExit!public!testing! !
+!ScribbleDocument class categoriesForMethods!
+defaultFileExtension!constants!public! !
+defaultModel!models!public! !
+fileType!constants!public! !
+fileTypes!constants!public! !
+icon!public! !
+resource_Default_view!public!resources-views! !
+scribblePresenterClass!constants!private! !
+shutdownOnExit!public!testing! !
+!
 

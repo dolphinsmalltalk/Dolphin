@@ -51,10 +51,12 @@ valueWithArgumentsAt: anAddress
 	"Private - Evaluate the receiver with arguments instantiated from the raw data at anAddress."
 
 	^receiver perform: selector withArgumentsAt: anAddress descriptor: descriptor! !
-!External.MessageCallback categoriesFor: #closure!accessing!public! !
-!External.MessageCallback categoriesFor: #closure:!accessing!public! !
-!External.MessageCallback categoriesFor: #printOn:!development!printing!public! !
-!External.MessageCallback categoriesFor: #receiver:!initializing!private! !
-!External.MessageCallback categoriesFor: #selector:!initializing!private! !
-!External.MessageCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!External.MessageCallback categoriesForMethods!
+closure!accessing!public! !
+closure:!accessing!public! !
+printOn:!development!printing!public! !
+receiver:!initializing!private! !
+selector:!initializing!private! !
+valueWithArgumentsAt:!evaluating!private! !
+!
 

@@ -43,11 +43,13 @@ nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger! !
-!OS.ENHMETARECORD categoriesFor: #getField:!accessing!private! !
-!OS.ENHMETARECORD categoriesFor: #iType!**compiled accessors**!public! !
-!OS.ENHMETARECORD categoriesFor: #iType:!**compiled accessors**!public! !
-!OS.ENHMETARECORD categoriesFor: #nSize!**compiled accessors**!public! !
-!OS.ENHMETARECORD categoriesFor: #nSize:!**compiled accessors**!public! !
+!OS.ENHMETARECORD categoriesForMethods!
+getField:!accessing!private! !
+iType!**compiled accessors**!public! !
+iType:!**compiled accessors**!public! !
+nSize!**compiled accessors**!public! !
+nSize:!**compiled accessors**!public! !
+!
 
 !OS.ENHMETARECORD class methodsFor!
 
@@ -104,12 +106,14 @@ uninitializeBeforeRemove
 
 unregisterRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: nil]! !
-!OS.ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.ENHMETARECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.ENHMETARECORD class categoriesFor: #initialize!public! !
-!OS.ENHMETARECORD class categoriesFor: #initializeAfterLoad!initializing!public! !
-!OS.ENHMETARECORD class categoriesFor: #iTypes!constants!public! !
-!OS.ENHMETARECORD class categoriesFor: #registerRecordTypes!initializing!private! !
-!OS.ENHMETARECORD class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!OS.ENHMETARECORD class categoriesFor: #unregisterRecordTypes!accessing!private! !
+!OS.ENHMETARECORD class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!public! !
+initializeAfterLoad!initializing!public! !
+iTypes!constants!public! !
+registerRecordTypes!initializing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!public! !
+unregisterRecordTypes!accessing!private! !
+!
 

@@ -26,10 +26,12 @@ title
 title: aString
 	title := aString
 ! !
-!Tools.Lesson categoriesFor: #contents!accessing!public! !
-!Tools.Lesson categoriesFor: #contents:!accessing!public! !
-!Tools.Lesson categoriesFor: #title!accessing!public! !
-!Tools.Lesson categoriesFor: #title:!accessing!public! !
+!Tools.Lesson categoriesForMethods!
+contents!accessing!public! !
+contents:!accessing!public! !
+title!accessing!public! !
+title:!accessing!public! !
+!
 
 !Tools.Lesson class methodsFor!
 
@@ -41,6 +43,8 @@ title: aTitle contents: someContents
 		title: aTitle;
 		contents: someContents
 ! !
-!Tools.Lesson class categoriesFor: #icon!constants!public! !
-!Tools.Lesson class categoriesFor: #title:contents:!instance creation!public! !
+!Tools.Lesson class categoriesForMethods!
+icon!constants!public! !
+title:contents:!instance creation!public! !
+!
 

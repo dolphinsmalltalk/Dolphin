@@ -141,17 +141,19 @@ superCategoriesOf: method
 					m := each compiledMethodAt: selector.
 					suggestions addAll: m categories]].
 	^suggestions! !
-!Tools.MethodCategorizationPolicy categoriesFor: #allCategoriesOfSelector:!enquiries!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #bestSuggestionFor:!enquiries!public! !
-!Tools.MethodCategorizationPolicy categoriesFor: #couldBeAccessor:!helpers!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #couldBeInitializer:!helpers!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #defaultCategories:!helpers!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #isReturnConstant:!helpers!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #prefixCategories!constants!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #suffixCategories!constants!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #suggestedPrivacyFor:!enquiries!private! !
-!Tools.MethodCategorizationPolicy categoriesFor: #suggestionsFor:!enquiries!public! !
-!Tools.MethodCategorizationPolicy categoriesFor: #superCategoriesOf:!helpers!private! !
+!Tools.MethodCategorizationPolicy categoriesForMethods!
+allCategoriesOfSelector:!enquiries!private! !
+bestSuggestionFor:!enquiries!public! !
+couldBeAccessor:!helpers!private! !
+couldBeInitializer:!helpers!private! !
+defaultCategories:!helpers!private! !
+isReturnConstant:!helpers!private! !
+prefixCategories!constants!private! !
+suffixCategories!constants!private! !
+suggestedPrivacyFor:!enquiries!private! !
+suggestionsFor:!enquiries!public! !
+superCategoriesOf:!helpers!private! !
+!
 
 !Tools.MethodCategorizationPolicy class methodsFor!
 
@@ -171,7 +173,9 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Default := nil.! !
-!Tools.MethodCategorizationPolicy class categoriesFor: #default!instance creation!public! !
-!Tools.MethodCategorizationPolicy class categoriesFor: #initialize!initializing!private! !
-!Tools.MethodCategorizationPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.MethodCategorizationPolicy class categoriesForMethods!
+default!instance creation!public! !
+initialize!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

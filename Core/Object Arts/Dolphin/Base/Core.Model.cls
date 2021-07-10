@@ -50,10 +50,12 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!Core.Model categoriesFor: #getEvents!events!private! !
-!Core.Model categoriesFor: #postCopy!copying!public! !
-!Core.Model categoriesFor: #setEvents:!events!private! !
-!Core.Model categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Model categoriesForMethods!
+getEvents!events!private! !
+postCopy!copying!public! !
+setEvents:!events!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 Core.Model methodProtocol: #model attributes: #(#readOnly) selectors: #()!
 
@@ -115,11 +117,13 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Core.Model class categoriesFor: #new!instance creation!public! !
-!Core.Model class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!Core.Model class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Core.Model class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!Core.Model class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!Core.Model class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!Core.Model class categoriesFor: #stbVersion!binary filing!public! !
+!Core.Model class categoriesForMethods!
+new!instance creation!public! !
+stbConvert:fromVersion:!binary filing!private! !
+stbConvertFrom:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

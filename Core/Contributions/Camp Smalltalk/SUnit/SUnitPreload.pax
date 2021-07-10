@@ -62,7 +62,9 @@ XProgramming.SUnit.TestFailure subclass: #'XProgramming.SUnit.ResumableTestFailu
 
 sunitExitWith: aValue
 	self return: aValue! !
-!Core.Exception categoriesFor: #sunitExitWith:!Camp Smalltalk!handler responses!public! !
+!Core.Exception categoriesForMethods!
+sunitExitWith:!Camp Smalltalk!handler responses!public! !
+!
 
 "End of package definition"!
 

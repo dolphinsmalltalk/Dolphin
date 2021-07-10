@@ -373,40 +373,42 @@ writeVersionInfoTo: aWriteStream
 	self stringTables notEmpty ifTrue: [self writeStringFileInfoTo: aWriteStream].
 	self translations notEmpty ifTrue: [self writeVarFileInfoTo: aWriteStream].
 	self writeBlockSizeTo: aWriteStream at: blockStart! !
-!OS.VersionResource categoriesFor: #bumpProductVersion!operations!public! !
-!OS.VersionResource categoriesFor: #decodeVersionString:!helpers!private! !
-!OS.VersionResource categoriesFor: #fileVersion!accessing!public! !
-!OS.VersionResource categoriesFor: #fileVersion:!accessing!public! !
-!OS.VersionResource categoriesFor: #fixedInfo!accessing!public! !
-!OS.VersionResource categoriesFor: #initialize!initializing!private! !
-!OS.VersionResource categoriesFor: #languageId!accessing!public! !
-!OS.VersionResource categoriesFor: #pack!operations!private! !
-!OS.VersionResource categoriesFor: #productVersion!accessing!public! !
-!OS.VersionResource categoriesFor: #productVersion:!accessing!public! !
-!OS.VersionResource categoriesFor: #readFromModule:!initializing!public! !
-!OS.VersionResource categoriesFor: #setFileVersions:!accessing!private! !
-!OS.VersionResource categoriesFor: #setProductVersions:!accessing!private! !
-!OS.VersionResource categoriesFor: #stringTables!accessing!public! !
-!OS.VersionResource categoriesFor: #stringTables:!accessing!public! !
-!OS.VersionResource categoriesFor: #translations!accessing!public! !
-!OS.VersionResource categoriesFor: #translations:!accessing!public! !
-!OS.VersionResource categoriesFor: #unpack:!operations!public! !
-!OS.VersionResource categoriesFor: #unpackStringFileInfo:!helpers!public! !
-!OS.VersionResource categoriesFor: #unpackStringTable:!helpers!public! !
-!OS.VersionResource categoriesFor: #unpackVar:!helpers!private! !
-!OS.VersionResource categoriesFor: #unpackVarFileInfo:!helpers!public! !
-!OS.VersionResource categoriesFor: #updateFile:!operations!public! !
-!OS.VersionResource categoriesFor: #updateResource:!operations!public! !
-!OS.VersionResource categoriesFor: #writeBinaryHeaderTo:key:value:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeBlockSizeTo:at:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeHeaderTo:type:key:value:length:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeStringFileInfoTo:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeStrings:to:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeStringTablesTo:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeTextHeaderTo:key:value:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeTranslationsTo:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeVarFileInfoTo:!helpers!private! !
-!OS.VersionResource categoriesFor: #writeVersionInfoTo:!helpers!private! !
+!OS.VersionResource categoriesForMethods!
+bumpProductVersion!operations!public! !
+decodeVersionString:!helpers!private! !
+fileVersion!accessing!public! !
+fileVersion:!accessing!public! !
+fixedInfo!accessing!public! !
+initialize!initializing!private! !
+languageId!accessing!public! !
+pack!operations!private! !
+productVersion!accessing!public! !
+productVersion:!accessing!public! !
+readFromModule:!initializing!public! !
+setFileVersions:!accessing!private! !
+setProductVersions:!accessing!private! !
+stringTables!accessing!public! !
+stringTables:!accessing!public! !
+translations!accessing!public! !
+translations:!accessing!public! !
+unpack:!operations!public! !
+unpackStringFileInfo:!helpers!public! !
+unpackStringTable:!helpers!public! !
+unpackVar:!helpers!private! !
+unpackVarFileInfo:!helpers!public! !
+updateFile:!operations!public! !
+updateResource:!operations!public! !
+writeBinaryHeaderTo:key:value:!helpers!private! !
+writeBlockSizeTo:at:!helpers!private! !
+writeHeaderTo:type:key:value:length:!helpers!private! !
+writeStringFileInfoTo:!helpers!private! !
+writeStrings:to:!helpers!private! !
+writeStringTablesTo:!helpers!private! !
+writeTextHeaderTo:key:value:!helpers!private! !
+writeTranslationsTo:!helpers!private! !
+writeVarFileInfoTo:!helpers!private! !
+writeVersionInfoTo:!helpers!private! !
+!
 
 !OS.VersionResource class methodsFor!
 
@@ -448,8 +450,10 @@ getVersionResourceOfModule: anExternalResourceLibrary
 
 new
 	^super new initialize! !
-!OS.VersionResource class categoriesFor: #forModule:!instance creation!public! !
-!OS.VersionResource class categoriesFor: #forPath:!instance creation!public! !
-!OS.VersionResource class categoriesFor: #getVersionResourceOfModule:!enquiries!private! !
-!OS.VersionResource class categoriesFor: #new!instance creation!public! !
+!OS.VersionResource class categoriesForMethods!
+forModule:!instance creation!public! !
+forPath:!instance creation!public! !
+getVersionResourceOfModule:!enquiries!private! !
+new!instance creation!public! !
+!
 

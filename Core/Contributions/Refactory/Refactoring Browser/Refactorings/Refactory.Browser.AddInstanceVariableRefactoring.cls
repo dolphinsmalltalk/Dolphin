@@ -18,6 +18,8 @@ preconditions
 
 transform
 	class addInstanceVariable: variableName! !
-!Refactory.Browser.AddInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.AddInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AddInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

@@ -21,6 +21,8 @@ createNamedNode: aString
 	"Private - Instantiate and answer a new named node of the type contained in the receiver."
 
 	^self shouldNotImplement! !
-!MSXML.DOMNotationsMap categoriesFor: #associationClass!constants!private! !
-!MSXML.DOMNotationsMap categoriesFor: #createNamedNode:!helpers!private! !
+!MSXML.DOMNotationsMap categoriesForMethods!
+associationClass!constants!private! !
+createNamedNode:!helpers!private! !
+!
 

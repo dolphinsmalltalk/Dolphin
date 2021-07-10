@@ -55,10 +55,12 @@ rgrc: aStructureArrayOfRECT
 		from: ##(_OffsetOf_rgrc + 1)
 		to: size
 		startingAt: 1! !
-!OS.NCCALCSIZE_PARAMS categoriesFor: #lppos!**compiled accessors**!public! !
-!OS.NCCALCSIZE_PARAMS categoriesFor: #lppos:!**compiled accessors**!public! !
-!OS.NCCALCSIZE_PARAMS categoriesFor: #rgrc!**compiled accessors**!public! !
-!OS.NCCALCSIZE_PARAMS categoriesFor: #rgrc:!**compiled accessors**!public! !
+!OS.NCCALCSIZE_PARAMS categoriesForMethods!
+lppos!**compiled accessors**!public! !
+lppos:!**compiled accessors**!public! !
+rgrc!**compiled accessors**!public! !
+rgrc:!**compiled accessors**!public! !
+!
 
 !OS.NCCALCSIZE_PARAMS class methodsFor!
 
@@ -80,6 +82,8 @@ defineFields
 
 getFieldNames
 	^#(#rgrc #lppos)! !
-!OS.NCCALCSIZE_PARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.NCCALCSIZE_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NCCALCSIZE_PARAMS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

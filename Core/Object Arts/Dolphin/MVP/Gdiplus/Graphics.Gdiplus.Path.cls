@@ -128,22 +128,24 @@ pointCount
 
 startFigure
 	Gdip gdipStartPathFigure: self asParameter! !
-!Graphics.Gdiplus.Path categoriesFor: #addArc:angles:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #addClosedCurve:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #addCurve:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #addEllipse:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #addLineFrom:to:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #addLines:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #addPolygon:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #addRectangle:!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Path categoriesFor: #bounds!accessing!public! !
-!Graphics.Gdiplus.Path categoriesFor: #closeFigure!operations!public! !
-!Graphics.Gdiplus.Path categoriesFor: #fillMode!accessing!public! !
-!Graphics.Gdiplus.Path categoriesFor: #fillMode:!accessing!public! !
-!Graphics.Gdiplus.Path categoriesFor: #getBounds:pen:!accessing!private! !
-!Graphics.Gdiplus.Path categoriesFor: #pointCount!accessing!public! !
-!Graphics.Gdiplus.Path categoriesFor: #startFigure!operations!public! !
+!Graphics.Gdiplus.Path categoriesForMethods!
+addArc:angles:!operations!public! !
+addClosedCurve:!operations!public! !
+addCurve:!operations!public! !
+addEllipse:!operations!public! !
+addLineFrom:to:!operations!public! !
+addLines:!operations!public! !
+addPolygon:!operations!public! !
+addRectangle:!operations!public! !
+basicFree!private!realizing/unrealizing! !
+bounds!accessing!public! !
+closeFigure!operations!public! !
+fillMode!accessing!public! !
+fillMode:!accessing!public! !
+getBounds:pen:!accessing!private! !
+pointCount!accessing!public! !
+startFigure!operations!public! !
+!
 
 !Graphics.Gdiplus.Path class methodsFor!
 
@@ -226,9 +228,11 @@ points: points types: types fillMode: aFillModeConstant
 				points: points
 				types: types
 				fillMode: aFillModeConstant)! !
-!Graphics.Gdiplus.Path class categoriesFor: #exampleGdipGPCreatingFigures!examples!public!sunit! !
-!Graphics.Gdiplus.Path class categoriesFor: #exampleGdipGPFillingFigures!examples!public!sunit! !
-!Graphics.Gdiplus.Path class categoriesFor: #fillMode:!instance creation!public! !
-!Graphics.Gdiplus.Path class categoriesFor: #new!instance creation!public! !
-!Graphics.Gdiplus.Path class categoriesFor: #points:types:fillMode:!instance creation!public! !
+!Graphics.Gdiplus.Path class categoriesForMethods!
+exampleGdipGPCreatingFigures!examples!public!sunit! !
+exampleGdipGPFillingFigures!examples!public!sunit! !
+fillMode:!instance creation!public! !
+new!instance creation!public! !
+points:types:fillMode:!instance creation!public! !
+!
 

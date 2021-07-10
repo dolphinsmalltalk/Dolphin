@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #PuttableStreamHelper
 	instanceVariableNames: ''
@@ -78,20 +78,24 @@ testXtab
 5.9.4.6 The effect is the same as sending the message #nextPut: to the receiver with an argument that is the object that is the value returned when the message #tab is sent to the standard global Character.
 "
 	self assertSend: #tab! !
-!PuttableStreamHelper categoriesFor: #canonicalObject!public! !
-!PuttableStreamHelper categoriesFor: #object:!public! !
-!PuttableStreamHelper categoriesFor: #protocol!public! !
-!PuttableStreamHelper categoriesFor: #testXcr!public! !
-!PuttableStreamHelper categoriesFor: #testXflush!public! !
-!PuttableStreamHelper categoriesFor: #testXnextPutAllX!public! !
-!PuttableStreamHelper categoriesFor: #testXnextPutX!public! !
-!PuttableStreamHelper categoriesFor: #testXspace!public! !
-!PuttableStreamHelper categoriesFor: #testXtab!public! !
+!PuttableStreamHelper categoriesForMethods!
+canonicalObject!public! !
+object:!public! !
+protocol!public! !
+testXcr!public! !
+testXflush!public! !
+testXnextPutAllX!public! !
+testXnextPutX!public! !
+testXspace!public! !
+testXtab!public! !
+!
 
 !PuttableStreamHelper class methodsFor!
 
 initialize
 	"PuttableStreamHelper  initialize"
 	super initialize! !
-!PuttableStreamHelper class categoriesFor: #initialize!public! !
+!PuttableStreamHelper class categoriesForMethods!
+initialize!public! !
+!
 

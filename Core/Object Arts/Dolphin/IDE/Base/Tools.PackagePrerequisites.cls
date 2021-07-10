@@ -23,9 +23,11 @@ dependentPackage
 
 prerequisitePackage
 	^self selectedPair ifNotNil: [:association | association key]! !
-!Tools.PackagePrerequisites categoriesFor: #childrenFor:!helpers!private! !
-!Tools.PackagePrerequisites categoriesFor: #dependentPackage!accessing!private! !
-!Tools.PackagePrerequisites categoriesFor: #prerequisitePackage!accessing!private! !
+!Tools.PackagePrerequisites categoriesForMethods!
+childrenFor:!helpers!private! !
+dependentPackage!accessing!private! !
+prerequisitePackage!accessing!private! !
+!
 
 !Tools.PackagePrerequisites class methodsFor!
 
@@ -33,5 +35,7 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: 'Package Prerequisites'! !
-!Tools.PackagePrerequisites class categoriesFor: #displayOn:!displaying!public! !
+!Tools.PackagePrerequisites class categoriesForMethods!
+displayOn:!displaying!public! !
+!
 

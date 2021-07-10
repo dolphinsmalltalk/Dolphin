@@ -30,6 +30,8 @@ testHash
 	pair2 := Pair first: #a second: #b.
 	self assert: pair1 hash equals: pair2 hash.
 	self deny: pair1 hash equals: Pair new hash! !
-!Core.Tests.PairTest categoriesFor: #testEquals!public! !
-!Core.Tests.PairTest categoriesFor: #testHash!public! !
+!Core.Tests.PairTest categoriesForMethods!
+testEquals!public! !
+testHash!public! !
+!
 

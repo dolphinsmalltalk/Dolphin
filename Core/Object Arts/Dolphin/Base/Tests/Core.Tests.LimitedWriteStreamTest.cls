@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.WriteStreamTest subclass: #'Core.Tests.LimitedWriteStreamTest'
 	instanceVariableNames: ''
@@ -239,18 +239,20 @@ testWithFromTo
 				assert: stream position equals: self stringSize * 2;
 				assert: stream contents equals: self string , self string;
 				assert: overLimit]! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #streamClass!helpers!private! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testLimit!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testLimitBlock!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextColonPut!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextPut!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextPutAll!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testNextPutAllThroughLimit!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOn!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOnFromTo!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOnLimitLimitBlock!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testOverFileStream!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testRecursionDetection!public!unit tests! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testWith!public! !
-!Core.Tests.LimitedWriteStreamTest categoriesFor: #testWithFromTo!public! !
+!Core.Tests.LimitedWriteStreamTest categoriesForMethods!
+streamClass!helpers!private! !
+testLimit!public!unit tests! !
+testLimitBlock!public!unit tests! !
+testNextColonPut!public!unit tests! !
+testNextPut!public!unit tests! !
+testNextPutAll!public!unit tests! !
+testNextPutAllThroughLimit!public!unit tests! !
+testOn!public!unit tests! !
+testOnFromTo!public!unit tests! !
+testOnLimitLimitBlock!public!unit tests! !
+testOverFileStream!public!unit tests! !
+testRecursionDetection!public!unit tests! !
+testWith!public! !
+testWithFromTo!public! !
+!
 

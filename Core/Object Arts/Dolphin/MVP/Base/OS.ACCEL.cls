@@ -31,9 +31,11 @@ key: anInteger
 	"Set the receiver's 'key' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_key put: anInteger! !
-!OS.ACCEL categoriesFor: #cmd:!**compiled accessors**!public! !
-!OS.ACCEL categoriesFor: #fVirt:!**compiled accessors**!public! !
-!OS.ACCEL categoriesFor: #key:!**compiled accessors**!public! !
+!OS.ACCEL categoriesForMethods!
+cmd:!**compiled accessors**!public! !
+fVirt:!**compiled accessors**!public! !
+key:!**compiled accessors**!public! !
+!
 
 !OS.ACCEL class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#fVirt #key #cmd)! !
-!OS.ACCEL class categoriesFor: #defineFields!public!template definition! !
-!OS.ACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ACCEL class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

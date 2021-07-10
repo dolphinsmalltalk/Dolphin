@@ -201,27 +201,29 @@ toolTipText
 					["Not truncated, so we don't want to display a tip."
 					^nil]].
 	^tipText! !
-!UI.StatusBarItem categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
-!UI.StatusBarItem categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
-!UI.StatusBarItem categoriesFor: #drawImageOn:in:!drawing!private! !
-!UI.StatusBarItem categoriesFor: #drawItem:bounding:!drawing!private! !
-!UI.StatusBarItem categoriesFor: #drawTextFlags!constants!drawing!private! !
-!UI.StatusBarItem categoriesFor: #drawTextOn:offset:!drawing!private! !
-!UI.StatusBarItem categoriesFor: #getImage!drawing!private! !
-!UI.StatusBarItem categoriesFor: #getImageBlock!adapters!public! !
-!UI.StatusBarItem categoriesFor: #getImageBlock:!adapters!public! !
-!UI.StatusBarItem categoriesFor: #getText!private!updating! !
-!UI.StatusBarItem categoriesFor: #getTextBlock!adapters!public! !
-!UI.StatusBarItem categoriesFor: #getTextBlock:!adapters!public! !
-!UI.StatusBarItem categoriesFor: #getTipText!private!updating! !
-!UI.StatusBarItem categoriesFor: #getTipTextBlock!accessing!public! !
-!UI.StatusBarItem categoriesFor: #getTipTextBlock:!accessing!public! !
-!UI.StatusBarItem categoriesFor: #imageManager!accessing!public! !
-!UI.StatusBarItem categoriesFor: #imageSizeIn:!helpers!private! !
-!UI.StatusBarItem categoriesFor: #initialize!initializing!private! !
-!UI.StatusBarItem categoriesFor: #printOn:!development!printing!public! !
-!UI.StatusBarItem categoriesFor: #textWidth:on:!helpers!private! !
-!UI.StatusBarItem categoriesFor: #toolTipText!enquiries!private! !
+!UI.StatusBarItem categoriesForMethods!
+defaultGetImageBlock!adapters!constants!private! !
+defaultGetTextBlock!adapters!constants!private! !
+drawImageOn:in:!drawing!private! !
+drawItem:bounding:!drawing!private! !
+drawTextFlags!constants!drawing!private! !
+drawTextOn:offset:!drawing!private! !
+getImage!drawing!private! !
+getImageBlock!adapters!public! !
+getImageBlock:!adapters!public! !
+getText!private!updating! !
+getTextBlock!adapters!public! !
+getTextBlock:!adapters!public! !
+getTipText!private!updating! !
+getTipTextBlock!accessing!public! !
+getTipTextBlock:!accessing!public! !
+imageManager!accessing!public! !
+imageSizeIn:!helpers!private! !
+initialize!initializing!private! !
+printOn:!development!printing!public! !
+textWidth:on:!helpers!private! !
+toolTipText!enquiries!private! !
+!
 
 !UI.StatusBarItem class methodsFor!
 
@@ -229,5 +231,7 @@ value: anObject
 	"#deprecated."
 
 	^anObject iconImageIndex! !
-!UI.StatusBarItem class categoriesFor: #value:!evaluating!private! !
+!UI.StatusBarItem class categoriesForMethods!
+value:!evaluating!private! !
+!
 

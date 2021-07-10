@@ -58,18 +58,20 @@ value
 value: valueNode 
 	value := valueNode.
 	value parent: self! !
-!Kernel.StReturnNode categoriesFor: #=!comparing!public! !
-!Kernel.StReturnNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StReturnNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StReturnNode categoriesFor: #containsReturn!public!testing! !
-!Kernel.StReturnNode categoriesFor: #hash!comparing!public! !
-!Kernel.StReturnNode categoriesFor: #isReturn!public!testing! !
-!Kernel.StReturnNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StReturnNode categoriesFor: #return:value:!initializing!private! !
-!Kernel.StReturnNode categoriesFor: #start!accessing!public! !
-!Kernel.StReturnNode categoriesFor: #stop!accessing!public! !
-!Kernel.StReturnNode categoriesFor: #value!accessing!public! !
-!Kernel.StReturnNode categoriesFor: #value:!accessing!public! !
+!Kernel.StReturnNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+childrenDo:!accessing!public! !
+containsReturn!public!testing! !
+hash!comparing!public! !
+isReturn!public!testing! !
+postCopy!copying!public! !
+return:value:!initializing!private! !
+start!accessing!public! !
+stop!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !Kernel.StReturnNode class methodsFor!
 
@@ -78,6 +80,8 @@ return: returnInteger value: aValueNode
 
 value: aNode
 	^self return: nil value: aNode! !
-!Kernel.StReturnNode class categoriesFor: #return:value:!instance creation!public! !
-!Kernel.StReturnNode class categoriesFor: #value:!instance creation!public! !
+!Kernel.StReturnNode class categoriesForMethods!
+return:value:!instance creation!public! !
+value:!instance creation!public! !
+!
 

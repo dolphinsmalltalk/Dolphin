@@ -66,14 +66,16 @@ validationBlock: aBlock
 	button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
-!UI.Prompter categoriesFor: #createComponents!initializing!public! !
-!UI.Prompter categoriesFor: #initialize!initializing!private! !
-!UI.Prompter categoriesFor: #isInputValid!public!testing! !
-!UI.Prompter categoriesFor: #model:!accessing!public! !
-!UI.Prompter categoriesFor: #prompt:!accessing!public! !
-!UI.Prompter categoriesFor: #queryCommand:!commands!private! !
-!UI.Prompter categoriesFor: #validationBlock!accessing!public! !
-!UI.Prompter categoriesFor: #validationBlock:!accessing!public! !
+!UI.Prompter categoriesForMethods!
+createComponents!initializing!public! !
+initialize!initializing!private! !
+isInputValid!public!testing! !
+model:!accessing!public! !
+prompt:!accessing!public! !
+queryCommand:!commands!private! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 
 !UI.Prompter class methodsFor!
 
@@ -166,14 +168,16 @@ resource_Mini_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DialogView) 34 30 nil nil 8 #(524288 196608) 416 nil 917510 ##(Graphics.Color) #lightYellow nil 165 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 nil nil nil nil 410 ##(UI.TextEdit) 34 16 nil 416 34 2 8 1140916352 1 528 nil nil nil 7 nil nil nil 528 nil 8 1920675248 1049094 ##(UI.NullConverter) nil nil 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 11 11 754 117 65 528 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 63 0 0 0 37 0 0 0] 8 #() 754 193 193 nil 27 170 192 34 2 528 8 'reply' 1180166 ##(Graphics.Rectangle) 754 11 11 754 1 1 nil nil nil nil 31867 nil nil nil nil 1 nil nil 918278 ##(Core.Semaphore) nil nil 1 nil 8 2005493520 642 138 144 34 1 706 #createAt:extent: 34 2 754 6143 21 754 131 79 416 802 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 64 12 0 0 49 0 0 0] 34 2 528 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1200 nil nil nil 7 nil nil nil 1200 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Presenter) #resource_OK_Cancel_button_block nil 642 138 144 34 1 706 #createAt:extent: 34 2 754 161 71 754 201 201 1200 802 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 80 0 0 0 35 0 0 0 180 0 0 0 135 0 0 0] 8 #() 864 nil 27 864 nil 27)! !
-!UI.Prompter class categoriesFor: #create:on:prompt:caption:!instance creation!public! !
-!UI.Prompter class categoriesFor: #createOn:prompt:caption:!instance creation!public! !
-!UI.Prompter class categoriesFor: #defaultModel!models!public! !
-!UI.Prompter class categoriesFor: #icon!constants!public! !
-!UI.Prompter class categoriesFor: #on:prompt:caption:!instance creation!public! !
-!UI.Prompter class categoriesFor: #prompt:!instance creation!public! !
-!UI.Prompter class categoriesFor: #prompt:caption:!instance creation!public! !
-!UI.Prompter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Prompter class categoriesFor: #resource_Inplace_edit_view!public!resources-views! !
-!UI.Prompter class categoriesFor: #resource_Mini_view!public!resources-views! !
+!UI.Prompter class categoriesForMethods!
+create:on:prompt:caption:!instance creation!public! !
+createOn:prompt:caption:!instance creation!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+on:prompt:caption:!instance creation!public! !
+prompt:!instance creation!public! !
+prompt:caption:!instance creation!public! !
+resource_Default_view!public!resources-views! !
+resource_Inplace_edit_view!public!resources-views! !
+resource_Mini_view!public!resources-views! !
+!
 

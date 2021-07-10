@@ -39,8 +39,10 @@ szlExtent: aSIZE
 		from: ##(_OffsetOf_szlExtent + 1)
 		to: ##(_OffsetOf_szlExtent + SIZEL basicByteSize)
 		startingAt: 1! !
-!OS.EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent!**compiled accessors**!public! !
-!OS.EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent:!**compiled accessors**!public! !
+!OS.EMRSETVIEWPORTEXTEX categoriesForMethods!
+szlExtent!**compiled accessors**!public! !
+szlExtent:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETVIEWPORTEXTEX class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETVIEWPORTEXTEX. EMR_SETWINDOWEXTEX}! !
-!OS.EMRSETVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETVIEWPORTEXTEX class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

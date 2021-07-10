@@ -19,8 +19,10 @@ color
 
 color: aColor
 	Gdip gdipSetSolidFillColor: self asParameter color: aColor argbCode! !
-!Graphics.Gdiplus.SolidBrush categoriesFor: #color!accessing!public! !
-!Graphics.Gdiplus.SolidBrush categoriesFor: #color:!accessing!public! !
+!Graphics.Gdiplus.SolidBrush categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+!
 
 !Graphics.Gdiplus.SolidBrush class methodsFor!
 
@@ -83,12 +85,14 @@ new
 
 red
 	^self color: Color red! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #black!instance creation!public! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #blue!instance creation!public! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #color:!instance creation!public! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #exampleGdipDropShadow!examples!public!sunit! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #exampleGdipSBFillAShape!examples!public!sunit! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #green!instance creation!public! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #new!instance creation!public! !
-!Graphics.Gdiplus.SolidBrush class categoriesFor: #red!instance creation!public! !
+!Graphics.Gdiplus.SolidBrush class categoriesForMethods!
+black!instance creation!public! !
+blue!instance creation!public! !
+color:!instance creation!public! !
+exampleGdipDropShadow!examples!public!sunit! !
+exampleGdipSBFillAShape!examples!public!sunit! !
+green!instance creation!public! !
+new!instance creation!public! !
+red!instance creation!public! !
+!
 

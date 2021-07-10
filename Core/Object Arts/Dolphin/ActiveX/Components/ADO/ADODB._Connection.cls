@@ -38,7 +38,9 @@ Cancel
 
 	<virtual stdcall: hresult 37>
 	^self invalidCall: _failureCode! !
-!ADODB._Connection categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Connection!public! !
+!ADODB._Connection categoriesForMethods!
+Cancel!**auto generated**!COM Interfaces-_Connection!public! !
+!
 
 !ADODB._Connection class methodsFor!
 
@@ -55,6 +57,8 @@ defineFunctions
 	self
 		defineFunction: #Cancel
 ! !
-!ADODB._Connection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB._Connection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB._Connection class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

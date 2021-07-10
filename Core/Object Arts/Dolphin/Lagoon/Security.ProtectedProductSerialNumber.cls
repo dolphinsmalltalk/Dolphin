@@ -157,22 +157,24 @@ value: anInteger
 
 	value := anInteger.
 	stringValue := nil! !
-!Security.ProtectedProductSerialNumber categoriesFor: #displayOn:!displaying!public! !
-!Security.ProtectedProductSerialNumber categoriesFor: #expiry!accessing!public! !
-!Security.ProtectedProductSerialNumber categoriesFor: #flags!accessing!public! !
-!Security.ProtectedProductSerialNumber categoriesFor: #isFixedLicence!public!testing! !
-!Security.ProtectedProductSerialNumber categoriesFor: #isFloatingLicence!public!testing! !
-!Security.ProtectedProductSerialNumber categoriesFor: #isTrial!public!testing! !
-!Security.ProtectedProductSerialNumber categoriesFor: #isValid!public!testing! !
-!Security.ProtectedProductSerialNumber categoriesFor: #lockedMethodDecodingKey!accessing!public! !
-!Security.ProtectedProductSerialNumber categoriesFor: #lockedMethodDecodingKeyHash!accessing!public! !
-!Security.ProtectedProductSerialNumber categoriesFor: #printOn:!printing!public! !
-!Security.ProtectedProductSerialNumber categoriesFor: #productId!accessing!public! !
-!Security.ProtectedProductSerialNumber categoriesFor: #split!accessing!private! !
-!Security.ProtectedProductSerialNumber categoriesFor: #stringValue!accessing!private! !
-!Security.ProtectedProductSerialNumber categoriesFor: #stringValue:!accessing!initializing!private! !
-!Security.ProtectedProductSerialNumber categoriesFor: #value!accessing!private! !
-!Security.ProtectedProductSerialNumber categoriesFor: #value:!accessing!initializing!private! !
+!Security.ProtectedProductSerialNumber categoriesForMethods!
+displayOn:!displaying!public! !
+expiry!accessing!public! !
+flags!accessing!public! !
+isFixedLicence!public!testing! !
+isFloatingLicence!public!testing! !
+isTrial!public!testing! !
+isValid!public!testing! !
+lockedMethodDecodingKey!accessing!public! !
+lockedMethodDecodingKeyHash!accessing!public! !
+printOn:!printing!public! !
+productId!accessing!public! !
+split!accessing!private! !
+stringValue!accessing!private! !
+stringValue:!accessing!initializing!private! !
+value!accessing!private! !
+value:!accessing!initializing!private! !
+!
 
 !Security.ProtectedProductSerialNumber class methodsFor!
 
@@ -374,26 +376,28 @@ unlockClasses: aCollectionOfClasses using: aSerialNumber
 
 	(self productProtectorWithKey: aSerialNumber lockedMethodDecodingKey) 
 		unlockClasses: aCollectionOfClasses! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #fromString:!instance creation!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #icon!constants!development!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #initialize!initializing!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #instanceDecoder!helpers!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #instanceEncoder!helpers!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #instanceEncodingKey!constants!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #lockClasses:!operations!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #lockedMethodEncodingKey!constants!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #new!instance creation!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #newProductId!operations!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #newProductProtector!helpers!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #productId:!instance creation!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #productId:expiry:flags:!instance creation!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #productProtectorClass!constants!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #productProtectorWithKey:!helpers!private! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #purgeSensitiveMethods!operations!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #serialNumberProtectorClass!constants!public! !
-!Security.ProtectedProductSerialNumber class categoriesFor: #unlockClasses:using:!operations!public! !
+!Security.ProtectedProductSerialNumber class categoriesForMethods!
+fromString:!instance creation!public! !
+icon!constants!development!public! !
+initialize!initializing!private! !
+instanceDecoder!helpers!public! !
+instanceDecodingKey!constants!private! !
+instanceEncoder!helpers!public! !
+instanceEncodingKey!constants!private! !
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+lockClasses:!operations!public! !
+lockedMethodDecodingKey!constants!private! !
+lockedMethodDecodingKeyHash!constants!private! !
+lockedMethodEncodingKey!constants!private! !
+new!instance creation!public! !
+newProductId!operations!private! !
+newProductProtector!helpers!private! !
+productId:!instance creation!public! !
+productId:expiry:flags:!instance creation!public! !
+productProtectorClass!constants!public! !
+productProtectorWithKey:!helpers!private! !
+purgeSensitiveMethods!operations!public! !
+serialNumberProtectorClass!constants!public! !
+unlockClasses:using:!operations!public! !
+!
 

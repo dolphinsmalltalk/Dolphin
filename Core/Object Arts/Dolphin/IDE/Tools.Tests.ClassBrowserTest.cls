@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.Tests.ClassBrowserAbstractTest subclass: #'Tools.Tests.ClassBrowserTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ Tools.Tests.ClassBrowserTest comment: ''!
 
 browserClass
 	^ClassBrowserShell! !
-!Tools.Tests.ClassBrowserTest categoriesFor: #browserClass!public!Running! !
+!Tools.Tests.ClassBrowserTest categoriesForMethods!
+browserClass!public!Running! !
+!
 

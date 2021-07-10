@@ -194,27 +194,29 @@ setToEnd
 	updating the readLimit if necessary."
 
 	position := self size! !
-!Core.WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
-!Core.WriteStream categoriesFor: #basicNextPut:!accessing!private! !
-!Core.WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !
-!Core.WriteStream categoriesFor: #contents!accessing!public! !
-!Core.WriteStream categoriesFor: #grabContents!accessing!public! !
-!Core.WriteStream categoriesFor: #growCollection!operations!private! !
-!Core.WriteStream categoriesFor: #initialize!initializing!private! !
-!Core.WriteStream categoriesFor: #isWriteable!public!testing! !
-!Core.WriteStream categoriesFor: #moveToEnd!positioning!private! !
-!Core.WriteStream categoriesFor: #next!accessing!public! !
-!Core.WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!Core.WriteStream categoriesFor: #nextPut:!accessing!public! !
-!Core.WriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!Core.WriteStream categoriesFor: #on:!initializing!private! !
-!Core.WriteStream categoriesFor: #padTo:put:!positioning!public! !
-!Core.WriteStream categoriesFor: #position:!positioning!public! !
-!Core.WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
-!Core.WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!Core.WriteStream categoriesFor: #primitiveNextPutAll:!accessing!private! !
-!Core.WriteStream categoriesFor: #reset!positioning!public! !
-!Core.WriteStream categoriesFor: #setToEnd!positioning!public! !
+!Core.WriteStream categoriesForMethods!
+basicNext:putAll:startingAt:!accessing!private! !
+basicNextPut:!accessing!private! !
+basicNextPutAll:!accessing!private! !
+contents!accessing!public! !
+grabContents!accessing!public! !
+growCollection!operations!private! !
+initialize!initializing!private! !
+isWriteable!public!testing! !
+moveToEnd!positioning!private! !
+next!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+on:!initializing!private! !
+padTo:put:!positioning!public! !
+position:!positioning!public! !
+primitiveBasicNextPut:!accessing!private! !
+primitiveNextPut:!accessing!private! !
+primitiveNextPutAll:!accessing!private! !
+reset!positioning!public! !
+setToEnd!positioning!public! !
+!
 
 Core.WriteStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 Core.WriteStream methodProtocol: #WriteStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #flush #isEmpty #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
@@ -239,8 +241,10 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
-!Core.WriteStream class categoriesFor: #with:!instance creation!public! !
-!Core.WriteStream class categoriesFor: #with:from:to:!instance creation!public! !
+!Core.WriteStream class categoriesForMethods!
+with:!instance creation!public! !
+with:from:to:!instance creation!public! !
+!
 
 Core.WriteStream class methodProtocol: #'WriteStream factory' attributes: #(#ansi #readOnly) selectors: #(#with:)!
 

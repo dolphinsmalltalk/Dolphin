@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
 	instanceVariableNames: 'browser universalEnvironment totalSelectors'
@@ -336,35 +336,37 @@ universalTestFor: aBrowserEnvironment
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.
 	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #categoriesFor:!public!universal tests! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #classesFor:!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #classNamesFor:!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #copyFor:!public!universal tests! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #keysFor:!public!universal tests! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #labelFor:!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #numberSelectorsFor:!public!universal tests! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #storeStringFor:!public!universal tests! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #tearDown!public!Running! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testAllClassesDo!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testAndEnvironment!AndEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testBrowserEnvironment!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testCategoryEnvironment!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testClassEnvironment!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testConstructedClassEnvironment!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testConstructedSelectorEnvironment!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testEnvironmentWrapper!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testImplementorsMatching!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testMatches!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testNotEnvironment!NotEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testOrEnvironment!OrEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testProtocolEnvironment!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testRemoveSelectorByAndAndNot!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testSelectMethods!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testSelectorEnvironment!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testSelectorEnvironmentCopy!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #testSystemIntegrity!BrowserEnvironment tests!public! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #totalSelectors!accessing!private! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #uniqueClassesIn:!public!universal tests! !
-!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesFor: #universalTestFor:!public!universal tests! !
+!Refactory.Browser.Tests.BrowserEnvironmentTest categoriesForMethods!
+categoriesFor:!public!universal tests! !
+classesFor:!BrowserEnvironment tests!public! !
+classNamesFor:!BrowserEnvironment tests!public! !
+copyFor:!public!universal tests! !
+keysFor:!public!universal tests! !
+labelFor:!BrowserEnvironment tests!public! !
+numberSelectorsFor:!public!universal tests! !
+setUp!public!set up! !
+storeStringFor:!public!universal tests! !
+tearDown!public!Running! !
+testAllClassesDo!BrowserEnvironment tests!public! !
+testAndEnvironment!AndEnvironment tests!public! !
+testBrowserEnvironment!BrowserEnvironment tests!public! !
+testCategoryEnvironment!BrowserEnvironment tests!public! !
+testClassEnvironment!BrowserEnvironment tests!public! !
+testConstructedClassEnvironment!BrowserEnvironment tests!public! !
+testConstructedSelectorEnvironment!BrowserEnvironment tests!public! !
+testEnvironmentWrapper!BrowserEnvironment tests!public! !
+testImplementorsMatching!BrowserEnvironment tests!public! !
+testMatches!BrowserEnvironment tests!public! !
+testNotEnvironment!NotEnvironment tests!public! !
+testOrEnvironment!OrEnvironment tests!public! !
+testProtocolEnvironment!BrowserEnvironment tests!public! !
+testRemoveSelectorByAndAndNot!BrowserEnvironment tests!public! !
+testSelectMethods!BrowserEnvironment tests!public! !
+testSelectorEnvironment!BrowserEnvironment tests!public! !
+testSelectorEnvironmentCopy!BrowserEnvironment tests!public! !
+testSystemIntegrity!BrowserEnvironment tests!public! !
+totalSelectors!accessing!private! !
+uniqueClassesIn:!public!universal tests! !
+universalTestFor:!public!universal tests! !
+!
 

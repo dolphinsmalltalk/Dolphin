@@ -94,13 +94,15 @@ stylingStartBefore: startInteger in: aScintillaView
 			[prev > 0 and: [(aScintillaView styleIdAt: prev) == id]] whileTrue: [prev := prev - 1].
 			[prev == 0 or: [(aScintillaView styleIdAt: prev) == id]] whileFalse: [prev := prev - 1]].
 	^prev + 1! !
-!UI.Scintilla.Styler categoriesFor: #blockSize!constants!private! !
-!UI.Scintilla.Styler categoriesFor: #colorText:in:startingAt:!operations!private! !
-!UI.Scintilla.Styler categoriesFor: #colorTextFrom:to:in:!event handling!public! !
-!UI.Scintilla.Styler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
-!UI.Scintilla.Styler categoriesFor: #prepareToStyleView:!initializing!public! !
-!UI.Scintilla.Styler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
-!UI.Scintilla.Styler categoriesFor: #stylingStartBefore:in:!event handling!public! !
+!UI.Scintilla.Styler categoriesForMethods!
+blockSize!constants!private! !
+colorText:in:startingAt:!operations!private! !
+colorTextFrom:to:in:!event handling!public! !
+onStyleNeeded:from:to:!event handling!public! !
+prepareToStyleView:!initializing!public! !
+resetStylingIn:from:to:!helpers!private! !
+stylingStartBefore:in:!event handling!public! !
+!
 
 !UI.Scintilla.Styler class methodsFor!
 
@@ -109,6 +111,8 @@ icon
 
 new
 	^super new initialize! !
-!UI.Scintilla.Styler class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.Styler class categoriesFor: #new!instance creation!public! !
+!UI.Scintilla.Styler class categoriesForMethods!
+icon!constants!development!public! !
+new!instance creation!public! !
+!
 

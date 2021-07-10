@@ -150,12 +150,14 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 				imports: (self importsFromPoolsString: poolDictString).
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
-!Core.Class categoriesFor: #sharedPoolNames!pool variables!public! !
-!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Core.Class categoriesForMethods!
+sharedPoolNames!pool variables!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!
 
 !Core.ClassDescription methodsFor!
 
@@ -165,7 +167,9 @@ sharedVariableString
 	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
 		separatedBy: [aStream space].
 	^aStream contents! !
-!Core.ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
+!Core.ClassDescription categoriesForMethods!
+sharedVariableString!accessing!public! !
+!
 
 !Core.UndefinedObject methodsFor!
 
@@ -191,8 +195,10 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 				poolDictionaries: poolDictString.
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
-!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Core.UndefinedObject categoriesForMethods!
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!
 
 !Kernel.Package methodsFor!
 
@@ -386,23 +392,25 @@ versionLookup
 		at: 5 put: #loadVersion5:filer:;
 		shrink;
 		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"	"same format as 4, except VM version loaded here"! !
-!Kernel.Package categoriesFor: #allResourceNames:!private!source filing! !
-!Kernel.Package categoriesFor: #basicLoadVersion4:filer:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #errorUnknownFileVersion:!exceptions!legacy package loading!private! !
-!Kernel.Package categoriesFor: #fileInClassDefinitions:!development!private!source filing! !
-!Kernel.Package categoriesFor: #loadGlobalsFromFiler:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadLegacyPAC:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadLegacyResources!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadResourcesFromFiler:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadVersion1:filer:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadVersion2:filer:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadVersion3:filer:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadVersion4:filer:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #loadVersion5:filer:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #resourceNames!legacy package loading!public! !
-!Kernel.Package categoriesFor: #script:!legacy package loading!public! !
-!Kernel.Package categoriesFor: #script:put:!legacy package loading!public! !
-!Kernel.Package categoriesFor: #versionLookup!constants!legacy package loading!private! !
+!Kernel.Package categoriesForMethods!
+allResourceNames:!private!source filing! !
+basicLoadVersion4:filer:!legacy package loading!private! !
+errorUnknownFileVersion:!exceptions!legacy package loading!private! !
+fileInClassDefinitions:!development!private!source filing! !
+loadGlobalsFromFiler:!legacy package loading!private! !
+loadLegacyPAC:!legacy package loading!private! !
+loadLegacyResources!legacy package loading!private! !
+loadResourcesFromFiler:!legacy package loading!private! !
+loadVersion1:filer:!legacy package loading!private! !
+loadVersion2:filer:!legacy package loading!private! !
+loadVersion3:filer:!legacy package loading!private! !
+loadVersion4:filer:!legacy package loading!private! !
+loadVersion5:filer:!legacy package loading!private! !
+resourceNames!legacy package loading!public! !
+script:!legacy package loading!public! !
+script:put:!legacy package loading!public! !
+versionLookup!constants!legacy package loading!private! !
+!
 
 !Kernel.Package class methodsFor!
 
@@ -421,9 +429,11 @@ sourceGlobalExtension
 	"Private - Answer the file extension for the files to which source globals are stored."
 
 	^ 'st'! !
-!Kernel.Package class categoriesFor: #binaryGlobalExtension!constants!private! !
-!Kernel.Package class categoriesFor: #name:comment:!instance creation!public! !
-!Kernel.Package class categoriesFor: #sourceGlobalExtension!constants!private! !
+!Kernel.Package class categoriesForMethods!
+binaryGlobalExtension!constants!private! !
+name:comment:!instance creation!public! !
+sourceGlobalExtension!constants!private! !
+!
 
 "End of package definition"!
 

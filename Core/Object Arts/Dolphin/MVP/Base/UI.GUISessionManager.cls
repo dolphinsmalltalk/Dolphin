@@ -198,32 +198,34 @@ windowSystemStartup
 
 	#(#{Canvas} #{GraphicsTool} #{Clipboard} #{View} #{ToolbarIconButton} #{Command})
 		do: [:s | s ifDefined: [:c | c onStartup]]! !
-!UI.GUISessionManager categoriesFor: #allocConsole!operations!private! !
-!UI.GUISessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
-!UI.GUISessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!UI.GUISessionManager categoriesFor: #clearSessionState!operations!public! !
-!UI.GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
-!UI.GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
-!UI.GUISessionManager categoriesFor: #disableWindowGhosting!helpers!public! !
-!UI.GUISessionManager categoriesFor: #inputStateClass!constants!private! !
-!UI.GUISessionManager categoriesFor: #isUnattended!public!testing! !
-!UI.GUISessionManager categoriesFor: #onInputLanguageChanged:!event handling!private! !
-!UI.GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
-!UI.GUISessionManager categoriesFor: #onTimeChanged:!event handling!private! !
-!UI.GUISessionManager categoriesFor: #onTimer:!event handling!private! !
-!UI.GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
-!UI.GUISessionManager categoriesFor: #resourceManager!accessing!public! !
-!UI.GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !
-!UI.GUISessionManager categoriesFor: #saveSessionState!operations!public! !
-!UI.GUISessionManager categoriesFor: #saveWindowState!operations-saving!private! !
-!UI.GUISessionManager categoriesFor: #showSplash!operations!public! !
-!UI.GUISessionManager categoriesFor: #startUI!operations-startup!public! !
-!UI.GUISessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
-!UI.GUISessionManager categoriesFor: #topLevelWindows!accessing!public! !
-!UI.GUISessionManager categoriesFor: #topLevelWindowsInZOrder!accessing!public! !
-!UI.GUISessionManager categoriesFor: #triggerSettingsChanged!event handling!private! !
-!UI.GUISessionManager categoriesFor: #windowSystemShutdown!operations-shutdown!private! !
-!UI.GUISessionManager categoriesFor: #windowSystemStartup!operations-startup!private! !
+!UI.GUISessionManager categoriesForMethods!
+allocConsole!operations!private! !
+basicShutdown!operations-shutdown!private! !
+basicTertiaryStartup!operations-startup!public! !
+clearSessionState!operations!public! !
+clearWindowState!operations-saving!private! !
+commandLineParser!helpers!private! !
+disableWindowGhosting!helpers!public! !
+inputStateClass!constants!private! !
+isUnattended!public!testing! !
+onInputLanguageChanged:!event handling!private! !
+onSettingChanged:!event handling!private! !
+onTimeChanged:!event handling!private! !
+onTimer:!event handling!private! !
+parseCmdLineFlags!operations-startup!private! !
+resourceManager!accessing!public! !
+restoreWindowState!operations-startup!private! !
+saveSessionState!operations!public! !
+saveWindowState!operations-saving!private! !
+showSplash!operations!public! !
+startUI!operations-startup!public! !
+tertiaryStartup!operations-startup!public! !
+topLevelWindows!accessing!public! !
+topLevelWindowsInZOrder!accessing!public! !
+triggerSettingsChanged!event handling!private! !
+windowSystemShutdown!operations-shutdown!private! !
+windowSystemStartup!operations-startup!private! !
+!
 
 !UI.GUISessionManager class methodsFor!
 
@@ -237,6 +239,8 @@ isConsoleApplication
 	(as opposed to a GUI application, which is a completely separate thing under Windows)."
 
 	^false! !
-!UI.GUISessionManager class categoriesFor: #icon!constants!development!public! !
-!UI.GUISessionManager class categoriesFor: #isConsoleApplication!public!testing! !
+!UI.GUISessionManager class categoriesForMethods!
+icon!constants!development!public! !
+isConsoleApplication!public!testing! !
+!
 

@@ -122,10 +122,12 @@ asValue
 	In the general case create an answer a ValueHolder onto the receiver"
 
 	^UI.ValueHolder with: self! !
-!Core.Object categoriesFor: #aspectAdaptorClass!constants!private! !
-!Core.Object categoriesFor: #aspectValue:!converting!public! !
-!Core.Object categoriesFor: #aspectValue:triggers:!converting!public! !
-!Core.Object categoriesFor: #asValue!converting!public! !
+!Core.Object categoriesForMethods!
+aspectAdaptorClass!constants!private! !
+aspectValue:!converting!public! !
+aspectValue:triggers:!converting!public! !
+asValue!converting!public! !
+!
 
 "End of package definition"!
 

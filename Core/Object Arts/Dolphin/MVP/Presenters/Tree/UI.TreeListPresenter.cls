@@ -280,33 +280,35 @@ viewModel
 	connected to the receiver's tree model - not the receiver's list model"
 
 	^self treeModel! !
-!UI.TreeListPresenter categoriesFor: #addNewNode:!helpers!private! !
-!UI.TreeListPresenter categoriesFor: #addNode:!helpers!private! !
-!UI.TreeListPresenter categoriesFor: #connectModel!initializing!private! !
-!UI.TreeListPresenter categoriesFor: #connectTreeModel!initializing!private! !
-!UI.TreeListPresenter categoriesFor: #doModelUpdate:!helpers!private!updating! !
-!UI.TreeListPresenter categoriesFor: #initialize!initializing!private! !
-!UI.TreeListPresenter categoriesFor: #isInTree:!helpers!private! !
-!UI.TreeListPresenter categoriesFor: #list!accessing!public! !
-!UI.TreeListPresenter categoriesFor: #list:!accessing!public! !
-!UI.TreeListPresenter categoriesFor: #model!accessing!private! !
-!UI.TreeListPresenter categoriesFor: #model:!accessing!public! !
-!UI.TreeListPresenter categoriesFor: #onListChanged!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onListItem:addedAtIndex:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onListItem:removedAtIndex:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onListItem:updatedAtIndex:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onTreeChanged:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onTreeItem:addedInParent:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onTreeItem:movedToParent:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onTreeItemUpdated:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #onTreeRemovingItem:!event handling!private! !
-!UI.TreeListPresenter categoriesFor: #rebuildFilter!private!updating! !
-!UI.TreeListPresenter categoriesFor: #refresh!private!updating! !
-!UI.TreeListPresenter categoriesFor: #removeNode:!helpers!private! !
-!UI.TreeListPresenter categoriesFor: #treeModel!accessing!private! !
-!UI.TreeListPresenter categoriesFor: #treeModel:!accessing!public! !
-!UI.TreeListPresenter categoriesFor: #updateTree!private!updating! !
-!UI.TreeListPresenter categoriesFor: #viewModel!accessing!private! !
+!UI.TreeListPresenter categoriesForMethods!
+addNewNode:!helpers!private! !
+addNode:!helpers!private! !
+connectModel!initializing!private! !
+connectTreeModel!initializing!private! !
+doModelUpdate:!helpers!private!updating! !
+initialize!initializing!private! !
+isInTree:!helpers!private! !
+list!accessing!public! !
+list:!accessing!public! !
+model!accessing!private! !
+model:!accessing!public! !
+onListChanged!event handling!private! !
+onListItem:addedAtIndex:!event handling!private! !
+onListItem:removedAtIndex:!event handling!private! !
+onListItem:updatedAtIndex:!event handling!private! !
+onTreeChanged:!event handling!private! !
+onTreeItem:addedInParent:!event handling!private! !
+onTreeItem:movedToParent:!event handling!private! !
+onTreeItemUpdated:!event handling!private! !
+onTreeRemovingItem:!event handling!private! !
+rebuildFilter!private!updating! !
+refresh!private!updating! !
+removeNode:!helpers!private! !
+treeModel!accessing!private! !
+treeModel:!accessing!public! !
+updateTree!private!updating! !
+viewModel!accessing!private! !
+!
 
 !UI.TreeListPresenter class methodsFor!
 
@@ -327,6 +329,8 @@ resource_Default_view
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 787526 3 ##(UI.TreeModel) nil 1638406 ##(Kernel.IdentitySearchPolicy) 721670 ##(UI.TreeNode) nil nil nil 170 192 8 #() 917510 ##(Graphics.Color) #default nil 13 nil nil nil 416 nil 8 1920462864 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 9 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 (ctx view presenter list includes: ctx item) 
 	ifFalse: [ctx forecolor: ctx forecolor faded]]' 8 #[37 105 17 158 159 160 17 161 180 220 6 233 0 163 164 183 106 60 106] #view #presenter #list #item #includes: #forecolor #faded #forecolor: 752 7 257 nil nil nil 170 176 592 33 #noIcons 1 170 192 592 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 994 701 501 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 994 193 193 nil 27)! !
-!UI.TreeListPresenter class categoriesFor: #defaultModel!models!public! !
-!UI.TreeListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.TreeListPresenter class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+!
 

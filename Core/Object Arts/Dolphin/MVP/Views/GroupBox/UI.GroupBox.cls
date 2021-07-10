@@ -43,10 +43,12 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isMove ifTrue: [
 		self parentView invalidateRect: self rectangle].
 	^super onPositionChanged: aPositionEvent! !
-!UI.GroupBox categoriesFor: #defaultExtent!constants!private! !
-!UI.GroupBox categoriesFor: #defaultWindowExStyle!constants!private! !
-!UI.GroupBox categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.GroupBox categoriesFor: #onPositionChanged:!event handling!private! !
+!UI.GroupBox categoriesForMethods!
+defaultExtent!constants!private! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+onPositionChanged:!event handling!private! !
+!
 
 !UI.GroupBox class methodsFor!
 
@@ -84,9 +86,11 @@ winClassName
 	comprehension"
 
 	^'BUTTON'! !
-!UI.GroupBox class categoriesFor: #icon!constants!public! !
-!UI.GroupBox class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.GroupBox class categoriesFor: #resource_Static_group_box!public!resources-views! !
-!UI.GroupBox class categoriesFor: #themePartName!constants!public!theming! !
-!UI.GroupBox class categoriesFor: #winClassName!constants!private! !
+!UI.GroupBox class categoriesForMethods!
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Static_group_box!public!resources-views! !
+themePartName!constants!public!theming! !
+winClassName!constants!private! !
+!
 

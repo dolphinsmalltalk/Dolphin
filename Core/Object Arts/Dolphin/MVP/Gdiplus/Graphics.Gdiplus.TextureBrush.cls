@@ -29,9 +29,11 @@ transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
 	Gdip gdipSetTextureTransform: self asParameter matrix: aGdiplusMatrix asParameter! !
-!Graphics.Gdiplus.TextureBrush categoriesFor: #rotateTransform:!operations!public! !
-!Graphics.Gdiplus.TextureBrush categoriesFor: #rotateTransform:order:!operations!public! !
-!Graphics.Gdiplus.TextureBrush categoriesFor: #transform:!accessing!public! !
+!Graphics.Gdiplus.TextureBrush categoriesForMethods!
+rotateTransform:!operations!public! !
+rotateTransform:order:!operations!public! !
+transform:!accessing!public! !
+!
 
 !Graphics.Gdiplus.TextureBrush class methodsFor!
 
@@ -102,9 +104,11 @@ image: anImage wrapMode: aWrapModeConstant rectangle: aRectangle
 				image: anImage
 				wrapMode: aWrapModeConstant
 				rectangle: aRectangle)! !
-!Graphics.Gdiplus.TextureBrush class categoriesFor: #exampleGdipTBFillAShape!examples!public!sunit! !
-!Graphics.Gdiplus.TextureBrush class categoriesFor: #exampleGdipTBTilingAShape!examples!public!sunit! !
-!Graphics.Gdiplus.TextureBrush class categoriesFor: #image:!instance creation!public! !
-!Graphics.Gdiplus.TextureBrush class categoriesFor: #image:wrapMode:!instance creation!public! !
-!Graphics.Gdiplus.TextureBrush class categoriesFor: #image:wrapMode:rectangle:!instance creation!public! !
+!Graphics.Gdiplus.TextureBrush class categoriesForMethods!
+exampleGdipTBFillAShape!examples!public!sunit! !
+exampleGdipTBTilingAShape!examples!public!sunit! !
+image:!instance creation!public! !
+image:wrapMode:!instance creation!public! !
+image:wrapMode:rectangle:!instance creation!public! !
+!
 

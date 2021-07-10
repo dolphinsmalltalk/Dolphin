@@ -32,8 +32,10 @@ streamOut: aStream
 	self isText 
 		ifTrue: [aStream nextPutAll: data]
 		ifFalse: [data binaryStoreOn: aStream]! !
-!UI.DocumentShell categoriesFor: #streamIn:!private!streaming! !
-!UI.DocumentShell categoriesFor: #streamOut:!private!streaming! !
+!UI.DocumentShell categoriesForMethods!
+streamIn:!private!streaming! !
+streamOut:!private!streaming! !
+!
 
 !UI.DocumentShell class methodsFor!
 
@@ -42,5 +44,7 @@ defaultFileExtension
 	the receiver"
 
 	^''! !
-!UI.DocumentShell class categoriesFor: #defaultFileExtension!constants!public! !
+!UI.DocumentShell class categoriesForMethods!
+defaultFileExtension!constants!public! !
+!
 

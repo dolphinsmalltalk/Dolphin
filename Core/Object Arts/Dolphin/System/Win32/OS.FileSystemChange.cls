@@ -44,13 +44,15 @@ setCode: anInteger fileName: aString
 	time := FILETIME now.
 	code := anInteger.
 	fileNames := {aString}! !
-!OS.FileSystemChange categoriesFor: #=!comparing!public! !
-!OS.FileSystemChange categoriesFor: #action!public! !
-!OS.FileSystemChange categoriesFor: #code!accessing!private! !
-!OS.FileSystemChange categoriesFor: #fileNames!accessing!public! !
-!OS.FileSystemChange categoriesFor: #fileNames:!accessing!public! !
-!OS.FileSystemChange categoriesFor: #printOn:!public! !
-!OS.FileSystemChange categoriesFor: #setCode:fileName:!initializing!private! !
+!OS.FileSystemChange categoriesForMethods!
+=!comparing!public! !
+action!public! !
+code!accessing!private! !
+fileNames!accessing!public! !
+fileNames:!accessing!public! !
+printOn:!public! !
+setCode:fileName:!initializing!private! !
+!
 
 !OS.FileSystemChange class methodsFor!
 
@@ -58,5 +60,7 @@ code: anInteger fileName: aString
 	^(self new)
 		setCode: anInteger fileName: aString;
 		yourself! !
-!OS.FileSystemChange class categoriesFor: #code:fileName:!instance creation!public! !
+!OS.FileSystemChange class categoriesForMethods!
+code:fileName:!instance creation!public! !
+!
 

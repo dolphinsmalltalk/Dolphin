@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.IniFileTest'
 	instanceVariableNames: 'iniFile'
@@ -226,28 +226,32 @@ testValues
 	self assert: sections fourth values equals: #('NoSectionNoKeyValue').
 	subject := self makeEmptyIniFile.
 	self assert: subject values isEmpty! !
-!OS.Tests.IniFileTest categoriesFor: #fileResource!accessing!private! !
-!OS.Tests.IniFileTest categoriesFor: #makeEmptyIniFile!helpers!private! !
-!OS.Tests.IniFileTest categoriesFor: #makeIniFile!helpers!private! !
-!OS.Tests.IniFileTest categoriesFor: #makeModifiableIniFile!helpers!private! !
-!OS.Tests.IniFileTest categoriesFor: #tearDown!private!running! !
-!OS.Tests.IniFileTest categoriesFor: #testAdd!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testAsByteArray!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testAt!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testAtPut!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testCollect!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testIncludesKey!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testIsEmpty!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testKeys!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testLookup!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testRemoveAllKeys!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testRemoveKey!public!unit tests! !
-!OS.Tests.IniFileTest categoriesFor: #testValues!public!unit tests! !
+!OS.Tests.IniFileTest categoriesForMethods!
+fileResource!accessing!private! !
+makeEmptyIniFile!helpers!private! !
+makeIniFile!helpers!private! !
+makeModifiableIniFile!helpers!private! !
+tearDown!private!running! !
+testAdd!public!unit tests! !
+testAsByteArray!public!unit tests! !
+testAt!public!unit tests! !
+testAtIfAbsentPut!public!unit tests! !
+testAtPut!public!unit tests! !
+testCollect!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testIsEmpty!public!unit tests! !
+testKeys!public!unit tests! !
+testLookup!public!unit tests! !
+testRemoveAllKeys!public!unit tests! !
+testRemoveKey!public!unit tests! !
+testValues!public!unit tests! !
+!
 
 !OS.Tests.IniFileTest class methodsFor!
 
 resources
 	^{IniFileTestResource}! !
-!OS.Tests.IniFileTest class categoriesFor: #resources!accessing!public! !
+!OS.Tests.IniFileTest class categoriesForMethods!
+resources!accessing!public! !
+!
 

@@ -53,9 +53,11 @@ LockServer: fLock
 
 	<virtual stdcall: hresult 5 sdword>
 	^self invalidCall: _failureCode! !
-!OS.COM.IClassFactory categoriesFor: #createInstance:iid:!instance creation!public! !
-!OS.COM.IClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
-!OS.COM.IClassFactory categoriesFor: #LockServer:!**auto generated**!public! !
+!OS.COM.IClassFactory categoriesForMethods!
+createInstance:iid:!instance creation!public! !
+CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
+LockServer:!**auto generated**!public! !
+!
 
 !OS.COM.IClassFactory class methodsFor!
 
@@ -85,7 +87,9 @@ defineFunctions
 			argumentTypes: 'IUnknown* GUID* IUnknown**';
 		defineFunction: #LockServer:
 			argumentTypes: 'bool'! !
-!OS.COM.IClassFactory class categoriesFor: #ctxAll!constants!public! !
-!OS.COM.IClassFactory class categoriesFor: #ctxServer!constants!public! !
-!OS.COM.IClassFactory class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IClassFactory class categoriesForMethods!
+ctxAll!constants!public! !
+ctxServer!constants!public! !
+defineFunctions!initializing!public! !
+!
 

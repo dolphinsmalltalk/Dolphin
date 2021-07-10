@@ -997,132 +997,134 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 				modifyOrCreate.
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
-!Core.Class categoriesFor: #absoluteName!accessing!namespaces!public! !
-!Core.Class categoriesFor: #absoluteNameFor:!public! !
-!Core.Class categoriesFor: #absoluteReference!accessing!namespaces!public! !
-!Core.Class categoriesFor: #addBinding:!class variables!private! !
-!Core.Class categoriesFor: #addClassConstant:!class variables!development!public! !
-!Core.Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
-!Core.Class categoriesFor: #addClassVariable:value:!class hierarchy-mutating!class variables!public! !
-!Core.Class categoriesFor: #addClassVarNamed:!class hierarchy-mutating!class variables!public! !
-!Core.Class categoriesFor: #addImport:!namespaces!public! !
-!Core.Class categoriesFor: #addSubclass:!class hierarchy-adding!private! !
-!Core.Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
-!Core.Class categoriesFor: #allBindingsDo:visited:!enumerating!private! !
-!Core.Class categoriesFor: #allEnvironments!class hierarchy-accessing!public! !
-!Core.Class categoriesFor: #allEnvironmentsDo:!class hierarchy-accessing!enumerating!private! !
-!Core.Class categoriesFor: #allImports!namespaces!public! !
-!Core.Class categoriesFor: #basicAddBinding:!class variables!private! !
-!Core.Class categoriesFor: #basicClassPool:!class variables!private! !
-!Core.Class categoriesFor: #basicRemoveBinding:!bindings!private! !
-!Core.Class categoriesFor: #binding!bindings!public! !
-!Core.Class categoriesFor: #bindingFor:!bindings!public! !
-!Core.Class categoriesFor: #bindingFor:environment:!bindings!public! !
-!Core.Class categoriesFor: #bindingOrNil!bindings!public! !
-!Core.Class categoriesFor: #bindingsDo:!bindings!enumerating!public! !
-!Core.Class categoriesFor: #canModifyBinding:newValue:!bindings!private! !
-!Core.Class categoriesFor: #categories!categories-accessing!public! !
-!Core.Class categoriesFor: #categories:!categories-accessing!public! !
-!Core.Class categoriesFor: #categoriesForClass!private!source filing-class definition! !
-!Core.Class categoriesFor: #category!categories-accessing!public! !
-!Core.Class categoriesFor: #category:!categories-accessing!public! !
-!Core.Class categoriesFor: #classBindingNames!accessing!class variables!public! !
-!Core.Class categoriesFor: #classCategories!categories-accessing!private!source filing! !
-!Core.Class categoriesFor: #classCategories:!categories-accessing!private! !
-!Core.Class categoriesFor: #classConstants!class variables!public! !
-!Core.Class categoriesFor: #classPool!accessing!class variables!public! !
-!Core.Class categoriesFor: #classUpdated!class hierarchy-mutating!class variables!private! !
-!Core.Class categoriesFor: #classVariableRemoved:!class hierarchy-mutating!class variables!private! !
-!Core.Class categoriesFor: #classVariables!class variables!public! !
-!Core.Class categoriesFor: #clearGuid!accessing!private! !
-!Core.Class categoriesFor: #comment!accessing!development!public! !
-!Core.Class categoriesFor: #comment:!accessing!development!public! !
-!Core.Class categoriesFor: #environment!accessing!public! !
-!Core.Class categoriesFor: #environment:!accessing!private! !
-!Core.Class categoriesFor: #fileIn!development!public!source filing! !
-!Core.Class categoriesFor: #fileOutName!development!private!source filing! !
-!Core.Class categoriesFor: #fileOutNameForClass:!development!private!source filing! !
-!Core.Class categoriesFor: #fileOutStem!development!private!source filing! !
-!Core.Class categoriesFor: #fullBindingFor:environment:!binding!public! !
-!Core.Class categoriesFor: #fullName!accessing!namespaces!public! !
-!Core.Class categoriesFor: #fullNameFor:!helpers!namespaces!private! !
-!Core.Class categoriesFor: #fullPath!accessing!namespaces!private! !
-!Core.Class categoriesFor: #fullyQualifiedReference!accessing!namespaces!public! !
-!Core.Class categoriesFor: #getFullName!helpers!private! !
-!Core.Class categoriesFor: #guid!constants!public! !
-!Core.Class categoriesFor: #guid:!class hierarchy-adding!private! !
-!Core.Class categoriesFor: #importedNamespacesDo:!namespaces!public! !
-!Core.Class categoriesFor: #imports!namespaces!public! !
-!Core.Class categoriesFor: #imports:!pool variables!public! !
-!Core.Class categoriesFor: #importsFromPoolsString:!class hierarchy-adding!private! !
-!Core.Class categoriesFor: #includeInCategory:!categories-adding!public! !
-!Core.Class categoriesFor: #includesEnvironment:!private!testing! !
-!Core.Class categoriesFor: #includesNamespace:!private!testing! !
-!Core.Class categoriesFor: #initializeAfterLoad!class initialization!public! !
-!Core.Class categoriesFor: #instanceClass!accessing!public! !
-!Core.Class categoriesFor: #isAbstract:!instance specification-accessing!public! !
-!Core.Class categoriesFor: #isAnonymous!public!testing! !
-!Core.Class categoriesFor: #isAtomic!public!testing! !
-!Core.Class categoriesFor: #isLiteral!public!testing! !
-!Core.Class categoriesFor: #localBindingFor:!bindings!public! !
-!Core.Class categoriesFor: #name!accessing!public! !
-!Core.Class categoriesFor: #newBindingContextForIdentifier:environment:!bindings!private! !
-!Core.Class categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
-!Core.Class categoriesFor: #owningPackage!development!public!source filing! !
-!Core.Class categoriesFor: #owningPackage:!accessing!development!public! !
-!Core.Class categoriesFor: #packageManager!development!public!source filing! !
-!Core.Class categoriesFor: #pathFrom:!accessing!private! !
-!Core.Class categoriesFor: #printAbsoluteNameOn:!public! !
-!Core.Class categoriesFor: #printFullNameOn:!helpers!private! !
-!Core.Class categoriesFor: #printNameOn:relativeTo:!printing!private! !
-!Core.Class categoriesFor: #printOn:!printing!public! !
-!Core.Class categoriesFor: #printString!printing!public! !
-!Core.Class categoriesFor: #removeClassConstant:!class variables!development!public! !
-!Core.Class categoriesFor: #removeClassVarName:!class hierarchy-mutating!class variables!public! !
-!Core.Class categoriesFor: #removeFromCategory:!categories-removing!public! !
-!Core.Class categoriesFor: #removeFromSuper!operations!private! !
-!Core.Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
-!Core.Class categoriesFor: #removeImport:!namespaces!public! !
-!Core.Class categoriesFor: #removeLocalBindingFor:!bindings!public! !
-!Core.Class categoriesFor: #removeSubclass:!helpers!private! !
-!Core.Class categoriesFor: #rename:!class hierarchy-mutating!private! !
-!Core.Class categoriesFor: #rename:in:!class hierarchy-mutating!private! !
-!Core.Class categoriesFor: #requiresInstallation!public!testing! !
-!Core.Class categoriesFor: #resolveBindingPath:!bindings!private! !
-!Core.Class categoriesFor: #resolveBindingPath:environment:!bindings!private! !
-!Core.Class categoriesFor: #resolveImportedBinding:!bindings!private! !
-!Core.Class categoriesFor: #resolveLocallyImportedBinding:!bindings!private! !
-!Core.Class categoriesFor: #resolvePathString:environment:!bindings!private! !
-!Core.Class categoriesFor: #resolvePublicBinding:!bindings!private! !
-!Core.Class categoriesFor: #resolveUnqualifiedName:environment:!bindings!private! !
-!Core.Class categoriesFor: #setClassVarNames:!class variables!private! !
-!Core.Class categoriesFor: #setGuid:!accessing!private! !
-!Core.Class categoriesFor: #setName:environment:!accessing!private! !
-!Core.Class categoriesFor: #shortName!accessing!public! !
-!Core.Class categoriesFor: #simpleName!accessing!public! !
-!Core.Class categoriesFor: #sourceDescriptor!accessing!public!source filing! !
-!Core.Class categoriesFor: #sourceDescriptor:!accessing!private!source filing! !
-!Core.Class categoriesFor: #sourceFilerClass!development!private!source filing-class definition! !
-!Core.Class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Core.Class categoriesFor: #stbModifyExportProxy:!binary filing!private! !
-!Core.Class categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.Class categoriesFor: #stbVersion!binary filing!public! !
-!Core.Class categoriesFor: #storeGUID!private!source filing-class definition! !
-!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #subclasses!class hierarchy-accessing!public! !
-!Core.Class categoriesFor: #subclasses:!class hierarchy-mutating!public! !
-!Core.Class categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
-!Core.Class categoriesFor: #unaliasedName!public!ston! !
-!Core.Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
-!Core.Class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!Core.Class categoriesFor: #unqualifiedName!accessing!public! !
-!Core.Class categoriesFor: #variableAdded:!class hierarchy-mutating!class variables!private! !
-!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #variableRemoved:!class hierarchy-mutating!class variables!private! !
-!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
-!Core.Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+!Core.Class categoriesForMethods!
+absoluteName!accessing!namespaces!public! !
+absoluteNameFor:!public! !
+absoluteReference!accessing!namespaces!public! !
+addBinding:!class variables!private! !
+addClassConstant:!class variables!development!public! !
+addClassConstant:value:!class variables!development!public! !
+addClassVariable:value:!class hierarchy-mutating!class variables!public! !
+addClassVarNamed:!class hierarchy-mutating!class variables!public! !
+addImport:!namespaces!public! !
+addSubclass:!class hierarchy-adding!private! !
+addToSuper!class hierarchy-adding!private! !
+allBindingsDo:visited:!enumerating!private! !
+allEnvironments!class hierarchy-accessing!public! !
+allEnvironmentsDo:!class hierarchy-accessing!enumerating!private! !
+allImports!namespaces!public! !
+basicAddBinding:!class variables!private! !
+basicClassPool:!class variables!private! !
+basicRemoveBinding:!bindings!private! !
+binding!bindings!public! !
+bindingFor:!bindings!public! !
+bindingFor:environment:!bindings!public! !
+bindingOrNil!bindings!public! !
+bindingsDo:!bindings!enumerating!public! !
+canModifyBinding:newValue:!bindings!private! !
+categories!categories-accessing!public! !
+categories:!categories-accessing!public! !
+categoriesForClass!private!source filing-class definition! !
+category!categories-accessing!public! !
+category:!categories-accessing!public! !
+classBindingNames!accessing!class variables!public! !
+classCategories!categories-accessing!private!source filing! !
+classCategories:!categories-accessing!private! !
+classConstants!class variables!public! !
+classPool!accessing!class variables!public! !
+classUpdated!class hierarchy-mutating!class variables!private! !
+classVariableRemoved:!class hierarchy-mutating!class variables!private! !
+classVariables!class variables!public! !
+clearGuid!accessing!private! !
+comment!accessing!development!public! !
+comment:!accessing!development!public! !
+environment!accessing!public! !
+environment:!accessing!private! !
+fileIn!development!public!source filing! !
+fileOutName!development!private!source filing! !
+fileOutNameForClass:!development!private!source filing! !
+fileOutStem!development!private!source filing! !
+fullBindingFor:environment:!binding!public! !
+fullName!accessing!namespaces!public! !
+fullNameFor:!helpers!namespaces!private! !
+fullPath!accessing!namespaces!private! !
+fullyQualifiedReference!accessing!namespaces!public! !
+getFullName!helpers!private! !
+guid!constants!public! !
+guid:!class hierarchy-adding!private! !
+importedNamespacesDo:!namespaces!public! !
+imports!namespaces!public! !
+imports:!pool variables!public! !
+importsFromPoolsString:!class hierarchy-adding!private! !
+includeInCategory:!categories-adding!public! !
+includesEnvironment:!private!testing! !
+includesNamespace:!private!testing! !
+initializeAfterLoad!class initialization!public! !
+instanceClass!accessing!public! !
+isAbstract:!instance specification-accessing!public! !
+isAnonymous!public!testing! !
+isAtomic!public!testing! !
+isLiteral!public!testing! !
+localBindingFor:!bindings!public! !
+name!accessing!public! !
+newBindingContextForIdentifier:environment:!bindings!private! !
+newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
+owningPackage!development!public!source filing! !
+owningPackage:!accessing!development!public! !
+packageManager!development!public!source filing! !
+pathFrom:!accessing!private! !
+printAbsoluteNameOn:!public! !
+printFullNameOn:!helpers!private! !
+printNameOn:relativeTo:!printing!private! !
+printOn:!printing!public! !
+printString!printing!public! !
+removeClassConstant:!class variables!development!public! !
+removeClassVarName:!class hierarchy-mutating!class variables!public! !
+removeFromCategory:!categories-removing!public! !
+removeFromSuper!operations!private! !
+removeFromSystem!class hierarchy-removing!private! !
+removeImport:!namespaces!public! !
+removeLocalBindingFor:!bindings!public! !
+removeSubclass:!helpers!private! !
+rename:!class hierarchy-mutating!private! !
+rename:in:!class hierarchy-mutating!private! !
+requiresInstallation!public!testing! !
+resolveBindingPath:!bindings!private! !
+resolveBindingPath:environment:!bindings!private! !
+resolveImportedBinding:!bindings!private! !
+resolveLocallyImportedBinding:!bindings!private! !
+resolvePathString:environment:!bindings!private! !
+resolvePublicBinding:!bindings!private! !
+resolveUnqualifiedName:environment:!bindings!private! !
+setClassVarNames:!class variables!private! !
+setGuid:!accessing!private! !
+setName:environment:!accessing!private! !
+shortName!accessing!public! !
+simpleName!accessing!public! !
+sourceDescriptor!accessing!public!source filing! !
+sourceDescriptor:!accessing!private!source filing! !
+sourceFilerClass!development!private!source filing-class definition! !
+stbConvertFrom:!binary filing!private! !
+stbModifyExportProxy:!binary filing!private! !
+stbSaveOn:!binary filing!public! !
+stbVersion!binary filing!public! !
+storeGUID!private!source filing-class definition! !
+subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+subclasses!class hierarchy-accessing!public! !
+subclasses:!class hierarchy-mutating!public! !
+subclassesDo:!class hierarchy-accessing!public! !
+unaliasedName!public!ston! !
+uninitialize!class hierarchy-removing!development!private! !
+uninitializeBeforeRemove!class hierarchy-removing!public! !
+unqualifiedName!accessing!public! !
+variableAdded:!class hierarchy-mutating!class variables!private! !
+variableByteSubclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
+variableByteSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+variableRemoved:!class hierarchy-mutating!class variables!private! !
+variableSubclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
+variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+!
 
 Core.Class methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #resolvePublicBinding:)!
 
@@ -1228,12 +1230,14 @@ foldLiterals
 		at: #strings put: {totalStrings. literalStrings size};
 		at: #annotations put: {totalAnnotations. annotations size};
 		yourself! !
-!Core.Class class categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
-!Core.Class class categoriesFor: #allBehaviorsDo:!enumerating!private! !
-!Core.Class class categoriesFor: #allClasses!class hierarchy-accessing!private! !
-!Core.Class class categoriesFor: #allClassesDo:!enumerating!private! !
-!Core.Class class categoriesFor: #allMethodsDo:!enumerating!private! !
-!Core.Class class categoriesFor: #allRoots!class hierarchy-accessing!private! !
-!Core.Class class categoriesFor: #basicAllRoots!class hierarchy-accessing!private! !
-!Core.Class class categoriesFor: #foldLiterals!operations!public! !
+!Core.Class class categoriesForMethods!
+allBehaviors!class hierarchy-accessing!private! !
+allBehaviorsDo:!enumerating!private! !
+allClasses!class hierarchy-accessing!private! !
+allClassesDo:!enumerating!private! !
+allMethodsDo:!enumerating!private! !
+allRoots!class hierarchy-accessing!private! !
+basicAllRoots!class hierarchy-accessing!private! !
+foldLiterals!operations!public! !
+!
 

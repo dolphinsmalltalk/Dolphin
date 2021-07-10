@@ -37,10 +37,12 @@ uncheckedAt: anInteger
 uncheckedAt: anInteger put: newValue 
 	super uncheckedAt: anInteger put: newValue yourAddress.
 	^newValue! !
-!External.PointerArray categoriesFor: #elementClass!accessing!public! !
-!External.PointerArray categoriesFor: #elementClass:!accessing!private! !
-!External.PointerArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.PointerArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.PointerArray categoriesForMethods!
+elementClass!accessing!public! !
+elementClass:!accessing!private! !
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.PointerArray class methodsFor!
 
@@ -64,6 +66,8 @@ length: anInteger elementClass: elementClass
 	of sufficient size to contain anInteger elements of type, elementClass."
 
 	^(self length: anInteger elementSize: self elementSize) elementClass: elementClass! !
-!External.PointerArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
-!External.PointerArray class categoriesFor: #length:elementClass:!instance creation!public! !
+!External.PointerArray class categoriesForMethods!
+fromAddress:length:elementClass:!instance creation!public! !
+length:elementClass:!instance creation!public! !
+!
 

@@ -22,8 +22,10 @@ value
 	"Answer the object that this one represents."
 
 	^self subclassResponsibility! !
-!Kernel.STBProxy categoriesFor: #stbFixup:at:!converting!public! !
-!Kernel.STBProxy categoriesFor: #value!converting!public! !
+!Kernel.STBProxy categoriesForMethods!
+stbFixup:at:!converting!public! !
+value!converting!public! !
+!
 
 !Kernel.STBProxy class methodsFor!
 
@@ -31,5 +33,7 @@ new
 	"Private - Use specialized instance creation methods"
 
 	^self shouldNotImplement! !
-!Kernel.STBProxy class categoriesFor: #new!instance creation!private! !
+!Kernel.STBProxy class categoriesForMethods!
+new!instance creation!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.BooleanTest subclass: #'Core.Tests.TrueTest'
 	instanceVariableNames: ''
@@ -84,17 +84,19 @@ testPrintOn
 testXor
 	self assert: (true xor: false).
 	self deny: (true xor: true)! !
-!Core.Tests.TrueTest categoriesFor: #subjectClass!constants!private! !
-!Core.Tests.TrueTest categoriesFor: #testAsBit!public!unit tests! !
-!Core.Tests.TrueTest categoriesFor: #testEvaluatingConjunction!public!unit tests! !
-!Core.Tests.TrueTest categoriesFor: #testEvaluatingDisjunction!public!unit tests! !
-!Core.Tests.TrueTest categoriesFor: #testIfFalse!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testIfFalseIfTrue!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testIfTrue!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testIfTrueIfFalse!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testNonEvaluatingConjunction!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testNonEvaluatingDisjunction!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testNot!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testPrintOn!public!testing! !
-!Core.Tests.TrueTest categoriesFor: #testXor!public!unit tests! !
+!Core.Tests.TrueTest categoriesForMethods!
+subjectClass!constants!private! !
+testAsBit!public!unit tests! !
+testEvaluatingConjunction!public!unit tests! !
+testEvaluatingDisjunction!public!unit tests! !
+testIfFalse!public!testing! !
+testIfFalseIfTrue!public!testing! !
+testIfTrue!public!testing! !
+testIfTrueIfFalse!public!testing! !
+testNonEvaluatingConjunction!public!testing! !
+testNonEvaluatingDisjunction!public!testing! !
+testNot!public!testing! !
+testPrintOn!public!testing! !
+testXor!public!unit tests! !
+!
 

@@ -32,9 +32,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#AddRef! !
-!OS.COM.AddRefFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!OS.COM.AddRefFunction categoriesFor: #descriptor!accessing!private! !
-!OS.COM.AddRefFunction categoriesFor: #selector!accessing!private! !
+!OS.COM.AddRefFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+descriptor!accessing!private! !
+selector!accessing!private! !
+!
 
 !OS.COM.AddRefFunction class methodsFor!
 
@@ -52,6 +54,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!OS.COM.AddRefFunction class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.AddRefFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.AddRefFunction class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

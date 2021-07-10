@@ -26,10 +26,12 @@ writeInto: subjectObject value: valueObject
 
 	self isWriteable ifFalse: [self error: 'Attempt to modify read-only aspect ', self printString].
 	^subjectObject at: index put: valueObject! !
-!Tools.StackFrameSlot categoriesFor: #index!accessing!public! !
-!Tools.StackFrameSlot categoriesFor: #index:!accessing!private! !
-!Tools.StackFrameSlot categoriesFor: #readFrom:!indirect accessing!private! !
-!Tools.StackFrameSlot categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Tools.StackFrameSlot categoriesForMethods!
+index!accessing!public! !
+index:!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !Tools.StackFrameSlot class methodsFor!
 
@@ -37,5 +39,7 @@ local: aString index: anInteger
 	^(self key: aString)
 		index: anInteger;
 		yourself! !
-!Tools.StackFrameSlot class categoriesFor: #local:index:!public! !
+!Tools.StackFrameSlot class categoriesForMethods!
+local:index:!public! !
+!
 

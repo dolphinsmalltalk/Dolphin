@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ParserTest'
 	instanceVariableNames: 'currentSelector classSearches rewrites'
@@ -735,64 +735,66 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 			(Array with: originalNode with: originalChild parent with: copiedNode with: copiedChild parent) collect: #identityHash.
 			"
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildArgumentSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMessageSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMethodArgumentSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMethodSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildMethodTitleSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildSimpleLiteralSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildSimpleVariableSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #buildStatementSearch!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #compare:to:!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #createArgumentSearchWith:selectors:inClass:!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #createMethodSearchWith:selectors:inClass:!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #createSearchWith:selectors:inClass:!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #currentSelector!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #errorSignal!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #parseAll!long running!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #parseError:!private! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #setUp!accessing!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testAllSearches!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testArray!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testBestNodeFor!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testBlockRewrites!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testCascadeReplacement!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testComparingTrees!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testCopy!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testCreationProtocol!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testEquality!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testEqualToWithMappingAfterRewrite!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testEqualToWithMappingRename!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testEquivalentExceptRenaming!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testExtendedLiterals!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testFormatter!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testIntervals!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testIsA!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testLiteralIntevals!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testLiteralMessages!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testLiterals!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testMethodPatterns!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testModifying!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testMultimatch!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testNodesDo!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testNumberParsing!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testParserErrors!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testParsingLiteralMessages!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testPatternCascade!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testPatternNodeCopy!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testPositions!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testPrimitives!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testQuerying!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testReadBeforeWritten!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testReadBeforeWritten1!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testReplacingNodes!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testRewriteMethods!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testRewrites!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testSearching!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testSmallDictionary!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #testTokens!public!unit tests! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #treeWithEverything!private! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #verifyParser!long running!public! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #verifySelector:inClass:!private! !
-!Refactory.Browser.Tests.ParserTest categoriesFor: #verifyTree:isDeepCopyOf:!private! !
+!Refactory.Browser.Tests.ParserTest categoriesForMethods!
+buildArgumentSearch!accessing!public! !
+buildMessageSearch!accessing!public! !
+buildMethodArgumentSearch!accessing!public! !
+buildMethodSearch!accessing!public! !
+buildMethodTitleSearch!accessing!public! !
+buildSimpleLiteralSearch!accessing!public! !
+buildSimpleVariableSearch!accessing!public! !
+buildStatementSearch!accessing!public! !
+compare:to:!accessing!public! !
+createArgumentSearchWith:selectors:inClass:!accessing!public! !
+createMethodSearchWith:selectors:inClass:!accessing!public! !
+createSearchWith:selectors:inClass:!accessing!public! !
+currentSelector!accessing!public! !
+errorSignal!public! !
+parseAll!long running!public! !
+parseError:!private! !
+setUp!accessing!public! !
+testAllSearches!public!unit tests! !
+testArray!public!unit tests! !
+testBestNodeFor!public! !
+testBlockRewrites!public!unit tests! !
+testCascadeReplacement!public!unit tests! !
+testComparingTrees!public!unit tests! !
+testCopy!public!unit tests! !
+testCreationProtocol!public!unit tests! !
+testEquality!public!unit tests! !
+testEqualToWithMappingAfterRewrite!public!unit tests! !
+testEqualToWithMappingRename!public!unit tests! !
+testEquivalentExceptRenaming!public!unit tests! !
+testExtendedLiterals!public!unit tests! !
+testFormatter!public!unit tests! !
+testIntervals!public!unit tests! !
+testIsA!public!unit tests! !
+testLiteralIntevals!public!unit tests! !
+testLiteralMessages!public!unit tests! !
+testLiterals!public!unit tests! !
+testMethodPatterns!public!unit tests! !
+testModifying!public!unit tests! !
+testMultimatch!public!unit tests! !
+testNodesDo!public!unit tests! !
+testNumberParsing!public!unit tests! !
+testParserErrors!public!unit tests! !
+testParsingLiteralMessages!public!unit tests! !
+testPatternCascade!public!unit tests! !
+testPatternNodeCopy!public!unit tests! !
+testPositions!public!unit tests! !
+testPrimitives!public!unit tests! !
+testQuerying!public!unit tests! !
+testReadBeforeWritten!public!unit tests! !
+testReadBeforeWritten1!public!unit tests! !
+testReplacingNodes!public!unit tests! !
+testRewriteMethods!public!unit tests! !
+testRewrites!public!unit tests! !
+testSearching!public!unit tests! !
+testSmallDictionary!public!unit tests! !
+testTokens!public!unit tests! !
+treeWithEverything!private! !
+verifyParser!long running!public! !
+verifySelector:inClass:!private! !
+verifyTree:isDeepCopyOf:!private! !
+!
 

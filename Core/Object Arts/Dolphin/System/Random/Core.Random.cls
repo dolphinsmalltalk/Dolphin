@@ -69,13 +69,15 @@ seed: aNumber
 	"Set the seed of the Random stream to aNumber (or 1 if zero)."
 
 	seed := aNumber max: 1! !
-!Core.Random categoriesFor: #atEnd!public!testing! !
-!Core.Random categoriesFor: #chiSquareTest:max:!examples!private! !
-!Core.Random categoriesFor: #isReadable!public!testing! !
-!Core.Random categoriesFor: #next!accessing!public! !
-!Core.Random categoriesFor: #peek!accessing!public! !
-!Core.Random categoriesFor: #seed!accessing!public! !
-!Core.Random categoriesFor: #seed:!accessing!public! !
+!Core.Random categoriesForMethods!
+atEnd!public!testing! !
+chiSquareTest:max:!examples!private! !
+isReadable!public!testing! !
+next!accessing!public! !
+peek!accessing!public! !
+seed!accessing!public! !
+seed:!accessing!public! !
+!
 
 !Core.Random class methodsFor!
 
@@ -118,13 +120,15 @@ systemClockSeed
 	seed := Delay microsecondClockValue // 1000 bitAnd: 16r3FFFFFFF.
 	seed = 0 ifTrue: [seed := 1].
 	^seed! !
-!Core.Random class categoriesFor: #default!instance creation!public! !
-!Core.Random class categoriesFor: #defaultGeneratorClass!accessing!public! !
-!Core.Random class categoriesFor: #defaultGeneratorClass:!accessing!public! !
-!Core.Random class categoriesFor: #initialize!initializing!public! !
-!Core.Random class categoriesFor: #new!instance creation!public! !
-!Core.Random class categoriesFor: #newConcrete!instance creation!private! !
-!Core.Random class categoriesFor: #newDefault!instance creation!private! !
-!Core.Random class categoriesFor: #seed:!instance creation!public! !
-!Core.Random class categoriesFor: #systemClockSeed!enquiries!public! !
+!Core.Random class categoriesForMethods!
+default!instance creation!public! !
+defaultGeneratorClass!accessing!public! !
+defaultGeneratorClass:!accessing!public! !
+initialize!initializing!public! !
+new!instance creation!public! !
+newConcrete!instance creation!private! !
+newDefault!instance creation!private! !
+seed:!instance creation!public! !
+systemClockSeed!enquiries!public! !
+!
 

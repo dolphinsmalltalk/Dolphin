@@ -47,12 +47,14 @@ pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
-!OS.NMLVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!OS.NMLVGETINFOTIPW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.NMLVGETINFOTIPW categoriesFor: #iItem!**compiled accessors**!public! !
-!OS.NMLVGETINFOTIPW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!OS.NMLVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
-!OS.NMLVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.NMLVGETINFOTIPW categoriesForMethods!
+cchTextMax!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+pszText!**compiled accessors**!public! !
+!
 
 !OS.NMLVGETINFOTIPW class methodsFor!
 
@@ -86,6 +88,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !
-!OS.NMLVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMLVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLVGETINFOTIPW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

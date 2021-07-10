@@ -177,29 +177,31 @@ viewNamed: aString ifNone: aBlock
 	on to our referee."
 
 	^self referee viewNamed: aString ifNone: aBlock! !
-!UI.AbstractDelegatingView categoriesFor: #applyFont!font!private!updating! !
-!UI.AbstractDelegatingView categoriesFor: #backcolor:!accessing!public! !
-!UI.AbstractDelegatingView categoriesFor: #calculateExtent:!geometry!private! !
-!UI.AbstractDelegatingView categoriesFor: #clearReferee!event handling!private! !
-!UI.AbstractDelegatingView categoriesFor: #createDelegate!event handling!private! !
-!UI.AbstractDelegatingView categoriesFor: #defaultWindowExStyle!constants!private! !
-!UI.AbstractDelegatingView categoriesFor: #isDragSource:!accessing!public! !
-!UI.AbstractDelegatingView categoriesFor: #isDropTarget:!accessing!public! !
-!UI.AbstractDelegatingView categoriesFor: #isGroupStop:!accessing-styles!public! !
-!UI.AbstractDelegatingView categoriesFor: #isTabStop:!accessing-styles!public! !
-!UI.AbstractDelegatingView categoriesFor: #layout:!geometry!private! !
-!UI.AbstractDelegatingView categoriesFor: #model!accessing!private! !
-!UI.AbstractDelegatingView categoriesFor: #model:!accessing!private! !
-!UI.AbstractDelegatingView categoriesFor: #onDestroyed!event handling!private! !
-!UI.AbstractDelegatingView categoriesFor: #onViewCreated!event handling!private! !
-!UI.AbstractDelegatingView categoriesFor: #preferredExtent!geometry!public! !
-!UI.AbstractDelegatingView categoriesFor: #preferredExtent:!geometry!public! !
-!UI.AbstractDelegatingView categoriesFor: #referee!accessing!private! !
-!UI.AbstractDelegatingView categoriesFor: #show!operations!public! !
-!UI.AbstractDelegatingView categoriesFor: #tabFocus!private!tabbing! !
-!UI.AbstractDelegatingView categoriesFor: #usePreferredExtent!accessing!public! !
-!UI.AbstractDelegatingView categoriesFor: #usePreferredExtent:!accessing!not an aspect!public! !
-!UI.AbstractDelegatingView categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!UI.AbstractDelegatingView categoriesFor: #validateUserInterface!operations!public! !
-!UI.AbstractDelegatingView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
+!UI.AbstractDelegatingView categoriesForMethods!
+applyFont!font!private!updating! !
+backcolor:!accessing!public! !
+calculateExtent:!geometry!private! !
+clearReferee!event handling!private! !
+createDelegate!event handling!private! !
+defaultWindowExStyle!constants!private! !
+isDragSource:!accessing!public! !
+isDropTarget:!accessing!public! !
+isGroupStop:!accessing-styles!public! !
+isTabStop:!accessing-styles!public! !
+layout:!geometry!private! !
+model!accessing!private! !
+model:!accessing!private! !
+onDestroyed!event handling!private! !
+onViewCreated!event handling!private! !
+preferredExtent!geometry!public! !
+preferredExtent:!geometry!public! !
+referee!accessing!private! !
+show!operations!public! !
+tabFocus!private!tabbing! !
+usePreferredExtent!accessing!public! !
+usePreferredExtent:!accessing!not an aspect!public! !
+validateSubViewLayouts:!geometry!private! !
+validateUserInterface!operations!public! !
+viewNamed:ifNone:!hierarchy!public!sub views! !
+!
 

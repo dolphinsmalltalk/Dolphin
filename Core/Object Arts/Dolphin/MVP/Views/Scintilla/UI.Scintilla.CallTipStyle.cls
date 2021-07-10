@@ -16,7 +16,9 @@ initialize
 	backcolor := Color tooltip.
 	forecolor := Color tooltipText.
 	self name: #callTip! !
-!UI.Scintilla.CallTipStyle categoriesFor: #initialize!initializing!private! !
+!UI.Scintilla.CallTipStyle categoriesForMethods!
+initialize!initializing!private! !
+!
 
 !UI.Scintilla.CallTipStyle class methodsFor!
 
@@ -33,5 +35,7 @@ initialize
 							setMessage: SCI_STYLESETFORE);
 				isImmutable: true;
 				yourself! !
-!UI.Scintilla.CallTipStyle class categoriesFor: #initialize!development!initializing!public! !
+!UI.Scintilla.CallTipStyle class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

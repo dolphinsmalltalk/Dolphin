@@ -94,21 +94,23 @@ update
 
 validateUserInterface: route
 	"Set the UI state of the receiver. Overridden in subclasses"! !
-!UI.ToolbarItem categoriesFor: #commandId!commands!private! !
-!UI.ToolbarItem categoriesFor: #getCommandId!commands!private! !
-!UI.ToolbarItem categoriesFor: #imageIndexIn:!operations!private! !
-!UI.ToolbarItem categoriesFor: #isDivider!public!testing! !
-!UI.ToolbarItem categoriesFor: #isDropdownStyle!public!style! !
-!UI.ToolbarItem categoriesFor: #onClick:!event handling!public! !
-!UI.ToolbarItem categoriesFor: #onDoubleClick:!event handling!public! !
-!UI.ToolbarItem categoriesFor: #onRightClick:!event handling!public! !
-!UI.ToolbarItem categoriesFor: #parent!operations!public! !
-!UI.ToolbarItem categoriesFor: #style!private!style! !
-!UI.ToolbarItem categoriesFor: #textIndexIn:!operations!private! !
-!UI.ToolbarItem categoriesFor: #toolbar!accessing!private! !
-!UI.ToolbarItem categoriesFor: #toolbar:!accessing!private! !
-!UI.ToolbarItem categoriesFor: #update!accessing!private! !
-!UI.ToolbarItem categoriesFor: #validateUserInterface:!operations!public! !
+!UI.ToolbarItem categoriesForMethods!
+commandId!commands!private! !
+getCommandId!commands!private! !
+imageIndexIn:!operations!private! !
+isDivider!public!testing! !
+isDropdownStyle!public!style! !
+onClick:!event handling!public! !
+onDoubleClick:!event handling!public! !
+onRightClick:!event handling!public! !
+parent!operations!public! !
+style!private!style! !
+textIndexIn:!operations!private! !
+toolbar!accessing!private! !
+toolbar:!accessing!private! !
+update!accessing!private! !
+validateUserInterface:!operations!public! !
+!
 
 !UI.ToolbarItem class methodsFor!
 
@@ -143,9 +145,11 @@ findTools
 
 stbVersion
 	^1! !
-!UI.ToolbarItem class categoriesFor: #buttonClass!constants!public! !
-!UI.ToolbarItem class categoriesFor: #editTools!instance creation!public! !
-!UI.ToolbarItem class categoriesFor: #fileTools!instance creation!public! !
-!UI.ToolbarItem class categoriesFor: #findTools!instance creation!public! !
-!UI.ToolbarItem class categoriesFor: #stbVersion!public! !
+!UI.ToolbarItem class categoriesForMethods!
+buttonClass!constants!public! !
+editTools!instance creation!public! !
+fileTools!instance creation!public! !
+findTools!instance creation!public! !
+stbVersion!public! !
+!
 

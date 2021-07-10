@@ -76,8 +76,10 @@ UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 
 	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXDTDHandler categoriesFor: #NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
-!MSXML.ISAXDTDHandler categoriesFor: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+!MSXML.ISAXDTDHandler categoriesForMethods!
+NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+!
 
 !MSXML.ISAXDTDHandler class methodsFor!
 
@@ -91,5 +93,7 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:
 			argumentTypes: 'word* sdword word* sdword word* sdword word* sdword'
 ! !
-!MSXML.ISAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXDTDHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

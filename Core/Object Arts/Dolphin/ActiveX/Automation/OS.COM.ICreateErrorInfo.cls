@@ -73,12 +73,14 @@ SetSource: szSource
 
 	<virtual stdcall: hresult 5 lpwstr>
 	^self invalidCall: _failureCode! !
-!OS.COM.ICreateErrorInfo categoriesFor: #errorInfo!accessing-interfaces!public! !
-!OS.COM.ICreateErrorInfo categoriesFor: #SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!OS.COM.ICreateErrorInfo categoriesFor: #SetGuid:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!OS.COM.ICreateErrorInfo categoriesFor: #SetHelpContext:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!OS.COM.ICreateErrorInfo categoriesFor: #SetHelpFile:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!OS.COM.ICreateErrorInfo categoriesFor: #SetSource:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!OS.COM.ICreateErrorInfo categoriesForMethods!
+errorInfo!accessing-interfaces!public! !
+SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetGuid:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetHelpContext:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetHelpFile:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetSource:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!
 
 !OS.COM.ICreateErrorInfo class methodsFor!
 
@@ -121,7 +123,9 @@ new
 	answer := self newPointer.
 	OleAut32 createErrorInfo: answer.
 	^answer! !
-!OS.COM.ICreateErrorInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!OS.COM.ICreateErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
-!OS.COM.ICreateErrorInfo class categoriesFor: #new!instance creation!public! !
+!OS.COM.ICreateErrorInfo class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+fromEXCEPINFO:guid:!instance creation!public! !
+new!instance creation!public! !
+!
 

@@ -71,13 +71,15 @@ vt
 	the receiver."
 
 	^VT_DISPATCH! !
-!OS.COM.TKindDispatchAnalyzer categoriesFor: #asImplType!accessing!public! !
-!OS.COM.TKindDispatchAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.TKindDispatchAnalyzer categoriesFor: #dualInterface!accessing!public! !
-!OS.COM.TKindDispatchAnalyzer categoriesFor: #isAutomationCompatible!public!testing! !
-!OS.COM.TKindDispatchAnalyzer categoriesFor: #properties!enumerating!public! !
-!OS.COM.TKindDispatchAnalyzer categoriesFor: #superInterface!enumerating!public! !
-!OS.COM.TKindDispatchAnalyzer categoriesFor: #vt!constants!public! !
+!OS.COM.TKindDispatchAnalyzer categoriesForMethods!
+asImplType!accessing!public! !
+baseClass!constants!private! !
+dualInterface!accessing!public! !
+isAutomationCompatible!public!testing! !
+properties!enumerating!public! !
+superInterface!enumerating!public! !
+vt!constants!public! !
+!
 
 !OS.COM.TKindDispatchAnalyzer class methodsFor!
 
@@ -94,6 +96,8 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_DISPATCH! !
-!OS.COM.TKindDispatchAnalyzer class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.TKindDispatchAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindDispatchAnalyzer class categoriesForMethods!
+initialize!development!initializing!private! !
+typekind!constants!private! !
+!
 

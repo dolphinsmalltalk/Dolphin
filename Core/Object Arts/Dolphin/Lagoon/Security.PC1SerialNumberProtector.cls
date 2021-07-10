@@ -131,11 +131,13 @@ stringFromData: anInteger
 	"Private - Answer a human-readable String representing the given raw encrypted data."
 	
 	^ self class readableStringFromInteger: anInteger.! !
-!Security.PC1SerialNumberProtector categoriesFor: #checksumBits!constants!public! !
-!Security.PC1SerialNumberProtector categoriesFor: #checksumFor:!helpers!private! !
-!Security.PC1SerialNumberProtector categoriesFor: #cipher!helpers!private! !
-!Security.PC1SerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
-!Security.PC1SerialNumberProtector categoriesFor: #decrypt:!operations!public! !
-!Security.PC1SerialNumberProtector categoriesFor: #encrypt:!operations!public! !
-!Security.PC1SerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
+!Security.PC1SerialNumberProtector categoriesForMethods!
+checksumBits!constants!public! !
+checksumFor:!helpers!private! !
+cipher!helpers!private! !
+dataFromString:!helpers!private! !
+decrypt:!operations!public! !
+encrypt:!operations!public! !
+stringFromData:!helpers!public! !
+!
 

@@ -93,12 +93,14 @@ nextAvailable
 
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
-!Core.ReadStream categoriesFor: #basicNext!accessing!public! !
-!Core.ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!Core.ReadStream categoriesFor: #basicNextAvailable!accessing!private! !
-!Core.ReadStream categoriesFor: #isReadable!public!testing! !
-!Core.ReadStream categoriesFor: #next!accessing!public! !
-!Core.ReadStream categoriesFor: #nextAvailable!accessing!public! !
+!Core.ReadStream categoriesForMethods!
+basicNext!accessing!public! !
+basicNext:into:startingAt:!accessing!public! !
+basicNextAvailable!accessing!private! !
+isReadable!public!testing! !
+next!accessing!public! !
+nextAvailable!accessing!public! !
+!
 
 Core.ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
 

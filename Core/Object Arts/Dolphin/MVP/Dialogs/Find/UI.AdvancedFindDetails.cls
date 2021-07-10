@@ -46,11 +46,13 @@ regularExpression
 		multiline: true;
 		global: true."
 	^regexp! !
-!UI.AdvancedFindDetails categoriesFor: #findIn:range:!public! !
-!UI.AdvancedFindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
-!UI.AdvancedFindDetails categoriesFor: #isRegularExpression!public!testing! !
-!UI.AdvancedFindDetails categoriesFor: #isRegularExpression:!accessing!public! !
-!UI.AdvancedFindDetails categoriesFor: #regularExpression!accessing!public! !
+!UI.AdvancedFindDetails categoriesForMethods!
+findIn:range:!public! !
+hasValidRegularExpression!public!testing! !
+isRegularExpression!public!testing! !
+isRegularExpression:!accessing!public! !
+regularExpression!accessing!public! !
+!
 
 !UI.AdvancedFindDetails class methodsFor!
 
@@ -59,6 +61,8 @@ regexpClass
 
 searchModes
 	^super searchModes copyWith: #regularExpression! !
-!UI.AdvancedFindDetails class categoriesFor: #regexpClass!constants!public! !
-!UI.AdvancedFindDetails class categoriesFor: #searchModes!constants!public! !
+!UI.AdvancedFindDetails class categoriesForMethods!
+regexpClass!constants!public! !
+searchModes!constants!public! !
+!
 

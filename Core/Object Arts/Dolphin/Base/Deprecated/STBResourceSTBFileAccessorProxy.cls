@@ -38,9 +38,11 @@ stbFixup: inFiler at: anInteger
 	classLocator := inFiler classLocator copyWithCodeBase.
 	(accessor := ResourceSTBFileAccessor onFileName: fileName) classLocator: classLocator.
 	self become: accessor! !
-!STBResourceSTBFileAccessorProxy categoriesFor: #bytes:!accessing!private! !
-!STBResourceSTBFileAccessorProxy categoriesFor: #fileName:!accessing!private! !
-!STBResourceSTBFileAccessorProxy categoriesFor: #stbFixup:at:!converting!public! !
+!STBResourceSTBFileAccessorProxy categoriesForMethods!
+bytes:!accessing!private! !
+fileName:!accessing!private! !
+stbFixup:at:!converting!public! !
+!
 
 !STBResourceSTBFileAccessorProxy class methodsFor!
 
@@ -60,6 +62,8 @@ withExternalFile: aResourceSTBFileAccessor
 	^self basicNew
 		fileName: aResourceSTBFileAccessor fileName;
 		yourself! !
-!STBResourceSTBFileAccessorProxy class categoriesFor: #withEmbeddedFile:!instance creation!public! !
-!STBResourceSTBFileAccessorProxy class categoriesFor: #withExternalFile:!instance creation!public! !
+!STBResourceSTBFileAccessorProxy class categoriesForMethods!
+withEmbeddedFile:!instance creation!public! !
+withExternalFile:!instance creation!public! !
+!
 

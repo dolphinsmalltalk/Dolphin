@@ -195,29 +195,31 @@ storeOn: aStream
 	aStream nextPutAll: ') metaClasses: #('.
 	metaClassSelectors keysAndValuesDo: classBlock.
 	aStream nextPutAll: '))'! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #addClass:!adding!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #addClass:selector:!adding!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #addClass:selectors:!adding!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #classes:metaClasses:!initialize/release!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #classSelectors:metaClassSelectors:!initialize/release!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #isSelectorEnvironment!public!testing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #numberSelectors!accessing!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #on:!initialize/release!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #removeClass:!public!removing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #removeClass:selector:!public!removing! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!Refactory.Browser.SelectorEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.SelectorEnvironment categoriesForMethods!
+addClass:!adding!public! !
+addClass:selector:!adding!public! !
+addClass:selectors:!adding!public! !
+classes:metaClasses:!initialize/release!public! !
+classesAndSelectorsDo:!accessing!public! !
+classesDo:!accessing/classes!public! !
+classNames!accessing/classes!public! !
+classSelectors:metaClassSelectors:!initialize/release!public! !
+defaultLabel!constants!private! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+isSelectorEnvironment!public!testing! !
+numberSelectors!accessing!public! !
+on:!initialize/release!public! !
+postCopy!copying!public! !
+removeClass:!public!removing! !
+removeClass:selector:!public!removing! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.SelectorEnvironment class methodsFor!
 
@@ -297,10 +299,12 @@ referencesTo: aLiteral in: aBrowserEnvironment
 		label: label;
 		searchStrings: {aLiteral printString};
 		yourself! !
-!Refactory.Browser.SelectorEnvironment class categoriesFor: #implementorsMatching:in:!instance creation!public! !
-!Refactory.Browser.SelectorEnvironment class categoriesFor: #implementorsOf:in:!instance creation!public! !
-!Refactory.Browser.SelectorEnvironment class categoriesFor: #matches:in:!instance creation!public! !
-!Refactory.Browser.SelectorEnvironment class categoriesFor: #onMethods:forClass:in:!instance creation!public! !
-!Refactory.Browser.SelectorEnvironment class categoriesFor: #onMethods:in:!instance creation!public! !
-!Refactory.Browser.SelectorEnvironment class categoriesFor: #referencesTo:in:!instance creation!public! !
+!Refactory.Browser.SelectorEnvironment class categoriesForMethods!
+implementorsMatching:in:!instance creation!public! !
+implementorsOf:in:!instance creation!public! !
+matches:in:!instance creation!public! !
+onMethods:forClass:in:!instance creation!public! !
+onMethods:in:!instance creation!public! !
+referencesTo:in:!instance creation!public! !
+!
 

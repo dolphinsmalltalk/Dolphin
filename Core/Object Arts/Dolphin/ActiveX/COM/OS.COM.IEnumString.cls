@@ -26,6 +26,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^LPWSTR! !
-!OS.COM.IEnumString class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IEnumString class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumString class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

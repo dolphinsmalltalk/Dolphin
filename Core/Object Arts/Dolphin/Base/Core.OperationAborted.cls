@@ -15,5 +15,7 @@ messageText
 	"Answer the <readableString> message text for the receiver."
 
 	^messageText ?? 'Operation aborted'! !
-!Core.OperationAborted categoriesFor: #messageText!accessing!public! !
+!Core.OperationAborted categoriesForMethods!
+messageText!accessing!public! !
+!
 

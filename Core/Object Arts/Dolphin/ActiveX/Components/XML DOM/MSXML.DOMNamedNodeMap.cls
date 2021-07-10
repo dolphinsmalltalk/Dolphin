@@ -215,36 +215,38 @@ uncheckedAdd: newObject
 	"Private - Should not be sent to the receiver."
 
 	^self shouldNotImplement! !
-!MSXML.DOMNamedNodeMap categoriesFor: #add:!adding!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #associationClass!constants!private! !
-!MSXML.DOMNamedNodeMap categoriesFor: #associations!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #associationsDo:!enumerating!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #at:ifAbsent:!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #at:put:!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #copyElementsInto:!adding!private! !
-!MSXML.DOMNamedNodeMap categoriesFor: #createNamedNode:!helpers!private! !
-!MSXML.DOMNamedNodeMap categoriesFor: #do:!enumerating!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #getNamedItem:!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #hash:max:!private!searching! !
-!MSXML.DOMNamedNodeMap categoriesFor: #includesKey:!public!searching! !
-!MSXML.DOMNamedNodeMap categoriesFor: #interface!accessing!private! !
-!MSXML.DOMNamedNodeMap categoriesFor: #item:!properties!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #length!properties!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #lookup:!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #nextNode!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #postCopy!copying!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #privateAt:put:!accessing!private! !
-!MSXML.DOMNamedNodeMap categoriesFor: #removeIndex:!private!removing! !
-!MSXML.DOMNamedNodeMap categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!MSXML.DOMNamedNodeMap categoriesFor: #removeNamedItem:!public!removing! !
-!MSXML.DOMNamedNodeMap categoriesFor: #removeQualifiedItem:namespaceURI:!public!removing! !
-!MSXML.DOMNamedNodeMap categoriesFor: #reset!enumerating!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #setInterface:parentNode:!accessing!private! !
-!MSXML.DOMNamedNodeMap categoriesFor: #setNamedItem:!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #size!accessing!public! !
-!MSXML.DOMNamedNodeMap categoriesFor: #uncheckedAdd:!adding!private! !
+!MSXML.DOMNamedNodeMap categoriesForMethods!
+add:!adding!public! !
+associationAt:ifAbsent:!accessing!public! !
+associationClass!constants!private! !
+associations!accessing!public! !
+associationsDo:!enumerating!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+copyElementsInto:!adding!private! !
+createNamedNode:!helpers!private! !
+do:!enumerating!public! !
+getNamedItem:!accessing!public! !
+hash:max:!private!searching! !
+includesKey:!public!searching! !
+interface!accessing!private! !
+item:!properties!public! !
+keysAndValuesDo:!enumerating!public! !
+length!properties!public! !
+lookup:!accessing!public! !
+nextNode!accessing!public! !
+postCopy!copying!public! !
+privateAt:put:!accessing!private! !
+removeIndex:!private!removing! !
+removeKey:ifAbsent:!public!removing! !
+removeNamedItem:!public!removing! !
+removeQualifiedItem:namespaceURI:!public!removing! !
+reset!enumerating!public! !
+setInterface:parentNode:!accessing!private! !
+setNamedItem:!accessing!public! !
+size!accessing!public! !
+uncheckedAdd:!adding!private! !
+!
 
 !MSXML.DOMNamedNodeMap class methodsFor!
 
@@ -256,5 +258,7 @@ onInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 		setInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 
 	! !
-!MSXML.DOMNamedNodeMap class categoriesFor: #onInterface:parentNode:!instance creation!public! !
+!MSXML.DOMNamedNodeMap class categoriesForMethods!
+onInterface:parentNode:!instance creation!public! !
+!
 

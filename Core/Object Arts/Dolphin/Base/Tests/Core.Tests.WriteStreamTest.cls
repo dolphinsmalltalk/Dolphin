@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.PositionableStreamTest subclass: #'Core.Tests.WriteStreamTest'
 	instanceVariableNames: ''
@@ -147,27 +147,29 @@ testUpToUtf
 	| stream |
 	stream := self streamOn: '1£/🐬'.
 	self readOperationNotImplemented: [stream upTo: Character dolphin]! !
-!Core.Tests.WriteStreamTest categoriesFor: #streamClass!helpers!private! !
-!Core.Tests.WriteStreamTest categoriesFor: #streamOn:!helpers!private! !
-!Core.Tests.WriteStreamTest categoriesFor: #string!constants!private! !
-!Core.Tests.WriteStreamTest categoriesFor: #stringSize!constants!private! !
-!Core.Tests.WriteStreamTest categoriesFor: #testBasicNext!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testContents!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNext!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNextColonPutColon!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNextInto!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNextPutAllArray!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testPeekFor!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testSetToEnd!public!testing! !
-!Core.Tests.WriteStreamTest categoriesFor: #testUpTo!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
-!Core.Tests.WriteStreamTest categoriesFor: #testUpToUtf!public!unit tests! !
+!Core.Tests.WriteStreamTest categoriesForMethods!
+streamClass!helpers!private! !
+streamOn:!helpers!private! !
+string!constants!private! !
+stringSize!constants!private! !
+testBasicNext!public!unit tests! !
+testContents!public!unit tests! !
+testNewContents!public!unit tests! !
+testNext!public!unit tests! !
+testNextAvailable!public!unit tests! !
+testNextAvailableColon!public!unit tests! !
+testNextColon!public!unit tests! !
+testNextColonPutColon!public!unit tests! !
+testNextInto!public!unit tests! !
+testNextPutAllArray!public!unit tests! !
+testNextWord!public!unit tests! !
+testPeekFor!public!unit tests! !
+testSetToEnd!public!testing! !
+testUpTo!public!unit tests! !
+testUpToAllColon!public!unit tests! !
+testUpToEnd!public!unit tests! !
+testUpToUtf!public!unit tests! !
+!
 
 !Core.Tests.WriteStreamTest class methodsFor!
 
@@ -175,5 +177,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'gettableStream only' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
-!Core.Tests.WriteStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
+!Core.Tests.WriteStreamTest class categoriesForMethods!
+allTestSelectors!Accessing!public! !
+!
 

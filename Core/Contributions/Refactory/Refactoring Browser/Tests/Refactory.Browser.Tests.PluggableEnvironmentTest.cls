@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.PluggableEnvironmentTest'
 	instanceVariableNames: ''
@@ -25,5 +25,7 @@ testReferencesTo
 	self universalTestFor: printString.
 	self assert: printString numberSelectors equals: (env referencesTo: #printString) numberSelectors.
 	self assert: printString numberClasses equals: (env referencesTo: #printString) numberClasses! !
-!Refactory.Browser.Tests.PluggableEnvironmentTest categoriesFor: #testReferencesTo!public!unit tests! !
+!Refactory.Browser.Tests.PluggableEnvironmentTest categoriesForMethods!
+testReferencesTo!public!unit tests! !
+!
 

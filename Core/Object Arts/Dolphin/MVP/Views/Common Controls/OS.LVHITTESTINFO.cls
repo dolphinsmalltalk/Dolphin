@@ -33,9 +33,11 @@ iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_iSubItem! !
-!OS.LVHITTESTINFO categoriesFor: #handle!accessing!private! !
-!OS.LVHITTESTINFO categoriesFor: #iItem!**compiled accessors**!public! !
-!OS.LVHITTESTINFO categoriesFor: #iSubItem!**compiled accessors**!public! !
+!OS.LVHITTESTINFO categoriesForMethods!
+handle!accessing!private! !
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+!
 
 !OS.LVHITTESTINFO class methodsFor!
 
@@ -58,6 +60,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #iItem #iSubItem)! !
-!OS.LVHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
-!OS.LVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LVHITTESTINFO class categoriesForMethods!
+defineFields!development!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

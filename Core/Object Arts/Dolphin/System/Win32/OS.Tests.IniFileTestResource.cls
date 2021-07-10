@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestResource subclass: #'OS.Tests.IniFileTestResource'
 	instanceVariableNames: ''
@@ -44,9 +44,11 @@ S3Key1=123
 tearDown
 	super tearDown.
 	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]! !
-!OS.Tests.IniFileTestResource categoriesFor: #emptyFile!public! !
-!OS.Tests.IniFileTestResource categoriesFor: #fileLocator!accessing!public! !
-!OS.Tests.IniFileTestResource categoriesFor: #iniFile1!accessing!public! !
-!OS.Tests.IniFileTestResource categoriesFor: #setUp!public!setup! !
-!OS.Tests.IniFileTestResource categoriesFor: #tearDown!public!setup! !
+!OS.Tests.IniFileTestResource categoriesForMethods!
+emptyFile!public! !
+fileLocator!accessing!public! !
+iniFile1!accessing!public! !
+setUp!public!setup! !
+tearDown!public!setup! !
+!
 

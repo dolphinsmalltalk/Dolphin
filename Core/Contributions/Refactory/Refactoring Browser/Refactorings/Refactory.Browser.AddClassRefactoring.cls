@@ -75,11 +75,13 @@ transform
 	(self model)
 		defineClass: self definitionMessage;
 		reparentClasses: subclasses to: (self model classNamed: className asSymbol)! !
-!Refactory.Browser.AddClassRefactoring categoriesFor: #addClass:superclass:subclasses:category:!initialize/release!public! !
-!Refactory.Browser.AddClassRefactoring categoriesFor: #definitionMessage!public!transforming! !
-!Refactory.Browser.AddClassRefactoring categoriesFor: #preconditions!public! !
-!Refactory.Browser.AddClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.AddClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AddClassRefactoring categoriesForMethods!
+addClass:superclass:subclasses:category:!initialize/release!public! !
+definitionMessage!public!transforming! !
+preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.AddClassRefactoring class methodsFor!
 
@@ -98,6 +100,8 @@ model: aRBNamespace addClass: aName superclass: aClass subclasses: aCollection c
 			subclasses: aCollection
 			category: aSymbol;
 		yourself! !
-!Refactory.Browser.AddClassRefactoring class categoriesFor: #addClass:superclass:subclasses:category:!instance creation!public! !
-!Refactory.Browser.AddClassRefactoring class categoriesFor: #model:addClass:superclass:subclasses:category:!instance creation!public! !
+!Refactory.Browser.AddClassRefactoring class categoriesForMethods!
+addClass:superclass:subclasses:category:!instance creation!public! !
+model:addClass:superclass:subclasses:category:!instance creation!public! !
+!
 

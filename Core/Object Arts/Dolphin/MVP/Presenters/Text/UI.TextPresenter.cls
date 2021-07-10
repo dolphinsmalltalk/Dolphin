@@ -95,19 +95,21 @@ selectionRange: anInterval
 	
 	^self view selectionRange: anInterval
 ! !
-!UI.TextPresenter categoriesFor: #clear!operations!public! !
-!UI.TextPresenter categoriesFor: #dragOver:!drag & drop!public! !
-!UI.TextPresenter categoriesFor: #drop:!drag & drop!public! !
-!UI.TextPresenter categoriesFor: #findDetails!accessing!public! !
-!UI.TextPresenter categoriesFor: #findDetails:!public!searching! !
-!UI.TextPresenter categoriesFor: #hasSelection!public!selection! !
-!UI.TextPresenter categoriesFor: #isModified!public!testing! !
-!UI.TextPresenter categoriesFor: #isModified:!modes!public! !
-!UI.TextPresenter categoriesFor: #isReadOnly!public!testing! !
-!UI.TextPresenter categoriesFor: #isReadOnly:!accessing!public! !
-!UI.TextPresenter categoriesFor: #replaceSelection:!operations!public! !
-!UI.TextPresenter categoriesFor: #selectionRange!public!selection! !
-!UI.TextPresenter categoriesFor: #selectionRange:!public!selection! !
+!UI.TextPresenter categoriesForMethods!
+clear!operations!public! !
+dragOver:!drag & drop!public! !
+drop:!drag & drop!public! !
+findDetails!accessing!public! !
+findDetails:!public!searching! !
+hasSelection!public!selection! !
+isModified!public!testing! !
+isModified:!modes!public! !
+isReadOnly!public!testing! !
+isReadOnly:!accessing!public! !
+replaceSelection:!operations!public! !
+selectionRange!public!selection! !
+selectionRange:!public!selection! !
+!
 
 UI.TextPresenter methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
 
@@ -163,10 +165,12 @@ resource_Static_text
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticText) 34 16 nil nil 34 2 8 1140850944 65 416 nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 642 241 39 416 594 #text: 34 1 8 'Static Text' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 642 193 193 nil 27)! !
-!UI.TextPresenter class categoriesFor: #defaultModel!models!public! !
-!UI.TextPresenter class categoriesFor: #icon!constants!public! !
-!UI.TextPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.TextPresenter class categoriesFor: #resource_Multiline_text!public!resources-views! !
-!UI.TextPresenter class categoriesFor: #resource_Password_text!public!resources-views! !
-!UI.TextPresenter class categoriesFor: #resource_Static_text!public!resources-views! !
+!UI.TextPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Multiline_text!public!resources-views! !
+resource_Password_text!public!resources-views! !
+resource_Static_text!public!resources-views! !
+!
 

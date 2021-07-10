@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.SystemNamespaceTest subclass: #'Kernel.Tests.RootNamespaceTest'
 	instanceVariableNames: ''
@@ -35,12 +35,14 @@ testEnvironment
 testIncludesKey
 	#(#Root #Smalltalk) do: [:each | self assert: (self subject includesKey: each)].
 	self deny: (self subject includesKey: Object name)! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #subject!constants!private! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #testAbsoluteName!public!unit tests! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #testAbsoluteNameOfIdentifier!public!unit tests! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #testAbsoluteReference!public!unit tests! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #testAllClasses!public!unit tests! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #testAllEnvironments!public!unit tests! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #testEnvironment!public!unit tests! !
-!Kernel.Tests.RootNamespaceTest categoriesFor: #testIncludesKey!public!unit tests! !
+!Kernel.Tests.RootNamespaceTest categoriesForMethods!
+subject!constants!private! !
+testAbsoluteName!public!unit tests! !
+testAbsoluteNameOfIdentifier!public!unit tests! !
+testAbsoluteReference!public!unit tests! !
+testAllClasses!public!unit tests! !
+testAllEnvironments!public!unit tests! !
+testEnvironment!public!unit tests! !
+testIncludesKey!public!unit tests! !
+!
 

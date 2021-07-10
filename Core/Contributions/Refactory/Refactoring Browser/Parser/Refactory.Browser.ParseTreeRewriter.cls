@@ -175,39 +175,41 @@ visitReturnNode: aReturnNode
 visitSequenceNode: aSequenceNode
 	aSequenceNode temporaries: (self visitArgumentNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [:each | self visitNode: each])! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #executeTree:!accessing!public! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #foundMatch!helpers!private! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #lookForMoreMatchesInContext:!operations!private! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:with:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:with:when:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:withValueFrom:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replace:withValueFrom:when:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:with:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:with:when:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:when:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceLiteral:with:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:with:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:with:when:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:when:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withTree:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withTree:when:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #replaceTree:withValueFrom:!public!replacing! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #tree!accessing!public! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitArgumentNodes:!public!visiting! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitArrayNode:!public!visiting! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitExternalArgTypeNode:!public! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitExternalCallNode:!public! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!Refactory.Browser.ParseTreeRewriter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!Refactory.Browser.ParseTreeRewriter categoriesForMethods!
+executeTree:!accessing!public! !
+foundMatch!helpers!private! !
+lookForMoreMatchesInContext:!operations!private! !
+replace:with:!public!replacing! !
+replace:with:when:!public!replacing! !
+replace:withValueFrom:!public!replacing! !
+replace:withValueFrom:when:!public!replacing! !
+replaceArgument:with:!public!replacing! !
+replaceArgument:with:when:!public!replacing! !
+replaceArgument:withValueFrom:!public!replacing! !
+replaceArgument:withValueFrom:when:!public!replacing! !
+replaceLiteral:with:!instance creation!public! !
+replaceMethod:with:!public!replacing! !
+replaceMethod:with:when:!public!replacing! !
+replaceMethod:withValueFrom:!public!replacing! !
+replaceMethod:withValueFrom:when:!public!replacing! !
+replaceTree:withTree:!public!replacing! !
+replaceTree:withTree:when:!public!replacing! !
+replaceTree:withValueFrom:!public!replacing! !
+tree!accessing!public! !
+visitArgumentNodes:!public!visiting! !
+visitArrayNode:!public!visiting! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitExternalArgTypeNode:!public! !
+visitExternalCallNode:!public! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitMethodNode:!public!visitor/double dispatching! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+!
 
 !Refactory.Browser.ParseTreeRewriter class methodsFor!
 
@@ -312,15 +314,17 @@ variable: aVarName getter: getMethod setter: setMethod receiver: aString
 		replace: aVarName , ' := ``@object' with: aString , ' ' , setMethod , ' ``@object';
 		replace: aVarName with: aString , ' ' , getMethod.
 	^rewriteRule! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #classVariable:getter:setter:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #removeTemporaryNamed:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #rename:to:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #rename:to:handler:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replace:with:in:!accessing!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replace:with:in:onInterval:!accessing!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replace:with:method:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replaceLiteral:with:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #replaceStatements:with:in:onInterval:!accessing!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #variable:getter:setter:!instance creation!public! !
-!Refactory.Browser.ParseTreeRewriter class categoriesFor: #variable:getter:setter:receiver:!instance creation!public! !
+!Refactory.Browser.ParseTreeRewriter class categoriesForMethods!
+classVariable:getter:setter:!instance creation!public! !
+removeTemporaryNamed:!instance creation!public! !
+rename:to:!instance creation!public! !
+rename:to:handler:!instance creation!public! !
+replace:with:in:!accessing!public! !
+replace:with:in:onInterval:!accessing!public! !
+replace:with:method:!instance creation!public! !
+replaceLiteral:with:!instance creation!public! !
+replaceStatements:with:in:onInterval:!accessing!public! !
+variable:getter:setter:!instance creation!public! !
+variable:getter:setter:receiver:!instance creation!public! !
+!
 

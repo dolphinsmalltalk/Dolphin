@@ -22,13 +22,17 @@ isPersistent
 
 path: aGdiplusPath
 	path := aGdiplusPath! !
-!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #isPersistent!public! !
-!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesFor: #path:!initializing!private! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+isPersistent!public! !
+path:!initializing!private! !
+!
 
 !Graphics.Gdiplus.PathGradientFromPathInitializer class methodsFor!
 
 path: aGdiplusPath
 	^self new path: aGdiplusPath! !
-!Graphics.Gdiplus.PathGradientFromPathInitializer class categoriesFor: #path:!instance creation!public! !
+!Graphics.Gdiplus.PathGradientFromPathInitializer class categoriesForMethods!
+path:!instance creation!public! !
+!
 

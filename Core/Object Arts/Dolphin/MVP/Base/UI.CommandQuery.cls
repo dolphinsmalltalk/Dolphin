@@ -196,35 +196,37 @@ text: aString
 	"Set the text state of the receiver to aString"
 
 	text := aString! !
-!UI.CommandQuery categoriesFor: #applicationShell!accessing!public! !
-!UI.CommandQuery categoriesFor: #beChecked!accessing!public! !
-!UI.CommandQuery categoriesFor: #beDisabled!accessing!public! !
-!UI.CommandQuery categoriesFor: #beEnabled!accessing!public! !
-!UI.CommandQuery categoriesFor: #beUnchecked!accessing!public! !
-!UI.CommandQuery categoriesFor: #canPerform!public!testing! !
-!UI.CommandQuery categoriesFor: #canPerformAgainst:!accessing!public! !
-!UI.CommandQuery categoriesFor: #command!accessing!public! !
-!UI.CommandQuery categoriesFor: #commandDescription!accessing!public! !
-!UI.CommandQuery categoriesFor: #commandDescription:source:!initializing!private! !
-!UI.CommandQuery categoriesFor: #commandSymbol!accessing!public! !
-!UI.CommandQuery categoriesFor: #description!accessing!public! !
-!UI.CommandQuery categoriesFor: #image!accessing!public! !
-!UI.CommandQuery categoriesFor: #image:!accessing!public! !
-!UI.CommandQuery categoriesFor: #initialize!initializing!private! !
-!UI.CommandQuery categoriesFor: #isChecked!public!testing! !
-!UI.CommandQuery categoriesFor: #isChecked:!accessing!public! !
-!UI.CommandQuery categoriesFor: #isDefault!accessing!public! !
-!UI.CommandQuery categoriesFor: #isDefault:!accessing!public! !
-!UI.CommandQuery categoriesFor: #isEnabled!public!testing! !
-!UI.CommandQuery categoriesFor: #isEnabled:!accessing!public! !
-!UI.CommandQuery categoriesFor: #perform!operations!public! !
-!UI.CommandQuery categoriesFor: #printOn:!development!printing!public! !
-!UI.CommandQuery categoriesFor: #receiver!accessing!public! !
-!UI.CommandQuery categoriesFor: #receiver:!accessing!public! !
-!UI.CommandQuery categoriesFor: #source!accessing!public! !
-!UI.CommandQuery categoriesFor: #source:!accessing!private! !
-!UI.CommandQuery categoriesFor: #text!accessing!public! !
-!UI.CommandQuery categoriesFor: #text:!accessing!public! !
+!UI.CommandQuery categoriesForMethods!
+applicationShell!accessing!public! !
+beChecked!accessing!public! !
+beDisabled!accessing!public! !
+beEnabled!accessing!public! !
+beUnchecked!accessing!public! !
+canPerform!public!testing! !
+canPerformAgainst:!accessing!public! !
+command!accessing!public! !
+commandDescription!accessing!public! !
+commandDescription:source:!initializing!private! !
+commandSymbol!accessing!public! !
+description!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+initialize!initializing!private! !
+isChecked!public!testing! !
+isChecked:!accessing!public! !
+isDefault!accessing!public! !
+isDefault:!accessing!public! !
+isEnabled!public!testing! !
+isEnabled:!accessing!public! !
+perform!operations!public! !
+printOn:!development!printing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+source!accessing!public! !
+source:!accessing!private! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 !UI.CommandQuery class methodsFor!
 
@@ -239,6 +241,8 @@ new
 	"Answers an instance of the receiver on a nil message"
 
 	^self commandDescription: CommandDescription new source: nil! !
-!UI.CommandQuery class categoriesFor: #commandDescription:source:!instance creation!public! !
-!UI.CommandQuery class categoriesFor: #new!instance creation!public! !
+!UI.CommandQuery class categoriesForMethods!
+commandDescription:source:!instance creation!public! !
+new!instance creation!public! !
+!
 

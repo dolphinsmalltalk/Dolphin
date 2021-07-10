@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.DefaultSortAlgorithmTest'
 	instanceVariableNames: ''
@@ -51,7 +51,9 @@ sort: aCollection sortBlock: block
 	self assertSorted: sorted.
 	self add: aCollection sortBlock: block.
 	^sorted! !
-!Kernel.Tests.DefaultSortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
-!Kernel.Tests.DefaultSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!Kernel.Tests.DefaultSortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
+!Kernel.Tests.DefaultSortAlgorithmTest categoriesForMethods!
+add:sortBlock:!helpers!private! !
+algorithmToTest!private!unit tests! !
+sort:sortBlock:!helpers!private! !
+!
 

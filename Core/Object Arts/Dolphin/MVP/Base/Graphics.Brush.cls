@@ -55,10 +55,12 @@ printOn: aPuttableStream
 				nextPut: $(;
 				print: lb;
 				nextPut: $)]! !
-!Graphics.Brush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Brush categoriesFor: #logBrush!accessing!private! !
-!Graphics.Brush categoriesFor: #logBrush:!accessing!private! !
-!Graphics.Brush categoriesFor: #printOn:!development!printing!public! !
+!Graphics.Brush categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+logBrush!accessing!private! !
+logBrush:!accessing!private! !
+printOn:!development!printing!public! !
+!
 
 !Graphics.Brush class methodsFor!
 
@@ -199,30 +201,32 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 				color: aColour;
 				hatch: hatchObject;
 				yourself)! !
-!Graphics.Brush class categoriesFor: #bitmap:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #black!instance creation!public! !
-!Graphics.Brush class categoriesFor: #color:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #cross!instance creation!public! !
-!Graphics.Brush class categoriesFor: #cross:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #darkGray!instance creation!public! !
-!Graphics.Brush class categoriesFor: #diagonal!instance creation!public! !
-!Graphics.Brush class categoriesFor: #diagonal:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #diamond!instance creation!public! !
-!Graphics.Brush class categoriesFor: #diamond:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #fromLogBrush:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #gray!instance creation!public! !
-!Graphics.Brush class categoriesFor: #horizontal!instance creation!public! !
-!Graphics.Brush class categoriesFor: #horizontal:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #icon!constants!public! !
-!Graphics.Brush class categoriesFor: #logBrushClass!constants!private! !
-!Graphics.Brush class categoriesFor: #newColor:!instance creation!private! !
-!Graphics.Brush class categoriesFor: #reverseDiagonal!instance creation!public! !
-!Graphics.Brush class categoriesFor: #reverseDiagonal:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #silver!instance creation!public! !
-!Graphics.Brush class categoriesFor: #sysColorBrushClass!instance creation!public! !
-!Graphics.Brush class categoriesFor: #transparent!instance creation!public! !
-!Graphics.Brush class categoriesFor: #vertical!instance creation!public! !
-!Graphics.Brush class categoriesFor: #vertical:!instance creation!public! !
-!Graphics.Brush class categoriesFor: #white!instance creation!public! !
-!Graphics.Brush class categoriesFor: #withStyle:color:hatch:!instance creation!public! !
+!Graphics.Brush class categoriesForMethods!
+bitmap:!instance creation!public! !
+black!instance creation!public! !
+color:!instance creation!public! !
+cross!instance creation!public! !
+cross:!instance creation!public! !
+darkGray!instance creation!public! !
+diagonal!instance creation!public! !
+diagonal:!instance creation!public! !
+diamond!instance creation!public! !
+diamond:!instance creation!public! !
+fromLogBrush:!instance creation!public! !
+gray!instance creation!public! !
+horizontal!instance creation!public! !
+horizontal:!instance creation!public! !
+icon!constants!public! !
+logBrushClass!constants!private! !
+newColor:!instance creation!private! !
+reverseDiagonal!instance creation!public! !
+reverseDiagonal:!instance creation!public! !
+silver!instance creation!public! !
+sysColorBrushClass!instance creation!public! !
+transparent!instance creation!public! !
+vertical!instance creation!public! !
+vertical:!instance creation!public! !
+white!instance creation!public! !
+withStyle:color:hatch:!instance creation!public! !
+!
 

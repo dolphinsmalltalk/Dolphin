@@ -101,30 +101,32 @@ value
 
 value: anObject
 	value := anObject! !
-!Kernel.StOptimizedNode categoriesFor: #=!comparing!public! !
-!Kernel.StOptimizedNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StOptimizedNode categoriesFor: #argumentCount!public! !
-!Kernel.StOptimizedNode categoriesFor: #arguments!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #body!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #body:!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #evaluateStatements!helpers!private! !
-!Kernel.StOptimizedNode categoriesFor: #hash!comparing!public! !
-!Kernel.StOptimizedNode categoriesFor: #initialize!public! !
-!Kernel.StOptimizedNode categoriesFor: #isImmediateNode!public!testing! !
-!Kernel.StOptimizedNode categoriesFor: #isInlined!public! !
-!Kernel.StOptimizedNode categoriesFor: #left:body:right:!initializing!public! !
-!Kernel.StOptimizedNode categoriesFor: #methodClass!accessing!private! !
-!Kernel.StOptimizedNode categoriesFor: #methodClass:!accessing!private! !
-!Kernel.StOptimizedNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StOptimizedNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StOptimizedNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #source!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #source:!accessing!private! !
-!Kernel.StOptimizedNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #value!accessing!public! !
-!Kernel.StOptimizedNode categoriesFor: #value:!accessing!public! !
+!Kernel.StOptimizedNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+argumentCount!public! !
+arguments!accessing!public! !
+body!accessing!public! !
+body:!accessing!public! !
+childrenDo:!accessing!public! !
+evaluateStatements!helpers!private! !
+hash!comparing!public! !
+initialize!public! !
+isImmediateNode!public!testing! !
+isInlined!public! !
+left:body:right:!initializing!public! !
+methodClass!accessing!private! !
+methodClass:!accessing!private! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+source!accessing!public! !
+source:!accessing!private! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !Kernel.StOptimizedNode class methodsFor!
 
@@ -143,8 +145,10 @@ left: leftInteger body: aSequenceNode right: rightInteger
 
 new
 	^super new initialize! !
-!Kernel.StOptimizedNode class categoriesFor: #body:!instance creation!public! !
-!Kernel.StOptimizedNode class categoriesFor: #initialize!public! !
-!Kernel.StOptimizedNode class categoriesFor: #left:body:right:!instance creation!public! !
-!Kernel.StOptimizedNode class categoriesFor: #new!instance creation!public! !
+!Kernel.StOptimizedNode class categoriesForMethods!
+body:!instance creation!public! !
+initialize!public! !
+left:body:right:!instance creation!public! !
+new!instance creation!public! !
+!
 

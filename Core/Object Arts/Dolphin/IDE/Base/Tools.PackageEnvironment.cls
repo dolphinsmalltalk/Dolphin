@@ -138,20 +138,22 @@ storeOn: aStream
 	aStream nextPutAll: ' packageNames: '.
 	self packageNames storeOn: aStream.
 	aStream nextPutAll: ';yourself)'! !
-!Tools.PackageEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!Tools.PackageEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Tools.PackageEnvironment categoriesFor: #definesClass:!public!testing! !
-!Tools.PackageEnvironment categoriesFor: #definesLooseMethodsInClass:!private!testing! !
-!Tools.PackageEnvironment categoriesFor: #includesClass:!public!testing! !
-!Tools.PackageEnvironment categoriesFor: #includesResource:!public!testing! !
-!Tools.PackageEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Tools.PackageEnvironment categoriesFor: #isSinglePackage!public!testing! !
-!Tools.PackageEnvironment categoriesFor: #packageNames!accessing!public! !
-!Tools.PackageEnvironment categoriesFor: #packageNames:!accessing!public! !
-!Tools.PackageEnvironment categoriesFor: #packages!accessing!public! !
-!Tools.PackageEnvironment categoriesFor: #packages:!accessing!private! !
-!Tools.PackageEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!Tools.PackageEnvironment categoriesFor: #storeOn:!printing!public! !
+!Tools.PackageEnvironment categoriesForMethods!
+classesDo:!accessing/classes!public! !
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+definesLooseMethodsInClass:!private!testing! !
+includesClass:!public!testing! !
+includesResource:!public!testing! !
+includesSelector:in:!public!testing! !
+isSinglePackage!public!testing! !
+packageNames!accessing!public! !
+packageNames:!accessing!public! !
+packages!accessing!public! !
+packages:!accessing!private! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !Tools.PackageEnvironment class methodsFor!
 
@@ -164,6 +166,8 @@ onEnvironment: anEnvironment packages: aPackage
 	^(self onEnvironment: anEnvironment)
 		packages: aPackage;
 		yourself! !
-!Tools.PackageEnvironment class categoriesFor: #onEnvironment:packageNames:!instance creation!public! !
-!Tools.PackageEnvironment class categoriesFor: #onEnvironment:packages:!instance creation!public! !
+!Tools.PackageEnvironment class categoriesForMethods!
+onEnvironment:packageNames:!instance creation!public! !
+onEnvironment:packages:!instance creation!public! !
+!
 

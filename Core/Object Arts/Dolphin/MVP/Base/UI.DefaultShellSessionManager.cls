@@ -21,13 +21,17 @@ mainShellClass
 
 mainShellClass: aShellClass 
 	mainShellClass := aShellClass! !
-!UI.DefaultShellSessionManager categoriesFor: #main!operations-startup!public! !
-!UI.DefaultShellSessionManager categoriesFor: #mainShellClass!constants!public! !
-!UI.DefaultShellSessionManager categoriesFor: #mainShellClass:!constants!public! !
+!UI.DefaultShellSessionManager categoriesForMethods!
+main!operations-startup!public! !
+mainShellClass!constants!public! !
+mainShellClass:!constants!public! !
+!
 
 !UI.DefaultShellSessionManager class methodsFor!
 
 installNew
 	self shouldNotImplement! !
-!UI.DefaultShellSessionManager class categoriesFor: #installNew!public! !
+!UI.DefaultShellSessionManager class categoriesForMethods!
+installNew!public! !
+!
 

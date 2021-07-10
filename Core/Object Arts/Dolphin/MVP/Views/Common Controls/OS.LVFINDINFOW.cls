@@ -57,13 +57,15 @@ vkDirection
 	"Answer the <Integer> value of the receiver's 'vkDirection' field."
 
 	^bytes dwordAtOffset: _OffsetOf_vkDirection! !
-!OS.LVFINDINFOW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.LVFINDINFOW categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.LVFINDINFOW categoriesFor: #maskIn:!accessing!public! !
-!OS.LVFINDINFOW categoriesFor: #param:!accessing!public! !
-!OS.LVFINDINFOW categoriesFor: #psz!**compiled accessors**!public! !
-!OS.LVFINDINFOW categoriesFor: #pt!**compiled accessors**!public! !
-!OS.LVFINDINFOW categoriesFor: #vkDirection!**compiled accessors**!public! !
+!OS.LVFINDINFOW categoriesForMethods!
+flags!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+param:!accessing!public! !
+psz!**compiled accessors**!public! !
+pt!**compiled accessors**!public! !
+vkDirection!**compiled accessors**!public! !
+!
 
 !OS.LVFINDINFOW class methodsFor!
 
@@ -81,6 +83,8 @@ defineFields
 
 getFieldNames
 	^#(#flags #psz #lParam #pt #vkDirection)! !
-!OS.LVFINDINFOW class categoriesFor: #defineFields!public!template definition! !
-!OS.LVFINDINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LVFINDINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

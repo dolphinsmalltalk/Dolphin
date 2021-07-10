@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.CollectionTest subclass: #'Core.Tests.AbstractDictionaryTest'
 	instanceVariableNames: ''
@@ -252,26 +252,28 @@ testStrongTalkTests
 	self assert: new]
 			on: UI.ConfirmationRequiredWarning
 			do: [:ex | ex refuse]! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #checkValidity:!benchmarking!private! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #key3Value!private! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #makeKey:!helpers!private! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #newCollection:!helpers!private! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #newEmpty!helpers!public! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testAssociationsDo!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutClean!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testEquals!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testNilKey!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
-!Core.Tests.AbstractDictionaryTest categoriesFor: #testStrongTalkTests!benchmarking!public! !
+!Core.Tests.AbstractDictionaryTest categoriesForMethods!
+assertCommutativelyEqual:other:!helpers!private! !
+checkValidity:!benchmarking!private! !
+collectionClass!helpers!private! !
+denyCommutativelyEqual:other:!helpers!private! !
+key3Value!private! !
+makeKey:!helpers!private! !
+newCollection:!helpers!private! !
+newDictionary!private!unit tests! !
+newEmpty!helpers!public! !
+testAssociationsDo!public!unit tests! !
+testAtIfAbsent!public!unit tests! !
+testAtIfAbsentPut!public!unit tests! !
+testAtIfAbsentPutClean!public!unit tests! !
+testAtIfAbsentPutModifyingCollection!public!unit tests! !
+testAtIfAbsentPutValue!public!unit tests! !
+testCyclicRefPrinting!public! !
+testDeepCopy!public!unit tests! !
+testEquals!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testNilKey!public!unit tests! !
+testRemoveKey!public!unit tests! !
+testStrongTalkTests!benchmarking!public! !
+!
 

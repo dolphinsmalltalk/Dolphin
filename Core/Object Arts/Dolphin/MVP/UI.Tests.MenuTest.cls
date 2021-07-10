@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.MenuTest'
 	instanceVariableNames: ''
@@ -24,5 +24,7 @@ testFindCommand
 	self assertNotNil: item.
 	self assert: item command isKindOf: Message.
 	self assert: item command selector equals: #quit! !
-!UI.Tests.MenuTest categoriesFor: #testFindCommand!public! !
+!UI.Tests.MenuTest categoriesForMethods!
+testFindCommand!public! !
+!
 

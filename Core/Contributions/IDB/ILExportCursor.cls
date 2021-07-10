@@ -21,6 +21,8 @@ hotSpotFor: anILImage
 
 icondirType
 	^2! !
-!ILExportCursor categoriesFor: #hotSpotFor:!accessing!public! !
-!ILExportCursor categoriesFor: #icondirType!constants!public! !
+!ILExportCursor categoriesForMethods!
+hotSpotFor:!accessing!public! !
+icondirType!constants!public! !
+!
 

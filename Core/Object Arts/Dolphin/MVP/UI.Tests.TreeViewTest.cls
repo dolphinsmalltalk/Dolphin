@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
 	instanceVariableNames: ''
@@ -125,17 +125,19 @@ testSetTextBlockDoesNotAffectSelection
 			presenter view updateMode: each.
 			super testSetTextBlockDoesNotAffectSelection.
 			presenter view model clear]! !
-!UI.Tests.TreeViewTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.TreeViewTest categoriesFor: #getItemText:!helpers!private! !
-!UI.Tests.TreeViewTest categoriesFor: #paintTree!helpers!private! !
-!UI.Tests.TreeViewTest categoriesFor: #refreshTree:!helpers!private! !
-!UI.Tests.TreeViewTest categoriesFor: #testCollapseOneLevel!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testCollapseTwoLevels!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testRefreshTreeDynamic!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testRefreshTreeLazy!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testRefreshTreeStatic!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testSelectionSetter!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
-!UI.Tests.TreeViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.TreeViewTest categoriesForMethods!
+classToTest!helpers!private! !
+getItemText:!helpers!private! !
+paintTree!helpers!private! !
+refreshTree:!helpers!private! !
+testCollapseOneLevel!public!unit tests! !
+testCollapseTwoLevels!public!unit tests! !
+testRefreshTreeDynamic!public!unit tests! !
+testRefreshTreeLazy!public!unit tests! !
+testRefreshTreeStatic!public!unit tests! !
+testSelectionSetter!public!unit tests! !
+testSelectionsPreservedOnRecreate!public!unit tests! !
+testSetImageBlockDoesNotAffectSelection!public!unit tests! !
+testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+!
 

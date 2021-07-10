@@ -55,13 +55,15 @@ sqlState: aString
 	"Private - Set the sqlState instance variable to aString."
 
 	sqlState := aString! !
-!Database.DBErrorDetails categoriesFor: #messageText!accessing!public! !
-!Database.DBErrorDetails categoriesFor: #msg!accessing!public! !
-!Database.DBErrorDetails categoriesFor: #msg:!accessing!private! !
-!Database.DBErrorDetails categoriesFor: #nativeErr:!accessing!private! !
-!Database.DBErrorDetails categoriesFor: #origin:!accessing!private! !
-!Database.DBErrorDetails categoriesFor: #sqlState!accessing!public! !
-!Database.DBErrorDetails categoriesFor: #sqlState:!accessing!private! !
+!Database.DBErrorDetails categoriesForMethods!
+messageText!accessing!public! !
+msg!accessing!public! !
+msg:!accessing!private! !
+nativeErr:!accessing!private! !
+origin:!accessing!private! !
+sqlState!accessing!public! !
+sqlState:!accessing!private! !
+!
 
 !Database.DBErrorDetails class methodsFor!
 
@@ -75,5 +77,7 @@ fromSQLError: errorString
 		msg: errorString;
 		origin: (errorString copyFrom: 1 to: lastBrkt);
 		yourself! !
-!Database.DBErrorDetails class categoriesFor: #fromSQLError:!instance creation!public! !
+!Database.DBErrorDetails class categoriesForMethods!
+fromSQLError:!instance creation!public! !
+!
 

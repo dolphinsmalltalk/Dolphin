@@ -38,10 +38,12 @@ pt: aPOINTL
 		from: ##(_OffsetOf_pt + 1)
 		to: ##(_OffsetOf_pt + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.CCHITTESTINFO categoriesFor: #flags!**compiled accessors**!public! !
-!OS.CCHITTESTINFO categoriesFor: #handle!accessing!private! !
-!OS.CCHITTESTINFO categoriesFor: #isItemHit!public!testing! !
-!OS.CCHITTESTINFO categoriesFor: #pt:!**compiled accessors**!public! !
+!OS.CCHITTESTINFO categoriesForMethods!
+flags!**compiled accessors**!public! !
+handle!accessing!private! !
+isItemHit!public!testing! !
+pt:!**compiled accessors**!public! !
+!
 
 !OS.CCHITTESTINFO class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags)! !
-!OS.CCHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
-!OS.CCHITTESTINFO class categoriesFor: #getFieldNames!constants!private! !
+!OS.CCHITTESTINFO class categoriesForMethods!
+defineFields!development!public!template definition! !
+getFieldNames!constants!private! !
+!
 

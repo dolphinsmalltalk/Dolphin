@@ -80,19 +80,23 @@ value
 		ifFalse: 
 			[self receiver perform: selector
 				withArguments: (expectedArgCount == args size ifTrue: [args] ifFalse: [self mergeArguments: #()])]! !
-!Kernel.EventMessageSend categoriesFor: #asMessageSend!public! !
-!Kernel.EventMessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
-!Kernel.EventMessageSend categoriesFor: #mergeArguments:!evaluating!private! !
-!Kernel.EventMessageSend categoriesFor: #postCopy!copying!public! !
-!Kernel.EventMessageSend categoriesFor: #receiver!accessing!debugger-step over!public! !
-!Kernel.EventMessageSend categoriesFor: #receiver:!accessing!public! !
-!Kernel.EventMessageSend categoriesFor: #selector:!accessing!public! !
-!Kernel.EventMessageSend categoriesFor: #setSelector:arguments:!initializing!private! !
-!Kernel.EventMessageSend categoriesFor: #value!evaluating!public! !
+!Kernel.EventMessageSend categoriesForMethods!
+asMessageSend!public! !
+forwardTo:withArguments:!evaluating!private! !
+mergeArguments:!evaluating!private! !
+postCopy!copying!public! !
+receiver!accessing!debugger-step over!public! !
+receiver:!accessing!public! !
+selector:!accessing!public! !
+setSelector:arguments:!initializing!private! !
+value!evaluating!public! !
+!
 
 !Kernel.EventMessageSend class methodsFor!
 
 new
 	^(self new: 1) beWeak; yourself! !
-!Kernel.EventMessageSend class categoriesFor: #new!instance creation!public! !
+!Kernel.EventMessageSend class categoriesForMethods!
+new!instance creation!public! !
+!
 

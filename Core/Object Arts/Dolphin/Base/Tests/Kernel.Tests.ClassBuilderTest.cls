@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.ClassBuilderTest'
 	instanceVariableNames: 'wasOAD dirtiedClasses'
@@ -431,32 +431,36 @@ testReshapeSubClass
 	self assert: testClass identicalTo: self classBuilderTestSubclass1.
 	self assert: testMeta identicalTo: self classBuilderTestSubclass1 class.
 	dirtiedClasses := true! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #classBuilderTestClass!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #classBuilderTestSubclass1!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #classBuilderTestSubclass2!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #setUp!public!Running! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #tearDown!public!Running! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testAddClassInstVars!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testAddInstVarName!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testAddRemoveImports!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testBuildAnonymous!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testBuildAnonymousInRootNamespace!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testBuildAnonymousRootClass!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testClassVars!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testCreateSubclassWithSameUnqualifiedName!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testFullName!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testMoveClassToSuperclassWithInstVars!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testMoveVariable!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testPoolVariablePrecedence!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testReparentSubClassWithSameAllInstVars!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testReshapeClass!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testReshapeClassWithJugglingInstVars!public!unit tests! !
-!Kernel.Tests.ClassBuilderTest categoriesFor: #testReshapeSubClass!public!unit tests! !
+!Kernel.Tests.ClassBuilderTest categoriesForMethods!
+classBuilderTestClass!public!unit tests! !
+classBuilderTestSubclass1!public!unit tests! !
+classBuilderTestSubclass2!public!unit tests! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testAddClassInstVars!public!unit tests! !
+testAddInstVarName!public!unit tests! !
+testAddRemoveImports!public!unit tests! !
+testBuildAnonymous!public!unit tests! !
+testBuildAnonymousInRootNamespace!public!unit tests! !
+testBuildAnonymousRootClass!public!unit tests! !
+testClassVars!public!unit tests! !
+testCreateSubclassWithSameUnqualifiedName!public!unit tests! !
+testFullName!public!unit tests! !
+testMoveClassToSuperclassWithInstVars!public!unit tests! !
+testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
+testMoveVariable!public!unit tests! !
+testPoolVariablePrecedence!public!unit tests! !
+testReparentSubClassWithSameAllInstVars!public!unit tests! !
+testReshapeClass!public!unit tests! !
+testReshapeClassWithJugglingInstVars!public!unit tests! !
+testReshapeSubClass!public!unit tests! !
+!
 
 !Kernel.Tests.ClassBuilderTest class methodsFor!
 
 resources
 	^{ClassBuilderTestClasses}! !
-!Kernel.Tests.ClassBuilderTest class categoriesFor: #resources!Accessing!public! !
+!Kernel.Tests.ClassBuilderTest class categoriesForMethods!
+resources!Accessing!public! !
+!
 

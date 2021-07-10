@@ -41,14 +41,16 @@ x
 
 y
 	^self height! !
-!External.SIZE categoriesFor: #asObject!converting!public! !
-!External.SIZE categoriesFor: #asPoint!converting!public! !
-!External.SIZE categoriesFor: #height!accessing!public! !
-!External.SIZE categoriesFor: #height:!accessing!public! !
-!External.SIZE categoriesFor: #width!accessing!public! !
-!External.SIZE categoriesFor: #width:!accessing!public! !
-!External.SIZE categoriesFor: #x!accessing!public! !
-!External.SIZE categoriesFor: #y!accessing!public! !
+!External.SIZE categoriesForMethods!
+asObject!converting!public! !
+asPoint!converting!public! !
+height!accessing!public! !
+height:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 
 !External.SIZE class methodsFor!
 
@@ -67,7 +69,9 @@ width: cx height: cy
 		width: cx;
 		height: cy;
 		yourself! !
-!External.SIZE class categoriesFor: #fromPoint:!instance creation!public! !
-!External.SIZE class categoriesFor: #icon!constants!public! !
-!External.SIZE class categoriesFor: #width:height:!instance creation!public! !
+!External.SIZE class categoriesForMethods!
+fromPoint:!instance creation!public! !
+icon!constants!public! !
+width:height:!instance creation!public! !
+!
 

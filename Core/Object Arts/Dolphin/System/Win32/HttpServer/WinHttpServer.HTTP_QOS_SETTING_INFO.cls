@@ -66,14 +66,16 @@ value: aHttpQosPropertyInfo
 	self
 		QosType: aHttpQosPropertyInfo qosType;
 		QosSetting: aHttpQosPropertyInfo yourAddress! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #printFields:on:!development!printing!private! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #propertyId!constants!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #QosSetting!**compiled accessors**!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #QosSetting:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #QosType!**compiled accessors**!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #QosType:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #value!accessing!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesFor: #value:!accessing!public! !
+!WinHttpServer.HTTP_QOS_SETTING_INFO categoriesForMethods!
+printFields:on:!development!printing!private! !
+propertyId!constants!public! !
+QosSetting!**compiled accessors**!public! !
+QosSetting:!**compiled accessors**!public! !
+QosType!**compiled accessors**!public! !
+QosType:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !WinHttpServer.HTTP_QOS_SETTING_INFO class methodsFor!
 
@@ -110,10 +112,12 @@ qosSetting: anHttpQosSetting
 	^(self new)
 		value: anHttpQosSetting;
 		yourself! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesFor: #maxBandwidth:!instance creation!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesFor: #maxConnections:!instance creation!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesFor: #propertyId!constants!public! !
-!WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesFor: #qosSetting:!instance creation!public! !
+!WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxBandwidth:!instance creation!public! !
+maxConnections:!instance creation!public! !
+propertyId!constants!public! !
+qosSetting:!instance creation!public! !
+!
 

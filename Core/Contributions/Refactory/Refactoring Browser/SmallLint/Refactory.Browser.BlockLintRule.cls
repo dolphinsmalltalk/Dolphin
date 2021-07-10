@@ -33,12 +33,14 @@ undeclaredVariables
 
 	#rbFix.	"Dolphin does not support forward refs. to undeclared variables"
 	^Dictionary new! !
-!Refactory.Browser.BlockLintRule categoriesFor: #checkClass:!accessing!public! !
-!Refactory.Browser.BlockLintRule categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.BlockLintRule categoriesFor: #classBlock:!initialize/release!public! !
-!Refactory.Browser.BlockLintRule categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.BlockLintRule categoriesFor: #methodBlock:!initialize/release!public! !
-!Refactory.Browser.BlockLintRule categoriesFor: #undeclaredVariables!public! !
+!Refactory.Browser.BlockLintRule categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+classBlock:!initialize/release!public! !
+initialize!initialize/release!public! !
+methodBlock:!initialize/release!public! !
+undeclaredVariables!public! !
+!
 
 !Refactory.Browser.BlockLintRule class methodsFor!
 
@@ -723,49 +725,51 @@ vernacularSelector
 
 vernacularSelectors
 	^#(#arse #fart)! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #abstractClass!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #addRemoveDependents!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #badMessage!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #badSelectors!constants!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #classInstVarNotInitialized!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #classNameInSelector!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #classNotReferenced!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #classShouldNotOverride!constants!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #collectionCopyEmpty!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #collectionMessagesToExternalObject!intention revealing!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #definesEqualNotHash!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #doesLiteralArrayContainComma:!helpers!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #equivalentSuperclassMethods!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #fullBlocks!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #implementedNotSent!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #instVarInSubclasses!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #justSendsSuper!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #literalArrayContainsComma!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #longMethods!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #longMethodSize!constants!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #metaclassShouldNotOverride!constants!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #missingSubclassResponsibility!intention revealing!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #onlyReadOrWritten!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #overridesSpecialMessage!bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #refersToClass!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #returnsBooleanAndOther!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #sendsDifferentSuper!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #sentNotImplemented!bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #subclassOf:overrides:!helpers!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #subclassResponsibilityNotDefined!bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #superMessages!constants!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #superSends!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #tempsReadBeforeWritten!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #tempsUnused!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #tempVarOverridesInstVar!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #undeclaredVariables!accessing!constants!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #unreferencedVariables!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #usesTrue!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #utilityMethods!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #utilityProtocols!constants!private! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #variableAssignedLiteral!miscellaneous!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #variableNotDefined!possible bugs!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #variableReferencedOnce!public!unnecessary code! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #vernacularSelector!intention revealing!public! !
-!Refactory.Browser.BlockLintRule class categoriesFor: #vernacularSelectors!constants!private! !
+!Refactory.Browser.BlockLintRule class categoriesForMethods!
+abstractClass!possible bugs!public! !
+addRemoveDependents!possible bugs!public! !
+badMessage!miscellaneous!public! !
+badSelectors!constants!private! !
+classInstVarNotInitialized!possible bugs!public! !
+classNameInSelector!miscellaneous!public! !
+classNotReferenced!public!unnecessary code! !
+classShouldNotOverride!constants!private! !
+collectionCopyEmpty!possible bugs!public! !
+collectionMessagesToExternalObject!intention revealing!public! !
+definesEqualNotHash!possible bugs!public! !
+doesLiteralArrayContainComma:!helpers!private! !
+equivalentSuperclassMethods!public!unnecessary code! !
+fullBlocks!miscellaneous!public! !
+implementedNotSent!public!unnecessary code! !
+instVarInSubclasses!miscellaneous!public! !
+justSendsSuper!public!unnecessary code! !
+literalArrayContainsComma!possible bugs!public! !
+longMethods!miscellaneous!public! !
+longMethodSize!constants!private! !
+metaclassShouldNotOverride!constants!private! !
+missingSubclassResponsibility!intention revealing!public! !
+onlyReadOrWritten!public!unnecessary code! !
+overridesSpecialMessage!bugs!public! !
+refersToClass!miscellaneous!public! !
+returnsBooleanAndOther!possible bugs!public! !
+sendsDifferentSuper!possible bugs!public! !
+sentNotImplemented!bugs!public! !
+subclassOf:overrides:!helpers!private! !
+subclassResponsibilityNotDefined!bugs!public! !
+superMessages!constants!private! !
+superSends!possible bugs!public! !
+tempsReadBeforeWritten!possible bugs!public! !
+tempsUnused!public!unnecessary code! !
+tempVarOverridesInstVar!possible bugs!public! !
+undeclaredVariables!accessing!constants!private! !
+unreferencedVariables!public!unnecessary code! !
+usesTrue!possible bugs!public! !
+utilityMethods!miscellaneous!public! !
+utilityProtocols!constants!private! !
+variableAssignedLiteral!miscellaneous!public! !
+variableNotDefined!possible bugs!public! !
+variableReferencedOnce!public!unnecessary code! !
+vernacularSelector!intention revealing!public! !
+vernacularSelectors!constants!private! !
+!
 

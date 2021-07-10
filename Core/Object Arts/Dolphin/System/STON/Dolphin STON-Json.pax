@@ -113,12 +113,14 @@ toJsonString: object
 toJsonStringPretty: object
 	^ String streamContents: [ :stream |
 		self put: object asJsonOnStreamPretty: stream ]! !
-!STON class categoriesFor: #jsonPrettyPrinter!private! !
-!STON class categoriesFor: #jsonWriter!accessing!public! !
-!STON class categoriesFor: #put:asJsonOnStream:!convenience!public! !
-!STON class categoriesFor: #put:asJsonOnStreamPretty:!convenience!public! !
-!STON class categoriesFor: #toJsonString:!convenience!public! !
-!STON class categoriesFor: #toJsonStringPretty:!convenience!public! !
+!STON class categoriesForMethods!
+jsonPrettyPrinter!private! !
+jsonWriter!accessing!public! !
+put:asJsonOnStream:!convenience!public! !
+put:asJsonOnStreamPretty:!convenience!public! !
+toJsonString:!convenience!public! !
+toJsonStringPretty:!convenience!public! !
+!
 
 "End of package definition"!
 

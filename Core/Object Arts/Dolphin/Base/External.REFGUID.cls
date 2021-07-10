@@ -77,16 +77,18 @@ value: guid
 	"Set the 16-byte GUID pointed at by the receiver to the <GUID>, guid."
 
 	self replaceFrom: 1 to: 16 with: guid startingAt: 1! !
-!External.REFGUID categoriesFor: #<=>!comparing!public! !
-!External.REFGUID categoriesFor: #=!comparing!public! !
-!External.REFGUID categoriesFor: #asString!converting!public! !
-!External.REFGUID categoriesFor: #copyingClass!copying!private! !
-!External.REFGUID categoriesFor: #displayOn:!printing!public! !
-!External.REFGUID categoriesFor: #hash!comparing!public! !
-!External.REFGUID categoriesFor: #printOn:!printing!public! !
-!External.REFGUID categoriesFor: #species!accessing!public! !
-!External.REFGUID categoriesFor: #value!accessing!public! !
-!External.REFGUID categoriesFor: #value:!accessing!public! !
+!External.REFGUID categoriesForMethods!
+<=>!comparing!public! !
+=!comparing!public! !
+asString!converting!public! !
+copyingClass!copying!private! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+printOn:!printing!public! !
+species!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !External.REFGUID class methodsFor!
 
@@ -96,5 +98,7 @@ fromInteger: anInteger
 	^self new 
 		basicDwordAtOffset: 0 put: anInteger;
 		yourself! !
-!External.REFGUID class categoriesFor: #fromInteger:!instance creation!public! !
+!External.REFGUID class categoriesForMethods!
+fromInteger:!instance creation!public! !
+!
 

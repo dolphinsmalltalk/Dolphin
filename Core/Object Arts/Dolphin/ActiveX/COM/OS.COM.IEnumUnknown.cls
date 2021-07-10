@@ -27,7 +27,9 @@ Next: celt rgelt: rgelt pceltFetched: pceltFetched
 
 	<virtual stdcall: hresult 4 dword IUnknown** dword*>
 	^self invalidCall: _failureCode! !
-!OS.COM.IEnumUnknown categoriesFor: #Next:rgelt:pceltFetched:!**auto generated**!COM Interfaces-OBJIDL.IEnumUnknown!primitives!public! !
+!OS.COM.IEnumUnknown categoriesForMethods!
+Next:rgelt:pceltFetched:!**auto generated**!COM Interfaces-OBJIDL.IEnumUnknown!primitives!public! !
+!
 
 !OS.COM.IEnumUnknown class methodsFor!
 
@@ -42,6 +44,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IUnknown! !
-!OS.COM.IEnumUnknown class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IEnumUnknown class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumUnknown class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

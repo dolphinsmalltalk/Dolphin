@@ -151,26 +151,28 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_type put: anInteger! !
-!OS.COM.STATSTG categoriesFor: #atime!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #atime:!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #cbSize!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #cbSize:!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #clsid!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #ctime!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #dwStgFmt!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #grfLocksSupported!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #grfLocksSupported:!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #grfMode!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #grfStateBits!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #isOLEStorage!public!testing! !
-!OS.COM.STATSTG categoriesFor: #isOLEStream!public!testing! !
-!OS.COM.STATSTG categoriesFor: #mtime!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #name!accessing!public! !
-!OS.COM.STATSTG categoriesFor: #name:!accessing!public! !
-!OS.COM.STATSTG categoriesFor: #pwcsName!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #pwcsName:!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #type!**compiled accessors**!public! !
-!OS.COM.STATSTG categoriesFor: #type:!**compiled accessors**!public! !
+!OS.COM.STATSTG categoriesForMethods!
+atime!**compiled accessors**!public! !
+atime:!**compiled accessors**!public! !
+cbSize!**compiled accessors**!public! !
+cbSize:!**compiled accessors**!public! !
+clsid!**compiled accessors**!public! !
+ctime!**compiled accessors**!public! !
+dwStgFmt!**compiled accessors**!public! !
+grfLocksSupported!**compiled accessors**!public! !
+grfLocksSupported:!**compiled accessors**!public! !
+grfMode!**compiled accessors**!public! !
+grfStateBits!**compiled accessors**!public! !
+isOLEStorage!public!testing! !
+isOLEStream!public!testing! !
+mtime!**compiled accessors**!public! !
+name!accessing!public! !
+name:!accessing!public! !
+pwcsName!**compiled accessors**!public! !
+pwcsName:!**compiled accessors**!public! !
+type!**compiled accessors**!public! !
+type:!**compiled accessors**!public! !
+!
 
 !OS.COM.STATSTG class methodsFor!
 
@@ -219,7 +221,9 @@ defineFields
 
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
-!OS.COM.STATSTG class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OS.COM.STATSTG class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.STATSTG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.STATSTG class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

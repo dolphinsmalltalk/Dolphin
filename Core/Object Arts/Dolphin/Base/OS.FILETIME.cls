@@ -74,14 +74,16 @@ integerValue: anInteger
 	FILETIME epoch."
 
 	bytes qwordAtOffset: 0 put: anInteger! !
-!OS.FILETIME categoriesFor: #asFILETIME!converting!public! !
-!OS.FILETIME categoriesFor: #asInteger!converting!public! !
-!OS.FILETIME categoriesFor: #asLocalTime!converting!public! !
-!OS.FILETIME categoriesFor: #asSYSTEMTIME!converting!public! !
-!OS.FILETIME categoriesFor: #asUTC!converting!public! !
-!OS.FILETIME categoriesFor: #basicAsSYSTEMTIME!converting!public! !
-!OS.FILETIME categoriesFor: #displayOn:!printing!public! !
-!OS.FILETIME categoriesFor: #integerValue:!accessing!public! !
+!OS.FILETIME categoriesForMethods!
+asFILETIME!converting!public! !
+asInteger!converting!public! !
+asLocalTime!converting!public! !
+asSYSTEMTIME!converting!public! !
+asUTC!converting!public! !
+basicAsSYSTEMTIME!converting!public! !
+displayOn:!printing!public! !
+integerValue:!accessing!public! !
+!
 
 !OS.FILETIME class methodsFor!
 
@@ -153,12 +155,14 @@ now
 	"Note that avoiding GetSystemTimePreciseAsFileTime is deliberate, as the less precise value from GetSystemTimeAsFileTime is that used to update file write times, etc."
 	Kernel32 getSystemTimeAsFileTime: answer.
 	^answer! !
-!OS.FILETIME class categoriesFor: #defineFields!public!template definition! !
-!OS.FILETIME class categoriesFor: #fromInteger:!instance creation!public! !
-!OS.FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !
-!OS.FILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!OS.FILETIME class categoriesFor: #fromUnixTime:!instance creation!public! !
-!OS.FILETIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.FILETIME class categoriesFor: #initialize!development!initializing!private! !
-!OS.FILETIME class categoriesFor: #now!instance creation!public! !
+!OS.FILETIME class categoriesForMethods!
+defineFields!public!template definition! !
+fromInteger:!instance creation!public! !
+fromLocalTime:!instance creation!public! !
+fromSYSTEMTIME:!instance creation!public! !
+fromUnixTime:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+now!instance creation!public! !
+!
 

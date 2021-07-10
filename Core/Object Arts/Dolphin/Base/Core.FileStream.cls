@@ -550,53 +550,55 @@ writePage
 		position: pageBase - 1;
 		write: collection count: readLimit.
 	flags := flags bitAnd: ##(BufferUpdatedMask bitInvert)! !
-!Core.FileStream categoriesFor: #absolutePosition!accessing!private! !
-!Core.FileStream categoriesFor: #atEnd!public!testing! !
-!Core.FileStream categoriesFor: #basicNext!accessing!public! !
-!Core.FileStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!Core.FileStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
-!Core.FileStream categoriesFor: #basicNextPut:!accessing!private! !
-!Core.FileStream categoriesFor: #basicUpTo:!accessing!private! !
-!Core.FileStream categoriesFor: #beBinary!modes!public! !
-!Core.FileStream categoriesFor: #beText!modes!public! !
-!Core.FileStream categoriesFor: #bufferClassFor:mode:type:!instance creation!private! !
-!Core.FileStream categoriesFor: #close!operations!public! !
-!Core.FileStream categoriesFor: #contents!accessing!public! !
-!Core.FileStream categoriesFor: #externalType!accessing!public! !
-!Core.FileStream categoriesFor: #file!accessing!public! !
-!Core.FileStream categoriesFor: #file:mode:type:!instance creation!private! !
-!Core.FileStream categoriesFor: #flush!buffer!public! !
-!Core.FileStream categoriesFor: #free!operations!public! !
-!Core.FileStream categoriesFor: #fullFlush!buffer!public! !
-!Core.FileStream categoriesFor: #growCollection!operations!private! !
-!Core.FileStream categoriesFor: #initialRead!buffer!private! !
-!Core.FileStream categoriesFor: #isBinary!public!testing! !
-!Core.FileStream categoriesFor: #isBufferDirty!buffer!private! !
-!Core.FileStream categoriesFor: #isText!public!testing! !
-!Core.FileStream categoriesFor: #isWriteable!public!testing! !
-!Core.FileStream categoriesFor: #lastPosition!accessing!private! !
-!Core.FileStream categoriesFor: #makeBufferOfSize:!buffer!private! !
-!Core.FileStream categoriesFor: #name!accessing!private! !
-!Core.FileStream categoriesFor: #next!accessing!public! !
-!Core.FileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!Core.FileStream categoriesFor: #nextAvailable!accessing!public! !
-!Core.FileStream categoriesFor: #nextPut:!accessing!public! !
-!Core.FileStream categoriesFor: #nextPutAll:!accessing!public! !
-!Core.FileStream categoriesFor: #on:file:!initializing!private! !
-!Core.FileStream categoriesFor: #ownsFile!accessing!public! !
-!Core.FileStream categoriesFor: #ownsFile:!accessing!public! !
-!Core.FileStream categoriesFor: #position!accessing!public! !
-!Core.FileStream categoriesFor: #position:!accessing!positioning!public! !
-!Core.FileStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
-!Core.FileStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!Core.FileStream categoriesFor: #readPageFor:!buffer!private! !
-!Core.FileStream categoriesFor: #reset!positioning!public! !
-!Core.FileStream categoriesFor: #reverseContents!accessing!public! !
-!Core.FileStream categoriesFor: #setToEnd!positioning!public! !
-!Core.FileStream categoriesFor: #size!accessing!public! !
-!Core.FileStream categoriesFor: #skip:!positioning!public! !
-!Core.FileStream categoriesFor: #updateLimits!accessing!positioning!private! !
-!Core.FileStream categoriesFor: #writePage!helpers!private! !
+!Core.FileStream categoriesForMethods!
+absolutePosition!accessing!private! !
+atEnd!public!testing! !
+basicNext!accessing!public! !
+basicNext:into:startingAt:!accessing!public! !
+basicNext:putAll:startingAt:!accessing!private! !
+basicNextPut:!accessing!private! !
+basicUpTo:!accessing!private! !
+beBinary!modes!public! !
+beText!modes!public! !
+bufferClassFor:mode:type:!instance creation!private! !
+close!operations!public! !
+contents!accessing!public! !
+externalType!accessing!public! !
+file!accessing!public! !
+file:mode:type:!instance creation!private! !
+flush!buffer!public! !
+free!operations!public! !
+fullFlush!buffer!public! !
+growCollection!operations!private! !
+initialRead!buffer!private! !
+isBinary!public!testing! !
+isBufferDirty!buffer!private! !
+isText!public!testing! !
+isWriteable!public!testing! !
+lastPosition!accessing!private! !
+makeBufferOfSize:!buffer!private! !
+name!accessing!private! !
+next!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextAvailable!accessing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+on:file:!initializing!private! !
+ownsFile!accessing!public! !
+ownsFile:!accessing!public! !
+position!accessing!public! !
+position:!accessing!positioning!public! !
+primitiveBasicNextPut:!accessing!private! !
+primitiveNextPut:!accessing!private! !
+readPageFor:!buffer!private! !
+reset!positioning!public! !
+reverseContents!accessing!public! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+skip:!positioning!public! !
+updateLimits!accessing!positioning!private! !
+writePage!helpers!private! !
+!
 
 Core.FileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!
 Core.FileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #externalType #isBinary #isEmpty #isText #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
@@ -804,25 +806,27 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
-!Core.FileStream class categoriesFor: #bufferSize!constants!public! !
-!Core.FileStream class categoriesFor: #file:mode:type:!instance creation!private! !
-!Core.FileStream class categoriesFor: #initialize!development!initializing!private! !
-!Core.FileStream class categoriesFor: #on:!instance creation!public! !
-!Core.FileStream class categoriesFor: #on:text:!instance creation!public! !
-!Core.FileStream class categoriesFor: #on:type:!instance creation!public! !
-!Core.FileStream class categoriesFor: #open:mode:check:type:!instance creation!private! !
-!Core.FileStream class categoriesFor: #read:!instance creation!public! !
-!Core.FileStream class categoriesFor: #read:text:!instance creation!public! !
-!Core.FileStream class categoriesFor: #read:type:!instance creation!public! !
-!Core.FileStream class categoriesFor: #readWrite:!instance creation!public! !
-!Core.FileStream class categoriesFor: #readWrite:text:!instance creation!public! !
-!Core.FileStream class categoriesFor: #write:!instance creation!public! !
-!Core.FileStream class categoriesFor: #write:mode:!instance creation!public! !
-!Core.FileStream class categoriesFor: #write:mode:check:text:!instance creation!public! !
-!Core.FileStream class categoriesFor: #write:mode:check:type:!instance creation!public! !
-!Core.FileStream class categoriesFor: #write:mode:type:!instance creation!public! !
-!Core.FileStream class categoriesFor: #write:text:!instance creation!public! !
-!Core.FileStream class categoriesFor: #write:type:!public! !
+!Core.FileStream class categoriesForMethods!
+bufferSize!constants!public! !
+file:mode:type:!instance creation!private! !
+initialize!development!initializing!private! !
+on:!instance creation!public! !
+on:text:!instance creation!public! !
+on:type:!instance creation!public! !
+open:mode:check:type:!instance creation!private! !
+read:!instance creation!public! !
+read:text:!instance creation!public! !
+read:type:!instance creation!public! !
+readWrite:!instance creation!public! !
+readWrite:text:!instance creation!public! !
+write:!instance creation!public! !
+write:mode:!instance creation!public! !
+write:mode:check:text:!instance creation!public! !
+write:mode:check:type:!instance creation!public! !
+write:mode:type:!instance creation!public! !
+write:text:!instance creation!public! !
+write:type:!public! !
+!
 
 Core.FileStream class methodProtocol: #'FileStream factory' attributes: #(#ansi #readOnly) selectors: #(#read: #read:type: #write: #write:mode: #write:mode:check:type:)!
 

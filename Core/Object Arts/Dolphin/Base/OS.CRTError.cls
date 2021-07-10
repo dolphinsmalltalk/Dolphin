@@ -50,10 +50,12 @@ strerror
 		errnum: self errno) == 0
 		ifTrue: [buf trimNulls]
 		ifFalse: [self errno printString]! !
-!OS.CRTError categoriesFor: #_descriptionArguments!displaying!public! !
-!OS.CRTError categoriesFor: #_descriptionFormat!displaying!public! !
-!OS.CRTError categoriesFor: #errno!accessing!public! !
-!OS.CRTError categoriesFor: #initialize!initializing!private! !
-!OS.CRTError categoriesFor: #messageText!accessing!public! !
-!OS.CRTError categoriesFor: #strerror!accessing!public! !
+!OS.CRTError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+errno!accessing!public! !
+initialize!initializing!private! !
+messageText!accessing!public! !
+strerror!accessing!public! !
+!
 

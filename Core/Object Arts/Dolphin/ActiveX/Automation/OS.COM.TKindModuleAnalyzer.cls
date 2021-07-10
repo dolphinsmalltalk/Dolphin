@@ -57,13 +57,15 @@ suggestedGlobalName
 	generated to represent the receiver's type."
 
 	^self name, 'Library'! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #dllNameIfNone:!accessing!public! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #getDllEntry:!accessing!private! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #isGeneratedAs:!private!testing! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!OS.COM.TKindModuleAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
+!OS.COM.TKindModuleAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+dllNameIfNone:!accessing!public! !
+getDllEntry:!accessing!private! !
+includeIDLInClassComment!constants!private! !
+isGeneratedAs:!private!testing! !
+suggestedBinding!accessing!private! !
+suggestedGlobalName!accessing!private! !
+!
 
 !OS.COM.TKindModuleAnalyzer class methodsFor!
 
@@ -71,5 +73,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_MODULE! !
-!OS.COM.TKindModuleAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindModuleAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

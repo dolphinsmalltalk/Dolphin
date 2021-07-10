@@ -72,18 +72,22 @@ size
 						lpszFile: nil
 						cch: 0].
 	^size! !
-!UI.DroppedFilesList categoriesFor: #add:!adding!public! !
-!UI.DroppedFilesList categoriesFor: #at:!accessing!public! !
-!UI.DroppedFilesList categoriesFor: #at:put:!accessing!public! !
-!UI.DroppedFilesList categoriesFor: #basicFree!finalizing!private! !
-!UI.DroppedFilesList categoriesFor: #free!finalizing!public! !
-!UI.DroppedFilesList categoriesFor: #position!public! !
-!UI.DroppedFilesList categoriesFor: #setHandle:!initializing!private! !
-!UI.DroppedFilesList categoriesFor: #size!accessing!public! !
+!UI.DroppedFilesList categoriesForMethods!
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!finalizing!private! !
+free!finalizing!public! !
+position!public! !
+setHandle:!initializing!private! !
+size!accessing!public! !
+!
 
 !UI.DroppedFilesList class methodsFor!
 
 fromHandle: anExternalHandle 
 	^self new setHandle: anExternalHandle! !
-!UI.DroppedFilesList class categoriesFor: #fromHandle:!public! !
+!UI.DroppedFilesList class categoriesForMethods!
+fromHandle:!public! !
+!
 

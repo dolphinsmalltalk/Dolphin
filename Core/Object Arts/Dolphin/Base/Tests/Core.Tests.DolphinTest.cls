@@ -117,18 +117,20 @@ verifyPropertyManagerOf: subject
 
 versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
-!Core.Tests.DolphinTest categoriesFor: #assertIs:deepCopyOf:!public!unit tests! !
-!Core.Tests.DolphinTest categoriesFor: #assertIs:deepCopyOf:visited:!private!unit tests! !
-!Core.Tests.DolphinTest categoriesFor: #compare:to:epsilon:!comparing!public! !
-!Core.Tests.DolphinTest categoriesFor: #createPackage:!helpers!public! !
-!Core.Tests.DolphinTest categoriesFor: #createTestPackage!helpers!public! !
-!Core.Tests.DolphinTest categoriesFor: #failureLog!Accessing!public! !
-!Core.Tests.DolphinTest categoriesFor: #isAtLeastVmVersion:!private!testing! !
-!Core.Tests.DolphinTest categoriesFor: #isLogging!Accessing!public! !
-!Core.Tests.DolphinTest categoriesFor: #isOnline!public!unit tests! !
-!Core.Tests.DolphinTest categoriesFor: #methodContextClass!constants!private! !
-!Core.Tests.DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
-!Core.Tests.DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
-!Core.Tests.DolphinTest categoriesFor: #verifyPropertyManagerOf:!helpers!private! !
-!Core.Tests.DolphinTest categoriesFor: #versionFromParts:!public!unit tests! !
+!Core.Tests.DolphinTest categoriesForMethods!
+assertIs:deepCopyOf:!public!unit tests! !
+assertIs:deepCopyOf:visited:!private!unit tests! !
+compare:to:epsilon:!comparing!public! !
+createPackage:!helpers!public! !
+createTestPackage!helpers!public! !
+failureLog!Accessing!public! !
+isAtLeastVmVersion:!private!testing! !
+isLogging!Accessing!public! !
+isOnline!public!unit tests! !
+methodContextClass!constants!private! !
+runKnownBug:test:!public!unit tests! !
+shouldRaiseZeroDivide:!Accessing!public! !
+verifyPropertyManagerOf:!helpers!private! !
+versionFromParts:!public!unit tests! !
+!
 

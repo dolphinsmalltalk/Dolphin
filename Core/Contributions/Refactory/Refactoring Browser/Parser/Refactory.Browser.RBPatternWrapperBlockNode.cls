@@ -37,11 +37,13 @@ wrappedNode
 wrappedNode: aRBProgramNode 
 	wrappedNode := aRBProgramNode.
 	aRBProgramNode parent: self! !
-!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #copyInContext:!matching!public! !
-!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #match:inContext:!matching!public! !
-!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #precedence!accessing!public! !
-!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #wrappedNode!accessing!public! !
-!Refactory.Browser.RBPatternWrapperBlockNode categoriesFor: #wrappedNode:!accessing!public! !
+!Refactory.Browser.RBPatternWrapperBlockNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+copyInContext:!matching!public! !
+match:inContext:!matching!public! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+wrappedNode!accessing!public! !
+wrappedNode:!accessing!public! !
+!
 

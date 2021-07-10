@@ -40,11 +40,13 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
-!Graphics.Gdiplus.POINTF categoriesFor: #asDword!converting!public! !
-!Graphics.Gdiplus.POINTF categoriesFor: #x!**compiled accessors**!public! !
-!Graphics.Gdiplus.POINTF categoriesFor: #x:!**compiled accessors**!public! !
-!Graphics.Gdiplus.POINTF categoriesFor: #y!**compiled accessors**!public! !
-!Graphics.Gdiplus.POINTF categoriesFor: #y:!**compiled accessors**!public! !
+!Graphics.Gdiplus.POINTF categoriesForMethods!
+asDword!converting!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.POINTF class methodsFor!
 
@@ -73,6 +75,8 @@ x: x y: y
 				floatAtOffset: 0 put: x;
 				floatAtOffset: 4 put: y;
 				yourself)! !
-!Graphics.Gdiplus.POINTF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.POINTF class categoriesFor: #x:y:!instance creation!public! !
+!Graphics.Gdiplus.POINTF class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+x:y:!instance creation!public! !
+!
 

@@ -55,13 +55,15 @@ scanCode
 	"Answer the scan code."
 
 	^self data highWord bitAnd: 16rFF! !
-!UI.KeyEvent categoriesFor: #code!accessing!public! !
-!UI.KeyEvent categoriesFor: #data!accessing!public! !
-!UI.KeyEvent categoriesFor: #isAlreadyDown!public!testing! !
-!UI.KeyEvent categoriesFor: #isAltKeyDown!public!testing! !
-!UI.KeyEvent categoriesFor: #isBeingReleased!public!testing! !
-!UI.KeyEvent categoriesFor: #isExtended!public!testing! !
-!UI.KeyEvent categoriesFor: #printLParamOn:!printing!public! !
-!UI.KeyEvent categoriesFor: #repeatCount!accessing!public! !
-!UI.KeyEvent categoriesFor: #scanCode!accessing!public! !
+!UI.KeyEvent categoriesForMethods!
+code!accessing!public! !
+data!accessing!public! !
+isAlreadyDown!public!testing! !
+isAltKeyDown!public!testing! !
+isBeingReleased!public!testing! !
+isExtended!public!testing! !
+printLParamOn:!printing!public! !
+repeatCount!accessing!public! !
+scanCode!accessing!public! !
+!
 

@@ -67,22 +67,26 @@ storeOn: aStream
 	aStream nextPutAll: ' categories: '.
 	categories asArray storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #categories!accessing!public! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #categories:!initialize/release!public! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.CategoryEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.CategoryEnvironment categoriesForMethods!
+categories!accessing!public! !
+categories:!initialize/release!public! !
+classNames!accessing/classes!public! !
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+postCopy!copying!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.CategoryEnvironment class methodsFor!
 
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
 		categories: aCollection; yourself! !
-!Refactory.Browser.CategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
+!Refactory.Browser.CategoryEnvironment class categoriesForMethods!
+onEnvironment:categories:!instance creation!public! !
+!
 

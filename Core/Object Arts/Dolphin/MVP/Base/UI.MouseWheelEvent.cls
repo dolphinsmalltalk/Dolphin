@@ -20,6 +20,8 @@ wheelRotation
 	"Answer the <number> of notches that the mouse wheel was rotated to generate this event."
 
 	^wParam highPartSigned / WHEEL_DELTA! !
-!UI.MouseWheelEvent categoriesFor: #isVertical!public! !
-!UI.MouseWheelEvent categoriesFor: #wheelRotation!public! !
+!UI.MouseWheelEvent categoriesForMethods!
+isVertical!public! !
+wheelRotation!public! !
+!
 

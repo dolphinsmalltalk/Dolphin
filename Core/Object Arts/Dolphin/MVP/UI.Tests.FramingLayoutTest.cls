@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FramingLayoutTest'
 	instanceVariableNames: ''
@@ -93,8 +93,10 @@ testResizeParentRelative
 				+ 5.
 	shell extent: (shell calcExtentFromClientExtent: marginExtents).
 	self assert: button rectangle extent equals: 5 @ 5! !
-!UI.Tests.FramingLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!UI.Tests.FramingLayoutTest categoriesFor: #testCircularEdgeConstraint!public!unit tests! !
-!UI.Tests.FramingLayoutTest categoriesFor: #testFramingCalculationSerialisation!public!unit tests! !
-!UI.Tests.FramingLayoutTest categoriesFor: #testResizeParentRelative!public!unit tests! !
+!UI.Tests.FramingLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+testCircularEdgeConstraint!public!unit tests! !
+testFramingCalculationSerialisation!public!unit tests! !
+testResizeParentRelative!public!unit tests! !
+!
 

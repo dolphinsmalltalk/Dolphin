@@ -73,11 +73,13 @@ Suspend
 
 	<virtual stdcall: hresult 10>
 	^self invalidCall: _failureCode! !
-!MSXML.IMXReaderControl categoriesFor: #Abort!**auto generated**!COM Interfaces-IMXReaderControl!public! !
-!MSXML.IMXReaderControl categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IMXReaderControl categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IMXReaderControl categoriesFor: #Resume!**auto generated**!COM Interfaces-IMXReaderControl!public! !
-!MSXML.IMXReaderControl categoriesFor: #Suspend!**auto generated**!COM Interfaces-IMXReaderControl!public! !
+!MSXML.IMXReaderControl categoriesForMethods!
+Abort!**auto generated**!COM Interfaces-IMXReaderControl!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+Resume!**auto generated**!COM Interfaces-IMXReaderControl!public! !
+Suspend!**auto generated**!COM Interfaces-IMXReaderControl!public! !
+!
 
 !MSXML.IMXReaderControl class methodsFor!
 
@@ -90,5 +92,7 @@ defineFunctions
 		defineFunction: #Resume;
 		defineFunction: #Suspend
 ! !
-!MSXML.IMXReaderControl class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IMXReaderControl class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -339,48 +339,50 @@ setText: text
 	to the clipboard the text is considered to terminate at the first null character."
 
 	self setRegisteredFormat: #String data: text! !
-!UI.Clipboard categoriesFor: #addRegisteredFormat:id:converter:!operations!public! !
-!UI.Clipboard categoriesFor: #apply:!operations!private! !
-!UI.Clipboard categoriesFor: #availableFormatIds!enquiries!public! !
-!UI.Clipboard categoriesFor: #availableFormats!enquiries!public! !
-!UI.Clipboard categoriesFor: #basicEmpty!operations!private! !
-!UI.Clipboard categoriesFor: #basicFree!private!realizing/unrealizing! !
-!UI.Clipboard categoriesFor: #basicRealize!public!realizing/unrealizing! !
-!UI.Clipboard categoriesFor: #close!public!realizing/unrealizing! !
-!UI.Clipboard categoriesFor: #empty!operations!public! !
-!UI.Clipboard categoriesFor: #errorFormatNotAvailable:!exceptions!public! !
-!UI.Clipboard categoriesFor: #free!public!realizing/unrealizing! !
-!UI.Clipboard categoriesFor: #getBitmap!accessing!public! !
-!UI.Clipboard categoriesFor: #getBitmapIfNone:!accessing!public! !
-!UI.Clipboard categoriesFor: #getDIBSection!accessing!public! !
-!UI.Clipboard categoriesFor: #getDIBSectionIfNone:!accessing!public! !
-!UI.Clipboard categoriesFor: #getFormatName:!accessing!public! !
-!UI.Clipboard categoriesFor: #getObject!accessing!public! !
-!UI.Clipboard categoriesFor: #getObjectClass!accessing!public! !
-!UI.Clipboard categoriesFor: #getObjectClassIfNone:!accessing!public! !
-!UI.Clipboard categoriesFor: #getObjectIfNone:!accessing!public! !
-!UI.Clipboard categoriesFor: #getRegisteredFormat:ifNone:!accessing!public! !
-!UI.Clipboard categoriesFor: #getText!accessing!public! !
-!UI.Clipboard categoriesFor: #getTextIfNone:!accessing!public! !
-!UI.Clipboard categoriesFor: #getTextOrEmpty!accessing!public! !
-!UI.Clipboard categoriesFor: #initialize!initializing!private! !
-!UI.Clipboard categoriesFor: #isBitmapAvailable!public!testing! !
-!UI.Clipboard categoriesFor: #isDIBAvailable!public!testing! !
-!UI.Clipboard categoriesFor: #isFormatAvailable:!public!testing! !
-!UI.Clipboard categoriesFor: #isFormatIdAvailable:!private!testing! !
-!UI.Clipboard categoriesFor: #isFormatRegistered:!public!testing! !
-!UI.Clipboard categoriesFor: #isObjectAvailable!public!testing! !
-!UI.Clipboard categoriesFor: #isTextAvailable!public!testing! !
-!UI.Clipboard categoriesFor: #open!public!realizing/unrealizing! !
-!UI.Clipboard categoriesFor: #registerFormat:!operations!public! !
-!UI.Clipboard categoriesFor: #registerFormat:converter:!operations!public! !
-!UI.Clipboard categoriesFor: #setBitmap:!accessing!public! !
-!UI.Clipboard categoriesFor: #setBitmap:format:!accessing!public! !
-!UI.Clipboard categoriesFor: #setData:formatId:!accessing!private! !
-!UI.Clipboard categoriesFor: #setDIB:!accessing!public! !
-!UI.Clipboard categoriesFor: #setObject:!accessing!public! !
-!UI.Clipboard categoriesFor: #setRegisteredFormat:data:!accessing!public! !
-!UI.Clipboard categoriesFor: #setText:!accessing!public! !
+!UI.Clipboard categoriesForMethods!
+addRegisteredFormat:id:converter:!operations!public! !
+apply:!operations!private! !
+availableFormatIds!enquiries!public! !
+availableFormats!enquiries!public! !
+basicEmpty!operations!private! !
+basicFree!private!realizing/unrealizing! !
+basicRealize!public!realizing/unrealizing! !
+close!public!realizing/unrealizing! !
+empty!operations!public! !
+errorFormatNotAvailable:!exceptions!public! !
+free!public!realizing/unrealizing! !
+getBitmap!accessing!public! !
+getBitmapIfNone:!accessing!public! !
+getDIBSection!accessing!public! !
+getDIBSectionIfNone:!accessing!public! !
+getFormatName:!accessing!public! !
+getObject!accessing!public! !
+getObjectClass!accessing!public! !
+getObjectClassIfNone:!accessing!public! !
+getObjectIfNone:!accessing!public! !
+getRegisteredFormat:ifNone:!accessing!public! !
+getText!accessing!public! !
+getTextIfNone:!accessing!public! !
+getTextOrEmpty!accessing!public! !
+initialize!initializing!private! !
+isBitmapAvailable!public!testing! !
+isDIBAvailable!public!testing! !
+isFormatAvailable:!public!testing! !
+isFormatIdAvailable:!private!testing! !
+isFormatRegistered:!public!testing! !
+isObjectAvailable!public!testing! !
+isTextAvailable!public!testing! !
+open!public!realizing/unrealizing! !
+registerFormat:!operations!public! !
+registerFormat:converter:!operations!public! !
+setBitmap:!accessing!public! !
+setBitmap:format:!accessing!public! !
+setData:formatId:!accessing!private! !
+setDIB:!accessing!public! !
+setObject:!accessing!public! !
+setRegisteredFormat:data:!accessing!public! !
+setText:!accessing!public! !
+!
 
 !UI.Clipboard class methodsFor!
 
@@ -411,9 +413,11 @@ onStartup
 	initialization."
 
 	Current := nil! !
-!UI.Clipboard class categoriesFor: #current!instance creation!public! !
-!UI.Clipboard class categoriesFor: #icon!constants!public! !
-!UI.Clipboard class categoriesFor: #new!instance creation!public! !
-!UI.Clipboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.Clipboard class categoriesFor: #onStartup!event handling!private! !
+!UI.Clipboard class categoriesForMethods!
+current!instance creation!public! !
+icon!constants!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+onStartup!event handling!private! !
+!
 

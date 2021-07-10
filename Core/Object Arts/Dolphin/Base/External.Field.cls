@@ -80,17 +80,19 @@ valueType
 	"Private - Answer the class of Smalltalk object to be used to represent the values stored in the field described by the receiver."
 
 	^Object! !
-!External.Field categoriesFor: #alignment!constants!public! !
-!External.Field categoriesFor: #beFiller!modes!public! !
-!External.Field categoriesFor: #byteSize!accessing!private! !
-!External.Field categoriesFor: #isFiller!private!testing! !
-!External.Field categoriesFor: #isFixedSize!private!testing! !
-!External.Field categoriesFor: #offset!accessing!private! !
-!External.Field categoriesFor: #offset:!accessing!private! !
-!External.Field categoriesFor: #printOn:!printing!public! !
-!External.Field categoriesFor: #structClass!accessing!private! !
-!External.Field categoriesFor: #structClass:!accessing!private! !
-!External.Field categoriesFor: #valueType!automatic generation!constants!private! !
+!External.Field categoriesForMethods!
+alignment!constants!public! !
+beFiller!modes!public! !
+byteSize!accessing!private! !
+isFiller!private!testing! !
+isFixedSize!private!testing! !
+offset!accessing!private! !
+offset:!accessing!private! !
+printOn:!printing!public! !
+structClass!accessing!private! !
+structClass:!accessing!private! !
+valueType!automatic generation!constants!private! !
+!
 
 !External.Field class methodsFor!
 
@@ -99,5 +101,7 @@ filler
 	(it cannot be read or written)."
 
 	^self new beFiller! !
-!External.Field class categoriesFor: #filler!instance creation!public! !
+!External.Field class categoriesForMethods!
+filler!instance creation!public! !
+!
 

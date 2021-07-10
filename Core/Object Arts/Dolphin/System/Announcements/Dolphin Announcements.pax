@@ -97,13 +97,17 @@ asWeakMessageSend
 		receiver: receiver
 		selector: selector
 		arguments: args copy! !
-!Core.MessageSend categoriesFor: #asWeakMessageSend!commands!public! !
+!Core.MessageSend categoriesForMethods!
+asWeakMessageSend!commands!public! !
+!
 
 !Core.MessageSendAbstract methodsFor!
 
 announcementSubscriber
 	^self receiver! !
-!Core.MessageSendAbstract categoriesFor: #announcementSubscriber!public! !
+!Core.MessageSendAbstract categoriesForMethods!
+announcementSubscriber!public! !
+!
 
 !Core.Symbol methodsFor!
 
@@ -119,8 +123,10 @@ handlesAnnouncement: anAnnouncement
 		announce: #FOO should raise DNU bar"
 
 	^anAnnouncement == self! !
-!Core.Symbol categoriesFor: #asAnnouncement!converting!public! !
-!Core.Symbol categoriesFor: #handlesAnnouncement:!converting!public! !
+!Core.Symbol categoriesForMethods!
+asAnnouncement!converting!public! !
+handlesAnnouncement:!converting!public! !
+!
 
 !Kernel.BlockClosure methodsFor!
 
@@ -130,8 +136,10 @@ announcementSubscriber
 asWeakMessageSend
 	self receiver notNil ifTrue: [self error: 'Only clean blocks can be weak'].
 	^self! !
-!Kernel.BlockClosure categoriesFor: #announcementSubscriber!public! !
-!Kernel.BlockClosure categoriesFor: #asWeakMessageSend!public! !
+!Kernel.BlockClosure categoriesForMethods!
+announcementSubscriber!public! !
+asWeakMessageSend!public! !
+!
 
 "End of package definition"!
 

@@ -92,19 +92,21 @@ validateUserInterface
 		ifTrue: 
 			["The button text should be updated"
 			self text: query text]! !
-!UI.CommandButton categoriesFor: #command!accessing!public! !
-!UI.CommandButton categoriesFor: #command:!accessing!public! !
-!UI.CommandButton categoriesFor: #commandDescription!accessing!public! !
-!UI.CommandButton categoriesFor: #commandDescription:!accessing!public! !
-!UI.CommandButton categoriesFor: #commandSource!accessing!public! !
-!UI.CommandButton categoriesFor: #defaultExtent!constants!private! !
-!UI.CommandButton categoriesFor: #defaultId!accessing!private! !
-!UI.CommandButton categoriesFor: #displayOnFormats!displaying!private! !
-!UI.CommandButton categoriesFor: #initialize!initializing!private! !
-!UI.CommandButton categoriesFor: #isChecked!accessing!public! !
-!UI.CommandButton categoriesFor: #isChecked:!accessing!public! !
-!UI.CommandButton categoriesFor: #onActionPerformed!event handling!public! !
-!UI.CommandButton categoriesFor: #validateUserInterface!operations!public! !
+!UI.CommandButton categoriesForMethods!
+command!accessing!public! !
+command:!accessing!public! !
+commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
+commandSource!accessing!public! !
+defaultExtent!constants!private! !
+defaultId!accessing!private! !
+displayOnFormats!displaying!private! !
+initialize!initializing!private! !
+isChecked!accessing!public! !
+isChecked:!accessing!public! !
+onActionPerformed!event handling!public! !
+validateUserInterface!operations!public! !
+!
 
 !UI.CommandButton class methodsFor!
 
@@ -139,7 +141,9 @@ initialize
 
 themePartName
 	^'BUTTON'! !
-!UI.CommandButton class categoriesFor: #icon!constants!public! !
-!UI.CommandButton class categoriesFor: #initialize!development!initializing!private! !
-!UI.CommandButton class categoriesFor: #themePartName!constants!public!theming! !
+!UI.CommandButton class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+themePartName!constants!public!theming! !
+!
 

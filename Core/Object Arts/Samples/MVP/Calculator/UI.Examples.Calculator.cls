@@ -60,12 +60,14 @@ print: aString
 
 printNewline
 	self print: String lineDelimiter! !
-!UI.Examples.Calculator categoriesFor: #clearTape!commands!public! !
-!UI.Examples.Calculator categoriesFor: #createComponents!initializing!private! !
-!UI.Examples.Calculator categoriesFor: #displayIt!commands!public! !
-!UI.Examples.Calculator categoriesFor: #evaluateIt!commands!public! !
-!UI.Examples.Calculator categoriesFor: #print:!helpers!private! !
-!UI.Examples.Calculator categoriesFor: #printNewline!private! !
+!UI.Examples.Calculator categoriesForMethods!
+clearTape!commands!public! !
+createComponents!initializing!private! !
+displayIt!commands!public! !
+evaluateIt!commands!public! !
+print:!helpers!private! !
+printNewline!private! !
+!
 
 !UI.Examples.Calculator class methodsFor!
 
@@ -103,11 +105,13 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!UI.Examples.Calculator class categoriesFor: #displayOn:!displaying!public! !
-!UI.Examples.Calculator class categoriesFor: #icon!constants!examples!public! !
-!UI.Examples.Calculator class categoriesFor: #initialize!development!initializing!private! !
-!UI.Examples.Calculator class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Examples.Calculator class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.Examples.Calculator class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!examples!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 
 UI.Examples.Calculator class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

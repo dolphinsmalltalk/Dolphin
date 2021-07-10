@@ -16,5 +16,7 @@ _descriptionFormat
 
 	^'This copy of Dolphin Smalltalk has not been installed correctly; please re-install from the original source medium.'
 ! !
-!Tools.InvalidInstallationError categoriesFor: #_descriptionFormat!displaying!public! !
+!Tools.InvalidInstallationError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

@@ -1055,122 +1055,124 @@ to: pTo
 	Helpstring: The message's principle (To header) recipients."
 
 	self put_To: pTo! !
-!CDO.IMessage categoriesFor: #addAttachment:!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #addAttachment:userName:password:!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #AddAttachment:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #addRelatedBodyPart:reference:referenceType:!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #addRelatedBodyPart:reference:referenceType:userName:password:!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #AddRelatedBodyPart:Reference:ReferenceType:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #attachments!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #autoGenerateTextBody!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #autoGenerateTextBody:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #bcc!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #bcc:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #bodyPart!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #cc!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #cc:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #configuration!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #configuration:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #createMHTMLBody:!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #CreateMHTMLBody:Flags:UserName:Password:!**auto generated**!COM Interfaces-IMessage!public! !
-!CDO.IMessage categoriesFor: #dataSource!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #dsnOptions!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #dsnOptions:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #envelopeFields!properties!public! !
-!CDO.IMessage categoriesFor: #fields!properties!public! !
-!CDO.IMessage categoriesFor: #followUpTo!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #followUpTo:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #forward!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #Forward:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #from!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #from:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #get_Attachments:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_BodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_CC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_EnvelopeFields:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_From:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_HTMLBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_ReceivedTime:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_SentOn:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_TextBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #get_To:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #getInterface:!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #getStream!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #GetStream:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #htmlBody!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #htmlBody:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #htmlBodyPart!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.IMessage categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.IMessage categoriesFor: #keywords!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #keywords:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #mdnRequested!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #mdnRequested:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #mimeFormatted!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #mimeFormatted:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #newsgroups!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #newsgroups:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #organization!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #organization:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #Post!**auto generated**!COM Interfaces-IMessage!public! !
-!CDO.IMessage categoriesFor: #postReply!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #PostReply:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_CC:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_From:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #put_To:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #putref_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #receivedTime!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #reply!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #Reply:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #replyAll!**auto generated**!methods!public! !
-!CDO.IMessage categoriesFor: #ReplyAll:!**auto generated**!COM Interfaces-IMessage!private! !
-!CDO.IMessage categoriesFor: #replyTo!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #replyTo:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #Send!**auto generated**!COM Interfaces-IMessage!public! !
-!CDO.IMessage categoriesFor: #sender!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #sender:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #sentOn!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #setConfiguration:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #subject!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #subject:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #textBody!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #textBody:!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #textBodyPart!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #to!**auto generated**!properties!public! !
-!CDO.IMessage categoriesFor: #to:!**auto generated**!properties!public! !
+!CDO.IMessage categoriesForMethods!
+addAttachment:!**auto generated**!methods!public! !
+addAttachment:userName:password:!**auto generated**!methods!public! !
+AddAttachment:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
+addRelatedBodyPart:reference:referenceType:!**auto generated**!methods!public! !
+addRelatedBodyPart:reference:referenceType:userName:password:!**auto generated**!methods!public! !
+AddRelatedBodyPart:Reference:ReferenceType:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
+attachments!**auto generated**!properties!public! !
+autoGenerateTextBody!**auto generated**!properties!public! !
+autoGenerateTextBody:!**auto generated**!properties!public! !
+bcc!**auto generated**!properties!public! !
+bcc:!**auto generated**!properties!public! !
+bodyPart!**auto generated**!properties!public! !
+cc!**auto generated**!properties!public! !
+cc:!**auto generated**!properties!public! !
+configuration!**auto generated**!properties!public! !
+configuration:!**auto generated**!properties!public! !
+createMHTMLBody:!**auto generated**!methods!public! !
+CreateMHTMLBody:Flags:UserName:Password:!**auto generated**!COM Interfaces-IMessage!public! !
+dataSource!**auto generated**!properties!public! !
+dsnOptions!**auto generated**!properties!public! !
+dsnOptions:!**auto generated**!properties!public! !
+envelopeFields!properties!public! !
+fields!properties!public! !
+followUpTo!**auto generated**!properties!public! !
+followUpTo:!**auto generated**!properties!public! !
+forward!**auto generated**!methods!public! !
+Forward:!**auto generated**!COM Interfaces-IMessage!private! !
+from!**auto generated**!properties!public! !
+from:!**auto generated**!properties!public! !
+get_Attachments:!**auto generated**!COM Interfaces-IMessage!private! !
+get_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+get_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
+get_BodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
+get_CC:!**auto generated**!COM Interfaces-IMessage!private! !
+get_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
+get_DataSource:!**auto generated**!COM Interfaces-IMessage!private! !
+get_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
+get_EnvelopeFields:!**auto generated**!COM Interfaces-IMessage!private! !
+get_Fields:!**auto generated**!COM Interfaces-IMessage!private! !
+get_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
+get_From:!**auto generated**!COM Interfaces-IMessage!private! !
+get_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
+get_HTMLBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
+get_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
+get_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
+get_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
+get_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
+get_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
+get_ReceivedTime:!**auto generated**!COM Interfaces-IMessage!private! !
+get_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
+get_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
+get_SentOn:!**auto generated**!COM Interfaces-IMessage!private! !
+get_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
+get_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+get_TextBodyPart:!**auto generated**!COM Interfaces-IMessage!private! !
+get_To:!**auto generated**!COM Interfaces-IMessage!private! !
+getInterface:!**auto generated**!methods!public! !
+GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IMessage!private! !
+getStream!**auto generated**!methods!public! !
+GetStream:!**auto generated**!COM Interfaces-IMessage!private! !
+htmlBody!**auto generated**!properties!public! !
+htmlBody:!**auto generated**!properties!public! !
+htmlBodyPart!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+keywords!**auto generated**!properties!public! !
+keywords:!**auto generated**!properties!public! !
+mdnRequested!**auto generated**!properties!public! !
+mdnRequested:!**auto generated**!properties!public! !
+mimeFormatted!**auto generated**!properties!public! !
+mimeFormatted:!**auto generated**!properties!public! !
+newsgroups!**auto generated**!properties!public! !
+newsgroups:!**auto generated**!properties!public! !
+organization!**auto generated**!properties!public! !
+organization:!**auto generated**!properties!public! !
+Post!**auto generated**!COM Interfaces-IMessage!public! !
+postReply!**auto generated**!methods!public! !
+PostReply:!**auto generated**!COM Interfaces-IMessage!private! !
+put_AutoGenerateTextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+put_BCC:!**auto generated**!COM Interfaces-IMessage!private! !
+put_CC:!**auto generated**!COM Interfaces-IMessage!private! !
+put_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
+put_DSNOptions:!**auto generated**!COM Interfaces-IMessage!private! !
+put_FollowUpTo:!**auto generated**!COM Interfaces-IMessage!private! !
+put_From:!**auto generated**!COM Interfaces-IMessage!private! !
+put_HTMLBody:!**auto generated**!COM Interfaces-IMessage!private! !
+put_Keywords:!**auto generated**!COM Interfaces-IMessage!private! !
+put_MDNRequested:!**auto generated**!COM Interfaces-IMessage!private! !
+put_MimeFormatted:!**auto generated**!COM Interfaces-IMessage!private! !
+put_Newsgroups:!**auto generated**!COM Interfaces-IMessage!private! !
+put_Organization:!**auto generated**!COM Interfaces-IMessage!private! !
+put_ReplyTo:!**auto generated**!COM Interfaces-IMessage!private! !
+put_Sender:!**auto generated**!COM Interfaces-IMessage!private! !
+put_Subject:!**auto generated**!COM Interfaces-IMessage!private! !
+put_TextBody:!**auto generated**!COM Interfaces-IMessage!private! !
+put_To:!**auto generated**!COM Interfaces-IMessage!private! !
+putref_Configuration:!**auto generated**!COM Interfaces-IMessage!private! !
+receivedTime!**auto generated**!properties!public! !
+reply!**auto generated**!methods!public! !
+Reply:!**auto generated**!COM Interfaces-IMessage!private! !
+replyAll!**auto generated**!methods!public! !
+ReplyAll:!**auto generated**!COM Interfaces-IMessage!private! !
+replyTo!**auto generated**!properties!public! !
+replyTo:!**auto generated**!properties!public! !
+Send!**auto generated**!COM Interfaces-IMessage!public! !
+sender!**auto generated**!properties!public! !
+sender:!**auto generated**!properties!public! !
+sentOn!**auto generated**!properties!public! !
+setConfiguration:!**auto generated**!properties!public! !
+subject!**auto generated**!properties!public! !
+subject:!**auto generated**!properties!public! !
+textBody!**auto generated**!properties!public! !
+textBody:!**auto generated**!properties!public! !
+textBodyPart!**auto generated**!properties!public! !
+to!**auto generated**!properties!public! !
+to:!**auto generated**!properties!public! !
+!
 
 !CDO.IMessage class methodsFor!
 
@@ -1298,6 +1300,8 @@ defineFunctions
 		defineFunction: #GetInterface:ppUnknown:
 			argumentTypes: 'bstr IDispatch**'
 ! !
-!CDO.IMessage class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDO.IMessage class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.IMessage class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -57,15 +57,17 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 				nextPutAll: each;
 				cr].
 	self productRegistryAt: self recentRegistryKey put: stream contents! !
-!UI.RegistryRecentMenu categoriesFor: #getRecentList!helpers!private! !
-!UI.RegistryRecentMenu categoriesFor: #initialize!initializing!private! !
-!UI.RegistryRecentMenu categoriesFor: #productRegistryAt:!accessing!private!product! !
-!UI.RegistryRecentMenu categoriesFor: #productRegistryAt:put:!accessing!private!product! !
-!UI.RegistryRecentMenu categoriesFor: #productRegistryKey!accessing!public! !
-!UI.RegistryRecentMenu categoriesFor: #recentRegistryKey!accessing!public! !
-!UI.RegistryRecentMenu categoriesFor: #recentRegistryKey:!accessing!public! !
-!UI.RegistryRecentMenu categoriesFor: #setProductRegistryKey:!initializing!private! !
-!UI.RegistryRecentMenu categoriesFor: #setRecentList:!helpers!private! !
+!UI.RegistryRecentMenu categoriesForMethods!
+getRecentList!helpers!private! !
+initialize!initializing!private! !
+productRegistryAt:!accessing!private!product! !
+productRegistryAt:put:!accessing!private!product! !
+productRegistryKey!accessing!public! !
+recentRegistryKey!accessing!public! !
+recentRegistryKey:!accessing!public! !
+setProductRegistryKey:!initializing!private! !
+setRecentList:!helpers!private! !
+!
 
 !UI.RegistryRecentMenu class methodsFor!
 
@@ -73,5 +75,7 @@ withProductKey: aKeyString
 	^(super new)
 		setProductRegistryKey: aKeyString;
 		yourself! !
-!UI.RegistryRecentMenu class categoriesFor: #withProductKey:!instance creation!public! !
+!UI.RegistryRecentMenu class categoriesForMethods!
+withProductKey:!instance creation!public! !
+!
 

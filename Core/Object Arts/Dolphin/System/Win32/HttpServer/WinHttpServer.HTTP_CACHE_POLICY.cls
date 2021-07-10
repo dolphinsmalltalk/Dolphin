@@ -61,12 +61,14 @@ SecondsToLive: anInteger
 	"Set the receiver's 'SecondsToLive' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_SecondsToLive put: anInteger! !
-!WinHttpServer.HTTP_CACHE_POLICY categoriesFor: #policy!accessing!public! !
-!WinHttpServer.HTTP_CACHE_POLICY categoriesFor: #Policy!**compiled accessors**!public! !
-!WinHttpServer.HTTP_CACHE_POLICY categoriesFor: #Policy:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_CACHE_POLICY categoriesFor: #printFields:on:!development!printing!private! !
-!WinHttpServer.HTTP_CACHE_POLICY categoriesFor: #SecondsToLive!**compiled accessors**!public! !
-!WinHttpServer.HTTP_CACHE_POLICY categoriesFor: #SecondsToLive:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_CACHE_POLICY categoriesForMethods!
+policy!accessing!public! !
+Policy!**compiled accessors**!public! !
+Policy:!**compiled accessors**!public! !
+printFields:on:!development!printing!private! !
+SecondsToLive!**compiled accessors**!public! !
+SecondsToLive:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_CACHE_POLICY class methodsFor!
 
@@ -112,10 +114,12 @@ timeToLive: anInteger
 
 userInvalidates
 	^UserInvalidates! !
-!WinHttpServer.HTTP_CACHE_POLICY class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_CACHE_POLICY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_CACHE_POLICY class categoriesFor: #initialize!public! !
-!WinHttpServer.HTTP_CACHE_POLICY class categoriesFor: #noCache!instance creation!public! !
-!WinHttpServer.HTTP_CACHE_POLICY class categoriesFor: #timeToLive:!instance creation!public! !
-!WinHttpServer.HTTP_CACHE_POLICY class categoriesFor: #userInvalidates!instance creation!public! !
+!WinHttpServer.HTTP_CACHE_POLICY class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!public! !
+noCache!instance creation!public! !
+timeToLive:!instance creation!public! !
+userInvalidates!instance creation!public! !
+!
 

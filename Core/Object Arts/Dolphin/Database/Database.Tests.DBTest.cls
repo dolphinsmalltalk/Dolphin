@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Database.Tests.DBTest'
 	instanceVariableNames: 'connection'
@@ -48,11 +48,13 @@ testIsEmpty
 	self assert: results isEmpty.
 	results := connection query: 'select CategoryID, CategoryName from categories where CategoryID = 1'.
 	self deny: results isEmpty! !
-!Database.Tests.DBTest categoriesFor: #databaseResource!helpers!private! !
-!Database.Tests.DBTest categoriesFor: #employeeNames!helpers!private! !
-!Database.Tests.DBTest categoriesFor: #field:fromRow:!helpers!private! !
-!Database.Tests.DBTest categoriesFor: #setUp!public!running! !
-!Database.Tests.DBTest categoriesFor: #tearDown!public!running! !
-!Database.Tests.DBTest categoriesFor: #testCollect!public!unit tests! !
-!Database.Tests.DBTest categoriesFor: #testIsEmpty!public!unit tests! !
+!Database.Tests.DBTest categoriesForMethods!
+databaseResource!helpers!private! !
+employeeNames!helpers!private! !
+field:fromRow:!helpers!private! !
+setUp!public!running! !
+tearDown!public!running! !
+testCollect!public!unit tests! !
+testIsEmpty!public!unit tests! !
+!
 

@@ -56,12 +56,14 @@ removeItem
 	item := listPresenter selection.
 	self removeElement: item.
 	self onValueChanged! !
-!UI.HashedCollectionPresenter categoriesFor: #addElement:!adding!private! !
-!UI.HashedCollectionPresenter categoriesFor: #addItem:!operations!public! !
-!UI.HashedCollectionPresenter categoriesFor: #canGrow!private!testing! !
-!UI.HashedCollectionPresenter categoriesFor: #elements!accessing!public! !
-!UI.HashedCollectionPresenter categoriesFor: #onListChanged!event handling!public! !
-!UI.HashedCollectionPresenter categoriesFor: #onValueChanged!event handling!public! !
-!UI.HashedCollectionPresenter categoriesFor: #removeElement:!private!removing! !
-!UI.HashedCollectionPresenter categoriesFor: #removeItem!commands!public!removing! !
+!UI.HashedCollectionPresenter categoriesForMethods!
+addElement:!adding!private! !
+addItem:!operations!public! !
+canGrow!private!testing! !
+elements!accessing!public! !
+onListChanged!event handling!public! !
+onValueChanged!event handling!public! !
+removeElement:!private!removing! !
+removeItem!commands!public!removing! !
+!
 

@@ -33,8 +33,10 @@ size
 	"Answer the size of the file in wide characters, excluding the BOM."
 
 	^super size - offset bitShift: -1! !
-!OS.StdioUtf16FileStream categoriesFor: #contentsSpecies!constants!private! !
-!OS.StdioUtf16FileStream categoriesFor: #position!accessing!public! !
-!OS.StdioUtf16FileStream categoriesFor: #position:!positioning!public! !
-!OS.StdioUtf16FileStream categoriesFor: #size!accessing!public! !
+!OS.StdioUtf16FileStream categoriesForMethods!
+contentsSpecies!constants!private! !
+position!accessing!public! !
+position:!positioning!public! !
+size!accessing!public! !
+!
 

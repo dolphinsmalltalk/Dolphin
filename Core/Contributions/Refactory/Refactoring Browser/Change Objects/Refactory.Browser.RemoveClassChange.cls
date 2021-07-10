@@ -34,10 +34,12 @@ printOn: aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeFromSystem';
 		nextPut: $!!! !
-!Refactory.Browser.RemoveClassChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.RemoveClassChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RemoveClassChange categoriesFor: #primitiveExecute!private! !
-!Refactory.Browser.RemoveClassChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RemoveClassChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+primitiveExecute!private! !
+printOn:!printing!public! !
+!
 
 !Refactory.Browser.RemoveClassChange class methodsFor!
 
@@ -46,6 +48,8 @@ remove: aClass
 
 removeClassName: aSymbol 
 	^self new changeClassName: aSymbol! !
-!Refactory.Browser.RemoveClassChange class categoriesFor: #remove:!instance creation!public! !
-!Refactory.Browser.RemoveClassChange class categoriesFor: #removeClassName:!instance creation!public! !
+!Refactory.Browser.RemoveClassChange class categoriesForMethods!
+remove:!instance creation!public! !
+removeClassName:!instance creation!public! !
+!
 

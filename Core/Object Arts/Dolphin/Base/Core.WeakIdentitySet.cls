@@ -37,10 +37,12 @@ species
 	Weak types are generally considered as of the same species as their equivalent strong type."
 
 	^IdentitySet! !
-!Core.WeakIdentitySet categoriesFor: #copyingClass!copying!private! !
-!Core.WeakIdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!Core.WeakIdentitySet categoriesFor: #hash:max:!private!searching! !
-!Core.WeakIdentitySet categoriesFor: #species!accessing!public! !
+!Core.WeakIdentitySet categoriesForMethods!
+copyingClass!copying!private! !
+findElementOrNil:!private!searching! !
+hash:max:!private!searching! !
+species!accessing!public! !
+!
 
 !Core.WeakIdentitySet class methodsFor!
 
@@ -50,5 +52,7 @@ initialize
 	so we must implement to get the bereavement notifications."
 
 	super initialize! !
-!Core.WeakIdentitySet class categoriesFor: #initialize!development!initializing!public! !
+!Core.WeakIdentitySet class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

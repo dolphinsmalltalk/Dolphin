@@ -114,24 +114,26 @@ startCaptureOn: aMouseEvent
 		ifTrue: [self onMouseMoved: aMouseEvent]
 		ifFalse: [self onLeftButtonPressed: aMouseEvent].
 	self captureMouse! !
-!UI.ButtonInteractor categoriesFor: #buttonRectangle!accessing!public! !
-!UI.ButtonInteractor categoriesFor: #buttonRectangle:!accessing!public! !
-!UI.ButtonInteractor categoriesFor: #buttonState!public! !
-!UI.ButtonInteractor categoriesFor: #buttonState:!public! !
-!UI.ButtonInteractor categoriesFor: #changeHotState:!helpers!private! !
-!UI.ButtonInteractor categoriesFor: #commandDescription!accessing!public! !
-!UI.ButtonInteractor categoriesFor: #commandDescription:!accessing!public! !
-!UI.ButtonInteractor categoriesFor: #fireCommand!event handling!private! !
-!UI.ButtonInteractor categoriesFor: #hitTest:!helpers!private! !
-!UI.ButtonInteractor categoriesFor: #invalidateUIState!helpers!private! !
-!UI.ButtonInteractor categoriesFor: #isHot:!public! !
-!UI.ButtonInteractor categoriesFor: #isPressed!public! !
-!UI.ButtonInteractor categoriesFor: #isPressed:!public! !
-!UI.ButtonInteractor categoriesFor: #onLeftButtonPressed:!initializing!private! !
-!UI.ButtonInteractor categoriesFor: #onLeftButtonReleased:!event handling!private! !
-!UI.ButtonInteractor categoriesFor: #onMouseMoved:!event handling!private! !
-!UI.ButtonInteractor categoriesFor: #setPresenter:!accessing!private! !
-!UI.ButtonInteractor categoriesFor: #startCaptureOn:!initializing!public! !
+!UI.ButtonInteractor categoriesForMethods!
+buttonRectangle!accessing!public! !
+buttonRectangle:!accessing!public! !
+buttonState!public! !
+buttonState:!public! !
+changeHotState:!helpers!private! !
+commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
+fireCommand!event handling!private! !
+hitTest:!helpers!private! !
+invalidateUIState!helpers!private! !
+isHot:!public! !
+isPressed!public! !
+isPressed:!public! !
+onLeftButtonPressed:!initializing!private! !
+onLeftButtonReleased:!event handling!private! !
+onMouseMoved:!event handling!private! !
+setPresenter:!accessing!private! !
+startCaptureOn:!initializing!public! !
+!
 
 !UI.ButtonInteractor class methodsFor!
 
@@ -142,5 +144,7 @@ stbConvertToVersion1: anArray
 		at: 3 put: (anArray at: 4);
 		at: 5 put: nil;
 		yourself! !
-!UI.ButtonInteractor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!UI.ButtonInteractor class categoriesForMethods!
+stbConvertToVersion1:!binary filing!private! !
+!
 

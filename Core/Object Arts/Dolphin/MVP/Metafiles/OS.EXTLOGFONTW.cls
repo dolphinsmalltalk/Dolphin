@@ -140,20 +140,22 @@ elfVendorId: anExternalArray
 		from: ##(_OffsetOf_elfVendorId + 1)
 		to: _OffsetOf_elfVendorId + size
 		startingAt: 1! !
-!OS.EXTLOGFONTW categoriesFor: #elfFullName!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfFullName:!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfLogFont!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfLogFont:!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfMatch!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfMatch:!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfPanose!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfPanose:!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfStyle!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfStyle:!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfStyleSize!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfStyleSize:!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfVendorId!**compiled accessors**!public! !
-!OS.EXTLOGFONTW categoriesFor: #elfVendorId:!**compiled accessors**!public! !
+!OS.EXTLOGFONTW categoriesForMethods!
+elfFullName!**compiled accessors**!public! !
+elfFullName:!**compiled accessors**!public! !
+elfLogFont!**compiled accessors**!public! !
+elfLogFont:!**compiled accessors**!public! !
+elfMatch!**compiled accessors**!public! !
+elfMatch:!**compiled accessors**!public! !
+elfPanose!**compiled accessors**!public! !
+elfPanose:!**compiled accessors**!public! !
+elfStyle!**compiled accessors**!public! !
+elfStyle:!**compiled accessors**!public! !
+elfStyleSize!**compiled accessors**!public! !
+elfStyleSize:!**compiled accessors**!public! !
+elfVendorId!**compiled accessors**!public! !
+elfVendorId:!**compiled accessors**!public! !
+!
 
 !OS.EXTLOGFONTW class methodsFor!
 
@@ -212,6 +214,8 @@ defineFields
 
 getFieldNames
 	^#(#elfLogFont #elfFullName #elfStyle #elfStyleSize #elfMatch #elfVendorId #elfPanose)! !
-!OS.EXTLOGFONTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EXTLOGFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EXTLOGFONTW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

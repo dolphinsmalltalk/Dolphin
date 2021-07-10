@@ -51,9 +51,11 @@ removeElement: anAssociation
 	self value: ((self value)
 				removeKey: anAssociation key;
 				yourself)! !
-!UI.DictionaryPresenter categoriesFor: #defaultAddItem!helpers!private! !
-!UI.DictionaryPresenter categoriesFor: #elements!accessing!public! !
-!UI.DictionaryPresenter categoriesFor: #removeElement:!private!removing! !
+!UI.DictionaryPresenter categoriesForMethods!
+defaultAddItem!helpers!private! !
+elements!accessing!public! !
+removeElement:!private!removing! !
+!
 
 !UI.DictionaryPresenter class methodsFor!
 
@@ -62,5 +64,7 @@ defaultModel
 	is initialized."
 
 	^Dictionary new asValue! !
-!UI.DictionaryPresenter class categoriesFor: #defaultModel!models!public! !
+!UI.DictionaryPresenter class categoriesForMethods!
+defaultModel!models!public! !
+!
 

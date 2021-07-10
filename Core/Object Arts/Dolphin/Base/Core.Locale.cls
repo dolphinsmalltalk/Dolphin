@@ -668,77 +668,79 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self subclassResponsibility! !
-!Core.Locale categoriesFor: #=!comparing!public! !
-!Core.Locale categoriesFor: #amDesignator!constants!public! !
-!Core.Locale categoriesFor: #boolFormat!constants!public! !
-!Core.Locale categoriesFor: #dateAndTimeFormatters!printing!private! !
-!Core.Locale categoriesFor: #dateFormat!constants!public! !
-!Core.Locale categoriesFor: #dayOfWeek:!mapping!public! !
-!Core.Locale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!Core.Locale categoriesFor: #dayOfWeekName:!constants!public! !
-!Core.Locale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!Core.Locale categoriesFor: #decimalPlaces!constants!public! !
-!Core.Locale categoriesFor: #decimalSeparator!constants!public! !
-!Core.Locale categoriesFor: #displayDate:on:!printing!public! !
-!Core.Locale categoriesFor: #displayDateTime:on:!printing!public! !
-!Core.Locale categoriesFor: #displayDuration:on:!printing!public! !
-!Core.Locale categoriesFor: #displayFloat:on:!printing!public! !
-!Core.Locale categoriesFor: #displayInteger:on:!printing!public! !
-!Core.Locale categoriesFor: #displayName!displaying!public! !
-!Core.Locale categoriesFor: #displayTime:on:!printing!public! !
-!Core.Locale categoriesFor: #durationFormat!constants!public! !
-!Core.Locale categoriesFor: #englishDisplayName!constants!public! !
-!Core.Locale categoriesFor: #englishLanguageName!constants!public! !
-!Core.Locale categoriesFor: #firstDayOfWeek!constants!public! !
-!Core.Locale categoriesFor: #getNumberFormat!helpers!private! !
-!Core.Locale categoriesFor: #hash!comparing!public! !
-!Core.Locale categoriesFor: #hasLeadingZero!constants!public! !
-!Core.Locale categoriesFor: #indexOfMonth:!enquiries!public! !
-!Core.Locale categoriesFor: #infinity!constants!public! !
-!Core.Locale categoriesFor: #isInstalled!public!testing! !
-!Core.Locale categoriesFor: #iso639LanguageName!constants!public! !
-!Core.Locale categoriesFor: #isSelfEvaluating!public!testing! !
-!Core.Locale categoriesFor: #isValidLocale!public!testing! !
-!Core.Locale categoriesFor: #languageId!accessing!public! !
-!Core.Locale categoriesFor: #lastTwoDigitYear!constants!public! !
-!Core.Locale categoriesFor: #lcid!accessing!public! !
-!Core.Locale categoriesFor: #listSeparator!constants!public! !
-!Core.Locale categoriesFor: #localizedDisplayName!constants!public! !
-!Core.Locale categoriesFor: #longDateFormat!constants!public! !
-!Core.Locale categoriesFor: #longTimeFormat!constants!public! !
-!Core.Locale categoriesFor: #monthAbbreviation:!enquiries!public! !
-!Core.Locale categoriesFor: #monthName:!enquiries!public! !
-!Core.Locale categoriesFor: #name!constants!public! !
-!Core.Locale categoriesFor: #nan!constants!public! !
-!Core.Locale categoriesFor: #nativeDigits!constants!public! !
-!Core.Locale categoriesFor: #negativeInfinity!constants!public! !
-!Core.Locale categoriesFor: #negativeNumberMode!constants!public! !
-!Core.Locale categoriesFor: #negativeSign!constants!public! !
-!Core.Locale categoriesFor: #numberFormat!constants!public! !
-!Core.Locale categoriesFor: #numberFormat:!accessing!private! !
-!Core.Locale categoriesFor: #numberGrouping!constants!public! !
-!Core.Locale categoriesFor: #percentSymbol!constants!public! !
-!Core.Locale categoriesFor: #pmDesignator!constants!public! !
-!Core.Locale categoriesFor: #primary!printing!public! !
-!Core.Locale categoriesFor: #print:on:format:alphabet:formatters:!printing!private! !
-!Core.Locale categoriesFor: #printDate:on:format:!printing!public! !
-!Core.Locale categoriesFor: #printDateTime:on:format:!printing!public! !
-!Core.Locale categoriesFor: #printDuration:on:format:!printing!public! !
-!Core.Locale categoriesFor: #printFloat:!printing!public! !
-!Core.Locale categoriesFor: #printFloat:format:!printing!public! !
-!Core.Locale categoriesFor: #printFloat:format:lcid:!printing!public! !
-!Core.Locale categoriesFor: #printFloat:on:format:!printing!public! !
-!Core.Locale categoriesFor: #printFractionalPart:on:places:!printing!private! !
-!Core.Locale categoriesFor: #printTime:on:format:!printing!public! !
-!Core.Locale categoriesFor: #shortAmDesignator!constants!public! !
-!Core.Locale categoriesFor: #shortDateFormat!constants!public! !
-!Core.Locale categoriesFor: #shortPmDesignator!constants!public! !
-!Core.Locale categoriesFor: #shortTimeFormat!constants!public! !
-!Core.Locale categoriesFor: #subLanguageId!accessing!public! !
-!Core.Locale categoriesFor: #tag!constants!public! !
-!Core.Locale categoriesFor: #thousandSeparator!constants!public! !
-!Core.Locale categoriesFor: #timeFormat!constants!public! !
-!Core.Locale categoriesFor: #yearMonthFormat!constants!public! !
+!Core.Locale categoriesForMethods!
+=!comparing!public! !
+amDesignator!constants!public! !
+boolFormat!constants!public! !
+dateAndTimeFormatters!printing!private! !
+dateFormat!constants!public! !
+dayOfWeek:!mapping!public! !
+dayOfWeekAbbreviation:!constants!public! !
+dayOfWeekName:!constants!public! !
+dayOfWeekShortAbbreviation:!constants!public! !
+decimalPlaces!constants!public! !
+decimalSeparator!constants!public! !
+displayDate:on:!printing!public! !
+displayDateTime:on:!printing!public! !
+displayDuration:on:!printing!public! !
+displayFloat:on:!printing!public! !
+displayInteger:on:!printing!public! !
+displayName!displaying!public! !
+displayTime:on:!printing!public! !
+durationFormat!constants!public! !
+englishDisplayName!constants!public! !
+englishLanguageName!constants!public! !
+firstDayOfWeek!constants!public! !
+getNumberFormat!helpers!private! !
+hash!comparing!public! !
+hasLeadingZero!constants!public! !
+indexOfMonth:!enquiries!public! !
+infinity!constants!public! !
+isInstalled!public!testing! !
+iso639LanguageName!constants!public! !
+isSelfEvaluating!public!testing! !
+isValidLocale!public!testing! !
+languageId!accessing!public! !
+lastTwoDigitYear!constants!public! !
+lcid!accessing!public! !
+listSeparator!constants!public! !
+localizedDisplayName!constants!public! !
+longDateFormat!constants!public! !
+longTimeFormat!constants!public! !
+monthAbbreviation:!enquiries!public! !
+monthName:!enquiries!public! !
+name!constants!public! !
+nan!constants!public! !
+nativeDigits!constants!public! !
+negativeInfinity!constants!public! !
+negativeNumberMode!constants!public! !
+negativeSign!constants!public! !
+numberFormat!constants!public! !
+numberFormat:!accessing!private! !
+numberGrouping!constants!public! !
+percentSymbol!constants!public! !
+pmDesignator!constants!public! !
+primary!printing!public! !
+print:on:format:alphabet:formatters:!printing!private! !
+printDate:on:format:!printing!public! !
+printDateTime:on:format:!printing!public! !
+printDuration:on:format:!printing!public! !
+printFloat:!printing!public! !
+printFloat:format:!printing!public! !
+printFloat:format:lcid:!printing!public! !
+printFloat:on:format:!printing!public! !
+printFractionalPart:on:places:!printing!private! !
+printTime:on:format:!printing!public! !
+shortAmDesignator!constants!public! !
+shortDateFormat!constants!public! !
+shortPmDesignator!constants!public! !
+shortTimeFormat!constants!public! !
+subLanguageId!accessing!public! !
+tag!constants!public! !
+thousandSeparator!constants!public! !
+timeFormat!constants!public! !
+yearMonthFormat!constants!public! !
+!
 
 !Core.Locale class methodsFor!
 
@@ -867,25 +869,27 @@ userDefault: aLocale
 	oldDefault := UserDefault.
 	UserDefault := aLocale ifNil: [self uiDefault].
 	^oldDefault! !
-!Core.Locale class categoriesFor: #default!accessing!public! !
-!Core.Locale class categoriesFor: #getTimeZoneInfo!enquiries!public! !
-!Core.Locale class categoriesFor: #initialize!class initialization!public! !
-!Core.Locale class categoriesFor: #installedSystemLocales!enquiries!private! !
-!Core.Locale class categoriesFor: #installedUILanguages!enquiries!public! !
-!Core.Locale class categoriesFor: #invariant!instance creation!public! !
-!Core.Locale class categoriesFor: #lcid:!instance creation!public! !
-!Core.Locale class categoriesFor: #makeLangId:subLang:!enquiries!private! !
-!Core.Locale class categoriesFor: #makeLcId:sortId:!enquiries!private! !
-!Core.Locale class categoriesFor: #named:!instance creation!public! !
-!Core.Locale class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Core.Locale class categoriesFor: #onSettingChanged:!event handling!private! !
-!Core.Locale class categoriesFor: #onStartup!event handling!private! !
-!Core.Locale class categoriesFor: #reset!initializing!public! !
-!Core.Locale class categoriesFor: #smalltalk!instance creation!public! !
-!Core.Locale class categoriesFor: #supportedSystemLocales!enquiries!private! !
-!Core.Locale class categoriesFor: #systemDefault!instance creation!public! !
-!Core.Locale class categoriesFor: #timeZoneInformation!enquiries!public! !
-!Core.Locale class categoriesFor: #uiDefault!instance creation!public! !
-!Core.Locale class categoriesFor: #userDefault!instance creation!public! !
-!Core.Locale class categoriesFor: #userDefault:!instance creation!public! !
+!Core.Locale class categoriesForMethods!
+default!accessing!public! !
+getTimeZoneInfo!enquiries!public! !
+initialize!class initialization!public! !
+installedSystemLocales!enquiries!private! !
+installedUILanguages!enquiries!public! !
+invariant!instance creation!public! !
+lcid:!instance creation!public! !
+makeLangId:subLang:!enquiries!private! !
+makeLcId:sortId:!enquiries!private! !
+named:!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+onSettingChanged:!event handling!private! !
+onStartup!event handling!private! !
+reset!initializing!public! !
+smalltalk!instance creation!public! !
+supportedSystemLocales!enquiries!private! !
+systemDefault!instance creation!public! !
+timeZoneInformation!enquiries!public! !
+uiDefault!instance creation!public! !
+userDefault!instance creation!public! !
+userDefault:!instance creation!public! !
+!
 

@@ -109,20 +109,22 @@ saveUserSettings
 validateUserInterface
 	modifiedModel value: self isModified.
 	^super validateUserInterface! !
-!UI.TextDocument categoriesFor: #createComponents!initializing!public! !
-!UI.TextDocument categoriesFor: #documentPresenterClass!constants!public! !
-!UI.TextDocument categoriesFor: #fileNew!commands!public! !
-!UI.TextDocument categoriesFor: #getDocumentData!accessing!private! !
-!UI.TextDocument categoriesFor: #isModified!public!testing! !
-!UI.TextDocument categoriesFor: #isModified:!modes!public! !
-!UI.TextDocument categoriesFor: #isText!public!testing! !
-!UI.TextDocument categoriesFor: #model:!accessing!public! !
-!UI.TextDocument categoriesFor: #onViewClosed!event handling!public! !
-!UI.TextDocument categoriesFor: #onViewOpened!event handling!public! !
-!UI.TextDocument categoriesFor: #openFile:!operations!public! !
-!UI.TextDocument categoriesFor: #restoreUserSettings!operations!options!private! !
-!UI.TextDocument categoriesFor: #saveUserSettings!helpers!private! !
-!UI.TextDocument categoriesFor: #validateUserInterface!operations!public! !
+!UI.TextDocument categoriesForMethods!
+createComponents!initializing!public! !
+documentPresenterClass!constants!public! !
+fileNew!commands!public! !
+getDocumentData!accessing!private! !
+isModified!public!testing! !
+isModified:!modes!public! !
+isText!public!testing! !
+model:!accessing!public! !
+onViewClosed!event handling!public! !
+onViewOpened!event handling!public! !
+openFile:!operations!public! !
+restoreUserSettings!operations!options!private! !
+saveUserSettings!helpers!private! !
+validateUserInterface!operations!public! !
+!
 
 !UI.TextDocument class methodsFor!
 
@@ -153,9 +155,11 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!UI.TextDocument class categoriesFor: #defaultFileExtension!constants!public! !
-!UI.TextDocument class categoriesFor: #defaultModel!models!public! !
-!UI.TextDocument class categoriesFor: #fileTypes!constants!public! !
-!UI.TextDocument class categoriesFor: #icon!constants!public! !
-!UI.TextDocument class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.TextDocument class categoriesForMethods!
+defaultFileExtension!constants!public! !
+defaultModel!models!public! !
+fileTypes!constants!public! !
+icon!constants!public! !
+shutdownOnExit!public!testing! !
+!
 

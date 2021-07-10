@@ -58,17 +58,21 @@ superVariable
 			[superVariable := StSuperVariable new
 						scope: self;
 						yourself]! !
-!Kernel.StClassScope categoriesFor: #environment!public! !
-!Kernel.StClassScope categoriesFor: #environment:!accessing!public! !
-!Kernel.StClassScope categoriesFor: #lookupVariable:!operations!public! !
-!Kernel.StClassScope categoriesFor: #methodClass!accessing!public! !
-!Kernel.StClassScope categoriesFor: #selfVariable!operations!public! !
-!Kernel.StClassScope categoriesFor: #setMethodClass:environment:!accessing!initializing!private! !
-!Kernel.StClassScope categoriesFor: #superVariable!operations!public! !
+!Kernel.StClassScope categoriesForMethods!
+environment!public! !
+environment:!accessing!public! !
+lookupVariable:!operations!public! !
+methodClass!accessing!public! !
+selfVariable!operations!public! !
+setMethodClass:environment:!accessing!initializing!private! !
+superVariable!operations!public! !
+!
 
 !Kernel.StClassScope class methodsFor!
 
 methodClass: aClassDescription environment: aNamespace
 	^self new setMethodClass: aClassDescription environment: aNamespace! !
-!Kernel.StClassScope class categoriesFor: #methodClass:environment:!instance creation!public! !
+!Kernel.StClassScope class categoriesForMethods!
+methodClass:environment:!instance creation!public! !
+!
 

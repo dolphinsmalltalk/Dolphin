@@ -100,19 +100,25 @@ UI.RuntimeSessionManager subclass: #'UI.Examples.XmlPadSessionManager'
 
 formatAsText
 	^false! !
-!MSXML.IXMLDOMComment categoriesFor: #formatAsText!public! !
+!MSXML.IXMLDOMComment categoriesForMethods!
+formatAsText!public! !
+!
 
 !MSXML.IXMLDOMEntityReference methodsFor!
 
 formatAsText
 	^true! !
-!MSXML.IXMLDOMEntityReference categoriesFor: #formatAsText!public! !
+!MSXML.IXMLDOMEntityReference categoriesForMethods!
+formatAsText!public! !
+!
 
 !MSXML.IXMLDOMNode methodsFor!
 
 formatAsText
 	^self isText! !
-!MSXML.IXMLDOMNode categoriesFor: #formatAsText!public! !
+!MSXML.IXMLDOMNode categoriesForMethods!
+formatAsText!public! !
+!
 
 "End of package definition"!
 

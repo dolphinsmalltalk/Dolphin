@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseProtocol subclass: #TestCaseHelper
 	instanceVariableNames: 'testCase'
@@ -22,9 +22,11 @@ printOn: aStream
 
 protocol
 	^testCase protocol! !
-!TestCaseHelper categoriesFor: #attachTo:!public! !
-!TestCaseHelper categoriesFor: #printOn:!public! !
-!TestCaseHelper categoriesFor: #protocol!public! !
+!TestCaseHelper categoriesForMethods!
+attachTo:!public! !
+printOn:!public! !
+protocol!public! !
+!
 
 !TestCaseHelper class methodsFor!
 
@@ -41,8 +43,10 @@ suite
 testMethods
 	testSelectors isNil ifTrue: [testSelectors := self selectors select: [:each | 'test*' match: each]].
 	^testSelectors! !
-!TestCaseHelper class categoriesFor: #initialize!public! !
-!TestCaseHelper class categoriesFor: #isAbstract!public! !
-!TestCaseHelper class categoriesFor: #suite!public! !
-!TestCaseHelper class categoriesFor: #testMethods!public! !
+!TestCaseHelper class categoriesForMethods!
+initialize!public! !
+isAbstract!public! !
+suite!public! !
+testMethods!public! !
+!
 

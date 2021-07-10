@@ -15,7 +15,9 @@ CADWORD is a counted array of 32-bit unsigned integers. For an example usage see
 
 getElements
 	^DWORDArray fromAddress: self pElems length: self cElems! !
-!OS.COM.CADWORD categoriesFor: #getElements!accessing!private! !
+!OS.COM.CADWORD categoriesForMethods!
+getElements!accessing!private! !
+!
 
 !OS.COM.CADWORD class methodsFor!
 
@@ -40,6 +42,8 @@ elementClass
 
 	^DWORD
 ! !
-!OS.COM.CADWORD class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.CADWORD class categoriesFor: #elementClass!constants!public! !
+!OS.COM.CADWORD class categoriesForMethods!
+defineFields!public!template definition! !
+elementClass!constants!public! !
+!
 

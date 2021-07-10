@@ -17,5 +17,7 @@ _descriptionFormat
 	"Answer the description format string for the receiver."
 
 	^'Invalid argument ''%2'': %1'! !
-!Core.InvalidArgumentError categoriesFor: #_descriptionFormat!displaying!public! !
+!Core.InvalidArgumentError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

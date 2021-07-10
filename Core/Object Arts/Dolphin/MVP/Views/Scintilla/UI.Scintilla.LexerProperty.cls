@@ -33,9 +33,11 @@ value: anObject
 		value: (self type < SC_TYPE_STRING
 				ifTrue: [anObject asParameter printString]
 				ifFalse: [anObject])! !
-!UI.Scintilla.LexerProperty categoriesFor: #getDescription!accessing!private! !
-!UI.Scintilla.LexerProperty categoriesFor: #name!accessing!public! !
-!UI.Scintilla.LexerProperty categoriesFor: #type!accessing!public! !
-!UI.Scintilla.LexerProperty categoriesFor: #value!accessing!public! !
-!UI.Scintilla.LexerProperty categoriesFor: #value:!accessing!public! !
+!UI.Scintilla.LexerProperty categoriesForMethods!
+getDescription!accessing!private! !
+name!accessing!public! !
+type!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 

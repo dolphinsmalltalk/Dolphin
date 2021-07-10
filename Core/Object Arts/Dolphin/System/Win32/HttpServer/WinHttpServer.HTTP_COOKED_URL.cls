@@ -81,14 +81,16 @@ QueryStringLength
 	"Private - Answer the <Integer> value of the receiver's 'QueryStringLength' field."
 
 	^bytes wordAtOffset: _OffsetOf_QueryStringLength! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #AbsPathLength!**compiled accessors**!private! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #FullUrlLength!**compiled accessors**!private! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #HostLength!**compiled accessors**!private! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pAbsPath!**compiled accessors**!public! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pFullUrl!**compiled accessors**!public! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pHost!**compiled accessors**!public! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #pQueryString!**compiled accessors**!public! !
-!WinHttpServer.HTTP_COOKED_URL categoriesFor: #QueryStringLength!**compiled accessors**!private! !
+!WinHttpServer.HTTP_COOKED_URL categoriesForMethods!
+AbsPathLength!**compiled accessors**!private! !
+FullUrlLength!**compiled accessors**!private! !
+HostLength!**compiled accessors**!private! !
+pAbsPath!**compiled accessors**!public! !
+pFullUrl!**compiled accessors**!public! !
+pHost!**compiled accessors**!public! !
+pQueryString!**compiled accessors**!public! !
+QueryStringLength!**compiled accessors**!private! !
+!
 
 !WinHttpServer.HTTP_COOKED_URL class methodsFor!
 
@@ -123,6 +125,8 @@ defineFields
 
 getFieldNames
 	^#(#FullUrlLength #HostLength #AbsPathLength #QueryStringLength #pFullUrl #pHost #pAbsPath #pQueryString)! !
-!WinHttpServer.HTTP_COOKED_URL class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_COOKED_URL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_COOKED_URL class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

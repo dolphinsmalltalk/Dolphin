@@ -89,12 +89,14 @@ selector
 	answer := BSTR new.
 	self get_selector: answer.
 	^answer asObject! !
-!MSXML.ISchemaIdentityConstraint categoriesFor: #fields!**auto generated**!properties!public! !
-!MSXML.ISchemaIdentityConstraint categoriesFor: #get_fields:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
-!MSXML.ISchemaIdentityConstraint categoriesFor: #get_referencedKey:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
-!MSXML.ISchemaIdentityConstraint categoriesFor: #get_selector:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
-!MSXML.ISchemaIdentityConstraint categoriesFor: #referencedKey!**auto generated**!properties!public! !
-!MSXML.ISchemaIdentityConstraint categoriesFor: #selector!**auto generated**!properties!public! !
+!MSXML.ISchemaIdentityConstraint categoriesForMethods!
+fields!**auto generated**!properties!public! !
+get_fields:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
+get_referencedKey:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
+get_selector:!**auto generated**!COM Interfaces-ISchemaIdentityConstraint!private! !
+referencedKey!**auto generated**!properties!public! !
+selector!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaIdentityConstraint class methodsFor!
 
@@ -110,5 +112,7 @@ defineFunctions
 		defineFunction: #get_referencedKey:
 			argumentTypes: 'ISchemaIdentityConstraint**'
 ! !
-!MSXML.ISchemaIdentityConstraint class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaIdentityConstraint class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

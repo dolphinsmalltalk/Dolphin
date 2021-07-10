@@ -122,19 +122,21 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
-!OS.COM.LockBytesAbstract categoriesFor: #contents!accessing!public! !
-!OS.COM.LockBytesAbstract categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #Flush!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #LockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #ReadAt:pv:cb:pcbRead:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #SetSize:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #size!accessing!public! !
-!OS.COM.LockBytesAbstract categoriesFor: #Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #supportedInterfaces!constants!public! !
-!OS.COM.LockBytesAbstract categoriesFor: #UnlockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockBytesAbstract categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockBytesAbstract categoriesForMethods!
+contents!accessing!public! !
+copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+Flush!COM Interfaces-ILockBytes!private! !
+LockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
+ReadAt:pv:cb:pcbRead:!COM Interfaces-ILockBytes!private! !
+replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+resize:!COM Interfaces-ILockBytes!private! !
+SetSize:!COM Interfaces-ILockBytes!private! !
+size!accessing!public! !
+Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
+supportedInterfaces!constants!public! !
+UnlockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
+WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!
 
 OS.COM.LockBytesAbstract methodProtocol: #ILockBytes attributes: #() selectors: #(#Flush #LockRegion:cb:dwLockType: #ReadAt:pv:cb:pcbRead: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #WriteAt:pv:cb:pcbWritten:)!
 

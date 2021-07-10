@@ -280,46 +280,48 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!OS.EMRPLGBLT categoriesFor: #aptlDest!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #aptlDest:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBitsMask!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBitsMask:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBmiMask!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBmiMask:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cySrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #iUsageMask!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #iUsageMask:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBitsMask!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBitsMask:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBmiMask!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBmiMask:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #xMask!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #xMask:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #yMask!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #yMask:!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!OS.EMRPLGBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRPLGBLT categoriesForMethods!
+aptlDest!**compiled accessors**!public! !
+aptlDest:!**compiled accessors**!public! !
+cbBitsMask!**compiled accessors**!public! !
+cbBitsMask:!**compiled accessors**!public! !
+cbBitsSrc!**compiled accessors**!public! !
+cbBitsSrc:!**compiled accessors**!public! !
+cbBmiMask!**compiled accessors**!public! !
+cbBmiMask:!**compiled accessors**!public! !
+cbBmiSrc!**compiled accessors**!public! !
+cbBmiSrc:!**compiled accessors**!public! !
+crBkColorSrc!**compiled accessors**!public! !
+crBkColorSrc:!**compiled accessors**!public! !
+cxSrc!**compiled accessors**!public! !
+cxSrc:!**compiled accessors**!public! !
+cySrc!**compiled accessors**!public! !
+cySrc:!**compiled accessors**!public! !
+iUsageMask!**compiled accessors**!public! !
+iUsageMask:!**compiled accessors**!public! !
+iUsageSrc!**compiled accessors**!public! !
+iUsageSrc:!**compiled accessors**!public! !
+offBitsMask!**compiled accessors**!public! !
+offBitsMask:!**compiled accessors**!public! !
+offBitsSrc!**compiled accessors**!public! !
+offBitsSrc:!**compiled accessors**!public! !
+offBmiMask!**compiled accessors**!public! !
+offBmiMask:!**compiled accessors**!public! !
+offBmiSrc!**compiled accessors**!public! !
+offBmiSrc:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+xformSrc!**compiled accessors**!public! !
+xformSrc:!**compiled accessors**!public! !
+xMask!**compiled accessors**!public! !
+xMask:!**compiled accessors**!public! !
+xSrc!**compiled accessors**!public! !
+xSrc:!**compiled accessors**!public! !
+yMask!**compiled accessors**!public! !
+yMask:!**compiled accessors**!public! !
+ySrc!**compiled accessors**!public! !
+ySrc:!**compiled accessors**!public! !
+!
 
 !OS.EMRPLGBLT class methodsFor!
 
@@ -425,7 +427,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_PLGBLT}! !
-!OS.EMRPLGBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRPLGBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRPLGBLT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPLGBLT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

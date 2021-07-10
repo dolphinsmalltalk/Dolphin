@@ -51,11 +51,13 @@ cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_cpMin put: anInteger! !
-!OS.CHARRANGE categoriesFor: #asObject!accessing!public! !
-!OS.CHARRANGE categoriesFor: #cpMax!**compiled accessors**!public! !
-!OS.CHARRANGE categoriesFor: #cpMax:!**compiled accessors**!public! !
-!OS.CHARRANGE categoriesFor: #cpMin!**compiled accessors**!public! !
-!OS.CHARRANGE categoriesFor: #cpMin:!**compiled accessors**!public! !
+!OS.CHARRANGE categoriesForMethods!
+asObject!accessing!public! !
+cpMax!**compiled accessors**!public! !
+cpMax:!**compiled accessors**!public! !
+cpMin!**compiled accessors**!public! !
+cpMin:!**compiled accessors**!public! !
+!
 
 !OS.CHARRANGE class methodsFor!
 
@@ -76,6 +78,8 @@ defineFields
 
 getFieldNames
 	^#(#cpMin #cpMax)! !
-!OS.CHARRANGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.CHARRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CHARRANGE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

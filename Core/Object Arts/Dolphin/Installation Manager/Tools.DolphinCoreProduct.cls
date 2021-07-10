@@ -138,10 +138,12 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Core'! !
-!Tools.DolphinCoreProduct categoriesFor: #contents!accessing!public! !
-!Tools.DolphinCoreProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
-!Tools.DolphinCoreProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
-!Tools.DolphinCoreProduct categoriesFor: #fullName!accessing!public! !
+!Tools.DolphinCoreProduct categoriesForMethods!
+contents!accessing!public! !
+defaultSystemFolderColor!constants!private! !
+defaultSystemFolderExtent!constants!private! !
+fullName!accessing!public! !
+!
 
 !Tools.DolphinCoreProduct class methodsFor!
 
@@ -154,6 +156,8 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
-!Tools.DolphinCoreProduct class categoriesFor: #productName!accessing!public! !
-!Tools.DolphinCoreProduct class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinCoreProduct class categoriesForMethods!
+productName!accessing!public! !
+shortProductName!accessing!public! !
+!
 

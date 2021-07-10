@@ -72,17 +72,19 @@ statusCode
 	"Answer the error status code from the receiver's details."
 
 	^self hresult statusCode! !
-!OS.HRESULTError categoriesFor: #_descriptionArguments!displaying!public! !
-!OS.HRESULTError categoriesFor: #_descriptionFormat!displaying!public! !
-!OS.HRESULTError categoriesFor: #errorInfo!accessing!private! !
-!OS.HRESULTError categoriesFor: #errorInfo:!accessing!private! !
-!OS.HRESULTError categoriesFor: #hasMessageText!private!testing! !
-!OS.HRESULTError categoriesFor: #hresult!accessing!public! !
-!OS.HRESULTError categoriesFor: #hresult:!accessing!public! !
-!OS.HRESULTError categoriesFor: #messageText!accessing!public! !
-!OS.HRESULTError categoriesFor: #osErrorMessage!displaying!public! !
-!OS.HRESULTError categoriesFor: #source!accessing!public! !
-!OS.HRESULTError categoriesFor: #statusCode!accessing!public! !
+!OS.HRESULTError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+errorInfo!accessing!private! !
+errorInfo:!accessing!private! !
+hasMessageText!private!testing! !
+hresult!accessing!public! !
+hresult:!accessing!public! !
+messageText!accessing!public! !
+osErrorMessage!displaying!public! !
+source!accessing!public! !
+statusCode!accessing!public! !
+!
 
 !OS.HRESULTError class methodsFor!
 
@@ -144,14 +146,16 @@ unregisterFacilityClass: anExceptionClass
 
 	FacilityClasses removeKey: (FacilityClasses keyAtValue: anExceptionClass ifAbsent: [^self])
 ! !
-!OS.HRESULTError class categoriesFor: #fromHRESULT:!instance creation!public! !
-!OS.HRESULTError class categoriesFor: #fromInteger:!instance creation!public! !
-!OS.HRESULTError class categoriesFor: #initialize!development!initializing!private! !
-!OS.HRESULTError class categoriesFor: #registerFacility:class:!initializing!public! !
-!OS.HRESULTError class categoriesFor: #signal:with:!instance creation!public! !
-!OS.HRESULTError class categoriesFor: #signal:withFailureCode:!instance creation!public! !
-!OS.HRESULTError class categoriesFor: #signalCode:facility:!instance creation!public! !
-!OS.HRESULTError class categoriesFor: #signalFailureCode:!instance creation!private! !
-!OS.HRESULTError class categoriesFor: #signalHRESULT:!instance creation!public! !
-!OS.HRESULTError class categoriesFor: #unregisterFacilityClass:!initializing!public! !
+!OS.HRESULTError class categoriesForMethods!
+fromHRESULT:!instance creation!public! !
+fromInteger:!instance creation!public! !
+initialize!development!initializing!private! !
+registerFacility:class:!initializing!public! !
+signal:with:!instance creation!public! !
+signal:withFailureCode:!instance creation!public! !
+signalCode:facility:!instance creation!public! !
+signalFailureCode:!instance creation!private! !
+signalHRESULT:!instance creation!public! !
+unregisterFacilityClass:!initializing!public! !
+!
 

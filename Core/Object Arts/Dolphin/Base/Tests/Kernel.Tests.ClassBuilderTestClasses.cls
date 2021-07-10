@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTestClassResource subclass: #'Kernel.Tests.ClassBuilderTestClasses'
 	instanceVariableNames: 'testClass testSubclass1 testSubclass2 testPool1 testPool2 testPool3 classesDirtied'
@@ -75,13 +75,15 @@ testSubclass1
 testSubclass2
 	classesDirtied ifTrue: [self createClasses].
 	^testSubclass2! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #compileMethods!public!unit tests! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #createClasses!private!unit tests! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #createPools!Init / Release!private! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #isAvailable!public!Testing! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #makeCleanClasses!private!unit tests! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #tearDown!public!Running! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #testClass!accessing!public! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #testSubclass1!accessing!public! !
-!Kernel.Tests.ClassBuilderTestClasses categoriesFor: #testSubclass2!accessing!public! !
+!Kernel.Tests.ClassBuilderTestClasses categoriesForMethods!
+compileMethods!public!unit tests! !
+createClasses!private!unit tests! !
+createPools!Init / Release!private! !
+isAvailable!public!Testing! !
+makeCleanClasses!private!unit tests! !
+tearDown!public!Running! !
+testClass!accessing!public! !
+testSubclass1!accessing!public! !
+testSubclass2!accessing!public! !
+!
 

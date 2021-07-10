@@ -57,14 +57,16 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!OS.NMITEMACTIVATE categoriesFor: #iItem!**compiled accessors**!public! !
-!OS.NMITEMACTIVATE categoriesFor: #iSubItem!**compiled accessors**!public! !
-!OS.NMITEMACTIVATE categoriesFor: #position!accessing!public! !
-!OS.NMITEMACTIVATE categoriesFor: #ptAction!**compiled accessors**!public! !
-!OS.NMITEMACTIVATE categoriesFor: #uChanged!**compiled accessors**!public! !
-!OS.NMITEMACTIVATE categoriesFor: #uKeyFlags!**compiled accessors**!public! !
-!OS.NMITEMACTIVATE categoriesFor: #uNewState!**compiled accessors**!public! !
-!OS.NMITEMACTIVATE categoriesFor: #uOldState!**compiled accessors**!public! !
+!OS.NMITEMACTIVATE categoriesForMethods!
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+position!accessing!public! !
+ptAction!**compiled accessors**!public! !
+uChanged!**compiled accessors**!public! !
+uKeyFlags!**compiled accessors**!public! !
+uNewState!**compiled accessors**!public! !
+uOldState!**compiled accessors**!public! !
+!
 
 !OS.NMITEMACTIVATE class methodsFor!
 
@@ -97,6 +99,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
-!OS.NMITEMACTIVATE class categoriesFor: #defineFields!public!template definition! !
-!OS.NMITEMACTIVATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMITEMACTIVATE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

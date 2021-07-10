@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.ClassDescriptionTest subclass: #'Core.Tests.ClassTest'
 	instanceVariableNames: ''
@@ -98,14 +98,16 @@ testPoolBinding
 
 testStoreOn
 	self assert: self class storeString equals: 'Core.Tests.ClassTest'! !
-!Core.Tests.ClassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!Core.Tests.ClassTest categoriesFor: #testAllRoots!public!unit tests! !
-!Core.Tests.ClassTest categoriesFor: #testClassPoolsWellFormed!public!unit tests! !
-!Core.Tests.ClassTest categoriesFor: #testImportsValid!public!unit tests! !
-!Core.Tests.ClassTest categoriesFor: #testIncludesNamespace!private! !
-!Core.Tests.ClassTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!Core.Tests.ClassTest categoriesFor: #testLocalEnvironment!public!unit tests! !
-!Core.Tests.ClassTest categoriesFor: #testLocalScope!public!unit tests! !
-!Core.Tests.ClassTest categoriesFor: #testPoolBinding!public!unit tests! !
-!Core.Tests.ClassTest categoriesFor: #testStoreOn!public!unit tests! !
+!Core.Tests.ClassTest categoriesForMethods!
+allClassHierarchyInstancesDo:!helpers!private! !
+testAllRoots!public!unit tests! !
+testClassPoolsWellFormed!public!unit tests! !
+testImportsValid!public!unit tests! !
+testIncludesNamespace!private! !
+testLessOrEqual!public!unit tests! !
+testLocalEnvironment!public!unit tests! !
+testLocalScope!public!unit tests! !
+testPoolBinding!public!unit tests! !
+testStoreOn!public!unit tests! !
+!
 

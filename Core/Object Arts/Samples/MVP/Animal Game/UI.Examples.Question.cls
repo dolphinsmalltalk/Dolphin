@@ -65,13 +65,15 @@ yes
 	to the receiver's question."
 
 	^yes! !
-!UI.Examples.Question categoriesFor: #ask!operations!public! !
-!UI.Examples.Question categoriesFor: #displayOn:!displaying!public! !
-!UI.Examples.Question categoriesFor: #no!accessing!public! !
-!UI.Examples.Question categoriesFor: #printOn:!printing!public! !
-!UI.Examples.Question categoriesFor: #text!accessing!public! !
-!UI.Examples.Question categoriesFor: #text:yes:no:!accessing!private! !
-!UI.Examples.Question categoriesFor: #yes!accessing!public! !
+!UI.Examples.Question categoriesForMethods!
+ask!operations!public! !
+displayOn:!displaying!public! !
+no!accessing!public! !
+printOn:!printing!public! !
+text!accessing!public! !
+text:yes:no:!accessing!private! !
+yes!accessing!public! !
+!
 
 !UI.Examples.Question class methodsFor!
 
@@ -103,7 +105,9 @@ text: aString yes: yesPath no: noPath
 
 	^self new text: aString yes: yesPath no: noPath
 ! !
-!UI.Examples.Question class categoriesFor: #icon!constants!public! !
-!UI.Examples.Question class categoriesFor: #promptToDistinguish:from:!instance creation!public! !
-!UI.Examples.Question class categoriesFor: #text:yes:no:!instance creation!public! !
+!UI.Examples.Question class categoriesForMethods!
+icon!constants!public! !
+promptToDistinguish:from:!instance creation!public! !
+text:yes:no:!instance creation!public! !
+!
 

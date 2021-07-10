@@ -153,35 +153,39 @@ printOn: aStream
 superclassName
 	self classReference.
 	^superclassName! !
-!Refactory.Browser.AddClassChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #areSubclassCreationMessageArgumentsValid:!private!testing! !
-!Refactory.Browser.AddClassChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #category!accessing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #changeClassName!accessing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #classConstants!accessing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #classReference!accessing!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #classVariableNames!accessing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #controller!accessing!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #definingSuperclass!accessing!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #definition!accessing!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #definition:!initialize/release!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #fillOutDefinition!helpers!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #fillOutDefinitionArguments:!helpers!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #imports!accessing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #instanceVariableNames!accessing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #isValidMessageName:!public!testing! !
-!Refactory.Browser.AddClassChange categoriesFor: #isValidSubclassCreationMessage:!public!testing! !
-!Refactory.Browser.AddClassChange categoriesFor: #namesIn:!helpers!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #parseDefinitionError!helpers!private! !
-!Refactory.Browser.AddClassChange categoriesFor: #primitiveExecute!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.AddClassChange categoriesFor: #superclassName!accessing!public! !
+!Refactory.Browser.AddClassChange categoriesForMethods!
+=!comparing!public! !
+areSubclassCreationMessageArgumentsValid:!private!testing! !
+asUndoOperation!converting!public! !
+category!accessing!public! !
+changeClassName!accessing!public! !
+changeString!printing!public! !
+classConstants!accessing!public! !
+classReference!accessing!private! !
+classVariableNames!accessing!public! !
+controller!accessing!private! !
+definingSuperclass!accessing!private! !
+definition!accessing!private! !
+definition:!initialize/release!public! !
+fillOutDefinition!helpers!private! !
+fillOutDefinitionArguments:!helpers!private! !
+hash!comparing!public! !
+imports!accessing!public! !
+instanceVariableNames!accessing!public! !
+isValidMessageName:!public!testing! !
+isValidSubclassCreationMessage:!public!testing! !
+namesIn:!helpers!private! !
+parseDefinitionError!helpers!private! !
+primitiveExecute!public! !
+printOn:!printing!public! !
+superclassName!accessing!public! !
+!
 
 !Refactory.Browser.AddClassChange class methodsFor!
 
 definition: aString 
 	^self new definition: aString! !
-!Refactory.Browser.AddClassChange class categoriesFor: #definition:!instance creation!public! !
+!Refactory.Browser.AddClassChange class categoriesForMethods!
+definition:!instance creation!public! !
+!
 

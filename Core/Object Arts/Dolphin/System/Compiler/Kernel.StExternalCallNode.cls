@@ -70,27 +70,31 @@ returnType
 returnType: aStExternalArgTypeNode
 	returnType := aStExternalArgTypeNode.
 	aStExternalArgTypeNode parent: self! !
-!Kernel.StExternalCallNode categoriesFor: #=!comparing!public! !
-!Kernel.StExternalCallNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StExternalCallNode categoriesFor: #argumentTypes!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #argumentTypes:!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #callingConvention!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #callingConvention:!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #initialize!initializing!public! !
-!Kernel.StExternalCallNode categoriesFor: #isExternalCall!public!testing! !
-!Kernel.StExternalCallNode categoriesFor: #isOverlapped!public!testing! !
-!Kernel.StExternalCallNode categoriesFor: #isOverlapped:!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #isVirtual!public!testing! !
-!Kernel.StExternalCallNode categoriesFor: #isVirtual:!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #nameOrOrdinal!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #nameOrOrdinal:!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #primitiveIndex!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #returnType!accessing!public! !
-!Kernel.StExternalCallNode categoriesFor: #returnType:!accessing!public! !
+!Kernel.StExternalCallNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+argumentTypes!accessing!public! !
+argumentTypes:!accessing!public! !
+callingConvention!accessing!public! !
+callingConvention:!accessing!public! !
+initialize!initializing!public! !
+isExternalCall!public!testing! !
+isOverlapped!public!testing! !
+isOverlapped:!accessing!public! !
+isVirtual!public!testing! !
+isVirtual:!accessing!public! !
+nameOrOrdinal!accessing!public! !
+nameOrOrdinal:!accessing!public! !
+primitiveIndex!accessing!public! !
+returnType!accessing!public! !
+returnType:!accessing!public! !
+!
 
 !Kernel.StExternalCallNode class methodsFor!
 
 new
 	^super new initialize! !
-!Kernel.StExternalCallNode class categoriesFor: #new!instance creation!public! !
+!Kernel.StExternalCallNode class categoriesForMethods!
+new!instance creation!public! !
+!
 

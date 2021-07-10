@@ -143,37 +143,39 @@ renameChangesForClass: aClassName to: newClassName
 
 renameClass: class to: newName
 	^self addChange: (RenameClassChange rename: class name to: newName)! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addChange:!accessing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addChangeFirst:!accessing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addClassVariable:to:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #addInstanceVariable:to:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #basicExecuteNotifying:!private! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #changes!inspector accessing!private! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #changes:!inspector accessing!private! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #changesSize!accessing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #comment:in:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #compile:in:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #compile:in:categories:!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #compile:in:classified:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #defineClass:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #executeNotifying:!private! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #flattenOnto:!private! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #initialize!initializing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeChange:!inspector accessing!private! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClass:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassNamed:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeClassVariable:from:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeInstanceVariable:from:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #removeMethod:from:!public!refactory/changes! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
-!Refactory.Browser.CompositeRefactoryChange categoriesFor: #renameClass:to:!public!refactory/changes! !
+!Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
+=!comparing!public! !
+addChange:!accessing!public! !
+addChangeFirst:!accessing!public! !
+addClassVariable:to:!public!refactory/changes! !
+addInstanceVariable:to:!public!refactory/changes! !
+basicExecuteNotifying:!private! !
+changeForClass:selector:!accessing!public! !
+changeForMetaclass:selector:!accessing!public! !
+changes!inspector accessing!private! !
+changes:!inspector accessing!private! !
+changesSize!accessing!public! !
+comment:in:!public!refactory/changes! !
+compile:in:!public!refactory/changes! !
+compile:in:categories:!public! !
+compile:in:classified:!public!refactory/changes! !
+defineClass:!public!refactory/changes! !
+executeNotifying:!private! !
+flattenOnto:!private! !
+hash!comparing!public! !
+initialize!initializing!public! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+problemCount!accessing!public! !
+removeChange:!inspector accessing!private! !
+removeClass:!public!refactory/changes! !
+removeClassNamed:!public!refactory/changes! !
+removeClassVariable:from:!public!refactory/changes! !
+removeInstanceVariable:from:!public!refactory/changes! !
+removeMethod:from:!public!refactory/changes! !
+renameChangesForClass:to:!accessing!public! !
+renameClass:to:!public!refactory/changes! !
+!
 
 !Refactory.Browser.CompositeRefactoryChange class methodsFor!
 
@@ -181,5 +183,7 @@ named: aString
 	^(self new)
 		name: aString;
 		yourself! !
-!Refactory.Browser.CompositeRefactoryChange class categoriesFor: #named:!instance creation!public! !
+!Refactory.Browser.CompositeRefactoryChange class categoriesForMethods!
+named:!instance creation!public! !
+!
 

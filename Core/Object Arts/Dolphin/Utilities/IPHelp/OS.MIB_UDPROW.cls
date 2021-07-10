@@ -36,8 +36,10 @@ dwLocalPort
 	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwLocalPort! !
-!OS.MIB_UDPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
-!OS.MIB_UDPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
+!OS.MIB_UDPROW categoriesForMethods!
+dwLocalAddr!**compiled accessors**!public! !
+dwLocalPort!**compiled accessors**!public! !
+!
 
 !OS.MIB_UDPROW class methodsFor!
 
@@ -63,6 +65,8 @@ defineFields
 
 getFieldNames
 	^#(#dwLocalAddr #dwLocalPort)! !
-!OS.MIB_UDPROW class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_UDPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_UDPROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

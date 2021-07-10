@@ -174,38 +174,40 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
-!XProgramming.SUnit.TestResult categoriesFor: #addError:signal:!adding!private! !
-!XProgramming.SUnit.TestResult categoriesFor: #addFailure:signal:!adding!private! !
-!XProgramming.SUnit.TestResult categoriesFor: #addPass:duration:!adding!private! !
-!XProgramming.SUnit.TestResult categoriesFor: #addSkip:signal:!adding!private! !
-!XProgramming.SUnit.TestResult categoriesFor: #correctCount!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #defects!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #displayAttributes:on:!printing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #displayOn:!printing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #duration!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #duration:!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #errorCount!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #errors!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #failureCount!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #failures!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #hasErrors!public!testing! !
-!XProgramming.SUnit.TestResult categoriesFor: #hasFailures!public!testing! !
-!XProgramming.SUnit.TestResult categoriesFor: #hasPassed!public!testing! !
-!XProgramming.SUnit.TestResult categoriesFor: #initialize!initializing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #isError:!public!testing! !
-!XProgramming.SUnit.TestResult categoriesFor: #isFailure:!public!testing! !
-!XProgramming.SUnit.TestResult categoriesFor: #isPassed:!public!testing! !
-!XProgramming.SUnit.TestResult categoriesFor: #isSkipped:!public!testing! !
-!XProgramming.SUnit.TestResult categoriesFor: #passed!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #passedCount!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #printOn:!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #resultFor:!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #results!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #runCase:!public!running! !
-!XProgramming.SUnit.TestResult categoriesFor: #runCount!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #skipped!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #skippedCount!accessing!public! !
-!XProgramming.SUnit.TestResult categoriesFor: #tests!accessing!public! !
+!XProgramming.SUnit.TestResult categoriesForMethods!
+addError:signal:!adding!private! !
+addFailure:signal:!adding!private! !
+addPass:duration:!adding!private! !
+addSkip:signal:!adding!private! !
+correctCount!accessing!public! !
+defects!accessing!public! !
+displayAttributes:on:!printing!public! !
+displayOn:!printing!public! !
+duration!accessing!public! !
+duration:!accessing!public! !
+errorCount!accessing!public! !
+errors!accessing!public! !
+failureCount!accessing!public! !
+failures!accessing!public! !
+hasErrors!public!testing! !
+hasFailures!public!testing! !
+hasPassed!public!testing! !
+initialize!initializing!public! !
+isError:!public!testing! !
+isFailure:!public!testing! !
+isPassed:!public!testing! !
+isSkipped:!public!testing! !
+passed!accessing!public! !
+passedCount!accessing!public! !
+printOn:!public! !
+resultFor:!accessing!public! !
+results!accessing!public! !
+runCase:!public!running! !
+runCount!accessing!public! !
+skipped!accessing!public! !
+skippedCount!accessing!public! !
+tests!accessing!public! !
+!
 
 !XProgramming.SUnit.TestResult class methodsFor!
 
@@ -234,12 +236,14 @@ signalFailureWith: aString
 
 skip
 	^TestSkip! !
-!XProgramming.SUnit.TestResult class categoriesFor: #error!Exceptions!public! !
-!XProgramming.SUnit.TestResult class categoriesFor: #exError!Exceptions!public! !
-!XProgramming.SUnit.TestResult class categoriesFor: #failure!Exceptions!public! !
-!XProgramming.SUnit.TestResult class categoriesFor: #new!Init / Release!public! !
-!XProgramming.SUnit.TestResult class categoriesFor: #resumableFailure!Exceptions!public! !
-!XProgramming.SUnit.TestResult class categoriesFor: #signalErrorWith:!Exceptions!public! !
-!XProgramming.SUnit.TestResult class categoriesFor: #signalFailureWith:!Exceptions!public! !
-!XProgramming.SUnit.TestResult class categoriesFor: #skip!Exceptions!public! !
+!XProgramming.SUnit.TestResult class categoriesForMethods!
+error!Exceptions!public! !
+exError!Exceptions!public! !
+failure!Exceptions!public! !
+new!Init / Release!public! !
+resumableFailure!Exceptions!public! !
+signalErrorWith:!Exceptions!public! !
+signalFailureWith:!Exceptions!public! !
+skip!Exceptions!public! !
+!
 

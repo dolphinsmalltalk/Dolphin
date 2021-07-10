@@ -26,9 +26,11 @@ packages: aCollection
 	"Set the packages selected in the receiver. Ignored at this level."
 
 	classesPresenter packages: aCollection! !
-!Tools.ChoosePackagedClassDialog categoriesFor: #classesPresenterClass!constants!private! !
-!Tools.ChoosePackagedClassDialog categoriesFor: #onViewOpened!event handling!public! !
-!Tools.ChoosePackagedClassDialog categoriesFor: #packages:!public!selection! !
+!Tools.ChoosePackagedClassDialog categoriesForMethods!
+classesPresenterClass!constants!private! !
+onViewOpened!event handling!public! !
+packages:!public!selection! !
+!
 
 !Tools.ChoosePackagedClassDialog class methodsFor!
 
@@ -55,7 +57,9 @@ resource_Default_view
 uninitialize
 	SmalltalkSystem.Current
 		ifNotNil: [:devsys | devsys classChooserClass == self ifTrue: [devsys classChooserClass: nil]]! !
-!Tools.ChoosePackagedClassDialog class categoriesFor: #on:!instance creation!public! !
-!Tools.ChoosePackagedClassDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ChoosePackagedClassDialog class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Tools.ChoosePackagedClassDialog class categoriesForMethods!
+on:!instance creation!public! !
+resource_Default_view!public!resources-views! !
+uninitialize!class hierarchy-removing!public! !
+!
 

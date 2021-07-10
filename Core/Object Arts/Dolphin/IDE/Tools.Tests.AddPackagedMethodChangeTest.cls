@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.AddPackagedMethodChangeTest'
 	instanceVariableNames: ''
@@ -54,7 +54,9 @@ testPrintOn
 	self assertIsNil: change protocol.
 	self assert: change printString readStream nextLine
 		equals: '!!<1d> class methodsFor: ''''!!' << self class fullName! !
-!Tools.Tests.AddPackagedMethodChangeTest categoriesFor: #changeClass!public!unit tests! !
-!Tools.Tests.AddPackagedMethodChangeTest categoriesFor: #testEnvironmentAndPackageMaintained!public!unit tests! !
-!Tools.Tests.AddPackagedMethodChangeTest categoriesFor: #testPrintOn!public!unit tests! !
+!Tools.Tests.AddPackagedMethodChangeTest categoriesForMethods!
+changeClass!public!unit tests! !
+testEnvironmentAndPackageMaintained!public!unit tests! !
+testPrintOn!public!unit tests! !
+!
 

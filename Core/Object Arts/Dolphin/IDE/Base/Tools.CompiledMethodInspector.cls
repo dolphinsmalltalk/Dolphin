@@ -37,10 +37,12 @@ text
 	^(index between: 2 and: self headerSize)
 		ifTrue: [ field ]
 		ifFalse: [ field printString ]! !
-!Tools.CompiledMethodInspector categoriesFor: #disassemblyText!accessing!private! !
-!Tools.CompiledMethodInspector categoriesFor: #source!accessing!public! !
-!Tools.CompiledMethodInspector categoriesFor: #sourceText!accessing!private! !
-!Tools.CompiledMethodInspector categoriesFor: #text!accessing!private! !
+!Tools.CompiledMethodInspector categoriesForMethods!
+disassemblyText!accessing!private! !
+source!accessing!public! !
+sourceText!accessing!private! !
+text!accessing!private! !
+!
 
 !Tools.CompiledMethodInspector class methodsFor!
 
@@ -52,5 +54,7 @@ headerList
 			(OrderedCollection
 					with: ' - source' -> #sourceText
 					with: ' - disassembly' -> #disassemblyText))! !
-!Tools.CompiledMethodInspector class categoriesFor: #headerList!constants!public! !
+!Tools.CompiledMethodInspector class categoriesForMethods!
+headerList!constants!public! !
+!
 

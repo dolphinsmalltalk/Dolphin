@@ -31,7 +31,9 @@ dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
-!OS.MIB_UDPEXROW categoriesFor: #dwProcessId!**compiled accessors**!public! !
+!OS.MIB_UDPEXROW categoriesForMethods!
+dwProcessId!**compiled accessors**!public! !
+!
 
 !OS.MIB_UDPEXROW class methodsFor!
 
@@ -56,6 +58,8 @@ defineFields
 
 getFieldNames
 	^#(#dwLocalAddr #dwLocalPort #dwProcessId)! !
-!OS.MIB_UDPEXROW class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_UDPEXROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_UDPEXROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

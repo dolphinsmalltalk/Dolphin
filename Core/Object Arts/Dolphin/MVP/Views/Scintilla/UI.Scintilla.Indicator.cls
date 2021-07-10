@@ -50,11 +50,13 @@ tag
 	example, to provide bubble help explaining the indicator."
 
 	^tag! !
-!UI.Scintilla.Indicator categoriesFor: #printOn:!printing!public! !
-!UI.Scintilla.Indicator categoriesFor: #range!accessing!public! !
-!UI.Scintilla.Indicator categoriesFor: #setStyleName:range:tag:!initializing!private! !
-!UI.Scintilla.Indicator categoriesFor: #styleName!public! !
-!UI.Scintilla.Indicator categoriesFor: #tag!accessing!public! !
+!UI.Scintilla.Indicator categoriesForMethods!
+printOn:!printing!public! !
+range!accessing!public! !
+setStyleName:range:tag:!initializing!private! !
+styleName!public! !
+tag!accessing!public! !
+!
 
 !UI.Scintilla.Indicator class methodsFor!
 
@@ -74,7 +76,9 @@ styleName: aSymbolOrInteger range: anInterval tag: anObject
 			range: anInterval
 			tag: anObject;
 		yourself! !
-!UI.Scintilla.Indicator class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.Indicator class categoriesFor: #styleName:range:!instance creation!public! !
-!UI.Scintilla.Indicator class categoriesFor: #styleName:range:tag:!instance creation!public! !
+!UI.Scintilla.Indicator class categoriesForMethods!
+icon!constants!development!public! !
+styleName:range:!instance creation!public! !
+styleName:range:tag:!instance creation!public! !
+!
 

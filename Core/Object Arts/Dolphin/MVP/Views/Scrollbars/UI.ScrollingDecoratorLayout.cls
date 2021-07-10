@@ -75,13 +75,15 @@ shouldStretchToFit
 
 shouldStretchToFit: aBoolean 
 	stretchToFit := aBoolean! !
-!UI.ScrollingDecoratorLayout categoriesFor: #initialize!initializing!public! !
-!UI.ScrollingDecoratorLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!UI.ScrollingDecoratorLayout categoriesFor: #positionScrolledViewOf:context:!helpers!private! !
-!UI.ScrollingDecoratorLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
-!UI.ScrollingDecoratorLayout categoriesFor: #scrolledChildOf:!helpers!private! !
-!UI.ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit!accessing!public! !
-!UI.ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit:!accessing!public! !
+!UI.ScrollingDecoratorLayout categoriesForMethods!
+initialize!initializing!public! !
+layoutContainer:context:!geometry!private! !
+positionScrolledViewOf:context:!helpers!private! !
+preferredLayoutExtentOf:context:!public! !
+scrolledChildOf:!helpers!private! !
+shouldStretchToFit!accessing!public! !
+shouldStretchToFit:!accessing!public! !
+!
 
 !UI.ScrollingDecoratorLayout class methodsFor!
 
@@ -97,6 +99,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!UI.ScrollingDecoratorLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.ScrollingDecoratorLayout class categoriesFor: #stbVersion!constants!public! !
+!UI.ScrollingDecoratorLayout class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!constants!public! !
+!
 

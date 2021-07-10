@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'MSXML.Tests.XmlFormatterTest'
 	instanceVariableNames: ''
@@ -159,11 +159,13 @@ testDocumentType
 	"
 DiffBrowser compare: reformatted with: text
 "! !
-!MSXML.Tests.XmlFormatterTest categoriesFor: #assertReformat:toCanonical:!helpers!private! !
-!MSXML.Tests.XmlFormatterTest categoriesFor: #newDocument!helpers!private! !
-!MSXML.Tests.XmlFormatterTest categoriesFor: #parseXml:!helpers!private! !
-!MSXML.Tests.XmlFormatterTest categoriesFor: #testCanonicalExample3_1!public!unit tests! !
-!MSXML.Tests.XmlFormatterTest categoriesFor: #testCanonicalExample3_2!public!unit tests! !
-!MSXML.Tests.XmlFormatterTest categoriesFor: #testCanonicalExample3_3!public!unit tests! !
-!MSXML.Tests.XmlFormatterTest categoriesFor: #testDocumentType!public!unit tests! !
+!MSXML.Tests.XmlFormatterTest categoriesForMethods!
+assertReformat:toCanonical:!helpers!private! !
+newDocument!helpers!private! !
+parseXml:!helpers!private! !
+testCanonicalExample3_1!public!unit tests! !
+testCanonicalExample3_2!public!unit tests! !
+testCanonicalExample3_3!public!unit tests! !
+testDocumentType!public!unit tests! !
+!
 

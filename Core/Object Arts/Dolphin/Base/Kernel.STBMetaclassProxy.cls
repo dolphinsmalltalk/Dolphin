@@ -22,8 +22,10 @@ resolveWithClassLocator: aClassLocator
 
 withClassLocator: aClassLocator
 	^#{MetaclassStub} ifDefined: [:classStub | classStub withClassLocator: aClassLocator]! !
-!Kernel.STBMetaclassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
-!Kernel.STBMetaclassProxy categoriesFor: #withClassLocator:!converting!private! !
+!Kernel.STBMetaclassProxy categoriesForMethods!
+resolveWithClassLocator:!converting!private! !
+withClassLocator:!converting!private! !
+!
 
 !Kernel.STBMetaclassProxy class methodsFor!
 
@@ -31,5 +33,7 @@ forClass: aMetaclass
 	"Answer a new instance representing aMetaclass."
 
 	^super forClass: aMetaclass instanceClass! !
-!Kernel.STBMetaclassProxy class categoriesFor: #forClass:!instance creation!public! !
+!Kernel.STBMetaclassProxy class categoriesForMethods!
+forClass:!instance creation!public! !
+!
 

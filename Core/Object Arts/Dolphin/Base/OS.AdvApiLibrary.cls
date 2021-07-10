@@ -57,10 +57,12 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 
 	<stdcall: bool ReportEventW handle word word dword lpvoid word dword lpvoid lpvoid>
 	^self invalidCall: _failureCode! !
-!OS.AdvApiLibrary categoriesFor: #deregisterEventSource:!public!win32 functions-events! !
-!OS.AdvApiLibrary categoriesFor: #getUserName:nSize:!public!win32 functions-system information! !
-!OS.AdvApiLibrary categoriesFor: #isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
-!OS.AdvApiLibrary categoriesFor: #reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
+!OS.AdvApiLibrary categoriesForMethods!
+deregisterEventSource:!public!win32 functions-events! !
+getUserName:nSize:!public!win32 functions-system information! !
+isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
+reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
+!
 
 !OS.AdvApiLibrary class methodsFor!
 
@@ -71,6 +73,8 @@ fileName
 
 sharedVariableName
 	^#{AdvApi32}! !
-!OS.AdvApiLibrary class categoriesFor: #fileName!constants!public! !
-!OS.AdvApiLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.AdvApiLibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

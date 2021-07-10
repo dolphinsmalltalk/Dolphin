@@ -52,11 +52,13 @@ prgCustData
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_prgCustData)
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
-!OS.COM.CUSTDATA categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.CUSTDATA categoriesFor: #buildContents!printing-IDL!private! !
-!OS.COM.CUSTDATA categoriesFor: #cCustData!**compiled accessors**!private! !
-!OS.COM.CUSTDATA categoriesFor: #contents!printing-IDL!public! !
-!OS.COM.CUSTDATA categoriesFor: #prgCustData!**compiled accessors**!public! !
+!OS.COM.CUSTDATA categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+buildContents!printing-IDL!private! !
+cCustData!**compiled accessors**!private! !
+contents!printing-IDL!public! !
+prgCustData!**compiled accessors**!public! !
+!
 
 !OS.COM.CUSTDATA class methodsFor!
 
@@ -92,7 +94,9 @@ initialize
 		at: (GUID fromString: '{82a85647-bd20-4075-823b-d9758c4391eb}') put: #length_is;
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
-!OS.COM.CUSTDATA class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.CUSTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.COM.CUSTDATA class categoriesFor: #initialize!public! !
+!OS.COM.CUSTDATA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!public! !
+!
 

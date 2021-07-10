@@ -61,13 +61,15 @@ removeMethodSilently: aCompiledMethod
 	methods that are members of the receiver, and make no fuss about it."
 
 	aCompiledMethod isPrivate: privacy not! !
-!Tools.MethodPrivacyCategory categoriesFor: #acceptsAdditions!public!testing! !
-!Tools.MethodPrivacyCategory categoriesFor: #addMethodSilently:!adding!private! !
-!Tools.MethodPrivacyCategory categoriesFor: #includesMethod:!public!testing! !
-!Tools.MethodPrivacyCategory categoriesFor: #isPrivacy!private!testing! !
-!Tools.MethodPrivacyCategory categoriesFor: #isPseud!public!testing! !
-!Tools.MethodPrivacyCategory categoriesFor: #privacy:!accessing!private! !
-!Tools.MethodPrivacyCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!Tools.MethodPrivacyCategory categoriesForMethods!
+acceptsAdditions!public!testing! !
+addMethodSilently:!adding!private! !
+includesMethod:!public!testing! !
+isPrivacy!private!testing! !
+isPseud!public!testing! !
+privacy:!accessing!private! !
+removeMethodSilently:!private!removing! !
+!
 
 !Tools.MethodPrivacyCategory class methodsFor!
 
@@ -91,6 +93,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Public := Private := nil! !
-!Tools.MethodPrivacyCategory class categoriesFor: #initialize!initializing!private! !
-!Tools.MethodPrivacyCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.MethodPrivacyCategory class categoriesForMethods!
+initialize!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

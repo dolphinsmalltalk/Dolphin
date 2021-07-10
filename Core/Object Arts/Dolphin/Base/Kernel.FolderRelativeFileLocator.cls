@@ -33,9 +33,11 @@ printOn: aStream
 		nextPutAll: #basePath:;
 		space;
 		print: self basePath! !
-!Kernel.FolderRelativeFileLocator categoriesFor: #basePath!accessing!public! !
-!Kernel.FolderRelativeFileLocator categoriesFor: #basePath:!accessing!public! !
-!Kernel.FolderRelativeFileLocator categoriesFor: #printOn:!development!printing!public! !
+!Kernel.FolderRelativeFileLocator categoriesForMethods!
+basePath!accessing!public! !
+basePath:!accessing!public! !
+printOn:!development!printing!public! !
+!
 
 !Kernel.FolderRelativeFileLocator class methodsFor!
 
@@ -45,5 +47,7 @@ basePath: aString
 	^(self new)
 		basePath: aString;
 		yourself! !
-!Kernel.FolderRelativeFileLocator class categoriesFor: #basePath:!accessing!public! !
+!Kernel.FolderRelativeFileLocator class categoriesForMethods!
+basePath:!accessing!public! !
+!
 

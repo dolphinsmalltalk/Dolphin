@@ -39,7 +39,9 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^block valueWithArgumentsAt: anAddress descriptor: descriptor! !
-!External.BlockCallback categoriesFor: #block:!accessing!private! !
-!External.BlockCallback categoriesFor: #printOn:!development!printing!public! !
-!External.BlockCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!External.BlockCallback categoriesForMethods!
+block:!accessing!private! !
+printOn:!development!printing!public! !
+valueWithArgumentsAt:!evaluating!private! !
+!
 

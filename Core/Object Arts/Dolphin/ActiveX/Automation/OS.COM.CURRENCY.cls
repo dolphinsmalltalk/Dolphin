@@ -45,11 +45,13 @@ value: newValue
 	"Set the receiver's value to the <Number>, newValue."
 
 	self cy: (newValue * 10000) asInteger! !
-!OS.COM.CURRENCY categoriesFor: #asVariant!converting!public! !
-!OS.COM.CURRENCY categoriesFor: #cy!**compiled accessors**!public! !
-!OS.COM.CURRENCY categoriesFor: #cy:!**compiled accessors**!public! !
-!OS.COM.CURRENCY categoriesFor: #value!accessing!public! !
-!OS.COM.CURRENCY categoriesFor: #value:!accessing!public! !
+!OS.COM.CURRENCY categoriesForMethods!
+asVariant!converting!public! !
+cy!**compiled accessors**!public! !
+cy:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 OS.COM.CURRENCY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 
@@ -97,12 +99,14 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_CY! !
-!OS.COM.CURRENCY class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.CURRENCY class categoriesFor: #epsilon!constants!public! !
-!OS.COM.CURRENCY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.COM.CURRENCY class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.CURRENCY class categoriesFor: #maximum!constants!public! !
-!OS.COM.CURRENCY class categoriesFor: #minimum!constants!public! !
-!OS.COM.CURRENCY class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!OS.COM.CURRENCY class categoriesFor: #vt!constants!public! !
+!OS.COM.CURRENCY class categoriesForMethods!
+defineFields!public!template definition! !
+epsilon!constants!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+maximum!constants!public! !
+minimum!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

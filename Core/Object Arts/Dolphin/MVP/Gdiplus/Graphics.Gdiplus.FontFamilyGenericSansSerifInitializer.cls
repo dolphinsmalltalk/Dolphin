@@ -16,11 +16,15 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipGetGenericFontFamilySansSerif: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer class methodsFor!
 
 uninitialize
 	GenericSansSerif := nil! !
-!Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.FontFamilyGenericSansSerifInitializer class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

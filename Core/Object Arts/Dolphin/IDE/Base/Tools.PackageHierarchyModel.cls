@@ -40,9 +40,11 @@ refresh
 
 	self reset.
 	self buildTree! !
-!Tools.PackageHierarchyModel categoriesFor: #addPackage:!adding!private! !
-!Tools.PackageHierarchyModel categoriesFor: #buildTree!private!updating! !
-!Tools.PackageHierarchyModel categoriesFor: #folderClass!constants!private! !
-!Tools.PackageHierarchyModel categoriesFor: #initialize!initializing!public! !
-!Tools.PackageHierarchyModel categoriesFor: #refresh!private!updating! !
+!Tools.PackageHierarchyModel categoriesForMethods!
+addPackage:!adding!private! !
+buildTree!private!updating! !
+folderClass!constants!private! !
+initialize!initializing!public! !
+refresh!private!updating! !
+!
 

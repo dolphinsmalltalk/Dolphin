@@ -50,10 +50,12 @@ DnsServerList
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'DnsServerList' field."
 
 	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_DnsServerList! !
-!OS.IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigActive!**compiled accessors**!public! !
-!OS.IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigEnabled!**compiled accessors**!public! !
-!OS.IP_PER_ADAPTER_INFO categoriesFor: #CurrentDnsServer!**compiled accessors**!public! !
-!OS.IP_PER_ADAPTER_INFO categoriesFor: #DnsServerList!**compiled accessors**!public! !
+!OS.IP_PER_ADAPTER_INFO categoriesForMethods!
+AutoconfigActive!**compiled accessors**!public! !
+AutoconfigEnabled!**compiled accessors**!public! !
+CurrentDnsServer!**compiled accessors**!public! !
+DnsServerList!**compiled accessors**!public! !
+!
 
 !OS.IP_PER_ADAPTER_INFO class methodsFor!
 
@@ -91,6 +93,8 @@ defineFields
 
 getFieldNames
 	^#(#AutoconfigEnabled #AutoconfigActive #CurrentDnsServer #DnsServerList)! !
-!OS.IP_PER_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
-!OS.IP_PER_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_PER_ADAPTER_INFO class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

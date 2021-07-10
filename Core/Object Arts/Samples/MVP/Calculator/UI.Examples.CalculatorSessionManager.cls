@@ -15,7 +15,9 @@ main
 	"Start up the Dolphin Calculator sample application"
 
 	self mainShellClass show! !
-!UI.Examples.CalculatorSessionManager categoriesFor: #main!operations-startup!public! !
+!UI.Examples.CalculatorSessionManager categoriesForMethods!
+main!operations-startup!public! !
+!
 
 !UI.Examples.CalculatorSessionManager class methodsFor!
 
@@ -23,5 +25,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Calculator! !
-!UI.Examples.CalculatorSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.CalculatorSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

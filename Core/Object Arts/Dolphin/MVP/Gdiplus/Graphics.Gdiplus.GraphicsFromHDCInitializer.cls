@@ -28,8 +28,10 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipCreateFromHDC: canvas asParameter graphics: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesFor: #canvas:!initializing!private! !
-!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.GraphicsFromHDCInitializer categoriesForMethods!
+canvas:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.GraphicsFromHDCInitializer class methodsFor!
 
@@ -37,5 +39,7 @@ canvas: aCanvas
 	"Creates a Graphics object that is associated with a specified device context."
 
 	^self new canvas: aCanvas! !
-!Graphics.Gdiplus.GraphicsFromHDCInitializer class categoriesFor: #canvas:!instance creation!public! !
+!Graphics.Gdiplus.GraphicsFromHDCInitializer class categoriesForMethods!
+canvas:!instance creation!public! !
+!
 

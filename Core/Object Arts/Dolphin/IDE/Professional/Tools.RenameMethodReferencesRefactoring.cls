@@ -30,7 +30,9 @@ preconditions
 						[self 
 							refactoringWarning: 'Renaming method references may not preserve behaviour.'.
 						true])! !
-!Tools.RenameMethodReferencesRefactoring categoriesFor: #displayOn:!displaying!public! !
-!Tools.RenameMethodReferencesRefactoring categoriesFor: #initialize!initializing!public! !
-!Tools.RenameMethodReferencesRefactoring categoriesFor: #preconditions!preconditions!public! !
+!Tools.RenameMethodReferencesRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+initialize!initializing!public! !
+preconditions!preconditions!public! !
+!
 

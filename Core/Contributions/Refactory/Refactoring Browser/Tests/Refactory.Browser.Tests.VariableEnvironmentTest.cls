@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Refactory.Browser.Tests.VariableEnvironmentTest'
 	instanceVariableNames: ''
@@ -57,9 +57,11 @@ testInstVars
 	self universalTestFor: readers.
 	self universalTestFor: classRefs.
 	self assert: refs numberSelectors equals: (writers | readers) numberSelectors! !
-!Refactory.Browser.Tests.VariableEnvironmentTest categoriesFor: #classVariableReader!private! !
-!Refactory.Browser.Tests.VariableEnvironmentTest categoriesFor: #classVariableWriter!private! !
-!Refactory.Browser.Tests.VariableEnvironmentTest categoriesFor: #testAddRemove!public!tests! !
-!Refactory.Browser.Tests.VariableEnvironmentTest categoriesFor: #testClassVars!public!tests! !
-!Refactory.Browser.Tests.VariableEnvironmentTest categoriesFor: #testInstVars!public!tests! !
+!Refactory.Browser.Tests.VariableEnvironmentTest categoriesForMethods!
+classVariableReader!private! !
+classVariableWriter!private! !
+testAddRemove!public!tests! !
+testClassVars!public!tests! !
+testInstVars!public!tests! !
+!
 

@@ -346,28 +346,30 @@ WillMove: adReason adStatus: adStatus pRecordset: pRecordset
 
 	<virtual stdcall: hresult 10 sdword sdword* _Recordset*>
 	^self invalidCall: _failureCode! !
-!ADODB.RecordsetEventsVt categoriesFor: #endOfRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #EndOfRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #fetchComplete:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #FetchComplete:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #fetchProgress:maxProgress:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #FetchProgress:MaxProgress:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #fieldChangeComplete:fields:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #FieldChangeComplete:Fields:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #moveComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #MoveComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #recordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #RecordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #recordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #RecordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #willChangeField:fields:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #WillChangeField:Fields:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #willChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #WillChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #willChangeRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #WillChangeRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
-!ADODB.RecordsetEventsVt categoriesFor: #willMove:adStatus:pRecordset:!**auto generated**!methods!public! !
-!ADODB.RecordsetEventsVt categoriesFor: #WillMove:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!ADODB.RecordsetEventsVt categoriesForMethods!
+endOfRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
+EndOfRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+fetchComplete:adStatus:pRecordset:!**auto generated**!methods!public! !
+FetchComplete:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+fetchProgress:maxProgress:adStatus:pRecordset:!**auto generated**!methods!public! !
+FetchProgress:MaxProgress:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+fieldChangeComplete:fields:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+FieldChangeComplete:Fields:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+moveComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+MoveComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+recordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+RecordChangeComplete:cRecords:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+recordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!methods!public! !
+RecordsetChangeComplete:pError:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+willChangeField:fields:adStatus:pRecordset:!**auto generated**!methods!public! !
+WillChangeField:Fields:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+willChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!methods!public! !
+WillChangeRecord:cRecords:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+willChangeRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
+WillChangeRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+willMove:adStatus:pRecordset:!**auto generated**!methods!public! !
+WillMove:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
+!
 
 !ADODB.RecordsetEventsVt class methodsFor!
 
@@ -399,5 +401,7 @@ defineFunctions
 		defineFunction: #FetchComplete:adStatus:pRecordset:
 			argumentTypes: 'Error* sdword* _Recordset*'
 ! !
-!ADODB.RecordsetEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.RecordsetEventsVt class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

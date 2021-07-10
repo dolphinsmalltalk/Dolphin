@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.IntegerTest subclass: #'Core.Tests.LargeIntegerTest'
 	instanceVariableNames: ''
@@ -1385,58 +1385,60 @@ testSubtractSmall
 	self assert: res equals: 16rBFFFFFFF.
 	self assert: res class identicalTo: LargeInteger.
 	self assert: res isImmutable! !
-!Core.Tests.LargeIntegerTest categoriesFor: #canonicalInstance!constants!private! !
-!Core.Tests.LargeIntegerTest categoriesFor: #largeComparisonPairs!constants!private! !
-!Core.Tests.LargeIntegerTest categoriesFor: #largeNegative!constants!private! !
-!Core.Tests.LargeIntegerTest categoriesFor: #largePositive!constants!private! !
-!Core.Tests.LargeIntegerTest categoriesFor: #smallIntegerComparisons!constants!private! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddDoubleToDoubleNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddDoubleToDoublePos!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddDoubleToTripleNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddDoubleToTriplePos!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddSingleToDoubleNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddSingleToDoublePos!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddSingleToSingleNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddSingleToSinglePos!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddSingleToTripleNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddSmall!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddToQuad!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddToQuadNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddTripleToTripleNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testAddTripleToTriplePos!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitAnd!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitAndSmall!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitOr!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitOrSmall!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitShiftRand2048n!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitShiftRand512n!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitXor!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testBitXorSmall!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testDivideSmall!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testEqual!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testEven!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testGcd!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testGreaterOrEqual!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testGreaterThan!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testHighBit!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testImmutable!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testLessThan!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testLowBit!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testMod!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testModulo!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testMulSmall!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testNegate!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testPrintLargeBase2!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testPrintStringBase!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testQuo!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testQuoRem!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testQuoRem2!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testQuoRem3!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testRem!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testSubFromQuad!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testSubFromQuadNeg!public!unit tests! !
-!Core.Tests.LargeIntegerTest categoriesFor: #testSubtractSmall!public!unit tests! !
+!Core.Tests.LargeIntegerTest categoriesForMethods!
+canonicalInstance!constants!private! !
+largeComparisonPairs!constants!private! !
+largeNegative!constants!private! !
+largePositive!constants!private! !
+smallIntegerComparisons!constants!private! !
+testAddDoubleToDoubleNeg!public!unit tests! !
+testAddDoubleToDoublePos!public!unit tests! !
+testAddDoubleToTripleNeg!public!unit tests! !
+testAddDoubleToTriplePos!public!unit tests! !
+testAddSingleToDoubleNeg!public!unit tests! !
+testAddSingleToDoublePos!public!unit tests! !
+testAddSingleToSingleNeg!public!unit tests! !
+testAddSingleToSinglePos!public!unit tests! !
+testAddSingleToTripleNeg!public!unit tests! !
+testAddSmall!public!unit tests! !
+testAddToQuad!public!unit tests! !
+testAddToQuadNeg!public!unit tests! !
+testAddTripleToTripleNeg!public!unit tests! !
+testAddTripleToTriplePos!public!unit tests! !
+testBitAnd!public!unit tests! !
+testBitAndSmall!public!unit tests! !
+testBitOr!public!unit tests! !
+testBitOrSmall!public!unit tests! !
+testBitShiftRand2048n!public!unit tests! !
+testBitShiftRand512n!public!unit tests! !
+testBitXor!public!unit tests! !
+testBitXorSmall!public!unit tests! !
+testDigitLength!public!unit tests! !
+testDivideSmall!public!unit tests! !
+testEqual!public!unit tests! !
+testEven!public!unit tests! !
+testGcd!public!unit tests! !
+testGreaterOrEqual!public!unit tests! !
+testGreaterThan!public!unit tests! !
+testHighBit!public!unit tests! !
+testImmutable!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+testLessThan!public!unit tests! !
+testLowBit!public!unit tests! !
+testMod!public!unit tests! !
+testModulo!public!unit tests! !
+testMulSmall!public!unit tests! !
+testNegate!public!unit tests! !
+testPrintLargeBase2!public!unit tests! !
+testPrintStringBase!public!unit tests! !
+testQuo!public!unit tests! !
+testQuoRem!public!unit tests! !
+testQuoRem2!public!unit tests! !
+testQuoRem3!public!unit tests! !
+testRaisedToInteger!public!unit tests! !
+testRem!public!unit tests! !
+testSubFromQuad!public!unit tests! !
+testSubFromQuadNeg!public!unit tests! !
+testSubtractSmall!public!unit tests! !
+!
 

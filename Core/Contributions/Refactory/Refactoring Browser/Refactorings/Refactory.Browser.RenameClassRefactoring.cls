@@ -61,11 +61,13 @@ transform
 		renameClass: class
 		to: newName
 		around: [self renameReferences]! !
-!Refactory.Browser.RenameClassRefactoring categoriesFor: #className:newName:!initialize/release!public! !
-!Refactory.Browser.RenameClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RenameClassRefactoring categoriesFor: #renameReferences!public!transforming! !
-!Refactory.Browser.RenameClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.RenameClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RenameClassRefactoring categoriesForMethods!
+className:newName:!initialize/release!public! !
+preconditions!preconditions!public! !
+renameReferences!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.RenameClassRefactoring class methodsFor!
 
@@ -77,6 +79,8 @@ model: aRBNamespace rename: aClass to: aNewName
 
 rename: aClass to: aNewName
 	^self new className: aClass fullName newName: aNewName! !
-!Refactory.Browser.RenameClassRefactoring class categoriesFor: #model:rename:to:!instance creation!public! !
-!Refactory.Browser.RenameClassRefactoring class categoriesFor: #rename:to:!instance creation!public! !
+!Refactory.Browser.RenameClassRefactoring class categoriesForMethods!
+model:rename:to:!instance creation!public! !
+rename:to:!instance creation!public! !
+!
 

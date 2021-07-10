@@ -104,21 +104,23 @@ setTextInto: aView
 	message back to aView."
 	
 	aView richText: self! !
-!UI.RichText categoriesFor: #=!comparing!public! !
-!UI.RichText categoriesFor: #asParameter!converting!public! !
-!UI.RichText categoriesFor: #asRichText!converting!public! !
-!UI.RichText categoriesFor: #asString!converting!public! !
-!UI.RichText categoriesFor: #copyToClipboard!copying!public! !
-!UI.RichText categoriesFor: #displayOn:!displaying!public! !
-!UI.RichText categoriesFor: #displayString!converting!displaying!public! !
-!UI.RichText categoriesFor: #hash!comparing!public! !
-!UI.RichText categoriesFor: #isEmpty!public!testing! !
-!UI.RichText categoriesFor: #notEmpty!public!testing! !
-!UI.RichText categoriesFor: #printOn:!development!printing!public! !
-!UI.RichText categoriesFor: #replaceSelectionIn:!double dispatch!public! !
-!UI.RichText categoriesFor: #rtf!accessing!private! !
-!UI.RichText categoriesFor: #rtf:!accessing!private! !
-!UI.RichText categoriesFor: #setTextInto:!double dispatch!private! !
+!UI.RichText categoriesForMethods!
+=!comparing!public! !
+asParameter!converting!public! !
+asRichText!converting!public! !
+asString!converting!public! !
+copyToClipboard!copying!public! !
+displayOn:!displaying!public! !
+displayString!converting!displaying!public! !
+hash!comparing!public! !
+isEmpty!public!testing! !
+notEmpty!public!testing! !
+printOn:!development!printing!public! !
+replaceSelectionIn:!double dispatch!public! !
+rtf!accessing!private! !
+rtf:!accessing!private! !
+setTextInto:!double dispatch!private! !
+!
 
 UI.RichText methodProtocol: #richString attributes: #(#readOnly) selectors: #(#setTextInto:)!
 
@@ -184,12 +186,14 @@ uninitialize
 	Converter isNil ifTrue: [^self].
 	Converter destroy.
 	Converter := nil! !
-!UI.RichText class categoriesFor: #fromRtf:!instance creation!public! !
-!UI.RichText class categoriesFor: #fromString:!instance creation!public! !
-!UI.RichText class categoriesFor: #initialize!class initialization!public! !
-!UI.RichText class categoriesFor: #new!instance creation!private! !
-!UI.RichText class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.RichText class categoriesFor: #registerClipboardFormat!class initialization!private! !
-!UI.RichText class categoriesFor: #rtfConverter!accessing!private! !
-!UI.RichText class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!UI.RichText class categoriesForMethods!
+fromRtf:!instance creation!public! !
+fromString:!instance creation!public! !
+initialize!class initialization!public! !
+new!instance creation!private! !
+onPreStripImage!class hierarchy-removing!private! !
+registerClipboardFormat!class initialization!private! !
+rtfConverter!accessing!private! !
+uninitialize!class hierarchy-removing!public! !
+!
 

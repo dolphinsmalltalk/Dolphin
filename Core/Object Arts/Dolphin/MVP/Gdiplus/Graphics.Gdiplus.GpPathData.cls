@@ -58,12 +58,14 @@ Types: aBYTE
 	"Set the receiver's 'Types' field to the value of the argument, aBYTE"
 
 	bytes uintPtrAtOffset: _OffsetOf_Types put: aBYTE yourAddress! !
-!Graphics.Gdiplus.GpPathData categoriesFor: #Count!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPathData categoriesFor: #Count:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPathData categoriesFor: #Points!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPathData categoriesFor: #Points:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPathData categoriesFor: #Types!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPathData categoriesFor: #Types:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpPathData categoriesForMethods!
+Count!**compiled accessors**!public! !
+Count:!**compiled accessors**!public! !
+Points!**compiled accessors**!public! !
+Points:!**compiled accessors**!public! !
+Types!**compiled accessors**!public! !
+Types:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpPathData class methodsFor!
 
@@ -93,6 +95,8 @@ defineFields
 
 getFieldNames
 	^#(#Count #Points #Types)! !
-!Graphics.Gdiplus.GpPathData class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpPathData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpPathData class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

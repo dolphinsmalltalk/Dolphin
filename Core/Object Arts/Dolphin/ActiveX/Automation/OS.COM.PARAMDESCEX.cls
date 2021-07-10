@@ -25,7 +25,9 @@ varDefaultValue
 	"Answer the <VARIANT> value of the receiver's 'varDefaultValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varDefaultValue! !
-!OS.COM.PARAMDESCEX categoriesFor: #varDefaultValue!**compiled accessors**!public! !
+!OS.COM.PARAMDESCEX categoriesForMethods!
+varDefaultValue!**compiled accessors**!public! !
+!
 
 !OS.COM.PARAMDESCEX class methodsFor!
 
@@ -48,6 +50,8 @@ defineFields
 
 getFieldNames
 	^#(#varDefaultValue)! !
-!OS.COM.PARAMDESCEX class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.PARAMDESCEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.PARAMDESCEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

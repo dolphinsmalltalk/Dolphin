@@ -25,9 +25,11 @@ value
 	"Answer the receiver's value field as a Smalltalk object."
 
 	^self elementClass fromAddress: bytes! !
-!External.StructurePointer categoriesFor: #elementClass!accessing!private! !
-!External.StructurePointer categoriesFor: #elementClass:!accessing!private! !
-!External.StructurePointer categoriesFor: #value!accessing!public! !
+!External.StructurePointer categoriesForMethods!
+elementClass!accessing!private! !
+elementClass:!accessing!private! !
+value!accessing!public! !
+!
 
 !External.StructurePointer class methodsFor!
 
@@ -64,9 +66,11 @@ newNull: pointerClass elementClass: elementClass
 		initializeAtAddress: pointerClass new;
 		elementClass: elementClass;
 		yourself! !
-!External.StructurePointer class categoriesFor: #byteSize!accessing!public! !
-!External.StructurePointer class categoriesFor: #elementClass:!instance creation!public! !
-!External.StructurePointer class categoriesFor: #fromAddress:elementClass:!instance creation!public! !
-!External.StructurePointer class categoriesFor: #getFieldNames!constants!private! !
-!External.StructurePointer class categoriesFor: #newNull:elementClass:!instance creation!public! !
+!External.StructurePointer class categoriesForMethods!
+byteSize!accessing!public! !
+elementClass:!instance creation!public! !
+fromAddress:elementClass:!instance creation!public! !
+getFieldNames!constants!private! !
+newNull:elementClass:!instance creation!public! !
+!
 

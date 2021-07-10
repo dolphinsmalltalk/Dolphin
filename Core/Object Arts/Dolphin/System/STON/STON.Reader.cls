@@ -485,60 +485,62 @@ setReference: reference to: object
 storeReference: object
 	objects addLast: object.
 	^objects size! !
-!STON.Reader categoriesFor: #acceptUnknownClasses:!initialize/release!private! !
-!STON.Reader categoriesFor: #atEnd!private!testing! !
-!STON.Reader categoriesFor: #close!initialize/release!private! !
-!STON.Reader categoriesFor: #consumeWhitespace!helpers!private! !
-!STON.Reader categoriesFor: #convertNewLines:!initialize/release!private! !
-!STON.Reader categoriesFor: #error:!error handling!private! !
-!STON.Reader categoriesFor: #expectChar:!helpers!private! !
-!STON.Reader categoriesFor: #initialize!initialize/release!private! !
-!STON.Reader categoriesFor: #instVarMapFor:!private! !
-!STON.Reader categoriesFor: #isClassChar:!helpers!private! !
-!STON.Reader categoriesFor: #isClassStartChar:!helpers!private! !
-!STON.Reader categoriesFor: #isList!public!testing! !
-!STON.Reader categoriesFor: #isSimpleSymbolChar:!helpers!private! !
-!STON.Reader categoriesFor: #lookupClass:!helpers!private! !
-!STON.Reader categoriesFor: #match:do:!helpers!private! !
-!STON.Reader categoriesFor: #matchChar:!helpers!private! !
-!STON.Reader categoriesFor: #newLine:!initialize/release!private! !
-!STON.Reader categoriesFor: #newReference!helpers!private! !
-!STON.Reader categoriesFor: #next!public! !
-!STON.Reader categoriesFor: #objectProperties!private! !
-!STON.Reader categoriesFor: #on:!initialize/release!private! !
-!STON.Reader categoriesFor: #optimizeForLargeStructures!initialize/release!private! !
-!STON.Reader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing!private! !
-!STON.Reader categoriesFor: #parseCharacterHex!helpers!private! !
-!STON.Reader categoriesFor: #parseCharacterHex4Value!helpers!private! !
-!STON.Reader categoriesFor: #parseCharacterHexDigit!parsing!private! !
-!STON.Reader categoriesFor: #parseClass!parsing!private! !
-!STON.Reader categoriesFor: #parseConstant!parsing!private! !
-!STON.Reader categoriesFor: #parseConstantDo:!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseEscapedCharacter!parsing!private! !
-!STON.Reader categoriesFor: #parseList!parsing!private! !
-!STON.Reader categoriesFor: #parseListDo:!parsing!private! !
-!STON.Reader categoriesFor: #parseListSingleton!parsing!private! !
-!STON.Reader categoriesFor: #parseMap!parsing!private! !
-!STON.Reader categoriesFor: #parseMapDo:!parsing!private! !
-!STON.Reader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
-!STON.Reader categoriesFor: #parseNumber!parsing!private! !
-!STON.Reader categoriesFor: #parseNumberExponent!parsing!private! !
-!STON.Reader categoriesFor: #parseNumberFraction!parsing!private! !
-!STON.Reader categoriesFor: #parseNumberInteger!parsing!private! !
-!STON.Reader categoriesFor: #parseObject!parsing!private! !
-!STON.Reader categoriesFor: #parseReference!public! !
-!STON.Reader categoriesFor: #parseSimpleValue!parsing!private! !
-!STON.Reader categoriesFor: #parseString!parsing-internal!private! !
-!STON.Reader categoriesFor: #parseStringInternal!parsing!private! !
-!STON.Reader categoriesFor: #parseSymbol!parsing!private! !
-!STON.Reader categoriesFor: #parseTrailingSurrogateHexEscape!parsing!private! !
-!STON.Reader categoriesFor: #parseValue!parsing!private! !
-!STON.Reader categoriesFor: #peekFor:!operations!private! !
-!STON.Reader categoriesFor: #registerNewObject:!parsing!private! !
-!STON.Reader categoriesFor: #renamedClasses!helpers!private! !
-!STON.Reader categoriesFor: #reset!initialize/release!private! !
-!STON.Reader categoriesFor: #setReference:to:!helpers!private! !
-!STON.Reader categoriesFor: #storeReference:!helpers!private! !
+!STON.Reader categoriesForMethods!
+acceptUnknownClasses:!initialize/release!private! !
+atEnd!private!testing! !
+close!initialize/release!private! !
+consumeWhitespace!helpers!private! !
+convertNewLines:!initialize/release!private! !
+error:!error handling!private! !
+expectChar:!helpers!private! !
+initialize!initialize/release!private! !
+instVarMapFor:!private! !
+isClassChar:!helpers!private! !
+isClassStartChar:!helpers!private! !
+isList!public!testing! !
+isSimpleSymbolChar:!helpers!private! !
+lookupClass:!helpers!private! !
+match:do:!helpers!private! !
+matchChar:!helpers!private! !
+newLine:!initialize/release!private! !
+newReference!helpers!private! !
+next!public! !
+objectProperties!private! !
+on:!initialize/release!private! !
+optimizeForLargeStructures!initialize/release!private! !
+parseCharacterConvertingNewLinesOn:!parsing!private! !
+parseCharacterHex!helpers!private! !
+parseCharacterHex4Value!helpers!private! !
+parseCharacterHexDigit!parsing!private! !
+parseClass!parsing!private! !
+parseConstant!parsing!private! !
+parseConstantDo:!parsing-internal!private! !
+parseEscapedCharacter!parsing!private! !
+parseList!parsing!private! !
+parseListDo:!parsing!private! !
+parseListSingleton!parsing!private! !
+parseMap!parsing!private! !
+parseMapDo:!parsing!private! !
+parseNamedInstVarsFor:!parsing!private! !
+parseNumber!parsing!private! !
+parseNumberExponent!parsing!private! !
+parseNumberFraction!parsing!private! !
+parseNumberInteger!parsing!private! !
+parseObject!parsing!private! !
+parseReference!public! !
+parseSimpleValue!parsing!private! !
+parseString!parsing-internal!private! !
+parseStringInternal!parsing!private! !
+parseSymbol!parsing!private! !
+parseTrailingSurrogateHexEscape!parsing!private! !
+parseValue!parsing!private! !
+peekFor:!operations!private! !
+registerNewObject:!parsing!private! !
+renamedClasses!helpers!private! !
+reset!initialize/release!private! !
+setReference:to:!helpers!private! !
+storeReference:!helpers!private! !
+!
 
 !STON.Reader class methodsFor!
 
@@ -579,9 +581,11 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
-!STON.Reader class categoriesFor: #icon!constants!public! !
-!STON.Reader class categoriesFor: #initialize!private! !
-!STON.Reader class categoriesFor: #initializeHexDigitValues!initializing!private! !
-!STON.Reader class categoriesFor: #new!instance creation!private! !
-!STON.Reader class categoriesFor: #on:!instance creation!public! !
+!STON.Reader class categoriesForMethods!
+icon!constants!public! !
+initialize!private! !
+initializeHexDigitValues!initializing!private! !
+new!instance creation!private! !
+on:!instance creation!public! !
+!
 

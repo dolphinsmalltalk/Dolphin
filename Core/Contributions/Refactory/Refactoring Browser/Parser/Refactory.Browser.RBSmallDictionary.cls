@@ -147,29 +147,31 @@ removeKey: key ifAbsent: aBlock
 
 size
 	^size! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #add:!adding!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #associationsDo:!enumerating!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #at:!accessing!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #at:ifAbsent:!accessing!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #at:put:!adding!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #do:!enumerating!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #empty!accessing!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #findIndexFor:!private!searching! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #growKeysAndValues!helpers!private! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #growTo:!helpers!private! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #includesKey:!public!testing! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #initialize!initializing!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #keys!accessing!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #keysDo:!enumerating!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #privateAt:put:!helpers!private! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #remove:ifAbsent:!public!removing! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #removeKey:!public!removing! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!Refactory.Browser.RBSmallDictionary categoriesFor: #size!accessing!public! !
+!Refactory.Browser.RBSmallDictionary categoriesForMethods!
+add:!adding!public! !
+associationsDo:!enumerating!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:put:!adding!public! !
+do:!enumerating!public! !
+empty!accessing!public! !
+errorKeyNotFound:!exceptions!private! !
+findIndexFor:!private!searching! !
+growKeysAndValues!helpers!private! !
+growTo:!helpers!private! !
+includesKey:!public!testing! !
+initialize!initializing!public! !
+keys!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+postCopy!copying!public! !
+privateAt:put:!helpers!private! !
+remove:ifAbsent:!public!removing! !
+removeKey:!public!removing! !
+removeKey:ifAbsent:!public!removing! !
+size!accessing!public! !
+!
 
 !Refactory.Browser.RBSmallDictionary class methodsFor!
 
@@ -180,6 +182,8 @@ new: aSize
 	"Ignore the size"
 
 	^self basicNew initialize! !
-!Refactory.Browser.RBSmallDictionary class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.RBSmallDictionary class categoriesFor: #new:!instance creation!public! !
+!Refactory.Browser.RBSmallDictionary class categoriesForMethods!
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

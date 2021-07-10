@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: ''
@@ -226,14 +226,16 @@ testFloatScanning
 	#('5.1234a' '0.5e' '1.5e2e3' '1.5e2e-3' '1.5e-Integer zero' '1.5e-' '1.5e+' '1.7976931348623158+e308')
 		do: [:each | self scanNonNumericEnd: each class: StNumberLiteralToken].
 	self scanNonNumericEnd: '5.F' class: StNumberLiteralToken! !
-!Kernel.Tests.ParserTest categoriesFor: #assertToken:isChar:!helpers!private! !
-!Kernel.Tests.ParserTest categoriesFor: #parserClass!constants!private! !
-!Kernel.Tests.ParserTest categoriesFor: #scannerClass!constants!private! !
-!Kernel.Tests.ParserTest categoriesFor: #scanNonNumericEnd:class:!public! !
-!Kernel.Tests.ParserTest categoriesFor: #testAnnotationEquality!public!unit tests! !
-!Kernel.Tests.ParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
-!Kernel.Tests.ParserTest categoriesFor: #testExpressionSolver!public! !
-!Kernel.Tests.ParserTest categoriesFor: #testExternalCallEquality!public!unit tests! !
-!Kernel.Tests.ParserTest categoriesFor: #testExternalCalls!public!unit tests! !
-!Kernel.Tests.ParserTest categoriesFor: #testFloatScanning!public!unit tests! !
+!Kernel.Tests.ParserTest categoriesForMethods!
+assertToken:isChar:!helpers!private! !
+parserClass!constants!private! !
+scannerClass!constants!private! !
+scanNonNumericEnd:class:!public! !
+testAnnotationEquality!public!unit tests! !
+testCharacterScanning!public!unit tests! !
+testExpressionSolver!public! !
+testExternalCallEquality!public!unit tests! !
+testExternalCalls!public!unit tests! !
+testFloatScanning!public!unit tests! !
+!
 

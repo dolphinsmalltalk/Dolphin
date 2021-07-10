@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageClosureTests'
 	instanceVariableNames: ''
@@ -89,13 +89,15 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 	"To debug this, open an env browser on the deployment scope as follows:
 		aBrowserEnvironment openEditor.
 	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"! !
-!Tools.Tests.PackageClosureTests categoriesFor: #consoleAppUnimplemented!constants!private! !
-!Tools.Tests.PackageClosureTests categoriesFor: #simpleGuiAppUnimplementedMessages!constants!private! !
-!Tools.Tests.PackageClosureTests categoriesFor: #testCommandLineHelloWorld!public!unit tests! !
-!Tools.Tests.PackageClosureTests categoriesFor: #testEtchASketch!public!unit tests! !
-!Tools.Tests.PackageClosureTests categoriesFor: #testHelloWorld!public!unit tests! !
-!Tools.Tests.PackageClosureTests categoriesFor: #testNotepad!public!unit tests! !
-!Tools.Tests.PackageClosureTests categoriesFor: #testRegEdit!public!unit tests! !
-!Tools.Tests.PackageClosureTests categoriesFor: #testSystemPackage!public!unit tests! !
-!Tools.Tests.PackageClosureTests categoriesFor: #verifyPackageClosure:missing:!helpers!private! !
+!Tools.Tests.PackageClosureTests categoriesForMethods!
+consoleAppUnimplemented!constants!private! !
+simpleGuiAppUnimplementedMessages!constants!private! !
+testCommandLineHelloWorld!public!unit tests! !
+testEtchASketch!public!unit tests! !
+testHelloWorld!public!unit tests! !
+testNotepad!public!unit tests! !
+testRegEdit!public!unit tests! !
+testSystemPackage!public!unit tests! !
+verifyPackageClosure:missing:!helpers!private! !
+!
 

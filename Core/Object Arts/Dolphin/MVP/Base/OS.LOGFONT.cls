@@ -50,12 +50,14 @@ lfFaceName: anAnsiString
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
 	bytes byteAtOffset: _OffsetOf_lfFaceName + size put: 0! !
-!OS.LOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
-!OS.LOGFONT categoriesFor: #faceName!accessing!public! !
-!OS.LOGFONT categoriesFor: #faceName:!accessing!public! !
-!OS.LOGFONT categoriesFor: #getData:!helpers!private! !
-!OS.LOGFONT categoriesFor: #lfFaceName!**compiled accessors**!public! !
-!OS.LOGFONT categoriesFor: #lfFaceName:!**compiled accessors**!public! !
+!OS.LOGFONT categoriesForMethods!
+createFont!private!realizing/unrealizing! !
+faceName!accessing!public! !
+faceName:!accessing!public! !
+getData:!helpers!private! !
+lfFaceName!**compiled accessors**!public! !
+lfFaceName:!**compiled accessors**!public! !
+!
 
 !OS.LOGFONT class methodsFor!
 
@@ -66,5 +68,7 @@ defineFields
 
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: AnsiString length: LF_FACESIZE)! !
-!OS.LOGFONT class categoriesFor: #defineFields!public!template definition! !
+!OS.LOGFONT class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

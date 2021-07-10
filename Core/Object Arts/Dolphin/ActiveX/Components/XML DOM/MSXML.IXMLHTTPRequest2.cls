@@ -213,20 +213,22 @@ SetRequestHeader: pwszHeader pwszValue: pwszValue
 
 	<virtual stdcall: hresult 10 lpwstr lpwstr>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #getAllResponseHeaders!**auto generated**!methods!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #GetAllResponseHeaders:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #getCookie:pwszName:dwFlags:!**auto generated**!methods!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #GetCookie:pwszName:dwFlags:pcCookies:ppCookies:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #getResponseHeader:!**auto generated**!methods!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #GetResponseHeader:ppwszValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #Open:pwszUrl:pStatusCallback:pwszUserName:pwszPassword:pwszProxyUserName:pwszProxyPassword:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #Send:cbBody:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #setCookie:!**auto generated**!methods!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #SetCookie:pdwCookieState:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #SetCustomResponseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #SetProperty:ullValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
-!MSXML.IXMLHTTPRequest2 categoriesFor: #SetRequestHeader:pwszValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
+!MSXML.IXMLHTTPRequest2 categoriesForMethods!
+Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
+getAllResponseHeaders!**auto generated**!methods!public! !
+GetAllResponseHeaders:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
+getCookie:pwszName:dwFlags:!**auto generated**!methods!public! !
+GetCookie:pwszName:dwFlags:pcCookies:ppCookies:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
+getResponseHeader:!**auto generated**!methods!public! !
+GetResponseHeader:ppwszValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
+Open:pwszUrl:pStatusCallback:pwszUserName:pwszPassword:pwszProxyUserName:pwszProxyPassword:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
+Send:cbBody:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
+setCookie:!**auto generated**!methods!public! !
+SetCookie:pdwCookieState:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!private! !
+SetCustomResponseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
+SetProperty:ullValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
+SetRequestHeader:pwszValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest2!public! !
+!
 
 !MSXML.IXMLHTTPRequest2 class methodsFor!
 
@@ -261,6 +263,8 @@ defineFunctions
 		defineFunction: #GetResponseHeader:ppwszValue:
 			argumentTypes: 'lpwstr lpwstr*'
 ! !
-!MSXML.IXMLHTTPRequest2 class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSXML.IXMLHTTPRequest2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLHTTPRequest2 class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

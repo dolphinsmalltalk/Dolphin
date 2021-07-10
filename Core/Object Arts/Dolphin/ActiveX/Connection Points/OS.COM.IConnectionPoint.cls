@@ -132,19 +132,21 @@ Unadvise: dwCookie
 
 	<virtual stdcall: sdword 7 dword>
 	^self invalidCall: _failureCode! !
-!OS.COM.IConnectionPoint categoriesFor: #advise:!adding!public! !
-!OS.COM.IConnectionPoint categoriesFor: #Advise:pdwCookie:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!OS.COM.IConnectionPoint categoriesFor: #connectionIID!accessing!public! !
-!OS.COM.IConnectionPoint categoriesFor: #connections!enumerating!public! !
-!OS.COM.IConnectionPoint categoriesFor: #enumConnections!methods!public! !
-!OS.COM.IConnectionPoint categoriesFor: #EnumConnections:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!OS.COM.IConnectionPoint categoriesFor: #getConnectionInterface!**auto generated**!methods!public! !
-!OS.COM.IConnectionPoint categoriesFor: #GetConnectionInterface:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!OS.COM.IConnectionPoint categoriesFor: #getConnectionPointContainer!**auto generated**!methods!public! !
-!OS.COM.IConnectionPoint categoriesFor: #GetConnectionPointContainer:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!OS.COM.IConnectionPoint categoriesFor: #printOn:!development!printing!public! !
-!OS.COM.IConnectionPoint categoriesFor: #unadvise:!**auto generated**!methods!public! !
-!OS.COM.IConnectionPoint categoriesFor: #Unadvise:!COM Interfaces-IConnectionPoint!private! !
+!OS.COM.IConnectionPoint categoriesForMethods!
+advise:!adding!public! !
+Advise:pdwCookie:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+connectionIID!accessing!public! !
+connections!enumerating!public! !
+enumConnections!methods!public! !
+EnumConnections:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+getConnectionInterface!**auto generated**!methods!public! !
+GetConnectionInterface:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+getConnectionPointContainer!**auto generated**!methods!public! !
+GetConnectionPointContainer:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+printOn:!development!printing!public! !
+unadvise:!**auto generated**!methods!public! !
+Unadvise:!COM Interfaces-IConnectionPoint!private! !
+!
 
 !OS.COM.IConnectionPoint class methodsFor!
 
@@ -165,5 +167,7 @@ defineFunctions
 		defineFunction: #EnumConnections:
 			argumentTypes: 'void**'
 ! !
-!OS.COM.IConnectionPoint class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IConnectionPoint class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

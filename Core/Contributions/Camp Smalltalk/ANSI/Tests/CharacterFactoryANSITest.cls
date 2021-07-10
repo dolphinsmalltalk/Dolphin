@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #CharacterFactoryANSITest
 	instanceVariableNames: ''
@@ -51,11 +51,13 @@ testXtab
 	self value: [Character tab]
 		should: [:r | true "implementation defined "]
 		conformTo: #'Character factory' selector: #'tab'.! !
-!CharacterFactoryANSITest categoriesFor: #canonicalObject!public! !
-!CharacterFactoryANSITest categoriesFor: #protocol!public! !
-!CharacterFactoryANSITest categoriesFor: #testXcodePointX!public! !
-!CharacterFactoryANSITest categoriesFor: #testXcr!public! !
-!CharacterFactoryANSITest categoriesFor: #testXlf!public! !
-!CharacterFactoryANSITest categoriesFor: #testXspace!public! !
-!CharacterFactoryANSITest categoriesFor: #testXtab!public! !
+!CharacterFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXcodePointX!public! !
+testXcr!public! !
+testXlf!public! !
+testXspace!public! !
+testXtab!public! !
+!
 

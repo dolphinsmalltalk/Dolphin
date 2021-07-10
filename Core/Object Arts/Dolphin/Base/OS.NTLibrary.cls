@@ -49,12 +49,14 @@ wineGetVersion
 
 	<stdcall: lpstr wine_get_version>
 	^nil	"instead of reporting an error"! !
-!OS.NTLibrary categoriesFor: #initialize!initializing!public! !
-!OS.NTLibrary categoriesFor: #isWine!public!testing! !
-!OS.NTLibrary categoriesFor: #ntQueryTimerResolution:maximum:actual:!public! !
-!OS.NTLibrary categoriesFor: #rtlNtStatusToDosError:!public!win32 functions-error handling! !
-!OS.NTLibrary categoriesFor: #setTimerResolution:set:actualResolution:!accessing!public! !
-!OS.NTLibrary categoriesFor: #wineGetVersion!public! !
+!OS.NTLibrary categoriesForMethods!
+initialize!initializing!public! !
+isWine!public!testing! !
+ntQueryTimerResolution:maximum:actual:!public! !
+rtlNtStatusToDosError:!public!win32 functions-error handling! !
+setTimerResolution:set:actualResolution:!accessing!public! !
+wineGetVersion!public! !
+!
 
 !OS.NTLibrary class methodsFor!
 
@@ -66,6 +68,8 @@ fileName
 
 sharedVariableName
 	^#{NtDll}! !
-!OS.NTLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!OS.NTLibrary class categoriesFor: #sharedVariableName!constants!private!realizing/unrealizing! !
+!OS.NTLibrary class categoriesForMethods!
+fileName!**auto generated**!constants!public! !
+sharedVariableName!constants!private!realizing/unrealizing! !
+!
 

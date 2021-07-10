@@ -223,30 +223,32 @@ update
 	samplingTimeStamp := DateAndTime now.
 	samplesElapsedTime := nil.
 	self trigger: #sampleSetUpdated: with: self! !
-!ProfilerSampleSet categoriesFor: #addItem:to:elapsedTime:!helpers!private! !
-!ProfilerSampleSet categoriesFor: #addSample:elapsedTime:!profiling!public! !
-!ProfilerSampleSet categoriesFor: #clearCaches!operations!public! !
-!ProfilerSampleSet categoriesFor: #duration!accessing!public! !
-!ProfilerSampleSet categoriesFor: #initialize!initializing!public! !
-!ProfilerSampleSet categoriesFor: #isActive!accessing!public! !
-!ProfilerSampleSet categoriesFor: #isActive:!accessing!public! !
-!ProfilerSampleSet categoriesFor: #name!accessing!public! !
-!ProfilerSampleSet categoriesFor: #profilerIconIndex!accessing!public! !
-!ProfilerSampleSet categoriesFor: #reportTo:!public!reporting! !
-!ProfilerSampleSet categoriesFor: #rootNodes!accessing!public! !
-!ProfilerSampleSet categoriesFor: #sampleAt:!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplesClasses!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplesElapsedTime!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplesElapsedTimeString!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplesSelectors!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplesSize!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplingCount!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplingInterval!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplingIntervalString!accessing!public! !
-!ProfilerSampleSet categoriesFor: #samplingTimeStamp!accessing!public! !
-!ProfilerSampleSet categoriesFor: #scanSamples!operations!public! !
-!ProfilerSampleSet categoriesFor: #setName:!initializing!public! !
-!ProfilerSampleSet categoriesFor: #update!public!updating! !
+!ProfilerSampleSet categoriesForMethods!
+addItem:to:elapsedTime:!helpers!private! !
+addSample:elapsedTime:!profiling!public! !
+clearCaches!operations!public! !
+duration!accessing!public! !
+initialize!initializing!public! !
+isActive!accessing!public! !
+isActive:!accessing!public! !
+name!accessing!public! !
+profilerIconIndex!accessing!public! !
+reportTo:!public!reporting! !
+rootNodes!accessing!public! !
+sampleAt:!accessing!public! !
+samplesClasses!accessing!public! !
+samplesElapsedTime!accessing!public! !
+samplesElapsedTimeString!accessing!public! !
+samplesSelectors!accessing!public! !
+samplesSize!accessing!public! !
+samplingCount!accessing!public! !
+samplingInterval!accessing!public! !
+samplingIntervalString!accessing!public! !
+samplingTimeStamp!accessing!public! !
+scanSamples!operations!public! !
+setName:!initializing!public! !
+update!public!updating! !
+!
 
 !ProfilerSampleSet class methodsFor!
 
@@ -264,7 +266,9 @@ new
 	"Should only create a new instance using #name:"
 
 	^self shouldNotImplement! !
-!ProfilerSampleSet class categoriesFor: #icon!constants!public! !
-!ProfilerSampleSet class categoriesFor: #name:!instance creation!public! !
-!ProfilerSampleSet class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
+!ProfilerSampleSet class categoriesForMethods!
+icon!constants!public! !
+name:!instance creation!public! !
+new!instance creation!protocols-instantiator!protocols-Object class!public! !
+!
 

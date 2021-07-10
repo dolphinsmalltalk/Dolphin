@@ -29,7 +29,9 @@ dwValue
 	"Answer the <Integer> value of the receiver's 'dwValue' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwValue! !
-!OS.MIB_IFNUMBER categoriesFor: #dwValue!**compiled accessors**!public! !
+!OS.MIB_IFNUMBER categoriesForMethods!
+dwValue!**compiled accessors**!public! !
+!
 
 !OS.MIB_IFNUMBER class methodsFor!
 
@@ -49,6 +51,8 @@ defineFields
 
 getFieldNames
 	^#(#dwValue)! !
-!OS.MIB_IFNUMBER class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_IFNUMBER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IFNUMBER class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

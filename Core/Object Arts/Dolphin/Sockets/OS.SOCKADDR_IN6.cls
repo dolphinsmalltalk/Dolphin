@@ -111,20 +111,22 @@ sin6_scope_id: anInteger
 	"Set the receiver's 'sin6_scope_id' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_sin6_scope_id put: anInteger! !
-!OS.SOCKADDR_IN6 categoriesFor: #flowInfo!accessing!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #flowInfo:!accessing!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #port!accessing!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #port:!accessing!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_addr!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_addr:!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_family!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_family:!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_flowinfo!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_flowinfo:!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_port!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_port:!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_scope_id!**compiled accessors**!public! !
-!OS.SOCKADDR_IN6 categoriesFor: #sin6_scope_id:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN6 categoriesForMethods!
+flowInfo!accessing!public! !
+flowInfo:!accessing!public! !
+port!accessing!public! !
+port:!accessing!public! !
+sin6_addr!**compiled accessors**!public! !
+sin6_addr:!**compiled accessors**!public! !
+sin6_family!**compiled accessors**!public! !
+sin6_family:!**compiled accessors**!public! !
+sin6_flowinfo!**compiled accessors**!public! !
+sin6_flowinfo:!**compiled accessors**!public! !
+sin6_port!**compiled accessors**!public! !
+sin6_port:!**compiled accessors**!public! !
+sin6_scope_id!**compiled accessors**!public! !
+sin6_scope_id:!**compiled accessors**!public! !
+!
 
 !OS.SOCKADDR_IN6 class methodsFor!
 
@@ -160,7 +162,9 @@ defineFields
 
 getFieldNames
 	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
-!OS.SOCKADDR_IN6 class categoriesFor: #addressFamily!constants!public! !
-!OS.SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.SOCKADDR_IN6 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SOCKADDR_IN6 class categoriesForMethods!
+addressFamily!constants!public! !
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

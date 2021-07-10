@@ -85,16 +85,18 @@ resolutionScaledBy: scale
 
 visibleSubViewsOf: aCompositeView context: aLayoutContext 
 	^aCompositeView managedSubViews select: [:each | aLayoutContext isViewVisible: each]! !
-!UI.LayoutManager categoriesFor: #arrangementOf:!accessing!public! !
-!UI.LayoutManager categoriesFor: #arrangementOf:put:!accessing!public! !
-!UI.LayoutManager categoriesFor: #layoutContainer:!geometry!public! !
-!UI.LayoutManager categoriesFor: #layoutContainer:context:!geometry!private! !
-!UI.LayoutManager categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!UI.LayoutManager categoriesFor: #removeSubView:!public!removing! !
-!UI.LayoutManager categoriesFor: #reposition:to:!geometry!private! !
-!UI.LayoutManager categoriesFor: #resize:to:!geometry!public! !
-!UI.LayoutManager categoriesFor: #resolutionScaledBy:!geometry!private! !
-!UI.LayoutManager categoriesFor: #visibleSubViewsOf:context:!helpers!private! !
+!UI.LayoutManager categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+layoutContainer:!geometry!public! !
+layoutContainer:context:!geometry!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+removeSubView:!public!removing! !
+reposition:to:!geometry!private! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+visibleSubViewsOf:context:!helpers!private! !
+!
 
 UI.LayoutManager methodProtocol: #layoutManager attributes: #(#readOnly) selectors: #(#arrangementOf: #arrangementOf:put: #layoutContainer: #preferredLayoutExtentOf:context: #removeSubView:)!
 
@@ -104,5 +106,7 @@ new
 	"Answer an instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
-!UI.LayoutManager class categoriesFor: #new!instance creation!public! !
+!UI.LayoutManager class categoriesForMethods!
+new!instance creation!public! !
+!
 

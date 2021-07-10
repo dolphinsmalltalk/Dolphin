@@ -16,7 +16,9 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipCreateRegion: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.RegionInitializer categoriesFor: #createHandle!private! !
+!Graphics.Gdiplus.RegionInitializer categoriesForMethods!
+createHandle!private! !
+!
 
 !Graphics.Gdiplus.RegionInitializer class methodsFor!
 
@@ -31,7 +33,9 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!Graphics.Gdiplus.RegionInitializer class categoriesFor: #default!instance creation!private! !
-!Graphics.Gdiplus.RegionInitializer class categoriesFor: #new!development!instance creation!public! !
-!Graphics.Gdiplus.RegionInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.RegionInitializer class categoriesForMethods!
+default!instance creation!private! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

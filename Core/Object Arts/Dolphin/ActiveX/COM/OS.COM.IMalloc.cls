@@ -79,12 +79,14 @@ Realloc: pv cb: cb
 
 	<virtual stdcall: void* 5 void* dword>
 	^self invalidCall: _failureCode! !
-!OS.COM.IMalloc categoriesFor: #Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!OS.COM.IMalloc categoriesFor: #DidAlloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!OS.COM.IMalloc categoriesFor: #Free:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!OS.COM.IMalloc categoriesFor: #GetSize:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!OS.COM.IMalloc categoriesFor: #HeapMinimize!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
-!OS.COM.IMalloc categoriesFor: #Realloc:cb:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!OS.COM.IMalloc categoriesForMethods!
+Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+DidAlloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+Free:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+GetSize:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+HeapMinimize!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+Realloc:cb:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
+!
 
 OS.COM.IMalloc methodProtocol: #IMalloc attributes: #(#readOnly) selectors: #(#Alloc: #DidAlloc: #GetSize: #HeapMinimize #Realloc:cb:)!
 
@@ -164,12 +166,14 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self clear! !
-!OS.COM.IMalloc class categoriesFor: #clear!initializing!private! !
-!OS.COM.IMalloc class categoriesFor: #default!accessing!public! !
-!OS.COM.IMalloc class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!OS.COM.IMalloc class categoriesFor: #free!private!realizing/unrealizing! !
-!OS.COM.IMalloc class categoriesFor: #freeShared!private!realizing/unrealizing! !
-!OS.COM.IMalloc class categoriesFor: #freeTask!private!realizing/unrealizing! !
-!OS.COM.IMalloc class categoriesFor: #task!accessing!public! !
-!OS.COM.IMalloc class categoriesFor: #uninitialize!accessing!class hierarchy-removing!private! !
+!OS.COM.IMalloc class categoriesForMethods!
+clear!initializing!private! !
+default!accessing!public! !
+defineFunctions!**auto generated**!initializing!public! !
+free!private!realizing/unrealizing! !
+freeShared!private!realizing/unrealizing! !
+freeTask!private!realizing/unrealizing! !
+task!accessing!public! !
+uninitialize!accessing!class hierarchy-removing!private! !
+!
 

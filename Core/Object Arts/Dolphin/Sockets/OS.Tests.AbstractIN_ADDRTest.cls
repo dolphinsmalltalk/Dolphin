@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.AbstractIN_ADDRTest'
 	instanceVariableNames: ''
@@ -22,7 +22,9 @@ testPrintOn
 	| subject |
 	subject := self canonicalInstance.
 	self assert: subject printString equals: 'an <p>(<s>)' << {subject class. subject displayString}! !
-!OS.Tests.AbstractIN_ADDRTest categoriesFor: #canonicalInstance!helpers!private! !
-!OS.Tests.AbstractIN_ADDRTest categoriesFor: #testDisplayOn!public!unit tests! !
-!OS.Tests.AbstractIN_ADDRTest categoriesFor: #testPrintOn!public!unit tests! !
+!OS.Tests.AbstractIN_ADDRTest categoriesForMethods!
+canonicalInstance!helpers!private! !
+testDisplayOn!public!unit tests! !
+testPrintOn!public!unit tests! !
+!
 

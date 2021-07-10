@@ -24,8 +24,10 @@ openConsoleStreams
 	"Do nothing - when running as a DLL we cannot assume we have access to the console"
 
 	! !
-!UI.AXDllGUISessionManager categoriesFor: #keepAlive!idling!public! !
-!UI.AXDllGUISessionManager categoriesFor: #openConsoleStreams!operations!private! !
+!UI.AXDllGUISessionManager categoriesForMethods!
+keepAlive!idling!public! !
+openConsoleStreams!operations!private! !
+!
 
 !UI.AXDllGUISessionManager class methodsFor!
 
@@ -49,8 +51,10 @@ isRuntime
 	(as opposed to development, or abstract)."
 
 	^true! !
-!UI.AXDllGUISessionManager class categoriesFor: #icon!constants!development!must strip!public! !
-!UI.AXDllGUISessionManager class categoriesFor: #imageExtension!constants!public! !
-!UI.AXDllGUISessionManager class categoriesFor: #isDLL!private!testing! !
-!UI.AXDllGUISessionManager class categoriesFor: #isRuntime!public!testing! !
+!UI.AXDllGUISessionManager class categoriesForMethods!
+icon!constants!development!must strip!public! !
+imageExtension!constants!public! !
+isDLL!private!testing! !
+isRuntime!public!testing! !
+!
 

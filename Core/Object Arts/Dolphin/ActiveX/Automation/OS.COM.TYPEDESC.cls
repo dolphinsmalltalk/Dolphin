@@ -191,28 +191,30 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^VARIANT nameOfVT: self vartype! !
-!OS.COM.TYPEDESC categoriesFor: #analyzer!accessing!private! !
-!OS.COM.TYPEDESC categoriesFor: #arrayDesc!development!private! !
-!OS.COM.TYPEDESC categoriesFor: #buildClassDesc!helpers!private! !
-!OS.COM.TYPEDESC categoriesFor: #classDesc!accessing!private! !
-!OS.COM.TYPEDESC categoriesFor: #getRefType!accessing!private! !
-!OS.COM.TYPEDESC categoriesFor: #hreftype!**compiled accessors**!public! !
-!OS.COM.TYPEDESC categoriesFor: #isAnonymous!public!testing! !
-!OS.COM.TYPEDESC categoriesFor: #isStructure!public!testing! !
-!OS.COM.TYPEDESC categoriesFor: #isUnion!public!testing! !
-!OS.COM.TYPEDESC categoriesFor: #isUserDefined!public!testing! !
-!OS.COM.TYPEDESC categoriesFor: #lpadesc!**compiled accessors**!public! !
-!OS.COM.TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
-!OS.COM.TYPEDESC categoriesFor: #owner:!accessing!private! !
-!OS.COM.TYPEDESC categoriesFor: #realTypeInfo!accessing!public! !
-!OS.COM.TYPEDESC categoriesFor: #tdesc!accessing!public! !
-!OS.COM.TYPEDESC categoriesFor: #tdescArray!accessing!public! !
-!OS.COM.TYPEDESC categoriesFor: #typeDesc!helpers!private! !
-!OS.COM.TYPEDESC categoriesFor: #typeInfo!accessing!public! !
-!OS.COM.TYPEDESC categoriesFor: #typeName!accessing!public! !
-!OS.COM.TYPEDESC categoriesFor: #vartype!accessing!public! !
-!OS.COM.TYPEDESC categoriesFor: #vt!**compiled accessors**!public! !
-!OS.COM.TYPEDESC categoriesFor: #vtName!accessing!private! !
+!OS.COM.TYPEDESC categoriesForMethods!
+analyzer!accessing!private! !
+arrayDesc!development!private! !
+buildClassDesc!helpers!private! !
+classDesc!accessing!private! !
+getRefType!accessing!private! !
+hreftype!**compiled accessors**!public! !
+isAnonymous!public!testing! !
+isStructure!public!testing! !
+isUnion!public!testing! !
+isUserDefined!public!testing! !
+lpadesc!**compiled accessors**!public! !
+lptdesc!**compiled accessors**!public! !
+owner:!accessing!private! !
+realTypeInfo!accessing!public! !
+tdesc!accessing!public! !
+tdescArray!accessing!public! !
+typeDesc!helpers!private! !
+typeInfo!accessing!public! !
+typeName!accessing!public! !
+vartype!accessing!public! !
+vt!**compiled accessors**!public! !
+vtName!accessing!private! !
+!
 
 !OS.COM.TYPEDESC class methodsFor!
 
@@ -260,7 +262,9 @@ initialize
 				at: VT_UNKNOWN + 1 put: 1;
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
-!OS.COM.TYPEDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.TYPEDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.COM.TYPEDESC class categoriesFor: #initialize!class initialization!development!public! !
+!OS.COM.TYPEDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!class initialization!development!public! !
+!
 

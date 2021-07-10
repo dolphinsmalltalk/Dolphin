@@ -102,19 +102,21 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^self subclassResponsibility! !
-!External.Callback categoriesFor: #argumentCount!accessing!private! !
-!External.Callback categoriesFor: #argumentsSize!accessing!private! !
-!External.Callback categoriesFor: #argumentTypes!accessing!private! !
-!External.Callback categoriesFor: #asParameter!converting!public! !
-!External.Callback categoriesFor: #callingConvention!accessing!private! !
-!External.Callback categoriesFor: #cookie!accessing!public! !
-!External.Callback categoriesFor: #cookie:!accessing!private! !
-!External.Callback categoriesFor: #descriptor!accessing!private! !
-!External.Callback categoriesFor: #descriptor:!initializing!private! !
-!External.Callback categoriesFor: #free!public!realizing/unrealizing! !
-!External.Callback categoriesFor: #makeProcInstance!private!realizing/unrealizing! !
-!External.Callback categoriesFor: #thunk!converting!private! !
-!External.Callback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!External.Callback categoriesForMethods!
+argumentCount!accessing!private! !
+argumentsSize!accessing!private! !
+argumentTypes!accessing!private! !
+asParameter!converting!public! !
+callingConvention!accessing!private! !
+cookie!accessing!public! !
+cookie:!accessing!private! !
+descriptor!accessing!private! !
+descriptor:!initializing!private! !
+free!public!realizing/unrealizing! !
+makeProcInstance!private!realizing/unrealizing! !
+thunk!converting!private! !
+valueWithArgumentsAt:!evaluating!private! !
+!
 
 !External.Callback class methodsFor!
 
@@ -287,21 +289,23 @@ uninitializeBeforeRemove
 
 unitializeSubclass: anExternalCallbackClass
 	! !
-!External.Callback class categoriesFor: #allocateThunks!helpers!private! !
-!External.Callback class categoriesFor: #block:argumentTypes:!instance creation!public! !
-!External.Callback class categoriesFor: #block:descriptor:!instance creation!public! !
-!External.Callback class categoriesFor: #callback:withArgumentsAt:!operations!private! !
-!External.Callback class categoriesFor: #callbackPrimitive!constants!private! !
-!External.Callback class categoriesFor: #clear!initializing!private! !
-!External.Callback class categoriesFor: #deallocateThunks!initializing!private! !
-!External.Callback class categoriesFor: #descriptorClass!constants!private! !
-!External.Callback class categoriesFor: #fromCookie:!accessing!public! !
-!External.Callback class categoriesFor: #initialize!development!initializing!public! !
-!External.Callback class categoriesFor: #new!instance creation!public! !
-!External.Callback class categoriesFor: #onStartup!event handling!public! !
-!External.Callback class categoriesFor: #receiver:prototype:!instance creation!public! !
-!External.Callback class categoriesFor: #receiver:selector:descriptor:!instance creation!public! !
-!External.Callback class categoriesFor: #register:!instance creation!private! !
-!External.Callback class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!External.Callback class categoriesFor: #unitializeSubclass:!development!initializing!public! !
+!External.Callback class categoriesForMethods!
+allocateThunks!helpers!private! !
+block:argumentTypes:!instance creation!public! !
+block:descriptor:!instance creation!public! !
+callback:withArgumentsAt:!operations!private! !
+callbackPrimitive!constants!private! !
+clear!initializing!private! !
+deallocateThunks!initializing!private! !
+descriptorClass!constants!private! !
+fromCookie:!accessing!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+onStartup!event handling!public! !
+receiver:prototype:!instance creation!public! !
+receiver:selector:descriptor:!instance creation!public! !
+register:!instance creation!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+unitializeSubclass:!development!initializing!public! !
+!
 

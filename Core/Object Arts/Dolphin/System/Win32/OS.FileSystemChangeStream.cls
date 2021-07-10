@@ -44,8 +44,10 @@ next
 	next := queue next.
 	next isInteger ifTrue: [^Win32Error signalWith: next].
 	^next! !
-!OS.FileSystemChangeStream categoriesFor: #handleError:!helpers!private! !
-!OS.FileSystemChangeStream categoriesFor: #handleNotifications:!private! !
-!OS.FileSystemChangeStream categoriesFor: #initialize!initializing!private! !
-!OS.FileSystemChangeStream categoriesFor: #next!public! !
+!OS.FileSystemChangeStream categoriesForMethods!
+handleError:!helpers!private! !
+handleNotifications:!private! !
+initialize!initializing!private! !
+next!public! !
+!
 

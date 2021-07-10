@@ -34,8 +34,10 @@ size
 
 	^byteSize
 	! !
-!External.Pointer categoriesFor: #byteSize!accessing!public! !
-!External.Pointer categoriesFor: #byteSize:!accessing!public! !
-!External.Pointer categoriesFor: #initialize:!initializing!public! !
-!External.Pointer categoriesFor: #size!accessing!public! !
+!External.Pointer categoriesForMethods!
+byteSize!accessing!public! !
+byteSize:!accessing!public! !
+initialize:!initializing!public! !
+size!accessing!public! !
+!
 

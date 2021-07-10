@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.Tests.STONTestCase subclass: #'STON.Tests.STONTest'
 	instanceVariableNames: ''
@@ -63,9 +63,11 @@ testToString
 	| object |
 	object := STON listClass withAll: {1. 0. -1. true. false. nil}.
 	self assert: (STON toString: object) equals: '[1,0,-1,true,false,nil]'! !
-!STON.Tests.STONTest categoriesFor: #testFromString!public! !
-!STON.Tests.STONTest categoriesFor: #testFromStringWithComments!public! !
-!STON.Tests.STONTest categoriesFor: #testPrettyPrinting!public! !
-!STON.Tests.STONTest categoriesFor: #testRoomExitCycles!public! !
-!STON.Tests.STONTest categoriesFor: #testToString!public! !
+!STON.Tests.STONTest categoriesForMethods!
+testFromString!public! !
+testFromStringWithComments!public! !
+testPrettyPrinting!public! !
+testRoomExitCycles!public! !
+testToString!public! !
+!
 

@@ -74,14 +74,16 @@ Value: anExternalAddress
 	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_Value put: anExternalAddress! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Guid!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Guid:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #NumberOfValues!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #NumberOfValues:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Type!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Type:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Value!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameter categoriesFor: #Value:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpEncoderParameter categoriesForMethods!
+Guid!**compiled accessors**!public! !
+Guid:!**compiled accessors**!public! !
+NumberOfValues!**compiled accessors**!public! !
+NumberOfValues:!**compiled accessors**!public! !
+Type!**compiled accessors**!public! !
+Type:!**compiled accessors**!public! !
+Value!**compiled accessors**!public! !
+Value:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpEncoderParameter class methodsFor!
 
@@ -115,6 +117,8 @@ defineFields
 
 getFieldNames
 	^#(#Guid #NumberOfValues #Type #Value)! !
-!Graphics.Gdiplus.GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpEncoderParameter class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpEncoderParameter class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

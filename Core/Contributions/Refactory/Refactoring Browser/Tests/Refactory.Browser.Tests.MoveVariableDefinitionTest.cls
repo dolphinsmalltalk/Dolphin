@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.MoveVariableDefinitionTest'
 	instanceVariableNames: ''
@@ -82,8 +82,10 @@ testNonExistantName
 				selector: #displayName.
 	self proceedThroughWarning: 
 			[self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal]! !
-!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testMoveDefinition!public!tests! !
-!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !
-!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testNoMoveDefinition!public!tests! !
-!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesFor: #testNonExistantName!public!tests! !
+!Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesForMethods!
+testMoveDefinition!public!tests! !
+testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !
+testNoMoveDefinition!public!tests! !
+testNonExistantName!public!tests! !
+!
 

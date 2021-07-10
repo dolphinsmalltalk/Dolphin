@@ -363,45 +363,47 @@ updateItem: aStatusBarItem
 	self setRightEdges.
 	self setItemText: aStatusBarItem.
 	self invalidateRect: (self rectangleOfItem: aStatusBarItem)! !
-!UI.StatusBar categoriesFor: #addItem:!adding!items!public! !
-!UI.StatusBar categoriesFor: #addItem:name:!adding!items!public! !
-!UI.StatusBar categoriesFor: #contents!accessing!public! !
-!UI.StatusBar categoriesFor: #defaultExtent!constants!private! !
-!UI.StatusBar categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.StatusBar categoriesFor: #getWindowText!accessing!private!win32 bug fix! !
-!UI.StatusBar categoriesFor: #getWindowTextLength!accessing!private!win32 bug fix! !
-!UI.StatusBar categoriesFor: #hasSizeGrip!accessing-styles!public! !
-!UI.StatusBar categoriesFor: #hasSizeGrip:!accessing-styles!public! !
-!UI.StatusBar categoriesFor: #hasToolTips!accessing-styles!public! !
-!UI.StatusBar categoriesFor: #hasToolTips:!accessing-styles!public! !
-!UI.StatusBar categoriesFor: #indexFromPoint:!accessing!enquiries!private! !
-!UI.StatusBar categoriesFor: #indexOfItem:!items!private! !
-!UI.StatusBar categoriesFor: #initialize!initializing!private! !
-!UI.StatusBar categoriesFor: #itemAtIndex:!items!public! !
-!UI.StatusBar categoriesFor: #itemFromId:!accessing!private! !
-!UI.StatusBar categoriesFor: #itemRect:!geometry!public! !
-!UI.StatusBar categoriesFor: #items!accessing!private! !
-!UI.StatusBar categoriesFor: #items:!accessing!private! !
-!UI.StatusBar categoriesFor: #layout:!geometry!private! !
-!UI.StatusBar categoriesFor: #layoutManager!geometry!public! !
-!UI.StatusBar categoriesFor: #layoutManager:!geometry!public! !
-!UI.StatusBar categoriesFor: #onDrawItem:!event handling-win32!public! !
-!UI.StatusBar categoriesFor: #onViewCreated!event handling!public! !
-!UI.StatusBar categoriesFor: #rectangleOfItem:!accessing!private! !
-!UI.StatusBar categoriesFor: #removeItem:!items!public!removing! !
-!UI.StatusBar categoriesFor: #rightEdgesForWidth:!geometry!private! !
-!UI.StatusBar categoriesFor: #sbGetBorders!accessing!private! !
-!UI.StatusBar categoriesFor: #sbGetRect:!accessing!private! !
-!UI.StatusBar categoriesFor: #sbGetTipText:!accessing!private! !
-!UI.StatusBar categoriesFor: #setControlBackcolor:!helpers!private! !
-!UI.StatusBar categoriesFor: #setItem:tipText:!operations!private! !
-!UI.StatusBar categoriesFor: #setItemText:!accessing!private! !
-!UI.StatusBar categoriesFor: #setRightEdges!helpers!private! !
-!UI.StatusBar categoriesFor: #setRightEdges:!helpers!private! !
-!UI.StatusBar categoriesFor: #setWindowText:!accessing!private!win32 bug fix! !
-!UI.StatusBar categoriesFor: #size!accessing!public! !
-!UI.StatusBar categoriesFor: #sizeGripWidth!constants!private! !
-!UI.StatusBar categoriesFor: #updateItem:!private!updating! !
+!UI.StatusBar categoriesForMethods!
+addItem:!adding!items!public! !
+addItem:name:!adding!items!public! !
+contents!accessing!public! !
+defaultExtent!constants!private! !
+defaultWindowStyle!constants!private! !
+getWindowText!accessing!private!win32 bug fix! !
+getWindowTextLength!accessing!private!win32 bug fix! !
+hasSizeGrip!accessing-styles!public! !
+hasSizeGrip:!accessing-styles!public! !
+hasToolTips!accessing-styles!public! !
+hasToolTips:!accessing-styles!public! !
+indexFromPoint:!accessing!enquiries!private! !
+indexOfItem:!items!private! !
+initialize!initializing!private! !
+itemAtIndex:!items!public! !
+itemFromId:!accessing!private! !
+itemRect:!geometry!public! !
+items!accessing!private! !
+items:!accessing!private! !
+layout:!geometry!private! !
+layoutManager!geometry!public! !
+layoutManager:!geometry!public! !
+onDrawItem:!event handling-win32!public! !
+onViewCreated!event handling!public! !
+rectangleOfItem:!accessing!private! !
+removeItem:!items!public!removing! !
+rightEdgesForWidth:!geometry!private! !
+sbGetBorders!accessing!private! !
+sbGetRect:!accessing!private! !
+sbGetTipText:!accessing!private! !
+setControlBackcolor:!helpers!private! !
+setItem:tipText:!operations!private! !
+setItemText:!accessing!private! !
+setRightEdges!helpers!private! !
+setRightEdges:!helpers!private! !
+setWindowText:!accessing!private!win32 bug fix! !
+size!accessing!public! !
+sizeGripWidth!constants!private! !
+updateItem:!private!updating! !
+!
 
 !UI.StatusBar class methodsFor!
 
@@ -428,8 +430,10 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_statusbar32'! !
-!UI.StatusBar class categoriesFor: #icon!constants!public! !
-!UI.StatusBar class categoriesFor: #resource_Status_bar!public!resources-views! !
-!UI.StatusBar class categoriesFor: #themePartName!constants!private! !
-!UI.StatusBar class categoriesFor: #winClassName!constants!private! !
+!UI.StatusBar class categoriesForMethods!
+icon!constants!public! !
+resource_Status_bar!public!resources-views! !
+themePartName!constants!private! !
+winClassName!constants!private! !
+!
 

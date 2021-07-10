@@ -152,18 +152,20 @@ shaHashBuffer: aHashHandle buffer: buffer
 		input: buffer
 		inputSize: buffer size
 		flags: 0! !
-!OS.BCryptLibrary categoriesFor: #closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
-!OS.BCryptLibrary categoriesFor: #createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
-!OS.BCryptLibrary categoriesFor: #destroyHash:!public!win32 functions-bcrypt library! !
-!OS.BCryptLibrary categoriesFor: #finishHash:output:outputSize:flags:!public!win32 functions-bcrypt library! !
-!OS.BCryptLibrary categoriesFor: #getProperty:property:output:outputSize:resultSize:flags:!public!win32 functions-bcrypt library! !
-!OS.BCryptLibrary categoriesFor: #hashData:input:inputSize:flags:!public!win32 functions-bcrypt library! !
-!OS.BCryptLibrary categoriesFor: #openAlgorithmProvider:id:implementation:flags:!public!win32 functions-bcrypt library! !
-!OS.BCryptLibrary categoriesFor: #shaAlgorithmHandle!hashing!public! !
-!OS.BCryptLibrary categoriesFor: #shaCreate!hashing!public! !
-!OS.BCryptLibrary categoriesFor: #shaDestroy:!hashing!public! !
-!OS.BCryptLibrary categoriesFor: #shaGetHash:!hashing!public! !
-!OS.BCryptLibrary categoriesFor: #shaHashBuffer:buffer:!hashing!public! !
+!OS.BCryptLibrary categoriesForMethods!
+closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
+createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
+destroyHash:!public!win32 functions-bcrypt library! !
+finishHash:output:outputSize:flags:!public!win32 functions-bcrypt library! !
+getProperty:property:output:outputSize:resultSize:flags:!public!win32 functions-bcrypt library! !
+hashData:input:inputSize:flags:!public!win32 functions-bcrypt library! !
+openAlgorithmProvider:id:implementation:flags:!public!win32 functions-bcrypt library! !
+shaAlgorithmHandle!hashing!public! !
+shaCreate!hashing!public! !
+shaDestroy:!hashing!public! !
+shaGetHash:!hashing!public! !
+shaHashBuffer:buffer:!hashing!public! !
+!
 
 !OS.BCryptLibrary class methodsFor!
 
@@ -174,6 +176,8 @@ fileName
 
 sharedVariableName
 	^#{BCrypt}! !
-!OS.BCryptLibrary class categoriesFor: #fileName!constants!public! !
-!OS.BCryptLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.BCryptLibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

@@ -214,19 +214,21 @@ Write: pszPropName pVar: pVar
 				ifTrue: [self class new save: pVar value clearDirty: clearDirty saveAll: saveAll]
 				ifFalse: [pVar value]).
 	^hr! !
-!OS.COM.PropertyBag categoriesFor: #asVariant!converting!public! !
-!OS.COM.PropertyBag categoriesFor: #inStream:!accessing!public! !
-!OS.COM.PropertyBag categoriesFor: #load!operations!public! !
-!OS.COM.PropertyBag categoriesFor: #printOn:indent:!printing!public! !
-!OS.COM.PropertyBag categoriesFor: #propertyTable!accessing!private! !
-!OS.COM.PropertyBag categoriesFor: #propertyTable:!accessing!private! !
-!OS.COM.PropertyBag categoriesFor: #Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!public! !
-!OS.COM.PropertyBag categoriesFor: #restoreInto:!operations!public! !
-!OS.COM.PropertyBag categoriesFor: #save:clearDirty:!operations!public! !
-!OS.COM.PropertyBag categoriesFor: #save:clearDirty:saveAll:!operations!public! !
-!OS.COM.PropertyBag categoriesFor: #setProperties:!helpers!private! !
-!OS.COM.PropertyBag categoriesFor: #supportedInterfaces!constants!public! !
-!OS.COM.PropertyBag categoriesFor: #Write:pVar:!COM Interfaces-IPropertyBag!public! !
+!OS.COM.PropertyBag categoriesForMethods!
+asVariant!converting!public! !
+inStream:!accessing!public! !
+load!operations!public! !
+printOn:indent:!printing!public! !
+propertyTable!accessing!private! !
+propertyTable:!accessing!private! !
+Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!public! !
+restoreInto:!operations!public! !
+save:clearDirty:!operations!public! !
+save:clearDirty:saveAll:!operations!public! !
+setProperties:!helpers!private! !
+supportedInterfaces!constants!public! !
+Write:pVar:!COM Interfaces-IPropertyBag!public! !
+!
 
 OS.COM.PropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
 

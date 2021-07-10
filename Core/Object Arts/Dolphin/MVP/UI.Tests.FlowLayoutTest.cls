@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.LayoutManagerTest subclass: #'UI.Tests.FlowLayoutTest'
 	instanceVariableNames: ''
@@ -81,7 +81,9 @@ testWrap
 			shell extent: shell extent - (each @ 0).
 			shell update.
 			1 to: 4 do: [:i | self assert: (children at: i) position equals: 0 @ ((i - 1) * (cy + vGap))]]! !
-!UI.Tests.FlowLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!UI.Tests.FlowLayoutTest categoriesFor: #testVerticalCentreing!public!unit tests! !
-!UI.Tests.FlowLayoutTest categoriesFor: #testWrap!public!unit tests! !
+!UI.Tests.FlowLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+testVerticalCentreing!public!unit tests! !
+testWrap!public!unit tests! !
+!
 

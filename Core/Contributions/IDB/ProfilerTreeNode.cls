@@ -146,20 +146,22 @@ time
 	This method was automatically generated, but may be modified."
 
 	^time! !
-!ProfilerTreeNode categoriesFor: #addFrame:elapsedTime:!profiling!public! !
-!ProfilerTreeNode categoriesFor: #allClasses!operations!public! !
-!ProfilerTreeNode categoriesFor: #allParentFrames!operations!public! !
-!ProfilerTreeNode categoriesFor: #allSelectors!operations!public! !
-!ProfilerTreeNode categoriesFor: #children!accessing!public! !
-!ProfilerTreeNode categoriesFor: #clearCache!operations!public! !
-!ProfilerTreeNode categoriesFor: #firstChild!accessing!public! !
-!ProfilerTreeNode categoriesFor: #hasChildren!public!testing! !
-!ProfilerTreeNode categoriesFor: #incrementTimeBy:!operations!public! !
-!ProfilerTreeNode categoriesFor: #isAbove:!public!testing! !
-!ProfilerTreeNode categoriesFor: #isChildOfFrameFor:!public!testing! !
-!ProfilerTreeNode categoriesFor: #isDolphinBranch!public!testing! !
-!ProfilerTreeNode categoriesFor: #isParentOfFrameFor:!public!testing! !
-!ProfilerTreeNode categoriesFor: #object:!accessing!public! !
-!ProfilerTreeNode categoriesFor: #tally!accessing!public! !
-!ProfilerTreeNode categoriesFor: #time!accessing!public! !
+!ProfilerTreeNode categoriesForMethods!
+addFrame:elapsedTime:!profiling!public! !
+allClasses!operations!public! !
+allParentFrames!operations!public! !
+allSelectors!operations!public! !
+children!accessing!public! !
+clearCache!operations!public! !
+firstChild!accessing!public! !
+hasChildren!public!testing! !
+incrementTimeBy:!operations!public! !
+isAbove:!public!testing! !
+isChildOfFrameFor:!public!testing! !
+isDolphinBranch!public!testing! !
+isParentOfFrameFor:!public!testing! !
+object:!accessing!public! !
+tally!accessing!public! !
+time!accessing!public! !
+!
 

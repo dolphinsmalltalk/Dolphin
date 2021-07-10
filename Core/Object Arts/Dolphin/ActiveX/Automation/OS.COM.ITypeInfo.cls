@@ -568,58 +568,60 @@ typeLib
 
 	^self libraryAndIndex key
 ! !
-!OS.COM.ITypeInfo categoriesFor: #AddressOfMember:invKind:ppv:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #asImplType!accessing!converting!public! !
-!OS.COM.ITypeInfo categoriesFor: #attributes!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.ITypeInfo categoriesFor: #CreateInstance:riid:ppvObj:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getAllCustData!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #getAllFuncCustData:!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #getAllVarCustData:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetContainingTypeLib:pIndex:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #GetDllEntry:invkind:pBstrDllName:pBstrName:pwOrdinal:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getFuncDesc:!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetFuncDesc:ppFuncDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getIDsOfNames:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetIDsOfNames:cNames:pMemId:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getImplTypeFlags:!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetImplTypeFlags:pImplTypeFlags:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getImplTypeInfoAt:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #getMops:!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetMops:pBstrMops:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #GetNames:rgBstrNames:cMaxNames:pcNames:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getNamesOfMember:count:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #getRefTypeInfo:!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetRefTypeInfo:ppTInfo:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getRefTypeOfImplType:!methods!private! !
-!OS.COM.ITypeInfo categoriesFor: #GetRefTypeOfImplType:pRefType:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getTypeAttr!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getTypeComp!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetTypeComp:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #getVarDesc:!**auto generated**!public! !
-!OS.COM.ITypeInfo categoriesFor: #GetVarDesc:ppVarDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #guid!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #idOfName:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #index!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #Invoke:memid:wFlags:pDispParams:pVarResult:pExcepInfo:puArgErr:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #isDual!public!testing! !
-!OS.COM.ITypeInfo categoriesFor: #isHidden!public!testing! !
-!OS.COM.ITypeInfo categoriesFor: #libraryAndIndex!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #nameOfID:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #nullCustData!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #recordInfoIfNone:!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #ReleaseFuncDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #ReleaseTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #ReleaseVarDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
-!OS.COM.ITypeInfo categoriesFor: #safeInvoke:memid:wFlags:pDispParams:pVarResult:pExcepInfo:puArgErr:!operations!private! !
-!OS.COM.ITypeInfo categoriesFor: #typeComp!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #typeFlags!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #typekind!accessing!public! !
-!OS.COM.ITypeInfo categoriesFor: #typeLib!accessing!public! !
+!OS.COM.ITypeInfo categoriesForMethods!
+AddressOfMember:invKind:ppv:!COM Interfaces-OAIDL.ITypeInfo!private! !
+asImplType!accessing!converting!public! !
+attributes!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+CreateInstance:riid:ppvObj:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getAllCustData!accessing!public! !
+getAllFuncCustData:!**auto generated**!public! !
+getAllVarCustData:!accessing!public! !
+GetContainingTypeLib:pIndex:!COM Interfaces-OAIDL.ITypeInfo!private! !
+GetDllEntry:invkind:pBstrDllName:pBstrName:pwOrdinal:!COM Interfaces-OAIDL.ITypeInfo!private! !
+GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getFuncDesc:!**auto generated**!public! !
+GetFuncDesc:ppFuncDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getIDsOfNames:!accessing!public! !
+GetIDsOfNames:cNames:pMemId:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getImplTypeFlags:!**auto generated**!public! !
+GetImplTypeFlags:pImplTypeFlags:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getImplTypeInfoAt:!accessing!public! !
+getMops:!**auto generated**!public! !
+GetMops:pBstrMops:!COM Interfaces-OAIDL.ITypeInfo!private! !
+GetNames:rgBstrNames:cMaxNames:pcNames:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getNamesOfMember:count:!accessing!public! !
+getRefTypeInfo:!**auto generated**!public! !
+GetRefTypeInfo:ppTInfo:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getRefTypeOfImplType:!methods!private! !
+GetRefTypeOfImplType:pRefType:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getTypeAttr!**auto generated**!public! !
+GetTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getTypeComp!**auto generated**!public! !
+GetTypeComp:!COM Interfaces-OAIDL.ITypeInfo!private! !
+getVarDesc:!**auto generated**!public! !
+GetVarDesc:ppVarDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
+guid!accessing!public! !
+idOfName:!accessing!public! !
+idOfName:ifAbsent:!accessing!public! !
+index!accessing!public! !
+Invoke:memid:wFlags:pDispParams:pVarResult:pExcepInfo:puArgErr:!COM Interfaces-OAIDL.ITypeInfo!private! !
+isDual!public!testing! !
+isHidden!public!testing! !
+libraryAndIndex!accessing!public! !
+nameOfID:!accessing!public! !
+nameOfID:ifAbsent:!accessing!public! !
+nullCustData!accessing!public! !
+recordInfoIfNone:!accessing!public! !
+ReleaseFuncDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
+ReleaseTypeAttr:!COM Interfaces-OAIDL.ITypeInfo!private! !
+ReleaseVarDesc:!COM Interfaces-OAIDL.ITypeInfo!private! !
+safeInvoke:memid:wFlags:pDispParams:pVarResult:pExcepInfo:puArgErr:!operations!private! !
+typeComp!accessing!public! !
+typeFlags!accessing!public! !
+typekind!accessing!public! !
+typeLib!accessing!public! !
+!
 
 !OS.COM.ITypeInfo class methodsFor!
 
@@ -674,5 +676,7 @@ defineFunctions
 			returnType: 'void' 
 			argumentTypes: 'VARDESC*'
 ! !
-!OS.COM.ITypeInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.ITypeInfo class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

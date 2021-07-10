@@ -17,5 +17,7 @@ getData: aDBStatement
 	"Private - Copy data from the result table into fields of the receiver."
 
 	self contents do: [:f | f getData: aDBStatement]! !
-!Database.DBUnboundBuffer categoriesFor: #getData:!data retrieval!private! !
+!Database.DBUnboundBuffer categoriesForMethods!
+getData:!data retrieval!private! !
+!
 

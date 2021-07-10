@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.PackageEnvironmentTest'
 	instanceVariableNames: ''
@@ -48,6 +48,8 @@ testPackageEnvironment
 			self assert: (env definesClass: each)].
 	self assert: (env includesSelector: #choose in: Graphics.Font class).
 	self deny: (env includesSelector: #icon in: Graphics.Font class)! !
-!Tools.Tests.PackageEnvironmentTest categoriesFor: #classNamesFor:!BrowserEnvironment tests!public! !
-!Tools.Tests.PackageEnvironmentTest categoriesFor: #testPackageEnvironment!public!unit tests! !
+!Tools.Tests.PackageEnvironmentTest categoriesForMethods!
+classNamesFor:!BrowserEnvironment tests!public! !
+testPackageEnvironment!public!unit tests! !
+!
 

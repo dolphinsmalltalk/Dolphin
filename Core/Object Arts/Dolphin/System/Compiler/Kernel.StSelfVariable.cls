@@ -15,5 +15,7 @@ name
 	"Answer the <readableString> identifier of the variable described by the receiver."
 
 	^'self'! !
-!Kernel.StSelfVariable categoriesFor: #name!accessing!public! !
+!Kernel.StSelfVariable categoriesForMethods!
+name!accessing!public! !
+!
 

@@ -120,7 +120,9 @@ solveFor: aString
 					variable: term;
 					value: op argument;
 					solveFor: aString]! !
-!Kernel.StAssignmentNode categoriesFor: #solveFor:!operations!private! !
+!Kernel.StAssignmentNode categoriesForMethods!
+solveFor:!operations!private! !
+!
 
 !Kernel.StMessageNode methodsFor!
 
@@ -136,7 +138,9 @@ inverseArithmeticOperator
 		at: #* put: #/;
 		at: #// put: #*;
 		shrink) at: self selector! !
-!Kernel.StMessageNode categoriesFor: #inverseArithmeticOperator!public! !
+!Kernel.StMessageNode categoriesForMethods!
+inverseArithmeticOperator!public! !
+!
 
 "End of package definition"!
 

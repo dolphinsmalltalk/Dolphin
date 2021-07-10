@@ -159,25 +159,27 @@ size
 
 valuesAndCountsDo: aBlock 
 	contents keysAndValuesDo: aBlock! !
-!Core.Bag categoriesFor: #=!comparing!public! !
-!Core.Bag categoriesFor: #add:!adding!public! !
-!Core.Bag categoriesFor: #add:withOccurrences:!adding!public! !
-!Core.Bag categoriesFor: #asBag!converting!public! !
-!Core.Bag categoriesFor: #asSet!converting!public! !
-!Core.Bag categoriesFor: #at:!accessing!public! !
-!Core.Bag categoriesFor: #at:put:!accessing!public! !
-!Core.Bag categoriesFor: #contents:!accessing!private! !
-!Core.Bag categoriesFor: #do:!enumerating!public! !
-!Core.Bag categoriesFor: #elements!accessing!private! !
-!Core.Bag categoriesFor: #elements:!accessing!private! !
-!Core.Bag categoriesFor: #includes:!public!searching! !
-!Core.Bag categoriesFor: #occurrencesOf:!public!searching! !
-!Core.Bag categoriesFor: #postCopy!copying!public! !
-!Core.Bag categoriesFor: #remove:ifAbsent:!public!removing! !
-!Core.Bag categoriesFor: #removeAll!public! !
-!Core.Bag categoriesFor: #removeAllOccurrencesOf:ifAbsent:!public!removing! !
-!Core.Bag categoriesFor: #size!accessing!public! !
-!Core.Bag categoriesFor: #valuesAndCountsDo:!enumerating!public! !
+!Core.Bag categoriesForMethods!
+=!comparing!public! !
+add:!adding!public! !
+add:withOccurrences:!adding!public! !
+asBag!converting!public! !
+asSet!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+contents:!accessing!private! !
+do:!enumerating!public! !
+elements!accessing!private! !
+elements:!accessing!private! !
+includes:!public!searching! !
+occurrencesOf:!public!searching! !
+postCopy!copying!public! !
+remove:ifAbsent:!public!removing! !
+removeAll!public! !
+removeAllOccurrencesOf:ifAbsent:!public!removing! !
+size!accessing!public! !
+valuesAndCountsDo:!enumerating!public! !
+!
 
 Core.Bag methodProtocol: #Bag attributes: #(#ansi #readOnly) selectors: #(#add: #add:withOccurrences: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
 
@@ -208,10 +210,12 @@ new: count
 	which uses equality as the comparison for identifying duplicate elements."
 
 	^super new contents: (LookupTable new: count)! !
-!Core.Bag class categoriesFor: #identityNew!instance creation!public! !
-!Core.Bag class categoriesFor: #identityNew:!instance creation!public! !
-!Core.Bag class categoriesFor: #new!instance creation!public! !
-!Core.Bag class categoriesFor: #new:!instance creation!public! !
+!Core.Bag class categoriesForMethods!
+identityNew!instance creation!public! !
+identityNew:!instance creation!public! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 
 Core.Bag class methodProtocol: #'Bag factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

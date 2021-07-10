@@ -27,8 +27,10 @@ stbFixup: inFiler at: anInteger
 	(accessor := ResourceSTBByteArrayAccessor onByteArray: bytes) classLocator: classLocator.
 
 	self become: accessor! !
-!STBResourceSTBByteArrayAccessorProxy categoriesFor: #bytes:!accessing!private! !
-!STBResourceSTBByteArrayAccessorProxy categoriesFor: #stbFixup:at:!converting!public! !
+!STBResourceSTBByteArrayAccessorProxy categoriesForMethods!
+bytes:!accessing!private! !
+stbFixup:at:!converting!public! !
+!
 
 !STBResourceSTBByteArrayAccessorProxy class methodsFor!
 
@@ -45,6 +47,8 @@ forAccessor: aResourceSTBByteArrayAccessor
 	^self basicNew
 		bytes: aResourceSTBByteArrayAccessor byteArray;
 		yourself! !
-!STBResourceSTBByteArrayAccessorProxy class categoriesFor: #for:!instance creation!public! !
-!STBResourceSTBByteArrayAccessorProxy class categoriesFor: #forAccessor:!instance creation!public! !
+!STBResourceSTBByteArrayAccessorProxy class categoriesForMethods!
+for:!instance creation!public! !
+forAccessor:!instance creation!public! !
+!
 

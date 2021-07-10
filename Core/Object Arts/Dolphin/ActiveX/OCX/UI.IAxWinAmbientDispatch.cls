@@ -612,62 +612,64 @@ userMode: pbUserMode
 
 	self put_UserMode: pbUserMode
 ! !
-!UI.IAxWinAmbientDispatch categoriesFor: #allowContextMenu!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #allowContextMenu:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #allowShowUI!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #allowShowUI:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #allowWindowlessActivation!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #allowWindowlessActivation:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #backColor!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #backColor:!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #displayAsDefault!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #displayAsDefault:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #docHostDoubleClickFlags!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #docHostDoubleClickFlags:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #docHostFlags!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #docHostFlags:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #font!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #font:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #foreColor!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #foreColor:!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_ShowGrabHandles:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_ShowHatching:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #get_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #localeID!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #localeID:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #messageReflect!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #messageReflect:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #optionKeyPath!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #optionKeyPath:!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #put_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
-!UI.IAxWinAmbientDispatch categoriesFor: #showGrabHandles!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #showHatching!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #userMode!**auto generated**!properties!public! !
-!UI.IAxWinAmbientDispatch categoriesFor: #userMode:!**auto generated**!properties!public! !
+!UI.IAxWinAmbientDispatch categoriesForMethods!
+allowContextMenu!**auto generated**!properties!public! !
+allowContextMenu:!**auto generated**!properties!public! !
+allowShowUI!**auto generated**!properties!public! !
+allowShowUI:!**auto generated**!properties!public! !
+allowWindowlessActivation!**auto generated**!properties!public! !
+allowWindowlessActivation:!**auto generated**!properties!public! !
+backColor!properties!public! !
+backColor:!properties!public! !
+displayAsDefault!**auto generated**!properties!public! !
+displayAsDefault:!**auto generated**!properties!public! !
+docHostDoubleClickFlags!**auto generated**!properties!public! !
+docHostDoubleClickFlags:!**auto generated**!properties!public! !
+docHostFlags!**auto generated**!properties!public! !
+docHostFlags:!**auto generated**!properties!public! !
+font!properties!public! !
+font:!**auto generated**!properties!public! !
+foreColor!properties!public! !
+foreColor:!properties!public! !
+get_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_ShowGrabHandles:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_ShowHatching:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+get_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+localeID!**auto generated**!properties!public! !
+localeID:!**auto generated**!properties!public! !
+messageReflect!**auto generated**!properties!public! !
+messageReflect:!**auto generated**!properties!public! !
+optionKeyPath!**auto generated**!properties!public! !
+optionKeyPath:!**auto generated**!properties!public! !
+put_AllowContextMenu:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_AllowShowUI:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_AllowWindowlessActivation:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_BackColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_DisplayAsDefault:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_DocHostDoubleClickFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_DocHostFlags:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_Font:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_ForeColor:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_LocaleID:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_MessageReflect:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_OptionKeyPath:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+put_UserMode:!**auto generated**!COM Interfaces-IAxWinAmbientDispatch!private! !
+showGrabHandles!**auto generated**!properties!public! !
+showHatching!**auto generated**!properties!public! !
+userMode!**auto generated**!properties!public! !
+userMode:!**auto generated**!properties!public! !
+!
 
 !UI.IAxWinAmbientDispatch class methodsFor!
 
@@ -706,5 +708,7 @@ defineFunctions
 		defineFunction: #put_OptionKeyPath: argumentTypes: 'bstr';
 		defineFunction: #get_OptionKeyPath1: argumentTypes: 'bstr*';
 		defineFunction: #get_IsWindowless: argumentTypes: 'varbool*'! !
-!UI.IAxWinAmbientDispatch class categoriesFor: #defineFunctions!initializing!public! !
+!UI.IAxWinAmbientDispatch class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

@@ -247,31 +247,33 @@ sortUsing: aSortAlgorithm
 		sort: self
 		from: 1
 		to: self size! !
-!Core.ArrayedCollection categoriesFor: #add:!adding!public! !
-!Core.ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
-!Core.ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
-!Core.ArrayedCollection categoriesFor: #at:!accessing!public! !
-!Core.ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.ArrayedCollection categoriesFor: #at:put:!accessing!public! !
-!Core.ArrayedCollection categoriesFor: #copyFrom:to:!public! !
-!Core.ArrayedCollection categoriesFor: #decodeAt:!encode/decode!private! !
-!Core.ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Core.ArrayedCollection categoriesFor: #detect:ifNone:!public!searching! !
-!Core.ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
-!Core.ArrayedCollection categoriesFor: #do:separatedBy:!enumerating!public! !
-!Core.ArrayedCollection categoriesFor: #findFirst:!public!searching! !
-!Core.ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
-!Core.ArrayedCollection categoriesFor: #includes:!public!searching! !
-!Core.ArrayedCollection categoriesFor: #inject:into:!enumerating!public! !
-!Core.ArrayedCollection categoriesFor: #lookup:!accessing!public! !
-!Core.ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!Core.ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!Core.ArrayedCollection categoriesFor: #removeAll!public! !
-!Core.ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !
-!Core.ArrayedCollection categoriesFor: #resize:!mutating!public! !
-!Core.ArrayedCollection categoriesFor: #size!accessing!public! !
-!Core.ArrayedCollection categoriesFor: #sort!public!sorting! !
-!Core.ArrayedCollection categoriesFor: #sortUsing:!public!sorting! !
+!Core.ArrayedCollection categoriesForMethods!
+add:!adding!public! !
+allSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+copyFrom:to:!public! !
+decodeAt:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+detect:ifNone:!public!searching! !
+do:!debugger-step through!enumerating!public! !
+do:separatedBy:!enumerating!public! !
+findFirst:!public!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+inject:into:!enumerating!public! !
+lookup:!accessing!public! !
+nextIdentityIndexOf:from:to:!public!searching! !
+nextIndexOf:from:to:!public!searching! !
+removeAll!public! !
+replaceIdentity:with:!public!replacing! !
+resize:!mutating!public! !
+size!accessing!public! !
+sort!public!sorting! !
+sortUsing:!public!sorting! !
+!
 
 !Core.ArrayedCollection class methodsFor!
 
@@ -349,14 +351,16 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
-!Core.ArrayedCollection class categoriesFor: #new!instance creation!public! !
-!Core.ArrayedCollection class categoriesFor: #new:withAll:!instance creation!public! !
-!Core.ArrayedCollection class categoriesFor: #with:!instance creation!public! !
-!Core.ArrayedCollection class categoriesFor: #with:with:!instance creation!public! !
-!Core.ArrayedCollection class categoriesFor: #with:with:with:!instance creation!public! !
-!Core.ArrayedCollection class categoriesFor: #with:with:with:with:!instance creation!public! !
-!Core.ArrayedCollection class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!Core.ArrayedCollection class categoriesFor: #withAll:!instance creation!public! !
+!Core.ArrayedCollection class categoriesForMethods!
+new!instance creation!public! !
+new:withAll:!instance creation!public! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 
 Core.ArrayedCollection class methodProtocol: #'Array factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

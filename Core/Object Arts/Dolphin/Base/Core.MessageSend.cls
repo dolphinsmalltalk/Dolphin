@@ -44,9 +44,11 @@ receiver
 receiver: anObject
 	receiver := anObject.
 ! !
-!Core.MessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
-!Core.MessageSend categoriesFor: #receiver!accessing!public! !
-!Core.MessageSend categoriesFor: #receiver:!accessing!public! !
+!Core.MessageSend categoriesForMethods!
+forwardTo:withArguments:!evaluating!private! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 
 Core.MessageSend methodProtocol: #messageSend attributes: #() selectors: #()!
 Core.MessageSend methodProtocol: #valuable attributes: #(#ansi #readOnly) selectors: #(#argumentCount #valueWithArguments:)!
@@ -60,5 +62,7 @@ empty
 	EmptySend isNil ifTrue: [
 		EmptySend := self receiver: nil selector: #isNil].
 	^EmptySend! !
-!Core.MessageSend class categoriesFor: #empty!instance creation!public! !
+!Core.MessageSend class categoriesForMethods!
+empty!instance creation!public! !
+!
 

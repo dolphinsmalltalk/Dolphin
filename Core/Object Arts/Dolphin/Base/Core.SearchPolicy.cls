@@ -104,18 +104,20 @@ printOn: aPuttableStream
 				print: SearchPolicy;
 				space;
 				display: name]! !
-!Core.SearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!Core.SearchPolicy categoriesFor: #hash:!comparing!public! !
-!Core.SearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!Core.SearchPolicy categoriesFor: #isEquality!public!testing! !
-!Core.SearchPolicy categoriesFor: #isIdentity!public!testing! !
-!Core.SearchPolicy categoriesFor: #isSelfEvaluating!public!testing! !
-!Core.SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!Core.SearchPolicy categoriesFor: #name!accessing!public! !
-!Core.SearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!Core.SearchPolicy categoriesFor: #newSet!operations!public! !
-!Core.SearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
-!Core.SearchPolicy categoriesFor: #printOn:!public! !
+!Core.SearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:!comparing!public! !
+hash:max:!comparing!public! !
+isEquality!public!testing! !
+isIdentity!public!testing! !
+isSelfEvaluating!public!testing! !
+keyAtValue:in:ifAbsent:!public!searching! !
+name!accessing!public! !
+newLookupTable!operations!public! !
+newSet!operations!public! !
+nextIndexOf:in:from:to:!public!searching! !
+printOn:!public! !
+!
 
 Core.SearchPolicy methodProtocol: #comparisonPolicy attributes: #(#readOnly) selectors: #(#compare:with:)!
 Core.SearchPolicy methodProtocol: #searchPolicy attributes: #(#readOnly) selectors: #(#compare:with: #hash: #hash:max: #keyAtValue:in:ifAbsent: #nextIndexOf:in:from:to:)!
@@ -153,9 +155,11 @@ never
 	are never considered equal)."
 
 	^NeverSearchPolicy current! !
-!Core.SearchPolicy class categoriesFor: #always!instance creation!public! !
-!Core.SearchPolicy class categoriesFor: #caseInsensitive!instance creation!public! !
-!Core.SearchPolicy class categoriesFor: #equality!instance creation!public! !
-!Core.SearchPolicy class categoriesFor: #identity!instance creation!public! !
-!Core.SearchPolicy class categoriesFor: #never!instance creation!public! !
+!Core.SearchPolicy class categoriesForMethods!
+always!instance creation!public! !
+caseInsensitive!instance creation!public! !
+equality!instance creation!public! !
+identity!instance creation!public! !
+never!instance creation!public! !
+!
 

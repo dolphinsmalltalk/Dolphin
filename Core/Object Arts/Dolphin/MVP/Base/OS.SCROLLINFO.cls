@@ -121,25 +121,27 @@ range: anInterval
 		nMin: anInterval start;
 		nMax: anInterval stop;
 		maskIn: SIF_RANGE! !
-!OS.SCROLLINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #fMask!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #fMask:!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #maskIn:!accessing!public! !
-!OS.SCROLLINFO categoriesFor: #nMax!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nMax:!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nMin!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nMin:!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nPage!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nPage:!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nPos!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nPos:!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #nTrackPos!**compiled accessors**!public! !
-!OS.SCROLLINFO categoriesFor: #page!accessing!public! !
-!OS.SCROLLINFO categoriesFor: #page:!accessing!public! !
-!OS.SCROLLINFO categoriesFor: #pos!accessing!public! !
-!OS.SCROLLINFO categoriesFor: #pos:!accessing!public! !
-!OS.SCROLLINFO categoriesFor: #range!accessing!public! !
-!OS.SCROLLINFO categoriesFor: #range:!accessing!public! !
+!OS.SCROLLINFO categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+fMask!**compiled accessors**!public! !
+fMask:!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+nMax!**compiled accessors**!public! !
+nMax:!**compiled accessors**!public! !
+nMin!**compiled accessors**!public! !
+nMin:!**compiled accessors**!public! !
+nPage!**compiled accessors**!public! !
+nPage:!**compiled accessors**!public! !
+nPos!**compiled accessors**!public! !
+nPos:!**compiled accessors**!public! !
+nTrackPos!**compiled accessors**!public! !
+page!accessing!public! !
+page:!accessing!public! !
+pos!accessing!public! !
+pos:!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+!
 
 !OS.SCROLLINFO class methodsFor!
 
@@ -170,6 +172,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
-!OS.SCROLLINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.SCROLLINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SCROLLINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractKeyboardTest'
 	instanceVariableNames: 'savedLayout'
@@ -22,6 +22,8 @@ setCurrentKeyboardLayout: aString
 
 tearDown
 	savedLayout ifNotNil: [Keyboard layoutName: savedLayout]! !
-!UI.Tests.AbstractKeyboardTest categoriesFor: #setCurrentKeyboardLayout:!helpers!private! !
-!UI.Tests.AbstractKeyboardTest categoriesFor: #tearDown!private!Running! !
+!UI.Tests.AbstractKeyboardTest categoriesForMethods!
+setCurrentKeyboardLayout:!helpers!private! !
+tearDown!private!Running! !
+!
 

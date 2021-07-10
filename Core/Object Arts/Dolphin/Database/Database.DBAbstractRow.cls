@@ -135,22 +135,24 @@ selectors
 
 status
 	^status! !
-!Database.DBAbstractRow categoriesFor: #=!comparing!public! !
-!Database.DBAbstractRow categoriesFor: #asObject!converting!private! !
-!Database.DBAbstractRow categoriesFor: #at:!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #at:ifAbsent:!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #at:ifPresent:!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #at:put:!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #atIndex:!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #atIndex:put:!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #buildSelectors!accessing!private! !
-!Database.DBAbstractRow categoriesFor: #columns!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #columns:!accessing!private! !
-!Database.DBAbstractRow categoriesFor: #contents!accessing!public! !
-!Database.DBAbstractRow categoriesFor: #doesNotUnderstand:!exceptions!private! !
-!Database.DBAbstractRow categoriesFor: #hash!comparing!public! !
-!Database.DBAbstractRow categoriesFor: #isDeletedRow!public!testing! !
-!Database.DBAbstractRow categoriesFor: #printOn:!printing!public! !
-!Database.DBAbstractRow categoriesFor: #selectors!accessing!private! !
-!Database.DBAbstractRow categoriesFor: #status!accessing!private! !
+!Database.DBAbstractRow categoriesForMethods!
+=!comparing!public! !
+asObject!converting!private! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:ifPresent:!accessing!public! !
+at:put:!accessing!public! !
+atIndex:!accessing!public! !
+atIndex:put:!accessing!public! !
+buildSelectors!accessing!private! !
+columns!accessing!public! !
+columns:!accessing!private! !
+contents!accessing!public! !
+doesNotUnderstand:!exceptions!private! !
+hash!comparing!public! !
+isDeletedRow!public!testing! !
+printOn:!printing!public! !
+selectors!accessing!private! !
+status!accessing!private! !
+!
 

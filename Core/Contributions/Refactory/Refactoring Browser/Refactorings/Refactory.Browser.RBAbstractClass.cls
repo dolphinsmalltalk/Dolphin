@@ -602,106 +602,108 @@ withAllSuperclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSuperclassesDo: aMonadicValuable! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #=!comparing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #addInstanceVariable:!public!variable accessing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #addMethod:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #addSubclass:!class hierarchy-adding!private! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allClassVariableNames!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allImports!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allInstanceVariableNames!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allSelectors!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allSubclasses!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allSubclassesBreadthFirstDo:!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allSuperclasses!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #allSuperclassesDo:!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #baseEnvironmentName!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #binding!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #bindingFor:!bindings!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #bindingOrNil!bindings!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #compile:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #compile:classified:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #compileTree:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #compileTree:classified:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #definesClassVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #definesInstanceVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #definesMethod:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #definesVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesInstanceVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesMethod:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #directlyDefinesVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #directlyImportsNamespace:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #environment!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #environmentName!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #existingMethodsThatReferTo:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #existingMethodsThatReferToAnyOf:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #fullBindingFor:!binding!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #fullName!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #fullyQualifiedReference!accessing!private! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hasRemoved:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyBindingFor:!bindings!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesClassVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesInstanceVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesMethod:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyDefinesVariable:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #hierarchyImportsNamespace:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #importsNamespace:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #inheritsFrom:!class hierarchy-testing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #inheritsPoolDictionaries!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #instanceClass!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #instanceVariableNames!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #instanceVariableNames:!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #isAbstract!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #isBytes!instance specification-testing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #isDefined!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #isMeta!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #isPointers!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #isVariable!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #localBindingFor:!binding!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #metaclass!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #methodFor:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #model!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #model:!initialize/release!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #name!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #name:!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #nearestRealClass!accessing!private! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #newMethods!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #nonMetaclass!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #parseTreeFor:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #primaryInstance!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #privateInstanceVariableNames!accessing!private! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #protocolsFor:!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #realClass!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #realClass:!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #removedMethods!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #removeInstanceVariable:!public!variable accessing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #removeMethod:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #removeSubclass:!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #renameInstanceVariable:to:around:!public!variable accessing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #selectors!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #setName:!initializing!private! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #soleInstance!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #sourceCodeFor:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #subclasses!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #subclassRedefines:!public!testing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #superclass!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #superclass:!accessing!private! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #typeOfClassVariable:!public!variable accessing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #unqualifiedName!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #whichMethodsReferToSymbol:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #whichSelectorsReferToClass:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #whichSelectorsReferToClassVariable:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #whichSelectorsReferToInstanceVariable:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #whoDefinesClassVariable:!public!variable accessing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #whoDefinesInstanceVariable:!public!variable accessing! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #whoDefinesMethod:!method accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #withAllSubclasses!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #withAllSuperclasses!accessing!public! !
-!Refactory.Browser.RBAbstractClass categoriesFor: #withAllSuperclassesDo:!accessing!public! !
+!Refactory.Browser.RBAbstractClass categoriesForMethods!
+=!comparing!public! !
+addInstanceVariable:!public!variable accessing! !
+addMethod:!method accessing!public! !
+addSubclass:!class hierarchy-adding!private! !
+allClassVariableNames!accessing!public! !
+allImports!accessing!public! !
+allInstanceVariableNames!accessing!public! !
+allSelectors!method accessing!public! !
+allSubclasses!accessing!public! !
+allSubclassesBreadthFirstDo:!accessing!public! !
+allSuperclasses!accessing!public! !
+allSuperclassesDo:!accessing!public! !
+baseEnvironmentName!accessing!public! !
+binding!accessing!public! !
+bindingFor:!bindings!public! !
+bindingOrNil!bindings!public! !
+compile:!method accessing!public! !
+compile:classified:!method accessing!public! !
+compileTree:!method accessing!public! !
+compileTree:classified:!method accessing!public! !
+definesClassVariable:!public!testing! !
+definesInstanceVariable:!public!testing! !
+definesMethod:!public!testing! !
+definesVariable:!public!testing! !
+directlyDefinesClassVariable:!public!testing! !
+directlyDefinesInstanceVariable:!public!testing! !
+directlyDefinesMethod:!public!testing! !
+directlyDefinesVariable:!public!testing! !
+directlyImportsNamespace:!public!testing! !
+environment!accessing!public! !
+environmentName!accessing!public! !
+existingMethodsThatReferTo:!method accessing!public! !
+existingMethodsThatReferToAnyOf:!method accessing!public! !
+fullBindingFor:!binding!public! !
+fullName!accessing!public! !
+fullyQualifiedReference!accessing!private! !
+hash!comparing!public! !
+hasRemoved:!public!testing! !
+hierarchyBindingFor:!bindings!public! !
+hierarchyDefinesClassVariable:!public!testing! !
+hierarchyDefinesInstanceVariable:!public!testing! !
+hierarchyDefinesMethod:!public!testing! !
+hierarchyDefinesVariable:!public!testing! !
+hierarchyImportsNamespace:!public!testing! !
+importsNamespace:!public!testing! !
+includesClass:!public!testing! !
+inheritsFrom:!class hierarchy-testing!public! !
+inheritsPoolDictionaries!public!testing! !
+instanceClass!accessing!public! !
+instanceVariableNames!accessing!public! !
+instanceVariableNames:!accessing!public! !
+isAbstract!public!testing! !
+isBytes!instance specification-testing!public! !
+isDefined!public!testing! !
+isMeta!public!testing! !
+isPointers!public!testing! !
+isVariable!public!testing! !
+localBindingFor:!binding!public! !
+metaclass!accessing!public! !
+methodFor:!method accessing!public! !
+model!accessing!public! !
+model:!initialize/release!public! !
+name!accessing!public! !
+name:!accessing!public! !
+nearestRealClass!accessing!private! !
+newMethods!accessing!public! !
+nonMetaclass!accessing!public! !
+parseTreeFor:!method accessing!public! !
+primaryInstance!accessing!public! !
+printOn:!printing!public! !
+privateInstanceVariableNames!accessing!private! !
+protocolsFor:!accessing!public! !
+realClass!accessing!public! !
+realClass:!accessing!public! !
+removedMethods!accessing!public! !
+removeInstanceVariable:!public!variable accessing! !
+removeMethod:!method accessing!public! !
+removeSubclass:!accessing!public! !
+renameInstanceVariable:to:around:!public!variable accessing! !
+selectors!method accessing!public! !
+setName:!initializing!private! !
+soleInstance!accessing!public! !
+sourceCodeFor:!method accessing!public! !
+storeOn:!printing!public! !
+subclasses!accessing!public! !
+subclassRedefines:!public!testing! !
+superclass!accessing!public! !
+superclass:!accessing!private! !
+typeOfClassVariable:!public!variable accessing! !
+unqualifiedName!accessing!public! !
+whichMethodsReferToSymbol:!method accessing!public! !
+whichSelectorsReferToClass:!method accessing!public! !
+whichSelectorsReferToClassVariable:!method accessing!public! !
+whichSelectorsReferToInstanceVariable:!method accessing!public! !
+whoDefinesClassVariable:!public!variable accessing! !
+whoDefinesInstanceVariable:!public!variable accessing! !
+whoDefinesMethod:!method accessing!public! !
+withAllSubclasses!accessing!public! !
+withAllSuperclasses!accessing!public! !
+withAllSuperclassesDo:!accessing!public! !
+!
 
 !Refactory.Browser.RBAbstractClass class methodsFor!
 
@@ -725,9 +727,11 @@ new
 	"RBClasses must always be #named:"
 
 	^self shouldNotImplement! !
-!Refactory.Browser.RBAbstractClass class categoriesFor: #existing:!instance creation!public! !
-!Refactory.Browser.RBAbstractClass class categoriesFor: #existingNamed:!instance creation!public! !
-!Refactory.Browser.RBAbstractClass class categoriesFor: #initialize!class initialization!public! !
-!Refactory.Browser.RBAbstractClass class categoriesFor: #named:!instance creation!public! !
-!Refactory.Browser.RBAbstractClass class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.RBAbstractClass class categoriesForMethods!
+existing:!instance creation!public! !
+existingNamed:!instance creation!public! !
+initialize!class initialization!public! !
+named:!instance creation!public! !
+new!instance creation!public! !
+!
 

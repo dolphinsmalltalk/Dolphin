@@ -96,21 +96,23 @@ translateVirtualKey: vkInteger
 	key code (SCK_xxx)"
 
 	^VirtualKeyMap at: (vkInteger bitAnd: 16rFF) + 1! !
-!UI.Scintilla.KeyBinding categoriesFor: #=!comparing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKey!accessing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKey:!accessing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKeyString!accessing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #acceleratorKeyString:!accessing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #commandSymbol!accessing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #commandSymbol:!accessing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #displayOn:!printing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #hash!comparing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #message!accessing!private! !
-!UI.Scintilla.KeyBinding categoriesFor: #message:!accessing!private! !
-!UI.Scintilla.KeyBinding categoriesFor: #printOn:!printing!public! !
-!UI.Scintilla.KeyBinding categoriesFor: #scintillaKeyCode!accessing!private! !
-!UI.Scintilla.KeyBinding categoriesFor: #translateVirtualKey:!helpers!private! !
+!UI.Scintilla.KeyBinding categoriesForMethods!
+=!comparing!public! !
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!public! !
+acceleratorKeyDisplayString!accessing!public! !
+acceleratorKeyString!accessing!public! !
+acceleratorKeyString:!accessing!public! !
+commandSymbol!accessing!public! !
+commandSymbol:!accessing!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+message!accessing!private! !
+message:!accessing!private! !
+printOn:!printing!public! !
+scintillaKeyCode!accessing!private! !
+translateVirtualKey:!helpers!private! !
+!
 
 !UI.Scintilla.KeyBinding class methodsFor!
 
@@ -281,11 +283,13 @@ newAcceleratorKey: keyInteger message: sciInteger
 
 newChord: aString message: sciInteger
 	^self newAcceleratorKey: (AcceleratorTable keyCodeFromInvariantString: aString) message: sciInteger! !
-!UI.Scintilla.KeyBinding class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.KeyBinding class categoriesFor: #initialize!development!initializing!private! !
-!UI.Scintilla.KeyBinding class categoriesFor: #initializeCommands!**auto generated**!development!private!scintilla interface! !
-!UI.Scintilla.KeyBinding class categoriesFor: #initializeVirtualKeyMap!development!initializing!private! !
-!UI.Scintilla.KeyBinding class categoriesFor: #new!instance creation!public! !
-!UI.Scintilla.KeyBinding class categoriesFor: #newAcceleratorKey:message:!instance creation!public! !
-!UI.Scintilla.KeyBinding class categoriesFor: #newChord:message:!instance creation!public! !
+!UI.Scintilla.KeyBinding class categoriesForMethods!
+icon!constants!development!public! !
+initialize!development!initializing!private! !
+initializeCommands!**auto generated**!development!private!scintilla interface! !
+initializeVirtualKeyMap!development!initializing!private! !
+new!instance creation!public! !
+newAcceleratorKey:message:!instance creation!public! !
+newChord:message:!instance creation!public! !
+!
 

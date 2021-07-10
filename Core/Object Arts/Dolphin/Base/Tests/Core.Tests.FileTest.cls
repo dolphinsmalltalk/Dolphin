@@ -565,34 +565,36 @@ testSplitStemFrom
 	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
-!Core.Tests.FileTest categoriesFor: #buildTestPathOfLength:!helpers!private! !
-!Core.Tests.FileTest categoriesFor: #createTestDirectories!helpers!private! !
-!Core.Tests.FileTest categoriesFor: #deleteDirectory:!helpers!public! !
-!Core.Tests.FileTest categoriesFor: #deleteTestDirectories!private!Running! !
-!Core.Tests.FileTest categoriesFor: #maxFname!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #maxPath!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #printFilenameOfLength:on:!helpers!private! !
-!Core.Tests.FileTest categoriesFor: #relativePathOf:to:!helpers!public! !
-!Core.Tests.FileTest categoriesFor: #removeDirectory:!helpers!private! !
-!Core.Tests.FileTest categoriesFor: #tearDown!private!Running! !
-!Core.Tests.FileTest categoriesFor: #test64BitSeek!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testClassAppendPathSeparator!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testClassDefaultExtension!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testClassPathExtension!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testClassRelativePathOfTo!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testCommonPrefixOfAnd!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testDeleteDirectory!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testForDirectoriesIn!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testMakePath!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testPathName!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testRemoveDirectory!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testRemoveExtension!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testRemovePathDelimiter!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testSetReadOnly!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testShortPath!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testSniffEncoding!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testSplitExtensionFrom!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testSplitFilenameFrom!public!unit tests! !
-!Core.Tests.FileTest categoriesFor: #testSplitStemFrom!public!unit tests! !
+!Core.Tests.FileTest categoriesForMethods!
+buildTestPathOfLength:!helpers!private! !
+createTestDirectories!helpers!private! !
+deleteDirectory:!helpers!public! !
+deleteTestDirectories!private!Running! !
+maxFname!public!unit tests! !
+maxPath!public!unit tests! !
+printFilenameOfLength:on:!helpers!private! !
+relativePathOf:to:!helpers!public! !
+removeDirectory:!helpers!private! !
+tearDown!private!Running! !
+test64BitSeek!public!unit tests! !
+testClassAppendPathSeparator!public!unit tests! !
+testClassDefaultExtension!public!unit tests! !
+testClassPathExtension!public!unit tests! !
+testClassRelativePathOfTo!public!unit tests! !
+testCommonPrefixOfAnd!public!unit tests! !
+testDeleteDirectory!public!unit tests! !
+testForDirectoriesIn!public!unit tests! !
+testMakePath!public!unit tests! !
+testPathName!public!unit tests! !
+testRemoveDirectory!public!unit tests! !
+testRemoveExtension!public!unit tests! !
+testRemovePathDelimiter!public!unit tests! !
+testSetReadOnly!public!unit tests! !
+testShortPath!public!unit tests! !
+testSniffEncoding!public!unit tests! !
+testSplitDriveFrom!public!unit tests! !
+testSplitExtensionFrom!public!unit tests! !
+testSplitFilenameFrom!public!unit tests! !
+testSplitStemFrom!public!unit tests! !
+!
 

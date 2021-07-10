@@ -35,9 +35,11 @@ style: rectangleStyleName
 	name, rectangleStyleName."
 
 	self setStyle: (StyleMap at: rectangleStyleName)! !
-!UI.StaticRectangle categoriesFor: #setStyle:!accessing!private! !
-!UI.StaticRectangle categoriesFor: #style!accessing!public! !
-!UI.StaticRectangle categoriesFor: #style:!accessing!public! !
+!UI.StaticRectangle categoriesForMethods!
+setStyle:!accessing!private! !
+style!accessing!public! !
+style:!accessing!public! !
+!
 
 !UI.StaticRectangle class methodsFor!
 
@@ -77,7 +79,9 @@ winClassName
 
 	^'STATIC'
 ! !
-!UI.StaticRectangle class categoriesFor: #initialize!development!initializing!private! !
-!UI.StaticRectangle class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.StaticRectangle class categoriesFor: #winClassName!constants!private! !
+!UI.StaticRectangle class categoriesForMethods!
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+winClassName!constants!private! !
+!
 

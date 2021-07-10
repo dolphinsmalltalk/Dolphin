@@ -46,10 +46,12 @@ mustBeBoolean
 	indefinitely, causing an unbreakable loop."
 
 	^true! !
-!Kernel.DeafObject categoriesFor: #=!comparing!public! !
-!Kernel.DeafObject categoriesFor: #asParameter!converting!public! !
-!Kernel.DeafObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!Kernel.DeafObject categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
+!Kernel.DeafObject categoriesForMethods!
+=!comparing!public! !
+asParameter!converting!public! !
+doesNotUnderstand:!exceptions!public! !
+mustBeBoolean!exceptions!not restartable!private!vm entry points! !
+!
 
 !Kernel.DeafObject class methodsFor!
 
@@ -62,6 +64,8 @@ initialize
 	"Private - Initialize the receiver's class variables."
 
 	Current isNil ifTrue: [Current := self new]! !
-!Kernel.DeafObject class categoriesFor: #current!accessing!public! !
-!Kernel.DeafObject class categoriesFor: #initialize!development!initializing!private! !
+!Kernel.DeafObject class categoriesForMethods!
+current!accessing!public! !
+initialize!development!initializing!private! !
+!
 

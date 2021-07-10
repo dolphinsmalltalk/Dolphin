@@ -301,51 +301,53 @@ y: aNumber
 	"Set the receiver's y coordinate"
 
 	y := aNumber! !
-!Graphics.Point categoriesFor: #-!arithmetic!public! !
-!Graphics.Point categoriesFor: #*!arithmetic!public! !
-!Graphics.Point categoriesFor: #/!arithmetic!public! !
-!Graphics.Point categoriesFor: #@!converting!public! !
-!Graphics.Point categoriesFor: #+!arithmetic!public! !
-!Graphics.Point categoriesFor: #<!comparing!public! !
-!Graphics.Point categoriesFor: #<=!comparing!public! !
-!Graphics.Point categoriesFor: #=!comparing!public! !
-!Graphics.Point categoriesFor: #>!comparing!public! !
-!Graphics.Point categoriesFor: #>=!comparing!public! !
-!Graphics.Point categoriesFor: #abs!arithmetic!public! !
-!Graphics.Point categoriesFor: #addToPoint:!double dispatch!private! !
-!Graphics.Point categoriesFor: #asDword!converting!public! !
-!Graphics.Point categoriesFor: #asParameter!converting!public! !
-!Graphics.Point categoriesFor: #asPoint!converting!public! !
-!Graphics.Point categoriesFor: #asPoint3D!converting!public! !
-!Graphics.Point categoriesFor: #asUIntPtr!converting!public! !
-!Graphics.Point categoriesFor: #ceiling!public!truncation and round off! !
-!Graphics.Point categoriesFor: #coerce:!coercing!private! !
-!Graphics.Point categoriesFor: #corner:!converting!public! !
-!Graphics.Point categoriesFor: #degrees!accessing!public! !
-!Graphics.Point categoriesFor: #dist:!operations!public! !
-!Graphics.Point categoriesFor: #divideIntoPoint:!double dispatch!private! !
-!Graphics.Point categoriesFor: #dotProduct:!operations!public! !
-!Graphics.Point categoriesFor: #extent:!converting!public! !
-!Graphics.Point categoriesFor: #floor!public!truncation and round off! !
-!Graphics.Point categoriesFor: #generality!coercing!private! !
-!Graphics.Point categoriesFor: #hash!comparing!public! !
-!Graphics.Point categoriesFor: #isSelfEvaluating!public!testing! !
-!Graphics.Point categoriesFor: #max:!comparing!public! !
-!Graphics.Point categoriesFor: #min:!comparing!public! !
-!Graphics.Point categoriesFor: #multiplyByPoint:!double dispatch!private! !
-!Graphics.Point categoriesFor: #printOn:!printing!public! !
-!Graphics.Point categoriesFor: #r!accessing!public! !
-!Graphics.Point categoriesFor: #raisedTo:!mathematical!public! !
-!Graphics.Point categoriesFor: #rounded!public!truncation and round off! !
-!Graphics.Point categoriesFor: #roundTo:!public!truncation and round off! !
-!Graphics.Point categoriesFor: #subtractFromPoint:!double dispatch!private! !
-!Graphics.Point categoriesFor: #transpose!operations!public! !
-!Graphics.Point categoriesFor: #truncated!public!truncation and round off! !
-!Graphics.Point categoriesFor: #x!accessing!public! !
-!Graphics.Point categoriesFor: #x:!accessing!public! !
-!Graphics.Point categoriesFor: #x:y:!accessing!private! !
-!Graphics.Point categoriesFor: #y!accessing!public! !
-!Graphics.Point categoriesFor: #y:!accessing!public! !
+!Graphics.Point categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+@!converting!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+abs!arithmetic!public! !
+addToPoint:!double dispatch!private! !
+asDword!converting!public! !
+asParameter!converting!public! !
+asPoint!converting!public! !
+asPoint3D!converting!public! !
+asUIntPtr!converting!public! !
+ceiling!public!truncation and round off! !
+coerce:!coercing!private! !
+corner:!converting!public! !
+degrees!accessing!public! !
+dist:!operations!public! !
+divideIntoPoint:!double dispatch!private! !
+dotProduct:!operations!public! !
+extent:!converting!public! !
+floor!public!truncation and round off! !
+generality!coercing!private! !
+hash!comparing!public! !
+isSelfEvaluating!public!testing! !
+max:!comparing!public! !
+min:!comparing!public! !
+multiplyByPoint:!double dispatch!private! !
+printOn:!printing!public! !
+r!accessing!public! !
+raisedTo:!mathematical!public! !
+rounded!public!truncation and round off! !
+roundTo:!public!truncation and round off! !
+subtractFromPoint:!double dispatch!private! !
+transpose!operations!public! !
+truncated!public!truncation and round off! !
+x!accessing!public! !
+x:!accessing!public! !
+x:y:!accessing!private! !
+y!accessing!public! !
+y:!accessing!public! !
+!
 
 !Graphics.Point class methodsFor!
 
@@ -378,10 +380,12 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^Zero! !
-!Graphics.Point class categoriesFor: #initialize!class initialization!development!public! !
-!Graphics.Point class categoriesFor: #new!instance creation!public! !
-!Graphics.Point class categoriesFor: #one!instance creation!public! !
-!Graphics.Point class categoriesFor: #unitialize!class hierarchy-removing!public! !
-!Graphics.Point class categoriesFor: #x:y:!instance creation!public! !
-!Graphics.Point class categoriesFor: #zero!instance creation!public! !
+!Graphics.Point class categoriesForMethods!
+initialize!class initialization!development!public! !
+new!instance creation!public! !
+one!instance creation!public! !
+unitialize!class hierarchy-removing!public! !
+x:y:!instance creation!public! !
+zero!instance creation!public! !
+!
 

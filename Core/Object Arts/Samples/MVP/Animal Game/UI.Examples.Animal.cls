@@ -68,12 +68,14 @@ printOn: aStream
 	aStream nextPut: $(.
 	self displayOn: aStream.
 	aStream nextPut: $)! !
-!UI.Examples.Animal categoriesFor: #ask!operations!public! !
-!UI.Examples.Animal categoriesFor: #displayOn:!displaying!public! !
-!UI.Examples.Animal categoriesFor: #knowledgeBase!accessing!public! !
-!UI.Examples.Animal categoriesFor: #name!accessing!public! !
-!UI.Examples.Animal categoriesFor: #name:!accessing!private! !
-!UI.Examples.Animal categoriesFor: #printOn:!printing!public! !
+!UI.Examples.Animal categoriesForMethods!
+ask!operations!public! !
+displayOn:!displaying!public! !
+knowledgeBase!accessing!public! !
+name!accessing!public! !
+name:!accessing!private! !
+printOn:!printing!public! !
+!
 
 !UI.Examples.Animal class methodsFor!
 
@@ -120,11 +122,13 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	KnowledgeBase := nil.! !
-!UI.Examples.Animal class categoriesFor: #icon!constants!public! !
-!UI.Examples.Animal class categoriesFor: #knowledgeBase!accessing!public! !
-!UI.Examples.Animal class categoriesFor: #name:!instance creation!public! !
-!UI.Examples.Animal class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.Examples.Animal class categoriesFor: #playGame!operations!public! !
-!UI.Examples.Animal class categoriesFor: #prompt!instance creation!public! !
-!UI.Examples.Animal class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.Examples.Animal class categoriesForMethods!
+icon!constants!public! !
+knowledgeBase!accessing!public! !
+name:!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+playGame!operations!public! !
+prompt!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

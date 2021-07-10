@@ -90,15 +90,17 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self fields! !
-!CDO.IConfiguration categoriesFor: #fields!properties!public! !
-!CDO.IConfiguration categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IConfiguration!private! !
-!CDO.IConfiguration categoriesFor: #getInterface:!**auto generated**!methods!public! !
-!CDO.IConfiguration categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IConfiguration!private! !
-!CDO.IConfiguration categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.IConfiguration categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.IConfiguration categoriesFor: #load:!**auto generated**!methods!public! !
-!CDO.IConfiguration categoriesFor: #Load:URL:!**auto generated**!COM Interfaces-IConfiguration!public! !
-!CDO.IConfiguration categoriesFor: #value!**auto generated**!properties!public! !
+!CDO.IConfiguration categoriesForMethods!
+fields!properties!public! !
+get_Fields:!**auto generated**!COM Interfaces-IConfiguration!private! !
+getInterface:!**auto generated**!methods!public! !
+GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IConfiguration!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+load:!**auto generated**!methods!public! !
+Load:URL:!**auto generated**!COM Interfaces-IConfiguration!public! !
+value!**auto generated**!properties!public! !
+!
 
 !CDO.IConfiguration class methodsFor!
 
@@ -120,6 +122,8 @@ defineFunctions
 		defineFunction: #GetInterface:ppUnknown:
 			argumentTypes: 'bstr IDispatch**'
 ! !
-!CDO.IConfiguration class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDO.IConfiguration class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.IConfiguration class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

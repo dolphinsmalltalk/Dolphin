@@ -120,23 +120,27 @@ removeKey: aString ifAbsent: aNiladicValuable
 setFilename: filenameString section: sectionNameString
 	filename := filenameString asUtf16String.
 	name := sectionNameString asUtf16String shallowCopy! !
-!OS.IniFileSection categoriesFor: #=!comparing!public! !
-!OS.IniFileSection categoriesFor: #at:ifAbsent:!adding!public! !
-!OS.IniFileSection categoriesFor: #at:put:!adding!public! !
-!OS.IniFileSection categoriesFor: #errorNilKey!exceptions!private! !
-!OS.IniFileSection categoriesFor: #getValue:!accessing!public! !
-!OS.IniFileSection categoriesFor: #hash!comparing!public! !
-!OS.IniFileSection categoriesFor: #keysClass!constants!private! !
-!OS.IniFileSection categoriesFor: #keysDo:!enumerating!public! !
-!OS.IniFileSection categoriesFor: #name!accessing!public! !
-!OS.IniFileSection categoriesFor: #printOn:!printing!public! !
-!OS.IniFileSection categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!OS.IniFileSection categoriesFor: #setFilename:section:!initializing!private! !
+!OS.IniFileSection categoriesForMethods!
+=!comparing!public! !
+at:ifAbsent:!adding!public! !
+at:put:!adding!public! !
+errorNilKey!exceptions!private! !
+getValue:!accessing!public! !
+hash!comparing!public! !
+keysClass!constants!private! !
+keysDo:!enumerating!public! !
+name!accessing!public! !
+printOn:!printing!public! !
+removeKey:ifAbsent:!public!removing! !
+setFilename:section:!initializing!private! !
+!
 
 !OS.IniFileSection class methodsFor!
 
 open: filenameString section: sectionNameString
 	^self new
 		setFilename: filenameString section: sectionNameString! !
-!OS.IniFileSection class categoriesFor: #open:section:!public! !
+!OS.IniFileSection class categoriesForMethods!
+open:section:!public! !
+!
 

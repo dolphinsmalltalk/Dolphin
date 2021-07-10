@@ -53,9 +53,11 @@ rightToLeft: aString
 		hours: (values at: 3) truncated
 		minutes: (values at: 2) truncated
 		seconds: (values at: 1)! !
-!UI.DurationToText categoriesFor: #actualFormat!accessing!private! !
-!UI.DurationToText categoriesFor: #format!accessing!public! !
-!UI.DurationToText categoriesFor: #format:!accessing!public! !
-!UI.DurationToText categoriesFor: #leftToRight:!operations!public! !
-!UI.DurationToText categoriesFor: #rightToLeft:!operations!public! !
+!UI.DurationToText categoriesForMethods!
+actualFormat!accessing!private! !
+format!accessing!public! !
+format:!accessing!public! !
+leftToRight:!operations!public! !
+rightToLeft:!operations!public! !
+!
 

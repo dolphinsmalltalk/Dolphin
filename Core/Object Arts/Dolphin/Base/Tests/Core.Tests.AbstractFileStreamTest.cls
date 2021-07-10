@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.ReadWriteStreamTest subclass: #'Core.Tests.AbstractFileStreamTest'
 	instanceVariableNames: 'tempFileName filestream'
@@ -400,39 +400,41 @@ testTruncate
 
 writeableCollections
 	^self strings , self byteArrays! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #arrayedCollections!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #blockWriteIntervals!constants!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #bufferSize!constants!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #closeTempStream:!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #collections!private!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #initializeRandomTestData!initializing!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #maxPosition!constants!public! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #randomData1!constants!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #randomData2!constants!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #readWriteStreamOnString:!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #setUp!public!running! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #streamClassSupportsPointers!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #streamWith:!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #strings!constants!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #tearDown!public!running! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #tempReadStream!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #tempReadWriteStream!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #tempWriteStream!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #tempWriteStream:!helpers!private! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #test1065!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #test64BitPosition!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testAppend!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testNextPutAllStartingAt!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testNextPutAllStartingAt2!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testPositionAfterWrite!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testPositionPastEnd!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testRandomWriteOnePage!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testReset!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testRewindAfterWrite!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #testTruncate!public!unit tests! !
-!Core.Tests.AbstractFileStreamTest categoriesFor: #writeableCollections!constants!private! !
+!Core.Tests.AbstractFileStreamTest categoriesForMethods!
+arrayedCollections!private! !
+assertBufferEmptyOrDirty:!helpers!private! !
+assertBufferEmptyOrDirty:size:!helpers!private! !
+blockWriteIntervals!constants!private! !
+bufferSize!constants!private! !
+closeTempStream:!helpers!private! !
+collections!private!unit tests! !
+initializeRandomTestData!initializing!private! !
+maxPosition!constants!public! !
+randomData1!constants!private! !
+randomData2!constants!private! !
+readWriteStreamOnString:!helpers!private! !
+setUp!public!running! !
+streamClassSupportsPointers!helpers!private! !
+streamOnBytes:type:!helpers!private! !
+streamWith:!helpers!private! !
+strings!constants!private! !
+tearDown!public!running! !
+tearDownTempStream!helpers!private! !
+tempReadStream!helpers!private! !
+tempReadWriteStream!helpers!private! !
+tempWriteStream!helpers!private! !
+tempWriteStream:!helpers!private! !
+test1065!public!unit tests! !
+test64BitPosition!public!unit tests! !
+testAppend!public!unit tests! !
+testNextPutAllStartingAt!public!unit tests! !
+testNextPutAllStartingAt2!public!unit tests! !
+testPositionAfterWrite!public!unit tests! !
+testPositionPastEnd!public!unit tests! !
+testRandomWriteOnePage!public!unit tests! !
+testReset!public!unit tests! !
+testRewindAfterWrite!public!unit tests! !
+testTruncate!public!unit tests! !
+writeableCollections!constants!private! !
+!
 

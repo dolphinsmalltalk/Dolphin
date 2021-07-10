@@ -23,8 +23,10 @@ nextLink: aLink
 	"Set the next Link referred to by the receiver to a aLink."
 
 	^nextLink := aLink! !
-!Core.Link categoriesFor: #nextLink!accessing!public! !
-!Core.Link categoriesFor: #nextLink:!accessing!not an aspect!public! !
+!Core.Link categoriesForMethods!
+nextLink!accessing!public! !
+nextLink:!accessing!not an aspect!public! !
+!
 
 !Core.Link class methodsFor!
 
@@ -36,5 +38,7 @@ nextLink: aLink
 	^self new
 		nextLink: aLink;
 		yourself! !
-!Core.Link class categoriesFor: #nextLink:!instance creation!public! !
+!Core.Link class categoriesForMethods!
+nextLink:!instance creation!public! !
+!
 

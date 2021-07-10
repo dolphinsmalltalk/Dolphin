@@ -108,17 +108,19 @@ item: index
 	answer := IScriptModule newPointer.
 	self get_Item: index asVariant ppmod: answer.
 	^answer asObject! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #add:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #add:object:!**auto generated**!methods!public! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #Add:Object:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #count!**auto generated**!properties!public! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #get_Item:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSScriptControl.IScriptModuleCollection categoriesFor: #item:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptModuleCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+add:!**auto generated**!methods!public! !
+add:object:!**auto generated**!methods!public! !
+Add:Object:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+count!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+get_Count:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+get_Item:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !MSScriptControl.IScriptModuleCollection class methodsFor!
 
@@ -148,7 +150,9 @@ initializeTypeLib
 		IScriptModuleCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!MSScriptControl.IScriptModuleCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSScriptControl.IScriptModuleCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSScriptControl.IScriptModuleCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptModuleCollection class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

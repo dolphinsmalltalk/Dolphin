@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.InitializerTests subclass: #'Graphics.Gdiplus.Tests.InitializerTest'
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ Graphics.Gdiplus.Tests.InitializerTest comment: ''!
 setUp
 	super setUp.
 	model := TestInitializer new! !
-!Graphics.Gdiplus.Tests.InitializerTest categoriesFor: #setUp!public!setup! !
+!Graphics.Gdiplus.Tests.InitializerTest categoriesForMethods!
+setUp!public!setup! !
+!
 

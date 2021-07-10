@@ -77,18 +77,20 @@ iString: anInteger
 	"Set the receiver's 'iString' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_iString put: anInteger! !
-!OS.TBBUTTON categoriesFor: #dwData!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #dwData:!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #fsState!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #fsState:!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #fsStyle!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #fsStyle:!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #iBitmap!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #iBitmap:!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #idCommand!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #idCommand:!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #iString!**compiled accessors**!public! !
-!OS.TBBUTTON categoriesFor: #iString:!**compiled accessors**!public! !
+!OS.TBBUTTON categoriesForMethods!
+dwData!**compiled accessors**!public! !
+dwData:!**compiled accessors**!public! !
+fsState!**compiled accessors**!public! !
+fsState:!**compiled accessors**!public! !
+fsStyle!**compiled accessors**!public! !
+fsStyle:!**compiled accessors**!public! !
+iBitmap!**compiled accessors**!public! !
+iBitmap:!**compiled accessors**!public! !
+idCommand!**compiled accessors**!public! !
+idCommand:!**compiled accessors**!public! !
+iString!**compiled accessors**!public! !
+iString:!**compiled accessors**!public! !
+!
 
 !OS.TBBUTTON class methodsFor!
 
@@ -118,6 +120,8 @@ defineFields
 
 getFieldNames
 	^#(#iBitmap #idCommand #fsState #fsStyle #dwData #iString)! !
-!OS.TBBUTTON class categoriesFor: #defineFields!public!template definition! !
-!OS.TBBUTTON class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TBBUTTON class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

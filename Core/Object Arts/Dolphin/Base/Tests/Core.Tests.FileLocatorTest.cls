@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.FileLocatorTest'
 	instanceVariableNames: ''
@@ -107,7 +107,9 @@ literalStoreArray
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty.
 	bytes := singletons binaryStoreBytes.
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty! !
-!Core.Tests.FileLocatorTest categoriesFor: #testImageRelativeFileLocator!public!unit tests! !
-!Core.Tests.FileLocatorTest categoriesFor: #testInstallRelativeFileLocator!public!unit tests! !
-!Core.Tests.FileLocatorTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
+!Core.Tests.FileLocatorTest categoriesForMethods!
+testImageRelativeFileLocator!public!unit tests! !
+testInstallRelativeFileLocator!public!unit tests! !
+testSingletonSerialisation!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #SortedCollectionFactoryANSITest
 	instanceVariableNames: ''
@@ -47,14 +47,16 @@ testXwithXwithXwithX
 testXwithXwithXwithXwithX
 	" <SortedCollection factory>#with:with:with:with: "
 	#'Collection'.! !
-!SortedCollectionFactoryANSITest categoriesFor: #canonicalObject!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #protocol!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXnew!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXnewX!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXsortBlockX!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXwithAllX!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXwithX!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXwithXwithX!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXwithXwithXwithX!public! !
-!SortedCollectionFactoryANSITest categoriesFor: #testXwithXwithXwithXwithX!public! !
+!SortedCollectionFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXnew!public! !
+testXnewX!public! !
+testXsortBlockX!public! !
+testXwithAllX!public! !
+testXwithX!public! !
+testXwithXwithX!public! !
+testXwithXwithXwithX!public! !
+testXwithXwithXwithXwithX!public! !
+!
 

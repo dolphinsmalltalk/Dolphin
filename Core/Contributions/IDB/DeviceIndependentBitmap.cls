@@ -187,22 +187,24 @@ width: widthInteger height: heightInteger depth: depthInteger
 
 	"IRV"
 	^self! !
-!DeviceIndependentBitmap categoriesFor: #baseLoadFlags!constants!public! !
-!DeviceIndependentBitmap categoriesFor: #bitmapInfoStruct!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #bitmapStruct!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #cacheInfo!helpers!private! !
-!DeviceIndependentBitmap categoriesFor: #clearCached!helpers!private! !
-!DeviceIndependentBitmap categoriesFor: #copyToClipboard!copying!public! !
-!DeviceIndependentBitmap categoriesFor: #createHandle!public!realizing/unrealizing! !
-!DeviceIndependentBitmap categoriesFor: #depth!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #erase!drawing!public! !
-!DeviceIndependentBitmap categoriesFor: #extent!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #getColorTable!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #imageBytes!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #saveToFile:!file operations!public! !
-!DeviceIndependentBitmap categoriesFor: #saveToStream:!file operations!public! !
-!DeviceIndependentBitmap categoriesFor: #setColorTable:!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #width:height:depth:!initializing!public! !
+!DeviceIndependentBitmap categoriesForMethods!
+baseLoadFlags!constants!public! !
+bitmapInfoStruct!accessing!public! !
+bitmapStruct!accessing!public! !
+cacheInfo!helpers!private! !
+clearCached!helpers!private! !
+copyToClipboard!copying!public! !
+createHandle!public!realizing/unrealizing! !
+depth!accessing!public! !
+erase!drawing!public! !
+extent!accessing!public! !
+getColorTable!accessing!public! !
+imageBytes!accessing!public! !
+saveToFile:!file operations!public! !
+saveToStream:!file operations!public! !
+setColorTable:!accessing!public! !
+width:height:depth:!initializing!public! !
+!
 
 !DeviceIndependentBitmap class methodsFor!
 
@@ -447,12 +449,14 @@ width: width height: height depth: depth
 		width: width
 		height: height
 		depth: depth! !
-!DeviceIndependentBitmap class categoriesFor: #colorTableDepth1!constants!public! !
-!DeviceIndependentBitmap class categoriesFor: #colorTableDepth16!constants!public! !
-!DeviceIndependentBitmap class categoriesFor: #colorTableDepth24!constants!public! !
-!DeviceIndependentBitmap class categoriesFor: #colorTableDepth32!constants!public! !
-!DeviceIndependentBitmap class categoriesFor: #colorTableDepth4!constants!public! !
-!DeviceIndependentBitmap class categoriesFor: #colorTableDepth8!constants!public! !
-!DeviceIndependentBitmap class categoriesFor: #colorTableForDepth:!accessing!public! !
-!DeviceIndependentBitmap class categoriesFor: #width:height:depth:!instance creation!public! !
+!DeviceIndependentBitmap class categoriesForMethods!
+colorTableDepth1!constants!public! !
+colorTableDepth16!constants!public! !
+colorTableDepth24!constants!public! !
+colorTableDepth32!constants!public! !
+colorTableDepth4!constants!public! !
+colorTableDepth8!constants!public! !
+colorTableForDepth:!accessing!public! !
+width:height:depth:!instance creation!public! !
+!
 

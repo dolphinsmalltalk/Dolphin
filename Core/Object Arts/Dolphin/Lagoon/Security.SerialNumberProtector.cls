@@ -57,14 +57,16 @@ stringFromData: anObject
 	"Private - Answer a human-readable String representing the given raw encrypted data."
 	
 	^ self subclassResponsibility.! !
-!Security.SerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
-!Security.SerialNumberProtector categoriesFor: #decrypt:!operations!public! !
-!Security.SerialNumberProtector categoriesFor: #decryptFromString:!operations!public! !
-!Security.SerialNumberProtector categoriesFor: #encrypt:!operations!public! !
-!Security.SerialNumberProtector categoriesFor: #encryptToString:!operations!public! !
-!Security.SerialNumberProtector categoriesFor: #key!initializing!public! !
-!Security.SerialNumberProtector categoriesFor: #key:!initializing!private! !
-!Security.SerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
+!Security.SerialNumberProtector categoriesForMethods!
+dataFromString:!helpers!private! !
+decrypt:!operations!public! !
+decryptFromString:!operations!public! !
+encrypt:!operations!public! !
+encryptToString:!operations!public! !
+key!initializing!public! !
+key:!initializing!private! !
+stringFromData:!helpers!public! !
+!
 
 Security.SerialNumberProtector methodProtocol: #SerialNumberProtector attributes: #() selectors: #(#decryptFromString: #encryptToString:)!
 
@@ -134,8 +136,10 @@ withKey: anInteger
 	^ (self new)
 		key: anInteger;
 		yourself.! !
-!Security.SerialNumberProtector class categoriesFor: #integerFromReadableString:!helpers!private! !
-!Security.SerialNumberProtector class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!Security.SerialNumberProtector class categoriesFor: #readableStringFromInteger:!helpers!private! !
-!Security.SerialNumberProtector class categoriesFor: #withKey:!instance creation!public! !
+!Security.SerialNumberProtector class categoriesForMethods!
+integerFromReadableString:!helpers!private! !
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+readableStringFromInteger:!helpers!private! !
+withKey:!instance creation!public! !
+!
 

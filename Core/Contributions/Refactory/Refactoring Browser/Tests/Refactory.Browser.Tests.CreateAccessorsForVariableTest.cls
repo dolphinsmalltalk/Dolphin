@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.CreateAccessorsForVariableTest'
 	instanceVariableNames: ''
@@ -66,9 +66,11 @@ testNonExistantName
 					variable: 'foo'
 					class: BasicLintRuleTest
 					classVariable: true)! !
-!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testExistingInstanceVariableAccessors!public!tests! !
-!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testNewClassVariableAccessors!public!tests! !
-!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testNewInstanceVariableAccessors!public!tests! !
-!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesForMethods!
+setUp!public!set up! !
+testExistingInstanceVariableAccessors!public!tests! !
+testNewClassVariableAccessors!public!tests! !
+testNewInstanceVariableAccessors!public!tests! !
+testNonExistantName!failure tests!public! !
+!
 

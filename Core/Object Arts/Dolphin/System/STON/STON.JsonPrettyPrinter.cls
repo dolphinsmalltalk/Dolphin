@@ -70,12 +70,14 @@ newlineIndent
 
 prettyPrintSpace
 	writeStream space! !
-!STON.JsonPrettyPrinter categoriesFor: #encodeList:!public!writing! !
-!STON.JsonPrettyPrinter categoriesFor: #encodeMap:!public!writing! !
-!STON.JsonPrettyPrinter categoriesFor: #indentedDo:!helpers!private! !
-!STON.JsonPrettyPrinter categoriesFor: #initialize!initialize/release!private! !
-!STON.JsonPrettyPrinter categoriesFor: #listElementSeparator!helpers!private! !
-!STON.JsonPrettyPrinter categoriesFor: #mapElementSeparator!helpers!private! !
-!STON.JsonPrettyPrinter categoriesFor: #newlineIndent!helpers!private! !
-!STON.JsonPrettyPrinter categoriesFor: #prettyPrintSpace!helpers!private! !
+!STON.JsonPrettyPrinter categoriesForMethods!
+encodeList:!public!writing! !
+encodeMap:!public!writing! !
+indentedDo:!helpers!private! !
+initialize!initialize/release!private! !
+listElementSeparator!helpers!private! !
+mapElementSeparator!helpers!private! !
+newlineIndent!helpers!private! !
+prettyPrintSpace!helpers!private! !
+!
 

@@ -232,26 +232,28 @@ Reset
 
 	<virtual stdcall: hresult 10>
 	^self invalidCall: _failureCode! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #allowOverride!**auto generated**!properties!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #allowOverride:!**auto generated**!properties!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #get_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #getDeclaredPrefixes!**auto generated**!methods!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #GetDeclaredPrefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #getPrefixes:!**auto generated**!methods!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #GetPrefixes:prefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #getURI:!**auto generated**!methods!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #GetURI:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #getURIFromNode:contextNode:!**auto generated**!methods!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #GetURIFromNode:contextNode:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #PopContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #PushContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #pushNodeContext:!**auto generated**!methods!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #put_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
-!MSXML.IVBMXNamespaceManager categoriesFor: #Reset!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+!MSXML.IVBMXNamespaceManager categoriesForMethods!
+allowOverride!**auto generated**!properties!public! !
+allowOverride:!**auto generated**!properties!public! !
+DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+get_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+getDeclaredPrefixes!**auto generated**!methods!public! !
+GetDeclaredPrefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+getPrefixes:!**auto generated**!methods!public! !
+GetPrefixes:prefixes:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+getURI:!**auto generated**!methods!public! !
+GetURI:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+getURIFromNode:contextNode:!**auto generated**!methods!public! !
+GetURIFromNode:contextNode:uri:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+PopContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+PushContext!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+pushNodeContext:!**auto generated**!methods!public! !
+PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+put_allowOverride:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!private! !
+Reset!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !
+!
 
 !MSXML.IVBMXNamespaceManager class methodsFor!
 
@@ -286,6 +288,8 @@ defineFunctions
 		defineFunction: #GetURIFromNode:contextNode:uri:
 			argumentTypes: 'bstr IXMLDOMNode* variant*'
 ! !
-!MSXML.IVBMXNamespaceManager class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSXML.IVBMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBMXNamespaceManager class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

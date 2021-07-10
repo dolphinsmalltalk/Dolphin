@@ -296,40 +296,42 @@ wmNotify: message wParam: wParam lParam: lParam
 	code := pnmhdr sdwordAtOffset: 8.
 	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
 	^super wmNotify: message wParam: wParam lParam: lParam! !
-!UI.ControlBarAbstract categoriesFor: #actualInsets:!accessing!private! !
-!UI.ControlBarAbstract categoriesFor: #actualPreferredExtent:!private! !
-!UI.ControlBarAbstract categoriesFor: #addSubView:name:!public!sub views! !
-!UI.ControlBarAbstract categoriesFor: #arrangementOf:!accessing!public! !
-!UI.ControlBarAbstract categoriesFor: #arrangementOf:put:!accessing!public! !
-!UI.ControlBarAbstract categoriesFor: #canAcceptSubViews!hierarchy!public!sub views!testing! !
-!UI.ControlBarAbstract categoriesFor: #defaultBackcolor!colors!constants!private! !
-!UI.ControlBarAbstract categoriesFor: #defaultExtentOf:!public! !
-!UI.ControlBarAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
-!UI.ControlBarAbstract categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.ControlBarAbstract categoriesFor: #errorDuplicateName:!exceptions!public! !
-!UI.ControlBarAbstract categoriesFor: #hasDivider!accessing-styles!public! !
-!UI.ControlBarAbstract categoriesFor: #hasDivider:!accessing-styles!public! !
-!UI.ControlBarAbstract categoriesFor: #indexFromPoint:!enquiries!private! !
-!UI.ControlBarAbstract categoriesFor: #initialize!initializing!private! !
-!UI.ControlBarAbstract categoriesFor: #insets!accessing!private! !
-!UI.ControlBarAbstract categoriesFor: #isVertical!accessing-styles!public! !
-!UI.ControlBarAbstract categoriesFor: #isVertical:!accessing-styles!public! !
-!UI.ControlBarAbstract categoriesFor: #layout:!geometry!private! !
-!UI.ControlBarAbstract categoriesFor: #layoutManager:!geometry!public! !
-!UI.ControlBarAbstract categoriesFor: #name:as:!public!subpresenters! !
-!UI.ControlBarAbstract categoriesFor: #nameOf:!public!subpresenters! !
-!UI.ControlBarAbstract categoriesFor: #nmClick:!event handling-win32!public! !
-!UI.ControlBarAbstract categoriesFor: #nmDblClk:!event handling-win32!public! !
-!UI.ControlBarAbstract categoriesFor: #nmRClick:!event handling-win32!public! !
-!UI.ControlBarAbstract categoriesFor: #onSubViewAdded:!event handling!public! !
-!UI.ControlBarAbstract categoriesFor: #onTipTextRequired:!event handling!private! !
-!UI.ControlBarAbstract categoriesFor: #onZOrderChanged!event handling!public! !
-!UI.ControlBarAbstract categoriesFor: #removeSubView:!hierarchy!public!sub views! !
-!UI.ControlBarAbstract categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
-!UI.ControlBarAbstract categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!UI.ControlBarAbstract categoriesFor: #validateUserInterface!operations!public! !
-!UI.ControlBarAbstract categoriesFor: #viewNamed:ifNone:!public!sub views! !
-!UI.ControlBarAbstract categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
+!UI.ControlBarAbstract categoriesForMethods!
+actualInsets:!accessing!private! !
+actualPreferredExtent:!private! !
+addSubView:name:!public!sub views! !
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+canAcceptSubViews!hierarchy!public!sub views!testing! !
+defaultBackcolor!colors!constants!private! !
+defaultExtentOf:!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+errorDuplicateName:!exceptions!public! !
+hasDivider!accessing-styles!public! !
+hasDivider:!accessing-styles!public! !
+indexFromPoint:!enquiries!private! !
+initialize!initializing!private! !
+insets!accessing!private! !
+isVertical!accessing-styles!public! !
+isVertical:!accessing-styles!public! !
+layout:!geometry!private! !
+layoutManager:!geometry!public! !
+name:as:!public!subpresenters! !
+nameOf:!public!subpresenters! !
+nmClick:!event handling-win32!public! !
+nmDblClk:!event handling-win32!public! !
+nmRClick:!event handling-win32!public! !
+onSubViewAdded:!event handling!public! !
+onTipTextRequired:!event handling!private! !
+onZOrderChanged!event handling!public! !
+removeSubView:!hierarchy!public!sub views! !
+ttnGetDispInfo:!event handling-win32!private! !
+validateSubViewLayouts:!geometry!private! !
+validateUserInterface!operations!public! !
+viewNamed:ifNone:!public!sub views! !
+wmNotify:wParam:lParam:!event handling-win32!private! !
+!
 
 UI.ControlBarAbstract methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
 
@@ -373,9 +375,11 @@ stbVersion
 	"14: Adds _tipText, and two spares"
 
 	^14! !
-!UI.ControlBarAbstract class categoriesFor: #icon!constants!public! !
-!UI.ControlBarAbstract class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
-!UI.ControlBarAbstract class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!UI.ControlBarAbstract class categoriesFor: #stbConvertFromVersion13:!binary filing!private! !
-!UI.ControlBarAbstract class categoriesFor: #stbVersion!binary filing!public! !
+!UI.ControlBarAbstract class categoriesForMethods!
+icon!constants!public! !
+stbConvert:fromVersion:!binary filing!public! !
+stbConvertFromVersion12:!binary filing!private! !
+stbConvertFromVersion13:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

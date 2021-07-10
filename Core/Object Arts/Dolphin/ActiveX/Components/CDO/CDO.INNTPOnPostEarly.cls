@@ -36,9 +36,11 @@ OnPostEarly: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 IMessage* sdword*>
 	^self invalidCall: _failureCode! !
-!CDO.INNTPOnPostEarly categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.INNTPOnPostEarly categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.INNTPOnPostEarly categoriesFor: #OnPostEarly:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostEarly!public! !
+!CDO.INNTPOnPostEarly categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+OnPostEarly:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostEarly!public! !
+!
 
 !CDO.INNTPOnPostEarly class methodsFor!
 
@@ -50,5 +52,7 @@ defineFunctions
 		defineFunction: #OnPostEarly:EventStatus:
 			argumentTypes: 'IMessage* sdword*'
 ! !
-!CDO.INNTPOnPostEarly class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.INNTPOnPostEarly class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

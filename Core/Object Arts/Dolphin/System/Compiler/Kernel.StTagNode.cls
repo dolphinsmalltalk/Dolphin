@@ -32,11 +32,13 @@ stop
 
 stop: anInteger
 	stop := anInteger! !
-!Kernel.StTagNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StTagNode categoriesFor: #isExternalCall!public!testing! !
-!Kernel.StTagNode categoriesFor: #primitiveIndex!accessing!public! !
-!Kernel.StTagNode categoriesFor: #start!accessing!public! !
-!Kernel.StTagNode categoriesFor: #start:!accessing!private! !
-!Kernel.StTagNode categoriesFor: #stop!accessing!public! !
-!Kernel.StTagNode categoriesFor: #stop:!accessing!private! !
+!Kernel.StTagNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isExternalCall!public!testing! !
+primitiveIndex!accessing!public! !
+start!accessing!public! !
+start:!accessing!private! !
+stop!accessing!public! !
+stop:!accessing!private! !
+!
 

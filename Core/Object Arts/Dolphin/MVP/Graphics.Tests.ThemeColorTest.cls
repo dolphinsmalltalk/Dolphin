@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.ThemeColorTest'
 	instanceVariableNames: ''
@@ -23,5 +23,7 @@ testNameActualColor
 	"Invoke the method directly so we don't need to install it."
 	tc2 := testMethod value: ThemeColor withArguments: {#dialog. Color face3d}.
 	self assert: tc2 equals: tc! !
-!Graphics.Tests.ThemeColorTest categoriesFor: #testNameActualColor!public!unit tests! !
+!Graphics.Tests.ThemeColorTest categoriesForMethods!
+testNameActualColor!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.IdeaSpaceShellTest'
 	instanceVariableNames: 'ideaShell browserPlugins'
@@ -334,24 +334,26 @@ testSaveRestoreErrors
 	self should: [newIdeaShell configureFromSavedStateString: saveString]
 		raise: Compiler notificationClass.
 	newIdeaShell view destroy! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #create:subclassOf:!helpers!private! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newInspectorShellCard!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newViewBrowserCard!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newViewComposerCard!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #newWorkspaceCard!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #setUp!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #tearDown!private!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testAbsorbCard!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testAbsorbedCardRemoval!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testBreakoutCard!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testBreakoutCardOrdering!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testHistoryRemove!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testRemoveCard!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testSaveRestore!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testSaveRestoreEmpty!public!unit tests! !
-!Tools.Tests.IdeaSpaceShellTest categoriesFor: #testSaveRestoreErrors!public!unit tests! !
+!Tools.Tests.IdeaSpaceShellTest categoriesForMethods!
+create:subclassOf:!helpers!private! !
+createThreeCards!helpers!private! !
+newClassBrowserCard!private!unit tests! !
+newEnvironmentBrowserCard!private!unit tests! !
+newInspectorShellCard!private!unit tests! !
+newSystemBrowserCard!private!unit tests! !
+newViewBrowserCard!private!unit tests! !
+newViewComposerCard!private!unit tests! !
+newWorkspaceCard!private!unit tests! !
+setUp!private!unit tests! !
+tearDown!private!unit tests! !
+testAbsorbCard!public!unit tests! !
+testAbsorbedCardRemoval!public!unit tests! !
+testBreakoutCard!public!unit tests! !
+testBreakoutCardOrdering!public!unit tests! !
+testHistoryRemove!public!unit tests! !
+testRemoveCard!public!unit tests! !
+testSaveRestore!public!unit tests! !
+testSaveRestoreEmpty!public!unit tests! !
+testSaveRestoreErrors!public!unit tests! !
+!
 

@@ -82,14 +82,16 @@ matchSelectorAgainst: aNode inContext: aDictionary
 selectorParts: tokenCollection arguments: variableNodes 
 	super selectorParts: tokenCollection arguments: variableNodes.
 	isList := (tokenCollection first value at: 2) == self listCharacter! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #copyInContext:!matching!public! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #isPatternNode!public!testing/matching! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #isSelectorList!public!testing! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #match:inContext:!matching!public! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #matchingClass!constants!public! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
-!Refactory.Browser.RBPatternMethodNode categoriesFor: #selectorParts:arguments:!initialize/release!public! !
+!Refactory.Browser.RBPatternMethodNode categoriesForMethods!
+copyInContext:!matching!public! !
+isPatternNode!public!testing/matching! !
+isSelectorList!public!testing! !
+match:inContext:!matching!public! !
+matchArgumentsAgainst:inContext:!matching!public! !
+matchingClass!constants!public! !
+matchSelectorAgainst:inContext:!matching!public! !
+selectorParts:arguments:!initialize/release!public! !
+!
 
 !Refactory.Browser.RBPatternMethodNode class methodsFor!
 
@@ -98,5 +100,7 @@ selectorParts: tokenCollection arguments: variableNodes
 		ifTrue: [super selectorParts: tokenCollection arguments: variableNodes]
 		ifFalse: 
 			[RBMethodNode selectorParts: tokenCollection arguments: variableNodes]! !
-!Refactory.Browser.RBPatternMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
+!Refactory.Browser.RBPatternMethodNode class categoriesForMethods!
+selectorParts:arguments:!instance creation!public! !
+!
 

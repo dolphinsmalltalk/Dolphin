@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.DiskVolumeInformationTest'
 	instanceVariableNames: ''
@@ -17,5 +17,7 @@ testFileSystemFlags
 	self deny: subject fileSystemFlags equals: 0.
 	self skipUnless: [subject fileSystemName = 'NTFS'].
 	self assert: subject isSparseFileCapable! !
-!OS.Tests.DiskVolumeInformationTest categoriesFor: #testFileSystemFlags!public! !
+!OS.Tests.DiskVolumeInformationTest categoriesForMethods!
+testFileSystemFlags!public! !
+!
 

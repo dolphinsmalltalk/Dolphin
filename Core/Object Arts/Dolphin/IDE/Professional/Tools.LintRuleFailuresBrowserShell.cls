@@ -56,15 +56,19 @@ removeMethod
 	index := self browser selectionsByIndex first.
 	self browser model removeAll: methods.
 	self browser selectionByIndex: index ifAbsent: []! !
-!Tools.LintRuleFailuresBrowserShell categoriesFor: #addToCommandRoute:!commands!public! !
-!Tools.LintRuleFailuresBrowserShell categoriesFor: #lintRule!accessing!public! !
-!Tools.LintRuleFailuresBrowserShell categoriesFor: #lintRule:!accessing!public! !
-!Tools.LintRuleFailuresBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!Tools.LintRuleFailuresBrowserShell categoriesFor: #removeMethod!commands!public! !
+!Tools.LintRuleFailuresBrowserShell categoriesForMethods!
+addToCommandRoute:!commands!public! !
+lintRule!accessing!public! !
+lintRule:!accessing!public! !
+queryCommand:!commands!private! !
+removeMethod!commands!public! !
+!
 
 !Tools.LintRuleFailuresBrowserShell class methodsFor!
 
 initialize
 	self canUseIdeaSpace: true! !
-!Tools.LintRuleFailuresBrowserShell class categoriesFor: #initialize!initializing!private! !
+!Tools.LintRuleFailuresBrowserShell class categoriesForMethods!
+initialize!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser subclass: #'Refactory.Browser.Tests'
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!Refactory.Browser.Tests class categoriesFor: #icon!constants!public! !
+!Refactory.Browser.Tests class categoriesForMethods!
+icon!constants!public! !
+!
 

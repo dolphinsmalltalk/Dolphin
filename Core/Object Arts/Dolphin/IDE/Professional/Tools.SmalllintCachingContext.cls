@@ -37,11 +37,13 @@ selectors
 	selectors isNil ifTrue: [self computeLiterals].
 	^selectors
 ! !
-!Tools.SmalllintCachingContext categoriesFor: #computeLiterals!helpers!private! !
-!Tools.SmalllintCachingContext categoriesFor: #initialize!initialize/release!public! !
-!Tools.SmalllintCachingContext categoriesFor: #literals!accessing!public! !
-!Tools.SmalllintCachingContext categoriesFor: #mutex!accessing!private! !
-!Tools.SmalllintCachingContext categoriesFor: #selectors!accessing!public! !
+!Tools.SmalllintCachingContext categoriesForMethods!
+computeLiterals!helpers!private! !
+initialize!initialize/release!public! !
+literals!accessing!public! !
+mutex!accessing!private! !
+selectors!accessing!public! !
+!
 
 !Tools.SmalllintCachingContext class methodsFor!
 
@@ -84,9 +86,11 @@ systemModel
 uninitialize
 	self clearCache.
 	self systemModel removeEventsTriggeredFor: self! !
-!Tools.SmalllintCachingContext class categoriesFor: #clearCache!operations!private! !
-!Tools.SmalllintCachingContext class categoriesFor: #initialize!class initialization!private! !
-!Tools.SmalllintCachingContext class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!Tools.SmalllintCachingContext class categoriesFor: #systemModel!accessing!private! !
-!Tools.SmalllintCachingContext class categoriesFor: #uninitialize!class initialization!private! !
+!Tools.SmalllintCachingContext class categoriesForMethods!
+clearCache!operations!private! !
+initialize!class initialization!private! !
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+systemModel!accessing!private! !
+uninitialize!class initialization!private! !
+!
 

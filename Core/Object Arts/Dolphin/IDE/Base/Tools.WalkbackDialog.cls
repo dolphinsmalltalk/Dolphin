@@ -163,20 +163,22 @@ wmSize: message wParam: wParam lParam: lParam
 	#todo "Resize the controls".
 	^nil
 ! !
-!Tools.WalkbackDialog categoriesFor: #actualBackcolor!accessing!private! !
-!Tools.WalkbackDialog categoriesFor: #callStack:!accessing!public! !
-!Tools.WalkbackDialog categoriesFor: #caption:!accessing!public! !
-!Tools.WalkbackDialog categoriesFor: #copyWalkbackToClipboard!commands!public! !
-!Tools.WalkbackDialog categoriesFor: #debuggable:!accessing!public! !
-!Tools.WalkbackDialog categoriesFor: #defaultExtent!constants!public! !
-!Tools.WalkbackDialog categoriesFor: #onInitDialog!event handling!private! !
-!Tools.WalkbackDialog categoriesFor: #primHookWindowCreate:!helpers!private! !
-!Tools.WalkbackDialog categoriesFor: #resumable:!accessing!public! !
-!Tools.WalkbackDialog categoriesFor: #runModalLoop!operations!private! !
-!Tools.WalkbackDialog categoriesFor: #templateId!constants!private! !
-!Tools.WalkbackDialog categoriesFor: #unhookWindowCreate:!operations!private! !
-!Tools.WalkbackDialog categoriesFor: #wmCommand:wParam:lParam:!event handling-win32!public! !
-!Tools.WalkbackDialog categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
+!Tools.WalkbackDialog categoriesForMethods!
+actualBackcolor!accessing!private! !
+callStack:!accessing!public! !
+caption:!accessing!public! !
+copyWalkbackToClipboard!commands!public! !
+debuggable:!accessing!public! !
+defaultExtent!constants!public! !
+onInitDialog!event handling!private! !
+primHookWindowCreate:!helpers!private! !
+resumable:!accessing!public! !
+runModalLoop!operations!private! !
+templateId!constants!private! !
+unhookWindowCreate:!operations!private! !
+wmCommand:wParam:lParam:!event handling-win32!public! !
+wmSize:wParam:lParam:!event handling-win32!private! !
+!
 
 !Tools.WalkbackDialog class methodsFor!
 
@@ -194,5 +196,7 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself)! !
-!Tools.WalkbackDialog class categoriesFor: #initialize!initializing!private! !
+!Tools.WalkbackDialog class categoriesForMethods!
+initialize!initializing!private! !
+!
 

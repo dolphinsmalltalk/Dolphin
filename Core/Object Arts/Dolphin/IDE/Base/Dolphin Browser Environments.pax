@@ -60,8 +60,10 @@ filterMethods: aMonadicValuable
 
 forPackages: aCollection
 	^PackageEnvironment onEnvironment: self packages: aCollection! !
-!Refactory.Browser.BrowserEnvironment categoriesFor: #filterMethods:!enquiries!public! !
-!Refactory.Browser.BrowserEnvironment categoriesFor: #forPackages:!environments!public! !
+!Refactory.Browser.BrowserEnvironment categoriesForMethods!
+filterMethods:!enquiries!public! !
+forPackages:!environments!public! !
+!
 
 "End of package definition"!
 

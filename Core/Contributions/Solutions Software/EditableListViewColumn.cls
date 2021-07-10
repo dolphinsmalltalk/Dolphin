@@ -519,71 +519,73 @@ updateValue: aValue in: anObject
 updateValueIn: anObject
 
 	self updateValue: self editor embeddedValue in: anObject! !
-!EditableListViewColumn categoriesFor: #_imageFromRow:!drawing!private! !
-!EditableListViewColumn categoriesFor: #activate!operations!public! !
-!EditableListViewColumn categoriesFor: #backcolor!accessing!public! !
-!EditableListViewColumn categoriesFor: #backcolor:!accessing!public! !
-!EditableListViewColumn categoriesFor: #cachedParent!accessing!private! !
-!EditableListViewColumn categoriesFor: #cachedParent:!accessing!private! !
-!EditableListViewColumn categoriesFor: #contentFromRow:!accessing!public! !
-!EditableListViewColumn categoriesFor: #createEditorIn:!initialize/release!private! !
-!EditableListViewColumn categoriesFor: #customDrawIcon:!drawing!public! !
-!EditableListViewColumn categoriesFor: #displayBackcolor!drawing!private! !
-!EditableListViewColumn categoriesFor: #displayForecolor!drawing!private! !
-!EditableListViewColumn categoriesFor: #displayOn:!displaying!private! !
-!EditableListViewColumn categoriesFor: #dropDownMenu:!accessing!public! !
-!EditableListViewColumn categoriesFor: #editor!accessing!public! !
-!EditableListViewColumn categoriesFor: #editor:!accessing!public! !
-!EditableListViewColumn categoriesFor: #forecolor!accessing!public! !
-!EditableListViewColumn categoriesFor: #forecolor:!accessing!public! !
-!EditableListViewColumn categoriesFor: #getEvents!events!private! !
-!EditableListViewColumn categoriesFor: #getSortContentsBlock!accessing!public! !
-!EditableListViewColumn categoriesFor: #getSortContentsBlock:!accessing!public! !
-!EditableListViewColumn categoriesFor: #hasColumnImage!public!testing! !
-!EditableListViewColumn categoriesFor: #hasEditor!public!testing! !
-!EditableListViewColumn categoriesFor: #hasHotTracking!public!testing! !
-!EditableListViewColumn categoriesFor: #hasImageBlock!public!testing! !
-!EditableListViewColumn categoriesFor: #hasPreDrawBlock!public!testing! !
-!EditableListViewColumn categoriesFor: #haveCheckAllHeader!initialize/release!public! !
-!EditableListViewColumn categoriesFor: #hide!operations!public! !
-!EditableListViewColumn categoriesFor: #imageFromRow:!public!testing! !
-!EditableListViewColumn categoriesFor: #infoTip!accessing!public! !
-!EditableListViewColumn categoriesFor: #infoTip:!accessing!public! !
-!EditableListViewColumn categoriesFor: #infoTipFromRow:withPrefix:!adapters!private! !
-!EditableListViewColumn categoriesFor: #infoTipPrefixTextFor:on:!accessing!public! !
-!EditableListViewColumn categoriesFor: #initialize!initialize/release!private! !
-!EditableListViewColumn categoriesFor: #invalidate!operations!public! !
-!EditableListViewColumn categoriesFor: #isEditable!accessing!public! !
-!EditableListViewColumn categoriesFor: #isEditable:!accessing!public! !
-!EditableListViewColumn categoriesFor: #isEditableBlock!accessing!public! !
-!EditableListViewColumn categoriesFor: #isEditableBlock:!accessing!public! !
-!EditableListViewColumn categoriesFor: #isEditableWith:!public!testing! !
-!EditableListViewColumn categoriesFor: #isValidContentsBlock!accessing!public! !
-!EditableListViewColumn categoriesFor: #isValidContentsBlock:!accessing!public! !
-!EditableListViewColumn categoriesFor: #isVisible!public!testing! !
-!EditableListViewColumn categoriesFor: #onColumnHeaderChecked:!event handling!private! !
-!EditableListViewColumn categoriesFor: #ownerDraw:!drawing!public! !
-!EditableListViewColumn categoriesFor: #postCopy!copying!public! !
-!EditableListViewColumn categoriesFor: #preDrawBlock!accessing!public! !
-!EditableListViewColumn categoriesFor: #preDrawBlock:!accessing!public! !
-!EditableListViewColumn categoriesFor: #rectangle!accessing!public! !
-!EditableListViewColumn categoriesFor: #rowSortBlock!private!sorting! !
-!EditableListViewColumn categoriesFor: #safeSortBlock!private!sorting! !
-!EditableListViewColumn categoriesFor: #setContentsBlock!accessing!public! !
-!EditableListViewColumn categoriesFor: #setContentsBlock:!accessing!public! !
-!EditableListViewColumn categoriesFor: #setEditorValueFrom:!operations!private! !
-!EditableListViewColumn categoriesFor: #setEvents:!events!private! !
-!EditableListViewColumn categoriesFor: #show!operations!public! !
-!EditableListViewColumn categoriesFor: #showAfter:!operations!public! !
-!EditableListViewColumn categoriesFor: #showIn:!operations!public! !
-!EditableListViewColumn categoriesFor: #showIn:after:!operations!public! !
-!EditableListViewColumn categoriesFor: #sortAscending!public!sorting! !
-!EditableListViewColumn categoriesFor: #sortAscending:!public!sorting! !
-!EditableListViewColumn categoriesFor: #sortContentFromRow:!private!sorting! !
-!EditableListViewColumn categoriesFor: #sortDescending!public!sorting! !
-!EditableListViewColumn categoriesFor: #stbSaveOn:!binary filing!public! !
-!EditableListViewColumn categoriesFor: #updateValue:in:!operations!private! !
-!EditableListViewColumn categoriesFor: #updateValueIn:!operations!private! !
+!EditableListViewColumn categoriesForMethods!
+_imageFromRow:!drawing!private! !
+activate!operations!public! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+cachedParent!accessing!private! !
+cachedParent:!accessing!private! !
+contentFromRow:!accessing!public! !
+createEditorIn:!initialize/release!private! !
+customDrawIcon:!drawing!public! !
+displayBackcolor!drawing!private! !
+displayForecolor!drawing!private! !
+displayOn:!displaying!private! !
+dropDownMenu:!accessing!public! !
+editor!accessing!public! !
+editor:!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+getEvents!events!private! !
+getSortContentsBlock!accessing!public! !
+getSortContentsBlock:!accessing!public! !
+hasColumnImage!public!testing! !
+hasEditor!public!testing! !
+hasHotTracking!public!testing! !
+hasImageBlock!public!testing! !
+hasPreDrawBlock!public!testing! !
+haveCheckAllHeader!initialize/release!public! !
+hide!operations!public! !
+imageFromRow:!public!testing! !
+infoTip!accessing!public! !
+infoTip:!accessing!public! !
+infoTipFromRow:withPrefix:!adapters!private! !
+infoTipPrefixTextFor:on:!accessing!public! !
+initialize!initialize/release!private! !
+invalidate!operations!public! !
+isEditable!accessing!public! !
+isEditable:!accessing!public! !
+isEditableBlock!accessing!public! !
+isEditableBlock:!accessing!public! !
+isEditableWith:!public!testing! !
+isValidContentsBlock!accessing!public! !
+isValidContentsBlock:!accessing!public! !
+isVisible!public!testing! !
+onColumnHeaderChecked:!event handling!private! !
+ownerDraw:!drawing!public! !
+postCopy!copying!public! !
+preDrawBlock!accessing!public! !
+preDrawBlock:!accessing!public! !
+rectangle!accessing!public! !
+rowSortBlock!private!sorting! !
+safeSortBlock!private!sorting! !
+setContentsBlock!accessing!public! !
+setContentsBlock:!accessing!public! !
+setEditorValueFrom:!operations!private! !
+setEvents:!events!private! !
+show!operations!public! !
+showAfter:!operations!public! !
+showIn:!operations!public! !
+showIn:after:!operations!public! !
+sortAscending!public!sorting! !
+sortAscending:!public!sorting! !
+sortContentFromRow:!private!sorting! !
+sortDescending!public!sorting! !
+stbSaveOn:!binary filing!public! !
+updateValue:in:!operations!private! !
+updateValueIn:!operations!private! !
+!
 
 !EditableListViewColumn class methodsFor!
 
@@ -594,5 +596,7 @@ stbVersion
 	15: Added isValidContentsBlock"
 
 	^15! !
-!EditableListViewColumn class categoriesFor: #stbVersion!binary filing!public! !
+!EditableListViewColumn class categoriesForMethods!
+stbVersion!binary filing!public! !
+!
 

@@ -657,77 +657,79 @@ validateOnParse: isValidating
 	Helpstring: indicates whether the parser performs validation"
 
 	self put_validateOnParse: isValidating! !
-!MSXML.IXMLDOMDocument categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLDOMDocument!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #async!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #async:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #createAttribute:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateAttribute:attribute:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createCDATASection:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateCDATASection:cdata:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createComment:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateComment:comment:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createDocumentFragment!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateDocumentFragment:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createElement:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateElement:element:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createEntityReference:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateEntityReference:entityRef:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createNode:name:namespaceURI:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateNode:name:namespaceURI:node:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createProcessingInstruction:data:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateProcessingInstruction:data:pi:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #createTextNode:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #CreateTextNode:text:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #doctype!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #documentElement!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_async:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_doctype:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_documentElement:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_implementation:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_parseError:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_preserveWhiteSpace:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_resolveExternals:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_url:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #get_validateOnParse:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #getElementsByTagName:!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #implementation!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #initialize!initializing!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #load:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #Load:isSuccessful:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #loadText:!operations!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #loadURL:!operations!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #loadXML:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #LoadXML:isSuccessful:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #nodeFromID:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #NodeFromID:node:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #ondataavailable:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #onreadystatechange:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #ontransformnode:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #ownerDocument!accessing!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #parseError!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #parseErrorClass!constants!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #preserveWhiteSpace!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #preserveWhiteSpace:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #printValueOn:!printing!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #put_async:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #put_ondataavailable:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #put_onreadystatechange:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #put_ontransformnode:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #put_preserveWhiteSpace:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #put_resolveExternals:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #put_validateOnParse:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #putref_documentElement:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #readyState!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #resolveExternals!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #resolveExternals:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #save:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #Save:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
-!MSXML.IXMLDOMDocument categoriesFor: #setDocumentElement:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #url!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #validateOnParse!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument categoriesFor: #validateOnParse:!**auto generated**!properties!public! !
+!MSXML.IXMLDOMDocument categoriesForMethods!
+Abort!**auto generated**!COM Interfaces-IXMLDOMDocument!public! !
+async!**auto generated**!properties!public! !
+async:!**auto generated**!properties!public! !
+createAttribute:!**auto generated**!methods!public! !
+CreateAttribute:attribute:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createCDATASection:!**auto generated**!methods!public! !
+CreateCDATASection:cdata:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createComment:!**auto generated**!methods!public! !
+CreateComment:comment:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createDocumentFragment!**auto generated**!methods!public! !
+CreateDocumentFragment:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createElement:!**auto generated**!methods!public! !
+CreateElement:element:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createEntityReference:!**auto generated**!methods!public! !
+CreateEntityReference:entityRef:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createNode:name:namespaceURI:!**auto generated**!methods!public! !
+CreateNode:name:namespaceURI:node:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createProcessingInstruction:data:!**auto generated**!methods!public! !
+CreateProcessingInstruction:data:pi:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+createTextNode:!**auto generated**!methods!public! !
+CreateTextNode:text:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+doctype!**auto generated**!properties!public! !
+documentElement!**auto generated**!properties!public! !
+get_async:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_doctype:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_documentElement:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_implementation:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_parseError:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_preserveWhiteSpace:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_readyState:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_resolveExternals:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_url:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+get_validateOnParse:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+getElementsByTagName:!methods!public! !
+GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+implementation!**auto generated**!properties!public! !
+initialize!initializing!public! !
+load:!**auto generated**!methods!public! !
+Load:isSuccessful:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+loadText:!operations!public! !
+loadURL:!operations!public! !
+loadXML:!**auto generated**!methods!public! !
+LoadXML:isSuccessful:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+nodeFromID:!**auto generated**!methods!public! !
+NodeFromID:node:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+ondataavailable:!**auto generated**!properties!public! !
+onreadystatechange:!**auto generated**!properties!public! !
+ontransformnode:!**auto generated**!properties!public! !
+ownerDocument!accessing!public! !
+parseError!**auto generated**!properties!public! !
+parseErrorClass!constants!private! !
+preserveWhiteSpace!**auto generated**!properties!public! !
+preserveWhiteSpace:!**auto generated**!properties!public! !
+printValueOn:!printing!private! !
+put_async:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+put_ondataavailable:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+put_onreadystatechange:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+put_ontransformnode:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+put_preserveWhiteSpace:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+put_resolveExternals:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+put_validateOnParse:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+putref_documentElement:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+readyState!**auto generated**!properties!public! !
+resolveExternals!**auto generated**!properties!public! !
+resolveExternals:!**auto generated**!properties!public! !
+save:!**auto generated**!methods!public! !
+Save:!**auto generated**!COM Interfaces-IXMLDOMDocument!private! !
+setDocumentElement:!**auto generated**!properties!public! !
+url!**auto generated**!properties!public! !
+validateOnParse!**auto generated**!properties!public! !
+validateOnParse:!**auto generated**!properties!public! !
+!
 
 !MSXML.IXMLDOMDocument class methodsFor!
 
@@ -814,7 +816,9 @@ new
 		<?xml version='1.0' ?> processing instruction."
 
 	^super new initialize! !
-!MSXML.IXMLDOMDocument class categoriesFor: #clsid!constants!public! !
-!MSXML.IXMLDOMDocument class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSXML.IXMLDOMDocument class categoriesFor: #new!instance creation!public! !
+!MSXML.IXMLDOMDocument class categoriesForMethods!
+clsid!constants!public! !
+defineFunctions!**auto generated**!initializing!private! !
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #WarningANSITest
 	instanceVariableNames: ''
@@ -96,24 +96,26 @@ testXsignalX
 testXtag
 	" <exceptionDescription>#tag "
 	#'Exception'.! !
-!WarningANSITest categoriesFor: #canonicalObject!public! !
-!WarningANSITest categoriesFor: #protocol!public! !
-!WarningANSITest categoriesFor: #testXdefaultAction!public! !
-!WarningANSITest categoriesFor: #testXdescription!public! !
-!WarningANSITest categoriesFor: #testXisNested!public! !
-!WarningANSITest categoriesFor: #testXisResumable!public! !
-!WarningANSITest categoriesFor: #testXmessageText!public! !
-!WarningANSITest categoriesFor: #testXmessageTextX!public! !
-!WarningANSITest categoriesFor: #testXouter!public! !
-!WarningANSITest categoriesFor: #testXpass!public! !
-!WarningANSITest categoriesFor: #testXresignalAsX!public! !
-!WarningANSITest categoriesFor: #testXresume!public! !
-!WarningANSITest categoriesFor: #testXresumeX!public! !
-!WarningANSITest categoriesFor: #testXretry!public! !
-!WarningANSITest categoriesFor: #testXretryUsingX!public! !
-!WarningANSITest categoriesFor: #testXreturn!public! !
-!WarningANSITest categoriesFor: #testXreturnX!public! !
-!WarningANSITest categoriesFor: #testXsignal!public! !
-!WarningANSITest categoriesFor: #testXsignalX!public! !
-!WarningANSITest categoriesFor: #testXtag!public! !
+!WarningANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXdefaultAction!public! !
+testXdescription!public! !
+testXisNested!public! !
+testXisResumable!public! !
+testXmessageText!public! !
+testXmessageTextX!public! !
+testXouter!public! !
+testXpass!public! !
+testXresignalAsX!public! !
+testXresume!public! !
+testXresumeX!public! !
+testXretry!public! !
+testXretryUsingX!public! !
+testXreturn!public! !
+testXreturnX!public! !
+testXsignal!public! !
+testXsignalX!public! !
+testXtag!public! !
+!
 

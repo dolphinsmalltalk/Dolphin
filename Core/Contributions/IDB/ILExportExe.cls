@@ -71,8 +71,10 @@ upgradeTo256: anIconImage
 		at: 3 put: colorBitmap imageBytes copy;
 		at: 4 put: colorBitmap getColorTable copy;
 		at: 5 put: maskBitmap imageBytes copy! !
-!ILExportExe categoriesFor: #createIconImages!operations!public! !
-!ILExportExe categoriesFor: #errorMessage!helpers!public! !
-!ILExportExe categoriesFor: #exportTo:!operations!public! !
-!ILExportExe categoriesFor: #upgradeTo256:!operations!public! !
+!ILExportExe categoriesForMethods!
+createIconImages!operations!public! !
+errorMessage!helpers!public! !
+exportTo:!operations!public! !
+upgradeTo256:!operations!public! !
+!
 

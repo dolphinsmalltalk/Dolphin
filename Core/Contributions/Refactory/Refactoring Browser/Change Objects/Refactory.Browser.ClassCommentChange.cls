@@ -38,13 +38,15 @@ printOn: aStream
 		nextPutAll: ' comment: ';
 		print: (self comment copyReplaceAll: '!!' with: '!!!!');
 		nextPutAll: '!!'! !
-!Refactory.Browser.ClassCommentChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.ClassCommentChange categoriesFor: #changeClass:!accessing!public! !
-!Refactory.Browser.ClassCommentChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.ClassCommentChange categoriesFor: #comment!accessing!public! !
-!Refactory.Browser.ClassCommentChange categoriesFor: #comment:!accessing!public! !
-!Refactory.Browser.ClassCommentChange categoriesFor: #primitiveExecute!accessing!public! !
-!Refactory.Browser.ClassCommentChange categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.ClassCommentChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeClass:!accessing!public! !
+changeString!printing!public! !
+comment!accessing!public! !
+comment:!accessing!public! !
+primitiveExecute!accessing!public! !
+printOn:!printing!public! !
+!
 
 !Refactory.Browser.ClassCommentChange class methodsFor!
 
@@ -53,5 +55,7 @@ comment: aString in: aClass
 		changeClass: aClass;
 		comment: aString;
 		yourself! !
-!Refactory.Browser.ClassCommentChange class categoriesFor: #comment:in:!instance creation!private! !
+!Refactory.Browser.ClassCommentChange class categoriesForMethods!
+comment:in:!instance creation!private! !
+!
 

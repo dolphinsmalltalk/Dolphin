@@ -121,23 +121,25 @@ testSelect
 testSize
 	self assert: self canonicalSubject size equals: 3.
 	self assert: self emptySubject size equals: 0! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #canonicalSubject!helpers!private! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #emptySubject!helpers!private! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testAnySatisfy!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testAsArray!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testAsByteArray!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testAt!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testAtPut!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testCollect!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testCopyFromTo!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testEnvironment!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testFirst!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testIdentityIndexOf!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testIncludes!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testIndexOf!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testPrintOn!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testRefersToLiteral!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testResize!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testSelect!public! !
-!Kernel.Tests.MethodAnnotationsTest categoriesFor: #testSize!public! !
+!Kernel.Tests.MethodAnnotationsTest categoriesForMethods!
+canonicalSubject!helpers!private! !
+emptySubject!helpers!private! !
+testAnySatisfy!public! !
+testAsArray!public! !
+testAsByteArray!public! !
+testAt!public! !
+testAtPut!public! !
+testCollect!public! !
+testCopyFromTo!public! !
+testEnvironment!public! !
+testFirst!public! !
+testIdentityIndexOf!public! !
+testIncludes!public! !
+testIndexOf!public! !
+testPrintOn!public! !
+testRefersToLiteral!public! !
+testResize!public! !
+testSelect!public! !
+testSize!public! !
+!
 

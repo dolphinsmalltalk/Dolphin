@@ -407,46 +407,48 @@ writeString: aString
 	index := aString lastIndexOf: Character cr ifAbsent: [0].
 	codeStream nextPutAll: aString.
 	index > 0 ifTrue: [lineStart := codeStream position - (aString size - index)]! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #addNewLinesBeforeStatementStartingAt:!helpers!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #format:!operations!public! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatArray:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatBinaryMessage:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatBlock:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatBlockArgumentsFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatCommentsFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatMethodCommentFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatSelectorAndArguments:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatSelectorAndArguments:firstSeparator:restSeparator:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatSequenceCommentsFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatSequenceNodeStatementsFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formattedSourceFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #formatTemporariesFor:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #indentAround:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #initialize!initializing!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #isMultilineBlock:!helpers!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #isMultiLineMessage:!helpers!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #needsParenthesisFor:!helpers!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #newLine!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #newLines:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #newLinesBeforeStartingAt:!formatting!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #precedenceOf:greaterThan:!helpers!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitNode:!formatting!private!visiting! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitPatternBlockNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #willBeMultiline:!helpers!private! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #with:and:do:separatedBy:!formatting!private!utility! !
-!Refactory.Browser.RBConfigurableFormatter categoriesFor: #writeString:!formatting!private! !
+!Refactory.Browser.RBConfigurableFormatter categoriesForMethods!
+addNewLinesBeforeStatementStartingAt:!helpers!private! !
+format:!operations!public! !
+formatArray:!formatting!private! !
+formatBinaryMessage:!formatting!private! !
+formatBlock:!formatting!private! !
+formatBlockArgumentsFor:!formatting!private! !
+formatCommentsFor:!formatting!private! !
+formatMethodBodyFor:!formatting!private! !
+formatMethodCommentFor:!formatting!private! !
+formatMethodPatternFor:!formatting!private! !
+formatSelectorAndArguments:!formatting!private! !
+formatSelectorAndArguments:firstSeparator:restSeparator:!formatting!private! !
+formatSequenceCommentsFor:!formatting!private! !
+formatSequenceNodeStatementsFor:!formatting!private! !
+formatStatementCommentsFor:!formatting!private! !
+formattedSourceFor:!formatting!private! !
+formatTemporariesFor:!formatting!private! !
+indentAround:!formatting!private! !
+initialize!initializing!private! !
+isMultilineBlock:!helpers!private! !
+isMultiLineMessage:!helpers!private! !
+needsParenthesisFor:!helpers!private! !
+newLine!formatting!private! !
+newLines:!formatting!private! !
+newLinesBeforeStartingAt:!formatting!private! !
+precedenceOf:greaterThan:!helpers!private! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitNode:!formatting!private!visiting! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitPatternBlockNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+willBeMultiline:!helpers!private! !
+with:and:do:separatedBy:!formatting!private!utility! !
+writeString:!formatting!private! !
+!
 
 !Refactory.Browser.RBConfigurableFormatter class methodsFor!
 
@@ -612,49 +614,51 @@ useTraditionalBinaryPrecedenceForParentheses
 
 useTraditionalBinaryPrecedenceForParentheses: aBoolean 
 	UseTraditionalBinaryPrecedenceForParentheses := aBoolean! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #format:!public!public interface! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #format:withIndents:!public!public interface! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #formatCommentWithStatements!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #formatCommentWithStatements:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #indentsForKeywords!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #indentsForKeywords:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #indentString!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #indentString:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #initialize!initializing!public! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #lineUpBlockBrackets!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #lineUpBlockBrackets:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #methodSignatureOnMultipleLines!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #methodSignatureOnMultipleLines:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #minimumNewLinesBetweenStatements!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #minimumNewLinesBetweenStatements:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLineAfterCascade!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLineAfterCascade:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstCascade!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstCascade:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstKeyword!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstKeyword:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodComment!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodComment:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodPattern!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodPattern:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLinesAfterTemporaries!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #newLinesAfterTemporaries:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #numberOfArgumentsForMultiLine!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #numberOfArgumentsForMultiLine:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #periodsAsTerminators!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #periodsAsTerminators:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #periodsAtEndOfBlock!public! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #periodsAtEndOfBlock:!public! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #retainBlankLinesBetweenStatements!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #retainBlankLinesBetweenStatements:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #stringFollowingReturn!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #stringFollowingReturn:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #stringInsideBlocks!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #stringInsideBlocks:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #stringInsideParentheses!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #stringInsideParentheses:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #traditionalBinaryPrecedence!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #traditionalBinaryPrecedence:!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #useTraditionalBinaryPrecedenceForParentheses!public!settings! !
-!Refactory.Browser.RBConfigurableFormatter class categoriesFor: #useTraditionalBinaryPrecedenceForParentheses:!public!settings! !
+!Refactory.Browser.RBConfigurableFormatter class categoriesForMethods!
+format:!public!public interface! !
+format:withIndents:!public!public interface! !
+formatCommentWithStatements!public!settings! !
+formatCommentWithStatements:!public!settings! !
+indentsForKeywords!public!settings! !
+indentsForKeywords:!public!settings! !
+indentString!public!settings! !
+indentString:!public!settings! !
+initialize!initializing!public! !
+lineUpBlockBrackets!public!settings! !
+lineUpBlockBrackets:!public!settings! !
+methodSignatureOnMultipleLines!public!settings! !
+methodSignatureOnMultipleLines:!public!settings! !
+minimumNewLinesBetweenStatements!public!settings! !
+minimumNewLinesBetweenStatements:!public!settings! !
+newLineAfterCascade!public!settings! !
+newLineAfterCascade:!public!settings! !
+newLineBeforeFirstCascade!public!settings! !
+newLineBeforeFirstCascade:!public!settings! !
+newLineBeforeFirstKeyword!public!settings! !
+newLineBeforeFirstKeyword:!public!settings! !
+newLinesAfterMethodComment!public!settings! !
+newLinesAfterMethodComment:!public!settings! !
+newLinesAfterMethodPattern!public!settings! !
+newLinesAfterMethodPattern:!public!settings! !
+newLinesAfterTemporaries!public!settings! !
+newLinesAfterTemporaries:!public!settings! !
+numberOfArgumentsForMultiLine!public!settings! !
+numberOfArgumentsForMultiLine:!public!settings! !
+periodsAsTerminators!public!settings! !
+periodsAsTerminators:!public!settings! !
+periodsAtEndOfBlock!public! !
+periodsAtEndOfBlock:!public! !
+retainBlankLinesBetweenStatements!public!settings! !
+retainBlankLinesBetweenStatements:!public!settings! !
+stringFollowingReturn!public!settings! !
+stringFollowingReturn:!public!settings! !
+stringInsideBlocks!public!settings! !
+stringInsideBlocks:!public!settings! !
+stringInsideParentheses!public!settings! !
+stringInsideParentheses:!public!settings! !
+traditionalBinaryPrecedence!public!settings! !
+traditionalBinaryPrecedence:!public!settings! !
+useTraditionalBinaryPrecedenceForParentheses!public!settings! !
+useTraditionalBinaryPrecedenceForParentheses:!public!settings! !
+!
 

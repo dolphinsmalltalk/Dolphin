@@ -51,10 +51,12 @@ wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: _OffsetOf_wParam! !
-!OS.ENLINK categoriesFor: #chrg!**compiled accessors**!public! !
-!OS.ENLINK categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.ENLINK categoriesFor: #msg!**compiled accessors**!public! !
-!OS.ENLINK categoriesFor: #wParam!**compiled accessors**!public! !
+!OS.ENLINK categoriesForMethods!
+chrg!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+msg!**compiled accessors**!public! !
+wParam!**compiled accessors**!public! !
+!
 
 !OS.ENLINK class methodsFor!
 
@@ -82,6 +84,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
-!OS.ENLINK class categoriesFor: #defineFields!public!template definition! !
-!OS.ENLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ENLINK class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.ScrollingDecoratorTest'
 	instanceVariableNames: ''
@@ -58,11 +58,13 @@ testSubViewResizeSmallerThanParent
 	presenter subViews first extent: 50 @ 50.
 	presenter layout.
 	self assert: presenter subViews first extent equals: 50 @ 50! !
-!UI.Tests.ScrollingDecoratorTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.ScrollingDecoratorTest categoriesFor: #initializePresenter!public!Running! !
-!UI.Tests.ScrollingDecoratorTest categoriesFor: #testMultipleSubViews!public!unit tests! !
-!UI.Tests.ScrollingDecoratorTest categoriesFor: #testResizeLargeAndSmall!public!unit tests! !
-!UI.Tests.ScrollingDecoratorTest categoriesFor: #testResizeToNothing!public!unit tests! !
-!UI.Tests.ScrollingDecoratorTest categoriesFor: #testSubViewResizeLargerThanParent!public!unit tests! !
-!UI.Tests.ScrollingDecoratorTest categoriesFor: #testSubViewResizeSmallerThanParent!public!unit tests! !
+!UI.Tests.ScrollingDecoratorTest categoriesForMethods!
+classToTest!helpers!private! !
+initializePresenter!public!Running! !
+testMultipleSubViews!public!unit tests! !
+testResizeLargeAndSmall!public!unit tests! !
+testResizeToNothing!public!unit tests! !
+testSubViewResizeLargerThanParent!public!unit tests! !
+testSubViewResizeSmallerThanParent!public!unit tests! !
+!
 

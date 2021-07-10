@@ -23,7 +23,9 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!Kernel.ImageRelativeFileLocator categoriesFor: #stbSaveOn:!binary filing!public! !
+!Kernel.ImageRelativeFileLocator categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
 
 !Kernel.ImageRelativeFileLocator class methodsFor!
 
@@ -51,8 +53,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!Kernel.ImageRelativeFileLocator class categoriesFor: #current!accessing!public! !
-!Kernel.ImageRelativeFileLocator class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Kernel.ImageRelativeFileLocator class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Kernel.ImageRelativeFileLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.ImageRelativeFileLocator class categoriesForMethods!
+current!accessing!public! !
+onPreStripImage!class hierarchy-removing!private! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -1174,114 +1174,116 @@ youShouldBeProcessingEvents
 	Change monitoring will be enabled if you ignore this warning (recommended)'.
 	[self isProcessingEvents] whileFalse: [self beProcessingEvents].
 	self clearCachedInformation! !
-!Kernel.PackageManager categoriesFor: #addClass:to:!adding!public! !
-!Kernel.PackageManager categoriesFor: #addLooseMethod:to:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #addManagedPackage:!adding!private! !
-!Kernel.PackageManager categoriesFor: #addMethod:to:!adding!public! !
-!Kernel.PackageManager categoriesFor: #addPackage:!adding!private! !
-!Kernel.PackageManager categoriesFor: #addPackagedMethod:to:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #addResourceIdentifier:to:!adding!public! !
-!Kernel.PackageManager categoriesFor: #addVariableNamed:to:!adding!public! !
-!Kernel.PackageManager categoriesFor: #allDependentPackagesOf:visited:!accessing!private! !
-!Kernel.PackageManager categoriesFor: #allPackagedClasses!accessing!public! !
-!Kernel.PackageManager categoriesFor: #allPackagedVariableNames!accessing!private! !
-!Kernel.PackageManager categoriesFor: #allSourceObjects!public!source filing! !
-!Kernel.PackageManager categoriesFor: #allVariableAliases!enquiries!public! !
-!Kernel.PackageManager categoriesFor: #basePackages!accessing!public! !
-!Kernel.PackageManager categoriesFor: #basicAddPackage:!adding!private! !
-!Kernel.PackageManager categoriesFor: #basicInstall:!operations!private! !
-!Kernel.PackageManager categoriesFor: #basicRemovePackage:!private!removing! !
-!Kernel.PackageManager categoriesFor: #basicUninstall:!private!removing! !
-!Kernel.PackageManager categoriesFor: #beNotProcessingEvents!modes!private! !
-!Kernel.PackageManager categoriesFor: #beProcessingEvents!modes!private! !
-!Kernel.PackageManager categoriesFor: #buildVariablesMap!helpers!private! !
-!Kernel.PackageManager categoriesFor: #changedPackages!accessing!public! !
-!Kernel.PackageManager categoriesFor: #changeProcessEventsBy:!operations!private! !
-!Kernel.PackageManager categoriesFor: #classRepackaged:from:to:!events!private! !
-!Kernel.PackageManager categoriesFor: #clearCachedInformation!helpers!private! !
-!Kernel.PackageManager categoriesFor: #defaultPackage!accessing!public! !
-!Kernel.PackageManager categoriesFor: #defaultPackage:!accessing!public! !
-!Kernel.PackageManager categoriesFor: #dependentPackagesOf:!private!testing! !
-!Kernel.PackageManager categoriesFor: #duplicatePackageSignal!accessing!private! !
-!Kernel.PackageManager categoriesFor: #errorFileInCompatibilityCheck:overlap:!exceptions!private! !
-!Kernel.PackageManager categoriesFor: #errorNameIsNotUnique:!exceptions!private! !
-!Kernel.PackageManager categoriesFor: #errorPackageNotFound:!exceptions!private! !
-!Kernel.PackageManager categoriesFor: #errorPrerequisiteNotFound:!exceptions!private! !
-!Kernel.PackageManager categoriesFor: #errorRemovingSystemPackage!exceptions!private! !
-!Kernel.PackageManager categoriesFor: #forgetLooseMethods!operations!private! !
-!Kernel.PackageManager categoriesFor: #getEvents!events!private! !
-!Kernel.PackageManager categoriesFor: #getLooseMethods!helpers!private! !
-!Kernel.PackageManager categoriesFor: #includesPackage:!public!searching! !
-!Kernel.PackageManager categoriesFor: #includesPackageNamed:!public!searching! !
-!Kernel.PackageManager categoriesFor: #initialize!initializing!private! !
-!Kernel.PackageManager categoriesFor: #install:!operations!public! !
-!Kernel.PackageManager categoriesFor: #installHere:!operations!public! !
-!Kernel.PackageManager categoriesFor: #isLooseMethod:!public!testing! !
-!Kernel.PackageManager categoriesFor: #isLooseResource:!public!testing! !
-!Kernel.PackageManager categoriesFor: #isProcessingEvents!private!testing! !
-!Kernel.PackageManager categoriesFor: #loadCompatibilityCheck:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #loadedChanged!private!updating! !
-!Kernel.PackageManager categoriesFor: #loadPackage:!binary filing!private! !
-!Kernel.PackageManager categoriesFor: #loadPrereq:relativeTo:extension:loaded:trail:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #loadPrereqsForPackage:relativeTo:extension:loaded:trail:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #lookup:!accessing!public! !
-!Kernel.PackageManager categoriesFor: #looseMethodRemoved:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #looseMethods!accessing!public! !
-!Kernel.PackageManager categoriesFor: #looseMethodUpdated:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #looseResourceIdentifiers!accessing!private! !
-!Kernel.PackageManager categoriesFor: #markAllPackagesAsBase!operations!public! !
-!Kernel.PackageManager categoriesFor: #memberOf:updatedAt:!events!private! !
-!Kernel.PackageManager categoriesFor: #membershipChanged:!events!private! !
-!Kernel.PackageManager categoriesFor: #membershipChanged:at:!events!private! !
-!Kernel.PackageManager categoriesFor: #memberUpdatedIn:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #methodRepackaged:from:to:!events!private! !
-!Kernel.PackageManager categoriesFor: #moveLooseMethod:from:to:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #moveMethod:from:to:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #newPackage:!adding!private! !
-!Kernel.PackageManager categoriesFor: #noEventsDo:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #observePackage:!private!updating! !
-!Kernel.PackageManager categoriesFor: #onClassAdded:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onClassDirtied:!helpers!private! !
-!Kernel.PackageManager categoriesFor: #onClassRemoved:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onClassRenamed:from:to:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onClassUpdated:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onMethodAdded:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onMethodCategorized:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onMethodRemoved:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onMethodUpdated:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onOwnedChanged:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onPackageChanged:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onPrerequisitesReset:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Kernel.PackageManager categoriesFor: #onVariableRemoved:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #onVariableRenamed:from:!event handling!private! !
-!Kernel.PackageManager categoriesFor: #packagedVariables!public! !
-!Kernel.PackageManager categoriesFor: #packageNamed:!accessing!public! !
-!Kernel.PackageManager categoriesFor: #packageNamed:ifNone:!accessing!public! !
-!Kernel.PackageManager categoriesFor: #packageNames!accessing!public! !
-!Kernel.PackageManager categoriesFor: #packageOfClass:!public!searching! !
-!Kernel.PackageManager categoriesFor: #packageOfMethod:!public!searching! !
-!Kernel.PackageManager categoriesFor: #packageOfMethodOrItsClass:!public!searching! !
-!Kernel.PackageManager categoriesFor: #packageOfResourceIdentifier:!public!searching! !
-!Kernel.PackageManager categoriesFor: #packageOfResourceIdentifierOrItsClass:!public!searching! !
-!Kernel.PackageManager categoriesFor: #packageOfVariableNamed:!public!searching! !
-!Kernel.PackageManager categoriesFor: #packages!accessing!public! !
-!Kernel.PackageManager categoriesFor: #prerequisiteNotFoundSignal!constants!public! !
-!Kernel.PackageManager categoriesFor: #rebaseBasePackagesTo:!public!removing! !
-!Kernel.PackageManager categoriesFor: #release!initializing!private! !
-!Kernel.PackageManager categoriesFor: #removePackage:!public!removing! !
-!Kernel.PackageManager categoriesFor: #renamePackage:to:!public!removing! !
-!Kernel.PackageManager categoriesFor: #resetPrerequisites!private!updating! !
-!Kernel.PackageManager categoriesFor: #resourceRepackaged:from:to:!events!private! !
-!Kernel.PackageManager categoriesFor: #setEvents:!events!private! !
-!Kernel.PackageManager categoriesFor: #sourceManager!accessing!public! !
-!Kernel.PackageManager categoriesFor: #systemPackage!constants!private! !
-!Kernel.PackageManager categoriesFor: #uninstall:!public!removing! !
-!Kernel.PackageManager categoriesFor: #unpackagedClasses!enquiries!private! !
-!Kernel.PackageManager categoriesFor: #unpackagedVariables!enquiries!private! !
-!Kernel.PackageManager categoriesFor: #variableRepackaged:from:to:!events!private! !
-!Kernel.PackageManager categoriesFor: #versionPackageIfRequired:!public! !
-!Kernel.PackageManager categoriesFor: #youShouldBeProcessingEvents!helpers!private! !
+!Kernel.PackageManager categoriesForMethods!
+addClass:to:!adding!public! !
+addLooseMethod:to:!helpers!private! !
+addManagedPackage:!adding!private! !
+addMethod:to:!adding!public! !
+addPackage:!adding!private! !
+addPackagedMethod:to:!helpers!private! !
+addResourceIdentifier:to:!adding!public! !
+addVariableNamed:to:!adding!public! !
+allDependentPackagesOf:visited:!accessing!private! !
+allPackagedClasses!accessing!public! !
+allPackagedVariableNames!accessing!private! !
+allSourceObjects!public!source filing! !
+allVariableAliases!enquiries!public! !
+basePackages!accessing!public! !
+basicAddPackage:!adding!private! !
+basicInstall:!operations!private! !
+basicRemovePackage:!private!removing! !
+basicUninstall:!private!removing! !
+beNotProcessingEvents!modes!private! !
+beProcessingEvents!modes!private! !
+buildVariablesMap!helpers!private! !
+changedPackages!accessing!public! !
+changeProcessEventsBy:!operations!private! !
+classRepackaged:from:to:!events!private! !
+clearCachedInformation!helpers!private! !
+defaultPackage!accessing!public! !
+defaultPackage:!accessing!public! !
+dependentPackagesOf:!private!testing! !
+duplicatePackageSignal!accessing!private! !
+errorFileInCompatibilityCheck:overlap:!exceptions!private! !
+errorNameIsNotUnique:!exceptions!private! !
+errorPackageNotFound:!exceptions!private! !
+errorPrerequisiteNotFound:!exceptions!private! !
+errorRemovingSystemPackage!exceptions!private! !
+forgetLooseMethods!operations!private! !
+getEvents!events!private! !
+getLooseMethods!helpers!private! !
+includesPackage:!public!searching! !
+includesPackageNamed:!public!searching! !
+initialize!initializing!private! !
+install:!operations!public! !
+installHere:!operations!public! !
+isLooseMethod:!public!testing! !
+isLooseResource:!public!testing! !
+isProcessingEvents!private!testing! !
+loadCompatibilityCheck:!helpers!private! !
+loadedChanged!private!updating! !
+loadPackage:!binary filing!private! !
+loadPrereq:relativeTo:extension:loaded:trail:!helpers!private! !
+loadPrereqsForPackage:relativeTo:extension:loaded:trail:!helpers!private! !
+lookup:!accessing!public! !
+looseMethodRemoved:!helpers!private! !
+looseMethods!accessing!public! !
+looseMethodUpdated:!helpers!private! !
+looseResourceIdentifiers!accessing!private! !
+markAllPackagesAsBase!operations!public! !
+memberOf:updatedAt:!events!private! !
+membershipChanged:!events!private! !
+membershipChanged:at:!events!private! !
+memberUpdatedIn:!event handling!private! !
+methodRepackaged:from:to:!events!private! !
+moveLooseMethod:from:to:!helpers!private! !
+moveMethod:from:to:!helpers!private! !
+newPackage:!adding!private! !
+noEventsDo:!helpers!private! !
+observePackage:!private!updating! !
+onClassAdded:!event handling!private! !
+onClassDirtied:!helpers!private! !
+onClassRemoved:!event handling!private! !
+onClassRenamed:from:to:!event handling!private! !
+onClassUpdated:!event handling!private! !
+onMethodAdded:!event handling!private! !
+onMethodCategorized:!event handling!private! !
+onMethodRemoved:!event handling!private! !
+onMethodUpdated:!event handling!private! !
+onOwnedChanged:!event handling!private! !
+onPackageChanged:!event handling!private! !
+onPrerequisitesReset:!event handling!private! !
+onPreStripImage!class hierarchy-removing!private! !
+onVariableRemoved:!event handling!private! !
+onVariableRenamed:from:!event handling!private! !
+packagedVariables!public! !
+packageNamed:!accessing!public! !
+packageNamed:ifNone:!accessing!public! !
+packageNames!accessing!public! !
+packageOfClass:!public!searching! !
+packageOfMethod:!public!searching! !
+packageOfMethodOrItsClass:!public!searching! !
+packageOfResourceIdentifier:!public!searching! !
+packageOfResourceIdentifierOrItsClass:!public!searching! !
+packageOfVariableNamed:!public!searching! !
+packages!accessing!public! !
+prerequisiteNotFoundSignal!constants!public! !
+rebaseBasePackagesTo:!public!removing! !
+release!initializing!private! !
+removePackage:!public!removing! !
+renamePackage:to:!public!removing! !
+resetPrerequisites!private!updating! !
+resourceRepackaged:from:to:!events!private! !
+setEvents:!events!private! !
+sourceManager!accessing!public! !
+systemPackage!constants!private! !
+uninstall:!public!removing! !
+unpackagedClasses!enquiries!private! !
+unpackagedVariables!enquiries!private! !
+variableRepackaged:from:to:!events!private! !
+versionPackageIfRequired:!public! !
+youShouldBeProcessingEvents!helpers!private! !
+!
 
 !Kernel.PackageManager class methodsFor!
 
@@ -1365,14 +1367,16 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset! !
-!Kernel.PackageManager class categoriesFor: #buildSingletonInstance!instance creation!private! !
-!Kernel.PackageManager class categoriesFor: #current!instance creation!public! !
-!Kernel.PackageManager class categoriesFor: #initialize!initializing!private! !
-!Kernel.PackageManager class categoriesFor: #new!instance creation!public! !
-!Kernel.PackageManager class categoriesFor: #newSystemPackage!operations!private! !
-!Kernel.PackageManager class categoriesFor: #reset!operations!public! !
-!Kernel.PackageManager class categoriesFor: #systemPackage!instance creation!public! !
-!Kernel.PackageManager class categoriesFor: #systemPackageComment!constants!private! !
-!Kernel.PackageManager class categoriesFor: #systemPackageName!constants!private! !
-!Kernel.PackageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.PackageManager class categoriesForMethods!
+buildSingletonInstance!instance creation!private! !
+current!instance creation!public! !
+initialize!initializing!private! !
+new!instance creation!public! !
+newSystemPackage!operations!private! !
+reset!operations!public! !
+systemPackage!instance creation!public! !
+systemPackageComment!constants!private! !
+systemPackageName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

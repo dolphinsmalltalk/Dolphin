@@ -70,17 +70,19 @@ maskIn: anInteger
 style: anInteger 
 	self dwStyle: anInteger.
 	self maskIn: MIM_STYLE! !
-!OS.MENUINFO categoriesFor: #cyMax!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #cyMax:!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #dwContextHelpID!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #dwContextHelpID:!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #dwStyle!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #dwStyle:!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #fMask!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #fMask:!**compiled accessors**!public! !
-!OS.MENUINFO categoriesFor: #maskIn:!accessing!private! !
-!OS.MENUINFO categoriesFor: #style:!accessing!public! !
+!OS.MENUINFO categoriesForMethods!
+cyMax!**compiled accessors**!public! !
+cyMax:!**compiled accessors**!public! !
+dwContextHelpID!**compiled accessors**!public! !
+dwContextHelpID:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dwStyle!**compiled accessors**!public! !
+dwStyle:!**compiled accessors**!public! !
+fMask!**compiled accessors**!public! !
+fMask:!**compiled accessors**!public! !
+maskIn:!accessing!private! !
+style:!accessing!public! !
+!
 
 !OS.MENUINFO class methodsFor!
 
@@ -112,6 +114,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
-!OS.MENUINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.MENUINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MENUINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

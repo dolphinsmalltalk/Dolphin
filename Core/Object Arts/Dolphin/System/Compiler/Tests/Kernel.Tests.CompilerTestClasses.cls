@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTestClassResource subclass: #'Kernel.Tests.CompilerTestClasses'
 	instanceVariableNames: 'testClass'
@@ -37,8 +37,10 @@ tearDown
 
 testClass
 	^testClass! !
-!Kernel.Tests.CompilerTestClasses categoriesFor: #compileMethods!private!Running! !
-!Kernel.Tests.CompilerTestClasses categoriesFor: #createClasses!private!Running! !
-!Kernel.Tests.CompilerTestClasses categoriesFor: #tearDown!public!Running! !
-!Kernel.Tests.CompilerTestClasses categoriesFor: #testClass!public!Running! !
+!Kernel.Tests.CompilerTestClasses categoriesForMethods!
+compileMethods!private!Running! !
+createClasses!private!Running! !
+tearDown!public!Running! !
+testClass!public!Running! !
+!
 

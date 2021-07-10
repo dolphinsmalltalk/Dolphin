@@ -58,16 +58,18 @@ y
 
 y: anObject
 	self subclassResponsibility! !
-!External.POINT categoriesFor: #asDword!converting!public! !
-!External.POINT categoriesFor: #asObject!converting!public! !
-!External.POINT categoriesFor: #asPoint!converting!public! !
-!External.POINT categoriesFor: #asUIntPtr!converting!public! !
-!External.POINT categoriesFor: #value!accessing!public! !
-!External.POINT categoriesFor: #value:!accessing!public! !
-!External.POINT categoriesFor: #x!accessing!public! !
-!External.POINT categoriesFor: #x:!accessing!public! !
-!External.POINT categoriesFor: #y!accessing!public! !
-!External.POINT categoriesFor: #y:!accessing!public! !
+!External.POINT categoriesForMethods!
+asDword!converting!public! !
+asObject!converting!public! !
+asPoint!converting!public! !
+asUIntPtr!converting!public! !
+value!accessing!public! !
+value:!accessing!public! !
+x!accessing!public! !
+x:!accessing!public! !
+y!accessing!public! !
+y:!accessing!public! !
+!
 
 !External.POINT class methodsFor!
 
@@ -92,8 +94,10 @@ x: x y: y
 		x: x;
 		y: y;
 		yourself! !
-!External.POINT class categoriesFor: #fromPoint:!instance creation!public! !
-!External.POINT class categoriesFor: #getFieldNames!constants!private! !
-!External.POINT class categoriesFor: #icon!constants!development!public! !
-!External.POINT class categoriesFor: #x:y:!instance creation!public! !
+!External.POINT class categoriesForMethods!
+fromPoint:!instance creation!public! !
+getFieldNames!constants!private! !
+icon!constants!development!public! !
+x:y:!instance creation!public! !
+!
 

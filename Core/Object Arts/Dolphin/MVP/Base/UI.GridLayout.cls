@@ -150,16 +150,18 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
-!UI.GridLayout categoriesFor: #columns!accessing!public! !
-!UI.GridLayout categoriesFor: #columns:!accessing!public! !
-!UI.GridLayout categoriesFor: #horizontalGap!accessing!public! !
-!UI.GridLayout categoriesFor: #horizontalGap:!accessing!public! !
-!UI.GridLayout categoriesFor: #initialize!initializing!private! !
-!UI.GridLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!UI.GridLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!UI.GridLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!UI.GridLayout categoriesFor: #rows!accessing!public! !
-!UI.GridLayout categoriesFor: #rows:!accessing!public! !
-!UI.GridLayout categoriesFor: #verticalGap!accessing!public! !
-!UI.GridLayout categoriesFor: #verticalGap:!accessing!public! !
+!UI.GridLayout categoriesForMethods!
+columns!accessing!public! !
+columns:!accessing!public! !
+horizontalGap!accessing!public! !
+horizontalGap:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+resolutionScaledBy:!geometry!private! !
+rows!accessing!public! !
+rows:!accessing!public! !
+verticalGap!accessing!public! !
+verticalGap:!accessing!public! !
+!
 

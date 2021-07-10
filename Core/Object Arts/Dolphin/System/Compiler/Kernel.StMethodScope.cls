@@ -15,5 +15,7 @@ forScopeNode: anStMethodNode outer: anStLexicalScope
 	^(self new)
 		setNode: anStMethodNode outer: anStLexicalScope;
 		yourself! !
-!Kernel.StMethodScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
+!Kernel.StMethodScope class categoriesForMethods!
+forScopeNode:outer:!instance creation!public! !
+!
 

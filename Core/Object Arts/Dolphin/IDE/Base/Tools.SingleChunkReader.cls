@@ -19,5 +19,7 @@ fileInFrom: aSourceFiler
 	(aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]) 
 		ifFalse: [self chunk: chunk].
 	^endAction value! !
-!Tools.SingleChunkReader categoriesFor: #fileInFrom:!private!source filing! !
+!Tools.SingleChunkReader categoriesForMethods!
+fileInFrom:!private!source filing! !
+!
 

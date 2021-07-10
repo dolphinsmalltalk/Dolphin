@@ -115,23 +115,25 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
-!OS.ODBCTIMESTAMP categoriesFor: #asDateAndTime!converting!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #dateAndTime:!accessing!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #fraction!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #fraction:!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #hour!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #hour:!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #milliseconds!accessing!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #minute!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #minute:!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #month!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #month:!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #second!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #second:!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #year!**compiled accessors**!public! !
-!OS.ODBCTIMESTAMP categoriesFor: #year:!**compiled accessors**!public! !
+!OS.ODBCTIMESTAMP categoriesForMethods!
+asDateAndTime!converting!public! !
+dateAndTime:!accessing!public! !
+day!**compiled accessors**!public! !
+day:!**compiled accessors**!public! !
+fraction!**compiled accessors**!public! !
+fraction:!**compiled accessors**!public! !
+hour!**compiled accessors**!public! !
+hour:!**compiled accessors**!public! !
+milliseconds!accessing!public! !
+minute!**compiled accessors**!public! !
+minute:!**compiled accessors**!public! !
+month!**compiled accessors**!public! !
+month:!**compiled accessors**!public! !
+second!**compiled accessors**!public! !
+second:!**compiled accessors**!public! !
+year!**compiled accessors**!public! !
+year:!**compiled accessors**!public! !
+!
 
 !OS.ODBCTIMESTAMP class methodsFor!
 
@@ -168,7 +170,9 @@ fromDateAndTime: aDateAndTime
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !
-!OS.ODBCTIMESTAMP class categoriesFor: #defineFields!public!template definition! !
-!OS.ODBCTIMESTAMP class categoriesFor: #fromDateAndTime:!instance creation!public! !
-!OS.ODBCTIMESTAMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ODBCTIMESTAMP class categoriesForMethods!
+defineFields!public!template definition! !
+fromDateAndTime:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

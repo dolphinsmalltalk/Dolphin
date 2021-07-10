@@ -35,7 +35,9 @@ GdiplusVersion: anInteger
 	"Set the receiver's 'GdiplusVersion' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_GdiplusVersion put: anInteger! !
-!Graphics.Gdiplus.GdiplusStartupInput categoriesFor: #GdiplusVersion:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GdiplusStartupInput categoriesForMethods!
+GdiplusVersion:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GdiplusStartupInput class methodsFor!
 
@@ -69,6 +71,8 @@ defineFields
 
 getFieldNames
 	^#(#GdiplusVersion)! !
-!Graphics.Gdiplus.GdiplusStartupInput class categoriesFor: #defineFields!public!template definition! !
-!Graphics.Gdiplus.GdiplusStartupInput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GdiplusStartupInput class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

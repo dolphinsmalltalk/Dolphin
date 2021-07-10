@@ -27,9 +27,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes swordAtOffset: offset put: anInteger! !
-!External.SWORDField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.SWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.SWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.SWORDField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.SWORDField class methodsFor!
 
@@ -38,5 +40,7 @@ byteSize
 	A WORD is always 16-bits/2 bytes."
 
 	^2! !
-!External.SWORDField class categoriesFor: #byteSize!constants!private! !
+!External.SWORDField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

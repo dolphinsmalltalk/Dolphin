@@ -71,16 +71,18 @@ viewResults
 
 	changes inspect.
 	self resetResult! !
-!Refactory.Browser.TransformationRule categoriesFor: #changes!accessing!public! !
-!Refactory.Browser.TransformationRule categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.TransformationRule categoriesFor: #displayOn:!printing!public! !
-!Refactory.Browser.TransformationRule categoriesFor: #hasConflicts!public!testing! !
-!Refactory.Browser.TransformationRule categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.TransformationRule categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.TransformationRule categoriesFor: #resetResult!accessing!public! !
-!Refactory.Browser.TransformationRule categoriesFor: #rewriteUsing:!initialize/release!public! !
-!Refactory.Browser.TransformationRule categoriesFor: #superSends!public!rules! !
-!Refactory.Browser.TransformationRule categoriesFor: #viewResults!private! !
+!Refactory.Browser.TransformationRule categoriesForMethods!
+changes!accessing!public! !
+checkMethod:!accessing!public! !
+displayOn:!printing!public! !
+hasConflicts!public!testing! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+resetResult!accessing!public! !
+rewriteUsing:!initialize/release!public! !
+superSends!public!rules! !
+viewResults!private! !
+!
 
 !Refactory.Browser.TransformationRule class methodsFor!
 
@@ -397,23 +399,25 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block'))
 		methods: false
 		name: 'Move assignment out of ensure: blocks'! !
-!Refactory.Browser.TransformationRule class categoriesFor: #assignmentInIfTrue!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #atIfAbsent!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #betweenAnd!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #braceArrays!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #cascadedNextPutAlls!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #detectIfNone!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #equalNil!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #guardClause!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #initializeRecursiveSelfRule!accessing!public! !
-!Refactory.Browser.TransformationRule class categoriesFor: #minMax!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #notElimination!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #notEmpty!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #recursiveSelfRule!accessing!public! !
-!Refactory.Browser.TransformationRule class categoriesFor: #rewrite:methods:name:!instance creation!public! !
-!Refactory.Browser.TransformationRule class categoriesFor: #showWhileBlocks!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #streamLiterals!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #superSends!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #testCaseAsserts!public!transformations! !
-!Refactory.Browser.TransformationRule class categoriesFor: #unwindBlocks!public!transformations! !
+!Refactory.Browser.TransformationRule class categoriesForMethods!
+assignmentInIfTrue!public!transformations! !
+atIfAbsent!public!transformations! !
+betweenAnd!public!transformations! !
+braceArrays!public!transformations! !
+cascadedNextPutAlls!public!transformations! !
+detectIfNone!public!transformations! !
+equalNil!public!transformations! !
+guardClause!public!transformations! !
+initializeRecursiveSelfRule!accessing!public! !
+minMax!public!transformations! !
+notElimination!public!transformations! !
+notEmpty!public!transformations! !
+recursiveSelfRule!accessing!public! !
+rewrite:methods:name:!instance creation!public! !
+showWhileBlocks!public!transformations! !
+streamLiterals!public!transformations! !
+superSends!public!transformations! !
+testCaseAsserts!public!transformations! !
+unwindBlocks!public!transformations! !
+!
 

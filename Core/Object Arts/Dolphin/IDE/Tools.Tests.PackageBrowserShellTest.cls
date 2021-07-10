@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.PackageBrowserShellTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
@@ -490,37 +490,41 @@ testRepackageMethods
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #addRemoveRenameClasses!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertClassesInSync!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertCurrentCardInSync!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertDependencyCard:inSync:!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertMethodsInSync!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertResourcesInSync!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #assertVariablesInSync!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #create:subclassOf:!helpers!private! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #createClassesABC!helpers!private! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #createGlobals!helpers!private! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #createMethods!helpers!private! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #currentCard!public!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #removeClass:!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #removeClasses!public!Running! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #removeGlobals!public!Running! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #renameClass!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #repackageClasses!private!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #resourceManager!constants!public! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #setUp!public!Running! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #showClassesPane!public!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #tearDown!public!Running! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #testAddRemoveClasses!public!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #testAddRemoveMethods!public!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #testGlobals!public!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #testRepackageClasses!public!unit tests! !
-!Tools.Tests.PackageBrowserShellTest categoriesFor: #testRepackageMethods!public!unit tests! !
+!Tools.Tests.PackageBrowserShellTest categoriesForMethods!
+addRemoveRenameClasses!private!unit tests! !
+assertClassesInSync!private!unit tests! !
+assertCurrentCardInSync!private!unit tests! !
+assertDependencyCard:inSync:!private!unit tests! !
+assertMethodsInSync!private!unit tests! !
+assertResourcesInSync!private!unit tests! !
+assertVariablesInSync!private!unit tests! !
+create:subclassOf:!helpers!private! !
+create:subclassOf:inPackage:!helpers!private! !
+createClassesABC!helpers!private! !
+createGlobals!helpers!private! !
+createMethods!helpers!private! !
+currentCard!public!unit tests! !
+removeClass:!private!unit tests! !
+removeClasses!public!Running! !
+removeGlobals!public!Running! !
+renameClass!private!unit tests! !
+repackageClasses!private!unit tests! !
+resourceManager!constants!public! !
+setUp!public!Running! !
+showClassesPane!public!unit tests! !
+tearDown!public!Running! !
+testAddRemoveClasses!public!unit tests! !
+testAddRemoveMethods!public!unit tests! !
+testGlobals!public!unit tests! !
+testRepackageClasses!public!unit tests! !
+testRepackageMethods!public!unit tests! !
+!
 
 !Tools.Tests.PackageBrowserShellTest class methodsFor!
 
 resources
 	^{Core.Tests.DolphinTestPackages}! !
-!Tools.Tests.PackageBrowserShellTest class categoriesFor: #resources!public! !
+!Tools.Tests.PackageBrowserShellTest class categoriesForMethods!
+resources!public! !
+!
 

@@ -209,24 +209,26 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that encoded integer value passed to API calls to represent the color)."
 
 	code := anInteger! !
-!Graphics.AbstractRGB categoriesFor: #asGrayscale!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #asInteger!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #asParameter!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #brightness!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #chroma!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #code!accessing!private! !
-!Graphics.AbstractRGB categoriesFor: #fadedBy:!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #green!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #hls!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #hslSaturation!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #hsv!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #hsvSaturation!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #hue!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #intensity:!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #isGrayscale!public!testing! !
-!Graphics.AbstractRGB categoriesFor: #lightness!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #luminance!accessing!public! !
-!Graphics.AbstractRGB categoriesFor: #registerName:!helpers!private! !
-!Graphics.AbstractRGB categoriesFor: #rgb!converting!public! !
-!Graphics.AbstractRGB categoriesFor: #setCode:!accessing!private! !
+!Graphics.AbstractRGB categoriesForMethods!
+asGrayscale!converting!public! !
+asInteger!converting!public! !
+asParameter!converting!public! !
+brightness!accessing!public! !
+chroma!accessing!public! !
+code!accessing!private! !
+fadedBy:!converting!public! !
+green!accessing!public! !
+hls!converting!public! !
+hslSaturation!accessing!public! !
+hsv!converting!public! !
+hsvSaturation!accessing!public! !
+hue!accessing!public! !
+intensity:!converting!public! !
+isGrayscale!public!testing! !
+lightness!accessing!public! !
+luminance!accessing!public! !
+registerName:!helpers!private! !
+rgb!converting!public! !
+setCode:!accessing!private! !
+!
 

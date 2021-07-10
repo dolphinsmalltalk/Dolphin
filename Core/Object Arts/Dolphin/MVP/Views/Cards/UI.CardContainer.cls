@@ -357,51 +357,53 @@ wmPrint: message wParam: wParam lParam: lParam
 		lParam: lParam.
 	canvas windowOrigin: prev.
 	^result! !
-!UI.CardContainer categoriesFor: #arrangementOf:put:!accessing!public! !
-!UI.CardContainer categoriesFor: #backcolor:!accessing!public! !
-!UI.CardContainer categoriesFor: #createTabs!helpers!private! !
-!UI.CardContainer categoriesFor: #defaultBackcolor!public! !
-!UI.CardContainer categoriesFor: #defaultViewClass!constants!public! !
-!UI.CardContainer categoriesFor: #ensureTabsAtBack!operations!private! !
-!UI.CardContainer categoriesFor: #getImageBlock!adapters!public! !
-!UI.CardContainer categoriesFor: #getImageBlock:!adapters!public! !
-!UI.CardContainer categoriesFor: #getTextBlock!adapters!public! !
-!UI.CardContainer categoriesFor: #getTextBlock:!adapters!public! !
-!UI.CardContainer categoriesFor: #hasButtons!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #hasButtons:!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #hasHotTracking!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #hasOwnTabs!public!testing! !
-!UI.CardContainer categoriesFor: #implicitInsets:!accessing!private! !
-!UI.CardContainer categoriesFor: #isDropTarget:!accessing!public! !
-!UI.CardContainer categoriesFor: #isInverted!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #isInverted:!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #isMultiline!accessing!public! !
-!UI.CardContainer categoriesFor: #isMultiline:!accessing!public! !
-!UI.CardContainer categoriesFor: #isTabStop!accessing!public! !
-!UI.CardContainer categoriesFor: #isTabStop:!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #isVertical!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #isVertical:!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #layout:!geometry!public! !
-!UI.CardContainer categoriesFor: #newTabs!helpers!private! !
-!UI.CardContainer categoriesFor: #onCurrentCardChanged!event handling!private! !
-!UI.CardContainer categoriesFor: #onEraseRequired:!event handling!public! !
-!UI.CardContainer categoriesFor: #onSubViewAdded:!event handling!private! !
-!UI.CardContainer categoriesFor: #onTabChanged!event handling!private! !
-!UI.CardContainer categoriesFor: #onTabChanging:!event handling!private! !
-!UI.CardContainer categoriesFor: #onViewCreated!event handling!private! !
-!UI.CardContainer categoriesFor: #onZOrderChanged!event handling!private! !
-!UI.CardContainer categoriesFor: #preTranslateKeyboardInput:!public! !
-!UI.CardContainer categoriesFor: #queryCommand:!commands!public! !
-!UI.CardContainer categoriesFor: #refreshTabs!public!updating! !
-!UI.CardContainer categoriesFor: #removeSubView:!public! !
-!UI.CardContainer categoriesFor: #tabOrientation!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #tabOrientation:!accessing-styles!public! !
-!UI.CardContainer categoriesFor: #tabs!accessing!private! !
-!UI.CardContainer categoriesFor: #updateTabs!public!updating! !
-!UI.CardContainer categoriesFor: #viewMode!accessing!public! !
-!UI.CardContainer categoriesFor: #viewMode:!accessing!public! !
-!UI.CardContainer categoriesFor: #wmPrint:wParam:lParam:!private! !
+!UI.CardContainer categoriesForMethods!
+arrangementOf:put:!accessing!public! !
+backcolor:!accessing!public! !
+createTabs!helpers!private! !
+defaultBackcolor!public! !
+defaultViewClass!constants!public! !
+ensureTabsAtBack!operations!private! !
+getImageBlock!adapters!public! !
+getImageBlock:!adapters!public! !
+getTextBlock!adapters!public! !
+getTextBlock:!adapters!public! !
+hasButtons!accessing-styles!public! !
+hasButtons:!accessing-styles!public! !
+hasHotTracking!accessing-styles!public! !
+hasHotTracking:!accessing-styles!public! !
+hasOwnTabs!public!testing! !
+implicitInsets:!accessing!private! !
+isDropTarget:!accessing!public! !
+isInverted!accessing-styles!public! !
+isInverted:!accessing-styles!public! !
+isMultiline!accessing!public! !
+isMultiline:!accessing!public! !
+isTabStop!accessing!public! !
+isTabStop:!accessing-styles!public! !
+isVertical!accessing-styles!public! !
+isVertical:!accessing-styles!public! !
+layout:!geometry!public! !
+newTabs!helpers!private! !
+onCurrentCardChanged!event handling!private! !
+onEraseRequired:!event handling!public! !
+onSubViewAdded:!event handling!private! !
+onTabChanged!event handling!private! !
+onTabChanging:!event handling!private! !
+onViewCreated!event handling!private! !
+onZOrderChanged!event handling!private! !
+preTranslateKeyboardInput:!public! !
+queryCommand:!commands!public! !
+refreshTabs!public!updating! !
+removeSubView:!public! !
+tabOrientation!accessing-styles!public! !
+tabOrientation:!accessing-styles!public! !
+tabs!accessing!private! !
+updateTabs!public!updating! !
+viewMode!accessing!public! !
+viewMode:!accessing!public! !
+wmPrint:wParam:lParam:!private! !
+!
 
 !UI.CardContainer class methodsFor!
 
@@ -414,5 +416,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.CardContainer) 34 16 nil nil 34 2 8 1409286144 131073 416 nil 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 853318 1 ##(UI.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(UI.TabViewXP) 34 28 nil 416 34 2 8 1140916736 1 592 787270 2 ##(UI.ListModel) 138 144 560 nil 1638406 ##(Kernel.IdentitySearchPolicy) nil nil 1 nil nil nil 592 nil 8 1920388864 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 ##(UI.ListControlView) #defaultGetTextBlock 575230339 8 #[30 105 226 0 106] #displayString 768 7 257 nil 754 0 nil 786 2 3 ##(UI.IconicListAbstract) #defaultGetImageBlock 579598755 8 #[30 105 226 0 106] #iconImageIndex 832 7 257 nil 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 1 1 1026 701 501 592 978 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 1026 193 193 nil 27 914 138 144 34 1 978 #createAt:extent: 34 2 1026 6143 21 1026 701 501 416 1106 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 34 1 592 1168 nil 27)! !
-!UI.CardContainer class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.CardContainer class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+!
 

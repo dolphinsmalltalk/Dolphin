@@ -32,8 +32,10 @@ writeInto: anExternalStructure value: anObject
 	<Boolean> argument, anObject."
 
 	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
-!External.BOOLField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.BOOLField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.BOOLField categoriesFor: #valueType!automatic generation!constants!development!private! !
-!External.BOOLField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.BOOLField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+valueType!automatic generation!constants!development!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

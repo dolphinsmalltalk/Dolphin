@@ -354,47 +354,49 @@ updateStatus
 				with: (filter isRestrictingMostRecent ifTrue: [' Re'] ifFalse: [String new])
 				with: (filter isRestrictingPicked ifTrue: [' Pi'] ifFalse: [String new])).
 	self clearStatusReport! !
-!ChunkBrowser categoriesFor: #browseChunk!commands!public!testing! !
-!ChunkBrowser categoriesFor: #canBrowse!public!testing! !
-!ChunkBrowser categoriesFor: #canPrint!printing!public!testing! !
-!ChunkBrowser categoriesFor: #canShowDifferences!public!testing! !
-!ChunkBrowser categoriesFor: #chunkSelectAll!commands!public! !
-!ChunkBrowser categoriesFor: #chunkSelectDefault!commands!public! !
-!ChunkBrowser categoriesFor: #chunkSelectNone!commands!public! !
-!ChunkBrowser categoriesFor: #clearStatusReport!helpers!public! !
-!ChunkBrowser categoriesFor: #clipboardOpen!commands!public! !
-!ChunkBrowser categoriesFor: #copyText!commands!public! !
-!ChunkBrowser categoriesFor: #createComponents!initializing!public! !
-!ChunkBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!ChunkBrowser categoriesFor: #fileOpen!commands!public! !
-!ChunkBrowser categoriesFor: #fileOpenPatch!commands!public! !
-!ChunkBrowser categoriesFor: #helpFileStem!constants!private! !
-!ChunkBrowser categoriesFor: #idbAbout!commands!enquiries!public! !
-!ChunkBrowser categoriesFor: #idbHelp!commands!enquiries!public! !
-!ChunkBrowser categoriesFor: #onActionPerformed!event handling!public! !
-!ChunkBrowser categoriesFor: #onRefreshNeeded!event handling!public! !
-!ChunkBrowser categoriesFor: #onSelectionChanged!event handling!public! !
-!ChunkBrowser categoriesFor: #onViewClosed!event handling!public! !
-!ChunkBrowser categoriesFor: #onViewOpened!event handling!public! !
-!ChunkBrowser categoriesFor: #pickSelection!commands!public! !
-!ChunkBrowser categoriesFor: #printableView!accessing!printing!public! !
-!ChunkBrowser categoriesFor: #queryCommand:!commands!public! !
-!ChunkBrowser categoriesFor: #restore:!commands!public! !
-!ChunkBrowser categoriesFor: #restorePicked!commands!public! !
-!ChunkBrowser categoriesFor: #restoreSelection!commands!public! !
-!ChunkBrowser categoriesFor: #restrictionClass!commands!public! !
-!ChunkBrowser categoriesFor: #restrictionClear!commands!public! !
-!ChunkBrowser categoriesFor: #restrictionRange!commands!public! !
-!ChunkBrowser categoriesFor: #restrictionSave!commands!public! !
-!ChunkBrowser categoriesFor: #showDifferences!commands!public! !
-!ChunkBrowser categoriesFor: #toggleChunkType:!commands!public! !
-!ChunkBrowser categoriesFor: #toggleComparisonType:!commands!public! !
-!ChunkBrowser categoriesFor: #toggleRestrictingMostRecent!commands!public! !
-!ChunkBrowser categoriesFor: #toggleRestrictingPicked!commands!public! !
-!ChunkBrowser categoriesFor: #unpickAll!commands!public! !
-!ChunkBrowser categoriesFor: #unpickSelection!commands!public! !
-!ChunkBrowser categoriesFor: #updateChunkList!operations!public! !
-!ChunkBrowser categoriesFor: #updateStatus!helpers!public! !
+!ChunkBrowser categoriesForMethods!
+browseChunk!commands!public!testing! !
+canBrowse!public!testing! !
+canPrint!printing!public!testing! !
+canShowDifferences!public!testing! !
+chunkSelectAll!commands!public! !
+chunkSelectDefault!commands!public! !
+chunkSelectNone!commands!public! !
+clearStatusReport!helpers!public! !
+clipboardOpen!commands!public! !
+copyText!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+fileOpen!commands!public! !
+fileOpenPatch!commands!public! !
+helpFileStem!constants!private! !
+idbAbout!commands!enquiries!public! !
+idbHelp!commands!enquiries!public! !
+onActionPerformed!event handling!public! !
+onRefreshNeeded!event handling!public! !
+onSelectionChanged!event handling!public! !
+onViewClosed!event handling!public! !
+onViewOpened!event handling!public! !
+pickSelection!commands!public! !
+printableView!accessing!printing!public! !
+queryCommand:!commands!public! !
+restore:!commands!public! !
+restorePicked!commands!public! !
+restoreSelection!commands!public! !
+restrictionClass!commands!public! !
+restrictionClear!commands!public! !
+restrictionRange!commands!public! !
+restrictionSave!commands!public! !
+showDifferences!commands!public! !
+toggleChunkType:!commands!public! !
+toggleComparisonType:!commands!public! !
+toggleRestrictingMostRecent!commands!public! !
+toggleRestrictingPicked!commands!public! !
+unpickAll!commands!public! !
+unpickSelection!commands!public! !
+updateChunkList!operations!public! !
+updateStatus!helpers!public! !
+!
 
 !ChunkBrowser class methodsFor!
 
@@ -509,18 +511,20 @@ stFileTypes
 		add: #('Smalltalk Files (*.st)' '*.st');
 		add: #('All Files (*.*)' '*.*');
 		yourself! !
-!ChunkBrowser class categoriesFor: #bitmap!constants!development!public! !
-!ChunkBrowser class categoriesFor: #chunkTypeSelection!accessing!public! !
-!ChunkBrowser class categoriesFor: #chunkTypeSelection:!accessing!public! !
-!ChunkBrowser class categoriesFor: #compareMethodsUsingParser!accessing!public! !
-!ChunkBrowser class categoriesFor: #compareMethodsUsingParser:!accessing!public! !
-!ChunkBrowser class categoriesFor: #defaultChunkTypeSelection!constants!public! !
-!ChunkBrowser class categoriesFor: #defaultCompareMethodsUsingParser!constants!public! !
-!ChunkBrowser class categoriesFor: #defaultModel!constants!public! !
-!ChunkBrowser class categoriesFor: #displayOn:!operations!public! !
-!ChunkBrowser class categoriesFor: #fileTypes!constants!public! !
-!ChunkBrowser class categoriesFor: #icon!constants!public! !
-!ChunkBrowser class categoriesFor: #publishedAspects!constants!public! !
-!ChunkBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!ChunkBrowser class categoriesFor: #stFileTypes!constants!public! !
+!ChunkBrowser class categoriesForMethods!
+bitmap!constants!development!public! !
+chunkTypeSelection!accessing!public! !
+chunkTypeSelection:!accessing!public! !
+compareMethodsUsingParser!accessing!public! !
+compareMethodsUsingParser:!accessing!public! !
+defaultChunkTypeSelection!constants!public! !
+defaultCompareMethodsUsingParser!constants!public! !
+defaultModel!constants!public! !
+displayOn:!operations!public! !
+fileTypes!constants!public! !
+icon!constants!public! !
+publishedAspects!constants!public! !
+resource_Default_view!public!resources-views! !
+stFileTypes!constants!public! !
+!
 

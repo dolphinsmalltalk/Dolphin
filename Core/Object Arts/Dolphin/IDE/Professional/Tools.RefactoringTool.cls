@@ -108,19 +108,21 @@ setPresenter: aPresenter
 
 systemModel
 	^SmalltalkSystem current! !
-!Tools.RefactoringTool categoriesFor: #convertTempToInstVar:!public!refactoring! !
-!Tools.RefactoringTool categoriesFor: #inlineParameter:!private!refactoring! !
-!Tools.RefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!Tools.RefactoringTool categoriesFor: #parseTree!accessing!private! !
-!Tools.RefactoringTool categoriesFor: #queryCommand:!commands!public! !
-!Tools.RefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
-!Tools.RefactoringTool categoriesFor: #removeParameter:!operations!private!refactoring! !
-!Tools.RefactoringTool categoriesFor: #removeParameter:from:!operations!private!refactoring! !
-!Tools.RefactoringTool categoriesFor: #renameIt!commands!public!refactoring! !
-!Tools.RefactoringTool categoriesFor: #renameItCommand!private!refactoring! !
-!Tools.RefactoringTool categoriesFor: #renameTemporary:!operations!private!refactoring! !
-!Tools.RefactoringTool categoriesFor: #setPresenter:!initializing!private! !
-!Tools.RefactoringTool categoriesFor: #systemModel!constants!public! !
+!Tools.RefactoringTool categoriesForMethods!
+convertTempToInstVar:!public!refactoring! !
+inlineParameter:!private!refactoring! !
+onAboutToDisplayMenu:!event handling!public! !
+parseTree!accessing!private! !
+queryCommand:!commands!public! !
+queryCommand:command:!commands!private! !
+removeParameter:!operations!private!refactoring! !
+removeParameter:from:!operations!private!refactoring! !
+renameIt!commands!public!refactoring! !
+renameItCommand!private!refactoring! !
+renameTemporary:!operations!private!refactoring! !
+setPresenter:!initializing!private! !
+systemModel!constants!public! !
+!
 
 Tools.RefactoringTool methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 
@@ -130,5 +132,7 @@ forPresenter: aPresenter
 	^(self new)
 		setPresenter: aPresenter;
 		yourself! !
-!Tools.RefactoringTool class categoriesFor: #forPresenter:!instance creation!public! !
+!Tools.RefactoringTool class categoriesForMethods!
+forPresenter:!instance creation!public! !
+!
 

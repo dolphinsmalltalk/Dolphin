@@ -41,8 +41,10 @@ classesReferencingPoolNamed: aSymbol
 
 	Notification deprecated.
 	^Smalltalk allClasses select: [:each | each sharedPoolNames includes: aSymbol]! !
-!SmalltalkSystem categoriesFor: #classesReferencingPool:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #classesReferencingPoolNamed:!enquiries!public! !
+!SmalltalkSystem categoriesForMethods!
+classesReferencingPool:!enquiries!public! !
+classesReferencingPoolNamed:!enquiries!public! !
+!
 
 "End of package definition"!
 

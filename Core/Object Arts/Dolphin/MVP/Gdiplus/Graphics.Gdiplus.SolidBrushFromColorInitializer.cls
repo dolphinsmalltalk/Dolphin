@@ -26,12 +26,16 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipCreateSolidFill: color argbCode brush: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesFor: #color:!initializing!private! !
-!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.SolidBrushFromColorInitializer categoriesForMethods!
+color:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.SolidBrushFromColorInitializer class methodsFor!
 
 color: aColor
 	^self new color: aColor! !
-!Graphics.Gdiplus.SolidBrushFromColorInitializer class categoriesFor: #color:!instance creation!public! !
+!Graphics.Gdiplus.SolidBrushFromColorInitializer class categoriesForMethods!
+color:!instance creation!public! !
+!
 

@@ -144,21 +144,23 @@ viewModel
 	connected to the receiver's choicesModel - not the receiver's value model"
 
 	^choicesModel! !
-!UI.ChoicePresenter categoriesFor: #choices:!accessing!public! !
-!UI.ChoicePresenter categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.ChoicePresenter categoriesFor: #getValue!helpers!private! !
-!UI.ChoicePresenter categoriesFor: #initialize!initializing!private! !
-!UI.ChoicePresenter categoriesFor: #isMultiChoice!private!testing! !
-!UI.ChoicePresenter categoriesFor: #model:!accessing!public! !
-!UI.ChoicePresenter categoriesFor: #nilChoice!accessing!public! !
-!UI.ChoicePresenter categoriesFor: #nilChoice:!initializing!public! !
-!UI.ChoicePresenter categoriesFor: #onChoiceChanged!event handling!private! !
-!UI.ChoicePresenter categoriesFor: #onSelectionChanged!event handling!private! !
-!UI.ChoicePresenter categoriesFor: #onSelectionChanging:!event handling!private! !
-!UI.ChoicePresenter categoriesFor: #onValueChanged!event handling!public! !
-!UI.ChoicePresenter categoriesFor: #updateChoice!accessing!private! !
-!UI.ChoicePresenter categoriesFor: #view:!accessing!public! !
-!UI.ChoicePresenter categoriesFor: #viewModel!accessing!private! !
+!UI.ChoicePresenter categoriesForMethods!
+choices:!accessing!public! !
+createSchematicWiring!initializing!public! !
+getValue!helpers!private! !
+initialize!initializing!private! !
+isMultiChoice!private!testing! !
+model:!accessing!public! !
+nilChoice!accessing!public! !
+nilChoice:!initializing!public! !
+onChoiceChanged!event handling!private! !
+onSelectionChanged!event handling!private! !
+onSelectionChanging:!event handling!private! !
+onValueChanged!event handling!public! !
+updateChoice!accessing!private! !
+view:!accessing!public! !
+viewModel!accessing!private! !
+!
 
 !UI.ChoicePresenter class methodsFor!
 
@@ -202,9 +204,11 @@ resource_Enhanced_list_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListView) 34 45 nil nil 34 2 8 1409355853 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920618720 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 201 #left 626 #displayString 656 626 #<= 8 #() nil nil 416 nil 1 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 962 491 311 416 914 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 244 12 0 0 165 0 0 0] 8 #() 962 193 193 nil 35)! !
-!UI.ChoicePresenter class categoriesFor: #defaultModel!models!public! !
-!UI.ChoicePresenter class categoriesFor: #icon!constants!public! !
-!UI.ChoicePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.ChoicePresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
-!UI.ChoicePresenter class categoriesFor: #resource_Enhanced_list_view!public!resources-views! !
+!UI.ChoicePresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Drop_down_list!public!resources-views! !
+resource_Enhanced_list_view!public!resources-views! !
+!
 

@@ -16,5 +16,7 @@ Windows'' standard behaviour for radio buttons is that a among a group of such b
 
 basicWindowStyle
 	^BS_AUTORADIOBUTTON! !
-!UI.RadioButton categoriesFor: #basicWindowStyle!constants!private! !
+!UI.RadioButton categoriesForMethods!
+basicWindowStyle!constants!private! !
+!
 

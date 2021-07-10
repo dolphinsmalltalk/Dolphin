@@ -41,14 +41,16 @@ searchString: aString
 
 sentMessages
 	^searchTree sentMessages! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #canMatch:!matching!public! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #context!accessing!private! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #foundMatchFor:!matching!public! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #methodSearchString:!initialize/release!public! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #owner:!initialize/release!public! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #performOn:!matching!public! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #searchString:!initialize/release!public! !
-!Refactory.Browser.RBParseTreeRule categoriesFor: #sentMessages!accessing!public! !
+!Refactory.Browser.RBParseTreeRule categoriesForMethods!
+canMatch:!matching!public! !
+context!accessing!private! !
+foundMatchFor:!matching!public! !
+methodSearchString:!initialize/release!public! !
+owner:!initialize/release!public! !
+performOn:!matching!public! !
+searchString:!initialize/release!public! !
+sentMessages!accessing!public! !
+!
 
 !Refactory.Browser.RBParseTreeRule class methodsFor!
 
@@ -66,7 +68,9 @@ search: aString
 	^(self new)
 		searchString: aString;
 		yourself! !
-!Refactory.Browser.RBParseTreeRule class categoriesFor: #methodSearch:!instance creation!public! !
-!Refactory.Browser.RBParseTreeRule class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.RBParseTreeRule class categoriesFor: #search:!instance creation!public! !
+!Refactory.Browser.RBParseTreeRule class categoriesForMethods!
+methodSearch:!instance creation!public! !
+new!instance creation!public! !
+search:!instance creation!public! !
+!
 

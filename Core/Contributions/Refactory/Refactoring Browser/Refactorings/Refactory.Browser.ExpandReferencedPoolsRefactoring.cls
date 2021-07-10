@@ -85,15 +85,17 @@ whichPoolDefines: varName
 				do: [:each | ((self poolVariableNamesIn: each) includes: varName) ifTrue: [^each]].
 			currentClass := currentClass superclass].
 	^nil! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #computePoolsToMove!public!transforming! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #forMethod:fromClass:toClasses:!initialize/release!public! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #hasPoolsToMove!public!testing! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #movePool:toClass:!public!transforming! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #movePoolVariables!public!transforming! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #poolVariableNamesIn:!public!transforming! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesFor: #whichPoolDefines:!public!transforming! !
+!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForMethods!
+computePoolsToMove!public!transforming! !
+forMethod:fromClass:toClasses:!initialize/release!public! !
+hasPoolsToMove!public!testing! !
+movePool:toClass:!public!transforming! !
+movePoolVariables!public!transforming! !
+poolVariableNamesIn:!public!transforming! !
+preconditions!preconditions!public! !
+transform!public!transforming! !
+whichPoolDefines:!public!transforming! !
+!
 
 !Refactory.Browser.ExpandReferencedPoolsRefactoring class methodsFor!
 
@@ -111,6 +113,8 @@ model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classColl
 			fromClass: aClass
 			toClasses: classCollection;
 		yourself! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring class categoriesFor: #forMethod:fromClass:toClasses:!instance creation!public! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring class categoriesFor: #model:forMethod:fromClass:toClasses:!instance creation!public! !
+!Refactory.Browser.ExpandReferencedPoolsRefactoring class categoriesForMethods!
+forMethod:fromClass:toClasses:!instance creation!public! !
+model:forMethod:fromClass:toClasses:!instance creation!public! !
+!
 

@@ -22,6 +22,8 @@ setImage: aBitmapOrNil
 
 	image := aBitmapOrNil notNil ifTrue: [aBitmapOrNil freeDC; yourself].
 	self sendMessage: STM_SETIMAGE wParam: IMAGE_BITMAP lParam: image asParameter! !
-!UI.StaticBitmap categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.StaticBitmap categoriesFor: #setImage:!accessing!private! !
+!UI.StaticBitmap categoriesForMethods!
+defaultWindowStyle!constants!private! !
+setImage:!accessing!private! !
+!
 

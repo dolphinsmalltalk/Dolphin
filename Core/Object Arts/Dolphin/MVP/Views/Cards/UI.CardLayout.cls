@@ -213,26 +213,28 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!UI.CardLayout categoriesFor: #arrangementOf:!accessing!public! !
-!UI.CardLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!UI.CardLayout categoriesFor: #cards!accessing!private! !
-!UI.CardLayout categoriesFor: #cardViews!accessing!private! !
-!UI.CardLayout categoriesFor: #currentCard!accessing!public! !
-!UI.CardLayout categoriesFor: #cycleNextCard!operations!public! !
-!UI.CardLayout categoriesFor: #cyclePreviousCard!operations!public! !
-!UI.CardLayout categoriesFor: #firstCard!operations!public! !
-!UI.CardLayout categoriesFor: #getEvents!events!private! !
-!UI.CardLayout categoriesFor: #initialize!initializing!private! !
-!UI.CardLayout categoriesFor: #lastCard!operations!public! !
-!UI.CardLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!UI.CardLayout categoriesFor: #nextCard!operations!public! !
-!UI.CardLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
-!UI.CardLayout categoriesFor: #previousCard!operations!public! !
-!UI.CardLayout categoriesFor: #removeSubView:!public!removing! !
-!UI.CardLayout categoriesFor: #setEvents:!events!private! !
-!UI.CardLayout categoriesFor: #showCard:!operations!public! !
-!UI.CardLayout categoriesFor: #showCardWithArrangement:!operations!public! !
-!UI.CardLayout categoriesFor: #stbSaveOn:!binary filing!public! !
+!UI.CardLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+cards!accessing!private! !
+cardViews!accessing!private! !
+currentCard!accessing!public! !
+cycleNextCard!operations!public! !
+cyclePreviousCard!operations!public! !
+firstCard!operations!public! !
+getEvents!events!private! !
+initialize!initializing!private! !
+lastCard!operations!public! !
+layoutContainer:context:!geometry!private! !
+nextCard!operations!public! !
+preferredLayoutExtentOf:context:!public! !
+previousCard!operations!public! !
+removeSubView:!public!removing! !
+setEvents:!events!private! !
+showCard:!operations!public! !
+showCardWithArrangement:!operations!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !UI.CardLayout class methodsFor!
 
@@ -248,6 +250,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!UI.CardLayout class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!UI.CardLayout class categoriesFor: #stbVersion!binary filing!public! !
+!UI.CardLayout class categoriesForMethods!
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

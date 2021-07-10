@@ -20,8 +20,10 @@ errorAsString
 errorCode
 	#deprecated. "6.0"
 	^self statusCode! !
-!Net.SocketError categoriesFor: #errorAsString!displaying!public! !
-!Net.SocketError categoriesFor: #errorCode!accessing!public! !
+!Net.SocketError categoriesForMethods!
+errorAsString!displaying!public! !
+errorCode!accessing!public! !
+!
 
 !Net.SocketError class methodsFor!
 
@@ -46,9 +48,11 @@ signalWith: anInteger
 
 	^(ErrorClasses at: anInteger ifAbsent: [self]) basicSignalWith: anInteger
 ! !
-!Net.SocketError class categoriesFor: #basicSignalWith:!instance creation!private! !
-!Net.SocketError class categoriesFor: #errorCode!enquiries!private! !
-!Net.SocketError class categoriesFor: #initialize!public! !
-!Net.SocketError class categoriesFor: #signal!instance creation!public! !
-!Net.SocketError class categoriesFor: #signalWith:!instance creation!public! !
+!Net.SocketError class categoriesForMethods!
+basicSignalWith:!instance creation!private! !
+errorCode!enquiries!private! !
+initialize!public! !
+signal!instance creation!public! !
+signalWith:!instance creation!public! !
+!
 

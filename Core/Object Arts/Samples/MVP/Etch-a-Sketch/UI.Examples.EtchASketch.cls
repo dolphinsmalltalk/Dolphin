@@ -83,11 +83,13 @@ onKnobChanged
 
 	"Remember the current location as the last"
 	lastLocation := newLocation! !
-!UI.Examples.EtchASketch categoriesFor: #createComponents!initializing!public! !
-!UI.Examples.EtchASketch categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.Examples.EtchASketch categoriesFor: #initialize!initializing!private! !
-!UI.Examples.EtchASketch categoriesFor: #model:!accessing!public! !
-!UI.Examples.EtchASketch categoriesFor: #onKnobChanged!event handling!private! !
+!UI.Examples.EtchASketch categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+initialize!initializing!private! !
+model:!accessing!public! !
+onKnobChanged!event handling!private! !
+!
 
 !UI.Examples.EtchASketch class methodsFor!
 
@@ -128,9 +130,11 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Etch-a-Sketch'! !
-!UI.Examples.EtchASketch class categoriesFor: #defaultModel!models!public! !
-!UI.Examples.EtchASketch class categoriesFor: #icon!constants!public! !
-!UI.Examples.EtchASketch class categoriesFor: #initialize!class initialization!private! !
-!UI.Examples.EtchASketch class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Examples.EtchASketch class categoriesFor: #sampleDescription!constants!development!private! !
+!UI.Examples.EtchASketch class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!class initialization!private! !
+resource_Default_view!public!resources-views! !
+sampleDescription!constants!development!private! !
+!
 

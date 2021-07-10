@@ -47,10 +47,12 @@ upperLeft: anInteger
 	"Set the receiver's 'upperLeft' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_upperLeft put: anInteger! !
-!OS.GRADIENT_RECT categoriesFor: #lowerRight!**compiled accessors**!public! !
-!OS.GRADIENT_RECT categoriesFor: #lowerRight:!**compiled accessors**!public! !
-!OS.GRADIENT_RECT categoriesFor: #upperLeft!**compiled accessors**!public! !
-!OS.GRADIENT_RECT categoriesFor: #upperLeft:!**compiled accessors**!public! !
+!OS.GRADIENT_RECT categoriesForMethods!
+lowerRight!**compiled accessors**!public! !
+lowerRight:!**compiled accessors**!public! !
+upperLeft!**compiled accessors**!public! !
+upperLeft:!**compiled accessors**!public! !
+!
 
 !OS.GRADIENT_RECT class methodsFor!
 
@@ -72,6 +74,8 @@ defineFields
 
 getFieldNames
 	^#(#upperLeft #lowerRight)! !
-!OS.GRADIENT_RECT class categoriesFor: #defineFields!public!template definition! !
-!OS.GRADIENT_RECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.GRADIENT_RECT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

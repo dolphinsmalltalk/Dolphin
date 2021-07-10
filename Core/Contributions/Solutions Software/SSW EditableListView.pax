@@ -126,8 +126,10 @@ setSortIconForColumn: aListViewColumn
 	aListViewColumn isSortOrderInverted
 		ifTrue: [(self columnHeader: aListViewColumn index) sortIndicator: #down]
 		ifFalse: [(self columnHeader: aListViewColumn index) sortIndicator: #up]! !
-!HeaderView categoriesFor: #clearSortIconForColumnAtIndex:!helpers!private! !
-!HeaderView categoriesFor: #setSortIconForColumn:!helpers!private! !
+!HeaderView categoriesForMethods!
+clearSortIconForColumnAtIndex:!helpers!private! !
+setSortIconForColumn:!helpers!private! !
+!
 
 !ListPresenter class methodsFor!
 
@@ -140,7 +142,9 @@ resource_Editable_list_view
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(Smalltalk.EditableListView)  98 38 0 0 98 2 8 1140920397 1025 416 590662 2 ##(ListModel)  202 208 98 0 0 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #identity 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294902721 8 ##(BasicListAbstract)  8 ##(IconicListAbstract)  570 8 ##(IconImageManager)  8 #current 0 0 0 328198 ##(Point)  65 65 0 0 202 208 98 1 1447494 14 ##(Smalltalk.EditableListViewColumn)  8 'Column 1' 201 8 #left 688 8 ##(SortedCollection)  0 0 416 0 1 0 0 16 0 1052998 13 ##(Smalltalk.EmbeddedTextEdit)  0 0 98 2 134349057 1 928 721990 2 ##(ValueHolder)  0 32 570 592 8 #equality 0 0 0 5 0 0 0 928 0 0 852486 ##(NullConverter)  0 8 '' 1 0 0 0 0 0 0 0 0 8 #report 544 0 131171 0 0 0 202 208 544 0 0 0 3 0 0 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 770 11 11 770 491 311 416 1170 8 #text: 98 1 8 'Column 1' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 250 0 0 0 160 0 0 0] 98 0 770 193 193 0 29 )! !
-!ListPresenter class categoriesFor: #resource_Editable_list_view!public!resources-views! !
+!ListPresenter class categoriesForMethods!
+resource_Editable_list_view!public!resources-views! !
+!
 
 !TextEdit methodsFor!
 
@@ -177,8 +181,10 @@ embeddedPreTranslateKeyboardInput: aMSG
 			^true]].
 
 	^super preTranslateKeyboardInput: aMSG! !
-!TextEdit categoriesFor: #currentLine!accessing!public! !
-!TextEdit categoriesFor: #embeddedPreTranslateKeyboardInput:!event handling!public! !
+!TextEdit categoriesForMethods!
+currentLine!accessing!public! !
+embeddedPreTranslateKeyboardInput:!event handling!public! !
+!
 
 !View methodsFor!
 
@@ -190,8 +196,10 @@ embeddedValue: anObject
 
 	self model setValue: anObject.
 	self refreshContents! !
-!View categoriesFor: #embeddedValue!hierarchy!public!sub views! !
-!View categoriesFor: #embeddedValue:!hierarchy!public!sub views! !
+!View categoriesForMethods!
+embeddedValue!hierarchy!public!sub views! !
+embeddedValue:!hierarchy!public!sub views! !
+!
 
 "End of package definition"!
 

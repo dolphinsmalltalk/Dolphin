@@ -22,5 +22,7 @@ testEqualValuesOfDifferentTypes
 			bNode := StLiteralValueNode value: b.
 			self deny: aNode equals: bNode.
 			self deny: bNode equals: aNode]! !
-!Kernel.Tests.StLiteralValueNodeTest categoriesFor: #testEqualValuesOfDifferentTypes!public! !
+!Kernel.Tests.StLiteralValueNodeTest categoriesForMethods!
+testEqualValuesOfDifferentTypes!public! !
+!
 

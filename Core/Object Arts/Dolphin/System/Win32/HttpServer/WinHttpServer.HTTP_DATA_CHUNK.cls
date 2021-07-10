@@ -161,26 +161,28 @@ FromMemory_pBuffer: anAddress
 printableFields
 	^{#(#FromMemory_pBuffer #FromFileHandle_FileHandle #FromFragmentCache_pFragmentName #FromFragmentCacheEx_pFragmentName)
 			at: self DataChunkType + 1}! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #data:!accessing!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #DataChunkType!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #DataChunkType:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_ByteRange!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_ByteRange:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_FileHandle!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_FileHandle:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_FragmentNameLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_FragmentNameLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_pFragmentName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_pFragmentName:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_ByteRange!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_ByteRange:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_pFragmentName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_pFragmentName:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromMemory_BufferLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromMemory_BufferLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromMemory_pBuffer!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #FromMemory_pBuffer:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_DATA_CHUNK categoriesFor: #printableFields!development!printing!private! !
+!WinHttpServer.HTTP_DATA_CHUNK categoriesForMethods!
+data:!accessing!public! !
+DataChunkType!**compiled accessors**!public! !
+DataChunkType:!**compiled accessors**!public! !
+FromFileHandle_ByteRange!**compiled accessors**!public! !
+FromFileHandle_ByteRange:!**compiled accessors**!public! !
+FromFileHandle_FileHandle!**compiled accessors**!public! !
+FromFileHandle_FileHandle:!**compiled accessors**!public! !
+FromFragmentCache_FragmentNameLength!**compiled accessors**!public! !
+FromFragmentCache_FragmentNameLength:!**compiled accessors**!public! !
+FromFragmentCache_pFragmentName!**compiled accessors**!public! !
+FromFragmentCache_pFragmentName:!**compiled accessors**!public! !
+FromFragmentCacheEx_ByteRange!**compiled accessors**!public! !
+FromFragmentCacheEx_ByteRange:!**compiled accessors**!public! !
+FromFragmentCacheEx_pFragmentName!**compiled accessors**!public! !
+FromFragmentCacheEx_pFragmentName:!**compiled accessors**!public! !
+FromMemory_BufferLength!**compiled accessors**!public! !
+FromMemory_BufferLength:!**compiled accessors**!public! !
+FromMemory_pBuffer!**compiled accessors**!public! !
+FromMemory_pBuffer:!**compiled accessors**!public! !
+printableFields!development!printing!private! !
+!
 
 !WinHttpServer.HTTP_DATA_CHUNK class methodsFor!
 
@@ -232,7 +234,9 @@ defineFields
 
 getFieldNames
 	^#(#DataChunkType #FromFileHandle_ByteRange #FromFragmentCache_FragmentNameLength #FromFragmentCacheEx_ByteRange #FromMemory_pBuffer #FromFragmentCache_pFragmentName #FromMemory_BufferLength #FromFileHandle_FileHandle #FromFragmentCacheEx_pFragmentName)! !
-!WinHttpServer.HTTP_DATA_CHUNK class categoriesFor: #data:!instance creation!public! !
-!WinHttpServer.HTTP_DATA_CHUNK class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_DATA_CHUNK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_DATA_CHUNK class categoriesForMethods!
+data:!instance creation!public! !
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

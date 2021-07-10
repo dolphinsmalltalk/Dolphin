@@ -83,18 +83,20 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_value put: anInteger! !
-!External.DWORD categoriesFor: #asSignedInteger!converting!public! !
-!External.DWORD categoriesFor: #asUnsignedInteger!converting!public! !
-!External.DWORD categoriesFor: #highSWord!accessing!public! !
-!External.DWORD categoriesFor: #highSWord:!accessing!public! !
-!External.DWORD categoriesFor: #highWord!accessing!public! !
-!External.DWORD categoriesFor: #highWord:!accessing!public! !
-!External.DWORD categoriesFor: #lowSWord!accessing!public! !
-!External.DWORD categoriesFor: #lowSWord:!accessing!public! !
-!External.DWORD categoriesFor: #lowWord!accessing!public! !
-!External.DWORD categoriesFor: #lowWord:!accessing!public! !
-!External.DWORD categoriesFor: #value!**compiled accessors**!public! !
-!External.DWORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.DWORD categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+highSWord!accessing!public! !
+highSWord:!accessing!public! !
+highWord!accessing!public! !
+highWord:!accessing!public! !
+lowSWord!accessing!public! !
+lowSWord:!accessing!public! !
+lowWord!accessing!public! !
+lowWord:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.DWORD class methodsFor!
 
@@ -115,7 +117,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.DWORD class categoriesFor: #defineFields!public!template definition! !
-!External.DWORD class categoriesFor: #initialize!development!initializing!private! !
-!External.DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.DWORD class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

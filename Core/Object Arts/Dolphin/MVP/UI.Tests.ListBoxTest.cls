@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.ListControlTest subclass: #'UI.Tests.ListBoxTest'
 	instanceVariableNames: 'lbnSelChange'
@@ -48,9 +48,11 @@ testNewSelectionsClickOutsideListWithModifiers
 
 verifyClicks: anArray
 	self assert: clicks size equals: anArray size! !
-!UI.Tests.ListBoxTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.ListBoxTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!helpers!private! !
-!UI.Tests.ListBoxTest categoriesFor: #setupClickIntercept!private! !
-!UI.Tests.ListBoxTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
-!UI.Tests.ListBoxTest categoriesFor: #verifyClicks:!helpers!private! !
+!UI.Tests.ListBoxTest categoriesForMethods!
+classToTest!helpers!private! !
+newSelectionAfterLeftClickOutsideList:!helpers!private! !
+setupClickIntercept!private! !
+testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
+verifyClicks:!helpers!private! !
+!
 

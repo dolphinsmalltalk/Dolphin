@@ -370,64 +370,66 @@ stbSaveOn: anSTBOutFiler
 				writeClass: Color withPrefix: STBPrefix forData;
 				register: self.
 			anSTBOutFiler nextPut: symbol]! !
-!Graphics.Color categoriesFor: #=!comparing!public! !
-!Graphics.Color categoriesFor: #actualColor!accessing!private! !
-!Graphics.Color categoriesFor: #adjustBrightness:!public! !
-!Graphics.Color categoriesFor: #adjustSaturation:brightness:!public! !
-!Graphics.Color categoriesFor: #alpha!accessing!public! !
-!Graphics.Color categoriesFor: #alpha:!accessing!public! !
-!Graphics.Color categoriesFor: #alphaMask!accessing!private! !
-!Graphics.Color categoriesFor: #argbClass!constants!private! !
-!Graphics.Color categoriesFor: #argbCode!accessing!public! !
-!Graphics.Color categoriesFor: #asColorRef!converting!public! !
-!Graphics.Color categoriesFor: #asCOLORREF!accessing!public! !
-!Graphics.Color categoriesFor: #asDword!converting!public! !
-!Graphics.Color categoriesFor: #asGrayscale!converting!public! !
-!Graphics.Color categoriesFor: #asParameter!converting!public! !
-!Graphics.Color categoriesFor: #asRGB!converting!public! !
-!Graphics.Color categoriesFor: #asUIntPtr!converting!public! !
-!Graphics.Color categoriesFor: #blue!accessing!public! !
-!Graphics.Color categoriesFor: #brightness!accessing!public! !
-!Graphics.Color categoriesFor: #brush!converting!public! !
-!Graphics.Color categoriesFor: #brushClass!constants!private! !
-!Graphics.Color categoriesFor: #chroma!accessing!public! !
-!Graphics.Color categoriesFor: #defaultPalette!constants!private! !
-!Graphics.Color categoriesFor: #faded!converting!public! !
-!Graphics.Color categoriesFor: #fadedBy:!converting!public! !
-!Graphics.Color categoriesFor: #green!accessing!public! !
-!Graphics.Color categoriesFor: #hash!comparing!public! !
-!Graphics.Color categoriesFor: #hls!converting!public! !
-!Graphics.Color categoriesFor: #hslSaturation!accessing!public! !
-!Graphics.Color categoriesFor: #hsv!converting!public! !
-!Graphics.Color categoriesFor: #hsvSaturation!accessing!public! !
-!Graphics.Color categoriesFor: #hue!accessing!public! !
-!Graphics.Color categoriesFor: #intensity:!converting!public! !
-!Graphics.Color categoriesFor: #isDefault!public!testing! !
-!Graphics.Color categoriesFor: #isGrayscale!public!testing! !
-!Graphics.Color categoriesFor: #isNone!public!testing! !
-!Graphics.Color categoriesFor: #isSelfEvaluating!public!testing! !
-!Graphics.Color categoriesFor: #isSymbolic!public!testing! !
-!Graphics.Color categoriesFor: #isTransparent!public!testing! !
-!Graphics.Color categoriesFor: #lighter!public! !
-!Graphics.Color categoriesFor: #lightness!public! !
-!Graphics.Color categoriesFor: #luminance!accessing!public! !
-!Graphics.Color categoriesFor: #name!accessing!public! !
-!Graphics.Color categoriesFor: #normalizedAlpha!public! !
-!Graphics.Color categoriesFor: #normalizedAlpha:!public! !
-!Graphics.Color categoriesFor: #normalizedBlue!accessing!public! !
-!Graphics.Color categoriesFor: #normalizedGreen!accessing!public! !
-!Graphics.Color categoriesFor: #normalizedRed!accessing!public! !
-!Graphics.Color categoriesFor: #pen!converting!public! !
-!Graphics.Color categoriesFor: #penClass!constants!private! !
-!Graphics.Color categoriesFor: #printOn:!printing!public! !
-!Graphics.Color categoriesFor: #red!accessing!public! !
-!Graphics.Color categoriesFor: #registerName:!private! !
-!Graphics.Color categoriesFor: #rgb!converting!public! !
-!Graphics.Color categoriesFor: #rgbaCode!accessing!public! !
-!Graphics.Color categoriesFor: #rgbCode!accessing!public! !
-!Graphics.Color categoriesFor: #setAlpha:!public! !
-!Graphics.Color categoriesFor: #species!accessing!public! !
-!Graphics.Color categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.Color categoriesForMethods!
+=!comparing!public! !
+actualColor!accessing!private! !
+adjustBrightness:!public! !
+adjustSaturation:brightness:!public! !
+alpha!accessing!public! !
+alpha:!accessing!public! !
+alphaMask!accessing!private! !
+argbClass!constants!private! !
+argbCode!accessing!public! !
+asColorRef!converting!public! !
+asCOLORREF!accessing!public! !
+asDword!converting!public! !
+asGrayscale!converting!public! !
+asParameter!converting!public! !
+asRGB!converting!public! !
+asUIntPtr!converting!public! !
+blue!accessing!public! !
+brightness!accessing!public! !
+brush!converting!public! !
+brushClass!constants!private! !
+chroma!accessing!public! !
+defaultPalette!constants!private! !
+faded!converting!public! !
+fadedBy:!converting!public! !
+green!accessing!public! !
+hash!comparing!public! !
+hls!converting!public! !
+hslSaturation!accessing!public! !
+hsv!converting!public! !
+hsvSaturation!accessing!public! !
+hue!accessing!public! !
+intensity:!converting!public! !
+isDefault!public!testing! !
+isGrayscale!public!testing! !
+isNone!public!testing! !
+isSelfEvaluating!public!testing! !
+isSymbolic!public!testing! !
+isTransparent!public!testing! !
+lighter!public! !
+lightness!public! !
+luminance!accessing!public! !
+name!accessing!public! !
+normalizedAlpha!public! !
+normalizedAlpha:!public! !
+normalizedBlue!accessing!public! !
+normalizedGreen!accessing!public! !
+normalizedRed!accessing!public! !
+pen!converting!public! !
+penClass!constants!private! !
+printOn:!printing!public! !
+red!accessing!public! !
+registerName:!private! !
+rgb!converting!public! !
+rgbaCode!accessing!public! !
+rgbCode!accessing!public! !
+setAlpha:!public! !
+species!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 Graphics.Color methodProtocol: #color attributes: #(#readOnly) selectors: #(#asParameter #asRGB #brush #pen)!
 
@@ -1421,207 +1423,209 @@ yellow
 
 yellowGreen
 	^self named: #yellowGreen! !
-!Graphics.Color class categoriesFor: #a:r:g:b:!instance creation!public! !
-!Graphics.Color class categoriesFor: #addNamed:color:!named colors!public! !
-!Graphics.Color class categoriesFor: #aliceBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #alpha:red:green:blue:!instance creation!public! !
-!Graphics.Color class categoriesFor: #antiqueWhite!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #applicationWorkspace!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #aqua!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #aquamarine!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #argbClass!constants!private! !
-!Graphics.Color class categoriesFor: #argbNoneCode!constants!public! !
-!Graphics.Color class categoriesFor: #azure!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #beige!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #bisque!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #black!common colors!public! !
-!Graphics.Color class categoriesFor: #blanchedAlmond!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #blue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #blueViolet!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #brightness:!instance creation!public! !
-!Graphics.Color class categoriesFor: #brown!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #burlyWood!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #byteSize!constants!public! !
-!Graphics.Color class categoriesFor: #cadetBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #caption!instance creation!public! !
-!Graphics.Color class categoriesFor: #chartreuse!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #chocolate!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #commonColors!common colors!constants!public! !
-!Graphics.Color class categoriesFor: #commonGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #coral!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #cornflowerBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #cornsilk!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #crimson!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #cyan!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkCyan!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkGoldenrod!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkGray!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkKhaki!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkMagenta!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkOliveGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkOrange!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkOrchid!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkRed!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkSalmon!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkSeaGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkShadow3d!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #darkSlateBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkSlateGray!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkTurquoise!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #darkViolet!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #deepPink!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #deepSkyBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #default!instance creation!named colors!public! !
-!Graphics.Color class categoriesFor: #dialog!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #dimGray!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #dodgerBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #face3d!instance creation!public! !
-!Graphics.Color class categoriesFor: #firebrick!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #floralWhite!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #forestGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #fromAddress:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fromArgbCode:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fromArray:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fromCOLORREF:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fromHTMLSpec:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fromInteger:!instance creation!private! !
-!Graphics.Color class categoriesFor: #fromNormalizedArray:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fromRgbaCode:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fromRgbCode:!instance creation!public! !
-!Graphics.Color class categoriesFor: #fuchsia!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #gainsboro!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #generateCommonColorAccessors!class initialization!private! !
-!Graphics.Color class categoriesFor: #ghostWhite!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #gold!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #goldenrod!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #gray!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #grayText!instance creation!public! !
-!Graphics.Color class categoriesFor: #green!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #greenYellow!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #h:s:l:!instance creation!public! !
-!Graphics.Color class categoriesFor: #h:s:l:alpha:!instance creation!public! !
-!Graphics.Color class categoriesFor: #h:s:v:!instance creation!public! !
-!Graphics.Color class categoriesFor: #h:s:v:alpha:!instance creation!public! !
-!Graphics.Color class categoriesFor: #highlight!instance creation!public! !
-!Graphics.Color class categoriesFor: #highlight3d!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #highlightText!instance creation!public! !
-!Graphics.Color class categoriesFor: #hls:!instance creation!public! !
-!Graphics.Color class categoriesFor: #honeydew!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #hotlight!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #hotPink!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #hsv:!instance creation!public! !
-!Graphics.Color class categoriesFor: #icon!constants!public! !
-!Graphics.Color class categoriesFor: #inactiveCaption!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #indexedColorClass!constants!public! !
-!Graphics.Color class categoriesFor: #indianRed!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #indigo!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #initialize!class initialization!development!public! !
-!Graphics.Color class categoriesFor: #initializeCommonColors!class initialization!private! !
-!Graphics.Color class categoriesFor: #ivory!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #khaki!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lavender!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lavenderBlush!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lawnGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lemonChiffon!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #light3d!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #lightBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightCoral!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightCyan!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightGoldenrodYellow!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightGray!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightPink!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightSalmon!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightSeaGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightSkyBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightSlateGray!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightSteelBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lightYellow!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #lime!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #limeGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #linen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #magenta!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #maroon!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumAquamarine!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumOrchid!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumPurple!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumSeaGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumSlateBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumSpringGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumTurquoise!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mediumVioletRed!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #menu!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #menuBar!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #menuHilight!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #menuText!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #midnightBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mintCream!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #mistyRose!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #moccasin!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #named:!instance creation!named colors!public! !
-!Graphics.Color class categoriesFor: #navajoWhite!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #navy!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #new!instance creation!public! !
-!Graphics.Color class categoriesFor: #none!instance creation!named colors!public! !
-!Graphics.Color class categoriesFor: #oldLace!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #olive!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #oliveDrab!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #orange!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #orangeRed!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #orchid!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #paleGoldenrod!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #paleGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #paleTurquoise!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #paleVioletRed!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #papayaWhip!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #peachPuff!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #peru!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #pink!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #plum!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #powderBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #purple!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #r:g:b:!instance creation!public! !
-!Graphics.Color class categoriesFor: #red!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #red:green:blue:!instance creation!public! !
-!Graphics.Color class categoriesFor: #removeNamed:!named colors!public! !
-!Graphics.Color class categoriesFor: #rgbClass!constants!instance creation!public! !
-!Graphics.Color class categoriesFor: #rosyBrown!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #royalBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #saddleBrown!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #salmon!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #sandyBrown!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #seaGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #seaShell!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #shadow3d!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #sienna!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #silver!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #skyBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #slateBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #slateGray!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #snow!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #springGreen!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Graphics.Color class categoriesFor: #steelBlue!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #systemColor:!instance creation!public! !
-!Graphics.Color class categoriesFor: #systemColorClass!constants!public! !
-!Graphics.Color class categoriesFor: #tan!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #teal!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #thistle!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #tomato!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #tooltip!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #tooltipText!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #transparent!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #turquoise!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #violet!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #wheat!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #white!common colors!public! !
-!Graphics.Color class categoriesFor: #whiteSmoke!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #window!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #windowText!named colors!public!system colors! !
-!Graphics.Color class categoriesFor: #withIndex:!instance creation!public! !
-!Graphics.Color class categoriesFor: #yellow!**auto generated**!common colors!public! !
-!Graphics.Color class categoriesFor: #yellowGreen!**auto generated**!common colors!public! !
+!Graphics.Color class categoriesForMethods!
+a:r:g:b:!instance creation!public! !
+addNamed:color:!named colors!public! !
+aliceBlue!**auto generated**!common colors!public! !
+alpha:red:green:blue:!instance creation!public! !
+antiqueWhite!**auto generated**!common colors!public! !
+applicationWorkspace!named colors!public!system colors! !
+aqua!**auto generated**!common colors!public! !
+aquamarine!**auto generated**!common colors!public! !
+argbClass!constants!private! !
+argbNoneCode!constants!public! !
+azure!**auto generated**!common colors!public! !
+beige!**auto generated**!common colors!public! !
+bisque!**auto generated**!common colors!public! !
+black!common colors!public! !
+blanchedAlmond!**auto generated**!common colors!public! !
+blue!**auto generated**!common colors!public! !
+blueViolet!**auto generated**!common colors!public! !
+brightness:!instance creation!public! !
+brown!**auto generated**!common colors!public! !
+burlyWood!**auto generated**!common colors!public! !
+byteSize!constants!public! !
+cadetBlue!**auto generated**!common colors!public! !
+caption!instance creation!public! !
+chartreuse!**auto generated**!common colors!public! !
+chocolate!**auto generated**!common colors!public! !
+commonColors!common colors!constants!public! !
+commonGreen!**auto generated**!common colors!public! !
+coral!**auto generated**!common colors!public! !
+cornflowerBlue!**auto generated**!common colors!public! !
+cornsilk!**auto generated**!common colors!public! !
+crimson!**auto generated**!common colors!public! !
+cyan!**auto generated**!common colors!public! !
+darkBlue!**auto generated**!common colors!public! !
+darkCyan!**auto generated**!common colors!public! !
+darkGoldenrod!**auto generated**!common colors!public! !
+darkGray!**auto generated**!common colors!public! !
+darkGreen!**auto generated**!common colors!public! !
+darkKhaki!**auto generated**!common colors!public! !
+darkMagenta!**auto generated**!common colors!public! !
+darkOliveGreen!**auto generated**!common colors!public! !
+darkOrange!**auto generated**!common colors!public! !
+darkOrchid!**auto generated**!common colors!public! !
+darkRed!**auto generated**!common colors!public! !
+darkSalmon!**auto generated**!common colors!public! !
+darkSeaGreen!**auto generated**!common colors!public! !
+darkShadow3d!named colors!public!system colors! !
+darkSlateBlue!**auto generated**!common colors!public! !
+darkSlateGray!**auto generated**!common colors!public! !
+darkTurquoise!**auto generated**!common colors!public! !
+darkViolet!**auto generated**!common colors!public! !
+deepPink!**auto generated**!common colors!public! !
+deepSkyBlue!**auto generated**!common colors!public! !
+default!instance creation!named colors!public! !
+dialog!named colors!public!system colors! !
+dimGray!**auto generated**!common colors!public! !
+dodgerBlue!**auto generated**!common colors!public! !
+face3d!instance creation!public! !
+firebrick!**auto generated**!common colors!public! !
+floralWhite!**auto generated**!common colors!public! !
+forestGreen!**auto generated**!common colors!public! !
+fromAddress:!instance creation!public! !
+fromArgbCode:!instance creation!public! !
+fromArray:!instance creation!public! !
+fromCOLORREF:!instance creation!public! !
+fromHTMLSpec:!instance creation!public! !
+fromInteger:!instance creation!private! !
+fromNormalizedArray:!instance creation!public! !
+fromRgbaCode:!instance creation!public! !
+fromRgbCode:!instance creation!public! !
+fuchsia!**auto generated**!common colors!public! !
+gainsboro!**auto generated**!common colors!public! !
+generateCommonColorAccessors!class initialization!private! !
+ghostWhite!**auto generated**!common colors!public! !
+gold!**auto generated**!common colors!public! !
+goldenrod!**auto generated**!common colors!public! !
+gray!**auto generated**!common colors!public! !
+grayText!instance creation!public! !
+green!**auto generated**!common colors!public! !
+greenYellow!**auto generated**!common colors!public! !
+h:s:l:!instance creation!public! !
+h:s:l:alpha:!instance creation!public! !
+h:s:v:!instance creation!public! !
+h:s:v:alpha:!instance creation!public! !
+highlight!instance creation!public! !
+highlight3d!named colors!public!system colors! !
+highlightText!instance creation!public! !
+hls:!instance creation!public! !
+honeydew!**auto generated**!common colors!public! !
+hotlight!named colors!public!system colors! !
+hotPink!**auto generated**!common colors!public! !
+hsv:!instance creation!public! !
+icon!constants!public! !
+inactiveCaption!named colors!public!system colors! !
+indexedColorClass!constants!public! !
+indianRed!**auto generated**!common colors!public! !
+indigo!**auto generated**!common colors!public! !
+initialize!class initialization!development!public! !
+initializeCommonColors!class initialization!private! !
+ivory!**auto generated**!common colors!public! !
+khaki!**auto generated**!common colors!public! !
+lavender!**auto generated**!common colors!public! !
+lavenderBlush!**auto generated**!common colors!public! !
+lawnGreen!**auto generated**!common colors!public! !
+lemonChiffon!**auto generated**!common colors!public! !
+light3d!named colors!public!system colors! !
+lightBlue!**auto generated**!common colors!public! !
+lightCoral!**auto generated**!common colors!public! !
+lightCyan!**auto generated**!common colors!public! !
+lightGoldenrodYellow!**auto generated**!common colors!public! !
+lightGray!**auto generated**!common colors!public! !
+lightGreen!**auto generated**!common colors!public! !
+lightPink!**auto generated**!common colors!public! !
+lightSalmon!**auto generated**!common colors!public! !
+lightSeaGreen!**auto generated**!common colors!public! !
+lightSkyBlue!**auto generated**!common colors!public! !
+lightSlateGray!**auto generated**!common colors!public! !
+lightSteelBlue!**auto generated**!common colors!public! !
+lightYellow!**auto generated**!common colors!public! !
+lime!**auto generated**!common colors!public! !
+limeGreen!**auto generated**!common colors!public! !
+linen!**auto generated**!common colors!public! !
+magenta!**auto generated**!common colors!public! !
+maroon!**auto generated**!common colors!public! !
+mediumAquamarine!**auto generated**!common colors!public! !
+mediumBlue!**auto generated**!common colors!public! !
+mediumOrchid!**auto generated**!common colors!public! !
+mediumPurple!**auto generated**!common colors!public! !
+mediumSeaGreen!**auto generated**!common colors!public! !
+mediumSlateBlue!**auto generated**!common colors!public! !
+mediumSpringGreen!**auto generated**!common colors!public! !
+mediumTurquoise!**auto generated**!common colors!public! !
+mediumVioletRed!**auto generated**!common colors!public! !
+menu!named colors!public!system colors! !
+menuBar!named colors!public!system colors! !
+menuHilight!named colors!public!system colors! !
+menuText!named colors!public!system colors! !
+midnightBlue!**auto generated**!common colors!public! !
+mintCream!**auto generated**!common colors!public! !
+mistyRose!**auto generated**!common colors!public! !
+moccasin!**auto generated**!common colors!public! !
+named:!instance creation!named colors!public! !
+navajoWhite!**auto generated**!common colors!public! !
+navy!**auto generated**!common colors!public! !
+new!instance creation!public! !
+none!instance creation!named colors!public! !
+oldLace!**auto generated**!common colors!public! !
+olive!**auto generated**!common colors!public! !
+oliveDrab!**auto generated**!common colors!public! !
+orange!**auto generated**!common colors!public! !
+orangeRed!**auto generated**!common colors!public! !
+orchid!**auto generated**!common colors!public! !
+paleGoldenrod!**auto generated**!common colors!public! !
+paleGreen!**auto generated**!common colors!public! !
+paleTurquoise!**auto generated**!common colors!public! !
+paleVioletRed!**auto generated**!common colors!public! !
+papayaWhip!**auto generated**!common colors!public! !
+peachPuff!**auto generated**!common colors!public! !
+peru!**auto generated**!common colors!public! !
+pink!**auto generated**!common colors!public! !
+plum!**auto generated**!common colors!public! !
+powderBlue!**auto generated**!common colors!public! !
+purple!**auto generated**!common colors!public! !
+r:g:b:!instance creation!public! !
+red!**auto generated**!common colors!public! !
+red:green:blue:!instance creation!public! !
+removeNamed:!named colors!public! !
+rgbClass!constants!instance creation!public! !
+rosyBrown!**auto generated**!common colors!public! !
+royalBlue!**auto generated**!common colors!public! !
+saddleBrown!**auto generated**!common colors!public! !
+salmon!**auto generated**!common colors!public! !
+sandyBrown!**auto generated**!common colors!public! !
+seaGreen!**auto generated**!common colors!public! !
+seaShell!**auto generated**!common colors!public! !
+shadow3d!named colors!public!system colors! !
+sienna!**auto generated**!common colors!public! !
+silver!**auto generated**!common colors!public! !
+skyBlue!**auto generated**!common colors!public! !
+slateBlue!**auto generated**!common colors!public! !
+slateGray!**auto generated**!common colors!public! !
+snow!**auto generated**!common colors!public! !
+springGreen!**auto generated**!common colors!public! !
+stbReadFrom:format:!binary filing!public! !
+steelBlue!**auto generated**!common colors!public! !
+systemColor:!instance creation!public! !
+systemColorClass!constants!public! !
+tan!**auto generated**!common colors!public! !
+teal!**auto generated**!common colors!public! !
+thistle!**auto generated**!common colors!public! !
+tomato!**auto generated**!common colors!public! !
+tooltip!named colors!public!system colors! !
+tooltipText!named colors!public!system colors! !
+transparent!**auto generated**!common colors!public! !
+turquoise!**auto generated**!common colors!public! !
+violet!**auto generated**!common colors!public! !
+wheat!**auto generated**!common colors!public! !
+white!common colors!public! !
+whiteSmoke!**auto generated**!common colors!public! !
+window!named colors!public!system colors! !
+windowText!named colors!public!system colors! !
+withIndex:!instance creation!public! !
+yellow!**auto generated**!common colors!public! !
+yellowGreen!**auto generated**!common colors!public! !
+!
 

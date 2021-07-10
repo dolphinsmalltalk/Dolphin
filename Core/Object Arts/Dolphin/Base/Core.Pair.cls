@@ -56,14 +56,16 @@ second: anObject
 	"Set the 2nd element of the pair."
 
 	second := anObject! !
-!Core.Pair categoriesFor: #=!comparing!public! !
-!Core.Pair categoriesFor: #first!accessing!public! !
-!Core.Pair categoriesFor: #first:!accessing!public! !
-!Core.Pair categoriesFor: #hash!comparing!public! !
-!Core.Pair categoriesFor: #last!accessing!public! !
-!Core.Pair categoriesFor: #printOn:!public! !
-!Core.Pair categoriesFor: #second!accessing!public! !
-!Core.Pair categoriesFor: #second:!accessing!public! !
+!Core.Pair categoriesForMethods!
+=!comparing!public! !
+first!accessing!public! !
+first:!accessing!public! !
+hash!comparing!public! !
+last!accessing!public! !
+printOn:!public! !
+second!accessing!public! !
+second:!accessing!public! !
+!
 
 !Core.Pair class methodsFor!
 
@@ -73,5 +75,7 @@ first: firstObject second: secondObject
 		first: firstObject;
 		second: secondObject;
 		yourself! !
-!Core.Pair class categoriesFor: #first:second:!instance creation!public! !
+!Core.Pair class categoriesForMethods!
+first:second:!instance creation!public! !
+!
 

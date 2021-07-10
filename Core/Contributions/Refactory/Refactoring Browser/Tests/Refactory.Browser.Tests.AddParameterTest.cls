@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddParameterTest'
 	instanceVariableNames: ''
@@ -170,15 +170,17 @@ testPrimitiveMethods
 				newSelector: #at:foo:
 				initializer: '1'.
 	self shouldFail: refactoring! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterForTwoArgumentMessage!public!tests! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesGlobalAndLiteral!public!tests! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesInstanceVariable!public! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesModelGlobal!public!tests! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testAddParameterThatReferencesSelf!public!tests! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testBadInitializationCode!failure tests!public! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testModelBadInitializationCode!failure tests!public! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testModelNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.AddParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
+!Refactory.Browser.Tests.AddParameterTest categoriesForMethods!
+setUp!public!set up! !
+testAddParameterForTwoArgumentMessage!public!tests! !
+testAddParameterThatReferencesGlobalAndLiteral!public!tests! !
+testAddParameterThatReferencesInstanceVariable!public! !
+testAddParameterThatReferencesModelGlobal!public!tests! !
+testAddParameterThatReferencesSelf!public!tests! !
+testBadInitializationCode!failure tests!public! !
+testModelBadInitializationCode!failure tests!public! !
+testModelNonExistantName!failure tests!public! !
+testNonExistantName!failure tests!public! !
+testPrimitiveMethods!failure tests!public! !
+!
 

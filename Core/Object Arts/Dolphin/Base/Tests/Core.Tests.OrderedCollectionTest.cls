@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SequencedGrowableCollectionTest subclass: #'Core.Tests.OrderedCollectionTest'
 	instanceVariableNames: ''
@@ -341,13 +341,15 @@ testStrongTalkTests
 				addLast: 1;
 				addLast: 3;
 				yourself)! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #collectionClass!constants!private! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #newCollection:!helpers!private! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #testFindFirst2!public!unit tests! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #testLast2!public!unit tests! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #testResize!public!unit tests! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #testSetSize!public!unit tests! !
-!Core.Tests.OrderedCollectionTest categoriesFor: #testStrongTalkTests!public!testing! !
+!Core.Tests.OrderedCollectionTest categoriesForMethods!
+collectionClass!constants!private! !
+newCollection:!helpers!private! !
+testFindFirst2!public!unit tests! !
+testFirst2!public!unit tests! !
+testFromToKeysAndValuesDo3!public!unit tests! !
+testLast2!public!unit tests! !
+testResize!public!unit tests! !
+testSetSize!public!unit tests! !
+testStrongTalkTests!public!testing! !
+!
 

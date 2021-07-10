@@ -326,52 +326,54 @@ updateWindow
 
 visit: anObject do: aNiladicValuable
 	aNiladicValuable value! !
-!UI.TranscriptShell categoriesFor: #<<!public! !
-!UI.TranscriptShell categoriesFor: #addToCommandRoute:!commands!public! !
-!UI.TranscriptShell categoriesFor: #alertUser!operations!private! !
-!UI.TranscriptShell categoriesFor: #basicPrint:!printing!private! !
-!UI.TranscriptShell categoriesFor: #clear!initializing!public! !
-!UI.TranscriptShell categoriesFor: #clearAll!initializing!public! !
-!UI.TranscriptShell categoriesFor: #close!operations!public! !
-!UI.TranscriptShell categoriesFor: #contents!accessing!public! !
-!UI.TranscriptShell categoriesFor: #cr!adding!public! !
-!UI.TranscriptShell categoriesFor: #createComponents!initializing!public! !
-!UI.TranscriptShell categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.TranscriptShell categoriesFor: #crtab!adding!public! !
-!UI.TranscriptShell categoriesFor: #crtab:!adding!public! !
-!UI.TranscriptShell categoriesFor: #defaultHelpId!public! !
-!UI.TranscriptShell categoriesFor: #display:!printing!public! !
-!UI.TranscriptShell categoriesFor: #fileFileIn!commands!public! !
-!UI.TranscriptShell categoriesFor: #flush!buffer!public! !
-!UI.TranscriptShell categoriesFor: #forgetSize!commands!public! !
-!UI.TranscriptShell categoriesFor: #hasOutputWindow!accessing!private! !
-!UI.TranscriptShell categoriesFor: #initialize!initializing!private! !
-!UI.TranscriptShell categoriesFor: #isEmpty!public!testing! !
-!UI.TranscriptShell categoriesFor: #locale!accessing!public! !
-!UI.TranscriptShell categoriesFor: #next:put:!operations!public! !
-!UI.TranscriptShell categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!UI.TranscriptShell categoriesFor: #nextPut:!adding!public! !
-!UI.TranscriptShell categoriesFor: #nextPutAll:!adding!public! !
-!UI.TranscriptShell categoriesFor: #notEmpty!public!testing! !
-!UI.TranscriptShell categoriesFor: #onCloseRequested:!event handling!public! !
-!UI.TranscriptShell categoriesFor: #onViewOpened!event handling!private! !
-!UI.TranscriptShell categoriesFor: #onViewRestored:!event handling!public! !
-!UI.TranscriptShell categoriesFor: #position!accessing!public! !
-!UI.TranscriptShell categoriesFor: #position:!accessing!public! !
-!UI.TranscriptShell categoriesFor: #print:!printing!public! !
-!UI.TranscriptShell categoriesFor: #queryCommand:!commands!private! !
-!UI.TranscriptShell categoriesFor: #rememberThisSize!commands!public! !
-!UI.TranscriptShell categoriesFor: #reset!positioning!public! !
-!UI.TranscriptShell categoriesFor: #setToEnd!operations!public! !
-!UI.TranscriptShell categoriesFor: #show!operations!public! !
-!UI.TranscriptShell categoriesFor: #show:!printing!public! !
-!UI.TranscriptShell categoriesFor: #smalltalkFilesType!constants!private! !
-!UI.TranscriptShell categoriesFor: #space!adding!public! !
-!UI.TranscriptShell categoriesFor: #stbSaveOn:!binary filing!public! !
-!UI.TranscriptShell categoriesFor: #tab!accessing!public! !
-!UI.TranscriptShell categoriesFor: #tab:!accessing!public! !
-!UI.TranscriptShell categoriesFor: #updateWindow!private!updating! !
-!UI.TranscriptShell categoriesFor: #visit:do:!public! !
+!UI.TranscriptShell categoriesForMethods!
+<<!public! !
+addToCommandRoute:!commands!public! !
+alertUser!operations!private! !
+basicPrint:!printing!private! !
+clear!initializing!public! !
+clearAll!initializing!public! !
+close!operations!public! !
+contents!accessing!public! !
+cr!adding!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+crtab!adding!public! !
+crtab:!adding!public! !
+defaultHelpId!public! !
+display:!printing!public! !
+fileFileIn!commands!public! !
+flush!buffer!public! !
+forgetSize!commands!public! !
+hasOutputWindow!accessing!private! !
+initialize!initializing!private! !
+isEmpty!public!testing! !
+locale!accessing!public! !
+next:put:!operations!public! !
+next:putAll:startingAt:!accessing!public! !
+nextPut:!adding!public! !
+nextPutAll:!adding!public! !
+notEmpty!public!testing! !
+onCloseRequested:!event handling!public! !
+onViewOpened!event handling!private! !
+onViewRestored:!event handling!public! !
+position!accessing!public! !
+position:!accessing!public! !
+print:!printing!public! !
+queryCommand:!commands!private! !
+rememberThisSize!commands!public! !
+reset!positioning!public! !
+setToEnd!operations!public! !
+show!operations!public! !
+show:!printing!public! !
+smalltalkFilesType!constants!private! !
+space!adding!public! !
+stbSaveOn:!binary filing!public! !
+tab!accessing!public! !
+tab:!accessing!public! !
+updateWindow!private!updating! !
+visit:do:!public! !
+!
 
 UI.TranscriptShell methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 UI.TranscriptShell methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
@@ -488,20 +490,22 @@ uninitialize
 	allow clean removal from the system."
 
 	self free! !
-!UI.TranscriptShell class categoriesFor: #create!instance creation!public! !
-!UI.TranscriptShell class categoriesFor: #current!instance creation!public! !
-!UI.TranscriptShell class categoriesFor: #default!instance creation!public! !
-!UI.TranscriptShell class categoriesFor: #defaultExtent!options!public! !
-!UI.TranscriptShell class categoriesFor: #defaultExtent:!options!public! !
-!UI.TranscriptShell class categoriesFor: #defaultView!constants!public! !
-!UI.TranscriptShell class categoriesFor: #displayOn:!displaying!public! !
-!UI.TranscriptShell class categoriesFor: #flashOnOutput!options!public! !
-!UI.TranscriptShell class categoriesFor: #flashOnOutput:!options!public! !
-!UI.TranscriptShell class categoriesFor: #free!public!realizing/unrealizing! !
-!UI.TranscriptShell class categoriesFor: #icon!constants!public! !
-!UI.TranscriptShell class categoriesFor: #initialize!development!initializing!private! !
-!UI.TranscriptShell class categoriesFor: #onStartup!events-session!private! !
-!UI.TranscriptShell class categoriesFor: #reset!operations!private! !
-!UI.TranscriptShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.TranscriptShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.TranscriptShell class categoriesForMethods!
+create!instance creation!public! !
+current!instance creation!public! !
+default!instance creation!public! !
+defaultExtent!options!public! !
+defaultExtent:!options!public! !
+defaultView!constants!public! !
+displayOn:!displaying!public! !
+flashOnOutput!options!public! !
+flashOnOutput:!options!public! !
+free!public!realizing/unrealizing! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+onStartup!events-session!private! !
+reset!operations!private! !
+resource_Default_view!public!resources-views! !
+uninitialize!class hierarchy-removing!private! !
+!
 

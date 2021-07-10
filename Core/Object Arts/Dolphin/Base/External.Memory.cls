@@ -82,15 +82,17 @@ size
 	sz := self allocator GetSize: self.
 	sz = 16rFFFFFFFF ifTrue: [self error: 'bad heap block'].
 	^sz! !
-!External.Memory categoriesFor: #allocate:!public!realizing/unrealizing! !
-!External.Memory categoriesFor: #allocator!constants!private! !
-!External.Memory categoriesFor: #basicAllocate:!initializing!private! !
-!External.Memory categoriesFor: #basicFree!private!realizing/unrealizing! !
-!External.Memory categoriesFor: #finalize!finalizing!private! !
-!External.Memory categoriesFor: #free!public!realizing/unrealizing! !
-!External.Memory categoriesFor: #reallocate:!public!realizing/unrealizing! !
-!External.Memory categoriesFor: #resize:!mutating!public! !
-!External.Memory categoriesFor: #size!accessing!public! !
+!External.Memory categoriesForMethods!
+allocate:!public!realizing/unrealizing! !
+allocator!constants!private! !
+basicAllocate:!initializing!private! !
+basicFree!private!realizing/unrealizing! !
+finalize!finalizing!private! !
+free!public!realizing/unrealizing! !
+reallocate:!public!realizing/unrealizing! !
+resize:!mutating!public! !
+size!accessing!public! !
+!
 
 !External.Memory class methodsFor!
 
@@ -225,22 +227,24 @@ Realloc: anAddress cb: anInteger
 		dwFlags: 0
 		lpMem: anAddress
 		dwBytes: anInteger) asInteger! !
-!External.Memory class categoriesFor: #Alloc:!operations!private! !
-!External.Memory class categoriesFor: #allocator!accessing!private! !
-!External.Memory class categoriesFor: #clear:!public!realizing/unrealizing! !
-!External.Memory class categoriesFor: #copyBytesToGlobalHeap:!operations!public! !
-!External.Memory class categoriesFor: #DidAlloc:!COM Interfaces-OBJIDL.IMalloc!private! !
-!External.Memory class categoriesFor: #free:!operations!public! !
-!External.Memory class categoriesFor: #Free:!COM Interfaces-OBJIDL.IMalloc!private! !
-!External.Memory class categoriesFor: #fromInteger:!instance creation!public! !
-!External.Memory class categoriesFor: #fromString:!instance creation!public! !
-!External.Memory class categoriesFor: #GetSize:!COM Interfaces-OBJIDL.IMalloc!private! !
-!External.Memory class categoriesFor: #HeapMinimize!COM Interfaces-OBJIDL.IMalloc!private! !
-!External.Memory class categoriesFor: #new!instance creation!public! !
-!External.Memory class categoriesFor: #new:!instance creation!public! !
-!External.Memory class categoriesFor: #newFixed:!instance creation!public! !
-!External.Memory class categoriesFor: #processHeap!accessing!private! !
-!External.Memory class categoriesFor: #Realloc:cb:!COM Interfaces-OBJIDL.IMalloc!private! !
+!External.Memory class categoriesForMethods!
+Alloc:!operations!private! !
+allocator!accessing!private! !
+clear:!public!realizing/unrealizing! !
+copyBytesToGlobalHeap:!operations!public! !
+DidAlloc:!COM Interfaces-OBJIDL.IMalloc!private! !
+free:!operations!public! !
+Free:!COM Interfaces-OBJIDL.IMalloc!private! !
+fromInteger:!instance creation!public! !
+fromString:!instance creation!public! !
+GetSize:!COM Interfaces-OBJIDL.IMalloc!private! !
+HeapMinimize!COM Interfaces-OBJIDL.IMalloc!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+newFixed:!instance creation!public! !
+processHeap!accessing!private! !
+Realloc:cb:!COM Interfaces-OBJIDL.IMalloc!private! !
+!
 
 External.Memory class methodProtocol: #IMalloc attributes: #(#readOnly) selectors: #(#Alloc: #DidAlloc: #GetSize: #HeapMinimize #Realloc:cb:)!
 

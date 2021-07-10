@@ -182,18 +182,20 @@ UnregisterServer
 
 	^hr
 ! !
-!Kernel.IPDolphin categoriesFor: #canUnloadNow!COM Interfaces-IInProcDolphin!public! !
-!Kernel.IPDolphin categoriesFor: #CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
-!Kernel.IPDolphin categoriesFor: #coclasses!enumerating!private! !
-!Kernel.IPDolphin categoriesFor: #GetClassObject:riid:ppv:!COM Interfaces-IInProcDolphin!private! !
-!Kernel.IPDolphin categoriesFor: #initialize!initializing!private! !
-!Kernel.IPDolphin categoriesFor: #OnInitialize!COM Interfaces-IInProcDolphin!private! !
-!Kernel.IPDolphin categoriesFor: #OnShutdown!COM Interfaces-IInProcDolphin!private! !
-!Kernel.IPDolphin categoriesFor: #onStartup!events-session!private! !
-!Kernel.IPDolphin categoriesFor: #pullPlug!operations!private! !
-!Kernel.IPDolphin categoriesFor: #RegisterServer!COM Interfaces-IInProcDolphin!private! !
-!Kernel.IPDolphin categoriesFor: #supportedInterfaces!constants!public! !
-!Kernel.IPDolphin categoriesFor: #UnregisterServer!COM Interfaces-IInProcDolphin!private! !
+!Kernel.IPDolphin categoriesForMethods!
+canUnloadNow!COM Interfaces-IInProcDolphin!public! !
+CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
+coclasses!enumerating!private! !
+GetClassObject:riid:ppv:!COM Interfaces-IInProcDolphin!private! !
+initialize!initializing!private! !
+OnInitialize!COM Interfaces-IInProcDolphin!private! !
+OnShutdown!COM Interfaces-IInProcDolphin!private! !
+onStartup!events-session!private! !
+pullPlug!operations!private! !
+RegisterServer!COM Interfaces-IInProcDolphin!private! !
+supportedInterfaces!constants!public! !
+UnregisterServer!COM Interfaces-IInProcDolphin!private! !
+!
 
 Kernel.IPDolphin methodProtocol: #'IPDolphin.IInProcDolphin' attributes: #(#readOnly) selectors: #(#CanUnloadNow #GetClassObject:riid:ppv: #OnInitialize #OnShutdown #RegisterServer #UnregisterServer)!
 
@@ -228,9 +230,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset.! !
-!Kernel.IPDolphin class categoriesFor: #current!instance creation!public! !
-!Kernel.IPDolphin class categoriesFor: #initialize!initializing!private! !
-!Kernel.IPDolphin class categoriesFor: #new!object creation!private! !
-!Kernel.IPDolphin class categoriesFor: #reset!instance creation!private! !
-!Kernel.IPDolphin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.IPDolphin class categoriesForMethods!
+current!instance creation!public! !
+initialize!initializing!private! !
+new!object creation!private! !
+reset!instance creation!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

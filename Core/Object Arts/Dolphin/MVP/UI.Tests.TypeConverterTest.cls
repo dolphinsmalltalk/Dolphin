@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.TypeConverterTest'
 	instanceVariableNames: 'edit'
@@ -102,12 +102,14 @@ testLeftNullValue
 		updateModel.
 	self assertIsNil: edit model value.
 	self assert: edit text isEmpty	"#1257"! !
-!UI.Tests.TypeConverterTest categoriesFor: #setUp!public!unit tests! !
-!UI.Tests.TypeConverterTest categoriesFor: #tearDown!public!unit tests! !
-!UI.Tests.TypeConverterTest categoriesFor: #testInvalidBooleanFormat!public!unit tests! !
-!UI.Tests.TypeConverterTest categoriesFor: #testInvalidDateFormat!public!unit tests! !
-!UI.Tests.TypeConverterTest categoriesFor: #testInvalidDurationFormat!public!unit tests! !
-!UI.Tests.TypeConverterTest categoriesFor: #testInvalidNumberFormat!public!unit tests! !
-!UI.Tests.TypeConverterTest categoriesFor: #testInvalidTimeFormat!public!unit tests! !
-!UI.Tests.TypeConverterTest categoriesFor: #testLeftNullValue!public!unit tests! !
+!UI.Tests.TypeConverterTest categoriesForMethods!
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testInvalidBooleanFormat!public!unit tests! !
+testInvalidDateFormat!public!unit tests! !
+testInvalidDurationFormat!public!unit tests! !
+testInvalidNumberFormat!public!unit tests! !
+testInvalidTimeFormat!public!unit tests! !
+testLeftNullValue!public!unit tests! !
+!
 

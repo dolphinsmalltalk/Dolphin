@@ -80,20 +80,24 @@ suggestedBinding
 	^(Structure classForGUID: id ifNone: []) 
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:structClass | structClass environment associationAt: structClass name]! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #byteSize!accessing!public! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #classDesc!constants!private! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #isAnonymous!public!testing! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #isStructure!public!testing! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #members!enumerating!public! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #name!accessing!public! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #recordInfoIfNone:!accessing!public! !
-!OS.COM.StructureTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
+!OS.COM.StructureTypeAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+byteSize!accessing!public! !
+classDesc!constants!private! !
+isAnonymous!public!testing! !
+isStructure!public!testing! !
+members!enumerating!public! !
+name!accessing!public! !
+recordInfoIfNone:!accessing!public! !
+suggestedBinding!accessing!private! !
+!
 
 !OS.COM.StructureTypeAnalyzer class methodsFor!
 
 initialize
 	BuiltIns := LookupTable new.
 	{Handle} do: [:each | BuiltIns at: each guid put: each]! !
-!OS.COM.StructureTypeAnalyzer class categoriesFor: #initialize!initializing!private! !
+!OS.COM.StructureTypeAnalyzer class categoriesForMethods!
+initialize!initializing!private! !
+!
 

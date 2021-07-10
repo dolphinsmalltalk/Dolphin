@@ -13,5 +13,7 @@ Refactory.Browser.PatternBlockToken comment: ''!
 
 isPatternBlock
 	^true! !
-!Refactory.Browser.PatternBlockToken categoriesFor: #isPatternBlock!public!testing! !
+!Refactory.Browser.PatternBlockToken categoriesForMethods!
+isPatternBlock!public!testing! !
+!
 

@@ -13,5 +13,7 @@ Refactory.Browser.ParseTreeEnvironment comment: ''!
 
 matcher: aParseTreeSearcher
 	matcher := aParseTreeSearcher! !
-!Refactory.Browser.ParseTreeEnvironment categoriesFor: #matcher:!initialize/release!public! !
+!Refactory.Browser.ParseTreeEnvironment categoriesForMethods!
+matcher:!initialize/release!public! !
+!
 

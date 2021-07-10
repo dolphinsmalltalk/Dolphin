@@ -638,69 +638,71 @@ topFrame
 	^self isActive 
 		ifTrue: [(self frameAtAddress: thisContext) sender]
 		ifFalse: [self suspendedFrame]! !
-!Core.Process categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.Process categoriesFor: #at:put:!accessing!public! !
-!Core.Process categoriesFor: #basicAt:put:!accessing!private! !
-!Core.Process categoriesFor: #basicSuspendedFrame!private!stack frames! !
-!Core.Process categoriesFor: #callbackDepth!accessing!private! !
-!Core.Process categoriesFor: #canDebug!development!public!testing! !
-!Core.Process categoriesFor: #debugger!accessing!development!private! !
-!Core.Process categoriesFor: #debugger:!accessing!development!private! !
-!Core.Process categoriesFor: #debugStream!accessing!public! !
-!Core.Process categoriesFor: #errno!accessing!public! !
-!Core.Process categoriesFor: #exceptionEnvironment!accessing!debugger-step over!public! !
-!Core.Process categoriesFor: #exceptionEnvironment:!accessing!debugger-step over!private! !
-!Core.Process categoriesFor: #finalize!finalizing!private! !
-!Core.Process categoriesFor: #fpControl!accessing!public! !
-!Core.Process categoriesFor: #fpControl:!accessing!private! !
-!Core.Process categoriesFor: #frameAtAddress:!private!stack frames! !
-!Core.Process categoriesFor: #frameAtIndex:!private!stack frames! !
-!Core.Process categoriesFor: #frameClass!private!stack frames! !
-!Core.Process categoriesFor: #id!accessing!public! !
-!Core.Process categoriesFor: #indexOfSP:!private!stack frames! !
-!Core.Process categoriesFor: #interruptWith:!interrupts!private! !
-!Core.Process categoriesFor: #isActive!public!states-testing! !
-!Core.Process categoriesFor: #isAlive!public!states-testing! !
-!Core.Process categoriesFor: #isAlive:!private!states-testing! !
-!Core.Process categoriesFor: #isDead!public!states-testing! !
-!Core.Process categoriesFor: #isDebuggee!private!states-testing! !
-!Core.Process categoriesFor: #isInCallback!private!testing! !
-!Core.Process categoriesFor: #isMain!public!testing! !
-!Core.Process categoriesFor: #isReady!public!states-testing! !
-!Core.Process categoriesFor: #isSuspended!public!states-testing! !
-!Core.Process categoriesFor: #isTerminated!public!states-testing! !
-!Core.Process categoriesFor: #isWaiting!public!states-testing! !
-!Core.Process categoriesFor: #kill!public!states-changing! !
-!Core.Process categoriesFor: #lastError!accessing!public! !
-!Core.Process categoriesFor: #name!accessing!public! !
-!Core.Process categoriesFor: #name:!accessing!public! !
-!Core.Process categoriesFor: #primTerminate!private!states-changing! !
-!Core.Process categoriesFor: #printOn:!printing!public! !
-!Core.Process categoriesFor: #priority!accessing!public! !
-!Core.Process categoriesFor: #priority:!accessing!public! !
-!Core.Process categoriesFor: #queueInterrupt:!interrupts!public! !
-!Core.Process categoriesFor: #queueInterrupt:with:!interrupts!public! !
-!Core.Process categoriesFor: #resetFloatingPoint!helpers!private! !
-!Core.Process categoriesFor: #resume!public!states-changing! !
-!Core.Process categoriesFor: #resume:!public!states-changing! !
-!Core.Process categoriesFor: #resumeUnconditionally!public!states-changing! !
-!Core.Process categoriesFor: #setFpControl:mask:!accessing!public! !
-!Core.Process categoriesFor: #setLaunchBlock:!initializing!private! !
-!Core.Process categoriesFor: #setPriority:!accessing!private! !
-!Core.Process categoriesFor: #shutdown!private!states-changing! !
-!Core.Process categoriesFor: #size!accessing!public! !
-!Core.Process categoriesFor: #spOfIndex:!private!stack frames! !
-!Core.Process categoriesFor: #stackTrace:!helpers!private! !
-!Core.Process categoriesFor: #state!private!states-changing! !
-!Core.Process categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.Process categoriesFor: #suspend!public!states-changing! !
-!Core.Process categoriesFor: #suspendedFrame!private!stack frames! !
-!Core.Process categoriesFor: #suspendedFrame:!private!stack frames! !
-!Core.Process categoriesFor: #suspendingList!accessing!private! !
-!Core.Process categoriesFor: #suspendUnconditionally!public!states-changing! !
-!Core.Process categoriesFor: #terminate!public!states-changing! !
-!Core.Process categoriesFor: #threadSync!accessing!private! !
-!Core.Process categoriesFor: #topFrame!private!stack frames! !
+!Core.Process categoriesForMethods!
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+basicAt:put:!accessing!private! !
+basicSuspendedFrame!private!stack frames! !
+callbackDepth!accessing!private! !
+canDebug!development!public!testing! !
+debugger!accessing!development!private! !
+debugger:!accessing!development!private! !
+debugStream!accessing!public! !
+errno!accessing!public! !
+exceptionEnvironment!accessing!debugger-step over!public! !
+exceptionEnvironment:!accessing!debugger-step over!private! !
+finalize!finalizing!private! !
+fpControl!accessing!public! !
+fpControl:!accessing!private! !
+frameAtAddress:!private!stack frames! !
+frameAtIndex:!private!stack frames! !
+frameClass!private!stack frames! !
+id!accessing!public! !
+indexOfSP:!private!stack frames! !
+interruptWith:!interrupts!private! !
+isActive!public!states-testing! !
+isAlive!public!states-testing! !
+isAlive:!private!states-testing! !
+isDead!public!states-testing! !
+isDebuggee!private!states-testing! !
+isInCallback!private!testing! !
+isMain!public!testing! !
+isReady!public!states-testing! !
+isSuspended!public!states-testing! !
+isTerminated!public!states-testing! !
+isWaiting!public!states-testing! !
+kill!public!states-changing! !
+lastError!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+primTerminate!private!states-changing! !
+printOn:!printing!public! !
+priority!accessing!public! !
+priority:!accessing!public! !
+queueInterrupt:!interrupts!public! !
+queueInterrupt:with:!interrupts!public! !
+resetFloatingPoint!helpers!private! !
+resume!public!states-changing! !
+resume:!public!states-changing! !
+resumeUnconditionally!public!states-changing! !
+setFpControl:mask:!accessing!public! !
+setLaunchBlock:!initializing!private! !
+setPriority:!accessing!private! !
+shutdown!private!states-changing! !
+size!accessing!public! !
+spOfIndex:!private!stack frames! !
+stackTrace:!helpers!private! !
+state!private!states-changing! !
+stbSaveOn:!binary filing!public! !
+suspend!public!states-changing! !
+suspendedFrame!private!stack frames! !
+suspendedFrame:!private!stack frames! !
+suspendingList!accessing!private! !
+suspendUnconditionally!public!states-changing! !
+terminate!public!states-changing! !
+threadSync!accessing!private! !
+topFrame!private!stack frames! !
+!
 
 !Core.Process class methodsFor!
 
@@ -762,7 +764,9 @@ new
 	"Processes should be created by sending one of the #fork family of messages to a block."
 
 	^self shouldNotImplement! !
-!Core.Process class categoriesFor: #forContext:priority:maxStack:!instance creation!private! !
-!Core.Process class categoriesFor: #initialize!development!initializing!public! !
-!Core.Process class categoriesFor: #new!instance creation!public! !
+!Core.Process class categoriesForMethods!
+forContext:priority:maxStack:!instance creation!private! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+!
 

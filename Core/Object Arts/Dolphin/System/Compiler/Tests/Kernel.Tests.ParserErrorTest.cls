@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.AbstractParserErrorTest subclass: #'Kernel.Tests.ParserErrorTest'
 	instanceVariableNames: 'semanticAnalyserClass'
@@ -342,32 +342,34 @@ writtenNotReadRange: aString
 	| start |
 	start := aString lastIndexOf: $_.
 	^start to: start + 3! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #ifNil:!control flow!public! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #lexicalErrorFrom:range:line:code:!helpers!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #parseExpression:in:!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #parseMethod:in:!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #parserClass!constants!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #scannerClass!constants!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #setUp!public!running! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsExpectCodePoint!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsPrimitivesCloseTagRecovery!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifiedReferenceInvalidName!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifiedReferenceMetaNotClosed!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifiedReferenceNotClosed!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsQualifierReferenceEmpty!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testParserErrors!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!private! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarningUnreachable!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #testWarnRestrictedSelector!public!unit tests! !
-!Kernel.Tests.ParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
+!Kernel.Tests.ParserErrorTest categoriesForMethods!
+ifNil:!control flow!public! !
+ifNotNil:ifNil:!control flow!public! !
+lexicalError:range:line:code:!helpers!private! !
+lexicalErrorFrom:range:line:code:!helpers!private! !
+parseExpression:in:!private! !
+parseMethod:in:!private! !
+parserClass!constants!private! !
+scannerClass!constants!private! !
+setUp!public!running! !
+testErrorsBadCodePoint!public!unit tests! !
+testErrorsExpectCodePoint!public!unit tests! !
+testErrorsLexicalBadNumber!public!unit tests! !
+testErrorsNonsenseAtEndOfExpression!public!unit tests! !
+testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+testErrorsPrimitivesCloseTagRecovery!public!unit tests! !
+testErrorsQualifiedReferenceInvalidName!public!unit tests! !
+testErrorsQualifiedReferenceMetaNotClosed!public!unit tests! !
+testErrorsQualifiedReferenceNotClosed!public!unit tests! !
+testErrorsQualifierReferenceEmpty!public!unit tests! !
+testErrorsTempsNotClosedRecovery!public!unit tests! !
+testParserErrors!public!unit tests! !
+testWarningSelfSendNotImplemented!private! !
+testWarningSupersendNotImplemented!private! !
+testWarningUnreachable!public!unit tests! !
+testWarnNiladicExceptionHandler!public!unit tests! !
+testWarnNonNiladicGuardedBlock!public!unit tests! !
+testWarnRestrictedSelector!public!unit tests! !
+writtenNotReadRange:!helpers!private! !
+!
 

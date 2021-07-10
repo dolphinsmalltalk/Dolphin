@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #SequencedStreamHelper
 	instanceVariableNames: ''
@@ -92,21 +92,25 @@ testXsetToEnd
 		should: [:r | "r UNSPECIFIED"  self canonicalObject position
 								= self canonicalObject contents size]
 		conformTo: self protocol selector: #'setToEnd'.! !
-!SequencedStreamHelper categoriesFor: #canonicalObject!public! !
-!SequencedStreamHelper categoriesFor: #object!public! !
-!SequencedStreamHelper categoriesFor: #object:!public! !
-!SequencedStreamHelper categoriesFor: #testXclose!public! !
-!SequencedStreamHelper categoriesFor: #testXcontents!public! !
-!SequencedStreamHelper categoriesFor: #testXisEmpty!public! !
-!SequencedStreamHelper categoriesFor: #testXposition!public! !
-!SequencedStreamHelper categoriesFor: #testXpositionX!public! !
-!SequencedStreamHelper categoriesFor: #testXreset!public! !
-!SequencedStreamHelper categoriesFor: #testXsetToEnd!public! !
+!SequencedStreamHelper categoriesForMethods!
+canonicalObject!public! !
+object!public! !
+object:!public! !
+testXclose!public! !
+testXcontents!public! !
+testXisEmpty!public! !
+testXposition!public! !
+testXpositionX!public! !
+testXreset!public! !
+testXsetToEnd!public! !
+!
 
 !SequencedStreamHelper class methodsFor!
 
 initialize
 	"SequencedStreamHelper  initialize"
 	super initialize! !
-!SequencedStreamHelper class categoriesFor: #initialize!public! !
+!SequencedStreamHelper class categoriesForMethods!
+initialize!public! !
+!
 

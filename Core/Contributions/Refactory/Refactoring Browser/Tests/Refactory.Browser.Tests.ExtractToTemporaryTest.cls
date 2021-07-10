@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractToTemporaryTest'
 	instanceVariableNames: ''
@@ -77,9 +77,11 @@ testNonExistantSelector
 				to: 'asdf'
 				from: #checkClass1:
 				in: RefactoryTestDataApp)! !
-!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
-!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testBadName!failure tests!public! !
-!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryForLastStatementInBlock!public!tests! !
-!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testExtractToTemporaryInsideBlock!public!tests! !
-!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!Refactory.Browser.Tests.ExtractToTemporaryTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testBadName!failure tests!public! !
+testExtractToTemporaryForLastStatementInBlock!public!tests! !
+testExtractToTemporaryInsideBlock!public!tests! !
+testNonExistantSelector!failure tests!public! !
+!
 

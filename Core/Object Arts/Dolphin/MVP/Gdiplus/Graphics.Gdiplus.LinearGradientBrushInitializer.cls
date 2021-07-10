@@ -40,6 +40,8 @@ rect: rect color1: color1 color2: color2 mode: aLinearGradientMode
 		color1: color1
 		color2: color2
 		mode: aLinearGradientMode! !
-!Graphics.Gdiplus.LinearGradientBrushInitializer class categoriesFor: #point1:point2:color1:color2:!instance creation!public! !
-!Graphics.Gdiplus.LinearGradientBrushInitializer class categoriesFor: #rect:color1:color2:mode:!instance creation!public! !
+!Graphics.Gdiplus.LinearGradientBrushInitializer class categoriesForMethods!
+point1:point2:color1:color2:!instance creation!public! !
+rect:color1:color2:mode:!instance creation!public! !
+!
 

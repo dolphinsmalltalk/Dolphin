@@ -22,7 +22,9 @@ includesMethod: aCompiledMethod
 	The 'All' methods category includes all methods!!"
 
 	^true! !
-!Tools.AllMethodsCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.AllMethodsCategory categoriesForMethods!
+includesMethod:!public!testing! !
+!
 
 !Tools.AllMethodsCategory class methodsFor!
 
@@ -48,8 +50,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!Tools.AllMethodsCategory class categoriesFor: #current!accessing!public! !
-!Tools.AllMethodsCategory class categoriesFor: #initialize!initializing!private! !
-!Tools.AllMethodsCategory class categoriesFor: #newNamed:!instance creation!private! !
-!Tools.AllMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.AllMethodsCategory class categoriesForMethods!
+current!accessing!public! !
+initialize!initializing!private! !
+newNamed:!instance creation!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

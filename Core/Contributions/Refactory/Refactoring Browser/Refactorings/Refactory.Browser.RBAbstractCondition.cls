@@ -48,14 +48,16 @@ errorStringFor: aBoolean
 
 not
 	^RBNegationCondition on: self! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #&!logical operations!public! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #|!logical operations!public! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #check!checking!public! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #errorBlock!accessing!public! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #errorBlockFor:!private! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #errorMacro!private! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #errorMacro:!private! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #errorString!accessing!public! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #errorStringFor:!private! !
-!Refactory.Browser.RBAbstractCondition categoriesFor: #not!logical operations!public! !
+!Refactory.Browser.RBAbstractCondition categoriesForMethods!
+&!logical operations!public! !
+|!logical operations!public! !
+check!checking!public! !
+errorBlock!accessing!public! !
+errorBlockFor:!private! !
+errorMacro!private! !
+errorMacro:!private! !
+errorString!accessing!public! !
+errorStringFor:!private! !
+not!logical operations!public! !
+!
 

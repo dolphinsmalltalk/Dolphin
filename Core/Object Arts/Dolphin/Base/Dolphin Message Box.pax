@@ -64,7 +64,9 @@ showMessage: aString style: anInteger
 				isSuppressible: true].
 	mb setStyle: anInteger maskedBy: MB_TYPEMASK.
 	^mb warning: aString! !
-!Core.Notification categoriesFor: #showMessage:style:!helpers!private! !
+!Core.Notification categoriesForMethods!
+showMessage:style:!helpers!private! !
+!
 
 !OS.ShlwapiLibrary methodsFor!
 
@@ -82,7 +84,9 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 
 	<stdcall: sdword SHMessageBoxCheckW handle lpwstr lpwstr dword sdword lpwstr>
 	^self invalidCall: _failureCode! !
-!OS.ShlwapiLibrary categoriesFor: #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesForMethods!
+shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
+!
 
 "End of package definition"!
 

@@ -34,7 +34,9 @@ removeFromSystem
 	This class is critical to system operation and must not be removed."
 
 	^self shouldNotImplement! !
-!Kernel.DeadObject class categoriesFor: #current!accessing!booting!public! !
-!Kernel.DeadObject class categoriesFor: #initialize!booting!development!initializing!private! !
-!Kernel.DeadObject class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
+!Kernel.DeadObject class categoriesForMethods!
+current!accessing!booting!public! !
+initialize!booting!development!initializing!private! !
+removeFromSystem!class hierarchy-removing!private! !
+!
 

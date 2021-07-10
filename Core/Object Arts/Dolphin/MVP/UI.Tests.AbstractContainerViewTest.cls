@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractContainerViewTest'
 	instanceVariableNames: 'containerView'
@@ -172,20 +172,22 @@ waitForScreenUpdate
 	"5 timesRepeat: 
 			[SessionManager current inputState pumpMessages.
 			Processor sleep: 100]"! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #backgroundColor!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #bitmapOfPrintView:!helpers!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #borderColor!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #borderRectangleOf:!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #checkBorderedNcRectangle:!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #checkPoints:inBitmap:color:!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #checkRectangle:inBitmap:color:!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #containerClass!private! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #initialParentExtent!private!Running! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #initialParentRect!private!Running! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #setUp!public!Running! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #tearDown!public!Running! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #testBorderedNcRectangle!public! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #testNcCalcSize!public! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #testNonBorderedNcRectangle!public! !
-!UI.Tests.AbstractContainerViewTest categoriesFor: #waitForScreenUpdate!private! !
+!UI.Tests.AbstractContainerViewTest categoriesForMethods!
+backgroundColor!private! !
+bitmapOfPrintView:!helpers!private! !
+borderColor!private! !
+borderRectangleOf:!private! !
+checkBorderedNcRectangle:!private! !
+checkPoints:inBitmap:color:!private! !
+checkRectangle:inBitmap:color:!private! !
+containerClass!private! !
+initialParentExtent!private!Running! !
+initialParentRect!private!Running! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testBorderedNcRectangle!public! !
+testNcCalcSize!public! !
+testNonBorderedNcRectangle!public! !
+waitForScreenUpdate!private! !
+!
 

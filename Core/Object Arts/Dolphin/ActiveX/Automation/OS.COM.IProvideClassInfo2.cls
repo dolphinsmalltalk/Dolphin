@@ -36,8 +36,10 @@ GetGUID: dwGuidKind pGUID: pGUID
 
 	<virtual stdcall: hresult 5 dword guid*>
 	^self invalidCall: _failureCode! !
-!OS.COM.IProvideClassInfo2 categoriesFor: #getGUID:!**auto generated**!methods!public! !
-!OS.COM.IProvideClassInfo2 categoriesFor: #GetGUID:pGUID:!**auto generated**!COM Interfaces-IProvideClassInfo2!private! !
+!OS.COM.IProvideClassInfo2 categoriesForMethods!
+getGUID:!**auto generated**!methods!public! !
+GetGUID:pGUID:!**auto generated**!COM Interfaces-IProvideClassInfo2!private! !
+!
 
 OS.COM.IProvideClassInfo2 methodProtocol: #IProvideClassInfo2 attributes: #(#readOnly) selectors: #(#GetClassInfo: #GetGUID:pGUID:)!
 
@@ -52,5 +54,7 @@ defineFunctions
 		defineFunction: #GetGUID:pGUID:
 			argumentTypes: 'dword GUID*'
 ! !
-!OS.COM.IProvideClassInfo2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IProvideClassInfo2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.ImageTests'
 	instanceVariableNames: ''
@@ -38,9 +38,11 @@ testSaveToFileJpeg
 	"GdiplusImage>>#saveToFile: should be matching against GpImageCodecInfo's FilenameExtension ... not its MimeType"
 
 	model saveToFile: (File temporaryFilenameWithPrefix: 'gdipTests') , '.jpg'! !
-!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testAsByteArrayRoundTrip!public!unit tests! !
-!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testClone!public!unit tests! !
-!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testExtent!public!unit tests! !
-!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testJpegContentType!public!unit tests! !
-!Graphics.Gdiplus.Tests.ImageTests categoriesFor: #testSaveToFileJpeg!public!unit tests! !
+!Graphics.Gdiplus.Tests.ImageTests categoriesForMethods!
+testAsByteArrayRoundTrip!public!unit tests! !
+testClone!public!unit tests! !
+testExtent!public!unit tests! !
+testJpegContentType!public!unit tests! !
+testSaveToFileJpeg!public!unit tests! !
+!
 

@@ -42,13 +42,17 @@ isPersistent
 
 iStream: pStream
 	iStream := pStream! !
-!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #isPersistent!constants!public!realizing/unrealizing!testing! !
-!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesFor: #iStream:!constants!initializing!private!realizing/unrealizing!testing! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+isPersistent!constants!public!realizing/unrealizing!testing! !
+iStream:!constants!initializing!private!realizing/unrealizing!testing! !
+!
 
 !Graphics.Gdiplus.ImageFromIStreamInitializer class methodsFor!
 
 iStream: pStream
 	^self new iStream: pStream! !
-!Graphics.Gdiplus.ImageFromIStreamInitializer class categoriesFor: #iStream:!instance creation!public! !
+!Graphics.Gdiplus.ImageFromIStreamInitializer class categoriesForMethods!
+iStream:!instance creation!public! !
+!
 

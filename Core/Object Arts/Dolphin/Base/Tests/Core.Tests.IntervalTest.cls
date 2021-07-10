@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.IntervalTest'
 	instanceVariableNames: ''
@@ -242,26 +242,28 @@ verifyIntervalConsistency: anInterval
 	elements := elements contents.
 	self assert: elements equals: anInterval.
 	self assert: (anInterval allSatisfy: [:each | anInterval includes: each])! !
-!Core.Tests.IntervalTest categoriesFor: #assimilate:!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #assimilateResultElement:!helpers!private! !
-!Core.Tests.IntervalTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.IntervalTest categoriesFor: #newCollection:!private!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testCollect!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testEquals!public!testing! !
-!Core.Tests.IntervalTest categoriesFor: #testEquals2!public!testing! !
-!Core.Tests.IntervalTest categoriesFor: #testEquals3!public!testing! !
-!Core.Tests.IntervalTest categoriesFor: #testEquals4!public!testing! !
-!Core.Tests.IntervalTest categoriesFor: #testEquals5!public!testing! !
-!Core.Tests.IntervalTest categoriesFor: #testEquals6!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testFromToBy!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testIncludes!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testIsEmpty!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testLimitedPrecisionConsistency1!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testLimitedPrecisionConsistency2!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testLimitedPrecisionConsistency3!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testPrintString!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testResize!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #testStoreOn!public!unit tests! !
-!Core.Tests.IntervalTest categoriesFor: #verifyIntervalConsistency:!helpers!private! !
+!Core.Tests.IntervalTest categoriesForMethods!
+assimilate:!public!unit tests! !
+assimilateResultElement:!helpers!private! !
+collectionClass!helpers!private! !
+newCollection:!private!unit tests! !
+testCollect!public!unit tests! !
+testEquals!public!testing! !
+testEquals2!public!testing! !
+testEquals3!public!testing! !
+testEquals4!public!testing! !
+testEquals5!public!testing! !
+testEquals6!public!unit tests! !
+testFromToBy!public!unit tests! !
+testIncludes!public!unit tests! !
+testIsEmpty!public!unit tests! !
+testLimitedPrecisionConsistency1!public!unit tests! !
+testLimitedPrecisionConsistency2!public!unit tests! !
+testLimitedPrecisionConsistency3!public!unit tests! !
+testPrintString!public!unit tests! !
+testReplaceFromToWithStartingAt!public!unit tests! !
+testResize!public!unit tests! !
+testStoreOn!public!unit tests! !
+verifyIntervalConsistency:!helpers!private! !
+!
 

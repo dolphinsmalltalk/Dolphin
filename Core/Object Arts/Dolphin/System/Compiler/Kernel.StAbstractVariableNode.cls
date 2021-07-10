@@ -60,19 +60,21 @@ variable
 
 variable: anStVariable
 	variable := anStVariable! !
-!Kernel.StAbstractVariableNode categoriesFor: #=!comparing!public! !
-!Kernel.StAbstractVariableNode categoriesFor: #hash!comparing!public! !
-!Kernel.StAbstractVariableNode categoriesFor: #isConstantNode!public!testing! !
-!Kernel.StAbstractVariableNode categoriesFor: #isImmediateNode!public!testing! !
-!Kernel.StAbstractVariableNode categoriesFor: #isVariable!public!testing! !
-!Kernel.StAbstractVariableNode categoriesFor: #name!constants!public! !
-!Kernel.StAbstractVariableNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StAbstractVariableNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StAbstractVariableNode categoriesFor: #setStart:!initializing!private! !
-!Kernel.StAbstractVariableNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StAbstractVariableNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StAbstractVariableNode categoriesFor: #variable!accessing!public! !
-!Kernel.StAbstractVariableNode categoriesFor: #variable:!accessing!public! !
+!Kernel.StAbstractVariableNode categoriesForMethods!
+=!comparing!public! !
+hash!comparing!public! !
+isConstantNode!public!testing! !
+isImmediateNode!public!testing! !
+isVariable!public!testing! !
+name!constants!public! !
+needsParenthesis!public!testing! !
+precedence!accessing!public! !
+setStart:!initializing!private! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+variable!accessing!public! !
+variable:!accessing!public! !
+!
 
 !Kernel.StAbstractVariableNode class methodsFor!
 
@@ -89,7 +91,9 @@ named: aString start: anInteger
 	^self new
 		setName: aString start: anInteger;
 		yourself! !
-!Kernel.StAbstractVariableNode class categoriesFor: #identifierToken:!instance creation!public! !
-!Kernel.StAbstractVariableNode class categoriesFor: #named:!instance creation!public! !
-!Kernel.StAbstractVariableNode class categoriesFor: #named:start:!instance creation!public! !
+!Kernel.StAbstractVariableNode class categoriesForMethods!
+identifierToken:!instance creation!public! !
+named:!instance creation!public! !
+named:start:!instance creation!public! !
+!
 

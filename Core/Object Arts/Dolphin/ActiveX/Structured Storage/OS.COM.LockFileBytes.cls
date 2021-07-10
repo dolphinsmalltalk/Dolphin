@@ -63,13 +63,15 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 		mtime: pstatstg mtime.
 	(grfStatFlag allMask: STATFLAG_NONAME) ifFalse: [pstatstg name: file name].
 	^S_OK! !
-!OS.COM.LockFileBytes categoriesFor: #contents!accessing!public! !
-!OS.COM.LockFileBytes categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockFileBytes categoriesFor: #file!accessing!private! !
-!OS.COM.LockFileBytes categoriesFor: #file:!accessing!private! !
-!OS.COM.LockFileBytes categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OS.COM.LockFileBytes categoriesFor: #size!accessing!public! !
-!OS.COM.LockFileBytes categoriesFor: #Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
+!OS.COM.LockFileBytes categoriesForMethods!
+contents!accessing!public! !
+copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+file!accessing!private! !
+file:!accessing!private! !
+replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+size!accessing!public! !
+Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
+!
 
 !OS.COM.LockFileBytes class methodsFor!
 
@@ -80,5 +82,7 @@ on: aFile
 	^self new
 		file: aFile;
 		queryInterface: ILockBytes! !
-!OS.COM.LockFileBytes class categoriesFor: #on:!instance creation!public! !
+!OS.COM.LockFileBytes class categoriesForMethods!
+on:!instance creation!public! !
+!
 

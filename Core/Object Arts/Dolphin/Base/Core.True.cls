@@ -122,17 +122,19 @@ xor: operand
 	Since the receiver is true, the answer is true only if the argument is false."
 
 	^operand not! !
-!Core.True categoriesFor: #and:!control flow!public! !
-!Core.True categoriesFor: #asBit!converting!public! !
-!Core.True categoriesFor: #asDword!converting!public! !
-!Core.True categoriesFor: #asParameter!converting!public! !
-!Core.True categoriesFor: #asUIntPtr!converting!public! !
-!Core.True categoriesFor: #ifFalse:!control flow!public! !
-!Core.True categoriesFor: #ifFalse:ifTrue:!control flow!public! !
-!Core.True categoriesFor: #ifTrue:!control flow!public! !
-!Core.True categoriesFor: #ifTrue:ifFalse:!control flow!public! !
-!Core.True categoriesFor: #not!logical operations!public! !
-!Core.True categoriesFor: #or:!control flow!public! !
-!Core.True categoriesFor: #printOn:!printing!public! !
-!Core.True categoriesFor: #xor:!logical operations!public! !
+!Core.True categoriesForMethods!
+and:!control flow!public! !
+asBit!converting!public! !
+asDword!converting!public! !
+asParameter!converting!public! !
+asUIntPtr!converting!public! !
+ifFalse:!control flow!public! !
+ifFalse:ifTrue:!control flow!public! !
+ifTrue:!control flow!public! !
+ifTrue:ifFalse:!control flow!public! !
+not!logical operations!public! !
+or:!control flow!public! !
+printOn:!printing!public! !
+xor:!logical operations!public! !
+!
 

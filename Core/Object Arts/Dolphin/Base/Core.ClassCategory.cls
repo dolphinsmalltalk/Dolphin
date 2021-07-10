@@ -43,12 +43,14 @@ removeClass: aClass
 
 	aClass removeFromCategory: self.
 	^aClass! !
-!Core.ClassCategory categoriesFor: #addClass:!adding!public! !
-!Core.ClassCategory categoriesFor: #classes!public! !
-!Core.ClassCategory categoriesFor: #contents!enumerating!public! !
-!Core.ClassCategory categoriesFor: #includesClass:!public!testing! !
-!Core.ClassCategory categoriesFor: #isEmpty!public!testing! !
-!Core.ClassCategory categoriesFor: #removeClass:!development!public!removing! !
+!Core.ClassCategory categoriesForMethods!
+addClass:!adding!public! !
+classes!public! !
+contents!enumerating!public! !
+includesClass:!public!testing! !
+isEmpty!public!testing! !
+removeClass:!development!public!removing! !
+!
 
 !Core.ClassCategory class methodsFor!
 
@@ -112,11 +114,13 @@ uninitialize
 
 	Table := nil.
 	Unclassified := nil! !
-!Core.ClassCategory class categoriesFor: #allClassCategories!accessing!public! !
-!Core.ClassCategory class categoriesFor: #initialize!initializing!private! !
-!Core.ClassCategory class categoriesFor: #name:!instance creation!public! !
-!Core.ClassCategory class categoriesFor: #table!accessing!private! !
-!Core.ClassCategory class categoriesFor: #unclassified!instance creation!public! !
-!Core.ClassCategory class categoriesFor: #unclassifiedName!constants!private! !
-!Core.ClassCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Core.ClassCategory class categoriesForMethods!
+allClassCategories!accessing!public! !
+initialize!initializing!private! !
+name:!instance creation!public! !
+table!accessing!private! !
+unclassified!instance creation!public! !
+unclassifiedName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

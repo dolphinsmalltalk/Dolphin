@@ -44,14 +44,16 @@ view
 view: aScintillaView id: anObject
 	view := aScintillaView.
 	id := anObject! !
-!UI.Scintilla.LexerMetadata categoriesFor: #description!accessing!public! !
-!UI.Scintilla.LexerMetadata categoriesFor: #displayOn:!printing!public! !
-!UI.Scintilla.LexerMetadata categoriesFor: #getDescription!accessing!private! !
-!UI.Scintilla.LexerMetadata categoriesFor: #id!accessing!private! !
-!UI.Scintilla.LexerMetadata categoriesFor: #name!accessing!public! !
-!UI.Scintilla.LexerMetadata categoriesFor: #printOn:!printing!public! !
-!UI.Scintilla.LexerMetadata categoriesFor: #view!accessing!private! !
-!UI.Scintilla.LexerMetadata categoriesFor: #view:id:!initializing!private! !
+!UI.Scintilla.LexerMetadata categoriesForMethods!
+description!accessing!public! !
+displayOn:!printing!public! !
+getDescription!accessing!private! !
+id!accessing!private! !
+name!accessing!public! !
+printOn:!printing!public! !
+view!accessing!private! !
+view:id:!initializing!private! !
+!
 
 !UI.Scintilla.LexerMetadata class methodsFor!
 
@@ -61,6 +63,8 @@ icon
 view: aScintillaView id: anObject
 	<primitive: 157>
 	^self new view: aScintillaView id: anObject! !
-!UI.Scintilla.LexerMetadata class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.LexerMetadata class categoriesFor: #view:id:!instance creation!public! !
+!UI.Scintilla.LexerMetadata class categoriesForMethods!
+icon!constants!development!public! !
+view:id:!instance creation!public! !
+!
 

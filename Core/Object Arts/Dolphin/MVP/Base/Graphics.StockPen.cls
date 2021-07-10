@@ -29,9 +29,11 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
-!Graphics.StockPen categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.StockPen categoriesFor: #id:!private!realizing/unrealizing! !
-!Graphics.StockPen categoriesFor: #ownedHandle:!accessing!private! !
+!Graphics.StockPen categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+id:!private!realizing/unrealizing! !
+ownedHandle:!accessing!private! !
+!
 
 !Graphics.StockPen class methodsFor!
 
@@ -42,5 +44,7 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
-!Graphics.StockPen class categoriesFor: #fromId:!instance creation!public! !
+!Graphics.StockPen class categoriesForMethods!
+fromId:!instance creation!public! !
+!
 

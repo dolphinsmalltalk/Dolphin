@@ -82,15 +82,17 @@ text: aString
 
 	text := aString asUtf16String.
 	self lpszText: text! !
-!OS.MSGBOXPARAMSW categoriesFor: #caption:!accessing!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #dwStyle:!**compiled accessors**!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #lpszCaption:!**compiled accessors**!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #lpszIcon:!**compiled accessors**!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!OS.MSGBOXPARAMSW categoriesFor: #text:!accessing!public! !
+!OS.MSGBOXPARAMSW categoriesForMethods!
+caption:!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+dwStyle:!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpszCaption:!**compiled accessors**!public! !
+lpszIcon:!**compiled accessors**!public! !
+lpszText:!**compiled accessors**!public! !
+text:!accessing!public! !
+!
 
 !OS.MSGBOXPARAMSW class methodsFor!
 
@@ -129,6 +131,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
-!OS.MSGBOXPARAMSW class categoriesFor: #defineFields!public!template definition! !
-!OS.MSGBOXPARAMSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MSGBOXPARAMSW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

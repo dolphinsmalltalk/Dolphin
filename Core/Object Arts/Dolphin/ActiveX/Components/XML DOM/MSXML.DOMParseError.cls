@@ -46,6 +46,8 @@ _descriptionFormat
 	"Private - Answer a string which is the message format for the receiver's description."
 
 	^'%1 - ''%3'' at %4!!d!!, %5!!d!!'! !
-!MSXML.DOMParseError categoriesFor: #_descriptionArguments!displaying!public! !
-!MSXML.DOMParseError categoriesFor: #_descriptionFormat!displaying!private! !
+!MSXML.DOMParseError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!private! !
+!
 

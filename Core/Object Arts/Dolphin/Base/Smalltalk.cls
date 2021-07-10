@@ -126,20 +126,22 @@ staticVariableRemoved: aVariableBinding
 	self
 		clearCachedClasses;
 		trigger: #variableRemoved: with: aVariableBinding! !
-!Smalltalk class categoriesFor: #allClasses!accessing!public! !
-!Smalltalk class categoriesFor: #allClassesDo:!binding!public! !
-!Smalltalk class categoriesFor: #allRoots!accessing!public! !
-!Smalltalk class categoriesFor: #classAdded:!event handling!private! !
-!Smalltalk class categoriesFor: #classesByGuid!private! !
-!Smalltalk class categoriesFor: #classRemoved:!private!removing! !
-!Smalltalk class categoriesFor: #classUpdated:!event handling!private! !
-!Smalltalk class categoriesFor: #clearCachedClasses!private! !
-!Smalltalk class categoriesFor: #declareVariable:!public! !
-!Smalltalk class categoriesFor: #developmentSystem!accessing!public! !
-!Smalltalk class categoriesFor: #getEvents!events!private! !
-!Smalltalk class categoriesFor: #oldNames!accessing!public! !
-!Smalltalk class categoriesFor: #removeClass:!operations!public! !
-!Smalltalk class categoriesFor: #setEvents:!events!private! !
-!Smalltalk class categoriesFor: #shortNameFor:in:!helpers!private! !
-!Smalltalk class categoriesFor: #staticVariableRemoved:!class hierarchy-mutating!class variables!private! !
+!Smalltalk class categoriesForMethods!
+allClasses!accessing!public! !
+allClassesDo:!binding!public! !
+allRoots!accessing!public! !
+classAdded:!event handling!private! !
+classesByGuid!private! !
+classRemoved:!private!removing! !
+classUpdated:!event handling!private! !
+clearCachedClasses!private! !
+declareVariable:!public! !
+developmentSystem!accessing!public! !
+getEvents!events!private! !
+oldNames!accessing!public! !
+removeClass:!operations!public! !
+setEvents:!events!private! !
+shortNameFor:in:!helpers!private! !
+staticVariableRemoved:!class hierarchy-mutating!class variables!private! !
+!
 

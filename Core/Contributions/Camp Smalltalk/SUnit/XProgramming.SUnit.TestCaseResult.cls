@@ -115,17 +115,19 @@ stacktrace
 	"Answer the stacktrace capture when the test failed/errored, or nil if the test passed."
 
 	^stacktrace! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #captureDiagnostics:!initializing!private! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #case!accessing!public! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #diagnostic!accessing!public! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #displayOn:!printing!private! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #duration!accessing!public! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #outcome!accessing!public! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #printSourceOn:!printing!private! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #setCase:duration:!initializing!private! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #setCase:outcome:signal:!initializing!private! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #signal!accessing!public! !
-!XProgramming.SUnit.TestCaseResult categoriesFor: #stacktrace!accessing!public! !
+!XProgramming.SUnit.TestCaseResult categoriesForMethods!
+captureDiagnostics:!initializing!private! !
+case!accessing!public! !
+diagnostic!accessing!public! !
+displayOn:!printing!private! !
+duration!accessing!public! !
+outcome!accessing!public! !
+printSourceOn:!printing!private! !
+setCase:duration:!initializing!private! !
+setCase:outcome:signal:!initializing!private! !
+signal!accessing!public! !
+stacktrace!accessing!public! !
+!
 
 !XProgramming.SUnit.TestCaseResult class methodsFor!
 
@@ -149,8 +151,10 @@ case: aTestCase skipped: aTestSkip
 		setCase: aTestCase
 		outcome: #skipped
 		signal: aTestSkip! !
-!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:duration:!instance creation!public! !
-!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:error:!instance creation!public! !
-!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:failure:!instance creation!public! !
-!XProgramming.SUnit.TestCaseResult class categoriesFor: #case:skipped:!instance creation!public! !
+!XProgramming.SUnit.TestCaseResult class categoriesForMethods!
+case:duration:!instance creation!public! !
+case:error:!instance creation!public! !
+case:failure:!instance creation!public! !
+case:skipped:!instance creation!public! !
+!
 

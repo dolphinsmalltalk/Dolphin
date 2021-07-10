@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Tests.AbstractPointTest subclass: #'Graphics.Tests.PointTest'
 	instanceVariableNames: ''
@@ -41,9 +41,11 @@ testStrictlyPositive
 	self assert: (self subjectClass x: 1 y: 1) strictlyPositive.
 	self deny: (self subjectClass x: 1 y: -1) strictlyPositive.
 	self deny: (self subjectClass x: -1 y: 1) strictlyPositive! !
-!Graphics.Tests.PointTest categoriesFor: #subjectClass!constants!private! !
-!Graphics.Tests.PointTest categoriesFor: #testAbs!public!unit tests! !
-!Graphics.Tests.PointTest categoriesFor: #testEquals!public!unit tests! !
-!Graphics.Tests.PointTest categoriesFor: #testIsZero!public!unit tests! !
-!Graphics.Tests.PointTest categoriesFor: #testStrictlyPositive!public!unit tests! !
+!Graphics.Tests.PointTest categoriesForMethods!
+subjectClass!constants!private! !
+testAbs!public!unit tests! !
+testEquals!public!unit tests! !
+testIsZero!public!unit tests! !
+testStrictlyPositive!public!unit tests! !
+!
 

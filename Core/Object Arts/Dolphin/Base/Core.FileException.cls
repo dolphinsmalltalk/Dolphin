@@ -35,11 +35,13 @@ isResumable
 setFile: aFile resumable: aBoolean 
 	file := aFile.
 	resumable := aBoolean! !
-!Core.FileException categoriesFor: #_descriptionArguments!displaying!public! !
-!Core.FileException categoriesFor: #_descriptionFormat!displaying!public! !
-!Core.FileException categoriesFor: #file!accessing!public! !
-!Core.FileException categoriesFor: #isResumable!public!testing! !
-!Core.FileException categoriesFor: #setFile:resumable:!accessing!private! !
+!Core.FileException categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+file!accessing!public! !
+isResumable!public!testing! !
+setFile:resumable:!accessing!private! !
+!
 
 !Core.FileException class methodsFor!
 
@@ -62,8 +64,10 @@ signalOn: aFile
 
 signalOn: aFile resumable: aBoolean 
 	^(self on: aFile resumable: aBoolean) signal! !
-!Core.FileException class categoriesFor: #on:!instance creation!public! !
-!Core.FileException class categoriesFor: #on:resumable:!instance creation!public! !
-!Core.FileException class categoriesFor: #signalOn:!instance creation!public! !
-!Core.FileException class categoriesFor: #signalOn:resumable:!instance creation!public! !
+!Core.FileException class categoriesForMethods!
+on:!instance creation!public! !
+on:resumable:!instance creation!public! !
+signalOn:!instance creation!public! !
+signalOn:resumable:!instance creation!public! !
+!
 

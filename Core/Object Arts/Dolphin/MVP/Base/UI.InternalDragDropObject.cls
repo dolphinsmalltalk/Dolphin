@@ -36,9 +36,11 @@ isFormatAvailable: formatIdentifier
 	"Answer whether the receiver can render itself in the format identified by formatIdentifier."
 
 	^availableFormats includesKey: formatIdentifier! !
-!UI.InternalDragDropObject categoriesFor: #availableFormats!accessing!public! !
-!UI.InternalDragDropObject categoriesFor: #format:data:!accessing!public! !
-!UI.InternalDragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
-!UI.InternalDragDropObject categoriesFor: #initialize!initializing!private! !
-!UI.InternalDragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
+!UI.InternalDragDropObject categoriesForMethods!
+availableFormats!accessing!public! !
+format:data:!accessing!public! !
+format:ifAbsent:!accessing!public! !
+initialize!initializing!private! !
+isFormatAvailable:!public!testing! !
+!
 

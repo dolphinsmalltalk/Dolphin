@@ -95,16 +95,18 @@ toggleUnderlined
 	"Toggle underline mode for the selection in the receiver"
 
 	self view isUnderlined: self view isUnderlined not! !
-!UI.RichTextPresenter categoriesFor: #alignParagraphCenter!commands!public! !
-!UI.RichTextPresenter categoriesFor: #alignParagraphLeft!commands!public! !
-!UI.RichTextPresenter categoriesFor: #alignParagraphRight!commands!public! !
-!UI.RichTextPresenter categoriesFor: #bePlain!commands!public! !
-!UI.RichTextPresenter categoriesFor: #chooseSelectionColor!commands!public! !
-!UI.RichTextPresenter categoriesFor: #chooseSelectionFont!commands!public! !
-!UI.RichTextPresenter categoriesFor: #queryCommand:!commands!private! !
-!UI.RichTextPresenter categoriesFor: #toggleBold!commands!public! !
-!UI.RichTextPresenter categoriesFor: #toggleItalic!commands!public! !
-!UI.RichTextPresenter categoriesFor: #toggleUnderlined!commands!public! !
+!UI.RichTextPresenter categoriesForMethods!
+alignParagraphCenter!commands!public! !
+alignParagraphLeft!commands!public! !
+alignParagraphRight!commands!public! !
+bePlain!commands!public! !
+chooseSelectionColor!commands!public! !
+chooseSelectionFont!commands!public! !
+queryCommand:!commands!private! !
+toggleBold!commands!public! !
+toggleItalic!commands!public! !
+toggleUnderlined!commands!public! !
+!
 
 !UI.RichTextPresenter class methodsFor!
 
@@ -139,7 +141,9 @@ resource_Static_text
 \viewkind4\uc1\pard\qc\f0\fs22 Type \b Rich \b0\i Static \i0 text \ul here\ulnone .\f1\par
 }
 ' 416 1314 #textLimit: 8 #(1073741823) 416 1314 #resetCharFormat 8 #() 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 209 12 0 0 75 0 0 0] 8 #() 1362 193 193 nil 27)! !
-!UI.RichTextPresenter class categoriesFor: #defaultModel!models!public! !
-!UI.RichTextPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.RichTextPresenter class categoriesFor: #resource_Static_text!public!resources-views! !
+!UI.RichTextPresenter class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+resource_Static_text!public!resources-views! !
+!
 

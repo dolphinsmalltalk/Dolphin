@@ -194,34 +194,36 @@ yourAddress
 	Nil is treated like a NULL pointer."
 
 	^0! !
-!Core.UndefinedObject categoriesFor: #??!converting!public! !
-!Core.UndefinedObject categoriesFor: #_deepCopy:!copying!private! !
-!Core.UndefinedObject categoriesFor: #bindingFor:!bindings!public! !
-!Core.UndefinedObject categoriesFor: #deepCopy!copying!public! !
-!Core.UndefinedObject categoriesFor: #displayOn:!displaying!public! !
-!Core.UndefinedObject categoriesFor: #fullName!accessing!public! !
-!Core.UndefinedObject categoriesFor: #ifNil:!control flow!public! !
-!Core.UndefinedObject categoriesFor: #ifNil:ifNotNil:!control flow!public! !
-!Core.UndefinedObject categoriesFor: #ifNotNil:!control flow!public! !
-!Core.UndefinedObject categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!Core.UndefinedObject categoriesFor: #importsFromPoolsString:!class hierarchy-adding!private! !
-!Core.UndefinedObject categoriesFor: #includesEnvironment:!private!testing! !
-!Core.UndefinedObject categoriesFor: #isAtomic!public!testing! !
-!Core.UndefinedObject categoriesFor: #isLiteral!public!testing! !
-!Core.UndefinedObject categoriesFor: #isNil!public!testing! !
-!Core.UndefinedObject categoriesFor: #isNull!private!testing! !
-!Core.UndefinedObject categoriesFor: #localBindingFor:!bindings!public! !
-!Core.UndefinedObject categoriesFor: #name!accessing!public! !
-!Core.UndefinedObject categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
-!Core.UndefinedObject categoriesFor: #notNil!public!testing! !
-!Core.UndefinedObject categoriesFor: #notNull!private!testing! !
-!Core.UndefinedObject categoriesFor: #printOn:!printing!public! !
-!Core.UndefinedObject categoriesFor: #printString!printing!public! !
-!Core.UndefinedObject categoriesFor: #refersTo:asLiteralOf:!private!testing! !
-!Core.UndefinedObject categoriesFor: #shallowCopy!copying!public! !
-!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
-!Core.UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
-!Core.UndefinedObject categoriesFor: #yourAddress!accessing!private! !
+!Core.UndefinedObject categoriesForMethods!
+??!converting!public! !
+_deepCopy:!copying!private! !
+bindingFor:!bindings!public! !
+deepCopy!copying!public! !
+displayOn:!displaying!public! !
+fullName!accessing!public! !
+ifNil:!control flow!public! !
+ifNil:ifNotNil:!control flow!public! !
+ifNotNil:!control flow!public! !
+ifNotNil:ifNil:!control flow!public! !
+importsFromPoolsString:!class hierarchy-adding!private! !
+includesEnvironment:!private!testing! !
+isAtomic!public!testing! !
+isLiteral!public!testing! !
+isNil!public!testing! !
+isNull!private!testing! !
+localBindingFor:!bindings!public! !
+name!accessing!public! !
+newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
+notNil!public!testing! !
+notNull!private!testing! !
+printOn:!printing!public! !
+printString!printing!public! !
+refersTo:asLiteralOf:!private!testing! !
+shallowCopy!copying!public! !
+subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+yourAddress!accessing!private! !
+!
 
 !Core.UndefinedObject class methodsFor!
 
@@ -230,5 +232,7 @@ new
 	There can be only one!!"
 
 	^nil! !
-!Core.UndefinedObject class categoriesFor: #new!instance creation!public! !
+!Core.UndefinedObject class categoriesForMethods!
+new!instance creation!public! !
+!
 

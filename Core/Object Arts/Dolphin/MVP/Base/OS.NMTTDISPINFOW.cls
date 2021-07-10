@@ -51,12 +51,14 @@ uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uFlags! !
-!OS.NMTTDISPINFOW categoriesFor: #idIsHandle!private!testing! !
-!OS.NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
-!OS.NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!OS.NMTTDISPINFOW categoriesFor: #text!accessing!public! !
-!OS.NMTTDISPINFOW categoriesFor: #text:!accessing!public! !
-!OS.NMTTDISPINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
+!OS.NMTTDISPINFOW categoriesForMethods!
+idIsHandle!private!testing! !
+lpszText!**compiled accessors**!public! !
+lpszText:!**compiled accessors**!public! !
+text!accessing!public! !
+text:!accessing!public! !
+uFlags!**compiled accessors**!public! !
+!
 
 !OS.NMTTDISPINFOW class methodsFor!
 
@@ -84,6 +86,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !
-!OS.NMTTDISPINFOW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMTTDISPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTTDISPINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

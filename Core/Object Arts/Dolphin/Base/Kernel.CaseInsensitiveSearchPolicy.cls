@@ -43,8 +43,10 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^'caseInsensitive'! !
-!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #hash:!comparing!public! !
-!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!Kernel.CaseInsensitiveSearchPolicy categoriesFor: #name!accessing!public! !
+!Kernel.CaseInsensitiveSearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:!comparing!public! !
+keyAtValue:in:ifAbsent:!public!searching! !
+name!accessing!public! !
+!
 

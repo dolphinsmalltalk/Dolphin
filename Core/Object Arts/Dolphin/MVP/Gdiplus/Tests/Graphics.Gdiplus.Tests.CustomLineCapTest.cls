@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.CustomLineCapTest'
 	instanceVariableNames: ''
@@ -64,11 +64,13 @@ testWidthScale
 	self assert: model widthScale equals: 1.
 	model widthScale: 2.5.
 	self assert: model widthScale equals: 2.5! !
-!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #setUp!public!setup! !
-!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testBaseCap!public!unit tests! !
-!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testBaseInset!public!unit tests! !
-!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testClone!public!unit tests! !
-!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testStrokeCaps!public!unit tests! !
-!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testStrokeJoin!public!unit tests! !
-!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesFor: #testWidthScale!public!unit tests! !
+!Graphics.Gdiplus.Tests.CustomLineCapTest categoriesForMethods!
+setUp!public!setup! !
+testBaseCap!public!unit tests! !
+testBaseInset!public!unit tests! !
+testClone!public!unit tests! !
+testStrokeCaps!public!unit tests! !
+testStrokeJoin!public!unit tests! !
+testWidthScale!public!unit tests! !
+!
 

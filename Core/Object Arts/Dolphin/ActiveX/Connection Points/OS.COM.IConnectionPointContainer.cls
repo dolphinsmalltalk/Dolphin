@@ -65,12 +65,14 @@ FindConnectionPoint: riid ppCP: ppCP
 
 	<virtual stdcall: hresult 5 guid* IConnectionPoint**>
 	^self invalidCall: _failureCode! !
-!OS.COM.IConnectionPointContainer categoriesFor: #connectionIIDs!enumerating!public! !
-!OS.COM.IConnectionPointContainer categoriesFor: #connectionPoints!enumerating!public! !
-!OS.COM.IConnectionPointContainer categoriesFor: #enumConnectionPoints!**auto generated**!methods!public! !
-!OS.COM.IConnectionPointContainer categoriesFor: #EnumConnectionPoints:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
-!OS.COM.IConnectionPointContainer categoriesFor: #findConnectionPoint:!accessing!public! !
-!OS.COM.IConnectionPointContainer categoriesFor: #FindConnectionPoint:ppCP:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
+!OS.COM.IConnectionPointContainer categoriesForMethods!
+connectionIIDs!enumerating!public! !
+connectionPoints!enumerating!public! !
+enumConnectionPoints!**auto generated**!methods!public! !
+EnumConnectionPoints:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
+findConnectionPoint:!accessing!public! !
+FindConnectionPoint:ppCP:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
+!
 
 !OS.COM.IConnectionPointContainer class methodsFor!
 
@@ -85,5 +87,7 @@ defineFunctions
 		defineFunction: #FindConnectionPoint:ppCP:
 			argumentTypes: 'GUID* IConnectionPoint**'
 ! !
-!OS.COM.IConnectionPointContainer class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IConnectionPointContainer class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -80,15 +80,17 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!OS.EMRSETICMPROFILE categoriesFor: #cbData!**compiled accessors**!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #cbData:!**compiled accessors**!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #cbName!**compiled accessors**!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #cbName:!**compiled accessors**!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #Data!**compiled accessors**!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #Data:!**compiled accessors**!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #dataLength!accessing!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.EMRSETICMPROFILE categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.EMRSETICMPROFILE categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+cbName!**compiled accessors**!public! !
+cbName:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+dataLength!accessing!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETICMPROFILE class methodsFor!
 
@@ -130,7 +132,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETICMPROFILEA. EMR_SETICMPROFILEW}! !
-!OS.EMRSETICMPROFILE class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRSETICMPROFILE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETICMPROFILE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETICMPROFILE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

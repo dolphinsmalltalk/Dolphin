@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.MenuPainterTest'
 	instanceVariableNames: ''
@@ -28,6 +28,8 @@ testSplitMenuText
 	self assert: (subject splitMenuText: 'c&&ab') equals: #('c&&ab' '' '').
 	self assert: (subject splitMenuText: '🐬&&&🍺🐬') equals: #('🐬&&' '🍺' '🐬').
 	self assert: (subject splitMenuText: '') equals: #('' '' '')! !
-!Tools.Tests.MenuPainterTest categoriesFor: #subjectClass!constants!private! !
-!Tools.Tests.MenuPainterTest categoriesFor: #testSplitMenuText!public! !
+!Tools.Tests.MenuPainterTest categoriesForMethods!
+subjectClass!constants!private! !
+testSplitMenuText!public! !
+!
 

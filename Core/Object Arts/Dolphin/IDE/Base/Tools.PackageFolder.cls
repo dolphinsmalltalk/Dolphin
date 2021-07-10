@@ -27,9 +27,11 @@ rootName
 	"Private - Answer the name to use for the folder at the root of the current image hierarchy"
 
 	^'$'! !
-!Tools.PackageFolder categoriesFor: #icon!constants!public! !
-!Tools.PackageFolder categoriesFor: #isDolphinFolder!private!testing! !
-!Tools.PackageFolder categoriesFor: #rootName!constants!private! !
+!Tools.PackageFolder categoriesForMethods!
+icon!constants!public! !
+isDolphinFolder!private!testing! !
+rootName!constants!private! !
+!
 
 !Tools.PackageFolder class methodsFor!
 
@@ -45,7 +47,9 @@ forPackage: aPackage
 	"Answer an instance of the receiver for the folder of aPackage"
 
 	^self pathname: aPackage packageFolder! !
-!Tools.PackageFolder class categoriesFor: #dolphinRoot!instance creation!public! !
-!Tools.PackageFolder class categoriesFor: #dolphinRootPathname!constants!instance creation!public! !
-!Tools.PackageFolder class categoriesFor: #forPackage:!instance creation!public! !
+!Tools.PackageFolder class categoriesForMethods!
+dolphinRoot!instance creation!public! !
+dolphinRootPathname!constants!instance creation!public! !
+forPackage:!instance creation!public! !
+!
 

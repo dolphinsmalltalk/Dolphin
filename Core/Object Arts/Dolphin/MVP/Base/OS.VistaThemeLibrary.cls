@@ -175,20 +175,22 @@ onStartup
 	"Private - Perform any initialization required at system startup time"
 
 	self bufferedPaintInit! !
-!OS.VistaThemeLibrary categoriesFor: #beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #bufferedPaintClear:prc:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #bufferedPaintInit!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #bufferedPaintStopAllAnimations:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #bufferedPaintUnInit!public! !
-!OS.VistaThemeLibrary categoriesFor: #endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintDC:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintTargetDC:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #getBufferedPaintTargetRect:prc:!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #isCompositionActive!**auto generated**!public! !
-!OS.VistaThemeLibrary categoriesFor: #onExit!private! !
-!OS.VistaThemeLibrary categoriesFor: #onStartup!private! !
+!OS.VistaThemeLibrary categoriesForMethods!
+beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
+beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
+bufferedPaintClear:prc:!**auto generated**!public! !
+bufferedPaintInit!**auto generated**!public! !
+bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
+bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
+bufferedPaintStopAllAnimations:!**auto generated**!public! !
+bufferedPaintUnInit!public! !
+endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
+getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
+getBufferedPaintDC:!**auto generated**!public! !
+getBufferedPaintTargetDC:!**auto generated**!public! !
+getBufferedPaintTargetRect:prc:!**auto generated**!public! !
+isCompositionActive!**auto generated**!public! !
+onExit!private! !
+onStartup!private! !
+!
 

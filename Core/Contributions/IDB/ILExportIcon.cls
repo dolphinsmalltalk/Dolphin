@@ -103,11 +103,13 @@ hotSpotFor: anImage
 
 icondirType
 	^1! !
-!ILExportIcon categoriesFor: #createColorBitmapFor:force256:!operations!public! !
-!ILExportIcon categoriesFor: #createICONDIR!operations!public! !
-!ILExportIcon categoriesFor: #createIconImages!operations!public! !
-!ILExportIcon categoriesFor: #createMaskBitmapFor:updating:!operations!public! !
-!ILExportIcon categoriesFor: #exportTo:!operations!public! !
-!ILExportIcon categoriesFor: #hotSpotFor:!accessing!public! !
-!ILExportIcon categoriesFor: #icondirType!constants!public! !
+!ILExportIcon categoriesForMethods!
+createColorBitmapFor:force256:!operations!public! !
+createICONDIR!operations!public! !
+createIconImages!operations!public! !
+createMaskBitmapFor:updating:!operations!public! !
+exportTo:!operations!public! !
+hotSpotFor:!accessing!public! !
+icondirType!constants!public! !
+!
 

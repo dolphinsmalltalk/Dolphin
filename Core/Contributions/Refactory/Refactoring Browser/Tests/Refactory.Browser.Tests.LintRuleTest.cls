@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.Tests.LintRuleTest'
 	instanceVariableNames: 'name foo1'
@@ -75,28 +75,32 @@ runOnEnvironment: anEnvironment
 
 viewResults
 	self subclassResponsibility! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #checkClass:!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #displayName!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #failedRules!private! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #hasConflicts!public!testing! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #isComposite!public!testing! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #junk!public!testing! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #name!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #name:!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #openEditor!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #resetResult!initialize/release!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #run!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #runOnEnvironment:!accessing!public! !
-!Refactory.Browser.Tests.LintRuleTest categoriesFor: #viewResults!private! !
+!Refactory.Browser.Tests.LintRuleTest categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+displayName!accessing!public! !
+failedRules!private! !
+hasConflicts!public!testing! !
+initialize!initialize/release!public! !
+isComposite!public!testing! !
+isEmpty!public!testing! !
+junk!public!testing! !
+name!accessing!public! !
+name:!accessing!public! !
+openEditor!accessing!public! !
+printOn:!printing!public! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+run!accessing!public! !
+runOnEnvironment:!accessing!public! !
+viewResults!private! !
+!
 
 !Refactory.Browser.Tests.LintRuleTest class methodsFor!
 
 new
 	^super new initialize! !
-!Refactory.Browser.Tests.LintRuleTest class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.Tests.LintRuleTest class categoriesForMethods!
+new!instance creation!public! !
+!
 

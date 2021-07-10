@@ -100,11 +100,13 @@ removeKey: aString ifAbsent: aNiladicValuable
 		writePrivateProfileSection: key
 		lpString: nil
 		lpFileName: filename) ifTrue: [value] ifFalse: [Win32Error signal]! !
-!OS.IniFile categoriesFor: #at:ifAbsent:!accessing!public! !
-!OS.IniFile categoriesFor: #at:put:!adding!public! !
-!OS.IniFile categoriesFor: #getValue:!accessing!private! !
-!OS.IniFile categoriesFor: #hasSectionNamed:!accessing!private! !
-!OS.IniFile categoriesFor: #includesKey:!accessing!public! !
-!OS.IniFile categoriesFor: #keysDo:!enumerating!public! !
-!OS.IniFile categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!OS.IniFile categoriesForMethods!
+at:ifAbsent:!accessing!public! !
+at:put:!adding!public! !
+getValue:!accessing!private! !
+hasSectionNamed:!accessing!private! !
+includesKey:!accessing!public! !
+keysDo:!enumerating!public! !
+removeKey:ifAbsent:!public!removing! !
+!
 

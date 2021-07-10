@@ -31,10 +31,12 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
-!UI.Scintilla.QueryableAttribute categoriesFor: #populateFromView:at:!initializing!private! !
-!UI.Scintilla.QueryableAttribute categoriesFor: #postCopy!copying!public! !
-!UI.Scintilla.QueryableAttribute categoriesFor: #view!accessing!private! !
-!UI.Scintilla.QueryableAttribute categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.QueryableAttribute categoriesForMethods!
+populateFromView:at:!initializing!private! !
+postCopy!copying!public! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !UI.Scintilla.QueryableAttribute class methodsFor!
 
@@ -42,5 +44,7 @@ view: aScintillaView index: anInteger
 	^(self new)
 		populateFromView: aScintillaView at: anInteger;
 		yourself! !
-!UI.Scintilla.QueryableAttribute class categoriesFor: #view:index:!instance creation!public! !
+!UI.Scintilla.QueryableAttribute class categoriesForMethods!
+view:index:!instance creation!public! !
+!
 

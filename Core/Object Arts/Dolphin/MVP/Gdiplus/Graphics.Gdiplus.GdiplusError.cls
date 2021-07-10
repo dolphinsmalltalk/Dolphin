@@ -45,10 +45,12 @@ win32ErrorDescription
 	error messages of the form: 'The error is: the operation was successful;"
 
 	^win32Error statusCode = 0 ifTrue: [''] ifFalse: [win32Error description]! !
-!Graphics.Gdiplus.GdiplusError categoriesFor: #_descriptionArguments!displaying!public! !
-!Graphics.Gdiplus.GdiplusError categoriesFor: #_descriptionFormat!displaying!public! !
-!Graphics.Gdiplus.GdiplusError categoriesFor: #initialize!initializing!public! !
-!Graphics.Gdiplus.GdiplusError categoriesFor: #win32ErrorDescription!accessing!private! !
+!Graphics.Gdiplus.GdiplusError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+initialize!initializing!public! !
+win32ErrorDescription!accessing!private! !
+!
 
 !Graphics.Gdiplus.GdiplusError class methodsFor!
 
@@ -65,5 +67,7 @@ initialize
 		failure."
 
 	self addClassConstant: 'ErrorDescriptions' value: #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')! !
-!Graphics.Gdiplus.GdiplusError class categoriesFor: #initialize!development!initializing!public! !
+!Graphics.Gdiplus.GdiplusError class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

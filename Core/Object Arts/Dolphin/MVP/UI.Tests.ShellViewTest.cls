@@ -41,6 +41,8 @@ testOpensOnForegroundMonitor
 	"Now a new shell should open on the primary monitor"
 	shell3 := self createShell: self printString , ': shell3'.
 	self assert: shell3 displayMonitor equals: primary! !
-!UI.Tests.ShellViewTest categoriesFor: #createShell:!private! !
-!UI.Tests.ShellViewTest categoriesFor: #testOpensOnForegroundMonitor!public!unit tests! !
+!UI.Tests.ShellViewTest categoriesForMethods!
+createShell:!private! !
+testOpensOnForegroundMonitor!public!unit tests! !
+!
 

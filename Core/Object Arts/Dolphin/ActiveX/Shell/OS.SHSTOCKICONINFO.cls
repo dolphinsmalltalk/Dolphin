@@ -59,11 +59,13 @@ szPath
 	"Answer the <Utf16String> value of the receiver's 'szPath' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szPath! !
-!OS.SHSTOCKICONINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.SHSTOCKICONINFO categoriesFor: #HICON!**compiled accessors**!public! !
-!OS.SHSTOCKICONINFO categoriesFor: #iIcon!**compiled accessors**!public! !
-!OS.SHSTOCKICONINFO categoriesFor: #iSysImageIndex!**compiled accessors**!public! !
-!OS.SHSTOCKICONINFO categoriesFor: #szPath!**compiled accessors**!public! !
+!OS.SHSTOCKICONINFO categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+HICON!**compiled accessors**!public! !
+iIcon!**compiled accessors**!public! !
+iSysImageIndex!**compiled accessors**!public! !
+szPath!**compiled accessors**!public! !
+!
 
 !OS.SHSTOCKICONINFO class methodsFor!
 
@@ -92,6 +94,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #HICON #iSysImageIndex #iIcon #szPath)! !
-!OS.SHSTOCKICONINFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.SHSTOCKICONINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SHSTOCKICONINFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

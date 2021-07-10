@@ -38,9 +38,11 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 
 isPersistent
 	^image isPersistent! !
-!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #image:wrapMode:rectangle:!initializing!private! !
-!Graphics.Gdiplus.TextureBrushInitializer categoriesFor: #isPersistent!public! !
+!Graphics.Gdiplus.TextureBrushInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+image:wrapMode:rectangle:!initializing!private! !
+isPersistent!public! !
+!
 
 !Graphics.Gdiplus.TextureBrushInitializer class methodsFor!
 
@@ -49,5 +51,7 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 		image: anImage
 		wrapMode: aNumber
 		rectangle: aRectangle! !
-!Graphics.Gdiplus.TextureBrushInitializer class categoriesFor: #image:wrapMode:rectangle:!instance creation!public! !
+!Graphics.Gdiplus.TextureBrushInitializer class categoriesForMethods!
+image:wrapMode:rectangle:!instance creation!public! !
+!
 

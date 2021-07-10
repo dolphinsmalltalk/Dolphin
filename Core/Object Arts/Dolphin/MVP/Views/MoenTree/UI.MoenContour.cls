@@ -57,13 +57,15 @@ upperTail
 
 upperTail: aMoenLink
 	upperTail := aMoenLink! !
-!UI.MoenContour categoriesFor: #lowerHead!accessing!private! !
-!UI.MoenContour categoriesFor: #lowerHead:!accessing!private! !
-!UI.MoenContour categoriesFor: #lowerTail!accessing!private! !
-!UI.MoenContour categoriesFor: #lowerTail:!accessing!private! !
-!UI.MoenContour categoriesFor: #printOn:!development!printing!public! !
-!UI.MoenContour categoriesFor: #upperHead!accessing!private! !
-!UI.MoenContour categoriesFor: #upperHead:!accessing!private! !
-!UI.MoenContour categoriesFor: #upperTail!accessing!private! !
-!UI.MoenContour categoriesFor: #upperTail:!accessing!private! !
+!UI.MoenContour categoriesForMethods!
+lowerHead!accessing!private! !
+lowerHead:!accessing!private! !
+lowerTail!accessing!private! !
+lowerTail:!accessing!private! !
+printOn:!development!printing!public! !
+upperHead!accessing!private! !
+upperHead:!accessing!private! !
+upperTail!accessing!private! !
+upperTail:!accessing!private! !
+!
 

@@ -423,42 +423,44 @@ uninitialize
 
 warningClass
 	^CompilerWarningNotification! !
-!Kernel.Compiler class categoriesFor: #compile:in:!compiling!public! !
-!Kernel.Compiler class categoriesFor: #compile:in:environment:!compiling!public! !
-!Kernel.Compiler class categoriesFor: #compile:in:environment:flags:!compiling!private! !
-!Kernel.Compiler class categoriesFor: #compileDebugExpression:in:environment:evaluationPools:!compiling!public! !
-!Kernel.Compiler class categoriesFor: #compileDebugMethod:in:environment:!compiling!public! !
-!Kernel.Compiler class categoriesFor: #compileExpression:in:!compiling!public! !
-!Kernel.Compiler class categoriesFor: #compileExpression:in:environment:!compiling!public! !
-!Kernel.Compiler class categoriesFor: #compileExpression:in:environment:flags:!compiling!public! !
-!Kernel.Compiler class categoriesFor: #compileForEvaluation:in:environment:evaluationPools:flags:!compiling!private! !
-!Kernel.Compiler class categoriesFor: #compilerNotification:!exceptions!private! !
-!Kernel.Compiler class categoriesFor: #debugInfoFlags:!development!public! !
-!Kernel.Compiler class categoriesFor: #debugInfoFor:in:environment:debug:!development!public! !
-!Kernel.Compiler class categoriesFor: #debugInfoForExpression:in:environment:evaluationPools:debug:!development!public! !
-!Kernel.Compiler class categoriesFor: #defaultFlags!constants!public! !
-!Kernel.Compiler class categoriesFor: #defaultFlags:!accessing!public! !
-!Kernel.Compiler class categoriesFor: #disableWarning:!helpers!public! !
-!Kernel.Compiler class categoriesFor: #enableWarning:!helpers!public! !
-!Kernel.Compiler class categoriesFor: #errorClass!public! !
-!Kernel.Compiler class categoriesFor: #evaluate:!evaluating!public! !
-!Kernel.Compiler class categoriesFor: #evaluate:for:!evaluating!public! !
-!Kernel.Compiler class categoriesFor: #evaluate:for:environment:!evaluating!public! !
-!Kernel.Compiler class categoriesFor: #evaluate:for:environment:evaluationPools:logged:!evaluating!public! !
-!Kernel.Compiler class categoriesFor: #evaluate:for:environment:evaluationPools:logged:ifFail:!evaluating!public! !
-!Kernel.Compiler class categoriesFor: #evaluate:for:environment:logged:!evaluating!public! !
-!Kernel.Compiler class categoriesFor: #evaluate:logged:!evaluating!public! !
-!Kernel.Compiler class categoriesFor: #identifierFrom:!parsing!public! !
-!Kernel.Compiler class categoriesFor: #initialize!development!initializing!private! !
-!Kernel.Compiler class categoriesFor: #isAReservedWord:!parsing!private! !
-!Kernel.Compiler class categoriesFor: #isAValidIdentifierChar:!parsing!private! !
-!Kernel.Compiler class categoriesFor: #isAValidInitialIdentifierChar:!parsing!private! !
-!Kernel.Compiler class categoriesFor: #isAValidLocalIdentifier:!parsing!private! !
-!Kernel.Compiler class categoriesFor: #isValidSelector:!public!testing! !
-!Kernel.Compiler class categoriesFor: #isWarningDisabled:!exceptions!private! !
-!Kernel.Compiler class categoriesFor: #notificationCallback:!exceptions!private! !
-!Kernel.Compiler class categoriesFor: #notificationClass!public! !
-!Kernel.Compiler class categoriesFor: #reservedWords!constants!private! !
-!Kernel.Compiler class categoriesFor: #uninitialize!class hierarchy-removing!public! !
-!Kernel.Compiler class categoriesFor: #warningClass!public! !
+!Kernel.Compiler class categoriesForMethods!
+compile:in:!compiling!public! !
+compile:in:environment:!compiling!public! !
+compile:in:environment:flags:!compiling!private! !
+compileDebugExpression:in:environment:evaluationPools:!compiling!public! !
+compileDebugMethod:in:environment:!compiling!public! !
+compileExpression:in:!compiling!public! !
+compileExpression:in:environment:!compiling!public! !
+compileExpression:in:environment:flags:!compiling!public! !
+compileForEvaluation:in:environment:evaluationPools:flags:!compiling!private! !
+compilerNotification:!exceptions!private! !
+debugInfoFlags:!development!public! !
+debugInfoFor:in:environment:debug:!development!public! !
+debugInfoForExpression:in:environment:evaluationPools:debug:!development!public! !
+defaultFlags!constants!public! !
+defaultFlags:!accessing!public! !
+disableWarning:!helpers!public! !
+enableWarning:!helpers!public! !
+errorClass!public! !
+evaluate:!evaluating!public! !
+evaluate:for:!evaluating!public! !
+evaluate:for:environment:!evaluating!public! !
+evaluate:for:environment:evaluationPools:logged:!evaluating!public! !
+evaluate:for:environment:evaluationPools:logged:ifFail:!evaluating!public! !
+evaluate:for:environment:logged:!evaluating!public! !
+evaluate:logged:!evaluating!public! !
+identifierFrom:!parsing!public! !
+initialize!development!initializing!private! !
+isAReservedWord:!parsing!private! !
+isAValidIdentifierChar:!parsing!private! !
+isAValidInitialIdentifierChar:!parsing!private! !
+isAValidLocalIdentifier:!parsing!private! !
+isValidSelector:!public!testing! !
+isWarningDisabled:!exceptions!private! !
+notificationCallback:!exceptions!private! !
+notificationClass!public! !
+reservedWords!constants!private! !
+uninitialize!class hierarchy-removing!public! !
+warningClass!public! !
+!
 

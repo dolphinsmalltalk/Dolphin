@@ -116,7 +116,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!Kernel.ConsoleSessionManager class categoriesFor: #icon!constants!development!public! !
+!Kernel.ConsoleSessionManager class categoriesForMethods!
+icon!constants!development!public! !
+!
 
 !Kernel.Package methodsFor!
 
@@ -144,9 +146,11 @@ rehydrateImageStripper: stripperClass
 			["If the package has been renamed the STB'd image stripper might lose its root package"
 			stripper rootPackage isNil ifTrue: [stripper rootPackage: self]].
 	^stripper! !
-!Kernel.Package categoriesFor: #hasImageStripper!private!testing! !
-!Kernel.Package categoriesFor: #imageStripper!accessing!public! !
-!Kernel.Package categoriesFor: #rehydrateImageStripper:!accessing!private! !
+!Kernel.Package categoriesForMethods!
+hasImageStripper!private!testing! !
+imageStripper!accessing!public! !
+rehydrateImageStripper:!accessing!private! !
+!
 
 !OS.VersionResource class methodsFor!
 
@@ -160,7 +164,9 @@ publishedAspectsOfInstances
 		add: (Aspect name: #stringTables);
 		add: (Aspect name: #translations);
 		yourself! !
-!OS.VersionResource class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!OS.VersionResource class categoriesForMethods!
+publishedAspectsOfInstances!constants!development!public! !
+!
 
 !OS.VS_VERSION_INFO_HEADER methodsFor!
 
@@ -174,7 +180,9 @@ printOn: target
 		nextPutAll: ', wType='; print: self wType;
 		nextPut: $)
 	! !
-!OS.VS_VERSION_INFO_HEADER categoriesFor: #printOn:!printing!public! !
+!OS.VS_VERSION_INFO_HEADER categoriesForMethods!
+printOn:!printing!public! !
+!
 
 !BasicImageStripper methodsFor!
 
@@ -196,9 +204,11 @@ setEvents: anEventsCollectionOrNil
 	Answer the receiver."
 
 	events := anEventsCollectionOrNil! !
-!BasicImageStripper categoriesFor: #getEvents!events!private! !
-!BasicImageStripper categoriesFor: #postCopy!copying!public! !
-!BasicImageStripper categoriesFor: #setEvents:!events!private! !
+!BasicImageStripper categoriesForMethods!
+getEvents!events!private! !
+postCopy!copying!public! !
+setEvents:!events!private! !
+!
 
 !ImageStripper methodsFor!
 
@@ -424,40 +434,42 @@ writeLogFile: aBoolean
 	to aBoolean."
 
 	flags := flags mask: WriteLogMask set: aBoolean! !
-!ImageStripper categoriesFor: #canDeploy!public!testing! !
-!ImageStripper categoriesFor: #compileExternalStructures:!accessing!public! !
-!ImageStripper categoriesFor: #defaultSessionManagerClass!accessing!public! !
-!ImageStripper categoriesFor: #deploy!operations!public! !
-!ImageStripper categoriesFor: #editCustomOptions!accessing!public! !
-!ImageStripper categoriesFor: #executableName:!accessing!public! !
-!ImageStripper categoriesFor: #ignoreViewReferences:!accessing!public! !
-!ImageStripper categoriesFor: #includeManifestResource:!accessing!public! !
-!ImageStripper categoriesFor: #initialize!initializing!private! !
-!ImageStripper categoriesFor: #isToGo:!accessing!public! !
-!ImageStripper categoriesFor: #isUnattended:!accessing!public! !
-!ImageStripper categoriesFor: #logReferencesToClasses:!accessing!public! !
-!ImageStripper categoriesFor: #preserveAspectSetters:!accessing!public! !
-!ImageStripper categoriesFor: #preStripScript:!accessing!public! !
-!ImageStripper categoriesFor: #queryCommand:!commands!private! !
-!ImageStripper categoriesFor: #retainInstVarNames:!accessing!public! !
-!ImageStripper categoriesFor: #rootPackage:!accessing!public! !
-!ImageStripper categoriesFor: #runtimeSessionManagerClass:!accessing!public! !
-!ImageStripper categoriesFor: #snapshotType:!accessing!public! !
-!ImageStripper categoriesFor: #stripClassBuilder:!accessing!public! !
-!ImageStripper categoriesFor: #stripClassGuids:!accessing!public! !
-!ImageStripper categoriesFor: #stripClassInfo:!accessing!public! !
-!ImageStripper categoriesFor: #stripDeprecatedMethods:!accessing!public! !
-!ImageStripper categoriesFor: #stripDuplicateBytecodes:!accessing!public! !
-!ImageStripper categoriesFor: #stripDuplicateStrings:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantClasses:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantMethods:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantPackages:!accessing!public! !
-!ImageStripper categoriesFor: #stripRedundantResources:!accessing!public! !
-!ImageStripper categoriesFor: #stripShouldNotImplement:!accessing!public! !
-!ImageStripper categoriesFor: #stripSubclassResponsibility:!accessing!public! !
-!ImageStripper categoriesFor: #stubFilePath:!accessing!public! !
-!ImageStripper categoriesFor: #versionResource:!accessing!private! !
-!ImageStripper categoriesFor: #writeLogFile:!accessing!public! !
+!ImageStripper categoriesForMethods!
+canDeploy!public!testing! !
+compileExternalStructures:!accessing!public! !
+defaultSessionManagerClass!accessing!public! !
+deploy!operations!public! !
+editCustomOptions!accessing!public! !
+executableName:!accessing!public! !
+ignoreViewReferences:!accessing!public! !
+includeManifestResource:!accessing!public! !
+initialize!initializing!private! !
+isToGo:!accessing!public! !
+isUnattended:!accessing!public! !
+logReferencesToClasses:!accessing!public! !
+preserveAspectSetters:!accessing!public! !
+preStripScript:!accessing!public! !
+queryCommand:!commands!private! !
+retainInstVarNames:!accessing!public! !
+rootPackage:!accessing!public! !
+runtimeSessionManagerClass:!accessing!public! !
+snapshotType:!accessing!public! !
+stripClassBuilder:!accessing!public! !
+stripClassGuids:!accessing!public! !
+stripClassInfo:!accessing!public! !
+stripDeprecatedMethods:!accessing!public! !
+stripDuplicateBytecodes:!accessing!public! !
+stripDuplicateStrings:!accessing!public! !
+stripRedundantClasses:!accessing!public! !
+stripRedundantMethods:!accessing!public! !
+stripRedundantPackages:!accessing!public! !
+stripRedundantResources:!accessing!public! !
+stripShouldNotImplement:!accessing!public! !
+stripSubclassResponsibility:!accessing!public! !
+stubFilePath:!accessing!public! !
+versionResource:!accessing!private! !
+writeLogFile:!accessing!public! !
+!
 
 !ImageStripper class methodsFor!
 
@@ -536,10 +548,12 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^6! !
-!ImageStripper class categoriesFor: #for:!instance creation!public! !
-!ImageStripper class categoriesFor: #publishedAspectsOfInstances!development!public! !
-!ImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
-!ImageStripper class categoriesFor: #stbVersion!binary filing!development!public! !
+!ImageStripper class categoriesForMethods!
+for:!instance creation!public! !
+publishedAspectsOfInstances!development!public! !
+stbConvertFrom:!binary filing!development!public! !
+stbVersion!binary filing!development!public! !
+!
 
 !Tools.PackageSelector methodsFor!
 
@@ -547,7 +561,9 @@ deploy
 	"Open a new Application Deployment Wizard on the image stripper of the current package."
 
 	ApplicationDeploymentWizard showModalOn: (self singlePackage aspectValue: #imageStripper)! !
-!Tools.PackageSelector categoriesFor: #deploy!commands!public! !
+!Tools.PackageSelector categoriesForMethods!
+deploy!commands!public! !
+!
 
 "End of package definition"!
 

@@ -100,20 +100,22 @@ top
 	"Answer whether the scroll event is to the far top/left."
 
 	^self scrollCode = SB_TOP! !
-!UI.ScrollEvent categoriesFor: #bottom!public!testing! !
-!UI.ScrollEvent categoriesFor: #endScroll!public!testing! !
-!UI.ScrollEvent categoriesFor: #lineDown!public!testing! !
-!UI.ScrollEvent categoriesFor: #lineLeft!public!testing! !
-!UI.ScrollEvent categoriesFor: #lineRight!public!testing! !
-!UI.ScrollEvent categoriesFor: #lineUp!public!testing! !
-!UI.ScrollEvent categoriesFor: #pageDown!public!testing! !
-!UI.ScrollEvent categoriesFor: #pageLeft!public!testing! !
-!UI.ScrollEvent categoriesFor: #pageRight!public!testing! !
-!UI.ScrollEvent categoriesFor: #pageUp!public!testing! !
-!UI.ScrollEvent categoriesFor: #pos!accessing!public! !
-!UI.ScrollEvent categoriesFor: #scrollBar!accessing!public! !
-!UI.ScrollEvent categoriesFor: #scrollCode!accessing!public! !
-!UI.ScrollEvent categoriesFor: #thumbPosition!public!testing! !
-!UI.ScrollEvent categoriesFor: #thumbTrack!public!testing! !
-!UI.ScrollEvent categoriesFor: #top!public!testing! !
+!UI.ScrollEvent categoriesForMethods!
+bottom!public!testing! !
+endScroll!public!testing! !
+lineDown!public!testing! !
+lineLeft!public!testing! !
+lineRight!public!testing! !
+lineUp!public!testing! !
+pageDown!public!testing! !
+pageLeft!public!testing! !
+pageRight!public!testing! !
+pageUp!public!testing! !
+pos!accessing!public! !
+scrollBar!accessing!public! !
+scrollCode!accessing!public! !
+thumbPosition!public!testing! !
+thumbTrack!public!testing! !
+top!public!testing! !
+!
 

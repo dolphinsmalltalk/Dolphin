@@ -52,15 +52,17 @@ searchForTree: aBRProgramNode replaceWith: replaceNode
 searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock 
 	self searchForTree: aBRProgramNode replaceWith: replaceString.
 	verificationBlock := aBlock! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #methodReplaceString:!initialize/release!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #replaceString:!initialize/release!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #searchFor:replaceWith:!initialize/release!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #searchFor:replaceWith:when:!initialize/release!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #searchForMethod:replaceWith:!initialize/release!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #searchForMethod:replaceWith:when:!initialize/release!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #searchForTree:replaceWith:!initialize/release!public! !
-!Refactory.Browser.RBStringReplaceRule categoriesFor: #searchForTree:replaceWith:when:!initialize/release!public! !
+!Refactory.Browser.RBStringReplaceRule categoriesForMethods!
+foundMatchFor:!matching!public! !
+methodReplaceString:!initialize/release!public! !
+replaceString:!initialize/release!public! !
+searchFor:replaceWith:!initialize/release!public! !
+searchFor:replaceWith:when:!initialize/release!public! !
+searchForMethod:replaceWith:!initialize/release!public! !
+searchForMethod:replaceWith:when:!initialize/release!public! !
+searchForTree:replaceWith:!initialize/release!public! !
+searchForTree:replaceWith:when:!initialize/release!public! !
+!
 
 !Refactory.Browser.RBStringReplaceRule class methodsFor!
 
@@ -92,10 +94,12 @@ searchForTree: aRBProgramNode replaceWith: replaceString when: aBlock
 		searchForTree: aRBProgramNode
 		replaceWith: replaceString
 		when: aBlock! !
-!Refactory.Browser.RBStringReplaceRule class categoriesFor: #searchFor:replaceWith:!instance creation!public! !
-!Refactory.Browser.RBStringReplaceRule class categoriesFor: #searchFor:replaceWith:when:!instance creation!public! !
-!Refactory.Browser.RBStringReplaceRule class categoriesFor: #searchForMethod:replaceWith:!instance creation!public! !
-!Refactory.Browser.RBStringReplaceRule class categoriesFor: #searchForMethod:replaceWith:when:!instance creation!public! !
-!Refactory.Browser.RBStringReplaceRule class categoriesFor: #searchForTree:replaceWith:!instance creation!public! !
-!Refactory.Browser.RBStringReplaceRule class categoriesFor: #searchForTree:replaceWith:when:!instance creation!public! !
+!Refactory.Browser.RBStringReplaceRule class categoriesForMethods!
+searchFor:replaceWith:!instance creation!public! !
+searchFor:replaceWith:when:!instance creation!public! !
+searchForMethod:replaceWith:!instance creation!public! !
+searchForMethod:replaceWith:when:!instance creation!public! !
+searchForTree:replaceWith:!instance creation!public! !
+searchForTree:replaceWith:when:!instance creation!public! !
+!
 

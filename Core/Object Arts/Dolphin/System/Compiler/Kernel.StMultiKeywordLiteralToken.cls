@@ -13,5 +13,7 @@ Kernel.StMultiKeywordLiteralToken comment: ''!
 
 isMultiKeyword
 	^true! !
-!Kernel.StMultiKeywordLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
+!Kernel.StMultiKeywordLiteralToken categoriesForMethods!
+isMultiKeyword!public!testing! !
+!
 

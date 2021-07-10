@@ -27,7 +27,9 @@ defaultSides
 	Triangles have 3 sides"
 
 	^3! !
-!UI.Examples.Triangle categoriesFor: #defaultColor!constants!public! !
-!UI.Examples.Triangle categoriesFor: #defaultPosition!constants!public! !
-!UI.Examples.Triangle categoriesFor: #defaultSides!constants!public! !
+!UI.Examples.Triangle categoriesForMethods!
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+defaultSides!constants!public! !
+!
 

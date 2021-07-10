@@ -83,16 +83,18 @@ validationBlock: aBlock
 	is valid. The OK button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
-!Tools.PackagePrompter categoriesFor: #createComponents!initializing!public! !
-!Tools.PackagePrompter categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.PackagePrompter categoriesFor: #defaultPackage:!accessing!private! !
-!Tools.PackagePrompter categoriesFor: #initialize!initializing!private! !
-!Tools.PackagePrompter categoriesFor: #onPackageSelected!event handling!public! !
-!Tools.PackagePrompter categoriesFor: #onViewOpened!event handling!public! !
-!Tools.PackagePrompter categoriesFor: #queryCommand:!commands!private! !
-!Tools.PackagePrompter categoriesFor: #toggleSetPackage!commands!public! !
-!Tools.PackagePrompter categoriesFor: #validationBlock!accessing!public! !
-!Tools.PackagePrompter categoriesFor: #validationBlock:!accessing!public! !
+!Tools.PackagePrompter categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultPackage:!accessing!private! !
+initialize!initializing!private! !
+onPackageSelected!event handling!public! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+toggleSetPackage!commands!public! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 
 !Tools.PackagePrompter class methodsFor!
 
@@ -138,9 +140,11 @@ showModalOn: aModel caption: aString default: aPackage validationBlock: aBlock
 		caption: aString;
 		validationBlock: aBlock;
 		showModal! !
-!Tools.PackagePrompter class categoriesFor: #defaultValidationBlock!constants!public! !
-!Tools.PackagePrompter class categoriesFor: #icon!accessing!constants!public! !
-!Tools.PackagePrompter class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.PackagePrompter class categoriesFor: #showModalOn:caption:default:!instance creation!public! !
-!Tools.PackagePrompter class categoriesFor: #showModalOn:caption:default:validationBlock:!instance creation!public! !
+!Tools.PackagePrompter class categoriesForMethods!
+defaultValidationBlock!constants!public! !
+icon!accessing!constants!public! !
+resource_Default_view!public!resources-views! !
+showModalOn:caption:default:!instance creation!public! !
+showModalOn:caption:default:validationBlock:!instance creation!public! !
+!
 

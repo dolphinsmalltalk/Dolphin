@@ -32,10 +32,12 @@ resolution: anInteger
 	"Sets the number of pixels between adjacent points in the grid to anInteger."
 
 	resolution := anInteger! !
-!Graphics.Grid categoriesFor: #constrainPoint:!accessing!public! !
-!Graphics.Grid categoriesFor: #constrainRectangle:!accessing!public! !
-!Graphics.Grid categoriesFor: #resolution!accessing!public! !
-!Graphics.Grid categoriesFor: #resolution:!accessing!public! !
+!Graphics.Grid categoriesForMethods!
+constrainPoint:!accessing!public! !
+constrainRectangle:!accessing!public! !
+resolution!accessing!public! !
+resolution:!accessing!public! !
+!
 
 !Graphics.Grid class methodsFor!
 
@@ -46,5 +48,7 @@ resolution: anInteger
 	^self new
 		resolution: anInteger;
 		yourself! !
-!Graphics.Grid class categoriesFor: #resolution:!instance creation!public! !
+!Graphics.Grid class categoriesForMethods!
+resolution:!instance creation!public! !
+!
 

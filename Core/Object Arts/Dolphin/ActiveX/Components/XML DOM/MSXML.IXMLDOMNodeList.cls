@@ -104,17 +104,19 @@ Reset
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMNodeList categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSXML.IXMLDOMNodeList categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!MSXML.IXMLDOMNodeList categoriesFor: #get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!MSXML.IXMLDOMNodeList categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!MSXML.IXMLDOMNodeList categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IXMLDOMNodeList categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IXMLDOMNodeList categoriesFor: #item:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMNodeList categoriesFor: #length!**auto generated**!properties!public! !
-!MSXML.IXMLDOMNodeList categoriesFor: #nextNode!**auto generated**!methods!public! !
-!MSXML.IXMLDOMNodeList categoriesFor: #NextNode:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!MSXML.IXMLDOMNodeList categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMNodeList!public! !
+!MSXML.IXMLDOMNodeList categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+nextNode!**auto generated**!methods!public! !
+NextNode:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+Reset!**auto generated**!COM Interfaces-IXMLDOMNodeList!public! !
+!
 
 !MSXML.IXMLDOMNodeList class methodsFor!
 
@@ -133,5 +135,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.IXMLDOMNodeList class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMNodeList class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

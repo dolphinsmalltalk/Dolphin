@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineTemporaryTest'
 	instanceVariableNames: ''
@@ -44,8 +44,10 @@ testInlineTemporaryReadBeforeWritten
 				inline: (self convertInterval: (48 to: 56) for: (RefactoryTestDataApp sourceCodeAt: #inlineTemporary))
 				from: #inlineTemporary
 				in: RefactoryTestDataApp)! !
-!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporary!public!tests! !
-!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporaryBadInterval!public!tests! !
-!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporaryMutlipleAssignment!public!tests! !
-!Refactory.Browser.Tests.InlineTemporaryTest categoriesFor: #testInlineTemporaryReadBeforeWritten!public!tests! !
+!Refactory.Browser.Tests.InlineTemporaryTest categoriesForMethods!
+testInlineTemporary!public!tests! !
+testInlineTemporaryBadInterval!public!tests! !
+testInlineTemporaryMutlipleAssignment!public!tests! !
+testInlineTemporaryReadBeforeWritten!public!tests! !
+!
 

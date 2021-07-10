@@ -115,23 +115,25 @@ ownerView: aView
 	| hWnd |
 	hWnd := aView asParameter.
 	hWnd isNull ifFalse: [self hwndOwner: hWnd].! !
-!OS.PRINTDLGW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #flags:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #hDC!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #hDC:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #hookFlag!accessing!public! !
-!OS.PRINTDLGW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nCopies!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nCopies:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nFromPage!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nFromPage:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nMinPage:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nToPage!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #nToPage:!**compiled accessors**!public! !
-!OS.PRINTDLGW categoriesFor: #ownerView:!accessing!public! !
+!OS.PRINTDLGW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hDC!**compiled accessors**!public! !
+hDC:!**compiled accessors**!public! !
+hookFlag!accessing!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpfnHook:!**compiled accessors**!public! !
+nCopies!**compiled accessors**!public! !
+nCopies:!**compiled accessors**!public! !
+nFromPage!**compiled accessors**!public! !
+nFromPage:!**compiled accessors**!public! !
+nMaxPage:!**compiled accessors**!public! !
+nMinPage:!**compiled accessors**!public! !
+nToPage!**compiled accessors**!public! !
+nToPage:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+!
 
 !OS.PRINTDLGW class methodsFor!
 
@@ -196,7 +198,9 @@ packing
 	PRINTDLG is an old Win16 structure with byte packing."
 
 	^1! !
-!OS.PRINTDLGW class categoriesFor: #defineFields!public!template definition! !
-!OS.PRINTDLGW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.PRINTDLGW class categoriesFor: #packing!constants!public! !
+!OS.PRINTDLGW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

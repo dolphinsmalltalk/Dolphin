@@ -23,5 +23,7 @@ executeStatement
 		nameLength2: SQL_NTS
 		tableName: tableName
 		nameLength3: SQL_NTS! !
-!Database.DBPrimaryKeysStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBPrimaryKeysStatement categoriesForMethods!
+executeStatement!operations!private! !
+!
 

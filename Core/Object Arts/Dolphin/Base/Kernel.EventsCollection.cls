@@ -88,16 +88,18 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^(self lookup: aSymbol) ifNotNil: [:msgs | msgs valueWithArguments: anArray]! !
-!Kernel.EventsCollection categoriesFor: #addEvent:action:!adding!private! !
-!Kernel.EventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
-!Kernel.EventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !
-!Kernel.EventsCollection categoriesFor: #removeActionsForEvent:!adding!private! !
-!Kernel.EventsCollection categoriesFor: #removeEventsTriggeredFor:!private!removing! !
-!Kernel.EventsCollection categoriesFor: #shrink!private!removing! !
-!Kernel.EventsCollection categoriesFor: #triggerEvent:!debugger-step through!private!triggering! !
-!Kernel.EventsCollection categoriesFor: #triggerEvent:with:!debugger-step through!private!triggering! !
-!Kernel.EventsCollection categoriesFor: #triggerEvent:with:with:!debugger-step through!private!triggering! !
-!Kernel.EventsCollection categoriesFor: #triggerEvent:withArguments:!debugger-step through!private!triggering! !
+!Kernel.EventsCollection categoriesForMethods!
+addEvent:action:!adding!private! !
+asMinimumRepresentation!converting!private! !
+hasActionsForEvent:!private!testing! !
+removeActionsForEvent:!adding!private! !
+removeEventsTriggeredFor:!private!removing! !
+shrink!private!removing! !
+triggerEvent:!debugger-step through!private!triggering! !
+triggerEvent:with:!debugger-step through!private!triggering! !
+triggerEvent:with:with:!debugger-step through!private!triggering! !
+triggerEvent:withArguments:!debugger-step through!private!triggering! !
+!
 
 Kernel.EventsCollection methodProtocol: #eventsCollection attributes: #(#readOnly) selectors: #(#addEvent:action: #asMinimumRepresentation #hasActionsForEvent: #removeActionsForEvent: #removeEventsTriggeredFor: #shrink #triggerEvent: #triggerEvent:with: #triggerEvent:with:with: #triggerEvent:withArguments:)!
 

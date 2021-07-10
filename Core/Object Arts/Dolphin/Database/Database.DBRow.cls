@@ -22,13 +22,17 @@ initializeFromBuffer: aDBRow
 	contents := aDBRow objects.
 	status := aDBRow status.
 	^self! !
-!Database.DBRow categoriesFor: #asObject!converting!private! !
-!Database.DBRow categoriesFor: #initializeFromBuffer:!instance creation!private! !
+!Database.DBRow categoriesForMethods!
+asObject!converting!private! !
+initializeFromBuffer:!instance creation!private! !
+!
 
 !Database.DBRow class methodsFor!
 
 fromBuffer: aDBRow
 	^super new
 		initializeFromBuffer: aDBRow! !
-!Database.DBRow class categoriesFor: #fromBuffer:!instance creation!private! !
+!Database.DBRow class categoriesForMethods!
+fromBuffer:!instance creation!private! !
+!
 

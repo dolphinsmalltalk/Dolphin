@@ -51,13 +51,15 @@ type: anObject
 	invalid call to anObject."
 
 	type := anObject! !
-!External.InvalidExternalCall categoriesFor: #_descriptionArguments!displaying!public! !
-!External.InvalidExternalCall categoriesFor: #_descriptionFormat!displaying!private! !
-!External.InvalidExternalCall categoriesFor: #argument!accessing!public! !
-!External.InvalidExternalCall categoriesFor: #argument:!accessing!private! !
-!External.InvalidExternalCall categoriesFor: #hresult!accessing!public! !
-!External.InvalidExternalCall categoriesFor: #type!accessing!public! !
-!External.InvalidExternalCall categoriesFor: #type:!accessing!private! !
+!External.InvalidExternalCall categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!private! !
+argument!accessing!public! !
+argument:!accessing!private! !
+hresult!accessing!public! !
+type!accessing!public! !
+type:!accessing!private! !
+!
 
 !External.InvalidExternalCall class methodsFor!
 
@@ -71,5 +73,7 @@ invalidArgument: anInteger got: anObject expected: type
 		argument: anObject;
 		type: type;
 		signalWith: anInteger! !
-!External.InvalidExternalCall class categoriesFor: #invalidArgument:got:expected:!instance creation!private! !
+!External.InvalidExternalCall class categoriesForMethods!
+invalidArgument:got:expected:!instance creation!private! !
+!
 

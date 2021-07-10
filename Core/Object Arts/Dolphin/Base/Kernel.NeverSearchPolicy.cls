@@ -21,6 +21,8 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^'never'! !
-!Kernel.NeverSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!Kernel.NeverSearchPolicy categoriesFor: #name!accessing!public! !
+!Kernel.NeverSearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+name!accessing!public! !
+!
 

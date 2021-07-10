@@ -22,5 +22,7 @@ sort: anObject from: startInteger to: stopInteger
 		heapsort: anObject
 		from: startInteger
 		to: stopInteger! !
-!Kernel.HeapsortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
+!Kernel.HeapsortAlgorithm categoriesForMethods!
+sort:from:to:!operations!public! !
+!
 

@@ -15,7 +15,9 @@ isFolder
 	"Answers true if the receiver can hold contents"
 
 	^true! !
-!Tools.SmalltalkSystemFolder categoriesFor: #isFolder!accessing!public! !
+!Tools.SmalltalkSystemFolder categoriesForMethods!
+isFolder!accessing!public! !
+!
 
 !Tools.SmalltalkSystemFolder class methodsFor!
 
@@ -58,9 +60,11 @@ icon: anIcon description: aStringDescription helpId: helpId
 		description: aStringDescription
 		openBlock: [:presenter :object | presenter expand: object]
 		helpId: helpId! !
-!Tools.SmalltalkSystemFolder class categoriesFor: #description:!instance creation!public! !
-!Tools.SmalltalkSystemFolder class categoriesFor: #description:helpId:!instance creation!public! !
-!Tools.SmalltalkSystemFolder class categoriesFor: #icon!constants!public! !
-!Tools.SmalltalkSystemFolder class categoriesFor: #icon:description:!instance creation!public! !
-!Tools.SmalltalkSystemFolder class categoriesFor: #icon:description:helpId:!instance creation!public! !
+!Tools.SmalltalkSystemFolder class categoriesForMethods!
+description:!instance creation!public! !
+description:helpId:!instance creation!public! !
+icon!constants!public! !
+icon:description:!instance creation!public! !
+icon:description:helpId:!instance creation!public! !
+!
 

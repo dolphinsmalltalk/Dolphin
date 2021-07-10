@@ -29,6 +29,8 @@ transform
 			(each directlyDefinesInstanceVariable: variableName) 
 				ifTrue: [each removeInstanceVariable: variableName]].
 	class addInstanceVariable: variableName! !
-!Refactory.Browser.PullUpInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.PullUpInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PullUpInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

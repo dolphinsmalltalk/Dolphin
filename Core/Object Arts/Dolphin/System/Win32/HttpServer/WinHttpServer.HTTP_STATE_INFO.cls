@@ -63,13 +63,15 @@ value: anInteger
 			[self
 				Present: true;
 				State: anInteger]! !
-!WinHttpServer.HTTP_STATE_INFO categoriesFor: #isActive!accessing!public! !
-!WinHttpServer.HTTP_STATE_INFO categoriesFor: #isActive:!accessing!public! !
-!WinHttpServer.HTTP_STATE_INFO categoriesFor: #printFields:on:!printing!private! !
-!WinHttpServer.HTTP_STATE_INFO categoriesFor: #State!**compiled accessors**!public! !
-!WinHttpServer.HTTP_STATE_INFO categoriesFor: #State:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_STATE_INFO categoriesFor: #value!public! !
-!WinHttpServer.HTTP_STATE_INFO categoriesFor: #value:!public! !
+!WinHttpServer.HTTP_STATE_INFO categoriesForMethods!
+isActive!accessing!public! !
+isActive:!accessing!public! !
+printFields:on:!printing!private! !
+State!**compiled accessors**!public! !
+State:!**compiled accessors**!public! !
+value!public! !
+value:!public! !
+!
 
 !WinHttpServer.HTTP_STATE_INFO class methodsFor!
 
@@ -105,9 +107,11 @@ inactive
 
 propertyId
 	^HttpServerStateProperty! !
-!WinHttpServer.HTTP_STATE_INFO class categoriesFor: #active!instance creation!public! !
-!WinHttpServer.HTTP_STATE_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_STATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_STATE_INFO class categoriesFor: #inactive!instance creation!public! !
-!WinHttpServer.HTTP_STATE_INFO class categoriesFor: #propertyId!constants!public! !
+!WinHttpServer.HTTP_STATE_INFO class categoriesForMethods!
+active!instance creation!public! !
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+inactive!instance creation!public! !
+propertyId!constants!public! !
+!
 

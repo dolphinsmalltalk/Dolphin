@@ -125,15 +125,17 @@ startTrackingAt: aPoint
 	self createDragImageList.
 	dragImageList dragEnter: self at: aPoint.
 	^aPoint! !
-!Tools.MenuComposerArena categoriesFor: #beginDrag:of:in:!helpers!private! !
-!Tools.MenuComposerArena categoriesFor: #cancelTrackingAt:!private!tracking! !
-!Tools.MenuComposerArena categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!Tools.MenuComposerArena categoriesFor: #createDragImageList!private!tracking! !
-!Tools.MenuComposerArena categoriesFor: #endTrackingAt:!private!tracking! !
-!Tools.MenuComposerArena categoriesFor: #hideDragCursor!modes!private! !
-!Tools.MenuComposerArena categoriesFor: #onItemIn:selectedAtIndex:!event handling!private! !
-!Tools.MenuComposerArena categoriesFor: #showDragCursor!modes!private! !
-!Tools.MenuComposerArena categoriesFor: #startTrackingAt:!private!tracking! !
+!Tools.MenuComposerArena categoriesForMethods!
+beginDrag:of:in:!helpers!private! !
+cancelTrackingAt:!private!tracking! !
+continueTrackingAt:from:!private!tracking! !
+createDragImageList!private!tracking! !
+endTrackingAt:!private!tracking! !
+hideDragCursor!modes!private! !
+onItemIn:selectedAtIndex:!event handling!private! !
+showDragCursor!modes!private! !
+startTrackingAt:!private!tracking! !
+!
 
 Tools.MenuComposerArena methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -153,6 +155,8 @@ publishedEventsOfInstances
 		add: #itemFrom:at:droppedBefore:copy:;
 		yourself.
 ! !
-!Tools.MenuComposerArena class categoriesFor: #icon!constants!public! !
-!Tools.MenuComposerArena class categoriesFor: #publishedEventsOfInstances!events!public! !
+!Tools.MenuComposerArena class categoriesForMethods!
+icon!constants!public! !
+publishedEventsOfInstances!events!public! !
+!
 

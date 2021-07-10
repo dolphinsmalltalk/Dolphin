@@ -63,11 +63,13 @@ Save: pPropBag fClearDirty: fClearDirty fSaveAllProperties: fSaveAllProperties
 
 	<virtual stdcall: hresult 7 IPropertyBag* bool bool>
 	^self invalidCall: _failureCode! !
-!OS.COM.IPersistPropertyBag categoriesFor: #initNew!methods!public! !
-!OS.COM.IPersistPropertyBag categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
-!OS.COM.IPersistPropertyBag categoriesFor: #Load:pErrorLog:!COM Interfaces-IPersistPropertyBag!private! !
-!OS.COM.IPersistPropertyBag categoriesFor: #save:fClearDirty:fSaveAllProperties:!methods!public! !
-!OS.COM.IPersistPropertyBag categoriesFor: #Save:fClearDirty:fSaveAllProperties:!COM Interfaces-IPersistPropertyBag!private! !
+!OS.COM.IPersistPropertyBag categoriesForMethods!
+initNew!methods!public! !
+InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
+Load:pErrorLog:!COM Interfaces-IPersistPropertyBag!private! !
+save:fClearDirty:fSaveAllProperties:!methods!public! !
+Save:fClearDirty:fSaveAllProperties:!COM Interfaces-IPersistPropertyBag!private! !
+!
 
 OS.COM.IPersistPropertyBag methodProtocol: #IPersistPropertyBag attributes: #(#readOnly) selectors: #(#InitNew #Load:pErrorLog: #Save:fClearDirty:fSaveAllProperties:)!
 
@@ -86,5 +88,7 @@ defineFunctions
 		defineFunction: #Save:fClearDirty:fSaveAllProperties:
 			argumentTypes: 'IPropertyBag* bool bool'
 ! !
-!OS.COM.IPersistPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistPropertyBag class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

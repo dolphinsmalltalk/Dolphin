@@ -93,20 +93,22 @@ verifySelectedInterval
 	self determineVariableDefinition.
 	self checkMultipleAssignments.
 	self checkReadBeforeWritten! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #checkMultipleAssignments!preconditions!private! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #checkReadBeforeWritten!preconditions!private! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #compileMethod!public!transforming! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #determineAssignmentNode!preconditions!private! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #determineVariableDefinition!preconditions!private! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #hasOnlyOneAssignment!public!testing! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #inline:from:in:!initialize/release!public! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #parseMethod!helpers!private! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #replaceAssignment!public!transforming! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #replaceReferences!public!transforming! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.InlineTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
+!Refactory.Browser.InlineTemporaryRefactoring categoriesForMethods!
+checkMultipleAssignments!preconditions!private! !
+checkReadBeforeWritten!preconditions!private! !
+compileMethod!public!transforming! !
+determineAssignmentNode!preconditions!private! !
+determineVariableDefinition!preconditions!private! !
+hasOnlyOneAssignment!public!testing! !
+inline:from:in:!initialize/release!public! !
+parseMethod!helpers!private! !
+preconditions!preconditions!public! !
+replaceAssignment!public!transforming! !
+replaceReferences!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+verifySelectedInterval!preconditions!public! !
+!
 
 !Refactory.Browser.InlineTemporaryRefactoring class methodsFor!
 
@@ -123,6 +125,8 @@ model: aRBNamespace inline: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!Refactory.Browser.InlineTemporaryRefactoring class categoriesFor: #inline:from:in:!instance creation!public! !
-!Refactory.Browser.InlineTemporaryRefactoring class categoriesFor: #model:inline:from:in:!instance creation!public! !
+!Refactory.Browser.InlineTemporaryRefactoring class categoriesForMethods!
+inline:from:in:!instance creation!public! !
+model:inline:from:in:!instance creation!public! !
+!
 

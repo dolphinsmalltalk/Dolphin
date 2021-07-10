@@ -41,9 +41,11 @@ setCommandDescription: aCommandDescription
 	self initialize.
 	commandDescription := aCommandDescription.
 	^self! !
-!UI.ToolbarIconButton categoriesFor: #imageIndexIn:!operations!private! !
-!UI.ToolbarIconButton categoriesFor: #renderBitmap!private! !
-!UI.ToolbarIconButton categoriesFor: #setCommandDescription:!public! !
+!UI.ToolbarIconButton categoriesForMethods!
+imageIndexIn:!operations!private! !
+renderBitmap!private! !
+setCommandDescription:!public! !
+!
 
 !UI.ToolbarIconButton class methodsFor!
 
@@ -109,10 +111,12 @@ stbConvertFrom: anSTBClassFormat
 	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
 	newInstance instVarAt: 4 put: (data at: 1).
 	newInstance]! !
-!UI.ToolbarIconButton class categoriesFor: #command:description:image:!instance creation!public! !
-!UI.ToolbarIconButton class categoriesFor: #commandDescription:!instance creation!public! !
-!UI.ToolbarIconButton class categoriesFor: #defaultImage!public! !
-!UI.ToolbarIconButton class categoriesFor: #new!instance creation!public! !
-!UI.ToolbarIconButton class categoriesFor: #onStartup!public! !
-!UI.ToolbarIconButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.ToolbarIconButton class categoriesForMethods!
+command:description:image:!instance creation!public! !
+commandDescription:!instance creation!public! !
+defaultImage!public! !
+new!instance creation!public! !
+onStartup!public! !
+stbConvertFrom:!binary filing!private! !
+!
 

@@ -24,8 +24,10 @@ value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
 	bytes dwordAtOffset: _OffsetOf_value put: aBoolean asParameter! !
-!External.BOOL categoriesFor: #value!**compiled accessors**!public! !
-!External.BOOL categoriesFor: #value:!**compiled accessors**!public! !
+!External.BOOL categoriesForMethods!
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.BOOL class methodsFor!
 
@@ -44,5 +46,7 @@ defineFields
 		type: (BOOLField new
 				beOverride;
 				yourself)! !
-!External.BOOL class categoriesFor: #defineFields!public!template definition! !
+!External.BOOL class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

@@ -55,13 +55,15 @@ rcItem
 	"Answer the <RECTL> value of the receiver's 'rcItem' field."
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcItem! !
-!OS.DRAWITEMSTRUCT categoriesFor: #hDC!**compiled accessors**!public! !
-!OS.DRAWITEMSTRUCT categoriesFor: #hwndItem!**compiled accessors**!public! !
-!OS.DRAWITEMSTRUCT categoriesFor: #isGrayed!public!testing! !
-!OS.DRAWITEMSTRUCT categoriesFor: #isSelected!public!testing! !
-!OS.DRAWITEMSTRUCT categoriesFor: #itemAction!**compiled accessors**!public! !
-!OS.DRAWITEMSTRUCT categoriesFor: #itemState!**compiled accessors**!public! !
-!OS.DRAWITEMSTRUCT categoriesFor: #rcItem!**compiled accessors**!public! !
+!OS.DRAWITEMSTRUCT categoriesForMethods!
+hDC!**compiled accessors**!public! !
+hwndItem!**compiled accessors**!public! !
+isGrayed!public!testing! !
+isSelected!public!testing! !
+itemAction!**compiled accessors**!public! !
+itemState!**compiled accessors**!public! !
+rcItem!**compiled accessors**!public! !
+!
 
 !OS.DRAWITEMSTRUCT class methodsFor!
 
@@ -94,6 +96,8 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemAction #itemState #hwndItem #hDC #rcItem)! !
-!OS.DRAWITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!OS.DRAWITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DRAWITEMSTRUCT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

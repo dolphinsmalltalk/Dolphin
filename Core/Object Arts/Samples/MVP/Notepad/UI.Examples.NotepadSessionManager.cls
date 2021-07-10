@@ -17,7 +17,9 @@ main
 	| pad |
 	pad := self mainShellClass show.
 	self argc > 1 ifTrue: [pad openFile: (self argv at: 2)]! !
-!UI.Examples.NotepadSessionManager categoriesFor: #main!operations!public! !
+!UI.Examples.NotepadSessionManager categoriesForMethods!
+main!operations!public! !
+!
 
 !UI.Examples.NotepadSessionManager class methodsFor!
 
@@ -25,5 +27,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Notepad! !
-!UI.Examples.NotepadSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.NotepadSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

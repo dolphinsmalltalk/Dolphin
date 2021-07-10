@@ -1258,135 +1258,137 @@ upgradeResources
 
 variableNames
 	^variablesPresenter selections! !
-!Tools.PackageBrowserShell categoriesFor: #accept!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #addToCommandRoute:!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #applyOptions!operations!options!private! !
-!Tools.PackageBrowserShell categoriesFor: #browseClass!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseClassReferences!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseClassReferencesIn:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #browseDefinitions!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseHierarchy!commands!private! !
-!Tools.PackageBrowserShell categoriesFor: #browseIt!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseItCommand!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #browseLocalClassReferences!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseLocalMessageDefinitions!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseLocalMessageReferences!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseLooseMethods:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #browseMessageDefinitions!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseMessageDefinitionsIn:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #browseMessageReferences!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseMessageReferencesIn:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #browseMethodClass!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseMethods!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browsePackages!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseReferences!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseSystem!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #browseVariableReferences!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #buildPopupForCommand:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #cacheCurrentCard!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #canSaveState!private!saved state! !
-!Tools.PackageBrowserShell categoriesFor: #clearCard:!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearClasses!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearComment!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearDependents!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearMethods!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearPrerequisites!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearResources!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearScriptNames!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #clearVariables!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #createComponents!commands!initializing!private! !
-!Tools.PackageBrowserShell categoriesFor: #createSchematicWiring!commands!initializing!private! !
-!Tools.PackageBrowserShell categoriesFor: #customDrawClassList:!private! !
-!Tools.PackageBrowserShell categoriesFor: #defaultHelpId!public! !
-!Tools.PackageBrowserShell categoriesFor: #hasClassSelected!public!testing! !
-!Tools.PackageBrowserShell categoriesFor: #hasEditableMethodSelected!public!testing! !
-!Tools.PackageBrowserShell categoriesFor: #hasEditableMethodsSelected!public!testing! !
-!Tools.PackageBrowserShell categoriesFor: #hasMethodSelected!public!testing! !
-!Tools.PackageBrowserShell categoriesFor: #hasPackages!private!testing! !
-!Tools.PackageBrowserShell categoriesFor: #hasPackageSelected!public!testing! !
-!Tools.PackageBrowserShell categoriesFor: #initialize!initializing!private! !
-!Tools.PackageBrowserShell categoriesFor: #inspectClasses!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #inspectCollection:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #inspectIt!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #inspectItCommand!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #inspectMethods!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #inspectResources!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #inspectSharedVariables!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #isCardUpToDate:!private!testing! !
-!Tools.PackageBrowserShell categoriesFor: #markCardDirty:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #objectRepackaged:from:to:card:list:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onCardChanged!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onClassRemoved:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onClassRepackaged:from:to:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onCloseRequested:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onDragClasses:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onDragMethods:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onDragOver:type:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onDragResource:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onDragVariable:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onDropOverPackage:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onMethodAdded:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onMethodRemoved:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onMethodRepackaged:from:to:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onMethodSelected!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onMethodUpdated:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onPackageChanged:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onPackageSelected!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onPackageSelectionChanging:!private! !
-!Tools.PackageBrowserShell categoriesFor: #onScriptSelected!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onVariableRemoved:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onVariableRenamed:from:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onVariableRepackaged:from:to:!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onViewClosed!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #onViewOpened!event handling!private! !
-!Tools.PackageBrowserShell categoriesFor: #openWorkspace!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #packages!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #packages:!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #promptToSaveChanges!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #promptToSaveChanges:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #queryCommand:!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #refreshCard:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #release!dependency!public! !
-!Tools.PackageBrowserShell categoriesFor: #removeClasses!commands!private! !
-!Tools.PackageBrowserShell categoriesFor: #removeLooseMethods!commands!private! !
-!Tools.PackageBrowserShell categoriesFor: #removeVariables!commands!private! !
-!Tools.PackageBrowserShell categoriesFor: #resourceIdentifier!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #resourceIdentifiers!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #saveComment!commands!private! !
-!Tools.PackageBrowserShell categoriesFor: #saveScript!operations!private! !
-!Tools.PackageBrowserShell categoriesFor: #scriptName!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #scriptText!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #scriptText:!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #searchEnvironment!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #selectedClass!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #selectedClasses!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #selectedMethod!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #selectedMethods!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #selectionEnvironment!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #setInitialFocus!operations!public! !
-!Tools.PackageBrowserShell categoriesFor: #sharedVariable!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #shortCaption!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #showPrerequisitesFor:!helpers!private! !
-!Tools.PackageBrowserShell categoriesFor: #singlePackage!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #singlePackage:!accessing!public! !
-!Tools.PackageBrowserShell categoriesFor: #source!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #statusText:!accessing!private! !
-!Tools.PackageBrowserShell categoriesFor: #updateCaption!public!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateCardNow:!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateCards!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateClasses!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateComment!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateContents!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateDependents!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateMap!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateMethods!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updatePrerequisites!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateResources!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateScriptNames!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateStatus!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #updateVariables!private!updating! !
-!Tools.PackageBrowserShell categoriesFor: #upgradeResources!commands!public! !
-!Tools.PackageBrowserShell categoriesFor: #variableNames!accessing!public! !
+!Tools.PackageBrowserShell categoriesForMethods!
+accept!commands!public! !
+addToCommandRoute:!commands!public! !
+applyOptions!operations!options!private! !
+browseClass!commands!public! !
+browseClassReferences!commands!public! !
+browseClassReferencesIn:!helpers!private! !
+browseDefinitions!commands!public! !
+browseHierarchy!commands!private! !
+browseIt!commands!public! !
+browseItCommand!helpers!private! !
+browseLocalClassReferences!commands!public! !
+browseLocalMessageDefinitions!commands!public! !
+browseLocalMessageReferences!commands!public! !
+browseLooseMethods:!helpers!private! !
+browseMessageDefinitions!commands!public! !
+browseMessageDefinitionsIn:!helpers!private! !
+browseMessageReferences!commands!public! !
+browseMessageReferencesIn:!helpers!private! !
+browseMethodClass!commands!public! !
+browseMethods!commands!public! !
+browsePackages!commands!public! !
+browseReferences!commands!public! !
+browseSystem!commands!public! !
+browseVariableReferences!commands!public! !
+buildPopupForCommand:!event handling!private! !
+cacheCurrentCard!event handling!private! !
+canSaveState!private!saved state! !
+clearCard:!private!updating! !
+clearClasses!private!updating! !
+clearComment!private!updating! !
+clearDependents!private!updating! !
+clearMethods!private!updating! !
+clearPrerequisites!private!updating! !
+clearResources!private!updating! !
+clearScriptNames!private!updating! !
+clearVariables!private!updating! !
+createComponents!commands!initializing!private! !
+createSchematicWiring!commands!initializing!private! !
+customDrawClassList:!private! !
+defaultHelpId!public! !
+hasClassSelected!public!testing! !
+hasEditableMethodSelected!public!testing! !
+hasEditableMethodsSelected!public!testing! !
+hasMethodSelected!public!testing! !
+hasPackages!private!testing! !
+hasPackageSelected!public!testing! !
+initialize!initializing!private! !
+inspectClasses!commands!public! !
+inspectCollection:!helpers!private! !
+inspectIt!commands!public! !
+inspectItCommand!helpers!private! !
+inspectMethods!commands!public! !
+inspectResources!commands!public! !
+inspectSharedVariables!commands!public! !
+isCardUpToDate:!private!testing! !
+markCardDirty:!helpers!private! !
+objectRepackaged:from:to:card:list:!event handling!private! !
+onCardChanged!event handling!private! !
+onClassRemoved:!event handling!private! !
+onClassRepackaged:from:to:!event handling!private! !
+onCloseRequested:!event handling!private! !
+onDragClasses:!event handling!private! !
+onDragMethods:!event handling!private! !
+onDragOver:type:!event handling!private! !
+onDragResource:!event handling!private! !
+onDragVariable:!event handling!private! !
+onDropOverPackage:!event handling!private! !
+onMethodAdded:!event handling!private! !
+onMethodRemoved:!event handling!private! !
+onMethodRepackaged:from:to:!event handling!private! !
+onMethodSelected!event handling!private! !
+onMethodUpdated:!event handling!private! !
+onPackageChanged:!event handling!private! !
+onPackageSelected!event handling!private! !
+onPackageSelectionChanging:!private! !
+onScriptSelected!event handling!private! !
+onVariableRemoved:!event handling!private! !
+onVariableRenamed:from:!event handling!private! !
+onVariableRepackaged:from:to:!event handling!private! !
+onViewClosed!event handling!private! !
+onViewOpened!event handling!private! !
+openWorkspace!commands!public! !
+packages!accessing!public! !
+packages:!accessing!public! !
+promptToSaveChanges!helpers!private! !
+promptToSaveChanges:!helpers!private! !
+queryCommand:!commands!public! !
+refreshCard:!helpers!private! !
+release!dependency!public! !
+removeClasses!commands!private! !
+removeLooseMethods!commands!private! !
+removeVariables!commands!private! !
+resourceIdentifier!accessing!private! !
+resourceIdentifiers!accessing!private! !
+saveComment!commands!private! !
+saveScript!operations!private! !
+scriptName!accessing!private! !
+scriptText!accessing!private! !
+scriptText:!accessing!private! !
+searchEnvironment!accessing!private! !
+selectedClass!accessing!public! !
+selectedClasses!accessing!public! !
+selectedMethod!accessing!public! !
+selectedMethods!accessing!public! !
+selectionEnvironment!accessing!private! !
+setInitialFocus!operations!public! !
+sharedVariable!accessing!public! !
+shortCaption!accessing!public! !
+showPrerequisitesFor:!helpers!private! !
+singlePackage!accessing!public! !
+singlePackage:!accessing!public! !
+source!accessing!private! !
+statusText:!accessing!private! !
+updateCaption!public!updating! !
+updateCardNow:!private!updating! !
+updateCards!private!updating! !
+updateClasses!private!updating! !
+updateComment!private!updating! !
+updateContents!private!updating! !
+updateDependents!private!updating! !
+updateMap!private!updating! !
+updateMethods!private!updating! !
+updatePrerequisites!private!updating! !
+updateResources!private!updating! !
+updateScriptNames!private!updating! !
+updateStatus!private!updating! !
+updateVariables!private!updating! !
+upgradeResources!commands!public! !
+variableNames!accessing!public! !
+!
 
 !Tools.PackageBrowserShell class methodsFor!
 
@@ -1448,12 +1450,14 @@ wordWrapComment: aBoolean
 	"Sets the comment word wrapping state for instances of the receiver to aBoolean."
 
 	WordWrapComment := aBoolean! !
-!Tools.PackageBrowserShell class categoriesFor: #displayOn:!displaying!public! !
-!Tools.PackageBrowserShell class categoriesFor: #icon!constants!public! !
-!Tools.PackageBrowserShell class categoriesFor: #initialize!initializing!private! !
-!Tools.PackageBrowserShell class categoriesFor: #publishedAspects!public! !
-!Tools.PackageBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.PackageBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
-!Tools.PackageBrowserShell class categoriesFor: #wordWrapComment!accessing!options!public! !
-!Tools.PackageBrowserShell class categoriesFor: #wordWrapComment:!accessing!options!public! !
+!Tools.PackageBrowserShell class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+wordWrapComment!accessing!options!public! !
+wordWrapComment:!accessing!options!public! !
+!
 

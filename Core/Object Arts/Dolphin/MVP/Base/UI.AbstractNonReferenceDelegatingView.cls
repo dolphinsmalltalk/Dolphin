@@ -56,13 +56,15 @@ isEnabled
 
 isEnabled: aBoolean 
 	self isStateRestoring ifFalse: [self referee isEnabled: aBoolean]! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #ambientBackcolor!accessing!private! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasBorder!accessing!accessing-styles!public! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasBorder:!accessing!accessing-styles!public! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge!accessing!accessing-styles!public! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge:!accessing!accessing-styles!public! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge!accessing!accessing-styles!public! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge:!accessing!accessing-styles!public! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #isEnabled!accessing!public!testing! !
-!UI.AbstractNonReferenceDelegatingView categoriesFor: #isEnabled:!accessing!public!state! !
+!UI.AbstractNonReferenceDelegatingView categoriesForMethods!
+ambientBackcolor!accessing!private! !
+hasBorder!accessing!accessing-styles!public! !
+hasBorder:!accessing!accessing-styles!public! !
+hasClientEdge!accessing!accessing-styles!public! !
+hasClientEdge:!accessing!accessing-styles!public! !
+hasStaticEdge!accessing!accessing-styles!public! !
+hasStaticEdge:!accessing!accessing-styles!public! !
+isEnabled!accessing!public!testing! !
+isEnabled:!accessing!public!state! !
+!
 

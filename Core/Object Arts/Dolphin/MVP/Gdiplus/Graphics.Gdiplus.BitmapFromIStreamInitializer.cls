@@ -31,13 +31,17 @@ isPersistent
 
 iStream: pStream
 	iStream := pStream! !
-!Graphics.Gdiplus.BitmapFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.BitmapFromIStreamInitializer categoriesFor: #isPersistent!public!testing! !
-!Graphics.Gdiplus.BitmapFromIStreamInitializer categoriesFor: #iStream:!initializing!private! !
+!Graphics.Gdiplus.BitmapFromIStreamInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+isPersistent!public!testing! !
+iStream:!initializing!private! !
+!
 
 !Graphics.Gdiplus.BitmapFromIStreamInitializer class methodsFor!
 
 iStream: pStream
 	^self new iStream: pStream! !
-!Graphics.Gdiplus.BitmapFromIStreamInitializer class categoriesFor: #iStream:!instance creation!public! !
+!Graphics.Gdiplus.BitmapFromIStreamInitializer class categoriesForMethods!
+iStream:!instance creation!public! !
+!
 

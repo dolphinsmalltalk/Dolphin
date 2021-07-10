@@ -234,34 +234,36 @@ upToEnd
 
 wrappedStream
 	^ stream! !
-!STON.CStyleCommentsSkipStream categoriesFor: #atEnd!public!testing! !
-!STON.CStyleCommentsSkipStream categoriesFor: #close!initialize/release!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #collectionSpecies!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #consumeComment!private! !
-!STON.CStyleCommentsSkipStream categoriesFor: #consumeToCommentEnd!private! !
-!STON.CStyleCommentsSkipStream categoriesFor: #consumeToEOL!private! !
-!STON.CStyleCommentsSkipStream categoriesFor: #escape!private! !
-!STON.CStyleCommentsSkipStream categoriesFor: #handleStringDelimiter:!private! !
-!STON.CStyleCommentsSkipStream categoriesFor: #insideString!private! !
-!STON.CStyleCommentsSkipStream categoriesFor: #isBinary!public!testing! !
-!STON.CStyleCommentsSkipStream categoriesFor: #isPositionable!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #next!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #next:!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #next:into:!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #nextAvailable!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #nextLine!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
-!STON.CStyleCommentsSkipStream categoriesFor: #on:!initialize/release!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #peek!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #peekFor:!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #position!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #readInto:startingAt:count:!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #skip:!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #skipSeparators!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #upTo:!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #upToEnd!accessing!public! !
-!STON.CStyleCommentsSkipStream categoriesFor: #wrappedStream!accessing!public! !
+!STON.CStyleCommentsSkipStream categoriesForMethods!
+atEnd!public!testing! !
+close!initialize/release!public! !
+collectionSpecies!accessing!public! !
+consumeComment!private! !
+consumeToCommentEnd!private! !
+consumeToEOL!private! !
+escape!private! !
+handleStringDelimiter:!private! !
+insideString!private! !
+isBinary!public!testing! !
+isPositionable!public! !
+next!accessing!public! !
+next:!accessing!public! !
+next:into:!accessing!public! !
+next:into:startingAt:!accessing!public! !
+nextAvailable!public! !
+nextLine!accessing!public! !
+nextNonCommentChar!private! !
+on:!initialize/release!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+position!accessing!public! !
+readInto:startingAt:count:!accessing!public! !
+skip:!accessing!public! !
+skipSeparators!public! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+wrappedStream!accessing!public! !
+!
 
 !STON.CStyleCommentsSkipStream class methodsFor!
 
@@ -274,6 +276,8 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
-!STON.CStyleCommentsSkipStream class categoriesFor: #icon!constants!public! !
-!STON.CStyleCommentsSkipStream class categoriesFor: #on:!instance creation!public! !
+!STON.CStyleCommentsSkipStream class categoriesForMethods!
+icon!constants!public! !
+on:!instance creation!public! !
+!
 

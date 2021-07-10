@@ -130,20 +130,22 @@ item: index
 	answer := IBodyPart newPointer.
 	self get_Item: index ppBody: answer.
 	^answer asObject! !
-!CDO.IBodyParts categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!CDO.IBodyParts categoriesFor: #add!**auto generated**!methods!public! !
-!CDO.IBodyParts categoriesFor: #add:!**auto generated**!methods!public! !
-!CDO.IBodyParts categoriesFor: #Add:ppPart:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDO.IBodyParts categoriesFor: #count!**auto generated**!properties!public! !
-!CDO.IBodyParts categoriesFor: #delete:!**auto generated**!methods!public! !
-!CDO.IBodyParts categoriesFor: #Delete:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDO.IBodyParts categoriesFor: #DeleteAll!**auto generated**!COM Interfaces-IBodyParts!public! !
-!CDO.IBodyParts categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDO.IBodyParts categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDO.IBodyParts categoriesFor: #get_Item:ppBody:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDO.IBodyParts categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.IBodyParts categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.IBodyParts categoriesFor: #item:!**auto generated**!properties!public! !
+!CDO.IBodyParts categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+add!**auto generated**!methods!public! !
+add:!**auto generated**!methods!public! !
+Add:ppPart:!**auto generated**!COM Interfaces-IBodyParts!private! !
+count!**auto generated**!properties!public! !
+delete:!**auto generated**!methods!public! !
+Delete:!**auto generated**!COM Interfaces-IBodyParts!private! !
+DeleteAll!**auto generated**!COM Interfaces-IBodyParts!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IBodyParts!private! !
+get_Count:!**auto generated**!COM Interfaces-IBodyParts!private! !
+get_Item:ppBody:!**auto generated**!COM Interfaces-IBodyParts!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !CDO.IBodyParts class methodsFor!
 
@@ -164,5 +166,7 @@ defineFunctions
 		defineFunction: #Add:ppPart:
 			argumentTypes: 'sdword IBodyPart**'
 ! !
-!CDO.IBodyParts class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.IBodyParts class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

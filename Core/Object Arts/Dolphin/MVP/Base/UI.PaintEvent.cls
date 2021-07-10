@@ -43,11 +43,13 @@ window: aView wParam: anInteger hdc: dcExternalHandle paintStruct: aPAINTSTRUCT
 	lParam := 0.
 	hdc := dcExternalHandle.
 	paintStruct := aPAINTSTRUCT! !
-!UI.PaintEvent categoriesFor: #canvas!accessing!public! !
-!UI.PaintEvent categoriesFor: #hdc!accessing!public! !
-!UI.PaintEvent categoriesFor: #paintStruct!accessing!public! !
-!UI.PaintEvent categoriesFor: #printOn:!development!printing!public! !
-!UI.PaintEvent categoriesFor: #window:wParam:hdc:paintStruct:!accessing!private! !
+!UI.PaintEvent categoriesForMethods!
+canvas!accessing!public! !
+hdc!accessing!public! !
+paintStruct!accessing!public! !
+printOn:!development!printing!public! !
+window:wParam:hdc:paintStruct:!accessing!private! !
+!
 
 !UI.PaintEvent class methodsFor!
 
@@ -59,5 +61,7 @@ window: aView wParam: wParam hdc: hdc paintStruct: ps
 		wParam: wParam
 		hdc: hdc
 		paintStruct: ps! !
-!UI.PaintEvent class categoriesFor: #window:wParam:hdc:paintStruct:!instance creation!public! !
+!UI.PaintEvent class categoriesForMethods!
+window:wParam:hdc:paintStruct:!instance creation!public! !
+!
 

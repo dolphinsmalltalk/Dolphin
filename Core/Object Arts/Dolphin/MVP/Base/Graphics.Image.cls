@@ -235,35 +235,37 @@ printOn: aStream
 						nextPutAll: #fromId:;
 						space;
 						print: id]]! !
-!Graphics.Image categoriesFor: #=!comparing!public! !
-!Graphics.Image categoriesFor: #addToImageList:mask:!private!testing! !
-!Graphics.Image categoriesFor: #asSharedCopy!converting!public! !
-!Graphics.Image categoriesFor: #copy!copying!public! !
-!Graphics.Image categoriesFor: #copyHandle!private!realizing/unrealizing! !
-!Graphics.Image categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Image categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.Image categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!Graphics.Image categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!Graphics.Image categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.Image categoriesFor: #extent!accessing!public! !
-!Graphics.Image categoriesFor: #fileLocator!accessing!public! !
-!Graphics.Image categoriesFor: #fileLocator:!accessing!public! !
-!Graphics.Image categoriesFor: #fileSpec!accessing!private! !
-!Graphics.Image categoriesFor: #freeDC!private!realizing/unrealizing! !
-!Graphics.Image categoriesFor: #fullIdentifier!accessing!private! !
-!Graphics.Image categoriesFor: #hash!comparing!public! !
-!Graphics.Image categoriesFor: #hotspot!accessing!public! !
-!Graphics.Image categoriesFor: #identifier!accessing!public! !
-!Graphics.Image categoriesFor: #identifier:!accessing!public! !
-!Graphics.Image categoriesFor: #imageManager!accessing!public! !
-!Graphics.Image categoriesFor: #imageType!constants!private!testing! !
-!Graphics.Image categoriesFor: #instanceHandle!accessing!public! !
-!Graphics.Image categoriesFor: #instanceHandle:!accessing!public! !
-!Graphics.Image categoriesFor: #isPersistent!private!testing! !
-!Graphics.Image categoriesFor: #isShared!private!testing! !
-!Graphics.Image categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!Graphics.Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Graphics.Image categoriesFor: #printOn:!printing!public! !
+!Graphics.Image categoriesForMethods!
+=!comparing!public! !
+addToImageList:mask:!private!testing! !
+asSharedCopy!converting!public! !
+copy!copying!public! !
+copyHandle!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+drawOn:!drawing-bitmaps!public! !
+drawOn:at:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+extent!accessing!public! !
+fileLocator!accessing!public! !
+fileLocator:!accessing!public! !
+fileSpec!accessing!private! !
+freeDC!private!realizing/unrealizing! !
+fullIdentifier!accessing!private! !
+hash!comparing!public! !
+hotspot!accessing!public! !
+identifier!accessing!public! !
+identifier:!accessing!public! !
+imageManager!accessing!public! !
+imageType!constants!private!testing! !
+instanceHandle!accessing!public! !
+instanceHandle:!accessing!public! !
+isPersistent!private!testing! !
+isShared!private!testing! !
+loadFromFile:extent:!private!realizing/unrealizing! !
+loadFromInstance:!private!realizing/unrealizing! !
+printOn:!printing!public! !
+!
 
 Graphics.Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
@@ -347,13 +349,15 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^3! !
-!Graphics.Image class categoriesFor: #fromFile:!instance creation!public! !
-!Graphics.Image class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!Graphics.Image class categoriesFor: #fromId:!instance creation!public! !
-!Graphics.Image class categoriesFor: #fromId:in:!instance creation!public! !
-!Graphics.Image class categoriesFor: #fromSystemId:!instance creation!public! !
-!Graphics.Image class categoriesFor: #icon!constants!public! !
-!Graphics.Image class categoriesFor: #imageManager!accessing!public! !
-!Graphics.Image class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Graphics.Image class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.Image class categoriesForMethods!
+fromFile:!instance creation!public! !
+fromFile:usingLocator:!instance creation!public! !
+fromId:!instance creation!public! !
+fromId:in:!instance creation!public! !
+fromSystemId:!instance creation!public! !
+icon!constants!public! !
+imageManager!accessing!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

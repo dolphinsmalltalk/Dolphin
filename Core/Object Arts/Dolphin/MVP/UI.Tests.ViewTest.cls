@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.ViewTest'
 	instanceVariableNames: ''
@@ -79,9 +79,11 @@ testRecreateMaintainsModelConnection
 	presenter model value: 'bbb'.
 	"If this fails, then the view did not receive a #valueChanged event from the model"
 	self assert: presenter view value equals: 'bbb'! !
-!UI.Tests.ViewTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.ViewTest categoriesFor: #testFontChangePropagationFromDesktop!public!unit tests! !
-!UI.Tests.ViewTest categoriesFor: #testFontChangePropagationFromSettingsChange!public!unit tests! !
-!UI.Tests.ViewTest categoriesFor: #testFontChangePropagationFromShell!public!unit tests! !
-!UI.Tests.ViewTest categoriesFor: #testRecreateMaintainsModelConnection!public!unit tests! !
+!UI.Tests.ViewTest categoriesForMethods!
+classToTest!helpers!private! !
+testFontChangePropagationFromDesktop!public!unit tests! !
+testFontChangePropagationFromSettingsChange!public!unit tests! !
+testFontChangePropagationFromShell!public!unit tests! !
+testRecreateMaintainsModelConnection!public!unit tests! !
+!
 

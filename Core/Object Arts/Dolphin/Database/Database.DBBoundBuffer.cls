@@ -37,6 +37,8 @@ bind: aDBStatement
 getData: aDBStatement
 	"Private - Not currently relevant to a bound row, though it might be if
 	we wanted to use SQLGetData for long values."! !
-!Database.DBBoundBuffer categoriesFor: #bind:!operations!private! !
-!Database.DBBoundBuffer categoriesFor: #getData:!data retrieval!private! !
+!Database.DBBoundBuffer categoriesForMethods!
+bind:!operations!private! !
+getData:!data retrieval!private! !
+!
 

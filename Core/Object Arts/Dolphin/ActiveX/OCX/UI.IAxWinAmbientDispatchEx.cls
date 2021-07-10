@@ -45,8 +45,10 @@ SetAmbientDispatch: pDispatch
 
 	<virtual stdcall: hresult 36 IDispatch*>
 	^self invalidCall: _failureCode! !
-!UI.IAxWinAmbientDispatchEx categoriesFor: #setAmbientDispatch:!**auto generated**!methods!public! !
-!UI.IAxWinAmbientDispatchEx categoriesFor: #SetAmbientDispatch:!**auto generated**!COM Interfaces-IAxWinAmbientDispatchEx!private! !
+!UI.IAxWinAmbientDispatchEx categoriesForMethods!
+setAmbientDispatch:!**auto generated**!methods!public! !
+SetAmbientDispatch:!**auto generated**!COM Interfaces-IAxWinAmbientDispatchEx!private! !
+!
 
 !UI.IAxWinAmbientDispatchEx class methodsFor!
 
@@ -58,5 +60,7 @@ defineFunctions
 		defineFunction: #SetAmbientDispatch:
 			argumentTypes: 'IDispatch*'
 ! !
-!UI.IAxWinAmbientDispatchEx class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!UI.IAxWinAmbientDispatchEx class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

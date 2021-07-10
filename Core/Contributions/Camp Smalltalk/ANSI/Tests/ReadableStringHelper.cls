@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #ReadableStringHelper
 	instanceVariableNames: ''
@@ -47,11 +47,13 @@ testXsubStringsX
 
 	" <readableString>#subStrings:"
 	#'ReadableString'.! !
-!ReadableStringHelper categoriesFor: #canonicalObject!public! !
-!ReadableStringHelper categoriesFor: #testXasLowercase!public! !
-!ReadableStringHelper categoriesFor: #testXasString!public! !
-!ReadableStringHelper categoriesFor: #testXasSymbol!public! !
-!ReadableStringHelper categoriesFor: #testXasUppercase!public! !
-!ReadableStringHelper categoriesFor: #testXsameAsX!public! !
-!ReadableStringHelper categoriesFor: #testXsubStringsX!public! !
+!ReadableStringHelper categoriesForMethods!
+canonicalObject!public! !
+testXasLowercase!public! !
+testXasString!public! !
+testXasSymbol!public! !
+testXasUppercase!public! !
+testXsameAsX!public! !
+testXsubStringsX!public! !
+!
 

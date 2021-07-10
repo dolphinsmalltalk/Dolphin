@@ -38,9 +38,11 @@ isResumable
 		- Integer division by zero is not continuable, so resumption is disallowed."
 
 	^self dividend isInteger not! !
-!Core.ZeroDivide categoriesFor: #_descriptionFormat!displaying!public! !
-!Core.ZeroDivide categoriesFor: #dividend!accessing!public! !
-!Core.ZeroDivide categoriesFor: #isResumable!public!testing! !
+!Core.ZeroDivide categoriesForMethods!
+_descriptionFormat!displaying!public! !
+dividend!accessing!public! !
+isResumable!public!testing! !
+!
 
 Core.ZeroDivide methodProtocol: #ZeroDivide attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #dividend #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -50,7 +52,9 @@ dividend: argument
 	"Signal the occurrence of an integer division by zero."
 
 	^self signalWith: argument! !
-!Core.ZeroDivide class categoriesFor: #dividend:!instance creation!public! !
+!Core.ZeroDivide class categoriesForMethods!
+dividend:!instance creation!public! !
+!
 
 Core.ZeroDivide class methodProtocol: #'ZeroDivide factory' attributes: #(#ansi #readOnly) selectors: #(#, #dividend: #handles: #new #signal #signal:)!
 

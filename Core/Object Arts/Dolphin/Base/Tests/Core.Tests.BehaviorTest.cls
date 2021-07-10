@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.BehaviorTest'
 	instanceVariableNames: ''
@@ -81,17 +81,21 @@ testWhichMethodsOnlySelfSend
 		equals: #(#returnSendSelfSpecial).
 	self assert: ((subject whichMethodsOnlySelfSend: #value) collect: [:each | each selector]) asArray
 		equals: #(#sendSelfSpecial)! !
-!Core.Tests.BehaviorTest categoriesFor: #testHasAbstractMethods!public! !
-!Core.Tests.BehaviorTest categoriesFor: #testIncludesBehavior!public! !
-!Core.Tests.BehaviorTest categoriesFor: #testInheritsFrom!public! !
-!Core.Tests.BehaviorTest categoriesFor: #testIsAbstract!public! !
-!Core.Tests.BehaviorTest categoriesFor: #testIsNonInstantiable!public! !
-!Core.Tests.BehaviorTest categoriesFor: #testUnderstoodSelectors!public! !
-!Core.Tests.BehaviorTest categoriesFor: #testWhichMethodsOnlySelfSend!public! !
+!Core.Tests.BehaviorTest categoriesForMethods!
+testHasAbstractMethods!public! !
+testIncludesBehavior!public! !
+testInheritsFrom!public! !
+testIsAbstract!public! !
+testIsNonInstantiable!public! !
+testUnderstoodSelectors!public! !
+testWhichMethodsOnlySelfSend!public! !
+!
 
 !Core.Tests.BehaviorTest class methodsFor!
 
 resources
 	^{BehaviorTestClasses}! !
-!Core.Tests.BehaviorTest class categoriesFor: #resources!Accessing!public! !
+!Core.Tests.BehaviorTest class categoriesForMethods!
+resources!Accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.PackageSelectorTest'
 	instanceVariableNames: 'packageA'
@@ -48,9 +48,11 @@ testFilter
 		selectRootFolder.
 	self assert: presenter autoSelect.
 	self assert: presenter selections asSet equals: Package manager packages asSet! !
-!Tools.Tests.PackageSelectorTest categoriesFor: #classToTest!helpers!private! !
-!Tools.Tests.PackageSelectorTest categoriesFor: #createPackage:!helpers!private! !
-!Tools.Tests.PackageSelectorTest categoriesFor: #removePackage:!helpers!private! !
-!Tools.Tests.PackageSelectorTest categoriesFor: #tearDown!private! !
-!Tools.Tests.PackageSelectorTest categoriesFor: #testFilter!public! !
+!Tools.Tests.PackageSelectorTest categoriesForMethods!
+classToTest!helpers!private! !
+createPackage:!helpers!private! !
+removePackage:!helpers!private! !
+tearDown!private! !
+testFilter!public! !
+!
 

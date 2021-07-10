@@ -61,15 +61,17 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes qwordAtOffset: _OffsetOf_value put: anInteger! !
-!External.QWORD categoriesFor: #asSignedInteger!converting!public! !
-!External.QWORD categoriesFor: #asUnsignedInteger!converting!public! !
-!External.QWORD categoriesFor: #displayOn:!displaying!public! !
-!External.QWORD categoriesFor: #highPart!**compiled accessors**!public! !
-!External.QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
-!External.QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
-!External.QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
-!External.QWORD categoriesFor: #value!**compiled accessors**!public! !
-!External.QWORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.QWORD categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+displayOn:!displaying!public! !
+highPart!**compiled accessors**!public! !
+highPart:!**compiled accessors**!public! !
+lowPart!**compiled accessors**!public! !
+lowPart:!**compiled accessors**!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.QWORD class methodsFor!
 
@@ -103,6 +105,8 @@ defineTemplate
 
 	super defineTemplate.
 	self assert: [self alignment = 8]! !
-!External.QWORD class categoriesFor: #defineFields!public!template definition! !
-!External.QWORD class categoriesFor: #defineTemplate!public!template definition! !
+!External.QWORD class categoriesForMethods!
+defineFields!public!template definition! !
+defineTemplate!public!template definition! !
+!
 

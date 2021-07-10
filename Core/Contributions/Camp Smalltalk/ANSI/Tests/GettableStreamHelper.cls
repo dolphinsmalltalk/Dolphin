@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #GettableStreamHelper
 	instanceVariableNames: ''
@@ -149,25 +149,29 @@ testXupToX
 	self value: [self canonicalObject upTo: $a]
 		should: [:r | r isEmpty]
 		conformTo: self protocol selector: #'upTo:'.! !
-!GettableStreamHelper categoriesFor: #canonicalObject!public! !
-!GettableStreamHelper categoriesFor: #object:!public! !
-!GettableStreamHelper categoriesFor: #protocol!public! !
-!GettableStreamHelper categoriesFor: #testXatEnd!public! !
-!GettableStreamHelper categoriesFor: #testXdoX!public! !
-!GettableStreamHelper categoriesFor: #testXnext!public! !
-!GettableStreamHelper categoriesFor: #testXnextLine!public! !
-!GettableStreamHelper categoriesFor: #testXnextMatchForX!public! !
-!GettableStreamHelper categoriesFor: #testXnextX!public! !
-!GettableStreamHelper categoriesFor: #testXpeek!public! !
-!GettableStreamHelper categoriesFor: #testXpeekForX!public! !
-!GettableStreamHelper categoriesFor: #testXskipToX!public! !
-!GettableStreamHelper categoriesFor: #testXskipX!public! !
-!GettableStreamHelper categoriesFor: #testXupToX!public! !
+!GettableStreamHelper categoriesForMethods!
+canonicalObject!public! !
+object:!public! !
+protocol!public! !
+testXatEnd!public! !
+testXdoX!public! !
+testXnext!public! !
+testXnextLine!public! !
+testXnextMatchForX!public! !
+testXnextX!public! !
+testXpeek!public! !
+testXpeekForX!public! !
+testXskipToX!public! !
+testXskipX!public! !
+testXupToX!public! !
+!
 
 !GettableStreamHelper class methodsFor!
 
 initialize
 	"GettableStreamHelper  initialize"
 	super initialize! !
-!GettableStreamHelper class categoriesFor: #initialize!public! !
+!GettableStreamHelper class categoriesForMethods!
+initialize!public! !
+!
 

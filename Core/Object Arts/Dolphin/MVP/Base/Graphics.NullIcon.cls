@@ -16,7 +16,9 @@ imageIndex
 
 	^0
 ! !
-!Graphics.NullIcon categoriesFor: #imageIndex!accessing!public! !
+!Graphics.NullIcon categoriesForMethods!
+imageIndex!accessing!public! !
+!
 
 !Graphics.NullIcon class methodsFor!
 
@@ -30,7 +32,9 @@ icon
 
 initialize
 	Current := self new! !
-!Graphics.NullIcon class categoriesFor: #current!instance creation!public! !
-!Graphics.NullIcon class categoriesFor: #icon!constants!public! !
-!Graphics.NullIcon class categoriesFor: #initialize!initializing!public! !
+!Graphics.NullIcon class categoriesForMethods!
+current!instance creation!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+!
 

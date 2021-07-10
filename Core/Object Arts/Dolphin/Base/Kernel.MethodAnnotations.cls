@@ -101,16 +101,18 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 			offset := i * 2.
 			aDyadicValuable value: i
 				value: (Message selector: (self basicAt: offset - 1) arguments: (self basicAt: offset))]! !
-!Kernel.MethodAnnotations categoriesFor: #at:!enumerating!public! !
-!Kernel.MethodAnnotations categoriesFor: #at:put:!accessing!public! !
-!Kernel.MethodAnnotations categoriesFor: #basicNextIdentityIndexOf:from:to:!private!searching! !
-!Kernel.MethodAnnotations categoriesFor: #copyingClass!copying!private! !
-!Kernel.MethodAnnotations categoriesFor: #do:!enumerating!public! !
-!Kernel.MethodAnnotations categoriesFor: #environment!public!searching! !
-!Kernel.MethodAnnotations categoriesFor: #first!enumerating!public! !
-!Kernel.MethodAnnotations categoriesFor: #printOn:!printing!public! !
-!Kernel.MethodAnnotations categoriesFor: #refersTo:asLiteralOf:!private!testing! !
-!Kernel.MethodAnnotations categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!Kernel.MethodAnnotations categoriesForMethods!
+at:!enumerating!public! !
+at:put:!accessing!public! !
+basicNextIdentityIndexOf:from:to:!private!searching! !
+copyingClass!copying!private! !
+do:!enumerating!public! !
+environment!public!searching! !
+first!enumerating!public! !
+printOn:!printing!public! !
+refersTo:asLiteralOf:!private!testing! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!
 
 !Kernel.MethodAnnotations class methodsFor!
 
@@ -143,7 +145,9 @@ uninitialize
 	VM
 		registryAt: self name put: nil;
 		registryAtIndex: 152 put: nil! !
-!Kernel.MethodAnnotations class categoriesFor: #fromPairs:!instance creation!public! !
-!Kernel.MethodAnnotations class categoriesFor: #initialize!development!initializing!private! !
-!Kernel.MethodAnnotations class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.MethodAnnotations class categoriesForMethods!
+fromPairs:!instance creation!public! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

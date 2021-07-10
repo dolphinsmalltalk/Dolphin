@@ -72,13 +72,15 @@ unit
 	unit := ByteArray newFixed: 4.
 	Gdip gdipGetFontUnit: self asParameter unit: unit.
 	^unit sdwordAtOffset: 0! !
-!Graphics.Gdiplus.Font categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Font categoriesFor: #emSize!accessing!public! !
-!Graphics.Gdiplus.Font categoriesFor: #family!accessing!public! !
-!Graphics.Gdiplus.Font categoriesFor: #height!accessing!public! !
-!Graphics.Gdiplus.Font categoriesFor: #heightFromGraphics:!accessing!public! !
-!Graphics.Gdiplus.Font categoriesFor: #name!accessing!public! !
-!Graphics.Gdiplus.Font categoriesFor: #unit!accessing!public! !
+!Graphics.Gdiplus.Font categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+emSize!accessing!public! !
+family!accessing!public! !
+height!accessing!public! !
+heightFromGraphics:!accessing!public! !
+name!accessing!public! !
+unit!accessing!public! !
+!
 
 !Graphics.Gdiplus.Font class methodsFor!
 
@@ -177,16 +179,18 @@ new
 	"Answer a new initialized instance of the receiver for the default font."
 
 	^self fontFamily: FontFamily genericSansSerif pointSize: Graphics.Font default pointSize! !
-!Graphics.Gdiplus.Font class categoriesFor: #exampleGdipFontHeight!examples!public!sunit! !
-!Graphics.Gdiplus.Font class categoriesFor: #fontFamily:emSize:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #fontFamily:emSize:style:unit:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #fontFamily:pointSize:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #icon!constants!development!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #name:emSize:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #name:emSize:style:unit:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #name:pixelSize:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #name:pixelSize:style:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #name:pointSize:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #name:pointSize:style:!instance creation!public! !
-!Graphics.Gdiplus.Font class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.Font class categoriesForMethods!
+exampleGdipFontHeight!examples!public!sunit! !
+fontFamily:emSize:!instance creation!public! !
+fontFamily:emSize:style:unit:!instance creation!public! !
+fontFamily:pointSize:!instance creation!public! !
+icon!constants!development!public! !
+name:emSize:!instance creation!public! !
+name:emSize:style:unit:!instance creation!public! !
+name:pixelSize:!instance creation!public! !
+name:pixelSize:style:!instance creation!public! !
+name:pointSize:!instance creation!public! !
+name:pointSize:style:!instance creation!public! !
+new!instance creation!public! !
+!
 

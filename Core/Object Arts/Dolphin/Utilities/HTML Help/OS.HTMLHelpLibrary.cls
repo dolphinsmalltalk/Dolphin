@@ -85,14 +85,16 @@ htmlHelpUrl: url style: styleOrNil
 		pszFile: (styleOrNil isNil ifTrue: [url] ifFalse: [url , '>' , styleOrNil])
 		uCommand: HH_DISPLAY_TOPIC
 		dwData: 0! !
-!OS.HTMLHelpLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!OS.HTMLHelpLibrary categoriesFor: #handle:!accessing!private! !
-!OS.HTMLHelpLibrary categoriesFor: #htmlHelp:pszFile:uCommand:dwData:!operations!public! !
-!OS.HTMLHelpLibrary categoriesFor: #htmlHelpCloseAll!operations!public! !
-!OS.HTMLHelpLibrary categoriesFor: #htmlHelpInitialize!operations!private! !
-!OS.HTMLHelpLibrary categoriesFor: #htmlHelpUninitialize!operations!private! !
-!OS.HTMLHelpLibrary categoriesFor: #htmlHelpUrl:!operations!public! !
-!OS.HTMLHelpLibrary categoriesFor: #htmlHelpUrl:style:!operations!public! !
+!OS.HTMLHelpLibrary categoriesForMethods!
+close!public!realizing/unrealizing! !
+handle:!accessing!private! !
+htmlHelp:pszFile:uCommand:dwData:!operations!public! !
+htmlHelpCloseAll!operations!public! !
+htmlHelpInitialize!operations!private! !
+htmlHelpUninitialize!operations!private! !
+htmlHelpUrl:!operations!public! !
+htmlHelpUrl:style:!operations!public! !
+!
 
 !OS.HTMLHelpLibrary class methodsFor!
 
@@ -108,6 +110,8 @@ htmlHelpCloseAll
 
 	(default notNil and: [default isOpen]) ifTrue: [
 		default htmlHelpCloseAll]! !
-!OS.HTMLHelpLibrary class categoriesFor: #fileName!constants!public! !
-!OS.HTMLHelpLibrary class categoriesFor: #htmlHelpCloseAll!operations!public! !
+!OS.HTMLHelpLibrary class categoriesForMethods!
+fileName!constants!public! !
+htmlHelpCloseAll!operations!public! !
+!
 

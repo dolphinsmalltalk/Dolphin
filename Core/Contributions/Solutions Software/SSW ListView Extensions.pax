@@ -182,29 +182,33 @@ vertScrollPos
 vertScrollPos: anInteger
 
 	self vertScrollBy: (anInteger - self vertScrollPos)! !
-!ListView categoriesFor: #fullItemFromPoint:!accessing!private! !
-!ListView categoriesFor: #getHeaderControl!accessing!private! !
-!ListView categoriesFor: #headerControl!accessing!public! !
-!ListView categoriesFor: #headerRect!accessing!public! !
-!ListView categoriesFor: #hideToolTipWindow!operations!public! !
-!ListView categoriesFor: #horzScrollBy:!enquiries!public! !
-!ListView categoriesFor: #horzScrollPos!enquiries!public! !
-!ListView categoriesFor: #horzScrollPos:!enquiries!public! !
-!ListView categoriesFor: #lvmGetToolTips!accessing!public! !
-!ListView categoriesFor: #lvmGetTopIndex!accessing!public! !
-!ListView categoriesFor: #maxTipWidth:!helpers!public! !
-!ListView categoriesFor: #rowPixelHeight!helpers!public! !
-!ListView categoriesFor: #smallImageExtent!accessing!private! !
-!ListView categoriesFor: #vertScrollBy:!enquiries!public! !
-!ListView categoriesFor: #vertScrollPos!enquiries!public! !
-!ListView categoriesFor: #vertScrollPos:!enquiries!public! !
+!ListView categoriesForMethods!
+fullItemFromPoint:!accessing!private! !
+getHeaderControl!accessing!private! !
+headerControl!accessing!public! !
+headerRect!accessing!public! !
+hideToolTipWindow!operations!public! !
+horzScrollBy:!enquiries!public! !
+horzScrollPos!enquiries!public! !
+horzScrollPos:!enquiries!public! !
+lvmGetToolTips!accessing!public! !
+lvmGetTopIndex!accessing!public! !
+maxTipWidth:!helpers!public! !
+rowPixelHeight!helpers!public! !
+smallImageExtent!accessing!private! !
+vertScrollBy:!enquiries!public! !
+vertScrollPos!enquiries!public! !
+vertScrollPos:!enquiries!public! !
+!
 
 !ListViewColumn methodsFor!
 
 columnHeader
 
 	^self parent headerControl columnHeader: self index! !
-!ListViewColumn categoriesFor: #columnHeader!accessing!public! !
+!ListViewColumn categoriesForMethods!
+columnHeader!accessing!public! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #ObjectClassANSITest
 	instanceVariableNames: ''
@@ -115,12 +115,14 @@ testXsuperclass
 				ifFalse: [r class conformsToAnsiProtocolNamed: #classDescription]]
 		conformTo: #classDescription
 		selector: #superclass! !
-!ObjectClassANSITest categoriesFor: #canonicalObject!public! !
-!ObjectClassANSITest categoriesFor: #protocol!public! !
-!ObjectClassANSITest categoriesFor: #testXallSubclasses!public! !
-!ObjectClassANSITest categoriesFor: #testXallSuperclasses!public! !
-!ObjectClassANSITest categoriesFor: #testXname!public! !
-!ObjectClassANSITest categoriesFor: #testXnew!public! !
-!ObjectClassANSITest categoriesFor: #testXsubclasses!public! !
-!ObjectClassANSITest categoriesFor: #testXsuperclass!public! !
+!ObjectClassANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXallSubclasses!public! !
+testXallSuperclasses!public! !
+testXname!public! !
+testXnew!public! !
+testXsubclasses!public! !
+testXsuperclass!public! !
+!
 

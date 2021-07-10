@@ -16,11 +16,15 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipStringFormatGetGenericTypographic: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.StringFormatGenericTypographicInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.StringFormatGenericTypographicInitializer class methodsFor!
 
 uninitialize
 	GenericTypographic := nil! !
-!Graphics.Gdiplus.StringFormatGenericTypographicInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormatGenericTypographicInitializer class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

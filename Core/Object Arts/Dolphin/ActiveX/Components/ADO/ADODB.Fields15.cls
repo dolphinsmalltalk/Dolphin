@@ -52,8 +52,10 @@ item: index
 	answer := Field newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODB.Fields15 categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Fields15!private! !
-!ADODB.Fields15 categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Fields15 categoriesForMethods!
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Fields15!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODB.Fields15 class methodsFor!
 
@@ -65,5 +67,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant Field**'
 ! !
-!ADODB.Fields15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Fields15 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

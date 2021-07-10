@@ -68,16 +68,18 @@ setInitializer: aGdiplusInitializer
 	self initialize.
 	initializer := aGdiplusInitializer.
 	^self! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #=!comparison!public! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #copy!copying!public! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #hash!comparison!public! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #initializer!accessing!public! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #initializer:!accessing!public! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #isPersistent!private!testing! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #printOn:!printing!public! !
-!Graphics.Gdiplus.GdiplusBase categoriesFor: #setInitializer:!initializing!private! !
+!Graphics.Gdiplus.GdiplusBase categoriesForMethods!
+=!comparison!public! !
+basicFree!private!realizing/unrealizing! !
+copy!copying!public! !
+createHandle!private!realizing/unrealizing! !
+hash!comparison!public! !
+initializer!accessing!public! !
+initializer:!accessing!public! !
+isPersistent!private!testing! !
+printOn:!printing!public! !
+setInitializer:!initializing!private! !
+!
 
 !Graphics.Gdiplus.GdiplusBase class methodsFor!
 
@@ -357,47 +359,49 @@ showExample: anImage viewMode: aSymbol
 	presenter topShell extent: anImage extent + presenter topShell rectangle extent
 				- presenter topShell clientRectangle extent.
 	^presenter! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsColorAdjustType!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsColorChannelFlags!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsColorMatrixFlags!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsCombineMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsCompositingMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsCompositingQuality!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsDashCap!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsDashStyle!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsEncoderParameterValueType!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsEncoderValue!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsFillMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsFlushIntention!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsFontStyle!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsHatchStyle!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsImageFlags!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsImageType!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsInterpolationMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsLinearGradientMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsLineCap!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsLineJoin!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsMatrixOrder!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsPathPointType!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsPenAlignment!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsPixelFormat!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsPropertyTag!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsRotate!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsSmoothingMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsStringAlignment!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsStringFormatFlags!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsStringTrimming!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsTextRenderingHint!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsUnit!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsWarpMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsWithPrefix:!constants!private! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #enumsWrapMode!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #fileResource!examples!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #fromInitializer:!instance creation!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #guidNamesWithPrefix:!constants!private! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #guidsEncoder!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #guidsFrameDimension!constants!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #guidsWithPrefix:!constants!private! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #showExample:!examples!public! !
-!Graphics.Gdiplus.GdiplusBase class categoriesFor: #showExample:viewMode:!examples!public! !
+!Graphics.Gdiplus.GdiplusBase class categoriesForMethods!
+enumsColorAdjustType!constants!public! !
+enumsColorChannelFlags!constants!public! !
+enumsColorMatrixFlags!constants!public! !
+enumsCombineMode!constants!public! !
+enumsCompositingMode!constants!public! !
+enumsCompositingQuality!constants!public! !
+enumsDashCap!constants!public! !
+enumsDashStyle!constants!public! !
+enumsEncoderParameterValueType!constants!public! !
+enumsEncoderValue!constants!public! !
+enumsFillMode!constants!public! !
+enumsFlushIntention!constants!public! !
+enumsFontStyle!constants!public! !
+enumsHatchStyle!constants!public! !
+enumsImageFlags!constants!public! !
+enumsImageType!constants!public! !
+enumsInterpolationMode!constants!public! !
+enumsLinearGradientMode!constants!public! !
+enumsLineCap!constants!public! !
+enumsLineJoin!constants!public! !
+enumsMatrixOrder!constants!public! !
+enumsPathPointType!constants!public! !
+enumsPenAlignment!constants!public! !
+enumsPixelFormat!constants!public! !
+enumsPropertyTag!constants!public! !
+enumsRotate!constants!public! !
+enumsSmoothingMode!constants!public! !
+enumsStringAlignment!constants!public! !
+enumsStringFormatFlags!constants!public! !
+enumsStringTrimming!constants!public! !
+enumsTextRenderingHint!constants!public! !
+enumsUnit!constants!public! !
+enumsWarpMode!constants!public! !
+enumsWithPrefix:!constants!private! !
+enumsWrapMode!constants!public! !
+fileResource!examples!public! !
+fromInitializer:!instance creation!public! !
+guidNamesWithPrefix:!constants!private! !
+guidsEncoder!constants!public! !
+guidsFrameDimension!constants!public! !
+guidsWithPrefix:!constants!private! !
+showExample:!examples!public! !
+showExample:viewMode:!examples!public! !
+!
 

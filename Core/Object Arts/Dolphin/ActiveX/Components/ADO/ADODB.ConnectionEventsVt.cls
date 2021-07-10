@@ -277,24 +277,26 @@ WillExecute: willExecute CursorType: cursorType LockType: lockType Options: opti
 
 	<virtual stdcall: hresult 8 lppvoid External.SDWORD* External.SDWORD* External.SDWORD* External.SDWORD* ADODB._Command* ADODB._Recordset* ADODB._Connection*>
 	^self invalidCall: _failureCode! !
-!ADODB.ConnectionEventsVt categoriesFor: #beginTransComplete:pError:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #BeginTransComplete:pError:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #commitTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #CommitTransComplete:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #connectComplete:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #ConnectComplete:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #disconnect:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #Disconnect:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #executeComplete:pError:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #ExecuteComplete:pError:adStatus:pCommand:pRecordset:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #infoMessage:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #InfoMessage:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #rollbackTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #RollbackTransComplete:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #willConnect:userID:password:options:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #WillConnect:UserID:Password:Options:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #willExecute:cursorType:lockType:options:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
-!ADODB.ConnectionEventsVt categoriesFor: #WillExecute:CursorType:LockType:Options:adStatus:pCommand:pRecordset:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+!ADODB.ConnectionEventsVt categoriesForMethods!
+beginTransComplete:pError:adStatus:pConnection:!**auto generated**!methods!public! !
+BeginTransComplete:pError:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+commitTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
+CommitTransComplete:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+connectComplete:adStatus:pConnection:!**auto generated**!methods!public! !
+ConnectComplete:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+disconnect:pConnection:!**auto generated**!methods!public! !
+Disconnect:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+executeComplete:pError:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
+ExecuteComplete:pError:adStatus:pCommand:pRecordset:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+infoMessage:adStatus:pConnection:!**auto generated**!methods!public! !
+InfoMessage:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+rollbackTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
+RollbackTransComplete:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+willConnect:userID:password:options:adStatus:pConnection:!**auto generated**!methods!public! !
+WillConnect:UserID:Password:Options:adStatus:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+willExecute:cursorType:lockType:options:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
+WillExecute:CursorType:LockType:Options:adStatus:pCommand:pRecordset:pConnection:!COM Interfaces-ConnectionEventsVt!public! !
+!
 
 !ADODB.ConnectionEventsVt class methodsFor!
 
@@ -322,5 +324,7 @@ defineFunctions
 		defineFunction: #Disconnect:pConnection:
 			argumentTypes: 'sdword* _Connection*'
 ! !
-!ADODB.ConnectionEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.ConnectionEventsVt class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

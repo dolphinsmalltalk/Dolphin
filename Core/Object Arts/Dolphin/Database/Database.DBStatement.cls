@@ -56,10 +56,12 @@ sqlString: aString
 	or lazily by examing the result set) has no effect."
 
 	sqlString := aString! !
-!Database.DBStatement categoriesFor: #defaultCursorType!constants!public! !
-!Database.DBStatement categoriesFor: #exec:!operations!public! !
-!Database.DBStatement categoriesFor: #executeStatement!operations!private! !
-!Database.DBStatement categoriesFor: #printOn:!printing!public! !
-!Database.DBStatement categoriesFor: #sqlString!accessing!public! !
-!Database.DBStatement categoriesFor: #sqlString:!accessing!private! !
+!Database.DBStatement categoriesForMethods!
+defaultCursorType!constants!public! !
+exec:!operations!public! !
+executeStatement!operations!private! !
+printOn:!printing!public! !
+sqlString!accessing!public! !
+sqlString:!accessing!private! !
+!
 

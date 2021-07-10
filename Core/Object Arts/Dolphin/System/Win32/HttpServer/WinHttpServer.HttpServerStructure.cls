@@ -14,5 +14,7 @@ WinHttpServer.HttpServerStructure comment: ''!
 
 byteSize
 	^bytes class isIndirection ifTrue: [super byteSize] ifFalse: [bytes size]! !
-!WinHttpServer.HttpServerStructure categoriesFor: #byteSize!accessing!public! !
+!WinHttpServer.HttpServerStructure categoriesForMethods!
+byteSize!accessing!public! !
+!
 

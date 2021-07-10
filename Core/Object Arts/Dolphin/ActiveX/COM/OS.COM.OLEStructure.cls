@@ -21,6 +21,8 @@ initialize: anInteger
 
 	super initialize: anInteger.
 	self dwSize: anInteger! !
-!OS.COM.OLEStructure categoriesFor: #dwSize:!initializing!public! !
-!OS.COM.OLEStructure categoriesFor: #initialize:!initializing!private! !
+!OS.COM.OLEStructure categoriesForMethods!
+dwSize:!initializing!public! !
+initialize:!initializing!private! !
+!
 

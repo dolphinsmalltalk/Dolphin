@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #SocketErrorTest
 	instanceVariableNames: ''
@@ -16,6 +16,8 @@ testSocketClosed
 
 testSocketWaitCancelled
 	self should: [SocketError signalWith: WSAEINTR] raise: SocketWaitCancelled! !
-!SocketErrorTest categoriesFor: #testSocketClosed!public!unit tests! !
-!SocketErrorTest categoriesFor: #testSocketWaitCancelled!public!unit tests! !
+!SocketErrorTest categoriesForMethods!
+testSocketClosed!public!unit tests! !
+testSocketWaitCancelled!public!unit tests! !
+!
 

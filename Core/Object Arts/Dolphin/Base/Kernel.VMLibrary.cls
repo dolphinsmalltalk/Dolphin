@@ -468,59 +468,61 @@ versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!.%5!!d!!'! !
-!Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #applicationHandle!accessing-handles!public! !
-!Kernel.VMLibrary categoriesFor: #argc!accessing!private! !
-!Kernel.VMLibrary categoriesFor: #argv!accessing!private! !
-!Kernel.VMLibrary categoriesFor: #basePatchLevel!constants!patching!private! !
-!Kernel.VMLibrary categoriesFor: #bytecodeVersion!accessing-version!public! !
-!Kernel.VMLibrary categoriesFor: #compilerFileName!accessing!private! !
-!Kernel.VMLibrary categoriesFor: #crashDump:!exceptions!private! !
-!Kernel.VMLibrary categoriesFor: #crtHandle!accessing-handles!private! !
-!Kernel.VMLibrary categoriesFor: #debugDump:!exceptions!private! !
-!Kernel.VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
-!Kernel.VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
-!Kernel.VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
-!Kernel.VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
-!Kernel.VMLibrary categoriesFor: #fullVersion!accessing-version!public! !
-!Kernel.VMLibrary categoriesFor: #getDlgProc!accessing-callbacks!private! !
-!Kernel.VMLibrary categoriesFor: #getGenericCallback!accessing-callbacks!private! !
-!Kernel.VMLibrary categoriesFor: #getVTable!accessing-callbacks!private! !
-!Kernel.VMLibrary categoriesFor: #getWndProc!accessing-callbacks!public! !
-!Kernel.VMLibrary categoriesFor: #handleFromInteger:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #hashBytes:count:!hash algorithms!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #highBit:!arithmetic!public! !
-!Kernel.VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
-!Kernel.VMLibrary categoriesFor: #isSlowMachine!environment!public! !
-!Kernel.VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
-!Kernel.VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #makeLargeSigned:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #makeLargeSigned:highPart:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #makeLargeUnsigned:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #makeLargeUnsigned:highPart:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #onStartup!event handling!public! !
-!Kernel.VMLibrary categoriesFor: #productName!accessing!public! !
-!Kernel.VMLibrary categoriesFor: #registerEventSource:!arithmetic!public! !
-!Kernel.VMLibrary categoriesFor: #registry!accessing!private! !
-!Kernel.VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
-!Kernel.VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
-!Kernel.VMLibrary categoriesFor: #registryAtIndex:put:!accessing-registry!private! !
-!Kernel.VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
-!Kernel.VMLibrary categoriesFor: #selectorOfSpecialSendEx:!enquiries!private! !
-!Kernel.VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
-!Kernel.VMLibrary categoriesFor: #stderr!accessing-handles!private! !
-!Kernel.VMLibrary categoriesFor: #stdin!accessing-handles!private! !
-!Kernel.VMLibrary categoriesFor: #stdout!accessing-handles!private! !
-!Kernel.VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
-!Kernel.VMLibrary categoriesFor: #unsignedFromSigned:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #utf16StringFromAddress:!helpers!private! !
-!Kernel.VMLibrary categoriesFor: #versionFormatString!constants!private! !
+!Kernel.VMLibrary categoriesForMethods!
+_snprintf_s:bufferSize:count:format:with:!helpers!private! !
+_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
+addressFromInteger:!helpers!private! !
+applicationHandle!accessing-handles!public! !
+argc!accessing!private! !
+argv!accessing!private! !
+basePatchLevel!constants!patching!private! !
+bytecodeVersion!accessing-version!public! !
+compilerFileName!accessing!private! !
+crashDump:!exceptions!private! !
+crtHandle!accessing-handles!private! !
+debugDump:!exceptions!private! !
+defaultProductDetails!accessing!private! !
+dump:path:stackDepth:walkbackDepth:!exceptions!private! !
+emptyBlock!accessing-handles!private! !
+errorIntegerMoreThan32Bits:!exceptions!private! !
+fullVersion!accessing-version!public! !
+getDlgProc!accessing-callbacks!private! !
+getGenericCallback!accessing-callbacks!private! !
+getVTable!accessing-callbacks!private! !
+getWndProc!accessing-callbacks!public! !
+handleFromInteger:!helpers!private! !
+hashBytes:count:!hash algorithms!helpers!private! !
+highBit:!arithmetic!public! !
+indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
+isSlowMachine!environment!public! !
+isUserBreakRequested!accessing!helpers!private! !
+kernelHandle!accessing-handles!private! !
+largeSignedFromUnsigned:!helpers!private! !
+largeUnsignedFromSigned:!helpers!private! !
+makeLargeSigned:!helpers!private! !
+makeLargeSigned:highPart:!helpers!private! !
+makeLargeUnsigned:!helpers!private! !
+makeLargeUnsigned:highPart:!helpers!private! !
+onStartup!event handling!public! !
+productName!accessing!public! !
+registerEventSource:!arithmetic!public! !
+registry!accessing!private! !
+registryAt:!accessing-registry!private! !
+registryAt:put:!accessing-registry!private! !
+registryAtIndex:put:!accessing-registry!private! !
+selectorOfSpecialSend:!enquiries!private! !
+selectorOfSpecialSendEx:!enquiries!private! !
+signedFromUnsigned:!helpers!private! !
+specialSelectors!accessing-registry!private! !
+stderr!accessing-handles!private! !
+stdin!accessing-handles!private! !
+stdout!accessing-handles!private! !
+stringFromAddress:!helpers!private! !
+unregisterObject:!accessing-registry!private! !
+unsignedFromSigned:!helpers!private! !
+utf16StringFromAddress:!helpers!private! !
+versionFormatString!constants!private! !
+!
 
 !Kernel.VMLibrary class methodsFor!
 
@@ -645,14 +647,16 @@ registryKeys
 
 sharedVariableName
 	^#{VM}! !
-!Kernel.VMLibrary class categoriesFor: #fileName!constants!public! !
-!Kernel.VMLibrary class categoriesFor: #hasBytecodeRepresentation:!helpers!private! !
-!Kernel.VMLibrary class categoriesFor: #initialize!development!initializing!private! !
-!Kernel.VMLibrary class categoriesFor: #maxBlockNesting!limits!public! !
-!Kernel.VMLibrary class categoriesFor: #maxLiterals!limits!public! !
-!Kernel.VMLibrary class categoriesFor: #maxMessageArguments!limits!public! !
-!Kernel.VMLibrary class categoriesFor: #maxTemps!limits!public! !
-!Kernel.VMLibrary class categoriesFor: #open!instance creation!public! !
-!Kernel.VMLibrary class categoriesFor: #registryKeys!constants!private! !
-!Kernel.VMLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!Kernel.VMLibrary class categoriesForMethods!
+fileName!constants!public! !
+hasBytecodeRepresentation:!helpers!private! !
+initialize!development!initializing!private! !
+maxBlockNesting!limits!public! !
+maxLiterals!limits!public! !
+maxMessageArguments!limits!public! !
+maxTemps!limits!public! !
+open!instance creation!public! !
+registryKeys!constants!private! !
+sharedVariableName!constants!private! !
+!
 

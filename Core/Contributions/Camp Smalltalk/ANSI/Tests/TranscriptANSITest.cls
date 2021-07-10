@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #TranscriptANSITest
 	instanceVariableNames: ''
@@ -15,13 +15,17 @@ canonicalObject
 
 protocol
 	^#'Transcript'! !
-!TranscriptANSITest categoriesFor: #canonicalObject!public! !
-!TranscriptANSITest categoriesFor: #protocol!public! !
+!TranscriptANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+!
 
 !TranscriptANSITest class methodsFor!
 
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: PuttableStreamHelper! !
-!TranscriptANSITest class categoriesFor: #helperClassesDo:!public! !
+!TranscriptANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

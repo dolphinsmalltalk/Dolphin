@@ -39,8 +39,10 @@ ptlOrigin: aPOINTL
 		from: ##(_OffsetOf_ptlOrigin + 1)
 		to: ##(_OffsetOf_ptlOrigin + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin!**compiled accessors**!public! !
-!OS.EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin:!**compiled accessors**!public! !
+!OS.EMRSETVIEWPORTORGEX categoriesForMethods!
+ptlOrigin!**compiled accessors**!public! !
+ptlOrigin:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETVIEWPORTORGEX class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETVIEWPORTORGEX. EMR_SETWINDOWORGEX. EMR_SETBRUSHORGEX}! !
-!OS.EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETVIEWPORTORGEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETVIEWPORTORGEX class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETVIEWPORTORGEX class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

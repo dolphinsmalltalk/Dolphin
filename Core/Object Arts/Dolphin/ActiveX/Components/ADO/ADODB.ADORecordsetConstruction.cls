@@ -142,18 +142,20 @@ rowset: ppRowset
 	"Set the 'Rowset' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Rowset: ppRowset! !
-!ADODB.ADORecordsetConstruction categoriesFor: #chapter!**auto generated**!properties!public! !
-!ADODB.ADORecordsetConstruction categoriesFor: #chapter:!**auto generated**!properties!public! !
-!ADODB.ADORecordsetConstruction categoriesFor: #get_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODB.ADORecordsetConstruction categoriesFor: #get_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODB.ADORecordsetConstruction categoriesFor: #get_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODB.ADORecordsetConstruction categoriesFor: #put_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODB.ADORecordsetConstruction categoriesFor: #put_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODB.ADORecordsetConstruction categoriesFor: #put_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
-!ADODB.ADORecordsetConstruction categoriesFor: #rowPosition!**auto generated**!properties!public! !
-!ADODB.ADORecordsetConstruction categoriesFor: #rowPosition:!**auto generated**!properties!public! !
-!ADODB.ADORecordsetConstruction categoriesFor: #rowset!**auto generated**!properties!public! !
-!ADODB.ADORecordsetConstruction categoriesFor: #rowset:!**auto generated**!properties!public! !
+!ADODB.ADORecordsetConstruction categoriesForMethods!
+chapter!**auto generated**!properties!public! !
+chapter:!**auto generated**!properties!public! !
+get_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+get_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+get_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+put_Chapter:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+put_RowPosition:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+put_Rowset:!**auto generated**!COM Interfaces-ADORecordsetConstruction!private! !
+rowPosition!**auto generated**!properties!public! !
+rowPosition:!**auto generated**!properties!public! !
+rowset!**auto generated**!properties!public! !
+rowset:!**auto generated**!properties!public! !
+!
 
 !ADODB.ADORecordsetConstruction class methodsFor!
 
@@ -175,5 +177,7 @@ defineFunctions
 		defineFunction: #put_RowPosition:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODB.ADORecordsetConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.ADORecordsetConstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

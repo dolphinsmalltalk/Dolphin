@@ -31,5 +31,7 @@ defineFunctions
 			argumentTypes: 'bool';
 		defineFunction: #RequestNewObjectLayout
 ! !
-!OS.COM.IOleClientSite class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IOleClientSite class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

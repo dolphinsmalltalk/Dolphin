@@ -65,18 +65,20 @@ run: aResult
 tests
 	tests isNil ifTrue: [tests := OrderedCollection new].
 	^tests! !
-!XProgramming.SUnit.TestSuite categoriesFor: #addDependentToHierachy:!Dependencies!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #addTest:!Accessing!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #addTests:!Accessing!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #defaultResources!Accessing!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #name!Accessing!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #name:!Accessing!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #removeDependentFromHierachy:!Dependencies!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #resources!Accessing!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #resources:!Accessing!public! !
-!XProgramming.SUnit.TestSuite categoriesFor: #run!public!Running! !
-!XProgramming.SUnit.TestSuite categoriesFor: #run:!public!Running! !
-!XProgramming.SUnit.TestSuite categoriesFor: #tests!Accessing!public! !
+!XProgramming.SUnit.TestSuite categoriesForMethods!
+addDependentToHierachy:!Dependencies!public! !
+addTest:!Accessing!public! !
+addTests:!Accessing!public! !
+defaultResources!Accessing!public! !
+name!Accessing!public! !
+name:!Accessing!public! !
+removeDependentFromHierachy:!Dependencies!public! !
+resources!Accessing!public! !
+resources:!Accessing!public! !
+run!public!Running! !
+run:!public!Running! !
+tests!Accessing!public! !
+!
 
 !XProgramming.SUnit.TestSuite class methodsFor!
 
@@ -85,5 +87,7 @@ named: aString
 	^self new
 		name: aString;
 		yourself! !
-!XProgramming.SUnit.TestSuite class categoriesFor: #named:!Creation!public! !
+!XProgramming.SUnit.TestSuite class categoriesForMethods!
+named:!Creation!public! !
+!
 

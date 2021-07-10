@@ -106,13 +106,15 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 				tab;
 				print: each case;
 				cr]! !
-!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
-!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
-!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
-!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !
-!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
-!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
-!XProgramming.SUnit.TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:threshold:!helpers!private! !
+!XProgramming.SUnit.TestRunConsoleLogger categoriesForMethods!
+finishedCase:!logging!public! !
+finishedRun:knownSlowTests:!logging!public! !
+startingCase:!logging!public! !
+startingRun:!logging!public! !
+stream:!accessing!private! !
+summarizeFailures:!helpers!private! !
+summarizeTimings:baseline:threshold:!helpers!private! !
+!
 
 !XProgramming.SUnit.TestRunConsoleLogger class methodsFor!
 
@@ -120,5 +122,7 @@ on: aPuttableStream
 	^(self new)
 		stream: aPuttableStream;
 		yourself! !
-!XProgramming.SUnit.TestRunConsoleLogger class categoriesFor: #on:!public! !
+!XProgramming.SUnit.TestRunConsoleLogger class categoriesForMethods!
+on:!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.StatusBarTest'
 	instanceVariableNames: ''
@@ -156,8 +156,10 @@ testToggleItemAutoResize
 	subject isAutoResize: true.
 	self assert: subject width equals: -1.
 	self assert: subject rectangle width equals: expectedWidth! !
-!UI.Tests.StatusBarTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.StatusBarTest categoriesFor: #testItemLayout!public!unit tests! !
-!UI.Tests.StatusBarTest categoriesFor: #testItemLayout:!helpers!private! !
-!UI.Tests.StatusBarTest categoriesFor: #testToggleItemAutoResize!public!unit tests! !
+!UI.Tests.StatusBarTest categoriesForMethods!
+classToTest!helpers!private! !
+testItemLayout!public!unit tests! !
+testItemLayout:!helpers!private! !
+testToggleItemAutoResize!public!unit tests! !
+!
 

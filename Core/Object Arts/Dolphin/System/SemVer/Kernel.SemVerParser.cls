@@ -114,12 +114,14 @@ step
 					[last := stream position.
 					$\x1A].
 	classification := ClassificationTable lookup: next code! !
-!Kernel.SemVerParser categoriesFor: #parse!parsing!public! !
-!Kernel.SemVerParser categoriesFor: #parseMetadataIdentifier:!parsing!private! !
-!Kernel.SemVerParser categoriesFor: #parsePrereleaseIdentifier:!parsing!private! !
-!Kernel.SemVerParser categoriesFor: #parseVersionInteger!parsing!private! !
-!Kernel.SemVerParser categoriesFor: #setStream:!initializing!private! !
-!Kernel.SemVerParser categoriesFor: #step!parsing!private! !
+!Kernel.SemVerParser categoriesForMethods!
+parse!parsing!public! !
+parseMetadataIdentifier:!parsing!private! !
+parsePrereleaseIdentifier:!parsing!private! !
+parseVersionInteger!parsing!private! !
+setStream:!initializing!private! !
+step!parsing!private! !
+!
 
 !Kernel.SemVerParser class methodsFor!
 
@@ -137,6 +139,8 @@ on: aReadStream
 	^self new
 		setStream: aReadStream;
 		yourself! !
-!Kernel.SemVerParser class categoriesFor: #initializeClassificationTable!public! !
-!Kernel.SemVerParser class categoriesFor: #on:!public! !
+!Kernel.SemVerParser class categoriesForMethods!
+initializeClassificationTable!public! !
+on:!public! !
+!
 

@@ -332,7 +332,9 @@ title
 	"Answer the receiver's 'title' (i.e. the display name)."
 
 	^self class titleOf: self name! !
-!Core.File categoriesFor: #title!accessing!public! !
+!Core.File categoriesForMethods!
+title!accessing!public! !
+!
 
 !Core.File class methodsFor!
 
@@ -354,7 +356,9 @@ titleOf: aString
 		lpszTitle: buf
 		cbBuf: len) < 0 ifTrue: [lib systemError: 123].
 	^buf! !
-!Core.File class categoriesFor: #titleOf:!filename manipulation!public! !
+!Core.File class categoriesForMethods!
+titleOf:!filename manipulation!public! !
+!
 
 !Graphics.Color class methodsFor!
 
@@ -362,7 +366,9 @@ choose
 	"Answer a new instance of the receiver chosen from the common color dialog."
 
 	^UI.ColorDialog showModal! !
-!Graphics.Color class categoriesFor: #choose!instance creation!public! !
+!Graphics.Color class categoriesForMethods!
+choose!instance creation!public! !
+!
 
 !Graphics.Font class methodsFor!
 
@@ -371,7 +377,9 @@ choose
 	font dialog."
 
 	^UI.FontDialog showModal! !
-!Graphics.Font class categoriesFor: #choose!instance creation!public! !
+!Graphics.Font class categoriesForMethods!
+choose!instance creation!public! !
+!
 
 "End of package definition"!
 

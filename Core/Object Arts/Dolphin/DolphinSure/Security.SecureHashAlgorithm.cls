@@ -100,16 +100,18 @@ resetContext
 		ifTrue: 
 			[OS.BCrypt shaDestroy: context.
 			context := nil]! !
-!Security.SecureHashAlgorithm categoriesFor: #context!helpers!private! !
-!Security.SecureHashAlgorithm categoriesFor: #finalHash!helpers!private! !
-!Security.SecureHashAlgorithm categoriesFor: #hashIn:!helpers!private! !
-!Security.SecureHashAlgorithm categoriesFor: #hashInInteger:!operations!public! !
-!Security.SecureHashAlgorithm categoriesFor: #hashInMessage:!operations!public! !
-!Security.SecureHashAlgorithm categoriesFor: #hashInStream:!operations!public! !
-!Security.SecureHashAlgorithm categoriesFor: #hashInteger:!operations!public! !
-!Security.SecureHashAlgorithm categoriesFor: #hashMessage:!operations!public! !
-!Security.SecureHashAlgorithm categoriesFor: #hashStream:!operations!public! !
-!Security.SecureHashAlgorithm categoriesFor: #resetContext!helpers!private! !
+!Security.SecureHashAlgorithm categoriesForMethods!
+context!helpers!private! !
+finalHash!helpers!private! !
+hashIn:!helpers!private! !
+hashInInteger:!operations!public! !
+hashInMessage:!operations!public! !
+hashInStream:!operations!public! !
+hashInteger:!operations!public! !
+hashMessage:!operations!public! !
+hashStream:!operations!public! !
+resetContext!helpers!private! !
+!
 
 !Security.SecureHashAlgorithm class methodsFor!
 
@@ -145,6 +147,8 @@ example2
 		self error: 'Test #3 failed!!'].
 	^true
 ! !
-!Security.SecureHashAlgorithm class categoriesFor: #example!examples!public! !
-!Security.SecureHashAlgorithm class categoriesFor: #example2!examples!public! !
+!Security.SecureHashAlgorithm class categoriesForMethods!
+example!examples!public! !
+example2!examples!public! !
+!
 

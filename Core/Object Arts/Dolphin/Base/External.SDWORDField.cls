@@ -27,9 +27,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sdwordAtOffset: offset put: anInteger! !
-!External.SDWORDField categoriesFor: #accessorMessage!initializing!private! !
-!External.SDWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.SDWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.SDWORDField categoriesForMethods!
+accessorMessage!initializing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.SDWORDField class methodsFor!
 
@@ -38,5 +40,7 @@ byteSize
 	An SDWORD is always 4 bytes."
 
 	^4! !
-!External.SDWORDField class categoriesFor: #byteSize!constants!private! !
+!External.SDWORDField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

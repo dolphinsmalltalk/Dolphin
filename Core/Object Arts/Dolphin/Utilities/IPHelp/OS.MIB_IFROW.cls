@@ -190,30 +190,32 @@ wszName
 	"Answer the <Utf16String> value of the receiver's 'wszName' field."
 
 	^Utf16String fromAddress: bytes yourAddress! !
-!OS.MIB_IFROW categoriesFor: #bDescr!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwAdminStatus!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwDescrLen!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwIndex!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwInDiscards!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwInErrors!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwInNUcastPkts!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwInOctets!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwInUcastPkts!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwInUnknownProtos!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwLastChange!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwMtu!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwOperStatus!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwOutDiscards!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwOutErrors!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwOutNUcastPkts!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwOutOctets!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwOutQLen!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwOutUcastPkts!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwPhysAddrLen!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwSpeed!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #dwType!**compiled accessors**!public! !
-!OS.MIB_IFROW categoriesFor: #wszName!**compiled accessors**!public! !
+!OS.MIB_IFROW categoriesForMethods!
+bDescr!**compiled accessors**!public! !
+bPhysAddr!**compiled accessors**!public! !
+dwAdminStatus!**compiled accessors**!public! !
+dwDescrLen!**compiled accessors**!public! !
+dwIndex!**compiled accessors**!public! !
+dwInDiscards!**compiled accessors**!public! !
+dwInErrors!**compiled accessors**!public! !
+dwInNUcastPkts!**compiled accessors**!public! !
+dwInOctets!**compiled accessors**!public! !
+dwInUcastPkts!**compiled accessors**!public! !
+dwInUnknownProtos!**compiled accessors**!public! !
+dwLastChange!**compiled accessors**!public! !
+dwMtu!**compiled accessors**!public! !
+dwOperStatus!**compiled accessors**!public! !
+dwOutDiscards!**compiled accessors**!public! !
+dwOutErrors!**compiled accessors**!public! !
+dwOutNUcastPkts!**compiled accessors**!public! !
+dwOutOctets!**compiled accessors**!public! !
+dwOutQLen!**compiled accessors**!public! !
+dwOutUcastPkts!**compiled accessors**!public! !
+dwPhysAddrLen!**compiled accessors**!public! !
+dwSpeed!**compiled accessors**!public! !
+dwType!**compiled accessors**!public! !
+wszName!**compiled accessors**!public! !
+!
 
 !OS.MIB_IFROW class methodsFor!
 
@@ -333,6 +335,8 @@ defineFields
 
 getFieldNames
 	^#(#wszName #dwIndex #dwType #dwMtu #dwSpeed #dwPhysAddrLen #bPhysAddr #dwAdminStatus #dwOperStatus #dwLastChange #dwInOctets #dwInUcastPkts #dwInNUcastPkts #dwInDiscards #dwInErrors #dwInUnknownProtos #dwOutOctets #dwOutUcastPkts #dwOutNUcastPkts #dwOutDiscards #dwOutErrors #dwOutQLen #dwDescrLen #bDescr)! !
-!OS.MIB_IFROW class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_IFROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IFROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

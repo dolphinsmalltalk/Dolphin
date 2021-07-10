@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.HRESULTTest'
 	instanceVariableNames: ''
@@ -26,5 +26,7 @@ testDisplayString
 				| actual |
 				actual := subject displayString: pair first.
 				self assert: actual equals: pair second]! !
-!OS.Tests.HRESULTTest categoriesFor: #testDisplayString!public!unit tests! !
+!OS.Tests.HRESULTTest categoriesForMethods!
+testDisplayString!public!unit tests! !
+!
 

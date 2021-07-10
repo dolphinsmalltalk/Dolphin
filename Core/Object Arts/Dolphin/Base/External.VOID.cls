@@ -22,6 +22,8 @@ new
 	thus a reference is always required."
 
 	^self newPointer! !
-!External.VOID class categoriesFor: #getFieldNames!constants!private! !
-!External.VOID class categoriesFor: #new!instance creation!public! !
+!External.VOID class categoriesForMethods!
+getFieldNames!constants!private! !
+new!instance creation!public! !
+!
 

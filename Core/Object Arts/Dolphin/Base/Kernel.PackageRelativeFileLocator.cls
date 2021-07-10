@@ -28,10 +28,12 @@ packageName
 
 setPackageName: aString 
 	packageName := aString! !
-!Kernel.PackageRelativeFileLocator categoriesFor: #basePath!accessing!public! !
-!Kernel.PackageRelativeFileLocator categoriesFor: #package!accessing!public! !
-!Kernel.PackageRelativeFileLocator categoriesFor: #packageName!accessing!public! !
-!Kernel.PackageRelativeFileLocator categoriesFor: #setPackageName:!initializing!private! !
+!Kernel.PackageRelativeFileLocator categoriesForMethods!
+basePath!accessing!public! !
+package!accessing!public! !
+packageName!accessing!public! !
+setPackageName:!initializing!private! !
+!
 
 !Kernel.PackageRelativeFileLocator class methodsFor!
 
@@ -50,6 +52,8 @@ packageNamed: aString
 	^(super new)
 		setPackageName: aString;
 		yourself! !
-!Kernel.PackageRelativeFileLocator class categoriesFor: #package:!instance creation!public! !
-!Kernel.PackageRelativeFileLocator class categoriesFor: #packageNamed:!instance creation!public! !
+!Kernel.PackageRelativeFileLocator class categoriesForMethods!
+package:!instance creation!public! !
+packageNamed:!instance creation!public! !
+!
 

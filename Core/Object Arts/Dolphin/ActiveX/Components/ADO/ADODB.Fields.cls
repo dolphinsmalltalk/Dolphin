@@ -109,13 +109,15 @@ Update
 
 	<virtual stdcall: hresult 15>
 	^self invalidCall: _failureCode! !
-!ADODB.Fields categoriesFor: #append:type:!**auto generated**!methods!public! !
-!ADODB.Fields categoriesFor: #append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
-!ADODB.Fields categoriesFor: #Append:Type:DefinedSize:Attrib:FieldValue:!**auto generated**!COM Interfaces-Fields!private! !
-!ADODB.Fields categoriesFor: #CancelUpdate!**auto generated**!COM Interfaces-Fields!public! !
-!ADODB.Fields categoriesFor: #resync!**auto generated**!methods!public! !
-!ADODB.Fields categoriesFor: #Resync:!**auto generated**!COM Interfaces-Fields!public! !
-!ADODB.Fields categoriesFor: #Update!**auto generated**!COM Interfaces-Fields!public! !
+!ADODB.Fields categoriesForMethods!
+append:type:!**auto generated**!methods!public! !
+append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
+Append:Type:DefinedSize:Attrib:FieldValue:!**auto generated**!COM Interfaces-Fields!private! !
+CancelUpdate!**auto generated**!COM Interfaces-Fields!public! !
+resync!**auto generated**!methods!public! !
+Resync:!**auto generated**!COM Interfaces-Fields!public! !
+Update!**auto generated**!COM Interfaces-Fields!public! !
+!
 
 !ADODB.Fields class methodsFor!
 
@@ -131,5 +133,7 @@ defineFunctions
 			argumentTypes: 'sdword';
 		defineFunction: #CancelUpdate
 ! !
-!ADODB.Fields class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Fields class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

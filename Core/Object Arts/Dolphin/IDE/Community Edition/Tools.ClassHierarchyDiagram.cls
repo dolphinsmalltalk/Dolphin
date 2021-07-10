@@ -60,13 +60,15 @@ onViewOpened
 
 searchForClass: aClass 
 	classesPresenter selection: aClass instanceClass ifAbsent: [super searchForClass: aClass]! !
-!Tools.ClassHierarchyDiagram categoriesFor: #canSaveState!private!saved state! !
-!Tools.ClassHierarchyDiagram categoriesFor: #createComponents!initializing!private! !
-!Tools.ClassHierarchyDiagram categoriesFor: #createSchematicWiring!initializing!private! !
-!Tools.ClassHierarchyDiagram categoriesFor: #defaultHelpId!public! !
-!Tools.ClassHierarchyDiagram categoriesFor: #onClassSelected!event handling!public! !
-!Tools.ClassHierarchyDiagram categoriesFor: #onViewOpened!event handling!private! !
-!Tools.ClassHierarchyDiagram categoriesFor: #searchForClass:!private! !
+!Tools.ClassHierarchyDiagram categoriesForMethods!
+canSaveState!private!saved state! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+defaultHelpId!public! !
+onClassSelected!event handling!public! !
+onViewOpened!event handling!private! !
+searchForClass:!private! !
+!
 
 !Tools.ClassHierarchyDiagram class methodsFor!
 
@@ -114,11 +116,13 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10590! !
-!Tools.ClassHierarchyDiagram class categoriesFor: #defaultAdditionalAccelerators!initializing!private! !
-!Tools.ClassHierarchyDiagram class categoriesFor: #displayOn:!displaying!public! !
-!Tools.ClassHierarchyDiagram class categoriesFor: #icon!constants!public! !
-!Tools.ClassHierarchyDiagram class categoriesFor: #initialize!initializing!private! !
-!Tools.ClassHierarchyDiagram class categoriesFor: #publishedAspects!public! !
-!Tools.ClassHierarchyDiagram class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ClassHierarchyDiagram class categoriesFor: #toolsFolderHelpId!public! !
+!Tools.ClassHierarchyDiagram class categoriesForMethods!
+defaultAdditionalAccelerators!initializing!private! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

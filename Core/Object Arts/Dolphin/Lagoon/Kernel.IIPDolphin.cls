@@ -27,5 +27,7 @@ defineFunctions
 		defineFunction: #OnInitialize;
 		defineFunction: #OnShutdown
 ! !
-!Kernel.IIPDolphin class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!Kernel.IIPDolphin class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

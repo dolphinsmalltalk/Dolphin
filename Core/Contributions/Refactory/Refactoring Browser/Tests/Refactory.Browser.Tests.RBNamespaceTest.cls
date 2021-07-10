@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBNamespaceTest'
 	instanceVariableNames: ''
@@ -185,18 +185,20 @@ testRoots
 	self assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) asArray
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedCollection: [:a :b | a name < b name]) asArray! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testAllClassesDo!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testCommentChange!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testDefineClassAfterDeletedChange!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testDefineClassChange!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testImplementors!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testIncludesClass!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testModelImplementorsSenders!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRedefineClassChange!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOn!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOnAfterAddition!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReferencesPrintOnAfterRemove!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRemoveClassChange!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testReparentSuperclassChange!class tests!public! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesFor: #testRoots!class tests!public! !
+!Refactory.Browser.Tests.RBNamespaceTest categoriesForMethods!
+testAllClassesDo!class tests!public! !
+testCommentChange!class tests!public! !
+testDefineClassAfterDeletedChange!class tests!public! !
+testDefineClassChange!class tests!public! !
+testImplementors!class tests!public! !
+testIncludesClass!class tests!public! !
+testModelImplementorsSenders!class tests!public! !
+testRedefineClassChange!class tests!public! !
+testReferencesPrintOn!class tests!public! !
+testReferencesPrintOnAfterAddition!class tests!public! !
+testReferencesPrintOnAfterRemove!class tests!public! !
+testRemoveClassChange!class tests!public! !
+testReparentSuperclassChange!class tests!public! !
+testRoots!class tests!public! !
+!
 

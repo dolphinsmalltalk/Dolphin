@@ -55,15 +55,17 @@ object: anObject
 
 systemModel
 	^SmalltalkSystem current! !
-!Tools.InspectorAbstract categoriesFor: #browseClass!commands!private! !
-!Tools.InspectorAbstract categoriesFor: #browseHierarchy!commands!private! !
-!Tools.InspectorAbstract categoriesFor: #browseIt!commands!public! !
-!Tools.InspectorAbstract categoriesFor: #browseObject!accessing!private! !
-!Tools.InspectorAbstract categoriesFor: #browseSystem!commands!public! !
-!Tools.InspectorAbstract categoriesFor: #inspecteeSelection!accessing!private! !
-!Tools.InspectorAbstract categoriesFor: #inspectIt!commands!public! !
-!Tools.InspectorAbstract categoriesFor: #object:!accessing!public! !
-!Tools.InspectorAbstract categoriesFor: #systemModel!accessing!private! !
+!Tools.InspectorAbstract categoriesForMethods!
+browseClass!commands!private! !
+browseHierarchy!commands!private! !
+browseIt!commands!public! !
+browseObject!accessing!private! !
+browseSystem!commands!public! !
+inspecteeSelection!accessing!private! !
+inspectIt!commands!public! !
+object:!accessing!public! !
+systemModel!accessing!private! !
+!
 
 !Tools.InspectorAbstract class methodsFor!
 
@@ -71,5 +73,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^BasicInspector icon! !
-!Tools.InspectorAbstract class categoriesFor: #icon!constants!public! !
+!Tools.InspectorAbstract class categoriesForMethods!
+icon!constants!public! !
+!
 

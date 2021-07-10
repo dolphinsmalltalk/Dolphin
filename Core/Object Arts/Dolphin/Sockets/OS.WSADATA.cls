@@ -71,13 +71,15 @@ wVersion
 	"Answer the <Integer> value of the receiver's 'wVersion' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVersion! !
-!OS.WSADATA categoriesFor: #iMaxSockets!**compiled accessors**!public! !
-!OS.WSADATA categoriesFor: #iMaxUdpDg!**compiled accessors**!public! !
-!OS.WSADATA categoriesFor: #lpVendorInfo!**compiled accessors**!public! !
-!OS.WSADATA categoriesFor: #szDescription!**compiled accessors**!public! !
-!OS.WSADATA categoriesFor: #szSystemStatus!**compiled accessors**!public! !
-!OS.WSADATA categoriesFor: #wHighVersion!**compiled accessors**!public! !
-!OS.WSADATA categoriesFor: #wVersion!**compiled accessors**!public! !
+!OS.WSADATA categoriesForMethods!
+iMaxSockets!**compiled accessors**!public! !
+iMaxUdpDg!**compiled accessors**!public! !
+lpVendorInfo!**compiled accessors**!public! !
+szDescription!**compiled accessors**!public! !
+szSystemStatus!**compiled accessors**!public! !
+wHighVersion!**compiled accessors**!public! !
+wVersion!**compiled accessors**!public! !
+!
 
 !OS.WSADATA class methodsFor!
 
@@ -110,6 +112,8 @@ defineFields
 
 getFieldNames
 	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
-!OS.WSADATA class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WSADATA class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

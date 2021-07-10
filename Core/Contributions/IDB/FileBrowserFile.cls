@@ -60,12 +60,14 @@ type
 	"Answer the value of the receiver's 'type' instance variable."
 
 	^type! !
-!FileBrowserFile categoriesFor: #isChunkFile!public!testing! !
-!FileBrowserFile categoriesFor: #isHTMLFile!public!testing! !
-!FileBrowserFile categoriesFor: #isImageFile!public!testing! !
-!FileBrowserFile categoriesFor: #isTypeIn:!public!testing! !
-!FileBrowserFile categoriesFor: #setName:parent:!initializing!public! !
-!FileBrowserFile categoriesFor: #size!accessing!public! !
-!FileBrowserFile categoriesFor: #timeStamp!accessing!public! !
-!FileBrowserFile categoriesFor: #type!accessing!public! !
+!FileBrowserFile categoriesForMethods!
+isChunkFile!public!testing! !
+isHTMLFile!public!testing! !
+isImageFile!public!testing! !
+isTypeIn:!public!testing! !
+setName:parent:!initializing!public! !
+size!accessing!public! !
+timeStamp!accessing!public! !
+type!accessing!public! !
+!
 

@@ -15,5 +15,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^XProgramming.SUnit.TestCase icon! !
-!UI.Scintilla.Tests class categoriesFor: #icon!constants!public! !
+!UI.Scintilla.Tests class categoriesForMethods!
+icon!constants!public! !
+!
 

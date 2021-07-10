@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.COM.Tests.TypeLibraryAnalyzerTest'
 	instanceVariableNames: 'analyzer'
@@ -74,15 +74,19 @@ testQuotesInIDL
 			class := Smalltalk at: #TLATESTLibITestQuotesInIDL.
 			self assert: class comment notEmpty.
 			self assert: (Compiler evaluate: class comment printString) = class comment]! !
-!OS.COM.Tests.TypeLibraryAnalyzerTest categoriesFor: #setUp!public!unit tests! !
-!OS.COM.Tests.TypeLibraryAnalyzerTest categoriesFor: #tearDown!public!unit tests! !
-!OS.COM.Tests.TypeLibraryAnalyzerTest categoriesFor: #testDefaultArgs!public!unit tests! !
-!OS.COM.Tests.TypeLibraryAnalyzerTest categoriesFor: #testDispinterfacePropGetOptionalArguments!public!unit tests! !
-!OS.COM.Tests.TypeLibraryAnalyzerTest categoriesFor: #testQuotesInIDL!public!unit tests! !
+!OS.COM.Tests.TypeLibraryAnalyzerTest categoriesForMethods!
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testDefaultArgs!public!unit tests! !
+testDispinterfacePropGetOptionalArguments!public!unit tests! !
+testQuotesInIDL!public!unit tests! !
+!
 
 !OS.COM.Tests.TypeLibraryAnalyzerTest class methodsFor!
 
 resources
 	^{TestTypelib}! !
-!OS.COM.Tests.TypeLibraryAnalyzerTest class categoriesFor: #resources!public!unit tests! !
+!OS.COM.Tests.TypeLibraryAnalyzerTest class categoriesForMethods!
+resources!public!unit tests! !
+!
 

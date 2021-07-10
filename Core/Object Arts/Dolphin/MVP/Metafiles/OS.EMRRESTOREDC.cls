@@ -35,8 +35,10 @@ iRelative: anInteger
 	"Set the receiver's 'iRelative' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iRelative put: anInteger! !
-!OS.EMRRESTOREDC categoriesFor: #iRelative!**compiled accessors**!public! !
-!OS.EMRRESTOREDC categoriesFor: #iRelative:!**compiled accessors**!public! !
+!OS.EMRRESTOREDC categoriesForMethods!
+iRelative!**compiled accessors**!public! !
+iRelative:!**compiled accessors**!public! !
+!
 
 !OS.EMRRESTOREDC class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_RESTOREDC}! !
-!OS.EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRRESTOREDC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRRESTOREDC class categoriesFor: #iTypes!constants!public! !
+!OS.EMRRESTOREDC class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

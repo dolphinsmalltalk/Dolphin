@@ -170,20 +170,22 @@ saveAsFile: pathString
 	self picture saveAsFile: istream fSaveMemCopy: true.
 	istream free.
 	fstream close! !
-!OS.COM.Picture categoriesFor: #=!comparing!public! !
-!OS.COM.Picture categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!OS.COM.Picture categoriesFor: #asBitmap!public! !
-!OS.COM.Picture categoriesFor: #asDIBSection!converting!public! !
-!OS.COM.Picture categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.Picture categoriesFor: #createHandle!private!realizing/unrealizing! !
-!OS.COM.Picture categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!OS.COM.Picture categoriesFor: #extent!accessing!public! !
-!OS.COM.Picture categoriesFor: #imageType!constants!private!testing! !
-!OS.COM.Picture categoriesFor: #isPersistent!private!testing! !
-!OS.COM.Picture categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!OS.COM.Picture categoriesFor: #picture!accessing!private! !
-!OS.COM.Picture categoriesFor: #picture:!accessing!private! !
-!OS.COM.Picture categoriesFor: #saveAsFile:!file operations!public! !
+!OS.COM.Picture categoriesForMethods!
+=!comparing!public! !
+addToImageList:mask:!double dispatch!private! !
+asBitmap!public! !
+asDIBSection!converting!public! !
+basicFree!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+extent!accessing!public! !
+imageType!constants!private!testing! !
+isPersistent!private!testing! !
+loadFromFile:extent:!private!realizing/unrealizing! !
+picture!accessing!private! !
+picture:!accessing!private! !
+saveAsFile:!file operations!public! !
+!
 
 !OS.COM.Picture class methodsFor!
 
@@ -192,5 +194,7 @@ fromIPicture: anIPicture
 		picture: anIPicture;
 		createHandle;
 		yourself! !
-!OS.COM.Picture class categoriesFor: #fromIPicture:!public! !
+!OS.COM.Picture class categoriesForMethods!
+fromIPicture:!public! !
+!
 

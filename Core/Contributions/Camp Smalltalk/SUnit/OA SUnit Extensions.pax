@@ -315,34 +315,36 @@ skipUnless: aNiladicValuable
 	" If the assumption in the <niladicValuable> argument evaluates to false, abandon the running test and mark it as skipped."
 	
 	aNiladicValuable value ifFalse: [TestSkip signal: 'Assumption in #skipUnless: failed']! !
-!XProgramming.SUnit.TestCase categoriesFor: #<=!comparing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #=!comparing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:equals:description:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:identicalTo:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:isKindOf:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:sameAs:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assertIsNil:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assertNotNil:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #debugWithResult!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #debugWithResult:!private!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #deny:equals:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #deny:identicalTo:!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #deny:sameAs:!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #denyIsNil:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #hash!comparing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #isCiBuild!helpers!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:raise:matching:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:trigger:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:trigger:butNot:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:trigger:matching:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:triggerAllOf:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:triggerAllOf:matching:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:triggerAllOf:matching:butNoneOf:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #shouldnt:trigger:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #shouldnt:triggerAnyOf:against:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #skipIfCiBuild!helpers!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #skipIfWin32!helpers!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #skipUnless:!asserting!public! !
+!XProgramming.SUnit.TestCase categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+assert:equals:description:!asserting!public! !
+assert:identicalTo:!asserting!public! !
+assert:isKindOf:!asserting!public! !
+assert:sameAs:!asserting!public! !
+assertIsNil:!asserting!public! !
+assertNotNil:!asserting!public! !
+debugWithResult!public!running! !
+debugWithResult:!private!running! !
+deny:equals:!asserting!public! !
+deny:identicalTo:!public! !
+deny:sameAs:!public! !
+denyIsNil:!asserting!public! !
+hash!comparing!public! !
+isCiBuild!helpers!public! !
+should:raise:matching:!asserting!public! !
+should:trigger:against:!asserting!public! !
+should:trigger:butNot:against:!asserting!public! !
+should:trigger:matching:against:!asserting!public! !
+should:triggerAllOf:against:!asserting!public! !
+should:triggerAllOf:matching:against:!asserting!public! !
+should:triggerAllOf:matching:butNoneOf:against:!asserting!public! !
+shouldnt:trigger:against:!asserting!public! !
+shouldnt:triggerAnyOf:against:!asserting!public! !
+skipIfCiBuild!helpers!public! !
+skipIfWin32!helpers!public! !
+skipUnless:!asserting!public! !
+!
 
 !XProgramming.SUnit.TestCase class methodsFor!
 
@@ -363,8 +365,10 @@ buildSuiteFromConcreteMethods: testMethodSelectors
 
 debugWithResult: aSymbol
 	^(self selector: aSymbol) debugWithResult! !
-!XProgramming.SUnit.TestCase class categoriesFor: #buildSuiteFromConcreteMethods:!Instance Creation!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #debugWithResult:!Instance Creation!public! !
+!XProgramming.SUnit.TestCase class categoriesForMethods!
+buildSuiteFromConcreteMethods:!Instance Creation!public! !
+debugWithResult:!Instance Creation!public! !
+!
 
 !XProgramming.SUnit.TestResult methodsFor!
 
@@ -392,7 +396,9 @@ debugCase: aTestCase
 				[:signal |
 				self addSkip: aTestCase signal: signal.
 				signal return]! !
-!XProgramming.SUnit.TestResult categoriesFor: #debugCase:!public!running! !
+!XProgramming.SUnit.TestResult categoriesForMethods!
+debugCase:!public!running! !
+!
 
 "End of package definition"!
 

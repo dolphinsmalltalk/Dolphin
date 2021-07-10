@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameMethodTest'
 	instanceVariableNames: ''
@@ -99,11 +99,13 @@ testRenameTestMethod1
 		equals: (RBParser parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
 	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)! !
-!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
-!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testMultipleSelectors!failure tests!public! !
-!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenamePermuteArgs!public!tests! !
-!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenamePrimitive!public!tests! !
-!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenameTestMethod!public!tests! !
-!Refactory.Browser.Tests.RenameMethodTest categoriesFor: #testRenameTestMethod1!public!tests! !
+!Refactory.Browser.Tests.RenameMethodTest categoriesForMethods!
+setUp!public!set up! !
+testExistingSelector!failure tests!public! !
+testMultipleSelectors!failure tests!public! !
+testRenamePermuteArgs!public!tests! !
+testRenamePrimitive!public!tests! !
+testRenameTestMethod!public!tests! !
+testRenameTestMethod1!public!tests! !
+!
 

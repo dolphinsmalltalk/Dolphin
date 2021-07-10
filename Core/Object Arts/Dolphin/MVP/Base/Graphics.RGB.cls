@@ -43,10 +43,12 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls to represent the color)."
 
 	code := anInteger bitAnd: 16rFFFFFF! !
-!Graphics.RGB categoriesFor: #alpha:!accessing!public! !
-!Graphics.RGB categoriesFor: #asRGB!converting!public! !
-!Graphics.RGB categoriesFor: #rgbCode!accessing!public! !
-!Graphics.RGB categoriesFor: #setCode:!accessing!private! !
+!Graphics.RGB categoriesForMethods!
+alpha:!accessing!public! !
+asRGB!converting!public! !
+rgbCode!accessing!public! !
+setCode:!accessing!private! !
+!
 
 !Graphics.RGB class methodsFor!
 
@@ -106,11 +108,13 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Graphics.RGB class categoriesFor: #fromInteger:!instance creation!private! !
-!Graphics.RGB class categoriesFor: #fromRgbCode:!instance creation!public! !
-!Graphics.RGB class categoriesFor: #r:g:b:!instance creation!public! !
-!Graphics.RGB class categoriesFor: #red:green:blue:!instance creation!public! !
-!Graphics.RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Graphics.RGB class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Graphics.RGB class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.RGB class categoriesForMethods!
+fromInteger:!instance creation!private! !
+fromRgbCode:!instance creation!public! !
+r:g:b:!instance creation!public! !
+red:green:blue:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbReadFrom:format:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

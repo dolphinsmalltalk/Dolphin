@@ -82,8 +82,10 @@ style: aNumber forecolor: foreARGB backcolor: backARGB
 				style: aNumber
 				forecolor: foreARGB
 				backcolor: backARGB)! !
-!Graphics.Gdiplus.HatchBrush class categoriesFor: #exampleGdipHBFillAShape!examples!public!sunit! !
-!Graphics.Gdiplus.HatchBrush class categoriesFor: #exampleGdipHBFillAString!examples!public!sunit! !
-!Graphics.Gdiplus.HatchBrush class categoriesFor: #exampleGdipHBStyles!examples!public!sunit! !
-!Graphics.Gdiplus.HatchBrush class categoriesFor: #style:forecolor:backcolor:!instance creation!public! !
+!Graphics.Gdiplus.HatchBrush class categoriesForMethods!
+exampleGdipHBFillAShape!examples!public!sunit! !
+exampleGdipHBFillAString!examples!public!sunit! !
+exampleGdipHBStyles!examples!public!sunit! !
+style:forecolor:backcolor:!instance creation!public! !
+!
 

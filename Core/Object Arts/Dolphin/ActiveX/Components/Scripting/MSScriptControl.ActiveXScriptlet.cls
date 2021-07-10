@@ -118,23 +118,25 @@ value
 	result := engine eval: self expression.
 	engine free.
 	^result! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #=!comparing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #addGlobalBinding:!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #description!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #description:!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #displayOn:!displaying!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #expression!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #expression:!accessing!private! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #globalBindings!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #globalBindings:!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #initialize!initializing!private! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #language!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #language:!accessing!private! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #procedures!accessing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #procedures:!accessing!private! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #removeGlobalBindings!initializing!public! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #setLanguage:expression:procedures:description:!initializing!private! !
-!MSScriptControl.ActiveXScriptlet categoriesFor: #value!evaluating!public! !
+!MSScriptControl.ActiveXScriptlet categoriesForMethods!
+=!comparing!public! !
+addGlobalBinding:!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+expression!accessing!public! !
+expression:!accessing!private! !
+globalBindings!accessing!public! !
+globalBindings:!accessing!public! !
+initialize!initializing!private! !
+language!accessing!public! !
+language:!accessing!private! !
+procedures!accessing!public! !
+procedures:!accessing!private! !
+removeGlobalBindings!initializing!public! !
+setLanguage:expression:procedures:description:!initializing!private! !
+value!evaluating!public! !
+!
 
 !MSScriptControl.ActiveXScriptlet class methodsFor!
 
@@ -164,7 +166,9 @@ new
 	which can be both read from and written to."
 
 	^super new initialize! !
-!MSScriptControl.ActiveXScriptlet class categoriesFor: #language:expression:procedures:!instance creation!public! !
-!MSScriptControl.ActiveXScriptlet class categoriesFor: #language:expression:procedures:description:!instance creation!public! !
-!MSScriptControl.ActiveXScriptlet class categoriesFor: #new!instance creation!public! !
+!MSScriptControl.ActiveXScriptlet class categoriesForMethods!
+language:expression:procedures:!instance creation!public! !
+language:expression:procedures:description:!instance creation!public! !
+new!instance creation!public! !
+!
 

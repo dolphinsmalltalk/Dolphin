@@ -88,9 +88,11 @@ verifyInvalidCallArguments: aBoolean
 		should: [apiCall value: gdiLibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
 		raise: HRESULTError
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
-!External.Tests.DynamicLinkLibraryTest categoriesFor: #makeTestMethodFrom:overlapped:!helpers!private! !
-!External.Tests.DynamicLinkLibraryTest categoriesFor: #testInvalidCallArguments!public!unit tests! !
-!External.Tests.DynamicLinkLibraryTest categoriesFor: #testInvalidOverlappedCallArguments!public!unit tests! !
-!External.Tests.DynamicLinkLibraryTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
-!External.Tests.DynamicLinkLibraryTest categoriesFor: #verifyInvalidCallArguments:!helpers!private! !
+!External.Tests.DynamicLinkLibraryTest categoriesForMethods!
+makeTestMethodFrom:overlapped:!helpers!private! !
+testInvalidCallArguments!public!unit tests! !
+testInvalidOverlappedCallArguments!public!unit tests! !
+testSingletonSerialisation!public!unit tests! !
+verifyInvalidCallArguments:!helpers!private! !
+!
 

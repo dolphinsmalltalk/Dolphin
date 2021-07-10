@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.RECTTest subclass: #'OS.Tests.RECTLTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ OS.Tests.RECTLTest comment: ''!
 
 subjectClass
 	^RECTL! !
-!OS.Tests.RECTLTest categoriesFor: #subjectClass!constants!private! !
+!OS.Tests.RECTLTest categoriesForMethods!
+subjectClass!constants!private! !
+!
 

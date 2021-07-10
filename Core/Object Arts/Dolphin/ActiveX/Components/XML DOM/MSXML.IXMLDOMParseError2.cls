@@ -111,14 +111,16 @@ get_errorXPath: xpathexpr
 
 	<virtual stdcall: hresult 15 bstr*>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #allErrors!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #errorParameters:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #ErrorParameters:param:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #errorParametersCount!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #errorXPath!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #get_allErrors:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #get_errorParametersCount:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!MSXML.IXMLDOMParseError2 categoriesFor: #get_errorXPath:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!MSXML.IXMLDOMParseError2 categoriesForMethods!
+allErrors!**auto generated**!properties!public! !
+errorParameters:!**auto generated**!methods!public! !
+ErrorParameters:param:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+errorParametersCount!**auto generated**!properties!public! !
+errorXPath!**auto generated**!properties!public! !
+get_allErrors:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+get_errorParametersCount:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+get_errorXPath:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!
 
 !MSXML.IXMLDOMParseError2 class methodsFor!
 
@@ -136,5 +138,7 @@ defineFunctions
 		defineFunction: #get_errorParametersCount:
 			argumentTypes: 'sdword*'
 ! !
-!MSXML.IXMLDOMParseError2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMParseError2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

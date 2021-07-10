@@ -17,5 +17,7 @@ nextElement
 	we get a true copy for an output argument."
 
 	^contents next copy detach! !
-!OS.COM.VariantEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
+!OS.COM.VariantEnumerator categoriesForMethods!
+nextElement!COM Interfaces-IEnumXXXX!private! !
+!
 

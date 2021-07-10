@@ -51,10 +51,12 @@ value: anInteger
 			[self
 				Present: true;
 				MaxConnections: anInteger]! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections!**compiled accessors**!public! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value!accessing!public! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value:!accessing!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO categoriesForMethods!
+MaxConnections!**compiled accessors**!public! !
+MaxConnections:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class methodsFor!
 
@@ -85,8 +87,10 @@ maxConnections: anInteger
 
 qosType
 	^HttpQosSettingTypeConnectionLimit! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #maxConnections:!public! !
-!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
+!WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxConnections:!public! !
+qosType!constants!public! !
+!
 

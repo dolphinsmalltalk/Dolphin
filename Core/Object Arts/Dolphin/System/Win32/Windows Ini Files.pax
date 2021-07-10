@@ -161,14 +161,16 @@ writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSize
 
 	<stdcall: bool WritePrivateProfileStructW lpwstr lpwstr void* dword lpwstr>
 	^self invalidCall: _failureCode! !
-!OS.KernelLibrary categoriesFor: #getPrivateProfileInt:lpKeyName:nDefault:lpFileName:!**auto generated**!public!win32 functions-ini files! !
-!OS.KernelLibrary categoriesFor: #getPrivateProfileSection:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !
-!OS.KernelLibrary categoriesFor: #getPrivateProfileSectionNames:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !
-!OS.KernelLibrary categoriesFor: #getPrivateProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !
-!OS.KernelLibrary categoriesFor: #getPrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:!**auto generated**!public!win32 functions-ini files! !
-!OS.KernelLibrary categoriesFor: #writePrivateProfileSection:lpString:lpFileName:!**auto generated**!public!win32 functions-ini files! !
-!OS.KernelLibrary categoriesFor: #writePrivateProfileString:lpKeyName:lpString:lpFileName:!**auto generated**!public!win32 functions-ini files! !
-!OS.KernelLibrary categoriesFor: #writePrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:!**auto generated**!public!win32 functions-ini files! !
+!OS.KernelLibrary categoriesForMethods!
+getPrivateProfileInt:lpKeyName:nDefault:lpFileName:!**auto generated**!public!win32 functions-ini files! !
+getPrivateProfileSection:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !
+getPrivateProfileSectionNames:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !
+getPrivateProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !
+getPrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:!**auto generated**!public!win32 functions-ini files! !
+writePrivateProfileSection:lpString:lpFileName:!**auto generated**!public!win32 functions-ini files! !
+writePrivateProfileString:lpKeyName:lpString:lpFileName:!**auto generated**!public!win32 functions-ini files! !
+writePrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:!**auto generated**!public!win32 functions-ini files! !
+!
 
 "End of package definition"!
 

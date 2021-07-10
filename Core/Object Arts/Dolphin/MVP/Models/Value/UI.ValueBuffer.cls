@@ -83,16 +83,18 @@ value
 	value otherwise answer that of the subject"
 
 	^modified ifTrue: [super value] ifFalse: [subject value]! !
-!UI.ValueBuffer categoriesFor: #apply!accessing!commands!public! !
-!UI.ValueBuffer categoriesFor: #gate!accessing!public! !
-!UI.ValueBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
-!UI.ValueBuffer categoriesFor: #isModified!public!testing! !
-!UI.ValueBuffer categoriesFor: #isValid!public!testing! !
-!UI.ValueBuffer categoriesFor: #onGateChanged!event handling!private! !
-!UI.ValueBuffer categoriesFor: #setValue:!accessing!private! !
-!UI.ValueBuffer categoriesFor: #subject!initializing!public! !
-!UI.ValueBuffer categoriesFor: #subject:!initializing!private! !
-!UI.ValueBuffer categoriesFor: #value!accessing!public! !
+!UI.ValueBuffer categoriesForMethods!
+apply!accessing!commands!public! !
+gate!accessing!public! !
+gate:!accessing!not an aspect!public! !
+isModified!public!testing! !
+isValid!public!testing! !
+onGateChanged!event handling!private! !
+setValue:!accessing!private! !
+subject!initializing!public! !
+subject:!initializing!private! !
+value!accessing!public! !
+!
 
 !UI.ValueBuffer class methodsFor!
 
@@ -110,7 +112,9 @@ subject: aSubjectValueModel
 	"Answer an instance of the receiver that buffers the value of aSubjectValueModel."
 
 	^super new subject: aSubjectValueModel! !
-!UI.ValueBuffer class categoriesFor: #icon!constants!public! !
-!UI.ValueBuffer class categoriesFor: #new!instance creation!private! !
-!UI.ValueBuffer class categoriesFor: #subject:!instance creation!public! !
+!UI.ValueBuffer class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!private! !
+subject:!instance creation!public! !
+!
 

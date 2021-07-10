@@ -35,8 +35,10 @@ paintTransparentBackgroundOn: aCanvas
 		drawThemeParentBackground: self asParameter
 		hdc: aCanvas asParameter
 		prc: nil! !
-!UI.CheckBox categoriesFor: #basicWindowStyle!constants!private! !
-!UI.CheckBox categoriesFor: #is3State!accessing!public! !
-!UI.CheckBox categoriesFor: #is3State:!accessing!public! !
-!UI.CheckBox categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
+!UI.CheckBox categoriesForMethods!
+basicWindowStyle!constants!private! !
+is3State!accessing!public! !
+is3State:!accessing!public! !
+paintTransparentBackgroundOn:!private!updating! !
+!
 

@@ -184,22 +184,24 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
-!Core.SharedSet categoriesFor: #add:!adding!public! !
-!Core.SharedSet categoriesFor: #addAll:!adding!public! !
-!Core.SharedSet categoriesFor: #asArray!converting!public! !
-!Core.SharedSet categoriesFor: #asByteArray!converting!public! !
-!Core.SharedSet categoriesFor: #do:!enumerating!public! !
-!Core.SharedSet categoriesFor: #find:ifAbsent:!public!searching! !
-!Core.SharedSet categoriesFor: #identityIncludes:!public!searching! !
-!Core.SharedSet categoriesFor: #includes:!public!searching! !
-!Core.SharedSet categoriesFor: #initialize!initializing!public! !
-!Core.SharedSet categoriesFor: #mutex!accessing!private! !
-!Core.SharedSet categoriesFor: #mutex:!initializing!private! !
-!Core.SharedSet categoriesFor: #postCopy!copying!public! !
-!Core.SharedSet categoriesFor: #preResize:!adding!public! !
-!Core.SharedSet categoriesFor: #printOn:!printing!public! !
-!Core.SharedSet categoriesFor: #remove:ifAbsent:!public!removing! !
-!Core.SharedSet categoriesFor: #resize:!mutating!private! !
-!Core.SharedSet categoriesFor: #shrink!mutating!public! !
-!Core.SharedSet categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.SharedSet categoriesForMethods!
+add:!adding!public! !
+addAll:!adding!public! !
+asArray!converting!public! !
+asByteArray!converting!public! !
+do:!enumerating!public! !
+find:ifAbsent:!public!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+initialize!initializing!public! !
+mutex!accessing!private! !
+mutex:!initializing!private! !
+postCopy!copying!public! !
+preResize:!adding!public! !
+printOn:!printing!public! !
+remove:ifAbsent:!public!removing! !
+resize:!mutating!private! !
+shrink!mutating!public! !
+stbSaveOn:!binary filing!public! !
+!
 

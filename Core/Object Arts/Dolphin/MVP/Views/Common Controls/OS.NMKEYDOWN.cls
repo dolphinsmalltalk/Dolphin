@@ -24,8 +24,10 @@ wVKey
 	"Answer the <Integer> value of the receiver's 'wVKey' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVKey! !
-!OS.NMKEYDOWN categoriesFor: #flags!**compiled accessors**!public! !
-!OS.NMKEYDOWN categoriesFor: #wVKey!**compiled accessors**!public! !
+!OS.NMKEYDOWN categoriesForMethods!
+flags!**compiled accessors**!public! !
+wVKey!**compiled accessors**!public! !
+!
 
 !OS.NMKEYDOWN class methodsFor!
 
@@ -41,6 +43,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #wVKey #flags)! !
-!OS.NMKEYDOWN class categoriesFor: #defineFields!public!template definition! !
-!OS.NMKEYDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMKEYDOWN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

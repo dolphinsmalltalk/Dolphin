@@ -45,10 +45,12 @@ tv_usec: anInteger
 	"Set the receiver's 'tv_usec' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_tv_usec put: anInteger! !
-!OS.TIMEVAL categoriesFor: #tv_sec!**compiled accessors**!public! !
-!OS.TIMEVAL categoriesFor: #tv_sec:!**compiled accessors**!public! !
-!OS.TIMEVAL categoriesFor: #tv_usec!**compiled accessors**!public! !
-!OS.TIMEVAL categoriesFor: #tv_usec:!**compiled accessors**!public! !
+!OS.TIMEVAL categoriesForMethods!
+tv_sec!**compiled accessors**!public! !
+tv_sec:!**compiled accessors**!public! !
+tv_usec!**compiled accessors**!public! !
+tv_usec:!**compiled accessors**!public! !
+!
 
 !OS.TIMEVAL class methodsFor!
 
@@ -71,6 +73,8 @@ defineFields
 
 getFieldNames
 	^#(#tv_sec #tv_usec)! !
-!OS.TIMEVAL class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.TIMEVAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TIMEVAL class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

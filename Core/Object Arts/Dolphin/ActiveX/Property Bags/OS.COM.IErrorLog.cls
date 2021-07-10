@@ -28,8 +28,10 @@ AddError: pszPropName pExcepInfo: pExcepInfo
 
 	<virtual stdcall: hresult 4 lpwstr EXCEPINFO*>
 	^self invalidCall: _failureCode! !
-!OS.COM.IErrorLog categoriesFor: #addError:pExcepInfo:!**auto generated**!methods!public! !
-!OS.COM.IErrorLog categoriesFor: #AddError:pExcepInfo:!**auto generated**!COM Interfaces-IErrorLog!private! !
+!OS.COM.IErrorLog categoriesForMethods!
+addError:pExcepInfo:!**auto generated**!methods!public! !
+AddError:pExcepInfo:!**auto generated**!COM Interfaces-IErrorLog!private! !
+!
 
 OS.COM.IErrorLog methodProtocol: #IErrorLog attributes: #(#readOnly) selectors: #(#AddError:pExcepInfo:)!
 
@@ -44,5 +46,7 @@ defineFunctions
 		defineFunction: #AddError:pExcepInfo:
 			argumentTypes: 'lpwstr EXCEPINFO*'
 ! !
-!OS.COM.IErrorLog class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IErrorLog class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

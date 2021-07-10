@@ -255,42 +255,44 @@ value: anObject
 	the original subject model until #apply is received"
 
 	self model value: anObject.! !
-!UI.InplaceTextEditor categoriesFor: #answer!accessing!public! !
-!UI.InplaceTextEditor categoriesFor: #apply!commands!public! !
-!UI.InplaceTextEditor categoriesFor: #bufferClass!accessing!private! !
-!UI.InplaceTextEditor categoriesFor: #bufferedModelFor:!accessing!private! !
-!UI.InplaceTextEditor categoriesFor: #cancel!commands!public! !
-!UI.InplaceTextEditor categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.InplaceTextEditor categoriesFor: #createView:!operations!private! !
-!UI.InplaceTextEditor categoriesFor: #editBox!helpers!private! !
-!UI.InplaceTextEditor categoriesFor: #findDetails!public!searching & replacing! !
-!UI.InplaceTextEditor categoriesFor: #font:!initializing!public! !
-!UI.InplaceTextEditor categoriesFor: #implicitBorder!constants!private! !
-!UI.InplaceTextEditor categoriesFor: #initialize!initializing!private! !
-!UI.InplaceTextEditor categoriesFor: #isConfirmed!public!testing! !
-!UI.InplaceTextEditor categoriesFor: #isInputValid!private!testing! !
-!UI.InplaceTextEditor categoriesFor: #model:!accessing!public! !
-!UI.InplaceTextEditor categoriesFor: #ok!commands!public! !
-!UI.InplaceTextEditor categoriesFor: #onFocusLost!event handling!private! !
-!UI.InplaceTextEditor categoriesFor: #onGetCursor:!event handling!public! !
-!UI.InplaceTextEditor categoriesFor: #onKeyTyped:!event handling!private! !
-!UI.InplaceTextEditor categoriesFor: #onTextChanged!event handling!private! !
-!UI.InplaceTextEditor categoriesFor: #onValueChanged!event handling!public! !
-!UI.InplaceTextEditor categoriesFor: #onViewOpened!event handling!private! !
-!UI.InplaceTextEditor categoriesFor: #ownerView!accessing!public! !
-!UI.InplaceTextEditor categoriesFor: #ownerView:!accessing!public! !
-!UI.InplaceTextEditor categoriesFor: #queryCommand:!commands!private! !
-!UI.InplaceTextEditor categoriesFor: #requiredExtent!helpers!private! !
-!UI.InplaceTextEditor categoriesFor: #resizeToFit!helpers!private! !
-!UI.InplaceTextEditor categoriesFor: #runModalInProcessLoop!helpers!private! !
-!UI.InplaceTextEditor categoriesFor: #setInitialFocus!operations!public! !
-!UI.InplaceTextEditor categoriesFor: #showModal!public!realizing/unrealizing! !
-!UI.InplaceTextEditor categoriesFor: #showModalView!helpers!private! !
-!UI.InplaceTextEditor categoriesFor: #textRectangle:!initializing!public! !
-!UI.InplaceTextEditor categoriesFor: #validationBlock!accessing!public! !
-!UI.InplaceTextEditor categoriesFor: #validationBlock:!accessing!public! !
-!UI.InplaceTextEditor categoriesFor: #value!accessing!public! !
-!UI.InplaceTextEditor categoriesFor: #value:!accessing!public! !
+!UI.InplaceTextEditor categoriesForMethods!
+answer!accessing!public! !
+apply!commands!public! !
+bufferClass!accessing!private! !
+bufferedModelFor:!accessing!private! !
+cancel!commands!public! !
+createSchematicWiring!initializing!public! !
+createView:!operations!private! !
+editBox!helpers!private! !
+findDetails!public!searching & replacing! !
+font:!initializing!public! !
+implicitBorder!constants!private! !
+initialize!initializing!private! !
+isConfirmed!public!testing! !
+isInputValid!private!testing! !
+model:!accessing!public! !
+ok!commands!public! !
+onFocusLost!event handling!private! !
+onGetCursor:!event handling!public! !
+onKeyTyped:!event handling!private! !
+onTextChanged!event handling!private! !
+onValueChanged!event handling!public! !
+onViewOpened!event handling!private! !
+ownerView!accessing!public! !
+ownerView:!accessing!public! !
+queryCommand:!commands!private! !
+requiredExtent!helpers!private! !
+resizeToFit!helpers!private! !
+runModalInProcessLoop!helpers!private! !
+setInitialFocus!operations!public! !
+showModal!public!realizing/unrealizing! !
+showModalView!helpers!private! !
+textRectangle:!initializing!public! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !UI.InplaceTextEditor class methodsFor!
 
@@ -316,8 +318,10 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #window nil 1543 nil nil nil 416 nil 8 1920675248 1049094 ##(UI.NullConverter) nil 8 '' 65 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 754 191 41 416 706 #text: 34 1 8 'Text to be edited' 416 706 #setMarginWidths: 34 1 8 #(2 2) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 94 12 0 0 30 0 0 0] 8 #() 754 193 193 nil 27)! !
-!UI.InplaceTextEditor class categoriesFor: #createOn:!public! !
-!UI.InplaceTextEditor class categoriesFor: #defaultModel!models!public! !
-!UI.InplaceTextEditor class categoriesFor: #icon!constants!public! !
-!UI.InplaceTextEditor class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.InplaceTextEditor class categoriesForMethods!
+createOn:!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

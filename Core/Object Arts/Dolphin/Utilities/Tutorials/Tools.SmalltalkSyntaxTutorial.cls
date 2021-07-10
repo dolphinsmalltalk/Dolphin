@@ -559,33 +559,35 @@ You must want me to help you learn Smalltalk.
 So let''s go to the first lesson.  Select the text below and click on the ''EvaluateIt'' button"
 
 ProfStef next.'! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesArray!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesCharacters!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesNumbers!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesString!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #basicTypesSymbol!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #blocks!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #blocksAssignation!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #conditionals!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #debugger!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #displaying!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #dolphinEnvironment!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #evaluatingVsDisplaying!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #instantiation!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #iterators!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #loops!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #mathematicalPrecedence!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxBinary!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxCascade!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxCascadeShouldNotBeHere!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxExecutionOrder!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxExecutionOrderParentheses!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxKeyword!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #messageSyntaxUnary!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #name!accessing!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #reflection!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #reflectionContinued!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #tableOfContents!contents!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #theEnd!pages!public! !
-!Tools.SmalltalkSyntaxTutorial categoriesFor: #welcome!pages!public! !
+!Tools.SmalltalkSyntaxTutorial categoriesForMethods!
+basicTypesArray!pages!public! !
+basicTypesCharacters!pages!public! !
+basicTypesNumbers!pages!public! !
+basicTypesString!pages!public! !
+basicTypesSymbol!pages!public! !
+blocks!pages!public! !
+blocksAssignation!pages!public! !
+conditionals!pages!public! !
+debugger!pages!public! !
+displaying!pages!public! !
+dolphinEnvironment!pages!public! !
+evaluatingVsDisplaying!pages!public! !
+instantiation!pages!public! !
+iterators!pages!public! !
+loops!pages!public! !
+mathematicalPrecedence!pages!public! !
+messageSyntaxBinary!pages!public! !
+messageSyntaxCascade!pages!public! !
+messageSyntaxCascadeShouldNotBeHere!pages!public! !
+messageSyntaxExecutionOrder!pages!public! !
+messageSyntaxExecutionOrderParentheses!pages!public! !
+messageSyntaxKeyword!pages!public! !
+messageSyntaxUnary!pages!public! !
+name!accessing!public! !
+reflection!pages!public! !
+reflectionContinued!pages!public! !
+tableOfContents!contents!public! !
+theEnd!pages!public! !
+welcome!pages!public! !
+!
 

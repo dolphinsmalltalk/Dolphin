@@ -74,18 +74,20 @@ promptToSaveClassChanges: aSelectionChangingEvent
 	selection change can continue."
 
 	^true! !
-!Tools.ClassBrowserPlugin categoriesFor: #applyOptions!options!private! !
-!Tools.ClassBrowserPlugin categoriesFor: #browser!accessing!public! !
-!Tools.ClassBrowserPlugin categoriesFor: #createSchematicWiring!initializing!private! !
-!Tools.ClassBrowserPlugin categoriesFor: #destroy!public!realizing/unrealizing! !
-!Tools.ClassBrowserPlugin categoriesFor: #displayOn:!displaying!public! !
-!Tools.ClassBrowserPlugin categoriesFor: #isCurrentCard!event handling!public! !
-!Tools.ClassBrowserPlugin categoriesFor: #isModified!public!testing! !
-!Tools.ClassBrowserPlugin categoriesFor: #modifiedModel!accessing!public! !
-!Tools.ClassBrowserPlugin categoriesFor: #onBrowserCardChanged!event handling!private! !
-!Tools.ClassBrowserPlugin categoriesFor: #onShownInBrowser!event handling!private! !
-!Tools.ClassBrowserPlugin categoriesFor: #onViewOpened!event handling!private! !
-!Tools.ClassBrowserPlugin categoriesFor: #promptToSaveClassChanges:!helpers!public! !
+!Tools.ClassBrowserPlugin categoriesForMethods!
+applyOptions!options!private! !
+browser!accessing!public! !
+createSchematicWiring!initializing!private! !
+destroy!public!realizing/unrealizing! !
+displayOn:!displaying!public! !
+isCurrentCard!event handling!public! !
+isModified!public!testing! !
+modifiedModel!accessing!public! !
+onBrowserCardChanged!event handling!private! !
+onShownInBrowser!event handling!private! !
+onViewOpened!event handling!private! !
+promptToSaveClassChanges:!helpers!public! !
+!
 
 Tools.ClassBrowserPlugin methodProtocol: #classBrowserPlugin attributes: #(#readOnly) selectors: #(#browser #isCurrentCard #onShownInBrowser)!
 
@@ -111,7 +113,9 @@ uninitializeBeforeRemove
 unregisterFromAllBrowsers
 	ClassBrowserAbstract allSubclasses do: [:each | each removePlugin: self].
 	self primAllInstances do: [:each | each destroy]! !
-!Tools.ClassBrowserPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Tools.ClassBrowserPlugin class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!Tools.ClassBrowserPlugin class categoriesFor: #unregisterFromAllBrowsers!initializing!private! !
+!Tools.ClassBrowserPlugin class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+unregisterFromAllBrowsers!initializing!private! !
+!
 

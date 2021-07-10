@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.MemoryManagerTest'
 	instanceVariableNames: ''
@@ -54,6 +54,8 @@ testOtOverflow
 	subject compact.
 	1 to: max do: [:i | objects at: i put: Object new].
 	self assert: events notEmpty! !
-!Kernel.Tests.MemoryManagerTest categoriesFor: #testBytesUsedByObject!public!unit tests! !
-!Kernel.Tests.MemoryManagerTest categoriesFor: #testOtOverflow!public!unit tests! !
+!Kernel.Tests.MemoryManagerTest categoriesForMethods!
+testBytesUsedByObject!public!unit tests! !
+testOtOverflow!public!unit tests! !
+!
 

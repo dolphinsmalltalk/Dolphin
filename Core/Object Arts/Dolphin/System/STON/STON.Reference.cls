@@ -37,14 +37,16 @@ printOn: stream
 
 refCount
 	^refCount! !
-!STON.Reference categoriesFor: #=!comparing!public! !
-!STON.Reference categoriesFor: #addReference!public! !
-!STON.Reference categoriesFor: #hash!comparing!public! !
-!STON.Reference categoriesFor: #index!accessing!public! !
-!STON.Reference categoriesFor: #index:!accessing!public! !
-!STON.Reference categoriesFor: #isStonReference!public!testing! !
-!STON.Reference categoriesFor: #printOn:!printing!public! !
-!STON.Reference categoriesFor: #refCount!accessing!public! !
+!STON.Reference categoriesForMethods!
+=!comparing!public! !
+addReference!public! !
+hash!comparing!public! !
+index!accessing!public! !
+index:!accessing!public! !
+isStonReference!public!testing! !
+printOn:!printing!public! !
+refCount!accessing!public! !
+!
 
 !STON.Reference class methodsFor!
 
@@ -57,6 +59,8 @@ index: integer
 	^ self new
 		index: integer;
 		yourself! !
-!STON.Reference class categoriesFor: #icon!constants!public! !
-!STON.Reference class categoriesFor: #index:!instance creation!public! !
+!STON.Reference class categoriesForMethods!
+icon!constants!public! !
+index:!instance creation!public! !
+!
 

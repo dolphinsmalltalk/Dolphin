@@ -52,11 +52,13 @@ name
 	"Answer the String name of the receiver (e.g., 'Arial')."
 
 	^self getName: Locale userDefault languageId! !
-!Graphics.Gdiplus.FontFamily categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.FontFamily categoriesFor: #clone!copying!public! !
-!Graphics.Gdiplus.FontFamily categoriesFor: #getName:!helpers!private! !
-!Graphics.Gdiplus.FontFamily categoriesFor: #lineSpacing!accessing!public! !
-!Graphics.Gdiplus.FontFamily categoriesFor: #name!accessing!public! !
+!Graphics.Gdiplus.FontFamily categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+clone!copying!public! !
+getName:!helpers!private! !
+lineSpacing!accessing!public! !
+name!accessing!public! !
+!
 
 !Graphics.Gdiplus.FontFamily class methodsFor!
 
@@ -96,10 +98,12 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Graphics.Font icon! !
-!Graphics.Gdiplus.FontFamily class categoriesFor: #exampleGdipFFClone!examples!public!sunit! !
-!Graphics.Gdiplus.FontFamily class categoriesFor: #fromName:!instance creation!public! !
-!Graphics.Gdiplus.FontFamily class categoriesFor: #fromName:fontCollection:!instance creation!public! !
-!Graphics.Gdiplus.FontFamily class categoriesFor: #genericSansSerif!instance creation!public! !
-!Graphics.Gdiplus.FontFamily class categoriesFor: #genericSerif!instance creation!public! !
-!Graphics.Gdiplus.FontFamily class categoriesFor: #icon!constants!development!public! !
+!Graphics.Gdiplus.FontFamily class categoriesForMethods!
+exampleGdipFFClone!examples!public!sunit! !
+fromName:!instance creation!public! !
+fromName:fontCollection:!instance creation!public! !
+genericSansSerif!instance creation!public! !
+genericSerif!instance creation!public! !
+icon!constants!development!public! !
+!
 

@@ -50,14 +50,16 @@ theEnd
 
 welcome
 	^Lesson title: 'Welcome' contents: '"Hi, this is a test tutorial."'! !
-!Tools.AbstractTutorial categoriesFor: #indexOfLesson:!accessing!public! !
-!Tools.AbstractTutorial categoriesFor: #lessonAt:!accessing!public! !
-!Tools.AbstractTutorial categoriesFor: #name!accessing!public! !
-!Tools.AbstractTutorial categoriesFor: #size!accessing!public! !
-!Tools.AbstractTutorial categoriesFor: #tableOfContents!accessing!public! !
-!Tools.AbstractTutorial categoriesFor: #testLesson!pages!public! !
-!Tools.AbstractTutorial categoriesFor: #theEnd!pages!public! !
-!Tools.AbstractTutorial categoriesFor: #welcome!pages!public! !
+!Tools.AbstractTutorial categoriesForMethods!
+indexOfLesson:!accessing!public! !
+lessonAt:!accessing!public! !
+name!accessing!public! !
+size!accessing!public! !
+tableOfContents!accessing!public! !
+testLesson!pages!public! !
+theEnd!pages!public! !
+welcome!pages!public! !
+!
 
 !Tools.AbstractTutorial class methodsFor!
 
@@ -68,5 +70,7 @@ icon
 		color: Color orchid)
 		textcolor: Color white;
 		yourself)! !
-!Tools.AbstractTutorial class categoriesFor: #icon!constants!public! !
+!Tools.AbstractTutorial class categoriesForMethods!
+icon!constants!public! !
+!
 

@@ -76,14 +76,16 @@ KnownHeaders: aStructureArray
 
 	bytes uintPtrAtOffset: _OffsetOf_KnownHeaders put: aStructureArray yourAddress.
 	self KnownHeaderCount: aStructureArray size! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags!**compiled accessors**!public! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId!**compiled accessors**!public! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount!**compiled accessors**!public! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS categoriesForMethods!
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+HeaderId!**compiled accessors**!public! !
+HeaderId:!**compiled accessors**!public! !
+KnownHeaderCount!**compiled accessors**!public! !
+KnownHeaderCount:!**compiled accessors**!public! !
+KnownHeaders!**compiled accessors**!public! !
+KnownHeaders:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class methodsFor!
 
@@ -110,6 +112,8 @@ defineFields
 
 getFieldNames
 	^#(#HeaderId #Flags #KnownHeaderCount #KnownHeaders)! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

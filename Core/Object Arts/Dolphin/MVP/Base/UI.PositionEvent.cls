@@ -128,27 +128,29 @@ y
 	"Answer the y-position of the window origin."
 
 	^self lpwp y! !
-!UI.PositionEvent categoriesFor: #extent!accessing!public! !
-!UI.PositionEvent categoriesFor: #extent:!accessing!public! !
-!UI.PositionEvent categoriesFor: #flags!accessing!public! !
-!UI.PositionEvent categoriesFor: #height!accessing!public! !
-!UI.PositionEvent categoriesFor: #height:!accessing!public! !
-!UI.PositionEvent categoriesFor: #isActivate!public!testing! !
-!UI.PositionEvent categoriesFor: #isClientAreaChanged!public!testing! !
-!UI.PositionEvent categoriesFor: #isHideWindow!public!testing! !
-!UI.PositionEvent categoriesFor: #isMove!public!testing! !
-!UI.PositionEvent categoriesFor: #isRectangleChanged!public!testing! !
-!UI.PositionEvent categoriesFor: #isResize!public!testing! !
-!UI.PositionEvent categoriesFor: #isVisibilityChange!public!testing! !
-!UI.PositionEvent categoriesFor: #isZOrderChanged!public!testing! !
-!UI.PositionEvent categoriesFor: #lpwp!accessing!private! !
-!UI.PositionEvent categoriesFor: #position!accessing!public! !
-!UI.PositionEvent categoriesFor: #printLParamOn:!development!printing!private! !
-!UI.PositionEvent categoriesFor: #rectangle!accessing!public! !
-!UI.PositionEvent categoriesFor: #width!accessing!public! !
-!UI.PositionEvent categoriesFor: #width:!accessing!public! !
-!UI.PositionEvent categoriesFor: #x!accessing!public! !
-!UI.PositionEvent categoriesFor: #y!accessing!public! !
+!UI.PositionEvent categoriesForMethods!
+extent!accessing!public! !
+extent:!accessing!public! !
+flags!accessing!public! !
+height!accessing!public! !
+height:!accessing!public! !
+isActivate!public!testing! !
+isClientAreaChanged!public!testing! !
+isHideWindow!public!testing! !
+isMove!public!testing! !
+isRectangleChanged!public!testing! !
+isResize!public!testing! !
+isVisibilityChange!public!testing! !
+isZOrderChanged!public!testing! !
+lpwp!accessing!private! !
+position!accessing!public! !
+printLParamOn:!development!printing!private! !
+rectangle!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 
 !UI.PositionEvent class methodsFor!
 
@@ -160,5 +162,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger asExternalAddress! !
-!UI.PositionEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
+!UI.PositionEvent class categoriesForMethods!
+window:message:wParam:lParam:!instance creation!public! !
+!
 

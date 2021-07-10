@@ -16,5 +16,7 @@ _descriptionFormat
 
 	^'It was not possible to decode some trusted signed data. The data is either corrupt or has been tampered with.'
 ! !
-!Security.TrustedDataError categoriesFor: #_descriptionFormat!displaying!public! !
+!Security.TrustedDataError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

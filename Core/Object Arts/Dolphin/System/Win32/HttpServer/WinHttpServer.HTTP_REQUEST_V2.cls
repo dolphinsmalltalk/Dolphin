@@ -59,11 +59,13 @@ RequestInfoCount: anInteger
 	"Set the receiver's 'RequestInfoCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RequestInfoCount put: anInteger! !
-!WinHttpServer.HTTP_REQUEST_V2 categoriesFor: #pRequestInfo!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_V2 categoriesFor: #pRequestInfo:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_V2 categoriesFor: #printableFields!development!printing!private! !
-!WinHttpServer.HTTP_REQUEST_V2 categoriesFor: #RequestInfoCount!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_V2 categoriesFor: #RequestInfoCount:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_REQUEST_V2 categoriesForMethods!
+pRequestInfo!**compiled accessors**!public! !
+pRequestInfo:!**compiled accessors**!public! !
+printableFields!development!printing!private! !
+RequestInfoCount!**compiled accessors**!private! !
+RequestInfoCount:!**compiled accessors**!private! !
+!
 
 !WinHttpServer.HTTP_REQUEST_V2 class methodsFor!
 
@@ -88,6 +90,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo #RequestInfoCount #pRequestInfo)! !
-!WinHttpServer.HTTP_REQUEST_V2 class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_REQUEST_V2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_V2 class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

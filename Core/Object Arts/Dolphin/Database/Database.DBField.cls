@@ -388,51 +388,53 @@ value: anObject
 	^anObject
 		ifNil: [self beNull]
 		ifNotNil: [self perform: (SetSelectors at: column type + TypeOffset) with: anObject]! !
-!Database.DBField categoriesFor: #=!comparing!public! !
-!Database.DBField categoriesFor: #beNull!accessing!public! !
-!Database.DBField categoriesFor: #column!accessing!private! !
-!Database.DBField categoriesFor: #fieldBuf!accessing!private! !
-!Database.DBField categoriesFor: #fieldSize!accessing!private! !
-!Database.DBField categoriesFor: #getAnsiString!converting!private! !
-!Database.DBField categoriesFor: #getBoolean!converting!private! !
-!Database.DBField categoriesFor: #getByte!converting!private! !
-!Database.DBField categoriesFor: #getByteArray!converting!private! !
-!Database.DBField categoriesFor: #getData:!accessing!private! !
-!Database.DBField categoriesFor: #getDate!converting!private! !
-!Database.DBField categoriesFor: #getDateAndTime!converting!private! !
-!Database.DBField categoriesFor: #getDouble!converting!private! !
-!Database.DBField categoriesFor: #getFloat!converting!private! !
-!Database.DBField categoriesFor: #getGuid!converting!private! !
-!Database.DBField categoriesFor: #getInt64!converting!private! !
-!Database.DBField categoriesFor: #getLong!converting!private! !
-!Database.DBField categoriesFor: #getShort!converting!private! !
-!Database.DBField categoriesFor: #getTime!converting!private! !
-!Database.DBField categoriesFor: #getUtf16String!converting!private! !
-!Database.DBField categoriesFor: #hash!comparing!public! !
-!Database.DBField categoriesFor: #initializeForColumn:!accessing!private! !
-!Database.DBField categoriesFor: #isNull!public!testing! !
-!Database.DBField categoriesFor: #lengthBuf!accessing!private! !
-!Database.DBField categoriesFor: #numberFromNumeric!converting!private! !
-!Database.DBField categoriesFor: #numberToNumeric:!converting!private! !
-!Database.DBField categoriesFor: #printOn:!printing!public! !
-!Database.DBField categoriesFor: #setAnsiString:!converting!private! !
-!Database.DBField categoriesFor: #setBoolean:!converting!private! !
-!Database.DBField categoriesFor: #setByte:!converting!private! !
-!Database.DBField categoriesFor: #setByteArray:!converting!private! !
-!Database.DBField categoriesFor: #setDate:!converting!private! !
-!Database.DBField categoriesFor: #setDateAndTime:!converting!private! !
-!Database.DBField categoriesFor: #setDouble:!converting!private! !
-!Database.DBField categoriesFor: #setFloat:!converting!private! !
-!Database.DBField categoriesFor: #setGuid:!converting!private! !
-!Database.DBField categoriesFor: #setInt64:!converting!private! !
-!Database.DBField categoriesFor: #setLong:!converting!private! !
-!Database.DBField categoriesFor: #setShort:!converting!private! !
-!Database.DBField categoriesFor: #setTime:!converting!private! !
-!Database.DBField categoriesFor: #setUtf16String:!converting!private! !
-!Database.DBField categoriesFor: #shouldTranslate:class:!accessing!private! !
-!Database.DBField categoriesFor: #size!accessing!private! !
-!Database.DBField categoriesFor: #value!accessing!public! !
-!Database.DBField categoriesFor: #value:!accessing!public! !
+!Database.DBField categoriesForMethods!
+=!comparing!public! !
+beNull!accessing!public! !
+column!accessing!private! !
+fieldBuf!accessing!private! !
+fieldSize!accessing!private! !
+getAnsiString!converting!private! !
+getBoolean!converting!private! !
+getByte!converting!private! !
+getByteArray!converting!private! !
+getData:!accessing!private! !
+getDate!converting!private! !
+getDateAndTime!converting!private! !
+getDouble!converting!private! !
+getFloat!converting!private! !
+getGuid!converting!private! !
+getInt64!converting!private! !
+getLong!converting!private! !
+getShort!converting!private! !
+getTime!converting!private! !
+getUtf16String!converting!private! !
+hash!comparing!public! !
+initializeForColumn:!accessing!private! !
+isNull!public!testing! !
+lengthBuf!accessing!private! !
+numberFromNumeric!converting!private! !
+numberToNumeric:!converting!private! !
+printOn:!printing!public! !
+setAnsiString:!converting!private! !
+setBoolean:!converting!private! !
+setByte:!converting!private! !
+setByteArray:!converting!private! !
+setDate:!converting!private! !
+setDateAndTime:!converting!private! !
+setDouble:!converting!private! !
+setFloat:!converting!private! !
+setGuid:!converting!private! !
+setInt64:!converting!private! !
+setLong:!converting!private! !
+setShort:!converting!private! !
+setTime:!converting!private! !
+setUtf16String:!converting!private! !
+shouldTranslate:class:!accessing!private! !
+size!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !Database.DBField class methodsFor!
 
@@ -511,7 +513,9 @@ newForCol: aDBColAttr
 	"Answer a new instance of the receiver for the column described by aColAttr."
 
 	^super new initializeForColumn: aDBColAttr! !
-!Database.DBField class categoriesFor: #initialize!initializing!public! !
-!Database.DBField class categoriesFor: #new!instance creation!public! !
-!Database.DBField class categoriesFor: #newForCol:!instance creation!public! !
+!Database.DBField class categoriesForMethods!
+initialize!initializing!public! !
+new!instance creation!public! !
+newForCol:!instance creation!public! !
+!
 

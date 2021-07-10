@@ -36,6 +36,8 @@ exampleGdipIFCEnumerating
 
 new
 	^self fromInitializer: InstalledFontCollectionInitializer default! !
-!Graphics.Gdiplus.InstalledFontCollection class categoriesFor: #exampleGdipIFCEnumerating!examples!public!sunit! !
-!Graphics.Gdiplus.InstalledFontCollection class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.InstalledFontCollection class categoriesForMethods!
+exampleGdipIFCEnumerating!examples!public!sunit! !
+new!instance creation!public! !
+!
 

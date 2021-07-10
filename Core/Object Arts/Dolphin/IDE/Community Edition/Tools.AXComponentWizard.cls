@@ -447,42 +447,44 @@ updateTypesList: typelib
 		nextPutAll: typelib namedUnions;
 		nextPutAll: (self generatableEnumsInTlb: typelib).
 	types list: (list contents asSortedCollection: [:a :b | a name <= b name])! !
-!Tools.AXComponentWizard categoriesFor: #apply!operations!private! !
-!Tools.AXComponentWizard categoriesFor: #browseIDL!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #browseTypeClass!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #browseTypesIDL!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #cancel!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #chooseNamespace!commands!private! !
-!Tools.AXComponentWizard categoriesFor: #choosePackage!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #createComponents!initializing!public! !
-!Tools.AXComponentWizard categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.AXComponentWizard categoriesFor: #displayInstalledTypeLib:!private!updating! !
-!Tools.AXComponentWizard categoriesFor: #finish!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #generatableEnumsInTlb:!private!updating! !
-!Tools.AXComponentWizard categoriesFor: #generatableInterfacesInTlb:!helpers!private! !
-!Tools.AXComponentWizard categoriesFor: #generatableStructsInTlb:!helpers!private! !
-!Tools.AXComponentWizard categoriesFor: #generate!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #initialize!initializing!private! !
-!Tools.AXComponentWizard categoriesFor: #inspectIt!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #inspectItCommand!public! !
-!Tools.AXComponentWizard categoriesFor: #inspectLibrary!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #inspectType!public! !
-!Tools.AXComponentWizard categoriesFor: #libraryListNextCard!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #loadTypeLib!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #onTypeLibrarySelected!event handling!private! !
-!Tools.AXComponentWizard categoriesFor: #onViewOpened!event handling!public! !
-!Tools.AXComponentWizard categoriesFor: #parametersNextCard!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #queryCommand:!commands!private! !
-!Tools.AXComponentWizard categoriesFor: #refresh!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #selectInstalled!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #selectUninstalled!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #standardInterfaces!private! !
-!Tools.AXComponentWizard categoriesFor: #toggleStandardTypes!commands!private! !
-!Tools.AXComponentWizard categoriesFor: #typeLib!accessing!public! !
-!Tools.AXComponentWizard categoriesFor: #typeLib:!accessing!public! !
-!Tools.AXComponentWizard categoriesFor: #typeLibHelp!commands!public! !
-!Tools.AXComponentWizard categoriesFor: #updateTypelibVariable!private!updating! !
-!Tools.AXComponentWizard categoriesFor: #updateTypesList:!private!updating! !
+!Tools.AXComponentWizard categoriesForMethods!
+apply!operations!private! !
+browseIDL!commands!public! !
+browseTypeClass!commands!public! !
+browseTypesIDL!commands!public! !
+cancel!commands!public! !
+chooseNamespace!commands!private! !
+choosePackage!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+displayInstalledTypeLib:!private!updating! !
+finish!commands!public! !
+generatableEnumsInTlb:!private!updating! !
+generatableInterfacesInTlb:!helpers!private! !
+generatableStructsInTlb:!helpers!private! !
+generate!commands!public! !
+initialize!initializing!private! !
+inspectIt!commands!public! !
+inspectItCommand!public! !
+inspectLibrary!commands!public! !
+inspectType!public! !
+libraryListNextCard!commands!public! !
+loadTypeLib!commands!public! !
+onTypeLibrarySelected!event handling!private! !
+onViewOpened!event handling!public! !
+parametersNextCard!commands!public! !
+queryCommand:!commands!private! !
+refresh!commands!public! !
+selectInstalled!commands!public! !
+selectUninstalled!commands!public! !
+standardInterfaces!private! !
+toggleStandardTypes!commands!private! !
+typeLib!accessing!public! !
+typeLib:!accessing!public! !
+typeLibHelp!commands!public! !
+updateTypelibVariable!private!updating! !
+updateTypesList:!private!updating! !
+!
 
 !Tools.AXComponentWizard class methodsFor!
 
@@ -573,11 +575,13 @@ on two lines if necessary.' 4368 1282 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 2
 
 toolsFolderHelpId
 	^10604! !
-!Tools.AXComponentWizard class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!Tools.AXComponentWizard class categoriesFor: #displayOn:!displaying!public! !
-!Tools.AXComponentWizard class categoriesFor: #icon!constants!public! !
-!Tools.AXComponentWizard class categoriesFor: #initialize!initializing!private! !
-!Tools.AXComponentWizard class categoriesFor: #registerServer!operations!public! !
-!Tools.AXComponentWizard class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.AXComponentWizard class categoriesFor: #toolsFolderHelpId!public! !
+!Tools.AXComponentWizard class categoriesForMethods!
+defaultAdditionalAccelerators!constants!private! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+registerServer!operations!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

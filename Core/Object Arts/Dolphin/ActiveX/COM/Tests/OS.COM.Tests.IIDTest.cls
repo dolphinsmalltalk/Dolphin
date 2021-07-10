@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.GUIDTest subclass: #'OS.COM.Tests.IIDTest'
 	instanceVariableNames: ''
@@ -19,6 +19,8 @@ testDisplayStringIUknown
 	subject := IUnknown iid.
 	self assert: subject displayString equals: 'IUnknown'.
 	super testDisplayString! !
-!OS.COM.Tests.IIDTest categoriesFor: #subjectClass!constants!private! !
-!OS.COM.Tests.IIDTest categoriesFor: #testDisplayStringIUknown!constants!public! !
+!OS.COM.Tests.IIDTest categoriesForMethods!
+subjectClass!constants!private! !
+testDisplayStringIUknown!constants!public! !
+!
 

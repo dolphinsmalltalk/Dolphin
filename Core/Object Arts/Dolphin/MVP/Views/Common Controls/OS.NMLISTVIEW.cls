@@ -58,14 +58,16 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!OS.NMLISTVIEW categoriesFor: #iItem!**compiled accessors**!public! !
-!OS.NMLISTVIEW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!OS.NMLISTVIEW categoriesFor: #itemHandle!accessing!public! !
-!OS.NMLISTVIEW categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.NMLISTVIEW categoriesFor: #ptAction!**compiled accessors**!public! !
-!OS.NMLISTVIEW categoriesFor: #uChanged!**compiled accessors**!public! !
-!OS.NMLISTVIEW categoriesFor: #uNewState!**compiled accessors**!public! !
-!OS.NMLISTVIEW categoriesFor: #uOldState!**compiled accessors**!public! !
+!OS.NMLISTVIEW categoriesForMethods!
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+lParam!**compiled accessors**!public! !
+ptAction!**compiled accessors**!public! !
+uChanged!**compiled accessors**!public! !
+uNewState!**compiled accessors**!public! !
+uOldState!**compiled accessors**!public! !
+!
 
 !OS.NMLISTVIEW class methodsFor!
 
@@ -86,6 +88,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #lParam)! !
-!OS.NMLISTVIEW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMLISTVIEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLISTVIEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -97,17 +97,19 @@ tempDeclClass
 
 variableNodeClass
 	^RBPatternVariableNode! !
-!Refactory.Browser.RBPatternParser categoriesFor: #evaluateStatements:!parsing!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #messageNodeClass!constants!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #methodNodeClass!constants!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #parameterNodeClass!constants!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #parseLiteralByteArrayObject!parsing!public! !
-!Refactory.Browser.RBPatternParser categoriesFor: #parsePatternBlock:!parsing!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #parsePrimitiveLiteral!parsing!public! !
-!Refactory.Browser.RBPatternParser categoriesFor: #parsePrimitiveObject!parsing!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #parseUnaryMessage!parsing!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #patchLiteralArrayToken!helpers!public! !
-!Refactory.Browser.RBPatternParser categoriesFor: #scannerClass!accessing!public! !
-!Refactory.Browser.RBPatternParser categoriesFor: #tempDeclClass!parsing!private! !
-!Refactory.Browser.RBPatternParser categoriesFor: #variableNodeClass!constants!private! !
+!Refactory.Browser.RBPatternParser categoriesForMethods!
+evaluateStatements:!parsing!private! !
+messageNodeClass!constants!private! !
+methodNodeClass!constants!private! !
+parameterNodeClass!constants!private! !
+parseLiteralByteArrayObject!parsing!public! !
+parsePatternBlock:!parsing!private! !
+parsePrimitiveLiteral!parsing!public! !
+parsePrimitiveObject!parsing!private! !
+parseUnaryMessage!parsing!private! !
+patchLiteralArrayToken!helpers!public! !
+scannerClass!accessing!public! !
+tempDeclClass!parsing!private! !
+variableNodeClass!constants!private! !
+!
 

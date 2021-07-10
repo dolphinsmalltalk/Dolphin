@@ -30,8 +30,10 @@ width
 	"Answer the width of the client area after the size event."
 
 	^self lParamX! !
-!UI.SizeEvent categoriesFor: #extent!accessing!public! !
-!UI.SizeEvent categoriesFor: #height!accessing!public! !
-!UI.SizeEvent categoriesFor: #type!accessing!public! !
-!UI.SizeEvent categoriesFor: #width!accessing!public! !
+!UI.SizeEvent categoriesForMethods!
+extent!accessing!public! !
+height!accessing!public! !
+type!accessing!public! !
+width!accessing!public! !
+!
 

@@ -60,16 +60,18 @@ rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
 	^self actualColor rgbCode! !
-!Graphics.VirtualColor categoriesFor: #actualColor!accessing!private! !
-!Graphics.VirtualColor categoriesFor: #alpha!accessing!public! !
-!Graphics.VirtualColor categoriesFor: #argbCode!converting!public! !
-!Graphics.VirtualColor categoriesFor: #asParameter!converting!public! !
-!Graphics.VirtualColor categoriesFor: #asRGB!converting!public! !
-!Graphics.VirtualColor categoriesFor: #isDefault!public!testing! !
-!Graphics.VirtualColor categoriesFor: #isNone!public!testing! !
-!Graphics.VirtualColor categoriesFor: #isSymbolic!public!testing! !
-!Graphics.VirtualColor categoriesFor: #rgbaCode!accessing!public! !
-!Graphics.VirtualColor categoriesFor: #rgbCode!converting!public! !
+!Graphics.VirtualColor categoriesForMethods!
+actualColor!accessing!private! !
+alpha!accessing!public! !
+argbCode!converting!public! !
+asParameter!converting!public! !
+asRGB!converting!public! !
+isDefault!public!testing! !
+isNone!public!testing! !
+isSymbolic!public!testing! !
+rgbaCode!accessing!public! !
+rgbCode!converting!public! !
+!
 
 !Graphics.VirtualColor class methodsFor!
 
@@ -77,5 +79,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	"Override back to default implementation"
 
 	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion! !
-!Graphics.VirtualColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!Graphics.VirtualColor class categoriesForMethods!
+stbReadFrom:format:!binary filing!public! !
+!
 

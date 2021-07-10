@@ -156,35 +156,37 @@ whichNodeIsContainedBy: anInterval
 			[(temporaries isEmpty and: [statements size == 1]) 
 				ifTrue: [^statements first]].
 	^node! !
-!Kernel.StSequenceNode categoriesFor: #=!comparing!public! !
-!Kernel.StSequenceNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StSequenceNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #allTemporaryVariableNodesDo:!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #bestNodeFor:!public!querying! !
-!Kernel.StSequenceNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #defines:!public!testing! !
-!Kernel.StSequenceNode categoriesFor: #directlyUses:!public!testing! !
-!Kernel.StSequenceNode categoriesFor: #hash!comparing!public! !
-!Kernel.StSequenceNode categoriesFor: #isLast:!public!testing! !
-!Kernel.StSequenceNode categoriesFor: #isSequence!public!testing! !
-!Kernel.StSequenceNode categoriesFor: #lastIsReturn!public!testing! !
-!Kernel.StSequenceNode categoriesFor: #leftBar!public! !
-!Kernel.StSequenceNode categoriesFor: #leftBar:temporaries:rightBar:!initializing!public! !
-!Kernel.StSequenceNode categoriesFor: #methodComments!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #outer!public! !
-!Kernel.StSequenceNode categoriesFor: #periods:!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StSequenceNode categoriesFor: #rightBar!accessing!private! !
-!Kernel.StSequenceNode categoriesFor: #start!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #statements!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #statements:!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #stop!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #temporaries!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #temporaries:!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #temporaryNames!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #temporaryVariables!accessing!public! !
-!Kernel.StSequenceNode categoriesFor: #uses:!public!testing! !
-!Kernel.StSequenceNode categoriesFor: #whichNodeIsContainedBy:!public!querying! !
+!Kernel.StSequenceNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+allDefinedVariableNodesDo:!accessing!public! !
+allTemporaryVariableNodesDo:!accessing!public! !
+bestNodeFor:!public!querying! !
+childrenDo:!accessing!public! !
+defines:!public!testing! !
+directlyUses:!public!testing! !
+hash!comparing!public! !
+isLast:!public!testing! !
+isSequence!public!testing! !
+lastIsReturn!public!testing! !
+leftBar!public! !
+leftBar:temporaries:rightBar:!initializing!public! !
+methodComments!accessing!public! !
+outer!public! !
+periods:!accessing!public! !
+postCopy!copying!public! !
+rightBar!accessing!private! !
+start!accessing!public! !
+statements!accessing!public! !
+statements:!accessing!public! !
+stop!accessing!public! !
+temporaries!accessing!public! !
+temporaries:!accessing!public! !
+temporaryNames!accessing!public! !
+temporaryVariables!accessing!public! !
+uses:!public!testing! !
+whichNodeIsContainedBy:!public!querying! !
+!
 
 !Kernel.StSequenceNode class methodsFor!
 
@@ -203,7 +205,9 @@ temporaries: variableNodes statements: statementNodes
 		temporaries: variableNodes;
 		statements: statementNodes;
 		yourself! !
-!Kernel.StSequenceNode class categoriesFor: #leftBar:temporaries:rightBar:!instance creation!public! !
-!Kernel.StSequenceNode class categoriesFor: #statements:!instance creation!public! !
-!Kernel.StSequenceNode class categoriesFor: #temporaries:statements:!instance creation!public! !
+!Kernel.StSequenceNode class categoriesForMethods!
+leftBar:temporaries:rightBar:!instance creation!public! !
+statements:!instance creation!public! !
+temporaries:statements:!instance creation!public! !
+!
 

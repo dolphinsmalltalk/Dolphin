@@ -59,12 +59,14 @@ offPalEntries: anInteger
 	"Set the receiver's 'offPalEntries' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offPalEntries put: anInteger! !
-!OS.EMREOF categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!OS.EMREOF categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!OS.EMREOF categoriesFor: #nSizeLast!**compiled accessors**!public! !
-!OS.EMREOF categoriesFor: #nSizeLast:!**compiled accessors**!public! !
-!OS.EMREOF categoriesFor: #offPalEntries!**compiled accessors**!public! !
-!OS.EMREOF categoriesFor: #offPalEntries:!**compiled accessors**!public! !
+!OS.EMREOF categoriesForMethods!
+nPalEntries!**compiled accessors**!public! !
+nPalEntries:!**compiled accessors**!public! !
+nSizeLast!**compiled accessors**!public! !
+nSizeLast:!**compiled accessors**!public! !
+offPalEntries!**compiled accessors**!public! !
+offPalEntries:!**compiled accessors**!public! !
+!
 
 !OS.EMREOF class methodsFor!
 
@@ -102,7 +104,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EOF}! !
-!OS.EMREOF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMREOF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMREOF class categoriesFor: #iTypes!constants!public! !
+!OS.EMREOF class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

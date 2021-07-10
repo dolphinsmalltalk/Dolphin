@@ -108,21 +108,23 @@ value
 	prior := Current.
 	Current := self.
 	^[self commandDescription performAgainst: self receiver] ensure: [Current := prior]! !
-!UI.Command categoriesFor: #beBenign!accessing!public! !
-!UI.Command categoriesFor: #canRedo!accessing!public! !
-!UI.Command categoriesFor: #canUndo!accessing!public! !
-!UI.Command categoriesFor: #command!commands!public! !
-!UI.Command categoriesFor: #commandDescription!accessing!public! !
-!UI.Command categoriesFor: #description!accessing!public! !
-!UI.Command categoriesFor: #isBenign!accessing!public! !
-!UI.Command categoriesFor: #isModalCommand!public!testing! !
-!UI.Command categoriesFor: #receiver!accessing!public! !
-!UI.Command categoriesFor: #receiver:commandDescription:!initializing!private! !
-!UI.Command categoriesFor: #redo!operations!public! !
-!UI.Command categoriesFor: #redoWith:!accessing!public! !
-!UI.Command categoriesFor: #undo!operations!public! !
-!UI.Command categoriesFor: #undoWith:!accessing!public! !
-!UI.Command categoriesFor: #value!evaluating!public! !
+!UI.Command categoriesForMethods!
+beBenign!accessing!public! !
+canRedo!accessing!public! !
+canUndo!accessing!public! !
+command!commands!public! !
+commandDescription!accessing!public! !
+description!accessing!public! !
+isBenign!accessing!public! !
+isModalCommand!public!testing! !
+receiver!accessing!public! !
+receiver:commandDescription:!initializing!private! !
+redo!operations!public! !
+redoWith:!accessing!public! !
+undo!operations!public! !
+undoWith:!accessing!public! !
+value!evaluating!public! !
+!
 
 !UI.Command class methodsFor!
 
@@ -145,8 +147,10 @@ receiver: anObject commandDescription: aCommandDescription
 
 	^super new receiver: anObject commandDescription: aCommandDescription
 ! !
-!UI.Command class categoriesFor: #current!accessing!public! !
-!UI.Command class categoriesFor: #new!instance creation!private! !
-!UI.Command class categoriesFor: #onStartup!public! !
-!UI.Command class categoriesFor: #receiver:commandDescription:!instance creation!public! !
+!UI.Command class categoriesForMethods!
+current!accessing!public! !
+new!instance creation!private! !
+onStartup!public! !
+receiver:commandDescription:!instance creation!public! !
+!
 

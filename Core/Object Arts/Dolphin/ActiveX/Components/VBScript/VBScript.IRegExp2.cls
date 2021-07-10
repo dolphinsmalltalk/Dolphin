@@ -153,16 +153,18 @@ Test: sourceString pMatch: pMatch
 
 	<virtual stdcall: hresult 17 bstr varbool*>
 	^self invalidCall: _failureCode! !
-!VBScript.IRegExp2 categoriesFor: #Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp2!private! !
-!VBScript.IRegExp2 categoriesFor: #get_Multiline:!**auto generated**!COM Interfaces-IRegExp2!private! !
-!VBScript.IRegExp2 categoriesFor: #matchCollectionClass!constants!private! !
-!VBScript.IRegExp2 categoriesFor: #multiline!**auto generated**!properties!public! !
-!VBScript.IRegExp2 categoriesFor: #multiline:!**auto generated**!properties!public! !
-!VBScript.IRegExp2 categoriesFor: #put_Multiline:!**auto generated**!COM Interfaces-IRegExp2!private! !
-!VBScript.IRegExp2 categoriesFor: #replace:replaceString:!methods!operations!public! !
-!VBScript.IRegExp2 categoriesFor: #replace:replaceVar:!methods!public! !
-!VBScript.IRegExp2 categoriesFor: #Replace:replaceVar:pDestString:!**auto generated**!COM Interfaces-IRegExp2!private! !
-!VBScript.IRegExp2 categoriesFor: #Test:pMatch:!**auto generated**!COM Interfaces-IRegExp2!private! !
+!VBScript.IRegExp2 categoriesForMethods!
+Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp2!private! !
+get_Multiline:!**auto generated**!COM Interfaces-IRegExp2!private! !
+matchCollectionClass!constants!private! !
+multiline!**auto generated**!properties!public! !
+multiline:!**auto generated**!properties!public! !
+put_Multiline:!**auto generated**!COM Interfaces-IRegExp2!private! !
+replace:replaceString:!methods!operations!public! !
+replace:replaceVar:!methods!public! !
+Replace:replaceVar:pDestString:!**auto generated**!COM Interfaces-IRegExp2!private! !
+Test:pMatch:!**auto generated**!COM Interfaces-IRegExp2!private! !
+!
 
 !VBScript.IRegExp2 class methodsFor!
 
@@ -194,5 +196,7 @@ defineFunctions
 		defineFunction: #Replace:replaceVar:pDestString:
 			argumentTypes: 'bstr variant bstr*'
 ! !
-!VBScript.IRegExp2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.IRegExp2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -124,7 +124,9 @@ sourceDescriptorForPosition: positionInteger
 	file index must be in the range 0..15, and the position >= 0."
 
 	^self sourceDescriptorForIndex: sourceFileIndex position: positionInteger! !
-!ChunkSourceFiler categoriesFor: #sourceDescriptorForPosition:!private!source filing-file in! !
+!ChunkSourceFiler categoriesForMethods!
+sourceDescriptorForPosition:!private!source filing-file in! !
+!
 
 !ClassBrowserAbstract methodsFor!
 
@@ -147,10 +149,12 @@ canBrowseMethodHistory
 canBrowseMethodHistoryForClass
 	#idbAdded.
 	^self hasClassSelected! !
-!ClassBrowserAbstract categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
-!ClassBrowserAbstract categoriesFor: #browseMethodHistoryForClass!commands!idb goodies!public! !
-!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistory!idb goodies!private!testing! !
-!ClassBrowserAbstract categoriesFor: #canBrowseMethodHistoryForClass!idb goodies!private!testing! !
+!ClassBrowserAbstract categoriesForMethods!
+browseMethodHistory!accessing!commands!idb goodies!private! !
+browseMethodHistoryForClass!commands!idb goodies!public! !
+canBrowseMethodHistory!idb goodies!private!testing! !
+canBrowseMethodHistoryForClass!idb goodies!private!testing! !
+!
 
 !CompiledMethod methodsFor!
 
@@ -163,8 +167,10 @@ versionHistory
 	"Answer a collection of MethodVersions representing the history of the receiver in this image"
 
 	^ChunkFileMethodScanner forMethod: self selector inClass: self methodClass! !
-!CompiledMethod categoriesFor: #loadedVersion!accessing!public! !
-!CompiledMethod categoriesFor: #versionHistory!accessing!public! !
+!CompiledMethod categoriesForMethods!
+loadedVersion!accessing!public! !
+versionHistory!accessing!public! !
+!
 
 !Debugger methodsFor!
 
@@ -180,8 +186,10 @@ browseMethodHistory
 canBrowseMethodHistory
 	#idbAdded.
 	^self hasEditableMethodSelected! !
-!Debugger categoriesFor: #browseMethodHistory!commands!idb goodies!private! !
-!Debugger categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
+!Debugger categoriesForMethods!
+browseMethodHistory!commands!idb goodies!private! !
+canBrowseMethodHistory!accessing!idb goodies!private!testing! !
+!
 
 !MethodBrowserShell methodsFor!
 
@@ -193,8 +201,10 @@ browseMethodHistory
 canBrowseMethodHistory
 	#idbAdded.
 	^self browser hasMethodSelected! !
-!MethodBrowserShell categoriesFor: #browseMethodHistory!accessing!commands!idb goodies!private! !
-!MethodBrowserShell categoriesFor: #canBrowseMethodHistory!accessing!idb goodies!private!testing! !
+!MethodBrowserShell categoriesForMethods!
+browseMethodHistory!accessing!commands!idb goodies!private! !
+canBrowseMethodHistory!accessing!idb goodies!private!testing! !
+!
 
 !SmalltalkToolShell methodsFor!
 
@@ -210,7 +220,9 @@ queryMethodHistoryCommand: aCommandQuery
 			[aCommandQuery isEnabled: self canBrowseMethodHistoryForClass.
 			^true].
 	^false! !
-!SmalltalkToolShell categoriesFor: #queryMethodHistoryCommand:!commands!private! !
+!SmalltalkToolShell categoriesForMethods!
+queryMethodHistoryCommand:!commands!private! !
+!
 
 "End of package definition"!
 

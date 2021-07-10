@@ -26,8 +26,10 @@ createHandle
 
 icon: anIcon
 	icon := anIcon! !
-!Graphics.Gdiplus.BitmapFromIconInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.BitmapFromIconInitializer categoriesFor: #icon:!initializing!private! !
+!Graphics.Gdiplus.BitmapFromIconInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+icon:!initializing!private! !
+!
 
 !Graphics.Gdiplus.BitmapFromIconInitializer class methodsFor!
 
@@ -35,5 +37,7 @@ icon: anIcon
 	"Creates a Bitmap object based on an icon."
 
 	^self new icon: anIcon! !
-!Graphics.Gdiplus.BitmapFromIconInitializer class categoriesFor: #icon:!instance creation!public! !
+!Graphics.Gdiplus.BitmapFromIconInitializer class categoriesForMethods!
+icon:!instance creation!public! !
+!
 

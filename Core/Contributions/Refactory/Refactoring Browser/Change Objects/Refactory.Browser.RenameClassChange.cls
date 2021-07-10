@@ -56,14 +56,16 @@ renameChangesForClass: aClassName to: newClassName
 	oldName asSymbol == aClassName 
 		ifTrue: [change rename: newClassName to: newName].
 	^change! !
-!Refactory.Browser.RenameClassChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.RenameClassChange categoriesFor: #changeClass!accessing!public! !
-!Refactory.Browser.RenameClassChange categoriesFor: #executeNotifying:!private! !
-!Refactory.Browser.RenameClassChange categoriesFor: #flattenOnto:!private! !
-!Refactory.Browser.RenameClassChange categoriesFor: #newName!private! !
-!Refactory.Browser.RenameClassChange categoriesFor: #oldName!private! !
-!Refactory.Browser.RenameClassChange categoriesFor: #rename:to:!initialize/release!public! !
-!Refactory.Browser.RenameClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!Refactory.Browser.RenameClassChange categoriesForMethods!
+=!comparing!public! !
+changeClass!accessing!public! !
+executeNotifying:!private! !
+flattenOnto:!private! !
+newName!private! !
+oldName!private! !
+rename:to:!initialize/release!public! !
+renameChangesForClass:to:!accessing!public! !
+!
 
 !Refactory.Browser.RenameClassChange class methodsFor!
 
@@ -71,5 +73,7 @@ rename: oldString to: newString
 	^(self new)
 		rename: oldString to: newString;
 		yourself! !
-!Refactory.Browser.RenameClassChange class categoriesFor: #rename:to:!instance creation!public! !
+!Refactory.Browser.RenameClassChange class categoriesForMethods!
+rename:to:!instance creation!public! !
+!
 

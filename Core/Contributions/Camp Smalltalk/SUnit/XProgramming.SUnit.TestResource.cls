@@ -50,17 +50,19 @@ setUp
 tearDown
 	"Does nothing. Subclasses should override this
 	to tear down their resource"! !
-!XProgramming.SUnit.TestResource categoriesFor: #description!Accessing!public! !
-!XProgramming.SUnit.TestResource categoriesFor: #description:!Accessing!public! !
-!XProgramming.SUnit.TestResource categoriesFor: #initialize!Init / Release!public! !
-!XProgramming.SUnit.TestResource categoriesFor: #isAvailable!public!Testing! !
-!XProgramming.SUnit.TestResource categoriesFor: #isUnavailable!public!Testing! !
-!XProgramming.SUnit.TestResource categoriesFor: #name!Accessing!public! !
-!XProgramming.SUnit.TestResource categoriesFor: #name:!Accessing!public! !
-!XProgramming.SUnit.TestResource categoriesFor: #printOn:!Printing!public! !
-!XProgramming.SUnit.TestResource categoriesFor: #resources!public! !
-!XProgramming.SUnit.TestResource categoriesFor: #setUp!public!Running! !
-!XProgramming.SUnit.TestResource categoriesFor: #tearDown!public!Running! !
+!XProgramming.SUnit.TestResource categoriesForMethods!
+description!Accessing!public! !
+description:!Accessing!public! !
+initialize!Init / Release!public! !
+isAvailable!public!Testing! !
+isUnavailable!public!Testing! !
+name!Accessing!public! !
+name:!Accessing!public! !
+printOn:!Printing!public! !
+resources!public! !
+setUp!public!Running! !
+tearDown!public!Running! !
+!
 
 !XProgramming.SUnit.TestResource class methodsFor!
 
@@ -91,12 +93,14 @@ resources
 
 signalInitializationError
 	^TestResult signalErrorWith: 'Resource ' , self name , ' could not be initialized'! !
-!XProgramming.SUnit.TestResource class categoriesFor: #current!Accessing!public! !
-!XProgramming.SUnit.TestResource class categoriesFor: #current:!Accessing!public! !
-!XProgramming.SUnit.TestResource class categoriesFor: #isAvailable!public!Testing! !
-!XProgramming.SUnit.TestResource class categoriesFor: #isUnavailable!public!Testing! !
-!XProgramming.SUnit.TestResource class categoriesFor: #new!Creation!public! !
-!XProgramming.SUnit.TestResource class categoriesFor: #reset!Creation!public! !
-!XProgramming.SUnit.TestResource class categoriesFor: #resources!public! !
-!XProgramming.SUnit.TestResource class categoriesFor: #signalInitializationError!public!Running! !
+!XProgramming.SUnit.TestResource class categoriesForMethods!
+current!Accessing!public! !
+current:!Accessing!public! !
+isAvailable!public!Testing! !
+isUnavailable!public!Testing! !
+new!Creation!public! !
+reset!Creation!public! !
+resources!public! !
+signalInitializationError!public!Running! !
+!
 

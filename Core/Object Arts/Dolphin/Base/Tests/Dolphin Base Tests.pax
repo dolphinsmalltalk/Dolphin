@@ -1111,7 +1111,9 @@ _chmod: aFilenameString pmode: aModeInteger
 	<overlap cdecl: sdword _chmod lpstr sdword>
 	#deprecated. "Kept only for testing"
 	^self invalidCall: _failureCode! !
-!OS.CRTLibraryNonBlocking categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
+!OS.CRTLibraryNonBlocking categoriesForMethods!
+_chmod:pmode:!CRT functions-file handling!public! !
+!
 
 !Tools.SmalltalkSystem methodsFor!
 
@@ -1287,13 +1289,15 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				stem: suiteName
 				extension: 'xml').
 	doc free! !
-!Tools.SmalltalkSystem categoriesFor: #baselinedSlowTests!accessing!public! !
-!Tools.SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
-!Tools.SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
-!Tools.SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
-!Tools.SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
-!Tools.SmalltalkSystem categoriesFor: #setTestAttributes:id:name:duration:tests:failures:errors:skipped:!helpers!private! !
-!Tools.SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!helpers!private! !
+!Tools.SmalltalkSystem categoriesForMethods!
+baselinedSlowTests!accessing!public! !
+regressionTestsLogFilename!public!tests! !
+regressionTestSuite!private!tests! !
+runRegressionTests!public!tests! !
+runRegressionTests:logTo:verbose:!public!tests! !
+setTestAttributes:id:name:duration:tests:failures:errors:skipped:!helpers!private! !
+writeJunitTestLog:result:!helpers!private! !
+!
 
 "End of package definition"!
 

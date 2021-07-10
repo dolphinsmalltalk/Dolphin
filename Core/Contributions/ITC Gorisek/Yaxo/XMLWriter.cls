@@ -168,38 +168,40 @@ xmlDeclaration: versionString
 				startPI: 'XML';
 				attribute: 'version' value: versionString;
 				endPI]! !
-!XMLWriter categoriesFor: #attribute:value:!public!writing xml! !
-!XMLWriter categoriesFor: #canonical!accessing!public! !
-!XMLWriter categoriesFor: #canonical:!accessing!public! !
-!XMLWriter categoriesFor: #cdata:!public!writing xml! !
-!XMLWriter categoriesFor: #comment:!public!writing xml! !
-!XMLWriter categoriesFor: #endCData!private!tags! !
-!XMLWriter categoriesFor: #endComment!private!tags! !
-!XMLWriter categoriesFor: #endDecl:!public!writing dtd! !
-!XMLWriter categoriesFor: #endDeclaration!public!writing dtd! !
-!XMLWriter categoriesFor: #endEmptyTag:!public!writing xml! !
-!XMLWriter categoriesFor: #endPI!private!tags! !
-!XMLWriter categoriesFor: #endTag!public!writing xml! !
-!XMLWriter categoriesFor: #endTag:!public!writing xml! !
-!XMLWriter categoriesFor: #eq!private!writing xml! !
-!XMLWriter categoriesFor: #initialize!initialize!public! !
-!XMLWriter categoriesFor: #pcData:!public!writing xml! !
-!XMLWriter categoriesFor: #pi:data:!public!writing xml! !
-!XMLWriter categoriesFor: #popTag:!private!tags! !
-!XMLWriter categoriesFor: #pushTag:!private!tags! !
-!XMLWriter categoriesFor: #putAsXMLString:!private!writing xml! !
-!XMLWriter categoriesFor: #stack!accessing!private! !
-!XMLWriter categoriesFor: #startCData!private!tags! !
-!XMLWriter categoriesFor: #startComment!private!tags! !
-!XMLWriter categoriesFor: #startDecl:!public!writing dtd! !
-!XMLWriter categoriesFor: #startDecl:named:!public!writing dtd! !
-!XMLWriter categoriesFor: #startDeclaration:!public!writing dtd! !
-!XMLWriter categoriesFor: #startElement:attributeList:!public!writing xml! !
-!XMLWriter categoriesFor: #startPI:!private!tags! !
-!XMLWriter categoriesFor: #startTag:!public!writing xml! !
-!XMLWriter categoriesFor: #stream!accessing!public! !
-!XMLWriter categoriesFor: #stream:!accessing!public! !
-!XMLWriter categoriesFor: #xmlDeclaration:!public!writing xml! !
+!XMLWriter categoriesForMethods!
+attribute:value:!public!writing xml! !
+canonical!accessing!public! !
+canonical:!accessing!public! !
+cdata:!public!writing xml! !
+comment:!public!writing xml! !
+endCData!private!tags! !
+endComment!private!tags! !
+endDecl:!public!writing dtd! !
+endDeclaration!public!writing dtd! !
+endEmptyTag:!public!writing xml! !
+endPI!private!tags! !
+endTag!public!writing xml! !
+endTag:!public!writing xml! !
+eq!private!writing xml! !
+initialize!initialize!public! !
+pcData:!public!writing xml! !
+pi:data:!public!writing xml! !
+popTag:!private!tags! !
+pushTag:!private!tags! !
+putAsXMLString:!private!writing xml! !
+stack!accessing!private! !
+startCData!private!tags! !
+startComment!private!tags! !
+startDecl:!public!writing dtd! !
+startDecl:named:!public!writing dtd! !
+startDeclaration:!public!writing dtd! !
+startElement:attributeList:!public!writing xml! !
+startPI:!private!tags! !
+startTag:!public!writing xml! !
+stream!accessing!public! !
+stream:!accessing!public! !
+xmlDeclaration:!public!writing xml! !
+!
 
 !XMLWriter class methodsFor!
 
@@ -221,6 +223,8 @@ initialize
 
 on: aStream
 	^self basicNew initialize stream: aStream! !
-!XMLWriter class categoriesFor: #initialize!class initialization!public! !
-!XMLWriter class categoriesFor: #on:!instance creation!public! !
+!XMLWriter class categoriesForMethods!
+initialize!class initialization!public! !
+on:!instance creation!public! !
+!
 

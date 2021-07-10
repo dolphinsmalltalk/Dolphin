@@ -50,9 +50,11 @@ method: aCompiledMethod
 			block := block shallowCopy.
 			self environment: block].
 	block method: aCompiledMethod! !
-!Kernel.BlockFrame categoriesFor: #argumentCount!accessing!public! !
-!Kernel.BlockFrame categoriesFor: #block!accessing!private! !
-!Kernel.BlockFrame categoriesFor: #displayOn:!printing!public! !
-!Kernel.BlockFrame categoriesFor: #isBlockFrame!private!testing! !
-!Kernel.BlockFrame categoriesFor: #method:!accessing!private! !
+!Kernel.BlockFrame categoriesForMethods!
+argumentCount!accessing!public! !
+block!accessing!private! !
+displayOn:!printing!public! !
+isBlockFrame!private!testing! !
+method:!accessing!private! !
+!
 

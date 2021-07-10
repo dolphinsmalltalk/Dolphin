@@ -54,17 +54,19 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #checkClass:!accessing!public! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #failedRules!accessing!public! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #hasConflicts!public!testing! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #isComposite!public!testing! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #resetResult!initialize/release!public! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #rules!accessing!public! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #rules:!initialize/release!public! !
-!Refactory.Browser.CompositeLintRule categoriesFor: #viewResults!helpers!private! !
+!Refactory.Browser.CompositeLintRule categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+failedRules!accessing!public! !
+hasConflicts!public!testing! !
+isComposite!public!testing! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+rules!accessing!public! !
+rules:!initialize/release!public! !
+viewResults!helpers!private! !
+!
 
 !Refactory.Browser.CompositeLintRule class methodsFor!
 
@@ -98,10 +100,12 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRule protocol: 'transformations'! !
-!Refactory.Browser.CompositeLintRule class categoriesFor: #allRules!instance creation!public! !
-!Refactory.Browser.CompositeLintRule class categoriesFor: #lintChecks!all checks!public! !
-!Refactory.Browser.CompositeLintRule class categoriesFor: #ruleFor:protocol:!instance creation!public! !
-!Refactory.Browser.CompositeLintRule class categoriesFor: #rules:!instance creation!public! !
-!Refactory.Browser.CompositeLintRule class categoriesFor: #rules:name:!instance creation!public! !
-!Refactory.Browser.CompositeLintRule class categoriesFor: #transformations!all checks!public! !
+!Refactory.Browser.CompositeLintRule class categoriesForMethods!
+allRules!instance creation!public! !
+lintChecks!all checks!public! !
+ruleFor:protocol:!instance creation!public! !
+rules:!instance creation!public! !
+rules:name:!instance creation!public! !
+transformations!all checks!public! !
+!
 

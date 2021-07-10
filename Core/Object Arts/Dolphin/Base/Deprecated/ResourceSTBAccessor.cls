@@ -65,12 +65,14 @@ readStream
 
 save: anObject as: aResourceClass on: stream
 	aResourceClass save: anObject toFiler: (STBOutFiler on: stream)! !
-!ResourceSTBAccessor categoriesFor: #byteArray!accessing!private! !
-!ResourceSTBAccessor categoriesFor: #classLocator!accessing!private! !
-!ResourceSTBAccessor categoriesFor: #classLocator:!accessing!private! !
-!ResourceSTBAccessor categoriesFor: #hiddenObjects!image stripping!private! !
-!ResourceSTBAccessor categoriesFor: #initialize!initializing!private! !
-!ResourceSTBAccessor categoriesFor: #loadWithContext:forEdit:!operations!public! !
-!ResourceSTBAccessor categoriesFor: #readStream!accessing!private! !
-!ResourceSTBAccessor categoriesFor: #save:as:on:!operations!private! !
+!ResourceSTBAccessor categoriesForMethods!
+byteArray!accessing!private! !
+classLocator!accessing!private! !
+classLocator:!accessing!private! !
+hiddenObjects!image stripping!private! !
+initialize!initializing!private! !
+loadWithContext:forEdit:!operations!public! !
+readStream!accessing!private! !
+save:as:on:!operations!private! !
+!
 

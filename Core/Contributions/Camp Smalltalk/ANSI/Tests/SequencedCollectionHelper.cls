@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #SequencedCollectionHelper
 	instanceVariableNames: ''
@@ -314,12 +314,14 @@ testXreplaceFromXtoXwithXstartingAtX
 				with: #(1 2)
 				startingAt: 3]
 		raise: TestResult error! !
-!SequencedCollectionHelper categoriesFor: #object!public! !
-!SequencedCollectionHelper categoriesFor: #object:!public! !
-!SequencedCollectionHelper categoriesFor: #testXatAllPutX!public! !
-!SequencedCollectionHelper categoriesFor: #testXatAllXputX!public! !
-!SequencedCollectionHelper categoriesFor: #testXatXputX!public! !
-!SequencedCollectionHelper categoriesFor: #testXreplaceFromXtoXwithObjectX!public! !
-!SequencedCollectionHelper categoriesFor: #testXreplaceFromXtoXwithX!public! !
-!SequencedCollectionHelper categoriesFor: #testXreplaceFromXtoXwithXstartingAtX!public! !
+!SequencedCollectionHelper categoriesForMethods!
+object!public! !
+object:!public! !
+testXatAllPutX!public! !
+testXatAllXputX!public! !
+testXatXputX!public! !
+testXreplaceFromXtoXwithObjectX!public! !
+testXreplaceFromXtoXwithX!public! !
+testXreplaceFromXtoXwithXstartingAtX!public! !
+!
 

@@ -117,23 +117,25 @@ storeOn: aStream
 		nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #allClasses!enumerating!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #allClassesDo:!enumerating!private! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #classesDo:!accessing/classes!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #classNames!accessing/classes!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #environment!accessing!private! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesProtocol:in:!public!testing! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #isSystem!public!testing! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #numberSelectors!accessing!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #onEnvironment:!initialize/release!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #progressBlock!accessing!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #progressBlock:!accessing!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper categoriesForMethods!
+allClasses!enumerating!public! !
+allClassesDo:!enumerating!private! !
+classesDo:!accessing/classes!public! !
+classNames!accessing/classes!public! !
+definesClass:!public!testing! !
+environment!accessing!private! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+isEmpty!public!testing! !
+isSystem!public!testing! !
+numberSelectors!accessing!public! !
+onEnvironment:!initialize/release!public! !
+progressBlock!accessing!public! !
+progressBlock:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.BrowserEnvironmentWrapper class methodsFor!
 
@@ -145,6 +147,8 @@ onEnvironment: anEnvironment
 		initialize;
 		onEnvironment: anEnvironment;
 		yourself! !
-!Refactory.Browser.BrowserEnvironmentWrapper class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.BrowserEnvironmentWrapper class categoriesFor: #onEnvironment:!instance creation!public! !
+!Refactory.Browser.BrowserEnvironmentWrapper class categoriesForMethods!
+new!instance creation!public! !
+onEnvironment:!instance creation!public! !
+!
 

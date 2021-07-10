@@ -108,15 +108,17 @@ toggleLocalHierarchy
 			classesPresenter model: self model classHierarchy.
 			actualClass notNil ifTrue: [self actualClass: actualClass]].
 	self validateUserInterface! !
-!Tools.ClassBrowserShell categoriesFor: #createComponents!initializing!public! !
-!Tools.ClassBrowserShell categoriesFor: #defaultHelpId!public! !
-!Tools.ClassBrowserShell categoriesFor: #displayLocalHierarchyOf:!private!updating! !
-!Tools.ClassBrowserShell categoriesFor: #isLocalHierarchyMode!private!testing! !
-!Tools.ClassBrowserShell categoriesFor: #isLocalHierarchyMode:!accessing!private! !
-!Tools.ClassBrowserShell categoriesFor: #onTipTextRequired:!event handling!private! !
-!Tools.ClassBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!Tools.ClassBrowserShell categoriesFor: #resetFor:!commands!public! !
-!Tools.ClassBrowserShell categoriesFor: #toggleLocalHierarchy!commands!public! !
+!Tools.ClassBrowserShell categoriesForMethods!
+createComponents!initializing!public! !
+defaultHelpId!public! !
+displayLocalHierarchyOf:!private!updating! !
+isLocalHierarchyMode!private!testing! !
+isLocalHierarchyMode:!accessing!private! !
+onTipTextRequired:!event handling!private! !
+queryCommand:!commands!private! !
+resetFor:!commands!public! !
+toggleLocalHierarchy!commands!public! !
+!
 
 !Tools.ClassBrowserShell class methodsFor!
 
@@ -154,9 +156,11 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10520! !
-!Tools.ClassBrowserShell class categoriesFor: #displayOn:!displaying!public! !
-!Tools.ClassBrowserShell class categoriesFor: #icon!constants!public! !
-!Tools.ClassBrowserShell class categoriesFor: #initialize!initializing!private! !
-!Tools.ClassBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ClassBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
+!Tools.ClassBrowserShell class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

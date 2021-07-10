@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.ExternalArrayTest subclass: #'External.Tests.FLOATArrayTest'
 	instanceVariableNames: ''
@@ -16,6 +16,8 @@ arrayClass
 
 elementFromValue: anObject 
 	^anObject asFloat! !
-!External.Tests.FLOATArrayTest categoriesFor: #arrayClass!constants!private! !
-!External.Tests.FLOATArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
+!External.Tests.FLOATArrayTest categoriesForMethods!
+arrayClass!constants!private! !
+elementFromValue:!private!unit tests! !
+!
 

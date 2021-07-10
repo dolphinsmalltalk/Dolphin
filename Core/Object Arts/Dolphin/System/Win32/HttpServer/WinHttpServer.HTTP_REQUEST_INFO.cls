@@ -74,14 +74,16 @@ pInfo: anExternalArray
 
 printFields: aCollection on: aStream
 	aStream print: self info! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #info!accessing!public! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #InfoLength!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #InfoLength:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #InfoType!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #InfoType:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #pInfo!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #pInfo:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_INFO categoriesFor: #printFields:on:!development!printing!private! !
+!WinHttpServer.HTTP_REQUEST_INFO categoriesForMethods!
+info!accessing!public! !
+InfoLength!**compiled accessors**!private! !
+InfoLength:!**compiled accessors**!private! !
+InfoType!**compiled accessors**!private! !
+InfoType:!**compiled accessors**!private! !
+pInfo!**compiled accessors**!private! !
+pInfo:!**compiled accessors**!private! !
+printFields:on:!development!printing!private! !
+!
 
 !WinHttpServer.HTTP_REQUEST_INFO class methodsFor!
 
@@ -106,6 +108,8 @@ defineFields
 
 getFieldNames
 	^#(#InfoType #InfoLength #pInfo)! !
-!WinHttpServer.HTTP_REQUEST_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_REQUEST_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

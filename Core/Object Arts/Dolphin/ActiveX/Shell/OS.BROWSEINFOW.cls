@@ -89,19 +89,21 @@ title: text
 	We must hold onto the string to prevent it being prematurely GC'd."
 
 	self lpszTitle: (title := text asUtf16String)! !
-!OS.BROWSEINFOW categoriesFor: #displayName!accessing!public! !
-!OS.BROWSEINFOW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #flags:!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #hookFlag!constants!public! !
-!OS.BROWSEINFOW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #initialize:!initializing!private! !
-!OS.BROWSEINFOW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #lpszTitle:!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #ownerView:!accessing!public! !
-!OS.BROWSEINFOW categoriesFor: #pidlRoot!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #pidlRoot:!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #pszDisplayName:!**compiled accessors**!public! !
-!OS.BROWSEINFOW categoriesFor: #title:!accessing!public! !
+!OS.BROWSEINFOW categoriesForMethods!
+displayName!accessing!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hookFlag!constants!public! !
+hwndOwner:!**compiled accessors**!public! !
+initialize:!initializing!private! !
+lpfnHook:!**compiled accessors**!public! !
+lpszTitle:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+pidlRoot!**compiled accessors**!public! !
+pidlRoot:!**compiled accessors**!public! !
+pszDisplayName:!**compiled accessors**!public! !
+title:!accessing!public! !
+!
 
 !OS.BROWSEINFOW class methodsFor!
 
@@ -133,6 +135,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
-!OS.BROWSEINFOW class categoriesFor: #defineFields!public!template definition! !
-!OS.BROWSEINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BROWSEINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -154,30 +154,32 @@ stbSaveOn: anSTBOutFiler
 	handle isNil 
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
-!EmbeddedFormattedTextEdit categoriesFor: #actualOffset!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #column!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #cueBanner!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #cueBanner:!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #defaultOffset!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
-!EmbeddedFormattedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedFormattedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #editRectFor:!accessing!private! !
-!EmbeddedFormattedTextEdit categoriesFor: #expectsText!public!testing! !
-!EmbeddedFormattedTextEdit categoriesFor: #hasCueBanner!public!testing! !
-!EmbeddedFormattedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedFormattedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedFormattedTextEdit categoriesFor: #offset!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #offset:!accessing!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #show!operations!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #showIn:!operations!public! !
-!EmbeddedFormattedTextEdit categoriesFor: #stbSaveOn:!binary filing!public! !
+!EmbeddedFormattedTextEdit categoriesForMethods!
+actualOffset!accessing!public! !
+column!accessing!public! !
+createEmbeddedIn:!initialize/release!public! !
+cueBanner!accessing!public! !
+cueBanner:!accessing!public! !
+defaultOffset!accessing!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
+displayOnFormats!binary filing!public! !
+editRectFor:!accessing!private! !
+expectsText!public!testing! !
+hasCueBanner!public!testing! !
+hasEmbeddedHotTracking!public!testing! !
+isDisplayOwnerDrawn!public!testing! !
+offset!accessing!public! !
+offset:!accessing!public! !
+onCursoredLeft!event handling!public! !
+onKillFocus!event handling!public! !
+onRequestDeactivate!event handling!public! !
+preTranslateKeyboardInput:!event handling!public! !
+show!operations!public! !
+showIn:!operations!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !EmbeddedFormattedTextEdit class methodsFor!
 
@@ -190,5 +192,7 @@ newForDate
 		format: '__/__/____';
 		typeconverter: DateToText new;
 		yourself! !
-!EmbeddedFormattedTextEdit class categoriesFor: #newForDate!constants!development!public! !
+!EmbeddedFormattedTextEdit class categoriesForMethods!
+newForDate!constants!development!public! !
+!
 

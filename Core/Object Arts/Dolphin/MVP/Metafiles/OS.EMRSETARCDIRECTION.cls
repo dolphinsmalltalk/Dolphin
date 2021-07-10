@@ -35,8 +35,10 @@ iArcDirection: anInteger
 	"Set the receiver's 'iArcDirection' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iArcDirection put: anInteger! !
-!OS.EMRSETARCDIRECTION categoriesFor: #iArcDirection!**compiled accessors**!public! !
-!OS.EMRSETARCDIRECTION categoriesFor: #iArcDirection:!**compiled accessors**!public! !
+!OS.EMRSETARCDIRECTION categoriesForMethods!
+iArcDirection!**compiled accessors**!public! !
+iArcDirection:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETARCDIRECTION class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETARCDIRECTION}! !
-!OS.EMRSETARCDIRECTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETARCDIRECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETARCDIRECTION class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETARCDIRECTION class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

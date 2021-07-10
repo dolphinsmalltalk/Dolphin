@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.FloatTest'
 	instanceVariableNames: 'fpeMask'
@@ -1497,94 +1497,96 @@ testUnderflow
 
 zeroes
 	^#(-0.0 0.0)! !
-!Core.Tests.FloatTest categoriesFor: #assertFloat:equals:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #assertNegativeZero:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #continuationValues!constants!private! !
-!Core.Tests.FloatTest categoriesFor: #finiteSignificand:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #infinities!constants!private! !
-!Core.Tests.FloatTest categoriesFor: #normals!constants!private! !
-!Core.Tests.FloatTest categoriesFor: #predecessor:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #printString:decimalPlaces:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #printString:significantFigures:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #setUp!private!Running! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseInvalidOperation:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseOverflow:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseOverflow:withContinuation:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseUnderflow:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:status:withContinuations:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuation:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuations:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #successor:!helpers!private! !
-!Core.Tests.FloatTest categoriesFor: #tearDown!private!Running! !
-!Core.Tests.FloatTest categoriesFor: #testAbs!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testAdd!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testArcCos!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testArcSin!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testArcTan!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testArcTan2!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testAsInteger!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testAsTrueFraction!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testCeiling!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testCopy!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testCos!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testDenormalsAsTrueFraction!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testDivideByZero!public!Testing!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testEqualsColon!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testEqualsZero!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testExp!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testExponent!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testFloatCharacterization!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testFloor!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testFloorLog2!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testFractionAsFloat!public!Testing!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testFractionComparisons!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testFractionPart!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testGreaterThanInteger!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testHash!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testInfinityComparisons!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIntegerAsFloat!public!Testing!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIntegerComparisons!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIntegerComparisonsImprecise!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIntegerPart!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIsFinite!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIsLiteral!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIsNan!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testIsZero!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testLessThanFraction!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testLessThanInteger!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testLn!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testLog!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testNaNComparisons!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testNegated!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testNegative!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testOverflow!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPredecessorSuccessor!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlaces!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesFmax!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesFmin!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesInfinities!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesNans!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintOnDecimalPlacesZeroes!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintOnSignificantFigures!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintString!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testPrintStringAndReadBack!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testRaisedTo!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testReadFrom!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testReciprocal!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testRounded!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testSign!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testSignificandAsInteger!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testSin!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testSqrt!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testStoreOn!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testTimesTwoPower!public!Testing!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testTruncated!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #testUnderflow!public!unit tests! !
-!Core.Tests.FloatTest categoriesFor: #zeroes!constants!private! !
+!Core.Tests.FloatTest categoriesForMethods!
+assertFloat:equals:!helpers!private! !
+assertNegativeZero:!helpers!private! !
+continuationValues!constants!private! !
+finiteSignificand:!helpers!private! !
+infinities!constants!private! !
+normals!constants!private! !
+predecessor:!helpers!private! !
+printString:decimalPlaces:!helpers!private! !
+printString:significantFigures:!helpers!private! !
+setUp!private!Running! !
+shouldRaiseInvalidOperation:!helpers!private! !
+shouldRaiseOverflow:!helpers!private! !
+shouldRaiseOverflow:withContinuation:!helpers!private! !
+shouldRaiseUnderflow:!helpers!private! !
+shouldRaiseZeroDivide:!helpers!private! !
+shouldRaiseZeroDivide:status:withContinuations:!helpers!private! !
+shouldRaiseZeroDivide:withContinuation:!helpers!private! !
+shouldRaiseZeroDivide:withContinuations:!helpers!private! !
+successor:!helpers!private! !
+tearDown!private!Running! !
+testAbs!public!unit tests! !
+testAdd!public!unit tests! !
+testArcCos!public!unit tests! !
+testArcSin!public!unit tests! !
+testArcTan!public!unit tests! !
+testArcTan2!public!unit tests! !
+testAsInteger!public!unit tests! !
+testAsTrueFraction!public!unit tests! !
+testCeiling!public!unit tests! !
+testCopy!public!unit tests! !
+testCos!public!unit tests! !
+testDenormalsAsTrueFraction!public!unit tests! !
+testDivideByZero!public!Testing!unit tests! !
+testEqualsColon!public!unit tests! !
+testEqualsZero!public!unit tests! !
+testExp!public!unit tests! !
+testExponent!public!unit tests! !
+testFloatCharacterization!public!unit tests! !
+testFloor!public!unit tests! !
+testFloorLog2!public!unit tests! !
+testFractionAsFloat!public!Testing!unit tests! !
+testFractionComparisons!public!unit tests! !
+testFractionPart!public!unit tests! !
+testGreaterThanInteger!public!unit tests! !
+testHash!public!unit tests! !
+testInfinityComparisons!public!unit tests! !
+testIntegerAsFloat!public!Testing!unit tests! !
+testIntegerComparisons!public!unit tests! !
+testIntegerComparisonsImprecise!public!unit tests! !
+testIntegerPart!public!unit tests! !
+testIsFinite!public!unit tests! !
+testIsInfinite!public!unit tests! !
+testIsLiteral!public!unit tests! !
+testIsNan!public!unit tests! !
+testIsSelfEvaluating!public!unit tests! !
+testIsZero!public!unit tests! !
+testLessThanFraction!public!unit tests! !
+testLessThanInteger!public!unit tests! !
+testLn!public!unit tests! !
+testLog!public!unit tests! !
+testNaNComparisons!public!unit tests! !
+testNegated!public!unit tests! !
+testNegative!public!unit tests! !
+testOverflow!public!unit tests! !
+testPredecessorSuccessor!public!unit tests! !
+testPrintOnDecimalPlaces!public!unit tests! !
+testPrintOnDecimalPlacesFmax!public!unit tests! !
+testPrintOnDecimalPlacesFmin!public!unit tests! !
+testPrintOnDecimalPlacesInfinities!public!unit tests! !
+testPrintOnDecimalPlacesNans!public!unit tests! !
+testPrintOnDecimalPlacesZeroes!public!unit tests! !
+testPrintOnSignificantFigures!public!unit tests! !
+testPrintString!public!unit tests! !
+testPrintStringAndReadBack!public!unit tests! !
+testRaisedTo!public!unit tests! !
+testRaisedToInteger!public!unit tests! !
+testReadFrom!public!unit tests! !
+testReciprocal!public!unit tests! !
+testRounded!public!unit tests! !
+testSign!public!unit tests! !
+testSignificandAsInteger!public!unit tests! !
+testSin!public!unit tests! !
+testSqrt!public!unit tests! !
+testStoreOn!public!unit tests! !
+testTimesTwoPower!public!Testing!unit tests! !
+testTruncated!public!unit tests! !
+testUnderflow!public!unit tests! !
+zeroes!constants!private! !
+!
 
 !Core.Tests.FloatTest class methodsFor!
 
@@ -1618,7 +1620,9 @@ ulp: aFloat
 	^exponent < Float emin
 		ifTrue: [Float fminDenormalized]
 		ifFalse: [Float epsilon timesTwoPower: exponent]! !
-!Core.Tests.FloatTest class categoriesFor: #predecessor:!helpers!private! !
-!Core.Tests.FloatTest class categoriesFor: #successor:!helpers!private! !
-!Core.Tests.FloatTest class categoriesFor: #ulp:!helpers!private! !
+!Core.Tests.FloatTest class categoriesForMethods!
+predecessor:!helpers!private! !
+successor:!helpers!private! !
+ulp:!helpers!private! !
+!
 

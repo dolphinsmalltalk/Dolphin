@@ -386,42 +386,44 @@ toggleStatusBar
 	| statusBar |
 	statusBar := self statusBar.
 	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show]! !
-!UI.Examples.RegEdit categoriesFor: #aboutRegistryEditor!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #additionalAccelerators!constants!private! !
-!UI.Examples.RegEdit categoriesFor: #chooseFont!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #copyKeyName!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #createComponents!initializing!public! !
-!UI.Examples.RegEdit categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.Examples.RegEdit categoriesFor: #delete!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #deleteSelectedKey!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #deleteSelectedValue!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #exportKey:toFile:!filing!private! !
-!UI.Examples.RegEdit categoriesFor: #exportRegistryFile!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #fileTypes!constants!private! !
-!UI.Examples.RegEdit categoriesFor: #importRegistryFile!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #initialize!initializing!private! !
-!UI.Examples.RegEdit categoriesFor: #newBinaryValue!commands!public! !
-!UI.Examples.RegEdit categoriesFor: #newDWORDValue!commands!public! !
-!UI.Examples.RegEdit categoriesFor: #newKey!commands!public! !
-!UI.Examples.RegEdit categoriesFor: #newStringValue!commands!public! !
-!UI.Examples.RegEdit categoriesFor: #newValue:!commands!public! !
-!UI.Examples.RegEdit categoriesFor: #newValueName!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #onAboutToRenameKey:accept:!event handling!public! !
-!UI.Examples.RegEdit categoriesFor: #onAboutToRenameValue:accept:!event handling!public! !
-!UI.Examples.RegEdit categoriesFor: #onKey:renamedTo:accept:!event handling!public! !
-!UI.Examples.RegEdit categoriesFor: #onKeySelected!event handling!private! !
-!UI.Examples.RegEdit categoriesFor: #onValue:renamedTo:accept:!event handling!public! !
-!UI.Examples.RegEdit categoriesFor: #onViewOpened!event handling!public! !
-!UI.Examples.RegEdit categoriesFor: #queryCommand:!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #refresh!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #rename!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #renameSelectedKey!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #renameSelectedValue!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #resourceLib!constants!public! !
-!UI.Examples.RegEdit categoriesFor: #selectedKey!accessing!public! !
-!UI.Examples.RegEdit categoriesFor: #selectedValue!accessing!public! !
-!UI.Examples.RegEdit categoriesFor: #statusBar!commands!private! !
-!UI.Examples.RegEdit categoriesFor: #toggleStatusBar!commands!private! !
+!UI.Examples.RegEdit categoriesForMethods!
+aboutRegistryEditor!commands!private! !
+additionalAccelerators!constants!private! !
+chooseFont!commands!private! !
+copyKeyName!commands!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+delete!commands!private! !
+deleteSelectedKey!commands!private! !
+deleteSelectedValue!commands!private! !
+exportKey:toFile:!filing!private! !
+exportRegistryFile!commands!private! !
+fileTypes!constants!private! !
+importRegistryFile!commands!private! !
+initialize!initializing!private! !
+newBinaryValue!commands!public! !
+newDWORDValue!commands!public! !
+newKey!commands!public! !
+newStringValue!commands!public! !
+newValue:!commands!public! !
+newValueName!commands!private! !
+onAboutToRenameKey:accept:!event handling!public! !
+onAboutToRenameValue:accept:!event handling!public! !
+onKey:renamedTo:accept:!event handling!public! !
+onKeySelected!event handling!private! !
+onValue:renamedTo:accept:!event handling!public! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+refresh!commands!private! !
+rename!commands!private! !
+renameSelectedKey!commands!private! !
+renameSelectedValue!commands!private! !
+resourceLib!constants!public! !
+selectedKey!accessing!public! !
+selectedValue!accessing!public! !
+statusBar!commands!private! !
+toggleStatusBar!commands!private! !
+!
 
 !UI.Examples.RegEdit class methodsFor!
 
@@ -519,16 +521,18 @@ stringIcon
 	"Answers an Icon that can be used to string values."
 
 	^RegKeyValues icon! !
-!UI.Examples.RegEdit class categoriesFor: #about!enquiries!private! !
-!UI.Examples.RegEdit class categoriesFor: #binaryIcon!constants!public! !
-!UI.Examples.RegEdit class categoriesFor: #displayOn:!displaying!public! !
-!UI.Examples.RegEdit class categoriesFor: #displayStringForValue:!displaying!private! !
-!UI.Examples.RegEdit class categoriesFor: #icon!constants!public! !
-!UI.Examples.RegEdit class categoriesFor: #iconFor:!constants!displaying!private! !
-!UI.Examples.RegEdit class categoriesFor: #initialize!development!initializing!private! !
-!UI.Examples.RegEdit class categoriesFor: #keyIcon!constants!public! !
-!UI.Examples.RegEdit class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.Examples.RegEdit class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Examples.RegEdit class categoriesFor: #shutdownOnExit!public!testing! !
-!UI.Examples.RegEdit class categoriesFor: #stringIcon!constants!public! !
+!UI.Examples.RegEdit class categoriesForMethods!
+about!enquiries!private! !
+binaryIcon!constants!public! !
+displayOn:!displaying!public! !
+displayStringForValue:!displaying!private! !
+icon!constants!public! !
+iconFor:!constants!displaying!private! !
+initialize!development!initializing!private! !
+keyIcon!constants!public! !
+onPreStripImage!class hierarchy-removing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+stringIcon!constants!public! !
+!
 

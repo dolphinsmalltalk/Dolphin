@@ -36,10 +36,12 @@ flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_flags put: anInteger! !
-!OS.GETTEXTEX categoriesFor: #cb!**compiled accessors**!public! !
-!OS.GETTEXTEX categoriesFor: #cb:!**compiled accessors**!public! !
-!OS.GETTEXTEX categoriesFor: #codepage:!**compiled accessors**!public! !
-!OS.GETTEXTEX categoriesFor: #flags:!**compiled accessors**!public! !
+!OS.GETTEXTEX categoriesForMethods!
+cb!**compiled accessors**!public! !
+cb:!**compiled accessors**!public! !
+codepage:!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+!
 
 !OS.GETTEXTEX class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#cb #flags #codepage)! !
-!OS.GETTEXTEX class categoriesFor: #defineFields!public!template definition! !
-!OS.GETTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.GETTEXTEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -375,53 +375,55 @@ updateWindow
 		ifTrue: [self displayErrors]
 		ifFalse: [result hasFailures ifTrue: [self displayFail] ifFalse: [self displayPass]].
 	self updateDefects! !
-!Tools.UnitTestPlugin categoriesFor: #allContextMenus!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #allMenuBarMenus!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #classUnderTest!Accessing!private! !
-!Tools.UnitTestPlugin categoriesFor: #createComponents!initializing!private! !
-!Tools.UnitTestPlugin categoriesFor: #createSchematicWiring!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #currentTestMethodSelectors!commands!private! !
-!Tools.UnitTestPlugin categoriesFor: #debugTest!commands!public! !
-!Tools.UnitTestPlugin categoriesFor: #debugTest:!operations!private! !
-!Tools.UnitTestPlugin categoriesFor: #defaultHelpId!constants!public! !
-!Tools.UnitTestPlugin categoriesFor: #displayColor:!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayDefects:!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayDetails:!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayErrors!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayFail!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayMode:!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayOn:!displaying!private! !
-!Tools.UnitTestPlugin categoriesFor: #displayPass!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayReset!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #displayRunning!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #hasDefects!public!testing! !
-!Tools.UnitTestPlugin categoriesFor: #hasIndividualTests!public!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #hasTestClass!public!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #icon!accessing!public! !
-!Tools.UnitTestPlugin categoriesFor: #icon:!accessing!private! !
-!Tools.UnitTestPlugin categoriesFor: #installMenuCommands!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #installTestCommandsInMethodMenu:!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #isBrowserLookingAtTestClass!private!testing! !
-!Tools.UnitTestPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
-!Tools.UnitTestPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!Tools.UnitTestPlugin categoriesFor: #onViewOpened!event handling!private! !
-!Tools.UnitTestPlugin categoriesFor: #queryCommand:!commands!private! !
-!Tools.UnitTestPlugin categoriesFor: #refreshIcon!operations!private! !
-!Tools.UnitTestPlugin categoriesFor: #runIndividualTests!commands!public! !
-!Tools.UnitTestPlugin categoriesFor: #runSuite:!operations!private! !
-!Tools.UnitTestPlugin categoriesFor: #runTests!commands!public! !
-!Tools.UnitTestPlugin categoriesFor: #startAutoSwitchProcess!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #stopAutoSwitchProcess!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #testClass!Accessing!private! !
-!Tools.UnitTestPlugin categoriesFor: #testSuite!accessing!public! !
-!Tools.UnitTestPlugin categoriesFor: #testSuiteName!event handling!private! !
-!Tools.UnitTestPlugin categoriesFor: #toggleToTests!commands!public! !
-!Tools.UnitTestPlugin categoriesFor: #toggleToTestsClass!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #toggleToTestsClassDescription!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #update:!helpers!private! !
-!Tools.UnitTestPlugin categoriesFor: #updateDefects!private!Updating! !
-!Tools.UnitTestPlugin categoriesFor: #updateWindow!private!Updating! !
+!Tools.UnitTestPlugin categoriesForMethods!
+allContextMenus!helpers!private! !
+allMenuBarMenus!helpers!private! !
+classUnderTest!Accessing!private! !
+createComponents!initializing!private! !
+createSchematicWiring!helpers!private! !
+currentTestMethodSelectors!commands!private! !
+debugTest!commands!public! !
+debugTest:!operations!private! !
+defaultHelpId!constants!public! !
+displayColor:!private!Updating! !
+displayDefects:!private!Updating! !
+displayDetails:!private!Updating! !
+displayErrors!private!Updating! !
+displayFail!private!Updating! !
+displayMode:!private!Updating! !
+displayOn:!displaying!private! !
+displayPass!private!Updating! !
+displayReset!private!Updating! !
+displayRunning!private!Updating! !
+hasDefects!public!testing! !
+hasIndividualTests!public!Updating! !
+hasTestClass!public!Updating! !
+icon!accessing!public! !
+icon:!accessing!private! !
+installMenuCommands!helpers!private! !
+installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
+installTestCommandsInMethodMenu:!helpers!private! !
+isBrowserLookingAtTestClass!private!testing! !
+onBrowserClassSelected!event handling!private! !
+onBrowserMethodSelected!event handling!private! !
+onViewOpened!event handling!private! !
+queryCommand:!commands!private! !
+refreshIcon!operations!private! !
+runIndividualTests!commands!public! !
+runSuite:!operations!private! !
+runTests!commands!public! !
+startAutoSwitchProcess!helpers!private! !
+stopAutoSwitchProcess!helpers!private! !
+testClass!Accessing!private! !
+testSuite!accessing!public! !
+testSuiteName!event handling!private! !
+toggleToTests!commands!public! !
+toggleToTestsClass!helpers!private! !
+toggleToTestsClassDescription!helpers!private! !
+update:!helpers!private! !
+updateDefects!private!Updating! !
+updateWindow!private!Updating! !
+!
 
 !Tools.UnitTestPlugin class methodsFor!
 
@@ -535,26 +537,28 @@ runningColor
 
 runningColor: aColor 
 	RunningColor := aColor = Color default ifTrue: [self defaultRunningColor] ifFalse: [aColor]! !
-!Tools.UnitTestPlugin class categoriesFor: #autoSwitchDelayMs!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #autoSwitchDelayMs:!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #defaultAutoSwitchDelay!constants!private! !
-!Tools.UnitTestPlugin class categoriesFor: #defaultErrorColor!constants!private! !
-!Tools.UnitTestPlugin class categoriesFor: #defaultFailColor!constants!private! !
-!Tools.UnitTestPlugin class categoriesFor: #defaultNoTestsColor!private!Updating! !
-!Tools.UnitTestPlugin class categoriesFor: #defaultPassColor!constants!private! !
-!Tools.UnitTestPlugin class categoriesFor: #defaultRunningColor!constants!private! !
-!Tools.UnitTestPlugin class categoriesFor: #errorColor!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #errorColor:!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #failColor!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #failColor:!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #icon!constants!public! !
-!Tools.UnitTestPlugin class categoriesFor: #initialize!class initialization!private! !
-!Tools.UnitTestPlugin class categoriesFor: #noTestsColor!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #noTestsColor:!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #passColor!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #passColor:!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #publishedAspects!private! !
-!Tools.UnitTestPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.UnitTestPlugin class categoriesFor: #runningColor!accessing!public! !
-!Tools.UnitTestPlugin class categoriesFor: #runningColor:!accessing!public! !
+!Tools.UnitTestPlugin class categoriesForMethods!
+autoSwitchDelayMs!accessing!public! !
+autoSwitchDelayMs:!accessing!public! !
+defaultAutoSwitchDelay!constants!private! !
+defaultErrorColor!constants!private! !
+defaultFailColor!constants!private! !
+defaultNoTestsColor!private!Updating! !
+defaultPassColor!constants!private! !
+defaultRunningColor!constants!private! !
+errorColor!accessing!public! !
+errorColor:!accessing!public! !
+failColor!accessing!public! !
+failColor:!accessing!public! !
+icon!constants!public! !
+initialize!class initialization!private! !
+noTestsColor!accessing!public! !
+noTestsColor:!accessing!public! !
+passColor!accessing!public! !
+passColor:!accessing!public! !
+publishedAspects!private! !
+resource_Default_view!public!resources-views! !
+runningColor!accessing!public! !
+runningColor:!accessing!public! !
+!
 

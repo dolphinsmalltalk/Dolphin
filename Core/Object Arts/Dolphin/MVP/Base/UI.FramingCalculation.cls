@@ -68,16 +68,18 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler writePreambleFor: self.
 	anSTBOutFiler nextPut: self name! !
-!UI.FramingCalculation categoriesFor: #calculateEdge:context:!calculations!public! !
-!UI.FramingCalculation categoriesFor: #calculateOffset:context:!calculations!public! !
-!UI.FramingCalculation categoriesFor: #displayOn:!displaying!public! !
-!UI.FramingCalculation categoriesFor: #isIndependent!public!testing! !
-!UI.FramingCalculation categoriesFor: #isProportional!public!testing! !
-!UI.FramingCalculation categoriesFor: #isVertical!public!testing! !
-!UI.FramingCalculation categoriesFor: #name!accessing!public! !
-!UI.FramingCalculation categoriesFor: #name:framingBlock:offsetBlock:flags:!initializing!private! !
-!UI.FramingCalculation categoriesFor: #printOn:!public! !
-!UI.FramingCalculation categoriesFor: #stbSaveOn:!binary filing!private! !
+!UI.FramingCalculation categoriesForMethods!
+calculateEdge:context:!calculations!public! !
+calculateOffset:context:!calculations!public! !
+displayOn:!displaying!public! !
+isIndependent!public!testing! !
+isProportional!public!testing! !
+isVertical!public!testing! !
+name!accessing!public! !
+name:framingBlock:offsetBlock:flags:!initializing!private! !
+printOn:!public! !
+stbSaveOn:!binary filing!private! !
+!
 
 !UI.FramingCalculation class methodsFor!
 
@@ -305,26 +307,28 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := self perform: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
-!UI.FramingCalculation class categoriesFor: #centerRelativeParentHeight!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #centerRelativeParentWidth!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedParentBottom!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedParentLeft!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedParentRight!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedParentTop!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedPreviousBottom!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedPreviousLeft!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedPreviousRight!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedPreviousTop!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedViewBottom!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedViewLeft!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedViewRight!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #fixedViewTop!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #initialize!initializing!public! !
-!UI.FramingCalculation class categoriesFor: #lookupCalc:framingBlock:offsetBlock:flags:!accessing!private! !
-!UI.FramingCalculation class categoriesFor: #newName:framingBlock:offsetBlock:flags:!instance creation!private! !
-!UI.FramingCalculation class categoriesFor: #onPostStripImage!event handling!private! !
-!UI.FramingCalculation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.FramingCalculation class categoriesFor: #relativeParentHeight!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #relativeParentWidth!instance creation!public! !
-!UI.FramingCalculation class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!UI.FramingCalculation class categoriesForMethods!
+centerRelativeParentHeight!instance creation!public! !
+centerRelativeParentWidth!instance creation!public! !
+fixedParentBottom!instance creation!public! !
+fixedParentLeft!instance creation!public! !
+fixedParentRight!instance creation!public! !
+fixedParentTop!instance creation!public! !
+fixedPreviousBottom!instance creation!public! !
+fixedPreviousLeft!instance creation!public! !
+fixedPreviousRight!instance creation!public! !
+fixedPreviousTop!instance creation!public! !
+fixedViewBottom!instance creation!public! !
+fixedViewLeft!instance creation!public! !
+fixedViewRight!instance creation!public! !
+fixedViewTop!instance creation!public! !
+initialize!initializing!public! !
+lookupCalc:framingBlock:offsetBlock:flags:!accessing!private! !
+newName:framingBlock:offsetBlock:flags:!instance creation!private! !
+onPostStripImage!event handling!private! !
+onPreStripImage!class hierarchy-removing!private! !
+relativeParentHeight!instance creation!public! !
+relativeParentWidth!instance creation!public! !
+stbReadFrom:format:!binary filing!public! !
+!
 

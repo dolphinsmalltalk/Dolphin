@@ -68,13 +68,15 @@ voice: voiceID channel: channel
 		msg: MidiProgramChange
 		with: voiceID
 		with: channel! !
-!OS.MIDIOut categoriesFor: #channel:msg:with:with:!public! !
-!OS.MIDIOut categoriesFor: #close!public! !
-!OS.MIDIOut categoriesFor: #controller:value:!public! !
-!OS.MIDIOut categoriesFor: #keyDown:velocity:!public! !
-!OS.MIDIOut categoriesFor: #keyDown:velocity:channel:!public! !
-!OS.MIDIOut categoriesFor: #keyUp:!public! !
-!OS.MIDIOut categoriesFor: #keyUp:channel:!public! !
-!OS.MIDIOut categoriesFor: #openDeviceID:!public! !
-!OS.MIDIOut categoriesFor: #voice:channel:!public! !
+!OS.MIDIOut categoriesForMethods!
+channel:msg:with:with:!public! !
+close!public! !
+controller:value:!public! !
+keyDown:velocity:!public! !
+keyDown:velocity:channel:!public! !
+keyUp:!public! !
+keyUp:channel:!public! !
+openDeviceID:!public! !
+voice:channel:!public! !
+!
 

@@ -103,16 +103,18 @@ setTimer: idInteger interval: integerOrDuration
 		nIDEvent: idInteger
 		uElapse: integerOrDuration asParameter
 		lpTimerFunc: nil! !
-!Kernel.PostedActionWindow categoriesFor: #asParameter!converting!public! !
-!Kernel.PostedActionWindow categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
-!Kernel.PostedActionWindow categoriesFor: #evaluateNextAction!helpers!private! !
-!Kernel.PostedActionWindow categoriesFor: #evaluatePendingActions!helpers!private! !
-!Kernel.PostedActionWindow categoriesFor: #handle:!accessing!private! !
-!Kernel.PostedActionWindow categoriesFor: #isPersistentView!private!testing! !
-!Kernel.PostedActionWindow categoriesFor: #isView!accessing!private!testing! !
-!Kernel.PostedActionWindow categoriesFor: #killTimer:!private!timers! !
-!Kernel.PostedActionWindow categoriesFor: #onStartup!event handling!private! !
-!Kernel.PostedActionWindow categoriesFor: #postAction:!operations!private! !
-!Kernel.PostedActionWindow categoriesFor: #preTranslateMessage:!dispatching!private! !
-!Kernel.PostedActionWindow categoriesFor: #setTimer:interval:!private!timers! !
+!Kernel.PostedActionWindow categoriesForMethods!
+asParameter!converting!public! !
+dispatchMessage:wParam:lParam:!dispatching!private! !
+evaluateNextAction!helpers!private! !
+evaluatePendingActions!helpers!private! !
+handle:!accessing!private! !
+isPersistentView!private!testing! !
+isView!accessing!private!testing! !
+killTimer:!private!timers! !
+onStartup!event handling!private! !
+postAction:!operations!private! !
+preTranslateMessage:!dispatching!private! !
+setTimer:interval:!private!timers! !
+!
 

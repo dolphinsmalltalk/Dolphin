@@ -79,17 +79,19 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_top put: anInteger! !
-!OS.RECTL categoriesFor: #asRectangle!converting!public! !
-!OS.RECTL categoriesFor: #bottom!**compiled accessors**!public! !
-!OS.RECTL categoriesFor: #bottom:!**compiled accessors**!public! !
-!OS.RECTL categoriesFor: #bottomRight!accessing!public! !
-!OS.RECTL categoriesFor: #extent!accessing!public! !
-!OS.RECTL categoriesFor: #left!**compiled accessors**!public! !
-!OS.RECTL categoriesFor: #left:!**compiled accessors**!public! !
-!OS.RECTL categoriesFor: #right!**compiled accessors**!public! !
-!OS.RECTL categoriesFor: #right:!**compiled accessors**!public! !
-!OS.RECTL categoriesFor: #top!**compiled accessors**!public! !
-!OS.RECTL categoriesFor: #top:!**compiled accessors**!public! !
+!OS.RECTL categoriesForMethods!
+asRectangle!converting!public! !
+bottom!**compiled accessors**!public! !
+bottom:!**compiled accessors**!public! !
+bottomRight!accessing!public! !
+extent!accessing!public! !
+left!**compiled accessors**!public! !
+left:!**compiled accessors**!public! !
+right!**compiled accessors**!public! !
+right:!**compiled accessors**!public! !
+top!**compiled accessors**!public! !
+top:!**compiled accessors**!public! !
+!
 
 !OS.RECTL class methodsFor!
 
@@ -136,8 +138,10 @@ left: leftInteger top: topInteger right: rightInteger bottom: bottomInteger
 				sdwordAtOffset: 8 put: rightInteger;
 				sdwordAtOffset: 12 put: bottomInteger;
 				yourself)! !
-!OS.RECTL class categoriesFor: #defineFields!public!template definition! !
-!OS.RECTL class categoriesFor: #extent:!instance creation!public! !
-!OS.RECTL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.RECTL class categoriesFor: #left:top:right:bottom:!instance creation!public! !
+!OS.RECTL class categoriesForMethods!
+defineFields!public!template definition! !
+extent:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+left:top:right:bottom:!instance creation!public! !
+!
 

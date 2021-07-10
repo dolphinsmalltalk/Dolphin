@@ -190,19 +190,21 @@ width: w height: h depth: d
 
 	extent := w@h.
 	depth := d! !
-!Graphics.DIBSection categoriesFor: #baseLoadFlags!constants!public! !
-!Graphics.DIBSection categoriesFor: #cacheInfo!helpers!private! !
-!Graphics.DIBSection categoriesFor: #clearCached!initializing!private! !
-!Graphics.DIBSection categoriesFor: #copyToGlobalHeap!accessing!private! !
-!Graphics.DIBSection categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.DIBSection categoriesFor: #depth!accessing!public! !
-!Graphics.DIBSection categoriesFor: #erase!drawing!private! !
-!Graphics.DIBSection categoriesFor: #errorInappropriateColorTable:!exceptions!public! !
-!Graphics.DIBSection categoriesFor: #getColorTable!accessing!public! !
-!Graphics.DIBSection categoriesFor: #getDIBSECTION!accessing!public! !
-!Graphics.DIBSection categoriesFor: #imageBits!accessing!public! !
-!Graphics.DIBSection categoriesFor: #setColorTable:!accessing!public! !
-!Graphics.DIBSection categoriesFor: #width:height:depth:!initializing!private! !
+!Graphics.DIBSection categoriesForMethods!
+baseLoadFlags!constants!public! !
+cacheInfo!helpers!private! !
+clearCached!initializing!private! !
+copyToGlobalHeap!accessing!private! !
+createHandle!private!realizing/unrealizing! !
+depth!accessing!public! !
+erase!drawing!private! !
+errorInappropriateColorTable:!exceptions!public! !
+getColorTable!accessing!public! !
+getDIBSECTION!accessing!public! !
+imageBits!accessing!public! !
+setColorTable:!accessing!public! !
+width:height:depth:!initializing!private! !
+!
 
 !Graphics.DIBSection class methodsFor!
 
@@ -259,8 +261,10 @@ width: width height: height depth: depth
 		height: height 
 		depth: depth
 		! !
-!Graphics.DIBSection class categoriesFor: #extent:!instance creation!public! !
-!Graphics.DIBSection class categoriesFor: #fromGlobalHandle:!instance creation!public! !
-!Graphics.DIBSection class categoriesFor: #width:height:!instance creation!public! !
-!Graphics.DIBSection class categoriesFor: #width:height:depth:!instance creation!public! !
+!Graphics.DIBSection class categoriesForMethods!
+extent:!instance creation!public! !
+fromGlobalHandle:!instance creation!public! !
+width:height:!instance creation!public! !
+width:height:depth:!instance creation!public! !
+!
 

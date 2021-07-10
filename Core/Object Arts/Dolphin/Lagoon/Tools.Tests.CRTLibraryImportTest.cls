@@ -60,8 +60,10 @@ testStubCrtExports
 						separatedBy: [desc nextPutAll: ', '].
 					desc contents]]
 					ensure: [l close]]! !
-!Tools.Tests.CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
-!Tools.Tests.CRTLibraryImportTest categoriesFor: #minimumVmVersion!accessing!public! !
-!Tools.Tests.CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
-!Tools.Tests.CRTLibraryImportTest categoriesFor: #testStubCrtExports!public!unit tests! !
+!Tools.Tests.CRTLibraryImportTest categoriesForMethods!
+devOnlyCrtFunctions!constants!private! !
+minimumVmVersion!accessing!public! !
+stubNames!constants!private! !
+testStubCrtExports!public!unit tests! !
+!
 

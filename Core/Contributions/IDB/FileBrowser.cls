@@ -322,34 +322,36 @@ updateFilesKeepingSelection
 	self onFolderSelectionChanged.
 	selection notNil 
 		ifTrue: [files selectionOrNil: (files list detect: [:each | each name = selection] ifNone: [])]! !
-!FileBrowser categoriesFor: #about!commands!public! !
-!FileBrowser categoriesFor: #askAboutHex:!helpers!public! !
-!FileBrowser categoriesFor: #canFileIn!commands!public!testing! !
-!FileBrowser categoriesFor: #canPrint!printing!public!testing! !
-!FileBrowser categoriesFor: #clearTabs!helpers!public! !
-!FileBrowser categoriesFor: #createComponents!initializing!public! !
-!FileBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!FileBrowser categoriesFor: #enableHex!commands!public! !
-!FileBrowser categoriesFor: #fileDelete!commands!public! !
-!FileBrowser categoriesFor: #fileIn!commands!public! !
-!FileBrowser categoriesFor: #fileNew!commands!public! !
-!FileBrowser categoriesFor: #fileOpen!commands!public! !
-!FileBrowser categoriesFor: #fileSave!commands!public! !
-!FileBrowser categoriesFor: #fileSaveAs!commands!public! !
-!FileBrowser categoriesFor: #onCloseRequested:!event handling!public! !
-!FileBrowser categoriesFor: #onFileSelectionChanged!event handling!public! !
-!FileBrowser categoriesFor: #onFolderSelectionChanged!event handling!public! !
-!FileBrowser categoriesFor: #onSelectionChanging:!event handling!public! !
-!FileBrowser categoriesFor: #onSessionStarted!event handling!public! !
-!FileBrowser categoriesFor: #onViewOpened!event handling!public! !
-!FileBrowser categoriesFor: #promptForChanges!helpers!public! !
-!FileBrowser categoriesFor: #queryCommand:!commands!public! !
-!FileBrowser categoriesFor: #removeCr!commands!public! !
-!FileBrowser categoriesFor: #saveFile:!helpers!public! !
-!FileBrowser categoriesFor: #setHTML:!helpers!public! !
-!FileBrowser categoriesFor: #setImage:!helpers!public! !
-!FileBrowser categoriesFor: #showImageAs:!commands!public! !
-!FileBrowser categoriesFor: #updateFilesKeepingSelection!helpers!public! !
+!FileBrowser categoriesForMethods!
+about!commands!public! !
+askAboutHex:!helpers!public! !
+canFileIn!commands!public!testing! !
+canPrint!printing!public!testing! !
+clearTabs!helpers!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+enableHex!commands!public! !
+fileDelete!commands!public! !
+fileIn!commands!public! !
+fileNew!commands!public! !
+fileOpen!commands!public! !
+fileSave!commands!public! !
+fileSaveAs!commands!public! !
+onCloseRequested:!event handling!public! !
+onFileSelectionChanged!event handling!public! !
+onFolderSelectionChanged!event handling!public! !
+onSelectionChanging:!event handling!public! !
+onSessionStarted!event handling!public! !
+onViewOpened!event handling!public! !
+promptForChanges!helpers!public! !
+queryCommand:!commands!public! !
+removeCr!commands!public! !
+saveFile:!helpers!public! !
+setHTML:!helpers!public! !
+setImage:!helpers!public! !
+showImageAs:!commands!public! !
+updateFilesKeepingSelection!helpers!public! !
+!
 
 !FileBrowser class methodsFor!
 
@@ -456,21 +458,23 @@ warnings: aBoolean
 	"Set whether warnings are enabled"
 
 	Warnings := aBoolean! !
-!FileBrowser class categoriesFor: #defaultFolder!accessing!public! !
-!FileBrowser class categoriesFor: #displayOn:!operations!public! !
-!FileBrowser class categoriesFor: #hexEnabled!accessing!public! !
-!FileBrowser class categoriesFor: #hexEnabled:!accessing!public! !
-!FileBrowser class categoriesFor: #hexFont!accessing!public! !
-!FileBrowser class categoriesFor: #hexFont:!accessing!public! !
-!FileBrowser class categoriesFor: #icon!constants!public! !
-!FileBrowser class categoriesFor: #publishedAspects!initializing!public! !
-!FileBrowser class categoriesFor: #removeCr!accessing!public! !
-!FileBrowser class categoriesFor: #removeCr:!accessing!public! !
-!FileBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!FileBrowser class categoriesFor: #rootFolder!accessing!public! !
-!FileBrowser class categoriesFor: #rootFolder:!accessing!public! !
-!FileBrowser class categoriesFor: #textFont!accessing!public! !
-!FileBrowser class categoriesFor: #textFont:!accessing!public! !
-!FileBrowser class categoriesFor: #warnings!accessing!public! !
-!FileBrowser class categoriesFor: #warnings:!accessing!public! !
+!FileBrowser class categoriesForMethods!
+defaultFolder!accessing!public! !
+displayOn:!operations!public! !
+hexEnabled!accessing!public! !
+hexEnabled:!accessing!public! !
+hexFont!accessing!public! !
+hexFont:!accessing!public! !
+icon!constants!public! !
+publishedAspects!initializing!public! !
+removeCr!accessing!public! !
+removeCr:!accessing!public! !
+resource_Default_view!public!resources-views! !
+rootFolder!accessing!public! !
+rootFolder:!accessing!public! !
+textFont!accessing!public! !
+textFont:!accessing!public! !
+warnings!accessing!public! !
+warnings:!accessing!public! !
+!
 

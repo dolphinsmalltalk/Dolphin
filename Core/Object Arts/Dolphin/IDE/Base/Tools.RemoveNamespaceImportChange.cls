@@ -28,10 +28,12 @@ changeSymbol
 
 variableName
 	^variable asString! !
-!Tools.RemoveNamespaceImportChange categoriesFor: #asUndoOperation!converting!public! !
-!Tools.RemoveNamespaceImportChange categoriesFor: #changeObject!private! !
-!Tools.RemoveNamespaceImportChange categoriesFor: #changesFileTemplate!constants!private! !
-!Tools.RemoveNamespaceImportChange categoriesFor: #changeStringFormat!constants!printing!private! !
-!Tools.RemoveNamespaceImportChange categoriesFor: #changeSymbol!constants!private! !
-!Tools.RemoveNamespaceImportChange categoriesFor: #variableName!accessing!private! !
+!Tools.RemoveNamespaceImportChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeObject!private! !
+changesFileTemplate!constants!private! !
+changeStringFormat!constants!printing!private! !
+changeSymbol!constants!private! !
+variableName!accessing!private! !
+!
 

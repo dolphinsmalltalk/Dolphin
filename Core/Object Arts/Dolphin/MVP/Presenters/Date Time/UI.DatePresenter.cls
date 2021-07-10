@@ -34,8 +34,10 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1140916224 1025 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920675248 853062 1 ##(UI.DateToText) nil 8 '' nil nil 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 690 251 39 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 29 0 0 0] 8 #() 690 193 193 nil 27)! !
-!UI.DatePresenter class categoriesFor: #defaultModel!models!public! !
-!UI.DatePresenter class categoriesFor: #defaultView!constants!public!views! !
-!UI.DatePresenter class categoriesFor: #icon!constants!public! !
-!UI.DatePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.DatePresenter class categoriesForMethods!
+defaultModel!models!public! !
+defaultView!constants!public!views! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

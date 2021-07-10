@@ -106,9 +106,11 @@ snatchAbbreviation
 				[(key occurrencesOf: $:) > 0 
 					ifTrue: [^MessageBox warning: 'Do not enter an abbreviation containing a colon.'].
 				self class abbreviations at: key put: text]! !
-!SmalltalkWorkspace categoriesFor: #expandAbbreviation!commands!private! !
-!SmalltalkWorkspace categoriesFor: #findSeparatorLeftAndKey:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #snatchAbbreviation!commands!private! !
+!SmalltalkWorkspace categoriesForMethods!
+expandAbbreviation!commands!private! !
+findSeparatorLeftAndKey:!helpers!private! !
+snatchAbbreviation!commands!private! !
+!
 
 !SmalltalkWorkspace class methodsFor!
 
@@ -158,8 +160,10 @@ defaultAbbreviations
 		at: 'abb' put: 'SmalltalkWorkspace abbreviations inspect';
 		shrink;
 		yourself! !
-!SmalltalkWorkspace class categoriesFor: #abbreviations!constants!development!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultAbbreviations!constants!development!private! !
+!SmalltalkWorkspace class categoriesForMethods!
+abbreviations!constants!development!public! !
+defaultAbbreviations!constants!development!private! !
+!
 
 "End of package definition"!
 

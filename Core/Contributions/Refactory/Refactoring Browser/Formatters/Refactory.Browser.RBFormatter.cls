@@ -364,42 +364,44 @@ visitSequenceNode: aSequenceNode
 	self formatTemporariesFor: aSequenceNode.
 	self formatMethodCommentFor: aSequenceNode indentBefore: false.
 	self formatStatementsFor: aSequenceNode! !
-!Refactory.Browser.RBFormatter categoriesFor: #acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #firstLineLength!accessing!public! !
-!Refactory.Browser.RBFormatter categoriesFor: #for:do:separatedBy:!enumerating!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatArray:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatMessage:cascade:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatMessageSelector:withArguments:multiline:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatMethodBodyFor:!private!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatMethodCommentFor:indentBefore:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatStatementsFor:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #formatTemporariesFor:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #indentWhile:!helpers!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #isMultiLine!accessing!public! !
-!Refactory.Browser.RBFormatter categoriesFor: #lastLineLength!accessing!public! !
-!Refactory.Browser.RBFormatter categoriesFor: #lineStart:!accessing!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #maximumArgumentsPerLine!constants!public! !
-!Refactory.Browser.RBFormatter categoriesFor: #needsParenthesisFor:!helpers!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #newLine!helpers!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #newLinesFor:startingAt:!formatting!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.RBFormatter categoriesFor: #precedenceOf:greaterThan:!helpers!private! !
-!Refactory.Browser.RBFormatter categoriesFor: #selectorsToLeaveOnLine!constants!public! !
-!Refactory.Browser.RBFormatter categoriesFor: #selectorsToStartOnNewLine!constants!public! !
-!Refactory.Browser.RBFormatter categoriesFor: #startMessageSendOnNewLine:!private!testing! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitNode:!public!visiting! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitPatternBlockNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBFormatter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBFormatter categoriesForMethods!
+acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
+firstLineLength!accessing!public! !
+for:do:separatedBy:!enumerating!private! !
+formatArray:!formatting!private! !
+formatMessage:cascade:!formatting!private! !
+formatMessageSelector:withArguments:multiline:!formatting!private! !
+formatMethodBodyFor:!private!visitor/double dispatching! !
+formatMethodCommentFor:indentBefore:!formatting!private! !
+formatMethodPatternFor:!formatting!private! !
+formatStatementCommentsFor:!formatting!private! !
+formatStatementsFor:!formatting!private! !
+formatTemporariesFor:!formatting!private! !
+indentWhile:!helpers!private! !
+isMultiLine!accessing!public! !
+lastLineLength!accessing!public! !
+lineStart:!accessing!private! !
+maximumArgumentsPerLine!constants!public! !
+needsParenthesisFor:!helpers!private! !
+newLine!helpers!private! !
+newLinesFor:startingAt:!formatting!private! !
+postCopy!copying!public! !
+precedenceOf:greaterThan:!helpers!private! !
+selectorsToLeaveOnLine!constants!public! !
+selectorsToStartOnNewLine!constants!public! !
+startMessageSendOnNewLine:!private!testing! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitNode:!public!visiting! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitPatternBlockNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+!
 
 !Refactory.Browser.RBFormatter class methodsFor!
 
@@ -433,11 +435,13 @@ selectorsToStartOnNewLine
 
 selectorsToStartOnNewLine: anArrayOfSymbols
 	SelectorsToStartOnNewLine := anArrayOfSymbols! !
-!Refactory.Browser.RBFormatter class categoriesFor: #initialize!initializing!public! !
-!Refactory.Browser.RBFormatter class categoriesFor: #maximumArgumentsPerLine!options!public! !
-!Refactory.Browser.RBFormatter class categoriesFor: #maximumArgumentsPerLine:!options!public! !
-!Refactory.Browser.RBFormatter class categoriesFor: #selectorsToLeaveOnLine!options!public! !
-!Refactory.Browser.RBFormatter class categoriesFor: #selectorsToLeaveOnLine:!options!public! !
-!Refactory.Browser.RBFormatter class categoriesFor: #selectorsToStartOnNewLine!options!public! !
-!Refactory.Browser.RBFormatter class categoriesFor: #selectorsToStartOnNewLine:!options!public! !
+!Refactory.Browser.RBFormatter class categoriesForMethods!
+initialize!initializing!public! !
+maximumArgumentsPerLine!options!public! !
+maximumArgumentsPerLine:!options!public! !
+selectorsToLeaveOnLine!options!public! !
+selectorsToLeaveOnLine:!options!public! !
+selectorsToStartOnNewLine!options!public! !
+selectorsToStartOnNewLine:!options!public! !
+!
 

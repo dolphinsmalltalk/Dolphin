@@ -96,21 +96,23 @@ wPlanes: anInteger
 	"Set the receiver's 'wPlanes' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wPlanes put: anInteger! !
-!ICONDIRENTRY categoriesFor: #bColorCount!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #bColorCount:!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #bHeight!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #bHeight:!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #bReserved!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #bWidth!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #bWidth:!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #dwBytesInRes!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #dwBytesInRes:!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #dwImageOffset!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #dwImageOffset:!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #wBitCount!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #wBitCount:!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #wPlanes!**compiled accessors**!public! !
-!ICONDIRENTRY categoriesFor: #wPlanes:!**compiled accessors**!public! !
+!ICONDIRENTRY categoriesForMethods!
+bColorCount!**compiled accessors**!public! !
+bColorCount:!**compiled accessors**!public! !
+bHeight!**compiled accessors**!public! !
+bHeight:!**compiled accessors**!public! !
+bReserved!**compiled accessors**!public! !
+bWidth!**compiled accessors**!public! !
+bWidth:!**compiled accessors**!public! !
+dwBytesInRes!**compiled accessors**!public! !
+dwBytesInRes:!**compiled accessors**!public! !
+dwImageOffset!**compiled accessors**!public! !
+dwImageOffset:!**compiled accessors**!public! !
+wBitCount!**compiled accessors**!public! !
+wBitCount:!**compiled accessors**!public! !
+wPlanes!**compiled accessors**!public! !
+wPlanes:!**compiled accessors**!public! !
+!
 
 !ICONDIRENTRY class methodsFor!
 
@@ -130,7 +132,9 @@ getFieldNames
 
 packing
 	^1! !
-!ICONDIRENTRY class categoriesFor: #defineFields!initializing!public! !
-!ICONDIRENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ICONDIRENTRY class categoriesFor: #packing!constants!public! !
+!ICONDIRENTRY class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

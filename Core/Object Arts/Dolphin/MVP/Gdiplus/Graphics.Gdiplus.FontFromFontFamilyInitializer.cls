@@ -27,8 +27,10 @@ fontFamily: aFontFamily emSize: aNumberSize style: aNumberStyle unit: aNumberUni
 	emSize := aNumberSize.
 	style := aNumberStyle.
 	unit := aNumberUnit! !
-!Graphics.Gdiplus.FontFromFontFamilyInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.FontFromFontFamilyInitializer categoriesFor: #fontFamily:emSize:style:unit:!initializing!private! !
+!Graphics.Gdiplus.FontFromFontFamilyInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+fontFamily:emSize:style:unit:!initializing!private! !
+!
 
 !Graphics.Gdiplus.FontFromFontFamilyInitializer class methodsFor!
 
@@ -38,5 +40,7 @@ fontFamily: fontFamily emSize: emSize style: style unit: unit
 		emSize: emSize
 		style: style
 		unit: unit! !
-!Graphics.Gdiplus.FontFromFontFamilyInitializer class categoriesFor: #fontFamily:emSize:style:unit:!instance creation!public! !
+!Graphics.Gdiplus.FontFromFontFamilyInitializer class categoriesForMethods!
+fontFamily:emSize:style:unit:!instance creation!public! !
+!
 

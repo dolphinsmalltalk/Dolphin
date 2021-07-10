@@ -86,14 +86,16 @@ size
 	"Answer the number of objects currently in the queue"
 
 	^accessProtect critical: [contents size]! !
-!Core.SharedQueue categoriesFor: #errorOutOfSync!exceptions!private! !
-!Core.SharedQueue categoriesFor: #initialize:!initializing!private! !
-!Core.SharedQueue categoriesFor: #next!accessing!public! !
-!Core.SharedQueue categoriesFor: #nextNoWait!accessing!public! !
-!Core.SharedQueue categoriesFor: #nextPut:!accessing!public! !
-!Core.SharedQueue categoriesFor: #peek!accessing!public! !
-!Core.SharedQueue categoriesFor: #removeAll!public!removing! !
-!Core.SharedQueue categoriesFor: #size!accessing!public! !
+!Core.SharedQueue categoriesForMethods!
+errorOutOfSync!exceptions!private! !
+initialize:!initializing!private! !
+next!accessing!public! !
+nextNoWait!accessing!public! !
+nextPut:!accessing!public! !
+peek!accessing!public! !
+removeAll!public!removing! !
+size!accessing!public! !
+!
 
 !Core.SharedQueue class methodsFor!
 
@@ -116,7 +118,9 @@ new: anInteger
 	^(self basicNew)
 		initialize: anInteger;
 		yourself! !
-!Core.SharedQueue class categoriesFor: #initialize!development!initializing!private! !
-!Core.SharedQueue class categoriesFor: #new!instance creation!public! !
-!Core.SharedQueue class categoriesFor: #new:!instance creation!public! !
+!Core.SharedQueue class categoriesForMethods!
+initialize!development!initializing!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

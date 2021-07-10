@@ -77,21 +77,23 @@ visualShellAt: aPoint
 	self shellClassFilter isNil ifTrue: [^shell].
 	self shellClassFilter detect: [:each | shell isKindOf: each] ifNone: [^nil].
 	^shell! !
-!Tools.VisualShellFinder categoriesFor: #cancelTrackingAt:!private!tracking! !
-!Tools.VisualShellFinder categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!Tools.VisualShellFinder categoriesFor: #defaultFoundCursor!constants!public! !
-!Tools.VisualShellFinder categoriesFor: #defaultNotFoundCursor!constants!public! !
-!Tools.VisualShellFinder categoriesFor: #endTrackingAt:!private!tracking! !
-!Tools.VisualShellFinder categoriesFor: #findObject!commands!public! !
-!Tools.VisualShellFinder categoriesFor: #foundCursor:!accessing!public! !
-!Tools.VisualShellFinder categoriesFor: #initialize!private! !
-!Tools.VisualShellFinder categoriesFor: #notFoundCursor:!accessing!public! !
-!Tools.VisualShellFinder categoriesFor: #setCursor:!private!tracking! !
-!Tools.VisualShellFinder categoriesFor: #shellClassFilter!accessing!public! !
-!Tools.VisualShellFinder categoriesFor: #shellClassFilter:!accessing!public! !
-!Tools.VisualShellFinder categoriesFor: #startTrackingAt:!private!tracking! !
-!Tools.VisualShellFinder categoriesFor: #value!public! !
-!Tools.VisualShellFinder categoriesFor: #visualShellAt:!helpers!public! !
+!Tools.VisualShellFinder categoriesForMethods!
+cancelTrackingAt:!private!tracking! !
+continueTrackingAt:from:!private!tracking! !
+defaultFoundCursor!constants!public! !
+defaultNotFoundCursor!constants!public! !
+endTrackingAt:!private!tracking! !
+findObject!commands!public! !
+foundCursor:!accessing!public! !
+initialize!private! !
+notFoundCursor:!accessing!public! !
+setCursor:!private!tracking! !
+shellClassFilter!accessing!public! !
+shellClassFilter:!accessing!public! !
+startTrackingAt:!private!tracking! !
+value!public! !
+visualShellAt:!helpers!public! !
+!
 
 Tools.VisualShellFinder methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -107,7 +109,9 @@ forAnyOf: aSetOfShellClasses
 
 new
 	^super new initialize! !
-!Tools.VisualShellFinder class categoriesFor: #for:!public! !
-!Tools.VisualShellFinder class categoriesFor: #forAnyOf:!public! !
-!Tools.VisualShellFinder class categoriesFor: #new!public! !
+!Tools.VisualShellFinder class categoriesForMethods!
+for:!public! !
+forAnyOf:!public! !
+new!public! !
+!
 

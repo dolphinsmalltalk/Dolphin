@@ -158,19 +158,21 @@ StartEntity: strName
 
 	<virtual stdcall: hresult 10 bstr*>
 	^self invalidCall: _failureCode! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #comment:!**auto generated**!methods!public! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #Comment:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #endEntity:!**auto generated**!methods!public! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #EndEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #StartCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #startDTD:strPublicId:strSystemId:!**auto generated**!methods!public! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #StartDTD:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #startEntity:!**auto generated**!methods!public! !
-!MSXML.IVBSAXLexicalHandler categoriesFor: #StartEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+!MSXML.IVBSAXLexicalHandler categoriesForMethods!
+comment:!**auto generated**!methods!public! !
+Comment:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+EndCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
+EndDTD!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
+endEntity:!**auto generated**!methods!public! !
+EndEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+StartCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !
+startDTD:strPublicId:strSystemId:!**auto generated**!methods!public! !
+StartDTD:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+startEntity:!**auto generated**!methods!public! !
+StartEntity:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
+!
 
 !MSXML.IVBSAXLexicalHandler class methodsFor!
 
@@ -191,5 +193,7 @@ defineFunctions
 		defineFunction: #Comment:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.IVBSAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXLexicalHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

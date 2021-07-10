@@ -127,23 +127,25 @@ selectionOrNil
 
 selectionOrNil: aPoolConstantsDictionary
 	dictionariesPresenter selectionOrNil: aPoolConstantsDictionary! !
-!Tools.PoolDictionariesShell categoriesFor: #addEntry!public! !
-!Tools.PoolDictionariesShell categoriesFor: #addPool!commands!public! !
-!Tools.PoolDictionariesShell categoriesFor: #browseEntryReferences!commands!public! !
-!Tools.PoolDictionariesShell categoriesFor: #classesReferencingSelectedPool!commands!private! !
-!Tools.PoolDictionariesShell categoriesFor: #createComponents!private! !
-!Tools.PoolDictionariesShell categoriesFor: #hasSelectedItemAccessor!public!selection! !
-!Tools.PoolDictionariesShell categoriesFor: #hasSelection!public!selection! !
-!Tools.PoolDictionariesShell categoriesFor: #methodsReferencingSelectedEntry!commands!private! !
-!Tools.PoolDictionariesShell categoriesFor: #model:!public! !
-!Tools.PoolDictionariesShell categoriesFor: #poolPackage!commands!public! !
-!Tools.PoolDictionariesShell categoriesFor: #queryCommand:!commands!private! !
-!Tools.PoolDictionariesShell categoriesFor: #removeEntry!public! !
-!Tools.PoolDictionariesShell categoriesFor: #removePool!commands!public! !
-!Tools.PoolDictionariesShell categoriesFor: #selectedItemAccessorOrNil!commands!private! !
-!Tools.PoolDictionariesShell categoriesFor: #selectedItemKey!commands!private! !
-!Tools.PoolDictionariesShell categoriesFor: #selectionOrNil!private!selection! !
-!Tools.PoolDictionariesShell categoriesFor: #selectionOrNil:!private!selection! !
+!Tools.PoolDictionariesShell categoriesForMethods!
+addEntry!public! !
+addPool!commands!public! !
+browseEntryReferences!commands!public! !
+classesReferencingSelectedPool!commands!private! !
+createComponents!private! !
+hasSelectedItemAccessor!public!selection! !
+hasSelection!public!selection! !
+methodsReferencingSelectedEntry!commands!private! !
+model:!public! !
+poolPackage!commands!public! !
+queryCommand:!commands!private! !
+removeEntry!public! !
+removePool!commands!public! !
+selectedItemAccessorOrNil!commands!private! !
+selectedItemKey!commands!private! !
+selectionOrNil!private!selection! !
+selectionOrNil:!private!selection! !
+!
 
 !Tools.PoolDictionariesShell class methodsFor!
 
@@ -192,11 +194,13 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10550! !
-!Tools.PoolDictionariesShell class categoriesFor: #defaultModel!public! !
-!Tools.PoolDictionariesShell class categoriesFor: #displayOn:!public! !
-!Tools.PoolDictionariesShell class categoriesFor: #icon!constants!public! !
-!Tools.PoolDictionariesShell class categoriesFor: #initialize!initializing!private! !
-!Tools.PoolDictionariesShell class categoriesFor: #publishedAspects!public! !
-!Tools.PoolDictionariesShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.PoolDictionariesShell class categoriesFor: #toolsFolderHelpId!private! !
+!Tools.PoolDictionariesShell class categoriesForMethods!
+defaultModel!public! !
+displayOn:!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!private! !
+!
 

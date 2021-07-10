@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'STON.Tests.TestDomainObject'
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
@@ -115,27 +115,29 @@ tags
 
 tags: anObject
 	tags := anObject! !
-!STON.Tests.TestDomainObject categoriesFor: #=!comparing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #boolean!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #boolean:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #bytes!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #bytes:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #color!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #color:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #created!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #created:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #description!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #description:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #float!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #float:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #hash!comparing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #initialize!initialize/release!public! !
-!STON.Tests.TestDomainObject categoriesFor: #integer!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #integer:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #modified!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #modified:!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #tags!accessing!public! !
-!STON.Tests.TestDomainObject categoriesFor: #tags:!accessing!public! !
+!STON.Tests.TestDomainObject categoriesForMethods!
+=!comparing!public! !
+boolean!accessing!public! !
+boolean:!accessing!public! !
+bytes!accessing!public! !
+bytes:!accessing!public! !
+color!accessing!public! !
+color:!accessing!public! !
+created!accessing!public! !
+created:!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+float!accessing!public! !
+float:!accessing!public! !
+hash!comparing!public! !
+initialize!initialize/release!public! !
+integer!accessing!public! !
+integer:!accessing!public! !
+modified!accessing!public! !
+modified:!accessing!public! !
+tags!accessing!public! !
+tags:!accessing!public! !
+!
 
 !STON.Tests.TestDomainObject class methodsFor!
 
@@ -155,6 +157,8 @@ dummy
 
 stonName
 	^ #TestDomainObject! !
-!STON.Tests.TestDomainObject class categoriesFor: #dummy!instance creation!public! !
-!STON.Tests.TestDomainObject class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.TestDomainObject class categoriesForMethods!
+dummy!instance creation!public! !
+stonName!public!ston/core! !
+!
 

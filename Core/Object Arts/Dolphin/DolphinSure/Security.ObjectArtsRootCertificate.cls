@@ -24,8 +24,10 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
-!Security.ObjectArtsRootCertificate categoriesFor: #publicKey!accessing!public! !
-!Security.ObjectArtsRootCertificate categoriesFor: #publisherPublicKey!accessing!private! !
+!Security.ObjectArtsRootCertificate categoriesForMethods!
+publicKey!accessing!public! !
+publisherPublicKey!accessing!private! !
+!
 
 !Security.ObjectArtsRootCertificate class methodsFor!
 
@@ -66,8 +68,10 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!Security.ObjectArtsRootCertificate class categoriesFor: #generate!instance creation!private! !
-!Security.ObjectArtsRootCertificate class categoriesFor: #new!instance creation!public! !
-!Security.ObjectArtsRootCertificate class categoriesFor: #publicKey!constants!public! !
-!Security.ObjectArtsRootCertificate class categoriesFor: #validYears!constants!private! !
+!Security.ObjectArtsRootCertificate class categoriesForMethods!
+generate!instance creation!private! !
+new!instance creation!public! !
+publicKey!constants!public! !
+validYears!constants!private! !
+!
 

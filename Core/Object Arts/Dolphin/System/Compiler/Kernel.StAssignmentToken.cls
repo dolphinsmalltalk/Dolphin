@@ -19,7 +19,9 @@ isAssignment
 
 length
 	^2! !
-!Kernel.StAssignmentToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StAssignmentToken categoriesFor: #isAssignment!public!testing! !
-!Kernel.StAssignmentToken categoriesFor: #length!accessing!private! !
+!Kernel.StAssignmentToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isAssignment!public!testing! !
+length!accessing!private! !
+!
 

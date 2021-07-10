@@ -35,8 +35,10 @@ QueryDesc: anInteger
 	"Set the receiver's 'QueryDesc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_QueryDesc put: anInteger! !
-!WinHttpServer.HttpServiceConfigQuery categoriesFor: #QueryDesc!**compiled accessors**!public! !
-!WinHttpServer.HttpServiceConfigQuery categoriesFor: #QueryDesc:!**compiled accessors**!public! !
+!WinHttpServer.HttpServiceConfigQuery categoriesForMethods!
+QueryDesc!**compiled accessors**!public! !
+QueryDesc:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HttpServiceConfigQuery class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc)! !
-!WinHttpServer.HttpServiceConfigQuery class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HttpServiceConfigQuery class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HttpServiceConfigQuery class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

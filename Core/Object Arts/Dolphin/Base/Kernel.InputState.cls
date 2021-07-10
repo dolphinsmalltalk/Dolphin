@@ -629,59 +629,61 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 					wParam: wParam
 					lParam: lParam) asUIntPtr]
 					ifCurtailed: [Processor unwindCallback: cookie])! !
-!Kernel.InputState categoriesFor: #aboutToForkUI!idling!private! !
-!Kernel.InputState categoriesFor: #aboutToIdle!idling!public! !
-!Kernel.InputState categoriesFor: #consoleStartup!operations-startup!private! !
-!Kernel.InputState categoriesFor: #createAndRegisterInputSemaphore!initializing!private! !
-!Kernel.InputState categoriesFor: #createAndRegisterWakeupEvent!initializing!private! !
-!Kernel.InputState categoriesFor: #createPostedActionWindow!initializing!private! !
-!Kernel.InputState categoriesFor: #deferredActions!accessing!private! !
-!Kernel.InputState categoriesFor: #ensureIdlerRunning!idling!private! !
-!Kernel.InputState categoriesFor: #ensureMainRunning!idling!private! !
-!Kernel.InputState categoriesFor: #enterIdle!idling!private! !
-!Kernel.InputState categoriesFor: #forkIdler!idling!private! !
-!Kernel.InputState categoriesFor: #forkMain!message dispatching!private! !
-!Kernel.InputState categoriesFor: #hasVisibleWindows!private!testing! !
-!Kernel.InputState categoriesFor: #idle!idling!private! !
-!Kernel.InputState categoriesFor: #idleLoop!idling!private! !
-!Kernel.InputState categoriesFor: #idlePanic!idling!private! !
-!Kernel.InputState categoriesFor: #idler!idling!private! !
-!Kernel.InputState categoriesFor: #initializeFrom:!initializing!private! !
-!Kernel.InputState categoriesFor: #inputSemaphore!accessing!private! !
-!Kernel.InputState categoriesFor: #isInputAvailable!idling!private! !
-!Kernel.InputState categoriesFor: #isInputReady:!message dispatching!private! !
-!Kernel.InputState categoriesFor: #keepAlive!idling!private! !
-!Kernel.InputState categoriesFor: #lookupWindow:!accessing!public! !
-!Kernel.InputState categoriesFor: #loopWhile:!message dispatching!public! !
-!Kernel.InputState categoriesFor: #main!accessing!private! !
-!Kernel.InputState categoriesFor: #main:!initializing!private! !
-!Kernel.InputState categoriesFor: #mainLoop!message dispatching!private! !
-!Kernel.InputState categoriesFor: #millisecondClockValue!enquiries!private! !
-!Kernel.InputState categoriesFor: #msgWindow!accessing!private! !
-!Kernel.InputState categoriesFor: #onExit!event handling!private! !
-!Kernel.InputState categoriesFor: #postAction:!message dispatching!public! !
-!Kernel.InputState categoriesFor: #postQuit:!operations-shutdown!private! !
-!Kernel.InputState categoriesFor: #preTranslateMessage:!message dispatching!private! !
-!Kernel.InputState categoriesFor: #primSampleInterval:!message dispatching!private! !
-!Kernel.InputState categoriesFor: #processDeferredActions!operations!public! !
-!Kernel.InputState categoriesFor: #prod!message dispatching!public! !
-!Kernel.InputState categoriesFor: #pumpMessage:!message dispatching!private! !
-!Kernel.InputState categoriesFor: #pumpMessages!message dispatching!public! !
-!Kernel.InputState categoriesFor: #purgeDeadWindows!public!removing! !
-!Kernel.InputState categoriesFor: #queueDeferredAction:!message dispatching!public! !
-!Kernel.InputState categoriesFor: #registerAsDispatcher!initializing!private! !
-!Kernel.InputState categoriesFor: #removeWindowAt:!accessing!private! !
-!Kernel.InputState categoriesFor: #setSamplingInterval:!initializing!private! !
-!Kernel.InputState categoriesFor: #startIdleTimer:!idling!private! !
-!Kernel.InputState categoriesFor: #stopIdleTimer:!idling!private! !
-!Kernel.InputState categoriesFor: #topLevelWindows!enumerating!public! !
-!Kernel.InputState categoriesFor: #uiIdle!idling!private! !
-!Kernel.InputState categoriesFor: #userInterruptSignal!constants!public! !
-!Kernel.InputState categoriesFor: #waitForInput:!idling!private! !
-!Kernel.InputState categoriesFor: #windowAt:ifAbsent:!accessing!public! !
-!Kernel.InputState categoriesFor: #windowAt:put:!accessing!public! !
-!Kernel.InputState categoriesFor: #windows!accessing!private! !
-!Kernel.InputState categoriesFor: #wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
+!Kernel.InputState categoriesForMethods!
+aboutToForkUI!idling!private! !
+aboutToIdle!idling!public! !
+consoleStartup!operations-startup!private! !
+createAndRegisterInputSemaphore!initializing!private! !
+createAndRegisterWakeupEvent!initializing!private! !
+createPostedActionWindow!initializing!private! !
+deferredActions!accessing!private! !
+ensureIdlerRunning!idling!private! !
+ensureMainRunning!idling!private! !
+enterIdle!idling!private! !
+forkIdler!idling!private! !
+forkMain!message dispatching!private! !
+hasVisibleWindows!private!testing! !
+idle!idling!private! !
+idleLoop!idling!private! !
+idlePanic!idling!private! !
+idler!idling!private! !
+initializeFrom:!initializing!private! !
+inputSemaphore!accessing!private! !
+isInputAvailable!idling!private! !
+isInputReady:!message dispatching!private! !
+keepAlive!idling!private! !
+lookupWindow:!accessing!public! !
+loopWhile:!message dispatching!public! !
+main!accessing!private! !
+main:!initializing!private! !
+mainLoop!message dispatching!private! !
+millisecondClockValue!enquiries!private! !
+msgWindow!accessing!private! !
+onExit!event handling!private! !
+postAction:!message dispatching!public! !
+postQuit:!operations-shutdown!private! !
+preTranslateMessage:!message dispatching!private! !
+primSampleInterval:!message dispatching!private! !
+processDeferredActions!operations!public! !
+prod!message dispatching!public! !
+pumpMessage:!message dispatching!private! !
+pumpMessages!message dispatching!public! !
+purgeDeadWindows!public!removing! !
+queueDeferredAction:!message dispatching!public! !
+registerAsDispatcher!initializing!private! !
+removeWindowAt:!accessing!private! !
+setSamplingInterval:!initializing!private! !
+startIdleTimer:!idling!private! !
+stopIdleTimer:!idling!private! !
+topLevelWindows!enumerating!public! !
+uiIdle!idling!private! !
+userInterruptSignal!constants!public! !
+waitForInput:!idling!private! !
+windowAt:ifAbsent:!accessing!public! !
+windowAt:put:!accessing!public! !
+windows!accessing!private! !
+wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
+!
 
 !Kernel.InputState class methodsFor!
 
@@ -699,8 +701,10 @@ newFromOld: anInputState
 	^(self new)
 		initializeFrom: anInputState;
 		yourself! !
-!Kernel.InputState class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.InputState class categoriesFor: #maxIdleSleep!accessing!public! !
-!Kernel.InputState class categoriesFor: #maxIdleSleep:!accessing!public! !
-!Kernel.InputState class categoriesFor: #newFromOld:!instance creation!private! !
+!Kernel.InputState class categoriesForMethods!
+initialize!development!initializing!public! !
+maxIdleSleep!accessing!public! !
+maxIdleSleep:!accessing!public! !
+newFromOld:!instance creation!private! !
+!
 

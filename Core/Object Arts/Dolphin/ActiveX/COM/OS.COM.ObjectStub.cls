@@ -301,25 +301,27 @@ supportsInterface: interface
 	supports that implementation!!)."
 
 	^interface == IUnknown! !
-!OS.COM.ObjectStub categoriesFor: #addInterface:!accessing-interfaces!private! !
-!OS.COM.ObjectStub categoriesFor: #AddRef!COM Interfaces-IUnknown!private! !
-!OS.COM.ObjectStub categoriesFor: #callback:vfn:withArgumentsAt:!evaluating!private! !
-!OS.COM.ObjectStub categoriesFor: #cookie!accessing!private! !
-!OS.COM.ObjectStub categoriesFor: #disconnect!public!realizing/unrealizing! !
-!OS.COM.ObjectStub categoriesFor: #findInterface:ifNoneAdd:!accessing-interfaces!private! !
-!OS.COM.ObjectStub categoriesFor: #free!operations!private! !
-!OS.COM.ObjectStub categoriesFor: #innerAddRef!non delegating unknown!private! !
-!OS.COM.ObjectStub categoriesFor: #innerQueryInterface:ppvObject:!non delegating unknown!private! !
-!OS.COM.ObjectStub categoriesFor: #innerRelease!non delegating unknown!private! !
-!OS.COM.ObjectStub categoriesFor: #onObject:!initializing!private! !
-!OS.COM.ObjectStub categoriesFor: #outerUnknown:!accessing!private! !
-!OS.COM.ObjectStub categoriesFor: #printOn:!development!printing!public! !
-!OS.COM.ObjectStub categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!OS.COM.ObjectStub categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!OS.COM.ObjectStub categoriesFor: #QueryInterface:ppvObject:!COM Interfaces-IUnknown!private! !
-!OS.COM.ObjectStub categoriesFor: #referenceCount!accessing!private! !
-!OS.COM.ObjectStub categoriesFor: #Release!COM Interfaces-IUnknown!private! !
-!OS.COM.ObjectStub categoriesFor: #supportsInterface:!accessing-interfaces!private!testing! !
+!OS.COM.ObjectStub categoriesForMethods!
+addInterface:!accessing-interfaces!private! !
+AddRef!COM Interfaces-IUnknown!private! !
+callback:vfn:withArgumentsAt:!evaluating!private! !
+cookie!accessing!private! !
+disconnect!public!realizing/unrealizing! !
+findInterface:ifNoneAdd:!accessing-interfaces!private! !
+free!operations!private! !
+innerAddRef!non delegating unknown!private! !
+innerQueryInterface:ppvObject:!non delegating unknown!private! !
+innerRelease!non delegating unknown!private! !
+onObject:!initializing!private! !
+outerUnknown:!accessing!private! !
+printOn:!development!printing!public! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing-interfaces!public! !
+QueryInterface:ppvObject:!COM Interfaces-IUnknown!private! !
+referenceCount!accessing!private! !
+Release!COM Interfaces-IUnknown!private! !
+supportsInterface:!accessing-interfaces!private!testing! !
+!
 
 !OS.COM.ObjectStub class methodsFor!
 
@@ -375,12 +377,14 @@ uninitialize
 
 	self initializeRegistries.
 	VM registryAtIndex: 70 put: nil! !
-!OS.COM.ObjectStub class categoriesFor: #disconnectAll!accessing!public! !
-!OS.COM.ObjectStub class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.ObjectStub class categoriesFor: #initializeRegistries!initializing!private! !
-!OS.COM.ObjectStub class categoriesFor: #on:!instance creation!public! !
-!OS.COM.ObjectStub class categoriesFor: #onExit!event handling!private! !
-!OS.COM.ObjectStub class categoriesFor: #onStartup!event handling!private! !
-!OS.COM.ObjectStub class categoriesFor: #registry!accessing!private! !
-!OS.COM.ObjectStub class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.ObjectStub class categoriesForMethods!
+disconnectAll!accessing!public! !
+initialize!development!initializing!private! !
+initializeRegistries!initializing!private! !
+on:!instance creation!public! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+registry!accessing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

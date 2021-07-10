@@ -98,26 +98,28 @@ variable: aVariableNode value: aValueNode position: anInteger
 	self variable: aVariableNode.
 	self value: aValueNode.
 	assignment := anInteger! !
-!Kernel.StAssignmentNode categoriesFor: #=!comparing!public! !
-!Kernel.StAssignmentNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StAssignmentNode categoriesFor: #assignmentPosition!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #assigns:!public!testing! !
-!Kernel.StAssignmentNode categoriesFor: #bestNodeFor:!public!querying! !
-!Kernel.StAssignmentNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #directlyUses:!public!testing! !
-!Kernel.StAssignmentNode categoriesFor: #hash!comparing!public! !
-!Kernel.StAssignmentNode categoriesFor: #isAssignment!public!testing! !
-!Kernel.StAssignmentNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StAssignmentNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StAssignmentNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #uses:!public!testing! !
-!Kernel.StAssignmentNode categoriesFor: #value!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #value:!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #variable!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #variable:!accessing!public! !
-!Kernel.StAssignmentNode categoriesFor: #variable:value:position:!initializing!private! !
+!Kernel.StAssignmentNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+assignmentPosition!accessing!public! !
+assigns:!public!testing! !
+bestNodeFor:!public!querying! !
+childrenDo:!accessing!public! !
+directlyUses:!public!testing! !
+hash!comparing!public! !
+isAssignment!public!testing! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+value!accessing!public! !
+value:!accessing!public! !
+variable!accessing!public! !
+variable:!accessing!public! !
+variable:value:position:!initializing!private! !
+!
 
 !Kernel.StAssignmentNode class methodsFor!
 
@@ -133,6 +135,8 @@ variable: aVariableNode value: aValueNode position: anInteger
 			value: aValueNode
 			position: anInteger;
 		yourself! !
-!Kernel.StAssignmentNode class categoriesFor: #variable:value:!instance creation!public! !
-!Kernel.StAssignmentNode class categoriesFor: #variable:value:position:!instance creation!public! !
+!Kernel.StAssignmentNode class categoriesForMethods!
+variable:value:!instance creation!public! !
+variable:value:position:!instance creation!public! !
+!
 

@@ -19,5 +19,7 @@ includesMethod: aCompiledMethod
 	the object which that category is interested in, and is a packed method."
 
 	^(super includesMethod: aCompiledMethod) and: [aCompiledMethod isPacked]! !
-!Tools.PackedReferencesCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.PackedReferencesCategory categoriesForMethods!
+includesMethod:!public!testing! !
+!
 

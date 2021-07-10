@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #BooleanANSITest
 	instanceVariableNames: ''
@@ -172,18 +172,20 @@ testXxorX
 		conformTo: #'boolean' selector: #'xor:'.
 	self value: [false xor: false] shouldnt: [:r | r]
 		conformTo: #'boolean' selector: #'xor:'.! !
-!BooleanANSITest categoriesFor: #canonicalObject!public! !
-!BooleanANSITest categoriesFor: #protocol!public! !
-!BooleanANSITest categoriesFor: #testXandOp!public! !
-!BooleanANSITest categoriesFor: #testXandX!public! !
-!BooleanANSITest categoriesFor: #testXeqvX!public! !
-!BooleanANSITest categoriesFor: #testXifFalseX!public! !
-!BooleanANSITest categoriesFor: #testXifFalseXifTrueX!public! !
-!BooleanANSITest categoriesFor: #testXifTrueX!public! !
-!BooleanANSITest categoriesFor: #testXifTrueXifFalseX!public! !
-!BooleanANSITest categoriesFor: #testXnot!public! !
-!BooleanANSITest categoriesFor: #testXorOp!public! !
-!BooleanANSITest categoriesFor: #testXorX!public! !
-!BooleanANSITest categoriesFor: #testXprintString!public! !
-!BooleanANSITest categoriesFor: #testXxorX!public! !
+!BooleanANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXandOp!public! !
+testXandX!public! !
+testXeqvX!public! !
+testXifFalseX!public! !
+testXifFalseXifTrueX!public! !
+testXifTrueX!public! !
+testXifTrueXifFalseX!public! !
+testXnot!public! !
+testXorOp!public! !
+testXorX!public! !
+testXprintString!public! !
+testXxorX!public! !
+!
 

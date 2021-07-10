@@ -46,14 +46,16 @@ source
 
 source: aString 
 	source := aString! !
-!Kernel.StNumberLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StNumberLiteralToken categoriesFor: #forgetNegative!helpers!private! !
-!Kernel.StNumberLiteralToken categoriesFor: #formatOn:source:!printing!public! !
-!Kernel.StNumberLiteralToken categoriesFor: #isNegative!public!testing! !
-!Kernel.StNumberLiteralToken categoriesFor: #isNumberLiteralToken!public!testing! !
-!Kernel.StNumberLiteralToken categoriesFor: #printOn:!public! !
-!Kernel.StNumberLiteralToken categoriesFor: #source!accessing!public! !
-!Kernel.StNumberLiteralToken categoriesFor: #source:!initializing!private! !
+!Kernel.StNumberLiteralToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+forgetNegative!helpers!private! !
+formatOn:source:!printing!public! !
+isNegative!public!testing! !
+isNumberLiteralToken!public!testing! !
+printOn:!public! !
+source!accessing!public! !
+source:!initializing!private! !
+!
 
 !Kernel.StNumberLiteralToken class methodsFor!
 
@@ -66,5 +68,7 @@ start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger 
 		stop: stopInteger;
 		source: sourceString;
 		yourself! !
-!Kernel.StNumberLiteralToken class categoriesFor: #start:comments:value:stop:source:!public! !
+!Kernel.StNumberLiteralToken class categoriesForMethods!
+start:comments:value:stop:source:!public! !
+!
 

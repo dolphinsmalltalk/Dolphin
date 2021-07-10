@@ -46,10 +46,12 @@ printOn: aStream
 		nextPut: $(;
 		print: self name;
 		nextPut: $)! !
-!OS.COM.TypeLibDocumentation categoriesFor: #helpcontext!accessing!public! !
-!OS.COM.TypeLibDocumentation categoriesFor: #helpfile!accessing!public! !
-!OS.COM.TypeLibDocumentation categoriesFor: #helpstring!accessing!public! !
-!OS.COM.TypeLibDocumentation categoriesFor: #name!accessing!public! !
-!OS.COM.TypeLibDocumentation categoriesFor: #name:helpstring:helpcontext:helpfile:!initializing!private! !
-!OS.COM.TypeLibDocumentation categoriesFor: #printOn:!printing!public! !
+!OS.COM.TypeLibDocumentation categoriesForMethods!
+helpcontext!accessing!public! !
+helpfile!accessing!public! !
+helpstring!accessing!public! !
+name!accessing!public! !
+name:helpstring:helpcontext:helpfile:!initializing!private! !
+printOn:!printing!public! !
+!
 

@@ -180,24 +180,26 @@ triggerIndividualEvents: aBoolean
 	its target on receipt of events from the COM event source. By default this is on."
 
 	flags := flags mask: NoIndividualEventsMask set: aBoolean not! !
-!OS.COM.EventSink categoriesFor: #connect:!operations!public! !
-!OS.COM.EventSink categoriesFor: #disconnect!operations!public! !
-!OS.COM.EventSink categoriesFor: #eventNames!events!public! !
-!OS.COM.EventSink categoriesFor: #handleEvent:withArguments:!event handling!public! !
-!OS.COM.EventSink categoriesFor: #invokeId:flags:withArguments:!operations!public! !
-!OS.COM.EventSink categoriesFor: #isTracingEnabled!event handling!private! !
-!OS.COM.EventSink categoriesFor: #isTracingEnabled:!event handling!private! !
-!OS.COM.EventSink categoriesFor: #printOn:!development!printing!public! !
-!OS.COM.EventSink categoriesFor: #publishedEventNames!events!public! !
-!OS.COM.EventSink categoriesFor: #setTarget:sourceTypeInfo:!initializing!private! !
-!OS.COM.EventSink categoriesFor: #sourceTypeInfo!accessing!public! !
-!OS.COM.EventSink categoriesFor: #target!accessing!public! !
-!OS.COM.EventSink categoriesFor: #target:!accessing!public! !
-!OS.COM.EventSink categoriesFor: #traceEvent:withArguments:!event handling!private! !
-!OS.COM.EventSink categoriesFor: #triggerGenericEvent!accessing!public! !
-!OS.COM.EventSink categoriesFor: #triggerGenericEvent:!accessing!public! !
-!OS.COM.EventSink categoriesFor: #triggerIndividualEvents!accessing!public! !
-!OS.COM.EventSink categoriesFor: #triggerIndividualEvents:!accessing!public! !
+!OS.COM.EventSink categoriesForMethods!
+connect:!operations!public! !
+disconnect!operations!public! !
+eventNames!events!public! !
+handleEvent:withArguments:!event handling!public! !
+invokeId:flags:withArguments:!operations!public! !
+isTracingEnabled!event handling!private! !
+isTracingEnabled:!event handling!private! !
+printOn:!development!printing!public! !
+publishedEventNames!events!public! !
+setTarget:sourceTypeInfo:!initializing!private! !
+sourceTypeInfo!accessing!public! !
+target!accessing!public! !
+target:!accessing!public! !
+traceEvent:withArguments:!event handling!private! !
+triggerGenericEvent!accessing!public! !
+triggerGenericEvent:!accessing!public! !
+triggerIndividualEvents!accessing!public! !
+triggerIndividualEvents:!accessing!public! !
+!
 
 !OS.COM.EventSink class methodsFor!
 
@@ -215,6 +217,8 @@ target: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer
 	to which this sink is connected invokes the methods."
 
 	^super new setTarget: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer! !
-!OS.COM.EventSink class categoriesFor: #new!instance creation!public! !
-!OS.COM.EventSink class categoriesFor: #target:sourceTypeInfo:!instance creation!public! !
+!OS.COM.EventSink class categoriesForMethods!
+new!instance creation!public! !
+target:sourceTypeInfo:!instance creation!public! !
+!
 

@@ -28,9 +28,11 @@ startingCase: aTestCase
 
 startingRun: aTestSuite
 ! !
-!XProgramming.SUnit.TestRunLogger categoriesFor: #finishedCase:!logging!public! !
-!XProgramming.SUnit.TestRunLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!logging!public! !
-!XProgramming.SUnit.TestRunLogger categoriesFor: #slowTestThreshold!helpers!private! !
-!XProgramming.SUnit.TestRunLogger categoriesFor: #startingCase:!logging!public! !
-!XProgramming.SUnit.TestRunLogger categoriesFor: #startingRun:!logging!public! !
+!XProgramming.SUnit.TestRunLogger categoriesForMethods!
+finishedCase:!logging!public! !
+finishedRun:knownSlowTests:!helpers!logging!public! !
+slowTestThreshold!helpers!private! !
+startingCase:!logging!public! !
+startingRun:!logging!public! !
+!
 

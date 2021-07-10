@@ -28,8 +28,10 @@ put_Peer: put_Peer
 
 	<virtual stdcall: hresult 5 OS.COM.IUnknown*>
 	^self invalidCall: _failureCode! !
-!Kernel.IIPPlugHole categoriesFor: #get_Peer:!COM Interfaces-IIPPlugHole!public! !
-!Kernel.IIPPlugHole categoriesFor: #put_Peer:!COM Interfaces-IIPPlugHole!public! !
+!Kernel.IIPPlugHole categoriesForMethods!
+get_Peer:!COM Interfaces-IIPPlugHole!public! !
+put_Peer:!COM Interfaces-IIPPlugHole!public! !
+!
 
 !Kernel.IIPPlugHole class methodsFor!
 
@@ -44,5 +46,7 @@ defineFunctions
 		defineFunction: #put_Peer:
 			argumentTypes: 'IUnknown*'
 ! !
-!Kernel.IIPPlugHole class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!Kernel.IIPPlugHole class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

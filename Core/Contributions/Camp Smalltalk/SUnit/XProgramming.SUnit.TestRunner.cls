@@ -156,34 +156,36 @@ updateWindow
 		ifTrue: [self displayPass]
 		ifFalse: [self displayFail].
 	self updateDefects! !
-!XProgramming.SUnit.TestRunner categoriesFor: #allTestSuite!helpers!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #createSchematicWiring!helpers!private! !
-!XProgramming.SUnit.TestRunner categoriesFor: #debugFailedTest!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #debugTest!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #debugTest:!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayClear!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayColor:!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayDefects:!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayDetails:!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayFail!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayGreen!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayMode:!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayPass!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayRed!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayReset!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayRunning!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #displayYellow!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #onViewOpened!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #refreshTests!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #result!Accessing!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #runAllTests!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #runSuite:!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #runTests!Actions!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #script!Accessing!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #timeSinceLastPassAsString!helpers!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #update:!helpers!public! !
-!XProgramming.SUnit.TestRunner categoriesFor: #updateDefects!public!Updating! !
-!XProgramming.SUnit.TestRunner categoriesFor: #updateWindow!public!Updating! !
+!XProgramming.SUnit.TestRunner categoriesForMethods!
+allTestSuite!helpers!public! !
+createSchematicWiring!helpers!private! !
+debugFailedTest!Actions!public! !
+debugTest!Actions!public! !
+debugTest:!Actions!public! !
+displayClear!public!Updating! !
+displayColor:!public!Updating! !
+displayDefects:!public!Updating! !
+displayDetails:!public!Updating! !
+displayFail!public!Updating! !
+displayGreen!public!Updating! !
+displayMode:!public!Updating! !
+displayPass!public!Updating! !
+displayRed!public!Updating! !
+displayReset!public!Updating! !
+displayRunning!public!Updating! !
+displayYellow!public!Updating! !
+onViewOpened!Actions!public! !
+refreshTests!Actions!public! !
+result!Accessing!public! !
+runAllTests!Actions!public! !
+runSuite:!Actions!public! !
+runTests!Actions!public! !
+script!Accessing!public! !
+timeSinceLastPassAsString!helpers!public! !
+update:!helpers!public! !
+updateDefects!public!Updating! !
+updateWindow!public!Updating! !
+!
 
 !XProgramming.SUnit.TestRunner class methodsFor!
 
@@ -229,11 +231,13 @@ toolDescription
 
 toolsFolderHelpId
 	^10632! !
-!XProgramming.SUnit.TestRunner class categoriesFor: #defaultView!public!views! !
-!XProgramming.SUnit.TestRunner class categoriesFor: #icon!constants!public! !
-!XProgramming.SUnit.TestRunner class categoriesFor: #initialize!initializing!must strip!private! !
-!XProgramming.SUnit.TestRunner class categoriesFor: #open!Init / Release!public! !
-!XProgramming.SUnit.TestRunner class categoriesFor: #resource_SUnit_Runner_30!public!resources-views! !
-!XProgramming.SUnit.TestRunner class categoriesFor: #toolDescription!constants!public! !
-!XProgramming.SUnit.TestRunner class categoriesFor: #toolsFolderHelpId!public! !
+!XProgramming.SUnit.TestRunner class categoriesForMethods!
+defaultView!public!views! !
+icon!constants!public! !
+initialize!initializing!must strip!private! !
+open!Init / Release!public! !
+resource_SUnit_Runner_30!public!resources-views! !
+toolDescription!constants!public! !
+toolsFolderHelpId!public! !
+!
 

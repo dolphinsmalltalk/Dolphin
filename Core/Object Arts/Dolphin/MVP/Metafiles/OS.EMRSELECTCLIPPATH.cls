@@ -35,8 +35,10 @@ iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger! !
-!OS.EMRSELECTCLIPPATH categoriesFor: #iMode!**compiled accessors**!public! !
-!OS.EMRSELECTCLIPPATH categoriesFor: #iMode:!**compiled accessors**!public! !
+!OS.EMRSELECTCLIPPATH categoriesForMethods!
+iMode!**compiled accessors**!public! !
+iMode:!**compiled accessors**!public! !
+!
 
 !OS.EMRSELECTCLIPPATH class methodsFor!
 
@@ -67,7 +69,9 @@ iTypes
 
 	^{EMR_SELECTCLIPPATH. EMR_SETBKMODE. EMR_SETMAPMODE. EMR_SETLAYOUT. EMR_SETPOLYFILLMODE}
 		, {EMR_SETROP2. EMR_SETSTRETCHBLTMODE. EMR_SETICMMODE. EMR_SETTEXTALIGN}! !
-!OS.EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSELECTCLIPPATH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -986,55 +986,57 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 
 	<stdcall: hresult SetWindowTheme handle lpwstr lpwstr>
 	^self invalidCall: _failureCode! !
-!OS.ThemeLibrary categoriesFor: #closeThemeData:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #drawThemeParentBackground:hdc:prc:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #enableThemeDialogTexture:dwFlags:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #enableTheming:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeAppProperties!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeSysBool:iBoolId:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeSysColor:iColorId:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeSysColorBrush:iColorId:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeSysFont:iFontId:plf:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeSysSize:iSizeId:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #getWindowTheme:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #isAppThemed!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #isThemeActive!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #isThemeDialogTextureEnabled:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #onExit!private! !
-!OS.ThemeLibrary categoriesFor: #onStartup!private! !
-!OS.ThemeLibrary categoriesFor: #openThemeData:pszClassList:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #setThemeAppProperties:!**auto generated**!public! !
-!OS.ThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
+!OS.ThemeLibrary categoriesForMethods!
+closeThemeData:!**auto generated**!public! !
+drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
+drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !
+drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public! !
+drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public! !
+drawThemeParentBackground:hdc:prc:!**auto generated**!public! !
+drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public! !
+enableThemeDialogTexture:dwFlags:!**auto generated**!public! !
+enableTheming:!**auto generated**!public! !
+getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public! !
+getThemeAppProperties!**auto generated**!public! !
+getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public! !
+getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public! !
+getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public! !
+getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public! !
+getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public! !
+getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public! !
+getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
+getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
+getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
+getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
+getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !
+getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public! !
+getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public! !
+getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public! !
+getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public! !
+getThemeSysBool:iBoolId:!**auto generated**!public! !
+getThemeSysColor:iColorId:!**auto generated**!public! !
+getThemeSysColorBrush:iColorId:!**auto generated**!public! !
+getThemeSysFont:iFontId:plf:!**auto generated**!public! !
+getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
+getThemeSysSize:iSizeId:!**auto generated**!public! !
+getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public! !
+getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public! !
+getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public! !
+getWindowTheme:!**auto generated**!public! !
+hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public! !
+isAppThemed!**auto generated**!public! !
+isThemeActive!**auto generated**!public! !
+isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public! !
+isThemeDialogTextureEnabled:!**auto generated**!public! !
+isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
+onExit!private! !
+onStartup!private! !
+openThemeData:pszClassList:!**auto generated**!public! !
+setThemeAppProperties:!**auto generated**!public! !
+setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
+!
 
 !OS.ThemeLibrary class methodsFor!
 
@@ -1051,7 +1053,9 @@ new
 
 sharedVariableName
 	^#{UxTheme}! !
-!OS.ThemeLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!OS.ThemeLibrary class categoriesFor: #new!instance creation!public! !
-!OS.ThemeLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.ThemeLibrary class categoriesForMethods!
+fileName!**auto generated**!constants!public! !
+new!instance creation!public! !
+sharedVariableName!constants!private! !
+!
 

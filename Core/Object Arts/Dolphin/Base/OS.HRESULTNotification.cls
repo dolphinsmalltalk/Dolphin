@@ -27,7 +27,9 @@ hresult
 	"Answer the HRESULT error code associated with the receiver."
 
 	^self tag! !
-!OS.HRESULTNotification categoriesFor: #_descriptionArguments!displaying!public! !
-!OS.HRESULTNotification categoriesFor: #_descriptionFormat!displaying!public! !
-!OS.HRESULTNotification categoriesFor: #hresult!accessing!public! !
+!OS.HRESULTNotification categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+hresult!accessing!public! !
+!
 

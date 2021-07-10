@@ -70,12 +70,14 @@ Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger! !
-!Graphics.Gdiplus.GpColorPalette categoriesFor: #Count!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorPalette categoriesFor: #Count:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorPalette categoriesFor: #Entries!accessing!public! !
-!Graphics.Gdiplus.GpColorPalette categoriesFor: #Entries:!accessing!public! !
-!Graphics.Gdiplus.GpColorPalette categoriesFor: #Flags!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorPalette categoriesFor: #Flags:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorPalette categoriesForMethods!
+Count!**compiled accessors**!public! !
+Count:!**compiled accessors**!public! !
+Entries!accessing!public! !
+Entries:!accessing!public! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpColorPalette class methodsFor!
 
@@ -105,6 +107,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Count #Entries)! !
-!Graphics.Gdiplus.GpColorPalette class categoriesFor: #defineFields!public!template definition! !
-!Graphics.Gdiplus.GpColorPalette class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpColorPalette class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

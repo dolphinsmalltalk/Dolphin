@@ -311,58 +311,60 @@ valueOrNil
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
 
 	^self bindingOrNil ifNotNil: [:var | self valueOfBinding: var]! !
-!Kernel.AbstractBindingReference categoriesFor: #<=!comparing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #=!comparing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #append:!copying!public! !
-!Kernel.AbstractBindingReference categoriesFor: #asFullyQualifiedReference!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #asQualifiedReference!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #asString!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #asSymbol!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #baseClass!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #basicUnqualifiedName!accessing!private! !
-!Kernel.AbstractBindingReference categoriesFor: #binding!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #bindingScope!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #declare!operations!public! !
-!Kernel.AbstractBindingReference categoriesFor: #declare:!operations!public! !
-!Kernel.AbstractBindingReference categoriesFor: #displayOn:!displaying!public! !
-!Kernel.AbstractBindingReference categoriesFor: #environment!operations!public! !
-!Kernel.AbstractBindingReference categoriesFor: #environmentName!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #hash!comparing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #home!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #ifDefined:!evaluating!public! !
-!Kernel.AbstractBindingReference categoriesFor: #ifDefined:ifNotDefined:!evaluating!public! !
-!Kernel.AbstractBindingReference categoriesFor: #ifDefinedDo:!evaluating!public! !
-!Kernel.AbstractBindingReference categoriesFor: #ifDefinedDo:elseDo:!evaluating!public! !
-!Kernel.AbstractBindingReference categoriesFor: #instance!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #isAbsolute!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #isDefined!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #isLiteral!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #isMeta!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #isPrivate!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #isPrivate:!accessing!private! !
-!Kernel.AbstractBindingReference categoriesFor: #isQualifiedName!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #isRelative!public!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #literalTextStyle!constants!public! !
-!Kernel.AbstractBindingReference categoriesFor: #meta!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #namespaceBinding!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #owningPackage:!accessing!development!private! !
-!Kernel.AbstractBindingReference categoriesFor: #path!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #pathString!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #printOn:!printing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #private!converting!public! !
-!Kernel.AbstractBindingReference categoriesFor: #refersTo:asLiteralOf:!private!testing! !
-!Kernel.AbstractBindingReference categoriesFor: #scope!constants!private! !
-!Kernel.AbstractBindingReference categoriesFor: #shortName!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #simpleName!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #species!comparing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #storeOn:!public!storing! !
-!Kernel.AbstractBindingReference categoriesFor: #undeclare!operations!public! !
-!Kernel.AbstractBindingReference categoriesFor: #unqualifiedName!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #value!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #valueOfBinding:!helpers!private! !
-!Kernel.AbstractBindingReference categoriesFor: #valueOrDo:!accessing!public! !
-!Kernel.AbstractBindingReference categoriesFor: #valueOrNil!accessing!public! !
+!Kernel.AbstractBindingReference categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+append:!copying!public! !
+asFullyQualifiedReference!converting!public! !
+asQualifiedReference!converting!public! !
+asString!converting!public! !
+asSymbol!converting!public! !
+baseClass!accessing!public! !
+basicUnqualifiedName!accessing!private! !
+binding!accessing!public! !
+bindingOrNil!accessing!public! !
+bindingScope!accessing!public! !
+declare!operations!public! !
+declare:!operations!public! !
+displayOn:!displaying!public! !
+environment!operations!public! !
+environmentName!accessing!public! !
+hash!comparing!public! !
+home!accessing!public! !
+ifDefined:!evaluating!public! !
+ifDefined:ifNotDefined:!evaluating!public! !
+ifDefinedDo:!evaluating!public! !
+ifDefinedDo:elseDo:!evaluating!public! !
+instance!converting!public! !
+isAbsolute!public!testing! !
+isDefined!public!testing! !
+isLiteral!public!testing! !
+isMeta!public!testing! !
+isPrivate!public!testing! !
+isPrivate:!accessing!private! !
+isQualifiedName!public!testing! !
+isRelative!public!testing! !
+literalTextStyle!constants!public! !
+meta!converting!public! !
+namespaceBinding!accessing!public! !
+owningPackage:!accessing!development!private! !
+path!accessing!public! !
+pathString!accessing!public! !
+printOn:!printing!public! !
+private!converting!public! !
+refersTo:asLiteralOf:!private!testing! !
+scope!constants!private! !
+shortName!accessing!public! !
+simpleName!accessing!public! !
+species!comparing!public! !
+storeOn:!public!storing! !
+undeclare!operations!public! !
+unqualifiedName!accessing!public! !
+value!accessing!public! !
+valueOfBinding:!helpers!private! !
+valueOrDo:!accessing!public! !
+valueOrNil!accessing!public! !
+!
 
 !Kernel.AbstractBindingReference class methodsFor!
 
@@ -460,21 +462,23 @@ simpleName: aString in: aNamespace
 
 splitQualifiedName: aString
 	^$. split: aString! !
-!Kernel.AbstractBindingReference class categoriesFor: #errorInvalidIdentifier:!exceptions!private! !
-!Kernel.AbstractBindingReference class categoriesFor: #initialize!class initialization!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #isQualifiedName:!enquiries!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #isValidQualifiedName:!enquiries!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #isValidUnqualifiedName:!enquiries!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #new!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #newPath:private:scope:!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #path:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #path:home:!compatibility!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #path:private:scope:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #path:scope:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #pathString:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #pathString:home:!compatibility!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #pathString:scope:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #simpleName:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #simpleName:in:!instance creation!public! !
-!Kernel.AbstractBindingReference class categoriesFor: #splitQualifiedName:!helpers!public! !
+!Kernel.AbstractBindingReference class categoriesForMethods!
+errorInvalidIdentifier:!exceptions!private! !
+initialize!class initialization!public! !
+isQualifiedName:!enquiries!public! !
+isValidQualifiedName:!enquiries!public! !
+isValidUnqualifiedName:!enquiries!public! !
+new!instance creation!public! !
+newPath:private:scope:!public! !
+path:!instance creation!public! !
+path:home:!compatibility!instance creation!public! !
+path:private:scope:!instance creation!public! !
+path:scope:!instance creation!public! !
+pathString:!instance creation!public! !
+pathString:home:!compatibility!instance creation!public! !
+pathString:scope:!instance creation!public! !
+simpleName:!instance creation!public! !
+simpleName:in:!instance creation!public! !
+splitQualifiedName:!helpers!public! !
+!
 

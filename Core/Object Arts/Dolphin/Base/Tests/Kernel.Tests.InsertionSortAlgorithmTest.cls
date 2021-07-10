@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.StableSortAlgorithmTest subclass: #'Kernel.Tests.InsertionSortAlgorithmTest'
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ integerSortSize
 	"Insertion sort is very slow, so be a bit less ambitious"
 
 	^500! !
-!Kernel.Tests.InsertionSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!Kernel.Tests.InsertionSortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
+!Kernel.Tests.InsertionSortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+integerSortSize!constants!private! !
+!
 

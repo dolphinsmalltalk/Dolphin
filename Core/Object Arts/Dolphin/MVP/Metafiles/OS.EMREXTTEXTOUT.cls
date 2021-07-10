@@ -75,16 +75,18 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMREXTTEXTOUT categoriesFor: #EMRTEXT!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #EMRTEXT:!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #exScale!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #exScale:!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #eyScale!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #eyScale:!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMREXTTEXTOUT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMREXTTEXTOUT categoriesForMethods!
+EMRTEXT!**compiled accessors**!public! !
+EMRTEXT:!**compiled accessors**!public! !
+exScale!**compiled accessors**!public! !
+exScale:!**compiled accessors**!public! !
+eyScale!**compiled accessors**!public! !
+eyScale:!**compiled accessors**!public! !
+iGraphicsMode!**compiled accessors**!public! !
+iGraphicsMode:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMREXTTEXTOUT class methodsFor!
 
@@ -127,6 +129,8 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^#()! !
-!OS.EMREXTTEXTOUT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMREXTTEXTOUT class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTTEXTOUT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+iTypes!constants!public! !
+!
 

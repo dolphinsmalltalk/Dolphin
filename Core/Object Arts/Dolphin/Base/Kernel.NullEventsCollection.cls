@@ -66,16 +66,18 @@ triggerEvent: aSymbol withArguments: anArray
 	Answer the result of the last evaluation, or nil if none."
 
 	^nil! !
-!Kernel.NullEventsCollection categoriesFor: #addEvent:action:!public! !
-!Kernel.NullEventsCollection categoriesFor: #asMinimumRepresentation!converting!public! !
-!Kernel.NullEventsCollection categoriesFor: #hasActionsForEvent:!public!testing! !
-!Kernel.NullEventsCollection categoriesFor: #removeActionsForEvent:!adding!public! !
-!Kernel.NullEventsCollection categoriesFor: #removeEventsTriggeredFor:!public!removing! !
-!Kernel.NullEventsCollection categoriesFor: #shrink!public!removing! !
-!Kernel.NullEventsCollection categoriesFor: #triggerEvent:!public!triggering! !
-!Kernel.NullEventsCollection categoriesFor: #triggerEvent:with:!public!triggering! !
-!Kernel.NullEventsCollection categoriesFor: #triggerEvent:with:with:!public!triggering! !
-!Kernel.NullEventsCollection categoriesFor: #triggerEvent:withArguments:!public!triggering! !
+!Kernel.NullEventsCollection categoriesForMethods!
+addEvent:action:!public! !
+asMinimumRepresentation!converting!public! !
+hasActionsForEvent:!public!testing! !
+removeActionsForEvent:!adding!public! !
+removeEventsTriggeredFor:!public!removing! !
+shrink!public!removing! !
+triggerEvent:!public!triggering! !
+triggerEvent:with:!public!triggering! !
+triggerEvent:with:with:!public!triggering! !
+triggerEvent:withArguments:!public!triggering! !
+!
 
 Kernel.NullEventsCollection methodProtocol: #eventsCollection attributes: #(#readOnly) selectors: #(#addEvent:action: #asMinimumRepresentation #hasActionsForEvent: #removeActionsForEvent: #removeEventsTriggeredFor: #shrink #triggerEvent: #triggerEvent:with: #triggerEvent:with:with: #triggerEvent:withArguments:)!
 
@@ -86,6 +88,8 @@ current
 
 initialize
 	Current := self new! !
-!Kernel.NullEventsCollection class categoriesFor: #current!accessing!public! !
-!Kernel.NullEventsCollection class categoriesFor: #initialize!initializing!public! !
+!Kernel.NullEventsCollection class categoriesForMethods!
+current!accessing!public! !
+initialize!initializing!public! !
+!
 

@@ -27,6 +27,8 @@ createHandle
 name: aString fontCollection: aFontCollection
 	name := aString.
 	fontCollection := aFontCollection! !
-!Graphics.Gdiplus.FontFamilyFromNameInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.FontFamilyFromNameInitializer categoriesFor: #name:fontCollection:!initializing!private! !
+!Graphics.Gdiplus.FontFamilyFromNameInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+name:fontCollection:!initializing!private! !
+!
 

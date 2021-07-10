@@ -201,33 +201,35 @@ toolTipText
 	"Answer a <readableString> suitable for displaying in a Tool-tip control."
 
 	^self description! !
-!UI.CommandDescription categoriesFor: #acceleratorKey!accessing!public! !
-!UI.CommandDescription categoriesFor: #acceleratorKey:!accessing!public! !
-!UI.CommandDescription categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!UI.CommandDescription categoriesFor: #acceleratorKeyString!accessing!public! !
-!UI.CommandDescription categoriesFor: #acceleratorKeyString:!accessing!public! !
-!UI.CommandDescription categoriesFor: #canPerformAgainst:!commands!public!testing! !
-!UI.CommandDescription categoriesFor: #command!accessing!public! !
-!UI.CommandDescription categoriesFor: #command:!accessing!public! !
-!UI.CommandDescription categoriesFor: #commandString!accessing!public! !
-!UI.CommandDescription categoriesFor: #commandSymbol!accessing!public! !
-!UI.CommandDescription categoriesFor: #description!accessing!public! !
-!UI.CommandDescription categoriesFor: #description:!accessing!public! !
-!UI.CommandDescription categoriesFor: #displayOn:!printing!public! !
-!UI.CommandDescription categoriesFor: #hasAcceleratorKey!public!testing! !
-!UI.CommandDescription categoriesFor: #id!accessing!public! !
-!UI.CommandDescription categoriesFor: #image!accessing!public! !
-!UI.CommandDescription categoriesFor: #image:!accessing!public! !
-!UI.CommandDescription categoriesFor: #initialize!initializing!private! !
-!UI.CommandDescription categoriesFor: #isModalCommand!public!testing! !
-!UI.CommandDescription categoriesFor: #isModalCommand:!public!testing! !
-!UI.CommandDescription categoriesFor: #menuText!accessing!private! !
-!UI.CommandDescription categoriesFor: #messages!enquiries!public! !
-!UI.CommandDescription categoriesFor: #performAgainst:!operations!private! !
-!UI.CommandDescription categoriesFor: #printOn:!development!printing!public! !
-!UI.CommandDescription categoriesFor: #queryCommand:!commands!private! !
-!UI.CommandDescription categoriesFor: #registerAcceleratorKeyIn:!operations!private! !
-!UI.CommandDescription categoriesFor: #toolTipText!accessing!public! !
+!UI.CommandDescription categoriesForMethods!
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!public! !
+acceleratorKeyDisplayString!accessing!public! !
+acceleratorKeyString!accessing!public! !
+acceleratorKeyString:!accessing!public! !
+canPerformAgainst:!commands!public!testing! !
+command!accessing!public! !
+command:!accessing!public! !
+commandString!accessing!public! !
+commandSymbol!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!printing!public! !
+hasAcceleratorKey!public!testing! !
+id!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+initialize!initializing!private! !
+isModalCommand!public!testing! !
+isModalCommand:!public!testing! !
+menuText!accessing!private! !
+messages!enquiries!public! !
+performAgainst:!operations!private! !
+printOn:!development!printing!public! !
+queryCommand:!commands!private! !
+registerAcceleratorKeyIn:!operations!private! !
+toolTipText!accessing!public! !
+!
 
 UI.CommandDescription methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 UI.CommandDescription methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
@@ -337,16 +339,18 @@ withId: anInteger ifAbsent: absentBlock
 	then the value of absentBlock."
 
 	^CommandDescriptionRegistry keyAtValue: anInteger ifAbsent: absentBlock! !
-!UI.CommandDescription class categoriesFor: #command:!instance creation!public! !
-!UI.CommandDescription class categoriesFor: #command:description:!instance creation!public! !
-!UI.CommandDescription class categoriesFor: #command:description:image:!instance creation!public! !
-!UI.CommandDescription class categoriesFor: #idFor:!command registry!private! !
-!UI.CommandDescription class categoriesFor: #initialize!development!initializing!private! !
-!UI.CommandDescription class categoriesFor: #maximumId!command registry!private! !
-!UI.CommandDescription class categoriesFor: #new!instance creation!public! !
-!UI.CommandDescription class categoriesFor: #nextId!command registry!private! !
-!UI.CommandDescription class categoriesFor: #startingId!command registry!private! !
-!UI.CommandDescription class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.CommandDescription class categoriesFor: #stbVersion!binary filing!public! !
-!UI.CommandDescription class categoriesFor: #withId:ifAbsent:!command registry!public! !
+!UI.CommandDescription class categoriesForMethods!
+command:!instance creation!public! !
+command:description:!instance creation!public! !
+command:description:image:!instance creation!public! !
+idFor:!command registry!private! !
+initialize!development!initializing!private! !
+maximumId!command registry!private! !
+new!instance creation!public! !
+nextId!command registry!private! !
+startingId!command registry!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+withId:ifAbsent:!command registry!public! !
+!
 

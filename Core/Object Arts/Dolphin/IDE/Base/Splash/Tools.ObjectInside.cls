@@ -192,36 +192,38 @@ y
 
 y: aNumber
 	self position: self position x @ aNumber! !
-!Tools.ObjectInside categoriesFor: #alpha!accessing!public! !
-!Tools.ObjectInside categoriesFor: #alpha:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #baseColor!accessing!public! !
-!Tools.ObjectInside categoriesFor: #baseColor:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #center!accessing!public! !
-!Tools.ObjectInside categoriesFor: #color!accessing!public! !
-!Tools.ObjectInside categoriesFor: #color:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #copy!copying!public! !
-!Tools.ObjectInside categoriesFor: #drawEdgePointsOn:!operations!public! !
-!Tools.ObjectInside categoriesFor: #drawOn:!operations!public! !
-!Tools.ObjectInside categoriesFor: #edgePoints!accessing!public! !
-!Tools.ObjectInside categoriesFor: #edgePoints:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #extent!accessing!public! !
-!Tools.ObjectInside categoriesFor: #findEdgePoints!operations!private! !
-!Tools.ObjectInside categoriesFor: #image!private! !
-!Tools.ObjectInside categoriesFor: #initialize!private! !
-!Tools.ObjectInside categoriesFor: #matrix!accessing!operations!public! !
-!Tools.ObjectInside categoriesFor: #position!accessing!public! !
-!Tools.ObjectInside categoriesFor: #position:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #resetMatrix!operations!public! !
-!Tools.ObjectInside categoriesFor: #rotation!accessing!public! !
-!Tools.ObjectInside categoriesFor: #rotation:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #scale!accessing!public! !
-!Tools.ObjectInside categoriesFor: #scale:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #setImage:!private! !
-!Tools.ObjectInside categoriesFor: #testCollisionIn:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #x!accessing!public! !
-!Tools.ObjectInside categoriesFor: #x:!accessing!public! !
-!Tools.ObjectInside categoriesFor: #y!accessing!public! !
-!Tools.ObjectInside categoriesFor: #y:!accessing!public! !
+!Tools.ObjectInside categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+baseColor!accessing!public! !
+baseColor:!accessing!public! !
+center!accessing!public! !
+color!accessing!public! !
+color:!accessing!public! !
+copy!copying!public! !
+drawEdgePointsOn:!operations!public! !
+drawOn:!operations!public! !
+edgePoints!accessing!public! !
+edgePoints:!accessing!public! !
+extent!accessing!public! !
+findEdgePoints!operations!private! !
+image!private! !
+initialize!private! !
+matrix!accessing!operations!public! !
+position!accessing!public! !
+position:!accessing!public! !
+resetMatrix!operations!public! !
+rotation!accessing!public! !
+rotation:!accessing!public! !
+scale!accessing!public! !
+scale:!accessing!public! !
+setImage:!private! !
+testCollisionIn:!accessing!public! !
+x!accessing!public! !
+x:!accessing!public! !
+y!accessing!public! !
+y:!accessing!public! !
+!
 
 !Tools.ObjectInside class methodsFor!
 
@@ -244,8 +246,10 @@ fromImage: aGdiplusImage scaledBy: aFloatScale
 	aFloatScale = 1 ifTrue: [^self fromImage: aGdiplusImage].
 	scaledBitmap := Gdiplus.Bitmap fromImage: aGdiplusImage scaledBy: aFloatScale.
 	^self fromImage: scaledBitmap! !
-!Tools.ObjectInside class categoriesFor: #chooseFile!public! !
-!Tools.ObjectInside class categoriesFor: #fromBytes:!public! !
-!Tools.ObjectInside class categoriesFor: #fromImage:!public! !
-!Tools.ObjectInside class categoriesFor: #fromImage:scaledBy:!public! !
+!Tools.ObjectInside class categoriesForMethods!
+chooseFile!public! !
+fromBytes:!public! !
+fromImage:!public! !
+fromImage:scaledBy:!public! !
+!
 

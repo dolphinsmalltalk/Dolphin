@@ -21,8 +21,10 @@ value
 	Automation date (an 8-byte floating point day number and fraction of a day)."
 
 	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: super value)! !
-!OS.COM.DATE categoriesFor: #asDateAndTime!accessing!public! !
-!OS.COM.DATE categoriesFor: #value!accessing!public! !
+!OS.COM.DATE categoriesForMethods!
+asDateAndTime!accessing!public! !
+value!accessing!public! !
+!
 
 !OS.COM.DATE class methodsFor!
 
@@ -86,14 +88,16 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DATE! !
-!OS.COM.DATE class categoriesFor: #fromString:!instance creation!public! !
-!OS.COM.DATE class categoriesFor: #fromString:locale:!instance creation!public! !
-!OS.COM.DATE class categoriesFor: #icon!constants!public! !
-!OS.COM.DATE class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.DATE class categoriesFor: #maximum!constants!public! !
-!OS.COM.DATE class categoriesFor: #minimum!constants!public! !
-!OS.COM.DATE class categoriesFor: #now!instance creation!public! !
-!OS.COM.DATE class categoriesFor: #typeName!constants!private! !
-!OS.COM.DATE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!OS.COM.DATE class categoriesFor: #vt!constants!public! !
+!OS.COM.DATE class categoriesForMethods!
+fromString:!instance creation!public! !
+fromString:locale:!instance creation!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+maximum!constants!public! !
+minimum!constants!public! !
+now!instance creation!public! !
+typeName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

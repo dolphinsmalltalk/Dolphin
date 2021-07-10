@@ -49,15 +49,17 @@ selectionOrNil
 
 selectionOrNil: anObject
 	^contentsPresenter selectionOrNil: anObject! !
-!Tools.TwinLevelInspector categoriesFor: #aspectAccessor!public! !
-!Tools.TwinLevelInspector categoriesFor: #createComponents!private! !
-!Tools.TwinLevelInspector categoriesFor: #createSchematicWiring!initializing!private! !
-!Tools.TwinLevelInspector categoriesFor: #inspectorPresenter!public! !
-!Tools.TwinLevelInspector categoriesFor: #isRootAspectVisible:!accessing!public! !
-!Tools.TwinLevelInspector categoriesFor: #model:!public! !
-!Tools.TwinLevelInspector categoriesFor: #onContentsSelectionChanged!private! !
-!Tools.TwinLevelInspector categoriesFor: #selectionOrNil!public!selection! !
-!Tools.TwinLevelInspector categoriesFor: #selectionOrNil:!public!selection! !
+!Tools.TwinLevelInspector categoriesForMethods!
+aspectAccessor!public! !
+createComponents!private! !
+createSchematicWiring!initializing!private! !
+inspectorPresenter!public! !
+isRootAspectVisible:!accessing!public! !
+model:!public! !
+onContentsSelectionChanged!private! !
+selectionOrNil!public!selection! !
+selectionOrNil:!public!selection! !
+!
 
 !Tools.TwinLevelInspector class methodsFor!
 
@@ -91,8 +93,10 @@ shellOn: aListModelOfObjects caption: caption
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!Tools.TwinLevelInspector class categoriesFor: #defaultModel!public! !
-!Tools.TwinLevelInspector class categoriesFor: #icon!constants!public! !
-!Tools.TwinLevelInspector class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.TwinLevelInspector class categoriesFor: #shellOn:caption:!instance creation!public! !
+!Tools.TwinLevelInspector class categoriesForMethods!
+defaultModel!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+shellOn:caption:!instance creation!public! !
+!
 

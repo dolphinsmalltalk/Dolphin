@@ -31,8 +31,10 @@ points: points types: types fillMode: aFillModeConstant
 	pathPoints := points.
 	pathTypes := types asByteArray.
 	fillMode := aFillModeConstant! !
-!Graphics.Gdiplus.PathFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.PathFromPointsInitializer categoriesFor: #points:types:fillMode:!initializing!private! !
+!Graphics.Gdiplus.PathFromPointsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+points:types:fillMode:!initializing!private! !
+!
 
 !Graphics.Gdiplus.PathFromPointsInitializer class methodsFor!
 
@@ -41,5 +43,7 @@ points: points types: types fillMode: aFillModeConstant
 		points: points
 		types: types
 		fillMode: aFillModeConstant! !
-!Graphics.Gdiplus.PathFromPointsInitializer class categoriesFor: #points:types:fillMode:!public! !
+!Graphics.Gdiplus.PathFromPointsInitializer class categoriesForMethods!
+points:types:fillMode:!public! !
+!
 

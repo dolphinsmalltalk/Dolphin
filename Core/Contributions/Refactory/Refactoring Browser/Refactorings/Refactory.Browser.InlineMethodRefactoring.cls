@@ -343,38 +343,40 @@ writeGuardClauses
 		replaceMethod: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]. `@.s2'
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [`@.s2. ^self] ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]'.
 	[rewriter executeTree: inlineParseTree] whileTrue: [inlineParseTree := rewriter tree]! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #addTemporary:assignedTo:!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #compileMethod!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #getOptionImplementorToInline:!options!private! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #hasMultipleReturns!public!testing! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inline:inMethod:forClass:!initialize/release!public! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inlineClass!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inlineSelector!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #inlineSourceReplacing:!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #insertInlinedMethod!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #isOverridden!public! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #isPrimitive!public!testing! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #moveComments!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #normalizeIfTrues!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #normalizeReturns!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #parseInlineMethod!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #removeEmptyIfTrues!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #removeImmediateBlocks!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #removeReturns!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #renameConflictingTemporaries!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #renameConflictingTemporary:!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #renameTemporary:to:!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #replaceArgument:with:!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #replaceArguments!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #rewriteCascadedMessage!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #rewriteInlinedTree!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.InlineMethodRefactoring categoriesFor: #writeGuardClauses!public!transforming! !
+!Refactory.Browser.InlineMethodRefactoring categoriesForMethods!
+addSelfReturn!public!transforming! !
+addTemporary:assignedTo:!public!transforming! !
+checkSuperMessages!public!transforming! !
+compileMethod!public!transforming! !
+findSelectedMessage!public!transforming! !
+getOptionImplementorToInline:!options!private! !
+hasMultipleReturns!public!testing! !
+inline:inMethod:forClass:!initialize/release!public! !
+inlineClass!public!transforming! !
+inlineSelector!public!transforming! !
+inlineSourceReplacing:!public!transforming! !
+insertInlinedMethod!public!transforming! !
+isOverridden!public! !
+isPrimitive!public!testing! !
+moveComments!public!transforming! !
+normalizeIfTrues!public!transforming! !
+normalizeReturns!public!transforming! !
+parseInlineMethod!public!transforming! !
+preconditions!preconditions!public! !
+removeEmptyIfTrues!public!transforming! !
+removeImmediateBlocks!public!transforming! !
+removeReturns!public!transforming! !
+renameConflictingTemporaries!public!transforming! !
+renameConflictingTemporary:!public!transforming! !
+renameTemporary:to:!public!transforming! !
+replaceArgument:with:!public!transforming! !
+replaceArguments!public!transforming! !
+rewriteCascadedMessage!public!transforming! !
+rewriteInlinedTree!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+writeGuardClauses!public!transforming! !
+!
 
 !Refactory.Browser.InlineMethodRefactoring class methodsFor!
 
@@ -395,7 +397,9 @@ model: aRBNamespace inline: anInterval inMethod: aSelector forClass: aClass
 			inMethod: aSelector
 			forClass: aClass;
 		yourself! !
-!Refactory.Browser.InlineMethodRefactoring class categoriesFor: #initialize!class initialization!public! !
-!Refactory.Browser.InlineMethodRefactoring class categoriesFor: #inline:inMethod:forClass:!instance creation!public! !
-!Refactory.Browser.InlineMethodRefactoring class categoriesFor: #model:inline:inMethod:forClass:!instance creation!public! !
+!Refactory.Browser.InlineMethodRefactoring class categoriesForMethods!
+initialize!class initialization!public! !
+inline:inMethod:forClass:!instance creation!public! !
+model:inline:inMethod:forClass:!instance creation!public! !
+!
 

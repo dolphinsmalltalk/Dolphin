@@ -38,8 +38,10 @@ createHandle
 		hpal: hPalette
 		bitmap: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesFor: #bitmap:!initializing!private! !
-!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer categoriesForMethods!
+bitmap:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.BitmapFromGdiBitmapInitializer class methodsFor!
 
@@ -50,5 +52,7 @@ bitmap: aBitmap
 	"SW: Would there be any need to allow the user to supply the HPALETTE ?"
 
 	^self new bitmap: aBitmap! !
-!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer class categoriesFor: #bitmap:!instance creation!public! !
+!Graphics.Gdiplus.BitmapFromGdiBitmapInitializer class categoriesForMethods!
+bitmap:!instance creation!public! !
+!
 

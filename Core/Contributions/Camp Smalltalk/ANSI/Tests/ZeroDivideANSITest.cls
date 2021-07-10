@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #ZeroDivideANSITest
 	instanceVariableNames: ''
@@ -99,25 +99,27 @@ testXsignalX
 testXtag
 	" <exceptionDescription>#tag "
 	#'Exception'.! !
-!ZeroDivideANSITest categoriesFor: #canonicalObject!public! !
-!ZeroDivideANSITest categoriesFor: #protocol!public! !
-!ZeroDivideANSITest categoriesFor: #testXdefaultAction!public! !
-!ZeroDivideANSITest categoriesFor: #testXdescription!public! !
-!ZeroDivideANSITest categoriesFor: #testXdividend!public! !
-!ZeroDivideANSITest categoriesFor: #testXisNested!public! !
-!ZeroDivideANSITest categoriesFor: #testXisResumable!public! !
-!ZeroDivideANSITest categoriesFor: #testXmessageText!public! !
-!ZeroDivideANSITest categoriesFor: #testXmessageTextX!public! !
-!ZeroDivideANSITest categoriesFor: #testXouter!public! !
-!ZeroDivideANSITest categoriesFor: #testXpass!public! !
-!ZeroDivideANSITest categoriesFor: #testXresignalAsX!public! !
-!ZeroDivideANSITest categoriesFor: #testXresume!public! !
-!ZeroDivideANSITest categoriesFor: #testXresumeX!public! !
-!ZeroDivideANSITest categoriesFor: #testXretry!public! !
-!ZeroDivideANSITest categoriesFor: #testXretryUsingX!public! !
-!ZeroDivideANSITest categoriesFor: #testXreturn!public! !
-!ZeroDivideANSITest categoriesFor: #testXreturnX!public! !
-!ZeroDivideANSITest categoriesFor: #testXsignal!public! !
-!ZeroDivideANSITest categoriesFor: #testXsignalX!public! !
-!ZeroDivideANSITest categoriesFor: #testXtag!public! !
+!ZeroDivideANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXdefaultAction!public! !
+testXdescription!public! !
+testXdividend!public! !
+testXisNested!public! !
+testXisResumable!public! !
+testXmessageText!public! !
+testXmessageTextX!public! !
+testXouter!public! !
+testXpass!public! !
+testXresignalAsX!public! !
+testXresume!public! !
+testXresumeX!public! !
+testXretry!public! !
+testXretryUsingX!public! !
+testXreturn!public! !
+testXreturnX!public! !
+testXsignal!public! !
+testXsignalX!public! !
+testXtag!public! !
+!
 

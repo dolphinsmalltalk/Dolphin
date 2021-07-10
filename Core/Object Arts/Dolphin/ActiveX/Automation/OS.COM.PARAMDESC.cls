@@ -72,15 +72,17 @@ wParamFlags
 	"Answer the <Integer> value of the receiver's 'wParamFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wParamFlags! !
-!OS.COM.PARAMDESC categoriesFor: #defaultValue!accessing!public! !
-!OS.COM.PARAMDESC categoriesFor: #directionFlags!public!testing! !
-!OS.COM.PARAMDESC categoriesFor: #hasDefaultValue!public!testing! !
-!OS.COM.PARAMDESC categoriesFor: #isIn!public!testing! !
-!OS.COM.PARAMDESC categoriesFor: #isOptional!public!testing! !
-!OS.COM.PARAMDESC categoriesFor: #isOut!public!testing! !
-!OS.COM.PARAMDESC categoriesFor: #isRetVal!public!testing! !
-!OS.COM.PARAMDESC categoriesFor: #pparamdescex!**compiled accessors**!public! !
-!OS.COM.PARAMDESC categoriesFor: #wParamFlags!**compiled accessors**!public! !
+!OS.COM.PARAMDESC categoriesForMethods!
+defaultValue!accessing!public! !
+directionFlags!public!testing! !
+hasDefaultValue!public!testing! !
+isIn!public!testing! !
+isOptional!public!testing! !
+isOut!public!testing! !
+isRetVal!public!testing! !
+pparamdescex!**compiled accessors**!public! !
+wParamFlags!**compiled accessors**!public! !
+!
 
 !OS.COM.PARAMDESC class methodsFor!
 
@@ -102,6 +104,8 @@ defineFields
 
 getFieldNames
 	^#(#pparamdescex #wParamFlags)! !
-!OS.COM.PARAMDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.PARAMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.PARAMDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

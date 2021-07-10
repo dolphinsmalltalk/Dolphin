@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SequencedStreamTest subclass: #ReadStreamANSITest
 	instanceVariableNames: 'readStream'
@@ -21,9 +21,11 @@ setUp
 
 	super setUp.
 	readStream := ReadStream on: 'this is a string'! !
-!ReadStreamANSITest categoriesFor: #canonicalObject!public! !
-!ReadStreamANSITest categoriesFor: #protocol!public! !
-!ReadStreamANSITest categoriesFor: #setUp!public! !
+!ReadStreamANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+!
 
 !ReadStreamANSITest class methodsFor!
 
@@ -32,5 +34,7 @@ helperClassesDo: aBlock
 	aBlock value: GettableStreamHelper.
 	aBlock value: CollectionStreamHelper.
 	aBlock value: ReadStreamHelper.! !
-!ReadStreamANSITest class categoriesFor: #helperClassesDo:!public! !
+!ReadStreamANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

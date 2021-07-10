@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.GUIDTest subclass: #'OS.COM.Tests.CLSIDTest'
 	instanceVariableNames: ''
@@ -32,8 +32,10 @@ testProgId
 	subject := self subjectClass fromProgID: 'ADODB.Command'.
 	actual := subject progID.
 	self assert: (actual beginsWith: 'ADODB.Command')! !
-!OS.COM.Tests.CLSIDTest categoriesFor: #subjectClass!constants!private! !
-!OS.COM.Tests.CLSIDTest categoriesFor: #testDisplayStringProgId!constants!public! !
-!OS.COM.Tests.CLSIDTest categoriesFor: #testFromStringProgId!public!unit tests! !
-!OS.COM.Tests.CLSIDTest categoriesFor: #testProgId!constants!public! !
+!OS.COM.Tests.CLSIDTest categoriesForMethods!
+subjectClass!constants!private! !
+testDisplayStringProgId!constants!public! !
+testFromStringProgId!public!unit tests! !
+testProgId!constants!public! !
+!
 

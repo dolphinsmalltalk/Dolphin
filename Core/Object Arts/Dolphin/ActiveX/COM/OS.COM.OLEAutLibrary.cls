@@ -62,11 +62,13 @@ sysStringLen: aBSTR
 
 	<stdcall: hresult SysStringLen bstr>
 	^self invalidCall: _failureCode! !
-!OS.COM.OLEAutLibrary categoriesFor: #getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
-!OS.COM.OLEAutLibrary categoriesFor: #sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
-!OS.COM.OLEAutLibrary categoriesFor: #sysFreeString:!Automation Functions-String Manipulation!primitives!public! !
-!OS.COM.OLEAutLibrary categoriesFor: #sysStringByteLen:!Automation Functions-String Manipulation!primitives!public! !
-!OS.COM.OLEAutLibrary categoriesFor: #sysStringLen:!Automation Functions-String Manipulation!primitives!public! !
+!OS.COM.OLEAutLibrary categoriesForMethods!
+getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
+sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
+sysFreeString:!Automation Functions-String Manipulation!primitives!public! !
+sysStringByteLen:!Automation Functions-String Manipulation!primitives!public! !
+sysStringLen:!Automation Functions-String Manipulation!primitives!public! !
+!
 
 !OS.COM.OLEAutLibrary class methodsFor!
 
@@ -78,6 +80,8 @@ fileName
 
 sharedVariableName
 	^#{OleAut32}! !
-!OS.COM.OLEAutLibrary class categoriesFor: #fileName!constants!public! !
-!OS.COM.OLEAutLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.COM.OLEAutLibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

@@ -51,10 +51,12 @@ NextEntryOffset
 	"Answer the <Integer> value of the receiver's 'NextEntryOffset' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NextEntryOffset! !
-!OS.FILE_NOTIFY_INFORMATION categoriesFor: #Action!**compiled accessors**!public! !
-!OS.FILE_NOTIFY_INFORMATION categoriesFor: #FileName!**compiled accessors**!public! !
-!OS.FILE_NOTIFY_INFORMATION categoriesFor: #FileNameLength!**compiled accessors**!public! !
-!OS.FILE_NOTIFY_INFORMATION categoriesFor: #NextEntryOffset!**compiled accessors**!public! !
+!OS.FILE_NOTIFY_INFORMATION categoriesForMethods!
+Action!**compiled accessors**!public! !
+FileName!**compiled accessors**!public! !
+FileNameLength!**compiled accessors**!public! !
+NextEntryOffset!**compiled accessors**!public! !
+!
 
 !OS.FILE_NOTIFY_INFORMATION class methodsFor!
 
@@ -93,7 +95,9 @@ getFieldNames
 
 new
 	^self new: ##(_OffsetOf_FileName + ((CRTConstants._MAX_PATH + 1) * 2))! !
-!OS.FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.FILE_NOTIFY_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.FILE_NOTIFY_INFORMATION class categoriesFor: #new!public! !
+!OS.FILE_NOTIFY_INFORMATION class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+new!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.UtfEncodedStringTest subclass: #'Core.Tests.Utf8StringTest'
 	instanceVariableNames: ''
@@ -103,16 +103,18 @@ testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self assert: subject keys equals: #(1 2 4 7 11 12)! !
-!Core.Tests.Utf8StringTest categoriesFor: #assimilateString:!helpers!private! !
-!Core.Tests.Utf8StringTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.Utf8StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
-!Core.Tests.Utf8StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
-!Core.Tests.Utf8StringTest categoriesFor: #decodeTestCases!constants!private! !
-!Core.Tests.Utf8StringTest categoriesFor: #testAssociations!public!unit tests! !
-!Core.Tests.Utf8StringTest categoriesFor: #testCopyWith!public!unit tests! !
-!Core.Tests.Utf8StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!Core.Tests.Utf8StringTest categoriesFor: #testDecodeNextFrom5and6Byte!public! !
-!Core.Tests.Utf8StringTest categoriesFor: #testDecodeNextFromOverlong!public! !
-!Core.Tests.Utf8StringTest categoriesFor: #testEncodedSizeOf!public! !
-!Core.Tests.Utf8StringTest categoriesFor: #testKeys!public!unit tests! !
+!Core.Tests.Utf8StringTest categoriesForMethods!
+assimilateString:!helpers!private! !
+collectionClass!helpers!private! !
+decodeIncompleteContinuations!constants!private! !
+decodeInvalidContinuations!constants!private! !
+decodeTestCases!constants!private! !
+testAssociations!public!unit tests! !
+testCopyWith!public!unit tests! !
+testCopyWithAtIndex!public!unit tests! !
+testDecodeNextFrom5and6Byte!public! !
+testDecodeNextFromOverlong!public! !
+testEncodedSizeOf!public! !
+testKeys!public!unit tests! !
+!
 

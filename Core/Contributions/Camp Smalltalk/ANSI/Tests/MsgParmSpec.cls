@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #MsgParmSpec
 	instanceVariableNames: 'parmName parmProtocols parmAliasingAttribute'
@@ -64,13 +64,15 @@ storeSIFString
 	aStream := WriteStream on: (String new: 50).
 	self storeSIFOn: aStream.
 	^ aStream contents! !
-!MsgParmSpec categoriesFor: #parmAliasingAttribute!public! !
-!MsgParmSpec categoriesFor: #parmName!public! !
-!MsgParmSpec categoriesFor: #parmProtocolNames!public! !
-!MsgParmSpec categoriesFor: #printOn:!public! !
-!MsgParmSpec categoriesFor: #setParmName:protocolNames:aliasing:!public! !
-!MsgParmSpec categoriesFor: #storeSIFOn:!public! !
-!MsgParmSpec categoriesFor: #storeSIFString!public! !
+!MsgParmSpec categoriesForMethods!
+parmAliasingAttribute!public! !
+parmName!public! !
+parmProtocolNames!public! !
+printOn:!public! !
+setParmName:protocolNames:aliasing:!public! !
+storeSIFOn:!public! !
+storeSIFString!public! !
+!
 
 !MsgParmSpec class methodsFor!
 
@@ -163,15 +165,17 @@ privateValidProtocolNames: protocolNamesIn ifError: errorBlock
 			(protocolName isKindOf: Symbol) ifFalse: [^errorBlock value].
 			protocolNamesTmp add: protocolName].
 	^protocolNamesTmp! !
-!MsgParmSpec class categoriesFor: #aliasingAttributes!public! !
-!MsgParmSpec class categoriesFor: #new!public! !
-!MsgParmSpec class categoriesFor: #newCapturedParmName:protocolNames:!public! !
-!MsgParmSpec class categoriesFor: #newParmName:protocolNames:aliasing:!public! !
-!MsgParmSpec class categoriesFor: #newUncapturedParmName:protocolNames:!public! !
-!MsgParmSpec class categoriesFor: #newUnspecifiedParmName:protocolNames:!public! !
-!MsgParmSpec class categoriesFor: #parmAliasingAttributeCaptured!public! !
-!MsgParmSpec class categoriesFor: #parmAliasingAttributeUncaptured!public! !
-!MsgParmSpec class categoriesFor: #parmAliasingAttributeUnspecified!public! !
-!MsgParmSpec class categoriesFor: #privateNewParmName:protocolNames:aliasing:!public! !
-!MsgParmSpec class categoriesFor: #privateValidProtocolNames:ifError:!public! !
+!MsgParmSpec class categoriesForMethods!
+aliasingAttributes!public! !
+new!public! !
+newCapturedParmName:protocolNames:!public! !
+newParmName:protocolNames:aliasing:!public! !
+newUncapturedParmName:protocolNames:!public! !
+newUnspecifiedParmName:protocolNames:!public! !
+parmAliasingAttributeCaptured!public! !
+parmAliasingAttributeUncaptured!public! !
+parmAliasingAttributeUnspecified!public! !
+privateNewParmName:protocolNames:aliasing:!public! !
+privateValidProtocolNames:ifError:!public! !
+!
 

@@ -97,14 +97,16 @@ text: aString
 	text := ('*<a*>*</a>*' match: aString) ifTrue: [aString] ifFalse: ['<a>' , aString , '</a>'].
 	super text: text.
 	commandDescription description: (self stripTags: text)! !
-!UI.LinkButton categoriesFor: #calculateExtent:!geometry!private! !
-!UI.LinkButton categoriesFor: #getWindowText!accessing!private! !
-!UI.LinkButton categoriesFor: #isEnabled:!accessing!public! !
-!UI.LinkButton categoriesFor: #nmClick:!event handling-win32!private! !
-!UI.LinkButton categoriesFor: #nmReturn:!event handling-win32!private! !
-!UI.LinkButton categoriesFor: #preferredHeight!enquiries!private! !
-!UI.LinkButton categoriesFor: #stripTags:!helpers!private! !
-!UI.LinkButton categoriesFor: #text:!accessing!public! !
+!UI.LinkButton categoriesForMethods!
+calculateExtent:!geometry!private! !
+getWindowText!accessing!private! !
+isEnabled:!accessing!public! !
+nmClick:!event handling-win32!private! !
+nmReturn:!event handling-win32!private! !
+preferredHeight!enquiries!private! !
+stripTags:!helpers!private! !
+text:!accessing!public! !
+!
 
 !UI.LinkButton class methodsFor!
 
@@ -122,6 +124,8 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
-!UI.LinkButton class categoriesFor: #resource_Link_button!public!resources-views! !
-!UI.LinkButton class categoriesFor: #winClassName!constants!private! !
+!UI.LinkButton class categoriesForMethods!
+resource_Link_button!public!resources-views! !
+winClassName!constants!private! !
+!
 

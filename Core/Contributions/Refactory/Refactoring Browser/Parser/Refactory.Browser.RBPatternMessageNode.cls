@@ -103,16 +103,18 @@ sentMessages
 	^(super sentMessages)
 		remove: self selector ifAbsent: [];
 		yourself! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #copyInContext:!matching!public! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #isList!public!testing/matching! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #isPatternNode!public!testing/matching! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #isSelectorList!public!testing/matching! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #match:inContext:!matching!public! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #matchingClass!constants!public! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #receiver:selectorParts:arguments:!initialize/release!public! !
-!Refactory.Browser.RBPatternMessageNode categoriesFor: #sentMessages!accessing!public! !
+!Refactory.Browser.RBPatternMessageNode categoriesForMethods!
+copyInContext:!matching!public! !
+isList!public!testing/matching! !
+isPatternNode!public!testing/matching! !
+isSelectorList!public!testing/matching! !
+match:inContext:!matching!public! !
+matchArgumentsAgainst:inContext:!matching!public! !
+matchingClass!constants!public! !
+matchSelectorAgainst:inContext:!matching!public! !
+receiver:selectorParts:arguments:!initialize/release!public! !
+sentMessages!accessing!public! !
+!
 
 !Refactory.Browser.RBPatternMessageNode class methodsFor!
 
@@ -128,5 +130,7 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 				receiver: aValueNode
 				selectorParts: keywordTokens
 				arguments: valueNodes]! !
-!Refactory.Browser.RBPatternMessageNode class categoriesFor: #receiver:selectorParts:arguments:!instance creation!public! !
+!Refactory.Browser.RBPatternMessageNode class categoriesForMethods!
+receiver:selectorParts:arguments:!instance creation!public! !
+!
 

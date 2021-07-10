@@ -97,24 +97,28 @@ subscriptionsOf: aSubscriber do: aBlock
 			subscription subscriber == aSubscriber 
 				ifTrue: [ aBlock value: subscription ]	]
 ! !
-!Kernel.SubscriptionRegistry categoriesFor: #add:!add/remove!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #deliver:!announcing!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #deliver:to:!private! !
-!Kernel.SubscriptionRegistry categoriesFor: #deliver:to:startingAt:!private! !
-!Kernel.SubscriptionRegistry categoriesFor: #glmSubscriptions!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #initialize!initialization!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #numberOfSubscriptions!accessing!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #protected:!private! !
-!Kernel.SubscriptionRegistry categoriesFor: #remove:!add/remove!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #removeSubscriber:!add/remove!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #replace:with:!add/remove!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #reset!initialize/release!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #subscriptionsHandling:!accessing!public! !
-!Kernel.SubscriptionRegistry categoriesFor: #subscriptionsOf:do:!iterating!public! !
+!Kernel.SubscriptionRegistry categoriesForMethods!
+add:!add/remove!public! !
+deliver:!announcing!public! !
+deliver:to:!private! !
+deliver:to:startingAt:!private! !
+glmSubscriptions!public! !
+initialize!initialization!public! !
+numberOfSubscriptions!accessing!public! !
+protected:!private! !
+remove:!add/remove!public! !
+removeSubscriber:!add/remove!public! !
+replace:with:!add/remove!public! !
+reset!initialize/release!public! !
+subscriptionsHandling:!accessing!public! !
+subscriptionsOf:do:!iterating!public! !
+!
 
 !Kernel.SubscriptionRegistry class methodsFor!
 
 new	
 	^super new initialize! !
-!Kernel.SubscriptionRegistry class categoriesFor: #new!public! !
+!Kernel.SubscriptionRegistry class categoriesForMethods!
+new!public! !
+!
 

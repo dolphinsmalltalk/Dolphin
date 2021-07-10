@@ -45,8 +45,10 @@ rightToLeft: anInteger
 	"Preserve the HOTKEYF_EXT flag by combining KF_EXTENDED with the VK_"
 	(hotKeyModifiers allMask: HOTKEYF_EXT) ifTrue: [vKey := vKey bitOr: KF_EXTENDED].
 	^AcceleratorTable keyCode: vKey modifiers: (self class hotKeyToAccelModifiers: hotKeyModifiers)! !
-!UI.AccelToHotKey categoriesFor: #leftToRight:!operations!private! !
-!UI.AccelToHotKey categoriesFor: #rightToLeft:!operations!private! !
+!UI.AccelToHotKey categoriesForMethods!
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 
 !UI.AccelToHotKey class methodsFor!
 
@@ -84,7 +86,9 @@ initialize
 
 	self addClassConstant: 'ModifierMap'
 		value: {HOTKEYF_SHIFT. FSHIFT. HOTKEYF_CONTROL. FCONTROL. HOTKEYF_ALT. FALT}! !
-!UI.AccelToHotKey class categoriesFor: #accelToHotKeyModifiers:!initializing!private! !
-!UI.AccelToHotKey class categoriesFor: #hotKeyToAccelModifiers:!initializing!private! !
-!UI.AccelToHotKey class categoriesFor: #initialize!development!initializing!private! !
+!UI.AccelToHotKey class categoriesForMethods!
+accelToHotKeyModifiers:!initializing!private! !
+hotKeyToAccelModifiers:!initializing!private! !
+initialize!development!initializing!private! !
+!
 

@@ -53,10 +53,12 @@ rightToLeft: aString
 
 	"Raise an error for no match"
 	^self errorInvalidFormat! !
-!UI.BooleanToText categoriesFor: #actualFormat!accessing!private! !
-!UI.BooleanToText categoriesFor: #errorInvalidFormat!exceptions!private! !
-!UI.BooleanToText categoriesFor: #format!accessing!public! !
-!UI.BooleanToText categoriesFor: #format:!accessing!public! !
-!UI.BooleanToText categoriesFor: #leftToRight:!operations!private! !
-!UI.BooleanToText categoriesFor: #rightToLeft:!operations!private! !
+!UI.BooleanToText categoriesForMethods!
+actualFormat!accessing!private! !
+errorInvalidFormat!exceptions!private! !
+format!accessing!public! !
+format:!accessing!public! !
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 

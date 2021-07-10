@@ -31,11 +31,13 @@ streamPosition
 
 streamPosition: aNumber
 	streamPosition := aNumber! !
-!STON.ReaderError categoriesFor: #_descriptionArguments!displaying!public! !
-!STON.ReaderError categoriesFor: #_descriptionFormat!displaying!public! !
-!STON.ReaderError categoriesFor: #messageText!accessing!public! !
-!STON.ReaderError categoriesFor: #streamPosition!accessing!public! !
-!STON.ReaderError categoriesFor: #streamPosition:!accessing!public! !
+!STON.ReaderError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+messageText!accessing!public! !
+streamPosition!accessing!public! !
+streamPosition:!accessing!public! !
+!
 
 !STON.ReaderError class methodsFor!
 
@@ -44,5 +46,7 @@ signal: aString streamPosition: streamPosition
 		streamPosition: streamPosition;
 		signal: aString;
 		yourself! !
-!STON.ReaderError class categoriesFor: #signal:streamPosition:!instance creation!public! !
+!STON.ReaderError class categoriesForMethods!
+signal:streamPosition:!instance creation!public! !
+!
 

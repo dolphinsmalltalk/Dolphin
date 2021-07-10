@@ -33,9 +33,11 @@ hash: operand
 	"Answer a suitable hash value for the <Object>, operand, under this search policy."
 
 	^hashBlock value: operand! !
-!Core.PluggableSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!Core.PluggableSearchPolicy categoriesFor: #compareBlock:hashBlock:!accessing!initializing!public! !
-!Core.PluggableSearchPolicy categoriesFor: #hash:!comparing!public! !
+!Core.PluggableSearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+compareBlock:hashBlock:!accessing!initializing!public! !
+hash:!comparing!public! !
+!
 
 !Core.PluggableSearchPolicy class methodsFor!
 
@@ -51,6 +53,8 @@ newCompareBlock: discriminator hashBlock: hasher
 
 	^super new
 		compareBlock: discriminator hashBlock: hasher! !
-!Core.PluggableSearchPolicy class categoriesFor: #new!instance creation!public! !
-!Core.PluggableSearchPolicy class categoriesFor: #newCompareBlock:hashBlock:!instance creation!public! !
+!Core.PluggableSearchPolicy class categoriesForMethods!
+new!instance creation!public! !
+newCompareBlock:hashBlock:!instance creation!public! !
+!
 

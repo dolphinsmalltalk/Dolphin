@@ -99,18 +99,20 @@ onValueChanged
 onViewOpened
 	super onViewOpened.
 	collectionPresenter selectionOrNil: (self model value lookup: 1)! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #addItem!commands!public! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #applyDefaultStyle!private!updating! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #createComponents!initializing!private! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #createSchematicWiring!initializing!public! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #defaultStyle!accessing!public! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #defaultStyle:!accessing!public! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #model:!accessing!public! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #normalStyle:!accessing!public! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #onSelectionChanged!event handling!private! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #onStyleChanged!event handling!private! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #onValueChanged!event handling!private! !
-!UI.Scintilla.StylesCollectionPresenter categoriesFor: #onViewOpened!event handling!public! !
+!UI.Scintilla.StylesCollectionPresenter categoriesForMethods!
+addItem!commands!public! !
+applyDefaultStyle!private!updating! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!public! !
+defaultStyle!accessing!public! !
+defaultStyle:!accessing!public! !
+model:!accessing!public! !
+normalStyle:!accessing!public! !
+onSelectionChanged!event handling!private! !
+onStyleChanged!event handling!private! !
+onValueChanged!event handling!private! !
+onViewOpened!event handling!public! !
+!
 
 !UI.Scintilla.StylesCollectionPresenter class methodsFor!
 
@@ -148,8 +150,10 @@ resource_Developer_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(UI.BorderLayout) 17 11 nil nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil nil nil 512 482 1 1 410 ##(UI.ReferenceView) 34 14 nil 512 34 2 8 1140850688 131073 592 nil nil nil 5 nil nil nil 592 1180230 1 ##(UI.ResourceIdentifier) ##(UI.Toolbar) #resource_List_tools nil 983302 ##(Core.MessageSequence) 138 144 34 2 721670 ##(Core.MessageSend) #createAt:extent: 34 2 328198 ##(Graphics.Point) 1 1 802 321 51 592 754 #text: 34 1 8 'toolbar' 592 983302 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 0 0 0 25 0 0 0] 8 #() 802 193 193 nil 27 nil nil nil 410 ##(UI.ListView) 34 45 nil 512 34 2 8 1140936781 1 976 590662 2 ##(UI.ListModel) 138 144 944 nil 1310726 ##(Kernel.IdentitySearchPolicy) 327686 ##(Graphics.Color) #default nil 5 265030 4 ##(UI.Menu) nil true 34 4 984134 2 ##(UI.CommandMenuItem) 1 1180998 4 ##(UI.CommandDescription) #moveFirst 8 'Move to &First' 1 1 nil nil nil 1202 1 1234 #moveUp 8 'Move to &Previous' 1 1 nil nil nil 1202 1 1234 #moveDown 8 'Move to &Next' 1 1 nil nil nil 1202 1 1234 #moveLast 8 'Move to &Last' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 976 nil 8 1883852064 459270 ##(Core.Message) #displayString 8 #() nil 1049926 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(UI.ListViewColumn) 8 '' 313 #left 1458 #displayString 1488 1458 #<= 8 #() nil nil 976 nil 3 nil 787814 3 ##(Kernel.BlockClosure) 0 nil 1180966 ##(Kernel.CompiledExpression) 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:each | ScintillaStylesCollectionPresenter customDraw: each]' 8 #[31 105 45 17 177 106] 721414 ##(Core.Association) #'UI.Scintilla.StylesCollectionPresenter' ##(UI.Scintilla.StylesCollectionPresenter) #customDraw: 1680 7 257 nil #report 944 nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 690 138 144 34 2 754 #createAt:extent: 34 2 802 1 51 802 321 783 976 754 #contextMenu: 34 1 1168 976 898 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 160 0 0 0 160 1 0 0] 8 #() 960 nil 35 170 192 34 2 976 8 'list' nil 690 138 144 34 1 754 #createAt:extent: 34 2 802 1 1 802 321 833 512 898 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 0 0 0 160 1 0 0] 34 2 592 976 960 nil 27 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 2208 nil nil nil 5 nil nil nil 2208 658 ##(UI.Scintilla.TextStylePresenter) #resource_Developer_view nil 690 138 144 34 1 754 #createAt:extent: 34 2 802 337 1 802 501 833 2208 898 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 168 0 0 0 0 0 0 0 162 1 0 0 160 1 0 0] 944 960 nil 27 170 192 34 4 2208 8 'detail' 512 8 'styles' 590342 ##(Graphics.Rectangle) 802 1 1 802 1 1 690 138 144 34 2 754 #createAt:extent: 34 2 802 7039 21 802 837 833 416 754 #text: 34 1 8 'Text Styles' 416 898 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 97 15 0 0 170 1 0 0] 34 2 512 2208 960 nil 27)! !
-!UI.Scintilla.StylesCollectionPresenter class categoriesFor: #customDraw:!helpers!public! !
-!UI.Scintilla.StylesCollectionPresenter class categoriesFor: #defaultModel!models!public! !
-!UI.Scintilla.StylesCollectionPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Scintilla.StylesCollectionPresenter class categoriesFor: #resource_Developer_view!public!resources-views! !
+!UI.Scintilla.StylesCollectionPresenter class categoriesForMethods!
+customDraw:!helpers!public! !
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+resource_Developer_view!public!resources-views! !
+!
 

@@ -97,18 +97,20 @@ RequestQueue: anInteger
 	"Set the receiver's 'RequestQueue' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RequestQueue put: anInteger! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue!**compiled accessors**!public! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO categoriesForMethods!
+DrainEntityBody!**compiled accessors**!public! !
+DrainEntityBody:!**compiled accessors**!public! !
+EntityBody!**compiled accessors**!public! !
+EntityBody:!**compiled accessors**!public! !
+HeaderWait!**compiled accessors**!public! !
+HeaderWait:!**compiled accessors**!public! !
+IdleConnection!**compiled accessors**!public! !
+IdleConnection:!**compiled accessors**!public! !
+MinSendRate!**compiled accessors**!public! !
+MinSendRate:!**compiled accessors**!public! !
+RequestQueue!**compiled accessors**!public! !
+RequestQueue:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class methodsFor!
 
@@ -144,7 +146,9 @@ getFieldNames
 
 propertyId
 	^HttpServerTimeoutsProperty! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #propertyId!constants!public! !
+!WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!constants!public! !
+!
 

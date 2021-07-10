@@ -122,23 +122,25 @@ view
 
 view: aScintillaView 
 	self subclassResponsibility! !
-!UI.Scintilla.Attribute categoriesFor: #=!comparing!public! !
-!UI.Scintilla.Attribute categoriesFor: #applyToView:initializing:!helpers!private! !
-!UI.Scintilla.Attribute categoriesFor: #asParameter!converting!public! !
-!UI.Scintilla.Attribute categoriesFor: #basicId!accessing!private! !
-!UI.Scintilla.Attribute categoriesFor: #basicId:!accessing!private! !
-!UI.Scintilla.Attribute categoriesFor: #hash!comparing!public! !
-!UI.Scintilla.Attribute categoriesFor: #id!accessing!public! !
-!UI.Scintilla.Attribute categoriesFor: #id:!accessing!public! !
-!UI.Scintilla.Attribute categoriesFor: #name!accessing!public! !
-!UI.Scintilla.Attribute categoriesFor: #printOn:!development!printing!public! !
-!UI.Scintilla.Attribute categoriesFor: #printPropertiesOn:!development!helpers!printing!private! !
-!UI.Scintilla.Attribute categoriesFor: #storeableProperties!development!printing!private! !
-!UI.Scintilla.Attribute categoriesFor: #storeOn:!development!printing!public! !
-!UI.Scintilla.Attribute categoriesFor: #updateView:property:!helpers!private! !
-!UI.Scintilla.Attribute categoriesFor: #updateViewProperty:!helpers!private! !
-!UI.Scintilla.Attribute categoriesFor: #view!accessing!private! !
-!UI.Scintilla.Attribute categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.Attribute categoriesForMethods!
+=!comparing!public! !
+applyToView:initializing:!helpers!private! !
+asParameter!converting!public! !
+basicId!accessing!private! !
+basicId:!accessing!private! !
+hash!comparing!public! !
+id!accessing!public! !
+id:!accessing!public! !
+name!accessing!public! !
+printOn:!development!printing!public! !
+printPropertiesOn:!development!helpers!printing!private! !
+storeableProperties!development!printing!private! !
+storeOn:!development!printing!public! !
+updateView:property:!helpers!private! !
+updateViewProperty:!helpers!private! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !UI.Scintilla.Attribute class methodsFor!
 
@@ -150,7 +152,9 @@ propertyMap
 
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
-!UI.Scintilla.Attribute class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.Attribute class categoriesFor: #propertyMap!constants!private! !
-!UI.Scintilla.Attribute class categoriesFor: #sortByIdBlock!constants!public! !
+!UI.Scintilla.Attribute class categoriesForMethods!
+icon!constants!development!public! !
+propertyMap!constants!private! !
+sortByIdBlock!constants!public! !
+!
 

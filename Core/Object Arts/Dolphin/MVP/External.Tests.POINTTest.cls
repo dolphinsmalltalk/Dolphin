@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Tests.AbstractPointTest subclass: #'External.Tests.POINTTest'
 	instanceVariableNames: ''
@@ -33,7 +33,9 @@ testValue
 	self assert: point class equals: Point.
 	self assert: point x equals: 101.
 	self assert: point y equals: 202! !
-!External.Tests.POINTTest categoriesFor: #testAsDword!public!unit tests! !
-!External.Tests.POINTTest categoriesFor: #testAsObject!public!unit tests! !
-!External.Tests.POINTTest categoriesFor: #testValue!public!unit tests! !
+!External.Tests.POINTTest categoriesForMethods!
+testAsDword!public!unit tests! !
+testAsObject!public!unit tests! !
+testValue!public!unit tests! !
+!
 

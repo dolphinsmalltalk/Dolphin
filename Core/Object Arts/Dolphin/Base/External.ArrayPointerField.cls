@@ -46,9 +46,11 @@ writeInto: anExternalStructure value: anObject
 		of: self
 		in: anExternalStructure.
 	^answer! !
-!External.ArrayPointerField categoriesFor: #arrayLength:!accessing!private! !
-!External.ArrayPointerField categoriesFor: #readFrom:!accessing!private! !
-!External.ArrayPointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.ArrayPointerField categoriesForMethods!
+arrayLength:!accessing!private! !
+readFrom:!accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.ArrayPointerField class methodsFor!
 
@@ -66,6 +68,8 @@ type: aClass length: anInteger
 	pointers to arrays objects of type aClass, of the specified fixed <integer> length."
 
 	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
-!External.ArrayPointerField class categoriesFor: #type:arrayLength:!instance creation!public! !
-!External.ArrayPointerField class categoriesFor: #type:length:!instance creation!public! !
+!External.ArrayPointerField class categoriesForMethods!
+type:arrayLength:!instance creation!public! !
+type:length:!instance creation!public! !
+!
 

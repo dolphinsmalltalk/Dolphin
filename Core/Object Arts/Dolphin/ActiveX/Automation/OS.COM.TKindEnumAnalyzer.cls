@@ -66,14 +66,16 @@ vt
 	the receiver."
 
 	^VT_I4! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #binding!accessing!private! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #constants!enumerating!public! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #isGeneratedAs:!private!testing! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #name!accessing!public! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
-!OS.COM.TKindEnumAnalyzer categoriesFor: #vt!constants!public! !
+!OS.COM.TKindEnumAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+binding!accessing!private! !
+constants!enumerating!public! !
+isGeneratedAs:!private!testing! !
+name!accessing!public! !
+suggestedBinding!accessing!private! !
+suggestedGlobalName!accessing!private! !
+vt!constants!public! !
+!
 
 !OS.COM.TKindEnumAnalyzer class methodsFor!
 
@@ -81,5 +83,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_ENUM! !
-!OS.COM.TKindEnumAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindEnumAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

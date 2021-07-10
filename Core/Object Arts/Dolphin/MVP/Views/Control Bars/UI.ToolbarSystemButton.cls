@@ -54,12 +54,14 @@ imageIndexIn: aToolbar
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
 	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex! !
-!UI.ToolbarSystemButton categoriesFor: #bitmapId!accessing!public! !
-!UI.ToolbarSystemButton categoriesFor: #bitmapId:!accessing!public! !
-!UI.ToolbarSystemButton categoriesFor: #bitmapId:index:commandDescription:!initializing!private! !
-!UI.ToolbarSystemButton categoriesFor: #bitmapIndex!accessing!public! !
-!UI.ToolbarSystemButton categoriesFor: #bitmapIndex:!accessing!public! !
-!UI.ToolbarSystemButton categoriesFor: #imageIndexIn:!operations!private! !
+!UI.ToolbarSystemButton categoriesForMethods!
+bitmapId!accessing!public! !
+bitmapId:!accessing!public! !
+bitmapId:index:commandDescription:!initializing!private! !
+bitmapIndex!accessing!public! !
+bitmapIndex:!accessing!public! !
+imageIndexIn:!operations!private! !
+!
 
 !UI.ToolbarSystemButton class methodsFor!
 
@@ -175,8 +177,10 @@ stbConvertFrom: anSTBClassFormat
 	newInstance instVarAt: 4 put: (data at: 1).
 	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
 	newInstance]! !
-!UI.ToolbarSystemButton class categoriesFor: #bitmapId:index:commandDescription:!instance creation!public! !
-!UI.ToolbarSystemButton class categoriesFor: #initialize!development!initializing!public! !
-!UI.ToolbarSystemButton class categoriesFor: #new!instance creation!public! !
-!UI.ToolbarSystemButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!UI.ToolbarSystemButton class categoriesForMethods!
+bitmapId:index:commandDescription:!instance creation!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+!
 

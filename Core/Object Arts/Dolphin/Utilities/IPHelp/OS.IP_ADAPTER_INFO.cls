@@ -148,24 +148,26 @@ type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
 	^bytes dwordAtOffset: _OffsetOf_type! !
-!OS.IP_ADAPTER_INFO categoriesFor: #AdapterName!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #Address!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #AddressLength!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #ComboIndex!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #CurrentIpAddress!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #Description!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #DhcpEnabled!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #DhcpServer!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #GatewayList!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #HaveWins!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #index!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #IpAddressList!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #LeaseExpires!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #LeaseObtained!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #Next!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #PrimaryWinsServer!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #SecondaryWinsServer!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INFO categoriesFor: #type!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INFO categoriesForMethods!
+AdapterName!**compiled accessors**!public! !
+Address!**compiled accessors**!public! !
+AddressLength!**compiled accessors**!public! !
+ComboIndex!**compiled accessors**!public! !
+CurrentIpAddress!**compiled accessors**!public! !
+Description!**compiled accessors**!public! !
+DhcpEnabled!**compiled accessors**!public! !
+DhcpServer!**compiled accessors**!public! !
+GatewayList!**compiled accessors**!public! !
+HaveWins!**compiled accessors**!public! !
+index!**compiled accessors**!public! !
+IpAddressList!**compiled accessors**!public! !
+LeaseExpires!**compiled accessors**!public! !
+LeaseObtained!**compiled accessors**!public! !
+Next!**compiled accessors**!public! !
+PrimaryWinsServer!**compiled accessors**!public! !
+SecondaryWinsServer!**compiled accessors**!public! !
+type!**compiled accessors**!public! !
+!
 
 !OS.IP_ADAPTER_INFO class methodsFor!
 
@@ -275,6 +277,8 @@ defineFields
 
 getFieldNames
 	^#(#Next #ComboIndex #AdapterName #Description #AddressLength #Address #index #type #DhcpEnabled #CurrentIpAddress #IpAddressList #GatewayList #DhcpServer #HaveWins #PrimaryWinsServer #SecondaryWinsServer #LeaseObtained #LeaseExpires)! !
-!OS.IP_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
-!OS.IP_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_ADAPTER_INFO class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

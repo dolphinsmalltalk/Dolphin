@@ -133,29 +133,31 @@ unreferencedArguments
 			["All arguments to primitive methods are implicitly referenced"
 			#()]
 		ifFalse: [locals select: [:each | each isArgument and: [each isRead not]]]! !
-!Kernel.StLexicalScope categoriesFor: #argumentCount!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #declareArgument:!helpers!private! !
-!Kernel.StLexicalScope categoriesFor: #declareLocalVariable:!helpers!private! !
-!Kernel.StLexicalScope categoriesFor: #declareTemp:!helpers!private! !
-!Kernel.StLexicalScope categoriesFor: #envTempCount!accessing!development!public! !
-!Kernel.StLexicalScope categoriesFor: #hasFarReturn!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #includesArg:!enquiries!public! !
-!Kernel.StLexicalScope categoriesFor: #includesLocal:!enquiries!public! !
-!Kernel.StLexicalScope categoriesFor: #includesTemp:!enquiries!public! !
-!Kernel.StLexicalScope categoriesFor: #initialize!initializing!private! !
-!Kernel.StLexicalScope categoriesFor: #isInlined!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #localCount!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #locals!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #lookupVariable:!operations!public! !
-!Kernel.StLexicalScope categoriesFor: #markFarReturn!public!visiting! !
-!Kernel.StLexicalScope categoriesFor: #markNeedsSelf!public!visiting! !
-!Kernel.StLexicalScope categoriesFor: #needsContext!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #needsSelf!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #node!accessing!public! !
-!Kernel.StLexicalScope categoriesFor: #printOn:!printing!public! !
-!Kernel.StLexicalScope categoriesFor: #realScope!public! !
-!Kernel.StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
-!Kernel.StLexicalScope categoriesFor: #temporaries!accessing!private! !
-!Kernel.StLexicalScope categoriesFor: #thisContextVariable!public! !
-!Kernel.StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
+!Kernel.StLexicalScope categoriesForMethods!
+argumentCount!accessing!public! !
+declareArgument:!helpers!private! !
+declareLocalVariable:!helpers!private! !
+declareTemp:!helpers!private! !
+envTempCount!accessing!development!public! !
+hasFarReturn!accessing!public! !
+includesArg:!enquiries!public! !
+includesLocal:!enquiries!public! !
+includesTemp:!enquiries!public! !
+initialize!initializing!private! !
+isInlined!accessing!public! !
+localCount!accessing!public! !
+locals!accessing!public! !
+lookupVariable:!operations!public! !
+markFarReturn!public!visiting! !
+markNeedsSelf!public!visiting! !
+needsContext!accessing!public! !
+needsSelf!accessing!public! !
+node!accessing!public! !
+printOn:!printing!public! !
+realScope!public! !
+setNode:outer:!initializing!private! !
+temporaries!accessing!private! !
+thisContextVariable!public! !
+unreferencedArguments!accessing!public! !
+!
 

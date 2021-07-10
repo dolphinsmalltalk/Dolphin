@@ -214,37 +214,39 @@ subclassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
 
 	instanceClass ifNotNil: [instanceClass subclassesDo: [:each | aMonadicValuable value: each class]]! !
-!Core.Metaclass categoriesFor: #absoluteReference!public! !
-!Core.Metaclass categoriesFor: #asQualifiedReference!converting!public! !
-!Core.Metaclass categoriesFor: #bindingFor:!bindings!public! !
-!Core.Metaclass categoriesFor: #classBindingNames!class variables!public! !
-!Core.Metaclass categoriesFor: #classPool!class variables!public! !
-!Core.Metaclass categoriesFor: #classVariables!class variables!public! !
-!Core.Metaclass categoriesFor: #comment!accessing!public! !
-!Core.Metaclass categoriesFor: #comment:!accessing!public! !
-!Core.Metaclass categoriesFor: #environment!accessing!public! !
-!Core.Metaclass categoriesFor: #fullBindingFor:environment:!binding!public! !
-!Core.Metaclass categoriesFor: #fullName!accessing!namespaces!public! !
-!Core.Metaclass categoriesFor: #fullyQualifiedReference!accessing!public! !
-!Core.Metaclass categoriesFor: #importedNamespacesDo:!pool variables!public! !
-!Core.Metaclass categoriesFor: #imports!pool variables!public! !
-!Core.Metaclass categoriesFor: #imports:!pool variables!public! !
-!Core.Metaclass categoriesFor: #instanceClass!accessing!public! !
-!Core.Metaclass categoriesFor: #instanceClass:!accessing!private! !
-!Core.Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
-!Core.Metaclass categoriesFor: #isAnonymous!public!testing! !
-!Core.Metaclass categoriesFor: #isMeta!public!testing! !
-!Core.Metaclass categoriesFor: #localBindingFor:!binding!public! !
-!Core.Metaclass categoriesFor: #name!accessing!public! !
-!Core.Metaclass categoriesFor: #new!instance creation!public! !
-!Core.Metaclass categoriesFor: #owningPackage!accessing!development!public! !
-!Core.Metaclass categoriesFor: #packageManager!development!public!source filing! !
-!Core.Metaclass categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
-!Core.Metaclass categoriesFor: #printFullNameOn:!helpers!private! !
-!Core.Metaclass categoriesFor: #printOn:!printing!public! !
-!Core.Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
-!Core.Metaclass categoriesFor: #removeFromSuper!operations!private! !
-!Core.Metaclass categoriesFor: #shortName!public! !
-!Core.Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.Metaclass categoriesFor: #subclassesDo:!class hierarchy-accessing!public! !
+!Core.Metaclass categoriesForMethods!
+absoluteReference!public! !
+asQualifiedReference!converting!public! !
+bindingFor:!bindings!public! !
+classBindingNames!class variables!public! !
+classPool!class variables!public! !
+classVariables!class variables!public! !
+comment!accessing!public! !
+comment:!accessing!public! !
+environment!accessing!public! !
+fullBindingFor:environment:!binding!public! !
+fullName!accessing!namespaces!public! !
+fullyQualifiedReference!accessing!public! !
+importedNamespacesDo:!pool variables!public! !
+imports!pool variables!public! !
+imports:!pool variables!public! !
+instanceClass!accessing!public! !
+instanceClass:!accessing!private! !
+instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
+isAnonymous!public!testing! !
+isMeta!public!testing! !
+localBindingFor:!binding!public! !
+name!accessing!public! !
+new!instance creation!public! !
+owningPackage!accessing!development!public! !
+packageManager!development!public!source filing! !
+printDefinitionOn:!private!source filing-class definition! !
+printFullNameOn:!helpers!private! !
+printOn:!printing!public! !
+removeClassVarName:!class variables!public! !
+removeFromSuper!operations!private! !
+shortName!public! !
+stbSaveOn:!binary filing!public! !
+subclassesDo:!class hierarchy-accessing!public! !
+!
 

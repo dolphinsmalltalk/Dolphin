@@ -34,8 +34,10 @@ InitNew
 
 	<virtual stdcall: sdword 9>
 	^self invalidCall: _failureCode! !
-!OS.COM.IPersistStreamInit categoriesFor: #initNew!initializing!public! !
-!OS.COM.IPersistStreamInit categoriesFor: #InitNew!COM Interfaces-IPersistStreamInit!public! !
+!OS.COM.IPersistStreamInit categoriesForMethods!
+initNew!initializing!public! !
+InitNew!COM Interfaces-IPersistStreamInit!public! !
+!
 
 OS.COM.IPersistStreamInit methodProtocol: #IPersistStreamInit attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #InitNew #IsDirty #Load: #Save:fClearDirty:)!
 
@@ -48,5 +50,7 @@ defineFunctions
 
 	self
 		defineFunction: #InitNew returnType: 'sdword'! !
-!OS.COM.IPersistStreamInit class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistStreamInit class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

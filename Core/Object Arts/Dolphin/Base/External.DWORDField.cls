@@ -27,9 +27,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes dwordAtOffset: offset put: anInteger! !
-!External.DWORDField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.DWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.DWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.DWORDField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.DWORDField class methodsFor!
 
@@ -38,5 +40,7 @@ byteSize
 	A DWORD is always 4 bytes."
 
 	^4! !
-!External.DWORDField class categoriesFor: #byteSize!constants!private! !
+!External.DWORDField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

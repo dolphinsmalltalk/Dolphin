@@ -60,10 +60,12 @@ printFields: aCollection on: aStream
 
 propertyId
 	^self class propertyId! !
-!WinHttpServer.HTTP_PROPERTY_FLAGS categoriesFor: #Present!**compiled accessors**!private! !
-!WinHttpServer.HTTP_PROPERTY_FLAGS categoriesFor: #Present:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_PROPERTY_FLAGS categoriesFor: #printFields:on:!development!printing!private! !
-!WinHttpServer.HTTP_PROPERTY_FLAGS categoriesFor: #propertyId!constants!public! !
+!WinHttpServer.HTTP_PROPERTY_FLAGS categoriesForMethods!
+Present!**compiled accessors**!private! !
+Present:!**compiled accessors**!private! !
+printFields:on:!development!printing!private! !
+propertyId!constants!public! !
+!
 
 !WinHttpServer.HTTP_PROPERTY_FLAGS class methodsFor!
 
@@ -84,6 +86,8 @@ defineFields
 
 propertyId
 	^self subclassResponsibility! !
-!WinHttpServer.HTTP_PROPERTY_FLAGS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_PROPERTY_FLAGS class categoriesFor: #propertyId!constants!public! !
+!WinHttpServer.HTTP_PROPERTY_FLAGS class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+propertyId!constants!public! !
+!
 

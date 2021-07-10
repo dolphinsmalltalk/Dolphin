@@ -61,15 +61,17 @@ picType: anInteger
 	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_picType put: anInteger! !
-!OS.COM.PICTDESC categoriesFor: #dw1!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #dw1:!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #dw2!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #dw2:!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #handle!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #handle:!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #picType!**compiled accessors**!public! !
-!OS.COM.PICTDESC categoriesFor: #picType:!**compiled accessors**!public! !
+!OS.COM.PICTDESC categoriesForMethods!
+dw1!**compiled accessors**!public! !
+dw1:!**compiled accessors**!public! !
+dw2!**compiled accessors**!public! !
+dw2:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+handle!**compiled accessors**!public! !
+handle:!**compiled accessors**!public! !
+picType!**compiled accessors**!public! !
+picType:!**compiled accessors**!public! !
+!
 
 !OS.COM.PICTDESC class methodsFor!
 
@@ -135,7 +137,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Picture icon! !
-!OS.COM.PICTDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.PICTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.COM.PICTDESC class categoriesFor: #icon!constants!public! !
+!OS.COM.PICTDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+icon!constants!public! !
+!
 

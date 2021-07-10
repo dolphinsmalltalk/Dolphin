@@ -51,12 +51,14 @@ uCount: anInteger
 	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uCount put: anInteger! !
-!OS.FLASHWINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.FLASHWINFO categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!OS.FLASHWINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.FLASHWINFO categoriesFor: #dwTimeout:!**compiled accessors**!public! !
-!OS.FLASHWINFO categoriesFor: #hwnd:!**compiled accessors**!public! !
-!OS.FLASHWINFO categoriesFor: #uCount:!**compiled accessors**!public! !
+!OS.FLASHWINFO categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dwTimeout:!**compiled accessors**!public! !
+hwnd:!**compiled accessors**!public! !
+uCount:!**compiled accessors**!public! !
+!
 
 !OS.FLASHWINFO class methodsFor!
 
@@ -83,6 +85,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !
-!OS.FLASHWINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.FLASHWINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FLASHWINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

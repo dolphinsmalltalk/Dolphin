@@ -668,52 +668,54 @@ testStlRoundTripUnnamedRGB
 	self assert: rehydrated first isKindOf: RGB.
 	self assert: rehydrated last identicalTo: rehydrated first.
 	self assert: rehydrated second identicalTo: Color blue! !
-!Graphics.Tests.ColorTest categoriesFor: #shouldRaiseNotARealColorError:!helpers!private! !
-!Graphics.Tests.ColorTest categoriesFor: #testActualColor!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testAlpha!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testArgbCode!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testAsColorRef!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testAsCOLORREF!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testAsRGB!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testBlue!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testBrightness!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testBrush!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testChroma!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testClassBlack!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testClassBrightness!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testClassFromArray!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testClassFromHtmlSpec!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testClassWhite!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testConversions!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testEquals!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testFaded!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testGreen!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testHash!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testHls!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testHsv!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testHue!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testIntensity!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testIsDefault!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testIsGrayscale!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testIsNone!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testIsSymbolic!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testIsTransparent!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testName!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testNormalizedAlpha!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testNormalizedBlue!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testNormalizedGreen!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testNormalizedRed!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testPen!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testPrintString!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testRed!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testRgb!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testRgbaCode!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testRgbCode!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testRGBNamedColors!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testSingletons!public!unit tests! !
-!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTrip!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripColourAlpha!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripPluggableColor!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripUnnamedARGB!public! !
-!Graphics.Tests.ColorTest categoriesFor: #testStlRoundTripUnnamedRGB!public! !
+!Graphics.Tests.ColorTest categoriesForMethods!
+shouldRaiseNotARealColorError:!helpers!private! !
+testActualColor!public!unit tests! !
+testAlpha!public!unit tests! !
+testArgbCode!public!unit tests! !
+testAsColorRef!public!unit tests! !
+testAsCOLORREF!public!unit tests! !
+testAsRGB!public!unit tests! !
+testBlue!public!unit tests! !
+testBrightness!public!unit tests! !
+testBrush!public!unit tests! !
+testChroma!public!unit tests! !
+testClassBlack!public!unit tests! !
+testClassBrightness!public!unit tests! !
+testClassFromArray!public! !
+testClassFromHtmlSpec!public! !
+testClassWhite!public!unit tests! !
+testConversions!public!unit tests! !
+testEquals!public!unit tests! !
+testFaded!public!unit tests! !
+testGreen!public!unit tests! !
+testHash!public!unit tests! !
+testHls!public!unit tests! !
+testHsv!public!unit tests! !
+testHue!public!unit tests! !
+testIntensity!public!unit tests! !
+testIsDefault!public!unit tests! !
+testIsGrayscale!public!unit tests! !
+testIsNone!public!unit tests! !
+testIsSymbolic!public! !
+testIsTransparent!public!unit tests! !
+testName!public! !
+testNormalizedAlpha!public!unit tests! !
+testNormalizedBlue!public!unit tests! !
+testNormalizedGreen!public!unit tests! !
+testNormalizedRed!public!unit tests! !
+testPen!public!unit tests! !
+testPrintString!public!unit tests! !
+testRed!public!unit tests! !
+testRgb!public!unit tests! !
+testRgbaCode!public!unit tests! !
+testRgbCode!public!unit tests! !
+testRGBNamedColors!public!unit tests! !
+testSingletons!public!unit tests! !
+testStlRoundTrip!public! !
+testStlRoundTripColourAlpha!public! !
+testStlRoundTripPluggableColor!public! !
+testStlRoundTripUnnamedARGB!public! !
+testStlRoundTripUnnamedRGB!public! !
+!
 

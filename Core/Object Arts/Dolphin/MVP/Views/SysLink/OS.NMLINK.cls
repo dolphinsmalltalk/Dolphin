@@ -25,7 +25,9 @@ item
 	"Answer the <LITEM> value of the receiver's 'item' field."
 
 	^LITEM fromAddress: bytes yourAddress + _OffsetOf_item! !
-!OS.NMLINK categoriesFor: #item!**compiled accessors**!public! !
+!OS.NMLINK categoriesForMethods!
+item!**compiled accessors**!public! !
+!
 
 !OS.NMLINK class methodsFor!
 
@@ -42,7 +44,9 @@ getFieldNames
 
 itemFromNMHDR: anExternalAddress
 	^LITEM fromAddress: anExternalAddress yourAddress + _OffsetOf_item! !
-!OS.NMLINK class categoriesFor: #defineFields!public!template definition! !
-!OS.NMLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.NMLINK class categoriesFor: #itemFromNMHDR:!public! !
+!OS.NMLINK class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+itemFromNMHDR:!public! !
+!
 

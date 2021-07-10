@@ -21,7 +21,9 @@ includesMethod: aCompiledMethod
 	nothing else."
 
 	^aCompiledMethod isSimpleSelfSend: literal! !
-!Tools.SingleUnarySendMethodCategory categoriesFor: #includesMethod:!public!testing! !
+!Tools.SingleUnarySendMethodCategory categoriesForMethods!
+includesMethod:!public!testing! !
+!
 
 !Tools.SingleUnarySendMethodCategory class methodsFor!
 
@@ -34,6 +36,8 @@ initialize
 
 referenceSymbols
 	^#(#subclassResponsibility #shouldNotImplement)! !
-!Tools.SingleUnarySendMethodCategory class categoriesFor: #initialize!initializing!private! !
-!Tools.SingleUnarySendMethodCategory class categoriesFor: #referenceSymbols!constants!private! !
+!Tools.SingleUnarySendMethodCategory class categoriesForMethods!
+initialize!initializing!private! !
+referenceSymbols!constants!private! !
+!
 

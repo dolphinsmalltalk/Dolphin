@@ -62,7 +62,9 @@ emitClassLayoutDescription
 		on: Error
 		do: [:ex | MessageBox errorMsg: ex description].
 	desc isNil ifFalse: [textPresenter replaceSelection: desc]! !
-!Tools.ClassCommentPlugin categoriesFor: #emitClassLayoutDescription!commands!development!public! !
+!Tools.ClassCommentPlugin categoriesForMethods!
+emitClassLayoutDescription!commands!development!public! !
+!
 
 "End of package definition"!
 

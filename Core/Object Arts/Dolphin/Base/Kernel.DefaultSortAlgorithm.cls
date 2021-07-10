@@ -165,12 +165,14 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^[:a :b | a <= b]! !
-!Kernel.DefaultSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!Kernel.DefaultSortAlgorithm categoriesFor: #insertionSort:from:to:!private!sorting! !
-!Kernel.DefaultSortAlgorithm categoriesFor: #sift:from:between:and:!private!sorting! !
-!Kernel.DefaultSortAlgorithm categoriesFor: #sort:from:to:!public!sorting! !
-!Kernel.DefaultSortAlgorithm categoriesFor: #sort:from:to:limit:!private!sorting! !
-!Kernel.DefaultSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!Kernel.DefaultSortAlgorithm categoriesForMethods!
+compare:with:!comparing!public! !
+insertionSort:from:to:!private!sorting! !
+sift:from:between:and:!private!sorting! !
+sort:from:to:!public!sorting! !
+sort:from:to:limit:!private!sorting! !
+sortBlock!accessing!public! !
+!
 
 !Kernel.DefaultSortAlgorithm class methodsFor!
 
@@ -185,8 +187,10 @@ newSortBlock: aDyadicValuable
 
 pluggableEquivalentClass
 	^IntrosortAlgorithm! !
-!Kernel.DefaultSortAlgorithm class categoriesFor: #current!instance creation!public! !
-!Kernel.DefaultSortAlgorithm class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.DefaultSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
-!Kernel.DefaultSortAlgorithm class categoriesFor: #pluggableEquivalentClass!constants!public! !
+!Kernel.DefaultSortAlgorithm class categoriesForMethods!
+current!instance creation!public! !
+initialize!development!initializing!public! !
+newSortBlock:!instance creation!public! !
+pluggableEquivalentClass!constants!public! !
+!
 

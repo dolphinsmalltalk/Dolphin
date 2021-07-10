@@ -24,8 +24,10 @@ initialize
 
 replace: aProgramNode with: newNode 
 	aProgramNode replaceMethodSource: newNode! !
-!Refactory.Browser.RBReplaceRule categoriesFor: #canMatch:!matching!public! !
-!Refactory.Browser.RBReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
-!Refactory.Browser.RBReplaceRule categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.RBReplaceRule categoriesFor: #replace:with:!matching!public! !
+!Refactory.Browser.RBReplaceRule categoriesForMethods!
+canMatch:!matching!public! !
+foundMatchFor:!matching!public! !
+initialize!initialize/release!public! !
+replace:with:!matching!public! !
+!
 

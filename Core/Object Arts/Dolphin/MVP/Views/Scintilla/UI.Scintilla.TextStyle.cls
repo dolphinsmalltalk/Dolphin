@@ -348,63 +348,65 @@ weight
 
 weight: anInteger 
 	weight := anInteger! !
-!UI.Scintilla.TextStyle categoriesFor: #=!comparing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #backcolor!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #backcolor:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #basicId!accessing!private! !
-!UI.Scintilla.TextStyle categoriesFor: #case!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #case:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #caseName!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #caseName:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #centiPointSize!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #centiPointSize:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #characterSet!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #characterSet:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #clearFont!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #description!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #description:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #displayOn:!displaying!public! !
-!UI.Scintilla.TextStyle categoriesFor: #flags!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #font!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #font:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #fontName!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #fontName:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #forecolor!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #forecolor:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #getThreeStateFlag:!helpers!private! !
-!UI.Scintilla.TextStyle categoriesFor: #initialize!initializing!private! !
-!UI.Scintilla.TextStyle categoriesFor: #isBackcolorExtendedToEndOfLine!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isBackcolorExtendedToEndOfLine:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #isBold!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isBold:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #isChangeable!private!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isHotspot!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isHotspot:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #isInvisible!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isInvisible:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #isItalic!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isItalic:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #isPredefined!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isReadOnly!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isReadOnly:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #isUnderlined!public!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #isUnderlined:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #isVisible!private!testing! !
-!UI.Scintilla.TextStyle categoriesFor: #key!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #mergeFont:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #name!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #name:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #pointSize!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #pointSize:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #restyleFont:!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #setPredefinedId!accessing!private! !
-!UI.Scintilla.TextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
-!UI.Scintilla.TextStyle categoriesFor: #storeableProperties!development!printing!private! !
-!UI.Scintilla.TextStyle categoriesFor: #value!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #view!accessing!private! !
-!UI.Scintilla.TextStyle categoriesFor: #view:!accessing!private! !
-!UI.Scintilla.TextStyle categoriesFor: #weight!accessing!public! !
-!UI.Scintilla.TextStyle categoriesFor: #weight:!accessing!public! !
+!UI.Scintilla.TextStyle categoriesForMethods!
+=!comparing!public! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicId!accessing!private! !
+case!accessing!public! !
+case:!accessing!public! !
+caseName!accessing!public! !
+caseName:!accessing!public! !
+centiPointSize!accessing!public! !
+centiPointSize:!accessing!public! !
+characterSet!accessing!public! !
+characterSet:!accessing!public! !
+clearFont!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+flags!accessing!public! !
+font!accessing!public! !
+font:!accessing!public! !
+fontName!accessing!public! !
+fontName:!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+getThreeStateFlag:!helpers!private! !
+initialize!initializing!private! !
+isBackcolorExtendedToEndOfLine!public!testing! !
+isBackcolorExtendedToEndOfLine:!accessing!public! !
+isBold!public!testing! !
+isBold:!accessing!public! !
+isChangeable!private!testing! !
+isHotspot!public!testing! !
+isHotspot:!accessing!public! !
+isInvisible!public!testing! !
+isInvisible:!accessing!public! !
+isItalic!public!testing! !
+isItalic:!accessing!public! !
+isPredefined!public!testing! !
+isReadOnly!public!testing! !
+isReadOnly:!accessing!public! !
+isUnderlined!public!testing! !
+isUnderlined:!accessing!public! !
+isVisible!private!testing! !
+key!accessing!public! !
+mergeFont:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+pointSize!accessing!public! !
+pointSize:!accessing!public! !
+restyleFont:!accessing!public! !
+setPredefinedId!accessing!private! !
+setThreeStateFlag:value:!helpers!private! !
+storeableProperties!development!printing!private! !
+value!accessing!public! !
+view!accessing!private! !
+view:!accessing!private! !
+weight!accessing!public! !
+weight:!accessing!public! !
+!
 
 !UI.Scintilla.TextStyle class methodsFor!
 
@@ -585,13 +587,15 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!UI.Scintilla.TextStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!UI.Scintilla.TextStyle class categoriesFor: #caseNames!constants!public! !
-!UI.Scintilla.TextStyle class categoriesFor: #icon!constants!public! !
-!UI.Scintilla.TextStyle class categoriesFor: #initialize!development!initializing!public! !
-!UI.Scintilla.TextStyle class categoriesFor: #name:!instance creation!public! !
-!UI.Scintilla.TextStyle class categoriesFor: #new!instance creation!public! !
-!UI.Scintilla.TextStyle class categoriesFor: #normal!instance creation!public! !
-!UI.Scintilla.TextStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!UI.Scintilla.TextStyle class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.TextStyle class categoriesForMethods!
+buildPropertyMap!constants!must not strip!private! !
+caseNames!constants!public! !
+icon!constants!public! !
+initialize!development!initializing!public! !
+name:!instance creation!public! !
+new!instance creation!public! !
+normal!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

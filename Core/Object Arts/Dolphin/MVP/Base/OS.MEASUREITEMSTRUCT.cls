@@ -36,10 +36,12 @@ itemWidth: anInteger
 	"Set the receiver's 'itemWidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_itemWidth put: anInteger! !
-!OS.MEASUREITEMSTRUCT categoriesFor: #itemHeight!**compiled accessors**!public! !
-!OS.MEASUREITEMSTRUCT categoriesFor: #itemHeight:!**compiled accessors**!public! !
-!OS.MEASUREITEMSTRUCT categoriesFor: #itemWidth!**compiled accessors**!public! !
-!OS.MEASUREITEMSTRUCT categoriesFor: #itemWidth:!**compiled accessors**!public! !
+!OS.MEASUREITEMSTRUCT categoriesForMethods!
+itemHeight!**compiled accessors**!public! !
+itemHeight:!**compiled accessors**!public! !
+itemWidth!**compiled accessors**!public! !
+itemWidth:!**compiled accessors**!public! !
+!
 
 !OS.MEASUREITEMSTRUCT class methodsFor!
 
@@ -66,6 +68,8 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemWidth #itemHeight)! !
-!OS.MEASUREITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!OS.MEASUREITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MEASUREITEMSTRUCT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

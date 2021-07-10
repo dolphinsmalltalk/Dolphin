@@ -244,48 +244,50 @@ testResult
 testResult: aTestResult
 
 	testResult := aTestResult! !
-!SUnitBrowserResult categoriesFor: #add:to:!actions!private! !
-!SUnitBrowserResult categoriesFor: #areAllTestsCompleted!public!querying! !
-!SUnitBrowserResult categoriesFor: #areAnyTestsCompleted!public!querying! !
-!SUnitBrowserResult categoriesFor: #basicErrors!accessing!private! !
-!SUnitBrowserResult categoriesFor: #basicFailures!accessing!private! !
-!SUnitBrowserResult categoriesFor: #basicPassed!accessing!private! !
-!SUnitBrowserResult categoriesFor: #clear!actions!public! !
-!SUnitBrowserResult categoriesFor: #defects!accessing!public! !
-!SUnitBrowserResult categoriesFor: #errorCount!public!statistics! !
-!SUnitBrowserResult categoriesFor: #errors!accessing!public! !
-!SUnitBrowserResult categoriesFor: #errors:!accessing!private! !
-!SUnitBrowserResult categoriesFor: #failureCount!public!statistics! !
-!SUnitBrowserResult categoriesFor: #failures!accessing!public! !
-!SUnitBrowserResult categoriesFor: #failures:!accessing!private! !
-!SUnitBrowserResult categoriesFor: #hasErrors!public!statistics! !
-!SUnitBrowserResult categoriesFor: #hasFailures!public!statistics! !
-!SUnitBrowserResult categoriesFor: #hasPassed!public!statistics! !
-!SUnitBrowserResult categoriesFor: #initialize!initializing!private! !
-!SUnitBrowserResult categoriesFor: #initializeModel:!initializing!private! !
-!SUnitBrowserResult categoriesFor: #isDefect:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #isError:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #isFailure:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #isPassed:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #keyFor:!actions!private! !
-!SUnitBrowserResult categoriesFor: #merge:for:!actions!public! !
-!SUnitBrowserResult categoriesFor: #model!accessing!public! !
-!SUnitBrowserResult categoriesFor: #model:!accessing!public! !
-!SUnitBrowserResult categoriesFor: #numberCorrectFor:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #numberErrorsFor:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #numberFailuresFor:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #numberInCollection:for:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #numberNotYetRunFor:!public!statistics! !
-!SUnitBrowserResult categoriesFor: #numberOfTests!accessing!private! !
-!SUnitBrowserResult categoriesFor: #passed!accessing!public! !
-!SUnitBrowserResult categoriesFor: #passed:!accessing!private! !
-!SUnitBrowserResult categoriesFor: #passedCount!public!statistics! !
-!SUnitBrowserResult categoriesFor: #remove:!actions!public! !
-!SUnitBrowserResult categoriesFor: #removeAll:!actions!public! !
-!SUnitBrowserResult categoriesFor: #removeAt:!actions!private! !
-!SUnitBrowserResult categoriesFor: #runCount!public!statistics! !
-!SUnitBrowserResult categoriesFor: #testResult!accessing!private! !
-!SUnitBrowserResult categoriesFor: #testResult:!accessing!private! !
+!SUnitBrowserResult categoriesForMethods!
+add:to:!actions!private! !
+areAllTestsCompleted!public!querying! !
+areAnyTestsCompleted!public!querying! !
+basicErrors!accessing!private! !
+basicFailures!accessing!private! !
+basicPassed!accessing!private! !
+clear!actions!public! !
+defects!accessing!public! !
+errorCount!public!statistics! !
+errors!accessing!public! !
+errors:!accessing!private! !
+failureCount!public!statistics! !
+failures!accessing!public! !
+failures:!accessing!private! !
+hasErrors!public!statistics! !
+hasFailures!public!statistics! !
+hasPassed!public!statistics! !
+initialize!initializing!private! !
+initializeModel:!initializing!private! !
+isDefect:!public!statistics! !
+isError:!public!statistics! !
+isFailure:!public!statistics! !
+isPassed:!public!statistics! !
+keyFor:!actions!private! !
+merge:for:!actions!public! !
+model!accessing!public! !
+model:!accessing!public! !
+numberCorrectFor:!public!statistics! !
+numberErrorsFor:!public!statistics! !
+numberFailuresFor:!public!statistics! !
+numberInCollection:for:!public!statistics! !
+numberNotYetRunFor:!public!statistics! !
+numberOfTests!accessing!private! !
+passed!accessing!public! !
+passed:!accessing!private! !
+passedCount!public!statistics! !
+remove:!actions!public! !
+removeAll:!actions!public! !
+removeAt:!actions!private! !
+runCount!public!statistics! !
+testResult!accessing!private! !
+testResult:!accessing!private! !
+!
 
 !SUnitBrowserResult class methodsFor!
 
@@ -300,6 +302,8 @@ newOn: anSunitModel
 	^self new
 		initializeModel: anSunitModel;
 		yourself! !
-!SUnitBrowserResult class categoriesFor: #new!instantiating!public! !
-!SUnitBrowserResult class categoriesFor: #newOn:!instantiating!public! !
+!SUnitBrowserResult class categoriesForMethods!
+new!instantiating!public! !
+newOn:!instantiating!public! !
+!
 

@@ -38,9 +38,11 @@ writeInto: bytes value: anObject
 		startingAt: 1.
 	"We need 2 null-terminator bytes for a wide-char string of course"
 	1 to: elemSize do: [:i | bytes at: offset + size + i put: 0]! !
-!External.StringField categoriesFor: #allocationLength!accessing!private! !
-!External.StringField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.StringField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.StringField categoriesForMethods!
+allocationLength!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.StringField class methodsFor!
 
@@ -49,5 +51,7 @@ length: anInteger
 	embedded arrays of type aClass, and of byte size anInteger"
 
 	^self type: AnsiString length: anInteger! !
-!External.StringField class categoriesFor: #length:!instance creation!public! !
+!External.StringField class categoriesForMethods!
+length:!instance creation!public! !
+!
 

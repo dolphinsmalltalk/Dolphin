@@ -131,30 +131,32 @@ unqualifiedName
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
-!Kernel.MetaBindingReference categoriesFor: #=!comparing!public! !
-!Kernel.MetaBindingReference categoriesFor: #asString!converting!public! !
-!Kernel.MetaBindingReference categoriesFor: #baseClass!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #bindingScope!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #displayOn:!converting!displaying!public! !
-!Kernel.MetaBindingReference categoriesFor: #environmentName!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #hash!comparing!public! !
-!Kernel.MetaBindingReference categoriesFor: #home!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #instance!converting!public! !
-!Kernel.MetaBindingReference categoriesFor: #isMeta!public!testing! !
-!Kernel.MetaBindingReference categoriesFor: #isPrivate!public!testing! !
-!Kernel.MetaBindingReference categoriesFor: #isPrivate:!accessing!private! !
-!Kernel.MetaBindingReference categoriesFor: #isRelative!public!testing! !
-!Kernel.MetaBindingReference categoriesFor: #meta!converting!displaying!public! !
-!Kernel.MetaBindingReference categoriesFor: #path!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #pathString!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #private!converting!public! !
-!Kernel.MetaBindingReference categoriesFor: #scope!constants!private! !
-!Kernel.MetaBindingReference categoriesFor: #setInstance:!converting!private! !
-!Kernel.MetaBindingReference categoriesFor: #setScope:!initializing!private! !
-!Kernel.MetaBindingReference categoriesFor: #shortName!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #unqualifiedName!accessing!public! !
-!Kernel.MetaBindingReference categoriesFor: #valueOfBinding:!accessing!private! !
+!Kernel.MetaBindingReference categoriesForMethods!
+=!comparing!public! !
+asString!converting!public! !
+baseClass!accessing!public! !
+bindingOrNil!accessing!public! !
+bindingScope!accessing!public! !
+displayOn:!converting!displaying!public! !
+environmentName!accessing!public! !
+hash!comparing!public! !
+home!accessing!public! !
+instance!converting!public! !
+isMeta!public!testing! !
+isPrivate!public!testing! !
+isPrivate:!accessing!private! !
+isRelative!public!testing! !
+meta!converting!displaying!public! !
+path!accessing!public! !
+pathString!accessing!public! !
+private!converting!public! !
+scope!constants!private! !
+setInstance:!converting!private! !
+setScope:!initializing!private! !
+shortName!accessing!public! !
+unqualifiedName!accessing!public! !
+valueOfBinding:!accessing!private! !
+!
 
 !Kernel.MetaBindingReference class methodsFor!
 
@@ -175,7 +177,9 @@ pathString: aString scope: anObject
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
 	^self instance: (BindingReference pathString: aString scope: anObject)! !
-!Kernel.MetaBindingReference class categoriesFor: #instance:!instance creation!public! !
-!Kernel.MetaBindingReference class categoriesFor: #newPath:private:scope:!instance creation!private! !
-!Kernel.MetaBindingReference class categoriesFor: #pathString:scope:!instance creation!public! !
+!Kernel.MetaBindingReference class categoriesForMethods!
+instance:!instance creation!public! !
+newPath:private:scope:!instance creation!private! !
+pathString:scope:!instance creation!public! !
+!
 

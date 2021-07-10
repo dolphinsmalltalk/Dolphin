@@ -71,15 +71,17 @@ removePropertyOf: anObject at: aSymbol ifAbsent: aBlock
 	removed := propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
 	propertyDict isEmpty ifTrue: [register removeKey: anObject].
 	^removed! !
-!Kernel.PropertyManager categoriesFor: #initialize!initializing!private! !
-!Kernel.PropertyManager categoriesFor: #propertyOf:at:!adding!public! !
-!Kernel.PropertyManager categoriesFor: #propertyOf:at:ifAbsent:!adding!public! !
-!Kernel.PropertyManager categoriesFor: #propertyOf:at:ifAbsentPut:!accessing!public! !
-!Kernel.PropertyManager categoriesFor: #propertyOf:at:put:!adding!public! !
-!Kernel.PropertyManager categoriesFor: #register!accessing!private! !
-!Kernel.PropertyManager categoriesFor: #removeAllPropertiesOf:!public!removing! !
-!Kernel.PropertyManager categoriesFor: #removePropertyOf:at:!public!removing! !
-!Kernel.PropertyManager categoriesFor: #removePropertyOf:at:ifAbsent:!public!removing! !
+!Kernel.PropertyManager categoriesForMethods!
+initialize!initializing!private! !
+propertyOf:at:!adding!public! !
+propertyOf:at:ifAbsent:!adding!public! !
+propertyOf:at:ifAbsentPut:!accessing!public! !
+propertyOf:at:put:!adding!public! !
+register!accessing!private! !
+removeAllPropertiesOf:!public!removing! !
+removePropertyOf:at:!public!removing! !
+removePropertyOf:at:ifAbsent:!public!removing! !
+!
 
 !Kernel.PropertyManager class methodsFor!
 
@@ -87,5 +89,7 @@ new
 	"Answers an instance of the receiver; instances require initialization"
 
 	^super new initialize! !
-!Kernel.PropertyManager class categoriesFor: #new!instance creation!public! !
+!Kernel.PropertyManager class categoriesForMethods!
+new!instance creation!public! !
+!
 

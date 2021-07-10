@@ -199,25 +199,27 @@ state
 					selector: #pageSize:
 					argument: self pageSize);
 		yourself! !
-!UI.ScrollBar categoriesFor: #calculateExtent:!geometry!private! !
-!UI.ScrollBar categoriesFor: #defaultExtent!constants!private! !
-!UI.ScrollBar categoriesFor: #displayValue!private!updating! !
-!UI.ScrollBar categoriesFor: #displayValue:!private!updating! !
-!UI.ScrollBar categoriesFor: #getScrollInfo:!accessing!private! !
-!UI.ScrollBar categoriesFor: #isTrackingContinuous!accessing!public! !
-!UI.ScrollBar categoriesFor: #isTrackingContinuous:!accessing!public! !
-!UI.ScrollBar categoriesFor: #isVertical!modes!public! !
-!UI.ScrollBar categoriesFor: #isVertical:!modes!public! !
-!UI.ScrollBar categoriesFor: #onHScroll:!event handling!public! !
-!UI.ScrollBar categoriesFor: #onVScroll:!event handling!public! !
-!UI.ScrollBar categoriesFor: #pageSize!accessing!public! !
-!UI.ScrollBar categoriesFor: #pageSize:!accessing!public! !
-!UI.ScrollBar categoriesFor: #range!accessing!public! !
-!UI.ScrollBar categoriesFor: #range:!accessing!public! !
-!UI.ScrollBar categoriesFor: #scrollPosition!accessing!private! !
-!UI.ScrollBar categoriesFor: #scrollPosition:!accessing!private! !
-!UI.ScrollBar categoriesFor: #setScrollInfo:!accessing!private! !
-!UI.ScrollBar categoriesFor: #state!accessing!private! !
+!UI.ScrollBar categoriesForMethods!
+calculateExtent:!geometry!private! !
+defaultExtent!constants!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+getScrollInfo:!accessing!private! !
+isTrackingContinuous!accessing!public! !
+isTrackingContinuous:!accessing!public! !
+isVertical!modes!public! !
+isVertical:!modes!public! !
+onHScroll:!event handling!public! !
+onVScroll:!event handling!public! !
+pageSize!accessing!public! !
+pageSize:!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+scrollPosition!accessing!private! !
+scrollPosition:!accessing!private! !
+setScrollInfo:!accessing!private! !
+state!accessing!private! !
+!
 
 !UI.ScrollBar class methodsFor!
 
@@ -251,12 +253,14 @@ winClassName
 
 	^'SCROLLBAR'
 ! !
-!UI.ScrollBar class categoriesFor: #defaultHeight!constants!public! !
-!UI.ScrollBar class categoriesFor: #defaultModel!models!public! !
-!UI.ScrollBar class categoriesFor: #defaultWidth!constants!public! !
-!UI.ScrollBar class categoriesFor: #icon!constants!public! !
-!UI.ScrollBar class categoriesFor: #initialize!development!initializing!private! !
-!UI.ScrollBar class categoriesFor: #themePartName!constants!private! !
-!UI.ScrollBar class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!UI.ScrollBar class categoriesFor: #winClassName!constants!private! !
+!UI.ScrollBar class categoriesForMethods!
+defaultHeight!constants!public! !
+defaultModel!models!public! !
+defaultWidth!constants!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+themePartName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+winClassName!constants!private! !
+!
 

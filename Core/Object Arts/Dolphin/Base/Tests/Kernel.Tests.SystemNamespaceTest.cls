@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.SystemNamespaceTest'
 	instanceVariableNames: ''
@@ -48,16 +48,18 @@ testIncludesKey
 
 testShortName
 	self assert: self subject shortName equals: self subject name! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #canonicalSubject!private! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #subject!constants!private! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testAbsoluteName!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testAbsoluteNameOfIdentifier!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testAllEnvironments!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testBinding!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testBindingOrNil!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testEnvironment!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testFullName!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testFullyQualifiedReference!public!unit tests! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testIncludesKey!public! !
-!Kernel.Tests.SystemNamespaceTest categoriesFor: #testShortName!public!unit tests! !
+!Kernel.Tests.SystemNamespaceTest categoriesForMethods!
+canonicalSubject!private! !
+subject!constants!private! !
+testAbsoluteName!public!unit tests! !
+testAbsoluteNameOfIdentifier!public!unit tests! !
+testAllEnvironments!public!unit tests! !
+testBinding!public!unit tests! !
+testBindingOrNil!public!unit tests! !
+testEnvironment!public!unit tests! !
+testFullName!public!unit tests! !
+testFullyQualifiedReference!public!unit tests! !
+testIncludesKey!public! !
+testShortName!public!unit tests! !
+!
 

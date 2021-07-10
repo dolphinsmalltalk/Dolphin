@@ -23,12 +23,16 @@ createHandle
 		graphics: graphics asParameter
 		cachedBitmap: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #bitmap:graphics:!initializing!private! !
-!Graphics.Gdiplus.CachedBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.CachedBitmapInitializer categoriesForMethods!
+bitmap:graphics:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 
 !Graphics.Gdiplus.CachedBitmapInitializer class methodsFor!
 
 bitmap: aBitmap graphics: aGraphics
 	^self new bitmap: aBitmap graphics: aGraphics! !
-!Graphics.Gdiplus.CachedBitmapInitializer class categoriesFor: #bitmap:graphics:!instance creation!public! !
+!Graphics.Gdiplus.CachedBitmapInitializer class categoriesForMethods!
+bitmap:graphics:!instance creation!public! !
+!
 

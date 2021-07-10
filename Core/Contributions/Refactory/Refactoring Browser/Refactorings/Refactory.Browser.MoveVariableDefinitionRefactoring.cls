@@ -102,14 +102,16 @@ usesDirectly: aParseTree
 		matches: '[:`@args | | `@temps | `@.Statements]' do: [:aNode :answer | answer];
 		matches: name do: [:aNode :answer | true].
 	^searcher executeTree: aParseTree initialAnswer: false! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #checkNodes:!public!transforming! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #checkParseTree!public!transforming! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #class:selector:interval:!initialize/release!public! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #subblocksIn:!public!transforming! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesFor: #usesDirectly:!public!transforming! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring categoriesForMethods!
+checkNodes:!public!transforming! !
+checkParseTree!public!transforming! !
+class:selector:interval:!initialize/release!public! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+subblocksIn:!public!transforming! !
+transform!public!transforming! !
+usesDirectly:!public!transforming! !
+!
 
 !Refactory.Browser.MoveVariableDefinitionRefactoring class methodsFor!
 
@@ -126,6 +128,8 @@ model: aRBNamespace bindTight: anInterval in: aClass selector: aSelector
 			selector: aSelector
 			interval: anInterval;
 		yourself! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring class categoriesFor: #bindTight:in:selector:!instance creation!public! !
-!Refactory.Browser.MoveVariableDefinitionRefactoring class categoriesFor: #model:bindTight:in:selector:!instance creation!public! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring class categoriesForMethods!
+bindTight:in:selector:!instance creation!public! !
+model:bindTight:in:selector:!instance creation!public! !
+!
 

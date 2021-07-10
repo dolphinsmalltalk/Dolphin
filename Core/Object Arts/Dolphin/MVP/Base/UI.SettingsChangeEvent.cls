@@ -25,9 +25,11 @@ printLParamOn: aStream
 
 uiAction
 	^wParam! !
-!UI.SettingsChangeEvent categoriesFor: #area!accessing!public! !
-!UI.SettingsChangeEvent categoriesFor: #isColorSetChange!public!testing! !
-!UI.SettingsChangeEvent categoriesFor: #isFontChange!public!testing! !
-!UI.SettingsChangeEvent categoriesFor: #printLParamOn:!printing!public! !
-!UI.SettingsChangeEvent categoriesFor: #uiAction!accessing!public! !
+!UI.SettingsChangeEvent categoriesForMethods!
+area!accessing!public! !
+isColorSetChange!public!testing! !
+isFontChange!public!testing! !
+printLParamOn:!printing!public! !
+uiAction!accessing!public! !
+!
 

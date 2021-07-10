@@ -22,6 +22,8 @@ handle
 
 iItem: anInteger 
 	iItem := anInteger! !
-!OS.TCHITTESTINFO categoriesFor: #handle!accessing!private! !
-!OS.TCHITTESTINFO categoriesFor: #iItem:!accessing!private! !
+!OS.TCHITTESTINFO categoriesForMethods!
+handle!accessing!private! !
+iItem:!accessing!private! !
+!
 

@@ -73,17 +73,19 @@ width: anInteger
 	self width = anInteger ifTrue: [^self].
 	logPen width: anInteger.
 	self free! !
-!Graphics.Pen categoriesFor: #color!accessing!public! !
-!Graphics.Pen categoriesFor: #color:!accessing!public! !
-!Graphics.Pen categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Pen categoriesFor: #handle:!accessing!private! !
-!Graphics.Pen categoriesFor: #logPen:!accessing!private! !
-!Graphics.Pen categoriesFor: #style!accessing!private! !
-!Graphics.Pen categoriesFor: #style:!accessing!private! !
-!Graphics.Pen categoriesFor: #styleName!accessing!public! !
-!Graphics.Pen categoriesFor: #styleName:!accessing!public! !
-!Graphics.Pen categoriesFor: #width!accessing!public! !
-!Graphics.Pen categoriesFor: #width:!accessing!public! !
+!Graphics.Pen categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+handle:!accessing!private! !
+logPen:!accessing!private! !
+style!accessing!private! !
+style:!accessing!private! !
+styleName!accessing!public! !
+styleName:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !Graphics.Pen class methodsFor!
 
@@ -184,23 +186,25 @@ withStyleName: aString
 		withStyle: (self styleNames indexOf: aString) - 1
 		width: 0
 		color: Color black! !
-!Graphics.Pen class categoriesFor: #black!instance creation!public! !
-!Graphics.Pen class categoriesFor: #blue!instance creation!public! !
-!Graphics.Pen class categoriesFor: #color:!instance creation!public! !
-!Graphics.Pen class categoriesFor: #dashDot!instance creation!public! !
-!Graphics.Pen class categoriesFor: #dashDotDot!instance creation!public! !
-!Graphics.Pen class categoriesFor: #dashed!instance creation!public! !
-!Graphics.Pen class categoriesFor: #dotted!instance creation!public! !
-!Graphics.Pen class categoriesFor: #fromLogPen:!instance creation!public! !
-!Graphics.Pen class categoriesFor: #green!instance creation!public! !
-!Graphics.Pen class categoriesFor: #icon!constants!public! !
-!Graphics.Pen class categoriesFor: #insideFrame!instance creation!public! !
-!Graphics.Pen class categoriesFor: #newColor:!instance creation!private! !
-!Graphics.Pen class categoriesFor: #none!instance creation!public! !
-!Graphics.Pen class categoriesFor: #red!instance creation!public! !
-!Graphics.Pen class categoriesFor: #solid!instance creation!public! !
-!Graphics.Pen class categoriesFor: #styleNames!constants!private! !
-!Graphics.Pen class categoriesFor: #white!instance creation!public! !
-!Graphics.Pen class categoriesFor: #withStyle:width:color:!instance creation!public! !
-!Graphics.Pen class categoriesFor: #withStyleName:!public! !
+!Graphics.Pen class categoriesForMethods!
+black!instance creation!public! !
+blue!instance creation!public! !
+color:!instance creation!public! !
+dashDot!instance creation!public! !
+dashDotDot!instance creation!public! !
+dashed!instance creation!public! !
+dotted!instance creation!public! !
+fromLogPen:!instance creation!public! !
+green!instance creation!public! !
+icon!constants!public! !
+insideFrame!instance creation!public! !
+newColor:!instance creation!private! !
+none!instance creation!public! !
+red!instance creation!public! !
+solid!instance creation!public! !
+styleNames!constants!private! !
+white!instance creation!public! !
+withStyle:width:color:!instance creation!public! !
+withStyleName:!public! !
+!
 

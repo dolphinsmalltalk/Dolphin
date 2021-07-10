@@ -149,18 +149,20 @@ prohibitedSubstitutions
 	answer := SDWORD new.
 	self get_prohibitedSubstitutions: answer.
 	^answer asObject! !
-!MSXML.ISchemaComplexType categoriesFor: #anyAttribute!**auto generated**!properties!public! !
-!MSXML.ISchemaComplexType categoriesFor: #attributes!**auto generated**!properties!public! !
-!MSXML.ISchemaComplexType categoriesFor: #contentModel!**auto generated**!properties!public! !
-!MSXML.ISchemaComplexType categoriesFor: #contentType!**auto generated**!properties!public! !
-!MSXML.ISchemaComplexType categoriesFor: #get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!MSXML.ISchemaComplexType categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!MSXML.ISchemaComplexType categoriesFor: #get_contentModel:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!MSXML.ISchemaComplexType categoriesFor: #get_contentType:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!MSXML.ISchemaComplexType categoriesFor: #get_isAbstract:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!MSXML.ISchemaComplexType categoriesFor: #get_prohibitedSubstitutions:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!MSXML.ISchemaComplexType categoriesFor: #isAbstract!**auto generated**!properties!public! !
-!MSXML.ISchemaComplexType categoriesFor: #prohibitedSubstitutions!**auto generated**!properties!public! !
+!MSXML.ISchemaComplexType categoriesForMethods!
+anyAttribute!**auto generated**!properties!public! !
+attributes!**auto generated**!properties!public! !
+contentModel!**auto generated**!properties!public! !
+contentType!**auto generated**!properties!public! !
+get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_attributes:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_contentModel:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_contentType:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_isAbstract:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_prohibitedSubstitutions:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+isAbstract!**auto generated**!properties!public! !
+prohibitedSubstitutions!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaComplexType class methodsFor!
 
@@ -182,5 +184,7 @@ defineFunctions
 		defineFunction: #get_prohibitedSubstitutions:
 			argumentTypes: 'sdword*'
 ! !
-!MSXML.ISchemaComplexType class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaComplexType class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -27,9 +27,11 @@ writeInto: anExternalStructure value: aBoolean
 	integer byte value 1 for true, or 0 for false."
 
 	anExternalStructure bytes byteAtOffset: offset put: aBoolean asParameter! !
-!External.BOOLEANField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.BOOLEANField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.BOOLEANField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.BOOLEANField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.BOOLEANField class methodsFor!
 
@@ -37,5 +39,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
-!External.BOOLEANField class categoriesFor: #byteSize!constants!private! !
+!External.BOOLEANField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

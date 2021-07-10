@@ -170,36 +170,38 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #alpha!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #alpha:!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #alphaValue!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #backcolor!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #backcolor:!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #basicBackcolor:!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #basicId!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #basicStrokeWidth!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #basicStrokeWidth:!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #code!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #code:!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #forecolor:!accessing!colors!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #glyphName!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #glyphName:!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #layer!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #layer:!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #layerCode!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #name!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #name:!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #newForLine:!adding!must not strip!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #storeableProperties!development!printing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #strokeWidth!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #strokeWidth:!accessing!public! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #view!accessing!private! !
-!UI.Scintilla.MarkerDefinition categoriesFor: #view:!accessing!private! !
+!UI.Scintilla.MarkerDefinition categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+alphaValue!accessing!private! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicBackcolor:!accessing!private! !
+basicForecolor:!accessing!private! !
+basicId!accessing!private! !
+basicSelectionBackcolor:!accessing!private! !
+basicStrokeWidth!accessing!private! !
+basicStrokeWidth:!accessing!private! !
+code!accessing!private! !
+code:!accessing!private! !
+forecolor!accessing!colors!public! !
+forecolor:!accessing!colors!public! !
+glyphName!accessing!public! !
+glyphName:!accessing!public! !
+layer!accessing!public! !
+layer:!accessing!public! !
+layerCode!accessing!private! !
+name!accessing!public! !
+name:!accessing!public! !
+newForLine:!adding!must not strip!public! !
+selectionBackcolor!accessing!colors!public! !
+selectionBackcolor:!accessing!colors!public! !
+storeableProperties!development!printing!private! !
+strokeWidth!accessing!public! !
+strokeWidth:!accessing!public! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !UI.Scintilla.MarkerDefinition class methodsFor!
 
@@ -555,16 +557,18 @@ stbVersion
 visibleCharacterGlyphs
 	#todo.	"Select a better range of characters more likely to be useful as markers by using the Unicode classifications, e.g. geometric shapes."
 	^(Character byteCharacterSet select: [:each | each isGraph]) asArray! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #arrows!constants!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #boxTree!constants!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #circleTree!constants!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #folderIds!constants!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #foldMarkerNames!constants!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #glyphNames!constants!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #initialize!development!initializing!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #plusMinus!constants!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #stbVersion!binary filing!public! !
-!UI.Scintilla.MarkerDefinition class categoriesFor: #visibleCharacterGlyphs!constants!public! !
+!UI.Scintilla.MarkerDefinition class categoriesForMethods!
+arrows!constants!public! !
+boxTree!constants!public! !
+buildPropertyMap!constants!must not strip!private! !
+circleTree!constants!public! !
+folderIds!constants!public! !
+foldMarkerNames!constants!public! !
+glyphNames!constants!public! !
+initialize!development!initializing!public! !
+plusMinus!constants!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+visibleCharacterGlyphs!constants!public! !
+!
 

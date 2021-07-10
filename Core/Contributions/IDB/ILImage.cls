@@ -234,35 +234,37 @@ transparentColorIndex
 
 width
 	^extent x! !
-!ILImage categoriesFor: #bitmapCache!accessing!public! !
-!ILImage categoriesFor: #clearBitmapCache!helpers!public! !
-!ILImage categoriesFor: #colorsUsed!helpers!public! !
-!ILImage categoriesFor: #countColorsUsed!helpers!public! !
-!ILImage categoriesFor: #defaultColor!constants!public! !
-!ILImage categoriesFor: #drawBitmapOn:at:!operations!public! !
-!ILImage categoriesFor: #editingImage!converting!public! !
-!ILImage categoriesFor: #extent!accessing!public! !
-!ILImage categoriesFor: #getRGBAt:!accessing!public! !
-!ILImage categoriesFor: #height!accessing!public! !
-!ILImage categoriesFor: #hotSpot!accessing!public! !
-!ILImage categoriesFor: #hotSpot:!accessing!public! !
-!ILImage categoriesFor: #imageAt:!accessing!public! !
-!ILImage categoriesFor: #imageAt:put:!accessing!public! !
-!ILImage categoriesFor: #imageDescription!displaying!public! !
-!ILImage categoriesFor: #indexFor:!accessing!public! !
-!ILImage categoriesFor: #isTransparentAt:!public!testing! !
-!ILImage categoriesFor: #offsetFor:!helpers!public! !
-!ILImage categoriesFor: #pixelCount!initializing!public! !
-!ILImage categoriesFor: #pixelPoints!helpers!public! !
-!ILImage categoriesFor: #pixelPoints:!helpers!public! !
-!ILImage categoriesFor: #putRGB:at:!accessing!public! !
-!ILImage categoriesFor: #rectangle!helpers!public! !
-!ILImage categoriesFor: #rgbFor:!accessing!public! !
-!ILImage categoriesFor: #setExtent:!initializing!public! !
-!ILImage categoriesFor: #setExtent:colors:!initializing!public! !
-!ILImage categoriesFor: #transparentColor!accessing!public! !
-!ILImage categoriesFor: #transparentColorIndex!constants!public! !
-!ILImage categoriesFor: #width!accessing!public! !
+!ILImage categoriesForMethods!
+bitmapCache!accessing!public! !
+clearBitmapCache!helpers!public! !
+colorsUsed!helpers!public! !
+countColorsUsed!helpers!public! !
+defaultColor!constants!public! !
+drawBitmapOn:at:!operations!public! !
+editingImage!converting!public! !
+extent!accessing!public! !
+getRGBAt:!accessing!public! !
+height!accessing!public! !
+hotSpot!accessing!public! !
+hotSpot:!accessing!public! !
+imageAt:!accessing!public! !
+imageAt:put:!accessing!public! !
+imageDescription!displaying!public! !
+indexFor:!accessing!public! !
+isTransparentAt:!public!testing! !
+offsetFor:!helpers!public! !
+pixelCount!initializing!public! !
+pixelPoints!helpers!public! !
+pixelPoints:!helpers!public! !
+putRGB:at:!accessing!public! !
+rectangle!helpers!public! !
+rgbFor:!accessing!public! !
+setExtent:!initializing!public! !
+setExtent:colors:!initializing!public! !
+transparentColor!accessing!public! !
+transparentColorIndex!constants!public! !
+width!accessing!public! !
+!
 
 !ILImage class methodsFor!
 
@@ -289,9 +291,11 @@ transparentRGB: anRGB
 	Dynamically changed to match the current background color"
 
 	TransparentRGB := anRGB! !
-!ILImage class categoriesFor: #defaultTransparentRGB!constants!public! !
-!ILImage class categoriesFor: #extent:!instance creation!public! !
-!ILImage class categoriesFor: #extent:colors:!instance creation!public! !
-!ILImage class categoriesFor: #transparentRGB!accessing!public! !
-!ILImage class categoriesFor: #transparentRGB:!accessing!public! !
+!ILImage class categoriesForMethods!
+defaultTransparentRGB!constants!public! !
+extent:!instance creation!public! !
+extent:colors:!instance creation!public! !
+transparentRGB!accessing!public! !
+transparentRGB:!accessing!public! !
+!
 

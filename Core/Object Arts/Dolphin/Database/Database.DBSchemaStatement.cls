@@ -35,11 +35,13 @@ tableName
 
 tableName: aStringPattern
 	tableName := aStringPattern! !
-!Database.DBSchemaStatement categoriesFor: #catalogName!accessing!public!searching! !
-!Database.DBSchemaStatement categoriesFor: #catalogName:!accessing!public!searching! !
-!Database.DBSchemaStatement categoriesFor: #defaultCursorType!constants!public! !
-!Database.DBSchemaStatement categoriesFor: #schemaName!accessing!public!searching! !
-!Database.DBSchemaStatement categoriesFor: #schemaName:!accessing!public!searching! !
-!Database.DBSchemaStatement categoriesFor: #tableName!accessing!public!searching! !
-!Database.DBSchemaStatement categoriesFor: #tableName:!accessing!public!searching! !
+!Database.DBSchemaStatement categoriesForMethods!
+catalogName!accessing!public!searching! !
+catalogName:!accessing!public!searching! !
+defaultCursorType!constants!public! !
+schemaName!accessing!public!searching! !
+schemaName:!accessing!public!searching! !
+tableName!accessing!public!searching! !
+tableName:!accessing!public!searching! !
+!
 

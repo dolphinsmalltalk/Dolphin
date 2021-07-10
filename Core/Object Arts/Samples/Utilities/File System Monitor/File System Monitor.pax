@@ -82,7 +82,9 @@ UI.RuntimeSessionManager subclass: #'OS.Examples.FileSystemMonitorSessionManager
 
 icon
 	^OS.Examples.FileSystemMonitor icon! !
-!OS.FileSystemChangeReader class categoriesFor: #icon!initializing!public! !
+!OS.FileSystemChangeReader class categoriesForMethods!
+icon!initializing!public! !
+!
 
 "End of package definition"!
 

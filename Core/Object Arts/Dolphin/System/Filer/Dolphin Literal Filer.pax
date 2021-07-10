@@ -69,25 +69,33 @@ literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '#('.
 	self do: [:each | each literalPrintOn: aWriteStream] separatedBy: [aWriteStream space].
 	aWriteStream nextPut: $)! !
-!Core.Array categoriesFor: #literalPrintOn:!public! !
+!Core.Array categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Core.Boolean methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!Core.Boolean categoriesFor: #literalPrintOn:!public! !
+!Core.Boolean categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Core.ByteArray methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!Core.ByteArray categoriesFor: #literalPrintOn:!public! !
+!Core.ByteArray categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Core.Character methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!Core.Character categoriesFor: #literalPrintOn:!public! !
+!Core.Character categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Core.ClassDescription methodsFor!
 
@@ -95,13 +103,17 @@ literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '##('.
 	self printFullNameOn: aWriteStream.
 	aWriteStream nextPut: $)! !
-!Core.ClassDescription categoriesFor: #literalPrintOn:!printing!public! !
+!Core.ClassDescription categoriesForMethods!
+literalPrintOn:!printing!public! !
+!
 
 !Core.Number methodsFor!
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
-!Core.Number categoriesFor: #literalPrintOn:!public! !
+!Core.Number categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Core.Object methodsFor!
 
@@ -148,10 +160,12 @@ literalStoreOn: aStream
 	method to perform such isolation"
 
 	(STLOutFiler on: aStream) nextPut: self! !
-!Core.Object categoriesFor: #literalStoreArray!literal filing!public! !
-!Core.Object categoriesFor: #literalStoreEvaluationOn:!literal filing!public! !
-!Core.Object categoriesFor: #literalStoreEvaluationString!literal filing!public! !
-!Core.Object categoriesFor: #literalStoreOn:!literal filing!public! !
+!Core.Object categoriesForMethods!
+literalStoreArray!literal filing!public! !
+literalStoreEvaluationOn:!literal filing!public! !
+literalStoreEvaluationString!literal filing!public! !
+literalStoreOn:!literal filing!public! !
+!
 
 !Core.Object class methodsFor!
 
@@ -186,10 +200,12 @@ literalReadFrom: aStream context: anObject
 	^(STLInFiler on: aStream)
 		context: anObject;
 		next! !
-!Core.Object class categoriesFor: #fromLiteralStoreArray:!literal filing!public! !
-!Core.Object class categoriesFor: #fromLiteralStoreArray:context:!literal filing!public! !
-!Core.Object class categoriesFor: #literalReadFrom:!literal filing!public! !
-!Core.Object class categoriesFor: #literalReadFrom:context:!binary filing!literal filing!public! !
+!Core.Object class categoriesForMethods!
+fromLiteralStoreArray:!literal filing!public! !
+fromLiteralStoreArray:context:!literal filing!public! !
+literalReadFrom:!literal filing!public! !
+literalReadFrom:context:!binary filing!literal filing!public! !
+!
 
 !Core.String methodsFor!
 
@@ -199,25 +215,33 @@ literalPrintOn: aWriteStream
 	Prints incorrectly, so trim nulls"
 
 	self trimNulls printOn: aWriteStream! !
-!Core.String categoriesFor: #literalPrintOn:!public! !
+!Core.String categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Core.Symbol methodsFor!
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
-!Core.Symbol categoriesFor: #literalPrintOn:!public! !
+!Core.Symbol categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Core.UndefinedObject methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!Core.UndefinedObject categoriesFor: #literalPrintOn:!public! !
+!Core.UndefinedObject categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Kernel.ProcessorScheduler methodsFor!
 
 literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '##(Core.Processor)'! !
-!Kernel.ProcessorScheduler categoriesFor: #literalPrintOn:!public! !
+!Kernel.ProcessorScheduler categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 "End of package definition"!
 

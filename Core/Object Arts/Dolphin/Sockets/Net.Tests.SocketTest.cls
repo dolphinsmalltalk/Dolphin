@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AbstractSocketTest subclass: #'Net.Tests.SocketTest'
 	instanceVariableNames: ''
@@ -136,14 +136,16 @@ testSTBMessages
 	ready wait.
 	messages := messages asArray.
 	self assert: messages equals: sent! !
-!Net.Tests.SocketTest categoriesFor: #clientSocketClass!constants!private! !
-!Net.Tests.SocketTest categoriesFor: #serverSocketClass!constants!private!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testBindReuseFailure!public!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testConnectFailure!public!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testListenUnbound!public!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testPeerAddress!public!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testPeerAddressNotConnected!public!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testQueryPort!public!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testQueryPortUnbound!public!unit tests! !
-!Net.Tests.SocketTest categoriesFor: #testSTBMessages!public!unit tests! !
+!Net.Tests.SocketTest categoriesForMethods!
+clientSocketClass!constants!private! !
+serverSocketClass!constants!private!unit tests! !
+testBindReuseFailure!public!unit tests! !
+testConnectFailure!public!unit tests! !
+testListenUnbound!public!unit tests! !
+testPeerAddress!public!unit tests! !
+testPeerAddressNotConnected!public!unit tests! !
+testQueryPort!public!unit tests! !
+testQueryPortUnbound!public!unit tests! !
+testSTBMessages!public!unit tests! !
+!
 

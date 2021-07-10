@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.DifferencesPresenterTest'
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ baz'.
 	presenter comparisonMode: #line.
 	items := presenter itemsFrom: str.
 	self assert: items asArray equals: #('foo bar' 'baz')! !
-!UI.Tests.DifferencesPresenterTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.DifferencesPresenterTest categoriesFor: #testItemsFrom!public! !
+!UI.Tests.DifferencesPresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+testItemsFrom!public! !
+!
 

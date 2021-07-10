@@ -235,40 +235,42 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!OS.EMRSTRETCHBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cxDest!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cxSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cyDest!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cySrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #cySrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #dwRop!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #xDest!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #xDest:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #yDest!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #yDest:!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!OS.EMRSTRETCHBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRSTRETCHBLT categoriesForMethods!
+cbBitsSrc!**compiled accessors**!public! !
+cbBitsSrc:!**compiled accessors**!public! !
+cbBmiSrc!**compiled accessors**!public! !
+cbBmiSrc:!**compiled accessors**!public! !
+crBkColorSrc!**compiled accessors**!public! !
+crBkColorSrc:!**compiled accessors**!public! !
+cxDest!**compiled accessors**!public! !
+cxDest:!**compiled accessors**!public! !
+cxSrc!**compiled accessors**!public! !
+cxSrc:!**compiled accessors**!public! !
+cyDest!**compiled accessors**!public! !
+cyDest:!**compiled accessors**!public! !
+cySrc!**compiled accessors**!public! !
+cySrc:!**compiled accessors**!public! !
+dwRop!**compiled accessors**!public! !
+dwRop:!**compiled accessors**!public! !
+iUsageSrc!**compiled accessors**!public! !
+iUsageSrc:!**compiled accessors**!public! !
+offBitsSrc!**compiled accessors**!public! !
+offBitsSrc:!**compiled accessors**!public! !
+offBmiSrc!**compiled accessors**!public! !
+offBmiSrc:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+xDest!**compiled accessors**!public! !
+xDest:!**compiled accessors**!public! !
+xformSrc!**compiled accessors**!public! !
+xformSrc:!**compiled accessors**!public! !
+xSrc!**compiled accessors**!public! !
+xSrc:!**compiled accessors**!public! !
+yDest!**compiled accessors**!public! !
+yDest:!**compiled accessors**!public! !
+ySrc!**compiled accessors**!public! !
+ySrc:!**compiled accessors**!public! !
+!
 
 !OS.EMRSTRETCHBLT class methodsFor!
 
@@ -362,7 +364,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_STRETCHBLT}! !
-!OS.EMRSTRETCHBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSTRETCHBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSTRETCHBLT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSTRETCHBLT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

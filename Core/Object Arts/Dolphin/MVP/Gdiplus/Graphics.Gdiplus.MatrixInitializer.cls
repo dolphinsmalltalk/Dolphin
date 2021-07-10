@@ -31,8 +31,10 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 	m22 := aReal22.
 	m31 := aReal31.
 	m32 := aReal32! !
-!Graphics.Gdiplus.MatrixInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.MatrixInitializer categoriesFor: #m11:m12:m21:m22:m31:m32:!initializing!private! !
+!Graphics.Gdiplus.MatrixInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+m11:m12:m21:m22:m31:m32:!initializing!private! !
+!
 
 !Graphics.Gdiplus.MatrixInitializer class methodsFor!
 
@@ -44,5 +46,7 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 		m22: aReal22
 		m31: aReal31
 		m32: aReal32! !
-!Graphics.Gdiplus.MatrixInitializer class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
+!Graphics.Gdiplus.MatrixInitializer class categoriesForMethods!
+m11:m12:m21:m22:m31:m32:!instance creation!public! !
+!
 

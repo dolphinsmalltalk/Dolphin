@@ -116,10 +116,12 @@ InternalEntityDecl: pwchName cchName: cchName pwchValue: pwchValue cchValue: cch
 
 	<virtual stdcall: hresult 6 word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXDeclHandler categoriesFor: #AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!MSXML.ISAXDeclHandler categoriesFor: #ElementDecl:cchName:pwchModel:cchModel:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!MSXML.ISAXDeclHandler categoriesFor: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!MSXML.ISAXDeclHandler categoriesFor: #InternalEntityDecl:cchName:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!MSXML.ISAXDeclHandler categoriesForMethods!
+AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+ElementDecl:cchName:pwchModel:cchModel:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+InternalEntityDecl:cchName:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!
 
 !MSXML.ISAXDeclHandler class methodsFor!
 
@@ -137,5 +139,7 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:
 			argumentTypes: 'word* sdword word* sdword word* sdword'
 ! !
-!MSXML.ISAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXDeclHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

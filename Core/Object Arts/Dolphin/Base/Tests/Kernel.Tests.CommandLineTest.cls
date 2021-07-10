@@ -471,45 +471,47 @@ testUnrecognizedOption
 		should: [commandLine options] raise: CommandLineError;
 		should: [commandLine arguments] raise: CommandLineError;
 		yourself! !
-!Kernel.Tests.CommandLineTest categoriesFor: #dolphinLauncherExe!private! !
-!Kernel.Tests.CommandLineTest categoriesFor: #dproImageName!private! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_01!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_02!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_03!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_04!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_05!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_06!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_07!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_08!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_09!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_10!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_11!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_12!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_13!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #test_getOpt_14!getopt protocol!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testAccessors!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testBlockNoArgument!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testBlockOptionalArgumentAbsent!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testBlockOptionalArgumentPresent!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testBlockRequiredArgumentPresent!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongAmbiguousOption!errors!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongEquals!long tests!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongMissingRequiredArgument!errors!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongNoArgument!long tests!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongOptionalArgumentAbsent!long tests!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongOptionalArgumentPresent!long tests!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongOptionEmptyArgument!errors!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongRequiredArgumentPresent!long tests!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongUnexpectedArgument!errors!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testLongUnexpectedOption!errors!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testMissingRequiredArgument!errors!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testPartialLong!long tests!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentAbsent!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentPresent!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testRepeatShortBlockNoArgument!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testShortBlockNoArgument!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testShortBlockOptionalArgumentAbsent!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testShortBlockRequiredArgumentPresent!block!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testSlashPrefix!public! !
-!Kernel.Tests.CommandLineTest categoriesFor: #testUnrecognizedOption!errors!public! !
+!Kernel.Tests.CommandLineTest categoriesForMethods!
+dolphinLauncherExe!private! !
+dproImageName!private! !
+test_getOpt_01!getopt protocol!public! !
+test_getOpt_02!getopt protocol!public! !
+test_getOpt_03!getopt protocol!public! !
+test_getOpt_04!getopt protocol!public! !
+test_getOpt_05!getopt protocol!public! !
+test_getOpt_06!getopt protocol!public! !
+test_getOpt_07!getopt protocol!public! !
+test_getOpt_08!getopt protocol!public! !
+test_getOpt_09!getopt protocol!public! !
+test_getOpt_10!getopt protocol!public! !
+test_getOpt_11!getopt protocol!public! !
+test_getOpt_12!getopt protocol!public! !
+test_getOpt_13!getopt protocol!public! !
+test_getOpt_14!getopt protocol!public! !
+testAccessors!public! !
+testBlockNoArgument!block!public! !
+testBlockOptionalArgumentAbsent!block!public! !
+testBlockOptionalArgumentPresent!block!public! !
+testBlockRequiredArgumentPresent!block!public! !
+testLongAmbiguousOption!errors!public! !
+testLongEquals!long tests!public! !
+testLongMissingRequiredArgument!errors!public! !
+testLongNoArgument!long tests!public! !
+testLongOptionalArgumentAbsent!long tests!public! !
+testLongOptionalArgumentPresent!long tests!public! !
+testLongOptionEmptyArgument!errors!public! !
+testLongRequiredArgumentPresent!long tests!public! !
+testLongUnexpectedArgument!errors!public! !
+testLongUnexpectedOption!errors!public! !
+testMissingRequiredArgument!errors!public! !
+testPartialLong!long tests!public! !
+testRepeatBlockOptionalArgumentAbsent!block!public! !
+testRepeatBlockOptionalArgumentPresent!block!public! !
+testRepeatShortBlockNoArgument!block!public! !
+testShortBlockNoArgument!block!public! !
+testShortBlockOptionalArgumentAbsent!block!public! !
+testShortBlockRequiredArgumentPresent!block!public! !
+testSlashPrefix!public! !
+testUnrecognizedOption!errors!public! !
+!
 

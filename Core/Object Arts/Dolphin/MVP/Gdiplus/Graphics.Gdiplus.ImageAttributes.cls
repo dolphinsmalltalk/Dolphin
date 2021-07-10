@@ -105,19 +105,21 @@ threshold: aFloat type: aColorAdjustTypeConstant
 		type: aColorAdjustTypeConstant
 		enableFlag: TRUE
 		threshold: aFloat! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #colorKeys:colorLow:colorHigh:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #colorMatrix:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #colorMatrix:type:mode:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #gamma:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #gamma:type:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #outputChannel:channelFlags:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapColor:to:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapColor:to:type:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapTable:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #remapTable:type:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #threshold:!accessing!public! !
-!Graphics.Gdiplus.ImageAttributes categoriesFor: #threshold:type:!accessing!public! !
+!Graphics.Gdiplus.ImageAttributes categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+colorKeys:colorLow:colorHigh:!accessing!public! !
+colorMatrix:!accessing!public! !
+colorMatrix:type:mode:!accessing!public! !
+gamma:!accessing!public! !
+gamma:type:!accessing!public! !
+outputChannel:channelFlags:!accessing!public! !
+remapColor:to:!accessing!public! !
+remapColor:to:type:!accessing!public! !
+remapTable:!accessing!public! !
+remapTable:type:!accessing!public! !
+threshold:!accessing!public! !
+threshold:type:!accessing!public! !
+!
 
 !Graphics.Gdiplus.ImageAttributes class methodsFor!
 
@@ -564,21 +566,23 @@ exampleRemapInput
 
 new
 	^self fromInitializer: ImageAttributesInitializer default! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars1!examples!private! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars2!examples!private! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars3!examples!private! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorBars4!examples!private! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleColorKeyTest!examples!private! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAAlphaBlending!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAColorKey!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAColorMatrix!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAColorRemap!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAGamma!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAOutputChannel!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAScaleColors!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAShearColors!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIAThreshold!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleGdipIATranslateColors!examples!public!sunit! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #exampleRemapInput!examples!private! !
-!Graphics.Gdiplus.ImageAttributes class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.ImageAttributes class categoriesForMethods!
+exampleColorBars1!examples!private! !
+exampleColorBars2!examples!private! !
+exampleColorBars3!examples!private! !
+exampleColorBars4!examples!private! !
+exampleColorKeyTest!examples!private! !
+exampleGdipIAAlphaBlending!examples!public!sunit! !
+exampleGdipIAColorKey!examples!public!sunit! !
+exampleGdipIAColorMatrix!examples!public!sunit! !
+exampleGdipIAColorRemap!examples!public!sunit! !
+exampleGdipIAGamma!examples!public!sunit! !
+exampleGdipIAOutputChannel!examples!public!sunit! !
+exampleGdipIAScaleColors!examples!public!sunit! !
+exampleGdipIAShearColors!examples!public!sunit! !
+exampleGdipIAThreshold!examples!public!sunit! !
+exampleGdipIATranslateColors!examples!public!sunit! !
+exampleRemapInput!examples!private! !
+new!instance creation!public! !
+!
 

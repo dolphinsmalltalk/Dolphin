@@ -410,41 +410,45 @@ printBasicDefinitionOfClass: aClass
 		crtab;
 		nextPutAll: 'classInstanceVariableNames: ';
 		print: aClass class instanceVariableString! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #collateClass:against:!private!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitClassName:!private!source filing-file out! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitClassPoolOfClass:!private!source filing-file out! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing-file out! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitLiteral:!private!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageBinaryVariables:!private!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageClassNames:!accessing!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageManualPrerequisites:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageMethodNames:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageNameSet:initializer:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackagePrerequisiteNames:!private! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageUntracedVariables:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageVariableNames:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageVariableNameSubsets:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPackageVariableReference:!accessing!private!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPaxNames:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #emitPaxVariableNames:accessor:!private!source filing-pax! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #environment!accessing!public! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #environment:!accessing!public! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing-file out! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutClass:ofPackage:!public!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutPackageMethods:!private!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutPackageSourceVariables:!private! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutPackageVariableAliases:!private!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #fileOutPoolDictionary:!private!source filing! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #getShortName:!helpers!private! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #getSmalltalkVariableName:!helpers!private! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #makePoolConstsFromSharedPool:!helpers!private! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #packageClassesInFileoutOrder:!helpers!private! !
-!Kernel.LegacyChunkSourceFiler categoriesFor: #printBasicDefinitionOfClass:!public!source filing-file out! !
+!Kernel.LegacyChunkSourceFiler categoriesForMethods!
+collateClass:against:!private!source filing! !
+emitClassName:!private!source filing-file out! !
+emitClassPoolOfClass:!private!source filing-file out! !
+emitDeclarationForClass:variable:!private!source filing-file out! !
+emitLiteral:!private!source filing! !
+emitPackageBinaryVariables:!private!source filing! !
+emitPackageClassNames:!accessing!private!source filing-pax! !
+emitPackageManualPrerequisites:!private!source filing-pax! !
+emitPackageMethodNames:!private!source filing-pax! !
+emitPackageNameSet:initializer:!private!source filing-pax! !
+emitPackagePrerequisiteNames:!private! !
+emitPackageUntracedVariables:!private!source filing-pax! !
+emitPackageVariableNames:!private!source filing-pax! !
+emitPackageVariableNameSubsets:!private!source filing-pax! !
+emitPackageVariableReference:!accessing!private!source filing! !
+emitPaxNames:!private!source filing-pax! !
+emitPaxVariableNames:accessor:!private!source filing-pax! !
+environment!accessing!public! !
+environment:!accessing!public! !
+fileOutAttributesOfClass:!public!source filing! !
+fileOutBasicDefinitionOfClass:!public!source filing-file out! !
+fileOutClass:ofPackage:!public!source filing! !
+fileOutPackageMethods:!private!source filing! !
+fileOutPackageSourceVariables:!private! !
+fileOutPackageVariableAliases:!private!source filing! !
+fileOutPoolDictionary:!private!source filing! !
+getShortName:!helpers!private! !
+getSmalltalkVariableName:!helpers!private! !
+makePoolConstsFromSharedPool:!helpers!private! !
+packageClassesInFileoutOrder:!helpers!private! !
+printBasicDefinitionOfClass:!public!source filing-file out! !
+!
 
 !Kernel.LegacyChunkSourceFiler class methodsFor!
 
 fileOutExtensionForClass: aClass
 	^(aClass inheritsFrom: SharedPool) ifTrue: ['st'] ifFalse: ['cls']! !
-!Kernel.LegacyChunkSourceFiler class categoriesFor: #fileOutExtensionForClass:!enquiries!public! !
+!Kernel.LegacyChunkSourceFiler class categoriesForMethods!
+fileOutExtensionForClass:!enquiries!public! !
+!
 

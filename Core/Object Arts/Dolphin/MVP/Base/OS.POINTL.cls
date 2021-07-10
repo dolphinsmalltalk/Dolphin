@@ -48,12 +48,14 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!OS.POINTL categoriesFor: #asUIntPtr!converting!public! !
-!OS.POINTL categoriesFor: #x!**compiled accessors**!public! !
-!OS.POINTL categoriesFor: #x:!**compiled accessors**!public! !
-!OS.POINTL categoriesFor: #x:y:!initializing!public! !
-!OS.POINTL categoriesFor: #y!**compiled accessors**!public! !
-!OS.POINTL categoriesFor: #y:!**compiled accessors**!public! !
+!OS.POINTL categoriesForMethods!
+asUIntPtr!converting!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+x:y:!initializing!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !OS.POINTL class methodsFor!
 
@@ -81,6 +83,8 @@ x: x y: y
 				sdwordAtOffset: _OffsetOf_x put: x;
 				sdwordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
-!OS.POINTL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.POINTL class categoriesFor: #x:y:!instance creation!public! !
+!OS.POINTL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+x:y:!instance creation!public! !
+!
 

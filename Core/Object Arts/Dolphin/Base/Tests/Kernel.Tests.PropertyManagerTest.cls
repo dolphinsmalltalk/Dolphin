@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.PropertyManagerTest'
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ testRegisterIsWeaklyKeyed
 	subject := PropertyManager new.
 	self assert: subject register hasWeakKeys.
 	self deny: subject register hasWeakValues! !
-!Kernel.Tests.PropertyManagerTest categoriesFor: #testRegisterIsWeaklyKeyed!public! !
+!Kernel.Tests.PropertyManagerTest categoriesForMethods!
+testRegisterIsWeaklyKeyed!public! !
+!
 

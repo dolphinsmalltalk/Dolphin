@@ -129,21 +129,23 @@ unhandledException: anException
 	anException isUserResumable ifFalse: [
 		self quit: -1].
 	^anException! !
-!Kernel.ConsoleSessionManager categoriesFor: #allocConsole!operations!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #attachFd:stream:!helpers!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!Kernel.ConsoleSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #isEmbedded!public!testing! !
-!Kernel.ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
-!Kernel.ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #openStdErr!helpers!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #openStdIn!helpers!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #openStdOut!helpers!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
-!Kernel.ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
-!Kernel.ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!Kernel.ConsoleSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!Kernel.ConsoleSessionManager categoriesForMethods!
+allocConsole!operations!private! !
+attachFd:stream:!helpers!private! !
+basicTertiaryStartup!operations-startup!public! !
+initializeFromSessionManager:!initializing!private! !
+isEmbedded!public!testing! !
+logError:!operations-logging!public! !
+onCloseConsole!event handling!private! !
+openStdErr!helpers!private! !
+openStdIn!helpers!private! !
+openStdOut!helpers!private! !
+quit:!operations-shutdown!private! !
+registerConsoleCtrlHandler!operations!private! !
+startUI!operations-startup!public! !
+traceStream!accessing!operations-logging!public! !
+unhandledException:!exceptions!private! !
+!
 
 !Kernel.ConsoleSessionManager class methodsFor!
 
@@ -172,7 +174,9 @@ run
 	consoleAlreadyOpen := self current openConsole.
 	self new main.
 	consoleAlreadyOpen ifFalse: [self current closeConsole]! !
-!Kernel.ConsoleSessionManager class categoriesFor: #isRuntime!public!testing! !
-!Kernel.ConsoleSessionManager class categoriesFor: #new!development!instance creation!public! !
-!Kernel.ConsoleSessionManager class categoriesFor: #run!development!public! !
+!Kernel.ConsoleSessionManager class categoriesForMethods!
+isRuntime!public!testing! !
+new!development!instance creation!public! !
+run!development!public! !
+!
 

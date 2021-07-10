@@ -42,10 +42,12 @@ signalType: aSignal
 	a raise event."
 
 	signalType := aSignal! !
-!Kernel.RaisedSignal categoriesFor: #_descriptionFormat!displaying!public! !
-!Kernel.RaisedSignal categoriesFor: #defaultAction!handling!public! !
-!Kernel.RaisedSignal categoriesFor: #isResumable!public!testing! !
-!Kernel.RaisedSignal categoriesFor: #messageText!accessing!public! !
-!Kernel.RaisedSignal categoriesFor: #signalType!accessing!private! !
-!Kernel.RaisedSignal categoriesFor: #signalType:!accessing!private! !
+!Kernel.RaisedSignal categoriesForMethods!
+_descriptionFormat!displaying!public! !
+defaultAction!handling!public! !
+isResumable!public!testing! !
+messageText!accessing!public! !
+signalType!accessing!private! !
+signalType:!accessing!private! !
+!
 

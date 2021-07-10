@@ -16,7 +16,9 @@ Public Domain Freeware'!
 
 seriesClass
 	^ChunkBrowserClassCategoryChunk! !
-!ChunkBrowserClassCategorySeriesStartChunk categoriesFor: #seriesClass!constants!public! !
+!ChunkBrowserClassCategorySeriesStartChunk categoriesForMethods!
+seriesClass!constants!public! !
+!
 
 !ChunkBrowserClassCategorySeriesStartChunk class methodsFor!
 
@@ -27,5 +29,7 @@ isChunkClassFor: aString
 	^(firstSpaceIndex := aString indexOf: Character space) = 0
 		ifTrue: [false]
 		ifFalse: [(aString indexOfSubCollection: ' categoriesForClass') = firstSpaceIndex]! !
-!ChunkBrowserClassCategorySeriesStartChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserClassCategorySeriesStartChunk class categoriesForMethods!
+isChunkClassFor:!public!testing! !
+!
 

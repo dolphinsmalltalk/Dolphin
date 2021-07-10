@@ -142,19 +142,21 @@ retCodeError: anInteger
 					(OS.ODBCRetCodes keyAtValue: code
 				                ifAbsent: ['Unknown']));
 			yourself)! !
-!Database.DBExceptionDetails categoriesFor: #addErrorDetails:!operations!private! !
-!Database.DBExceptionDetails categoriesFor: #buildErrorInfo!operations!private! !
-!Database.DBExceptionDetails categoriesFor: #buildErrorInfoFrom:type:!operations!private! !
-!Database.DBExceptionDetails categoriesFor: #code!accessing!public! !
-!Database.DBExceptionDetails categoriesFor: #code:!accessing!private! !
-!Database.DBExceptionDetails categoriesFor: #errors!accessing!public! !
-!Database.DBExceptionDetails categoriesFor: #errors:!accessing!private! !
-!Database.DBExceptionDetails categoriesFor: #hDBC!accessing!public! !
-!Database.DBExceptionDetails categoriesFor: #hDBC:!accessing!private! !
-!Database.DBExceptionDetails categoriesFor: #hEnv!accessing!public! !
-!Database.DBExceptionDetails categoriesFor: #hEnv:!accessing!private! !
-!Database.DBExceptionDetails categoriesFor: #hStmt!accessing!public! !
-!Database.DBExceptionDetails categoriesFor: #hStmt:!accessing!private! !
-!Database.DBExceptionDetails categoriesFor: #printOn:!printing!public! !
-!Database.DBExceptionDetails categoriesFor: #retCodeError:!accessing!private! !
+!Database.DBExceptionDetails categoriesForMethods!
+addErrorDetails:!operations!private! !
+buildErrorInfo!operations!private! !
+buildErrorInfoFrom:type:!operations!private! !
+code!accessing!public! !
+code:!accessing!private! !
+errors!accessing!public! !
+errors:!accessing!private! !
+hDBC!accessing!public! !
+hDBC:!accessing!private! !
+hEnv!accessing!public! !
+hEnv:!accessing!private! !
+hStmt!accessing!public! !
+hStmt:!accessing!private! !
+printOn:!printing!public! !
+retCodeError:!accessing!private! !
+!
 

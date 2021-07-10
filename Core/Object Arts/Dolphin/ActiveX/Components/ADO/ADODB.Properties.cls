@@ -51,8 +51,10 @@ item: index
 	answer := Property newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODB.Properties categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Properties!private! !
-!ADODB.Properties categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Properties categoriesForMethods!
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Properties!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODB.Properties class methodsFor!
 
@@ -64,5 +66,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant Property**'
 ! !
-!ADODB.Properties class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Properties class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

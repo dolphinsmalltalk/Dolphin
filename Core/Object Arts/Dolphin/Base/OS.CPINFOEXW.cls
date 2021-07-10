@@ -85,14 +85,16 @@ UnicodeDefaultChar
 	"Answer the <Integer> value of the receiver's 'UnicodeDefaultChar' field."
 
 	^bytes wordAtOffset: _OffsetOf_UnicodeDefaultChar! !
-!OS.CPINFOEXW categoriesFor: #codepage!**compiled accessors**!public! !
-!OS.CPINFOEXW categoriesFor: #CodePageName!**compiled accessors**!public! !
-!OS.CPINFOEXW categoriesFor: #DefaultChar!**compiled accessors**!public! !
-!OS.CPINFOEXW categoriesFor: #defaultCharacter!accessing!public! !
-!OS.CPINFOEXW categoriesFor: #LeadByte!**compiled accessors**!public! !
-!OS.CPINFOEXW categoriesFor: #MaxCharSize!**compiled accessors**!public! !
-!OS.CPINFOEXW categoriesFor: #unicodeDefaultChar!accessing!public! !
-!OS.CPINFOEXW categoriesFor: #UnicodeDefaultChar!**compiled accessors**!public! !
+!OS.CPINFOEXW categoriesForMethods!
+codepage!**compiled accessors**!public! !
+CodePageName!**compiled accessors**!public! !
+DefaultChar!**compiled accessors**!public! !
+defaultCharacter!accessing!public! !
+LeadByte!**compiled accessors**!public! !
+MaxCharSize!**compiled accessors**!public! !
+unicodeDefaultChar!accessing!public! !
+UnicodeDefaultChar!**compiled accessors**!public! !
+!
 
 !OS.CPINFOEXW class methodsFor!
 
@@ -144,7 +146,9 @@ defineFields
 
 getFieldNames
 	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
-!OS.CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
-!OS.CPINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.CPINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CPINFOEXW class categoriesForMethods!
+codePage:!instance creation!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

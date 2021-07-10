@@ -36,8 +36,10 @@ server: anObject
 	the server is set before the interface is queried."
 
 	server := anObject! !
-!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #interfaceClass!accessing!public! !
-!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #interfaceClass:!accessing!public! !
-!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #server!accessing!public! !
-!OS.COM.ForwardingDualInterfaceImplementation categoriesFor: #server:!accessing!public! !
+!OS.COM.ForwardingDualInterfaceImplementation categoriesForMethods!
+interfaceClass!accessing!public! !
+interfaceClass:!accessing!public! !
+server!accessing!public! !
+server:!accessing!public! !
+!
 

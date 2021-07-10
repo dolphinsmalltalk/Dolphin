@@ -45,13 +45,15 @@ visitImport: aBindingReference from: aNamespace
 			[:namespace |
 			"We delay initializing the visited set until the last possible moment, as mostly is is not required."
 			((visited ifNil: [visited := Set with: methodClass]) addNewElement: namespace) ifTrue: [namespace]]! !
-!Kernel.BindingContext categoriesFor: #environment!accessing!public! !
-!Kernel.BindingContext categoriesFor: #identifier!accessing!public! !
-!Kernel.BindingContext categoriesFor: #includesNamespace:!public!testing! !
-!Kernel.BindingContext categoriesFor: #methodClass!accessing!public! !
-!Kernel.BindingContext categoriesFor: #owningPackage!accessing!public! !
-!Kernel.BindingContext categoriesFor: #setMethodClass:environment:identifier:!initializing!private! !
-!Kernel.BindingContext categoriesFor: #visitImport:from:!public! !
+!Kernel.BindingContext categoriesForMethods!
+environment!accessing!public! !
+identifier!accessing!public! !
+includesNamespace:!public!testing! !
+methodClass!accessing!public! !
+owningPackage!accessing!public! !
+setMethodClass:environment:identifier:!initializing!private! !
+visitImport:from:!public! !
+!
 
 Kernel.BindingContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage)!
 
@@ -64,5 +66,7 @@ methodClass: aClass environment: aNamespace identifier: aString
 			environment: aNamespace
 			identifier: aString;
 		yourself! !
-!Kernel.BindingContext class categoriesFor: #methodClass:environment:identifier:!instance creation!public! !
+!Kernel.BindingContext class categoriesForMethods!
+methodClass:environment:identifier:!instance creation!public! !
+!
 

@@ -1527,163 +1527,165 @@ yourself
 
 	^self
 ! !
-!Core.Object categoriesFor: #??!converting!public! !
-!Core.Object categoriesFor: #_deepCopy:!copying!private! !
-!Core.Object categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
-!Core.Object categoriesFor: #_primitiveError:at:!exceptions!private! !
-!Core.Object categoriesFor: #_primitiveError:at:put:!exceptions!private! !
-!Core.Object categoriesFor: #~~!comparing!public! !
-!Core.Object categoriesFor: #~=!comparing!public! !
-!Core.Object categoriesFor: #=!comparing!public! !
-!Core.Object categoriesFor: #==!comparing!public! !
-!Core.Object categoriesFor: #->!converting!public! !
-!Core.Object categoriesFor: #addDependent:!dependency!public! !
-!Core.Object categoriesFor: #allReferences!enumerating!public! !
-!Core.Object categoriesFor: #allReferences:!enumerating!public! !
-!Core.Object categoriesFor: #appendToStream:!double dispatch!private! !
-!Core.Object categoriesFor: #asParameter!converting!public! !
-!Core.Object categoriesFor: #assert:!public!testing! !
-!Core.Object categoriesFor: #asUIntPtr!converting!public! !
-!Core.Object categoriesFor: #at:!accessing!public! !
-!Core.Object categoriesFor: #at:put:!accessing!public! !
-!Core.Object categoriesFor: #basicAt:!accessing!private! !
-!Core.Object categoriesFor: #basicAt:put:!accessing!private! !
-!Core.Object categoriesFor: #basicClass!accessing!public! !
-!Core.Object categoriesFor: #basicDoesNotUnderstand:!exceptions!public! !
-!Core.Object categoriesFor: #basicIdentityHash!comparing!public! !
-!Core.Object categoriesFor: #basicIdentityIndexOf:from:to:!private!searching! !
-!Core.Object categoriesFor: #basicPrintOn:!printing!public! !
-!Core.Object categoriesFor: #basicPrintString!printing!public! !
-!Core.Object categoriesFor: #basicResize:!mutating!private! !
-!Core.Object categoriesFor: #basicShallowCopy!copying!private! !
-!Core.Object categoriesFor: #basicSize!accessing!private! !
-!Core.Object categoriesFor: #basicYourAddress!accessing!private! !
-!Core.Object categoriesFor: #become:!mutating!public! !
-!Core.Object categoriesFor: #becomeA:!mutating!public! !
-!Core.Object categoriesFor: #becomeAn:!mutating!public! !
-!Core.Object categoriesFor: #beFinalizable!accessing!public! !
-!Core.Object categoriesFor: #beStrong!accessing!public! !
-!Core.Object categoriesFor: #beUnfinalizable!accessing!public! !
-!Core.Object categoriesFor: #beWeak!accessing!public! !
-!Core.Object categoriesFor: #binaryStoreBytes!binary filing!public! !
-!Core.Object categoriesFor: #binaryStoreOn:!binary filing!public! !
-!Core.Object categoriesFor: #breakDependents!dependency!public! !
-!Core.Object categoriesFor: #broadcast:!dependency!public! !
-!Core.Object categoriesFor: #broadcast:with:!dependency!public! !
-!Core.Object categoriesFor: #changed!dependency!public! !
-!Core.Object categoriesFor: #changed:!dependency!public! !
-!Core.Object categoriesFor: #changed:with:!dependency!public! !
-!Core.Object categoriesFor: #class!accessing!public! !
-!Core.Object categoriesFor: #copy!copying!public! !
-!Core.Object categoriesFor: #deepCopy!copying!public! !
-!Core.Object categoriesFor: #dependents!dependency!public! !
-!Core.Object categoriesFor: #displayOn:!displaying!public! !
-!Core.Object categoriesFor: #displayString!displaying!public! !
-!Core.Object categoriesFor: #displayString:!displaying!public! !
-!Core.Object categoriesFor: #displayStringLimitedTo:locale:!public! !
-!Core.Object categoriesFor: #doesNotUnderstand:!exceptions!public!vm entry points! !
-!Core.Object categoriesFor: #error:!exceptions!public! !
-!Core.Object categoriesFor: #errorCantHold:!exceptions!public! !
-!Core.Object categoriesFor: #errorNotFound:!exceptions!public! !
-!Core.Object categoriesFor: #errorSubscriptBounds:!exceptions!public! !
-!Core.Object categoriesFor: #events!debugger-step over!events!public! !
-!Core.Object categoriesFor: #expandMacrosIn:!double dispatch!private! !
-!Core.Object categoriesFor: #finalize!finalizing!public! !
-!Core.Object categoriesFor: #free!finalizing!public! !
-!Core.Object categoriesFor: #fullPrintString!printing!public! !
-!Core.Object categoriesFor: #getDependents!dependency!private! !
-!Core.Object categoriesFor: #getEvents!events!private! !
-!Core.Object categoriesFor: #getSpecialBehavior!accessing!private! !
-!Core.Object categoriesFor: #hash!comparing!public! !
-!Core.Object categoriesFor: #identityHash!comparing!public! !
-!Core.Object categoriesFor: #ifNil:!control flow!public! !
-!Core.Object categoriesFor: #ifNil:ifNotNil:!control flow!public! !
-!Core.Object categoriesFor: #ifNotNil:!control flow!public! !
-!Core.Object categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!Core.Object categoriesFor: #initialize!initializing!public! !
-!Core.Object categoriesFor: #instVarAt:!accessing!private! !
-!Core.Object categoriesFor: #instVarAt:put:!accessing!private! !
-!Core.Object categoriesFor: #instVarNamed:!accessing!private! !
-!Core.Object categoriesFor: #isAtomic!public!testing! !
-!Core.Object categoriesFor: #isBehavior!public!testing! !
-!Core.Object categoriesFor: #isCharacter!public!testing! !
-!Core.Object categoriesFor: #isFinalizable!public!testing! !
-!Core.Object categoriesFor: #isImmediate!private!testing! !
-!Core.Object categoriesFor: #isImmutable!public!testing! !
-!Core.Object categoriesFor: #isImmutable:!initializing!public! !
-!Core.Object categoriesFor: #isIndexable!public!testing! !
-!Core.Object categoriesFor: #isInteger!public!testing! !
-!Core.Object categoriesFor: #isKindOf:!public!testing! !
-!Core.Object categoriesFor: #isLiteral!public!testing! !
-!Core.Object categoriesFor: #isLiteral:!private!testing! !
-!Core.Object categoriesFor: #isMemberOf:!public!testing! !
-!Core.Object categoriesFor: #isNil!public!testing! !
-!Core.Object categoriesFor: #isNumber!public!testing! !
-!Core.Object categoriesFor: #isSelfEvaluating!public!testing! !
-!Core.Object categoriesFor: #isSelfEvaluating:!private!testing! !
-!Core.Object categoriesFor: #isString!public!testing! !
-!Core.Object categoriesFor: #isSymbol!public!RefactoringBrowser! !
-!Core.Object categoriesFor: #isWeak!public!testing! !
-!Core.Object categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
-!Core.Object categoriesFor: #noEventsDo:!debugger-step through!events!public! !
-!Core.Object categoriesFor: #notNil!public!testing! !
-!Core.Object categoriesFor: #oneWayBecome:!mutating!public! !
-!Core.Object categoriesFor: #perform:!message sending!public! !
-!Core.Object categoriesFor: #perform:with:!message sending!public! !
-!Core.Object categoriesFor: #perform:with:with:!message sending!public! !
-!Core.Object categoriesFor: #perform:with:with:with:!message sending!public! !
-!Core.Object categoriesFor: #perform:with:with:with:with:!message sending!public! !
-!Core.Object categoriesFor: #perform:withArguments:!message sending!public! !
-!Core.Object categoriesFor: #perform:withArgumentsAt:descriptor:!message sending!private! !
-!Core.Object categoriesFor: #postCopy!copying!public! !
-!Core.Object categoriesFor: #primitiveFailed:!exceptions!public! !
-!Core.Object categoriesFor: #printOn:!printing!public! !
-!Core.Object categoriesFor: #printString!printing!public! !
-!Core.Object categoriesFor: #printStringLimitedTo:!printing!public! !
-!Core.Object categoriesFor: #propertyAt:!properties!public! !
-!Core.Object categoriesFor: #propertyAt:ifAbsent:!properties!public! !
-!Core.Object categoriesFor: #propertyAt:put:!properties!public! !
-!Core.Object categoriesFor: #propertyManager!private!properties! !
-!Core.Object categoriesFor: #refersTo:asLiteralOf:!private!testing! !
-!Core.Object categoriesFor: #release!dependency!public! !
-!Core.Object categoriesFor: #removeAllEventsTriggered!events!public! !
-!Core.Object categoriesFor: #removeAllProperties!properties!public! !
-!Core.Object categoriesFor: #removeDependent:!dependency!public! !
-!Core.Object categoriesFor: #removeEventsTriggeredFor:!events!public! !
-!Core.Object categoriesFor: #removePropertyAt:!properties!public! !
-!Core.Object categoriesFor: #removePropertyAt:ifAbsent:!properties!public! !
-!Core.Object categoriesFor: #resize:!mutating!public! !
-!Core.Object categoriesFor: #respondsTo:!public!testing! !
-!Core.Object categoriesFor: #setDependents:!dependency!private! !
-!Core.Object categoriesFor: #setEvents:!events!private! !
-!Core.Object categoriesFor: #setSpecialBehavior:!accessing!private! !
-!Core.Object categoriesFor: #shallowCopy!copying!public! !
-!Core.Object categoriesFor: #shouldNotImplement!exceptions!public! !
-!Core.Object categoriesFor: #size!accessing!public! !
-!Core.Object categoriesFor: #species!accessing!public! !
-!Core.Object categoriesFor: #stbFixup:at:!binary filing!public! !
-!Core.Object categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.Object categoriesFor: #storeOn:!printing!public! !
-!Core.Object categoriesFor: #storeString!printing!public! !
-!Core.Object categoriesFor: #subclassResponsibility!exceptions!public! !
-!Core.Object categoriesFor: #swappingBecome:!mutating!public! !
-!Core.Object categoriesFor: #trigger:!debugger-step through!events!public! !
-!Core.Object categoriesFor: #trigger:with:!debugger-step through!events!public! !
-!Core.Object categoriesFor: #trigger:with:with:!debugger-step through!events!public! !
-!Core.Object categoriesFor: #trigger:withArguments:!debugger-step through!events!public! !
-!Core.Object categoriesFor: #understandsArithmetic!public!testing! !
-!Core.Object categoriesFor: #update:!dependency!public! !
-!Core.Object categoriesFor: #update:with:!dependency!public! !
-!Core.Object categoriesFor: #update:with:from:!dependency!public! !
-!Core.Object categoriesFor: #value!evaluating!public! !
-!Core.Object categoriesFor: #when:perform:!events!private! !
-!Core.Object categoriesFor: #when:send:to:!events!public! !
-!Core.Object categoriesFor: #when:send:to:with:!events!public! !
-!Core.Object categoriesFor: #when:send:to:withArguments:!events!public! !
-!Core.Object categoriesFor: #when:sendTo:!events!public! !
-!Core.Object categoriesFor: #whileMutableDo:!accessing!public! !
-!Core.Object categoriesFor: #yourAddress!accessing!public! !
-!Core.Object categoriesFor: #yourself!accessing!public! !
+!Core.Object categoriesForMethods!
+??!converting!public! !
+_deepCopy:!copying!private! !
+_deepenShallowCopy:trail:!copying!private! !
+_primitiveError:at:!exceptions!private! !
+_primitiveError:at:put:!exceptions!private! !
+~~!comparing!public! !
+~=!comparing!public! !
+=!comparing!public! !
+==!comparing!public! !
+->!converting!public! !
+addDependent:!dependency!public! !
+allReferences!enumerating!public! !
+allReferences:!enumerating!public! !
+appendToStream:!double dispatch!private! !
+asParameter!converting!public! !
+assert:!public!testing! !
+asUIntPtr!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicAt:!accessing!private! !
+basicAt:put:!accessing!private! !
+basicClass!accessing!public! !
+basicDoesNotUnderstand:!exceptions!public! !
+basicIdentityHash!comparing!public! !
+basicIdentityIndexOf:from:to:!private!searching! !
+basicPrintOn:!printing!public! !
+basicPrintString!printing!public! !
+basicResize:!mutating!private! !
+basicShallowCopy!copying!private! !
+basicSize!accessing!private! !
+basicYourAddress!accessing!private! !
+become:!mutating!public! !
+becomeA:!mutating!public! !
+becomeAn:!mutating!public! !
+beFinalizable!accessing!public! !
+beStrong!accessing!public! !
+beUnfinalizable!accessing!public! !
+beWeak!accessing!public! !
+binaryStoreBytes!binary filing!public! !
+binaryStoreOn:!binary filing!public! !
+breakDependents!dependency!public! !
+broadcast:!dependency!public! !
+broadcast:with:!dependency!public! !
+changed!dependency!public! !
+changed:!dependency!public! !
+changed:with:!dependency!public! !
+class!accessing!public! !
+copy!copying!public! !
+deepCopy!copying!public! !
+dependents!dependency!public! !
+displayOn:!displaying!public! !
+displayString!displaying!public! !
+displayString:!displaying!public! !
+displayStringLimitedTo:locale:!public! !
+doesNotUnderstand:!exceptions!public!vm entry points! !
+error:!exceptions!public! !
+errorCantHold:!exceptions!public! !
+errorNotFound:!exceptions!public! !
+errorSubscriptBounds:!exceptions!public! !
+events!debugger-step over!events!public! !
+expandMacrosIn:!double dispatch!private! !
+finalize!finalizing!public! !
+free!finalizing!public! !
+fullPrintString!printing!public! !
+getDependents!dependency!private! !
+getEvents!events!private! !
+getSpecialBehavior!accessing!private! !
+hash!comparing!public! !
+identityHash!comparing!public! !
+ifNil:!control flow!public! !
+ifNil:ifNotNil:!control flow!public! !
+ifNotNil:!control flow!public! !
+ifNotNil:ifNil:!control flow!public! !
+initialize!initializing!public! !
+instVarAt:!accessing!private! !
+instVarAt:put:!accessing!private! !
+instVarNamed:!accessing!private! !
+isAtomic!public!testing! !
+isBehavior!public!testing! !
+isCharacter!public!testing! !
+isFinalizable!public!testing! !
+isImmediate!private!testing! !
+isImmutable!public!testing! !
+isImmutable:!initializing!public! !
+isIndexable!public!testing! !
+isInteger!public!testing! !
+isKindOf:!public!testing! !
+isLiteral!public!testing! !
+isLiteral:!private!testing! !
+isMemberOf:!public!testing! !
+isNil!public!testing! !
+isNumber!public!testing! !
+isSelfEvaluating!public!testing! !
+isSelfEvaluating:!private!testing! !
+isString!public!testing! !
+isSymbol!public!RefactoringBrowser! !
+isWeak!public!testing! !
+mustBeBoolean!exceptions!not restartable!private!vm entry points! !
+noEventsDo:!debugger-step through!events!public! !
+notNil!public!testing! !
+oneWayBecome:!mutating!public! !
+perform:!message sending!public! !
+perform:with:!message sending!public! !
+perform:with:with:!message sending!public! !
+perform:with:with:with:!message sending!public! !
+perform:with:with:with:with:!message sending!public! !
+perform:withArguments:!message sending!public! !
+perform:withArgumentsAt:descriptor:!message sending!private! !
+postCopy!copying!public! !
+primitiveFailed:!exceptions!public! !
+printOn:!printing!public! !
+printString!printing!public! !
+printStringLimitedTo:!printing!public! !
+propertyAt:!properties!public! !
+propertyAt:ifAbsent:!properties!public! !
+propertyAt:put:!properties!public! !
+propertyManager!private!properties! !
+refersTo:asLiteralOf:!private!testing! !
+release!dependency!public! !
+removeAllEventsTriggered!events!public! !
+removeAllProperties!properties!public! !
+removeDependent:!dependency!public! !
+removeEventsTriggeredFor:!events!public! !
+removePropertyAt:!properties!public! !
+removePropertyAt:ifAbsent:!properties!public! !
+resize:!mutating!public! !
+respondsTo:!public!testing! !
+setDependents:!dependency!private! !
+setEvents:!events!private! !
+setSpecialBehavior:!accessing!private! !
+shallowCopy!copying!public! !
+shouldNotImplement!exceptions!public! !
+size!accessing!public! !
+species!accessing!public! !
+stbFixup:at:!binary filing!public! !
+stbSaveOn:!binary filing!public! !
+storeOn:!printing!public! !
+storeString!printing!public! !
+subclassResponsibility!exceptions!public! !
+swappingBecome:!mutating!public! !
+trigger:!debugger-step through!events!public! !
+trigger:with:!debugger-step through!events!public! !
+trigger:with:with:!debugger-step through!events!public! !
+trigger:withArguments:!debugger-step through!events!public! !
+understandsArithmetic!public!testing! !
+update:!dependency!public! !
+update:with:!dependency!public! !
+update:with:from:!dependency!public! !
+value!evaluating!public! !
+when:perform:!events!private! !
+when:send:to:!events!public! !
+when:send:to:with:!events!public! !
+when:send:to:withArguments:!events!public! !
+when:sendTo:!events!public! !
+whileMutableDo:!accessing!public! !
+yourAddress!accessing!public! !
+yourself!accessing!public! !
+!
 
 Core.Object methodProtocol: #Object attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #yourself)!
 
@@ -1782,13 +1784,15 @@ resourcesLocator
 	environment it is assumed that all resources will be in a Resources subdirectory relative to the installation directory"
 
 	^SessionManager current resourcesLocatorForClass: self! !
-!Core.Object class categoriesFor: #binaryReadFrom:!binary filing!public! !
-!Core.Object class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
-!Core.Object class categoriesFor: #fromBinaryStoreBytes:!binary filing!public! !
-!Core.Object class categoriesFor: #fromBinaryStoreBytes:context:!binary filing!public! !
-!Core.Object class categoriesFor: #initialize!development!initializing!public! !
-!Core.Object class categoriesFor: #initializeDependencyMechanism!initializing!private! !
-!Core.Object class categoriesFor: #initializeEventsRegister!initializing!private! !
-!Core.Object class categoriesFor: #initializePropertyRegister!initializing!private! !
-!Core.Object class categoriesFor: #resourcesLocator!public! !
+!Core.Object class categoriesForMethods!
+binaryReadFrom:!binary filing!public! !
+binaryReadFrom:context:!binary filing!public! !
+fromBinaryStoreBytes:!binary filing!public! !
+fromBinaryStoreBytes:context:!binary filing!public! !
+initialize!development!initializing!public! !
+initializeDependencyMechanism!initializing!private! !
+initializeEventsRegister!initializing!private! !
+initializePropertyRegister!initializing!private! !
+resourcesLocator!public! !
+!
 

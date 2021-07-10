@@ -253,32 +253,34 @@ totalFreeBytes
 
 	totalFreeBytes isNil ifTrue: [self calcDiskSpace].
 	^totalFreeBytes! !
-!OS.DiskVolumeInformation categoriesFor: #bytesPerSector!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #calcDiskSpace!helpers!private! !
-!OS.DiskVolumeInformation categoriesFor: #displayOn:!displaying!public! !
-!OS.DiskVolumeInformation categoriesFor: #displaySerialNumberOn:!displaying!private! !
-!OS.DiskVolumeInformation categoriesFor: #driveLetter!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #explorerName!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #fileSystemFlags!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #fileSystemName!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #freeBytes!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #freeClusters!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #getDiskFreeSpace!helpers!private! !
-!OS.DiskVolumeInformation categoriesFor: #getDiskFreeSpaceEx!helpers!private! !
-!OS.DiskVolumeInformation categoriesFor: #getDiskStats!helpers!private! !
-!OS.DiskVolumeInformation categoriesFor: #getVolumeInformation!helpers!private! !
-!OS.DiskVolumeInformation categoriesFor: #isSparseFileCapable!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #label!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #label:!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #maxComponentLength!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #printOn:!displaying!public! !
-!OS.DiskVolumeInformation categoriesFor: #rootPath!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #sectorsPerCluster!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #serialNumber!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #setPath:!initializing!private! !
-!OS.DiskVolumeInformation categoriesFor: #totalBytes!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #totalClusters!accessing!public! !
-!OS.DiskVolumeInformation categoriesFor: #totalFreeBytes!accessing!public! !
+!OS.DiskVolumeInformation categoriesForMethods!
+bytesPerSector!accessing!public! !
+calcDiskSpace!helpers!private! !
+displayOn:!displaying!public! !
+displaySerialNumberOn:!displaying!private! !
+driveLetter!accessing!public! !
+explorerName!accessing!public! !
+fileSystemFlags!accessing!public! !
+fileSystemName!accessing!public! !
+freeBytes!accessing!public! !
+freeClusters!accessing!public! !
+getDiskFreeSpace!helpers!private! !
+getDiskFreeSpaceEx!helpers!private! !
+getDiskStats!helpers!private! !
+getVolumeInformation!helpers!private! !
+isSparseFileCapable!accessing!public! !
+label!accessing!public! !
+label:!accessing!public! !
+maxComponentLength!accessing!public! !
+printOn:!displaying!public! !
+rootPath!accessing!public! !
+sectorsPerCluster!accessing!public! !
+serialNumber!accessing!public! !
+setPath:!initializing!private! !
+totalBytes!accessing!public! !
+totalClusters!accessing!public! !
+totalFreeBytes!accessing!public! !
+!
 
 !OS.DiskVolumeInformation class methodsFor!
 
@@ -297,6 +299,8 @@ forSystemPath
 	"
 
 	^self forPath: SessionManager current systemDirectory! !
-!OS.DiskVolumeInformation class categoriesFor: #forPath:!instance creation!public! !
-!OS.DiskVolumeInformation class categoriesFor: #forSystemPath!instance creation!public! !
+!OS.DiskVolumeInformation class categoriesForMethods!
+forPath:!instance creation!public! !
+forSystemPath!instance creation!public! !
+!
 

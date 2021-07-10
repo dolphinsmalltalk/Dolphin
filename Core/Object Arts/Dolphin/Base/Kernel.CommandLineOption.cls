@@ -86,21 +86,23 @@ value: anObject
 		ifTrue: [block value: anObject]
 		ifFalse: [block value].
 ! !
-!Kernel.CommandLineOption categoriesFor: #initializeFromStream:!private! !
-!Kernel.CommandLineOption categoriesFor: #initializeOption:!private! !
-!Kernel.CommandLineOption categoriesFor: #initializeOption:block:!private! !
-!Kernel.CommandLineOption categoriesFor: #initializeOptionAllowingArgument:!private! !
-!Kernel.CommandLineOption categoriesFor: #initializeOptionAllowingArgument:block:!private! !
-!Kernel.CommandLineOption categoriesFor: #initializeOptionRequiringArgument:!private! !
-!Kernel.CommandLineOption categoriesFor: #initializeOptionRequiringArgument:block:!private! !
-!Kernel.CommandLineOption categoriesFor: #isArgumentAllowed!accessing!public! !
-!Kernel.CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
-!Kernel.CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
-!Kernel.CommandLineOption categoriesFor: #isArgumentRequired:!accessing!public! !
-!Kernel.CommandLineOption categoriesFor: #isLongOption!public! !
-!Kernel.CommandLineOption categoriesFor: #name!accessing!public! !
-!Kernel.CommandLineOption categoriesFor: #name:!accessing!public! !
-!Kernel.CommandLineOption categoriesFor: #value:!public! !
+!Kernel.CommandLineOption categoriesForMethods!
+initializeFromStream:!private! !
+initializeOption:!private! !
+initializeOption:block:!private! !
+initializeOptionAllowingArgument:!private! !
+initializeOptionAllowingArgument:block:!private! !
+initializeOptionRequiringArgument:!private! !
+initializeOptionRequiringArgument:block:!private! !
+isArgumentAllowed!accessing!public! !
+isArgumentAllowed:!accessing!public! !
+isArgumentRequired!accessing!public! !
+isArgumentRequired:!accessing!public! !
+isLongOption!public! !
+name!accessing!public! !
+name:!accessing!public! !
+value:!public! !
+!
 
 !Kernel.CommandLineOption class methodsFor!
 
@@ -139,11 +141,13 @@ requiringArgument: aString block: aBlock
 	^(self new)
 		initializeOptionRequiringArgument: aString block: aBlock;
 		yourself! !
-!Kernel.CommandLineOption class categoriesFor: #allowingArgument:!public! !
-!Kernel.CommandLineOption class categoriesFor: #allowingArgument:block:!public! !
-!Kernel.CommandLineOption class categoriesFor: #fromStream:!public! !
-!Kernel.CommandLineOption class categoriesFor: #named:!public! !
-!Kernel.CommandLineOption class categoriesFor: #named:block:!public! !
-!Kernel.CommandLineOption class categoriesFor: #requiringArgument:!public! !
-!Kernel.CommandLineOption class categoriesFor: #requiringArgument:block:!public! !
+!Kernel.CommandLineOption class categoriesForMethods!
+allowingArgument:!public! !
+allowingArgument:block:!public! !
+fromStream:!public! !
+named:!public! !
+named:block:!public! !
+requiringArgument:!public! !
+requiringArgument:block:!public! !
+!
 

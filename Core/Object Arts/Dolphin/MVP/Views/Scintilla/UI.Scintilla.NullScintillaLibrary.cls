@@ -364,11 +364,13 @@ returnValues
 		shrink;
 		isImmutable: true;
 		yourself)! !
-!UI.Scintilla.NullScintillaLibrary categoriesFor: #directBooleanFunction:msg:wParam:lParam:!operations!private! !
-!UI.Scintilla.NullScintillaLibrary categoriesFor: #directFunction:msg:wParam:lParam:!operations!private! !
-!UI.Scintilla.NullScintillaLibrary categoriesFor: #directFunction:msg:wParam:lpParam:!operations!private! !
-!UI.Scintilla.NullScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lParam:!operations!private! !
-!UI.Scintilla.NullScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lpParam:!operations!private! !
-!UI.Scintilla.NullScintillaLibrary categoriesFor: #open:!private!realizing/unrealizing! !
-!UI.Scintilla.NullScintillaLibrary categoriesFor: #returnValues!**auto generated**!development!private!scintilla interface! !
+!UI.Scintilla.NullScintillaLibrary categoriesForMethods!
+directBooleanFunction:msg:wParam:lParam:!operations!private! !
+directFunction:msg:wParam:lParam:!operations!private! !
+directFunction:msg:wParam:lpParam:!operations!private! !
+directFunction:msg:wpParam:lParam:!operations!private! !
+directFunction:msg:wpParam:lpParam:!operations!private! !
+open:!private!realizing/unrealizing! !
+returnValues!**auto generated**!development!private!scintilla interface! !
+!
 

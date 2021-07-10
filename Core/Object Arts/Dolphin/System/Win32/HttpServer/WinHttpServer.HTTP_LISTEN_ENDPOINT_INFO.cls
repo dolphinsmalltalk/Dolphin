@@ -37,8 +37,10 @@ EnableSharing: aBoolean
 	"Set the receiver's 'EnableSharing' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_EnableSharing put: aBoolean asParameter! !
-!WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO categoriesFor: #EnableSharing!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO categoriesFor: #EnableSharing:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO categoriesForMethods!
+EnableSharing!**compiled accessors**!public! !
+EnableSharing:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class methodsFor!
 
@@ -64,7 +66,9 @@ getFieldNames
 
 propertyId
 	^HttpServerListenEndpointProperty! !
-!WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #propertyId!public! !
+!WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

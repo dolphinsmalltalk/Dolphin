@@ -39,5 +39,7 @@ paintImageOn: aCanvas
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
-!UI.ImageView categoriesFor: #paintImageOn:!drawing!event handling!private! !
+!UI.ImageView categoriesForMethods!
+paintImageOn:!drawing!event handling!private! !
+!
 

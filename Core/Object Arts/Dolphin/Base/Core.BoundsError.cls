@@ -25,7 +25,9 @@ receiver: anObject
 	"Set the object which generated the bounds error to be anObject"
 	
 	receiver := anObject! !
-!Core.BoundsError categoriesFor: #_descriptionFormat!displaying!public! !
-!Core.BoundsError categoriesFor: #receiver!accessing!public! !
-!Core.BoundsError categoriesFor: #receiver:!accessing!public! !
+!Core.BoundsError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 

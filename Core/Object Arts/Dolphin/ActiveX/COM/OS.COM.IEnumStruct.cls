@@ -21,8 +21,10 @@ elementClass
 
 elementClass: anExternalStructure 
 	elementClass := anExternalStructure! !
-!OS.COM.IEnumStruct categoriesFor: #elementClass!accessing!private! !
-!OS.COM.IEnumStruct categoriesFor: #elementClass:!accessing!private! !
+!OS.COM.IEnumStruct categoriesForMethods!
+elementClass!accessing!private! !
+elementClass:!accessing!private! !
+!
 
 !OS.COM.IEnumStruct class methodsFor!
 
@@ -33,5 +35,7 @@ elementClass: elementClass
 	^(self newPointer)
 		elementClass: elementClass;
 		yourself! !
-!OS.COM.IEnumStruct class categoriesFor: #elementClass:!instance creation!public! !
+!OS.COM.IEnumStruct class categoriesForMethods!
+elementClass:!instance creation!public! !
+!
 

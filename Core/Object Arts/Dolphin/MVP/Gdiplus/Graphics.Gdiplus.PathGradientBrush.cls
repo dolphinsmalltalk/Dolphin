@@ -288,41 +288,43 @@ wrapMode: aWrapModeConstant
 	"Set if and how painting is done outside the receiver's boundary path."
 
 	Gdip gdipSetPathGradientWrapMode: self asParameter wrapMode: aWrapModeConstant! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendBellShape:scale:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColors:positions:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendColorsCount!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendFactors!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendFactors:positions:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendFactorsCount!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #blendTriangularShape:scale:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #bounds!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerColor!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerColor:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerPoint!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #centerPoint:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #focusScales!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #focusScales:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #isGammaCorrected!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #isGammaCorrected:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #multiplyTransform:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #multiplyTransform:order:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #pointCount!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #resetTransform!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #rotateTransform:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #rotateTransform:order:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #scaleTransform:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #scaleTransform:order:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColor:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColors!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColors:!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #surroundColorsCount!accessing-properties!private! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #transform!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #transform:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #translateTransform:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #translateTransform:order:!accessing-transformations!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #wrapMode!accessing-properties!public! !
-!Graphics.Gdiplus.PathGradientBrush categoriesFor: #wrapMode:!accessing-properties!public! !
+!Graphics.Gdiplus.PathGradientBrush categoriesForMethods!
+blendBellShape:scale:!accessing-properties!public! !
+blendColors!accessing-properties!public! !
+blendColors:positions:!accessing-properties!public! !
+blendColorsCount!accessing-properties!public! !
+blendFactors!accessing-properties!public! !
+blendFactors:positions:!accessing-properties!public! !
+blendFactorsCount!accessing-properties!public! !
+blendTriangularShape:scale:!accessing-properties!public! !
+bounds!accessing-properties!public! !
+centerColor!accessing-properties!public! !
+centerColor:!accessing-properties!public! !
+centerPoint!accessing-properties!public! !
+centerPoint:!accessing-properties!public! !
+focusScales!accessing-properties!public! !
+focusScales:!accessing-properties!public! !
+isGammaCorrected!accessing-properties!public! !
+isGammaCorrected:!accessing-properties!public! !
+multiplyTransform:!accessing-transformations!public! !
+multiplyTransform:order:!accessing-transformations!public! !
+pointCount!accessing-properties!public! !
+resetTransform!accessing-transformations!public! !
+rotateTransform:!accessing-transformations!public! !
+rotateTransform:order:!accessing-transformations!public! !
+scaleTransform:!accessing-transformations!public! !
+scaleTransform:order:!accessing-transformations!public! !
+surroundColor:!accessing-properties!public! !
+surroundColors!accessing-properties!public! !
+surroundColors:!accessing-properties!public! !
+surroundColorsCount!accessing-properties!private! !
+transform!accessing-transformations!public! !
+transform:!accessing-transformations!public! !
+translateTransform:!accessing-transformations!public! !
+translateTransform:order:!accessing-transformations!public! !
+wrapMode!accessing-properties!public! !
+wrapMode:!accessing-properties!public! !
+!
 
 !Graphics.Gdiplus.PathGradientBrush class methodsFor!
 
@@ -755,24 +757,26 @@ rgb
 
 triangle
 	^{100 @ 0. 200 @ 200. 0 @ 200}! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGBlendColors!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGBlendFactors!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGBounds!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGCenterColor!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGCenterPoint!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGFocusScales!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGGamma!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGMultiply!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGScale!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGSurroundColors!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGSurroundColors2!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGTransform!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGTranslate!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #exampleGdipPGWrapMode!examples!public!sunit! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #examplesWorkspace!examples!private! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #path:!instance creation!public! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #points:!instance creation!public! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #points:wrapMode:!instance creation!public! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #rgb!examples!private! !
-!Graphics.Gdiplus.PathGradientBrush class categoriesFor: #triangle!examples!private! !
+!Graphics.Gdiplus.PathGradientBrush class categoriesForMethods!
+exampleGdipPGBlendColors!examples!public!sunit! !
+exampleGdipPGBlendFactors!examples!public!sunit! !
+exampleGdipPGBounds!examples!public!sunit! !
+exampleGdipPGCenterColor!examples!public!sunit! !
+exampleGdipPGCenterPoint!examples!public!sunit! !
+exampleGdipPGFocusScales!examples!public!sunit! !
+exampleGdipPGGamma!examples!public!sunit! !
+exampleGdipPGMultiply!examples!public!sunit! !
+exampleGdipPGScale!examples!public!sunit! !
+exampleGdipPGSurroundColors!examples!public!sunit! !
+exampleGdipPGSurroundColors2!examples!public!sunit! !
+exampleGdipPGTransform!examples!public!sunit! !
+exampleGdipPGTranslate!examples!public!sunit! !
+exampleGdipPGWrapMode!examples!public!sunit! !
+examplesWorkspace!examples!private! !
+path:!instance creation!public! !
+points:!instance creation!public! !
+points:wrapMode:!instance creation!public! !
+rgb!examples!private! !
+triangle!examples!private! !
+!
 

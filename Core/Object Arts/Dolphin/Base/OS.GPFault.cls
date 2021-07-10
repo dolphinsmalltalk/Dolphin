@@ -31,8 +31,10 @@ isReading
 	"Answer whether the fault occurred attempting to read from memory (as opposed to writing)."
 
 	^(exceptionRecord information at: 1) == 0! !
-!OS.GPFault categoriesFor: #_descriptionArguments!displaying!public! !
-!OS.GPFault categoriesFor: #_descriptionFormat!displaying!public! !
-!OS.GPFault categoriesFor: #inaccessibleAddress!accessing!public! !
-!OS.GPFault categoriesFor: #isReading!accessing!public! !
+!OS.GPFault categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+inaccessibleAddress!accessing!public! !
+isReading!accessing!public! !
+!
 

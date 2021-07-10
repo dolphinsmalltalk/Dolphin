@@ -32,10 +32,12 @@ lpfnHook: anExternalAddress
 
 maskIn: anInteger 
 	self flags: (self flags maskSet: anInteger)! !
-!OS.CommonDialogStructure categoriesFor: #flags!accessing!public! !
-!OS.CommonDialogStructure categoriesFor: #flags:!accessing!public! !
-!OS.CommonDialogStructure categoriesFor: #hook:!accessing!public! !
-!OS.CommonDialogStructure categoriesFor: #hookFlag!constants!public! !
-!OS.CommonDialogStructure categoriesFor: #lpfnHook:!public! !
-!OS.CommonDialogStructure categoriesFor: #maskIn:!accessing!public! !
+!OS.CommonDialogStructure categoriesForMethods!
+flags!accessing!public! !
+flags:!accessing!public! !
+hook:!accessing!public! !
+hookFlag!constants!public! !
+lpfnHook:!public! !
+maskIn:!accessing!public! !
+!
 

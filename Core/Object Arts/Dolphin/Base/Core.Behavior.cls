@@ -961,111 +961,113 @@ withAllSuperclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSuperclassesDo: aMonadicValuable! !
-!Core.Behavior categoriesFor: #addSelector:withMethod:!methods-accessing!private! !
-!Core.Behavior categoriesFor: #addToSuper!class hierarchy-adding!private! !
-!Core.Behavior categoriesFor: #allSuperclasses!class hierarchy-accessing!public! !
-!Core.Behavior categoriesFor: #allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
-!Core.Behavior categoriesFor: #basicCompile:!compiling!private! !
-!Core.Behavior categoriesFor: #basicCompile:environment:!compiling!private! !
-!Core.Behavior categoriesFor: #basicCompile:flags:environment:!compiling!private! !
-!Core.Behavior categoriesFor: #basicNew!instance creation!private! !
-!Core.Behavior categoriesFor: #basicNew:!instance creation!private! !
-!Core.Behavior categoriesFor: #basicNewFixed:!instance creation!private! !
-!Core.Behavior categoriesFor: #bindingFor:!bindings!public! !
-!Core.Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
-!Core.Behavior categoriesFor: #compile:!compiling!public! !
-!Core.Behavior categoriesFor: #compile:environment:!compiling!public! !
-!Core.Behavior categoriesFor: #compileAll!compiling!development!public! !
-!Core.Behavior categoriesFor: #compiledMethodAt:!methods-accessing!public! !
-!Core.Behavior categoriesFor: #compiledMethodAt:ifAbsent:!methods-accessing!public! !
-!Core.Behavior categoriesFor: #compilerClass!constants!public! !
-!Core.Behavior categoriesFor: #decompile:!compiling!development!public! !
-!Core.Behavior categoriesFor: #defaultCompilationFlags!compiling!constants!public! !
-!Core.Behavior categoriesFor: #definitionOf:!methods-testing!public! !
-!Core.Behavior categoriesFor: #dynamicSelectors!methods-accessing!public! !
-!Core.Behavior categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
-!Core.Behavior categoriesFor: #environment!accessing!public! !
-!Core.Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
-!Core.Behavior categoriesFor: #errorNotPinnable!error handling!private! !
-!Core.Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
-!Core.Behavior categoriesFor: #hasImmediateInstances!public!testing! !
-!Core.Behavior categoriesFor: #hasMethods!methods-testing!public! !
-!Core.Behavior categoriesFor: #hierarchyBindingFor:!bindings!public! !
-!Core.Behavior categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
-!Core.Behavior categoriesFor: #includesSelector:!methods-testing!public! !
-!Core.Behavior categoriesFor: #inheritsFrom:!class hierarchy-testing!public! !
-!Core.Behavior categoriesFor: #instanceCount!accessing!public! !
-!Core.Behavior categoriesFor: #instanceSpec!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #instanceSpec:!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #instSize!instance specification-accessing!public! !
-!Core.Behavior categoriesFor: #instVarNames!instance variables!public! !
-!Core.Behavior categoriesFor: #isBehavior!public!testing! !
-!Core.Behavior categoriesFor: #isBits!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isBytes!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isFixed!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isIndirection!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isIndirection:!instance specification-accessing!public! !
-!Core.Behavior categoriesFor: #isMeta!public!testing! !
-!Core.Behavior categoriesFor: #isMetaclass!public!testing! !
-!Core.Behavior categoriesFor: #isMourner!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isNonInstantiable!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isNonInstantiable:!instance specification-accessing!public! !
-!Core.Behavior categoriesFor: #isNullTerminated!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isNullTerminated:!instance specification-accessing!public! !
-!Core.Behavior categoriesFor: #isPointers!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isVariable!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #isWords!instance specification-testing!public! !
-!Core.Behavior categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
-!Core.Behavior categoriesFor: #lookupMethod:!methods-accessing!public! !
-!Core.Behavior categoriesFor: #makeMourner!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #methodDictionary!methods-accessing!private! !
-!Core.Behavior categoriesFor: #methodDictionary:!methods-accessing!private! !
-!Core.Behavior categoriesFor: #new!instance creation!public! !
-!Core.Behavior categoriesFor: #new:!instance creation!public! !
-!Core.Behavior categoriesFor: #new:max:!instance creation!private! !
-!Core.Behavior categoriesFor: #newFixed:!instance creation!public! !
-!Core.Behavior categoriesFor: #primAllInstances!instances!private! !
-!Core.Behavior categoriesFor: #primAllSubinstances!instances!private! !
-!Core.Behavior categoriesFor: #recompile:!compiling!development!public! !
-!Core.Behavior categoriesFor: #recompileMethod:environment:!compiling!development!private! !
-!Core.Behavior categoriesFor: #recompileReferencesToLiteral:!development!private! !
-!Core.Behavior categoriesFor: #referenceFilterFor:!development!methods-testing!private! !
-!Core.Behavior categoriesFor: #referenceFilterForAnyOf:!development!methods-testing!private! !
-!Core.Behavior categoriesFor: #removeFromSuper!operations!private! !
-!Core.Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
-!Core.Behavior categoriesFor: #removeSelector:!methods-removing!public! !
-!Core.Behavior categoriesFor: #removeSelector:ifAbsent:!methods-removing!public! !
-!Core.Behavior categoriesFor: #removeSelectors:!methods-removing!public! !
-!Core.Behavior categoriesFor: #requiresInstallation!public!testing! !
-!Core.Behavior categoriesFor: #selectMethods:!methods-testing!private! !
-!Core.Behavior categoriesFor: #selectors!methods-accessing!public! !
-!Core.Behavior categoriesFor: #selectorsDo:!enumerating!public! !
-!Core.Behavior categoriesFor: #setInstSize:!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #setShapeFlags:to:!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
-!Core.Behavior categoriesFor: #setSuperclass:!class hierarchy-mutating!private! !
-!Core.Behavior categoriesFor: #shallowCopy!copying!public! !
-!Core.Behavior categoriesFor: #sourceCodeAt:!development!methods-accessing!public! !
-!Core.Behavior categoriesFor: #superclass!class hierarchy-accessing!public! !
-!Core.Behavior categoriesFor: #superclass:!class hierarchy-mutating!public! !
-!Core.Behavior categoriesFor: #understoodSelectors!methods-accessing!public! !
-!Core.Behavior categoriesFor: #understoodSelectorsDo:!methods-accessing!public! !
-!Core.Behavior categoriesFor: #whichClassIncludesSelector:!methods-testing!public! !
-!Core.Behavior categoriesFor: #whichClassSatisfies:!helpers!private! !
-!Core.Behavior categoriesFor: #whichMethodsAccess:!development!methods-testing!public! !
-!Core.Behavior categoriesFor: #whichMethodsAccess:at:!development!methods-testing!private! !
-!Core.Behavior categoriesFor: #whichMethodsAssign:!development!methods-testing!public! !
-!Core.Behavior categoriesFor: #whichMethodsAssign:at:!development!methods-testing!private! !
-!Core.Behavior categoriesFor: #whichMethodsRead:!development!methods-testing!public! !
-!Core.Behavior categoriesFor: #whichMethodsRead:at:!development!methods-testing!private! !
-!Core.Behavior categoriesFor: #whichSelectorsAccess:!development!methods-testing!public! !
-!Core.Behavior categoriesFor: #whichSelectorsAssign:!development!methods-testing!public! !
-!Core.Behavior categoriesFor: #whichSelectorsRead:!development!methods-testing!public! !
-!Core.Behavior categoriesFor: #whichSelectorsWrite:!development!methods-testing!public! !
-!Core.Behavior categoriesFor: #withAllSuperclasses!class hierarchy-accessing!public! !
-!Core.Behavior categoriesFor: #withAllSuperclassesDo:!enumerating!public! !
+!Core.Behavior categoriesForMethods!
+addSelector:withMethod:!methods-accessing!private! !
+addToSuper!class hierarchy-adding!private! !
+allSuperclasses!class hierarchy-accessing!public! !
+allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
+basicCompile:!compiling!private! !
+basicCompile:environment:!compiling!private! !
+basicCompile:flags:environment:!compiling!private! !
+basicNew!instance creation!private! !
+basicNew:!instance creation!private! !
+basicNewFixed:!instance creation!private! !
+bindingFor:!bindings!public! !
+canUnderstand:!methods-testing!public! !
+compile:!compiling!public! !
+compile:environment:!compiling!public! !
+compileAll!compiling!development!public! !
+compiledMethodAt:!methods-accessing!public! !
+compiledMethodAt:ifAbsent:!methods-accessing!public! !
+compilerClass!constants!public! !
+decompile:!compiling!development!public! !
+defaultCompilationFlags!compiling!constants!public! !
+definitionOf:!methods-testing!public! !
+dynamicSelectors!methods-accessing!public! !
+dynamicSelectorsDo:!methods-accessing!public! !
+environment!accessing!public! !
+errorNonInstantiable!error handling!private! !
+errorNotPinnable!error handling!private! !
+extraInstanceSpec!instance specification-accessing!private! !
+extraInstanceSpec:!instance specification-accessing!private! !
+flushMethodCache!methods-removing!private! !
+hasImmediateInstances!public!testing! !
+hasMethods!methods-testing!public! !
+hierarchyBindingFor:!bindings!public! !
+includesBehavior:!class hierarchy-testing!public! !
+includesSelector:!methods-testing!public! !
+inheritsFrom:!class hierarchy-testing!public! !
+instanceCount!accessing!public! !
+instanceSpec!instance specification-accessing!private! !
+instanceSpec:!instance specification-accessing!private! !
+instSize!instance specification-accessing!public! !
+instVarNames!instance variables!public! !
+isBehavior!public!testing! !
+isBits!instance specification-testing!public! !
+isBytes!instance specification-testing!public! !
+isFixed!instance specification-testing!public! !
+isIndirection!instance specification-testing!public! !
+isIndirection:!instance specification-accessing!public! !
+isMeta!public!testing! !
+isMetaclass!public!testing! !
+isMourner!instance specification-testing!public! !
+isNonInstantiable!instance specification-testing!public! !
+isNonInstantiable:!instance specification-accessing!public! !
+isNullTerminated!instance specification-testing!public! !
+isNullTerminated:!instance specification-accessing!public! !
+isPointers!instance specification-testing!public! !
+isVariable!instance specification-testing!public! !
+isWords!instance specification-testing!public! !
+kindOfSubclass!class hierarchy-testing!private! !
+lookupMethod:!methods-accessing!public! !
+makeMourner!instance specification-accessing!private! !
+methodDictionary!methods-accessing!private! !
+methodDictionary:!methods-accessing!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+new:max:!instance creation!private! !
+newFixed:!instance creation!public! !
+primAllInstances!instances!private! !
+primAllSubinstances!instances!private! !
+recompile:!compiling!development!public! !
+recompileMethod:environment:!compiling!development!private! !
+recompileReferencesToLiteral:!development!private! !
+referenceFilterFor:!development!methods-testing!private! !
+referenceFilterForAnyOf:!development!methods-testing!private! !
+removeFromSuper!operations!private! !
+removeFromSystem!class hierarchy-removing!private! !
+removeSelector:!methods-removing!public! !
+removeSelector:ifAbsent:!methods-removing!public! !
+removeSelectors:!methods-removing!public! !
+requiresInstallation!public!testing! !
+selectMethods:!methods-testing!private! !
+selectors!methods-accessing!public! !
+selectorsDo:!enumerating!public! !
+setInstSize:!instance specification-accessing!private! !
+setShapeFlags:to:!instance specification-accessing!private! !
+setSpecialBehavior:to:!instance specification-accessing!private! !
+setSuperclass:!class hierarchy-mutating!private! !
+shallowCopy!copying!public! !
+sourceCodeAt:!development!methods-accessing!public! !
+superclass!class hierarchy-accessing!public! !
+superclass:!class hierarchy-mutating!public! !
+understoodSelectors!methods-accessing!public! !
+understoodSelectorsDo:!methods-accessing!public! !
+whichClassIncludesSelector:!methods-testing!public! !
+whichClassSatisfies:!helpers!private! !
+whichMethodsAccess:!development!methods-testing!public! !
+whichMethodsAccess:at:!development!methods-testing!private! !
+whichMethodsAssign:!development!methods-testing!public! !
+whichMethodsAssign:at:!development!methods-testing!private! !
+whichMethodsRead:!development!methods-testing!public! !
+whichMethodsRead:at:!development!methods-testing!private! !
+whichSelectorsAccess:!development!methods-testing!public! !
+whichSelectorsAssign:!development!methods-testing!public! !
+whichSelectorsRead:!development!methods-testing!public! !
+whichSelectorsWrite:!development!methods-testing!public! !
+withAllSuperclasses!class hierarchy-accessing!public! !
+withAllSuperclassesDo:!enumerating!public! !
+!
 
 Core.Behavior methodProtocol: #instantiator attributes: #(#ansi #readOnly) selectors: #(#new)!
 
@@ -1076,5 +1078,7 @@ initialize
 		value: (MethodDictionary new
 				isImmutable: true;
 				yourself)! !
-!Core.Behavior class categoriesFor: #initialize!development!initializing!public! !
+!Core.Behavior class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

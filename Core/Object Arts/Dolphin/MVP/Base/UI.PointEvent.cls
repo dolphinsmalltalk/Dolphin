@@ -36,9 +36,11 @@ y
 	"Answer the y-position of the pointer."
 
 	^self lParamY! !
-!UI.PointEvent categoriesFor: #position!accessing!public! !
-!UI.PointEvent categoriesFor: #printLParamOn:!printing!private! !
-!UI.PointEvent categoriesFor: #screenPosition!accessing!public! !
-!UI.PointEvent categoriesFor: #x!accessing!public! !
-!UI.PointEvent categoriesFor: #y!accessing!public! !
+!UI.PointEvent categoriesForMethods!
+position!accessing!public! !
+printLParamOn:!printing!private! !
+screenPosition!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 

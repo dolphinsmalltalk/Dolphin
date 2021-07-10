@@ -70,19 +70,23 @@ setStream: anExternalAddress name: aString flags: anInteger
 
 translationMode
 	^CRTConstants._O_U16TEXT! !
-!OS.StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!private! !
-!OS.StdioUnicodeFileStream categoriesFor: #basicNextPut:!accessing!private! !
-!OS.StdioUnicodeFileStream categoriesFor: #basicPeek!accessing!private! !
-!OS.StdioUnicodeFileStream categoriesFor: #bufferClass!constants!private! !
-!OS.StdioUnicodeFileStream categoriesFor: #getString:!accessing!private! !
-!OS.StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !
-!OS.StdioUnicodeFileStream categoriesFor: #open:mode:!instance creation!private! !
-!OS.StdioUnicodeFileStream categoriesFor: #setStream:name:flags:!initializing!private! !
-!OS.StdioUnicodeFileStream categoriesFor: #translationMode!constants!private! !
+!OS.StdioUnicodeFileStream categoriesForMethods!
+basicNextAvailable!accessing!private! !
+basicNextPut:!accessing!private! !
+basicPeek!accessing!private! !
+bufferClass!constants!private! !
+getString:!accessing!private! !
+nextPutAll:!accessing!public! !
+open:mode:!instance creation!private! !
+setStream:name:flags:!initializing!private! !
+translationMode!constants!private! !
+!
 
 !OS.StdioUnicodeFileStream class methodsFor!
 
 encodingType
 	^#utf16le! !
-!OS.StdioUnicodeFileStream class categoriesFor: #encodingType!constants!public! !
+!OS.StdioUnicodeFileStream class categoriesForMethods!
+encodingType!constants!public! !
+!
 

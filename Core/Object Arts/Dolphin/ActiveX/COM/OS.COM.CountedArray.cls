@@ -95,20 +95,22 @@ uncheckedAt: anInteger put: anObject
 	with the <Object> argument."
 
 	^self elements at: anInteger put: anObject! !
-!OS.COM.CountedArray categoriesFor: #asArray!converting!public! !
-!OS.COM.CountedArray categoriesFor: #basicLength:!accessing!private! !
-!OS.COM.CountedArray categoriesFor: #cElems!**compiled accessors**!public! !
-!OS.COM.CountedArray categoriesFor: #cElems:!**compiled accessors**!public! !
-!OS.COM.CountedArray categoriesFor: #elements!accessing!private! !
-!OS.COM.CountedArray categoriesFor: #getElements!accessing!private! !
-!OS.COM.CountedArray categoriesFor: #initialize!initializing!private! !
-!OS.COM.CountedArray categoriesFor: #length!accessing!public! !
-!OS.COM.CountedArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
-!OS.COM.CountedArray categoriesFor: #onStartup!event handling!private! !
-!OS.COM.CountedArray categoriesFor: #pElems!**compiled accessors**!public! !
-!OS.COM.CountedArray categoriesFor: #pElems:!**compiled accessors**!public! !
-!OS.COM.CountedArray categoriesFor: #uncheckedAt:!accessing!private!testing! !
-!OS.COM.CountedArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!OS.COM.CountedArray categoriesForMethods!
+asArray!converting!public! !
+basicLength:!accessing!private! !
+cElems!**compiled accessors**!public! !
+cElems:!**compiled accessors**!public! !
+elements!accessing!private! !
+getElements!accessing!private! !
+initialize!initializing!private! !
+length!accessing!public! !
+needsFree!initializing!private!realizing/unrealizing! !
+onStartup!event handling!private! !
+pElems!**compiled accessors**!public! !
+pElems:!**compiled accessors**!public! !
+uncheckedAt:!accessing!private!testing! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !OS.COM.CountedArray class methodsFor!
 
@@ -155,10 +157,12 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OS.COM.CountedArray class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OS.COM.CountedArray class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.CountedArray class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.CountedArray class categoriesFor: #new:!instance creation!public! !
-!OS.COM.CountedArray class categoriesFor: #onStartup!event handling!private! !
-!OS.COM.CountedArray class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.CountedArray class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+new:!instance creation!public! !
+onStartup!event handling!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.RECTTest subclass: #'Graphics.Gdiplus.Tests.RECTFTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ Graphics.Gdiplus.Tests.RECTFTest comment: ''!
 
 subjectClass
 	^RECTF! !
-!Graphics.Gdiplus.Tests.RECTFTest categoriesFor: #subjectClass!constants!private! !
+!Graphics.Gdiplus.Tests.RECTFTest categoriesForMethods!
+subjectClass!constants!private! !
+!
 

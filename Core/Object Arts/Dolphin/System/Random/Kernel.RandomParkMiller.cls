@@ -33,9 +33,11 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	seed := 1.0.
 	quo := (modulus quo: multiplier) asFloat.
 	rem := (modulus \\ multiplier) asFloat! !
-!Kernel.RandomParkMiller categoriesFor: #lcg!helpers!private! !
-!Kernel.RandomParkMiller categoriesFor: #seed:!accessing!public! !
-!Kernel.RandomParkMiller categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
+!Kernel.RandomParkMiller categoriesForMethods!
+lcg!helpers!private! !
+seed:!accessing!public! !
+setModulus:multiplier:increment:!initializing!private! !
+!
 
 !Kernel.RandomParkMiller class methodsFor!
 
@@ -49,6 +51,8 @@ newModulus: mInteger multiplier: aInteger increment: cInteger
 	"This generator only supports a fixed set of constants."
 
 	^self shouldNotImplement! !
-!Kernel.RandomParkMiller class categoriesFor: #new!instance creation!public! !
-!Kernel.RandomParkMiller class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
+!Kernel.RandomParkMiller class categoriesForMethods!
+new!instance creation!public! !
+newModulus:multiplier:increment:!instance creation!public! !
+!
 

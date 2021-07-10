@@ -249,29 +249,31 @@ sourceURL
 	answer := BSTR new.
 	self get_SourceURL: answer.
 	^answer asObject! !
-!CDO.IDataSource categoriesFor: #activeConnection!**auto generated**!properties!public! !
-!CDO.IDataSource categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDO.IDataSource categoriesFor: #get_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDO.IDataSource categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDO.IDataSource categoriesFor: #get_SourceClass:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDO.IDataSource categoriesFor: #get_SourceURL:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDO.IDataSource categoriesFor: #isDirty!**auto generated**!properties!public! !
-!CDO.IDataSource categoriesFor: #isDirty:!**auto generated**!properties!public! !
-!CDO.IDataSource categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.IDataSource categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.IDataSource categoriesFor: #open:!**auto generated**!methods!public! !
-!CDO.IDataSource categoriesFor: #Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDO.IDataSource categoriesFor: #OpenObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDO.IDataSource categoriesFor: #put_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDO.IDataSource categoriesFor: #Save!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDO.IDataSource categoriesFor: #saveTo:!**auto generated**!methods!public! !
-!CDO.IDataSource categoriesFor: #SaveTo:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDO.IDataSource categoriesFor: #saveToContainer:!**auto generated**!methods!public! !
-!CDO.IDataSource categoriesFor: #SaveToContainer:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDO.IDataSource categoriesFor: #SaveToObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDO.IDataSource categoriesFor: #source!**auto generated**!properties!public! !
-!CDO.IDataSource categoriesFor: #sourceClass!**auto generated**!properties!public! !
-!CDO.IDataSource categoriesFor: #sourceURL!**auto generated**!properties!public! !
+!CDO.IDataSource categoriesForMethods!
+activeConnection!**auto generated**!properties!public! !
+get_ActiveConnection:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_Source:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_SourceClass:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_SourceURL:!**auto generated**!COM Interfaces-IDataSource!private! !
+isDirty!**auto generated**!properties!public! !
+isDirty:!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+open:!**auto generated**!methods!public! !
+Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+OpenObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
+put_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
+Save!**auto generated**!COM Interfaces-IDataSource!public! !
+saveTo:!**auto generated**!methods!public! !
+SaveTo:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+saveToContainer:!**auto generated**!methods!public! !
+SaveToContainer:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+SaveToObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
+source!**auto generated**!properties!public! !
+sourceClass!**auto generated**!properties!public! !
+sourceURL!**auto generated**!properties!public! !
+!
 
 !CDO.IDataSource class methodsFor!
 
@@ -304,5 +306,7 @@ defineFunctions
 		defineFunction: #SaveToContainer:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:
 			argumentTypes: 'bstr IDispatch* sdword sdword sdword bstr bstr'
 ! !
-!CDO.IDataSource class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.IDataSource class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

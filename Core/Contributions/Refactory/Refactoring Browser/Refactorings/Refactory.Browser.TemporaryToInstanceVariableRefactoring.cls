@@ -62,11 +62,13 @@ transform
 	class addInstanceVariable: temporaryVariableName.
 	(matcher := ParseTreeRewriter removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
 	class compileTree: matcher tree classified: protocols! !
-!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #checkForValidTemporaryVariable!preconditions!public! !
-!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #class:selector:variable:!initialize/release!public! !
-!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesForMethods!
+checkForValidTemporaryVariable!preconditions!public! !
+class:selector:variable:!initialize/release!public! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.TemporaryToInstanceVariableRefactoring class methodsFor!
 
@@ -83,6 +85,8 @@ model: aRBNamespace class: aClass selector: aSelector variable: aVariableName
 			selector: aSelector
 			variable: aVariableName;
 		yourself! !
-!Refactory.Browser.TemporaryToInstanceVariableRefactoring class categoriesFor: #class:selector:variable:!instance creation!public! !
-!Refactory.Browser.TemporaryToInstanceVariableRefactoring class categoriesFor: #model:class:selector:variable:!instance creation!public! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring class categoriesForMethods!
+class:selector:variable:!instance creation!public! !
+model:class:selector:variable:!instance creation!public! !
+!
 

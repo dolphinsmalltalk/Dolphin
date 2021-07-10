@@ -102,32 +102,34 @@ start: anInteger
 
 stop
 	^self start + self length - 1! !
-!Kernel.StToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StToken categoriesFor: #comments!accessing!public! !
-!Kernel.StToken categoriesFor: #comments:!accessing!private! !
-!Kernel.StToken categoriesFor: #isAssignment!public!testing! !
-!Kernel.StToken categoriesFor: #isBinary!public!testing! !
-!Kernel.StToken categoriesFor: #isBinary:!public!testing! !
-!Kernel.StToken categoriesFor: #isEof!public!testing! !
-!Kernel.StToken categoriesFor: #isIdentifier!public!testing! !
-!Kernel.StToken categoriesFor: #isKeyword!public!testing! !
-!Kernel.StToken categoriesFor: #isLiteralArrayToken!public!testing! !
-!Kernel.StToken categoriesFor: #isLiteralToken!public!testing! !
-!Kernel.StToken categoriesFor: #isNumberLiteralToken!public!testing! !
-!Kernel.StToken categoriesFor: #isOptimized!public!testing! !
-!Kernel.StToken categoriesFor: #isPatternBlock!public!testing! !
-!Kernel.StToken categoriesFor: #isPatternVariable!public!testing! !
-!Kernel.StToken categoriesFor: #isQualifiedReference!public!testing! !
-!Kernel.StToken categoriesFor: #isSpecial!public!testing! !
-!Kernel.StToken categoriesFor: #isSpecial:!public!testing! !
-!Kernel.StToken categoriesFor: #length!accessing!public! !
-!Kernel.StToken categoriesFor: #printOn:!printing!public! !
-!Kernel.StToken categoriesFor: #removePositions!accessing!public! !
-!Kernel.StToken categoriesFor: #scannerClass!constants!public! !
-!Kernel.StToken categoriesFor: #sourceInterval!accessing!public! !
-!Kernel.StToken categoriesFor: #start!accessing!public! !
-!Kernel.StToken categoriesFor: #start:!initializing!private! !
-!Kernel.StToken categoriesFor: #stop!accessing!public! !
+!Kernel.StToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+comments!accessing!public! !
+comments:!accessing!private! !
+isAssignment!public!testing! !
+isBinary!public!testing! !
+isBinary:!public!testing! !
+isEof!public!testing! !
+isIdentifier!public!testing! !
+isKeyword!public!testing! !
+isLiteralArrayToken!public!testing! !
+isLiteralToken!public!testing! !
+isNumberLiteralToken!public!testing! !
+isOptimized!public!testing! !
+isPatternBlock!public!testing! !
+isPatternVariable!public!testing! !
+isQualifiedReference!public!testing! !
+isSpecial!public!testing! !
+isSpecial:!public!testing! !
+length!accessing!public! !
+printOn:!printing!public! !
+removePositions!accessing!public! !
+scannerClass!constants!public! !
+sourceInterval!accessing!public! !
+start!accessing!public! !
+start:!initializing!private! !
+stop!accessing!public! !
+!
 
 !Kernel.StToken class methodsFor!
 
@@ -142,6 +144,8 @@ start: anInteger comments: aCollectionOrNil
 		start: anInteger;
 		comments: aCollectionOrNil;
 		yourself! !
-!Kernel.StToken class categoriesFor: #start:!instance creation!public! !
-!Kernel.StToken class categoriesFor: #start:comments:!instance creation!public! !
+!Kernel.StToken class categoriesForMethods!
+start:!instance creation!public! !
+start:comments:!instance creation!public! !
+!
 

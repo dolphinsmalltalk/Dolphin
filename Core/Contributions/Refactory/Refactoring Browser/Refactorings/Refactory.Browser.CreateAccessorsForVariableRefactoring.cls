@@ -144,24 +144,26 @@ usesAssignmentOf: aString in: aClass classVariable: isClassVar
 								checkClass: each
 								selector: sel
 								using: matcher]]! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #classVariable:!initialize/release!public! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #createGetterAccessor!public!transforming! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #createSetterAccessor!public!transforming! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #defineGetterMethod!public!transforming! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #defineSetterMethod!public!transforming! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #definingClass!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #findGetterMethod!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #findSetterMethod!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #getterMethod!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #methodsReferencingVariable!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #needsReturnForSetter!public!testing! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #possibleGetterSelectors!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #possibleSetterSelectors!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #setterMethod!accessing!private! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesFor: #usesAssignmentOf:in:classVariable:!public!testing! !
+!Refactory.Browser.CreateAccessorsForVariableRefactoring categoriesForMethods!
+classVariable:!initialize/release!public! !
+createGetterAccessor!public!transforming! !
+createSetterAccessor!public!transforming! !
+defineGetterMethod!public!transforming! !
+defineSetterMethod!public!transforming! !
+definingClass!accessing!private! !
+findGetterMethod!accessing!private! !
+findSetterMethod!accessing!private! !
+getterMethod!accessing!private! !
+methodsReferencingVariable!accessing!private! !
+needsReturnForSetter!public!testing! !
+possibleGetterSelectors!accessing!private! !
+possibleSetterSelectors!accessing!private! !
+preconditions!preconditions!public! !
+setterMethod!accessing!private! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+usesAssignmentOf:in:classVariable:!public!testing! !
+!
 
 !Refactory.Browser.CreateAccessorsForVariableRefactoring class methodsFor!
 
@@ -176,6 +178,8 @@ model: aRBNamespace variable: aVarName class: aClass classVariable: aBoolean
 variable: aVarName class: aClass classVariable: aBoolean 
 	^(self variable: aVarName class: aClass)
 		classVariable: aBoolean; yourself! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring class categoriesFor: #model:variable:class:classVariable:!instance creation!public! !
-!Refactory.Browser.CreateAccessorsForVariableRefactoring class categoriesFor: #variable:class:classVariable:!instance creation!public! !
+!Refactory.Browser.CreateAccessorsForVariableRefactoring class categoriesForMethods!
+model:variable:class:classVariable:!instance creation!public! !
+variable:class:classVariable:!instance creation!public! !
+!
 

@@ -196,34 +196,36 @@ title: aString
 
 	title := aString asUtf16String.
 	self lpstrTitle: title! !
-!OS.OPENFILENAMEW categoriesFor: #defaultExtension!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #defaultExtension:!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #fileName!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #fileName:!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #fileTypes:!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #flags:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #flagsEx!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #flagsEx:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #hookFlag!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #initialDirectory:!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrDefExt:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrFile!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrFile:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrFileTitle!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrFileTitle:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrFilter:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrInitialDir:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #lpstrTitle:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #nFilterIndex!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #nFilterIndex:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #nMaxFile:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #nMaxFileTitle:!**compiled accessors**!public! !
-!OS.OPENFILENAMEW categoriesFor: #ownerView:!accessing!public! !
-!OS.OPENFILENAMEW categoriesFor: #title:!accessing!public! !
+!OS.OPENFILENAMEW categoriesForMethods!
+defaultExtension!accessing!public! !
+defaultExtension:!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+fileName!accessing!public! !
+fileName:!accessing!public! !
+fileTypes:!accessing!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+flagsEx!**compiled accessors**!public! !
+flagsEx:!**compiled accessors**!public! !
+hookFlag!accessing!public! !
+hwndOwner:!**compiled accessors**!public! !
+initialDirectory:!accessing!public! !
+lpfnHook:!**compiled accessors**!public! !
+lpstrDefExt:!**compiled accessors**!public! !
+lpstrFile!**compiled accessors**!public! !
+lpstrFile:!**compiled accessors**!public! !
+lpstrFileTitle!**compiled accessors**!public! !
+lpstrFileTitle:!**compiled accessors**!public! !
+lpstrFilter:!**compiled accessors**!public! !
+lpstrInitialDir:!**compiled accessors**!public! !
+lpstrTitle:!**compiled accessors**!public! !
+nFilterIndex!**compiled accessors**!public! !
+nFilterIndex:!**compiled accessors**!public! !
+nMaxFile:!**compiled accessors**!public! !
+nMaxFileTitle:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+title:!accessing!public! !
+!
 
 !OS.OPENFILENAMEW class methodsFor!
 
@@ -287,6 +289,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
-!OS.OPENFILENAMEW class categoriesFor: #defineFields!public!template definition! !
-!OS.OPENFILENAMEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OPENFILENAMEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

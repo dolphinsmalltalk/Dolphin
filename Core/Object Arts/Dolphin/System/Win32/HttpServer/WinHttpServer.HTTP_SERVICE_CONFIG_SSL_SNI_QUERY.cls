@@ -53,10 +53,12 @@ KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		from: ##(_OffsetOf_KeyDesc + 1)
 		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
 		startingAt: 1! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #KeyDesc:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesForMethods!
+dwToken!**compiled accessors**!public! !
+dwToken:!**compiled accessors**!public! !
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class methodsFor!
 
@@ -81,6 +83,8 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

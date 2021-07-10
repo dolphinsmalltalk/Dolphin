@@ -254,26 +254,28 @@ startTrackingAt: aPoint
 	self beginDragImage.
 	self giveFeedback.
 	^self dragPoint! !
-!UI.InternalDragDropSession categoriesFor: #beginDragImage!public!tracking! !
-!UI.InternalDragDropSession categoriesFor: #buildDragImageList!private!tracking! !
-!UI.InternalDragDropSession categoriesFor: #cancelTrackingAt:!public!tracking! !
-!UI.InternalDragDropSession categoriesFor: #continueTrackingAt:from:!public!tracking! !
-!UI.InternalDragDropSession categoriesFor: #defaultDragColorDepth!accessing!private! !
-!UI.InternalDragDropSession categoriesFor: #doDragDropAt:button:!operations!public! !
-!UI.InternalDragDropSession categoriesFor: #dragObjectClass!constants!public! !
-!UI.InternalDragDropSession categoriesFor: #dropTargetUnder:!helpers!private!tracking! !
-!UI.InternalDragDropSession categoriesFor: #endTrackingAt:!public!tracking! !
-!UI.InternalDragDropSession categoriesFor: #getExtendedOperation!operations!private! !
-!UI.InternalDragDropSession categoriesFor: #giveCursorFeedback!operations!private!wine fix! !
-!UI.InternalDragDropSession categoriesFor: #giveFeedback!operations!private!wine fix! !
-!UI.InternalDragDropSession categoriesFor: #hideDragImage!operations!public! !
-!UI.InternalDragDropSession categoriesFor: #isExtendedDrag!public!testing! !
-!UI.InternalDragDropSession categoriesFor: #operationDescriptions!accessing!public! !
-!UI.InternalDragDropSession categoriesFor: #operationDescriptions:!accessing!public! !
-!UI.InternalDragDropSession categoriesFor: #promptForDropOperation!operations!private! !
-!UI.InternalDragDropSession categoriesFor: #showDragImage!operations!public! !
-!UI.InternalDragDropSession categoriesFor: #solidifyOperation!operations!private! !
-!UI.InternalDragDropSession categoriesFor: #startTrackingAt:!public!tracking! !
+!UI.InternalDragDropSession categoriesForMethods!
+beginDragImage!public!tracking! !
+buildDragImageList!private!tracking! !
+cancelTrackingAt:!public!tracking! !
+continueTrackingAt:from:!public!tracking! !
+defaultDragColorDepth!accessing!private! !
+doDragDropAt:button:!operations!public! !
+dragObjectClass!constants!public! !
+dropTargetUnder:!helpers!private!tracking! !
+endTrackingAt:!public!tracking! !
+getExtendedOperation!operations!private! !
+giveCursorFeedback!operations!private!wine fix! !
+giveFeedback!operations!private!wine fix! !
+hideDragImage!operations!public! !
+isExtendedDrag!public!testing! !
+operationDescriptions!accessing!public! !
+operationDescriptions:!accessing!public! !
+promptForDropOperation!operations!private! !
+showDragImage!operations!public! !
+solidifyOperation!operations!private! !
+startTrackingAt:!public!tracking! !
+!
 
 UI.InternalDragDropSession methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 

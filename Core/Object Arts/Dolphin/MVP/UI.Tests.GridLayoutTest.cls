@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.LayoutManagerTest subclass: #'UI.Tests.GridLayoutTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ UI.Tests.GridLayoutTest comment: ''!
 
 layoutManagerClass
 	^GridLayout! !
-!UI.Tests.GridLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
+!UI.Tests.GridLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+!
 

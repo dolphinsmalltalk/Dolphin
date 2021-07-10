@@ -71,14 +71,16 @@ transform
 	self
 		reparentSubclasses;
 		removeClasses! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #checkReferencesTo:!preconditions!private! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #classNames:!initialize/release!public! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #hasReferencesTo:!preconditions!public! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #removeClasses!public!transforming! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.RemoveClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RemoveClassRefactoring categoriesForMethods!
+checkReferencesTo:!preconditions!private! !
+classNames:!initialize/release!public! !
+hasReferencesTo:!preconditions!public! !
+preconditions!preconditions!public! !
+removeClasses!public!transforming! !
+reparentSubclasses!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.RemoveClassRefactoring class methodsFor!
 
@@ -90,6 +92,8 @@ model: aRBNamespace classNames: aClassNameCollection
 		model: aRBNamespace;
 		classNames: aClassNameCollection;
 		yourself! !
-!Refactory.Browser.RemoveClassRefactoring class categoriesFor: #classNames:!instance creation!public! !
-!Refactory.Browser.RemoveClassRefactoring class categoriesFor: #model:classNames:!instance creation!public! !
+!Refactory.Browser.RemoveClassRefactoring class categoriesForMethods!
+classNames:!instance creation!public! !
+model:classNames:!instance creation!public! !
+!
 

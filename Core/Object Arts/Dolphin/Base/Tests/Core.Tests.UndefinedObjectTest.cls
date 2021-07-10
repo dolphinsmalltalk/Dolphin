@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.UndefinedObjectTest'
 	instanceVariableNames: ''
@@ -63,18 +63,20 @@ testStoreOn
 	nil storeOn: stream.
 	string := stream contents.
 	self assert: (Compiler evaluate: string) equals: nil! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testClone!public!testing / copying! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testDeepCopy!public!testing / copying! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNil!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNilIfNotNil!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNotNil!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testIfNotNilIfNil!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testIsLiteral!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testIsNil!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testIsSelfEvaluating!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testNew!public!unit tests! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testNotNil!public!testing / testing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testPrintOn!public!testing / printing! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testShallowCopy!public!testing / copying! !
-!Core.Tests.UndefinedObjectTest categoriesFor: #testStoreOn!public!testing / printing! !
+!Core.Tests.UndefinedObjectTest categoriesForMethods!
+testClone!public!testing / copying! !
+testDeepCopy!public!testing / copying! !
+testIfNil!public!testing / testing! !
+testIfNilIfNotNil!public!testing / testing! !
+testIfNotNil!public!testing / testing! !
+testIfNotNilIfNil!public!testing / testing! !
+testIsLiteral!public!testing / testing! !
+testIsNil!public!testing / testing! !
+testIsSelfEvaluating!public!testing / testing! !
+testNew!public!unit tests! !
+testNotNil!public!testing / testing! !
+testPrintOn!public!testing / printing! !
+testShallowCopy!public!testing / copying! !
+testStoreOn!public!testing / printing! !
+!
 

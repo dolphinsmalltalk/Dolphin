@@ -37,10 +37,12 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
-!External.SDWORD categoriesFor: #isSigned!public!testing! !
-!External.SDWORD categoriesFor: #unsignedValue:!accessing!public! !
-!External.SDWORD categoriesFor: #value!**compiled accessors**!public! !
-!External.SDWORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.SDWORD categoriesForMethods!
+isSigned!public!testing! !
+unsignedValue:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.SDWORD class methodsFor!
 
@@ -70,8 +72,10 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.SDWORD class categoriesFor: #defineFields!public!template definition! !
-!External.SDWORD class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
-!External.SDWORD class categoriesFor: #initialize!development!initializing!private! !
-!External.SDWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.SDWORD class categoriesForMethods!
+defineFields!public!template definition! !
+fromUnsignedInteger:!instance creation!public! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -30,7 +30,9 @@ readFrom: aStructure
 		fromAddress: (aStructure bytes sdwordAtOffset: offset)
 		length: (arrayLength getElementCountOf: self in: aStructure)
 		elementClass: self elementClass! !
-!External.StructureArrayPointerField categoriesFor: #elementClass!accessing!private! !
-!External.StructureArrayPointerField categoriesFor: #pointerClass!accessing!private! !
-!External.StructureArrayPointerField categoriesFor: #readFrom:!accessing!private! !
+!External.StructureArrayPointerField categoriesForMethods!
+elementClass!accessing!private! !
+pointerClass!accessing!private! !
+readFrom:!accessing!private! !
+!
 

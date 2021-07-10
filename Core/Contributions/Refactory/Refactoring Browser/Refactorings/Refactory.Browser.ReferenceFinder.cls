@@ -130,22 +130,24 @@ startFrom: anObject
 	backlinks last at: anObject put: nil.
 	#rbFix.	"Because an Object will be found on the path Smalltalk->Processor->active Process->obj, we add the active process to the backlinks so it appears that it has already been searched"
 	backlinks last at: Processor activeProcess put: nil! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #addBacklinkFrom:to:!helpers!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #addBacklinkLevel!helpers!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #backlinkFor:!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #computePathFor:!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #find!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #findAllPaths:!accessing!public! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #findPath:!accessing!public! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #hasSearched:!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #identityDictionaryClass!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #initialize!initialize/release!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #printToDoNotice!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #processLinkTo:from:!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #searchForObject!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #searchIndicesIn:!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #searchVariablesIn:!private! !
-!Refactory.Browser.ReferenceFinder categoriesFor: #startFrom:!initialize/release!public! !
+!Refactory.Browser.ReferenceFinder categoriesForMethods!
+addBacklinkFrom:to:!helpers!private! !
+addBacklinkLevel!helpers!private! !
+backlinkFor:!private! !
+computePathFor:!private! !
+find!private! !
+findAllPaths:!accessing!public! !
+findPath:!accessing!public! !
+hasSearched:!private! !
+identityDictionaryClass!private! !
+initialize!initialize/release!private! !
+printToDoNotice!private! !
+processLinkTo:from:!private! !
+searchForObject!private! !
+searchIndicesIn:!private! !
+searchVariablesIn:!private! !
+startFrom:!initialize/release!public! !
+!
 
 !Refactory.Browser.ReferenceFinder class methodsFor!
 
@@ -197,13 +199,15 @@ new
 	^(super new)
 		initialize;
 		yourself! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsTo:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsTo:from:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:from:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathTo:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathTo:from:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathToInstanceOf:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #findPathToInstanceOf:from:!accessing!public! !
-!Refactory.Browser.ReferenceFinder class categoriesFor: #new!instance creation!public! !
+!Refactory.Browser.ReferenceFinder class categoriesForMethods!
+findAllPathsTo:!accessing!public! !
+findAllPathsTo:from:!accessing!public! !
+findAllPathsToInstanceOf:!accessing!public! !
+findAllPathsToInstanceOf:from:!accessing!public! !
+findPathTo:!accessing!public! !
+findPathTo:from:!accessing!public! !
+findPathToInstanceOf:!accessing!public! !
+findPathToInstanceOf:from:!accessing!public! !
+new!instance creation!public! !
+!
 

@@ -151,18 +151,20 @@ Validate: errorObj
 
 	<virtual stdcall: hresult 80 IXMLDOMParseError**>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #get_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #namespaces!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #putref_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #schemas!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #setProperty_:value:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #setSchemas:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #validate!**auto generated**!methods!public! !
-!MSXML.IXMLDOMDocument2 categoriesFor: #Validate:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+!MSXML.IXMLDOMDocument2 categoriesForMethods!
+get_namespaces:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+get_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+getProperty_:!**auto generated**!methods!public! !
+namespaces!**auto generated**!properties!public! !
+putref_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+schemas!**auto generated**!properties!public! !
+SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+setProperty_:value:!**auto generated**!methods!public! !
+setSchemas:!**auto generated**!properties!public! !
+validate!**auto generated**!methods!public! !
+Validate:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+!
 
 !MSXML.IXMLDOMDocument2 class methodsFor!
 
@@ -231,13 +233,15 @@ newFreeThreadedDOMDocument40
 	"Answer a new instance of the receiver on the FreeThreadedDOMDocument40 COM object"
 
 	^self onCLSID: (CLSID fromString: '{88D969C1-F192-11D4-A65F-0040963251E5}')! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument26!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument30!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newDOMDocument40!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument26!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument30!instance creation!public! !
-!MSXML.IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument40!instance creation!public! !
+!MSXML.IXMLDOMDocument2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+newDOMDocument!instance creation!public! !
+newDOMDocument26!instance creation!public! !
+newDOMDocument30!instance creation!public! !
+newDOMDocument40!instance creation!public! !
+newFreeThreadedDOMDocument!instance creation!public! !
+newFreeThreadedDOMDocument26!instance creation!public! !
+newFreeThreadedDOMDocument30!instance creation!public! !
+newFreeThreadedDOMDocument40!instance creation!public! !
+!
 

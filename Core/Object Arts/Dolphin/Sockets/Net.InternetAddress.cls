@@ -84,15 +84,17 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
-!Net.InternetAddress categoriesFor: #asParameter!accessing!public! !
-!Net.InternetAddress categoriesFor: #displayIPOn:!displaying!public! !
-!Net.InternetAddress categoriesFor: #displayOn:!displaying!public! !
-!Net.InternetAddress categoriesFor: #host!accessing!public! !
-!Net.InternetAddress categoriesFor: #host:!accessing!private! !
-!Net.InternetAddress categoriesFor: #ipAddress!accessing!public! !
-!Net.InternetAddress categoriesFor: #ipAddress:!accessing!private! !
-!Net.InternetAddress categoriesFor: #ipString!accessing!public! !
-!Net.InternetAddress categoriesFor: #printOn:!printing!public! !
+!Net.InternetAddress categoriesForMethods!
+asParameter!accessing!public! !
+displayIPOn:!displaying!public! !
+displayOn:!displaying!public! !
+host!accessing!public! !
+host:!accessing!private! !
+ipAddress!accessing!public! !
+ipAddress:!accessing!private! !
+ipString!accessing!public! !
+printOn:!printing!public! !
+!
 
 !Net.InternetAddress class methodsFor!
 
@@ -158,11 +160,13 @@ localHost
 	hostName := Utf16String new: MaxHostName.
 	Ws2_32 gethostname: hostName namelen: hostName size.
 	^self host: hostName trimNulls! !
-!Net.InternetAddress class categoriesFor: #allForHost:!accessing!public! !
-!Net.InternetAddress class categoriesFor: #fromIPString:!instance creation!public! !
-!Net.InternetAddress class categoriesFor: #fromString:!instance creation!public! !
-!Net.InternetAddress class categoriesFor: #host:!instance creation!public! !
-!Net.InternetAddress class categoriesFor: #ipAddress:!instance creation!public! !
-!Net.InternetAddress class categoriesFor: #isIPString:!public!testing! !
-!Net.InternetAddress class categoriesFor: #localHost!instance creation!public! !
+!Net.InternetAddress class categoriesForMethods!
+allForHost:!accessing!public! !
+fromIPString:!instance creation!public! !
+fromString:!instance creation!public! !
+host:!instance creation!public! !
+ipAddress:!instance creation!public! !
+isIPString:!public!testing! !
+localHost!instance creation!public! !
+!
 

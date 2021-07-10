@@ -73,12 +73,14 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRPOLYLINE categoriesFor: #aptl!**compiled accessors**!public! !
-!OS.EMRPOLYLINE categoriesFor: #aptl:!**compiled accessors**!public! !
-!OS.EMRPOLYLINE categoriesFor: #cptl!**compiled accessors**!public! !
-!OS.EMRPOLYLINE categoriesFor: #cptl:!**compiled accessors**!public! !
-!OS.EMRPOLYLINE categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRPOLYLINE categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYLINE categoriesForMethods!
+aptl!**compiled accessors**!public! !
+aptl:!**compiled accessors**!public! !
+cptl!**compiled accessors**!public! !
+cptl:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMRPOLYLINE class methodsFor!
 
@@ -116,7 +118,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYLINE. EMR_POLYBEZIER. EMR_POLYGON. EMR_POLYBEZIERTO. EMR_POLYLINETO}! !
-!OS.EMRPOLYLINE class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRPOLYLINE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYLINE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

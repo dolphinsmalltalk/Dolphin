@@ -104,20 +104,22 @@ zoneId
 
 zoneId: anInteger
 	zoneId := anInteger! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #bias!**compiled accessors**!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #currentBias!accessing!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #currentName!accessing!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #daylightBias!**compiled accessors**!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #daylightDate!**compiled accessors**!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #daylightName!**compiled accessors**!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #offset!enquiries!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #offsetSeconds!enquiries!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #printableFields!development!printing!private! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #standardBias!**compiled accessors**!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #standardDate!**compiled accessors**!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #standardName!**compiled accessors**!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #zoneId!accessing!public! !
-!OS.TIME_ZONE_INFORMATION categoriesFor: #zoneId:!accessing!private! !
+!OS.TIME_ZONE_INFORMATION categoriesForMethods!
+bias!**compiled accessors**!public! !
+currentBias!accessing!public! !
+currentName!accessing!public! !
+daylightBias!**compiled accessors**!public! !
+daylightDate!**compiled accessors**!public! !
+daylightName!**compiled accessors**!public! !
+offset!enquiries!public! !
+offsetSeconds!enquiries!public! !
+printableFields!development!printing!private! !
+standardBias!**compiled accessors**!public! !
+standardDate!**compiled accessors**!public! !
+standardName!**compiled accessors**!public! !
+zoneId!accessing!public! !
+zoneId:!accessing!private! !
+!
 
 !OS.TIME_ZONE_INFORMATION class methodsFor!
 
@@ -164,6 +166,8 @@ defineFields
 
 getFieldNames
 	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
-!OS.TIME_ZONE_INFORMATION class categoriesFor: #defineFields!public!template definition! !
-!OS.TIME_ZONE_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TIME_ZONE_INFORMATION class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

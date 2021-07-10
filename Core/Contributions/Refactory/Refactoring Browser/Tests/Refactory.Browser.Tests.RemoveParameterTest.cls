@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveParameterTest'
 	instanceVariableNames: ''
@@ -48,7 +48,9 @@ testRemoveParameter
 		equals: (RBParser parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
-!Refactory.Browser.Tests.RemoveParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.RemoveParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
-!Refactory.Browser.Tests.RemoveParameterTest categoriesFor: #testRemoveParameter!public!tests! !
+!Refactory.Browser.Tests.RemoveParameterTest categoriesForMethods!
+testNonExistantName!failure tests!public! !
+testPrimitiveMethods!failure tests!public! !
+testRemoveParameter!public!tests! !
+!
 

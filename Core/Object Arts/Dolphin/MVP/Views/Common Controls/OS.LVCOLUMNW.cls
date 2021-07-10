@@ -187,36 +187,38 @@ width: pixelWidth
 	"Set the width of the column to pixelWidth."
 
 	self cx: pixelWidth; maskIn: LVCF_WIDTH! !
-!OS.LVCOLUMNW categoriesFor: #alignment:!accessing!public! !
-!OS.LVCOLUMNW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cx!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cx:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cxDefault!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cxDefault:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cxIdeal!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cxIdeal:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cxMin!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #cxMin:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #fmt!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #fmt:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #format:!accessing!public! !
-!OS.LVCOLUMNW categoriesFor: #iImage!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #iImage:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #image:!accessing!public! !
-!OS.LVCOLUMNW categoriesFor: #iOrder!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #iOrder:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #iSubItem:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #mask!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #mask:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #maskIn:!accessing!public! !
-!OS.LVCOLUMNW categoriesFor: #newTextBuffer:!helpers!public! !
-!OS.LVCOLUMNW categoriesFor: #order:!accessing!public! !
-!OS.LVCOLUMNW categoriesFor: #pszText!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #pszText:!**compiled accessors**!public! !
-!OS.LVCOLUMNW categoriesFor: #text!accessing!public! !
-!OS.LVCOLUMNW categoriesFor: #text:!accessing!public! !
-!OS.LVCOLUMNW categoriesFor: #width:!accessing!public! !
+!OS.LVCOLUMNW categoriesForMethods!
+alignment:!accessing!public! !
+cchTextMax:!**compiled accessors**!public! !
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+cxDefault!**compiled accessors**!public! !
+cxDefault:!**compiled accessors**!public! !
+cxIdeal!**compiled accessors**!public! !
+cxIdeal:!**compiled accessors**!public! !
+cxMin!**compiled accessors**!public! !
+cxMin:!**compiled accessors**!public! !
+fmt!**compiled accessors**!public! !
+fmt:!**compiled accessors**!public! !
+format:!accessing!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+image:!accessing!public! !
+iOrder!**compiled accessors**!public! !
+iOrder:!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+iSubItem:!**compiled accessors**!public! !
+mask!**compiled accessors**!public! !
+mask:!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+newTextBuffer:!helpers!public! !
+order:!accessing!public! !
+pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+text!accessing!public! !
+text:!accessing!public! !
+width:!accessing!public! !
+!
 
 !OS.LVCOLUMNW class methodsFor!
 
@@ -283,8 +285,10 @@ initialize
 				at: #center put: LVCFMT_CENTER;
 				shrink;
 				yourself)! !
-!OS.LVCOLUMNW class categoriesFor: #defineFields!public!template definition! !
-!OS.LVCOLUMNW class categoriesFor: #fromColumn:in:!instance creation!public! !
-!OS.LVCOLUMNW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.LVCOLUMNW class categoriesFor: #initialize!development!initializing!private! !
+!OS.LVCOLUMNW class categoriesForMethods!
+defineFields!public!template definition! !
+fromColumn:in:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+!
 

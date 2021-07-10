@@ -101,18 +101,20 @@ resetPreviouslyViewedNotes
 	"
 
 	RegKey userRoot removeKey: self registryKeyName ifAbsent: []! !
-!UI.OneOffNoteBubble class categoriesFor: #addPreviouslyViewedNote:!private! !
-!UI.OneOffNoteBubble class categoriesFor: #defaultCaption!constants!private! !
-!UI.OneOffNoteBubble class categoriesFor: #defaultTimeout!constants!private! !
-!UI.OneOffNoteBubble class categoriesFor: #defaultWidth!constants!private! !
-!UI.OneOffNoteBubble class categoriesFor: #icon!constants!development!public! !
-!UI.OneOffNoteBubble class categoriesFor: #name:text:!instance creation!public! !
-!UI.OneOffNoteBubble class categoriesFor: #name:text:for:!instance creation!public! !
-!UI.OneOffNoteBubble class categoriesFor: #name:text:for:timeout:!instance creation!public! !
-!UI.OneOffNoteBubble class categoriesFor: #previouslyViewedNotes!accessing!public! !
-!UI.OneOffNoteBubble class categoriesFor: #previouslyViewedNotes:!accessing!public! !
-!UI.OneOffNoteBubble class categoriesFor: #registryKey!private! !
-!UI.OneOffNoteBubble class categoriesFor: #registryKeyName!constants!private! !
-!UI.OneOffNoteBubble class categoriesFor: #removePreviouslyViewedNote:!private! !
-!UI.OneOffNoteBubble class categoriesFor: #resetPreviouslyViewedNotes!private! !
+!UI.OneOffNoteBubble class categoriesForMethods!
+addPreviouslyViewedNote:!private! !
+defaultCaption!constants!private! !
+defaultTimeout!constants!private! !
+defaultWidth!constants!private! !
+icon!constants!development!public! !
+name:text:!instance creation!public! !
+name:text:for:!instance creation!public! !
+name:text:for:timeout:!instance creation!public! !
+previouslyViewedNotes!accessing!public! !
+previouslyViewedNotes:!accessing!public! !
+registryKey!private! !
+registryKeyName!constants!private! !
+removePreviouslyViewedNote:!private! !
+resetPreviouslyViewedNotes!private! !
+!
 

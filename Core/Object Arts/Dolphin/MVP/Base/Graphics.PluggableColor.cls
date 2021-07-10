@@ -34,15 +34,19 @@ stbSaveOn: anSTBOutFiler
 	"Override back to default implementation"
 
 	anSTBOutFiler saveObject: self! !
-!Graphics.PluggableColor categoriesFor: #actualColor!private!testing! !
-!Graphics.PluggableColor categoriesFor: #printOn:!printing!public! !
-!Graphics.PluggableColor categoriesFor: #setValuable:!initializing!private! !
-!Graphics.PluggableColor categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.PluggableColor categoriesForMethods!
+actualColor!private!testing! !
+printOn:!printing!public! !
+setValuable:!initializing!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 !Graphics.PluggableColor class methodsFor!
 
 with: aNiladicValuable 
 	<primitive: 157>
 	^self basicNew setValuable: aNiladicValuable! !
-!Graphics.PluggableColor class categoriesFor: #with:!instance creation!public! !
+!Graphics.PluggableColor class categoriesForMethods!
+with:!instance creation!public! !
+!
 

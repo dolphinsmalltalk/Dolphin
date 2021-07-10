@@ -285,32 +285,34 @@ value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pvar asVariant! !
-!ADODB.Field15 categoriesFor: #actualSize!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #appendChunk:!**auto generated**!methods!public! !
-!ADODB.Field15 categoriesFor: #AppendChunk:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #definedSize!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #get_ActualSize:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_DefinedSize:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_NumericScale:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_OriginalValue:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_Precision:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_UnderlyingValue:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #getChunk:!**auto generated**!methods!public! !
-!ADODB.Field15 categoriesFor: #GetChunk:pvar:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #name!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #numericScale!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #originalValue!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #precision!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Field15!private! !
-!ADODB.Field15 categoriesFor: #type!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #underlyingValue!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #value!**auto generated**!properties!public! !
-!ADODB.Field15 categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODB.Field15 categoriesForMethods!
+actualSize!**auto generated**!properties!public! !
+appendChunk:!**auto generated**!methods!public! !
+AppendChunk:!**auto generated**!COM Interfaces-Field15!private! !
+attributes!**auto generated**!properties!public! !
+definedSize!**auto generated**!properties!public! !
+get_ActualSize:!**auto generated**!COM Interfaces-Field15!private! !
+get_Attributes:!**auto generated**!COM Interfaces-Field15!private! !
+get_DefinedSize:!**auto generated**!COM Interfaces-Field15!private! !
+get_Name:!**auto generated**!COM Interfaces-Field15!private! !
+get_NumericScale:!**auto generated**!COM Interfaces-Field15!private! !
+get_OriginalValue:!**auto generated**!COM Interfaces-Field15!private! !
+get_Precision:!**auto generated**!COM Interfaces-Field15!private! !
+get_Type:!**auto generated**!COM Interfaces-Field15!private! !
+get_UnderlyingValue:!**auto generated**!COM Interfaces-Field15!private! !
+get_Value:!**auto generated**!COM Interfaces-Field15!private! !
+getChunk:!**auto generated**!methods!public! !
+GetChunk:pvar:!**auto generated**!COM Interfaces-Field15!private! !
+name!**auto generated**!properties!public! !
+numericScale!**auto generated**!properties!public! !
+originalValue!**auto generated**!properties!public! !
+precision!**auto generated**!properties!public! !
+put_Value:!**auto generated**!COM Interfaces-Field15!private! !
+type!**auto generated**!properties!public! !
+underlyingValue!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+!
 
 !ADODB.Field15 class methodsFor!
 
@@ -346,5 +348,7 @@ defineFunctions
 		defineFunction: #get_UnderlyingValue:
 			argumentTypes: 'variant*'
 ! !
-!ADODB.Field15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Field15 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

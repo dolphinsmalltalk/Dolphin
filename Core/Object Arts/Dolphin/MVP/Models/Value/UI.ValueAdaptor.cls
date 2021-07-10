@@ -40,10 +40,12 @@ subject: anObject
 
 	subject := anObject.
 ! !
-!UI.ValueAdaptor categoriesFor: #displayOn:!displaying!public! !
-!UI.ValueAdaptor categoriesFor: #printOn:!printing!public! !
-!UI.ValueAdaptor categoriesFor: #subject!accessing!private! !
-!UI.ValueAdaptor categoriesFor: #subject:!initializing!private! !
+!UI.ValueAdaptor categoriesForMethods!
+displayOn:!displaying!public! !
+printOn:!printing!public! !
+subject!accessing!private! !
+subject:!initializing!private! !
+!
 
 !UI.ValueAdaptor class methodsFor!
 
@@ -56,6 +58,8 @@ subject: anObject
 	^(self new)
 		subject: anObject;
 		yourself! !
-!UI.ValueAdaptor class categoriesFor: #icon!constants!public! !
-!UI.ValueAdaptor class categoriesFor: #subject:!instance creation!public! !
+!UI.ValueAdaptor class categoriesForMethods!
+icon!constants!public! !
+subject:!instance creation!public! !
+!
 

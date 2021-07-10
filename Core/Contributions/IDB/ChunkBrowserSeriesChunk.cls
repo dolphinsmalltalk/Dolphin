@@ -16,11 +16,15 @@ Public Domain Freeware'!
 
 initializeFromSeriesStart: aChunkBrowserSeriesStartChunk
 	identity1 := aChunkBrowserSeriesStartChunk identity1! !
-!ChunkBrowserSeriesChunk categoriesFor: #initializeFromSeriesStart:!initializing!public! !
+!ChunkBrowserSeriesChunk categoriesForMethods!
+initializeFromSeriesStart:!initializing!public! !
+!
 
 !ChunkBrowserSeriesChunk class methodsFor!
 
 isChunkClassFor: aString
 	self shouldNotImplement! !
-!ChunkBrowserSeriesChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserSeriesChunk class categoriesForMethods!
+isChunkClassFor:!public!testing! !
+!
 

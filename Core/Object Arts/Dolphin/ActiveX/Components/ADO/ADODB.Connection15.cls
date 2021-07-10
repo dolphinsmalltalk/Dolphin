@@ -622,67 +622,69 @@ version
 	answer := BSTR new.
 	self get_Version: answer.
 	^answer asObject! !
-!ADODB.Connection15 categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #attributes:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #beginTrans!**auto generated**!methods!public! !
-!ADODB.Connection15 categoriesFor: #BeginTrans:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #Close!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODB.Connection15 categoriesFor: #commandTimeout!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #commandTimeout:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #CommitTrans!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODB.Connection15 categoriesFor: #connectionString!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #connectionString:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #connectionTimeout!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #connectionTimeout:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #cursorLocation!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #cursorLocation:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #defaultDatabase!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #defaultDatabase:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #errors!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #execute:!**auto generated**!methods!public! !
-!ADODB.Connection15 categoriesFor: #execute:options:!**auto generated**!methods!public! !
-!ADODB.Connection15 categoriesFor: #Execute:RecordsAffected:Options:ppiRset:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_Errors:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #get_Version:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB.Connection15 categoriesFor: #isolationLevel!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #isolationLevel:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB.Connection15 categoriesFor: #mode!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #mode:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #open!**auto generated**!methods!public! !
-!ADODB.Connection15 categoriesFor: #open:!operations!public! !
-!ADODB.Connection15 categoriesFor: #Open:UserID:Password:Options:!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODB.Connection15 categoriesFor: #openSchema:!**auto generated**!methods!public! !
-!ADODB.Connection15 categoriesFor: #openSchema:restrictions:schemaID:!**auto generated**!methods!public! !
-!ADODB.Connection15 categoriesFor: #OpenSchema:Restrictions:SchemaID:pprset:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #provider!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #provider:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #put_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
-!ADODB.Connection15 categoriesFor: #query:!executing!public! !
-!ADODB.Connection15 categoriesFor: #RollbackTrans!**auto generated**!COM Interfaces-Connection15!public! !
-!ADODB.Connection15 categoriesFor: #state!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #value!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #value:!**auto generated**!properties!public! !
-!ADODB.Connection15 categoriesFor: #version!**auto generated**!properties!public! !
+!ADODB.Connection15 categoriesForMethods!
+attributes!**auto generated**!properties!public! !
+attributes:!**auto generated**!properties!public! !
+beginTrans!**auto generated**!methods!public! !
+BeginTrans:!**auto generated**!COM Interfaces-Connection15!private! !
+Close!**auto generated**!COM Interfaces-Connection15!public! !
+commandTimeout!**auto generated**!properties!public! !
+commandTimeout:!**auto generated**!properties!public! !
+CommitTrans!**auto generated**!COM Interfaces-Connection15!public! !
+connectionString!**auto generated**!properties!public! !
+connectionString:!**auto generated**!properties!public! !
+connectionTimeout!**auto generated**!properties!public! !
+connectionTimeout:!**auto generated**!properties!public! !
+cursorLocation!**auto generated**!properties!public! !
+cursorLocation:!**auto generated**!properties!public! !
+defaultDatabase!**auto generated**!properties!public! !
+defaultDatabase:!**auto generated**!properties!public! !
+errors!**auto generated**!properties!public! !
+execute:!**auto generated**!methods!public! !
+execute:options:!**auto generated**!methods!public! !
+Execute:RecordsAffected:Options:ppiRset:!**auto generated**!COM Interfaces-Connection15!private! !
+get_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
+get_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+get_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
+get_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+get_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
+get_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
+get_Errors:!**auto generated**!COM Interfaces-Connection15!private! !
+get_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
+get_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
+get_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
+get_State:!**auto generated**!COM Interfaces-Connection15!private! !
+get_Version:!**auto generated**!COM Interfaces-Connection15!private! !
+isExtensible!**auto generated**!public!testing! !
+isolationLevel!**auto generated**!properties!public! !
+isolationLevel:!**auto generated**!properties!public! !
+isVBCollection!**auto generated**!public!testing! !
+mode!**auto generated**!properties!public! !
+mode:!**auto generated**!properties!public! !
+open!**auto generated**!methods!public! !
+open:!operations!public! !
+Open:UserID:Password:Options:!**auto generated**!COM Interfaces-Connection15!public! !
+openSchema:!**auto generated**!methods!public! !
+openSchema:restrictions:schemaID:!**auto generated**!methods!public! !
+OpenSchema:Restrictions:SchemaID:pprset:!**auto generated**!COM Interfaces-Connection15!private! !
+provider!**auto generated**!properties!public! !
+provider:!**auto generated**!properties!public! !
+put_Attributes:!**auto generated**!COM Interfaces-Connection15!private! !
+put_CommandTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+put_ConnectionString:!**auto generated**!COM Interfaces-Connection15!private! !
+put_ConnectionTimeout:!**auto generated**!COM Interfaces-Connection15!private! !
+put_CursorLocation:!**auto generated**!COM Interfaces-Connection15!private! !
+put_DefaultDatabase:!**auto generated**!COM Interfaces-Connection15!private! !
+put_IsolationLevel:!**auto generated**!COM Interfaces-Connection15!private! !
+put_Mode:!**auto generated**!COM Interfaces-Connection15!private! !
+put_Provider:!**auto generated**!COM Interfaces-Connection15!private! !
+query:!executing!public! !
+RollbackTrans!**auto generated**!COM Interfaces-Connection15!public! !
+state!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+version!**auto generated**!properties!public! !
+!
 
 !ADODB.Connection15 class methodsFor!
 
@@ -745,5 +747,7 @@ defineFunctions
 		defineFunction: #OpenSchema:Restrictions:SchemaID:pprset:
 			argumentTypes: 'sdword variant variant _Recordset**'
 ! !
-!ADODB.Connection15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Connection15 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

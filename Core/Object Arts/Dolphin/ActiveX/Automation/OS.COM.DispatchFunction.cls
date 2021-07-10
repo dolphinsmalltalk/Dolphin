@@ -32,5 +32,7 @@ callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 				withArgumentsAt: anAddress
 				descriptor: descriptor]
 		ifNil: [E_NOTIMPL]! !
-!OS.COM.DispatchFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!OS.COM.DispatchFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+!
 

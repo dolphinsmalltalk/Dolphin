@@ -52,11 +52,13 @@ unhandledException: anException
 		self quit: -1].
 	"Resume execution"
 	^anException! !
-!Kernel.AXDllSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!Kernel.AXDllSessionManager categoriesFor: #keepAlive!idling!public! !
-!Kernel.AXDllSessionManager categoriesFor: #openConsoleStreams!operations!private! !
-!Kernel.AXDllSessionManager categoriesFor: #startUI!operations-startup!public! !
-!Kernel.AXDllSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!Kernel.AXDllSessionManager categoriesForMethods!
+basicTertiaryStartup!operations-startup!public! !
+keepAlive!idling!public! !
+openConsoleStreams!operations!private! !
+startUI!operations-startup!public! !
+unhandledException:!exceptions!private! !
+!
 
 !Kernel.AXDllSessionManager class methodsFor!
 
@@ -80,8 +82,10 @@ isRuntime
 	(as opposed to development, or abstract)."
 
 	^true! !
-!Kernel.AXDllSessionManager class categoriesFor: #icon!constants!development!must strip!public! !
-!Kernel.AXDllSessionManager class categoriesFor: #imageExtension!constants!public! !
-!Kernel.AXDllSessionManager class categoriesFor: #isDLL!private!testing! !
-!Kernel.AXDllSessionManager class categoriesFor: #isRuntime!public!testing! !
+!Kernel.AXDllSessionManager class categoriesForMethods!
+icon!constants!development!must strip!public! !
+imageExtension!constants!public! !
+isDLL!private!testing! !
+isRuntime!public!testing! !
+!
 

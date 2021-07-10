@@ -105,18 +105,20 @@ socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."
 
 	SocketError signalWith: Processor activeProcess lastError! !
-!Net.SocketAbstract categoriesFor: #asParameter!converting!public! !
-!Net.SocketAbstract categoriesFor: #close!operations!public! !
-!Net.SocketAbstract categoriesFor: #create!operations!private! !
-!Net.SocketAbstract categoriesFor: #descriptor:!initializing!private! !
-!Net.SocketAbstract categoriesFor: #errorSocketClosed!operations!private! !
-!Net.SocketAbstract categoriesFor: #finalize!finalizing!private! !
-!Net.SocketAbstract categoriesFor: #initialize!initializing!private! !
-!Net.SocketAbstract categoriesFor: #isOpen!public!testing! !
-!Net.SocketAbstract categoriesFor: #port!accessing!public! !
-!Net.SocketAbstract categoriesFor: #port:!accessing!private! !
-!Net.SocketAbstract categoriesFor: #printOn:!printing!public! !
-!Net.SocketAbstract categoriesFor: #queryPort!accessing!public! !
-!Net.SocketAbstract categoriesFor: #socketError!exceptions!private! !
-!Net.SocketAbstract categoriesFor: #socketErrorOverlap!operations!private! !
+!Net.SocketAbstract categoriesForMethods!
+asParameter!converting!public! !
+close!operations!public! !
+create!operations!private! !
+descriptor:!initializing!private! !
+errorSocketClosed!operations!private! !
+finalize!finalizing!private! !
+initialize!initializing!private! !
+isOpen!public!testing! !
+port!accessing!public! !
+port:!accessing!private! !
+printOn:!printing!public! !
+queryPort!accessing!public! !
+socketError!exceptions!private! !
+socketErrorOverlap!operations!private! !
+!
 

@@ -33,8 +33,10 @@ library
 
 library: anObject
 	library := anObject! !
-!Graphics.Gdiplus.Initializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Initializer categoriesFor: #isPersistent!public!testing! !
-!Graphics.Gdiplus.Initializer categoriesFor: #library!accessing!private! !
-!Graphics.Gdiplus.Initializer categoriesFor: #library:!private!test accessing! !
+!Graphics.Gdiplus.Initializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+isPersistent!public!testing! !
+library!accessing!private! !
+library:!private!test accessing! !
+!
 

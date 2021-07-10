@@ -447,44 +447,46 @@ wmPrint: message wParam: wParam lParam: lParam
 		wParam: wParam
 		lParam: lParam.
 	^true! !
-!StyledContainer categoriesFor: #actualCornerRadii!private! !
-!StyledContainer categoriesFor: #actualEdges!private! !
-!StyledContainer categoriesFor: #addArc:angles:to:!private! !
-!StyledContainer categoriesFor: #addCorner:of:corners:toPath:!private! !
-!StyledContainer categoriesFor: #addCorner:of:toPath:!private! !
-!StyledContainer categoriesFor: #addEdge:of:toPath:!private! !
-!StyledContainer categoriesFor: #allEdges!private! !
-!StyledContainer categoriesFor: #ambientBackcolor!accessing!private! !
-!StyledContainer categoriesFor: #cornerRadii!public! !
-!StyledContainer categoriesFor: #cornerRadii:!public! !
-!StyledContainer categoriesFor: #edges!accessing!public! !
-!StyledContainer categoriesFor: #edges:!accessing!public! !
-!StyledContainer categoriesFor: #getEdgeBits!event handling!private! !
-!StyledContainer categoriesFor: #hasStyledBrush!public! !
-!StyledContainer categoriesFor: #hasStyledPen!public! !
-!StyledContainer categoriesFor: #hasStyledShadow!public! !
-!StyledContainer categoriesFor: #initialize!private! !
-!StyledContainer categoriesFor: #isAntialiased!accessing!public! !
-!StyledContainer categoriesFor: #isAntialiased:!accessing!public! !
-!StyledContainer categoriesFor: #onEraseRequired:!event handling!private! !
-!StyledContainer categoriesFor: #onPaintRequired:!private! !
-!StyledContainer categoriesFor: #onPositionChanged:!event handling!private! !
-!StyledContainer categoriesFor: #paintEdge:of:onGraphics:withPen:!private! !
-!StyledContainer categoriesFor: #paintParentBackgroundOn:!private! !
-!StyledContainer categoriesFor: #paintStyledBackgroundOn:!event handling!private! !
-!StyledContainer categoriesFor: #paintStyledEdgesOn:!event handling!private! !
-!StyledContainer categoriesFor: #paintStyledShadowOf:on:!private! !
-!StyledContainer categoriesFor: #paintTransparentChildrenOn:updateRect:!private! !
-!StyledContainer categoriesFor: #styledBackgroundRectangle!private! !
-!StyledContainer categoriesFor: #styledBorderRectangle!private! !
-!StyledContainer categoriesFor: #styledBorderWidth!public! !
-!StyledContainer categoriesFor: #styledBrush!public! !
-!StyledContainer categoriesFor: #styledBrush:!public! !
-!StyledContainer categoriesFor: #styledPen!public! !
-!StyledContainer categoriesFor: #styledPen:!public! !
-!StyledContainer categoriesFor: #styledShadow!public! !
-!StyledContainer categoriesFor: #styledShadow:!public! !
-!StyledContainer categoriesFor: #wmPrint:wParam:lParam:!event handling-win32!private! !
+!StyledContainer categoriesForMethods!
+actualCornerRadii!private! !
+actualEdges!private! !
+addArc:angles:to:!private! !
+addCorner:of:corners:toPath:!private! !
+addCorner:of:toPath:!private! !
+addEdge:of:toPath:!private! !
+allEdges!private! !
+ambientBackcolor!accessing!private! !
+cornerRadii!public! !
+cornerRadii:!public! !
+edges!accessing!public! !
+edges:!accessing!public! !
+getEdgeBits!event handling!private! !
+hasStyledBrush!public! !
+hasStyledPen!public! !
+hasStyledShadow!public! !
+initialize!private! !
+isAntialiased!accessing!public! !
+isAntialiased:!accessing!public! !
+onEraseRequired:!event handling!private! !
+onPaintRequired:!private! !
+onPositionChanged:!event handling!private! !
+paintEdge:of:onGraphics:withPen:!private! !
+paintParentBackgroundOn:!private! !
+paintStyledBackgroundOn:!event handling!private! !
+paintStyledEdgesOn:!event handling!private! !
+paintStyledShadowOf:on:!private! !
+paintTransparentChildrenOn:updateRect:!private! !
+styledBackgroundRectangle!private! !
+styledBorderRectangle!private! !
+styledBorderWidth!public! !
+styledBrush!public! !
+styledBrush:!public! !
+styledPen!public! !
+styledPen:!public! !
+styledShadow!public! !
+styledShadow:!public! !
+wmPrint:wParam:lParam:!event handling-win32!private! !
+!
 
 !StyledContainer class methodsFor!
 
@@ -500,6 +502,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StyledContainer) 34 22 nil nil 34 2 8 1174405120 131073 416 nil nil nil 7 nil nil nil 416 nil 170 192 8 #() nil 138 144 8 #(#top #bottom #left #right) 590598 ##(Smalltalk.StyledPen) 327686 ##(Smalltalk.Color) #black 5 8 #(1) 1246214 ##(Smalltalk.StyledGradientBrush) 578 #face3d nil 328198 ##(Smalltalk.Point) 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 224 63 1 674 706 8 0 0 0 0 0 0 224 63 3 8 #(20 20 20 20) true nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 3839 21 674 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 8 #() 674 193 193 nil 27 )! !
-!StyledContainer class categoriesFor: #clearNest!public! !
-!StyledContainer class categoriesFor: #resource_Default_view!public!resources-views! !
+!StyledContainer class categoriesForMethods!
+clearNest!public! !
+resource_Default_view!public!resources-views! !
+!
 

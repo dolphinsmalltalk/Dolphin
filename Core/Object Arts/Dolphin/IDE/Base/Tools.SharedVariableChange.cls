@@ -49,12 +49,14 @@ setVariable: aString environment: aNamespace
 
 variable
 	^variable! !
-!Tools.SharedVariableChange categoriesFor: #=!comparing!public! !
-!Tools.SharedVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!Tools.SharedVariableChange categoriesFor: #environment!accessing!private! !
-!Tools.SharedVariableChange categoriesFor: #environmentName!accessing!private! !
-!Tools.SharedVariableChange categoriesFor: #executeNotifying:!private! !
-!Tools.SharedVariableChange categoriesFor: #primitiveExecute!operations!private! !
-!Tools.SharedVariableChange categoriesFor: #setVariable:environment:!initializing!private! !
-!Tools.SharedVariableChange categoriesFor: #variable!accessing!private! !
+!Tools.SharedVariableChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+environment!accessing!private! !
+environmentName!accessing!private! !
+executeNotifying:!private! !
+primitiveExecute!operations!private! !
+setVariable:environment:!initializing!private! !
+variable!accessing!private! !
+!
 

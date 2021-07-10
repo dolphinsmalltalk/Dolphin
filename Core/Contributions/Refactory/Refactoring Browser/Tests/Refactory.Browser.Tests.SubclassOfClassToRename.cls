@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
@@ -43,15 +43,17 @@ rewriteRule1: anObject
 
 symbolReference
 	^#ClassToRename! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls!accessing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #calls1!accessing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #externalReference:_:!performing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #fullyQualifiedReference!performing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #name!accessing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #partiallyQualifiedReference1!performing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #partiallyQualifiedReference2!performing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #reference!performing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #rewriteRule1!accessing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #rewriteRule1:!accessing!public! !
-!Refactory.Browser.Tests.SubclassOfClassToRename categoriesFor: #symbolReference!performing!public! !
+!Refactory.Browser.Tests.SubclassOfClassToRename categoriesForMethods!
+calls!accessing!public! !
+calls1!accessing!public! !
+externalReference:_:!performing!public! !
+fullyQualifiedReference!performing!public! !
+name!accessing!public! !
+partiallyQualifiedReference1!performing!public! !
+partiallyQualifiedReference2!performing!public! !
+reference!performing!public! !
+rewriteRule1!accessing!public! !
+rewriteRule1:!accessing!public! !
+symbolReference!performing!public! !
+!
 

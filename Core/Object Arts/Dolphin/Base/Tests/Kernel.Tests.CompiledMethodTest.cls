@@ -91,13 +91,15 @@ testValueWithReceiverArguments
 	method := self class compiledMethodAt: #returnPlusOne:.
 	value := method value: self withArguments: #(1).
 	self assert: value equals: 2! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #returnPlusOne:!examples!private! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #returnTrue!examples!private! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #testHasAnnotation!public!unit tests! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #testIsQuick!public!unit tests! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #testIsSimpleSelfSend!public!unit tests! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #testLocalEnvironment!public!unit tests! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #testLocalScope!public!unit tests! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #testRecompileMaintainsEnvironmentAndPackage!public!unit tests! !
-!Kernel.Tests.CompiledMethodTest categoriesFor: #testValueWithReceiverArguments!public!unit tests! !
+!Kernel.Tests.CompiledMethodTest categoriesForMethods!
+returnPlusOne:!examples!private! !
+returnTrue!examples!private! !
+testHasAnnotation!public!unit tests! !
+testIsQuick!public!unit tests! !
+testIsSimpleSelfSend!public!unit tests! !
+testLocalEnvironment!public!unit tests! !
+testLocalScope!public!unit tests! !
+testRecompileMaintainsEnvironmentAndPackage!public!unit tests! !
+testValueWithReceiverArguments!public!unit tests! !
+!
 

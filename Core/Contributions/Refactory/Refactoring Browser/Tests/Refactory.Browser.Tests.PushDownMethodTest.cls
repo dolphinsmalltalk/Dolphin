@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushDownMethodTest'
 	instanceVariableNames: ''
@@ -45,8 +45,10 @@ testPushDownNonExistantMenu
 	| refactoring |
 	refactoring := PushDownMethodRefactoring pushDown: #(#someMethodThatDoesNotExist) from: LintRuleTest.
 	self shouldFail: refactoring! !
-!Refactory.Browser.Tests.PushDownMethodTest categoriesFor: #testPushDownMethod!public!tests! !
-!Refactory.Browser.Tests.PushDownMethodTest categoriesFor: #testPushDownMethodOnNonAbstractClass!failure tests!public! !
-!Refactory.Browser.Tests.PushDownMethodTest categoriesFor: #testPushDownMethodThatReferencesPoolDictionary!public!tests! !
-!Refactory.Browser.Tests.PushDownMethodTest categoriesFor: #testPushDownNonExistantMenu!failure tests!public! !
+!Refactory.Browser.Tests.PushDownMethodTest categoriesForMethods!
+testPushDownMethod!public!tests! !
+testPushDownMethodOnNonAbstractClass!failure tests!public! !
+testPushDownMethodThatReferencesPoolDictionary!public!tests! !
+testPushDownNonExistantMenu!failure tests!public! !
+!
 

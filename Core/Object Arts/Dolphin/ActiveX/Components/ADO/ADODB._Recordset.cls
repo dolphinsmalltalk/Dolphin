@@ -55,9 +55,11 @@ Save: destination PersistFormat: persistFormat
 
 	<virtual stdcall: hresult 85 variant sdword>
 	^self invalidCall: _failureCode! !
-!ADODB._Recordset categoriesFor: #save!**auto generated**!methods!public! !
-!ADODB._Recordset categoriesFor: #save:persistFormat:!**auto generated**!methods!public! !
-!ADODB._Recordset categoriesFor: #Save:PersistFormat:!**auto generated**!COM Interfaces-_Recordset!private! !
+!ADODB._Recordset categoriesForMethods!
+save!**auto generated**!methods!public! !
+save:persistFormat:!**auto generated**!methods!public! !
+Save:PersistFormat:!**auto generated**!COM Interfaces-_Recordset!private! !
+!
 
 !ADODB._Recordset class methodsFor!
 
@@ -83,7 +85,9 @@ example1
 	rs open: 'Employees' activeConnection: 'DSN=Northwind'.
 	"Get the employees names"
 	rs collect: [:each | (each item: 'LastName') value]! !
-!ADODB._Recordset class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB._Recordset class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!ADODB._Recordset class categoriesFor: #example1!examples!public! !
+!ADODB._Recordset class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+example1!examples!public! !
+!
 

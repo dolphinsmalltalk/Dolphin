@@ -45,10 +45,12 @@ purpose
 It is therefore not possible to guarantee the identity of the publisher or ensure that the content has not been modified since it was originally published. 
 
 You must decide if you are willing to accept this content as safe.'! !
-!Security.NotSignedCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!Security.NotSignedCertificate categoriesFor: #canBePermanentlyTrusted!public!testing!trust! !
-!Security.NotSignedCertificate categoriesFor: #imageAttributes!accessing!private! !
-!Security.NotSignedCertificate categoriesFor: #purpose!accessing!public! !
+!Security.NotSignedCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+canBePermanentlyTrusted!public!testing!trust! !
+imageAttributes!accessing!private! !
+purpose!accessing!public! !
+!
 
 !Security.NotSignedCertificate class methodsFor!
 
@@ -75,7 +77,9 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!Security.NotSignedCertificate class categoriesFor: #new!instance creation!public! !
-!Security.NotSignedCertificate class categoriesFor: #publicKey!constants!private! !
-!Security.NotSignedCertificate class categoriesFor: #validYears!constants!private! !
+!Security.NotSignedCertificate class categoriesForMethods!
+new!instance creation!public! !
+publicKey!constants!private! !
+validYears!constants!private! !
+!
 

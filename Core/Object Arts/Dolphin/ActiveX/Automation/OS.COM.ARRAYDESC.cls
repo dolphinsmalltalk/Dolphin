@@ -39,9 +39,11 @@ rgbounds
 		fromAddress: bytes yourAddress + _OffsetOf_rgbounds
 		length: self cDims
 		elementClass: SAFEARRAYBOUND! !
-!OS.COM.ARRAYDESC categoriesFor: #cDims!**compiled accessors**!private! !
-!OS.COM.ARRAYDESC categoriesFor: #elementCount!accessing!private! !
-!OS.COM.ARRAYDESC categoriesFor: #rgbounds!**compiled accessors**!public! !
+!OS.COM.ARRAYDESC categoriesForMethods!
+cDims!**compiled accessors**!private! !
+elementCount!accessing!private! !
+rgbounds!**compiled accessors**!public! !
+!
 
 !OS.COM.ARRAYDESC class methodsFor!
 
@@ -69,6 +71,8 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #cDims #rgbounds)! !
-!OS.COM.ARRAYDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.ARRAYDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.ARRAYDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

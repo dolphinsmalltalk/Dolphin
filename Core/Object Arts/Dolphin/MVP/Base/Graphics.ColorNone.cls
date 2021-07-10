@@ -109,21 +109,23 @@ shallowCopy
 	"The receiver has a singleton instance."
 
 	^self! !
-!Graphics.ColorNone categoriesFor: #alpha!accessing!public! !
-!Graphics.ColorNone categoriesFor: #alpha:!accessing!public! !
-!Graphics.ColorNone categoriesFor: #alphaMask!accessing!private! !
-!Graphics.ColorNone categoriesFor: #argbCode!accessing!public! !
-!Graphics.ColorNone categoriesFor: #brush!converting!public! !
-!Graphics.ColorNone categoriesFor: #hls!converting!public! !
-!Graphics.ColorNone categoriesFor: #hslSaturation!accessing!public! !
-!Graphics.ColorNone categoriesFor: #hsv!converting!public! !
-!Graphics.ColorNone categoriesFor: #hsvSaturation!accessing!public! !
-!Graphics.ColorNone categoriesFor: #hue!public! !
-!Graphics.ColorNone categoriesFor: #isNone!public!testing! !
-!Graphics.ColorNone categoriesFor: #luminance!public! !
-!Graphics.ColorNone categoriesFor: #name!accessing!public! !
-!Graphics.ColorNone categoriesFor: #normalizedAlpha!public! !
-!Graphics.ColorNone categoriesFor: #pen!converting!public! !
-!Graphics.ColorNone categoriesFor: #rgbCode!accessing!public! !
-!Graphics.ColorNone categoriesFor: #shallowCopy!copying!public! !
+!Graphics.ColorNone categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+alphaMask!accessing!private! !
+argbCode!accessing!public! !
+brush!converting!public! !
+hls!converting!public! !
+hslSaturation!accessing!public! !
+hsv!converting!public! !
+hsvSaturation!accessing!public! !
+hue!public! !
+isNone!public!testing! !
+luminance!public! !
+name!accessing!public! !
+normalizedAlpha!public! !
+pen!converting!public! !
+rgbCode!accessing!public! !
+shallowCopy!copying!public! !
+!
 

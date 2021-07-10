@@ -31,10 +31,12 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_value put: anInteger! !
-!External.INT_PTR categoriesFor: #isSigned!public!testing! !
-!External.INT_PTR categoriesFor: #unsignedValue:!accessing!public! !
-!External.INT_PTR categoriesFor: #value!**compiled accessors**!public! !
-!External.INT_PTR categoriesFor: #value:!**compiled accessors**!public! !
+!External.INT_PTR categoriesForMethods!
+isSigned!public!testing! !
+unsignedValue:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.INT_PTR class methodsFor!
 
@@ -43,5 +45,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: INT_PTRField new beOverride! !
-!External.INT_PTR class categoriesFor: #defineFields!public!template definition! !
+!External.INT_PTR class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

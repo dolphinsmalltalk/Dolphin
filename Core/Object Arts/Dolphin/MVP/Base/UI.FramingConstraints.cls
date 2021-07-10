@@ -275,32 +275,34 @@ updateFor: aView rectangle: aRectangle layoutContext: aLayoutContext
 				parentRectangle: parentRect.
 	context rectangle: aRectangle.
 	self updateFor: aView context: context! !
-!UI.FramingConstraints categoriesFor: #bottomFraming!accessing!public! !
-!UI.FramingConstraints categoriesFor: #bottomFraming:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #bottomOffset!accessing!public! !
-!UI.FramingConstraints categoriesFor: #bottomOffset:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #errorCantFixEdgeToItself!exceptions!private! !
-!UI.FramingConstraints categoriesFor: #errorNoIndepentEdge!exceptions!private! !
-!UI.FramingConstraints categoriesFor: #framings!accessing!public! !
-!UI.FramingConstraints categoriesFor: #initialize!initializing!private! !
-!UI.FramingConstraints categoriesFor: #leftFraming!accessing!public! !
-!UI.FramingConstraints categoriesFor: #leftFraming:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #leftOffset!accessing!public! !
-!UI.FramingConstraints categoriesFor: #leftOffset:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #messages!accessing!public! !
-!UI.FramingConstraints categoriesFor: #offsets!accessing!public! !
-!UI.FramingConstraints categoriesFor: #rectangleFor:within:context:!operations!private! !
-!UI.FramingConstraints categoriesFor: #resolutionScaledBy:!geometry!private! !
-!UI.FramingConstraints categoriesFor: #rightFraming!accessing!public! !
-!UI.FramingConstraints categoriesFor: #rightFraming:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #rightOffset!accessing!public! !
-!UI.FramingConstraints categoriesFor: #rightOffset:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #topFraming!accessing!public! !
-!UI.FramingConstraints categoriesFor: #topFraming:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #topOffset!accessing!public! !
-!UI.FramingConstraints categoriesFor: #topOffset:!accessing!public! !
-!UI.FramingConstraints categoriesFor: #updateFor:context:!geometry!private! !
-!UI.FramingConstraints categoriesFor: #updateFor:rectangle:layoutContext:!geometry!private! !
+!UI.FramingConstraints categoriesForMethods!
+bottomFraming!accessing!public! !
+bottomFraming:!accessing!public! !
+bottomOffset!accessing!public! !
+bottomOffset:!accessing!public! !
+errorCantFixEdgeToItself!exceptions!private! !
+errorNoIndepentEdge!exceptions!private! !
+framings!accessing!public! !
+initialize!initializing!private! !
+leftFraming!accessing!public! !
+leftFraming:!accessing!public! !
+leftOffset!accessing!public! !
+leftOffset:!accessing!public! !
+messages!accessing!public! !
+offsets!accessing!public! !
+rectangleFor:within:context:!operations!private! !
+resolutionScaledBy:!geometry!private! !
+rightFraming!accessing!public! !
+rightFraming:!accessing!public! !
+rightOffset!accessing!public! !
+rightOffset:!accessing!public! !
+topFraming!accessing!public! !
+topFraming:!accessing!public! !
+topOffset!accessing!public! !
+topOffset:!accessing!public! !
+updateFor:context:!geometry!private! !
+updateFor:rectangle:layoutContext:!geometry!private! !
+!
 
 UI.FramingConstraints methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
 
@@ -367,11 +369,13 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!UI.FramingConstraints class categoriesFor: #calculationClass!constants!private! !
-!UI.FramingConstraints class categoriesFor: #new!instance creation!public! !
-!UI.FramingConstraints class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!UI.FramingConstraints class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.FramingConstraints class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!UI.FramingConstraints class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!UI.FramingConstraints class categoriesFor: #stbVersion!binary filing!public! !
+!UI.FramingConstraints class categoriesForMethods!
+calculationClass!constants!private! !
+new!instance creation!public! !
+stbConvert:fromVersion:!binary filing!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

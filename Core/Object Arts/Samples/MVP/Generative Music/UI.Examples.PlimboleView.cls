@@ -38,14 +38,18 @@ onPositionChanged: aPositionEvent
 
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent! !
-!UI.Examples.PlimboleView categoriesFor: #cellExtent!private! !
-!UI.Examples.PlimboleView categoriesFor: #connectModel!models!private! !
-!UI.Examples.PlimboleView categoriesFor: #onPaintRequired:!event handling!private! !
-!UI.Examples.PlimboleView categoriesFor: #onPositionChanged:!event handling!private! !
+!UI.Examples.PlimboleView categoriesForMethods!
+cellExtent!private! !
+connectModel!models!private! !
+onPaintRequired:!event handling!private! !
+onPositionChanged:!event handling!private! !
+!
 
 !UI.Examples.PlimboleView class methodsFor!
 
 icon
 	^PlimbolePresenter icon! !
-!UI.Examples.PlimboleView class categoriesFor: #icon!public! !
+!UI.Examples.PlimboleView class categoriesForMethods!
+icon!public! !
+!
 

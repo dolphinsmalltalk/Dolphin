@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.StringFormatTest'
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ testTabOffsets
 	self assert: StringFormat genericDefault tabOffsets equals: #(0.0).
 	offsets := #(1.25 2.5 3.75 4).
 	self assert: (StringFormat new tabOffsets: offsets) tabOffsets equals: offsets! !
-!Graphics.Gdiplus.Tests.StringFormatTest categoriesFor: #testTabOffsets!public! !
+!Graphics.Gdiplus.Tests.StringFormatTest categoriesForMethods!
+testTabOffsets!public! !
+!
 

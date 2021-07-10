@@ -16,7 +16,9 @@ Kernel.Announcement comment: 'This class is the superclass for events that someo
 
 asAnnouncement
 	^ self! !
-!Kernel.Announcement categoriesFor: #asAnnouncement!converting!public! !
+!Kernel.Announcement categoriesForMethods!
+asAnnouncement!converting!public! !
+!
 
 !Kernel.Announcement class methodsFor!
 
@@ -31,7 +33,9 @@ handlesAnnouncement: anAnnouncement
 
 
 	^ anAnnouncement class == self or: [ anAnnouncement class inheritsFrom: self ]! !
-!Kernel.Announcement class categoriesFor: #,!public! !
-!Kernel.Announcement class categoriesFor: #asAnnouncement!converting!public! !
-!Kernel.Announcement class categoriesFor: #handlesAnnouncement:!public!testing! !
+!Kernel.Announcement class categoriesForMethods!
+,!public! !
+asAnnouncement!converting!public! !
+handlesAnnouncement:!public!testing! !
+!
 

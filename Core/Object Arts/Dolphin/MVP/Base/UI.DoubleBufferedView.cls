@@ -117,18 +117,20 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
-!UI.DoubleBufferedView categoriesFor: #canvas!accessing!public! !
-!UI.DoubleBufferedView categoriesFor: #filerProxy!binary filing!private! !
-!UI.DoubleBufferedView categoriesFor: #flip!operations!public! !
-!UI.DoubleBufferedView categoriesFor: #initialize!initializing!private! !
-!UI.DoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
-!UI.DoubleBufferedView categoriesFor: #invalidate!operations!public! !
-!UI.DoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
-!UI.DoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
-!UI.DoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
-!UI.DoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
-!UI.DoubleBufferedView categoriesFor: #refreshContents!public!updating! !
-!UI.DoubleBufferedView categoriesFor: #render!operations!private! !
-!UI.DoubleBufferedView categoriesFor: #repaint!operations!public! !
-!UI.DoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!UI.DoubleBufferedView categoriesForMethods!
+canvas!accessing!public! !
+filerProxy!binary filing!private! !
+flip!operations!public! !
+initialize!initializing!private! !
+initializeSurfacesFor:!initializing!private! !
+invalidate!operations!public! !
+onCreated:!event handling!private! !
+onEraseRequired:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onPositionChanged:!event handling!private! !
+refreshContents!public!updating! !
+render!operations!private! !
+repaint!operations!public! !
+wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!
 

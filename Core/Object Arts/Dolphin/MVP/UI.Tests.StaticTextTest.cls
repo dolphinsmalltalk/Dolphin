@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.StaticTextTest'
 	instanceVariableNames: ''
@@ -75,7 +75,9 @@ lines'.
 	self assert: actual y equals: expected y.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
 	self assert: (actual x - expected x) abs < 3! !
-!UI.Tests.StaticTextTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.StaticTextTest categoriesFor: #testCalculateExtentMultiline!public! !
-!UI.Tests.StaticTextTest categoriesFor: #testCalculateExtentSimple!public! !
+!UI.Tests.StaticTextTest categoriesForMethods!
+classToTest!helpers!private! !
+testCalculateExtentMultiline!public! !
+testCalculateExtentSimple!public! !
+!
 

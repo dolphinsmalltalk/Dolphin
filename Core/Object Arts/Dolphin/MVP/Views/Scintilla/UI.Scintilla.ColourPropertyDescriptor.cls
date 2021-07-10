@@ -21,7 +21,9 @@ lParamFromAttributeValue: aColor
 
 valueFromLResult: anInteger
 	^Color fromRgbCode: anInteger! !
-!UI.Scintilla.ColourPropertyDescriptor categoriesFor: #defaultFlags!constants!private! !
-!UI.Scintilla.ColourPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
-!UI.Scintilla.ColourPropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
+!UI.Scintilla.ColourPropertyDescriptor categoriesForMethods!
+defaultFlags!constants!private! !
+lParamFromAttributeValue:!helpers!private! !
+valueFromLResult:!helpers!private! !
+!
 

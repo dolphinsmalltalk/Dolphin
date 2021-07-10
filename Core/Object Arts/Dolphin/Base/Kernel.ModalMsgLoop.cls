@@ -41,9 +41,11 @@ wait
 	message loop continues to be serviced, but keyboard and mouse input is discarded."
 
 	SessionManager.Current inputState loopWhile: [loop]! !
-!Kernel.ModalMsgLoop categoriesFor: #initialize!initializing!private! !
-!Kernel.ModalMsgLoop categoriesFor: #signal!process synchronisation!public! !
-!Kernel.ModalMsgLoop categoriesFor: #wait!process synchronisation!public! !
+!Kernel.ModalMsgLoop categoriesForMethods!
+initialize!initializing!private! !
+signal!process synchronisation!public! !
+wait!process synchronisation!public! !
+!
 
 !Kernel.ModalMsgLoop class methodsFor!
 
@@ -51,5 +53,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!Kernel.ModalMsgLoop class categoriesFor: #new!instance creation!public! !
+!Kernel.ModalMsgLoop class categoriesForMethods!
+new!instance creation!public! !
+!
 

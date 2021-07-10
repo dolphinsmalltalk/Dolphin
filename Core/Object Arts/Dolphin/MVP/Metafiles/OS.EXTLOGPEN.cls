@@ -113,20 +113,22 @@ elpWidth: anInteger
 	"Set the receiver's 'elpWidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_elpWidth put: anInteger! !
-!OS.EXTLOGPEN categoriesFor: #elpBrushStyle!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpBrushStyle:!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpColor!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpColor:!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpHatch!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpHatch:!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpNumEntries!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpNumEntries:!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpPenStyle!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpPenStyle:!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpStyleEntry!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpStyleEntry:!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpWidth!**compiled accessors**!public! !
-!OS.EXTLOGPEN categoriesFor: #elpWidth:!**compiled accessors**!public! !
+!OS.EXTLOGPEN categoriesForMethods!
+elpBrushStyle!**compiled accessors**!public! !
+elpBrushStyle:!**compiled accessors**!public! !
+elpColor!**compiled accessors**!public! !
+elpColor:!**compiled accessors**!public! !
+elpHatch!**compiled accessors**!public! !
+elpHatch:!**compiled accessors**!public! !
+elpNumEntries!**compiled accessors**!public! !
+elpNumEntries:!**compiled accessors**!public! !
+elpPenStyle!**compiled accessors**!public! !
+elpPenStyle:!**compiled accessors**!public! !
+elpStyleEntry!**compiled accessors**!public! !
+elpStyleEntry:!**compiled accessors**!public! !
+elpWidth!**compiled accessors**!public! !
+elpWidth:!**compiled accessors**!public! !
+!
 
 !OS.EXTLOGPEN class methodsFor!
 
@@ -173,6 +175,8 @@ defineFields
 
 getFieldNames
 	^#(#elpPenStyle #elpWidth #elpBrushStyle #elpColor #elpHatch #elpNumEntries #elpStyleEntry)! !
-!OS.EXTLOGPEN class categoriesFor: #defineFields!public!template definition! !
-!OS.EXTLOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EXTLOGPEN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

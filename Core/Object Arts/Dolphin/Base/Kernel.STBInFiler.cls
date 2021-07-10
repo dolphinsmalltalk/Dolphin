@@ -240,32 +240,34 @@ resetAndValidateStream
 
 setRefOffset: anInteger
 	readMap setSize: anInteger! !
-!Kernel.STBInFiler categoriesFor: #basicNext!accessing!private! !
-!Kernel.STBInFiler categoriesFor: #classAt:!accessing!private! !
-!Kernel.STBInFiler categoriesFor: #classLocator!accessing!public! !
-!Kernel.STBInFiler categoriesFor: #classLocator:!accessing!public! !
-!Kernel.STBInFiler categoriesFor: #contents!enumerating!public! !
-!Kernel.STBInFiler categoriesFor: #defaultClassLocatorClass!constants!private! !
-!Kernel.STBInFiler categoriesFor: #deferAction:!deferred actions!public! !
-!Kernel.STBInFiler categoriesFor: #evaluateDeferredActions!deferred actions!private! !
-!Kernel.STBInFiler categoriesFor: #fixup:to:!operations!public! !
-!Kernel.STBInFiler categoriesFor: #initialize!initializing!private! !
-!Kernel.STBInFiler categoriesFor: #isUpgrading!public!testing! !
-!Kernel.STBInFiler categoriesFor: #isUpgrading:!accessing!public! !
-!Kernel.STBInFiler categoriesFor: #next!operations!public! !
-!Kernel.STBInFiler categoriesFor: #objectAt:!accessing!private! !
-!Kernel.STBInFiler categoriesFor: #readClassData:!helpers!private! !
-!Kernel.STBInFiler categoriesFor: #readClassLocator:!helpers!private! !
-!Kernel.STBInFiler categoriesFor: #readInteger!helpers!private! !
-!Kernel.STBInFiler categoriesFor: #readMap!accessing!private! !
-!Kernel.STBInFiler categoriesFor: #readObjectOfClass:!accessing!private! !
-!Kernel.STBInFiler categoriesFor: #readObjectOfClass:format:!operations!private! !
-!Kernel.STBInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
-!Kernel.STBInFiler categoriesFor: #readVersion!initializing!private! !
-!Kernel.STBInFiler categoriesFor: #register:!helpers!private! !
-!Kernel.STBInFiler categoriesFor: #reset!initializing!private! !
-!Kernel.STBInFiler categoriesFor: #resetAndValidateStream!initializing!private! !
-!Kernel.STBInFiler categoriesFor: #setRefOffset:!accessing!private! !
+!Kernel.STBInFiler categoriesForMethods!
+basicNext!accessing!private! !
+classAt:!accessing!private! !
+classLocator!accessing!public! !
+classLocator:!accessing!public! !
+contents!enumerating!public! !
+defaultClassLocatorClass!constants!private! !
+deferAction:!deferred actions!public! !
+evaluateDeferredActions!deferred actions!private! !
+fixup:to:!operations!public! !
+initialize!initializing!private! !
+isUpgrading!public!testing! !
+isUpgrading:!accessing!public! !
+next!operations!public! !
+objectAt:!accessing!private! !
+readClassData:!helpers!private! !
+readClassLocator:!helpers!private! !
+readInteger!helpers!private! !
+readMap!accessing!private! !
+readObjectOfClass:!accessing!private! !
+readObjectOfClass:format:!operations!private! !
+readObjectWithPrefix:!accessing!private! !
+readVersion!initializing!private! !
+register:!helpers!private! !
+reset!initializing!private! !
+resetAndValidateStream!initializing!private! !
+setRefOffset:!accessing!private! !
+!
 
 !Kernel.STBInFiler class methodsFor!
 
@@ -279,5 +281,7 @@ peekForSignatureIn: aReadStream
 	position := aReadStream position.
 	^(aReadStream nextAvailable: self signature size) asByteArray = self signature
 		or: [aReadStream position: position. false]! !
-!Kernel.STBInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
+!Kernel.STBInFiler class categoriesForMethods!
+peekForSignatureIn:!public!testing! !
+!
 

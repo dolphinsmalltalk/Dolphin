@@ -94,18 +94,20 @@ eM22: aFloat
 	"Set the receiver's 'eM22' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eM22 put: aFloat! !
-!OS.XFORM categoriesFor: #eDx!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eDx:!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eDy!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eDy:!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM11!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM11:!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM12!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM12:!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM21!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM21:!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM22!**compiled accessors**!public! !
-!OS.XFORM categoriesFor: #eM22:!**compiled accessors**!public! !
+!OS.XFORM categoriesForMethods!
+eDx!**compiled accessors**!public! !
+eDx:!**compiled accessors**!public! !
+eDy!**compiled accessors**!public! !
+eDy:!**compiled accessors**!public! !
+eM11!**compiled accessors**!public! !
+eM11:!**compiled accessors**!public! !
+eM12!**compiled accessors**!public! !
+eM12:!**compiled accessors**!public! !
+eM21!**compiled accessors**!public! !
+eM21:!**compiled accessors**!public! !
+eM22!**compiled accessors**!public! !
+eM22:!**compiled accessors**!public! !
+!
 
 !OS.XFORM class methodsFor!
 
@@ -135,6 +137,8 @@ defineFields
 
 getFieldNames
 	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
-!OS.XFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.XFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.XFORM class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

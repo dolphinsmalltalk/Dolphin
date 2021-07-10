@@ -51,10 +51,12 @@ value: anInteger
 			[self
 				Present: true;
 				MaxBandwidth: anInteger]! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #MaxBandwidth!**compiled accessors**!public! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #MaxBandwidth:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #value!accessing!public! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #value:!accessing!public! !
+!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO categoriesForMethods!
+MaxBandwidth!**compiled accessors**!public! !
+MaxBandwidth:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class methodsFor!
 
@@ -83,8 +85,10 @@ maxBandwidth: anInteger
 
 qosType
 	^HttpQosSettingTypeBandwidth! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #maxBandwidth:!public! !
-!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
+!WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxBandwidth:!public! !
+qosType!constants!public! !
+!
 

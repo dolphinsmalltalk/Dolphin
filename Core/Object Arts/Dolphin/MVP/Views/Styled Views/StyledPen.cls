@@ -46,14 +46,16 @@ width
 
 width: anInteger 
 	width := anInteger! !
-!StyledPen categoriesFor: #asGdiplusPen!public! !
-!StyledPen categoriesFor: #color!accessing!public! !
-!StyledPen categoriesFor: #color:!accessing!public! !
-!StyledPen categoriesFor: #dashPattern!public! !
-!StyledPen categoriesFor: #dashPattern:!public! !
-!StyledPen categoriesFor: #printOn:!public! !
-!StyledPen categoriesFor: #width!accessing!public! !
-!StyledPen categoriesFor: #width:!accessing!public! !
+!StyledPen categoriesForMethods!
+asGdiplusPen!public! !
+color!accessing!public! !
+color:!accessing!public! !
+dashPattern!public! !
+dashPattern:!public! !
+printOn:!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !StyledPen class methodsFor!
 
@@ -110,14 +112,16 @@ styles
 		at: #dashDot put: #(4 4 1 4);
 		at: #dashDotDot put: #(4 4 1 2 1 2);
 		yourself)! !
-!StyledPen class categoriesFor: #color:width:dashPattern:!public! !
-!StyledPen class categoriesFor: #color:width:style:!public! !
-!StyledPen class categoriesFor: #dashDot!public! !
-!StyledPen class categoriesFor: #dashDotDot!public! !
-!StyledPen class categoriesFor: #dashed!public! !
-!StyledPen class categoriesFor: #dotted!public! !
-!StyledPen class categoriesFor: #icon!constants!development!public! !
-!StyledPen class categoriesFor: #new!public! !
-!StyledPen class categoriesFor: #solid!public! !
-!StyledPen class categoriesFor: #styles!private! !
+!StyledPen class categoriesForMethods!
+color:width:dashPattern:!public! !
+color:width:style:!public! !
+dashDot!public! !
+dashDotDot!public! !
+dashed!public! !
+dotted!public! !
+icon!constants!development!public! !
+new!public! !
+solid!public! !
+styles!private! !
+!
 

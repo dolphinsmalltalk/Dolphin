@@ -108,27 +108,29 @@ whichNodeIsContainedBy: anInterval
 				collect: [:each | each whichNodeIsContainedBy: anInterval]) 
 					reject: [:each | each isNil].
 	^selectedChildren detect: [:each | true] ifNone: [nil]! !
-!Kernel.StCascadeNode categoriesFor: #=!comparing!public! !
-!Kernel.StCascadeNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StCascadeNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
-!Kernel.StCascadeNode categoriesFor: #bestNodeFor:!public!querying! !
-!Kernel.StCascadeNode categoriesFor: #children!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #directlyUses:!public!testing! !
-!Kernel.StCascadeNode categoriesFor: #hash!comparing!public! !
-!Kernel.StCascadeNode categoriesFor: #isCascade!public!testing! !
-!Kernel.StCascadeNode categoriesFor: #messages!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #messages:!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #messages:semicolons:!initializing!public! !
-!Kernel.StCascadeNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StCascadeNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StCascadeNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #receiver!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #semicolons!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StCascadeNode categoriesFor: #uses:!public!testing! !
-!Kernel.StCascadeNode categoriesFor: #whichNodeIsContainedBy:!public!querying! !
+!Kernel.StCascadeNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+addStatementCommentsTo:!accessing!private! !
+bestNodeFor:!public!querying! !
+children!accessing!public! !
+childrenDo:!accessing!public! !
+directlyUses:!public!testing! !
+hash!comparing!public! !
+isCascade!public!testing! !
+messages!accessing!public! !
+messages:!accessing!public! !
+messages:semicolons:!initializing!public! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+receiver!accessing!public! !
+semicolons!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+whichNodeIsContainedBy:!public!querying! !
+!
 
 !Kernel.StCascadeNode class methodsFor!
 
@@ -137,6 +139,8 @@ messages: messageNodes
 
 messages: messageNodes semicolons: integerCollection 
 	^self new messages: messageNodes semicolons: integerCollection! !
-!Kernel.StCascadeNode class categoriesFor: #messages:!instance creation!public! !
-!Kernel.StCascadeNode class categoriesFor: #messages:semicolons:!instance creation!public! !
+!Kernel.StCascadeNode class categoriesForMethods!
+messages:!instance creation!public! !
+messages:semicolons:!instance creation!public! !
+!
 

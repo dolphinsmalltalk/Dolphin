@@ -36,9 +36,11 @@ fd_count: anInteger
 	"Set the receiver's 'fd_count' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_fd_count put: anInteger! !
-!OS.FD_SET categoriesFor: #fd_array!**compiled accessors**!public! !
-!OS.FD_SET categoriesFor: #fd_count!**compiled accessors**!public! !
-!OS.FD_SET categoriesFor: #fd_count:!**compiled accessors**!public! !
+!OS.FD_SET categoriesForMethods!
+fd_array!**compiled accessors**!public! !
+fd_count!**compiled accessors**!public! !
+fd_count:!**compiled accessors**!public! !
+!
 
 !OS.FD_SET class methodsFor!
 
@@ -61,6 +63,8 @@ defineFields
 
 getFieldNames
 	^#(#fd_count #fd_array)! !
-!OS.FD_SET class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.FD_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FD_SET class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

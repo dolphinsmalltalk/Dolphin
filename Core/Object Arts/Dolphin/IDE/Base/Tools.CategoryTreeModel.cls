@@ -62,14 +62,18 @@ title: category
 	"Set the topmost node of the tree to be the specified <Category>"
 
 	title := category! !
-!Tools.CategoryTreeModel categoriesFor: #addCategory:!adding!private! !
-!Tools.CategoryTreeModel categoriesFor: #list:!accessing!public! !
-!Tools.CategoryTreeModel categoriesFor: #title!accessing!public! !
-!Tools.CategoryTreeModel categoriesFor: #title:!accessing!public! !
+!Tools.CategoryTreeModel categoriesForMethods!
+addCategory:!adding!private! !
+list:!accessing!public! !
+title!accessing!public! !
+title:!accessing!public! !
+!
 
 !Tools.CategoryTreeModel class methodsFor!
 
 defaultSearchPolicy
 	^SearchPolicy equality! !
-!Tools.CategoryTreeModel class categoriesFor: #defaultSearchPolicy!constants!public! !
+!Tools.CategoryTreeModel class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+!
 

@@ -49,7 +49,9 @@ package!
 type
 	Notification deprecated.
 	^self styleName! !
-!UI.Scintilla.Indicator categoriesFor: #type!accessing!public! !
+!UI.Scintilla.Indicator categoriesForMethods!
+type!accessing!public! !
+!
 
 !UI.Scintilla.IndicatorStyle methodsFor!
 
@@ -86,19 +88,23 @@ styleName
 styleName: aSymbol
 	Notification deprecated.
 	self style: aSymbol! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #alphaPercent!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #alphaPercent:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyleName!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyleName:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #styleName!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #styleName:!accessing!public! !
+!UI.Scintilla.IndicatorStyle categoriesForMethods!
+alphaPercent!accessing!public! !
+alphaPercent:!accessing!public! !
+hoverStyleName!accessing!public! !
+hoverStyleName:!accessing!public! !
+styleName!accessing!public! !
+styleName:!accessing!public! !
+!
 
 !UI.Scintilla.IndicatorStyle class methodsFor!
 
 styleNames
 	Notification deprecated.
 	^IndicatorStyles! !
-!UI.Scintilla.IndicatorStyle class categoriesFor: #styleNames!initializing!public! !
+!UI.Scintilla.IndicatorStyle class categoriesForMethods!
+styleNames!initializing!public! !
+!
 
 !UI.Scintilla.ScintillaView methodsFor!
 
@@ -215,24 +221,26 @@ secondarySelectionAlpha: alphaInteger
 selectionAlpha: alphaInteger
 	#deprecated.	"Retained as used in old saved view state."
 	self selectionBackcolor: (self selectionBackcolor alpha: alphaInteger)! !
-!UI.Scintilla.ScintillaView categoriesFor: #currentLineAlpha:!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #firstVisibleLine:!public!scrolling! !
-!UI.Scintilla.ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #hoverTime!other settings!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #hoverTime:!other settings!private! !
-!UI.Scintilla.ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #isCurrentLineHighlighted:!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingBuffered!other settings!public!testing! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingBuffered:!other settings!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingTwoPhase!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #isDrawingTwoPhase:!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
-!UI.Scintilla.ScintillaView categoriesFor: #isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #marginCount!margins!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #marginCount:!margins!public!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #sciSetEdgeColumn:!long lines!private!scintilla interface! !
-!UI.Scintilla.ScintillaView categoriesFor: #secondarySelectionAlpha:!caret, selection, and hotspot styles!public! !
-!UI.Scintilla.ScintillaView categoriesFor: #selectionAlpha:!caret, selection, and hotspot styles!public! !
+!UI.Scintilla.ScintillaView categoriesForMethods!
+currentLineAlpha:!caret, selection, and hotspot styles!public! !
+firstVisibleLine:!public!scrolling! !
+highlightRange:withIndicator:!indicators!public! !
+hoverTime!other settings!private! !
+hoverTime:!other settings!private! !
+indicatorDefinitions:!indicators!public! !
+isCurrentLineHighlighted:!caret, selection, and hotspot styles!public! !
+isDrawingBuffered!other settings!public!testing! !
+isDrawingBuffered:!other settings!public! !
+isDrawingTwoPhase!public!scintilla interface! !
+isDrawingTwoPhase:!public!scintilla interface! !
+isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
+isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
+marginCount!margins!public!scintilla interface! !
+marginCount:!margins!public!scintilla interface! !
+sciSetEdgeColumn:!long lines!private!scintilla interface! !
+secondarySelectionAlpha:!caret, selection, and hotspot styles!public! !
+selectionAlpha:!caret, selection, and hotspot styles!public! !
+!
 
 "End of package definition"!
 

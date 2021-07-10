@@ -44,10 +44,12 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 
 	<stdcall: bool PlaySoundW lpvoid handle dword>
 	^self invalidCall: _failureCode! !
-!OS.WinMMLibrary categoriesFor: #mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
-!OS.WinMMLibrary categoriesFor: #mciSendString:!public!win32 functions-MCI! !
-!OS.WinMMLibrary categoriesFor: #mciSendString:lpszReturnString:cchReturn:hwndCallback:!public!win32 functions-MCI! !
-!OS.WinMMLibrary categoriesFor: #playSound:hmod:fdwSound:!public!win32 functions-wave audio! !
+!OS.WinMMLibrary categoriesForMethods!
+mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
+mciSendString:!public!win32 functions-MCI! !
+mciSendString:lpszReturnString:cchReturn:hwndCallback:!public!win32 functions-MCI! !
+playSound:hmod:fdwSound:!public!win32 functions-wave audio! !
+!
 
 !OS.WinMMLibrary class methodsFor!
 
@@ -55,5 +57,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinMM'! !
-!OS.WinMMLibrary class categoriesFor: #fileName!constants!public! !
+!OS.WinMMLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

@@ -58,10 +58,12 @@ properties
 	answer := Properties newPointer.
 	self get_Properties: answer.
 	^answer asObject! !
-!ADODB._ADO categoriesFor: #get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
-!ADODB._ADO categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB._ADO categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB._ADO categoriesFor: #properties!**auto generated**!properties!public! !
+!ADODB._ADO categoriesForMethods!
+get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+properties!**auto generated**!properties!public! !
+!
 
 !ADODB._ADO class methodsFor!
 
@@ -73,5 +75,7 @@ defineFunctions
 		defineFunction: #get_Properties:
 			argumentTypes: 'Properties**'
 ! !
-!ADODB._ADO class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB._ADO class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

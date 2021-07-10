@@ -96,19 +96,21 @@ value
 	by sending a message to the receiver's subject."
 
 	^self getValue! !
-!UI.ValueAspectAdaptor categoriesFor: #=!comparing!public! !
-!UI.ValueAspectAdaptor categoriesFor: #aspect!accessing!private! !
-!UI.ValueAspectAdaptor categoriesFor: #aspectTriggers:!accessing!public! !
-!UI.ValueAspectAdaptor categoriesFor: #canGet!private!testing! !
-!UI.ValueAspectAdaptor categoriesFor: #canSet!private!testing! !
-!UI.ValueAspectAdaptor categoriesFor: #displayOn:!displaying!public! !
-!UI.ValueAspectAdaptor categoriesFor: #getSelector!accessing!private! !
-!UI.ValueAspectAdaptor categoriesFor: #getValue!accessing!private! !
-!UI.ValueAspectAdaptor categoriesFor: #hash!comparing!public! !
-!UI.ValueAspectAdaptor categoriesFor: #putSelector!accessing!private! !
-!UI.ValueAspectAdaptor categoriesFor: #setValue:!accessing!private! !
-!UI.ValueAspectAdaptor categoriesFor: #subject:aspect:!initializing!private! !
-!UI.ValueAspectAdaptor categoriesFor: #value!accessing!public! !
+!UI.ValueAspectAdaptor categoriesForMethods!
+=!comparing!public! !
+aspect!accessing!private! !
+aspectTriggers:!accessing!public! !
+canGet!private!testing! !
+canSet!private!testing! !
+displayOn:!displaying!public! !
+getSelector!accessing!private! !
+getValue!accessing!private! !
+hash!comparing!public! !
+putSelector!accessing!private! !
+setValue:!accessing!private! !
+subject:aspect:!initializing!private! !
+value!accessing!public! !
+!
 
 !UI.ValueAspectAdaptor class methodsFor!
 
@@ -122,6 +124,8 @@ subject: anObject aspect: aSymbol
 	an aspect of anObject identified by aSymbol"
 
 	^(super new) subject: anObject aspect: aSymbol; yourself! !
-!UI.ValueAspectAdaptor class categoriesFor: #new!instance creation!private! !
-!UI.ValueAspectAdaptor class categoriesFor: #subject:aspect:!instance creation!public! !
+!UI.ValueAspectAdaptor class categoriesForMethods!
+new!instance creation!private! !
+subject:aspect:!instance creation!public! !
+!
 

@@ -521,69 +521,71 @@ watermarkBitmap
 						usingLocator: FileLocator installRelative.
 			Watermark := bitmap createWatermarkAlphaPercent: 60 backcolor: backgroundPresenter view backcolor].
 	^Watermark! !
-!Tools.IdeaSpaceShell categoriesFor: #absorbCard:!private! !
-!Tools.IdeaSpaceShell categoriesFor: #addIdeaCardTools:!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #addShellDecorations:!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #allAdditionalKeyBindings!constants!private! !
-!Tools.IdeaSpaceShell categoriesFor: #basicCaption!constants!public! !
-!Tools.IdeaSpaceShell categoriesFor: #breakoutCard:!private! !
-!Tools.IdeaSpaceShell categoriesFor: #breakoutCurrentCard!public! !
-!Tools.IdeaSpaceShell categoriesFor: #cardHistoryBack!commands!private! !
-!Tools.IdeaSpaceShell categoriesFor: #cardHistoryForward!commands!private! !
-!Tools.IdeaSpaceShell categoriesFor: #cards!accessing!public! !
-!Tools.IdeaSpaceShell categoriesFor: #cardsPresenter!public! !
-!Tools.IdeaSpaceShell categoriesFor: #closeCard!commands!public! !
-!Tools.IdeaSpaceShell categoriesFor: #closeCard:!commands!public! !
-!Tools.IdeaSpaceShell categoriesFor: #configureCardForIdeaSpace:!private! !
-!Tools.IdeaSpaceShell categoriesFor: #createComponents!initializing!private! !
-!Tools.IdeaSpaceShell categoriesFor: #createSchematicWiring!initializing!private! !
-!Tools.IdeaSpaceShell categoriesFor: #currentCard!accessing!public! !
-!Tools.IdeaSpaceShell categoriesFor: #currentCardIndex!public! !
-!Tools.IdeaSpaceShell categoriesFor: #currentCardIndex:!public! !
-!Tools.IdeaSpaceShell categoriesFor: #defaultHelpId!constants!public! !
-!Tools.IdeaSpaceShell categoriesFor: #destroyCard:!commands!public! !
-!Tools.IdeaSpaceShell categoriesFor: #filename!accessing!public! !
-!Tools.IdeaSpaceShell categoriesFor: #filename:!accessing!public! !
-!Tools.IdeaSpaceShell categoriesFor: #hasContents!public! !
-!Tools.IdeaSpaceShell categoriesFor: #hasCurrentCard!public!testing! !
-!Tools.IdeaSpaceShell categoriesFor: #hasFilename!public!testing! !
-!Tools.IdeaSpaceShell categoriesFor: #historySkip:!helpers!public! !
-!Tools.IdeaSpaceShell categoriesFor: #ideaCardToolbarId!Constants!private! !
-!Tools.IdeaSpaceShell categoriesFor: #initialize!initializing!private! !
-!Tools.IdeaSpaceShell categoriesFor: #installCardMenubarAndAccelerators!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #isCurrentCardFirst!public!testing! !
-!Tools.IdeaSpaceShell categoriesFor: #isCurrentCardLast!public!testing! !
-!Tools.IdeaSpaceShell categoriesFor: #isIdeaSpaceCard!public!testing! !
-!Tools.IdeaSpaceShell categoriesFor: #loadErrorDescriptionFrom:!private! !
-!Tools.IdeaSpaceShell categoriesFor: #loadIdeaSpace!commands!private! !
-!Tools.IdeaSpaceShell categoriesFor: #moveCardLeft!commands!public! !
-!Tools.IdeaSpaceShell categoriesFor: #moveCardRight!commands!public! !
-!Tools.IdeaSpaceShell categoriesFor: #newEmbeddedCardOfClass:!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #onCardCaptionChanged!event handling!private! !
-!Tools.IdeaSpaceShell categoriesFor: #onCardChanged!event handling!private! !
-!Tools.IdeaSpaceShell categoriesFor: #onCloseRequested:!event handling!private! !
-!Tools.IdeaSpaceShell categoriesFor: #onIdleEntered!event handling!private! !
-!Tools.IdeaSpaceShell categoriesFor: #onTabsMiddleButtonClicked:!event handling!private! !
-!Tools.IdeaSpaceShell categoriesFor: #onViewOpened!event handling!private! !
-!Tools.IdeaSpaceShell categoriesFor: #openIdeaSpace!public! !
-!Tools.IdeaSpaceShell categoriesFor: #openOn:!private! !
-!Tools.IdeaSpaceShell categoriesFor: #queryCommand:!commands!private! !
-!Tools.IdeaSpaceShell categoriesFor: #registerForCardEvents!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #removeCard:!commands!private! !
-!Tools.IdeaSpaceShell categoriesFor: #removeCardMenubarAndAccelerators!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #removeHistoryForCard:!commands!private! !
-!Tools.IdeaSpaceShell categoriesFor: #removeIdeaCardTools:!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #removeShellDecorations:!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #removeSizeGrip:!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #restorePreviousCard:!commands!private! !
-!Tools.IdeaSpaceShell categoriesFor: #revertIdeaSpace!public! !
-!Tools.IdeaSpaceShell categoriesFor: #saveIdeaSpace!commands!operations!public! !
-!Tools.IdeaSpaceShell categoriesFor: #saveIdeaSpaceAs!commands!operations!public! !
-!Tools.IdeaSpaceShell categoriesFor: #saveStateOn:!private!saved state! !
-!Tools.IdeaSpaceShell categoriesFor: #setWatermark!operations!private! !
-!Tools.IdeaSpaceShell categoriesFor: #tabs!accessing!private! !
-!Tools.IdeaSpaceShell categoriesFor: #updateCaption!helpers!private! !
-!Tools.IdeaSpaceShell categoriesFor: #watermarkBitmap!constants!private! !
+!Tools.IdeaSpaceShell categoriesForMethods!
+absorbCard:!private! !
+addIdeaCardTools:!helpers!private! !
+addShellDecorations:!helpers!private! !
+allAdditionalKeyBindings!constants!private! !
+basicCaption!constants!public! !
+breakoutCard:!private! !
+breakoutCurrentCard!public! !
+cardHistoryBack!commands!private! !
+cardHistoryForward!commands!private! !
+cards!accessing!public! !
+cardsPresenter!public! !
+closeCard!commands!public! !
+closeCard:!commands!public! !
+configureCardForIdeaSpace:!private! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+currentCard!accessing!public! !
+currentCardIndex!public! !
+currentCardIndex:!public! !
+defaultHelpId!constants!public! !
+destroyCard:!commands!public! !
+filename!accessing!public! !
+filename:!accessing!public! !
+hasContents!public! !
+hasCurrentCard!public!testing! !
+hasFilename!public!testing! !
+historySkip:!helpers!public! !
+ideaCardToolbarId!Constants!private! !
+initialize!initializing!private! !
+installCardMenubarAndAccelerators!helpers!private! !
+isCurrentCardFirst!public!testing! !
+isCurrentCardLast!public!testing! !
+isIdeaSpaceCard!public!testing! !
+loadErrorDescriptionFrom:!private! !
+loadIdeaSpace!commands!private! !
+moveCardLeft!commands!public! !
+moveCardRight!commands!public! !
+newEmbeddedCardOfClass:!helpers!private! !
+onCardCaptionChanged!event handling!private! !
+onCardChanged!event handling!private! !
+onCloseRequested:!event handling!private! !
+onIdleEntered!event handling!private! !
+onTabsMiddleButtonClicked:!event handling!private! !
+onViewOpened!event handling!private! !
+openIdeaSpace!public! !
+openOn:!private! !
+queryCommand:!commands!private! !
+registerForCardEvents!helpers!private! !
+removeCard:!commands!private! !
+removeCardMenubarAndAccelerators!helpers!private! !
+removeHistoryForCard:!commands!private! !
+removeIdeaCardTools:!helpers!private! !
+removeShellDecorations:!helpers!private! !
+removeSizeGrip:!helpers!private! !
+restorePreviousCard:!commands!private! !
+revertIdeaSpace!public! !
+saveIdeaSpace!commands!operations!public! !
+saveIdeaSpaceAs!commands!operations!public! !
+saveStateOn:!private!saved state! !
+setWatermark!operations!private! !
+tabs!accessing!private! !
+updateCaption!helpers!private! !
+watermarkBitmap!constants!private! !
+!
 
 !Tools.IdeaSpaceShell class methodsFor!
 
@@ -668,16 +670,18 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10599! !
-!Tools.IdeaSpaceShell class categoriesFor: #defaultAdditionalAccelerators!constants!public! !
-!Tools.IdeaSpaceShell class categoriesFor: #defaultFileExtension!constants!public! !
-!Tools.IdeaSpaceShell class categoriesFor: #displayOn:!displaying!public! !
-!Tools.IdeaSpaceShell class categoriesFor: #fileTypes!constants!private! !
-!Tools.IdeaSpaceShell class categoriesFor: #getFilename!instance creation!private! !
-!Tools.IdeaSpaceShell class categoriesFor: #icon!constants!public! !
-!Tools.IdeaSpaceShell class categoriesFor: #initialize!initializing!private! !
-!Tools.IdeaSpaceShell class categoriesFor: #open!instance creation!public! !
-!Tools.IdeaSpaceShell class categoriesFor: #openOn:!instance creation!public! !
-!Tools.IdeaSpaceShell class categoriesFor: #publishedAspects!operations!public! !
-!Tools.IdeaSpaceShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.IdeaSpaceShell class categoriesFor: #toolsFolderHelpId!constants!public! !
+!Tools.IdeaSpaceShell class categoriesForMethods!
+defaultAdditionalAccelerators!constants!public! !
+defaultFileExtension!constants!public! !
+displayOn:!displaying!public! !
+fileTypes!constants!private! !
+getFilename!instance creation!private! !
+icon!constants!public! !
+initialize!initializing!private! !
+open!instance creation!public! !
+openOn:!instance creation!public! !
+publishedAspects!operations!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!constants!public! !
+!
 

@@ -51,8 +51,10 @@ item: index
 	answer := _Parameter newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODB.Parameters categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
-!ADODB.Parameters categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Parameters categoriesForMethods!
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODB.Parameters class methodsFor!
 
@@ -64,5 +66,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant _Parameter**'
 ! !
-!ADODB.Parameters class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Parameters class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

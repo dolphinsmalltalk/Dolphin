@@ -64,13 +64,15 @@ nextIndexOf: anElement in: collection from: start to: stop
 	answer 0."
 
 	^collection nextIdentityIndexOf: anElement from: start to: stop! !
-!Kernel.IdentitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!Kernel.IdentitySearchPolicy categoriesFor: #hash:!comparing!public! !
-!Kernel.IdentitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!Kernel.IdentitySearchPolicy categoriesFor: #isIdentity!public!testing! !
-!Kernel.IdentitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!Kernel.IdentitySearchPolicy categoriesFor: #name!accessing!public! !
-!Kernel.IdentitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!Kernel.IdentitySearchPolicy categoriesFor: #newSet!operations!public! !
-!Kernel.IdentitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+!Kernel.IdentitySearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:!comparing!public! !
+hash:max:!comparing!public! !
+isIdentity!public!testing! !
+keyAtValue:in:ifAbsent:!public!searching! !
+name!accessing!public! !
+newLookupTable!operations!public! !
+newSet!operations!public! !
+nextIndexOf:in:from:to:!public!searching! !
+!
 

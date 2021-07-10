@@ -444,7 +444,9 @@ asRichText
 	"Answer the receiver converted to a RichText instance"
 
 	^UI.RichText fromString: self! !
-!Core.String categoriesFor: #asRichText!converting!public! !
+!Core.String categoriesForMethods!
+asRichText!converting!public! !
+!
 
 !UI.Clipboard methodsFor!
 
@@ -461,8 +463,10 @@ getRichTextIfNone: exceptionHandler
 	result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #RichText ifNone: exceptionHandler! !
-!UI.Clipboard categoriesFor: #getRichText!accessing!public! !
-!UI.Clipboard categoriesFor: #getRichTextIfNone:!accessing!public! !
+!UI.Clipboard categoriesForMethods!
+getRichText!accessing!public! !
+getRichTextIfNone:!accessing!public! !
+!
 
 !UI.TextEdit methodsFor!
 
@@ -494,10 +498,12 @@ selectionRtf: aString
 	RichText/Strings."
 
 	! !
-!UI.TextEdit categoriesFor: #richText!accessing!public! !
-!UI.TextEdit categoriesFor: #richTextClass!accessing!private! !
-!UI.TextEdit categoriesFor: #selectionRichText:!private!selection! !
-!UI.TextEdit categoriesFor: #selectionRtf:!private!selection! !
+!UI.TextEdit categoriesForMethods!
+richText!accessing!public! !
+richTextClass!accessing!private! !
+selectionRichText:!private!selection! !
+selectionRtf:!private!selection! !
+!
 
 !UI.View methodsFor!
 
@@ -506,7 +512,9 @@ richText
 	May be overridden by subclasses which actually contain rich text."
 
 	^self plainText asRichText! !
-!UI.View categoriesFor: #richText!accessing!public! !
+!UI.View categoriesForMethods!
+richText!accessing!public! !
+!
 
 "End of package definition"!
 

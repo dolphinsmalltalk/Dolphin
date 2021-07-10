@@ -27,9 +27,11 @@ serialNumberClass
 	"Answer the class of the <ProtectedProductSerialNumber> used to encrypt the receiver"
 
 	^MyCompanySerialNumber! !
-!Security.Examples.ProtectedScribbleSessionManager categoriesFor: #encryptedPackageNames!constants!public! !
-!Security.Examples.ProtectedScribbleSessionManager categoriesFor: #productRegistrationKey!constants!public! !
-!Security.Examples.ProtectedScribbleSessionManager categoriesFor: #serialNumberClass!constants!public! !
+!Security.Examples.ProtectedScribbleSessionManager categoriesForMethods!
+encryptedPackageNames!constants!public! !
+productRegistrationKey!constants!public! !
+serialNumberClass!constants!public! !
+!
 
 !Security.Examples.ProtectedScribbleSessionManager class methodsFor!
 
@@ -37,5 +39,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Smalltalk.Scribble! !
-!Security.Examples.ProtectedScribbleSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!Security.Examples.ProtectedScribbleSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

@@ -100,18 +100,20 @@ reifyNullTerminatedArray: ptrArray
 				[addresses nextPut: (addressClass fromAddress: each) address.
 				i := i + VMConstants.IntPtrSize].
 	^addresses contents! !
-!OS.HOSTENT categoriesFor: #address!accessing!public! !
-!OS.HOSTENT categoriesFor: #addressClass!helpers!private! !
-!OS.HOSTENT categoriesFor: #allAddresses!accessing!public! !
-!OS.HOSTENT categoriesFor: #allAliases!accessing!public! !
-!OS.HOSTENT categoriesFor: #h_addr!accessing!public! !
-!OS.HOSTENT categoriesFor: #h_addr_list!**compiled accessors**!public! !
-!OS.HOSTENT categoriesFor: #h_addrtype!**compiled accessors**!public! !
-!OS.HOSTENT categoriesFor: #h_aliases!**compiled accessors**!public! !
-!OS.HOSTENT categoriesFor: #h_length!**compiled accessors**!public! !
-!OS.HOSTENT categoriesFor: #h_name!**compiled accessors**!public! !
-!OS.HOSTENT categoriesFor: #host!accessing!public! !
-!OS.HOSTENT categoriesFor: #reifyNullTerminatedArray:!helpers!private! !
+!OS.HOSTENT categoriesForMethods!
+address!accessing!public! !
+addressClass!helpers!private! !
+allAddresses!accessing!public! !
+allAliases!accessing!public! !
+h_addr!accessing!public! !
+h_addr_list!**compiled accessors**!public! !
+h_addrtype!**compiled accessors**!public! !
+h_aliases!**compiled accessors**!public! !
+h_length!**compiled accessors**!public! !
+h_name!**compiled accessors**!public! !
+host!accessing!public! !
+reifyNullTerminatedArray:!helpers!private! !
+!
 
 !OS.HOSTENT class methodsFor!
 
@@ -152,7 +154,9 @@ host: aStringHostName
 	^answer isNull
 		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
 		ifFalse: [answer]! !
-!OS.HOSTENT class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.HOSTENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.HOSTENT class categoriesFor: #host:!instance creation!public! !
+!OS.HOSTENT class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+host:!instance creation!public! !
+!
 

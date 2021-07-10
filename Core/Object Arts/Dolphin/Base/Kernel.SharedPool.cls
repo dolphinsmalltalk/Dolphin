@@ -64,12 +64,14 @@ subclass: aSymbol
 variableAdded: aVariableBinding
 	aVariableBinding isImmutable: true.
 	super variableAdded: aVariableBinding! !
-!Kernel.SharedPool class categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
-!Kernel.SharedPool class categoriesFor: #at:put:!adding!development!public! !
-!Kernel.SharedPool class categoriesFor: #baseEnvironment!constants!private! !
-!Kernel.SharedPool class categoriesFor: #classesReferencing!development!private! !
-!Kernel.SharedPool class categoriesFor: #isValidKey:!adding!private! !
-!Kernel.SharedPool class categoriesFor: #keyString:!adding!private! !
-!Kernel.SharedPool class categoriesFor: #subclass:!class hierarchy-adding!public! !
-!Kernel.SharedPool class categoriesFor: #variableAdded:!class hierarchy-mutating!class variables!private! !
+!Kernel.SharedPool class categoriesForMethods!
+at:ifAbsentPut:!accessing!development!public! !
+at:put:!adding!development!public! !
+baseEnvironment!constants!private! !
+classesReferencing!development!private! !
+isValidKey:!adding!private! !
+keyString:!adding!private! !
+subclass:!class hierarchy-adding!public! !
+variableAdded:!class hierarchy-mutating!class variables!private! !
+!
 

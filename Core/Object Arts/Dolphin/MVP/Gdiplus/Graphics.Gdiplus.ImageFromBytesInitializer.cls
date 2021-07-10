@@ -27,5 +27,7 @@ createHandle
 	self library gdipLoadImageFromStream: stm image: gpHandle.
 	stm free.
 	^gpHandle! !
-!Graphics.Gdiplus.ImageFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageFromBytesInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 

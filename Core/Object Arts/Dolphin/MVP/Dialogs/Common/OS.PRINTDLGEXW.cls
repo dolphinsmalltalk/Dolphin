@@ -274,48 +274,50 @@ nStartPage: anInteger
 	"Set the receiver's 'nStartPage' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nStartPage put: anInteger! !
-!OS.PRINTDLGEXW categoriesFor: #dwResultAction!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #dwResultAction:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #ExclusionFlags!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #ExclusionFlags:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #flags:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #Flags2!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #Flags2:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hDC!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hDC:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hDevMode!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hDevMode:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hDevNames!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hDevNames:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hInstance!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hwndOwner!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lpCallback!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lpCallback:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lphPropertyPages!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lphPropertyPages:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lpPageRanges!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lpPageRanges:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lpPrintTemplateName!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lpPrintTemplateName:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lStructSize!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #lStructSize:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nCopies!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nCopies:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nMaxPage!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nMaxPageRanges!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nMaxPageRanges:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nMinPage!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nMinPage:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nPageRanges!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nPageRanges:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nPropertyPages!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nPropertyPages:!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nStartPage!**compiled accessors**!public! !
-!OS.PRINTDLGEXW categoriesFor: #nStartPage:!**compiled accessors**!public! !
+!OS.PRINTDLGEXW categoriesForMethods!
+dwResultAction!**compiled accessors**!public! !
+dwResultAction:!**compiled accessors**!public! !
+ExclusionFlags!**compiled accessors**!public! !
+ExclusionFlags:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+Flags2!**compiled accessors**!public! !
+Flags2:!**compiled accessors**!public! !
+hDC!**compiled accessors**!public! !
+hDC:!**compiled accessors**!public! !
+hDevMode!**compiled accessors**!public! !
+hDevMode:!**compiled accessors**!public! !
+hDevNames!**compiled accessors**!public! !
+hDevNames:!**compiled accessors**!public! !
+hInstance!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+hwndOwner!**compiled accessors**!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpCallback!**compiled accessors**!public! !
+lpCallback:!**compiled accessors**!public! !
+lphPropertyPages!**compiled accessors**!public! !
+lphPropertyPages:!**compiled accessors**!public! !
+lpPageRanges!**compiled accessors**!public! !
+lpPageRanges:!**compiled accessors**!public! !
+lpPrintTemplateName!**compiled accessors**!public! !
+lpPrintTemplateName:!**compiled accessors**!public! !
+lStructSize!**compiled accessors**!public! !
+lStructSize:!**compiled accessors**!public! !
+nCopies!**compiled accessors**!public! !
+nCopies:!**compiled accessors**!public! !
+nMaxPage!**compiled accessors**!public! !
+nMaxPage:!**compiled accessors**!public! !
+nMaxPageRanges!**compiled accessors**!public! !
+nMaxPageRanges:!**compiled accessors**!public! !
+nMinPage!**compiled accessors**!public! !
+nMinPage:!**compiled accessors**!public! !
+nPageRanges!**compiled accessors**!public! !
+nPageRanges:!**compiled accessors**!public! !
+nPropertyPages!**compiled accessors**!public! !
+nPropertyPages:!**compiled accessors**!public! !
+nStartPage!**compiled accessors**!public! !
+nStartPage:!**compiled accessors**!public! !
+!
 
 !OS.PRINTDLGEXW class methodsFor!
 
@@ -375,6 +377,8 @@ defineFields
 
 getFieldNames
 	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
-!OS.PRINTDLGEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.PRINTDLGEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PRINTDLGEXW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

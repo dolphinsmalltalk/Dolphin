@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.ArrayedCollectionTest subclass: #'Core.Tests.ByteArrayTest'
 	instanceVariableNames: ''
@@ -160,17 +160,19 @@ testWordAtOffsetPut
 
 wordValues
 	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16rFFFE 16rFFFF)! !
-!Core.Tests.ByteArrayTest categoriesFor: #assimilate:!public!unit tests! !
-!Core.Tests.ByteArrayTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.ByteArrayTest categoriesFor: #dwordValues!constants!private! !
-!Core.Tests.ByteArrayTest categoriesFor: #sdwordValues!constants!private! !
-!Core.Tests.ByteArrayTest categoriesFor: #testBasicDwordAtOffsetPut!public!unit tests! !
-!Core.Tests.ByteArrayTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
-!Core.Tests.ByteArrayTest categoriesFor: #testFromHexString!public! !
-!Core.Tests.ByteArrayTest categoriesFor: #testMixedConcatenation!public! !
-!Core.Tests.ByteArrayTest categoriesFor: #testSbyteAtOffset!public!unit tests! !
-!Core.Tests.ByteArrayTest categoriesFor: #testSbyteAtOffsetPut!public!unit tests! !
-!Core.Tests.ByteArrayTest categoriesFor: #testSDwordAtOffsetPut!public!unit tests! !
-!Core.Tests.ByteArrayTest categoriesFor: #testWordAtOffsetPut!public!unit tests! !
-!Core.Tests.ByteArrayTest categoriesFor: #wordValues!constants!private! !
+!Core.Tests.ByteArrayTest categoriesForMethods!
+assimilate:!public!unit tests! !
+collectionClass!helpers!private! !
+dwordValues!constants!private! !
+sdwordValues!constants!private! !
+testBasicDwordAtOffsetPut!public!unit tests! !
+testDwordAtOffsetPut!public!unit tests! !
+testFromHexString!public! !
+testMixedConcatenation!public! !
+testSbyteAtOffset!public!unit tests! !
+testSbyteAtOffsetPut!public!unit tests! !
+testSDwordAtOffsetPut!public!unit tests! !
+testWordAtOffsetPut!public!unit tests! !
+wordValues!constants!private! !
+!
 

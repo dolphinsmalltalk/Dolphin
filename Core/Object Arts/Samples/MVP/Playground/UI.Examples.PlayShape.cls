@@ -52,8 +52,10 @@ redraw
 
 	playground invalidate; update.
 	self delay! !
-!UI.Examples.PlayShape categoriesFor: #delay!operations!public! !
-!UI.Examples.PlayShape categoriesFor: #drawOn:!drawing!private! !
-!UI.Examples.PlayShape categoriesFor: #playground:!accessing!private! !
-!UI.Examples.PlayShape categoriesFor: #redraw!operations!public! !
+!UI.Examples.PlayShape categoriesForMethods!
+delay!operations!public! !
+drawOn:!drawing!private! !
+playground:!accessing!private! !
+redraw!operations!public! !
+!
 

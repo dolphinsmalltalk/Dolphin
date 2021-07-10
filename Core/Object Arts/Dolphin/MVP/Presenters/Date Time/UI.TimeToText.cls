@@ -51,9 +51,11 @@ rightToLeft: aString
 
 	#todo.	"Parse correctly using format and/or locale."
 	^Time fromString: aString! !
-!UI.TimeToText categoriesFor: #actualFormat!accessing!private! !
-!UI.TimeToText categoriesFor: #format!accessing!public! !
-!UI.TimeToText categoriesFor: #format:!accessing!public! !
-!UI.TimeToText categoriesFor: #leftToRight:!operations!private! !
-!UI.TimeToText categoriesFor: #rightToLeft:!operations!private! !
+!UI.TimeToText categoriesForMethods!
+actualFormat!accessing!private! !
+format!accessing!public! !
+format:!accessing!public! !
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 

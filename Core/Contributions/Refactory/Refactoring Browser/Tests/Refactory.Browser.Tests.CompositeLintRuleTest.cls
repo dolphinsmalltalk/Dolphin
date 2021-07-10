@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.LintRuleTest subclass: #'Refactory.Browser.Tests.CompositeLintRuleTest'
 	instanceVariableNames: 'rules'
@@ -49,17 +49,19 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #checkClass:!accessing!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #failedRules!accessing!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #hasConflicts!public!testing! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #isComposite!public!testing! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #resetResult!initialize/release!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #rules!accessing!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #rules:!initialize/release!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesFor: #viewResults!private! !
+!Refactory.Browser.Tests.CompositeLintRuleTest categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+failedRules!accessing!public! !
+hasConflicts!public!testing! !
+isComposite!public!testing! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+rules!accessing!public! !
+rules:!initialize/release!public! !
+viewResults!private! !
+!
 
 !Refactory.Browser.Tests.CompositeLintRuleTest class methodsFor!
 
@@ -89,10 +91,12 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRuleTest protocol: 'transformations'! !
-!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesFor: #allRules!instance creation!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesFor: #lintChecks!all checks!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesFor: #ruleFor:protocol:!instance creation!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesFor: #rules:!instance creation!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesFor: #rules:name:!instance creation!public! !
-!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesFor: #transformations!all checks!public! !
+!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesForMethods!
+allRules!instance creation!public! !
+lintChecks!all checks!public! !
+ruleFor:protocol:!instance creation!public! !
+rules:!instance creation!public! !
+rules:name:!instance creation!public! !
+transformations!all checks!public! !
+!
 

@@ -58,17 +58,19 @@ variable
 
 variableName
 	^variable! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeObject!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeStringFormat!constants!printing!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #changeSymbol!constants!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #class:variable:!initialize/release!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #primitiveExecute!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #variable!accessing!private! !
-!Refactory.Browser.RefactoryVariableChange categoriesFor: #variableName!accessing!private! !
+!Refactory.Browser.RefactoryVariableChange categoriesForMethods!
+=!comparing!public! !
+changeObject!private! !
+changeString!printing!public! !
+changeStringFormat!constants!printing!private! !
+changeSymbol!constants!private! !
+class:variable:!initialize/release!private! !
+hash!comparing!public! !
+primitiveExecute!private! !
+printOn:!printing!public! !
+variable!accessing!private! !
+variableName!accessing!private! !
+!
 
 !Refactory.Browser.RefactoryVariableChange class methodsFor!
 
@@ -83,6 +85,8 @@ remove: aVariable from: aBehavior
 	but is here so we don't need to copy it to all subclasses"
 
 	^self new class: aBehavior variable: aVariable! !
-!Refactory.Browser.RefactoryVariableChange class categoriesFor: #add:to:!instance creation!public! !
-!Refactory.Browser.RefactoryVariableChange class categoriesFor: #remove:from:!instance creation!public! !
+!Refactory.Browser.RefactoryVariableChange class categoriesForMethods!
+add:to:!instance creation!public! !
+remove:from:!instance creation!public! !
+!
 

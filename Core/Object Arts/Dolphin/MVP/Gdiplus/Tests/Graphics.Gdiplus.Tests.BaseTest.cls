@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.BaseTest'
 	instanceVariableNames: ''
@@ -35,7 +35,9 @@ testComparisonIdentity
 				fromInitializer: (initializer := TestInitializer new arg1: 123).
 	self assert: model equals: (self concreteGdiplusBaseSubclass fromInitializer: initializer).
 	model hash! !
-!Graphics.Gdiplus.Tests.BaseTest categoriesFor: #concreteGdiplusBaseSubclass!private! !
-!Graphics.Gdiplus.Tests.BaseTest categoriesFor: #testComparisonEquality!public!unit tests! !
-!Graphics.Gdiplus.Tests.BaseTest categoriesFor: #testComparisonIdentity!public!unit tests! !
+!Graphics.Gdiplus.Tests.BaseTest categoriesForMethods!
+concreteGdiplusBaseSubclass!private! !
+testComparisonEquality!public!unit tests! !
+testComparisonIdentity!public!unit tests! !
+!
 

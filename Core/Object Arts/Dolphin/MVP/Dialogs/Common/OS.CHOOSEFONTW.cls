@@ -107,23 +107,25 @@ rgbColors: anInteger
 	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_rgbColors put: anInteger! !
-!OS.CHOOSEFONTW categoriesFor: #color!public! !
-!OS.CHOOSEFONTW categoriesFor: #color:!public! !
-!OS.CHOOSEFONTW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #flags!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #flags:!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #hDC:!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #hookFlag!accessing!public! !
-!OS.CHOOSEFONTW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #iPointSize!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #logFont!private! !
-!OS.CHOOSEFONTW categoriesFor: #logFont:!private! !
-!OS.CHOOSEFONTW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #lpLogFont!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #lpLogFont:!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #ownerView:!accessing!public! !
-!OS.CHOOSEFONTW categoriesFor: #rgbColors!**compiled accessors**!public! !
-!OS.CHOOSEFONTW categoriesFor: #rgbColors:!**compiled accessors**!public! !
+!OS.CHOOSEFONTW categoriesForMethods!
+color!public! !
+color:!public! !
+dwSize:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hDC:!**compiled accessors**!public! !
+hookFlag!accessing!public! !
+hwndOwner:!**compiled accessors**!public! !
+iPointSize!**compiled accessors**!public! !
+logFont!private! !
+logFont:!private! !
+lpfnHook:!**compiled accessors**!public! !
+lpLogFont!**compiled accessors**!public! !
+lpLogFont:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+rgbColors!**compiled accessors**!public! !
+rgbColors:!**compiled accessors**!public! !
+!
 
 !OS.CHOOSEFONTW class methodsFor!
 
@@ -169,6 +171,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
-!OS.CHOOSEFONTW class categoriesFor: #defineFields!public!template definition! !
-!OS.CHOOSEFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CHOOSEFONTW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

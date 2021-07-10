@@ -106,22 +106,24 @@ preResize: newMe
 
 sourceFilerClass
 	^LegacyChunkSourceFiler! !
-!PoolConstantsDictionary categoriesFor: #add:!adding!public! !
-!PoolConstantsDictionary categoriesFor: #canFileOut!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
-!PoolConstantsDictionary categoriesFor: #fileOut!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #fileOutName!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #fileOutOn:!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #isChanged!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #isChanged:!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #isValidKey:!adding!development!private! !
-!PoolConstantsDictionary categoriesFor: #keyString:!adding!development!private! !
-!PoolConstantsDictionary categoriesFor: #name!accessing!public! !
-!PoolConstantsDictionary categoriesFor: #name:!accessing!private! !
-!PoolConstantsDictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!PoolConstantsDictionary categoriesFor: #owningPackage!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #preResize:!adding!private! !
-!PoolConstantsDictionary categoriesFor: #sourceFilerClass!public!source filing! !
+!PoolConstantsDictionary categoriesForMethods!
+add:!adding!public! !
+canFileOut!public!source filing! !
+classesReferencing!development!private! !
+fileOut!public!source filing! !
+fileOutName!public!source filing! !
+fileOutOn:!public!source filing! !
+isChanged!public!source filing! !
+isChanged:!public!source filing! !
+isValidKey:!adding!development!private! !
+keyString:!adding!development!private! !
+name!accessing!public! !
+name:!accessing!private! !
+newAssociation:value:!helpers!private! !
+owningPackage!public!source filing! !
+preResize:!adding!private! !
+sourceFilerClass!public!source filing! !
+!
 
 PoolConstantsDictionary methodProtocol: #sourceObject attributes: #(#readOnly) selectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage #sourceFilerClass)!
 
@@ -131,5 +133,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
-!PoolConstantsDictionary class categoriesFor: #named:!instance creation!public! !
+!PoolConstantsDictionary class categoriesForMethods!
+named:!instance creation!public! !
+!
 

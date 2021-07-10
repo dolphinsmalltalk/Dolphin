@@ -44,10 +44,12 @@ paintTransparentBackgroundOn: aCanvas
 	aCanvas
 		brush: (HatchBrush diamond: Color whiteSmoke);
 		fillRectangle: self clientRectangle! !
-!UI.ColorView categoriesFor: #basicActualBackcolor!accessing!private! !
-!UI.ColorView categoriesFor: #displayValue!private!updating! !
-!UI.ColorView categoriesFor: #displayValue:!private!updating! !
-!UI.ColorView categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
+!UI.ColorView categoriesForMethods!
+basicActualBackcolor!accessing!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+paintTransparentBackgroundOn:!private!updating! !
+!
 
 !UI.ColorView class methodsFor!
 
@@ -60,6 +62,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!UI.ColorView class categoriesFor: #defaultModel!models!public! !
-!UI.ColorView class categoriesFor: #icon!constants!public! !
+!UI.ColorView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

@@ -82,18 +82,20 @@ translateTransform: aPoint order: aMatrixOrderConstant
 		offsetX: aPoint x
 		offsetY: aPoint y
 		order: aMatrixOrderConstant! !
-!Graphics.Gdiplus.Matrix categoriesFor: #asArray!converting!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Matrix categoriesFor: #printOn:!printing!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #rotateTransform:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #rotateTransform:order:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #scaleTransform:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #scaleTransform:order:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #shearTransform:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #shearTransform:order:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #transformPoints:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #translateTransform:!operations!public! !
-!Graphics.Gdiplus.Matrix categoriesFor: #translateTransform:order:!operations!public! !
+!Graphics.Gdiplus.Matrix categoriesForMethods!
+asArray!converting!public! !
+basicFree!private!realizing/unrealizing! !
+printOn:!printing!public! !
+rotateTransform:!operations!public! !
+rotateTransform:order:!operations!public! !
+scaleTransform:!operations!public! !
+scaleTransform:order:!operations!public! !
+shearTransform:!operations!public! !
+shearTransform:order:!operations!public! !
+transformPoints:!operations!public! !
+translateTransform:!operations!public! !
+translateTransform:order:!operations!public! !
+!
 
 !Graphics.Gdiplus.Matrix class methodsFor!
 
@@ -215,11 +217,13 @@ rectangle: aRectangle point: aPoint
 		m22: aRectangle height
 		m31: aPoint x
 		m32: aPoint y! !
-!Graphics.Gdiplus.Matrix class categoriesFor: #exampleGdipMShadows!examples!public!sunit! !
-!Graphics.Gdiplus.Matrix class categoriesFor: #exampleGdipMShear!examples!public!sunit! !
-!Graphics.Gdiplus.Matrix class categoriesFor: #exampleGdipMTranslate!examples!public!sunit! !
-!Graphics.Gdiplus.Matrix class categoriesFor: #fromArray:!instance creation!public! !
-!Graphics.Gdiplus.Matrix class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
-!Graphics.Gdiplus.Matrix class categoriesFor: #new!instance creation!public! !
-!Graphics.Gdiplus.Matrix class categoriesFor: #rectangle:point:!instance creation!public! !
+!Graphics.Gdiplus.Matrix class categoriesForMethods!
+exampleGdipMShadows!examples!public!sunit! !
+exampleGdipMShear!examples!public!sunit! !
+exampleGdipMTranslate!examples!public!sunit! !
+fromArray:!instance creation!public! !
+m11:m12:m21:m22:m31:m32:!instance creation!public! !
+new!instance creation!public! !
+rectangle:point:!instance creation!public! !
+!
 

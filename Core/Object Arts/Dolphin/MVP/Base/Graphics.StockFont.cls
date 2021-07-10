@@ -44,12 +44,14 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
-!Graphics.StockFont categoriesFor: #=!comparing!public! !
-!Graphics.StockFont categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.StockFont categoriesFor: #hash!comparing!public! !
-!Graphics.StockFont categoriesFor: #id!accessing!private! !
-!Graphics.StockFont categoriesFor: #id:!accessing!private! !
-!Graphics.StockFont categoriesFor: #ownedHandle:!accessing!private! !
+!Graphics.StockFont categoriesForMethods!
+=!comparing!public! !
+createHandle!private!realizing/unrealizing! !
+hash!comparing!public! !
+id!accessing!private! !
+id:!accessing!private! !
+ownedHandle:!accessing!private! !
+!
 
 !Graphics.StockFont class methodsFor!
 
@@ -60,5 +62,7 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
-!Graphics.StockFont class categoriesFor: #fromId:!instance creation!public! !
+!Graphics.StockFont class categoriesForMethods!
+fromId:!instance creation!public! !
+!
 

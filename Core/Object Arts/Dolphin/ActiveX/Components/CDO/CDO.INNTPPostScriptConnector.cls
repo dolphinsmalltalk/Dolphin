@@ -25,8 +25,10 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDO.INNTPPostScriptConnector categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.INNTPPostScriptConnector categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.INNTPPostScriptConnector categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !CDO.INNTPPostScriptConnector class methodsFor!
 
@@ -35,5 +37,7 @@ clsid
 
 	^CLSID fromString: '{cd000009-8b95-11d1-82db-00c04fb1625d}'
 ! !
-!CDO.INNTPPostScriptConnector class categoriesFor: #clsid!**auto generated**!constants!private! !
+!CDO.INNTPPostScriptConnector class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+!
 

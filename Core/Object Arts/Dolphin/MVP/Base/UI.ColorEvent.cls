@@ -18,6 +18,8 @@ canvas
 
 hdc
 	^self wParam! !
-!UI.ColorEvent categoriesFor: #canvas!accessing!public! !
-!UI.ColorEvent categoriesFor: #hdc!accessing!public! !
+!UI.ColorEvent categoriesForMethods!
+canvas!accessing!public! !
+hdc!accessing!public! !
+!
 

@@ -50,14 +50,16 @@ selectionOrNil
 	"Legacy behaviour"
 
 	^self selectionIfNone: [#()]! !
-!MultipleSelectionListBox categoriesFor: #defaultWindowStyle!constants!private! !
-!MultipleSelectionListBox categoriesFor: #isMultiSelect:!public!testing! !
-!MultipleSelectionListBox categoriesFor: #selection!public!selection! !
-!MultipleSelectionListBox categoriesFor: #selection:ifAbsent:!public!selection! !
-!MultipleSelectionListBox categoriesFor: #selectionByIndex!public!selection! !
-!MultipleSelectionListBox categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!MultipleSelectionListBox categoriesFor: #selectionIfNone:!public!selection! !
-!MultipleSelectionListBox categoriesFor: #selectionOrNil!public!selection! !
+!MultipleSelectionListBox categoriesForMethods!
+defaultWindowStyle!constants!private! !
+isMultiSelect:!public!testing! !
+selection!public!selection! !
+selection:ifAbsent:!public!selection! !
+selectionByIndex!public!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionIfNone:!public!selection! !
+selectionOrNil!public!selection! !
+!
 
 !MultipleSelectionListBox class methodsFor!
 
@@ -65,5 +67,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Smalltalk developmentSystem deprecatedIcon! !
-!MultipleSelectionListBox class categoriesFor: #icon!constants!public! !
+!MultipleSelectionListBox class categoriesForMethods!
+icon!constants!public! !
+!
 

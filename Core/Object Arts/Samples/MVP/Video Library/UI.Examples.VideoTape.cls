@@ -68,12 +68,14 @@ recordings
 	"
 
 	^recordings! !
-!UI.Examples.VideoTape categoriesFor: #displayOn:!printing!public! !
-!UI.Examples.VideoTape categoriesFor: #length!accessing!public! !
-!UI.Examples.VideoTape categoriesFor: #name!accessing!public! !
-!UI.Examples.VideoTape categoriesFor: #name:length:!initializing!private! !
-!UI.Examples.VideoTape categoriesFor: #printOn:!printing!public! !
-!UI.Examples.VideoTape categoriesFor: #recordings!accessing!public! !
+!UI.Examples.VideoTape categoriesForMethods!
+displayOn:!printing!public! !
+length!accessing!public! !
+name!accessing!public! !
+name:length:!initializing!private! !
+printOn:!printing!public! !
+recordings!accessing!public! !
+!
 
 !UI.Examples.VideoTape class methodsFor!
 
@@ -112,8 +114,10 @@ name: tapeName length: tapeLength
 
 	^self new name: tapeName length: tapeLength
 ! !
-!UI.Examples.VideoTape class categoriesFor: #defaultTapeLength!constants!private! !
-!UI.Examples.VideoTape class categoriesFor: #icon!constants!public! !
-!UI.Examples.VideoTape class categoriesFor: #name:!instance creation!public! !
-!UI.Examples.VideoTape class categoriesFor: #name:length:!instance creation!public! !
+!UI.Examples.VideoTape class categoriesForMethods!
+defaultTapeLength!constants!private! !
+icon!constants!public! !
+name:!instance creation!public! !
+name:length:!instance creation!public! !
+!
 

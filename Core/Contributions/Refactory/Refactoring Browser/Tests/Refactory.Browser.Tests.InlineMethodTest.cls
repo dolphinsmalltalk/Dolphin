@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineMethodTest'
 	instanceVariableNames: ''
@@ -262,19 +262,21 @@ testReturn
 						for: (BasicLintRuleTest class sourceCodeAt: #utilityMethods))
 				inMethod: #utilityMethods
 				forClass: BasicLintRuleTest class)! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testBadInterval!failure tests!public! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod1!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod2!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod3!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod4!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethod5!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethodForSuperSend!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testInlineRecursiveCascadedMethod!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testModelInlineRecursiveMethod!public!tests! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testOverriden!failure tests!public! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testPrimitive!failure tests!public! !
-!Refactory.Browser.Tests.InlineMethodTest categoriesFor: #testReturn!failure tests!public! !
+!Refactory.Browser.Tests.InlineMethodTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testInlineMethod!public!tests! !
+testInlineMethod1!public!tests! !
+testInlineMethod2!public!tests! !
+testInlineMethod3!public!tests! !
+testInlineMethod4!public!tests! !
+testInlineMethod5!public!tests! !
+testInlineMethodForSuperSend!public!tests! !
+testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
+testInlineRecursiveCascadedMethod!public!tests! !
+testModelInlineRecursiveMethod!public!tests! !
+testNonExistantSelector!failure tests!public! !
+testOverriden!failure tests!public! !
+testPrimitive!failure tests!public! !
+testReturn!failure tests!public! !
+!
 

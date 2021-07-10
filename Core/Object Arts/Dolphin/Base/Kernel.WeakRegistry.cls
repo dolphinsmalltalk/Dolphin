@@ -37,7 +37,9 @@ removeAtIndex: anInteger
 	object := registry basicAt: anInteger.
 	registry basicAt: anInteger put: DeadObject current.
 	^object! !
-!Kernel.WeakRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!Kernel.WeakRegistry categoriesFor: #initialize:!initializing!private! !
-!Kernel.WeakRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!Kernel.WeakRegistry categoriesForMethods!
+addAnsweringIndex:!adding!public! !
+initialize:!initializing!private! !
+removeAtIndex:!public!removing! !
+!
 

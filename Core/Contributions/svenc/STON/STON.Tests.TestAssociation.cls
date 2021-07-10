@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Association subclass: #'STON.Tests.TestAssociation'
 	instanceVariableNames: 'timestamp'
@@ -26,8 +26,10 @@ timestamp
 value: anObject
 	super value: anObject.
 	timestamp := self now! !
-!STON.Tests.TestAssociation categoriesFor: #key:value:!accessing!public! !
-!STON.Tests.TestAssociation categoriesFor: #now!accessing!public! !
-!STON.Tests.TestAssociation categoriesFor: #timestamp!accessing!public! !
-!STON.Tests.TestAssociation categoriesFor: #value:!accessing!public! !
+!STON.Tests.TestAssociation categoriesForMethods!
+key:value:!accessing!public! !
+now!accessing!public! !
+timestamp!accessing!public! !
+value:!accessing!public! !
+!
 

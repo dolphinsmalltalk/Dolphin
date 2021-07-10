@@ -337,40 +337,42 @@ updateControlInfo
 				list: (funcs collect: [:f | f selector -> f printIDL]);
 				view enable]
 		ifFalse: [eventsPresenter clear; view disable]! !
-!Tools.AXControlBrowser categoriesFor: #about!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #browseIDL!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #browseIDLOfTypeLib:!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #chooseAmbientBackcolor!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #chooseAmbientFont!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #chooseAmbientForecolor!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #controlHelp!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #controlProperties!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #controlSite!accessing!public! !
-!Tools.AXControlBrowser categoriesFor: #copyEventName!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #createComponents!initializing!public! !
-!Tools.AXControlBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.AXControlBrowser categoriesFor: #editProperties!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #fileNewControl!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #initialize!initializing!private! !
-!Tools.AXControlBrowser categoriesFor: #inspectControl!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #isTracingEvents!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #isTracingEvents:!accessing!public! !
-!Tools.AXControlBrowser categoriesFor: #onDragEvent:!event handling!public! !
-!Tools.AXControlBrowser categoriesFor: #onEvent:withArguments:!event handling!private! !
-!Tools.AXControlBrowser categoriesFor: #onPropertyChanged:!event handling!private! !
-!Tools.AXControlBrowser categoriesFor: #onPropertyChanging:accept:!event handling!private! !
-!Tools.AXControlBrowser categoriesFor: #onViewOpened!event handling!public! !
-!Tools.AXControlBrowser categoriesFor: #progId:!operations!public! !
-!Tools.AXControlBrowser categoriesFor: #queryCommand:!commands!private! !
-!Tools.AXControlBrowser categoriesFor: #toggleAllowShowUI!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #toggleAllowWindowless!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #toggleDesignMode!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #toggleDisplayAsDefault!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #toggleEventTracing!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #toggleFireControlEvents!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #toggleFirePropertyNotifications!commands!public! !
-!Tools.AXControlBrowser categoriesFor: #trace:!operations!private! !
-!Tools.AXControlBrowser categoriesFor: #updateControlInfo!operations!private! !
+!Tools.AXControlBrowser categoriesForMethods!
+about!commands!public! !
+browseIDL!commands!public! !
+browseIDLOfTypeLib:!commands!public! !
+chooseAmbientBackcolor!commands!public! !
+chooseAmbientFont!commands!public! !
+chooseAmbientForecolor!commands!public! !
+controlHelp!commands!public! !
+controlProperties!commands!public! !
+controlSite!accessing!public! !
+copyEventName!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+editProperties!commands!public! !
+fileNewControl!commands!public! !
+initialize!initializing!private! !
+inspectControl!commands!public! !
+isTracingEvents!commands!public! !
+isTracingEvents:!accessing!public! !
+onDragEvent:!event handling!public! !
+onEvent:withArguments:!event handling!private! !
+onPropertyChanged:!event handling!private! !
+onPropertyChanging:accept:!event handling!private! !
+onViewOpened!event handling!public! !
+progId:!operations!public! !
+queryCommand:!commands!private! !
+toggleAllowShowUI!commands!public! !
+toggleAllowWindowless!commands!public! !
+toggleDesignMode!commands!public! !
+toggleDisplayAsDefault!commands!public! !
+toggleEventTracing!commands!public! !
+toggleFireControlEvents!commands!public! !
+toggleFirePropertyNotifications!commands!public! !
+trace:!operations!private! !
+updateControlInfo!operations!private! !
+!
 
 !Tools.AXControlBrowser class methodsFor!
 
@@ -421,10 +423,12 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10603! !
-!Tools.AXControlBrowser class categoriesFor: #displayOn:!displaying!public! !
-!Tools.AXControlBrowser class categoriesFor: #icon!constants!public! !
-!Tools.AXControlBrowser class categoriesFor: #initialize!initializing!must strip!private! !
-!Tools.AXControlBrowser class categoriesFor: #publishedAspects!public! !
-!Tools.AXControlBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.AXControlBrowser class categoriesFor: #toolsFolderHelpId!constants!public! !
+!Tools.AXControlBrowser class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!must strip!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!constants!public! !
+!
 

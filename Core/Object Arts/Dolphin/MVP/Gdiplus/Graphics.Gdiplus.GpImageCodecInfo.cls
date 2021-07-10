@@ -186,32 +186,34 @@ Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Version put: anInteger! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Clsid!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Clsid:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #CodecName!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #CodecName:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #DllName!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #DllName:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FilenameExtension!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FilenameExtension:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Flags!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Flags:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatDescription!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatDescription:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatID!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #FormatID:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #MimeType!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #MimeType:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigCount!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigCount:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigMask!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigMask:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigPattern!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigPattern:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigSize!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #SigSize:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Version!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpImageCodecInfo categoriesFor: #Version:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpImageCodecInfo categoriesForMethods!
+Clsid!**compiled accessors**!public! !
+Clsid:!**compiled accessors**!public! !
+CodecName!**compiled accessors**!public! !
+CodecName:!**compiled accessors**!public! !
+DllName!**compiled accessors**!public! !
+DllName:!**compiled accessors**!public! !
+FilenameExtension!**compiled accessors**!public! !
+FilenameExtension:!**compiled accessors**!public! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+FormatDescription!**compiled accessors**!public! !
+FormatDescription:!**compiled accessors**!public! !
+FormatID!**compiled accessors**!public! !
+FormatID:!**compiled accessors**!public! !
+MimeType!**compiled accessors**!public! !
+MimeType:!**compiled accessors**!public! !
+SigCount!**compiled accessors**!public! !
+SigCount:!**compiled accessors**!public! !
+SigMask!**compiled accessors**!public! !
+SigMask:!**compiled accessors**!public! !
+SigPattern!**compiled accessors**!public! !
+SigPattern:!**compiled accessors**!public! !
+SigSize!**compiled accessors**!public! !
+SigSize:!**compiled accessors**!public! !
+Version!**compiled accessors**!public! !
+Version:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpImageCodecInfo class methodsFor!
 
@@ -281,6 +283,8 @@ defineFields
 
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
-!Graphics.Gdiplus.GpImageCodecInfo class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpImageCodecInfo class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpImageCodecInfo class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

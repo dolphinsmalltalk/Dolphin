@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Net.Tests.PROTOENTTest'
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ testFromStringInvalid
 		should: [OS.PROTOENT fromString: GUID newUnique asString]
 		raise: SocketError
 		matching: [:ex | ex statusCode = WinSocketErrors.WSANO_DATA]! !
-!Net.Tests.PROTOENTTest categoriesFor: #testFromInteger!public! !
-!Net.Tests.PROTOENTTest categoriesFor: #testFromIntegerInvalid!public! !
-!Net.Tests.PROTOENTTest categoriesFor: #testFromString!public! !
-!Net.Tests.PROTOENTTest categoriesFor: #testFromStringInvalid!public! !
+!Net.Tests.PROTOENTTest categoriesForMethods!
+testFromInteger!public! !
+testFromIntegerInvalid!public! !
+testFromString!public! !
+testFromStringInvalid!public! !
+!
 

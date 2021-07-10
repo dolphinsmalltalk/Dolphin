@@ -133,12 +133,14 @@ testValidVersions
 			self assert: subject buildmetadata equals: each sixth.
 			self assert: subject displayString equals: string.
 			self assert: subject printString equals: 'a SemVer(<p>)' << string]! !
-!Core.Tests.SemVerTest categoriesFor: #comparisonCases!constants!private! !
-!Core.Tests.SemVerTest categoriesFor: #testComparing!public!unit tests! !
-!Core.Tests.SemVerTest categoriesFor: #testEqualPrecedence!public!unit tests! !
-!Core.Tests.SemVerTest categoriesFor: #testFromGitDescription!public!unit tests! !
-!Core.Tests.SemVerTest categoriesFor: #testInvalidVersions!public!unit tests! !
-!Core.Tests.SemVerTest categoriesFor: #testPrecedence!public!unit tests! !
-!Core.Tests.SemVerTest categoriesFor: #testReadFromPartial!public! !
-!Core.Tests.SemVerTest categoriesFor: #testValidVersions!public!unit tests! !
+!Core.Tests.SemVerTest categoriesForMethods!
+comparisonCases!constants!private! !
+testComparing!public!unit tests! !
+testEqualPrecedence!public!unit tests! !
+testFromGitDescription!public!unit tests! !
+testInvalidVersions!public!unit tests! !
+testPrecedence!public!unit tests! !
+testReadFromPartial!public! !
+testValidVersions!public!unit tests! !
+!
 

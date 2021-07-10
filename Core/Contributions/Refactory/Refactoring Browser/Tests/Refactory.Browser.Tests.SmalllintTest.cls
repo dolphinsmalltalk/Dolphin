@@ -233,60 +233,62 @@ testWhileTrue
 
 testYourselfNotUsed
 	self parseTreeRuleFor: self currentSelector! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #blockRuleFor:!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #blockRuleFor:plusSelectors:!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #checkRule:isEqualTo:!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #compare:to:!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #currentSelector!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #parseTreeRuleFor:!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #parseTreeRuleFor:plusSelectors:!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #refactoryTestAppEnvironment!public!set up! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAnySatisfy!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAsOrderedCollectionNotNeeded!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAssignmentInBlock!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAssignmentInIfTrue!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testAtIfAbsent!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testBadMessage!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testBooleanPrecedence!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testCollectionMessagesToExternalObject!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testCollectionProtocol!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testCollectSelectNotUsed!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testConsistencyCheck!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testDetectAnySatisfy!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEndTrueFalse!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEqualNotUsed!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEqualsTrue!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testEquivalentSuperclassMethods!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testExtraBlock!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testFileBlocks!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testFullBlocks!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testGuardingClause!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testIfTrueBlocks!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testIfTrueReturns!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testJustSendsSuper!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testLiteralArrayCharacters!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testLongMethods!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testMinMax!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testMissingYourself!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testModifiesCollection!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testOverridesSpecialMessage!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testPrecedence!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testRefersToClass!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testReturnInEnsure!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testReturnsBooleanAndOther!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testReturnsIfTrue!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSearchingLiteral!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSendsDifferentSuper!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSizeCheck!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testStringConcatenation!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testSuperSends!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testTempsReadBeforeWritten!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testTempVarOverridesInstVar!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testThreeElementPoint!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testToDo!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testToDoCollect!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testToDoWithIncrement!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testUsesAdd!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testWhileTrue!public!tests! !
-!Refactory.Browser.Tests.SmalllintTest categoriesFor: #testYourselfNotUsed!public!tests! !
+!Refactory.Browser.Tests.SmalllintTest categoriesForMethods!
+blockRuleFor:!public!set up! !
+blockRuleFor:plusSelectors:!public!set up! !
+checkRule:isEqualTo:!public!set up! !
+compare:to:!public!set up! !
+currentSelector!public!set up! !
+parseTreeRuleFor:!public!set up! !
+parseTreeRuleFor:plusSelectors:!public!set up! !
+refactoryTestAppEnvironment!public!set up! !
+testAnySatisfy!public!tests! !
+testAsOrderedCollectionNotNeeded!public!tests! !
+testAssignmentInBlock!public!tests! !
+testAssignmentInIfTrue!public!tests! !
+testAtIfAbsent!public!tests! !
+testBadMessage!public!tests! !
+testBooleanPrecedence!public!tests! !
+testCollectionMessagesToExternalObject!public!tests! !
+testCollectionProtocol!public!tests! !
+testCollectSelectNotUsed!public!tests! !
+testConsistencyCheck!public!tests! !
+testDetectAnySatisfy!public!tests! !
+testEndTrueFalse!public!tests! !
+testEqualNotUsed!public!tests! !
+testEqualsTrue!public!tests! !
+testEquivalentSuperclassMethods!public!tests! !
+testExtraBlock!public!tests! !
+testFileBlocks!public!tests! !
+testFullBlocks!public!tests! !
+testGuardingClause!public!tests! !
+testIfTrueBlocks!public!tests! !
+testIfTrueReturns!public!tests! !
+testJustSendsSuper!public!tests! !
+testLiteralArrayCharacters!public!tests! !
+testLongMethods!public!tests! !
+testMinMax!public!tests! !
+testMissingYourself!public!tests! !
+testModifiesCollection!public!tests! !
+testOverridesSpecialMessage!public!tests! !
+testPrecedence!public!tests! !
+testRefersToClass!public!tests! !
+testReturnInEnsure!public!tests! !
+testReturnsBooleanAndOther!public!tests! !
+testReturnsIfTrue!public!tests! !
+testSearchingLiteral!public!tests! !
+testSendsDifferentSuper!public!tests! !
+testSizeCheck!public!tests! !
+testStringConcatenation!public!tests! !
+testSuperSends!public!tests! !
+testTempsReadBeforeWritten!public!tests! !
+testTempVarOverridesInstVar!public!tests! !
+testThreeElementPoint!public!tests! !
+testToDo!public!tests! !
+testToDoCollect!public!tests! !
+testToDoWithIncrement!public!tests! !
+testUsesAdd!public!tests! !
+testWhileTrue!public!tests! !
+testYourselfNotUsed!public!tests! !
+!
 

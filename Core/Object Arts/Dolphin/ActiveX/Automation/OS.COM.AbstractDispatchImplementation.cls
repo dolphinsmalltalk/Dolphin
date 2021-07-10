@@ -151,18 +151,20 @@ typeInfoCount
 	"Answer 1 if type information is available, else 0."
 
 	^0! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #decodeArgs:!helpers!private! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #errorDispatching:exception:excepInfo:!operations!private! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!public! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #idsOfNames:whenNotKnown:!accessing!public! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #invokeId:flags:withArguments:!operations!public! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #notifyDispatchError:invoking:!operations!private! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #supportedInterfaces!constants!public! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #typeInfo:ifNone:!accessing!private! !
-!OS.COM.AbstractDispatchImplementation categoriesFor: #typeInfoCount!accessing!public! !
+!OS.COM.AbstractDispatchImplementation categoriesForMethods!
+decodeArgs:!helpers!private! !
+errorDispatching:exception:excepInfo:!operations!private! !
+GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
+GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!public! !
+GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
+idsOfNames:whenNotKnown:!accessing!public! !
+Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
+invokeId:flags:withArguments:!operations!public! !
+notifyDispatchError:invoking:!operations!private! !
+supportedInterfaces!constants!public! !
+typeInfo:ifNone:!accessing!private! !
+typeInfoCount!accessing!public! !
+!
 
 OS.COM.AbstractDispatchImplementation methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
 

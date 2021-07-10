@@ -22,13 +22,17 @@ fillMode: aNumber
 
 isPersistent
 	^false! !
-!Graphics.Gdiplus.PathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.PathInitializer categoriesFor: #fillMode:!initializing!private! !
-!Graphics.Gdiplus.PathInitializer categoriesFor: #isPersistent!public!testing! !
+!Graphics.Gdiplus.PathInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+fillMode:!initializing!private! !
+isPersistent!public!testing! !
+!
 
 !Graphics.Gdiplus.PathInitializer class methodsFor!
 
 fillMode: aNumber
 	^self new fillMode: aNumber! !
-!Graphics.Gdiplus.PathInitializer class categoriesFor: #fillMode:!instance creation!public! !
+!Graphics.Gdiplus.PathInitializer class categoriesForMethods!
+fillMode:!instance creation!public! !
+!
 

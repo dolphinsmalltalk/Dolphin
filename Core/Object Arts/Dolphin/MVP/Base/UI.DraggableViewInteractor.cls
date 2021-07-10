@@ -45,7 +45,9 @@ onMouseMoved: aMouseEvent
 				isTracking: false;
 				isHot: true].
 	^false	"Suppress perform default processing"! !
-!UI.DraggableViewInteractor categoriesFor: #changeHotState:!accessing!private! !
-!UI.DraggableViewInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!UI.DraggableViewInteractor categoriesFor: #onMouseMoved:!event handling!public! !
+!UI.DraggableViewInteractor categoriesForMethods!
+changeHotState:!accessing!private! !
+onLeftButtonPressed:!event handling!public! !
+onMouseMoved:!event handling!public! !
+!
 

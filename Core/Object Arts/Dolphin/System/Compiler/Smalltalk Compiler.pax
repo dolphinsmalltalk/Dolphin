@@ -180,7 +180,9 @@ analyze
 		context: nil
 		pools: #()
 		onError: nil! !
-!Kernel.StMethodNode categoriesFor: #analyze!public! !
+!Kernel.StMethodNode categoriesForMethods!
+analyze!public! !
+!
 
 "End of package definition"!
 

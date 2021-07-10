@@ -144,31 +144,33 @@ visitedBlock
 
 visitedBlock: anObject
 	visitedBlock := anObject! !
-!Core.LimitedWriteStream categoriesFor: #alreadyVisited:!private! !
-!Core.LimitedWriteStream categoriesFor: #atEnd!public!testing! !
-!Core.LimitedWriteStream categoriesFor: #checkLimit!helpers!private! !
-!Core.LimitedWriteStream categoriesFor: #contents!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #contentsSpecies!constants!private! !
-!Core.LimitedWriteStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!Core.LimitedWriteStream categoriesFor: #isWriteable!public!testing! !
-!Core.LimitedWriteStream categoriesFor: #limit!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #limit:!public! !
-!Core.LimitedWriteStream categoriesFor: #limitBlock!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #limitBlock:!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #locale!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #locale:!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #moveToEnd!public! !
-!Core.LimitedWriteStream categoriesFor: #next:put:!public! !
-!Core.LimitedWriteStream categoriesFor: #nextPut:!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #originalContents!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #peekFor:!accessing!public! !
-!Core.LimitedWriteStream categoriesFor: #position!public! !
-!Core.LimitedWriteStream categoriesFor: #reset!public! !
-!Core.LimitedWriteStream categoriesFor: #setStream:limit:limitBlock:!initializing!private! !
-!Core.LimitedWriteStream categoriesFor: #visit:do:!public! !
-!Core.LimitedWriteStream categoriesFor: #visitedBlock!public! !
-!Core.LimitedWriteStream categoriesFor: #visitedBlock:!public! !
+!Core.LimitedWriteStream categoriesForMethods!
+alreadyVisited:!private! !
+atEnd!public!testing! !
+checkLimit!helpers!private! !
+contents!accessing!public! !
+contentsSpecies!constants!private! !
+encodedSizeOf:!encode/decode!public! !
+isWriteable!public!testing! !
+limit!accessing!public! !
+limit:!public! !
+limitBlock!accessing!public! !
+limitBlock:!accessing!public! !
+locale!accessing!public! !
+locale:!accessing!public! !
+moveToEnd!public! !
+next:put:!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+originalContents!accessing!public! !
+peekFor:!accessing!public! !
+position!public! !
+reset!public! !
+setStream:limit:limitBlock:!initializing!private! !
+visit:do:!public! !
+visitedBlock!public! !
+visitedBlock:!public! !
+!
 
 !Core.LimitedWriteStream class methodsFor!
 
@@ -241,14 +243,16 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
-!Core.LimitedWriteStream class categoriesFor: #defaultLimit!constants!private! !
-!Core.LimitedWriteStream class categoriesFor: #defaultLimitBlock!constants!private! !
-!Core.LimitedWriteStream class categoriesFor: #on:!instance creation!public! !
-!Core.LimitedWriteStream class categoriesFor: #on:from:to:!instance creation!public! !
-!Core.LimitedWriteStream class categoriesFor: #on:limit:!accessing!public! !
-!Core.LimitedWriteStream class categoriesFor: #on:limit:limitBlock:!instance creation!public! !
-!Core.LimitedWriteStream class categoriesFor: #over:limit:!accessing!public! !
-!Core.LimitedWriteStream class categoriesFor: #over:limit:limitBlock:!instance creation!public! !
-!Core.LimitedWriteStream class categoriesFor: #with:!instance creation!public! !
-!Core.LimitedWriteStream class categoriesFor: #with:from:to:!instance creation!public! !
+!Core.LimitedWriteStream class categoriesForMethods!
+defaultLimit!constants!private! !
+defaultLimitBlock!constants!private! !
+on:!instance creation!public! !
+on:from:to:!instance creation!public! !
+on:limit:!accessing!public! !
+on:limit:limitBlock:!instance creation!public! !
+over:limit:!accessing!public! !
+over:limit:limitBlock:!instance creation!public! !
+with:!instance creation!public! !
+with:from:to:!instance creation!public! !
+!
 

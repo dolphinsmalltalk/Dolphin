@@ -22,6 +22,8 @@ index: anInteger
 	"Private - Set the special selector index."
 
 	index := anInteger! !
-!Tools.SpecialReferencesCategory categoriesFor: #includesMethod:!public!testing! !
-!Tools.SpecialReferencesCategory categoriesFor: #index:!accessing!private! !
+!Tools.SpecialReferencesCategory categoriesForMethods!
+includesMethod:!public!testing! !
+index:!accessing!private! !
+!
 

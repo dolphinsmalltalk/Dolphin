@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.UtfEncodedStringTest subclass: #'Core.Tests.Utf16StringTest'
 	instanceVariableNames: ''
@@ -98,16 +98,18 @@ testUtf8StringConversion
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
 	self assert: bstr asUtf8String equals: byteString! !
-!Core.Tests.Utf16StringTest categoriesFor: #assimilate:!helpers!private! !
-!Core.Tests.Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
-!Core.Tests.Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
-!Core.Tests.Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.Utf16StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
-!Core.Tests.Utf16StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
-!Core.Tests.Utf16StringTest categoriesFor: #decodeTestCases!constants!private! !
-!Core.Tests.Utf16StringTest categoriesFor: #testAssociations!public!unit tests! !
-!Core.Tests.Utf16StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!Core.Tests.Utf16StringTest categoriesFor: #testKeys!public!unit tests! !
-!Core.Tests.Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
-!Core.Tests.Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
+!Core.Tests.Utf16StringTest categoriesForMethods!
+assimilate:!helpers!private! !
+assimilateString:!helpers!private! !
+byteArrayForSequence:!helpers!private! !
+collectionClass!helpers!private! !
+decodeIncompleteContinuations!constants!private! !
+decodeInvalidContinuations!constants!private! !
+decodeTestCases!constants!private! !
+testAssociations!public!unit tests! !
+testCopyWithAtIndex!public!unit tests! !
+testKeys!public!unit tests! !
+testMixedConcatenation!public! !
+testUtf8StringConversion!public!unit tests! !
+!
 

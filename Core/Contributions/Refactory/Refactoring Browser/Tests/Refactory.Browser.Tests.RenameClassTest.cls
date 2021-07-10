@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameClassTest'
 	instanceVariableNames: ''
@@ -219,12 +219,14 @@ testRenameClass
 	%<stdcall: <1s>* dummy <2s>.<1s> Tests.<1s>*>'
 						expandMacrosWith: newName
 						with: classToRename environment fullName))! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testBadName!failure tests!public! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testExistingName!failure tests!public! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testModelRenameClass!public!tests! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testModelRenameSequenceClass!public!tests! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testRenameChangeNamespace!public!tests! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testRenameChangeNamespaceToImported!public!tests! !
-!Refactory.Browser.Tests.RenameClassTest categoriesFor: #testRenameClass!public!tests! !
+!Refactory.Browser.Tests.RenameClassTest categoriesForMethods!
+testBadName!failure tests!public! !
+testExistingName!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelRenameClass!public!tests! !
+testModelRenameSequenceClass!public!tests! !
+testRenameChangeNamespace!public!tests! !
+testRenameChangeNamespaceToImported!public!tests! !
+testRenameClass!public!tests! !
+!
 

@@ -57,11 +57,13 @@ palVersion: anInteger
 	"Set the receiver's 'palVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_palVersion put: anInteger! !
-!OS.LOGPALETTE categoriesFor: #palNumEntries!**compiled accessors**!public! !
-!OS.LOGPALETTE categoriesFor: #palNumEntries:!**compiled accessors**!public! !
-!OS.LOGPALETTE categoriesFor: #palPalEntry!**compiled accessors**!public! !
-!OS.LOGPALETTE categoriesFor: #palVersion!**compiled accessors**!public! !
-!OS.LOGPALETTE categoriesFor: #palVersion:!**compiled accessors**!public! !
+!OS.LOGPALETTE categoriesForMethods!
+palNumEntries!**compiled accessors**!public! !
+palNumEntries:!**compiled accessors**!public! !
+palPalEntry!**compiled accessors**!public! !
+palVersion!**compiled accessors**!public! !
+palVersion:!**compiled accessors**!public! !
+!
 
 !OS.LOGPALETTE class methodsFor!
 
@@ -100,7 +102,9 @@ new
 	^(super new)
 		palNumEntries: 256;
 		yourself! !
-!OS.LOGPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.LOGPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.LOGPALETTE class categoriesFor: #new!instance creation!public! !
+!OS.LOGPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #IdentityDictionaryFactoryANSITest
 	instanceVariableNames: ''
@@ -27,9 +27,11 @@ testXnewX
 testXwithAllX
 	" <IdentityDictionary factory>#withAll: "
 	#'Collection'.! !
-!IdentityDictionaryFactoryANSITest categoriesFor: #canonicalObject!public! !
-!IdentityDictionaryFactoryANSITest categoriesFor: #protocol!public! !
-!IdentityDictionaryFactoryANSITest categoriesFor: #testXnew!public! !
-!IdentityDictionaryFactoryANSITest categoriesFor: #testXnewX!public! !
-!IdentityDictionaryFactoryANSITest categoriesFor: #testXwithAllX!public! !
+!IdentityDictionaryFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXnew!public! !
+testXnewX!public! !
+testXwithAllX!public! !
+!
 

@@ -19,7 +19,9 @@ isIdentifier
 
 isPatternVariable
 	^value first == self scannerClass patternVariableCharacter! !
-!Kernel.StIdentifierToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StIdentifierToken categoriesFor: #isIdentifier!public!testing! !
-!Kernel.StIdentifierToken categoriesFor: #isPatternVariable!public!testing! !
+!Kernel.StIdentifierToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isIdentifier!public!testing! !
+isPatternVariable!public!testing! !
+!
 

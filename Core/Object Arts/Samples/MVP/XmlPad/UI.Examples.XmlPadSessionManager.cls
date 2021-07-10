@@ -17,7 +17,9 @@ main
 	| pad |
 	pad := self mainShellClass show.
 	self argc > 1 ifTrue: [pad openFile: (self argv at: 2)]! !
-!UI.Examples.XmlPadSessionManager categoriesFor: #main!operations!public! !
+!UI.Examples.XmlPadSessionManager categoriesForMethods!
+main!operations!public! !
+!
 
 !UI.Examples.XmlPadSessionManager class methodsFor!
 
@@ -25,5 +27,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^XmlPad! !
-!UI.Examples.XmlPadSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.XmlPadSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

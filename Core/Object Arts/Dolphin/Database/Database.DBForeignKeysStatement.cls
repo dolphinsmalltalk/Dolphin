@@ -47,11 +47,13 @@ foreignTableName
 
 foreignTableName: aString
 	foreignTableName := aString! !
-!Database.DBForeignKeysStatement categoriesFor: #executeStatement!operations!private! !
-!Database.DBForeignKeysStatement categoriesFor: #foreignCatalogName!accessing!public! !
-!Database.DBForeignKeysStatement categoriesFor: #foreignCatalogName:!accessing!public! !
-!Database.DBForeignKeysStatement categoriesFor: #foreignSchemaName!accessing!public! !
-!Database.DBForeignKeysStatement categoriesFor: #foreignSchemaName:!accessing!public! !
-!Database.DBForeignKeysStatement categoriesFor: #foreignTableName!accessing!public! !
-!Database.DBForeignKeysStatement categoriesFor: #foreignTableName:!accessing!public! !
+!Database.DBForeignKeysStatement categoriesForMethods!
+executeStatement!operations!private! !
+foreignCatalogName!accessing!public! !
+foreignCatalogName:!accessing!public! !
+foreignSchemaName!accessing!public! !
+foreignSchemaName:!accessing!public! !
+foreignTableName!accessing!public! !
+foreignTableName:!accessing!public! !
+!
 

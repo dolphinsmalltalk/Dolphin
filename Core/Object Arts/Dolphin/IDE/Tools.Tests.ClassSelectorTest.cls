@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableItemsTest subclass: #'Tools.Tests.ClassSelectorTest'
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
@@ -297,27 +297,31 @@ testSelection
 			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
 	self removeClassesABC! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #create:subclassOf:!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #createClassesABC!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #createClassesDEF!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #createClassesGHI!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesABC!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesDEF!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesGHI!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #removeClassesNamed:!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #setUp!public!Running! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #tearDown!public!Running! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #testAddRemove!public!unit tests! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #testHierarchyMove!public!unit tests! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #testPackageMove!public!unit tests! !
-!Tools.Tests.ClassSelectorTest categoriesFor: #testSelection!public!unit tests! !
+!Tools.Tests.ClassSelectorTest categoriesForMethods!
+create:subclassOf:!helpers!private! !
+create:subclassOf:inPackage:!helpers!private! !
+createClassesABC!helpers!private! !
+createClassesDEF!helpers!private! !
+createClassesGHI!helpers!private! !
+removalOfSelectionLeaves:!helpers!private! !
+removeClassesABC!helpers!private! !
+removeClassesDEF!helpers!private! !
+removeClassesGHI!helpers!private! !
+removeClassesNamed:!helpers!private! !
+resetSelection!helpers!private! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testAddRemove!public!unit tests! !
+testHierarchyMove!public!unit tests! !
+testPackageMove!public!unit tests! !
+testSelection!public!unit tests! !
+!
 
 !Tools.Tests.ClassSelectorTest class methodsFor!
 
 resources
 	^{Core.Tests.DolphinTestPackages}! !
-!Tools.Tests.ClassSelectorTest class categoriesFor: #resources!Accessing!public! !
+!Tools.Tests.ClassSelectorTest class categoriesForMethods!
+resources!Accessing!public! !
+!
 

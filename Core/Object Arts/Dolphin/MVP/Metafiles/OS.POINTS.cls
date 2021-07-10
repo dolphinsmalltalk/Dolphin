@@ -60,12 +60,14 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_y put: anInteger! !
-!OS.POINTS categoriesFor: #asDword!converting!public! !
-!OS.POINTS categoriesFor: #asUIntPtr!converting!public! !
-!OS.POINTS categoriesFor: #x!**compiled accessors**!public! !
-!OS.POINTS categoriesFor: #x:!**compiled accessors**!public! !
-!OS.POINTS categoriesFor: #y!**compiled accessors**!public! !
-!OS.POINTS categoriesFor: #y:!**compiled accessors**!public! !
+!OS.POINTS categoriesForMethods!
+asDword!converting!public! !
+asUIntPtr!converting!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !OS.POINTS class methodsFor!
 
@@ -90,6 +92,8 @@ x: x y: y
 				swordAtOffset: _OffsetOf_x put: x;
 				swordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
-!OS.POINTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.POINTS class categoriesFor: #x:y:!instance creation!public! !
+!OS.POINTS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+x:y:!instance creation!public! !
+!
 

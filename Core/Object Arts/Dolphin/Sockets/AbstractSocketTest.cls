@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #AbstractSocketTest
 	instanceVariableNames: 'sockets'
@@ -30,8 +30,10 @@ testQueryPort
 	| s |
 	s := self serverSocketClass port: 1000.
 	[self assert: s queryPort = 1000] ensure: [s close]! !
-!AbstractSocketTest categoriesFor: #serverSocketClass!constants!private! !
-!AbstractSocketTest categoriesFor: #setUp!private!running! !
-!AbstractSocketTest categoriesFor: #tearDown!private!running! !
-!AbstractSocketTest categoriesFor: #testQueryPort!public!unit tests! !
+!AbstractSocketTest categoriesForMethods!
+serverSocketClass!constants!private! !
+setUp!private!running! !
+tearDown!private!running! !
+testQueryPort!public!unit tests! !
+!
 

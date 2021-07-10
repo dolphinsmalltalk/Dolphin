@@ -243,43 +243,45 @@ weight: anInteger
 	logfont lfWeight: anInteger.
 	"Cause the receiver to be re-realized"
 	self free! !
-!Graphics.Font categoriesFor: #=!comparing!public! !
-!Graphics.Font categoriesFor: #beBold!accessing!public! !
-!Graphics.Font categoriesFor: #beItalic!accessing!public! !
-!Graphics.Font categoriesFor: #beUnderlined!accessing!public! !
-!Graphics.Font categoriesFor: #characterSet!accessing!public! !
-!Graphics.Font categoriesFor: #characterSet:!accessing!public! !
-!Graphics.Font categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Font categoriesFor: #desktopResolution!initializing!private! !
-!Graphics.Font categoriesFor: #displayOn:!displaying!public! !
-!Graphics.Font categoriesFor: #handle:!accessing!public! !
-!Graphics.Font categoriesFor: #hash!comparing!public! !
-!Graphics.Font categoriesFor: #initialize!initializing!public! !
-!Graphics.Font categoriesFor: #isBold!public!testing! !
-!Graphics.Font categoriesFor: #isBold:!modes!public! !
-!Graphics.Font categoriesFor: #isDefault!public!testing! !
-!Graphics.Font categoriesFor: #isItalic!public!testing! !
-!Graphics.Font categoriesFor: #isItalic:!modes!public! !
-!Graphics.Font categoriesFor: #isStruckThrough!public!testing! !
-!Graphics.Font categoriesFor: #isStruckThrough:!accessing!public! !
-!Graphics.Font categoriesFor: #isUnderlined!public!testing! !
-!Graphics.Font categoriesFor: #isUnderlined:!modes!public! !
-!Graphics.Font categoriesFor: #logFont!accessing!public! !
-!Graphics.Font categoriesFor: #logFont:!accessing!public! !
-!Graphics.Font categoriesFor: #name!accessing!public! !
-!Graphics.Font categoriesFor: #name:!accessing!public! !
-!Graphics.Font categoriesFor: #pixelFromPoints:!mapping!private! !
-!Graphics.Font categoriesFor: #pixelSize!accessing!public! !
-!Graphics.Font categoriesFor: #pixelSize:!accessing!public! !
-!Graphics.Font categoriesFor: #pointFromPixels:!mapping!private! !
-!Graphics.Font categoriesFor: #pointSize!accessing!public! !
-!Graphics.Font categoriesFor: #pointSize:!accessing!public! !
-!Graphics.Font categoriesFor: #postCopy!copying!public! !
-!Graphics.Font categoriesFor: #printOn:!development!printing!public! !
-!Graphics.Font categoriesFor: #resolution!accessing!public! !
-!Graphics.Font categoriesFor: #resolution:!accessing!public! !
-!Graphics.Font categoriesFor: #weight!accessing!public! !
-!Graphics.Font categoriesFor: #weight:!accessing!public! !
+!Graphics.Font categoriesForMethods!
+=!comparing!public! !
+beBold!accessing!public! !
+beItalic!accessing!public! !
+beUnderlined!accessing!public! !
+characterSet!accessing!public! !
+characterSet:!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+desktopResolution!initializing!private! !
+displayOn:!displaying!public! !
+handle:!accessing!public! !
+hash!comparing!public! !
+initialize!initializing!public! !
+isBold!public!testing! !
+isBold:!modes!public! !
+isDefault!public!testing! !
+isItalic!public!testing! !
+isItalic:!modes!public! !
+isStruckThrough!public!testing! !
+isStruckThrough:!accessing!public! !
+isUnderlined!public!testing! !
+isUnderlined:!modes!public! !
+logFont!accessing!public! !
+logFont:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+pixelFromPoints:!mapping!private! !
+pixelSize!accessing!public! !
+pixelSize:!accessing!public! !
+pointFromPixels:!mapping!private! !
+pointSize!accessing!public! !
+pointSize:!accessing!public! !
+postCopy!copying!public! !
+printOn:!development!printing!public! !
+resolution!accessing!public! !
+resolution:!accessing!public! !
+weight!accessing!public! !
+weight:!accessing!public! !
+!
 
 !Graphics.Font class methodsFor!
 
@@ -349,15 +351,17 @@ uninitialize
 	"Uninitialize the class variables of the receiver as it is about to be removed from the system."
 
 	System := nil! !
-!Graphics.Font class categoriesFor: #default!instance creation!public! !
-!Graphics.Font class categoriesFor: #defaultPointSize!constants!private! !
-!Graphics.Font class categoriesFor: #fromLogFont:!instance creation!public! !
-!Graphics.Font class categoriesFor: #icon!constants!public! !
-!Graphics.Font class categoriesFor: #name:!instance creation!public! !
-!Graphics.Font class categoriesFor: #name:pixelSize:!instance creation!public! !
-!Graphics.Font class categoriesFor: #name:pointSize:!instance creation!public! !
-!Graphics.Font class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Graphics.Font class categoriesFor: #reset!instance creation!public! !
-!Graphics.Font class categoriesFor: #system!instance creation!public! !
-!Graphics.Font class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Font class categoriesForMethods!
+default!instance creation!public! !
+defaultPointSize!constants!private! !
+fromLogFont:!instance creation!public! !
+icon!constants!public! !
+name:!instance creation!public! !
+name:pixelSize:!instance creation!public! !
+name:pointSize:!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+reset!instance creation!public! !
+system!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

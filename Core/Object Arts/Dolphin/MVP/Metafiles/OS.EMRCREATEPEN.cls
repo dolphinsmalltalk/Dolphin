@@ -51,10 +51,12 @@ lopn: aLOGPEN
 		from: ##(_OffsetOf_lopn + 1)
 		to: ##(_OffsetOf_lopn + LOGPEN basicByteSize)
 		startingAt: 1! !
-!OS.EMRCREATEPEN categoriesFor: #ihPen!**compiled accessors**!public! !
-!OS.EMRCREATEPEN categoriesFor: #ihPen:!**compiled accessors**!public! !
-!OS.EMRCREATEPEN categoriesFor: #lopn!**compiled accessors**!public! !
-!OS.EMRCREATEPEN categoriesFor: #lopn:!**compiled accessors**!public! !
+!OS.EMRCREATEPEN categoriesForMethods!
+ihPen!**compiled accessors**!public! !
+ihPen:!**compiled accessors**!public! !
+lopn!**compiled accessors**!public! !
+lopn:!**compiled accessors**!public! !
+!
 
 !OS.EMRCREATEPEN class methodsFor!
 
@@ -88,7 +90,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEPEN}! !
-!OS.EMRCREATEPEN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRCREATEPEN class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATEPEN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

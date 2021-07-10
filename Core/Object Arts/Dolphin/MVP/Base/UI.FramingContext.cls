@@ -87,30 +87,32 @@ top
 
 width
 	^rectangle width! !
-!UI.FramingContext categoriesFor: #bottom!accessing!public! !
-!UI.FramingContext categoriesFor: #height!accessing!public! !
-!UI.FramingContext categoriesFor: #left!accessing!public! !
-!UI.FramingContext categoriesFor: #parentBottom!accessing!public! !
-!UI.FramingContext categoriesFor: #parentExtent!accessing!public! !
-!UI.FramingContext categoriesFor: #parentHeight!accessing!public! !
-!UI.FramingContext categoriesFor: #parentLeft!accessing!public! !
-!UI.FramingContext categoriesFor: #parentRectangle!accessing!public! !
-!UI.FramingContext categoriesFor: #parentRight!accessing!public! !
-!UI.FramingContext categoriesFor: #parentTop!accessing!public! !
-!UI.FramingContext categoriesFor: #parentView!accessing!public! !
-!UI.FramingContext categoriesFor: #parentWidth!accessing!public! !
-!UI.FramingContext categoriesFor: #previousBottom!accessing!public! !
-!UI.FramingContext categoriesFor: #previousLeft!accessing!public! !
-!UI.FramingContext categoriesFor: #previousRectangle!accessing!public! !
-!UI.FramingContext categoriesFor: #previousRight!accessing!public! !
-!UI.FramingContext categoriesFor: #previousSibling!accessing!public! !
-!UI.FramingContext categoriesFor: #previousTop!accessing!public! !
-!UI.FramingContext categoriesFor: #rectangle!accessing!public! !
-!UI.FramingContext categoriesFor: #rectangle:!accessing!public! !
-!UI.FramingContext categoriesFor: #right!accessing!public! !
-!UI.FramingContext categoriesFor: #setLayoutContext:view:parentRectangle:!initializing!private! !
-!UI.FramingContext categoriesFor: #top!accessing!public! !
-!UI.FramingContext categoriesFor: #width!accessing!public! !
+!UI.FramingContext categoriesForMethods!
+bottom!accessing!public! !
+height!accessing!public! !
+left!accessing!public! !
+parentBottom!accessing!public! !
+parentExtent!accessing!public! !
+parentHeight!accessing!public! !
+parentLeft!accessing!public! !
+parentRectangle!accessing!public! !
+parentRight!accessing!public! !
+parentTop!accessing!public! !
+parentView!accessing!public! !
+parentWidth!accessing!public! !
+previousBottom!accessing!public! !
+previousLeft!accessing!public! !
+previousRectangle!accessing!public! !
+previousRight!accessing!public! !
+previousSibling!accessing!public! !
+previousTop!accessing!public! !
+rectangle!accessing!public! !
+rectangle:!accessing!public! !
+right!accessing!public! !
+setLayoutContext:view:parentRectangle:!initializing!private! !
+top!accessing!public! !
+width!accessing!public! !
+!
 
 !UI.FramingContext class methodsFor!
 
@@ -120,5 +122,7 @@ layoutContext: aLayoutContext view: aView parentRectangle: aRectangle
 			view: aView
 			parentRectangle: aRectangle;
 		yourself! !
-!UI.FramingContext class categoriesFor: #layoutContext:view:parentRectangle:!instance creation!public! !
+!UI.FramingContext class categoriesForMethods!
+layoutContext:view:parentRectangle:!instance creation!public! !
+!
 

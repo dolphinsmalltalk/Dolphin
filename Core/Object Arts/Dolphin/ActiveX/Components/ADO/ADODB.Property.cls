@@ -161,21 +161,23 @@ value: pval
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pval asVariant! !
-!ADODB.Property categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODB.Property categoriesFor: #attributes:!**auto generated**!properties!public! !
-!ADODB.Property categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Property!private! !
-!ADODB.Property categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Property!private! !
-!ADODB.Property categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Property!private! !
-!ADODB.Property categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Property!private! !
-!ADODB.Property categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB.Property categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB.Property categoriesFor: #name!**auto generated**!properties!public! !
-!ADODB.Property categoriesFor: #printValueOn:!printing!private! !
-!ADODB.Property categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Property!private! !
-!ADODB.Property categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Property!private! !
-!ADODB.Property categoriesFor: #type!**auto generated**!properties!public! !
-!ADODB.Property categoriesFor: #value!**auto generated**!properties!public! !
-!ADODB.Property categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODB.Property categoriesForMethods!
+attributes!**auto generated**!properties!public! !
+attributes:!**auto generated**!properties!public! !
+get_Attributes:!**auto generated**!COM Interfaces-Property!private! !
+get_Name:!**auto generated**!COM Interfaces-Property!private! !
+get_Type:!**auto generated**!COM Interfaces-Property!private! !
+get_Value:!**auto generated**!COM Interfaces-Property!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+name!**auto generated**!properties!public! !
+printValueOn:!printing!private! !
+put_Attributes:!**auto generated**!COM Interfaces-Property!private! !
+put_Value:!**auto generated**!COM Interfaces-Property!private! !
+type!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+!
 
 !ADODB.Property class methodsFor!
 
@@ -197,5 +199,7 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
-!ADODB.Property class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Property class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

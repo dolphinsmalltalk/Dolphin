@@ -40,6 +40,8 @@ visitPresenter: presenter
 
 	self appendPresenter: presenter.
 	^presenter! !
-!UI.LegacyCommandPolicy categoriesFor: #queryCommand:!operations!private! !
-!UI.LegacyCommandPolicy categoriesFor: #visitPresenter:!operations!private! !
+!UI.LegacyCommandPolicy categoriesForMethods!
+queryCommand:!operations!private! !
+visitPresenter:!operations!private! !
+!
 

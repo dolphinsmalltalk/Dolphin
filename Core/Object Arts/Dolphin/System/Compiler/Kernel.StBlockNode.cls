@@ -149,41 +149,43 @@ uses: aNode
 				includes: parent selector) not 
 				or: [parent isUsed]]
 		ifFalse: [self isUsed]! !
-!Kernel.StBlockNode categoriesFor: #=!comparing!public! !
-!Kernel.StBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StBlockNode categoriesFor: #actualScope!public! !
-!Kernel.StBlockNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
-!Kernel.StBlockNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #argumentCount!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #argumentNames!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #arguments!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #arguments:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #bar!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #bar:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #barOrStop!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #blockVariables!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #body!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #body:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #childrenDo:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #defines:!public!testing! !
-!Kernel.StBlockNode categoriesFor: #directlyUses:!public!testing! !
-!Kernel.StBlockNode categoriesFor: #hash!comparing!public! !
-!Kernel.StBlockNode categoriesFor: #isBlock!public!testing! !
-!Kernel.StBlockNode categoriesFor: #isEmptyBlock!public!testing! !
-!Kernel.StBlockNode categoriesFor: #isImmediateNode!public!testing! !
-!Kernel.StBlockNode categoriesFor: #isInlined!public! !
-!Kernel.StBlockNode categoriesFor: #isLast:!public!testing! !
-!Kernel.StBlockNode categoriesFor: #left!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #left:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StBlockNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StBlockNode categoriesFor: #precedence!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #right!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #right:!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StBlockNode categoriesFor: #uses:!public!testing! !
+!Kernel.StBlockNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+actualScope!public! !
+addStatementCommentsTo:!accessing!private! !
+allArgumentVariableNodesDo:!accessing!public! !
+allDefinedVariableNodesDo:!accessing!public! !
+argumentCount!accessing!public! !
+argumentNames!accessing!public! !
+arguments!accessing!public! !
+arguments:!accessing!public! !
+bar!accessing!public! !
+bar:!accessing!public! !
+barOrStop!accessing!public! !
+blockVariables!accessing!public! !
+body!accessing!public! !
+body:!accessing!public! !
+childrenDo:!accessing!public! !
+defines:!public!testing! !
+directlyUses:!public!testing! !
+hash!comparing!public! !
+isBlock!public!testing! !
+isEmptyBlock!public!testing! !
+isImmediateNode!public!testing! !
+isInlined!public! !
+isLast:!public!testing! !
+left!accessing!public! !
+left:!accessing!public! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+right!accessing!public! !
+right:!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+!
 
 !Kernel.StBlockNode class methodsFor!
 
@@ -195,6 +197,8 @@ arguments: argNodes body: sequenceNode
 
 body: sequenceNode 
 	^self arguments: #() body: sequenceNode! !
-!Kernel.StBlockNode class categoriesFor: #arguments:body:!instance creation!public! !
-!Kernel.StBlockNode class categoriesFor: #body:!instance creation!public! !
+!Kernel.StBlockNode class categoriesForMethods!
+arguments:body:!instance creation!public! !
+body:!instance creation!public! !
+!
 

@@ -202,46 +202,48 @@ toolTipText
 	"Answer a String suitable for displaying in a Tool tip control."
 
 	^self commandDescription toolTipText! !
-!UI.ToolButton categoriesFor: #applyFont!font!private!updating! !
-!UI.ToolButton categoriesFor: #backcolor:!accessing!public! !
-!UI.ToolButton categoriesFor: #bitmapSize!accessing!geometry!public! !
-!UI.ToolButton categoriesFor: #bitmapSize:!accessing!geometry!public! !
-!UI.ToolButton categoriesFor: #buttonSize!accessing!geometry!public! !
-!UI.ToolButton categoriesFor: #buttonSize:!accessing!geometry!public! !
-!UI.ToolButton categoriesFor: #commandDescription!accessing!public! !
-!UI.ToolButton categoriesFor: #commandDescription:!accessing!public! !
-!UI.ToolButton categoriesFor: #createDelegate!event handling!private! !
-!UI.ToolButton categoriesFor: #createInternalButton!event handling!private! !
-!UI.ToolButton categoriesFor: #defaultBackcolor!private! !
-!UI.ToolButton categoriesFor: #defaultBitmapSize!constants!private! !
-!UI.ToolButton categoriesFor: #defaultExtent!constants!private! !
-!UI.ToolButton categoriesFor: #hasFlatAppearance!accessing!accessing-styles!public! !
-!UI.ToolButton categoriesFor: #hasFlatAppearance:!accessing!accessing-styles!public! !
-!UI.ToolButton categoriesFor: #hasLabels!accessing!accessing-styles!public! !
-!UI.ToolButton categoriesFor: #hasLabels:!accessing!accessing-styles!public! !
-!UI.ToolButton categoriesFor: #hasListAppearance!accessing!public! !
-!UI.ToolButton categoriesFor: #hasListAppearance:!accessing!public! !
-!UI.ToolButton categoriesFor: #internalButton!private! !
-!UI.ToolButton categoriesFor: #isChecked!accessing!public!testing! !
-!UI.ToolButton categoriesFor: #isChecked:!accessing!public!state! !
-!UI.ToolButton categoriesFor: #isCheckStyle!accessing!public! !
-!UI.ToolButton categoriesFor: #isCheckStyle:!accessing!public! !
-!UI.ToolButton categoriesFor: #isDropDownOnly!accessing!public! !
-!UI.ToolButton categoriesFor: #isDropDownOnly:!accessing!public! !
-!UI.ToolButton categoriesFor: #isDropdownStyle!accessing!public! !
-!UI.ToolButton categoriesFor: #isDropdownStyle:!accessing!public! !
-!UI.ToolButton categoriesFor: #isEnabled!accessing!public!testing! !
-!UI.ToolButton categoriesFor: #isEnabled:!accessing!public!state! !
-!UI.ToolButton categoriesFor: #isGroupStyle!accessing!public! !
-!UI.ToolButton categoriesFor: #isGroupStyle:!accessing!public!style! !
-!UI.ToolButton categoriesFor: #isIndeterminate!accessing!public!testing! !
-!UI.ToolButton categoriesFor: #isIndeterminate:!accessing!public!state! !
-!UI.ToolButton categoriesFor: #isPressed!accessing!public!testing! !
-!UI.ToolButton categoriesFor: #isPressed:!accessing!public!state! !
-!UI.ToolButton categoriesFor: #onPositionChanged:!event handling!private! !
-!UI.ToolButton categoriesFor: #onResize!private! !
-!UI.ToolButton categoriesFor: #onTipTextRequired!event handling!public! !
-!UI.ToolButton categoriesFor: #toolTipText!operations!public! !
+!UI.ToolButton categoriesForMethods!
+applyFont!font!private!updating! !
+backcolor:!accessing!public! !
+bitmapSize!accessing!geometry!public! !
+bitmapSize:!accessing!geometry!public! !
+buttonSize!accessing!geometry!public! !
+buttonSize:!accessing!geometry!public! !
+commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
+createDelegate!event handling!private! !
+createInternalButton!event handling!private! !
+defaultBackcolor!private! !
+defaultBitmapSize!constants!private! !
+defaultExtent!constants!private! !
+hasFlatAppearance!accessing!accessing-styles!public! !
+hasFlatAppearance:!accessing!accessing-styles!public! !
+hasLabels!accessing!accessing-styles!public! !
+hasLabels:!accessing!accessing-styles!public! !
+hasListAppearance!accessing!public! !
+hasListAppearance:!accessing!public! !
+internalButton!private! !
+isChecked!accessing!public!testing! !
+isChecked:!accessing!public!state! !
+isCheckStyle!accessing!public! !
+isCheckStyle:!accessing!public! !
+isDropDownOnly!accessing!public! !
+isDropDownOnly:!accessing!public! !
+isDropdownStyle!accessing!public! !
+isDropdownStyle:!accessing!public! !
+isEnabled!accessing!public!testing! !
+isEnabled:!accessing!public!state! !
+isGroupStyle!accessing!public! !
+isGroupStyle:!accessing!public!style! !
+isIndeterminate!accessing!public!testing! !
+isIndeterminate:!accessing!public!state! !
+isPressed!accessing!public!testing! !
+isPressed:!accessing!public!state! !
+onPositionChanged:!event handling!private! !
+onResize!private! !
+onTipTextRequired!event handling!public! !
+toolTipText!operations!public! !
+!
 
 !UI.ToolButton class methodsFor!
 
@@ -257,6 +259,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ToolButton) 34 14 nil nil 34 2 8 1140850688 131073 416 nil nil nil 7 nil nil nil 416 nil 410 ##(UI.Toolbar) 34 25 nil 416 34 2 8 1140853580 131137 480 nil nil nil 3 nil nil nil 480 nil 8 1920642432 nil 170 192 34 2 45015 1311814 1 ##(UI.ToolbarIconButton) 480 1 1377606 4 ##(UI.CommandDescription) #noCommand 8 'No command' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Object.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 45015 34 1 608 nil nil 3 nil 655878 ##(Graphics.Point) 49 49 818 183 87 nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 818 1 1 818 193 97 480 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 96 0 0 0 48 0 0 0] 8 #() 818 193 193 nil 27 866 138 144 34 1 930 #createAt:extent: 34 2 818 6143 21 818 193 97 416 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 95 12 0 0 58 0 0 0] 34 1 480 1072 nil 27)! !
-!UI.ToolButton class categoriesFor: #icon!public! !
-!UI.ToolButton class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.ToolButton class categoriesForMethods!
+icon!public! !
+resource_Default_view!public!resources-views! !
+!
 

@@ -88,8 +88,10 @@ resource_Wizard_card_container
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.WizardCardContainer) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 853318 1 ##(UI.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 706 701 501 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 8 #() 706 193 193 nil 27)! !
-!UI.Presenter class categoriesFor: #resource_Card_container!public!resources-views! !
-!UI.Presenter class categoriesFor: #resource_Wizard_card_container!public!resources-views! !
+!UI.Presenter class categoriesForMethods!
+resource_Card_container!public!resources-views! !
+resource_Wizard_card_container!public!resources-views! !
+!
 
 "End of package definition"!
 

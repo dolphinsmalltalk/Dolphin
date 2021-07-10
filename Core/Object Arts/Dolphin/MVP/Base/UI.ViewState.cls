@@ -38,8 +38,10 @@ restore
 		placement: placement;
 		basicInvalidateLayout;
 		isStateRestoring: false! !
-!UI.ViewState categoriesFor: #recordStateOf:forRecreate:!initializing!private! !
-!UI.ViewState categoriesFor: #restore!operations!public! !
+!UI.ViewState categoriesForMethods!
+recordStateOf:forRecreate:!initializing!private! !
+restore!operations!public! !
+!
 
 !UI.ViewState class methodsFor!
 
@@ -55,6 +57,8 @@ recordStateOf: aView forRecreate: aBoolean
 
 	^super new 
 		recordStateOf: aView forRecreate: aBoolean! !
-!UI.ViewState class categoriesFor: #new!instance creation!private! !
-!UI.ViewState class categoriesFor: #recordStateOf:forRecreate:!instance creation!public! !
+!UI.ViewState class categoriesForMethods!
+new!instance creation!private! !
+recordStateOf:forRecreate:!instance creation!public! !
+!
 

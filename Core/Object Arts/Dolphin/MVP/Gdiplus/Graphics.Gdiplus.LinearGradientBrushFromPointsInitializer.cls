@@ -42,6 +42,8 @@ point1: aPoint1 point2: aPoint2 color1: startColor color2: endColor
 	point2 := aPoint2.
 	color1 := startColor.
 	color2 := endColor! !
-!Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer categoriesFor: #point1:point2:color1:color2:!initializing!private! !
+!Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+point1:point2:color1:color2:!initializing!private! !
+!
 

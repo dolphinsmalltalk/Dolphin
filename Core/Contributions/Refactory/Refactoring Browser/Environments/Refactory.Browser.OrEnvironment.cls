@@ -57,15 +57,17 @@ storeOn: aStream
 	aStream nextPutAll: ' | '.
 	oredEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.OrEnvironment categoriesFor: #classesDo:!accessing!public! !
-!Refactory.Browser.OrEnvironment categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.OrEnvironment categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.OrEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.OrEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!Refactory.Browser.OrEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Refactory.Browser.OrEnvironment categoriesFor: #oredEnvironment:!initialization!private! !
-!Refactory.Browser.OrEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!Refactory.Browser.OrEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.OrEnvironment categoriesForMethods!
+classesDo:!accessing!public! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+oredEnvironment:!initialization!private! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.OrEnvironment class methodsFor!
 
@@ -73,5 +75,7 @@ onEnvironment: anEnvironment or: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		oredEnvironment: anotherEnvironment;
 		yourself! !
-!Refactory.Browser.OrEnvironment class categoriesFor: #onEnvironment:or:!instance creation!public! !
+!Refactory.Browser.OrEnvironment class categoriesForMethods!
+onEnvironment:or:!instance creation!public! !
+!
 

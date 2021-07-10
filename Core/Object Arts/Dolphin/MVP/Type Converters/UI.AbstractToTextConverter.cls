@@ -32,10 +32,12 @@ locale: aLocaleOrNil
 	"Set the value of the receiver's instance variable locale to aLocaleOrNil"
 
 	locale := aLocaleOrNil! !
-!UI.AbstractToTextConverter categoriesFor: #actualLocale!accessing!private! !
-!UI.AbstractToTextConverter categoriesFor: #initialize!initializing!private! !
-!UI.AbstractToTextConverter categoriesFor: #locale!accessing!public! !
-!UI.AbstractToTextConverter categoriesFor: #locale:!accessing!public! !
+!UI.AbstractToTextConverter categoriesForMethods!
+actualLocale!accessing!private! !
+initialize!initializing!private! !
+locale!accessing!public! !
+locale:!accessing!public! !
+!
 
 !UI.AbstractToTextConverter class methodsFor!
 
@@ -55,6 +57,8 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!UI.AbstractToTextConverter class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.AbstractToTextConverter class categoriesFor: #stbVersion!binary filing!public! !
+!UI.AbstractToTextConverter class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

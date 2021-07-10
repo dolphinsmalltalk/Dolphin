@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.AbstractContainerViewTest subclass: #'UI.Tests.StyledContainerTest'
 	instanceVariableNames: ''
@@ -19,7 +19,9 @@ parentBackcolor
 
 styledBorderColor
 	^Color blue! !
-!UI.Tests.StyledContainerTest categoriesFor: #containerClass!private! !
-!UI.Tests.StyledContainerTest categoriesFor: #parentBackcolor!private! !
-!UI.Tests.StyledContainerTest categoriesFor: #styledBorderColor!private! !
+!UI.Tests.StyledContainerTest categoriesForMethods!
+containerClass!private! !
+parentBackcolor!private! !
+styledBorderColor!private! !
+!
 

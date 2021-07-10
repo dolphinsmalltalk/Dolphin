@@ -98,16 +98,18 @@ szlStroke: aSIZE
 		from: ##(_OffsetOf_szlStroke + 1)
 		to: ##(_OffsetOf_szlStroke + SIZEL basicByteSize)
 		startingAt: 1! !
-!OS.EMRFRAMERGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #ihBrush!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #szlStroke!**compiled accessors**!public! !
-!OS.EMRFRAMERGN categoriesFor: #szlStroke:!**compiled accessors**!public! !
+!OS.EMRFRAMERGN categoriesForMethods!
+cbRgnData!**compiled accessors**!public! !
+cbRgnData:!**compiled accessors**!public! !
+ihBrush!**compiled accessors**!public! !
+ihBrush:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+RGNDATA!**compiled accessors**!public! !
+RGNDATA:!**compiled accessors**!public! !
+szlStroke!**compiled accessors**!public! !
+szlStroke:!**compiled accessors**!public! !
+!
 
 !OS.EMRFRAMERGN class methodsFor!
 
@@ -152,7 +154,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_FRAMERGN}! !
-!OS.EMRFRAMERGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRFRAMERGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRFRAMERGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMRFRAMERGN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

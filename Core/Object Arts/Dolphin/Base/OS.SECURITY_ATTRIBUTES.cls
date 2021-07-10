@@ -54,11 +54,13 @@ lpSecurityDescriptor: anExternalAddress
 	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anExternalAddress! !
-!OS.SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle!**compiled accessors**!public! !
-!OS.SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle:!**compiled accessors**!public! !
-!OS.SECURITY_ATTRIBUTES categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor!**compiled accessors**!public! !
-!OS.SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor:!**compiled accessors**!public! !
+!OS.SECURITY_ATTRIBUTES categoriesForMethods!
+bInheritHandle!**compiled accessors**!public! !
+bInheritHandle:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+lpSecurityDescriptor!**compiled accessors**!public! !
+lpSecurityDescriptor:!**compiled accessors**!public! !
+!
 
 !OS.SECURITY_ATTRIBUTES class methodsFor!
 
@@ -82,6 +84,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
-!OS.SECURITY_ATTRIBUTES class categoriesFor: #defineFields!public!template definition! !
-!OS.SECURITY_ATTRIBUTES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SECURITY_ATTRIBUTES class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

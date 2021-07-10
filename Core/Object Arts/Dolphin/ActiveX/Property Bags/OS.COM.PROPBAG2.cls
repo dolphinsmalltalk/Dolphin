@@ -82,18 +82,20 @@ vt: anInteger
 	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_vt put: anInteger! !
-!OS.COM.PROPBAG2 categoriesFor: #cfType!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #cfType:!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #clsid!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #clsid:!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #dwHint!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #dwHint:!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #dwType!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #dwType:!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #pstrName!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #pstrName:!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #vt!**compiled accessors**!public! !
-!OS.COM.PROPBAG2 categoriesFor: #vt:!**compiled accessors**!public! !
+!OS.COM.PROPBAG2 categoriesForMethods!
+cfType!**compiled accessors**!public! !
+cfType:!**compiled accessors**!public! !
+clsid!**compiled accessors**!public! !
+clsid:!**compiled accessors**!public! !
+dwHint!**compiled accessors**!public! !
+dwHint:!**compiled accessors**!public! !
+dwType!**compiled accessors**!public! !
+dwType:!**compiled accessors**!public! !
+pstrName!**compiled accessors**!public! !
+pstrName:!**compiled accessors**!public! !
+vt!**compiled accessors**!public! !
+vt:!**compiled accessors**!public! !
+!
 
 !OS.COM.PROPBAG2 class methodsFor!
 
@@ -122,6 +124,8 @@ defineFields
 
 getFieldNames
 	^#(#dwType #vt #cfType #dwHint #pstrName #clsid)! !
-!OS.COM.PROPBAG2 class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.PROPBAG2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.PROPBAG2 class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

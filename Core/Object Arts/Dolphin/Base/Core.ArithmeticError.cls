@@ -15,5 +15,7 @@ isResumable
 	"Answer whether the receiver represents a resumable error. Most arithmetic errors are resumable."
 
 	^true! !
-!Core.ArithmeticError categoriesFor: #isResumable!public!testing! !
+!Core.ArithmeticError categoriesForMethods!
+isResumable!public!testing! !
+!
 

@@ -122,18 +122,20 @@ testUniqueness
 	generated := Set new: size.
 	size timesRepeat: [generated add: self subjectClass newUnique].
 	self assert: generated size equals: size! !
-!External.Tests.GUIDTest categoriesFor: #assertNull:!helpers!private! !
-!External.Tests.GUIDTest categoriesFor: #subjectClass!constants!private! !
-!External.Tests.GUIDTest categoriesFor: #testAsByteArray!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testAsInteger!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testComparison!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testDisplayString!constants!public! !
-!External.Tests.GUIDTest categoriesFor: #testFromString!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testFromStringNull!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testIsSelfEvaluating!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testNewUnique!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testNull!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testOrder!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testStoreOn!public!unit tests! !
-!External.Tests.GUIDTest categoriesFor: #testUniqueness!public!unit tests! !
+!External.Tests.GUIDTest categoriesForMethods!
+assertNull:!helpers!private! !
+subjectClass!constants!private! !
+testAsByteArray!public!unit tests! !
+testAsInteger!public!unit tests! !
+testComparison!public!unit tests! !
+testDisplayString!constants!public! !
+testFromString!public!unit tests! !
+testFromStringNull!public!unit tests! !
+testIsSelfEvaluating!public!unit tests! !
+testNewUnique!public!unit tests! !
+testNull!public!unit tests! !
+testOrder!public!unit tests! !
+testStoreOn!public!unit tests! !
+testUniqueness!public!unit tests! !
+!
 

@@ -93,13 +93,15 @@ Seek: keyValues SeekOption: seekOption
 
 	<virtual stdcall: hresult 82 variant sdword>
 	^self invalidCall: _failureCode! !
-!ADODB.Recordset21 categoriesFor: #get_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
-!ADODB.Recordset21 categoriesFor: #index!**auto generated**!properties!public! !
-!ADODB.Recordset21 categoriesFor: #index:!**auto generated**!properties!public! !
-!ADODB.Recordset21 categoriesFor: #put_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
-!ADODB.Recordset21 categoriesFor: #seek:!**auto generated**!methods!public! !
-!ADODB.Recordset21 categoriesFor: #seek:seekOption:!**auto generated**!methods!public! !
-!ADODB.Recordset21 categoriesFor: #Seek:SeekOption:!**auto generated**!COM Interfaces-Recordset21!private! !
+!ADODB.Recordset21 categoriesForMethods!
+get_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
+index!**auto generated**!properties!public! !
+index:!**auto generated**!properties!public! !
+put_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
+seek:!**auto generated**!methods!public! !
+seek:seekOption:!**auto generated**!methods!public! !
+Seek:SeekOption:!**auto generated**!COM Interfaces-Recordset21!private! !
+!
 
 !ADODB.Recordset21 class methodsFor!
 
@@ -115,5 +117,7 @@ defineFunctions
 		defineFunction: #get_Index:
 			argumentTypes: 'bstr*'
 ! !
-!ADODB.Recordset21 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Recordset21 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

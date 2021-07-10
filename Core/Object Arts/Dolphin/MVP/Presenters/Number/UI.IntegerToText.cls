@@ -16,5 +16,7 @@ rightToLeft: aString
 	empty or nil then answer leftExceptionalValue to represent this"
 
 	^Integer fromString: aString! !
-!UI.IntegerToText categoriesFor: #rightToLeft:!operations!public! !
+!UI.IntegerToText categoriesForMethods!
+rightToLeft:!operations!public! !
+!
 

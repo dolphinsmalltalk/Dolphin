@@ -53,12 +53,14 @@ printOn: aStream
 
 valueType
 	^self fieldClass! !
-!External.EmbeddedField categoriesFor: #alignment!constants!public! !
-!External.EmbeddedField categoriesFor: #byteSize!accessing!private! !
-!External.EmbeddedField categoriesFor: #fieldClass!accessing!private! !
-!External.EmbeddedField categoriesFor: #fieldClass:!accessing!private! !
-!External.EmbeddedField categoriesFor: #printOn:!printing!public! !
-!External.EmbeddedField categoriesFor: #valueType!accessing!private! !
+!External.EmbeddedField categoriesForMethods!
+alignment!constants!public! !
+byteSize!accessing!private! !
+fieldClass!accessing!private! !
+fieldClass:!accessing!private! !
+printOn:!printing!public! !
+valueType!accessing!private! !
+!
 
 !External.EmbeddedField class methodsFor!
 
@@ -68,5 +70,7 @@ new
 	a length."
 
 	^self shouldNotImplement! !
-!External.EmbeddedField class categoriesFor: #new!instance creation!private! !
+!External.EmbeddedField class categoriesForMethods!
+new!instance creation!private! !
+!
 

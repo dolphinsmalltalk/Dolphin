@@ -101,19 +101,21 @@ workArea
 	"Answer a `Rectangle` which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
 	^self info rcWork asRectangle! !
-!UI.DisplayMonitor categoriesFor: #=!comparing!public! !
-!UI.DisplayMonitor categoriesFor: #deviceName!accessing!public! !
-!UI.DisplayMonitor categoriesFor: #devices!accessing!private! !
-!UI.DisplayMonitor categoriesFor: #handle!accessing!private! !
-!UI.DisplayMonitor categoriesFor: #handle:!accessing!private! !
-!UI.DisplayMonitor categoriesFor: #hash!comparing!public! !
-!UI.DisplayMonitor categoriesFor: #info!accessing!private! !
-!UI.DisplayMonitor categoriesFor: #isAttachedToDesktop!public!testing! !
-!UI.DisplayMonitor categoriesFor: #isPrimary!public!testing! !
-!UI.DisplayMonitor categoriesFor: #origin!accessing!public! !
-!UI.DisplayMonitor categoriesFor: #printOn:!printing!public! !
-!UI.DisplayMonitor categoriesFor: #rectangle!accessing!public! !
-!UI.DisplayMonitor categoriesFor: #workArea!accessing!public! !
+!UI.DisplayMonitor categoriesForMethods!
+=!comparing!public! !
+deviceName!accessing!public! !
+devices!accessing!private! !
+handle!accessing!private! !
+handle:!accessing!private! !
+hash!comparing!public! !
+info!accessing!private! !
+isAttachedToDesktop!public!testing! !
+isPrimary!public!testing! !
+origin!accessing!public! !
+printOn:!printing!public! !
+rectangle!accessing!public! !
+workArea!accessing!public! !
+!
 
 !UI.DisplayMonitor class methodsFor!
 
@@ -221,18 +223,20 @@ primary
 	^(User32 monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
 		ifNil: [Win32Error signal]
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]! !
-!UI.DisplayMonitor class categoriesFor: #active!instance creation!public! !
-!UI.DisplayMonitor class categoriesFor: #allIntersecting:!instance creation!public! !
-!UI.DisplayMonitor class categoriesFor: #allMonitors!enumerating!public! !
-!UI.DisplayMonitor class categoriesFor: #containingPoint:!instance creation!public! !
-!UI.DisplayMonitor class categoriesFor: #desktopMonitors!enumerating!public! !
-!UI.DisplayMonitor class categoriesFor: #displayingView:!instance creation!public! !
-!UI.DisplayMonitor class categoriesFor: #forCanvas:intersecting:!enumerating!public! !
-!UI.DisplayMonitor class categoriesFor: #forCanvas:intersecting:do:!enumerating!private! !
-!UI.DisplayMonitor class categoriesFor: #fromHandle:!instance creation!private! !
-!UI.DisplayMonitor class categoriesFor: #icon!constants!public! !
-!UI.DisplayMonitor class categoriesFor: #intersecting:!instance creation!public! !
-!UI.DisplayMonitor class categoriesFor: #nearestPoint:!instance creation!public! !
-!UI.DisplayMonitor class categoriesFor: #nearestView:!instance creation!public! !
-!UI.DisplayMonitor class categoriesFor: #primary!instance creation!public! !
+!UI.DisplayMonitor class categoriesForMethods!
+active!instance creation!public! !
+allIntersecting:!instance creation!public! !
+allMonitors!enumerating!public! !
+containingPoint:!instance creation!public! !
+desktopMonitors!enumerating!public! !
+displayingView:!instance creation!public! !
+forCanvas:intersecting:!enumerating!public! !
+forCanvas:intersecting:do:!enumerating!private! !
+fromHandle:!instance creation!private! !
+icon!constants!public! !
+intersecting:!instance creation!public! !
+nearestPoint:!instance creation!public! !
+nearestView:!instance creation!public! !
+primary!instance creation!public! !
+!
 

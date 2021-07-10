@@ -101,19 +101,21 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 			[:i | 
 			subscript sdword: i - 1.
 			aDyadicValuable value: i value: (interface item: subscript)]! !
-!ADODB.ADOCollection categoriesFor: #add:!adding!public! !
-!ADODB.ADOCollection categoriesFor: #at:!accessing!public! !
-!ADODB.ADOCollection categoriesFor: #at:put:!accessing!public! !
-!ADODB.ADOCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
-!ADODB.ADOCollection categoriesFor: #copyingClass!copying!private! !
-!ADODB.ADOCollection categoriesFor: #free!public!realizing/unrealizing! !
-!ADODB.ADOCollection categoriesFor: #interface!accessing!public! !
-!ADODB.ADOCollection categoriesFor: #interface:!accessing!private! !
-!ADODB.ADOCollection categoriesFor: #item:!accessing!public! !
-!ADODB.ADOCollection categoriesFor: #reset!methods!public! !
-!ADODB.ADOCollection categoriesFor: #size!accessing!public! !
-!ADODB.ADOCollection categoriesFor: #species!accessing!public! !
-!ADODB.ADOCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!ADODB.ADOCollection categoriesForMethods!
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+copyingClass!copying!private! !
+free!public!realizing/unrealizing! !
+interface!accessing!public! !
+interface:!accessing!private! !
+item:!accessing!public! !
+reset!methods!public! !
+size!accessing!public! !
+species!accessing!public! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!
 
 !ADODB.ADOCollection class methodsFor!
 
@@ -125,5 +127,7 @@ on: anADO_Collection
 		interface: anADO_Collection
 
 	! !
-!ADODB.ADOCollection class categoriesFor: #on:!instance creation!public! !
+!ADODB.ADOCollection class categoriesForMethods!
+on:!instance creation!public! !
+!
 

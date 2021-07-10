@@ -189,33 +189,35 @@ valueOrNil
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
 
 	^self bindingOrNil ifNotNil: [:var | var value]! !
-!Kernel.BindingReference categoriesFor: #=!comparing!public! !
-!Kernel.BindingReference categoriesFor: #asString!converting!public! !
-!Kernel.BindingReference categoriesFor: #baseClass!accessing!public! !
-!Kernel.BindingReference categoriesFor: #bind!operations!private! !
-!Kernel.BindingReference categoriesFor: #bindingOrNil!accessing!public! !
-!Kernel.BindingReference categoriesFor: #bindingScope!accessing!public! !
-!Kernel.BindingReference categoriesFor: #environmentName!accessing!public! !
-!Kernel.BindingReference categoriesFor: #hash!comparing!public! !
-!Kernel.BindingReference categoriesFor: #home!accessing!public! !
-!Kernel.BindingReference categoriesFor: #instance!converting!public! !
-!Kernel.BindingReference categoriesFor: #isPrivate!public!testing! !
-!Kernel.BindingReference categoriesFor: #isPrivate:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #isRelative!public!testing! !
-!Kernel.BindingReference categoriesFor: #meta!converting!displaying!public! !
-!Kernel.BindingReference categoriesFor: #path!accessing!public! !
-!Kernel.BindingReference categoriesFor: #pathString!accessing!public! !
-!Kernel.BindingReference categoriesFor: #private!converting!public! !
-!Kernel.BindingReference categoriesFor: #scope!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setBinding:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setGeneration:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setPath:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setPath:private:!initializing!private! !
-!Kernel.BindingReference categoriesFor: #setPathString:!accessing!private! !
-!Kernel.BindingReference categoriesFor: #setPathString:private:!initializing!private! !
-!Kernel.BindingReference categoriesFor: #setScope:!initializing!private! !
-!Kernel.BindingReference categoriesFor: #stbSaveOn:!binary filing!public! !
-!Kernel.BindingReference categoriesFor: #valueOrNil!accessing!public! !
+!Kernel.BindingReference categoriesForMethods!
+=!comparing!public! !
+asString!converting!public! !
+baseClass!accessing!public! !
+bind!operations!private! !
+bindingOrNil!accessing!public! !
+bindingScope!accessing!public! !
+environmentName!accessing!public! !
+hash!comparing!public! !
+home!accessing!public! !
+instance!converting!public! !
+isPrivate!public!testing! !
+isPrivate:!accessing!private! !
+isRelative!public!testing! !
+meta!converting!displaying!public! !
+path!accessing!public! !
+pathString!accessing!public! !
+private!converting!public! !
+scope!accessing!private! !
+setBinding:!accessing!private! !
+setGeneration:!accessing!private! !
+setPath:!accessing!private! !
+setPath:private:!initializing!private! !
+setPathString:!accessing!private! !
+setPathString:private:!initializing!private! !
+setScope:!initializing!private! !
+stbSaveOn:!binary filing!public! !
+valueOrNil!accessing!public! !
+!
 
 !Kernel.BindingReference class methodsFor!
 
@@ -331,16 +333,18 @@ uninitialize
 		registryAt: self name put: nil;
 		registryAtIndex: 65 put: nil;
 		registryAtIndex: 69 put: nil! !
-!Kernel.BindingReference class categoriesFor: #clearCachedBindings!operations!private! !
-!Kernel.BindingReference class categoriesFor: #flushBindings!operations!private! !
-!Kernel.BindingReference class categoriesFor: #fullPathString:!instance creation!public! !
-!Kernel.BindingReference class categoriesFor: #initialize!class initialization!public! !
-!Kernel.BindingReference class categoriesFor: #newPath:private:scope:!instance creation!private! !
-!Kernel.BindingReference class categoriesFor: #pathString:private:!instance creation!public! !
-!Kernel.BindingReference class categoriesFor: #pathString:private:scope:!instance creation!public! !
-!Kernel.BindingReference class categoriesFor: #pathString:scope:!instance creation!public! !
-!Kernel.BindingReference class categoriesFor: #pathString:scope:flags:!instance creation!private! !
-!Kernel.BindingReference class categoriesFor: #stbConvertFrom:!public! !
-!Kernel.BindingReference class categoriesFor: #stbVersion!public! !
-!Kernel.BindingReference class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.BindingReference class categoriesForMethods!
+clearCachedBindings!operations!private! !
+flushBindings!operations!private! !
+fullPathString:!instance creation!public! !
+initialize!class initialization!public! !
+newPath:private:scope:!instance creation!private! !
+pathString:private:!instance creation!public! !
+pathString:private:scope:!instance creation!public! !
+pathString:scope:!instance creation!public! !
+pathString:scope:flags:!instance creation!private! !
+stbConvertFrom:!public! !
+stbVersion!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

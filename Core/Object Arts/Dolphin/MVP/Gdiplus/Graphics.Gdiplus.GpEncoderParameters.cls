@@ -64,12 +64,14 @@ Parameter: aStructureArrayOfGpEncoderParameter
 
 valueBuffer: aByteArray
 	valueBuffer := aByteArray! !
-!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #byteSize!accessing!public! !
-!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Count!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Count:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Parameter!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #Parameter:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpEncoderParameters categoriesFor: #valueBuffer:!public! !
+!Graphics.Gdiplus.GpEncoderParameters categoriesForMethods!
+byteSize!accessing!public! !
+Count!**compiled accessors**!public! !
+Count:!**compiled accessors**!public! !
+Parameter!**compiled accessors**!public! !
+Parameter:!**compiled accessors**!public! !
+valueBuffer:!public! !
+!
 
 !Graphics.Gdiplus.GpEncoderParameters class methodsFor!
 
@@ -105,7 +107,9 @@ length: anInteger
 	^(self new: self byteSize + ((anInteger - 1) * GpEncoderParameter byteSize))
 		Count: anInteger;
 		yourself! !
-!Graphics.Gdiplus.GpEncoderParameters class categoriesFor: #defineFields!public!template definition! !
-!Graphics.Gdiplus.GpEncoderParameters class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!Graphics.Gdiplus.GpEncoderParameters class categoriesFor: #length:!public! !
+!Graphics.Gdiplus.GpEncoderParameters class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+length:!public! !
+!
 

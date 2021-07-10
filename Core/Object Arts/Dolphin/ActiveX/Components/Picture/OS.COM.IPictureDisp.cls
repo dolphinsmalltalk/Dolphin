@@ -116,15 +116,17 @@ width
 		OLE_XSIZE_HIMETRIC Width"
 
 	^self getPropertyId: 4! !
-!OS.COM.IPictureDisp categoriesFor: #handle!**auto generated**!properties!public! !
-!OS.COM.IPictureDisp categoriesFor: #height!**auto generated**!properties!public! !
-!OS.COM.IPictureDisp categoriesFor: #hPal!**auto generated**!properties!public! !
-!OS.COM.IPictureDisp categoriesFor: #hPal:!**auto generated**!properties!public! !
-!OS.COM.IPictureDisp categoriesFor: #render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!**auto generated**!methods!public! !
-!OS.COM.IPictureDisp categoriesFor: #type!**auto generated**!properties!public! !
-!OS.COM.IPictureDisp categoriesFor: #value!**auto generated**!properties!public! !
-!OS.COM.IPictureDisp categoriesFor: #value:!**auto generated**!properties!public! !
-!OS.COM.IPictureDisp categoriesFor: #width!**auto generated**!properties!public! !
+!OS.COM.IPictureDisp categoriesForMethods!
+handle!**auto generated**!properties!public! !
+height!**auto generated**!properties!public! !
+hPal!**auto generated**!properties!public! !
+hPal:!**auto generated**!properties!public! !
+render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!**auto generated**!methods!public! !
+type!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+width!**auto generated**!properties!public! !
+!
 
 !OS.COM.IPictureDisp class methodsFor!
 
@@ -132,5 +134,7 @@ clsid
 	"Private - Answer the CLSID of the coclass (StdPicture) for which the receiver is the default interface."
 
 	^CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}'! !
-!OS.COM.IPictureDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
+!OS.COM.IPictureDisp class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+!
 

@@ -23,8 +23,10 @@ lvfi
 	"Answer the <LVFINDINFOW> value of the receiver's 'lvfi' field."
 
 	^LVFINDINFOW fromAddress: bytes yourAddress + _OffsetOf_lvfi! !
-!OS.NMLVFINDITEMW categoriesFor: #iStart!**compiled accessors**!public! !
-!OS.NMLVFINDITEMW categoriesFor: #lvfi!**compiled accessors**!public! !
+!OS.NMLVFINDITEMW categoriesForMethods!
+iStart!**compiled accessors**!public! !
+lvfi!**compiled accessors**!public! !
+!
 
 !OS.NMLVFINDITEMW class methodsFor!
 
@@ -40,6 +42,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iStart #lvfi)! !
-!OS.NMLVFINDITEMW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMLVFINDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLVFINDITEMW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

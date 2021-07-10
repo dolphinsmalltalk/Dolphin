@@ -221,15 +221,19 @@ causeName
 
 	#deprecated.	"Could be more than one cause"
 	^self causeNames last! !
-!_FPIEEE_RECORD categoriesFor: #causeCode!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #causeName!accessing!public! !
+!_FPIEEE_RECORD categoriesForMethods!
+causeCode!accessing!public! !
+causeName!accessing!public! !
+!
 
 !_FPIEEE_VALUE methodsFor!
 
 valueType
 	#deprecated.
 	^self format! !
-!_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
+!_FPIEEE_VALUE categoriesForMethods!
+valueType!accessing!public! !
+!
 
 !ArithmeticValue methodsFor!
 
@@ -238,7 +242,9 @@ quoAndRem: aNumber
 	Notification deprecated.
 	quo := self quo: aNumber.
 	^{quo. self - (quo * aNumber)}! !
-!ArithmeticValue categoriesFor: #quoAndRem:!arithmetic!public! !
+!ArithmeticValue categoriesForMethods!
+quoAndRem:!arithmetic!public! !
+!
 
 !Behavior methodsFor!
 
@@ -249,15 +255,19 @@ makeIndirect
 makeNullTerminated
 	Notification deprecated.
 	self isNullTerminated: true! !
-!Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
-!Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
+!Behavior categoriesForMethods!
+makeIndirect!instance specification-accessing!private! !
+makeNullTerminated!instance specification-accessing!private! !
+!
 
 !ByteCodeDispatcher methodsFor!
 
 byteCodeSegments
 	#deprecated.
 	^self segments! !
-!ByteCodeDispatcher categoriesFor: #byteCodeSegments!accessing!public! !
+!ByteCodeDispatcher categoriesForMethods!
+byteCodeSegments!accessing!public! !
+!
 
 !Category class methodsFor!
 
@@ -265,14 +275,18 @@ categoryIcon
 	"Answer an Icon representing the Category objects which the receiver collects." 
 
 	^self icon! !
-!Category class categoriesFor: #categoryIcon!constants!public! !
+!Category class categoriesForMethods!
+categoryIcon!constants!public! !
+!
 
 !Character class methodsFor!
 
 safeCodePoint: anInteger
 	Notification deprecated.
 	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
-!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
+!Character class categoriesForMethods!
+safeCodePoint:!instance creation!public! !
+!
 
 !Class methodsFor!
 
@@ -334,18 +348,22 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 		poolDictionaries: poolDictString)
 		categories: {ClassCategory name: aCategoryOrString};
 		yourself! !
-!Class categoriesFor: #allSharedPoolNames!pool variables!public! !
-!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!Class categoriesForMethods!
+allSharedPoolNames!pool variables!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!
 
 !Class class methodsFor!
 
 foldLiteralStrings
 	Notification deprecated.
 	^self foldLiterals at: #strings! !
-!Class class categoriesFor: #foldLiteralStrings!operations!public! !
+!Class class categoriesForMethods!
+foldLiteralStrings!operations!public! !
+!
 
 !ClassDescription methodsFor!
 
@@ -382,11 +400,13 @@ sharedPoolsDo: aMonadicValuable
 	#deprecated.
 	self
 		importedNamespacesDo: [:each | (each inheritsFrom: SharedPool) ifTrue: [aMonadicValuable value: each]]! !
-!ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPools!pool variables!public! !
-!ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
+!ClassDescription categoriesForMethods!
+allSharedPoolNames!pool variables!public! !
+allSharedPools!pool variables!public! !
+sharedPoolNames!pool variables!public! !
+sharedPools!pool variables!public! !
+sharedPoolsDo:!pool variables!public! !
+!
 
 !CompiledMethod class methodsFor!
 
@@ -408,7 +428,9 @@ fromString: aString
 			stream peekFor: $#.
 			selector := stream upToEnd asSymbol.
 			theClass compiledMethodAt: selector ifAbsent: []]! !
-!CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
+!CompiledMethod class categoriesForMethods!
+fromString:!converting!development!public! !
+!
 
 !Compiler class methodsFor!
 
@@ -470,20 +492,24 @@ evaluate: aString for: anObject logged: aBoolean
 		for: anObject
 		evaluationPools: nil
 		logged: aBoolean! !
-!Compiler class categoriesFor: #compileDebugExpression:in:evaluationPools:!compiling!public! !
-!Compiler class categoriesFor: #compileDebugMethod:in:!compiling!public! !
-!Compiler class categoriesFor: #compileExpression:in:flags:!compiling!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !
+!Compiler class categoriesForMethods!
+compileDebugExpression:in:evaluationPools:!compiling!public! !
+compileDebugMethod:in:!compiling!public! !
+compileExpression:in:flags:!compiling!public! !
+evaluate:for:evaluationPools:!evaluating!public! !
+evaluate:for:evaluationPools:logged:!evaluating!public! !
+evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
+evaluate:for:logged:!evaluating!public! !
+!
 
 !CompilerNotification methodsFor!
 
 extra
 	#deprecated.
 	^extras isEmpty ifFalse: [extras anyOne]! !
-!CompilerNotification categoriesFor: #extra!accessing!public! !
+!CompilerNotification categoriesForMethods!
+extra!accessing!public! !
+!
 
 !CRTLibrary methodsFor!
 
@@ -619,21 +645,23 @@ wcsncmp: string1 string2: string2 count: count
 	<cdecl: sdword wcsncmp lpwstr lpwstr intptr>
 	#deprecated. "Unused. CRT string functions are generally not useful because they stop at null terminators."
 	^self invalidCall: _failureCode! !
-!CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #_chdir:!CRT functions-directory control!public! !
-!CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
-!CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #wcsncmp:string2:count:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesForMethods!
+__iscsym:!CRT functions-character classification!public! !
+__iscsymf:!CRT functions-character classification!public! !
+_chdir:!CRT functions-directory control!public! !
+_chmod:pmode:!CRT functions-file handling!public! !
+_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
+_strnicmp:string2:count:!CRT functions-string manipulation!public! !
+_strrev:!CRT functions-string manipulation!public! !
+_wgetcwd:maxlen:!CRT functions-directory control!public! !
+iswcntrl:!CRT functions-character classification!public! !
+iswgraph:!CRT functions-character classification!public! !
+iswprint:!CRT functions-character classification!public! !
+iswpunct:!CRT functions-character classification!public! !
+memset:c:count:!CRT functions-buffer manipulation!public! !
+strpbrk:strCharSet:!CRT functions-string manipulation!public! !
+wcsncmp:string2:count:!CRT functions-string manipulation!public! !
+!
 
 !Delay class methodsFor!
 
@@ -648,9 +676,11 @@ resolution: aDuration do: aNiladicValuable
 resolution: aDuration set: aBoolean
 	Notification deprecated.
 	^self timerResolution: aDuration set: aBoolean! !
-!Delay class categoriesFor: #resolution!constants!public! !
-!Delay class categoriesFor: #resolution:do:!operations!public! !
-!Delay class categoriesFor: #resolution:set:!helpers!public! !
+!Delay class categoriesForMethods!
+resolution!constants!public! !
+resolution:do:!operations!public! !
+resolution:set:!helpers!public! !
+!
 
 !ExternalLibrary methodsFor!
 
@@ -659,7 +689,9 @@ invalidCall
 
 	Notification deprecated.
 	^self invalidCall: Failed! !
-!ExternalLibrary categoriesFor: #invalidCall!exceptions!public! !
+!ExternalLibrary categoriesForMethods!
+invalidCall!exceptions!public! !
+!
 
 !File methodsFor!
 
@@ -672,7 +704,9 @@ readCharacter
 	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
 	string := String new: 1.
 	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
-!File categoriesFor: #readCharacter!operations!public! !
+!File categoriesForMethods!
+readCharacter!operations!public! !
+!
 
 !File class methodsFor!
 
@@ -686,22 +720,28 @@ for: matchString inAndBelow: dirString do: operation
 		forAll: matchString
 		in: dirString
 		do: [:each | operation value: each directory value: each]! !
-!File class categoriesFor: #change:extension:!filename manipulation!public! !
-!File class categoriesFor: #for:inAndBelow:do:!enumerating!public! !
+!File class categoriesForMethods!
+change:extension:!filename manipulation!public! !
+for:inAndBelow:do:!enumerating!public! !
+!
 
 !FunctionDescriptor class methodsFor!
 
 fromString: aString
 	Notification deprecated.
 	^self fromString: aString environment: Smalltalk! !
-!FunctionDescriptor class categoriesFor: #fromString:!instance creation!public! !
+!FunctionDescriptor class categoriesForMethods!
+fromString:!instance creation!public! !
+!
 
 !Integer methodsFor!
 
 digitSize
 	#deprecated.
 	^self digitLength! !
-!Integer categoriesFor: #digitSize!accessing!public! !
+!Integer categoriesForMethods!
+digitSize!accessing!public! !
+!
 
 !KernelLibrary methodsFor!
 
@@ -743,13 +783,15 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
+!KernelLibrary categoriesForMethods!
+compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
+getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
+getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
+getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
+lstrcmp:lpString2:!public!win32 functions-string manipulation! !
+lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
+setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
+!
 
 !Locale methodsFor!
 
@@ -773,9 +815,11 @@ isMonthBeforeDay
 
 	Notification deprecated.	"Use dateFormat"
 	^self dateOrder ~= 1! !
-!Locale categoriesFor: #dateOrder!constants!public! !
-!Locale categoriesFor: #dateSeparator!constants!public! !
-!Locale categoriesFor: #isMonthBeforeDay!helpers!public! !
+!Locale categoriesForMethods!
+dateOrder!constants!public! !
+dateSeparator!constants!public! !
+isMonthBeforeDay!helpers!public! !
+!
 
 !MessageBox methodsFor!
 
@@ -822,17 +866,19 @@ yesNo
 yesNoCancel
 	#deprecated.
 	self buttonStyle: #yesNoCancel! !
-!MessageBox categoriesFor: #abortRetryIgnore!accessing-styles!public! !
-!MessageBox categoriesFor: #error!modes!public! !
-!MessageBox categoriesFor: #fatalError!accessing-styles!public! !
-!MessageBox categoriesFor: #ok!accessing-styles!public! !
-!MessageBox categoriesFor: #okCancel!accessing-styles!public! !
-!MessageBox categoriesFor: #prompt!accessing-styles!public! !
-!MessageBox categoriesFor: #retryCancel!accessing-styles!public! !
-!MessageBox categoriesFor: #systemModal!accessing-styles!public! !
-!MessageBox categoriesFor: #taskModal!accessing-styles!public! !
-!MessageBox categoriesFor: #yesNo!accessing-styles!public! !
-!MessageBox categoriesFor: #yesNoCancel!accessing-styles!public! !
+!MessageBox categoriesForMethods!
+abortRetryIgnore!accessing-styles!public! !
+error!modes!public! !
+fatalError!accessing-styles!public! !
+ok!accessing-styles!public! !
+okCancel!accessing-styles!public! !
+prompt!accessing-styles!public! !
+retryCancel!accessing-styles!public! !
+systemModal!accessing-styles!public! !
+taskModal!accessing-styles!public! !
+yesNo!accessing-styles!public! !
+yesNoCancel!accessing-styles!public! !
+!
 
 !MessageBoxAbstract methodsFor!
 
@@ -843,15 +889,19 @@ notify
 warning
 	#deprecated.
 	self iconStyle: #warning! !
-!MessageBoxAbstract categoriesFor: #notify!modes!public! !
-!MessageBoxAbstract categoriesFor: #warning!modes!public! !
+!MessageBoxAbstract categoriesForMethods!
+notify!modes!public! !
+warning!modes!public! !
+!
 
 !NTLibrary class methodsFor!
 
 isWine
 	Notification deprecated.	"Use `NtDll isWine`"
 	^self default isWine! !
-!NTLibrary class categoriesFor: #isWine!public!testing! !
+!NTLibrary class categoriesForMethods!
+isWine!public!testing! !
+!
 
 !Package methodsFor!
 
@@ -872,10 +922,12 @@ isBaseImagePackage
 untracedGlobals
 	#deprecated.
 	^self untracedVariables collect: [:each | each asSymbol]! !
-!Package categoriesFor: #addGlobalNamed:!adding!public! !
-!Package categoriesFor: #includesGlobalNamed:!public!testing! !
-!Package categoriesFor: #isBaseImagePackage!public!testing! !
-!Package categoriesFor: #untracedGlobals!accessing!public! !
+!Package categoriesForMethods!
+addGlobalNamed:!adding!public! !
+includesGlobalNamed:!public!testing! !
+isBaseImagePackage!public!testing! !
+untracedGlobals!accessing!public! !
+!
 
 !PackageManager methodsFor!
 
@@ -890,16 +942,20 @@ allGlobalAliases
 packageOfGlobalNamed: globalName 
 	#deprecated.
 	^self packageOfVariableNamed: globalName asQualifiedReference! !
-!PackageManager categoriesFor: #addGlobalNamed:to:!adding!public! !
-!PackageManager categoriesFor: #allGlobalAliases!enquiries!public! !
-!PackageManager categoriesFor: #packageOfGlobalNamed:!public!searching! !
+!PackageManager categoriesForMethods!
+addGlobalNamed:to:!adding!public! !
+allGlobalAliases!enquiries!public! !
+packageOfGlobalNamed:!public!searching! !
+!
 
 !SortAlgorithm class methodsFor!
 
 sortBlock: aDyadicValuable
 	Notification deprecated.
 	^self newSortBlock: aDyadicValuable! !
-!SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
+!SortAlgorithm class categoriesForMethods!
+sortBlock:!instance creation!public! !
+!
 
 !SortedCollection class methodsFor!
 
@@ -910,28 +966,36 @@ value: anObject1 value: anObject2
 
 	Notification deprecated.
 	^anObject1 <= anObject2! !
-!SortedCollection class categoriesFor: #value:value:!evaluating!private! !
+!SortedCollection class categoriesForMethods!
+value:value:!evaluating!private! !
+!
 
 !STBClassProxy class methodsFor!
 
 for: aClass 
 	#deprecated.
 	^self forClass: aClass! !
-!STBClassProxy class categoriesFor: #for:!instance creation!public! !
+!STBClassProxy class categoriesForMethods!
+for:!instance creation!public! !
+!
 
 !STBCollectionProxy class methodsFor!
 
 for: aCollection 
 	#deprecated.
 	^self forCollection: aCollection! !
-!STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
+!STBCollectionProxy class categoriesForMethods!
+for:!instance creation!public! !
+!
 
 !STBPrefix methodsFor!
 
 isLiteralPrefix
 	#deprecated.
 	^dword anyMask: LiteralPrefixMask! !
-!STBPrefix categoriesFor: #isLiteralPrefix!public!testing! !
+!STBPrefix categoriesForMethods!
+isLiteralPrefix!public!testing! !
+!
 
 !STBSingletonProxy class methodsFor!
 
@@ -942,15 +1006,19 @@ for: aClass
 for: aClass using: aSelectorSymbol 
 	#deprecated.
 	^self forClass: aClass using: aSelectorSymbol! !
-!STBSingletonProxy class categoriesFor: #for:!instance creation!public! !
-!STBSingletonProxy class categoriesFor: #for:using:!instance creation!public! !
+!STBSingletonProxy class categoriesForMethods!
+for:!instance creation!public! !
+for:using:!instance creation!public! !
+!
 
 !Stream methodsFor!
 
 nextOrNil
 	#deprecated.
 	^self nextAvailable! !
-!Stream categoriesFor: #nextOrNil!accessing!public! !
+!Stream categoriesForMethods!
+nextOrNil!accessing!public! !
+!
 
 !String methodsFor!
 
@@ -961,8 +1029,10 @@ asUnicodeString
 equals: comperand
 	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
 	^self = comperand! !
-!String categoriesFor: #asUnicodeString!converting!public! !
-!String categoriesFor: #equals:!comparing!public! !
+!String categoriesForMethods!
+asUnicodeString!converting!public! !
+equals:!comparing!public! !
+!
 
 !String class methodsFor!
 
@@ -981,10 +1051,12 @@ fromUnicodeString: anAddressOrUnicodeString
 unicodeClass
 	#deprecated.
 	^self utf16Class! !
-!String class categoriesFor: #fromId:!instance creation!public! !
-!String class categoriesFor: #fromId:in:!instance creation!public! !
-!String class categoriesFor: #fromUnicodeString:!instance creation!public! !
-!String class categoriesFor: #unicodeClass!constants!public! !
+!String class categoriesForMethods!
+fromId:!instance creation!public! !
+fromId:in:!instance creation!public! !
+fromUnicodeString:!instance creation!public! !
+unicodeClass!constants!public! !
+!
 
 !ExternalStructure methodsFor!
 
@@ -995,8 +1067,10 @@ do: aOneArgumentBlock
 do: operation separatedBy: separator 
 	#deprecated.
 	self fieldsDo: operation separatedBy: separator! !
-!ExternalStructure categoriesFor: #do:!enumerating!public! !
-!ExternalStructure categoriesFor: #do:separatedBy:!enumerating!public! !
+!ExternalStructure categoriesForMethods!
+do:!enumerating!public! !
+do:separatedBy:!enumerating!public! !
+!
 
 !Time class methodsFor!
 
@@ -1005,7 +1079,9 @@ microsecondsToRun: timedBlock
 	(including the overhead)."
 
 	^timedBlock timeToRun asMicroseconds asInteger! !
-!Time class categoriesFor: #microsecondsToRun:!operations!public! !
+!Time class categoriesForMethods!
+microsecondsToRun:!operations!public! !
+!
 
 !TimeStamp methodsFor!
 
@@ -1028,9 +1104,11 @@ time: aTime
 	Notification deprecated.
 	self isImmutable: false.
 	time := aTime! !
-!TimeStamp categoriesFor: #date:!accessing!public! !
-!TimeStamp categoriesFor: #dateAndTime!accessing!public! !
-!TimeStamp categoriesFor: #time:!accessing!public! !
+!TimeStamp categoriesForMethods!
+date:!accessing!public! !
+dateAndTime!accessing!public! !
+time:!accessing!public! !
+!
 
 !UndefinedObject methodsFor!
 
@@ -1043,7 +1121,9 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 		poolDictionaries: poolDictString)
 		categories: {ClassCategory name: aCategoryOrString};
 		yourself! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!UndefinedObject categoriesForMethods!
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+!
 
 !UserLibrary methodsFor!
 
@@ -1066,10 +1146,12 @@ isCharUpper: aCharacter
 	<stdcall: bool IsCharUpperW char>
 	#deprecated. "Does not yield Unicode compliant results."
 	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #isCharAlpha:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #isCharAlphaNumeric:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #isCharLower:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #isCharUpper:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesForMethods!
+isCharAlpha:!public!win32 functions-string manipulation! !
+isCharAlphaNumeric:!public!win32 functions-string manipulation! !
+isCharLower:!public!win32 functions-string manipulation! !
+isCharUpper:!public!win32 functions-string manipulation! !
+!
 
 !VMLibrary methodsFor!
 
@@ -1124,18 +1206,20 @@ shortName
 	"Answer the localised short name for Dolphin."
 	Notification deprecated.
 	^String fromId: 129 in: self! !
-!VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows8OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows8Point1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaOrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsXPOrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #shortName!accessing!public! !
+!VMLibrary categoriesForMethods!
+isWindows10OrGreater!public!win32 functions-version helpers! !
+isWindows7OrGreater!public!win32 functions-version helpers! !
+isWindows7SP1OrGreater!public!win32 functions-version helpers! !
+isWindows8OrGreater!public!win32 functions-version helpers! !
+isWindows8Point1OrGreater!public!win32 functions-version helpers! !
+isWindowsServer!public!win32 functions-version helpers! !
+isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
+isWindowsVistaOrGreater!public!win32 functions-version helpers! !
+isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
+isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
+isWindowsXPOrGreater!public!win32 functions-version helpers! !
+shortName!accessing!public! !
+!
 
 !WindowsLocale methodsFor!
 
@@ -1144,7 +1228,9 @@ timeSeparator
 
 	Notification deprecated.	"Use timeFormat"
 	^self getStringInfo: LOCALE_STIME! !
-!WindowsLocale categoriesFor: #timeSeparator!constants!public! !
+!WindowsLocale categoriesForMethods!
+timeSeparator!constants!public! !
+!
 
 !WinMMLibrary methodsFor!
 
@@ -1152,7 +1238,9 @@ timeGetTime
 	<stdcall: dword timeGetTime>
 	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
 	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
+!WinMMLibrary categoriesForMethods!
+timeGetTime!public!win32 functions-timer! !
+!
 
 "End of package definition"!
 

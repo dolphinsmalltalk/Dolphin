@@ -21,7 +21,9 @@ value
 		by: 2
 		do: [:i | inst at: (array at: i) put: (array at: i + 1)].
 	^inst! !
-!Kernel.STBIdentityDictionaryProxy categoriesFor: #value!converting!public! !
+!Kernel.STBIdentityDictionaryProxy categoriesForMethods!
+value!converting!public! !
+!
 
 !Kernel.STBIdentityDictionaryProxy class methodsFor!
 
@@ -37,5 +39,7 @@ forCollection: anIdentityDictionary
 				nextPut: key;
 				nextPut: value].
 	^self class: anIdentityDictionary class array: tempStream grabContents! !
-!Kernel.STBIdentityDictionaryProxy class categoriesFor: #forCollection:!instance creation!public! !
+!Kernel.STBIdentityDictionaryProxy class categoriesForMethods!
+forCollection:!instance creation!public! !
+!
 

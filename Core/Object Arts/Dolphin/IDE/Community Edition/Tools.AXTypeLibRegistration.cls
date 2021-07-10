@@ -87,17 +87,19 @@ versionString
 	"Answer the version string from the typelib's registration details."
 
 	^versionString! !
-!Tools.AXTypeLibRegistration categoriesFor: #<!comparing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #<=!comparing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #=!comparing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #buildVersionNumbers!accessing!helpers!private! !
-!Tools.AXTypeLibRegistration categoriesFor: #description!accessing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #description:guidString:versionString:!initializing!private! !
-!Tools.AXTypeLibRegistration categoriesFor: #hash!comparing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #libid!accessing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #majorVersion!accessing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #minorVersion!accessing!public! !
-!Tools.AXTypeLibRegistration categoriesFor: #versionString!accessing!public! !
+!Tools.AXTypeLibRegistration categoriesForMethods!
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+buildVersionNumbers!accessing!helpers!private! !
+description!accessing!public! !
+description:guidString:versionString:!initializing!private! !
+hash!comparing!public! !
+libid!accessing!public! !
+majorVersion!accessing!public! !
+minorVersion!accessing!public! !
+versionString!accessing!public! !
+!
 
 !Tools.AXTypeLibRegistration class methodsFor!
 
@@ -112,6 +114,8 @@ icon
 	"Answers an <Icon> that can be used to represent this class"
 
 	^TypeLibraryAnalyzer icon! !
-!Tools.AXTypeLibRegistration class categoriesFor: #description:guidString:versionString:!instance creation!public! !
-!Tools.AXTypeLibRegistration class categoriesFor: #icon!constants!public! !
+!Tools.AXTypeLibRegistration class categoriesForMethods!
+description:guidString:versionString:!instance creation!public! !
+icon!constants!public! !
+!
 

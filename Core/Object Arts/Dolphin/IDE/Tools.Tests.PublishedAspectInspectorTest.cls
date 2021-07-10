@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.PublishedAspectInspectorTest'
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
@@ -666,33 +666,35 @@ testSetToNil
 	inspector setAspectValue: nil.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #aspectAccessorNamed:!helpers!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #aspectPresenter!accessing!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #createInspectorOn:!helpers!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #getAccessorKeyText:!private!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #getAccessorValueText:!private!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #isUsingListTreeView!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #repaint!helpers!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #seqCollMoveDownTest:!helpers!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #seqCollMoveFirstTest:!helpers!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #seqCollMoveLastTest:!helpers!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #seqCollMoveUpTest:!helpers!private! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #tearDown!public!running! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testAddRemoveCollectionElement!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testAspectChanged!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testCommandMenuItemEditor!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testContextMenuEdit!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testCopyAndPasteMenu!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testImmutableAspect!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testImmutableAspect2!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testListViewColumnsEdit!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testMoveDown!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testMoveFirst!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testMoveLast!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testMoveUp!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testPublishedAspectsOfInstancesOnClassSide!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testRefresh!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testRemoveCollectionElements1!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testRootAspectVisible!public!unit tests! !
-!Tools.Tests.PublishedAspectInspectorTest categoriesFor: #testSetToNil!public!unit tests! !
+!Tools.Tests.PublishedAspectInspectorTest categoriesForMethods!
+aspectAccessorNamed:!helpers!private! !
+aspectPresenter!accessing!private! !
+createInspectorOn:!helpers!private! !
+getAccessorKeyText:!private!unit tests! !
+getAccessorValueText:!private!unit tests! !
+isUsingListTreeView!private! !
+repaint!helpers!private! !
+seqCollMoveDownTest:!helpers!private! !
+seqCollMoveFirstTest:!helpers!private! !
+seqCollMoveLastTest:!helpers!private! !
+seqCollMoveUpTest:!helpers!private! !
+tearDown!public!running! !
+testAddRemoveCollectionElement!public!unit tests! !
+testAspectChanged!public!unit tests! !
+testCommandMenuItemEditor!public!unit tests! !
+testContextMenuEdit!public!unit tests! !
+testCopyAndPasteMenu!public!unit tests! !
+testImmutableAspect!public!unit tests! !
+testImmutableAspect2!public!unit tests! !
+testListViewColumnsEdit!public!unit tests! !
+testMoveDown!public!unit tests! !
+testMoveFirst!public!unit tests! !
+testMoveLast!public!unit tests! !
+testMoveUp!public!unit tests! !
+testPublishedAspectsOfInstancesOnClassSide!public!unit tests! !
+testRefresh!public!unit tests! !
+testRemoveCollectionElements1!public!unit tests! !
+testRootAspectVisible!public!unit tests! !
+testSetToNil!public!unit tests! !
+!
 

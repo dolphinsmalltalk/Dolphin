@@ -102,13 +102,15 @@ verifyClass: aClass environment: aNamespaceOrNil definitionPrefix: aString
 	subject printBasicDefinitionOfClass: aClass.
 	actual := stream contents.
 	self assert: (actual beginsWith: aString)! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfClassInSmalltalk!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfClassWithSuperclassInSmalltalk!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfNamespace!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfNestedNamespace!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfRootClass!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfRootNamespace!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfSmalltalkNamespace!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #testPrintDefinitionOfTopLevelNamespace!public!unit tests! !
-!Kernel.Tests.ChunkSourceFilerTest categoriesFor: #verifyClass:environment:definitionPrefix:!helpers!private! !
+!Kernel.Tests.ChunkSourceFilerTest categoriesForMethods!
+testPrintDefinitionOfClassInSmalltalk!public!unit tests! !
+testPrintDefinitionOfClassWithSuperclassInSmalltalk!public!unit tests! !
+testPrintDefinitionOfNamespace!public!unit tests! !
+testPrintDefinitionOfNestedNamespace!public!unit tests! !
+testPrintDefinitionOfRootClass!public!unit tests! !
+testPrintDefinitionOfRootNamespace!public!unit tests! !
+testPrintDefinitionOfSmalltalkNamespace!public!unit tests! !
+testPrintDefinitionOfTopLevelNamespace!public!unit tests! !
+verifyClass:environment:definitionPrefix:!helpers!private! !
+!
 

@@ -56,13 +56,15 @@ value: anObject
 	is received"
 
 	self model value: anObject.! !
-!UI.ValueDialog categoriesFor: #answer!accessing!public! !
-!UI.ValueDialog categoriesFor: #bufferClass!accessing!private! !
-!UI.ValueDialog categoriesFor: #bufferedModelFor:!accessing!private! !
-!UI.ValueDialog categoriesFor: #model:!accessing!public! !
-!UI.ValueDialog categoriesFor: #onValueChanged!event handling!public! !
-!UI.ValueDialog categoriesFor: #value!accessing!public! !
-!UI.ValueDialog categoriesFor: #value:!accessing!public! !
+!UI.ValueDialog categoriesForMethods!
+answer!accessing!public! !
+bufferClass!accessing!private! !
+bufferedModelFor:!accessing!private! !
+model:!accessing!public! !
+onValueChanged!event handling!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 UI.ValueDialog methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 UI.ValueDialog methodProtocol: #valueDialogPresenter attributes: #(#readOnly) selectors: #(#apply #cancel #caption #caption: #clearCommandHistory #ensureVisible #hasCommandHistory #hasCommandHistory: #ok #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #redo #revert #setFocus #show #topShell #undo #updateCaption #value #value: #view)!
@@ -81,6 +83,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!UI.ValueDialog class categoriesFor: #defaultModel!models!public! !
-!UI.ValueDialog class categoriesFor: #icon!constants!public! !
+!UI.ValueDialog class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

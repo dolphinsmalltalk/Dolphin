@@ -289,28 +289,30 @@ transform
 					(c compiledMethodAt: selector ifAbsent: []) 
 						ifNotNil: [:m | change package: m owningPackage]]].
 	class compileTree: modifiedParseTree! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkAssignments:!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkReturn!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkSelfReturns!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkSingleAssignment:!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkSpecialExtractions!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #checkTemporaries!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #createTemporariesInExtractedMethodFor:!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #existingSelector!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #extractMethod!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #getExtractedSource!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #isMethodEquivalentTo:!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #isParseTreeEquivalentTo:!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #methodDelimiter!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #nameNewMethod:!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #placeholderNode!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #remainingTemporaries!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #reorderParametersToMatch:!public!transforming! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.ExtractMethodRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
+checkAssignments:!public!transforming! !
+checkReturn!public!transforming! !
+checkSelfReturns!public!transforming! !
+checkSingleAssignment:!public!transforming! !
+checkSpecialExtractions!public!transforming! !
+checkTemporaries!public!transforming! !
+createTemporariesInExtractedMethodFor:!public!transforming! !
+existingSelector!public!transforming! !
+extract:from:in:!initialize/release!public! !
+extractMethod!public!transforming! !
+getExtractedSource!public!transforming! !
+getNewMethodName!public!transforming! !
+isMethodEquivalentTo:!public!transforming! !
+isParseTreeEquivalentTo:!public!transforming! !
+methodDelimiter!public!transforming! !
+nameNewMethod:!public!transforming! !
+placeholderNode!public!transforming! !
+preconditions!preconditions!public! !
+remainingTemporaries!public!transforming! !
+reorderParametersToMatch:!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.ExtractMethodRefactoring class methodsFor!
 
@@ -327,6 +329,8 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!Refactory.Browser.ExtractMethodRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
-!Refactory.Browser.ExtractMethodRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractMethodRefactoring class categoriesForMethods!
+extract:from:in:!instance creation!public! !
+model:extract:from:in:!instance creation!public! !
+!
 

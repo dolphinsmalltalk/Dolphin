@@ -61,20 +61,22 @@ visitProcessingInstruction: anIXMLDOMProcessingInstruction
 
 visitText: anIXMLDOMText
 	self visitCharacterData: anIXMLDOMText! !
-!MSXML.XmlDomVisitor categoriesFor: #visitAttribute:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitCDATA:!public! !
-!MSXML.XmlDomVisitor categoriesFor: #visitCharacterData:!private! !
-!MSXML.XmlDomVisitor categoriesFor: #visitComment:!public! !
-!MSXML.XmlDomVisitor categoriesFor: #visitDocument:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitDocumentType:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitDomNode:!private!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitElement:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitEntity:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitEntityReference:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitNode:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitNodeChildren:!private!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitNodes:!private!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitNotation:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitProcessingInstruction:!public!visiting! !
-!MSXML.XmlDomVisitor categoriesFor: #visitText:!public! !
+!MSXML.XmlDomVisitor categoriesForMethods!
+visitAttribute:!public!visiting! !
+visitCDATA:!public! !
+visitCharacterData:!private! !
+visitComment:!public! !
+visitDocument:!public!visiting! !
+visitDocumentType:!public!visiting! !
+visitDomNode:!private!visiting! !
+visitElement:!public!visiting! !
+visitEntity:!public!visiting! !
+visitEntityReference:!public!visiting! !
+visitNode:!public!visiting! !
+visitNodeChildren:!private!visiting! !
+visitNodes:!private!visiting! !
+visitNotation:!public!visiting! !
+visitProcessingInstruction:!public!visiting! !
+visitText:!public! !
+!
 

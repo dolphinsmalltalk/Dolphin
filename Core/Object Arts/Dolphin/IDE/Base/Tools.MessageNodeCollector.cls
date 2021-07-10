@@ -20,9 +20,11 @@ messages
 visitMessageNode: aMessageNode
 	messages addLast: aMessageNode.
 	super visitMessageNode: aMessageNode! !
-!Tools.MessageNodeCollector categoriesFor: #initialize!initializing!private! !
-!Tools.MessageNodeCollector categoriesFor: #messages!accessing!public! !
-!Tools.MessageNodeCollector categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!Tools.MessageNodeCollector categoriesForMethods!
+initialize!initializing!private! !
+messages!accessing!public! !
+visitMessageNode:!public!visitor/double dispatching! !
+!
 
 !Tools.MessageNodeCollector class methodsFor!
 
@@ -30,5 +32,7 @@ messagesSentBy: anStProgramNode
 	^(self new)
 		visitNode: anStProgramNode;
 		messages! !
-!Tools.MessageNodeCollector class categoriesFor: #messagesSentBy:!enquiries!public! !
+!Tools.MessageNodeCollector class categoriesForMethods!
+messagesSentBy:!enquiries!public! !
+!
 

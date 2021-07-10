@@ -104,19 +104,21 @@ printString
 	stream := String smalltalkWriteStream: 32.
 	self printOn: stream.
 	^stream contents! !
-!Core.Magnitude categoriesFor: #<!comparing!public! !
-!Core.Magnitude categoriesFor: #<=!comparing!public! !
-!Core.Magnitude categoriesFor: #<=>!comparing!public! !
-!Core.Magnitude categoriesFor: #=!comparing!public! !
-!Core.Magnitude categoriesFor: #>!comparing!public! !
-!Core.Magnitude categoriesFor: #>=!comparing!public! !
-!Core.Magnitude categoriesFor: #between:and:!comparing!public! !
-!Core.Magnitude categoriesFor: #clampBetween:and:!comparing!public! !
-!Core.Magnitude categoriesFor: #hash!comparing!public! !
-!Core.Magnitude categoriesFor: #isNaN!public!testing! !
-!Core.Magnitude categoriesFor: #max:!comparing!public! !
-!Core.Magnitude categoriesFor: #min:!comparing!public! !
-!Core.Magnitude categoriesFor: #printString!public! !
+!Core.Magnitude categoriesForMethods!
+<!comparing!public! !
+<=!comparing!public! !
+<=>!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+between:and:!comparing!public! !
+clampBetween:and:!comparing!public! !
+hash!comparing!public! !
+isNaN!public!testing! !
+max:!comparing!public! !
+min:!comparing!public! !
+printString!public! !
+!
 
 Core.Magnitude methodProtocol: #magnitude attributes: #(#ansi #readOnly) selectors: #(#< #<= #> #>= #between:and: #max: #min:)!
 

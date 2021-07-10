@@ -791,59 +791,61 @@ stubTextFor: aStMessageNode inClass: aClass
 		crtab;
 		nextPutAll: body.
 	^source contents! !
-!Tools.CodeRefactoringTool categoriesFor: #addClassVariable:to:!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #addInstanceVariable:to:!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #addParameterCommand!commands!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #addParameterToMessage!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #addSharedVariable:to:!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #canPerformCodeRefactoring!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #canRenameNode!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #changeSignature:in:operation:title:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #changeSignatureCommandFor:in:operation:title:!helpers!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #contextBindingFor:!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #convertTempToInstVar!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #createClassForVariable:!autocorrection!private! !
-!Tools.CodeRefactoringTool categoriesFor: #declareAllUndeclaredVariablesAsTemps!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #declareTemporary:!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #emitKeywordSignatureFor:in:on:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #extractionRange!helpers!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #extractMethod!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #extractToComponent!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #extractToTemporary!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #findAssignmentsToTemp:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #hasUndeclaredVariables!autocorrection!private! !
-!Tools.CodeRefactoringTool categoriesFor: #implementMessage:!commands!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #implementMessage:inClass:!commands!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #inlineMessage!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #inlineParameter!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #inlineTemporary!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #inlineTemporary:in:!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #isLocalVariable:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #moveTempToInnerScope!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #nameForArgument:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:!autocorrection!private! !
-!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forMessage:!autocorrection!private! !
-!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forUndefinedVar:!autocorrection!private! !
-!Tools.CodeRefactoringTool categoriesFor: #populateAutoCorrectMenu:forVariable:!autocorrection!private! !
-!Tools.CodeRefactoringTool categoriesFor: #populateImplementMenu:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #populateImplementMenu:forMessage:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #queryRenameCommand:command:!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #removeParameter!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #removeTempDecl:!autocorrection!commands!private! !
-!Tools.CodeRefactoringTool categoriesFor: #renameClass:!helpers!private! !
-!Tools.CodeRefactoringTool categoriesFor: #renameClassVariable:!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameInstanceVariable:!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameItCommand!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameMessage!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameMessageCommand!commands!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameNode!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameTemporary:!operations!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameVariable!commands!public!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #renameVariableCommand:!commands!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #selectedErrorRange!accessing!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #selectedMethod!accessing!private! !
-!Tools.CodeRefactoringTool categoriesFor: #selectedNode!accessing!private!refactoring! !
-!Tools.CodeRefactoringTool categoriesFor: #stubTextFor:inClass:!helpers!private! !
+!Tools.CodeRefactoringTool categoriesForMethods!
+addClassVariable:to:!commands!private! !
+addInstanceVariable:to:!commands!private! !
+addParameterCommand!commands!private!refactoring! !
+addParameterToMessage!commands!public!refactoring! !
+addSharedVariable:to:!commands!private! !
+canPerformCodeRefactoring!private!refactoring! !
+canRenameNode!private!refactoring! !
+changeSignature:in:operation:title:!helpers!private! !
+changeSignatureCommandFor:in:operation:title:!helpers!private!refactoring! !
+contextBindingFor:!private!refactoring! !
+convertTempToInstVar!commands!public!refactoring! !
+createClassForVariable:!autocorrection!private! !
+declareAllUndeclaredVariablesAsTemps!commands!private! !
+declareTemporary:!commands!private! !
+emitKeywordSignatureFor:in:on:!helpers!private! !
+extractionRange!helpers!private!refactoring! !
+extractMethod!commands!public!refactoring! !
+extractToComponent!commands!public!refactoring! !
+extractToTemporary!commands!public!refactoring! !
+findAssignmentsToTemp:!helpers!private! !
+hasUndeclaredVariables!autocorrection!private! !
+implementMessage:!commands!private!refactoring! !
+implementMessage:inClass:!commands!private!refactoring! !
+inlineMessage!commands!public!refactoring! !
+inlineParameter!commands!public!refactoring! !
+inlineTemporary!commands!public!refactoring! !
+inlineTemporary:in:!private!refactoring! !
+isLocalVariable:!helpers!private! !
+moveTempToInnerScope!public!refactoring! !
+nameForArgument:!helpers!private! !
+onAboutToDisplayMenu:!event handling!public! !
+populateAutoCorrectMenu:!autocorrection!private! !
+populateAutoCorrectMenu:forMessage:!autocorrection!private! !
+populateAutoCorrectMenu:forUndefinedVar:!autocorrection!private! !
+populateAutoCorrectMenu:forVariable:!autocorrection!private! !
+populateImplementMenu:!helpers!private! !
+populateImplementMenu:forMessage:!helpers!private! !
+queryCommand:command:!commands!private! !
+queryRenameCommand:command:!commands!private! !
+removeParameter!commands!public!refactoring! !
+removeTempDecl:!autocorrection!commands!private! !
+renameClass:!helpers!private! !
+renameClassVariable:!private!refactoring! !
+renameInstanceVariable:!private!refactoring! !
+renameItCommand!private!refactoring! !
+renameMessage!commands!public!refactoring! !
+renameMessageCommand!commands!private!refactoring! !
+renameNode!commands!public!refactoring! !
+renameTemporary:!operations!private!refactoring! !
+renameVariable!commands!public!refactoring! !
+renameVariableCommand:!commands!private!refactoring! !
+selectedErrorRange!accessing!private!refactoring! !
+selectedMethod!accessing!private! !
+selectedNode!accessing!private!refactoring! !
+stubTextFor:inClass:!helpers!private! !
+!
 

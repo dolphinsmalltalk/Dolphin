@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.AbstractDictionaryTest subclass: #'Kernel.Tests.MethodDictionaryTest'
 	instanceVariableNames: ''
@@ -56,9 +56,11 @@ testMaintainsLoadFactor
 			self assert: actualSize equals: expectedSize.
 			self assert: actualSlots / 2 <= minimumSlots.
 			self assert: actualSlots equals: expectedSlots]! !
-!Kernel.Tests.MethodDictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!Kernel.Tests.MethodDictionaryTest categoriesFor: #key3Value!private! !
-!Kernel.Tests.MethodDictionaryTest categoriesFor: #loadFactor!constants!private! !
-!Kernel.Tests.MethodDictionaryTest categoriesFor: #testClassSizeFor!public!unit tests! !
-!Kernel.Tests.MethodDictionaryTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !
+!Kernel.Tests.MethodDictionaryTest categoriesForMethods!
+collectionClass!helpers!private! !
+key3Value!private! !
+loadFactor!constants!private! !
+testClassSizeFor!public!unit tests! !
+testMaintainsLoadFactor!public!unit tests! !
+!
 

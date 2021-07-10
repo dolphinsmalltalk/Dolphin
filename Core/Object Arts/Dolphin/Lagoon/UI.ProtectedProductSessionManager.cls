@@ -135,19 +135,21 @@ unlock
 		unlockClasses: self encryptedClasses
 		using: sn.
 ! !
-!UI.ProtectedProductSessionManager categoriesFor: #encryptedClasses!accessing!public! !
-!UI.ProtectedProductSessionManager categoriesFor: #encryptedClasses:!accessing!private! !
-!UI.ProtectedProductSessionManager categoriesFor: #encryptedPackageNames!accessing!public! !
-!UI.ProtectedProductSessionManager categoriesFor: #initialize!initializing!private! !
-!UI.ProtectedProductSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
-!UI.ProtectedProductSessionManager categoriesFor: #isSafeToEncrypt:!helpers!private! !
-!UI.ProtectedProductSessionManager categoriesFor: #lock!operations!public! !
-!UI.ProtectedProductSessionManager categoriesFor: #main!operations!public! !
-!UI.ProtectedProductSessionManager categoriesFor: #productRegistrationKey!constants!public! !
-!UI.ProtectedProductSessionManager categoriesFor: #promptForSerialNumber!operations!public! !
-!UI.ProtectedProductSessionManager categoriesFor: #serialNumberClass!constants!public! !
-!UI.ProtectedProductSessionManager categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
-!UI.ProtectedProductSessionManager categoriesFor: #unlock!operations!public! !
+!UI.ProtectedProductSessionManager categoriesForMethods!
+encryptedClasses!accessing!public! !
+encryptedClasses:!accessing!private! !
+encryptedPackageNames!accessing!public! !
+initialize!initializing!private! !
+initializeFromSessionManager:!initializing!private! !
+isSafeToEncrypt:!helpers!private! !
+lock!operations!public! !
+main!operations!public! !
+productRegistrationKey!constants!public! !
+promptForSerialNumber!operations!public! !
+serialNumberClass!constants!public! !
+shouldEncryptMetaclasses!constants!public!testing! !
+unlock!operations!public! !
+!
 
 !UI.ProtectedProductSessionManager class methodsFor!
 
@@ -156,5 +158,7 @@ isSafeToEncryptWithProductProtection
 	the deployment of a Protected Product application."
 
 	^ false.! !
-!UI.ProtectedProductSessionManager class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
+!UI.ProtectedProductSessionManager class categoriesForMethods!
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+!
 

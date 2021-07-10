@@ -19,7 +19,9 @@ changeStringFormat
 
 changeSymbol
 	^#removeClassVarName:! !
-!Refactory.Browser.RemoveClassVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.RemoveClassVariableChange categoriesFor: #changeStringFormat!constants!printing!private! !
-!Refactory.Browser.RemoveClassVariableChange categoriesFor: #changeSymbol!constants!private! !
+!Refactory.Browser.RemoveClassVariableChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeStringFormat!constants!printing!private! !
+changeSymbol!constants!private! !
+!
 

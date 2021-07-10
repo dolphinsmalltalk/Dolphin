@@ -67,15 +67,17 @@ rightFailed
 
 unknownFailed
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #check!checking!public! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #errorBlockFor:!private! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #errorMacro!private! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #errorStringFor:!private! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #left:right:!initialize/release!public! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #leftFailed!private! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #longMacro!private! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #neitherFailed!private! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #rightFailed!private! !
-!Refactory.Browser.RBConjunctiveCondition categoriesFor: #unknownFailed!private! !
+!Refactory.Browser.RBConjunctiveCondition categoriesForMethods!
+check!checking!public! !
+errorBlockFor:!private! !
+errorMacro!private! !
+errorStringFor:!private! !
+left:right:!initialize/release!public! !
+leftFailed!private! !
+longMacro!private! !
+neitherFailed!private! !
+printOn:!printing!public! !
+rightFailed!private! !
+unknownFailed!private! !
+!
 

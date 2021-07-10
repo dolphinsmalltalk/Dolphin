@@ -52,11 +52,13 @@ removeAccount: aPersonalAccount
 	Answers aPersonalAccount"
 
 	^self accounts remove: aPersonalAccount! !
-!UI.Examples.PersonalMoney categoriesFor: #accounts!accessing!initializing!public! !
-!UI.Examples.PersonalMoney categoriesFor: #addAccount:!adding!public! !
-!UI.Examples.PersonalMoney categoriesFor: #initialize!initializing!private! !
-!UI.Examples.PersonalMoney categoriesFor: #owner!accessing!public! !
-!UI.Examples.PersonalMoney categoriesFor: #owner:!accessing!public! !
-!UI.Examples.PersonalMoney categoriesFor: #printOn:!printing!public! !
-!UI.Examples.PersonalMoney categoriesFor: #removeAccount:!public!removing! !
+!UI.Examples.PersonalMoney categoriesForMethods!
+accounts!accessing!initializing!public! !
+addAccount:!adding!public! !
+initialize!initializing!private! !
+owner!accessing!public! !
+owner:!accessing!public! !
+printOn:!printing!public! !
+removeAccount:!public!removing! !
+!
 

@@ -67,14 +67,16 @@ sampleSets
 	This method was automatically generated, but may be modified."
 
 	^sampleSets! !
-!ProfilerSampleSetManager categoriesFor: #addSampleSetNamed:!operations!public! !
-!ProfilerSampleSetManager categoriesFor: #initialize!initializing!public! !
-!ProfilerSampleSetManager categoriesFor: #onSampleSetUpdated:!event handling!public! !
-!ProfilerSampleSetManager categoriesFor: #removeAll!operations!public! !
-!ProfilerSampleSetManager categoriesFor: #removeSampleSetNamed:!operations!public! !
-!ProfilerSampleSetManager categoriesFor: #sampleSetNamed:!operations!public! !
-!ProfilerSampleSetManager categoriesFor: #sampleSetNames!accessing!public! !
-!ProfilerSampleSetManager categoriesFor: #sampleSets!accessing!public! !
+!ProfilerSampleSetManager categoriesForMethods!
+addSampleSetNamed:!operations!public! !
+initialize!initializing!public! !
+onSampleSetUpdated:!event handling!public! !
+removeAll!operations!public! !
+removeSampleSetNamed:!operations!public! !
+sampleSetNamed:!operations!public! !
+sampleSetNames!accessing!public! !
+sampleSets!accessing!public! !
+!
 
 !ProfilerSampleSetManager class methodsFor!
 
@@ -103,9 +105,11 @@ reset
 	"Clear the singleton instance of this class"
 
 	Default := nil! !
-!ProfilerSampleSetManager class categoriesFor: #default!instance creation!public! !
-!ProfilerSampleSetManager class categoriesFor: #defaultSetName!constants!public! !
-!ProfilerSampleSetManager class categoriesFor: #icon!constants!public! !
-!ProfilerSampleSetManager class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
-!ProfilerSampleSetManager class categoriesFor: #reset!operations!public! !
+!ProfilerSampleSetManager class categoriesForMethods!
+default!instance creation!public! !
+defaultSetName!constants!public! !
+icon!constants!public! !
+new!instance creation!protocols-instantiator!protocols-Object class!public! !
+reset!operations!public! !
+!
 

@@ -65,16 +65,18 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anInteger! !
-!External.UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
-!External.UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
-!External.UINT_PTR categoriesFor: #highPart!accessing!public! !
-!External.UINT_PTR categoriesFor: #highPart:!accessing!public! !
-!External.UINT_PTR categoriesFor: #highPartSigned!accessing!public! !
-!External.UINT_PTR categoriesFor: #lowPart!accessing!public! !
-!External.UINT_PTR categoriesFor: #lowPart:!accessing!public! !
-!External.UINT_PTR categoriesFor: #lowPartSigned!accessing!public! !
-!External.UINT_PTR categoriesFor: #value!**compiled accessors**!public! !
-!External.UINT_PTR categoriesFor: #value:!**compiled accessors**!public! !
+!External.UINT_PTR categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+highPart!accessing!public! !
+highPart:!accessing!public! !
+highPartSigned!accessing!public! !
+lowPart!accessing!public! !
+lowPart:!accessing!public! !
+lowPartSigned!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.UINT_PTR class methodsFor!
 
@@ -83,5 +85,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: UINT_PTRField new beOverride! !
-!External.UINT_PTR class categoriesFor: #defineFields!public!template definition! !
+!External.UINT_PTR class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

@@ -331,48 +331,50 @@ setEnvironment: aBrowserEnvironment
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
-!Refactory.Browser.RBNamespace categoriesFor: #addChangeToClass:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #addClassConstant:to:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #addClassVariable:to:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #addImport:to:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #addInstanceVariable:to:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #allClassesDo:!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #allImplementorsOf:!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #allReferencesTo:do:!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #allReferencesToClass:do:!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #changeClass:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #changes!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #changes:!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #classFor:!accessing/classes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #classNamed:!accessing/classes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #comment:in:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #compile:in:classified:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #createNewClassFor:!accessing/classes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #defineClass:!changes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #environment!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #flushCaches!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #hasRemoved:!public!testing! !
-!Refactory.Browser.RBNamespace categoriesFor: #includesClassNamed:!public!testing! !
-!Refactory.Browser.RBNamespace categoriesFor: #includesGlobal:!public!testing! !
-!Refactory.Browser.RBNamespace categoriesFor: #metaclassNamed:!accessing/classes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #name!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #name:!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #performChange:around:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #privateImplementorsOf:!helpers!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #removeClass:!changes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #removeClassConstant:from:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #removeInstanceVariable:from:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #removeMethod:from:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #renameClass:to:around:!changes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #renameClassVariable:to:in:around:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #renameInstanceVariable:to:in:around:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #reparentClasses:to:!changes!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #replaceClassNameIn:to:!changes!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #rootClasses!accessing!public! !
-!Refactory.Browser.RBNamespace categoriesFor: #setEnvironment:!initialize/release!private! !
-!Refactory.Browser.RBNamespace categoriesFor: #whichCategoryIncludes:!accessing/classes!public! !
+!Refactory.Browser.RBNamespace categoriesForMethods!
+addChangeToClass:!changes!private! !
+addClassConstant:to:!changes!private! !
+addClassVariable:to:!changes!private! !
+addImport:to:!changes!private! !
+addInstanceVariable:to:!changes!private! !
+allClassesDo:!accessing!public! !
+allImplementorsOf:!accessing!public! !
+allReferencesTo:do:!accessing!public! !
+allReferencesToClass:do:!accessing!public! !
+changeClass:!changes!private! !
+changes!accessing!public! !
+changes:!accessing!public! !
+classFor:!accessing/classes!public! !
+classNamed:!accessing/classes!public! !
+comment:in:!changes!private! !
+compile:in:classified:!changes!private! !
+createNewClassFor:!accessing/classes!public! !
+defineClass:!changes!public! !
+environment!accessing!public! !
+flushCaches!changes!private! !
+hasRemoved:!public!testing! !
+includesClassNamed:!public!testing! !
+includesGlobal:!public!testing! !
+metaclassNamed:!accessing/classes!public! !
+name!accessing!public! !
+name:!accessing!public! !
+performChange:around:!changes!private! !
+privateImplementorsOf:!helpers!private! !
+removeClass:!changes!public! !
+removeClassConstant:from:!changes!private! !
+removeClassNamed:!changes!public! !
+removeClassVariable:from:!changes!private! !
+removeInstanceVariable:from:!changes!private! !
+removeMethod:from:!changes!private! !
+renameClass:to:around:!changes!public! !
+renameClassVariable:to:in:around:!changes!private! !
+renameInstanceVariable:to:in:around:!changes!private! !
+reparentClasses:to:!changes!public! !
+replaceClassNameIn:to:!changes!private! !
+rootClasses!accessing!public! !
+setEnvironment:!initialize/release!private! !
+whichCategoryIncludes:!accessing/classes!public! !
+!
 
 !Refactory.Browser.RBNamespace class methodsFor!
 
@@ -383,6 +385,8 @@ onEnvironment: aBrowserEnvironment
 	^self basicNew
 		setEnvironment: aBrowserEnvironment;
 		yourself! !
-!Refactory.Browser.RBNamespace class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.RBNamespace class categoriesFor: #onEnvironment:!instance creation!public! !
+!Refactory.Browser.RBNamespace class categoriesForMethods!
+new!instance creation!public! !
+onEnvironment:!instance creation!public! !
+!
 

@@ -39,15 +39,17 @@ value
 
 valueClass
 	^token value class! !
-!Kernel.StLiteralValueNode categoriesFor: #=!comparing!public! !
-!Kernel.StLiteralValueNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StLiteralValueNode categoriesFor: #formattedCode!accessing!public! !
-!Kernel.StLiteralValueNode categoriesFor: #literalToken:!accessing!private! !
-!Kernel.StLiteralValueNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StLiteralValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StLiteralValueNode categoriesFor: #token!accessing!public! !
-!Kernel.StLiteralValueNode categoriesFor: #value!accessing!public! !
-!Kernel.StLiteralValueNode categoriesFor: #valueClass!accessing!public! !
+!Kernel.StLiteralValueNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+formattedCode!accessing!public! !
+literalToken:!accessing!private! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+token!accessing!public! !
+value!accessing!public! !
+valueClass!accessing!public! !
+!
 
 !Kernel.StLiteralValueNode class methodsFor!
 
@@ -58,6 +60,8 @@ literalToken: aLiteralToken
 
 value: aValue
 	^self literalToken: (StLiteralToken value: aValue)! !
-!Kernel.StLiteralValueNode class categoriesFor: #literalToken:!instance creation!public! !
-!Kernel.StLiteralValueNode class categoriesFor: #value:!instance creation!public! !
+!Kernel.StLiteralValueNode class categoriesForMethods!
+literalToken:!instance creation!public! !
+value:!instance creation!public! !
+!
 

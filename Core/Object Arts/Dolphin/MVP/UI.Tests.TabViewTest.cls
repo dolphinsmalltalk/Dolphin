@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.TabViewTest'
 	instanceVariableNames: ''
@@ -47,10 +47,12 @@ testSetTextImageDoesNotAffectSelection
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
-!UI.Tests.TabViewTest categoriesFor: #addTestTabs!helpers!private! !
-!UI.Tests.TabViewTest categoriesFor: #autoSelectsFirst!private!testing! !
-!UI.Tests.TabViewTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.TabViewTest categoriesFor: #removingResetsSelection!public!testing! !
-!UI.Tests.TabViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
-!UI.Tests.TabViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
+!UI.Tests.TabViewTest categoriesForMethods!
+addTestTabs!helpers!private! !
+autoSelectsFirst!private!testing! !
+classToTest!helpers!private! !
+removingResetsSelection!public!testing! !
+testSelectionsPreservedOnRecreate!public!unit tests! !
+testSetTextImageDoesNotAffectSelection!public!unit tests! !
+!
 

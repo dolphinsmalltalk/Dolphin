@@ -103,21 +103,23 @@ recurseInto
 setName: aString start: anInteger
 	super setName: aString start: anInteger.
 	self initializePatternVariables! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #copyInContext:!matching!public! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #identifierToken:!initialize/release!public! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #initializePatternVariables!initialize/release!private! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #isAnything!public!testing/matching! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #isList!public!testing/matching! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #isLiteralNode!public!testing! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #isPatternNode!public!testing/matching! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #isStatement!public!testing/matching! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #match:inContext:!matching!public! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #matchingClass!constants!public! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #matchLiteral:inContext:!matching!public! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #matchStatement:inContext:!matching!public! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #parent:!accessing!public! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #recurseInto!public!testing/matching! !
-!Refactory.Browser.RBPatternVariableNode categoriesFor: #setName:start:!initializing!private! !
+!Refactory.Browser.RBPatternVariableNode categoriesForMethods!
+copyInContext:!matching!public! !
+identifierToken:!initialize/release!public! !
+initializePatternVariables!initialize/release!private! !
+isAnything!public!testing/matching! !
+isList!public!testing/matching! !
+isLiteralNode!public!testing! !
+isPatternNode!public!testing/matching! !
+isStatement!public!testing/matching! !
+match:inContext:!matching!public! !
+matchingClass!constants!public! !
+matchLiteral:inContext:!matching!public! !
+matchStatement:inContext:!matching!public! !
+parent:!accessing!public! !
+recurseInto!public!testing/matching! !
+setName:start:!initializing!private! !
+!
 
 !Refactory.Browser.RBPatternVariableNode class methodsFor!
 
@@ -125,5 +127,7 @@ identifierToken: anIdentifierToken
 	^anIdentifierToken isPatternVariable
 		ifTrue: [self named: anIdentifierToken value start: anIdentifierToken start]
 		ifFalse: [RBVariableNode named: anIdentifierToken value start: anIdentifierToken start]! !
-!Refactory.Browser.RBPatternVariableNode class categoriesFor: #identifierToken:!instance creation!public! !
+!Refactory.Browser.RBPatternVariableNode class categoriesForMethods!
+identifierToken:!instance creation!public! !
+!
 

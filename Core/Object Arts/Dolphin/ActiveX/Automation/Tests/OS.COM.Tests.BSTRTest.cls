@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.COM.Tests.BSTRTest'
 	instanceVariableNames: ''
@@ -35,7 +35,9 @@ testAsUtf8String
 			ptr := LPBSTR fromAddress: subject basicYourAddress.
 			self assert: ptr asUtf8String isKindOf: Utf8String.
 			self assert: ptr asUtf8String equals: each]! !
-!OS.COM.Tests.BSTRTest categoriesFor: #stringConversionCases!constants!private! !
-!OS.COM.Tests.BSTRTest categoriesFor: #testAsString!public!unit tests! !
-!OS.COM.Tests.BSTRTest categoriesFor: #testAsUtf8String!public!unit tests! !
+!OS.COM.Tests.BSTRTest categoriesForMethods!
+stringConversionCases!constants!private! !
+testAsString!public!unit tests! !
+testAsUtf8String!public!unit tests! !
+!
 

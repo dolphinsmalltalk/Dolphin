@@ -1007,90 +1007,92 @@ truncated
 	"Implementation Note: Rather than calculate the integer approximation by a series of divisions (as in versions of Dolphin prior to 3.02), a process which was both very slow for large Floats and also prone to error, we use precise #asTrueFraction."
 	^self asTrueFraction truncated
 ! !
-!Core.Float categoriesFor: #-!arithmetic!public! !
-!Core.Float categoriesFor: #*!arithmetic!public! !
-!Core.Float categoriesFor: #/!arithmetic!public! !
-!Core.Float categoriesFor: #+!arithmetic!public! !
-!Core.Float categoriesFor: #<!comparing!public! !
-!Core.Float categoriesFor: #<=!comparing!public! !
-!Core.Float categoriesFor: #=!comparing!public! !
-!Core.Float categoriesFor: #>!comparing!public! !
-!Core.Float categoriesFor: #>=!comparing!public! !
-!Core.Float categoriesFor: #abs!mathematical!public! !
-!Core.Float categoriesFor: #absPrintExactlyOn:base:!printing!private! !
-!Core.Float categoriesFor: #absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros:!printing!private! !
-!Core.Float categoriesFor: #absPrintOn:base:digitCount:decimalExponents:!printing!private! !
-!Core.Float categoriesFor: #addToFloat:!double dispatch!private! !
-!Core.Float categoriesFor: #addToFraction:!double dispatch!private! !
-!Core.Float categoriesFor: #addToInteger:!double dispatch!private! !
-!Core.Float categoriesFor: #arcCos!mathematical!public! !
-!Core.Float categoriesFor: #arcSin!mathematical!public! !
-!Core.Float categoriesFor: #arcTan!mathematical!public! !
-!Core.Float categoriesFor: #arcTan:!mathematical!public! !
-!Core.Float categoriesFor: #asApproximateFraction!converting!public! !
-!Core.Float categoriesFor: #asFloat!converting!public! !
-!Core.Float categoriesFor: #asFraction!converting!public! !
-!Core.Float categoriesFor: #asTrueFraction!converting!public! !
-!Core.Float categoriesFor: #bitRepresentation!accessing!private! !
-!Core.Float categoriesFor: #ceiling!public!truncation and round off! !
-!Core.Float categoriesFor: #coerce:!coercing!private! !
-!Core.Float categoriesFor: #cos!mathematical!public! !
-!Core.Float categoriesFor: #displayOn:!printing!public! !
-!Core.Float categoriesFor: #divideIntoFloat:!double dispatch!private! !
-!Core.Float categoriesFor: #divideIntoFraction:!double dispatch!private! !
-!Core.Float categoriesFor: #divideIntoInteger:!double dispatch!private! !
-!Core.Float categoriesFor: #equals:!comparing!public! !
-!Core.Float categoriesFor: #equalToFraction:!double dispatch!private! !
-!Core.Float categoriesFor: #equalToInteger:!double dispatch!private! !
-!Core.Float categoriesFor: #exp!mathematical!public! !
-!Core.Float categoriesFor: #exponent!accessing!public! !
-!Core.Float categoriesFor: #floor!public!truncation and round off! !
-!Core.Float categoriesFor: #floorLog:!mathematical!public! !
-!Core.Float categoriesFor: #floorLog10!mathematical!public! !
-!Core.Float categoriesFor: #fpClass!helpers!private! !
-!Core.Float categoriesFor: #fractionPart!accessing!public! !
-!Core.Float categoriesFor: #generality!coercing!private! !
-!Core.Float categoriesFor: #greaterOrEquals:!comparing!public! !
-!Core.Float categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!Core.Float categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!Core.Float categoriesFor: #hash!comparing!public! !
-!Core.Float categoriesFor: #integerPart!accessing!public! !
-!Core.Float categoriesFor: #isDenormal!public!testing! !
-!Core.Float categoriesFor: #isFinite!public!testing! !
-!Core.Float categoriesFor: #isFloat!public!testing! !
-!Core.Float categoriesFor: #isInfinite!public!testing! !
-!Core.Float categoriesFor: #isLiteral!public!testing! !
-!Core.Float categoriesFor: #isNaN!public!testing! !
-!Core.Float categoriesFor: #isZero!public!testing! !
-!Core.Float categoriesFor: #lessOrEquals:!comparing!public! !
-!Core.Float categoriesFor: #ln!mathematical!public! !
-!Core.Float categoriesFor: #log!mathematical!public! !
-!Core.Float categoriesFor: #multiplyByFloat:!double dispatch!private! !
-!Core.Float categoriesFor: #multiplyByFraction:!double dispatch!private! !
-!Core.Float categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!Core.Float categoriesFor: #negated!arithmetic!public! !
-!Core.Float categoriesFor: #negative!public!testing! !
-!Core.Float categoriesFor: #printOn:!printing!public! !
-!Core.Float categoriesFor: #printOn:base:!printing!public! !
-!Core.Float categoriesFor: #printOn:base:decimalPlaces:!printing!public! !
-!Core.Float categoriesFor: #printOn:base:significantFigures:!printing!public! !
-!Core.Float categoriesFor: #printOn:base:significantFigures:decimalExponents:!printing!public! !
-!Core.Float categoriesFor: #printOn:decimalPlaces:!printing!public! !
-!Core.Float categoriesFor: #printOn:significantFigures:!printing!public! !
-!Core.Float categoriesFor: #qwordAtOffset:!accessing!private! !
-!Core.Float categoriesFor: #raisedTo:!mathematical!public! !
-!Core.Float categoriesFor: #reciprocalLogBase2!mathematical!public! !
-!Core.Float categoriesFor: #rounded!public!truncation and round off! !
-!Core.Float categoriesFor: #sign!public!testing! !
-!Core.Float categoriesFor: #significandAsInteger!accessing!public! !
-!Core.Float categoriesFor: #sin!mathematical!public! !
-!Core.Float categoriesFor: #sqrt!mathematical!public! !
-!Core.Float categoriesFor: #subtractFromFloat:!double dispatch!private! !
-!Core.Float categoriesFor: #subtractFromFraction:!double dispatch!private! !
-!Core.Float categoriesFor: #subtractFromInteger:!double dispatch!private! !
-!Core.Float categoriesFor: #tan!mathematical!public! !
-!Core.Float categoriesFor: #timesTwoPower:!mathematical!public! !
-!Core.Float categoriesFor: #truncated!public!truncation and round off! !
+!Core.Float categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+abs!mathematical!public! !
+absPrintExactlyOn:base:!printing!private! !
+absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros:!printing!private! !
+absPrintOn:base:digitCount:decimalExponents:!printing!private! !
+addToFloat:!double dispatch!private! !
+addToFraction:!double dispatch!private! !
+addToInteger:!double dispatch!private! !
+arcCos!mathematical!public! !
+arcSin!mathematical!public! !
+arcTan!mathematical!public! !
+arcTan:!mathematical!public! !
+asApproximateFraction!converting!public! !
+asFloat!converting!public! !
+asFraction!converting!public! !
+asTrueFraction!converting!public! !
+bitRepresentation!accessing!private! !
+ceiling!public!truncation and round off! !
+coerce:!coercing!private! !
+cos!mathematical!public! !
+displayOn:!printing!public! !
+divideIntoFloat:!double dispatch!private! !
+divideIntoFraction:!double dispatch!private! !
+divideIntoInteger:!double dispatch!private! !
+equals:!comparing!public! !
+equalToFraction:!double dispatch!private! !
+equalToInteger:!double dispatch!private! !
+exp!mathematical!public! !
+exponent!accessing!public! !
+floor!public!truncation and round off! !
+floorLog:!mathematical!public! !
+floorLog10!mathematical!public! !
+fpClass!helpers!private! !
+fractionPart!accessing!public! !
+generality!coercing!private! !
+greaterOrEquals:!comparing!public! !
+greaterThanFraction:!double dispatch!private! !
+greaterThanInteger:!double dispatch!private! !
+hash!comparing!public! !
+integerPart!accessing!public! !
+isDenormal!public!testing! !
+isFinite!public!testing! !
+isFloat!public!testing! !
+isInfinite!public!testing! !
+isLiteral!public!testing! !
+isNaN!public!testing! !
+isZero!public!testing! !
+lessOrEquals:!comparing!public! !
+ln!mathematical!public! !
+log!mathematical!public! !
+multiplyByFloat:!double dispatch!private! !
+multiplyByFraction:!double dispatch!private! !
+multiplyByInteger:!double dispatch!private! !
+negated!arithmetic!public! !
+negative!public!testing! !
+printOn:!printing!public! !
+printOn:base:!printing!public! !
+printOn:base:decimalPlaces:!printing!public! !
+printOn:base:significantFigures:!printing!public! !
+printOn:base:significantFigures:decimalExponents:!printing!public! !
+printOn:decimalPlaces:!printing!public! !
+printOn:significantFigures:!printing!public! !
+qwordAtOffset:!accessing!private! !
+raisedTo:!mathematical!public! !
+reciprocalLogBase2!mathematical!public! !
+rounded!public!truncation and round off! !
+sign!public!testing! !
+significandAsInteger!accessing!public! !
+sin!mathematical!public! !
+sqrt!mathematical!public! !
+subtractFromFloat:!double dispatch!private! !
+subtractFromFraction:!double dispatch!private! !
+subtractFromInteger:!double dispatch!private! !
+tan!mathematical!public! !
+timesTwoPower:!mathematical!public! !
+truncated!public!truncation and round off! !
+!
 
 !Core.Float class methodsFor!
 
@@ -1344,36 +1346,38 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^0.0! !
-!Core.Float class categoriesFor: #defaultDecimalExponents!accessing!public! !
-!Core.Float class categoriesFor: #defaultDecimalExponents:!accessing!public! !
-!Core.Float class categoriesFor: #denormalized!public!testing! !
-!Core.Float class categoriesFor: #e!constants!public! !
-!Core.Float class categoriesFor: #emax!constants!public! !
-!Core.Float class categoriesFor: #emin!constants!public! !
-!Core.Float class categoriesFor: #epsilon!constants!public! !
-!Core.Float class categoriesFor: #exceptionMask!accessing!public! !
-!Core.Float class categoriesFor: #exceptionMask:!accessing!public! !
-!Core.Float class categoriesFor: #fmax!constants!public! !
-!Core.Float class categoriesFor: #fmin!constants!public! !
-!Core.Float class categoriesFor: #fminDenormalized!constants!public! !
-!Core.Float class categoriesFor: #fminNormalized!constants!public! !
-!Core.Float class categoriesFor: #infinity!constants!public! !
-!Core.Float class categoriesFor: #initialize!development!initializing!private! !
-!Core.Float class categoriesFor: #maxExponent!constants!private! !
-!Core.Float class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
-!Core.Float class categoriesFor: #nan!constants!public! !
-!Core.Float class categoriesFor: #negativeInfinity!constants!public! !
-!Core.Float class categoriesFor: #negativeZero!constants!public! !
-!Core.Float class categoriesFor: #new!instance creation!public! !
-!Core.Float class categoriesFor: #one!instance creation!public! !
-!Core.Float class categoriesFor: #onStartup!event handling!private! !
-!Core.Float class categoriesFor: #pi!constants!public! !
-!Core.Float class categoriesFor: #precision!constants!public! !
-!Core.Float class categoriesFor: #radix!constants!public! !
-!Core.Float class categoriesFor: #readFrom:!instance creation!public! !
-!Core.Float class categoriesFor: #reset!initializing!public! !
-!Core.Float class categoriesFor: #statusFlags!accessing!public! !
-!Core.Float class categoriesFor: #zero!instance creation!public! !
+!Core.Float class categoriesForMethods!
+defaultDecimalExponents!accessing!public! !
+defaultDecimalExponents:!accessing!public! !
+denormalized!public!testing! !
+e!constants!public! !
+emax!constants!public! !
+emin!constants!public! !
+epsilon!constants!public! !
+exceptionMask!accessing!public! !
+exceptionMask:!accessing!public! !
+fmax!constants!public! !
+fmin!constants!public! !
+fminDenormalized!constants!public! !
+fminNormalized!constants!public! !
+infinity!constants!public! !
+initialize!development!initializing!private! !
+maxExponent!constants!private! !
+maxLiteralIntegerExponent!constants!private! !
+nan!constants!public! !
+negativeInfinity!constants!public! !
+negativeZero!constants!public! !
+new!instance creation!public! !
+one!instance creation!public! !
+onStartup!event handling!private! !
+pi!constants!public! !
+precision!constants!public! !
+radix!constants!public! !
+readFrom:!instance creation!public! !
+reset!initializing!public! !
+statusFlags!accessing!public! !
+zero!instance creation!public! !
+!
 
 Core.Float class methodProtocol: #floatCharacterization attributes: #(#ansi #readOnly) selectors: #(#denormalized #e #emax #emin #epsilon #fmax #fmin #fminDenormalized #fminNormalized #pi #precision #radix)!
 

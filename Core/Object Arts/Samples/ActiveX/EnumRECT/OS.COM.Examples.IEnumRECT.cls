@@ -20,5 +20,7 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^RECT! !
-!OS.COM.Examples.IEnumRECT class categoriesFor: #elementClass!constants!public! !
+!OS.COM.Examples.IEnumRECT class categoriesForMethods!
+elementClass!constants!public! !
+!
 

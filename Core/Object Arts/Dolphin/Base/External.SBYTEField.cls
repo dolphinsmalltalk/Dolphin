@@ -27,9 +27,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sbyteAtOffset: offset put: anInteger! !
-!External.SBYTEField categoriesFor: #accessorMessage!initializing!private! !
-!External.SBYTEField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.SBYTEField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.SBYTEField categoriesForMethods!
+accessorMessage!initializing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.SBYTEField class methodsFor!
 
@@ -37,5 +39,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
-!External.SBYTEField class categoriesFor: #byteSize!constants!private! !
+!External.SBYTEField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

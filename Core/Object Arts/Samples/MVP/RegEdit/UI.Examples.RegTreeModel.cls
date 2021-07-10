@@ -35,10 +35,12 @@ defaultGetParentBlock
 
 defaultHasChildrenBlock
 	^[:aRegKey | aRegKey notEmpty]! !
-!UI.Examples.RegTreeModel categoriesFor: #approxSize!accessing!private! !
-!UI.Examples.RegTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!UI.Examples.RegTreeModel categoriesFor: #defaultGetParentBlock!initializing!private! !
-!UI.Examples.RegTreeModel categoriesFor: #defaultHasChildrenBlock!initializing!private! !
+!UI.Examples.RegTreeModel categoriesForMethods!
+approxSize!accessing!private! !
+defaultGetChildrenBlock!initializing!private! !
+defaultGetParentBlock!initializing!private! !
+defaultHasChildrenBlock!initializing!private! !
+!
 
 !UI.Examples.RegTreeModel class methodsFor!
 
@@ -51,5 +53,7 @@ defaultSearchPolicy
 	identical."
 
 	^SearchPolicy equality! !
-!UI.Examples.RegTreeModel class categoriesFor: #defaultSearchPolicy!accessing!public! !
+!UI.Examples.RegTreeModel class categoriesForMethods!
+defaultSearchPolicy!accessing!public! !
+!
 

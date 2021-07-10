@@ -406,58 +406,60 @@ width: anInteger
 
 	self basicWidth: anInteger.
 	self parent ifNotNil: [:view | view setWidthOfColumn: self index to: anInteger]! !
-!UI.ListViewColumn categoriesFor: #alignment!alignment!public! !
-!UI.ListViewColumn categoriesFor: #alignment:!alignment!public! !
-!UI.ListViewColumn categoriesFor: #alignmentCenter!alignment!public! !
-!UI.ListViewColumn categoriesFor: #alignmentLeft!alignment!public! !
-!UI.ListViewColumn categoriesFor: #alignmentRight!alignment!public! !
-!UI.ListViewColumn categoriesFor: #basicWidth!accessing!private! !
-!UI.ListViewColumn categoriesFor: #basicWidth:!accessing!private! !
-!UI.ListViewColumn categoriesFor: #contentFromRow:!adapters!private! !
-!UI.ListViewColumn categoriesFor: #customDrawBlock!accessing!public! !
-!UI.ListViewColumn categoriesFor: #customDrawBlock:!accessing!public! !
-!UI.ListViewColumn categoriesFor: #defaultGetContentsBlock!adapters!constants!private! !
-!UI.ListViewColumn categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
-!UI.ListViewColumn categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
-!UI.ListViewColumn categoriesFor: #defaultSortBlock!adapters!constants!private!sorting! !
-!UI.ListViewColumn categoriesFor: #defaultWidth!constants!private! !
-!UI.ListViewColumn categoriesFor: #getContentsBlock!adapters!private! !
-!UI.ListViewColumn categoriesFor: #getContentsBlock:!adapters!public! !
-!UI.ListViewColumn categoriesFor: #getImageBlock!adapters!public! !
-!UI.ListViewColumn categoriesFor: #getImageBlock:!adapters!public! !
-!UI.ListViewColumn categoriesFor: #getInfoTipBlock!accessing!public! !
-!UI.ListViewColumn categoriesFor: #getInfoTipBlock:!accessing!public! !
-!UI.ListViewColumn categoriesFor: #getTextBlock!adapters!public! !
-!UI.ListViewColumn categoriesFor: #getTextBlock:!adapters!public! !
-!UI.ListViewColumn categoriesFor: #headerIcon:!helpers!private! !
-!UI.ListViewColumn categoriesFor: #imageFromRow:!adapters!private!wine fix! !
-!UI.ListViewColumn categoriesFor: #index!accessing!public! !
-!UI.ListViewColumn categoriesFor: #infoTipFromRow:withPrefix:!adapters!private! !
-!UI.ListViewColumn categoriesFor: #initialize!initializing!private! !
-!UI.ListViewColumn categoriesFor: #isAlignmentCenter!alignment!public! !
-!UI.ListViewColumn categoriesFor: #isAlignmentLeft!alignment!public! !
-!UI.ListViewColumn categoriesFor: #isAlignmentRight!alignment!public! !
-!UI.ListViewColumn categoriesFor: #isAutoResize!public!testing! !
-!UI.ListViewColumn categoriesFor: #isAutoResize:!accessing!public! !
-!UI.ListViewColumn categoriesFor: #isSortable!adapters!private! !
-!UI.ListViewColumn categoriesFor: #isSortOrderInverted!private!testing! !
-!UI.ListViewColumn categoriesFor: #isSortOrderInverted:!accessing!private! !
-!UI.ListViewColumn categoriesFor: #name!accessing!public! !
-!UI.ListViewColumn categoriesFor: #name:!accessing!public! !
-!UI.ListViewColumn categoriesFor: #parent!accessing!public! !
-!UI.ListViewColumn categoriesFor: #parent:!accessing!private! !
-!UI.ListViewColumn categoriesFor: #printOn:!printing!public! !
-!UI.ListViewColumn categoriesFor: #resolutionScaledBy:!geometry!private! !
-!UI.ListViewColumn categoriesFor: #rowSortBlock!adapters!private! !
-!UI.ListViewColumn categoriesFor: #sortBlock!adapters!public!sorting! !
-!UI.ListViewColumn categoriesFor: #sortBlock:!adapters!public!sorting! !
-!UI.ListViewColumn categoriesFor: #text!accessing!public! !
-!UI.ListViewColumn categoriesFor: #text:!accessing!public! !
-!UI.ListViewColumn categoriesFor: #textFromRow:!adapters!private! !
-!UI.ListViewColumn categoriesFor: #toggleSortOrder!helpers!private! !
-!UI.ListViewColumn categoriesFor: #update!accessing!private! !
-!UI.ListViewColumn categoriesFor: #width!accessing!public! !
-!UI.ListViewColumn categoriesFor: #width:!accessing!public! !
+!UI.ListViewColumn categoriesForMethods!
+alignment!alignment!public! !
+alignment:!alignment!public! !
+alignmentCenter!alignment!public! !
+alignmentLeft!alignment!public! !
+alignmentRight!alignment!public! !
+basicWidth!accessing!private! !
+basicWidth:!accessing!private! !
+contentFromRow:!adapters!private! !
+customDrawBlock!accessing!public! !
+customDrawBlock:!accessing!public! !
+defaultGetContentsBlock!adapters!constants!private! !
+defaultGetImageBlock!adapters!constants!private! !
+defaultGetTextBlock!adapters!constants!private! !
+defaultSortBlock!adapters!constants!private!sorting! !
+defaultWidth!constants!private! !
+getContentsBlock!adapters!private! !
+getContentsBlock:!adapters!public! !
+getImageBlock!adapters!public! !
+getImageBlock:!adapters!public! !
+getInfoTipBlock!accessing!public! !
+getInfoTipBlock:!accessing!public! !
+getTextBlock!adapters!public! !
+getTextBlock:!adapters!public! !
+headerIcon:!helpers!private! !
+imageFromRow:!adapters!private!wine fix! !
+index!accessing!public! !
+infoTipFromRow:withPrefix:!adapters!private! !
+initialize!initializing!private! !
+isAlignmentCenter!alignment!public! !
+isAlignmentLeft!alignment!public! !
+isAlignmentRight!alignment!public! !
+isAutoResize!public!testing! !
+isAutoResize:!accessing!public! !
+isSortable!adapters!private! !
+isSortOrderInverted!private!testing! !
+isSortOrderInverted:!accessing!private! !
+name!accessing!public! !
+name:!accessing!public! !
+parent!accessing!public! !
+parent:!accessing!private! !
+printOn:!printing!public! !
+resolutionScaledBy:!geometry!private! !
+rowSortBlock!adapters!private! !
+sortBlock!adapters!public!sorting! !
+sortBlock:!adapters!public!sorting! !
+text!accessing!public! !
+text:!accessing!public! !
+textFromRow:!adapters!private! !
+toggleSortOrder!helpers!private! !
+update!accessing!private! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !UI.ListViewColumn class methodsFor!
 
@@ -528,10 +530,12 @@ text: titleString width: widthPixels
 		text: titleString;
 		width: widthPixels;
 		yourself! !
-!UI.ListViewColumn class categoriesFor: #icon!constants!public! !
-!UI.ListViewColumn class categoriesFor: #new!instance creation!public! !
-!UI.ListViewColumn class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.ListViewColumn class categoriesFor: #stbVersion!binary filing!public! !
-!UI.ListViewColumn class categoriesFor: #text:!instance creation!public! !
-!UI.ListViewColumn class categoriesFor: #text:width:!instance creation!public! !
+!UI.ListViewColumn class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+text:!instance creation!public! !
+text:width:!instance creation!public! !
+!
 

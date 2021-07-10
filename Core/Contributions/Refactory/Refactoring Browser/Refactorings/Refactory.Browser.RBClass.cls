@@ -298,50 +298,52 @@ unqualifiedName
 	"Answer the fully-qualified name of the non-metaclass."
 
 	^unqualifiedName ifNil: [unqualifiedName := ($. split: name) last asSymbol]! !
-!Refactory.Browser.RBClass categoriesFor: #<=!public! !
-!Refactory.Browser.RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
-!Refactory.Browser.RBClass categoriesFor: #addImport:!namespaces!public! !
-!Refactory.Browser.RBClass categoriesFor: #allClassVariableNames!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #allImports!namespaces!public! !
-!Refactory.Browser.RBClass categoriesFor: #category!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #category:!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #classBindingNames!public! !
-!Refactory.Browser.RBClass categoriesFor: #classConstants!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #classConstants:!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #classVariableNames!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #classVariableNames:!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #comment!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #comment:!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #definitionString!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!Refactory.Browser.RBClass categoriesFor: #directlyImportsNamespace:!public!testing! !
-!Refactory.Browser.RBClass categoriesFor: #environment!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #fullyQualifiedReference!accessing!namespaces!public! !
-!Refactory.Browser.RBClass categoriesFor: #getImports!helpers!private! !
-!Refactory.Browser.RBClass categoriesFor: #imports!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #imports:!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #includesEnvironment:!namespaces!private!testing! !
-!Refactory.Browser.RBClass categoriesFor: #includesNamespace:!private!testing! !
-!Refactory.Browser.RBClass categoriesFor: #isMeta!public!testing! !
-!Refactory.Browser.RBClass categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
-!Refactory.Browser.RBClass categoriesFor: #localBindingFor:!bindings!public! !
-!Refactory.Browser.RBClass categoriesFor: #metaclass!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #metaclass:!initializing!private! !
-!Refactory.Browser.RBClass categoriesFor: #name:!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #newBindingContextForIdentifier:!bindings!private! !
-!Refactory.Browser.RBClass categoriesFor: #nonMetaclass!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
-!Refactory.Browser.RBClass categoriesFor: #realName:!initialize/release!public! !
-!Refactory.Browser.RBClass categoriesFor: #removeClassVariable:!public!variable accessing! !
-!Refactory.Browser.RBClass categoriesFor: #renameClassVariable:to:around:!public!variable accessing! !
-!Refactory.Browser.RBClass categoriesFor: #resolveBindingPath:!bindings!private! !
-!Refactory.Browser.RBClass categoriesFor: #resolveImportedBinding:!bindings!private! !
-!Refactory.Browser.RBClass categoriesFor: #resolveLocallyImportedBinding:!bindings!private! !
-!Refactory.Browser.RBClass categoriesFor: #resolvePathString:!bindings!private! !
-!Refactory.Browser.RBClass categoriesFor: #resolvePublicBinding:!bindings!private! !
-!Refactory.Browser.RBClass categoriesFor: #resolveUnqualifiedName:!bindings!private! !
-!Refactory.Browser.RBClass categoriesFor: #setName:!initializing!private! !
-!Refactory.Browser.RBClass categoriesFor: #unqualifiedName!public! !
+!Refactory.Browser.RBClass categoriesForMethods!
+<=!public! !
+addClassVariable:!public!variable accessing! !
+addImport:!namespaces!public! !
+allClassVariableNames!accessing!public! !
+allImports!namespaces!public! !
+category!accessing!public! !
+category:!accessing!public! !
+classBindingNames!public! !
+classConstants!accessing!public! !
+classConstants:!accessing!public! !
+classVariableNames!accessing!public! !
+classVariableNames:!accessing!public! !
+comment!accessing!public! !
+comment:!accessing!public! !
+definitionString!accessing!public! !
+directlyDefinesClassVariable:!public!testing! !
+directlyImportsNamespace:!public!testing! !
+environment!accessing!public! !
+fullyQualifiedReference!accessing!namespaces!public! !
+getImports!helpers!private! !
+imports!accessing!public! !
+imports:!accessing!public! !
+includesEnvironment:!namespaces!private!testing! !
+includesNamespace:!private!testing! !
+isMeta!public!testing! !
+kindOfSubclass!class hierarchy-testing!private! !
+localBindingFor:!bindings!public! !
+metaclass!accessing!public! !
+metaclass:!initializing!private! !
+name:!accessing!public! !
+newBindingContextForIdentifier:!bindings!private! !
+nonMetaclass!accessing!public! !
+printDefinitionOn:!accessing!public! !
+realName:!initialize/release!public! !
+removeClassVariable:!public!variable accessing! !
+renameClassVariable:to:around:!public!variable accessing! !
+resolveBindingPath:!bindings!private! !
+resolveImportedBinding:!bindings!private! !
+resolveLocallyImportedBinding:!bindings!private! !
+resolvePathString:!bindings!private! !
+resolvePublicBinding:!bindings!private! !
+resolveUnqualifiedName:!bindings!private! !
+setName:!initializing!private! !
+unqualifiedName!public! !
+!
 
 !Refactory.Browser.RBClass class methodsFor!
 
@@ -354,6 +356,8 @@ existing: aBehavior
 
 initialize
 	LookupComment := Object new! !
-!Refactory.Browser.RBClass class categoriesFor: #existing:!instance creation!public! !
-!Refactory.Browser.RBClass class categoriesFor: #initialize!class initialization!public! !
+!Refactory.Browser.RBClass class categoriesForMethods!
+existing:!instance creation!public! !
+initialize!class initialization!public! !
+!
 

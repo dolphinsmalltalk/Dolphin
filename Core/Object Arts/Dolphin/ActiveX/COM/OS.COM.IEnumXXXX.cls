@@ -217,29 +217,31 @@ upToEndDo: operation
 	elems do: [:e | operation value: e].
 	elems size < count] 
 			whileFalse! !
-!OS.COM.IEnumXXXX categoriesFor: #batchSize!constants!public! !
-!OS.COM.IEnumXXXX categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
-!OS.COM.IEnumXXXX categoriesFor: #collect:!enumerating!public! !
-!OS.COM.IEnumXXXX categoriesFor: #contents!accessing!public! !
-!OS.COM.IEnumXXXX categoriesFor: #copy!copying!public! !
-!OS.COM.IEnumXXXX categoriesFor: #do:!enumerating!public! !
-!OS.COM.IEnumXXXX categoriesFor: #elementClass!constants!private! !
-!OS.COM.IEnumXXXX categoriesFor: #errorEndOfStream!exceptions!public! !
-!OS.COM.IEnumXXXX categoriesFor: #newElement!helpers!private! !
-!OS.COM.IEnumXXXX categoriesFor: #newElements:!helpers!private! !
-!OS.COM.IEnumXXXX categoriesFor: #next!accessing!public! !
-!OS.COM.IEnumXXXX categoriesFor: #next:!accessing!public! !
-!OS.COM.IEnumXXXX categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!primitives!private! !
-!OS.COM.IEnumXXXX categoriesFor: #nextAvailable!accessing!public! !
-!OS.COM.IEnumXXXX categoriesFor: #nextAvailable:!accessing!public! !
-!OS.COM.IEnumXXXX categoriesFor: #position:!positioning!public! !
-!OS.COM.IEnumXXXX categoriesFor: #reset!positioning!public! !
-!OS.COM.IEnumXXXX categoriesFor: #Reset!COM Interfaces-IEnumXXXX!primitives!private! !
-!OS.COM.IEnumXXXX categoriesFor: #select:!enumerating!public! !
-!OS.COM.IEnumXXXX categoriesFor: #skip:!positioning!public! !
-!OS.COM.IEnumXXXX categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!primitives!private! !
-!OS.COM.IEnumXXXX categoriesFor: #upToEnd!accessing!public! !
-!OS.COM.IEnumXXXX categoriesFor: #upToEndDo:!helpers!private! !
+!OS.COM.IEnumXXXX categoriesForMethods!
+batchSize!constants!public! !
+Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
+collect:!enumerating!public! !
+contents!accessing!public! !
+copy!copying!public! !
+do:!enumerating!public! !
+elementClass!constants!private! !
+errorEndOfStream!exceptions!public! !
+newElement!helpers!private! !
+newElements:!helpers!private! !
+next!accessing!public! !
+next:!accessing!public! !
+Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!primitives!private! !
+nextAvailable!accessing!public! !
+nextAvailable:!accessing!public! !
+position:!positioning!public! !
+reset!positioning!public! !
+Reset!COM Interfaces-IEnumXXXX!primitives!private! !
+select:!enumerating!public! !
+skip:!positioning!public! !
+Skip:!COM Interfaces-IEnumXXXX!primitives!private! !
+upToEnd!accessing!public! !
+upToEndDo:!helpers!private! !
+!
 
 OS.COM.IEnumXXXX methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
 
@@ -267,6 +269,8 @@ elementClass
 
 	^self subclassResponsibility
 ! !
-!OS.COM.IEnumXXXX class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IEnumXXXX class categoriesFor: #elementClass!constants!private! !
+!OS.COM.IEnumXXXX class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!private! !
+!
 

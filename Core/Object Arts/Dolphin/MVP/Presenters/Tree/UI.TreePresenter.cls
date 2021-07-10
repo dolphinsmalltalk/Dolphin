@@ -64,15 +64,17 @@ up
 	| parent |
 	parent := self model parentOf: self selectionOrNil.
 	self expand: parent! !
-!UI.TreePresenter categoriesFor: #collapse:!operations!public! !
-!UI.TreePresenter categoriesFor: #expand:!operations!public! !
-!UI.TreePresenter categoriesFor: #expandAll:!operations!public! !
-!UI.TreePresenter categoriesFor: #hasSelection!public!selection! !
-!UI.TreePresenter categoriesFor: #isExpanded:!public!testing! !
-!UI.TreePresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
-!UI.TreePresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
-!UI.TreePresenter categoriesFor: #selectableItems!accessing!private! !
-!UI.TreePresenter categoriesFor: #up!operations!public! !
+!UI.TreePresenter categoriesForMethods!
+collapse:!operations!public! !
+expand:!operations!public! !
+expandAll:!operations!public! !
+hasSelection!public!selection! !
+isExpanded:!public!testing! !
+onAboutToEditLabel:!event handling!public! !
+onLabelOf:editedTo:!event handling!public! !
+selectableItems!accessing!private! !
+up!operations!public! !
+!
 
 UI.TreePresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
 
@@ -98,7 +100,9 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 787526 3 ##(UI.TreeModel) nil 1638406 ##(Kernel.IdentitySearchPolicy) 721670 ##(UI.TreeNode) nil nil nil 170 192 8 #() 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920462864 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil 170 176 592 nil #noIcons 1 170 192 592 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 882 401 571 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 39 1 0 0] 8 #() 882 193 193 nil 27)! !
-!UI.TreePresenter class categoriesFor: #defaultModel!models!public! !
-!UI.TreePresenter class categoriesFor: #icon!constants!public! !
-!UI.TreePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.TreePresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

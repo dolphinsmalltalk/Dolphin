@@ -217,36 +217,38 @@ wTypeFlags
 	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wTypeFlags! !
-!OS.COM.TYPEATTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.TYPEATTR categoriesFor: #cbAlignment!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #cbSizeInstance!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #cbSizeVft!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #cFuncs!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #cImplTypes!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #classDesc!accessing!private! !
-!OS.COM.TYPEATTR categoriesFor: #cVars!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #guid!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #idldescType!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #isAggregatable!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isAppObject!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isAutomationCompatible!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isControl!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isDispatchable!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isExtensible!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isInstantiable!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isLicensed!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #isRestricted!public!testing! !
-!OS.COM.TYPEATTR categoriesFor: #lcid!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #memidConstructor!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #memidDestructor!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #name!accessing!public! !
-!OS.COM.TYPEATTR categoriesFor: #piTypeInfo:!accessing!private! !
-!OS.COM.TYPEATTR categoriesFor: #tdesc!accessing!public! !
-!OS.COM.TYPEATTR categoriesFor: #tdescAlias!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #typekind!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
-!OS.COM.TYPEATTR categoriesFor: #wTypeFlags!**compiled accessors**!public! !
+!OS.COM.TYPEATTR categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+cbAlignment!**compiled accessors**!public! !
+cbSizeInstance!**compiled accessors**!public! !
+cbSizeVft!**compiled accessors**!public! !
+cFuncs!**compiled accessors**!public! !
+cImplTypes!**compiled accessors**!public! !
+classDesc!accessing!private! !
+cVars!**compiled accessors**!public! !
+guid!**compiled accessors**!public! !
+idldescType!**compiled accessors**!public! !
+isAggregatable!public!testing! !
+isAppObject!public!testing! !
+isAutomationCompatible!public!testing! !
+isControl!public!testing! !
+isDispatchable!public!testing! !
+isExtensible!public!testing! !
+isInstantiable!public!testing! !
+isLicensed!public!testing! !
+isRestricted!public!testing! !
+lcid!**compiled accessors**!public! !
+memidConstructor!**compiled accessors**!public! !
+memidDestructor!**compiled accessors**!public! !
+name!accessing!public! !
+piTypeInfo:!accessing!private! !
+tdesc!accessing!public! !
+tdescAlias!**compiled accessors**!public! !
+typekind!**compiled accessors**!public! !
+wMajorVerNum!**compiled accessors**!public! !
+wMinorVerNum!**compiled accessors**!public! !
+wTypeFlags!**compiled accessors**!public! !
+!
 
 !OS.COM.TYPEATTR class methodsFor!
 
@@ -300,6 +302,8 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
-!OS.COM.TYPEATTR class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.TYPEATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.TYPEATTR class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

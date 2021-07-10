@@ -195,26 +195,28 @@ writeStream
 
 	writeStream isNil ifTrue: [writeStream := SocketWriteStream on: self text: self isText].
 	^writeStream! !
-!Net.Socket categoriesFor: #address!accessing!public! !
-!Net.Socket categoriesFor: #connect!operations!public! !
-!Net.Socket categoriesFor: #hasInput!private!testing! !
-!Net.Socket categoriesFor: #initialize!initializing!private! !
-!Net.Socket categoriesFor: #isText!public! !
-!Net.Socket categoriesFor: #isText:!accessing!public! !
-!Net.Socket categoriesFor: #peerAddress!accessing!public! !
-!Net.Socket categoriesFor: #port:address:!initializing!private! !
-!Net.Socket categoriesFor: #readStream!accessing!public! !
-!Net.Socket categoriesFor: #receive:!operations!public! !
-!Net.Socket categoriesFor: #receive:count:!operations!public! !
-!Net.Socket categoriesFor: #receive:count:startingAt:!operations!public! !
-!Net.Socket categoriesFor: #receiveByte!operations!public! !
-!Net.Socket categoriesFor: #receiveSome:count:startingAt:!operations!private! !
-!Net.Socket categoriesFor: #send:!operations!public! !
-!Net.Socket categoriesFor: #send:count:!operations!public! !
-!Net.Socket categoriesFor: #send:count:startingAt:!operations!public! !
-!Net.Socket categoriesFor: #sendByte:!operations!public! !
-!Net.Socket categoriesFor: #sendSome:count:startingAt:!operations!private! !
-!Net.Socket categoriesFor: #writeStream!accessing!public! !
+!Net.Socket categoriesForMethods!
+address!accessing!public! !
+connect!operations!public! !
+hasInput!private!testing! !
+initialize!initializing!private! !
+isText!public! !
+isText:!accessing!public! !
+peerAddress!accessing!public! !
+port:address:!initializing!private! !
+readStream!accessing!public! !
+receive:!operations!public! !
+receive:count:!operations!public! !
+receive:count:startingAt:!operations!public! !
+receiveByte!operations!public! !
+receiveSome:count:startingAt:!operations!private! !
+send:!operations!public! !
+send:count:!operations!public! !
+send:count:startingAt:!operations!public! !
+sendByte:!operations!public! !
+sendSome:count:startingAt:!operations!private! !
+writeStream!accessing!public! !
+!
 
 !Net.Socket class methodsFor!
 
@@ -252,9 +254,11 @@ port: anIntegerPort ipAddress: aByteArray
 	IP address in aByteArray"
 
 	^self port: anIntegerPort address: (InternetAddress ipAddress: aByteArray)! !
-!Net.Socket class categoriesFor: #descriptor:port:address:!instance creation!public! !
-!Net.Socket class categoriesFor: #new!instance creation!private! !
-!Net.Socket class categoriesFor: #port:address:!instance creation!public! !
-!Net.Socket class categoriesFor: #port:host:!instance creation!public! !
-!Net.Socket class categoriesFor: #port:ipAddress:!instance creation!public! !
+!Net.Socket class categoriesForMethods!
+descriptor:port:address:!instance creation!public! !
+new!instance creation!private! !
+port:address:!instance creation!public! !
+port:host:!instance creation!public! !
+port:ipAddress:!instance creation!public! !
+!
 

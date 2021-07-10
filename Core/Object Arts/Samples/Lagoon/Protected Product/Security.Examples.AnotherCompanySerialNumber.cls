@@ -67,9 +67,11 @@ serialNumberProtectorClass
 	"overriden to request asymetric"
 
 	^Security.ElgamalSerialNumberProtector! !
-!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
-!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #instanceEncodingKey!constants!private! !
-!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
-!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
-!Security.Examples.AnotherCompanySerialNumber class categoriesFor: #serialNumberProtectorClass!constants!public! !
+!Security.Examples.AnotherCompanySerialNumber class categoriesForMethods!
+instanceDecodingKey!constants!private! !
+instanceEncodingKey!constants!private! !
+lockedMethodDecodingKey!constants!private! !
+lockedMethodDecodingKeyHash!constants!private! !
+serialNumberProtectorClass!constants!public! !
+!
 

@@ -25,8 +25,10 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDO.ISMTPScriptConnector categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.ISMTPScriptConnector categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.ISMTPScriptConnector categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !CDO.ISMTPScriptConnector class methodsFor!
 
@@ -35,5 +37,7 @@ clsid
 
 	^CLSID fromString: '{cd000008-8b95-11d1-82db-00c04fb1625d}'
 ! !
-!CDO.ISMTPScriptConnector class categoriesFor: #clsid!**auto generated**!constants!private! !
+!CDO.ISMTPScriptConnector class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+!
 

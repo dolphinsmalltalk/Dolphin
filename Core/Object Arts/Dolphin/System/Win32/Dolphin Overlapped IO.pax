@@ -110,11 +110,13 @@ postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberO
 
 	<stdcall: sdword PostQueuedCompletionStatus sdword dword dword OVERLAPPED*>
 	^self invalidCall: _failureCode! !
-!OS.KernelLibrary categoriesFor: #cancelIo:!**auto generated**!public! !
-!OS.KernelLibrary categoriesFor: #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !
-!OS.KernelLibrary categoriesFor: #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:!**auto generated**!public! !
-!OS.KernelLibrary categoriesFor: #getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:!**auto generated**!public! !
-!OS.KernelLibrary categoriesFor: #postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:!**auto generated**!public! !
+!OS.KernelLibrary categoriesForMethods!
+cancelIo:!**auto generated**!public! !
+createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !
+getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:!**auto generated**!public! !
+getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:!**auto generated**!public! !
+postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:!**auto generated**!public! !
+!
 
 "End of package definition"!
 

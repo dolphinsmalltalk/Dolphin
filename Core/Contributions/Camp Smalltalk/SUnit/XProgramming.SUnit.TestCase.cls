@@ -204,47 +204,49 @@ skip: aComment
 	TestSkip signal: aComment!
 
 tearDown! !
-!XProgramming.SUnit.TestCase categoriesFor: #addDependentToHierachy:!dependencies!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:description:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:description:resumable:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #assert:equals:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #comparingStringBetween:and:!helpers!private! !
-!XProgramming.SUnit.TestCase categoriesFor: #debug!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #debugAsFailure!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #deny:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #deny:description:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #deny:description:resumable:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #executeShould:inScopeOf:!private!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #fail:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #failureLog!accessing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #getDescription:!helpers!private! !
-!XProgramming.SUnit.TestCase categoriesFor: #isLogging!accessing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #logFailure:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #openDebuggerOnFailingTestMethod!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #performTest!private!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #printOn:!printing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #removeDependentFromHierachy:!dependencies!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #resources!accessing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #run!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #run:!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #runCase!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #runCaseAsFailure:!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #selector!accessing!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #setTestSelector:!initializing!private! !
-!XProgramming.SUnit.TestCase categoriesFor: #setUp!public!running! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:description:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:raise:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #should:raise:description:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #shouldnt:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #shouldnt:description:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #shouldnt:raise:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #shouldnt:raise:description:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #signalFailure:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #skip!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #skip:!asserting!public! !
-!XProgramming.SUnit.TestCase categoriesFor: #tearDown!public!running! !
+!XProgramming.SUnit.TestCase categoriesForMethods!
+addDependentToHierachy:!dependencies!public! !
+assert:!asserting!public! !
+assert:description:!asserting!public! !
+assert:description:resumable:!asserting!public! !
+assert:equals:!asserting!public! !
+comparingStringBetween:and:!helpers!private! !
+debug!public!running! !
+debugAsFailure!public!running! !
+deny:!asserting!public! !
+deny:description:!asserting!public! !
+deny:description:resumable:!asserting!public! !
+executeShould:inScopeOf:!private!running! !
+fail:!asserting!public! !
+failureLog!accessing!public! !
+getDescription:!helpers!private! !
+isLogging!accessing!public! !
+logFailure:!asserting!public! !
+openDebuggerOnFailingTestMethod!public!running! !
+performTest!private!running! !
+printOn:!printing!public! !
+removeDependentFromHierachy:!dependencies!public! !
+resources!accessing!public! !
+run!public!running! !
+run:!public!running! !
+runCase!public!running! !
+runCaseAsFailure:!public!running! !
+selector!accessing!public! !
+setTestSelector:!initializing!private! !
+setUp!public!running! !
+should:!asserting!public! !
+should:description:!asserting!public! !
+should:raise:!asserting!public! !
+should:raise:description:!asserting!public! !
+shouldnt:!asserting!public! !
+shouldnt:description:!asserting!public! !
+shouldnt:raise:!asserting!public! !
+shouldnt:raise:description:!asserting!public! !
+signalFailure:!asserting!public! !
+skip!asserting!public! !
+skip:!asserting!public! !
+tearDown!public!running! !
+!
 
 !XProgramming.SUnit.TestCase class methodsFor!
 
@@ -314,19 +316,21 @@ testSelectors
 
 version
 	^'3.1'! !
-!XProgramming.SUnit.TestCase class categoriesFor: #allTestSelectors!Accessing!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #buildSuite!Building Suites!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #buildSuiteFromAllSelectors!Building Suites!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #buildSuiteFromLocalSelectors!Building Suites!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #buildSuiteFromMethods:!Building Suites!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #debug:!Instance Creation!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #debugAsFailure:!Instance Creation!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #resources!Accessing!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #run:!Instance Creation!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #selector:!Instance Creation!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #shouldInheritSelectors!public!Testing! !
-!XProgramming.SUnit.TestCase class categoriesFor: #suite!Instance Creation!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #testSelectors!Accessing!public! !
-!XProgramming.SUnit.TestCase class categoriesFor: #version!Accessing!public! !
+!XProgramming.SUnit.TestCase class categoriesForMethods!
+allTestSelectors!Accessing!public! !
+buildSuite!Building Suites!public! !
+buildSuiteFromAllSelectors!Building Suites!public! !
+buildSuiteFromLocalSelectors!Building Suites!public! !
+buildSuiteFromMethods:!Building Suites!public! !
+buildSuiteFromSelectors!Building Suites!public! !
+debug:!Instance Creation!public! !
+debugAsFailure:!Instance Creation!public! !
+resources!Accessing!public! !
+run:!Instance Creation!public! !
+selector:!Instance Creation!public! !
+shouldInheritSelectors!public!Testing! !
+suite!Instance Creation!public! !
+testSelectors!Accessing!public! !
+version!Accessing!public! !
+!
 

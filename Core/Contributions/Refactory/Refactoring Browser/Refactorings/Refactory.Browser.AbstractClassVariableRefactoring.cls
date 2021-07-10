@@ -63,10 +63,12 @@ transform
 	self createAccessors.
 	self abstractInstanceReferences.
 	self abstractClassReferences! !
-!Refactory.Browser.AbstractClassVariableRefactoring categoriesFor: #abstractClassReferences!public!transforming! !
-!Refactory.Browser.AbstractClassVariableRefactoring categoriesFor: #abstractInstanceReferences!public!transforming! !
-!Refactory.Browser.AbstractClassVariableRefactoring categoriesFor: #accessorsRefactoring!accessing!private! !
-!Refactory.Browser.AbstractClassVariableRefactoring categoriesFor: #createAccessors!public!transforming! !
-!Refactory.Browser.AbstractClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.AbstractClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AbstractClassVariableRefactoring categoriesForMethods!
+abstractClassReferences!public!transforming! !
+abstractInstanceReferences!public!transforming! !
+accessorsRefactoring!accessing!private! !
+createAccessors!public!transforming! !
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

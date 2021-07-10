@@ -47,10 +47,12 @@ ntmSizeEM
 	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
 	^bytes dwordAtOffset: _OffsetOf_ntmSizeEM! !
-!OS.NEWTEXTMETRICW categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
-!OS.NEWTEXTMETRICW categoriesFor: #ntmCellHeight!**compiled accessors**!public! !
-!OS.NEWTEXTMETRICW categoriesFor: #ntmFlags!**compiled accessors**!public! !
-!OS.NEWTEXTMETRICW categoriesFor: #ntmSizeEM!**compiled accessors**!public! !
+!OS.NEWTEXTMETRICW categoriesForMethods!
+ntmAvgWidth!**compiled accessors**!public! !
+ntmCellHeight!**compiled accessors**!public! !
+ntmFlags!**compiled accessors**!public! !
+ntmSizeEM!**compiled accessors**!public! !
+!
 
 !OS.NEWTEXTMETRICW class methodsFor!
 
@@ -77,6 +79,8 @@ defineFields
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
-!OS.NEWTEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
-!OS.NEWTEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NEWTEXTMETRICW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

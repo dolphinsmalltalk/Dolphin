@@ -24,6 +24,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IConnectionPoint! !
-!OS.COM.IEnumConnectionPoints class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IEnumConnectionPoints class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumConnectionPoints class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

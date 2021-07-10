@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.ValueConverterTest'
 	instanceVariableNames: 'converter value startTime newTime changed'
@@ -46,8 +46,10 @@ testValueColon
 	self assert: changed.
 	self assert: converter value equals: newTime displayString.
 	self assert: value value equals: newTime! !
-!UI.Tests.ValueConverterTest categoriesFor: #onValueChanged!helpers!public! !
-!UI.Tests.ValueConverterTest categoriesFor: #setUp!public!Running! !
-!UI.Tests.ValueConverterTest categoriesFor: #testValue!public!unit tests! !
-!UI.Tests.ValueConverterTest categoriesFor: #testValueColon!public!unit tests! !
+!UI.Tests.ValueConverterTest categoriesForMethods!
+onValueChanged!helpers!public! !
+setUp!public!Running! !
+testValue!public!unit tests! !
+testValueColon!public!unit tests! !
+!
 

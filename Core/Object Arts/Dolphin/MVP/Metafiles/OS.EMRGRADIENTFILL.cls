@@ -96,16 +96,18 @@ Ver: aStructureArrayOfTRIVERTEX
 		from: ##(_OffsetOf_Ver + 1)
 		to: _OffsetOf_Ver + size
 		startingAt: 1! !
-!OS.EMRGRADIENTFILL categoriesFor: #nTri!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #nTri:!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #nVer!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #nVer:!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #ulMode!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #ulMode:!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #Ver!**compiled accessors**!public! !
-!OS.EMRGRADIENTFILL categoriesFor: #Ver:!**compiled accessors**!public! !
+!OS.EMRGRADIENTFILL categoriesForMethods!
+nTri!**compiled accessors**!public! !
+nTri:!**compiled accessors**!public! !
+nVer!**compiled accessors**!public! !
+nVer:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+ulMode!**compiled accessors**!public! !
+ulMode:!**compiled accessors**!public! !
+Ver!**compiled accessors**!public! !
+Ver:!**compiled accessors**!public! !
+!
 
 !OS.EMRGRADIENTFILL class methodsFor!
 
@@ -150,7 +152,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GRADIENTFILL}! !
-!OS.EMRGRADIENTFILL class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRGRADIENTFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRGRADIENTFILL class categoriesFor: #iTypes!constants!public! !
+!OS.EMRGRADIENTFILL class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

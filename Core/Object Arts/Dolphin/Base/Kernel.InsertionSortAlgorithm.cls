@@ -22,5 +22,7 @@ sort: anObject from: startInteger to: stopInteger
 		insertionSort: anObject
 		from: startInteger
 		to: stopInteger! !
-!Kernel.InsertionSortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
+!Kernel.InsertionSortAlgorithm categoriesForMethods!
+sort:from:to:!operations!public! !
+!
 

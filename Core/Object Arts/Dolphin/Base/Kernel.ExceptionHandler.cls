@@ -23,9 +23,11 @@ setHandler: monadicBlock
 setSelector: exceptionSelector
 	selector := exceptionSelector
 ! !
-!Kernel.ExceptionHandler categoriesFor: #actionFor:!debugger-step over!helpers!private! !
-!Kernel.ExceptionHandler categoriesFor: #setHandler:!debugger-step over!initializing!private! !
-!Kernel.ExceptionHandler categoriesFor: #setSelector:!debugger-step over!initializing!private! !
+!Kernel.ExceptionHandler categoriesForMethods!
+actionFor:!debugger-step over!helpers!private! !
+setHandler:!debugger-step over!initializing!private! !
+setSelector:!debugger-step over!initializing!private! !
+!
 
 !Kernel.ExceptionHandler class methodsFor!
 
@@ -37,5 +39,7 @@ on: selector do: action
 		setSelector: selector;
 		setHandler: action;
 		yourself! !
-!Kernel.ExceptionHandler class categoriesFor: #on:do:!debugger-step through!instance creation!private! !
+!Kernel.ExceptionHandler class categoriesForMethods!
+on:do:!debugger-step through!instance creation!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #SequencedContractibleCollectionHelper
 	instanceVariableNames: ''
@@ -61,9 +61,11 @@ testXremoveLast
 		should: [ :result | result = getValue and: [ ((sequencedCollection at: (originalLength - 1)) = getValue2) and: [ sequencedCollection size = (originalLength - 1) ] ] ]
 		conformTo: #sequencedContractibleCollection
 		selector: #removeLast.! !
-!SequencedContractibleCollectionHelper categoriesFor: #object!public! !
-!SequencedContractibleCollectionHelper categoriesFor: #object:!public! !
-!SequencedContractibleCollectionHelper categoriesFor: #testXremoveAtIndexX!public! !
-!SequencedContractibleCollectionHelper categoriesFor: #testXremoveFirst!public! !
-!SequencedContractibleCollectionHelper categoriesFor: #testXremoveLast!public! !
+!SequencedContractibleCollectionHelper categoriesForMethods!
+object!public! !
+object:!public! !
+testXremoveAtIndexX!public! !
+testXremoveFirst!public! !
+testXremoveLast!public! !
+!
 

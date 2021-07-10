@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'Tools.Tests.MethodWorkspaceTest'
 	instanceVariableNames: ''
@@ -38,6 +38,8 @@ testSelectedOrNearestNode
 	workspace selectionRange: (221 to: 220).
 	node := workspace selectedNode.
 	self assert: node isVariable! !
-!Tools.Tests.MethodWorkspaceTest categoriesFor: #classToTest!helpers!private! !
-!Tools.Tests.MethodWorkspaceTest categoriesFor: #testSelectedOrNearestNode!public! !
+!Tools.Tests.MethodWorkspaceTest categoriesForMethods!
+classToTest!helpers!private! !
+testSelectedOrNearestNode!public! !
+!
 

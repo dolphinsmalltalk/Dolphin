@@ -123,21 +123,23 @@ value
 	"Answer the copy of the subject model"
 
 	^subjectCopy! !
-!UI.AspectBuffer categoriesFor: #apply!commands!public! !
-!UI.AspectBuffer categoriesFor: #aspectValue:!accessing!public! !
-!UI.AspectBuffer categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!UI.AspectBuffer categoriesFor: #gate!accessing!public! !
-!UI.AspectBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
-!UI.AspectBuffer categoriesFor: #initialize!initializing!private! !
-!UI.AspectBuffer categoriesFor: #isValid!public!testing! !
-!UI.AspectBuffer categoriesFor: #isValidBlock!accessing!public! !
-!UI.AspectBuffer categoriesFor: #isValidBlock:!accessing!not an aspect!public! !
-!UI.AspectBuffer categoriesFor: #notifyChanged!operations!public! !
-!UI.AspectBuffer categoriesFor: #onGateChanged!event handling!private! !
-!UI.AspectBuffer categoriesFor: #revert!commands!public! !
-!UI.AspectBuffer categoriesFor: #subject!accessing!public! !
-!UI.AspectBuffer categoriesFor: #subject:!accessing!not an aspect!public! !
-!UI.AspectBuffer categoriesFor: #value!accessing!public! !
+!UI.AspectBuffer categoriesForMethods!
+apply!commands!public! !
+aspectValue:!accessing!public! !
+doesNotUnderstand:!exceptions!public! !
+gate!accessing!public! !
+gate:!accessing!not an aspect!public! !
+initialize!initializing!private! !
+isValid!public!testing! !
+isValidBlock!accessing!public! !
+isValidBlock:!accessing!not an aspect!public! !
+notifyChanged!operations!public! !
+onGateChanged!event handling!private! !
+revert!commands!public! !
+subject!accessing!public! !
+subject:!accessing!not an aspect!public! !
+value!accessing!public! !
+!
 
 !UI.AspectBuffer class methodsFor!
 
@@ -156,7 +158,9 @@ subject: aSubjectModel
 
 	^super new subject: aSubjectModel
 ! !
-!UI.AspectBuffer class categoriesFor: #icon!constants!development!public! !
-!UI.AspectBuffer class categoriesFor: #new!instance creation!private! !
-!UI.AspectBuffer class categoriesFor: #subject:!instance creation!public! !
+!UI.AspectBuffer class categoriesForMethods!
+icon!constants!development!public! !
+new!instance creation!private! !
+subject:!instance creation!public! !
+!
 

@@ -99,18 +99,20 @@ pwszValue: anUtf16String
 	"Set the receiver's 'pwszValue' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszValue put: anUtf16String yourAddress! !
-!MSXML.XHR_COOKIE categoriesFor: #dwFlags!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #ftExpires!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #ftExpires:!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszName!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszName:!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszP3PPolicy!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszP3PPolicy:!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszUrl!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszUrl:!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszValue!**compiled accessors**!public! !
-!MSXML.XHR_COOKIE categoriesFor: #pwszValue:!**compiled accessors**!public! !
+!MSXML.XHR_COOKIE categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+ftExpires!**compiled accessors**!public! !
+ftExpires:!**compiled accessors**!public! !
+pwszName!**compiled accessors**!public! !
+pwszName:!**compiled accessors**!public! !
+pwszP3PPolicy!**compiled accessors**!public! !
+pwszP3PPolicy:!**compiled accessors**!public! !
+pwszUrl!**compiled accessors**!public! !
+pwszUrl:!**compiled accessors**!public! !
+pwszValue!**compiled accessors**!public! !
+pwszValue:!**compiled accessors**!public! !
+!
 
 !MSXML.XHR_COOKIE class methodsFor!
 
@@ -141,6 +143,8 @@ defineFields
 
 getFieldNames
 	^#(#pwszUrl #pwszName #pwszValue #pwszP3PPolicy #ftExpires #dwFlags)! !
-!MSXML.XHR_COOKIE class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!MSXML.XHR_COOKIE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MSXML.XHR_COOKIE class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

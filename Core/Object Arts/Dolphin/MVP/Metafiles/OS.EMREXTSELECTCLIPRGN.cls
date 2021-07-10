@@ -66,12 +66,14 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
-!OS.EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!OS.EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!OS.EMREXTSELECTCLIPRGN categoriesFor: #iMode!**compiled accessors**!public! !
-!OS.EMREXTSELECTCLIPRGN categoriesFor: #iMode:!**compiled accessors**!public! !
-!OS.EMREXTSELECTCLIPRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!OS.EMREXTSELECTCLIPRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
+!OS.EMREXTSELECTCLIPRGN categoriesForMethods!
+cbRgnData!**compiled accessors**!public! !
+cbRgnData:!**compiled accessors**!public! !
+iMode!**compiled accessors**!public! !
+iMode:!**compiled accessors**!public! !
+RGNDATA!**compiled accessors**!public! !
+RGNDATA:!**compiled accessors**!public! !
+!
 
 !OS.EMREXTSELECTCLIPRGN class methodsFor!
 
@@ -108,7 +110,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTSELECTCLIPRGN}! !
-!OS.EMREXTSELECTCLIPRGN class categoriesFor: #defineFields!public!template definition! !
-!OS.EMREXTSELECTCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMREXTSELECTCLIPRGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTSELECTCLIPRGN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

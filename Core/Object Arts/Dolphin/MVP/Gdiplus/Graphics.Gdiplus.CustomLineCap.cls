@@ -109,20 +109,22 @@ widthScale: aNumber
 	draw lines. The default value of 1.0 does not scale the line cap."
 
 	Gdip gdipSetCustomLineCapWidthScale: self asParameter widthScale: aNumber! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #baseCap!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #baseCap:!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #baseInset!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #baseInset:!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #clone!copying!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #endCap!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #startCap!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #startCap:endCap:!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #strokeCaps!accessing!private! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #strokeJoin!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #strokeJoin:!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #widthScale!accessing!public! !
-!Graphics.Gdiplus.CustomLineCap categoriesFor: #widthScale:!accessing!public! !
+!Graphics.Gdiplus.CustomLineCap categoriesForMethods!
+baseCap!accessing!public! !
+baseCap:!accessing!public! !
+baseInset!accessing!public! !
+baseInset:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+clone!copying!public! !
+endCap!accessing!public! !
+startCap!accessing!public! !
+startCap:endCap:!accessing!public! !
+strokeCaps!accessing!private! !
+strokeJoin!accessing!public! !
+strokeJoin:!accessing!public! !
+widthScale!accessing!public! !
+widthScale:!accessing!public! !
+!
 
 !Graphics.Gdiplus.CustomLineCap class methodsFor!
 
@@ -164,8 +166,10 @@ strokePath: aStrokePath
 		strokePath: aStrokePath
 		baseCap: LineCapFlat
 		baseInset: 0! !
-!Graphics.Gdiplus.CustomLineCap class categoriesFor: #exampleGdipCLCStrokeCaps!examples!public!unit tests! !
-!Graphics.Gdiplus.CustomLineCap class categoriesFor: #fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
-!Graphics.Gdiplus.CustomLineCap class categoriesFor: #new!instance creation!public! !
-!Graphics.Gdiplus.CustomLineCap class categoriesFor: #strokePath:!instance creation!public! !
+!Graphics.Gdiplus.CustomLineCap class categoriesForMethods!
+exampleGdipCLCStrokeCaps!examples!public!unit tests! !
+fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
+new!instance creation!public! !
+strokePath:!instance creation!public! !
+!
 

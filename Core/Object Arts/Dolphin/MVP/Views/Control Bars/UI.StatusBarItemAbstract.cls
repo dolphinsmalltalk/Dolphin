@@ -259,45 +259,47 @@ width: widthInteger
 	width = widthInteger ifTrue: [^self].
 	width := widthInteger.
 	self update! !
-!UI.StatusBarItemAbstract categoriesFor: #border!accessing!private! !
-!UI.StatusBarItemAbstract categoriesFor: #border:!accessing!private! !
-!UI.StatusBarItemAbstract categoriesFor: #borderStyle!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #borderStyle:!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #drawItem:bounding:!drawing!private! !
-!UI.StatusBarItemAbstract categoriesFor: #extent:!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #getText!private!updating! !
-!UI.StatusBarItemAbstract categoriesFor: #getTipText!private!updating! !
-!UI.StatusBarItemAbstract categoriesFor: #hasBorder!public!testing! !
-!UI.StatusBarItemAbstract categoriesFor: #hasParentView!private!testing!views! !
-!UI.StatusBarItemAbstract categoriesFor: #initialize!initializing!private! !
-!UI.StatusBarItemAbstract categoriesFor: #invalidate!drawing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #isAutoResize!public!testing! !
-!UI.StatusBarItemAbstract categoriesFor: #isAutoResize:!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #isOwnerDrawn!public!testing! !
-!UI.StatusBarItemAbstract categoriesFor: #isOwnerDrawn:!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #model!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #model:!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #name!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #name:!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #onClick:!event handling!public! !
-!UI.StatusBarItemAbstract categoriesFor: #onDoubleClick:!event handling!public! !
-!UI.StatusBarItemAbstract categoriesFor: #onRightClick:!event handling!public! !
-!UI.StatusBarItemAbstract categoriesFor: #onTipTextRequired!event handling!private! !
-!UI.StatusBarItemAbstract categoriesFor: #onValueChanged!event handling!public! !
-!UI.StatusBarItemAbstract categoriesFor: #onViewOpened!event handling!public! !
-!UI.StatusBarItemAbstract categoriesFor: #parentView!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #parentView:!initializing!private! !
-!UI.StatusBarItemAbstract categoriesFor: #presenter:!initializing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #presenterConnectionPoint!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #rectangle!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #refreshContents!public!updating! !
-!UI.StatusBarItemAbstract categoriesFor: #style!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #style:!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #toolTipText!event handling!private! !
-!UI.StatusBarItemAbstract categoriesFor: #update!private!updating! !
-!UI.StatusBarItemAbstract categoriesFor: #updateTipText!private!updating! !
-!UI.StatusBarItemAbstract categoriesFor: #width!accessing!public! !
-!UI.StatusBarItemAbstract categoriesFor: #width:!accessing!public! !
+!UI.StatusBarItemAbstract categoriesForMethods!
+border!accessing!private! !
+border:!accessing!private! !
+borderStyle!accessing!public! !
+borderStyle:!accessing!public! !
+drawItem:bounding:!drawing!private! !
+extent:!accessing!public! !
+getText!private!updating! !
+getTipText!private!updating! !
+hasBorder!public!testing! !
+hasParentView!private!testing!views! !
+initialize!initializing!private! !
+invalidate!drawing!public! !
+isAutoResize!public!testing! !
+isAutoResize:!accessing!public! !
+isOwnerDrawn!public!testing! !
+isOwnerDrawn:!accessing!public! !
+model!accessing!public! !
+model:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+onClick:!event handling!public! !
+onDoubleClick:!event handling!public! !
+onRightClick:!event handling!public! !
+onTipTextRequired!event handling!private! !
+onValueChanged!event handling!public! !
+onViewOpened!event handling!public! !
+parentView!accessing!public! !
+parentView:!initializing!private! !
+presenter:!initializing!public! !
+presenterConnectionPoint!accessing!public! !
+rectangle!accessing!public! !
+refreshContents!public!updating! !
+style!accessing!public! !
+style:!accessing!public! !
+toolTipText!event handling!private! !
+update!private!updating! !
+updateTipText!private!updating! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !UI.StatusBarItemAbstract class methodsFor!
 
@@ -346,10 +348,12 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!UI.StatusBarItemAbstract class categoriesFor: #icon!constants!public! !
-!UI.StatusBarItemAbstract class categoriesFor: #initialize!development!initializing!private! !
-!UI.StatusBarItemAbstract class categoriesFor: #new!instance creation!public! !
-!UI.StatusBarItemAbstract class categoriesFor: #separator:!instance creation!public! !
-!UI.StatusBarItemAbstract class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!UI.StatusBarItemAbstract class categoriesFor: #stbVersion!binary filing!private! !
+!UI.StatusBarItemAbstract class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+separator:!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!private! !
+!
 

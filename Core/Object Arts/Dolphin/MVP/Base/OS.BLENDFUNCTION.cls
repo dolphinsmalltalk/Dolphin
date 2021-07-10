@@ -87,18 +87,20 @@ usePerPixelAlpha: aBoolean
 	blend. If not then only the constant alpha is used."
 
 	self AlphaFormat: (aBoolean ifTrue: [AC_SRC_ALPHA] ifFalse: [0])! !
-!OS.BLENDFUNCTION categoriesFor: #AlphaFormat!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #AlphaFormat:!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #blend:!accessing!public! !
-!OS.BLENDFUNCTION categoriesFor: #BlendFlags!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #BlendFlags:!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #BlendOp!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #BlendOp:!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #blendPercentage:!accessing!public! !
-!OS.BLENDFUNCTION categoriesFor: #initialize!initializing!public! !
-!OS.BLENDFUNCTION categoriesFor: #SourceConstantAlpha!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #SourceConstantAlpha:!**compiled accessors**!public! !
-!OS.BLENDFUNCTION categoriesFor: #usePerPixelAlpha:!accessing!public! !
+!OS.BLENDFUNCTION categoriesForMethods!
+AlphaFormat!**compiled accessors**!public! !
+AlphaFormat:!**compiled accessors**!public! !
+blend:!accessing!public! !
+BlendFlags!**compiled accessors**!public! !
+BlendFlags:!**compiled accessors**!public! !
+BlendOp!**compiled accessors**!public! !
+BlendOp:!**compiled accessors**!public! !
+blendPercentage:!accessing!public! !
+initialize!initializing!public! !
+SourceConstantAlpha!**compiled accessors**!public! !
+SourceConstantAlpha:!**compiled accessors**!public! !
+usePerPixelAlpha:!accessing!public! !
+!
 
 !OS.BLENDFUNCTION class methodsFor!
 
@@ -132,7 +134,9 @@ defineFields
 
 getFieldNames
 	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
-!OS.BLENDFUNCTION class categoriesFor: #blend:!instance creation!public! !
-!OS.BLENDFUNCTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.BLENDFUNCTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BLENDFUNCTION class categoriesForMethods!
+blend:!instance creation!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -20,5 +20,7 @@ testPathCompactPathEx
 				cchMax: buf size - 1
 				dwFlags: 0).
 	self assert: buf trimNulls equals: 'c:\dolphin\'! !
-!OS.Tests.ShlwapiLibraryTest categoriesFor: #testPathCompactPathEx!public!unit tests! !
+!OS.Tests.ShlwapiLibraryTest categoriesForMethods!
+testPathCompactPathEx!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.GraphicsPathTest'
 	instanceVariableNames: 'fillMode'
@@ -48,12 +48,14 @@ testFillMode
 testPointCount
 	self setSample3Points.
 	self assert: model pointCount equals: 3! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #setSample3Points!public! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #setSampleEllipse!public! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #setSampleNew!public! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testBounds!public! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testConstructor3Points!public! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testConstructorPoints!public! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testFillMode!public! !
-!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesFor: #testPointCount!public! !
+!Graphics.Gdiplus.Tests.GraphicsPathTest categoriesForMethods!
+setSample3Points!public! !
+setSampleEllipse!public! !
+setSampleNew!public! !
+testBounds!public! !
+testConstructor3Points!public! !
+testConstructorPoints!public! !
+testFillMode!public! !
+testPointCount!public! !
+!
 

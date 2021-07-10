@@ -100,15 +100,17 @@ reverseDo: operation
 	it only moves forward through the result set)."
 
 	^self asOrderedCollection reverseDo: operation! !
-!Database.DBForwardOnlyResultSet categoriesFor: #bind:!binding!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #close!public!realizing/unrealizing! !
-!Database.DBForwardOnlyResultSet categoriesFor: #free!public!realizing/unrealizing! !
-!Database.DBForwardOnlyResultSet categoriesFor: #moveFirst!operations!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #moveLast!enumerating!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #moveNext!operations!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #movePrevious!enumerating!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #moveTo:!accessing!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #onStartup!event handling!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #requery!operations!private! !
-!Database.DBForwardOnlyResultSet categoriesFor: #reverseDo:!enumerating!public! !
+!Database.DBForwardOnlyResultSet categoriesForMethods!
+bind:!binding!private! !
+close!public!realizing/unrealizing! !
+free!public!realizing/unrealizing! !
+moveFirst!operations!private! !
+moveLast!enumerating!private! !
+moveNext!operations!private! !
+movePrevious!enumerating!private! !
+moveTo:!accessing!private! !
+onStartup!event handling!private! !
+requery!operations!private! !
+reverseDo:!enumerating!public! !
+!
 

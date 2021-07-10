@@ -31,7 +31,9 @@ executeStatement
 		nameLength3: SQL_NTS
 		columnName: self columnName
 		nameLength4: SQL_NTS! !
-!Database.DBColumnsStatement categoriesFor: #columnName!accessing!public! !
-!Database.DBColumnsStatement categoriesFor: #columnName:!accessing!public! !
-!Database.DBColumnsStatement categoriesFor: #executeStatement!operations!private! !
+!Database.DBColumnsStatement categoriesForMethods!
+columnName!accessing!public! !
+columnName:!accessing!public! !
+executeStatement!operations!private! !
+!
 

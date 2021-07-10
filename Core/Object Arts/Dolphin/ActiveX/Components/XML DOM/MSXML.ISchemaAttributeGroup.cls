@@ -69,10 +69,12 @@ get_attributes: attributes
 
 	<virtual stdcall: hresult 16 ISchemaItemCollection**>
 	^self invalidCall: _failureCode! !
-!MSXML.ISchemaAttributeGroup categoriesFor: #anyAttribute!**auto generated**!properties!public! !
-!MSXML.ISchemaAttributeGroup categoriesFor: #attributes!**auto generated**!properties!public! !
-!MSXML.ISchemaAttributeGroup categoriesFor: #get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
-!MSXML.ISchemaAttributeGroup categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
+!MSXML.ISchemaAttributeGroup categoriesForMethods!
+anyAttribute!**auto generated**!properties!public! !
+attributes!**auto generated**!properties!public! !
+get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
+get_attributes:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !
+!
 
 !MSXML.ISchemaAttributeGroup class methodsFor!
 
@@ -86,5 +88,7 @@ defineFunctions
 		defineFunction: #get_attributes:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
-!MSXML.ISchemaAttributeGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaAttributeGroup class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

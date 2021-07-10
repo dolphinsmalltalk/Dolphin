@@ -71,14 +71,16 @@ isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
 
 	^false! !
-!External.INTEGER categoriesFor: #asInteger!converting!public! !
-!External.INTEGER categoriesFor: #asSignedInteger!converting!public! !
-!External.INTEGER categoriesFor: #asString!converting!public! !
-!External.INTEGER categoriesFor: #asUIntPtr!converting!public! !
-!External.INTEGER categoriesFor: #asUnsignedInteger!converting!public! !
-!External.INTEGER categoriesFor: #hash!comparing!public! !
-!External.INTEGER categoriesFor: #isNull!public!testing! !
-!External.INTEGER categoriesFor: #isSigned!public!testing! !
+!External.INTEGER categoriesForMethods!
+asInteger!converting!public! !
+asSignedInteger!converting!public! !
+asString!converting!public! !
+asUIntPtr!converting!public! !
+asUnsignedInteger!converting!public! !
+hash!comparing!public! !
+isNull!public!testing! !
+isSigned!public!testing! !
+!
 
 !External.INTEGER class methodsFor!
 
@@ -97,7 +99,9 @@ fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
 	^self new value: anInteger! !
-!External.INTEGER class categoriesFor: #decompileDefinition!public! !
-!External.INTEGER class categoriesFor: #defineTemplate!public!template definition! !
-!External.INTEGER class categoriesFor: #fromInteger:!instance creation!public! !
+!External.INTEGER class categoriesForMethods!
+decompileDefinition!public! !
+defineTemplate!public!template definition! !
+fromInteger:!instance creation!public! !
+!
 

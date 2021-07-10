@@ -73,18 +73,20 @@ valueWithArguments: anArray
 	"Plays all the messages in this sequence, which are assumed to be `MessageSend`s that are fully qualified when provided with the specified arguments. Answers the result of the last message in the sequence."
 
 	^messages inject: nil into: [:answer :each | each valueWithArguments: anArray]! !
-!Core.MessageSequence categoriesFor: #add:!adding!public! !
-!Core.MessageSequence categoriesFor: #add:afterIndex:!adding!public! !
-!Core.MessageSequence categoriesFor: #addAll:afterIndex:!adding!public! !
-!Core.MessageSequence categoriesFor: #forwardTo:!operations!public! !
-!Core.MessageSequence categoriesFor: #includes:!public!searching! !
-!Core.MessageSequence categoriesFor: #initialize!initializing!private! !
-!Core.MessageSequence categoriesFor: #messages!accessing!public! !
-!Core.MessageSequence categoriesFor: #messages:!initializing!public! !
-!Core.MessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
-!Core.MessageSequence categoriesFor: #size!public!testing! !
-!Core.MessageSequence categoriesFor: #value!evaluating!public! !
-!Core.MessageSequence categoriesFor: #valueWithArguments:!evaluating!public! !
+!Core.MessageSequence categoriesForMethods!
+add:!adding!public! !
+add:afterIndex:!adding!public! !
+addAll:afterIndex:!adding!public! !
+forwardTo:!operations!public! !
+includes:!public!searching! !
+initialize!initializing!private! !
+messages!accessing!public! !
+messages:!initializing!public! !
+removeMessagesFor:!public!removing! !
+size!public!testing! !
+value!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 !Core.MessageSequence class methodsFor!
 
@@ -94,5 +96,7 @@ withMessages: aSequencedReadableCollection
 	^self new
 		messages: aSequencedReadableCollection asOrderedCollection;
 		yourself! !
-!Core.MessageSequence class categoriesFor: #withMessages:!instance creation!public! !
+!Core.MessageSequence class categoriesForMethods!
+withMessages:!instance creation!public! !
+!
 

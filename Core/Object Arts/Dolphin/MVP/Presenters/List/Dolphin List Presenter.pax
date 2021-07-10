@@ -213,7 +213,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ListPresenter icon! !
-!UI.SelectableItemsPresenter class categoriesFor: #icon!constants!public! !
+!UI.SelectableItemsPresenter class categoriesForMethods!
+icon!constants!public! !
+!
 
 !UI.View methodsFor!
 
@@ -225,7 +227,9 @@ wmBeginDrag: message wParam: wParam lParam: lParam
 	listbox := self class withHandle: lParam.
 	^listbox lbnBeginDrag: wParam.
 ! !
-!UI.View categoriesFor: #wmBeginDrag:wParam:lParam:!event handling-win32!private! !
+!UI.View categoriesForMethods!
+wmBeginDrag:wParam:lParam:!event handling-win32!private! !
+!
 
 "End of package definition"!
 

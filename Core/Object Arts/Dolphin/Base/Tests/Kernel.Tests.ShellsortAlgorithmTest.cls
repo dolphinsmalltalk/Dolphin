@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.ShellsortAlgorithmTest'
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ integerSortSize
 	"Shell sort is slow, so be a bit less ambitious"
 
 	^1000! !
-!Kernel.Tests.ShellsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!Kernel.Tests.ShellsortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
+!Kernel.Tests.ShellsortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+integerSortSize!constants!private! !
+!
 

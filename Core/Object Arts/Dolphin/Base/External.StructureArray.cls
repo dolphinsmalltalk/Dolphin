@@ -80,13 +80,15 @@ uncheckedAt: anInteger put: anObject
 		to: offset + self elementSize
 		startingAt: 1.
 	^anObject! !
-!External.StructureArray categoriesFor: #alignment!constants!public! !
-!External.StructureArray categoriesFor: #basicFree!private!realizing/unrealizing! !
-!External.StructureArray categoriesFor: #elementClass:!accessing!private! !
-!External.StructureArray categoriesFor: #initialize!initializing!private! !
-!External.StructureArray categoriesFor: #initializePointer!initializing!private! !
-!External.StructureArray categoriesFor: #packing!constants!private! !
-!External.StructureArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.StructureArray categoriesForMethods!
+alignment!constants!public! !
+basicFree!private!realizing/unrealizing! !
+elementClass:!accessing!private! !
+initialize!initializing!private! !
+initializePointer!initializing!private! !
+packing!constants!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.StructureArray class methodsFor!
 
@@ -146,11 +148,13 @@ withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadic
 	answer := self length: aCollection size elementClass: anExternalStructureClass.
 	answer with: aCollection do: aDyadicValuable.
 	^answer! !
-!External.StructureArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
-!External.StructureArray class categoriesFor: #length:elementClass:!instance creation!public! !
-!External.StructureArray class categoriesFor: #length:elementClass:initializer:!instance creation!public! !
-!External.StructureArray class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!External.StructureArray class categoriesFor: #stbVersion!binary filing!public! !
-!External.StructureArray class categoriesFor: #with:!instance creation!public! !
-!External.StructureArray class categoriesFor: #withAll:elementClass:initializer:!instance creation!public! !
+!External.StructureArray class categoriesForMethods!
+fromAddress:length:elementClass:!instance creation!public! !
+length:elementClass:!instance creation!public! !
+length:elementClass:initializer:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+with:!instance creation!public! !
+withAll:elementClass:initializer:!instance creation!public! !
+!
 

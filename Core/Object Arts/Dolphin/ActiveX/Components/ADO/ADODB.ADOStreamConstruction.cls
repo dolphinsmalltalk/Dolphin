@@ -65,10 +65,12 @@ stream: ppStm
 	"Set the 'Stream' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Stream: ppStm! !
-!ADODB.ADOStreamConstruction categoriesFor: #get_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
-!ADODB.ADOStreamConstruction categoriesFor: #put_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
-!ADODB.ADOStreamConstruction categoriesFor: #stream!**auto generated**!properties!public! !
-!ADODB.ADOStreamConstruction categoriesFor: #stream:!**auto generated**!properties!public! !
+!ADODB.ADOStreamConstruction categoriesForMethods!
+get_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
+put_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
+stream!**auto generated**!properties!public! !
+stream:!**auto generated**!properties!public! !
+!
 
 !ADODB.ADOStreamConstruction class methodsFor!
 
@@ -82,5 +84,7 @@ defineFunctions
 		defineFunction: #put_Stream:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODB.ADOStreamConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.ADOStreamConstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

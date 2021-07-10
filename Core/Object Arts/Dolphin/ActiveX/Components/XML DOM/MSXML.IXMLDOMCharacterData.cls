@@ -154,22 +154,24 @@ SubstringData: offset count: count data: data
 
 	<virtual stdcall: hresult 47 sdword sdword bstr*>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #=!comparing!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #attributes!properties!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #childNodes!properties!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #data!**auto generated**!properties!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #data:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #DeleteData:count:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #InsertData:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #isText!public!testing! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #length!**auto generated**!properties!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #ReplaceData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #substringData:count:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMCharacterData categoriesFor: #SubstringData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!MSXML.IXMLDOMCharacterData categoriesForMethods!
+=!comparing!public! !
+AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+attributes!properties!public! !
+childNodes!properties!public! !
+data!**auto generated**!properties!public! !
+data:!**auto generated**!properties!public! !
+DeleteData:count:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+get_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+InsertData:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+isText!public!testing! !
+length!**auto generated**!properties!public! !
+put_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+ReplaceData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+substringData:count:!**auto generated**!methods!public! !
+SubstringData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!
 
 !MSXML.IXMLDOMCharacterData class methodsFor!
 
@@ -195,5 +197,7 @@ defineFunctions
 		defineFunction: #ReplaceData:count:data:
 			argumentTypes: 'sdword sdword bstr'
 ! !
-!MSXML.IXMLDOMCharacterData class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMCharacterData class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

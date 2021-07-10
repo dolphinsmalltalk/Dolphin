@@ -67,12 +67,14 @@ uuidToString: uuid stringUuid: lppstr
 
 	<stdcall: errno UuidToStringA void* char**>
 	^self invalidCall: _failureCode! !
-!OS.RPCLibrary categoriesFor: #invalidCall:!exceptions!private! !
-!OS.RPCLibrary categoriesFor: #rpcStringFree:!primitives!public!win32 functions-rpc! !
-!OS.RPCLibrary categoriesFor: #uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
-!OS.RPCLibrary categoriesFor: #uuidCreate:!primitives!public!win32 functions-rpc! !
-!OS.RPCLibrary categoriesFor: #uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
-!OS.RPCLibrary categoriesFor: #uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
+!OS.RPCLibrary categoriesForMethods!
+invalidCall:!exceptions!private! !
+rpcStringFree:!primitives!public!win32 functions-rpc! !
+uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
+uuidCreate:!primitives!public!win32 functions-rpc! !
+uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
+uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
+!
 
 !OS.RPCLibrary class methodsFor!
 
@@ -83,6 +85,8 @@ fileName
 
 sharedVariableName
 	^#{Rpcrt4}! !
-!OS.RPCLibrary class categoriesFor: #fileName!constants!public! !
-!OS.RPCLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.RPCLibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

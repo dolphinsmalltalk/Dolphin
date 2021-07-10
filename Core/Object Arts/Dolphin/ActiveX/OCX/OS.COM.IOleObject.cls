@@ -366,41 +366,43 @@ verbs
 			[:ex |
 			"If we get OLEOBJ_E_NOVERBS then just return an empty collection"
 			ex hresult asUnsignedInteger = 16r80040180 ifTrue: [ex return: #()] ifFalse: [ex pass]]! !
-!OS.COM.IOleObject categoriesFor: #Advise:pdwConnection:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #appName!accessing!public! !
-!OS.COM.IOleObject categoriesFor: #close:!methods!public! !
-!OS.COM.IOleObject categoriesFor: #Close:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #DoVerb:lpmsg:pActiveSite:lindex:hwndParent:lprcPosRect:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #doVerb:msg:activeSite:parentView:rectangle:!methods!public! !
-!OS.COM.IOleObject categoriesFor: #EnumAdvise:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #enumVerbs!accessing!public! !
-!OS.COM.IOleObject categoriesFor: #EnumVerbs:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #fullName!accessing!public! !
-!OS.COM.IOleObject categoriesFor: #GetClientSite:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #GetClipboardData:ppDataObject:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #getExtent:!**auto generated**!methods!public! !
-!OS.COM.IOleObject categoriesFor: #GetExtent:psizel:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #getMiscStatus:!**auto generated**!methods!public! !
-!OS.COM.IOleObject categoriesFor: #GetMiscStatus:pdwStatus:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #GetMoniker:dwWhichMoniker:ppmk:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #getUserClassID!**auto generated**!methods!public! !
-!OS.COM.IOleObject categoriesFor: #GetUserClassID:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #getUserType:!methods!public! !
-!OS.COM.IOleObject categoriesFor: #GetUserType:pszUserType:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #InitFromData:fCreation:dwReserved:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #IsUpToDate!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #SetClientSite:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #SetColorScheme:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #setExtent:psizel:!methods!public! !
-!OS.COM.IOleObject categoriesFor: #SetExtent:psizel:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #setHostNames:szContainerObj:!**auto generated**!methods!public! !
-!OS.COM.IOleObject categoriesFor: #SetHostNames:szContainerObj:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #SetMoniker:pmk:!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #shortName!accessing!public! !
-!OS.COM.IOleObject categoriesFor: #unadvise:!methods!public! !
-!OS.COM.IOleObject categoriesFor: #Unadvise:!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #Update!**auto generated**!COM Interfaces-IOleObject!private! !
-!OS.COM.IOleObject categoriesFor: #verbs!accessing!public! !
+!OS.COM.IOleObject categoriesForMethods!
+Advise:pdwConnection:!COM Interfaces-IOleObject!private! !
+appName!accessing!public! !
+close:!methods!public! !
+Close:!COM Interfaces-IOleObject!private! !
+DoVerb:lpmsg:pActiveSite:lindex:hwndParent:lprcPosRect:!**auto generated**!COM Interfaces-IOleObject!private! !
+doVerb:msg:activeSite:parentView:rectangle:!methods!public! !
+EnumAdvise:!COM Interfaces-IOleObject!private! !
+enumVerbs!accessing!public! !
+EnumVerbs:!COM Interfaces-IOleObject!private! !
+fullName!accessing!public! !
+GetClientSite:!**auto generated**!COM Interfaces-IOleObject!private! !
+GetClipboardData:ppDataObject:!COM Interfaces-IOleObject!private! !
+getExtent:!**auto generated**!methods!public! !
+GetExtent:psizel:!**auto generated**!COM Interfaces-IOleObject!private! !
+getMiscStatus:!**auto generated**!methods!public! !
+GetMiscStatus:pdwStatus:!**auto generated**!COM Interfaces-IOleObject!private! !
+GetMoniker:dwWhichMoniker:ppmk:!COM Interfaces-IOleObject!private! !
+getUserClassID!**auto generated**!methods!public! !
+GetUserClassID:!**auto generated**!COM Interfaces-IOleObject!private! !
+getUserType:!methods!public! !
+GetUserType:pszUserType:!**auto generated**!COM Interfaces-IOleObject!private! !
+InitFromData:fCreation:dwReserved:!**auto generated**!COM Interfaces-IOleObject!private! !
+IsUpToDate!**auto generated**!COM Interfaces-IOleObject!private! !
+SetClientSite:!**auto generated**!COM Interfaces-IOleObject!private! !
+SetColorScheme:!**auto generated**!COM Interfaces-IOleObject!private! !
+setExtent:psizel:!methods!public! !
+SetExtent:psizel:!COM Interfaces-IOleObject!private! !
+setHostNames:szContainerObj:!**auto generated**!methods!public! !
+SetHostNames:szContainerObj:!COM Interfaces-IOleObject!private! !
+SetMoniker:pmk:!**auto generated**!COM Interfaces-IOleObject!private! !
+shortName!accessing!public! !
+unadvise:!methods!public! !
+Unadvise:!COM Interfaces-IOleObject!private! !
+Update!**auto generated**!COM Interfaces-IOleObject!private! !
+verbs!accessing!public! !
+!
 
 OS.COM.IOleObject methodProtocol: #'OLEIDL.IOleObject' attributes: #() selectors: #(#Advise:pdwConnection: #Close: #DoVerb:lpmsg:pActiveSite:lindex:hwndParent:lprcPosRect: #EnumAdvise: #EnumVerbs: #GetClientSite: #GetClipboardData:ppDataObject: #GetExtent:psizel: #GetMiscStatus:pdwStatus: #GetMoniker:dwWhichMoniker:ppmk: #GetUserClassID: #GetUserType:pszUserType: #InitFromData:fCreation:dwReserved: #IsUpToDate #SetClientSite: #SetColorScheme: #SetExtent:psizel: #SetHostNames:szContainerObj: #SetMoniker:pmk: #Unadvise: #Update)!
 
@@ -468,5 +470,7 @@ defineFunctions
 		defineFunction: #SetColorScheme:
 			argumentTypes: 'LOGPALETTE*'
 ! !
-!OS.COM.IOleObject class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IOleObject class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.ChoicePresenterTest'
 	instanceVariableNames: ''
@@ -85,9 +85,11 @@ testNilMultiChoice
 	self assert: presenter view hasSelection.
 	self assert: presenter view selectionsByIndex equals: #(3 4).
 	self assert: presenter value equals: #(2 3)! !
-!UI.Tests.ChoicePresenterTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.ChoicePresenterTest categoriesFor: #testChangeChoices!public!unit tests! !
-!UI.Tests.ChoicePresenterTest categoriesFor: #testChangeMultiChoices!public!unit tests! !
-!UI.Tests.ChoicePresenterTest categoriesFor: #testNilChoice!public!unit tests! !
-!UI.Tests.ChoicePresenterTest categoriesFor: #testNilMultiChoice!public!unit tests! !
+!UI.Tests.ChoicePresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+testChangeChoices!public!unit tests! !
+testChangeMultiChoices!public!unit tests! !
+testNilChoice!public!unit tests! !
+testNilMultiChoice!public!unit tests! !
+!
 

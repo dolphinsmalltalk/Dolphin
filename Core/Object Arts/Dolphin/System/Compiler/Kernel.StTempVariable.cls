@@ -15,5 +15,7 @@ isTempVariable
 	"Answer whether the receiver describes a temporary variable."
 
 	^true! !
-!Kernel.StTempVariable categoriesFor: #isTempVariable!public!testing! !
+!Kernel.StTempVariable categoriesForMethods!
+isTempVariable!public!testing! !
+!
 

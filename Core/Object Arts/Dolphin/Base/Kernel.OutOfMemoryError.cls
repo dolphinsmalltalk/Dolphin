@@ -15,12 +15,16 @@ initialize
 	"Private - Initialize the receiver's instance variables."
 
 	self tag: (HRESULT fromInteger: E_OUTOFMEMORY)! !
-!Kernel.OutOfMemoryError categoriesFor: #initialize!initializing!private! !
+!Kernel.OutOfMemoryError categoriesForMethods!
+initialize!initializing!private! !
+!
 
 !Kernel.OutOfMemoryError class methodsFor!
 
 signal: messageText with: anObject
 
 	^self shouldNotImplement! !
-!Kernel.OutOfMemoryError class categoriesFor: #signal:with:!instance creation!public! !
+!Kernel.OutOfMemoryError class categoriesForMethods!
+signal:with:!instance creation!public! !
+!
 

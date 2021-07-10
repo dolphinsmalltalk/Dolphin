@@ -39,8 +39,10 @@ ptl: aPOINTL
 		from: ##(_OffsetOf_ptl + 1)
 		to: ##(_OffsetOf_ptl + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRLINETO categoriesFor: #ptl!**compiled accessors**!public! !
-!OS.EMRLINETO categoriesFor: #ptl:!**compiled accessors**!public! !
+!OS.EMRLINETO categoriesForMethods!
+ptl!**compiled accessors**!public! !
+ptl:!**compiled accessors**!public! !
+!
 
 !OS.EMRLINETO class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_LINETO. EMR_MOVETOEX}! !
-!OS.EMRLINETO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRLINETO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRLINETO class categoriesFor: #iTypes!constants!public! !
+!OS.EMRLINETO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

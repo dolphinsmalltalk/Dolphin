@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.MoveMethodTest'
 	instanceVariableNames: ''
@@ -165,9 +165,11 @@ testMovePrimitiveMethod
 				class: Object
 				variable: 'OrderedCollection'.
 	self shouldFail: refactoring! !
-!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodIntoArgument!public!tests! !
-!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodIntoClassVariable!public!tests! !
-!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodIntoInstanceVariable!public!tests! !
-!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMoveMethodThatReferencesPoolDictionary!public!tests! !
-!Refactory.Browser.Tests.MoveMethodTest categoriesFor: #testMovePrimitiveMethod!failure tests!public! !
+!Refactory.Browser.Tests.MoveMethodTest categoriesForMethods!
+testMoveMethodIntoArgument!public!tests! !
+testMoveMethodIntoClassVariable!public!tests! !
+testMoveMethodIntoInstanceVariable!public!tests! !
+testMoveMethodThatReferencesPoolDictionary!public!tests! !
+testMovePrimitiveMethod!failure tests!public! !
+!
 

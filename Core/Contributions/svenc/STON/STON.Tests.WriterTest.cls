@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.Tests.STONTestCase subclass: #'STON.Tests.WriterTest'
 	instanceVariableNames: ''
@@ -405,50 +405,52 @@ testUserNil
 	| user |
 	user := STONTestUser new.
 	self assert: (self serialize: user) equals: 'TestUser{#enabled:true}'! !
-!STON.Tests.WriterTest categoriesFor: #serialize:!private! !
-!STON.Tests.WriterTest categoriesFor: #serializeAsciiOnly:!private! !
-!STON.Tests.WriterTest categoriesFor: #serializeJson:!private! !
-!STON.Tests.WriterTest categoriesFor: #serializePretty:!private! !
-!STON.Tests.WriterTest categoriesFor: #testAssociation!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testBag!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testBoolean!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testByteArray!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testClass!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testColor!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testCustomNewline!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testDate!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testDateAndTime!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testDictionary!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testDictionaryWithComplexKeys!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testDoubleQuotedString!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testEmptyArrayPretty!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testEmptyDictionaryPretty!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testFloat!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testFraction!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testIdentityDictionary!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testInteger!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testIsSimpleSymbol!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testKeepingNewLines!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testList!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testMap!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testMetaclass!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testNil!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testNonBMPCharacterEncoding!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testNull!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testOrderedCollection!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testPoint!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testReferenceCycle!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testReferenceSharing!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testReferenceSharingError!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testReferenceSharingIgnore!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testRestrictedClassesInJsonMode!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testScaledDecimal!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testString!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testSymbol!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testSymbolAsString!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testTime!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testUser!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testUser2!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testUser3Nil!public!tests! !
-!STON.Tests.WriterTest categoriesFor: #testUserNil!public!tests! !
+!STON.Tests.WriterTest categoriesForMethods!
+serialize:!private! !
+serializeAsciiOnly:!private! !
+serializeJson:!private! !
+serializePretty:!private! !
+testAssociation!public!tests! !
+testBag!public!tests! !
+testBoolean!public!tests! !
+testByteArray!public!tests! !
+testClass!public!tests! !
+testColor!public!tests! !
+testCustomNewline!public!tests! !
+testDate!public!tests! !
+testDateAndTime!public!tests! !
+testDictionary!public!tests! !
+testDictionaryWithComplexKeys!public!tests! !
+testDoubleQuotedString!public!tests! !
+testEmptyArrayPretty!public!tests! !
+testEmptyDictionaryPretty!public!tests! !
+testFloat!public!tests! !
+testFraction!public!tests! !
+testIdentityDictionary!public!tests! !
+testInteger!public!tests! !
+testIsSimpleSymbol!public!tests! !
+testKeepingNewLines!public!tests! !
+testList!public!tests! !
+testMap!public!tests! !
+testMetaclass!public!tests! !
+testNil!public!tests! !
+testNonBMPCharacterEncoding!public!tests! !
+testNull!public!tests! !
+testOrderedCollection!public!tests! !
+testPoint!public!tests! !
+testReferenceCycle!public!tests! !
+testReferenceSharing!public!tests! !
+testReferenceSharingError!public!tests! !
+testReferenceSharingIgnore!public!tests! !
+testRestrictedClassesInJsonMode!public!tests! !
+testScaledDecimal!public!tests! !
+testString!public!tests! !
+testSymbol!public!tests! !
+testSymbolAsString!public!tests! !
+testTime!public!tests! !
+testUser!public!tests! !
+testUser2!public!tests! !
+testUser3Nil!public!tests! !
+testUserNil!public!tests! !
+!
 

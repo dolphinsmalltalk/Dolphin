@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.TemporaryToInstanceVariableTest'
 	instanceVariableNames: ''
@@ -55,8 +55,10 @@ testTemporaryToInstanceVariable
 								nameStream nextPut: $).
 								^nameStream contents').
 	self assert: (class directlyDefinesInstanceVariable: 'nameStream')! !
-!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #testRedefinedTemporary!failure tests!public! !
-!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesFor: #testTemporaryToInstanceVariable!public!tests! !
+!Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesForMethods!
+setUp!public!set up! !
+testNonExistantName!failure tests!public! !
+testRedefinedTemporary!failure tests!public! !
+testTemporaryToInstanceVariable!public!tests! !
+!
 

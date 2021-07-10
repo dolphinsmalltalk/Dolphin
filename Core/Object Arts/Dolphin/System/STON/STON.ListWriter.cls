@@ -15,5 +15,7 @@ STON.ListWriter comment: 'STONArrayWriter helps in writing array based STON repr
 add: anObject
 	first ifTrue: [ first := false ] ifFalse: [ writer listElementSeparator ].
 	writer nextPut: anObject! !
-!STON.ListWriter categoriesFor: #add:!accessing!public! !
+!STON.ListWriter categoriesForMethods!
+add:!accessing!public! !
+!
 

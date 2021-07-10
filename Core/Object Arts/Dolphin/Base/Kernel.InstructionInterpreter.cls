@@ -623,122 +623,124 @@ unused: extensionByte1 with: extensionByte2
 unused: extensionByte1 with: extensionByte2 with: extensionByte3
 	"Interpret an unused quad byte instruction."
 ! !
-!Kernel.InstructionInterpreter categoriesFor: #blockCopy:stack:env:copy:offset1:offset2:!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #break!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #decodeNearOffset:!helpers!public! !
-!Kernel.InstructionInterpreter categoriesFor: #decPushTemp:temp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #decrementStackTop!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #decTemp:temp:!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #dispatcher!accessing!public! !
-!Kernel.InstructionInterpreter categoriesFor: #dispatcher:!accessing!public! !
-!Kernel.InstructionInterpreter categoriesFor: #duplicateStackTop!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #exLongPushImmediate:byte2:byte3:byte4:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #exLongSend:with:with:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #exLongSupersend:with:with:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #incPushTemp:temp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #incrementStackTop!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #incTemp:temp:!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #interpret!interpreting!public! !
-!Kernel.InstructionInterpreter categoriesFor: #isZero!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #jump:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #jumpIfFalse:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #jumpIfNil:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #jumpIfNotNil:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #jumpIfTrue:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #longJump:with:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longJumpIfFalse:with:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longJumpIfNil:with:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longJumpIfNotNil:with:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longJumpIfTrue:with:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longPopStoreStatic:with:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longPushConst:with:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longPushImmediate:with:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longPushStatic:with:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longSend:with:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longStoreStatic:with:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #longSupersend:with:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #macroInstructionPart2!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #method!accessing!public! !
-!Kernel.InstructionInterpreter categoriesFor: #method:!accessing!public! !
-!Kernel.InstructionInterpreter categoriesFor: #nearJump:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #nearJumpIfFalse:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #nearJumpIfNil:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #nearJumpIfNotNil:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #nearJumpIfTrue:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #nop!instructions-miscellaneous!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popContextTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popDup!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popInstVar:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popOuter:temp:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #popOuterTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popPushSelf!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popPushTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popReturnSelf!instructions-returning!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popStackTop!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popStatic:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #popTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushActiveFrame!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushChar:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushCharacter:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #pushConst:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushContextTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushImmediate:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushImmediateInteger:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #pushInstVar:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushOuter:temp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushOuterTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushPseudo:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushSelf!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushSelfAndTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushStatic:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #pushTempPair:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #reset!positioning!public! !
-!Kernel.InstructionInterpreter categoriesFor: #returnFromBlock!instructions-returning!public! !
-!Kernel.InstructionInterpreter categoriesFor: #returnFromBlockHome!instructions-returning!public! !
-!Kernel.InstructionInterpreter categoriesFor: #returnFromMessage!instructions-returning!public! !
-!Kernel.InstructionInterpreter categoriesFor: #returnPseudo:!instructions-returning!public! !
-!Kernel.InstructionInterpreter categoriesFor: #returnSelf!instructions-returning!public! !
-!Kernel.InstructionInterpreter categoriesFor: #send:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #send:args:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #sendSelector:args:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #sendSelf:args:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #sendSelfSelector:args:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #sendSelfZeroArgs:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #sendTempZeroArgs:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #sendZeroArgs:toTemp:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #shortJump:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortJumpIfFalse:!instructions-jumping!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPopInstVar:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPopOuterTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPopPushTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPopTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPushConst:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPushImmediate:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPushInstVar:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPushOuterTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPushSelfAndTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPushStatic:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortPushTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortSendOneArg:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortSendSelfZeroArgs:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortSendTwoArgs:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortSendZeroArgs:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortSpecialSend:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortSpecialSendEx:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #shortStoreTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #storeInstVar:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #storeOuter:temp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #storeOuterTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #storeStatic:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #storeTemp:!instructions-stack ops!public! !
-!Kernel.InstructionInterpreter categoriesFor: #supersend:!instructions-sending!public! !
-!Kernel.InstructionInterpreter categoriesFor: #supersend:args:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #supersendSelector:!interpreting!private! !
-!Kernel.InstructionInterpreter categoriesFor: #unused!instructions-unused!public! !
-!Kernel.InstructionInterpreter categoriesFor: #unused:!instructions-unused!public! !
-!Kernel.InstructionInterpreter categoriesFor: #unused:with:!instructions-unused!public! !
-!Kernel.InstructionInterpreter categoriesFor: #unused:with:with:!instructions-unused!public! !
+!Kernel.InstructionInterpreter categoriesForMethods!
+blockCopy:stack:env:copy:offset1:offset2:!instructions-miscellaneous!public! !
+break!instructions-miscellaneous!public! !
+decodeNearOffset:!helpers!public! !
+decPushTemp:temp:!instructions-stack ops!public! !
+decrementStackTop!instructions-miscellaneous!public! !
+decTemp:temp:!instructions-miscellaneous!public! !
+dispatcher!accessing!public! !
+dispatcher:!accessing!public! !
+duplicateStackTop!instructions-stack ops!public! !
+exLongPushImmediate:byte2:byte3:byte4:!instructions-stack ops!public! !
+exLongSend:with:with:!instructions-sending!public! !
+exLongSupersend:with:with:!instructions-sending!public! !
+incPushTemp:temp:!instructions-stack ops!public! !
+incrementStackTop!instructions-miscellaneous!public! !
+incTemp:temp:!instructions-miscellaneous!public! !
+interpret!interpreting!public! !
+isZero!instructions-miscellaneous!public! !
+jump:!interpreting!private! !
+jumpIfFalse:!interpreting!private! !
+jumpIfNil:!interpreting!private! !
+jumpIfNotNil:!interpreting!private! !
+jumpIfTrue:!interpreting!private! !
+longJump:with:!instructions-jumping!public! !
+longJumpIfFalse:with:!instructions-jumping!public! !
+longJumpIfNil:with:!instructions-jumping!public! !
+longJumpIfNotNil:with:!instructions-jumping!public! !
+longJumpIfTrue:with:!instructions-jumping!public! !
+longPopStoreStatic:with:!instructions-stack ops!public! !
+longPushConst:with:!instructions-stack ops!public! !
+longPushImmediate:with:!instructions-stack ops!public! !
+longPushStatic:with:!instructions-stack ops!public! !
+longSend:with:!instructions-sending!public! !
+longStoreStatic:with:!instructions-stack ops!public! !
+longSupersend:with:!instructions-sending!public! !
+macroInstructionPart2!interpreting!private! !
+method!accessing!public! !
+method:!accessing!public! !
+nearJump:!instructions-jumping!public! !
+nearJumpIfFalse:!instructions-jumping!public! !
+nearJumpIfNil:!instructions-jumping!public! !
+nearJumpIfNotNil:!instructions-jumping!public! !
+nearJumpIfTrue:!instructions-jumping!public! !
+nop!instructions-miscellaneous!public! !
+popContextTemp:!instructions-stack ops!public! !
+popDup!instructions-stack ops!public! !
+popInstVar:!instructions-stack ops!public! !
+popOuter:temp:!interpreting!private! !
+popOuterTemp:!instructions-stack ops!public! !
+popPushSelf!instructions-stack ops!public! !
+popPushTemp:!instructions-stack ops!public! !
+popReturnSelf!instructions-returning!public! !
+popStackTop!instructions-stack ops!public! !
+popStatic:!instructions-stack ops!public! !
+popTemp:!instructions-stack ops!public! !
+pushActiveFrame!instructions-stack ops!public! !
+pushChar:!instructions-stack ops!public! !
+pushCharacter:!interpreting!private! !
+pushConst:!instructions-stack ops!public! !
+pushContextTemp:!instructions-stack ops!public! !
+pushImmediate:!instructions-stack ops!public! !
+pushImmediateInteger:!interpreting!private! !
+pushInstVar:!instructions-stack ops!public! !
+pushOuter:temp:!instructions-stack ops!public! !
+pushOuterTemp:!instructions-stack ops!public! !
+pushPseudo:!instructions-stack ops!public! !
+pushSelf!instructions-stack ops!public! !
+pushSelfAndTemp:!instructions-stack ops!public! !
+pushStatic:!instructions-stack ops!public! !
+pushTemp:!instructions-stack ops!public! !
+pushTempPair:!instructions-stack ops!public! !
+reset!positioning!public! !
+returnFromBlock!instructions-returning!public! !
+returnFromBlockHome!instructions-returning!public! !
+returnFromMessage!instructions-returning!public! !
+returnPseudo:!instructions-returning!public! !
+returnSelf!instructions-returning!public! !
+send:!instructions-sending!public! !
+send:args:!interpreting!private! !
+sendSelector:args:!interpreting!private! !
+sendSelf:args:!interpreting!private! !
+sendSelfSelector:args:!interpreting!private! !
+sendSelfZeroArgs:!instructions-sending!public! !
+sendTempZeroArgs:!instructions-sending!public! !
+sendZeroArgs:toTemp:!interpreting!private! !
+shortJump:!instructions-jumping!public! !
+shortJumpIfFalse:!instructions-jumping!public! !
+shortPopInstVar:!instructions-stack ops!public! !
+shortPopOuterTemp:!instructions-stack ops!public! !
+shortPopPushTemp:!instructions-stack ops!public! !
+shortPopTemp:!instructions-stack ops!public! !
+shortPushConst:!instructions-stack ops!public! !
+shortPushImmediate:!instructions-stack ops!public! !
+shortPushInstVar:!instructions-stack ops!public! !
+shortPushOuterTemp:!instructions-stack ops!public! !
+shortPushSelfAndTemp:!instructions-stack ops!public! !
+shortPushStatic:!instructions-stack ops!public! !
+shortPushTemp:!instructions-stack ops!public! !
+shortSendOneArg:!instructions-sending!public! !
+shortSendSelfZeroArgs:!instructions-sending!public! !
+shortSendTwoArgs:!instructions-sending!public! !
+shortSendZeroArgs:!instructions-sending!public! !
+shortSpecialSend:!instructions-sending!public! !
+shortSpecialSendEx:!instructions-sending!public! !
+shortStoreTemp:!instructions-stack ops!public! !
+storeInstVar:!instructions-stack ops!public! !
+storeOuter:temp:!instructions-stack ops!public! !
+storeOuterTemp:!instructions-stack ops!public! !
+storeStatic:!instructions-stack ops!public! !
+storeTemp:!instructions-stack ops!public! !
+supersend:!instructions-sending!public! !
+supersend:args:!interpreting!private! !
+supersendSelector:!interpreting!private! !
+unused!instructions-unused!public! !
+unused:!instructions-unused!public! !
+unused:with:!instructions-unused!public! !
+unused:with:with:!instructions-unused!public! !
+!
 
 Kernel.InstructionInterpreter methodProtocol: #bytecodeInterpreter attributes: #() selectors: #(#blockCopy:stack:env:copy:offset1:offset2: #break #decPushTemp:temp: #decrementStackTop #decTemp:temp: #duplicateStackTop #exLongSend:with:with: #exLongSupersend:with:with: #incPushTemp:temp: #incrementStackTop #incTemp:temp: #isZero #longJump:with: #longJumpIfFalse:with: #longJumpIfNil:with: #longJumpIfNotNil:with: #longJumpIfTrue:with: #longPopStoreStatic:with: #longPushConst:with: #longPushImmediate:with: #longPushStatic:with: #longSend:with: #longStoreStatic:with: #longSupersend:with: #nearJump: #nearJumpIfFalse: #nearJumpIfNil: #nearJumpIfNotNil: #nearJumpIfTrue: #nop #popContextTemp: #popDup #popInstVar: #popOuterTemp: #popPushSelf #popReturnSelf #popStackTop #popStatic: #popTemp: #pushActiveFrame #pushChar: #pushConst: #pushContextTemp: #pushImmediate: #pushInstVar: #pushOuter:temp: #pushOuterTemp: #pushPseudo: #pushSelfAndTemp: #pushStatic: #pushTemp: #pushTempPair: #returnFromBlock #returnFromBlockHome #returnFromMessage #returnPseudo: #returnSelf #send: #sendSelfZeroArgs: #sendTempZeroArgs: #shortJump: #shortJumpIfFalse: #shortPopInstVar: #shortPopOuterTemp: #shortPopPushTemp: #shortPopTemp: #shortPushConst: #shortPushImmediate: #shortPushInstVar: #shortPushOuterTemp: #shortPushSelfAndTemp: #shortPushStatic: #shortPushTemp: #shortSendOneArg: #shortSendSelfZeroArgs: #shortSendTwoArgs: #shortSendZeroArgs: #shortSpecialSend: #shortStoreTemp: #storeInstVar: #storeOuter:temp: #storeOuterTemp: #storeStatic: #storeTemp: #supersend: #unused #unused: #unused:with: #unused:with:with:)!
 
@@ -758,7 +760,9 @@ method: aCompiledMethod
 
 new
 	^self basicNew initialize! !
-!Kernel.InstructionInterpreter class categoriesFor: #dispatcher:!instance creation!public! !
-!Kernel.InstructionInterpreter class categoriesFor: #method:!instance creation!public! !
-!Kernel.InstructionInterpreter class categoriesFor: #new!instance creation!public! !
+!Kernel.InstructionInterpreter class categoriesForMethods!
+dispatcher:!instance creation!public! !
+method:!instance creation!public! !
+new!instance creation!public! !
+!
 

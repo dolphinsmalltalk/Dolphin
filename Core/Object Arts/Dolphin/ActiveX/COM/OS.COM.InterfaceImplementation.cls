@@ -100,13 +100,15 @@ supportedInterfaces
 	as necessary."
 
 	^self subclassResponsibility! !
-!OS.COM.InterfaceImplementation categoriesFor: #aggregatee!accessing!public! !
-!OS.COM.InterfaceImplementation categoriesFor: #clsid!accessing!public! !
-!OS.COM.InterfaceImplementation categoriesFor: #finalRelease!public!realizing/unrealizing! !
-!OS.COM.InterfaceImplementation categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!OS.COM.InterfaceImplementation categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-!OS.COM.InterfaceImplementation categoriesFor: #server!accessing!public! !
-!OS.COM.InterfaceImplementation categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.InterfaceImplementation categoriesForMethods!
+aggregatee!accessing!public! !
+clsid!accessing!public! !
+finalRelease!public!realizing/unrealizing! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+server!accessing!public! !
+supportedInterfaces!constants!public! !
+!
 
 OS.COM.InterfaceImplementation methodProtocol: #COMObject attributes: #(#readOnly) selectors: #(#clsid #finalRelease #queryInterface: #queryInterface:ifNone:)!
 
@@ -283,20 +285,22 @@ versionIndependentProgID
 	| pid |
 	pid := self progID.
 	^pid copyFrom: 1 to: (pid lastIndexOf: $.)-1! !
-!OS.COM.InterfaceImplementation class categoriesFor: #clsid!constants!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #inprocSurrogate:!constants!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #new!instance creation!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #progDescription!accessing!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #progID!constants!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #register!operations!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #register:!operations!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #registerAsInProcServer:!helpers!private! !
-!OS.COM.InterfaceImplementation class categoriesFor: #registerAsLocalServer:!helpers!private! !
-!OS.COM.InterfaceImplementation class categoriesFor: #registerClassFactory!operations!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #revokeClassFactories!operations!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!OS.COM.InterfaceImplementation class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!OS.COM.InterfaceImplementation class categoriesFor: #unregister!operations!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #unregisterClassFactory!operations!public! !
-!OS.COM.InterfaceImplementation class categoriesFor: #versionIndependentProgID!constants!public! !
+!OS.COM.InterfaceImplementation class categoriesForMethods!
+clsid!constants!public! !
+inprocSurrogate:!constants!public! !
+new!instance creation!public! !
+progDescription!accessing!public! !
+progID!constants!public! !
+register!operations!public! !
+register:!operations!public! !
+registerAsInProcServer:!helpers!private! !
+registerAsLocalServer:!helpers!private! !
+registerClassFactory!operations!public! !
+revokeClassFactories!operations!public! !
+uninitialize!class hierarchy-removing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+unregister!operations!public! !
+unregisterClassFactory!operations!public! !
+versionIndependentProgID!constants!public! !
+!
 

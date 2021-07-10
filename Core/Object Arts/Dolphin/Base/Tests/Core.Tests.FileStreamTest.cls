@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.AbstractFileStreamTest subclass: #'Core.Tests.FileStreamTest'
 	instanceVariableNames: ''
@@ -188,20 +188,22 @@ testWritePastEnd
 	actual := filestream upToEnd.
 	expected := expected contents.
 	self assert: actual equals: expected! !
-!Core.Tests.FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!private!unit tests! !
-!Core.Tests.FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
-!Core.Tests.FileStreamTest categoriesFor: #bufferSize!constants!private! !
-!Core.Tests.FileStreamTest categoriesFor: #maxPosition!constants!private! !
-!Core.Tests.FileStreamTest categoriesFor: #maxSize!constants!private! !
-!Core.Tests.FileStreamTest categoriesFor: #streamClass!helpers!private! !
-!Core.Tests.FileStreamTest categoriesFor: #streamClassSupportsUtf16!helpers!private! !
-!Core.Tests.FileStreamTest categoriesFor: #streamOn:!helpers!private! !
-!Core.Tests.FileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!Core.Tests.FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
-!Core.Tests.FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
-!Core.Tests.FileStreamTest categoriesFor: #testNextAvailableColonWithPaging!public!unit tests! !
-!Core.Tests.FileStreamTest categoriesFor: #testOwnsFile!public! !
-!Core.Tests.FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !
-!Core.Tests.FileStreamTest categoriesFor: #testVeryLargeSparseFile!public!unit tests! !
-!Core.Tests.FileStreamTest categoriesFor: #testWritePastEnd!public!unit tests! !
+!Core.Tests.FileStreamTest categoriesForMethods!
+assertBufferEmptyOrDirty:!private!unit tests! !
+assertBufferEmptyOrDirty:size:!helpers!private! !
+bufferSize!constants!private! !
+maxPosition!constants!private! !
+maxSize!constants!private! !
+streamClass!helpers!private! !
+streamClassSupportsUtf16!helpers!private! !
+streamOn:!helpers!private! !
+streamOnFile:type:!helpers!private! !
+tearDownTempStream!helpers!private! !
+testFileTimes!public!unit tests! !
+testNextAvailableColonWithPaging!public!unit tests! !
+testOwnsFile!public! !
+testSingleByteOverflow!public!unit tests! !
+testVeryLargeSparseFile!public!unit tests! !
+testWritePastEnd!public!unit tests! !
+!
 

@@ -39,8 +39,10 @@ QueryService: guidService riid: riid ppvObject: ppvObject
 
 	<virtual stdcall: hresult 4 guid* guid* IUnknown**>
 	^self invalidCall: _failureCode! !
-!OS.COM.IServiceProvider categoriesFor: #queryService:riid:!methods!public! !
-!OS.COM.IServiceProvider categoriesFor: #QueryService:riid:ppvObject:!COM Interfaces-IServiceProvider!private! !
+!OS.COM.IServiceProvider categoriesForMethods!
+queryService:riid:!methods!public! !
+QueryService:riid:ppvObject:!COM Interfaces-IServiceProvider!private! !
+!
 
 OS.COM.IServiceProvider methodProtocol: #IServiceProvider attributes: #(#readOnly) selectors: #(#QueryService:riid:ppvObject:)!
 
@@ -55,5 +57,7 @@ defineFunctions
 		defineFunction: #QueryService:riid:ppvObject:
 			argumentTypes: 'GUID* GUID* IUnknown**'
 ! !
-!OS.COM.IServiceProvider class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IServiceProvider class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

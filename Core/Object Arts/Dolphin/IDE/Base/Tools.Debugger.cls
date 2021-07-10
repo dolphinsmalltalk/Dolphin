@@ -1867,149 +1867,151 @@ userBreak
 	self populateStackModel
 	
 	! !
-!Tools.Debugger categoriesFor: #accept!commands!private! !
-!Tools.Debugger categoriesFor: #accept:methodSource:!operations!private! !
-!Tools.Debugger categoriesFor: #acceptNoRestart!commands!private! !
-!Tools.Debugger categoriesFor: #addToCommandRoute:!commands!public! !
-!Tools.Debugger categoriesFor: #allFrames!commands!private! !
-!Tools.Debugger categoriesFor: #animatePause!accessing!private! !
-!Tools.Debugger categoriesFor: #beAnimated:!modes!private! !
-!Tools.Debugger categoriesFor: #beBroken!modes!private! !
-!Tools.Debugger categoriesFor: #beDisassembled:!private!testing! !
-!Tools.Debugger categoriesFor: #beRunning!modes!private! !
-!Tools.Debugger categoriesFor: #blockedRestartWarning:!operations!private! !
-!Tools.Debugger categoriesFor: #break:!operations!private! !
-!Tools.Debugger categoriesFor: #breakFrame:!commands!private! !
-!Tools.Debugger categoriesFor: #breakWhen:!accessing!private! !
-!Tools.Debugger categoriesFor: #browseDefinitions!commands!private! !
-!Tools.Debugger categoriesFor: #browseDefinitionsMatching:in:!private! !
-!Tools.Debugger categoriesFor: #browseDefinitionsOfSelector:in:!private! !
-!Tools.Debugger categoriesFor: #browseHierarchy!commands!private! !
-!Tools.Debugger categoriesFor: #browseIt!commands!public! !
-!Tools.Debugger categoriesFor: #browseMessages!commands!private! !
-!Tools.Debugger categoriesFor: #browseMethodInheritanceChain!commands!private! !
-!Tools.Debugger categoriesFor: #browseReferences!browsing!commands!public! !
-!Tools.Debugger categoriesFor: #browseReferencesMatching:in:!private! !
-!Tools.Debugger categoriesFor: #browseReferencesToLiteral:in:!browsing!private! !
-!Tools.Debugger categoriesFor: #browseSystem!commands!public! !
-!Tools.Debugger categoriesFor: #browseVariableClass!commands!private! !
-!Tools.Debugger categoriesFor: #buildParseTree!commands!private! !
-!Tools.Debugger categoriesFor: #canImplementMessage!private!testing! !
-!Tools.Debugger categoriesFor: #canSaveMethod!private!testing! !
-!Tools.Debugger categoriesFor: #classForVariable:!public! !
-!Tools.Debugger categoriesFor: #clearCachedMethodInfo!helpers!private! !
-!Tools.Debugger categoriesFor: #continue:with:!operations!private! !
-!Tools.Debugger categoriesFor: #createComponents!initializing!public! !
-!Tools.Debugger categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.Debugger categoriesFor: #cursorIPRange!commands!private! !
-!Tools.Debugger categoriesFor: #debugState:!private!updating! !
-!Tools.Debugger categoriesFor: #defaultHelpId!public! !
-!Tools.Debugger categoriesFor: #depth!accessing!private! !
-!Tools.Debugger categoriesFor: #depth:!accessing!private! !
-!Tools.Debugger categoriesFor: #displayFrame!private!updating! !
-!Tools.Debugger categoriesFor: #displayLocal:!private!updating! !
-!Tools.Debugger categoriesFor: #displaySource!private!updating! !
-!Tools.Debugger categoriesFor: #emitKeywordSignatureFor:in:on:!helpers!private! !
-!Tools.Debugger categoriesFor: #findBlockHome:!helpers!private! !
-!Tools.Debugger categoriesFor: #findHomeFrame:!helpers!private! !
-!Tools.Debugger categoriesFor: #frame!accessing!private! !
-!Tools.Debugger categoriesFor: #frameCalledFrom:!accessing!operations!private! !
-!Tools.Debugger categoriesFor: #frames!accessing!private! !
-!Tools.Debugger categoriesFor: #generateStubFor:inClass:!helpers!private! !
-!Tools.Debugger categoriesFor: #hasEditableMethodSelected!public!testing! !
-!Tools.Debugger categoriesFor: #hasEditableMethodsSelected!public!testing! !
-!Tools.Debugger categoriesFor: #hasMethodSelected!public!testing! !
-!Tools.Debugger categoriesFor: #initialize!initializing!private! !
-!Tools.Debugger categoriesFor: #inspectIt!commands!private! !
-!Tools.Debugger categoriesFor: #inspectReferences!commands!private! !
-!Tools.Debugger categoriesFor: #isAnimating!private!testing! !
-!Tools.Debugger categoriesFor: #isDisassembled!private!testing! !
-!Tools.Debugger categoriesFor: #isFrameRestartable!private!testing! !
-!Tools.Debugger categoriesFor: #isInCompositeOp!private!testing! !
-!Tools.Debugger categoriesFor: #isMain:!accessing!private! !
-!Tools.Debugger categoriesFor: #isResumable!private!testing! !
-!Tools.Debugger categoriesFor: #isRunning!private!testing! !
-!Tools.Debugger categoriesFor: #killProcess!commands!private! !
-!Tools.Debugger categoriesFor: #mainView!accessing!private! !
-!Tools.Debugger categoriesFor: #makeDebugFrame:!helpers!private! !
-!Tools.Debugger categoriesFor: #markMethodAsUnbound:!helpers!private! !
-!Tools.Debugger categoriesFor: #moreFrames!commands!private! !
-!Tools.Debugger categoriesFor: #nameForArgument:!helpers!private! !
-!Tools.Debugger categoriesFor: #newLocalsTreeWithRoots:!private!updating! !
-!Tools.Debugger categoriesFor: #nilVariable!commands!private! !
-!Tools.Debugger categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!Tools.Debugger categoriesFor: #onBreak:!event handling!private! !
-!Tools.Debugger categoriesFor: #onCloseRequested:!event handling!private! !
-!Tools.Debugger categoriesFor: #onExpressionEvaluated:!event handling!private! !
-!Tools.Debugger categoriesFor: #onFrameSelected!event handling!private! !
-!Tools.Debugger categoriesFor: #onFrameSelectionChanging:!event handling!private! !
-!Tools.Debugger categoriesFor: #onHalt:!event handling!private! !
-!Tools.Debugger categoriesFor: #onMethodRemoved:!event handling!private! !
-!Tools.Debugger categoriesFor: #onMethodUpdated:!event handling!private! !
-!Tools.Debugger categoriesFor: #onPromptToSaveChanges:!event handling!private! !
-!Tools.Debugger categoriesFor: #onStep:!event handling!private! !
-!Tools.Debugger categoriesFor: #onTempSelected!event handling!private! !
-!Tools.Debugger categoriesFor: #onTerminate!event handling!private! !
-!Tools.Debugger categoriesFor: #onVariableValueChanged!public! !
-!Tools.Debugger categoriesFor: #onViewClosed!event handling!private! !
-!Tools.Debugger categoriesFor: #onWalkback:topFrame:resumable:!event handling!private! !
-!Tools.Debugger categoriesFor: #parseContext!accessing!public! !
-!Tools.Debugger categoriesFor: #parseTree!commands!private! !
-!Tools.Debugger categoriesFor: #performMethodsRefactoring:name:!private!refactoring! !
-!Tools.Debugger categoriesFor: #populateImplementMenu:!helpers!private! !
-!Tools.Debugger categoriesFor: #populateStackModel!private!updating! !
-!Tools.Debugger categoriesFor: #process:topFrame:!accessing!initializing!private! !
-!Tools.Debugger categoriesFor: #promptToSaveChanges!commands!private! !
-!Tools.Debugger categoriesFor: #queryCommand:!commands!private! !
-!Tools.Debugger categoriesFor: #queryFrameCommand:!commands!private! !
-!Tools.Debugger categoriesFor: #refreshFrame!private!updating! !
-!Tools.Debugger categoriesFor: #restartBlock:inFrame:!operations!private! !
-!Tools.Debugger categoriesFor: #restartBlockFrame:!operations!private! !
-!Tools.Debugger categoriesFor: #restartFrame!commands!private! !
-!Tools.Debugger categoriesFor: #restartFrame:!operations!private! !
-!Tools.Debugger categoriesFor: #restartFrameWithFocus:!commands!private! !
-!Tools.Debugger categoriesFor: #restartMethod!operations!private! !
-!Tools.Debugger categoriesFor: #restartMethodFrame:!operations!private! !
-!Tools.Debugger categoriesFor: #restartWithStubFor:inClass:!commands!private! !
-!Tools.Debugger categoriesFor: #resumable:!modes!private! !
-!Tools.Debugger categoriesFor: #resume!operations!private! !
-!Tools.Debugger categoriesFor: #resumeProcess!commands!private! !
-!Tools.Debugger categoriesFor: #return:fromFrame:!operations!private! !
-!Tools.Debugger categoriesFor: #return:toFrame:!operations!private! !
-!Tools.Debugger categoriesFor: #returnFromMessage!commands!private! !
-!Tools.Debugger categoriesFor: #runDebuggedProcess!operations!private! !
-!Tools.Debugger categoriesFor: #runProcess!operations!private! !
-!Tools.Debugger categoriesFor: #runToCursor!commands!private! !
-!Tools.Debugger categoriesFor: #saveNewMethod:!commands!public! !
-!Tools.Debugger categoriesFor: #searchEnvironment!commands!private! !
-!Tools.Debugger categoriesFor: #selectedMethod!accessing!public! !
-!Tools.Debugger categoriesFor: #selectedMethods!accessing!public! !
-!Tools.Debugger categoriesFor: #selectedNode!accessing!private! !
-!Tools.Debugger categoriesFor: #selectionIP!accessing!private! !
-!Tools.Debugger categoriesFor: #setInitialFocus!operations!public! !
-!Tools.Debugger categoriesFor: #setSourceSelection!private!updating! !
-!Tools.Debugger categoriesFor: #setVariablesList:!private!updating! !
-!Tools.Debugger categoriesFor: #showNextStatement!commands!private! !
-!Tools.Debugger categoriesFor: #skipMaskFor:!helpers!private! !
-!Tools.Debugger categoriesFor: #source!accessing!private! !
-!Tools.Debugger categoriesFor: #sourceRangeAt:inTextMap:!helpers!private! !
-!Tools.Debugger categoriesFor: #step!operations!private! !
-!Tools.Debugger categoriesFor: #stepInFrame:!operations!private! !
-!Tools.Debugger categoriesFor: #stepInto!commands!private! !
-!Tools.Debugger categoriesFor: #stepIntoBlock!commands!private! !
-!Tools.Debugger categoriesFor: #stepOut!commands!private! !
-!Tools.Debugger categoriesFor: #stepOver!commands!private! !
-!Tools.Debugger categoriesFor: #stubTextFor:inClass:!helpers!private! !
-!Tools.Debugger categoriesFor: #suspend!operations!private! !
-!Tools.Debugger categoriesFor: #suspendProcess!operations!private! !
-!Tools.Debugger categoriesFor: #terminateOnClose!private!testing! !
-!Tools.Debugger categoriesFor: #terminateProcess!commands!private! !
-!Tools.Debugger categoriesFor: #tipForVariable:!enquiries!public! !
-!Tools.Debugger categoriesFor: #toggleAnimation!commands!private! !
-!Tools.Debugger categoriesFor: #toggleDisassembly!commands!private! !
-!Tools.Debugger categoriesFor: #updateForBreakAt:!operations!private! !
-!Tools.Debugger categoriesFor: #updateTemporaries!private!updating! !
-!Tools.Debugger categoriesFor: #userBreak!commands!private! !
+!Tools.Debugger categoriesForMethods!
+accept!commands!private! !
+accept:methodSource:!operations!private! !
+acceptNoRestart!commands!private! !
+addToCommandRoute:!commands!public! !
+allFrames!commands!private! !
+animatePause!accessing!private! !
+beAnimated:!modes!private! !
+beBroken!modes!private! !
+beDisassembled:!private!testing! !
+beRunning!modes!private! !
+blockedRestartWarning:!operations!private! !
+break:!operations!private! !
+breakFrame:!commands!private! !
+breakWhen:!accessing!private! !
+browseDefinitions!commands!private! !
+browseDefinitionsMatching:in:!private! !
+browseDefinitionsOfSelector:in:!private! !
+browseHierarchy!commands!private! !
+browseIt!commands!public! !
+browseMessages!commands!private! !
+browseMethodInheritanceChain!commands!private! !
+browseReferences!browsing!commands!public! !
+browseReferencesMatching:in:!private! !
+browseReferencesToLiteral:in:!browsing!private! !
+browseSystem!commands!public! !
+browseVariableClass!commands!private! !
+buildParseTree!commands!private! !
+canImplementMessage!private!testing! !
+canSaveMethod!private!testing! !
+classForVariable:!public! !
+clearCachedMethodInfo!helpers!private! !
+continue:with:!operations!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+cursorIPRange!commands!private! !
+debugState:!private!updating! !
+defaultHelpId!public! !
+depth!accessing!private! !
+depth:!accessing!private! !
+displayFrame!private!updating! !
+displayLocal:!private!updating! !
+displaySource!private!updating! !
+emitKeywordSignatureFor:in:on:!helpers!private! !
+findBlockHome:!helpers!private! !
+findHomeFrame:!helpers!private! !
+frame!accessing!private! !
+frameCalledFrom:!accessing!operations!private! !
+frames!accessing!private! !
+generateStubFor:inClass:!helpers!private! !
+hasEditableMethodSelected!public!testing! !
+hasEditableMethodsSelected!public!testing! !
+hasMethodSelected!public!testing! !
+initialize!initializing!private! !
+inspectIt!commands!private! !
+inspectReferences!commands!private! !
+isAnimating!private!testing! !
+isDisassembled!private!testing! !
+isFrameRestartable!private!testing! !
+isInCompositeOp!private!testing! !
+isMain:!accessing!private! !
+isResumable!private!testing! !
+isRunning!private!testing! !
+killProcess!commands!private! !
+mainView!accessing!private! !
+makeDebugFrame:!helpers!private! !
+markMethodAsUnbound:!helpers!private! !
+moreFrames!commands!private! !
+nameForArgument:!helpers!private! !
+newLocalsTreeWithRoots:!private!updating! !
+nilVariable!commands!private! !
+onAboutToDisplayMenu:!event handling!public! !
+onBreak:!event handling!private! !
+onCloseRequested:!event handling!private! !
+onExpressionEvaluated:!event handling!private! !
+onFrameSelected!event handling!private! !
+onFrameSelectionChanging:!event handling!private! !
+onHalt:!event handling!private! !
+onMethodRemoved:!event handling!private! !
+onMethodUpdated:!event handling!private! !
+onPromptToSaveChanges:!event handling!private! !
+onStep:!event handling!private! !
+onTempSelected!event handling!private! !
+onTerminate!event handling!private! !
+onVariableValueChanged!public! !
+onViewClosed!event handling!private! !
+onWalkback:topFrame:resumable:!event handling!private! !
+parseContext!accessing!public! !
+parseTree!commands!private! !
+performMethodsRefactoring:name:!private!refactoring! !
+populateImplementMenu:!helpers!private! !
+populateStackModel!private!updating! !
+process:topFrame:!accessing!initializing!private! !
+promptToSaveChanges!commands!private! !
+queryCommand:!commands!private! !
+queryFrameCommand:!commands!private! !
+refreshFrame!private!updating! !
+restartBlock:inFrame:!operations!private! !
+restartBlockFrame:!operations!private! !
+restartFrame!commands!private! !
+restartFrame:!operations!private! !
+restartFrameWithFocus:!commands!private! !
+restartMethod!operations!private! !
+restartMethodFrame:!operations!private! !
+restartWithStubFor:inClass:!commands!private! !
+resumable:!modes!private! !
+resume!operations!private! !
+resumeProcess!commands!private! !
+return:fromFrame:!operations!private! !
+return:toFrame:!operations!private! !
+returnFromMessage!commands!private! !
+runDebuggedProcess!operations!private! !
+runProcess!operations!private! !
+runToCursor!commands!private! !
+saveNewMethod:!commands!public! !
+searchEnvironment!commands!private! !
+selectedMethod!accessing!public! !
+selectedMethods!accessing!public! !
+selectedNode!accessing!private! !
+selectionIP!accessing!private! !
+setInitialFocus!operations!public! !
+setSourceSelection!private!updating! !
+setVariablesList:!private!updating! !
+showNextStatement!commands!private! !
+skipMaskFor:!helpers!private! !
+source!accessing!private! !
+sourceRangeAt:inTextMap:!helpers!private! !
+step!operations!private! !
+stepInFrame:!operations!private! !
+stepInto!commands!private! !
+stepIntoBlock!commands!private! !
+stepOut!commands!private! !
+stepOver!commands!private! !
+stubTextFor:inClass:!helpers!private! !
+suspend!operations!private! !
+suspendProcess!operations!private! !
+terminateOnClose!private!testing! !
+terminateProcess!commands!private! !
+tipForVariable:!enquiries!public! !
+toggleAnimation!commands!private! !
+toggleDisassembly!commands!private! !
+updateForBreakAt:!operations!private! !
+updateTemporaries!private!updating! !
+userBreak!commands!private! !
+!
 
 Tools.Debugger methodProtocol: #debugEventHandler attributes: #(#readOnly) selectors: #(#onBreak: #onHalt: #onStep: #onTerminate #onWalkback:topFrame:resumable:)!
 Tools.Debugger methodProtocol: #variableMetadataProvider attributes: #(#readOnly) selectors: #(#classForVariable: #tipForVariable:)!
@@ -2235,32 +2237,34 @@ unskipSelector: aSymbol of: aClass
 	"Private - Remove the specified method to the set of those skipped by the debugger."
 
 	(self skipTable lookup: aClass) ifNotNil: [:selectors | selectors removeKey: aSymbol ifAbsent: []]! !
-!Tools.Debugger class categoriesFor: #animatePause!options!public! !
-!Tools.Debugger class categoriesFor: #animatePause:!options!public! !
-!Tools.Debugger class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!Tools.Debugger class categoriesFor: #defaultStackDepth!accessing!public! !
-!Tools.Debugger class categoriesFor: #defaultStackDepth:!accessing!public! !
-!Tools.Debugger class categoriesFor: #displayOn:!displaying!public! !
-!Tools.Debugger class categoriesFor: #enableDynamicMenus!options!public! !
-!Tools.Debugger class categoriesFor: #enableDynamicMenus:!options!public! !
-!Tools.Debugger class categoriesFor: #icon!constants!public! !
-!Tools.Debugger class categoriesFor: #initialize!initializing!public! !
-!Tools.Debugger class categoriesFor: #initializeSkipTable!initializing!public! !
-!Tools.Debugger class categoriesFor: #interrupts!constants!private! !
-!Tools.Debugger class categoriesFor: #publishedAspects!public! !
-!Tools.Debugger class categoriesFor: #resource_Basic_debugger!public!resources-views! !
-!Tools.Debugger class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.Debugger class categoriesFor: #restartOnMethodSave!options!public! !
-!Tools.Debugger class categoriesFor: #restartOnMethodSave:!options!public! !
-!Tools.Debugger class categoriesFor: #runToCursorBehavior!options!public! !
-!Tools.Debugger class categoriesFor: #runToCursorBehavior:!options!public! !
-!Tools.Debugger class categoriesFor: #show:process:topFrame:resumable:!instance creation!private! !
-!Tools.Debugger class categoriesFor: #showWalkbacks!options!public! !
-!Tools.Debugger class categoriesFor: #showWalkbacks:!options!public! !
-!Tools.Debugger class categoriesFor: #skipSelector:of:maskClear:!accessing!private! !
-!Tools.Debugger class categoriesFor: #skipSelector:of:maskSet:!accessing!private! !
-!Tools.Debugger class categoriesFor: #skipSelector:of:type:!accessing!private! !
-!Tools.Debugger class categoriesFor: #skipTable!accessing!public! !
-!Tools.Debugger class categoriesFor: #uninitialize!initializing!private! !
-!Tools.Debugger class categoriesFor: #unskipSelector:of:!accessing!private! !
+!Tools.Debugger class categoriesForMethods!
+animatePause!options!public! !
+animatePause:!options!public! !
+defaultAdditionalAccelerators!constants!private! !
+defaultStackDepth!accessing!public! !
+defaultStackDepth:!accessing!public! !
+displayOn:!displaying!public! !
+enableDynamicMenus!options!public! !
+enableDynamicMenus:!options!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+initializeSkipTable!initializing!public! !
+interrupts!constants!private! !
+publishedAspects!public! !
+resource_Basic_debugger!public!resources-views! !
+resource_Default_view!public!resources-views! !
+restartOnMethodSave!options!public! !
+restartOnMethodSave:!options!public! !
+runToCursorBehavior!options!public! !
+runToCursorBehavior:!options!public! !
+show:process:topFrame:resumable:!instance creation!private! !
+showWalkbacks!options!public! !
+showWalkbacks:!options!public! !
+skipSelector:of:maskClear:!accessing!private! !
+skipSelector:of:maskSet:!accessing!private! !
+skipSelector:of:type:!accessing!private! !
+skipTable!accessing!public! !
+uninitialize!initializing!private! !
+unskipSelector:of:!accessing!private! !
+!
 

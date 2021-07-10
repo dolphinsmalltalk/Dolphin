@@ -51,14 +51,16 @@ saxHandler
 
 saxHandler: aHandler
 	saxHandler := aHandler! !
-!SAXDriver categoriesFor: #handleCData:!handling tokens!public! !
-!SAXDriver categoriesFor: #handleEndDocument!handling tokens!public! !
-!SAXDriver categoriesFor: #handleEndTag:!handling tokens!public! !
-!SAXDriver categoriesFor: #handlePCData:!handling tokens!public! !
-!SAXDriver categoriesFor: #handlePI:data:!handling tokens!public! !
-!SAXDriver categoriesFor: #handleStartDocument!handling tokens!public! !
-!SAXDriver categoriesFor: #handleStartTag:attributes:!handling tokens!public! !
-!SAXDriver categoriesFor: #handleXMLDecl:!handling tokens!public! !
-!SAXDriver categoriesFor: #saxHandler!accessing!public! !
-!SAXDriver categoriesFor: #saxHandler:!accessing!public! !
+!SAXDriver categoriesForMethods!
+handleCData:!handling tokens!public! !
+handleEndDocument!handling tokens!public! !
+handleEndTag:!handling tokens!public! !
+handlePCData:!handling tokens!public! !
+handlePI:data:!handling tokens!public! !
+handleStartDocument!handling tokens!public! !
+handleStartTag:attributes:!handling tokens!public! !
+handleXMLDecl:!handling tokens!public! !
+saxHandler!accessing!public! !
+saxHandler:!accessing!public! !
+!
 

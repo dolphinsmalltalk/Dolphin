@@ -76,12 +76,14 @@ transform
 		ifTrue: [self refactoringError: oldName , ' isn''t defined by the method'].
 	self renameNode: definingNode.
 	class compileTree: parseTree! !
-!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #class:selector:interval:newName:!initialize/release!public! !
-!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #oldName:!accessing!private! !
-!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #renameNode:!public!transforming! !
-!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.RenameTemporaryRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RenameTemporaryRefactoring categoriesForMethods!
+class:selector:interval:newName:!initialize/release!public! !
+oldName:!accessing!private! !
+preconditions!preconditions!public! !
+renameNode:!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.RenameTemporaryRefactoring class methodsFor!
 
@@ -100,6 +102,8 @@ renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector
 		selector: aSelector
 		interval: anInterval
 		newName: newName! !
-!Refactory.Browser.RenameTemporaryRefactoring class categoriesFor: #model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
-!Refactory.Browser.RenameTemporaryRefactoring class categoriesFor: #renameTemporaryFrom:to:in:selector:!instance creation!public! !
+!Refactory.Browser.RenameTemporaryRefactoring class categoriesForMethods!
+model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
+renameTemporaryFrom:to:in:selector:!instance creation!public! !
+!
 

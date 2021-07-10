@@ -27,7 +27,9 @@ setImage: anIconOrNil
 
 	image := anIconOrNil.
 	self sendMessage: STM_SETIMAGE wParam: IMAGE_ICON lParam: anIconOrNil asParameter! !
-!UI.StaticIcon categoriesFor: #defaultExtent!constants!private! !
-!UI.StaticIcon categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.StaticIcon categoriesFor: #setImage:!accessing!private! !
+!UI.StaticIcon categoriesForMethods!
+defaultExtent!constants!private! !
+defaultWindowStyle!constants!private! !
+setImage:!accessing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.ExternalFieldTest subclass: #'External.Tests.ArrayPointerFieldTest'
 	instanceVariableNames: ''
@@ -76,6 +76,8 @@ testGenerateAccessorsForSizeIsExpression
 	struct Test: string.
 	self assert: struct Size equals: string size * 2.
 	self assert: struct Test equals: string! !
-!External.Tests.ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizedString!public! !
-!External.Tests.ArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizeIsExpression!public! !
+!External.Tests.ArrayPointerFieldTest categoriesForMethods!
+testGenerateAccessorsForSizedString!public! !
+testGenerateAccessorsForSizeIsExpression!public! !
+!
 

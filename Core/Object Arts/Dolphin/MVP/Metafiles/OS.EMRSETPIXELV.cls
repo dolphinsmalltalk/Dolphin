@@ -51,10 +51,12 @@ ptlPixel: aPOINTL
 		from: ##(_OffsetOf_ptlPixel + 1)
 		to: ##(_OffsetOf_ptlPixel + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRSETPIXELV categoriesFor: #crColor!**compiled accessors**!public! !
-!OS.EMRSETPIXELV categoriesFor: #crColor:!**compiled accessors**!public! !
-!OS.EMRSETPIXELV categoriesFor: #ptlPixel!**compiled accessors**!public! !
-!OS.EMRSETPIXELV categoriesFor: #ptlPixel:!**compiled accessors**!public! !
+!OS.EMRSETPIXELV categoriesForMethods!
+crColor!**compiled accessors**!public! !
+crColor:!**compiled accessors**!public! !
+ptlPixel!**compiled accessors**!public! !
+ptlPixel:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETPIXELV class methodsFor!
 
@@ -88,7 +90,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETPIXELV}! !
-!OS.EMRSETPIXELV class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETPIXELV class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETPIXELV class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETPIXELV class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

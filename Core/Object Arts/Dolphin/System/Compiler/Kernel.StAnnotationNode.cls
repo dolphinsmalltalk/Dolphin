@@ -32,16 +32,20 @@ setSelector: aSymbol arguments: anArray
 	selector := aSymbol asSymbol.
 	arguments := anArray asArray.
 	^self! !
-!Kernel.StAnnotationNode categoriesFor: #=!comparing!public! !
-!Kernel.StAnnotationNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StAnnotationNode categoriesFor: #argumentCount!accessing!public! !
-!Kernel.StAnnotationNode categoriesFor: #arguments!accessing!public! !
-!Kernel.StAnnotationNode categoriesFor: #selector!accessing!public! !
-!Kernel.StAnnotationNode categoriesFor: #setSelector:arguments:!initializing!private! !
+!Kernel.StAnnotationNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+argumentCount!accessing!public! !
+arguments!accessing!public! !
+selector!accessing!public! !
+setSelector:arguments:!initializing!private! !
+!
 
 !Kernel.StAnnotationNode class methodsFor!
 
 selector: aSymbol arguments: anArrayOfStLiteralValueNode
 	^self new setSelector: aSymbol arguments: anArrayOfStLiteralValueNode! !
-!Kernel.StAnnotationNode class categoriesFor: #selector:arguments:!instance creation!public! !
+!Kernel.StAnnotationNode class categoriesForMethods!
+selector:arguments:!instance creation!public! !
+!
 

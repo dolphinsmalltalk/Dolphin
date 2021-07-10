@@ -26,8 +26,10 @@ BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 
 	<virtual stdcall: hresult 5 lpwstr dword lppvoid lppvoid>
 	^self invalidCall: _failureCode! !
-!OS.COM.ITypeComp categoriesFor: #Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
-!OS.COM.ITypeComp categoriesFor: #BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
+!OS.COM.ITypeComp categoriesForMethods!
+Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
+BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
+!
 
 !OS.COM.ITypeComp class methodsFor!
 
@@ -58,5 +60,7 @@ defineFunctions
 			 argumentTypes: 'lpwstr dword word ITypeInfo** SDWORD* lppvoid'; "'DESCKIND* BINDPTR*';"
 		defineFunction: #BindType:lHashVal:ppTInfo:ppTComp:        
 			 argumentTypes: 'lpwstr dword ITypeInfo** ITypeComp**'! !
-!OS.COM.ITypeComp class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.ITypeComp class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

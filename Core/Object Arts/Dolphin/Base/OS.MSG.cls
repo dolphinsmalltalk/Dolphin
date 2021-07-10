@@ -84,17 +84,19 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!OS.MSG categoriesFor: #hwnd!**compiled accessors**!public! !
-!OS.MSG categoriesFor: #isInput!public!testing! !
-!OS.MSG categoriesFor: #isKeyboardInput!public!testing! !
-!OS.MSG categoriesFor: #isMouseInput!public!testing! !
-!OS.MSG categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.MSG categoriesFor: #message!**compiled accessors**!public! !
-!OS.MSG categoriesFor: #swParam!accessing!public! !
-!OS.MSG categoriesFor: #time!**compiled accessors**!public! !
-!OS.MSG categoriesFor: #wParam!**compiled accessors**!public! !
-!OS.MSG categoriesFor: #x!**compiled accessors**!public! !
-!OS.MSG categoriesFor: #y!**compiled accessors**!public! !
+!OS.MSG categoriesForMethods!
+hwnd!**compiled accessors**!public! !
+isInput!public!testing! !
+isKeyboardInput!public!testing! !
+isMouseInput!public!testing! !
+lParam!**compiled accessors**!public! !
+message!**compiled accessors**!public! !
+swParam!accessing!public! !
+time!**compiled accessors**!public! !
+wParam!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+!
 
 !OS.MSG class methodsFor!
 
@@ -125,6 +127,8 @@ defineFields
 
 getFieldNames
 	^#(#hwnd #message #wParam #lParam #time #x #y)! !
-!OS.MSG class categoriesFor: #defineFields!public!template definition! !
-!OS.MSG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MSG class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

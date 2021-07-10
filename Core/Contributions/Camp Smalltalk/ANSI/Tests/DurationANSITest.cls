@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #DurationANSITest
 	instanceVariableNames: 'off0123 smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf numList'
@@ -282,29 +282,31 @@ testXsubtractOp
 	self value: [off0123 - (Duration days: 1 hours: 1 minutes: 1 seconds: 1)]
 		should: [:r | r = (Duration days:-0 hours:-23 minutes:-58 seconds:-58)]
 		conformTo: #'Duration' selector: #'-'! !
-!DurationANSITest categoriesFor: #canonicalObject!public! !
-!DurationANSITest categoriesFor: #protocol!public! !
-!DurationANSITest categoriesFor: #setUp!public! !
-!DurationANSITest categoriesFor: #testXabs!public! !
-!DurationANSITest categoriesFor: #testXaddOp!public! !
-!DurationANSITest categoriesFor: #testXasSeconds!public! !
-!DurationANSITest categoriesFor: #testXbetweenXandX!public! !
-!DurationANSITest categoriesFor: #testXdays!public! !
-!DurationANSITest categoriesFor: #testXdivideOp!public! !
-!DurationANSITest categoriesFor: #testXequalityOp!public! !
-!DurationANSITest categoriesFor: #testXgreaterThanOp!public! !
-!DurationANSITest categoriesFor: #testXgreaterThanOrEqualToOp!public! !
-!DurationANSITest categoriesFor: #testXhours!public! !
-!DurationANSITest categoriesFor: #testXlessThanOp!public! !
-!DurationANSITest categoriesFor: #testXlessThanOrEqualToOp!public! !
-!DurationANSITest categoriesFor: #testXmaxX!public! !
-!DurationANSITest categoriesFor: #testXminutes!public! !
-!DurationANSITest categoriesFor: #testXminX!public! !
-!DurationANSITest categoriesFor: #testXmultiplyOp!public! !
-!DurationANSITest categoriesFor: #testXnegated!public! !
-!DurationANSITest categoriesFor: #testXnegative!public! !
-!DurationANSITest categoriesFor: #testXpositive!public! !
-!DurationANSITest categoriesFor: #testXprintString!public! !
-!DurationANSITest categoriesFor: #testXseconds!public! !
-!DurationANSITest categoriesFor: #testXsubtractOp!public! !
+!DurationANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testXabs!public! !
+testXaddOp!public! !
+testXasSeconds!public! !
+testXbetweenXandX!public! !
+testXdays!public! !
+testXdivideOp!public! !
+testXequalityOp!public! !
+testXgreaterThanOp!public! !
+testXgreaterThanOrEqualToOp!public! !
+testXhours!public! !
+testXlessThanOp!public! !
+testXlessThanOrEqualToOp!public! !
+testXmaxX!public! !
+testXminutes!public! !
+testXminX!public! !
+testXmultiplyOp!public! !
+testXnegated!public! !
+testXnegative!public! !
+testXpositive!public! !
+testXprintString!public! !
+testXseconds!public! !
+testXsubtractOp!public! !
+!
 

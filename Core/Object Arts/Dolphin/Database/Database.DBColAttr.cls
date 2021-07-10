@@ -254,40 +254,42 @@ updateRuleMask: anInteger
 		self specialFlagAt:
 			(1 bitShift: (anInteger+8)) 
 			put: true ]! !
-!Database.DBColAttr categoriesFor: #columnNumber!accessing!public! !
-!Database.DBColAttr categoriesFor: #columnNumber:!accessing!private! !
-!Database.DBColAttr categoriesFor: #cType!accessing!private! !
-!Database.DBColAttr categoriesFor: #deleteRuleMask!accessing!public! !
-!Database.DBColAttr categoriesFor: #deleteRuleMask:!accessing!private! !
-!Database.DBColAttr categoriesFor: #hasVariableTransferOctetLength!public!testing! !
-!Database.DBColAttr categoriesFor: #initialize!initializing!private! !
-!Database.DBColAttr categoriesFor: #isBinaryType!private!testing! !
-!Database.DBColAttr categoriesFor: #isCharType!private!testing! !
-!Database.DBColAttr categoriesFor: #isFixedPointType!private!testing! !
-!Database.DBColAttr categoriesFor: #isForeignKey!public!testing! !
-!Database.DBColAttr categoriesFor: #isForeignKey:!accessing!private! !
-!Database.DBColAttr categoriesFor: #isKey!public!testing! !
-!Database.DBColAttr categoriesFor: #isPrimaryKey!public!testing! !
-!Database.DBColAttr categoriesFor: #isPrimaryKey:!accessing!private! !
-!Database.DBColAttr categoriesFor: #length!accessing!public! !
-!Database.DBColAttr categoriesFor: #length:!accessing!private! !
-!Database.DBColAttr categoriesFor: #lengthC!accessing!private! !
-!Database.DBColAttr categoriesFor: #name!accessing!public! !
-!Database.DBColAttr categoriesFor: #name:!accessing!private! !
-!Database.DBColAttr categoriesFor: #parameterType!accessing!public! !
-!Database.DBColAttr categoriesFor: #parameterType:!accessing!public! !
-!Database.DBColAttr categoriesFor: #precision!accessing!public! !
-!Database.DBColAttr categoriesFor: #precision:!accessing!private! !
-!Database.DBColAttr categoriesFor: #printOn:!printing!public! !
-!Database.DBColAttr categoriesFor: #scale!accessing!public! !
-!Database.DBColAttr categoriesFor: #scale:!accessing!private! !
-!Database.DBColAttr categoriesFor: #specialFlagAt:!accessing!private! !
-!Database.DBColAttr categoriesFor: #specialFlagAt:put:!accessing!private! !
-!Database.DBColAttr categoriesFor: #transferOctetLength!accessing!initializing!private! !
-!Database.DBColAttr categoriesFor: #type!accessing!public! !
-!Database.DBColAttr categoriesFor: #type:!accessing!private! !
-!Database.DBColAttr categoriesFor: #updateRuleMask!accessing!public! !
-!Database.DBColAttr categoriesFor: #updateRuleMask:!accessing!private! !
+!Database.DBColAttr categoriesForMethods!
+columnNumber!accessing!public! !
+columnNumber:!accessing!private! !
+cType!accessing!private! !
+deleteRuleMask!accessing!public! !
+deleteRuleMask:!accessing!private! !
+hasVariableTransferOctetLength!public!testing! !
+initialize!initializing!private! !
+isBinaryType!private!testing! !
+isCharType!private!testing! !
+isFixedPointType!private!testing! !
+isForeignKey!public!testing! !
+isForeignKey:!accessing!private! !
+isKey!public!testing! !
+isPrimaryKey!public!testing! !
+isPrimaryKey:!accessing!private! !
+length!accessing!public! !
+length:!accessing!private! !
+lengthC!accessing!private! !
+name!accessing!public! !
+name:!accessing!private! !
+parameterType!accessing!public! !
+parameterType:!accessing!public! !
+precision!accessing!public! !
+precision:!accessing!private! !
+printOn:!printing!public! !
+scale!accessing!public! !
+scale:!accessing!private! !
+specialFlagAt:!accessing!private! !
+specialFlagAt:put:!accessing!private! !
+transferOctetLength!accessing!initializing!private! !
+type!accessing!public! !
+type:!accessing!private! !
+updateRuleMask!accessing!public! !
+updateRuleMask:!accessing!private! !
+!
 
 !Database.DBColAttr class methodsFor!
 
@@ -341,6 +343,8 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!Database.DBColAttr class categoriesFor: #initialize!initializing!private! !
-!Database.DBColAttr class categoriesFor: #new!instance creation!public! !
+!Database.DBColAttr class categoriesForMethods!
+initialize!initializing!private! !
+new!instance creation!public! !
+!
 

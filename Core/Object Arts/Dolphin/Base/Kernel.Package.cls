@@ -1902,222 +1902,224 @@ It will probably load, but it may not operate correctly.
 If you experience subsequent problems please contact the package supplier for an updated version.'
 				expandMacrosWith: self name
 				with: versionString)! !
-!Kernel.Package categoriesFor: #about!commands!public! !
-!Kernel.Package categoriesFor: #aboutBlock!accessing!public! !
-!Kernel.Package categoriesFor: #aboutBlock:!accessing!public! !
-!Kernel.Package categoriesFor: #aboutBlockBytes:!accessing!private! !
-!Kernel.Package categoriesFor: #addAllPrerequisitesTo:!accessing!private! !
-!Kernel.Package categoriesFor: #addClass:!adding!public! !
-!Kernel.Package categoriesFor: #addLooseMethod:!adding!private! !
-!Kernel.Package categoriesFor: #addMethod:!adding!public! !
-!Kernel.Package categoriesFor: #addPackagedMethod:!adding!private! !
-!Kernel.Package categoriesFor: #addResourceIdentifier:!adding!public! !
-!Kernel.Package categoriesFor: #addVariableNamed:!adding!public! !
-!Kernel.Package categoriesFor: #aliasVariableNames!accessing!private! !
-!Kernel.Package categoriesFor: #allDependentPackages!accessing!public! !
-!Kernel.Package categoriesFor: #allMethods!accessing!public! !
-!Kernel.Package categoriesFor: #allMethodsDo:!enumerating!private! !
-!Kernel.Package categoriesFor: #allPrerequisites!accessing!private! !
-!Kernel.Package categoriesFor: #allResourceIdentifiers!accessing!public! !
-!Kernel.Package categoriesFor: #allResourceNames!accessing!private! !
-!Kernel.Package categoriesFor: #allSourceObjects!accessing!public!source filing! !
-!Kernel.Package categoriesFor: #allSourceObjectsDo:!enumerating!public!source filing! !
-!Kernel.Package categoriesFor: #basicAddClass:!adding!private! !
-!Kernel.Package categoriesFor: #basicAddVariableNamed:!adding!private! !
-!Kernel.Package categoriesFor: #basicComment:!accessing!private! !
-!Kernel.Package categoriesFor: #basicPackageVersion!accessing!private! !
-!Kernel.Package categoriesFor: #basicPackageVersion:!accessing!private! !
-!Kernel.Package categoriesFor: #basicRemoveClass:!private!removing! !
-!Kernel.Package categoriesFor: #basicRemoveVariableNamed:!private!removing! !
-!Kernel.Package categoriesFor: #basicResetPrerequisites!initializing!private! !
-!Kernel.Package categoriesFor: #basicScriptAt:put:!accessing!private! !
-!Kernel.Package categoriesFor: #behaviors!enumerating!public! !
-!Kernel.Package categoriesFor: #behaviorsDo:!enumerating!public! !
-!Kernel.Package categoriesFor: #binaryGlobalNames:!accessing!legacy package loading!private! !
-!Kernel.Package categoriesFor: #binaryVariableNames!accessing!private! !
-!Kernel.Package categoriesFor: #bindingRefToLiteral:!helpers!private! !
-!Kernel.Package categoriesFor: #buildPrerequisiteNames!helpers!private! !
-!Kernel.Package categoriesFor: #calculatePrerequisites!helpers!private! !
-!Kernel.Package categoriesFor: #canShowAbout!public!testing! !
-!Kernel.Package categoriesFor: #changedFrom:!initializing!public! !
-!Kernel.Package categoriesFor: #changeIndex!accessing!private! !
-!Kernel.Package categoriesFor: #changeIndexValue:!accessing!private! !
-!Kernel.Package categoriesFor: #classDefinitionsFileName!accessing!private! !
-!Kernel.Package categoriesFor: #classes!accessing!public! !
-!Kernel.Package categoriesFor: #classesDo:!enumerating!public! !
-!Kernel.Package categoriesFor: #classesInHierarchyOrder!enumerating!private! !
-!Kernel.Package categoriesFor: #classFromName:!helpers!private! !
-!Kernel.Package categoriesFor: #classNames!accessing!public! !
-!Kernel.Package categoriesFor: #classNames:!accessing!private! !
-!Kernel.Package categoriesFor: #comment!accessing!public! !
-!Kernel.Package categoriesFor: #comment:!accessing!public! !
-!Kernel.Package categoriesFor: #convertOldMethodNames!legacy package loading!private! !
-!Kernel.Package categoriesFor: #convertOldNames:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #convertOldNamesProperty:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #convertPoolDictionariesToSharedPools!legacy package loading!private! !
-!Kernel.Package categoriesFor: #declareClasses!helpers!private! !
-!Kernel.Package categoriesFor: #declareVariable:!helpers!private! !
-!Kernel.Package categoriesFor: #declareVariables!helpers!private! !
-!Kernel.Package categoriesFor: #dependentPackages!accessing!public! !
-!Kernel.Package categoriesFor: #depthOfClass:!helpers!public! !
-!Kernel.Package categoriesFor: #displayOn:!displaying!public! !
-!Kernel.Package categoriesFor: #ensureNamesFullyQualified!loading!private! !
-!Kernel.Package categoriesFor: #environment!helpers!private! !
-!Kernel.Package categoriesFor: #environment:!helpers!private! !
-!Kernel.Package categoriesFor: #environmentName:!initializing!private! !
-!Kernel.Package categoriesFor: #errorFileCorrupt!exceptions!private! !
-!Kernel.Package categoriesFor: #evaluateScript:source:!private!source filing! !
-!Kernel.Package categoriesFor: #fileInClasses!private!source filing! !
-!Kernel.Package categoriesFor: #fileInScript:!private!source filing! !
-!Kernel.Package categoriesFor: #fileNameForBinaryVariable:extension:!helpers!private! !
-!Kernel.Package categoriesFor: #fileNameForSourceGlobal:!helpers!private! !
-!Kernel.Package categoriesFor: #fileOutName!public!source filing! !
-!Kernel.Package categoriesFor: #getEvents!accessing!private! !
-!Kernel.Package categoriesFor: #getPrerequisites!accessing!private! !
-!Kernel.Package categoriesFor: #globalAliases:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #globalNames!legacy package loading!public! !
-!Kernel.Package categoriesFor: #hasCyclicPrerequisites!private!testing! !
-!Kernel.Package categoriesFor: #hasCyclicPrerequisites:safe:!private!testing! !
-!Kernel.Package categoriesFor: #hasUncommittedPrerequisites!private!testing! !
-!Kernel.Package categoriesFor: #hierarchyOrderOfClasses:!helpers!private! !
-!Kernel.Package categoriesFor: #imageStripper:!accessing!public! !
-!Kernel.Package categoriesFor: #imageStripperBytes!accessing!private! !
-!Kernel.Package categoriesFor: #imageStripperBytes:!accessing!private! !
-!Kernel.Package categoriesFor: #includesClass:!public!testing! !
-!Kernel.Package categoriesFor: #includesClassNamed:!public!testing! !
-!Kernel.Package categoriesFor: #includesMethod:!public!testing! !
-!Kernel.Package categoriesFor: #includesResourceIdentifier:!private!testing! !
-!Kernel.Package categoriesFor: #includesVariableNamed:!public!testing! !
-!Kernel.Package categoriesFor: #initialize!initializing!private! !
-!Kernel.Package categoriesFor: #initializeClasses!initializing!private! !
-!Kernel.Package categoriesFor: #initializeGlobals!initializing!private! !
-!Kernel.Package categoriesFor: #initializeLegacyResources!initializing!private! !
-!Kernel.Package categoriesFor: #initializeOldSourcePackage!initializing!private! !
-!Kernel.Package categoriesFor: #isAlias:!initializing!private! !
-!Kernel.Package categoriesFor: #isBasePackage!public!testing! !
-!Kernel.Package categoriesFor: #isChanged!public!testing! !
-!Kernel.Package categoriesFor: #isChanged:!accessing!public! !
-!Kernel.Package categoriesFor: #isDefaultPackage!public!testing! !
-!Kernel.Package categoriesFor: #isImportedClass:!initializing!private! !
-!Kernel.Package categoriesFor: #isInstalled!public!testing! !
-!Kernel.Package categoriesFor: #isLegacySourceFormat!public!testing! !
-!Kernel.Package categoriesFor: #isSourceObject:!initializing!private! !
-!Kernel.Package categoriesFor: #isSystemPackage!public!testing! !
-!Kernel.Package categoriesFor: #load!initializing!private! !
-!Kernel.Package categoriesFor: #loadBinaryVariables!initializing!private! !
-!Kernel.Package categoriesFor: #loadPAC!loading!private! !
-!Kernel.Package categoriesFor: #loadPAC:!loading!private! !
-!Kernel.Package categoriesFor: #loadPAX!loading!private! !
-!Kernel.Package categoriesFor: #looseResourceIdentifiers!initializing!public! !
-!Kernel.Package categoriesFor: #looseResourceIdentifiersDo:!initializing!public! !
-!Kernel.Package categoriesFor: #manager!initializing!public! !
-!Kernel.Package categoriesFor: #manualPrerequisites!initializing!public! !
-!Kernel.Package categoriesFor: #manualPrerequisites:!initializing!public! !
-!Kernel.Package categoriesFor: #membershipChanged!initializing!private! !
-!Kernel.Package categoriesFor: #membershipChangedAt:!events!private! !
-!Kernel.Package categoriesFor: #memberUpdatedAt:!events!private! !
-!Kernel.Package categoriesFor: #methodNames!accessing!public! !
-!Kernel.Package categoriesFor: #methods!accessing!public! !
-!Kernel.Package categoriesFor: #methodsDo:!enumerating!public! !
-!Kernel.Package categoriesFor: #methodsOfClass:!accessing!public! !
-!Kernel.Package categoriesFor: #name!accessing!public! !
-!Kernel.Package categoriesFor: #nameForResourceIdentifier:!helpers!private! !
-!Kernel.Package categoriesFor: #okToSaveOrDeploy!private!testing! !
-!Kernel.Package categoriesFor: #okToUninstall!private!testing! !
-!Kernel.Package categoriesFor: #onClassRemoved:!events!private! !
-!Kernel.Package categoriesFor: #onClassRenamed:from:to:!events!private! !
-!Kernel.Package categoriesFor: #onVariableRenamed:from:!events!private! !
-!Kernel.Package categoriesFor: #owningPackage!adding!public! !
-!Kernel.Package categoriesFor: #packageFileName!accessing!public! !
-!Kernel.Package categoriesFor: #packageFileName:!accessing!private! !
-!Kernel.Package categoriesFor: #packageFolder!accessing!public! !
-!Kernel.Package categoriesFor: #packagePathname!accessing!private! !
-!Kernel.Package categoriesFor: #packagePathname:!accessing!private! !
-!Kernel.Package categoriesFor: #packageVersion!accessing!public! !
-!Kernel.Package categoriesFor: #packageVersion:!accessing!public! !
-!Kernel.Package categoriesFor: #path!accessing!public! !
-!Kernel.Package categoriesFor: #paxVersion!accessing!private! !
-!Kernel.Package categoriesFor: #paxVersion:!initializing!private! !
-!Kernel.Package categoriesFor: #postLoadInitialization:!loading!private! !
-!Kernel.Package categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
-!Kernel.Package categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
-!Kernel.Package categoriesFor: #predeclareClassesSetting!accessing!private! !
-!Kernel.Package categoriesFor: #prerequisiteNames!accessing!private! !
-!Kernel.Package categoriesFor: #prerequisites!accessing!public! !
-!Kernel.Package categoriesFor: #printOn:!initializing!public! !
-!Kernel.Package categoriesFor: #privateUninstall!initializing!private! !
-!Kernel.Package categoriesFor: #propertyAt:ifAbsent:!initializing!public! !
-!Kernel.Package categoriesFor: #propertyAt:put:!properties!public! !
-!Kernel.Package categoriesFor: #rebaseTo:!initializing!public! !
-!Kernel.Package categoriesFor: #remainingClasses!initializing!public! !
-!Kernel.Package categoriesFor: #removeAllProperties!properties!public! !
-!Kernel.Package categoriesFor: #removeClass:!initializing!public! !
-!Kernel.Package categoriesFor: #removeClassName:!initializing!private! !
-!Kernel.Package categoriesFor: #removeGlobalNamed:!initializing!public! !
-!Kernel.Package categoriesFor: #removeLooseMethod:!initializing!private! !
-!Kernel.Package categoriesFor: #removeMethod:!initializing!public! !
-!Kernel.Package categoriesFor: #removeMethodNames:!initializing!private! !
-!Kernel.Package categoriesFor: #removePackagedMethod:!initializing!private! !
-!Kernel.Package categoriesFor: #removePAXProperties!initializing!private! !
-!Kernel.Package categoriesFor: #removePropertyAt:ifAbsent:!properties!public! !
-!Kernel.Package categoriesFor: #removeVariableNamed:!initializing!public! !
-!Kernel.Package categoriesFor: #renameLooseMethodsOf:to:!initializing!private! !
-!Kernel.Package categoriesFor: #resetChangeFlags!initializing!public! !
-!Kernel.Package categoriesFor: #resetPrerequisites!initializing!private! !
-!Kernel.Package categoriesFor: #resourceIdentifiers!accessing!public! !
-!Kernel.Package categoriesFor: #scriptAt:!accessing!public! !
-!Kernel.Package categoriesFor: #scriptAt:put:!accessing!public! !
-!Kernel.Package categoriesFor: #scripts!accessing!private! !
-!Kernel.Package categoriesFor: #setAliasVariableNames:!initializing!private! !
-!Kernel.Package categoriesFor: #setBinaryVariableNames:!initializing!private! !
-!Kernel.Package categoriesFor: #setClassNames:!initializing!private! !
-!Kernel.Package categoriesFor: #setEvents:!events!private! !
-!Kernel.Package categoriesFor: #setManualPrerequisites:!initializing!private! !
-!Kernel.Package categoriesFor: #setMethodNames:!initializing!private! !
-!Kernel.Package categoriesFor: #setPackageFileName:!initializing!private! !
-!Kernel.Package categoriesFor: #setPrerequisites:!initializing!private! !
-!Kernel.Package categoriesFor: #setUntracedVariables:!initializing!private! !
-!Kernel.Package categoriesFor: #setVariableNames:!initializing!private! !
-!Kernel.Package categoriesFor: #shrink!private! !
-!Kernel.Package categoriesFor: #sourceDescriptor!accessing!private! !
-!Kernel.Package categoriesFor: #sourceDescriptor:!accessing!private! !
-!Kernel.Package categoriesFor: #sourceFilerClass!private!source filing-class definition! !
-!Kernel.Package categoriesFor: #sourceFilerOn:!loading!private! !
-!Kernel.Package categoriesFor: #sourceGlobalExtension!constants!private! !
-!Kernel.Package categoriesFor: #sourceManager!accessing!public! !
-!Kernel.Package categoriesFor: #sourceVariableNames!accessing!private! !
-!Kernel.Package categoriesFor: #stbSaveOn:!binary filing!public! !
-!Kernel.Package categoriesFor: #storeComment!helpers!private! !
-!Kernel.Package categoriesFor: #synchronizeNames!helpers!private! !
-!Kernel.Package categoriesFor: #timestamp!accessing!public! !
-!Kernel.Package categoriesFor: #timestamp:!accessing!private! !
-!Kernel.Package categoriesFor: #trace:prerequisite:from:to:dependency:!helpers!private! !
-!Kernel.Package categoriesFor: #tracePrerequisites!operations!private! !
-!Kernel.Package categoriesFor: #tracePrerequisites:!operations!private! !
-!Kernel.Package categoriesFor: #tracePrerequisitesOfClasses:packagedVariables:!operations!private! !
-!Kernel.Package categoriesFor: #tracePrerequisitesOfEnvironment:!operations!private! !
-!Kernel.Package categoriesFor: #tracePrerequisitesOfImageStripper:!operations!private! !
-!Kernel.Package categoriesFor: #tracePrerequisitesOfLiterals:packagedVariables:!operations!private! !
-!Kernel.Package categoriesFor: #tracePrerequisitesOfMethods:!operations!private! !
-!Kernel.Package categoriesFor: #tracePrerequisitesOfVariables:packagedVariables:!operations!private! !
-!Kernel.Package categoriesFor: #uninstall!public!removing! !
-!Kernel.Package categoriesFor: #uninstallClasses!class hierarchy-removing!private!removing! !
-!Kernel.Package categoriesFor: #uninstallGlobals!private!removing! !
-!Kernel.Package categoriesFor: #uninstallMethods!private!removing! !
-!Kernel.Package categoriesFor: #untracedGlobals:!legacy package loading!private! !
-!Kernel.Package categoriesFor: #untracedVariables!accessing!public! !
-!Kernel.Package categoriesFor: #untracedVariables:!accessing!public! !
-!Kernel.Package categoriesFor: #upateFileNames!operations!private! !
-!Kernel.Package categoriesFor: #updateMethodNamesToFullyQualified!loading!private! !
-!Kernel.Package categoriesFor: #updateNamesToFullyQualified!loading!private! !
-!Kernel.Package categoriesFor: #upgrade!helpers!private! !
-!Kernel.Package categoriesFor: #upgradeToVersion2!helpers!private! !
-!Kernel.Package categoriesFor: #validate!operations!private! !
-!Kernel.Package categoriesFor: #variableNames!accessing!public! !
-!Kernel.Package categoriesFor: #variableNames:!private! !
-!Kernel.Package categoriesFor: #variables!private!source filing! !
-!Kernel.Package categoriesFor: #versionIfRequired!public! !
-!Kernel.Package categoriesFor: #vmVersionCheck:!constants!private! !
+!Kernel.Package categoriesForMethods!
+about!commands!public! !
+aboutBlock!accessing!public! !
+aboutBlock:!accessing!public! !
+aboutBlockBytes:!accessing!private! !
+addAllPrerequisitesTo:!accessing!private! !
+addClass:!adding!public! !
+addLooseMethod:!adding!private! !
+addMethod:!adding!public! !
+addPackagedMethod:!adding!private! !
+addResourceIdentifier:!adding!public! !
+addVariableNamed:!adding!public! !
+aliasVariableNames!accessing!private! !
+allDependentPackages!accessing!public! !
+allMethods!accessing!public! !
+allMethodsDo:!enumerating!private! !
+allPrerequisites!accessing!private! !
+allResourceIdentifiers!accessing!public! !
+allResourceNames!accessing!private! !
+allSourceObjects!accessing!public!source filing! !
+allSourceObjectsDo:!enumerating!public!source filing! !
+basicAddClass:!adding!private! !
+basicAddVariableNamed:!adding!private! !
+basicComment:!accessing!private! !
+basicPackageVersion!accessing!private! !
+basicPackageVersion:!accessing!private! !
+basicRemoveClass:!private!removing! !
+basicRemoveVariableNamed:!private!removing! !
+basicResetPrerequisites!initializing!private! !
+basicScriptAt:put:!accessing!private! !
+behaviors!enumerating!public! !
+behaviorsDo:!enumerating!public! !
+binaryGlobalNames:!accessing!legacy package loading!private! !
+binaryVariableNames!accessing!private! !
+bindingRefToLiteral:!helpers!private! !
+buildPrerequisiteNames!helpers!private! !
+calculatePrerequisites!helpers!private! !
+canShowAbout!public!testing! !
+changedFrom:!initializing!public! !
+changeIndex!accessing!private! !
+changeIndexValue:!accessing!private! !
+classDefinitionsFileName!accessing!private! !
+classes!accessing!public! !
+classesDo:!enumerating!public! !
+classesInHierarchyOrder!enumerating!private! !
+classFromName:!helpers!private! !
+classNames!accessing!public! !
+classNames:!accessing!private! !
+comment!accessing!public! !
+comment:!accessing!public! !
+convertOldMethodNames!legacy package loading!private! !
+convertOldNames:!legacy package loading!private! !
+convertOldNamesProperty:!legacy package loading!private! !
+convertPoolDictionariesToSharedPools!legacy package loading!private! !
+declareClasses!helpers!private! !
+declareVariable:!helpers!private! !
+declareVariables!helpers!private! !
+dependentPackages!accessing!public! !
+depthOfClass:!helpers!public! !
+displayOn:!displaying!public! !
+ensureNamesFullyQualified!loading!private! !
+environment!helpers!private! !
+environment:!helpers!private! !
+environmentName:!initializing!private! !
+errorFileCorrupt!exceptions!private! !
+evaluateScript:source:!private!source filing! !
+fileInClasses!private!source filing! !
+fileInScript:!private!source filing! !
+fileNameForBinaryVariable:extension:!helpers!private! !
+fileNameForSourceGlobal:!helpers!private! !
+fileOutName!public!source filing! !
+getEvents!accessing!private! !
+getPrerequisites!accessing!private! !
+globalAliases:!legacy package loading!private! !
+globalNames!legacy package loading!public! !
+hasCyclicPrerequisites!private!testing! !
+hasCyclicPrerequisites:safe:!private!testing! !
+hasUncommittedPrerequisites!private!testing! !
+hierarchyOrderOfClasses:!helpers!private! !
+imageStripper:!accessing!public! !
+imageStripperBytes!accessing!private! !
+imageStripperBytes:!accessing!private! !
+includesClass:!public!testing! !
+includesClassNamed:!public!testing! !
+includesMethod:!public!testing! !
+includesResourceIdentifier:!private!testing! !
+includesVariableNamed:!public!testing! !
+initialize!initializing!private! !
+initializeClasses!initializing!private! !
+initializeGlobals!initializing!private! !
+initializeLegacyResources!initializing!private! !
+initializeOldSourcePackage!initializing!private! !
+isAlias:!initializing!private! !
+isBasePackage!public!testing! !
+isChanged!public!testing! !
+isChanged:!accessing!public! !
+isDefaultPackage!public!testing! !
+isImportedClass:!initializing!private! !
+isInstalled!public!testing! !
+isLegacySourceFormat!public!testing! !
+isSourceObject:!initializing!private! !
+isSystemPackage!public!testing! !
+load!initializing!private! !
+loadBinaryVariables!initializing!private! !
+loadPAC!loading!private! !
+loadPAC:!loading!private! !
+loadPAX!loading!private! !
+looseResourceIdentifiers!initializing!public! !
+looseResourceIdentifiersDo:!initializing!public! !
+manager!initializing!public! !
+manualPrerequisites!initializing!public! !
+manualPrerequisites:!initializing!public! !
+membershipChanged!initializing!private! !
+membershipChangedAt:!events!private! !
+memberUpdatedAt:!events!private! !
+methodNames!accessing!public! !
+methods!accessing!public! !
+methodsDo:!enumerating!public! !
+methodsOfClass:!accessing!public! !
+name!accessing!public! !
+nameForResourceIdentifier:!helpers!private! !
+okToSaveOrDeploy!private!testing! !
+okToUninstall!private!testing! !
+onClassRemoved:!events!private! !
+onClassRenamed:from:to:!events!private! !
+onVariableRenamed:from:!events!private! !
+owningPackage!adding!public! !
+packageFileName!accessing!public! !
+packageFileName:!accessing!private! !
+packageFolder!accessing!public! !
+packagePathname!accessing!private! !
+packagePathname:!accessing!private! !
+packageVersion!accessing!public! !
+packageVersion:!accessing!public! !
+path!accessing!public! !
+paxVersion!accessing!private! !
+paxVersion:!initializing!private! !
+postLoadInitialization:!loading!private! !
+preDeclareClassesOnLoad!accessing!public! !
+preDeclareClassesOnLoad:!accessing!public! !
+predeclareClassesSetting!accessing!private! !
+prerequisiteNames!accessing!private! !
+prerequisites!accessing!public! !
+printOn:!initializing!public! !
+privateUninstall!initializing!private! !
+propertyAt:ifAbsent:!initializing!public! !
+propertyAt:put:!properties!public! !
+rebaseTo:!initializing!public! !
+remainingClasses!initializing!public! !
+removeAllProperties!properties!public! !
+removeClass:!initializing!public! !
+removeClassName:!initializing!private! !
+removeGlobalNamed:!initializing!public! !
+removeLooseMethod:!initializing!private! !
+removeMethod:!initializing!public! !
+removeMethodNames:!initializing!private! !
+removePackagedMethod:!initializing!private! !
+removePAXProperties!initializing!private! !
+removePropertyAt:ifAbsent:!properties!public! !
+removeVariableNamed:!initializing!public! !
+renameLooseMethodsOf:to:!initializing!private! !
+resetChangeFlags!initializing!public! !
+resetPrerequisites!initializing!private! !
+resourceIdentifiers!accessing!public! !
+scriptAt:!accessing!public! !
+scriptAt:put:!accessing!public! !
+scripts!accessing!private! !
+setAliasVariableNames:!initializing!private! !
+setBinaryVariableNames:!initializing!private! !
+setClassNames:!initializing!private! !
+setEvents:!events!private! !
+setManualPrerequisites:!initializing!private! !
+setMethodNames:!initializing!private! !
+setPackageFileName:!initializing!private! !
+setPrerequisites:!initializing!private! !
+setUntracedVariables:!initializing!private! !
+setVariableNames:!initializing!private! !
+shrink!private! !
+sourceDescriptor!accessing!private! !
+sourceDescriptor:!accessing!private! !
+sourceFilerClass!private!source filing-class definition! !
+sourceFilerOn:!loading!private! !
+sourceGlobalExtension!constants!private! !
+sourceManager!accessing!public! !
+sourceVariableNames!accessing!private! !
+stbSaveOn:!binary filing!public! !
+storeComment!helpers!private! !
+synchronizeNames!helpers!private! !
+timestamp!accessing!public! !
+timestamp:!accessing!private! !
+trace:prerequisite:from:to:dependency:!helpers!private! !
+tracePrerequisites!operations!private! !
+tracePrerequisites:!operations!private! !
+tracePrerequisitesOfClasses:packagedVariables:!operations!private! !
+tracePrerequisitesOfEnvironment:!operations!private! !
+tracePrerequisitesOfImageStripper:!operations!private! !
+tracePrerequisitesOfLiterals:packagedVariables:!operations!private! !
+tracePrerequisitesOfMethods:!operations!private! !
+tracePrerequisitesOfVariables:packagedVariables:!operations!private! !
+uninstall!public!removing! !
+uninstallClasses!class hierarchy-removing!private!removing! !
+uninstallGlobals!private!removing! !
+uninstallMethods!private!removing! !
+untracedGlobals:!legacy package loading!private! !
+untracedVariables!accessing!public! !
+untracedVariables:!accessing!public! !
+upateFileNames!operations!private! !
+updateMethodNamesToFullyQualified!loading!private! !
+updateNamesToFullyQualified!loading!private! !
+upgrade!helpers!private! !
+upgradeToVersion2!helpers!private! !
+validate!operations!private! !
+variableNames!accessing!public! !
+variableNames:!private! !
+variables!private!source filing! !
+versionIfRequired!public! !
+vmVersionCheck:!constants!private! !
+!
 
 !Kernel.Package class methodsFor!
 
@@ -2465,37 +2467,39 @@ unsaveableSignal
 	a package with uncommitted or cyclic pre-requisites."
 
 	^UnsaveableSignal! !
-!Kernel.Package class categoriesFor: #binaryPacLoader:!accessing!private! !
-!Kernel.Package class categoriesFor: #clashSignal!constants!private! !
-!Kernel.Package class categoriesFor: #defaultSortBlock!constants!public! !
-!Kernel.Package class categoriesFor: #errorInvalidPACFile:!exceptions!private! !
-!Kernel.Package class categoriesFor: #errorInvalidPAXFile:!exceptions!private! !
-!Kernel.Package class categoriesFor: #fromFile:!instance creation!private! !
-!Kernel.Package class categoriesFor: #fromPACFile:!instance creation!private! !
-!Kernel.Package class categoriesFor: #fromPAXFile:!instance creation!private! !
-!Kernel.Package class categoriesFor: #initialize!initializing!private! !
-!Kernel.Package class categoriesFor: #manager!accessing!public! !
-!Kernel.Package class categoriesFor: #name:!instance creation!public! !
-!Kernel.Package class categoriesFor: #new!instance creation!public! !
-!Kernel.Package class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Kernel.Package class categoriesFor: #packageExtension!constants!private! !
-!Kernel.Package class categoriesFor: #packageFileVersion!constants!public! !
-!Kernel.Package class categoriesFor: #paxVersion!constants!private! !
-!Kernel.Package class categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
-!Kernel.Package class categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
-!Kernel.Package class categoriesFor: #readFrom:!instance creation!private! !
-!Kernel.Package class categoriesFor: #sourcePackageExtension!constants!private! !
-!Kernel.Package class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion6:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbConvertFromVersion7:!binary filing!private! !
-!Kernel.Package class categoriesFor: #stbVersion!binary filing!public! !
-!Kernel.Package class categoriesFor: #uncommitted!accessing!public! !
-!Kernel.Package class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Kernel.Package class categoriesFor: #unsaveableSignal!constants!private! !
+!Kernel.Package class categoriesForMethods!
+binaryPacLoader:!accessing!private! !
+clashSignal!constants!private! !
+defaultSortBlock!constants!public! !
+errorInvalidPACFile:!exceptions!private! !
+errorInvalidPAXFile:!exceptions!private! !
+fromFile:!instance creation!private! !
+fromPACFile:!instance creation!private! !
+fromPAXFile:!instance creation!private! !
+initialize!initializing!private! !
+manager!accessing!public! !
+name:!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+packageExtension!constants!private! !
+packageFileVersion!constants!public! !
+paxVersion!constants!private! !
+preDeclareClassesOnLoad!accessing!public! !
+preDeclareClassesOnLoad:!accessing!public! !
+readFrom:!instance creation!private! !
+sourcePackageExtension!constants!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbConvertFromVersion3:!binary filing!private! !
+stbConvertFromVersion4:!binary filing!private! !
+stbConvertFromVersion5:!binary filing!private! !
+stbConvertFromVersion6:!binary filing!private! !
+stbConvertFromVersion7:!binary filing!private! !
+stbVersion!binary filing!public! !
+uncommitted!accessing!public! !
+uninitialize!class hierarchy-removing!private! !
+unsaveableSignal!constants!private! !
+!
 

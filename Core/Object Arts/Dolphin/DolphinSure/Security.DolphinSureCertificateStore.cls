@@ -121,21 +121,23 @@ serials
 	"Answer anOrderedCollection of the certificate serial numbers in the receiver"
 
 	^self regKey subValues associations collect: [:each | each key]! !
-!Security.DolphinSureCertificateStore categoriesFor: #<=!comparing!public! !
-!Security.DolphinSureCertificateStore categoriesFor: #addCertificate:!adding!public! !
-!Security.DolphinSureCertificateStore categoriesFor: #atSerial:ifAbsent:!accessing!public! !
-!Security.DolphinSureCertificateStore categoriesFor: #certificates!accessing!public! !
-!Security.DolphinSureCertificateStore categoriesFor: #default!accessing!public! !
-!Security.DolphinSureCertificateStore categoriesFor: #displayOn:!printing!public! !
-!Security.DolphinSureCertificateStore categoriesFor: #includesCertificate:!public!testing! !
-!Security.DolphinSureCertificateStore categoriesFor: #includesSerial:!public!testing! !
-!Security.DolphinSureCertificateStore categoriesFor: #name!initializing!private! !
-!Security.DolphinSureCertificateStore categoriesFor: #name:!initializing!private! !
-!Security.DolphinSureCertificateStore categoriesFor: #printOn:!printing!public! !
-!Security.DolphinSureCertificateStore categoriesFor: #regKey!accessing!private! !
-!Security.DolphinSureCertificateStore categoriesFor: #removeAllCertificates!public!removing! !
-!Security.DolphinSureCertificateStore categoriesFor: #removeCertificate:ifAbsent:!public!removing! !
-!Security.DolphinSureCertificateStore categoriesFor: #serials!accessing!public! !
+!Security.DolphinSureCertificateStore categoriesForMethods!
+<=!comparing!public! !
+addCertificate:!adding!public! !
+atSerial:ifAbsent:!accessing!public! !
+certificates!accessing!public! !
+default!accessing!public! !
+displayOn:!printing!public! !
+includesCertificate:!public!testing! !
+includesSerial:!public!testing! !
+name!initializing!private! !
+name:!initializing!private! !
+printOn:!printing!public! !
+regKey!accessing!private! !
+removeAllCertificates!public!removing! !
+removeCertificate:ifAbsent:!public!removing! !
+serials!accessing!public! !
+!
 
 !Security.DolphinSureCertificateStore class methodsFor!
 
@@ -196,15 +198,17 @@ temporaryTrust
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!Security.DolphinSureCertificateStore class categoriesFor: #allStores!enquiries!public! !
-!Security.DolphinSureCertificateStore class categoriesFor: #certificateStoreRoot!accessing!private! !
-!Security.DolphinSureCertificateStore class categoriesFor: #clearTemporaryTrustStore!operations!private! !
-!Security.DolphinSureCertificateStore class categoriesFor: #icon!constants!development!public! !
-!Security.DolphinSureCertificateStore class categoriesFor: #initialize!initializing!private! !
-!Security.DolphinSureCertificateStore class categoriesFor: #myCertificates!instance creation!public! !
-!Security.DolphinSureCertificateStore class categoriesFor: #name:!instance creation!public! !
-!Security.DolphinSureCertificateStore class categoriesFor: #new!instance creation!private! !
-!Security.DolphinSureCertificateStore class categoriesFor: #permanentTrust!instance creation!public! !
-!Security.DolphinSureCertificateStore class categoriesFor: #temporaryTrust!instance creation!public! !
-!Security.DolphinSureCertificateStore class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Security.DolphinSureCertificateStore class categoriesForMethods!
+allStores!enquiries!public! !
+certificateStoreRoot!accessing!private! !
+clearTemporaryTrustStore!operations!private! !
+icon!constants!development!public! !
+initialize!initializing!private! !
+myCertificates!instance creation!public! !
+name:!instance creation!public! !
+new!instance creation!private! !
+permanentTrust!instance creation!public! !
+temporaryTrust!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

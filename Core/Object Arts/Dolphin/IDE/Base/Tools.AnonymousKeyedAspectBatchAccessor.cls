@@ -13,5 +13,7 @@ Tools.AnonymousKeyedAspectBatchAccessor comment: 'Part of the PublishedAspectorI
 
 aspectClass
 	^AnonymousKeyedAspect! !
-!Tools.AnonymousKeyedAspectBatchAccessor categoriesFor: #aspectClass!public! !
+!Tools.AnonymousKeyedAspectBatchAccessor categoriesForMethods!
+aspectClass!public! !
+!
 

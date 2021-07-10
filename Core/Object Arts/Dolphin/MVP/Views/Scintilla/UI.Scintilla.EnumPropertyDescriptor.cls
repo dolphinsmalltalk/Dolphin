@@ -34,10 +34,12 @@ values
 
 values: anObject
 	values := anObject! !
-!UI.Scintilla.EnumPropertyDescriptor categoriesFor: #initialize!initializing!private! !
-!UI.Scintilla.EnumPropertyDescriptor categoriesFor: #nilChoice!accessing!public! !
-!UI.Scintilla.EnumPropertyDescriptor categoriesFor: #nilChoice:!accessing!public! !
-!UI.Scintilla.EnumPropertyDescriptor categoriesFor: #type:!public! !
-!UI.Scintilla.EnumPropertyDescriptor categoriesFor: #values!accessing!public! !
-!UI.Scintilla.EnumPropertyDescriptor categoriesFor: #values:!accessing!public! !
+!UI.Scintilla.EnumPropertyDescriptor categoriesForMethods!
+initialize!initializing!private! !
+nilChoice!accessing!public! !
+nilChoice:!accessing!public! !
+type:!public! !
+values!accessing!public! !
+values:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TestCaseHelper subclass: #CollectionHelper
 	instanceVariableNames: ''
@@ -671,41 +671,45 @@ testXsize
 	" <collection>#size "
 	#'Collection'.
 	self assertSend: #size! !
-!CollectionHelper categoriesFor: #canonicalElement!public! !
-!CollectionHelper categoriesFor: #canonicalObject!public! !
-!CollectionHelper categoriesFor: #emptyCollection!public! !
-!CollectionHelper categoriesFor: #limitedElementTypes!public! !
-!CollectionHelper categoriesFor: #object!public! !
-!CollectionHelper categoriesFor: #object:!public! !
-!CollectionHelper categoriesFor: #returnTypeHasLimitedElementTypes!public! !
-!CollectionHelper categoriesFor: #testXallSatisfyX!public! !
-!CollectionHelper categoriesFor: #testXanySatisfyX!public! !
-!CollectionHelper categoriesFor: #testXasArray!public! !
-!CollectionHelper categoriesFor: #testXasBag!public! !
-!CollectionHelper categoriesFor: #testXasByteArray!public! !
-!CollectionHelper categoriesFor: #testXasOrderedCollection!public! !
-!CollectionHelper categoriesFor: #testXasSet!public! !
-!CollectionHelper categoriesFor: #testXasSortedCollection!public! !
-!CollectionHelper categoriesFor: #testXasSortedCollectionX!public! !
-!CollectionHelper categoriesFor: #testXcollectX!public! !
-!CollectionHelper categoriesFor: #testXdetectX!public! !
-!CollectionHelper categoriesFor: #testXdetectXifNoneX!public! !
-!CollectionHelper categoriesFor: #testXdoX!public! !
-!CollectionHelper categoriesFor: #testXdoXseparatedByX!public! !
-!CollectionHelper categoriesFor: #testXincludesX!public! !
-!CollectionHelper categoriesFor: #testXinjectXintoX!public! !
-!CollectionHelper categoriesFor: #testXisEmpty!public! !
-!CollectionHelper categoriesFor: #testXnotEmpty!public! !
-!CollectionHelper categoriesFor: #testXoccurrencesOfX!public! !
-!CollectionHelper categoriesFor: #testXrehash!public! !
-!CollectionHelper categoriesFor: #testXrejectX!public! !
-!CollectionHelper categoriesFor: #testXselectX!public! !
-!CollectionHelper categoriesFor: #testXsize!public! !
+!CollectionHelper categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCollection!public! !
+limitedElementTypes!public! !
+object!public! !
+object:!public! !
+returnTypeHasLimitedElementTypes!public! !
+testXallSatisfyX!public! !
+testXanySatisfyX!public! !
+testXasArray!public! !
+testXasBag!public! !
+testXasByteArray!public! !
+testXasOrderedCollection!public! !
+testXasSet!public! !
+testXasSortedCollection!public! !
+testXasSortedCollectionX!public! !
+testXcollectX!public! !
+testXdetectX!public! !
+testXdetectXifNoneX!public! !
+testXdoX!public! !
+testXdoXseparatedByX!public! !
+testXincludesX!public! !
+testXinjectXintoX!public! !
+testXisEmpty!public! !
+testXnotEmpty!public! !
+testXoccurrencesOfX!public! !
+testXrehash!public! !
+testXrejectX!public! !
+testXselectX!public! !
+testXsize!public! !
+!
 
 !CollectionHelper class methodsFor!
 
 initialize
 	"CollectionHelper  initialize"
 	super initialize! !
-!CollectionHelper class categoriesFor: #initialize!public! !
+!CollectionHelper class categoriesForMethods!
+initialize!public! !
+!
 

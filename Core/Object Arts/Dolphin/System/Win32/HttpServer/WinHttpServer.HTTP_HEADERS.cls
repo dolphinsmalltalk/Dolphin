@@ -92,14 +92,16 @@ UnknownHeaderCount: anInteger
 	"Set the receiver's 'UnknownHeaderCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_UnknownHeaderCount put: anInteger! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #knownHeaderIndex:!constants!public! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #knownHeaderName:!constants!public! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #KnownHeaders!accessing!public! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #printFieldsOn:!development!printing!private! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #pUnknownHeaders!**compiled accessors**!public! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #pUnknownHeaders:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #UnknownHeaderCount!**compiled accessors**!private! !
-!WinHttpServer.HTTP_HEADERS categoriesFor: #UnknownHeaderCount:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_HEADERS categoriesForMethods!
+knownHeaderIndex:!constants!public! !
+knownHeaderName:!constants!public! !
+KnownHeaders!accessing!public! !
+printFieldsOn:!development!printing!private! !
+pUnknownHeaders!**compiled accessors**!public! !
+pUnknownHeaders:!**compiled accessors**!public! !
+UnknownHeaderCount!**compiled accessors**!private! !
+UnknownHeaderCount:!**compiled accessors**!private! !
+!
 
 !WinHttpServer.HTTP_HEADERS class methodsFor!
 
@@ -145,9 +147,11 @@ knownHeaderIndex: headerName
 
 knownHeaderName: anInteger
 	^self indexToHeaderMap at: anInteger! !
-!WinHttpServer.HTTP_HEADERS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_HEADERS class categoriesFor: #headerToIndexMap!public! !
-!WinHttpServer.HTTP_HEADERS class categoriesFor: #indexToHeaderMap!public! !
-!WinHttpServer.HTTP_HEADERS class categoriesFor: #knownHeaderIndex:!public! !
-!WinHttpServer.HTTP_HEADERS class categoriesFor: #knownHeaderName:!public! !
+!WinHttpServer.HTTP_HEADERS class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+headerToIndexMap!public! !
+indexToHeaderMap!public! !
+knownHeaderIndex:!public! !
+knownHeaderName:!public! !
+!
 

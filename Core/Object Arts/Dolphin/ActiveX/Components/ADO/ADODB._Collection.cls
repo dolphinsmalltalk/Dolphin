@@ -95,14 +95,16 @@ removeAtIndex: index
 	Raise a <BoundsError> if there is no element with that index."
 
 	^self shouldNotImplement! !
-!ADODB._Collection categoriesFor: #_newEnum!**auto generated**!methods!public! !
-!ADODB._Collection categoriesFor: #_NewEnum:!**auto generated**!COM Interfaces-_Collection!private! !
-!ADODB._Collection categoriesFor: #count!**auto generated**!properties!public! !
-!ADODB._Collection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-_Collection!private! !
-!ADODB._Collection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB._Collection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB._Collection categoriesFor: #Refresh!**auto generated**!COM Interfaces-_Collection!public! !
-!ADODB._Collection categoriesFor: #removeAtIndex:!public!removing! !
+!ADODB._Collection categoriesForMethods!
+_newEnum!**auto generated**!methods!public! !
+_NewEnum:!**auto generated**!COM Interfaces-_Collection!private! !
+count!**auto generated**!properties!public! !
+get_Count:!**auto generated**!COM Interfaces-_Collection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+Refresh!**auto generated**!COM Interfaces-_Collection!public! !
+removeAtIndex:!public!removing! !
+!
 
 !ADODB._Collection class methodsFor!
 
@@ -117,5 +119,7 @@ defineFunctions
 			argumentTypes: 'IUnknown**';
 		defineFunction: #Refresh
 ! !
-!ADODB._Collection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB._Collection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

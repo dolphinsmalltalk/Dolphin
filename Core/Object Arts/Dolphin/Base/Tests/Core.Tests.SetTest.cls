@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.CollectionTest subclass: #'Core.Tests.SetTest'
 	instanceVariableNames: ''
@@ -217,28 +217,30 @@ testShallowCopy
 	copy := set shallowCopy.
 	self assertIs: copy shallowCopyOf: set.
 	self assertValidSet: copy! !
-!Core.Tests.SetTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
-!Core.Tests.SetTest categoriesFor: #assertIs:shallowCopyOf:!private!unit tests! !
-!Core.Tests.SetTest categoriesFor: #assertValidSet:!private!unit tests! !
-!Core.Tests.SetTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.SetTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
-!Core.Tests.SetTest categoriesFor: #elements!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #loadFactor!constants!private! !
-!Core.Tests.SetTest categoriesFor: #minimumCapacity!constants!private! !
-!Core.Tests.SetTest categoriesFor: #newEmpty!helpers!private! !
-!Core.Tests.SetTest categoriesFor: #newSet!private!unit tests! !
-!Core.Tests.SetTest categoriesFor: #newSet:!private!unit tests! !
-!Core.Tests.SetTest categoriesFor: #setSizes!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testAddIfAbsent!public! !
-!Core.Tests.SetTest categoriesFor: #testAllHealthy!public! !
-!Core.Tests.SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testClassSizeFor!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testCopy!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testDeepCopy!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testEquals!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testIncludes!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testNil!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testRemove!public!unit tests! !
-!Core.Tests.SetTest categoriesFor: #testShallowCopy!public!unit tests! !
+!Core.Tests.SetTest categoriesForMethods!
+assertCommutativelyEqual:other:!helpers!private! !
+assertIs:shallowCopyOf:!private!unit tests! !
+assertValidSet:!private!unit tests! !
+collectionClass!helpers!private! !
+denyCommutativelyEqual:other:!helpers!private! !
+elements!public!unit tests! !
+loadFactor!constants!private! !
+minimumCapacity!constants!private! !
+newEmpty!helpers!private! !
+newSet!private!unit tests! !
+newSet:!private!unit tests! !
+setSizes!public!unit tests! !
+testAddIfAbsent!public! !
+testAllHealthy!public! !
+testAllInstancesValid!public!unit tests! !
+testClassSizeFor!public!unit tests! !
+testCopy!public!unit tests! !
+testDeepCopy!public!unit tests! !
+testEquals!public!unit tests! !
+testIncludes!public!unit tests! !
+testMaintainsLoadFactor!public!unit tests! !
+testNil!public!unit tests! !
+testRemove!public!unit tests! !
+testShallowCopy!public!unit tests! !
+!
 

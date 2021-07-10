@@ -15,5 +15,7 @@ main
 	"Start up the sample application"
 
 	BouncingBallView new showShell! !
-!UI.Examples.BouncingBallSessionManager categoriesFor: #main!operations-startup!public! !
+!UI.Examples.BouncingBallSessionManager categoriesForMethods!
+main!operations-startup!public! !
+!
 

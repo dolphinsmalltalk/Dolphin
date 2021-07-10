@@ -29,10 +29,12 @@ isSpecialVariable
 
 specialVariableInScope: anStSemanticScope
 	^self subclassResponsibility! !
-!Kernel.StSpecialVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StSpecialVariableNode categoriesFor: #isConstantNode!public!testing! !
-!Kernel.StSpecialVariableNode categoriesFor: #isSpecialVariable!public!testing! !
-!Kernel.StSpecialVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!Kernel.StSpecialVariableNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isConstantNode!public!testing! !
+isSpecialVariable!public!testing! !
+specialVariableInScope:!double dispatch!public! !
+!
 
 !Kernel.StSpecialVariableNode class methodsFor!
 
@@ -40,5 +42,7 @@ start: anInteger
 	^(self new)
 		setStart: anInteger;
 		yourself! !
-!Kernel.StSpecialVariableNode class categoriesFor: #start:!public! !
+!Kernel.StSpecialVariableNode class categoriesForMethods!
+start:!public! !
+!
 

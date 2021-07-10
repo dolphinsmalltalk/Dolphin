@@ -22,6 +22,8 @@ defaultPosition
 	by subclasses that wish to start off at another location"
 
 	^200 @ 100! !
-!UI.Examples.Square categoriesFor: #defaultColor!constants!public! !
-!UI.Examples.Square categoriesFor: #defaultPosition!constants!public! !
+!UI.Examples.Square categoriesForMethods!
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+!
 

@@ -67,13 +67,15 @@ uStateFor: aValue enabled: aBoolean
 	^aValue == false
 		ifTrue: [uState] 
 		ifFalse: [uState | DFCS_CHECKED]! !
-!EmbeddedCheckBox categoriesFor: #basicWindowStyle!constants!private! !
-!EmbeddedCheckBox categoriesFor: #defaultIStateId!constants!public! !
-!EmbeddedCheckBox categoriesFor: #iPartId!constants!public! !
-!EmbeddedCheckBox categoriesFor: #is3State!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #is3State:!accessing!public! !
-!EmbeddedCheckBox categoriesFor: #iStateFor:enabled:hot:!drawing!private! !
-!EmbeddedCheckBox categoriesFor: #uStateFor:enabled:!drawing!private! !
+!EmbeddedCheckBox categoriesForMethods!
+basicWindowStyle!constants!private! !
+defaultIStateId!constants!public! !
+iPartId!constants!public! !
+is3State!accessing!public! !
+is3State:!accessing!public! !
+iStateFor:enabled:hot:!drawing!private! !
+uStateFor:enabled:!drawing!private! !
+!
 
 !EmbeddedCheckBox class methodsFor!
 
@@ -81,5 +83,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^CheckBox icon! !
-!EmbeddedCheckBox class categoriesFor: #icon!constants!public! !
+!EmbeddedCheckBox class categoriesForMethods!
+icon!constants!public! !
+!
 

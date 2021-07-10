@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.StTokenTest subclass: #'Kernel.Tests.StOptimizedTokenTest'
 	instanceVariableNames: ''
@@ -35,6 +35,8 @@ testInstanceCreation
 	self assert: token2 start equals: 20.
 	self assert: token2 stop equals: 22.
 	self assert: token2 comments equals: nil! !
-!Kernel.Tests.StOptimizedTokenTest categoriesFor: #subjectClass!constants!private! !
-!Kernel.Tests.StOptimizedTokenTest categoriesFor: #testInstanceCreation!public!unit tests! !
+!Kernel.Tests.StOptimizedTokenTest categoriesForMethods!
+subjectClass!constants!private! !
+testInstanceCreation!public!unit tests! !
+!
 

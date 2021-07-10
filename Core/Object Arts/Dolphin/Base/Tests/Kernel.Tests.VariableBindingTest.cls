@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.AssociationTest subclass: #'Kernel.Tests.VariableBindingTest'
 	instanceVariableNames: ''
@@ -47,8 +47,10 @@ testRefersToLiteral
 	self assert: (method refersToLiteral: subject environment).
 	self deny: (method refersToLiteral: subject environment environment).
 	self deny: (method refersToLiteral: subject environment environment environment)! !
-!Kernel.Tests.VariableBindingTest categoriesFor: #testAbsoluteName!public!unit tests! !
-!Kernel.Tests.VariableBindingTest categoriesFor: #testFullName!public! !
-!Kernel.Tests.VariableBindingTest categoriesFor: #testFullyQualifiedReference!public! !
-!Kernel.Tests.VariableBindingTest categoriesFor: #testRefersToLiteral!public!unit tests! !
+!Kernel.Tests.VariableBindingTest categoriesForMethods!
+testAbsoluteName!public!unit tests! !
+testFullName!public! !
+testFullyQualifiedReference!public! !
+testRefersToLiteral!public!unit tests! !
+!
 

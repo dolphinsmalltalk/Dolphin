@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.VariableTypeTest'
 	instanceVariableNames: ''
@@ -55,8 +55,10 @@ testParseTreeTypes
 				model: model.
 	self assert: types size equals: 1.
 	self assert: (types includes: (model classFor: self class))! !
-!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testBasicLintRuleTypes!public!unit tests! !
-!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testCompositeLintRuleTypes!public!tests! !
-!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testLintRuleTypes!public!tests! !
-!Refactory.Browser.Tests.VariableTypeTest categoriesFor: #testParseTreeTypes!public!tests! !
+!Refactory.Browser.Tests.VariableTypeTest categoriesForMethods!
+testBasicLintRuleTypes!public!unit tests! !
+testCompositeLintRuleTypes!public!tests! !
+testLintRuleTypes!public!tests! !
+testParseTreeTypes!public!tests! !
+!
 

@@ -113,13 +113,15 @@ species
 	Weak types are generally considered as of the same species as their equivalent strong type."
 
 	^Set! !
-!Core.WeakSet categoriesFor: #copyEmpty:!copying!private! !
-!Core.WeakSet categoriesFor: #copyingClass!copying!private! !
-!Core.WeakSet categoriesFor: #do:!enumerating!public! !
-!Core.WeakSet categoriesFor: #elementsExpired:!finalizing!private! !
-!Core.WeakSet categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
-!Core.WeakSet categoriesFor: #initialize!initializing!private! !
-!Core.WeakSet categoriesFor: #species!accessing!public! !
+!Core.WeakSet categoriesForMethods!
+copyEmpty:!copying!private! !
+copyingClass!copying!private! !
+do:!enumerating!public! !
+elementsExpired:!finalizing!private! !
+fixCollisionsIgnoringCorpsesFrom:!private!removing! !
+initialize!initializing!private! !
+species!accessing!public! !
+!
 
 !Core.WeakSet class methodsFor!
 
@@ -129,5 +131,7 @@ initialize
 	effect repairs."
 
 	self makeMourner! !
-!Core.WeakSet class categoriesFor: #initialize!development!initializing!public! !
+!Core.WeakSet class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

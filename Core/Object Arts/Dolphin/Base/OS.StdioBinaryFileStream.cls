@@ -84,15 +84,17 @@ upToEnd
 	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block."
 
 	^self basicNext: self size - self position! !
-!OS.StdioBinaryFileStream categoriesFor: #contentsSpecies!constants!private! !
-!OS.StdioBinaryFileStream categoriesFor: #externalType!accessing!public! !
-!OS.StdioBinaryFileStream categoriesFor: #next!accessing!public! !
-!OS.StdioBinaryFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!OS.StdioBinaryFileStream categoriesFor: #nextLine!accessing!public! !
-!OS.StdioBinaryFileStream categoriesFor: #peek!accessing!public! !
-!OS.StdioBinaryFileStream categoriesFor: #peekFor:!accessing!public! !
-!OS.StdioBinaryFileStream categoriesFor: #translationMode!constants!private! !
-!OS.StdioBinaryFileStream categoriesFor: #upToEnd!accessing!public! !
+!OS.StdioBinaryFileStream categoriesForMethods!
+contentsSpecies!constants!private! !
+externalType!accessing!public! !
+next!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextLine!accessing!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+translationMode!constants!private! !
+upToEnd!accessing!public! !
+!
 
 !OS.StdioBinaryFileStream class methodsFor!
 
@@ -104,6 +106,8 @@ encodingType
 	Although this ought to be #binary at this level (untranslated binary being the most general), for historical compatibility it is not."
 
 	^#binary! !
-!OS.StdioBinaryFileStream class categoriesFor: #encodingMode!constants!private! !
-!OS.StdioBinaryFileStream class categoriesFor: #encodingType!constants!public! !
+!OS.StdioBinaryFileStream class categoriesForMethods!
+encodingMode!constants!private! !
+encodingType!constants!public! !
+!
 

@@ -54,7 +54,9 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(Graphics.TextTileIcon text: 'XP' fontName: 'Bauhaus 93')! !
-!XProgramming class categoriesFor: #icon!constants!public! !
+!XProgramming class categoriesForMethods!
+icon!constants!public! !
+!
 
 !XProgramming.SUnit class methodsFor!
 
@@ -62,7 +64,9 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!XProgramming.SUnit class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit class categoriesForMethods!
+icon!constants!public! !
+!
 
 !XProgramming.SUnit.TestCase class methodsFor!
 
@@ -72,7 +76,9 @@ icon
 	^##((Graphics.TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
 		textcolor: Graphics.Color lightSeaGreen;
 		yourself)! !
-!XProgramming.SUnit.TestCase class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit.TestCase class categoriesForMethods!
+icon!constants!public! !
+!
 
 !XProgramming.SUnit.TestCaseResult class methodsFor!
 
@@ -80,7 +86,9 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!XProgramming.SUnit.TestCaseResult class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit.TestCaseResult class categoriesForMethods!
+icon!constants!public! !
+!
 
 !XProgramming.SUnit.TestResource class methodsFor!
 
@@ -88,7 +96,9 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!XProgramming.SUnit.TestResource class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit.TestResource class categoriesForMethods!
+icon!constants!public! !
+!
 
 !XProgramming.SUnit.TestResult class methodsFor!
 
@@ -96,7 +106,9 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!XProgramming.SUnit.TestResult class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit.TestResult class categoriesForMethods!
+icon!constants!public! !
+!
 
 !XProgramming.SUnit.TestRunLogger class methodsFor!
 
@@ -104,7 +116,9 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!XProgramming.SUnit.TestRunLogger class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit.TestRunLogger class categoriesForMethods!
+icon!constants!public! !
+!
 
 !XProgramming.SUnit.TestSuite class methodsFor!
 
@@ -112,7 +126,9 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!XProgramming.SUnit.TestSuite class categoriesFor: #icon!constants!public! !
+!XProgramming.SUnit.TestSuite class categoriesForMethods!
+icon!constants!public! !
+!
 
 "End of package definition"!
 

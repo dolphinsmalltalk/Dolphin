@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.AnnouncementSetTest'
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ testInstanceCreation
 	| set |
 	set := AnnouncementMockA , AnnouncementMockB.
 	self assert: set size equals: 2! !
-!Kernel.Tests.AnnouncementSetTest categoriesFor: #testIncludeOnlyOnce!public!testing! !
-!Kernel.Tests.AnnouncementSetTest categoriesFor: #testInstanceCreation!public!testing! !
+!Kernel.Tests.AnnouncementSetTest categoriesForMethods!
+testIncludeOnlyOnce!public!testing! !
+testInstanceCreation!public!testing! !
+!
 

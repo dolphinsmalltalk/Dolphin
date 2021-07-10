@@ -30,15 +30,19 @@ errorStringFor: aBoolean
 printOn: aStream 
 	aStream nextPutAll: 'NOT ';
 		print: condition! !
-!Refactory.Browser.RBNegationCondition categoriesFor: #check!checking!public! !
-!Refactory.Browser.RBNegationCondition categoriesFor: #condition:!initialize/release!public! !
-!Refactory.Browser.RBNegationCondition categoriesFor: #errorBlockFor:!private! !
-!Refactory.Browser.RBNegationCondition categoriesFor: #errorStringFor:!private! !
-!Refactory.Browser.RBNegationCondition categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RBNegationCondition categoriesForMethods!
+check!checking!public! !
+condition:!initialize/release!public! !
+errorBlockFor:!private! !
+errorStringFor:!private! !
+printOn:!printing!public! !
+!
 
 !Refactory.Browser.RBNegationCondition class methodsFor!
 
 on: aCondition
 	^self new condition: aCondition! !
-!Refactory.Browser.RBNegationCondition class categoriesFor: #on:!instance creation!public! !
+!Refactory.Browser.RBNegationCondition class categoriesForMethods!
+on:!instance creation!public! !
+!
 

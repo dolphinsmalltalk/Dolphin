@@ -30,9 +30,11 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_value put: anInteger! !
-!External.SWORD categoriesFor: #isSigned!public!testing! !
-!External.SWORD categoriesFor: #value!**compiled accessors**!public! !
-!External.SWORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.SWORD categoriesForMethods!
+isSigned!public!testing! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.SWORD class methodsFor!
 
@@ -53,7 +55,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.SWORD class categoriesFor: #defineFields!public!template definition! !
-!External.SWORD class categoriesFor: #initialize!development!initializing!private! !
-!External.SWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.SWORD class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -108,19 +108,21 @@ socket: aSocket
 	"Private - Sets the socket instance variable to aSocket."
 
 	socket := aSocket! !
-!Net.SocketWriteStream categoriesFor: #close!operations!public! !
-!Net.SocketWriteStream categoriesFor: #flush!buffer!public! !
-!Net.SocketWriteStream categoriesFor: #growCollection!operations!private! !
-!Net.SocketWriteStream categoriesFor: #isBinary!public!testing! !
-!Net.SocketWriteStream categoriesFor: #isText!public!testing! !
-!Net.SocketWriteStream categoriesFor: #isText:!modes!public! !
-!Net.SocketWriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!Net.SocketWriteStream categoriesFor: #nextPut:!accessing!public! !
-!Net.SocketWriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!Net.SocketWriteStream categoriesFor: #on:!initializing!private! !
-!Net.SocketWriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!Net.SocketWriteStream categoriesFor: #socket!accessing!private! !
-!Net.SocketWriteStream categoriesFor: #socket:!accessing!private! !
+!Net.SocketWriteStream categoriesForMethods!
+close!operations!public! !
+flush!buffer!public! !
+growCollection!operations!private! !
+isBinary!public!testing! !
+isText!public!testing! !
+isText:!modes!public! !
+next:putAll:startingAt:!accessing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+on:!initializing!private! !
+primitiveNextPut:!accessing!private! !
+socket!accessing!private! !
+socket:!accessing!private! !
+!
 
 !Net.SocketWriteStream class methodsFor!
 
@@ -142,7 +144,9 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
-!Net.SocketWriteStream class categoriesFor: #bufferSize!constants!public! !
-!Net.SocketWriteStream class categoriesFor: #on:!instance creation!public! !
-!Net.SocketWriteStream class categoriesFor: #on:text:!instance creation!public! !
+!Net.SocketWriteStream class categoriesForMethods!
+bufferSize!constants!public! !
+on:!instance creation!public! !
+on:text:!instance creation!public! !
+!
 

@@ -206,28 +206,30 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
-!Core.Symbol categoriesFor: #argumentCount!accessing!public! !
-!Core.Symbol categoriesFor: #asString!converting!public! !
-!Core.Symbol categoriesFor: #asSymbol!converting!public! !
-!Core.Symbol categoriesFor: #copyEmpty:!private! !
-!Core.Symbol categoriesFor: #copyFrom:to:!copying!public! !
-!Core.Symbol categoriesFor: #copyingClass!copying!private! !
-!Core.Symbol categoriesFor: #deepCopy!copying!public! !
-!Core.Symbol categoriesFor: #displayString!printing!public! !
-!Core.Symbol categoriesFor: #forwardTo:!operations!public! !
-!Core.Symbol categoriesFor: #isAtomic!public!testing! !
-!Core.Symbol categoriesFor: #isInfix!public!testing! !
-!Core.Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
-!Core.Symbol categoriesFor: #keywords!accessing!public! !
-!Core.Symbol categoriesFor: #mutableCopy!copying!public! !
-!Core.Symbol categoriesFor: #numArgs!accessing!public! !
-!Core.Symbol categoriesFor: #printArgumentTypeOn:!printing!private! !
-!Core.Symbol categoriesFor: #printOn:!printing!public! !
-!Core.Symbol categoriesFor: #refersTo:asLiteralOf:!private!testing! !
-!Core.Symbol categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Core.Symbol categoriesFor: #shallowCopy!copying!public! !
-!Core.Symbol categoriesFor: #species!accessing!public! !
-!Core.Symbol categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.Symbol categoriesForMethods!
+argumentCount!accessing!public! !
+asString!converting!public! !
+asSymbol!converting!public! !
+copyEmpty:!private! !
+copyFrom:to:!copying!public! !
+copyingClass!copying!private! !
+deepCopy!copying!public! !
+displayString!printing!public! !
+forwardTo:!operations!public! !
+isAtomic!public!testing! !
+isInfix!public!testing! !
+isSymbol!public!RefactoringBrowser! !
+keywords!accessing!public! !
+mutableCopy!copying!public! !
+numArgs!accessing!public! !
+printArgumentTypeOn:!printing!private! !
+printOn:!printing!public! !
+refersTo:asLiteralOf:!private!testing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+shallowCopy!copying!public! !
+species!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 Core.Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
 Core.Symbol methodProtocol: #selector attributes: #(#ansi #readOnly) selectors: #()!
@@ -455,23 +457,25 @@ with: aCharacter
 
 withAll: anArrayOfCharacter
 	^self intern: (String withAll: anArrayOfCharacter)! !
-!Core.Symbol class categoriesFor: #addUnique:!accessing!private! !
-!Core.Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
-!Core.Symbol class categoriesFor: #coerceString:!instance creation!public! !
-!Core.Symbol class categoriesFor: #findInterned:!accessing!public! !
-!Core.Symbol class categoriesFor: #fromAddress:length:!instance creation!public! !
-!Core.Symbol class categoriesFor: #initialize!development!initializing!public! !
-!Core.Symbol class categoriesFor: #intern:!instance creation!public! !
-!Core.Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
-!Core.Symbol class categoriesFor: #internCharacter:!instance creation!public! !
-!Core.Symbol class categoriesFor: #isLiteralSymbol:!parsing!private! !
-!Core.Symbol class categoriesFor: #new:!instance creation!public! !
-!Core.Symbol class categoriesFor: #readFrom:!instance creation!public! !
-!Core.Symbol class categoriesFor: #resizeTable!initializing!private! !
-!Core.Symbol class categoriesFor: #resizeTable:!initializing!private! !
-!Core.Symbol class categoriesFor: #stats!development!private! !
-!Core.Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Core.Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
-!Core.Symbol class categoriesFor: #with:!instance creation!public! !
-!Core.Symbol class categoriesFor: #withAll:!instance creation!public! !
+!Core.Symbol class categoriesForMethods!
+addUnique:!accessing!private! !
+allInstancesDo:!enumerating!public! !
+coerceString:!instance creation!public! !
+findInterned:!accessing!public! !
+fromAddress:length:!instance creation!public! !
+initialize!development!initializing!public! !
+intern:!instance creation!public! !
+intern:cookie:!not restartable!private!vm entry points! !
+internCharacter:!instance creation!public! !
+isLiteralSymbol:!parsing!private! !
+new:!instance creation!public! !
+readFrom:!instance creation!public! !
+resizeTable!initializing!private! !
+resizeTable:!initializing!private! !
+stats!development!private! !
+stbReadFrom:format:!binary filing!public! !
+stbReadFromProxy:!binary filing!private! !
+with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 

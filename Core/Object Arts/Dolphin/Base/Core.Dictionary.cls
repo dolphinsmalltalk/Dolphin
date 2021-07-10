@@ -535,64 +535,66 @@ values
 	answer := OrderedCollection new: self size.
 	self do: [:value | answer addLast: value].
 	^answer! !
-!Core.Dictionary categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
-!Core.Dictionary categoriesFor: #=!comparing!public! !
-!Core.Dictionary categoriesFor: #add:!adding!public! !
-!Core.Dictionary categoriesFor: #addNewElement:!adding!public! !
-!Core.Dictionary categoriesFor: #asSet!converting!public! !
-!Core.Dictionary categoriesFor: #associationAt:!accessing!public! !
-!Core.Dictionary categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!Core.Dictionary categoriesFor: #associationAt:ifPresent:!accessing!public! !
-!Core.Dictionary categoriesFor: #associationClass!constants!private! !
-!Core.Dictionary categoriesFor: #associations!accessing!public! !
-!Core.Dictionary categoriesFor: #associationsDo:!enumerating!public! !
-!Core.Dictionary categoriesFor: #associationsDo:separatedBy:!enumerating!public! !
-!Core.Dictionary categoriesFor: #at:!accessing!public! !
-!Core.Dictionary categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.Dictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!Core.Dictionary categoriesFor: #at:ifAbsentPutClean:!accessing!public! !
-!Core.Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
-!Core.Dictionary categoriesFor: #at:ifPresent:!accessing!public! !
-!Core.Dictionary categoriesFor: #at:put:!accessing!public! !
-!Core.Dictionary categoriesFor: #atAll:put:!accessing!public! !
-!Core.Dictionary categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Core.Dictionary categoriesFor: #bindingFor:!bindings!public! !
-!Core.Dictionary categoriesFor: #bindingsDo:!enumerating!public! !
-!Core.Dictionary categoriesFor: #changeKey:to:!accessing!private! !
-!Core.Dictionary categoriesFor: #collect:!enumerating!public! !
-!Core.Dictionary categoriesFor: #copyElementsInto:!adding!private! !
-!Core.Dictionary categoriesFor: #do:!enumerating!public! !
-!Core.Dictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!Core.Dictionary categoriesFor: #findElementOrNil:!private!searching! !
-!Core.Dictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!Core.Dictionary categoriesFor: #identityIncludes:!public!searching! !
-!Core.Dictionary categoriesFor: #includes:!public!searching! !
-!Core.Dictionary categoriesFor: #includesAssociation:!public!searching! !
-!Core.Dictionary categoriesFor: #includesKey:!public!searching! !
-!Core.Dictionary categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!Core.Dictionary categoriesFor: #keyAtValue:!accessing!public! !
-!Core.Dictionary categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!Core.Dictionary categoriesFor: #keys!accessing!public! !
-!Core.Dictionary categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Core.Dictionary categoriesFor: #keysClass!constants!private! !
-!Core.Dictionary categoriesFor: #keysDo:!enumerating!public! !
-!Core.Dictionary categoriesFor: #lookup:!accessing!public! !
-!Core.Dictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!Core.Dictionary categoriesFor: #occurrencesOf:!public!searching! !
-!Core.Dictionary categoriesFor: #postCopy!copying!public! !
-!Core.Dictionary categoriesFor: #printOn:!printing!public! !
-!Core.Dictionary categoriesFor: #remove:ifAbsent:!public!removing! !
-!Core.Dictionary categoriesFor: #removeAllKeys:!public!removing! !
-!Core.Dictionary categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
-!Core.Dictionary categoriesFor: #removeAssociation:!public!removing! !
-!Core.Dictionary categoriesFor: #removeAssociation:ifAbsent:!public!removing! !
-!Core.Dictionary categoriesFor: #removeKey:!public!removing! !
-!Core.Dictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!Core.Dictionary categoriesFor: #searchPolicy!constants!public! !
-!Core.Dictionary categoriesFor: #select:!enumerating!public! !
-!Core.Dictionary categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.Dictionary categoriesFor: #storeOn:!printing!public! !
-!Core.Dictionary categoriesFor: #values!accessing!public! !
+!Core.Dictionary categoriesForMethods!
+_deepCopyElementsInto:trail:!copying!private! !
+=!comparing!public! !
+add:!adding!public! !
+addNewElement:!adding!public! !
+asSet!converting!public! !
+associationAt:!accessing!public! !
+associationAt:ifAbsent:!accessing!public! !
+associationAt:ifPresent:!accessing!public! !
+associationClass!constants!private! !
+associations!accessing!public! !
+associationsDo:!enumerating!public! !
+associationsDo:separatedBy:!enumerating!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:ifAbsentPutClean:!accessing!public! !
+at:ifAbsentPutValue:!accessing!public! !
+at:ifPresent:!accessing!public! !
+at:put:!accessing!public! !
+atAll:put:!accessing!public! !
+bestSlotFor:boundedBy:!development!private!statistics! !
+bindingFor:!bindings!public! !
+bindingsDo:!enumerating!public! !
+changeKey:to:!accessing!private! !
+collect:!enumerating!public! !
+copyElementsInto:!adding!private! !
+do:!enumerating!public! !
+errorKeyNotFound:!exceptions!private! !
+findElementOrNil:!private!searching! !
+findKeyOrNil:!private!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+includesAssociation:!public!searching! !
+includesKey:!public!searching! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keys!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysClass!constants!private! !
+keysDo:!enumerating!public! !
+lookup:!accessing!public! !
+newAssociation:value:!helpers!private! !
+occurrencesOf:!public!searching! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+remove:ifAbsent:!public!removing! !
+removeAllKeys:!public!removing! !
+removeAllKeys:ifAbsent:!public!removing! !
+removeAssociation:!public!removing! !
+removeAssociation:ifAbsent:!public!removing! !
+removeKey:!public!removing! !
+removeKey:ifAbsent:!public!removing! !
+searchPolicy!constants!public! !
+select:!enumerating!public! !
+stbSaveOn:!binary filing!public! !
+storeOn:!printing!public! !
+values!accessing!public! !
+!
 
 Core.Dictionary methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
 Core.Dictionary methodProtocol: #Dictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!

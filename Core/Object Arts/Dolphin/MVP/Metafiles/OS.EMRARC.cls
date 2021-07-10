@@ -71,12 +71,14 @@ rclBox: aRECT
 		from: ##(_OffsetOf_rclBox + 1)
 		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRARC categoriesFor: #ptlEnd!**compiled accessors**!public! !
-!OS.EMRARC categoriesFor: #ptlEnd:!**compiled accessors**!public! !
-!OS.EMRARC categoriesFor: #ptlStart!**compiled accessors**!public! !
-!OS.EMRARC categoriesFor: #ptlStart:!**compiled accessors**!public! !
-!OS.EMRARC categoriesFor: #rclBox!**compiled accessors**!public! !
-!OS.EMRARC categoriesFor: #rclBox:!**compiled accessors**!public! !
+!OS.EMRARC categoriesForMethods!
+ptlEnd!**compiled accessors**!public! !
+ptlEnd:!**compiled accessors**!public! !
+ptlStart!**compiled accessors**!public! !
+ptlStart:!**compiled accessors**!public! !
+rclBox!**compiled accessors**!public! !
+rclBox:!**compiled accessors**!public! !
+!
 
 !OS.EMRARC class methodsFor!
 
@@ -114,7 +116,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ARC. EMR_ARCTO. EMR_CHORD. EMR_PIE}! !
-!OS.EMRARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRARC class categoriesFor: #iTypes!constants!public! !
+!OS.EMRARC class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

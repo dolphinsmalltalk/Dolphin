@@ -44,11 +44,13 @@ stbFixup: inFiler at: anInteger
 
 withClassLocator: aClassLocator
 	^#{ClassStub} ifDefined: [:classStub | classStub withClassLocator: aClassLocator]! !
-!Kernel.STBClassProxy categoriesFor: #locatorKey:!accessing!private! !
-!Kernel.STBClassProxy categoriesFor: #packageName:!accessing!private! !
-!Kernel.STBClassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
-!Kernel.STBClassProxy categoriesFor: #stbFixup:at:!converting!public! !
-!Kernel.STBClassProxy categoriesFor: #withClassLocator:!converting!private! !
+!Kernel.STBClassProxy categoriesForMethods!
+locatorKey:!accessing!private! !
+packageName:!accessing!private! !
+resolveWithClassLocator:!converting!private! !
+stbFixup:at:!converting!public! !
+withClassLocator:!converting!private! !
+!
 
 !Kernel.STBClassProxy class methodsFor!
 
@@ -76,7 +78,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Kernel.STBClassProxy class categoriesFor: #forClass:!instance creation!public! !
-!Kernel.STBClassProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Kernel.STBClassProxy class categoriesFor: #stbVersion!binary filing!public! !
+!Kernel.STBClassProxy class categoriesForMethods!
+forClass:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

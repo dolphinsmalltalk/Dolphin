@@ -162,26 +162,28 @@ tmWeight
 	"Answer the <Integer> value of the receiver's 'tmWeight' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_tmWeight! !
-!OS.TEXTMETRICW categoriesFor: #tmAscent!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmAveCharWidth!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmBreakChar!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmCharSet!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmDefaultChar!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmDescent!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmDigitizedAspectX!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmDigitizedAspectY!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmExternalLeading!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmFirstChar!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmHeight!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmInternalLeading!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmItalic!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmLastChar!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmMaxCharWidth!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmOverhang!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmPitchAndFamily!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmStruckOut!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmUnderlined!**compiled accessors**!public! !
-!OS.TEXTMETRICW categoriesFor: #tmWeight!**compiled accessors**!public! !
+!OS.TEXTMETRICW categoriesForMethods!
+tmAscent!**compiled accessors**!public! !
+tmAveCharWidth!**compiled accessors**!public! !
+tmBreakChar!**compiled accessors**!public! !
+tmCharSet!**compiled accessors**!public! !
+tmDefaultChar!**compiled accessors**!public! !
+tmDescent!**compiled accessors**!public! !
+tmDigitizedAspectX!**compiled accessors**!public! !
+tmDigitizedAspectY!**compiled accessors**!public! !
+tmExternalLeading!**compiled accessors**!public! !
+tmFirstChar!**compiled accessors**!public! !
+tmHeight!**compiled accessors**!public! !
+tmInternalLeading!**compiled accessors**!public! !
+tmItalic!**compiled accessors**!public! !
+tmLastChar!**compiled accessors**!public! !
+tmMaxCharWidth!**compiled accessors**!public! !
+tmOverhang!**compiled accessors**!public! !
+tmPitchAndFamily!**compiled accessors**!public! !
+tmStruckOut!**compiled accessors**!public! !
+tmUnderlined!**compiled accessors**!public! !
+tmWeight!**compiled accessors**!public! !
+!
 
 !OS.TEXTMETRICW class methodsFor!
 
@@ -243,7 +245,9 @@ packing
 	"Uses non-standard packing"
 
 	^4! !
-!OS.TEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
-!OS.TEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.TEXTMETRICW class categoriesFor: #packing!constants!public! !
+!OS.TEXTMETRICW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

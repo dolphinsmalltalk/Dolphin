@@ -246,43 +246,45 @@ validateAlpha: anInteger
 	^(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE)
 		ifTrue: [anInteger]
 		ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #alpha!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #alpha:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #applyToView:initializing:!helpers!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicAlpha:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicForeAlpha:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicForecolor:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverForecolor:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicHoverStyle:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicId!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicStrokeWidth!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicStrokeWidth:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #flags!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #flags:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #foreAlpha!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #foreAlpha:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #forecolor!accessing!colors!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #forecolor:!accessing!colors!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #hoverForecolor!accessing!colors!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #hoverForecolor:!accessing!colors!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyle!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #hoverStyle:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #initialize!initializing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #isUnderText!public!testing! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #layer!private!testing! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #layer:!accessing!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #name!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #name:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #strokeWidth!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #strokeWidth:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #style!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #style:!accessing!public! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #styleFromName:!helpers!private! !
-!UI.Scintilla.IndicatorStyle categoriesFor: #validateAlpha:!helpers!private! !
+!UI.Scintilla.IndicatorStyle categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+applyToView:initializing:!helpers!private! !
+basicAlpha:!accessing!private! !
+basicForeAlpha:!accessing!private! !
+basicForecolor:!accessing!private! !
+basicHoverForecolor:!accessing!private! !
+basicHoverStyle!accessing!private! !
+basicHoverStyle:!accessing!private! !
+basicId!accessing!private! !
+basicStrokeWidth!accessing!private! !
+basicStrokeWidth:!accessing!private! !
+basicStyle!accessing!private! !
+basicStyle:!accessing!private! !
+flags!accessing!private! !
+flags:!accessing!private! !
+foreAlpha!accessing!public! !
+foreAlpha:!accessing!public! !
+forecolor!accessing!colors!public! !
+forecolor:!accessing!colors!public! !
+hoverForecolor!accessing!colors!public! !
+hoverForecolor:!accessing!colors!public! !
+hoverStyle!accessing!public! !
+hoverStyle:!accessing!public! !
+initialize!initializing!private! !
+isUnderText!public!testing! !
+isUnderText:!accessing!public! !
+layer!private!testing! !
+layer:!accessing!private! !
+name!accessing!public! !
+name:!accessing!public! !
+strokeWidth!accessing!public! !
+strokeWidth:!accessing!public! !
+style!accessing!public! !
+style:!accessing!public! !
+styleFromName:!helpers!private! !
+validateAlpha:!helpers!private! !
+!
 
 !UI.Scintilla.IndicatorStyle class methodsFor!
 
@@ -403,9 +405,11 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^4! !
-!UI.Scintilla.IndicatorStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!UI.Scintilla.IndicatorStyle class categoriesFor: #initialize!development!initializing!public! !
-!UI.Scintilla.IndicatorStyle class categoriesFor: #new!public! !
-!UI.Scintilla.IndicatorStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!UI.Scintilla.IndicatorStyle class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.IndicatorStyle class categoriesForMethods!
+buildPropertyMap!constants!must not strip!private! !
+initialize!development!initializing!public! !
+new!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

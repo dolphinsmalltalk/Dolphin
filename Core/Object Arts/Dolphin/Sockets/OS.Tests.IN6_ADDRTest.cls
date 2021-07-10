@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Tests.AbstractIN_ADDRTest subclass: #'OS.Tests.IN6_ADDRTest'
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ testDisplayOn
 	| subject |
 	subject := self canonicalInstance.
 	self assert: subject displayString equals: 'fe80::d26e:deff:fe52:46d0'! !
-!OS.Tests.IN6_ADDRTest categoriesFor: #canonicalInstance!helpers!private! !
-!OS.Tests.IN6_ADDRTest categoriesFor: #testDisplayOn!public!unit tests! !
+!OS.Tests.IN6_ADDRTest categoriesForMethods!
+canonicalInstance!helpers!private! !
+testDisplayOn!public!unit tests! !
+!
 

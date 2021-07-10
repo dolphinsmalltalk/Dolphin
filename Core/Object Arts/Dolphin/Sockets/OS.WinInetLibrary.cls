@@ -51,10 +51,12 @@ ping: aURL
 	"Attempts to ping aURL. Answers true if a reply is received."
 
 	^self internetCheckConnection: aURL dwFlags: 1 dwReserved: 0! !
-!OS.WinInetLibrary categoriesFor: #internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
-!OS.WinInetLibrary categoriesFor: #internetGoOnline:hwndParent:dwReserved:!public!win32 functions-internet! !
-!OS.WinInetLibrary categoriesFor: #internetOpen:dwAccessType:lpszProxyName:lpszProxyBypass:dwFlags:!public!win32 functions-internet! !
-!OS.WinInetLibrary categoriesFor: #ping:!operations!public! !
+!OS.WinInetLibrary categoriesForMethods!
+internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
+internetGoOnline:hwndParent:dwReserved:!public!win32 functions-internet! !
+internetOpen:dwAccessType:lpszProxyName:lpszProxyBypass:dwFlags:!public!win32 functions-internet! !
+ping:!operations!public! !
+!
 
 !OS.WinInetLibrary class methodsFor!
 
@@ -62,5 +64,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinInet'! !
-!OS.WinInetLibrary class categoriesFor: #fileName!constants!public! !
+!OS.WinInetLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

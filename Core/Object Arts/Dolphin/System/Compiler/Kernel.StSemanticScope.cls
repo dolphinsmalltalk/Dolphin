@@ -38,12 +38,14 @@ superVariable
 
 thisContextVariable
 	^self shouldNotImplement! !
-!Kernel.StSemanticScope categoriesFor: #environment:!accessing!public! !
-!Kernel.StSemanticScope categoriesFor: #isInlined!accessing!public! !
-!Kernel.StSemanticScope categoriesFor: #lookupVariable:!operations!public! !
-!Kernel.StSemanticScope categoriesFor: #outer!accessing!public! !
-!Kernel.StSemanticScope categoriesFor: #outer:!accessing!public! !
-!Kernel.StSemanticScope categoriesFor: #selfVariable!public! !
-!Kernel.StSemanticScope categoriesFor: #superVariable!public! !
-!Kernel.StSemanticScope categoriesFor: #thisContextVariable!public! !
+!Kernel.StSemanticScope categoriesForMethods!
+environment:!accessing!public! !
+isInlined!accessing!public! !
+lookupVariable:!operations!public! !
+outer!accessing!public! !
+outer:!accessing!public! !
+selfVariable!public! !
+superVariable!public! !
+thisContextVariable!public! !
+!
 

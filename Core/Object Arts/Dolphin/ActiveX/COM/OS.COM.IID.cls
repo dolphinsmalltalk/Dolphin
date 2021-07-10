@@ -28,8 +28,10 @@ interfaceName
 	development/debugging and tools, rather than for use in applications."
 
 	^(((RegKey classesRoot: #read) at: 'Interface') at: self asString ifAbsent: [^nil]) value! !
-!OS.COM.IID categoriesFor: #displayOn:!displaying!public! !
-!OS.COM.IID categoriesFor: #interfaceName!accessing!public! !
+!OS.COM.IID categoriesForMethods!
+displayOn:!displaying!public! !
+interfaceName!accessing!public! !
+!
 
 !OS.COM.IID class methodsFor!
 
@@ -39,5 +41,7 @@ initialize
 	"
 
 	self extraInstanceSpec: ByteSize! !
-!OS.COM.IID class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.IID class categoriesForMethods!
+initialize!development!initializing!private! !
+!
 

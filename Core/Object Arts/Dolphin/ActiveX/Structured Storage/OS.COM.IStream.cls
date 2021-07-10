@@ -431,55 +431,57 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	<virtual stdcall: hresult 12 qword qword dword>
 	^self invalidCall: _failureCode! !
-!OS.COM.IStream categoriesFor: #at:!accessing!public! !
-!OS.COM.IStream categoriesFor: #at:put:!accessing!public! !
-!OS.COM.IStream categoriesFor: #atEnd!public!testing! !
-!OS.COM.IStream categoriesFor: #cacheStats!helpers!private! !
-!OS.COM.IStream categoriesFor: #Clone:!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #Commit:!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #contents!accessing!public! !
-!OS.COM.IStream categoriesFor: #copy!copying!public! !
-!OS.COM.IStream categoriesFor: #copyFrom:to:!copying!public! !
-!OS.COM.IStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #copyTo:count:!copying!public! !
-!OS.COM.IStream categoriesFor: #cr!accessing!public! !
-!OS.COM.IStream categoriesFor: #do:!public! !
-!OS.COM.IStream categoriesFor: #fastFlush!operations!public! !
-!OS.COM.IStream categoriesFor: #flush!operations!public! !
-!OS.COM.IStream categoriesFor: #grow!accessing!private! !
-!OS.COM.IStream categoriesFor: #handle!accessing!public! !
-!OS.COM.IStream categoriesFor: #isEmpty!public!testing! !
-!OS.COM.IStream categoriesFor: #isReadable!public!testing! !
-!OS.COM.IStream categoriesFor: #isWriteable!public!testing! !
-!OS.COM.IStream categoriesFor: #lockFrom:to:!operations!public! !
-!OS.COM.IStream categoriesFor: #lockFrom:to:type:!operations!public! !
-!OS.COM.IStream categoriesFor: #LockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #mode!accessing!public! !
-!OS.COM.IStream categoriesFor: #name!accessing!public! !
-!OS.COM.IStream categoriesFor: #nextCLSID!accessing!public! !
-!OS.COM.IStream categoriesFor: #nextLine!accessing!public! !
-!OS.COM.IStream categoriesFor: #nextPutCLSID:!accessing!public! !
-!OS.COM.IStream categoriesFor: #notEmpty!public!testing! !
-!OS.COM.IStream categoriesFor: #peek!accessing!public! !
-!OS.COM.IStream categoriesFor: #peekFor:!accessing!public! !
-!OS.COM.IStream categoriesFor: #position!accessing!public! !
-!OS.COM.IStream categoriesFor: #position:!accessing!public! !
-!OS.COM.IStream categoriesFor: #reset!accessing!public! !
-!OS.COM.IStream categoriesFor: #resize:!accessing!public! !
-!OS.COM.IStream categoriesFor: #Revert!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #rollback!operations!public! !
-!OS.COM.IStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #SetSize:!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #setToEnd!positioning!public! !
-!OS.COM.IStream categoriesFor: #size!accessing!public! !
-!OS.COM.IStream categoriesFor: #skip:!positioning!public! !
-!OS.COM.IStream categoriesFor: #space!accessing!public! !
-!OS.COM.IStream categoriesFor: #stat!accessing!public! !
-!OS.COM.IStream categoriesFor: #Stat:grfStatFlag:!**auto generated**!primitives!public! !
-!OS.COM.IStream categoriesFor: #tab!accessing!public! !
-!OS.COM.IStream categoriesFor: #unlockFrom:to:!operations!public! !
-!OS.COM.IStream categoriesFor: #unlockFrom:to:type:!operations!public! !
-!OS.COM.IStream categoriesFor: #UnlockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+!OS.COM.IStream categoriesForMethods!
+at:!accessing!public! !
+at:put:!accessing!public! !
+atEnd!public!testing! !
+cacheStats!helpers!private! !
+Clone:!**auto generated**!primitives!public! !
+Commit:!**auto generated**!primitives!public! !
+contents!accessing!public! !
+copy!copying!public! !
+copyFrom:to:!copying!public! !
+CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!primitives!public! !
+copyTo:count:!copying!public! !
+cr!accessing!public! !
+do:!public! !
+fastFlush!operations!public! !
+flush!operations!public! !
+grow!accessing!private! !
+handle!accessing!public! !
+isEmpty!public!testing! !
+isReadable!public!testing! !
+isWriteable!public!testing! !
+lockFrom:to:!operations!public! !
+lockFrom:to:type:!operations!public! !
+LockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+mode!accessing!public! !
+name!accessing!public! !
+nextCLSID!accessing!public! !
+nextLine!accessing!public! !
+nextPutCLSID:!accessing!public! !
+notEmpty!public!testing! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+position!accessing!public! !
+position:!accessing!public! !
+reset!accessing!public! !
+resize:!accessing!public! !
+Revert!**auto generated**!primitives!public! !
+rollback!operations!public! !
+Seek:dwOrigin:plibNewPosition:!**auto generated**!primitives!public! !
+SetSize:!**auto generated**!primitives!public! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+skip:!positioning!public! !
+space!accessing!public! !
+stat!accessing!public! !
+Stat:grfStatFlag:!**auto generated**!primitives!public! !
+tab!accessing!public! !
+unlockFrom:to:!operations!public! !
+unlockFrom:to:type:!operations!public! !
+UnlockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+!
 
 OS.COM.IStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
 OS.COM.IStream methodProtocol: #IStream attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:cb:pcbRead:pcbWritten: #LockRegion:cb:dwLockType: #Read:cb:pcbRead: #Revert #Seek:dwOrigin:plibNewPosition: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #Write:cb:pcbWritten:)!
@@ -546,9 +548,11 @@ onURL: urlString
 		dwReserved: 0
 		lpfnCB: nil.
 	^answer! !
-!OS.COM.IStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!OS.COM.IStream class categoriesFor: #fromBytes:!instance creation!public! !
-!OS.COM.IStream class categoriesFor: #onHGLOBAL!instance creation!public! !
-!OS.COM.IStream class categoriesFor: #onHGLOBAL:!instance creation!public! !
-!OS.COM.IStream class categoriesFor: #onURL:!instance creation!public! !
+!OS.COM.IStream class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+fromBytes:!instance creation!public! !
+onHGLOBAL!instance creation!public! !
+onHGLOBAL:!instance creation!public! !
+onURL:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.BlockClosureTest'
 	instanceVariableNames: 'x'
@@ -330,22 +330,24 @@ testValueWithArguments
 		should: [[:i | 3 + 4] valueWithArguments: #(1 2)]
 		raise: Error
 		matching: [:err | err description = 'Block expects 1 argument(s), 2 given']! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #blockWithCopiedValue:!helpers!private! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn!helpers!private! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn1!helpers!private! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn2!helpers!private! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #nestedReturn3!helpers!private! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testCopyingBlock!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testCull!public!tests / evaluating! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testCullCull!public!tests / evaluating! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testCullCullCull!public!tests / evaluating! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testCullCullCullCull!public!tests / evaluating! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testEmptyBlock!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testEnsure!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testEqualityOfBlocksFromSameMethod!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testNesting!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testNoArguments!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testOneArgument!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testRecursiveBlock!public!unit tests! !
-!Kernel.Tests.BlockClosureTest categoriesFor: #testValueWithArguments!public!unit tests! !
+!Kernel.Tests.BlockClosureTest categoriesForMethods!
+blockWithCopiedValue:!helpers!private! !
+nestedReturn!helpers!private! !
+nestedReturn1!helpers!private! !
+nestedReturn2!helpers!private! !
+nestedReturn3!helpers!private! !
+testCopyingBlock!public!unit tests! !
+testCull!public!tests / evaluating! !
+testCullCull!public!tests / evaluating! !
+testCullCullCull!public!tests / evaluating! !
+testCullCullCullCull!public!tests / evaluating! !
+testEmptyBlock!public!unit tests! !
+testEnsure!public!unit tests! !
+testEqualityOfBlocksFromSameMethod!public!unit tests! !
+testNesting!public!unit tests! !
+testNoArguments!public!unit tests! !
+testOneArgument!public!unit tests! !
+testRecursiveBlock!public!unit tests! !
+testValueWithArguments!public!unit tests! !
+!
 

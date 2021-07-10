@@ -46,10 +46,12 @@ testWindowsDirectory
 	actual := SessionManager current windowsDirectory.
 	self assert: (File isDirectory: actual).
 	self assert: (actual sameAs: windows)! !
-!Kernel.Tests.SessionManagerTest categoriesFor: #testComputerName!public!unit tests! !
-!Kernel.Tests.SessionManagerTest categoriesFor: #testDocumentsDirectory!public!unit tests! !
-!Kernel.Tests.SessionManagerTest categoriesFor: #testGetEnv!public!unit tests! !
-!Kernel.Tests.SessionManagerTest categoriesFor: #testSystemDirectory!public!unit tests! !
-!Kernel.Tests.SessionManagerTest categoriesFor: #testUsername!public!unit tests! !
-!Kernel.Tests.SessionManagerTest categoriesFor: #testWindowsDirectory!public!unit tests! !
+!Kernel.Tests.SessionManagerTest categoriesForMethods!
+testComputerName!public!unit tests! !
+testDocumentsDirectory!public!unit tests! !
+testGetEnv!public!unit tests! !
+testSystemDirectory!public!unit tests! !
+testUsername!public!unit tests! !
+testWindowsDirectory!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Tests.AbstractRectangleTest subclass: #'Graphics.Tests.RectangleTest'
 	instanceVariableNames: ''
@@ -44,7 +44,9 @@ testInsetBy
 	self assert: (desktop insetBy: 1 @ 2) equals: (1 @ 2 corner: 1279 @ 1022).
 	self assert: ((1 @ 2 corner: 3 @ 4) insetBy: (2 @ 0 corner: 0 @ 0)) equals: (3 @ 2 corner: 3 @ 4).
 	#todo	"Add more insetBy: <Rectangle> tests"! !
-!Graphics.Tests.RectangleTest categoriesFor: #subjectClass!constants!private! !
-!Graphics.Tests.RectangleTest categoriesFor: #testAreasOutside!public!unit tests! !
-!Graphics.Tests.RectangleTest categoriesFor: #testInsetBy!public!unit tests! !
+!Graphics.Tests.RectangleTest categoriesForMethods!
+subjectClass!constants!private! !
+testAreasOutside!public!unit tests! !
+testInsetBy!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.FormatterTest'
 	instanceVariableNames: 'settings'
@@ -285,31 +285,33 @@ testSmokeTest
 
 testUnaryMessage
 	self runTestForPairs: #(#('self halt') #('self halt halt'))! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #runMethodTestFor:!private! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #runTestForPairs:!private! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #setUp!public!running! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #smokeTestAllMethodsOfHierarchy:!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #smokeTestForMethodsOfClasses:!helpers!private! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #tearDown!public!running! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testAllSettingsInitialized!public!unit tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testAssignments!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBeginningNewLines!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBinaryMessage!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBlock!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testBlockArguments!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testCascadeKeywordMessages!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testCascadeMessages!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testFormatVariable!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testIndent!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testKeywordMessage!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testLiterals!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testLongSelectors!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testMethod!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testMethodComment!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testNoNewlineCascadeMessages!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testPeriodTerminators!public! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testReturn!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testSequence!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testSmokeTest!public!tests! !
-!Refactory.Browser.Tests.FormatterTest categoriesFor: #testUnaryMessage!public!tests! !
+!Refactory.Browser.Tests.FormatterTest categoriesForMethods!
+runMethodTestFor:!private! !
+runTestForPairs:!private! !
+setUp!public!running! !
+smokeTestAllMethodsOfHierarchy:!public!tests! !
+smokeTestForMethodsOfClasses:!helpers!private! !
+tearDown!public!running! !
+testAllSettingsInitialized!public!unit tests! !
+testAssignments!public!tests! !
+testBeginningNewLines!public!tests! !
+testBinaryMessage!public!tests! !
+testBlock!public!tests! !
+testBlockArguments!public!tests! !
+testCascadeKeywordMessages!public!tests! !
+testCascadeMessages!public!tests! !
+testFormatVariable!public!tests! !
+testIndent!public!tests! !
+testKeywordMessage!public!tests! !
+testLiterals!public!tests! !
+testLongSelectors!public!tests! !
+testMethod!public!tests! !
+testMethodComment!public!tests! !
+testNoNewlineCascadeMessages!public!tests! !
+testPeriodTerminators!public! !
+testReturn!public!tests! !
+testSequence!public!tests! !
+testSmokeTest!public!tests! !
+testUnaryMessage!public!tests! !
+!
 

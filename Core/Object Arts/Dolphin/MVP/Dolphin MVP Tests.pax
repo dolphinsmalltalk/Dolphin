@@ -706,9 +706,11 @@ testShellReadWrite
 	[shell2 := self simpleReadWriteOf: shell1 context: UI.View desktop] ensure: 
 			[shell1 destroy.
 			shell2 destroy]! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testRectangleReadWrite!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testResourceReadWrite!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testShellReadWrite!public!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesForMethods!
+testRectangleReadWrite!public!unit tests! !
+testResourceReadWrite!public!unit tests! !
+testShellReadWrite!public!unit tests! !
+!
 
 "End of package definition"!
 

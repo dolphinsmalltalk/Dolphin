@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTestClassResource subclass: #'Core.Tests.ExceptionTesterClasses'
 	instanceVariableNames: 'testNotificationClass resumableErrorClass testErrorClass'
@@ -47,10 +47,12 @@ testErrorClass
 
 testNotificationClass
 	^testNotificationClass! !
-!Core.Tests.ExceptionTesterClasses categoriesFor: #createClasses!Init / Release!public! !
-!Core.Tests.ExceptionTesterClasses categoriesFor: #isAvailable!public!Testing! !
-!Core.Tests.ExceptionTesterClasses categoriesFor: #resumableErrorClass!accessing!public! !
-!Core.Tests.ExceptionTesterClasses categoriesFor: #tearDown!public!Running! !
-!Core.Tests.ExceptionTesterClasses categoriesFor: #testErrorClass!accessing!public! !
-!Core.Tests.ExceptionTesterClasses categoriesFor: #testNotificationClass!accessing!public! !
+!Core.Tests.ExceptionTesterClasses categoriesForMethods!
+createClasses!Init / Release!public! !
+isAvailable!public!Testing! !
+resumableErrorClass!accessing!public! !
+tearDown!public!Running! !
+testErrorClass!accessing!public! !
+testNotificationClass!accessing!public! !
+!
 

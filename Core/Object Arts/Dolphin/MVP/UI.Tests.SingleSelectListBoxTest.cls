@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.ListBoxTest subclass: #'UI.Tests.SingleSelectListBoxTest'
 	instanceVariableNames: ''
@@ -47,11 +47,15 @@ testSelectionModeChange
 		against: presenter.
 	"#115: Changing list box selection mode fails if there are selections"
 	self assert: presenter view selectionsByIndex equals: #(2)! !
-!UI.Tests.SingleSelectListBoxTest categoriesFor: #testSelectionModeChange!public!unit tests! !
+!UI.Tests.SingleSelectListBoxTest categoriesForMethods!
+testSelectionModeChange!public!unit tests! !
+!
 
 !UI.Tests.SingleSelectListBoxTest class methodsFor!
 
 classToTest
 	^ListPresenter! !
-!UI.Tests.SingleSelectListBoxTest class categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.SingleSelectListBoxTest class categoriesForMethods!
+classToTest!helpers!private! !
+!
 

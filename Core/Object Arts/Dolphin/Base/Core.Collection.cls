@@ -550,68 +550,70 @@ union: comperand
 	^(Set withAll: self)
 		addAll: comperand;
 		yourself! !
-!Core.Collection categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Core.Collection categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
-!Core.Collection categoriesFor: #add:!adding!public! !
-!Core.Collection categoriesFor: #addAll:!adding!public! !
-!Core.Collection categoriesFor: #allSatisfy:!enumerating!public! !
-!Core.Collection categoriesFor: #anyOne!accessing!public! !
-!Core.Collection categoriesFor: #anySatisfy:!enumerating!public! !
-!Core.Collection categoriesFor: #appendToStream:!double dispatch!private! !
-!Core.Collection categoriesFor: #approxSize!accessing!private! !
-!Core.Collection categoriesFor: #asArray!converting!public! !
-!Core.Collection categoriesFor: #asBag!converting!public! !
-!Core.Collection categoriesFor: #asByteArray!converting!public! !
-!Core.Collection categoriesFor: #asIdentitySet!converting!public! !
-!Core.Collection categoriesFor: #asOrderedCollection!converting!public! !
-!Core.Collection categoriesFor: #asSet!converting!public! !
-!Core.Collection categoriesFor: #asSortedCollection!converting!public! !
-!Core.Collection categoriesFor: #asSortedCollection:!converting!public! !
-!Core.Collection categoriesFor: #asSortedCollectionUsing:!converting!public! !
-!Core.Collection categoriesFor: #collect:!enumerating!public! !
-!Core.Collection categoriesFor: #copyEmpty!copying!public! !
-!Core.Collection categoriesFor: #copyEmpty:!copying!private! !
-!Core.Collection categoriesFor: #copyingClass!copying!private! !
-!Core.Collection categoriesFor: #copyLike!copying!private! !
-!Core.Collection categoriesFor: #copySize!copying!private! !
-!Core.Collection categoriesFor: #copyWithoutDuplicates!copying!public! !
-!Core.Collection categoriesFor: #count:!enumerating!public! !
-!Core.Collection categoriesFor: #countElements!accessing!private! !
-!Core.Collection categoriesFor: #detect:!public!searching! !
-!Core.Collection categoriesFor: #detect:ifNone:!public!searching! !
-!Core.Collection categoriesFor: #difference:!public!set operations! !
-!Core.Collection categoriesFor: #distinct!public!set operations! !
-!Core.Collection categoriesFor: #do:!enumerating!public! !
-!Core.Collection categoriesFor: #do:separatedBy:!enumerating!public! !
-!Core.Collection categoriesFor: #errorEmptyCollection!exceptions!private! !
-!Core.Collection categoriesFor: #errorNotKeyed!exceptions!private! !
-!Core.Collection categoriesFor: #errorValueNotFound:!exceptions!private! !
-!Core.Collection categoriesFor: #fold:!enumerating!public! !
-!Core.Collection categoriesFor: #growSize!accessing!private! !
-!Core.Collection categoriesFor: #identityIncludes:!public!searching! !
-!Core.Collection categoriesFor: #includes:!public!searching! !
-!Core.Collection categoriesFor: #inject:into:!enumerating!public! !
-!Core.Collection categoriesFor: #intersection:!public!set operations! !
-!Core.Collection categoriesFor: #isEmpty!public!testing! !
-!Core.Collection categoriesFor: #newSelection!enumerating!private! !
-!Core.Collection categoriesFor: #noDifference:!public!set operations! !
-!Core.Collection categoriesFor: #notEmpty!public!testing! !
-!Core.Collection categoriesFor: #occurrencesOf:!public!searching! !
-!Core.Collection categoriesFor: #printOn:!printing!public! !
-!Core.Collection categoriesFor: #rehash!operations!public! !
-!Core.Collection categoriesFor: #reject:!enumerating!public! !
-!Core.Collection categoriesFor: #remove:!public!removing! !
-!Core.Collection categoriesFor: #remove:ifAbsent:!public!removing! !
-!Core.Collection categoriesFor: #removeAll!public! !
-!Core.Collection categoriesFor: #removeAll:!public!removing! !
-!Core.Collection categoriesFor: #removeAllSuchThat:!public!removing! !
-!Core.Collection categoriesFor: #select:!enumerating!public! !
-!Core.Collection categoriesFor: #select:thenCollect:!enumerating!public! !
-!Core.Collection categoriesFor: #size!accessing!public! !
-!Core.Collection categoriesFor: #split:!public!tokenizing! !
-!Core.Collection categoriesFor: #storeOn:!printing!public! !
-!Core.Collection categoriesFor: #symmetricDifference:!public!set operations! !
-!Core.Collection categoriesFor: #union:!public!set operations! !
+!Core.Collection categoriesForMethods!
+_beginsString:!comparing!double dispatch!private! !
+_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
+add:!adding!public! !
+addAll:!adding!public! !
+allSatisfy:!enumerating!public! !
+anyOne!accessing!public! !
+anySatisfy:!enumerating!public! !
+appendToStream:!double dispatch!private! !
+approxSize!accessing!private! !
+asArray!converting!public! !
+asBag!converting!public! !
+asByteArray!converting!public! !
+asIdentitySet!converting!public! !
+asOrderedCollection!converting!public! !
+asSet!converting!public! !
+asSortedCollection!converting!public! !
+asSortedCollection:!converting!public! !
+asSortedCollectionUsing:!converting!public! !
+collect:!enumerating!public! !
+copyEmpty!copying!public! !
+copyEmpty:!copying!private! !
+copyingClass!copying!private! !
+copyLike!copying!private! !
+copySize!copying!private! !
+copyWithoutDuplicates!copying!public! !
+count:!enumerating!public! !
+countElements!accessing!private! !
+detect:!public!searching! !
+detect:ifNone:!public!searching! !
+difference:!public!set operations! !
+distinct!public!set operations! !
+do:!enumerating!public! !
+do:separatedBy:!enumerating!public! !
+errorEmptyCollection!exceptions!private! !
+errorNotKeyed!exceptions!private! !
+errorValueNotFound:!exceptions!private! !
+fold:!enumerating!public! !
+growSize!accessing!private! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+inject:into:!enumerating!public! !
+intersection:!public!set operations! !
+isEmpty!public!testing! !
+newSelection!enumerating!private! !
+noDifference:!public!set operations! !
+notEmpty!public!testing! !
+occurrencesOf:!public!searching! !
+printOn:!printing!public! !
+rehash!operations!public! !
+reject:!enumerating!public! !
+remove:!public!removing! !
+remove:ifAbsent:!public!removing! !
+removeAll!public! !
+removeAll:!public!removing! !
+removeAllSuchThat:!public!removing! !
+select:!enumerating!public! !
+select:thenCollect:!enumerating!public! !
+size!accessing!public! !
+split:!public!tokenizing! !
+storeOn:!printing!public! !
+symmetricDifference:!public!set operations! !
+union:!public!set operations! !
+!
 
 Core.Collection methodProtocol: #collection attributes: #(#ansi #readOnly) selectors: #(#allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #select: #size)!
 Core.Collection methodProtocol: #extensibleCollection attributes: #(#ansi #readOnly) selectors: #(#add: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
@@ -686,14 +688,16 @@ withAll: newElements
 	^(self new: newElements size)
 		addAll: newElements;
 		yourself! !
-!Core.Collection class categoriesFor: #defaultSortAlgorithmClass!instance creation!public! !
-!Core.Collection class categoriesFor: #initialize!development!initializing!private! !
-!Core.Collection class categoriesFor: #with:!instance creation!public! !
-!Core.Collection class categoriesFor: #with:with:!instance creation!public! !
-!Core.Collection class categoriesFor: #with:with:with:!instance creation!public! !
-!Core.Collection class categoriesFor: #with:with:with:with:!instance creation!public! !
-!Core.Collection class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!Core.Collection class categoriesFor: #withAll:!instance creation!public! !
+!Core.Collection class categoriesForMethods!
+defaultSortAlgorithmClass!instance creation!public! !
+initialize!development!initializing!private! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 
 Core.Collection class methodProtocol: #'collection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new:)!
 Core.Collection class methodProtocol: #'initializeableCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!

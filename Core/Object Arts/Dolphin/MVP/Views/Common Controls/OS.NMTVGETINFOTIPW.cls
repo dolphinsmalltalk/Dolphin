@@ -40,11 +40,13 @@ pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
-!OS.NMTVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!OS.NMTVGETINFOTIPW categoriesFor: #hItem!**compiled accessors**!public! !
-!OS.NMTVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
-!OS.NMTVGETINFOTIPW categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.NMTVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
+!OS.NMTVGETINFOTIPW categoriesForMethods!
+cchTextMax!**compiled accessors**!public! !
+hItem!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+lParam!**compiled accessors**!public! !
+pszText!**compiled accessors**!public! !
+!
 
 !OS.NMTVGETINFOTIPW class methodsFor!
 
@@ -62,6 +64,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !
-!OS.NMTVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMTVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTVGETINFOTIPW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

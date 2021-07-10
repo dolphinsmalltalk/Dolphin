@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #WriteStreamFactoryANSITest
 	instanceVariableNames: ''
@@ -22,7 +22,9 @@ testXwithX
 		should: [:r | r position = 'this is a string' size & (r contents = 'this is a string')]
 		conformTo: self protocol
 		selector: #with:! !
-!WriteStreamFactoryANSITest categoriesFor: #canonicalObject!public! !
-!WriteStreamFactoryANSITest categoriesFor: #protocol!public! !
-!WriteStreamFactoryANSITest categoriesFor: #testXwithX!public! !
+!WriteStreamFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXwithX!public! !
+!
 

@@ -51,13 +51,15 @@ selector
 	<failedMessage>."
 
 	^self message selector! !
-!Core.MessageNotUnderstood categoriesFor: #_descriptionArguments!displaying!public! !
-!Core.MessageNotUnderstood categoriesFor: #_descriptionFormat!displaying!public! !
-!Core.MessageNotUnderstood categoriesFor: #isResumable!public!testing! !
-!Core.MessageNotUnderstood categoriesFor: #message!accessing!public! !
-!Core.MessageNotUnderstood categoriesFor: #receiver!accessing!public! !
-!Core.MessageNotUnderstood categoriesFor: #receiver:!accessing!public! !
-!Core.MessageNotUnderstood categoriesFor: #selector!accessing!public! !
+!Core.MessageNotUnderstood categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+isResumable!public!testing! !
+message!accessing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+selector!accessing!public! !
+!
 
 Core.MessageNotUnderstood methodProtocol: #MessageNotUnderstood attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #message #messageText #messageText: #outer #pass #receiver #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -71,7 +73,9 @@ receiver: anObject message: aMessage
 		receiver: anObject;
 		tag: aMessage;
 		signal! !
-!Core.MessageNotUnderstood class categoriesFor: #receiver:message:!instance creation!public! !
+!Core.MessageNotUnderstood class categoriesForMethods!
+receiver:message:!instance creation!public! !
+!
 
 Core.MessageNotUnderstood class methodProtocol: #MessageNotUnderstoodSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 

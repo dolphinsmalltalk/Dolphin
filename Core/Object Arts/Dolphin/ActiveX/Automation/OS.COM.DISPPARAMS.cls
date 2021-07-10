@@ -163,20 +163,22 @@ singleArg
 	"Answer the single VARIANT parameter - assumes cArgs == 1"
 
 	^VARIANT fromAddress: (bytes intPtrAtOffset: 0)! !
-!OS.COM.DISPPARAMS categoriesFor: #arg:!accessing!public! !
-!OS.COM.DISPPARAMS categoriesFor: #args:!accessing!public! !
-!OS.COM.DISPPARAMS categoriesFor: #cArgs!**compiled accessors**!private! !
-!OS.COM.DISPPARAMS categoriesFor: #cArgs:!**compiled accessors**!private! !
-!OS.COM.DISPPARAMS categoriesFor: #cNamedArgs!**compiled accessors**!private! !
-!OS.COM.DISPPARAMS categoriesFor: #cNamedArgs:!**compiled accessors**!private! !
-!OS.COM.DISPPARAMS categoriesFor: #names:named:args:!accessing!public! !
-!OS.COM.DISPPARAMS categoriesFor: #propertyPut:value:!accessing!public! !
-!OS.COM.DISPPARAMS categoriesFor: #propertyPutValue:!accessing!public! !
-!OS.COM.DISPPARAMS categoriesFor: #rgdispidNamedArgs!**compiled accessors**!public! !
-!OS.COM.DISPPARAMS categoriesFor: #rgdispidNamedArgs:!**compiled accessors**!public! !
-!OS.COM.DISPPARAMS categoriesFor: #rgvarg!**compiled accessors**!public! !
-!OS.COM.DISPPARAMS categoriesFor: #rgvarg:!**compiled accessors**!public! !
-!OS.COM.DISPPARAMS categoriesFor: #singleArg!accessing!public! !
+!OS.COM.DISPPARAMS categoriesForMethods!
+arg:!accessing!public! !
+args:!accessing!public! !
+cArgs!**compiled accessors**!private! !
+cArgs:!**compiled accessors**!private! !
+cNamedArgs!**compiled accessors**!private! !
+cNamedArgs:!**compiled accessors**!private! !
+names:named:args:!accessing!public! !
+propertyPut:value:!accessing!public! !
+propertyPutValue:!accessing!public! !
+rgdispidNamedArgs!**compiled accessors**!public! !
+rgdispidNamedArgs:!**compiled accessors**!public! !
+rgvarg!**compiled accessors**!public! !
+rgvarg:!**compiled accessors**!public! !
+singleArg!accessing!public! !
+!
 
 !OS.COM.DISPPARAMS class methodsFor!
 
@@ -241,11 +243,13 @@ zeroArgs
 	are no arguments."
 
 	^ZeroArgs! !
-!OS.COM.DISPPARAMS class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.DISPPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.COM.DISPPARAMS class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.DISPPARAMS class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!OS.COM.DISPPARAMS class categoriesFor: #with:!instance creation!public! !
-!OS.COM.DISPPARAMS class categoriesFor: #withArguments:!instance creation!public! !
-!OS.COM.DISPPARAMS class categoriesFor: #zeroArgs!instance creation!public! !
+!OS.COM.DISPPARAMS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+with:!instance creation!public! !
+withArguments:!instance creation!public! !
+zeroArgs!instance creation!public! !
+!
 

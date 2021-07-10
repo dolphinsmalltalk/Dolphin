@@ -397,66 +397,68 @@ Win32Status: anInteger
 	"Set the receiver's 'Win32Status' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Win32Status put: anInteger! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIp!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIp:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIpLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ClientIpLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Cookie!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Cookie:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #CookieLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #CookieLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Host!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Host:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #HostLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #HostLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Method!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Method:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #MethodLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #MethodLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #MethodNum!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #MethodNum:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ProtocolStatus!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ProtocolStatus:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Referrer!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Referrer:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ReferrerLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ReferrerLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerIp!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerIp:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerIpLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerIpLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerName:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerNameLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerNameLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerPort!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServerPort:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServiceName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServiceName:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServiceNameLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #ServiceNameLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #SubStatus!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #SubStatus:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Type!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Type:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriQuery!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriQuery:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriQueryLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriQueryLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriStem!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriStem:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriStemLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UriStemLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserAgent!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserAgent:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserAgentLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserAgentLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserName:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserNameLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #UserNameLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Win32Status!**compiled accessors**!public! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesFor: #Win32Status:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_LOG_FIELDS_DATA categoriesForMethods!
+ClientIp!**compiled accessors**!public! !
+ClientIp:!**compiled accessors**!public! !
+ClientIpLength!**compiled accessors**!public! !
+ClientIpLength:!**compiled accessors**!public! !
+Cookie!**compiled accessors**!public! !
+Cookie:!**compiled accessors**!public! !
+CookieLength!**compiled accessors**!public! !
+CookieLength:!**compiled accessors**!public! !
+Host!**compiled accessors**!public! !
+Host:!**compiled accessors**!public! !
+HostLength!**compiled accessors**!public! !
+HostLength:!**compiled accessors**!public! !
+Method!**compiled accessors**!public! !
+Method:!**compiled accessors**!public! !
+MethodLength!**compiled accessors**!public! !
+MethodLength:!**compiled accessors**!public! !
+MethodNum!**compiled accessors**!public! !
+MethodNum:!**compiled accessors**!public! !
+ProtocolStatus!**compiled accessors**!public! !
+ProtocolStatus:!**compiled accessors**!public! !
+Referrer!**compiled accessors**!public! !
+Referrer:!**compiled accessors**!public! !
+ReferrerLength!**compiled accessors**!public! !
+ReferrerLength:!**compiled accessors**!public! !
+ServerIp!**compiled accessors**!public! !
+ServerIp:!**compiled accessors**!public! !
+ServerIpLength!**compiled accessors**!public! !
+ServerIpLength:!**compiled accessors**!public! !
+ServerName!**compiled accessors**!public! !
+ServerName:!**compiled accessors**!public! !
+ServerNameLength!**compiled accessors**!public! !
+ServerNameLength:!**compiled accessors**!public! !
+ServerPort!**compiled accessors**!public! !
+ServerPort:!**compiled accessors**!public! !
+ServiceName!**compiled accessors**!public! !
+ServiceName:!**compiled accessors**!public! !
+ServiceNameLength!**compiled accessors**!public! !
+ServiceNameLength:!**compiled accessors**!public! !
+SubStatus!**compiled accessors**!public! !
+SubStatus:!**compiled accessors**!public! !
+Type!**compiled accessors**!public! !
+Type:!**compiled accessors**!public! !
+UriQuery!**compiled accessors**!public! !
+UriQuery:!**compiled accessors**!public! !
+UriQueryLength!**compiled accessors**!public! !
+UriQueryLength:!**compiled accessors**!public! !
+UriStem!**compiled accessors**!public! !
+UriStem:!**compiled accessors**!public! !
+UriStemLength!**compiled accessors**!public! !
+UriStemLength:!**compiled accessors**!public! !
+UserAgent!**compiled accessors**!public! !
+UserAgent:!**compiled accessors**!public! !
+UserAgentLength!**compiled accessors**!public! !
+UserAgentLength:!**compiled accessors**!public! !
+UserName!**compiled accessors**!public! !
+UserName:!**compiled accessors**!public! !
+UserNameLength!**compiled accessors**!public! !
+UserNameLength:!**compiled accessors**!public! !
+Win32Status!**compiled accessors**!public! !
+Win32Status:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_LOG_FIELDS_DATA class methodsFor!
 
@@ -535,6 +537,8 @@ defineFields
 
 getFieldNames
 	^#(#Type #UserNameLength #UriStemLength #ClientIpLength #ServerNameLength #ServiceNameLength #ServerIpLength #MethodLength #UriQueryLength #HostLength #UserAgentLength #CookieLength #ReferrerLength #UserName #UriStem #ClientIp #ServerName #ServiceName #ServerIp #Method #UriQuery #Host #UserAgent #Cookie #Referrer #ServerPort #ProtocolStatus #Win32Status #MethodNum #SubStatus)! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_LOG_FIELDS_DATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_LOG_FIELDS_DATA class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -45,11 +45,13 @@ subject: anObject
 	"Private - Set the value of the receiver's ''subject'' instance variable to the argument, anObject."
 
 	subject := anObject! !
-!SUnitAbsWrapper categoriesFor: #icon!accessing!constants!public! !
-!SUnitAbsWrapper categoriesFor: #model!accessing!private! !
-!SUnitAbsWrapper categoriesFor: #model:!accessing!private! !
-!SUnitAbsWrapper categoriesFor: #subject!accessing!private! !
-!SUnitAbsWrapper categoriesFor: #subject:!accessing!private! !
+!SUnitAbsWrapper categoriesForMethods!
+icon!accessing!constants!public! !
+model!accessing!private! !
+model:!accessing!private! !
+subject!accessing!private! !
+subject:!accessing!private! !
+!
 
 !SUnitAbsWrapper class methodsFor!
 
@@ -58,5 +60,7 @@ newOn: anSUnitBrowserModel
 	^self new
 		model: anSUnitBrowserModel;
 		yourself! !
-!SUnitAbsWrapper class categoriesFor: #newOn:!instantiating!public! !
+!SUnitAbsWrapper class categoriesForMethods!
+newOn:!instantiating!public! !
+!
 

@@ -296,7 +296,9 @@ documentsDirectory
 	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
 
 	^Shell32 getSpecialFolderLocation: ShellConstants.CSIDL_PERSONAL! !
-!Core.SessionManager categoriesFor: #documentsDirectory!accessing!public! !
+!Core.SessionManager categoriesForMethods!
+documentsDirectory!accessing!public! !
+!
 
 !Graphics.Icon class methodsFor!
 
@@ -312,7 +314,9 @@ shellStock: anInteger
 		uFlags: 0
 		psii: info.
 	^self fromId: info iIcon abs in: (External.ResourceLibrary open: info szPath)! !
-!Graphics.Icon class categoriesFor: #shellStock:!instance creation!public! !
+!Graphics.Icon class categoriesForMethods!
+shellStock:!instance creation!public! !
+!
 
 !UI.View methodsFor!
 
@@ -323,8 +327,10 @@ wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| files |
 	files := DroppedFilesList fromHandle: wParamInteger asExternalHandle.
 	self presenter trigger: #dropFiles: with: files! !
-!UI.View categoriesFor: #acceptDroppedFiles:!public! !
-!UI.View categoriesFor: #wmDropFiles:wParam:lParam:!public! !
+!UI.View categoriesForMethods!
+acceptDroppedFiles:!public! !
+wmDropFiles:wParam:lParam:!public! !
+!
 
 !UI.View class methodsFor!
 
@@ -336,9 +342,11 @@ shellMessageMappings
 
 unregisterShellMessages
 	self unregisterMessageMappings: {WM_DROPFILES}! !
-!UI.View class categoriesFor: #registerShellMessages!development!initializing!public! !
-!UI.View class categoriesFor: #shellMessageMappings!constants!must not strip!private! !
-!UI.View class categoriesFor: #unregisterShellMessages!class hierarchy-removing!public! !
+!UI.View class categoriesForMethods!
+registerShellMessages!development!initializing!public! !
+shellMessageMappings!constants!must not strip!private! !
+unregisterShellMessages!class hierarchy-removing!public! !
+!
 
 "End of package definition"!
 

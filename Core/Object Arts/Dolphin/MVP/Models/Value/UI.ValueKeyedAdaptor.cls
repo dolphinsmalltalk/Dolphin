@@ -94,18 +94,20 @@ value
 	sending a message to the receiver's subject with the key."
 	
 	^self subject perform: self getSelector with: self key! !
-!UI.ValueKeyedAdaptor categoriesFor: #=!comparing!public! !
-!UI.ValueKeyedAdaptor categoriesFor: #canGet!private!testing! !
-!UI.ValueKeyedAdaptor categoriesFor: #canSet!private!testing! !
-!UI.ValueKeyedAdaptor categoriesFor: #displayOn:!displaying!public! !
-!UI.ValueKeyedAdaptor categoriesFor: #getSelector!accessing!private! !
-!UI.ValueKeyedAdaptor categoriesFor: #hash!comparing!public! !
-!UI.ValueKeyedAdaptor categoriesFor: #key!accessing!private! !
-!UI.ValueKeyedAdaptor categoriesFor: #objectRefName!accessing!private! !
-!UI.ValueKeyedAdaptor categoriesFor: #putSelector!accessing!private! !
-!UI.ValueKeyedAdaptor categoriesFor: #setValue:!accessing!private! !
-!UI.ValueKeyedAdaptor categoriesFor: #subject:key:!initializing!private! !
-!UI.ValueKeyedAdaptor categoriesFor: #value!accessing!public! !
+!UI.ValueKeyedAdaptor categoriesForMethods!
+=!comparing!public! !
+canGet!private!testing! !
+canSet!private!testing! !
+displayOn:!displaying!public! !
+getSelector!accessing!private! !
+hash!comparing!public! !
+key!accessing!private! !
+objectRefName!accessing!private! !
+putSelector!accessing!private! !
+setValue:!accessing!private! !
+subject:key:!initializing!private! !
+value!accessing!public! !
+!
 
 !UI.ValueKeyedAdaptor class methodsFor!
 
@@ -119,6 +121,8 @@ subject: anObject key: aKey
 	an element of anObject identified by aKey"
 
 	^(super new) subject: anObject key: aKey; yourself! !
-!UI.ValueKeyedAdaptor class categoriesFor: #new!instance creation!private! !
-!UI.ValueKeyedAdaptor class categoriesFor: #subject:key:!instance creation!public! !
+!UI.ValueKeyedAdaptor class categoriesForMethods!
+new!instance creation!private! !
+subject:key:!instance creation!public! !
+!
 

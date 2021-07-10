@@ -58,11 +58,13 @@ WrapDSOandSession: pDSO pSession: pSession
 
 	<virtual stdcall: hresult 6 IUnknown* IUnknown*>
 	^self invalidCall: _failureCode! !
-!ADODB.ADOConnectionConstruction15 categoriesFor: #dso!**auto generated**!properties!public! !
-!ADODB.ADOConnectionConstruction15 categoriesFor: #get_DSO:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!private! !
-!ADODB.ADOConnectionConstruction15 categoriesFor: #get_Session:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!private! !
-!ADODB.ADOConnectionConstruction15 categoriesFor: #session!**auto generated**!properties!public! !
-!ADODB.ADOConnectionConstruction15 categoriesFor: #WrapDSOandSession:pSession:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!public! !
+!ADODB.ADOConnectionConstruction15 categoriesForMethods!
+dso!**auto generated**!properties!public! !
+get_DSO:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!private! !
+get_Session:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!private! !
+session!**auto generated**!properties!public! !
+WrapDSOandSession:pSession:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!public! !
+!
 
 !ADODB.ADOConnectionConstruction15 class methodsFor!
 
@@ -78,5 +80,7 @@ defineFunctions
 		defineFunction: #WrapDSOandSession:pSession:
 			argumentTypes: 'IUnknown* IUnknown*'
 ! !
-!ADODB.ADOConnectionConstruction15 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.ADOConnectionConstruction15 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

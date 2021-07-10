@@ -105,20 +105,22 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 
 wParam
 	^wParam! !
-!UI.WindowsEvent categoriesFor: #defaultWindowProcessing!event handling!public! !
-!UI.WindowsEvent categoriesFor: #isHandled!public!testing! !
-!UI.WindowsEvent categoriesFor: #lParam!accessing!public! !
-!UI.WindowsEvent categoriesFor: #lParam:!accessing!public! !
-!UI.WindowsEvent categoriesFor: #lParamX!accessing!public! !
-!UI.WindowsEvent categoriesFor: #lParamY!accessing!public! !
-!UI.WindowsEvent categoriesFor: #lResult!accessing!public! !
-!UI.WindowsEvent categoriesFor: #lResult:!accessing!not an aspect!public! !
-!UI.WindowsEvent categoriesFor: #message!accessing!private! !
-!UI.WindowsEvent categoriesFor: #printLParamOn:!development!printing!private! !
-!UI.WindowsEvent categoriesFor: #printOn:!development!printing!public! !
-!UI.WindowsEvent categoriesFor: #printWParamOn:!development!printing!private! !
-!UI.WindowsEvent categoriesFor: #window:message:wParam:lParam:!initializing!private! !
-!UI.WindowsEvent categoriesFor: #wParam!accessing!public! !
+!UI.WindowsEvent categoriesForMethods!
+defaultWindowProcessing!event handling!public! !
+isHandled!public!testing! !
+lParam!accessing!public! !
+lParam:!accessing!public! !
+lParamX!accessing!public! !
+lParamY!accessing!public! !
+lResult!accessing!public! !
+lResult:!accessing!not an aspect!public! !
+message!accessing!private! !
+printLParamOn:!development!printing!private! !
+printOn:!development!printing!public! !
+printWParamOn:!development!printing!private! !
+window:message:wParam:lParam:!initializing!private! !
+wParam!accessing!public! !
+!
 
 !UI.WindowsEvent class methodsFor!
 
@@ -136,5 +138,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
-!UI.WindowsEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
+!UI.WindowsEvent class categoriesForMethods!
+window:message:wParam:lParam:!instance creation!public! !
+!
 

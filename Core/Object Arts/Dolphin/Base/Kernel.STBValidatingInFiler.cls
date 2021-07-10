@@ -41,10 +41,12 @@ validationBlock: aMonadicValuable
 	of this class are valid for loading from the receiver."
 
 	self classLocator validationBlock: aMonadicValuable.! !
-!Kernel.STBValidatingInFiler categoriesFor: #classAt:!accessing!private! !
-!Kernel.STBValidatingInFiler categoriesFor: #defaultClassLocatorClass!constants!private! !
-!Kernel.STBValidatingInFiler categoriesFor: #validationBlock!accessing!private! !
-!Kernel.STBValidatingInFiler categoriesFor: #validationBlock:!accessing!public! !
+!Kernel.STBValidatingInFiler categoriesForMethods!
+classAt:!accessing!private! !
+defaultClassLocatorClass!constants!private! !
+validationBlock!accessing!private! !
+validationBlock:!accessing!public! !
+!
 
 !Kernel.STBValidatingInFiler class methodsFor!
 
@@ -52,5 +54,7 @@ errorInvalidClass: aClassName
 	"Private - Signal an exception to warn that an input stream contains an invalid class."
 
 	STBError signal: ('Input stream contains an invalid class (<1s>)' expandMacrosWith: aClassName)! !
-!Kernel.STBValidatingInFiler class categoriesFor: #errorInvalidClass:!exceptions!private! !
+!Kernel.STBValidatingInFiler class categoriesForMethods!
+errorInvalidClass:!exceptions!private! !
+!
 

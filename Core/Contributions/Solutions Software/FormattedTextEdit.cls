@@ -250,35 +250,37 @@ wmPaint: message wParam: wParam lParam: lParam
 		ifTrue: [self defaultWindowProcessing: message wParam: wParam lParam: lParam]
 		ifFalse: [self basicPaint: message wParam: wParam lParam: lParam]
 ! !
-!FormattedTextEdit categoriesFor: #applyFormat!helpers!private! !
-!FormattedTextEdit categoriesFor: #clearMessageBubble!helpers!private! !
-!FormattedTextEdit categoriesFor: #createMessageBubble!helpers!private! !
-!FormattedTextEdit categoriesFor: #enUpdate!event handling-win32!private! !
-!FormattedTextEdit categoriesFor: #errorTextInvalid!helpers!private! !
-!FormattedTextEdit categoriesFor: #format!accessing!private! !
-!FormattedTextEdit categoriesFor: #format:!accessing!private! !
-!FormattedTextEdit categoriesFor: #formatDo:!helpers!private! !
-!FormattedTextEdit categoriesFor: #hasMessageBubble!public!testing! !
-!FormattedTextEdit categoriesFor: #initialize!initialize/release!public! !
-!FormattedTextEdit categoriesFor: #isFormatting!accessing!private! !
-!FormattedTextEdit categoriesFor: #isFormatting:!accessing!private! !
-!FormattedTextEdit categoriesFor: #isPlaceholder:!public!testing! !
-!FormattedTextEdit categoriesFor: #isSeparator:!public!testing! !
-!FormattedTextEdit categoriesFor: #isTextValid!private!testing! !
-!FormattedTextEdit categoriesFor: #messageBubble!accessing!private! !
-!FormattedTextEdit categoriesFor: #messageBubble:!accessing!private! !
-!FormattedTextEdit categoriesFor: #onKeyPressed:!event handling!public! !
-!FormattedTextEdit categoriesFor: #onKeyTyped:!event handling!public! !
-!FormattedTextEdit categoriesFor: #onKillFocus!event handling!private! !
-!FormattedTextEdit categoriesFor: #onPaintRequired:!event handling!public! !
-!FormattedTextEdit categoriesFor: #onSetFocus!event handling!public! !
-!FormattedTextEdit categoriesFor: #onViewCreated!event handling!private! !
-!FormattedTextEdit categoriesFor: #placeholderChar!accessing!private! !
-!FormattedTextEdit categoriesFor: #placeholderChar:!accessing!private! !
-!FormattedTextEdit categoriesFor: #separatorChars!accessing!private! !
-!FormattedTextEdit categoriesFor: #separatorChars:!accessing!private! !
-!FormattedTextEdit categoriesFor: #updateModel!helpers!private! !
-!FormattedTextEdit categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!public! !
+!FormattedTextEdit categoriesForMethods!
+applyFormat!helpers!private! !
+clearMessageBubble!helpers!private! !
+createMessageBubble!helpers!private! !
+enUpdate!event handling-win32!private! !
+errorTextInvalid!helpers!private! !
+format!accessing!private! !
+format:!accessing!private! !
+formatDo:!helpers!private! !
+hasMessageBubble!public!testing! !
+initialize!initialize/release!public! !
+isFormatting!accessing!private! !
+isFormatting:!accessing!private! !
+isPlaceholder:!public!testing! !
+isSeparator:!public!testing! !
+isTextValid!private!testing! !
+messageBubble!accessing!private! !
+messageBubble:!accessing!private! !
+onKeyPressed:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onKillFocus!event handling!private! !
+onPaintRequired:!event handling!public! !
+onSetFocus!event handling!public! !
+onViewCreated!event handling!private! !
+placeholderChar!accessing!private! !
+placeholderChar:!accessing!private! !
+separatorChars!accessing!private! !
+separatorChars:!accessing!private! !
+updateModel!helpers!private! !
+wmPaint:wParam:lParam:!event handling-win32!public! !
+!
 
 !FormattedTextEdit class methodsFor!
 
@@ -294,6 +296,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^21! !
-!FormattedTextEdit class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!FormattedTextEdit class categoriesFor: #stbVersion!binary filing!public! !
+!FormattedTextEdit class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

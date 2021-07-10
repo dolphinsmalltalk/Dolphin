@@ -79,15 +79,17 @@ update
 
 	(self presenterNamed: 'items') list: (self items select: [:each | self filter: each]).
 	(self presenterNamed: 'items') view layout! !
-!ProfilerListsPresenter categoriesFor: #createComponents!initializing!public! !
-!ProfilerListsPresenter categoriesFor: #filterPercentage:!filtering!public! !
-!ProfilerListsPresenter categoriesFor: #filterSelector:!filtering!public! !
-!ProfilerListsPresenter categoriesFor: #hasSelection!public!testing! !
-!ProfilerListsPresenter categoriesFor: #items!accessing!public! !
-!ProfilerListsPresenter categoriesFor: #reportIdentityOf:to:!public!reporting! !
-!ProfilerListsPresenter categoriesFor: #reportItems!public!reporting! !
-!ProfilerListsPresenter categoriesFor: #reportTitleTo:!public!reporting! !
-!ProfilerListsPresenter categoriesFor: #reportTo:!public!reporting! !
-!ProfilerListsPresenter categoriesFor: #selectionOrNil!accessing!public! !
-!ProfilerListsPresenter categoriesFor: #update!public!updating! !
+!ProfilerListsPresenter categoriesForMethods!
+createComponents!initializing!public! !
+filterPercentage:!filtering!public! !
+filterSelector:!filtering!public! !
+hasSelection!public!testing! !
+items!accessing!public! !
+reportIdentityOf:to:!public!reporting! !
+reportItems!public!reporting! !
+reportTitleTo:!public!reporting! !
+reportTo:!public!reporting! !
+selectionOrNil!accessing!public! !
+update!public!updating! !
+!
 

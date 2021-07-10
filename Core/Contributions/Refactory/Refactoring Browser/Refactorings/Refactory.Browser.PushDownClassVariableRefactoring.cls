@@ -60,10 +60,12 @@ transform
 	class removeClassVariable: variableName.
 	destinationClass isNil ifTrue: [^self].
 	destinationClass addClassVariable: variableName! !
-!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #findDestinationClass!preconditions!public! !
-!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #signalMultipleReferenceError!preconditions!public! !
-!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #signalReferenceError:!preconditions!public! !
-!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #signalStillReferencedError!preconditions!public! !
-!Refactory.Browser.PushDownClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PushDownClassVariableRefactoring categoriesForMethods!
+findDestinationClass!preconditions!public! !
+preconditions!preconditions!public! !
+signalMultipleReferenceError!preconditions!public! !
+signalReferenceError:!preconditions!public! !
+signalStillReferencedError!preconditions!public! !
+transform!public!transforming! !
+!
 

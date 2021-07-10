@@ -68,15 +68,17 @@ showWindow
 	self class canDisplay 
 		ifTrue: [super showWindow]
 		ifFalse: [Canvas forDesktop colorDepth < 16 ifTrue: [self give256ColorDisplayWarning]]! !
-!Tools.DolphinSplash categoriesFor: #animationDuration!constants!private! !
-!Tools.DolphinSplash categoriesFor: #defaultExtent!accessing!public! !
-!Tools.DolphinSplash categoriesFor: #defaultSplashDelay!constants!public! !
-!Tools.DolphinSplash categoriesFor: #defaultWindowStyle!constants!private! !
-!Tools.DolphinSplash categoriesFor: #give256ColorDisplayWarning!operations!private! !
-!Tools.DolphinSplash categoriesFor: #objectsInside!accessing!private! !
-!Tools.DolphinSplash categoriesFor: #onCreated:!event handling!private! !
-!Tools.DolphinSplash categoriesFor: #onPaintRequired:!event handling!private! !
-!Tools.DolphinSplash categoriesFor: #showWindow!operations!private! !
+!Tools.DolphinSplash categoriesForMethods!
+animationDuration!constants!private! !
+defaultExtent!accessing!public! !
+defaultSplashDelay!constants!public! !
+defaultWindowStyle!constants!private! !
+give256ColorDisplayWarning!operations!private! !
+objectsInside!accessing!private! !
+onCreated:!event handling!private! !
+onPaintRequired:!event handling!private! !
+showWindow!operations!private! !
+!
 
 !Tools.DolphinSplash class methodsFor!
 
@@ -103,8 +105,10 @@ splashPlayTheGame
 
 splashPlayTheGame: aBoolean
 	SeeingTheObjectsInside splashPlayTheGame: aBoolean! !
-!Tools.DolphinSplash class categoriesFor: #canDisplay!accessing!public! !
-!Tools.DolphinSplash class categoriesFor: #publishedAspects!public! !
-!Tools.DolphinSplash class categoriesFor: #splashPlayTheGame!accessing!public! !
-!Tools.DolphinSplash class categoriesFor: #splashPlayTheGame:!accessing!public! !
+!Tools.DolphinSplash class categoriesForMethods!
+canDisplay!accessing!public! !
+publishedAspects!public! !
+splashPlayTheGame!accessing!public! !
+splashPlayTheGame:!accessing!public! !
+!
 

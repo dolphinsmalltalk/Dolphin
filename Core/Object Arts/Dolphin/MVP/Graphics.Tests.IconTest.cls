@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.IconTest'
 	instanceVariableNames: ''
@@ -20,5 +20,7 @@ testImageIndexDoesntRealize
 	self assertIsNil: icon basicHandle.
 	icon imageIndex.
 	self assertIsNil: icon basicHandle! !
-!Graphics.Tests.IconTest categoriesFor: #testImageIndexDoesntRealize!public! !
+!Graphics.Tests.IconTest categoriesForMethods!
+testImageIndexDoesntRealize!public! !
+!
 

@@ -65,15 +65,17 @@ iLevel
 	"Answer the <Integer> value of the receiver's 'iLevel' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_iLevel! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #clrText:!**compiled accessors**!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #clrTextBk!**compiled accessors**!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
-!OS.NMTVCUSTOMDRAW categoriesFor: #iLevel!**compiled accessors**!public! !
+!OS.NMTVCUSTOMDRAW categoriesForMethods!
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+clrText!**compiled accessors**!public! !
+clrText:!**compiled accessors**!public! !
+clrTextBk!**compiled accessors**!public! !
+clrTextBk:!**compiled accessors**!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+iLevel!**compiled accessors**!public! !
+!
 
 !OS.NMTVCUSTOMDRAW class methodsFor!
 
@@ -90,6 +92,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iLevel)! !
-!OS.NMTVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMTVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTVCUSTOMDRAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

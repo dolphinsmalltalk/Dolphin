@@ -264,25 +264,27 @@ wmSize: message wParam: wParam lParam: lParam
 		wmSize: message
 		wParam: wParam
 		lParam: lParam! !
-!UI.MultilineTextEditWithImage categoriesFor: #backBitmap!accessing!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #backBitmap:!accessing!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #backBrush!accessing!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #backMode!accessing!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #backMode:!accessing!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #createBackBrush!helpers!private! !
-!UI.MultilineTextEditWithImage categoriesFor: #defaultBackgroundImage!helpers!private! !
-!UI.MultilineTextEditWithImage categoriesFor: #enUpdate!event handling-win32!private! !
-!UI.MultilineTextEditWithImage categoriesFor: #freeBackBrush!private!realizing/unrealizing! !
-!UI.MultilineTextEditWithImage categoriesFor: #initialize!initializing!private! !
-!UI.MultilineTextEditWithImage categoriesFor: #onColorRequired:!event handling!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #onEraseRequired:!event handling!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #onHScroll:!event handling!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #onMouseWheeled:!event handling!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #onPaintRequired:!event handling!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #onVScroll:!event handling!public! !
-!UI.MultilineTextEditWithImage categoriesFor: #repaintWindow!helpers!private! !
-!UI.MultilineTextEditWithImage categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!UI.MultilineTextEditWithImage categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
+!UI.MultilineTextEditWithImage categoriesForMethods!
+backBitmap!accessing!public! !
+backBitmap:!accessing!public! !
+backBrush!accessing!public! !
+backMode!accessing!public! !
+backMode:!accessing!public! !
+createBackBrush!helpers!private! !
+defaultBackgroundImage!helpers!private! !
+enUpdate!event handling-win32!private! !
+freeBackBrush!private!realizing/unrealizing! !
+initialize!initializing!private! !
+onColorRequired:!event handling!public! !
+onEraseRequired:!event handling!public! !
+onHScroll:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onPaintRequired:!event handling!public! !
+onVScroll:!event handling!public! !
+repaintWindow!helpers!private! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmSize:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.MultilineTextEditWithImage class methodsFor!
 
@@ -304,5 +306,7 @@ example1
 			SessionManager inputState queueDeferredAction: [t backMode: each].
 			Processor sleep: 3 seconds]]
 			fork! !
-!UI.MultilineTextEditWithImage class categoriesFor: #example1!examples!public! !
+!UI.MultilineTextEditWithImage class categoriesForMethods!
+example1!examples!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.StringTest subclass: #'Core.Tests.UtfEncodedStringTest'
 	instanceVariableNames: ''
@@ -581,57 +581,59 @@ withAllTestCases
 				{'a 🐬 è' asUtf8String}.
 				#('Приве́т नमस्ते שָׁלוֹם').
 				#('áèȋöû')}! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #afterTestCases!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #beforeTestCases!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #caseConversionCases!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #decodeTestCases!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #indexOfTestCases!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #lengthTestCases!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #makeStringFromCodeUnits:!helpers!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #reverseTestCases!constants!private! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testAllButFirst!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testAllButLast!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testAllSatisfy!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testAnyone!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testAnySatisfy!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testBeginsWithExtended!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testCollect!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testCopyReplacingWithObject!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testCopyWithout!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testDecodeAt!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testDecodeNextFrom!constants!public! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testDetectIfNoneExtended!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testFindFirst!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testFindLast!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testFirst!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testFirstColon!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testGothicSubStrings!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testIdentityIncludes!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testIncludes!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testInjectInto!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testKeysAndValuesDo!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testLast!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testLastColon!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testLeftString!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testMidString!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testOccurrencesOf!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testPairsDo!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testReject!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testReverseComposites!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testRuneSubStrings!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testSecondThirdEtc!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testSelect!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testSplitByCharacterArrayExtended!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testSplitByString!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #testWithDo!public!unit tests! !
-!Core.Tests.UtfEncodedStringTest categoriesFor: #withAllTestCases!constants!private! !
+!Core.Tests.UtfEncodedStringTest categoriesForMethods!
+afterTestCases!constants!private! !
+beforeTestCases!constants!private! !
+caseConversionCases!constants!private! !
+decodeIncompleteContinuations!constants!private! !
+decodeInvalidContinuations!constants!private! !
+decodeTestCases!constants!private! !
+indexOfTestCases!constants!private! !
+lengthTestCases!constants!private! !
+makeStringFromCodeUnits:!helpers!private! !
+reverseTestCases!constants!private! !
+testAllButFirst!public!unit tests! !
+testAllButLast!public!unit tests! !
+testAllSatisfy!public!unit tests! !
+testAnsiStringRoundTrip!public!unit tests! !
+testAnyone!public!unit tests! !
+testAnySatisfy!public!unit tests! !
+testBeginsWithExtended!public!unit tests! !
+testBeginsWithIgnoreCase!public!unit tests! !
+testCollect!public!unit tests! !
+testCopyReplaceAllWith!public!unit tests! !
+testCopyReplacingWithObject!public!unit tests! !
+testCopyWithout!public!unit tests! !
+testCopyWithoutIndex!public!unit tests! !
+testDecodeAt!public!unit tests! !
+testDecodeNextFrom!constants!public! !
+testDetectIfNoneExtended!public!unit tests! !
+testEncodeOnPut!public!unit tests! !
+testFindFirst!public!unit tests! !
+testFindLast!public!unit tests! !
+testFindStringStartingAt!public!unit tests! !
+testFirst!public!unit tests! !
+testFirstColon!public!unit tests! !
+testFromToKeysAndValuesDo!public!unit tests! !
+testGothicSubStrings!public!unit tests! !
+testIdentityIncludes!public!unit tests! !
+testIncludes!public!unit tests! !
+testInjectInto!public!unit tests! !
+testKeysAndValuesDo!public!unit tests! !
+testLast!public!unit tests! !
+testLastColon!public!unit tests! !
+testLeftString!public!unit tests! !
+testMidString!public!unit tests! !
+testOccurrencesOf!public!unit tests! !
+testPairsDo!public!unit tests! !
+testReject!public!unit tests! !
+testReverseComposites!public!unit tests! !
+testRuneSubStrings!public!unit tests! !
+testSecondThirdEtc!public!unit tests! !
+testSelect!public!unit tests! !
+testSplitByCharacterArrayExtended!public!unit tests! !
+testSplitByString!public!unit tests! !
+testWithDo!public!unit tests! !
+withAllTestCases!constants!private! !
+!
 

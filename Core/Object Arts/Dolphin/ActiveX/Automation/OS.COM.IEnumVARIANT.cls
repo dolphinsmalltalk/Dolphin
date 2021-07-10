@@ -44,8 +44,10 @@ nextAvailable: anInteger
 	answer := elements collect: [:e | e value].
 	elements free.
 	^answer! !
-!OS.COM.IEnumVARIANT categoriesFor: #nextAvailable!accessing!public! !
-!OS.COM.IEnumVARIANT categoriesFor: #nextAvailable:!accessing!public! !
+!OS.COM.IEnumVARIANT categoriesForMethods!
+nextAvailable!accessing!public! !
+nextAvailable:!accessing!public! !
+!
 
 !OS.COM.IEnumVARIANT class methodsFor!
 
@@ -60,6 +62,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^VARIANT! !
-!OS.COM.IEnumVARIANT class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IEnumVARIANT class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumVARIANT class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

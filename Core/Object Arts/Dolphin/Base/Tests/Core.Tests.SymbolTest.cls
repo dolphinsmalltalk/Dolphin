@@ -135,23 +135,25 @@ testSpecies
 
 testSymbolTable
 	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !
-!Core.Tests.SymbolTest categoriesFor: #assimilateString:!helpers!private! !
-!Core.Tests.SymbolTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.SymbolTest categoriesFor: #newCollection:!helpers!private! !
-!Core.Tests.SymbolTest categoriesFor: #newCopy:!helpers!private! !
-!Core.Tests.SymbolTest categoriesFor: #newEmptyCollection:!public! !
-!Core.Tests.SymbolTest categoriesFor: #testArgumentCount!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testAsString!helpers!public! !
-!Core.Tests.SymbolTest categoriesFor: #testAtPut!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testEncodeOnPut!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testKeywords!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testPrintString!helpers!public! !
-!Core.Tests.SymbolTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testResize!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testSpecies!public!unit tests! !
-!Core.Tests.SymbolTest categoriesFor: #testSymbolTable!public!unit tests! !
+!Core.Tests.SymbolTest categoriesForMethods!
+assimilateString:!helpers!private! !
+collectionClass!helpers!private! !
+newCollection:!helpers!private! !
+newCopy:!helpers!private! !
+newEmptyCollection:!public! !
+testArgumentCount!public!unit tests! !
+testAsString!helpers!public! !
+testAtPut!public!unit tests! !
+testEncodeOnPut!public!unit tests! !
+testInstVarAtPut!public!unit tests! !
+testKeywords!public!unit tests! !
+testPrintLiteral!public!unit tests! !
+testPrintString!helpers!public! !
+testRefersToLiteral!public!unit tests! !
+testReplaceFromToWithStartingAt!public!unit tests! !
+testReplaceIdentityWith!public!unit tests! !
+testResize!public!unit tests! !
+testSpecies!public!unit tests! !
+testSymbolTable!public!unit tests! !
+!
 

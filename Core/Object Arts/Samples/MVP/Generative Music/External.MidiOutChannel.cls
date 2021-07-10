@@ -124,23 +124,25 @@ playNote: noteName velocity: velocity duration: aDuration channel: channel
 
 voice: voice channel: channel
 	self midiout voice: (self mapVoiceToValue: voice ) channel: channel! !
-!External.MidiOutChannel categoriesFor: #defaultDeviceId!private! !
-!External.MidiOutChannel categoriesFor: #defaultDuration!private! !
-!External.MidiOutChannel categoriesFor: #defaultVelocity!private! !
-!External.MidiOutChannel categoriesFor: #defaultVoice!private! !
-!External.MidiOutChannel categoriesFor: #free!private! !
-!External.MidiOutChannel categoriesFor: #initialize!private! !
-!External.MidiOutChannel categoriesFor: #mapNoteToValue:!helpers!private! !
-!External.MidiOutChannel categoriesFor: #mapVoiceToValue:!private! !
-!External.MidiOutChannel categoriesFor: #midiNoteMap!private! !
-!External.MidiOutChannel categoriesFor: #midiout!accessing!public! !
-!External.MidiOutChannel categoriesFor: #octaveShift!helpers!private! !
-!External.MidiOutChannel categoriesFor: #open!private! !
-!External.MidiOutChannel categoriesFor: #playNote:channel:!public! !
-!External.MidiOutChannel categoriesFor: #playNote:duration:channel:!public! !
-!External.MidiOutChannel categoriesFor: #playNote:velocity:channel:!public! !
-!External.MidiOutChannel categoriesFor: #playNote:velocity:duration:channel:!public! !
-!External.MidiOutChannel categoriesFor: #voice:channel:!public! !
+!External.MidiOutChannel categoriesForMethods!
+defaultDeviceId!private! !
+defaultDuration!private! !
+defaultVelocity!private! !
+defaultVoice!private! !
+free!private! !
+initialize!private! !
+mapNoteToValue:!helpers!private! !
+mapVoiceToValue:!private! !
+midiNoteMap!private! !
+midiout!accessing!public! !
+octaveShift!helpers!private! !
+open!private! !
+playNote:channel:!public! !
+playNote:duration:channel:!public! !
+playNote:velocity:channel:!public! !
+playNote:velocity:duration:channel:!public! !
+voice:channel:!public! !
+!
 
 !External.MidiOutChannel class methodsFor!
 
@@ -149,6 +151,8 @@ generalMidiMap
 
 new
 	^super new initialize! !
-!External.MidiOutChannel class categoriesFor: #generalMidiMap!public! !
-!External.MidiOutChannel class categoriesFor: #new!instance creation!public! !
+!External.MidiOutChannel class categoriesForMethods!
+generalMidiMap!public! !
+new!instance creation!public! !
+!
 

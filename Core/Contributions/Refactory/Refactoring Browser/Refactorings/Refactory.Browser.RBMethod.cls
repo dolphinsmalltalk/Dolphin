@@ -113,21 +113,23 @@ source
 
 source: aString 
 	source := aString! !
-!Refactory.Browser.RBMethod categoriesFor: #literal:containsReferenceTo:!private! !
-!Refactory.Browser.RBMethod categoriesFor: #method!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #method:!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #modelClass!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #modelClass:!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #parseTree!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #refersToAnySymbol:!public!testing! !
-!Refactory.Browser.RBMethod categoriesFor: #refersToClass:!public!testing! !
-!Refactory.Browser.RBMethod categoriesFor: #refersToSymbol:!public!testing! !
-!Refactory.Browser.RBMethod categoriesFor: #refersToVariable:!public!testing! !
-!Refactory.Browser.RBMethod categoriesFor: #selector!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #selector:!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #source!accessing!public! !
-!Refactory.Browser.RBMethod categoriesFor: #source:!accessing!public! !
+!Refactory.Browser.RBMethod categoriesForMethods!
+literal:containsReferenceTo:!private! !
+method!accessing!public! !
+method:!accessing!public! !
+modelClass!accessing!public! !
+modelClass:!accessing!public! !
+parseTree!accessing!public! !
+printOn:!printing!public! !
+refersToAnySymbol:!public!testing! !
+refersToClass:!public!testing! !
+refersToSymbol:!public!testing! !
+refersToVariable:!public!testing! !
+selector!accessing!public! !
+selector:!accessing!public! !
+source!accessing!public! !
+source:!accessing!public! !
+!
 
 !Refactory.Browser.RBMethod class methodsFor!
 
@@ -144,6 +146,8 @@ for: aRBClass source: aString selector: aSelector
 		selector: aSelector;
 		source: aString;
 		yourself! !
-!Refactory.Browser.RBMethod class categoriesFor: #for:fromMethod:andSelector:!instance creation!public! !
-!Refactory.Browser.RBMethod class categoriesFor: #for:source:selector:!instance creation!public! !
+!Refactory.Browser.RBMethod class categoriesForMethods!
+for:fromMethod:andSelector:!instance creation!public! !
+for:source:selector:!instance creation!public! !
+!
 

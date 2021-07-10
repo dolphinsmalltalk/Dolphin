@@ -28,12 +28,14 @@ object
 
 object: anObject
 	object := anObject! !
-!Tools.SmalltalkSearchCandidate categoriesFor: #displayOn:!displaying!public! !
-!Tools.SmalltalkSearchCandidate categoriesFor: #icon!public! !
-!Tools.SmalltalkSearchCandidate categoriesFor: #matchingName!accessing!public! !
-!Tools.SmalltalkSearchCandidate categoriesFor: #matchingName:!accessing!public! !
-!Tools.SmalltalkSearchCandidate categoriesFor: #object!accessing!public! !
-!Tools.SmalltalkSearchCandidate categoriesFor: #object:!accessing!public! !
+!Tools.SmalltalkSearchCandidate categoriesForMethods!
+displayOn:!displaying!public! !
+icon!public! !
+matchingName!accessing!public! !
+matchingName:!accessing!public! !
+object!accessing!public! !
+object:!accessing!public! !
+!
 
 !Tools.SmalltalkSearchCandidate class methodsFor!
 
@@ -42,5 +44,7 @@ matchingName: aString object: anObject
 		matchingName: aString;
 		object: anObject;
 		yourself! !
-!Tools.SmalltalkSearchCandidate class categoriesFor: #matchingName:object:!instance creation!public! !
+!Tools.SmalltalkSearchCandidate class categoriesForMethods!
+matchingName:object:!instance creation!public! !
+!
 

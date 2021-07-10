@@ -61,12 +61,14 @@ MaxPeakBandwidth: anInteger
 	"Set the receiver's 'MaxPeakBandwidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_MaxPeakBandwidth put: anInteger! !
-!WinHttpServer.HTTP_FLOWRATE_INFO categoriesFor: #BurstSize!**compiled accessors**!public! !
-!WinHttpServer.HTTP_FLOWRATE_INFO categoriesFor: #BurstSize:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_FLOWRATE_INFO categoriesFor: #MaxBandwidth!**compiled accessors**!public! !
-!WinHttpServer.HTTP_FLOWRATE_INFO categoriesFor: #MaxBandwidth:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_FLOWRATE_INFO categoriesFor: #MaxPeakBandwidth!**compiled accessors**!public! !
-!WinHttpServer.HTTP_FLOWRATE_INFO categoriesFor: #MaxPeakBandwidth:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_FLOWRATE_INFO categoriesForMethods!
+BurstSize!**compiled accessors**!public! !
+BurstSize:!**compiled accessors**!public! !
+MaxBandwidth!**compiled accessors**!public! !
+MaxBandwidth:!**compiled accessors**!public! !
+MaxPeakBandwidth!**compiled accessors**!public! !
+MaxPeakBandwidth:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_FLOWRATE_INFO class methodsFor!
 
@@ -104,8 +106,10 @@ maxBandwidth: maxInteger maxPeakBandwidth: peakInteger burstSize: burstInteger
 
 qosType
 	^HttpQosSettingTypeFlowRate! !
-!WinHttpServer.HTTP_FLOWRATE_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_FLOWRATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_FLOWRATE_INFO class categoriesFor: #maxBandwidth:maxPeakBandwidth:burstSize:!constants!instance creation!public! !
-!WinHttpServer.HTTP_FLOWRATE_INFO class categoriesFor: #qosType!constants!public! !
+!WinHttpServer.HTTP_FLOWRATE_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxBandwidth:maxPeakBandwidth:burstSize:!constants!instance creation!public! !
+qosType!constants!public! !
+!
 

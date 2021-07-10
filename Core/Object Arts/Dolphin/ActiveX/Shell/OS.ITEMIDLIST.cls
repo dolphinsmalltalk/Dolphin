@@ -140,22 +140,24 @@ pointerClass
 	"Private - Answer the default class to use as a pointer"
 
 	^WindowsShellMemory! !
-!OS.ITEMIDLIST categoriesFor: #append:!operations!public! !
-!OS.ITEMIDLIST categoriesFor: #back!accessing!private! !
-!OS.ITEMIDLIST categoriesFor: #back:!accessing!private! !
-!OS.ITEMIDLIST categoriesFor: #bufferClass!constants!private! !
-!OS.ITEMIDLIST categoriesFor: #cb!accessing!public! !
-!OS.ITEMIDLIST categoriesFor: #cb:!accessing!public! !
-!OS.ITEMIDLIST categoriesFor: #getSize!operations!public! !
-!OS.ITEMIDLIST categoriesFor: #idCopy!operations!public! !
-!OS.ITEMIDLIST categoriesFor: #idLast!operations!public! !
-!OS.ITEMIDLIST categoriesFor: #idNext!operations!public! !
-!OS.ITEMIDLIST categoriesFor: #idParent!operations!public! !
-!OS.ITEMIDLIST categoriesFor: #isDesktopID!public!testing! !
-!OS.ITEMIDLIST categoriesFor: #isSingle!public!testing! !
-!OS.ITEMIDLIST categoriesFor: #isValid!public!testing! !
-!OS.ITEMIDLIST categoriesFor: #onStartup!event handling!public! !
-!OS.ITEMIDLIST categoriesFor: #pointerClass!constants!private! !
+!OS.ITEMIDLIST categoriesForMethods!
+append:!operations!public! !
+back!accessing!private! !
+back:!accessing!private! !
+bufferClass!constants!private! !
+cb!accessing!public! !
+cb:!accessing!public! !
+getSize!operations!public! !
+idCopy!operations!public! !
+idLast!operations!public! !
+idNext!operations!public! !
+idParent!operations!public! !
+isDesktopID!public!testing! !
+isSingle!public!testing! !
+isValid!public!testing! !
+onStartup!event handling!public! !
+pointerClass!constants!private! !
+!
 
 !OS.ITEMIDLIST class methodsFor!
 
@@ -248,15 +250,17 @@ pointerClass
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OS.ITEMIDLIST class categoriesFor: #defineFields!public!template definition! !
-!OS.ITEMIDLIST class categoriesFor: #exampleCopying!examples!public! !
-!OS.ITEMIDLIST class categoriesFor: #exampleWalkID:!examples!public! !
-!OS.ITEMIDLIST class categoriesFor: #exampleWalking!examples!public! !
-!OS.ITEMIDLIST class categoriesFor: #exampleWalkPath:!examples!public! !
-!OS.ITEMIDLIST class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.ITEMIDLIST class categoriesFor: #initialize!development!initializing!private! !
-!OS.ITEMIDLIST class categoriesFor: #new!instance creation!public! !
-!OS.ITEMIDLIST class categoriesFor: #onStartup!event handling!private! !
-!OS.ITEMIDLIST class categoriesFor: #pointerClass!constants!private! !
-!OS.ITEMIDLIST class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.ITEMIDLIST class categoriesForMethods!
+defineFields!public!template definition! !
+exampleCopying!examples!public! !
+exampleWalkID:!examples!public! !
+exampleWalking!examples!public! !
+exampleWalkPath:!examples!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+onStartup!event handling!private! !
+pointerClass!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

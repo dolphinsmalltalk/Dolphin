@@ -325,39 +325,41 @@ stbSaveOn: anSTBOutFiler
 	algorithm ~~ self class defaultSortAlgorithm
 		ifTrue: [^anSTBOutFiler saveObject: self as: (STBSortedCollectionProxy forCollection: self)].
 	super stbSaveOn: anSTBOutFiler! !
-!Core.SortedCollection categoriesFor: #,!copying!public! !
-!Core.SortedCollection categoriesFor: #add:!adding!public! !
-!Core.SortedCollection categoriesFor: #add:afterIndex:!adding!public! !
-!Core.SortedCollection categoriesFor: #add:beforeIndex:!adding!public! !
-!Core.SortedCollection categoriesFor: #addAll:!adding!public! !
-!Core.SortedCollection categoriesFor: #addAllFirst:!adding!public! !
-!Core.SortedCollection categoriesFor: #addAllLast:!adding!public! !
-!Core.SortedCollection categoriesFor: #addAllWithoutSorting:!adding!public! !
-!Core.SortedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
-!Core.SortedCollection categoriesFor: #addFirst:!adding!public! !
-!Core.SortedCollection categoriesFor: #addLast:!adding!public! !
-!Core.SortedCollection categoriesFor: #algorithm!accessing!public! !
-!Core.SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
-!Core.SortedCollection categoriesFor: #anyIndexOf:!public!searching! !
-!Core.SortedCollection categoriesFor: #asOrderedCollection!converting!public! !
-!Core.SortedCollection categoriesFor: #asSortedCollection!converting!public! !
-!Core.SortedCollection categoriesFor: #at:put:!accessing!public! !
-!Core.SortedCollection categoriesFor: #binaryIncludes:!adding!public! !
-!Core.SortedCollection categoriesFor: #collect:!enumerating!public! !
-!Core.SortedCollection categoriesFor: #copyEmpty:!copying!private! !
-!Core.SortedCollection categoriesFor: #copyFrom:to:!copying!public! !
-!Core.SortedCollection categoriesFor: #copyLikeOfSize:!copying!private! !
-!Core.SortedCollection categoriesFor: #indexForInserting:!adding!private! !
-!Core.SortedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Core.SortedCollection categoriesFor: #resize:!mutating!private! !
-!Core.SortedCollection categoriesFor: #reSort!operations!public! !
-!Core.SortedCollection categoriesFor: #reverse!copying!public! !
-!Core.SortedCollection categoriesFor: #select:!enumerating!public! !
-!Core.SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !
-!Core.SortedCollection categoriesFor: #sortBlock!accessing!public! !
-!Core.SortedCollection categoriesFor: #sortBlock:!accessing!operations!public! !
-!Core.SortedCollection categoriesFor: #sortFrom:to:!algorithms!private! !
-!Core.SortedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.SortedCollection categoriesForMethods!
+,!copying!public! !
+add:!adding!public! !
+add:afterIndex:!adding!public! !
+add:beforeIndex:!adding!public! !
+addAll:!adding!public! !
+addAllFirst:!adding!public! !
+addAllLast:!adding!public! !
+addAllWithoutSorting:!adding!public! !
+addAnsweringIndex:!adding!public! !
+addFirst:!adding!public! !
+addLast:!adding!public! !
+algorithm!accessing!public! !
+algorithm:!accessing!operations!public! !
+anyIndexOf:!public!searching! !
+asOrderedCollection!converting!public! !
+asSortedCollection!converting!public! !
+at:put:!accessing!public! !
+binaryIncludes:!adding!public! !
+collect:!enumerating!public! !
+copyEmpty:!copying!private! !
+copyFrom:to:!copying!public! !
+copyLikeOfSize:!copying!private! !
+indexForInserting:!adding!private! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+resize:!mutating!private! !
+reSort!operations!public! !
+reverse!copying!public! !
+select:!enumerating!public! !
+setSortAlgorithm:!initializing!private! !
+sortBlock!accessing!public! !
+sortBlock:!accessing!operations!public! !
+sortFrom:to:!algorithms!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 Core.SortedCollection methodProtocol: #SortedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #addAll: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #reverse #reverseDo: #select: #size #sortBlock #sortBlock: #with:do:)!
 
@@ -408,12 +410,14 @@ sortBlock: aDyadicValuable
 withNilsSortBlock
 	^[:a :b | a isNil ifTrue: [true] ifFalse: [b isNil ifTrue: [false] ifFalse: [a <= b]]]
 ! !
-!Core.SortedCollection class categoriesFor: #caseSensitiveSortBlock!constants!public! !
-!Core.SortedCollection class categoriesFor: #defaultSortBlock!constants!public! !
-!Core.SortedCollection class categoriesFor: #new:!instance creation!public! !
-!Core.SortedCollection class categoriesFor: #sortAlgorithm:!instance creation!public! !
-!Core.SortedCollection class categoriesFor: #sortBlock:!instance creation!public! !
-!Core.SortedCollection class categoriesFor: #withNilsSortBlock!instance creation!public! !
+!Core.SortedCollection class categoriesForMethods!
+caseSensitiveSortBlock!constants!public! !
+defaultSortBlock!constants!public! !
+new:!instance creation!public! !
+sortAlgorithm:!instance creation!public! !
+sortBlock:!instance creation!public! !
+withNilsSortBlock!instance creation!public! !
+!
 
 Core.SortedCollection class methodProtocol: #'SortedCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #sortBlock: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

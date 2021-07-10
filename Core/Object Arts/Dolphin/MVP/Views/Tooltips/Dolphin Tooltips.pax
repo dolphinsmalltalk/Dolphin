@@ -145,7 +145,9 @@ UI.ControlView subclass: #'UI.Tooltip'
 
 toolTipWindow
 	^UI.Tooltip fromHandle: self hwndFrom! !
-!OS.NMTTDISPINFOW categoriesFor: #toolTipWindow!accessing!public! !
+!OS.NMTTDISPINFOW categoriesForMethods!
+toolTipWindow!accessing!public! !
+!
 
 "End of package definition"!
 

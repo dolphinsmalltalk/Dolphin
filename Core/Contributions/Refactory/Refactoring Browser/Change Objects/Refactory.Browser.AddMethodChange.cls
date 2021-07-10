@@ -98,23 +98,25 @@ selector
 			[selector := RBParser parseMethodPattern: source.
 			selector isNil ifTrue: [selector := #unknown]].
 	^selector! !
-!Refactory.Browser.AddMethodChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #class:protocol:source:!initialize/release!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #class:source:!initialize/release!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #controller!accessing!private! !
-!Refactory.Browser.AddMethodChange categoriesFor: #currentProtocols!helpers!private! !
-!Refactory.Browser.AddMethodChange categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #parseTree!helpers!private! !
-!Refactory.Browser.AddMethodChange categoriesFor: #primitiveExecute!operations!private! !
-!Refactory.Browser.AddMethodChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #protocol!accessing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #protocols!accessing!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #protocols:!initialize/release!public! !
-!Refactory.Browser.AddMethodChange categoriesFor: #selector!accessing!public! !
+!Refactory.Browser.AddMethodChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+changeForClass:selector:!accessing!public! !
+changeForMetaclass:selector:!accessing!public! !
+changeString!printing!public! !
+class:protocol:source:!initialize/release!public! !
+class:source:!initialize/release!public! !
+controller!accessing!private! !
+currentProtocols!helpers!private! !
+hash!comparing!public! !
+parseTree!helpers!private! !
+primitiveExecute!operations!private! !
+printOn:!printing!public! !
+protocol!accessing!public! !
+protocols!accessing!public! !
+protocols:!initialize/release!public! !
+selector!accessing!public! !
+!
 
 !Refactory.Browser.AddMethodChange class methodsFor!
 
@@ -126,6 +128,8 @@ compile: aString in: aBehavior classified: aProtocol
 		class: aBehavior
 		protocol: aProtocol
 		source: aString! !
-!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:!instance creation!public! !
-!Refactory.Browser.AddMethodChange class categoriesFor: #compile:in:classified:!instance creation!public! !
+!Refactory.Browser.AddMethodChange class categoriesForMethods!
+compile:in:!instance creation!public! !
+compile:in:classified:!instance creation!public! !
+!
 

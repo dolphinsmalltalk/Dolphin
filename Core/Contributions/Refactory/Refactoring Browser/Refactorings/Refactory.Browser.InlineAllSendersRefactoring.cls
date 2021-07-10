@@ -98,18 +98,20 @@ transform
 		inlineSelfSends;
 		removeMethod;
 		checkInlinedMethods! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #checkInlinedMethods!public!transforming! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #inlineMessagesInClass:andSelector:!public!transforming! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #inlineSelfSends!public!transforming! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #messagePattern!public!transforming! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #messagesNotReplaced!accessing!public! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #numberOfSelfSendsIn:!public!transforming! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #removeMethod!public!transforming! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #selfSendIn:!public!transforming! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #sendersOf:in:!initialize/release!public! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.InlineAllSendersRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.InlineAllSendersRefactoring categoriesForMethods!
+checkInlinedMethods!public!transforming! !
+inlineMessagesInClass:andSelector:!public!transforming! !
+inlineSelfSends!public!transforming! !
+messagePattern!public!transforming! !
+messagesNotReplaced!accessing!public! !
+numberOfSelfSendsIn:!public!transforming! !
+preconditions!preconditions!public! !
+removeMethod!public!transforming! !
+selfSendIn:!public!transforming! !
+sendersOf:in:!initialize/release!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.InlineAllSendersRefactoring class methodsFor!
 
@@ -121,6 +123,8 @@ model: aRBNamespace sendersOf: aSelector in: aClass
 
 sendersOf: aSelector in: aClass 
 	^self new sendersOf: aSelector in: aClass! !
-!Refactory.Browser.InlineAllSendersRefactoring class categoriesFor: #model:sendersOf:in:!instance creation!public! !
-!Refactory.Browser.InlineAllSendersRefactoring class categoriesFor: #sendersOf:in:!instance creation!public! !
+!Refactory.Browser.InlineAllSendersRefactoring class categoriesForMethods!
+model:sendersOf:in:!instance creation!public! !
+sendersOf:in:!instance creation!public! !
+!
 

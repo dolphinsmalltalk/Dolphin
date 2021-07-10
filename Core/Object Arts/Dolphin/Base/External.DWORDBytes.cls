@@ -31,10 +31,12 @@ value: anObject
 	"Set the 32-bit unsigned <integer> value stored in the receiver."
 
 	self dwordAtOffset: 0 put: anObject! !
-!External.DWORDBytes categoriesFor: #asDword!converting!public! !
-!External.DWORDBytes categoriesFor: #asInteger!converting!public! !
-!External.DWORDBytes categoriesFor: #asSignedInteger!converting!public! !
-!External.DWORDBytes categoriesFor: #value:!accessing!public! !
+!External.DWORDBytes categoriesForMethods!
+asDword!converting!public! !
+asInteger!converting!public! !
+asSignedInteger!converting!public! !
+value:!accessing!public! !
+!
 
 !External.DWORDBytes class methodsFor!
 
@@ -46,6 +48,8 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress dwordAtOffset: 0! !
-!External.DWORDBytes class categoriesFor: #elementSize!constants!private! !
-!External.DWORDBytes class categoriesFor: #valueAtAddress:!helpers!private! !
+!External.DWORDBytes class categoriesForMethods!
+elementSize!constants!private! !
+valueAtAddress:!helpers!private! !
+!
 

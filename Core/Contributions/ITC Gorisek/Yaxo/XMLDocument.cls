@@ -60,16 +60,18 @@ version
 
 version: aString	
 	version := aString! !
-!XMLDocument categoriesFor: #dtd!accessing!public! !
-!XMLDocument categoriesFor: #dtd:!accessing!public! !
-!XMLDocument categoriesFor: #encoding!accessing!public! !
-!XMLDocument categoriesFor: #encoding:!accessing!public! !
-!XMLDocument categoriesFor: #hasDocumentElement!public!testing! !
-!XMLDocument categoriesFor: #isDocument!public!testing! !
-!XMLDocument categoriesFor: #printCanonicalOn:!printing!public! !
-!XMLDocument categoriesFor: #printXMLOn:!printing!public! !
-!XMLDocument categoriesFor: #requiredMarkup!accessing!public! !
-!XMLDocument categoriesFor: #requiredMarkup:!accessing!public! !
-!XMLDocument categoriesFor: #version!accessing!public! !
-!XMLDocument categoriesFor: #version:!accessing!public! !
+!XMLDocument categoriesForMethods!
+dtd!accessing!public! !
+dtd:!accessing!public! !
+encoding!accessing!public! !
+encoding:!accessing!public! !
+hasDocumentElement!public!testing! !
+isDocument!public!testing! !
+printCanonicalOn:!printing!public! !
+printXMLOn:!printing!public! !
+requiredMarkup!accessing!public! !
+requiredMarkup:!accessing!public! !
+version!accessing!public! !
+version:!accessing!public! !
+!
 

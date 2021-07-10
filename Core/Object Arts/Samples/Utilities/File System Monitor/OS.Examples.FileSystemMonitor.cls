@@ -123,19 +123,21 @@ queryCommand: aCommandQuery
 
 toggleMonitoring
 	self model isMonitoring: self model isMonitoring not! !
-!OS.Examples.FileSystemMonitor categoriesFor: #about!enquiries!private! !
-!OS.Examples.FileSystemMonitor categoriesFor: #addChange:!helpers!private! !
-!OS.Examples.FileSystemMonitor categoriesFor: #chooseDirectory!commands!public! !
-!OS.Examples.FileSystemMonitor categoriesFor: #clear!commands!public! !
-!OS.Examples.FileSystemMonitor categoriesFor: #createComponents!initializing!public! !
-!OS.Examples.FileSystemMonitor categoriesFor: #createSchematicWiring!initializing!public! !
-!OS.Examples.FileSystemMonitor categoriesFor: #model:!accessing!public! !
-!OS.Examples.FileSystemMonitor categoriesFor: #onFileAdded:!event handling!private! !
-!OS.Examples.FileSystemMonitor categoriesFor: #onFileModified:!event handling!private! !
-!OS.Examples.FileSystemMonitor categoriesFor: #onFileRemoved:!event handling!private! !
-!OS.Examples.FileSystemMonitor categoriesFor: #onFileRenamedFrom:to:!event handling!private! !
-!OS.Examples.FileSystemMonitor categoriesFor: #queryCommand:!public! !
-!OS.Examples.FileSystemMonitor categoriesFor: #toggleMonitoring!public! !
+!OS.Examples.FileSystemMonitor categoriesForMethods!
+about!enquiries!private! !
+addChange:!helpers!private! !
+chooseDirectory!commands!public! !
+clear!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+model:!accessing!public! !
+onFileAdded:!event handling!private! !
+onFileModified:!event handling!private! !
+onFileRemoved:!event handling!private! !
+onFileRenamedFrom:to:!event handling!private! !
+queryCommand:!public! !
+toggleMonitoring!public! !
+!
 
 !OS.Examples.FileSystemMonitor class methodsFor!
 
@@ -172,10 +174,12 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!OS.Examples.FileSystemMonitor class categoriesFor: #defaultModel!models!public! !
-!OS.Examples.FileSystemMonitor class categoriesFor: #displayOn:!displaying!public! !
-!OS.Examples.FileSystemMonitor class categoriesFor: #icon!public! !
-!OS.Examples.FileSystemMonitor class categoriesFor: #initialize!development!initializing!private! !
-!OS.Examples.FileSystemMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
-!OS.Examples.FileSystemMonitor class categoriesFor: #shutdownOnExit!public!testing! !
+!OS.Examples.FileSystemMonitor class categoriesForMethods!
+defaultModel!models!public! !
+displayOn:!displaying!public! !
+icon!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 

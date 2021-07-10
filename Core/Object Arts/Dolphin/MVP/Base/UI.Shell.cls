@@ -303,39 +303,41 @@ view: aShellView
 	super view: aShellView.
 	self onViewOpened; setInitialFocus
 ! !
-!UI.Shell categoriesFor: #addCommandHistory:!accessing!private! !
-!UI.Shell categoriesFor: #allAdditionalKeyBindings!constants!private! !
-!UI.Shell categoriesFor: #caption!accessing!public! !
-!UI.Shell categoriesFor: #caption:!accessing!public! !
-!UI.Shell categoriesFor: #clearCommandHistory!accessing!public! !
-!UI.Shell categoriesFor: #commandHistory!accessing!private! !
-!UI.Shell categoriesFor: #commandPolicyClass!commands!constants!public! !
-!UI.Shell categoriesFor: #commandPolicyWithSource:!commands!public! !
-!UI.Shell categoriesFor: #createView:!operations!private! !
-!UI.Shell categoriesFor: #exit!commands!public! !
-!UI.Shell categoriesFor: #hasCommandHistory!accessing!public! !
-!UI.Shell categoriesFor: #hasCommandHistory:!accessing!public! !
-!UI.Shell categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
-!UI.Shell categoriesFor: #onIdleEntered!event handling!public! !
-!UI.Shell categoriesFor: #onSettingChanged:!event handling-win32!public! !
-!UI.Shell categoriesFor: #onTimeChanged:!event handling-win32!public! !
-!UI.Shell categoriesFor: #onViewActivated:!event handling!public! !
-!UI.Shell categoriesFor: #onViewDeactivated:!event handling!public! !
-!UI.Shell categoriesFor: #onViewDestroyed!event handling!public! !
-!UI.Shell categoriesFor: #onViewMinimized:!event handling!public! !
-!UI.Shell categoriesFor: #onViewNcActivated:!event handling!public! !
-!UI.Shell categoriesFor: #onViewNcDeactivated:!event handling!public! !
-!UI.Shell categoriesFor: #onViewOpened!event handling!public! !
-!UI.Shell categoriesFor: #onViewRestored:!event handling!public! !
-!UI.Shell categoriesFor: #performCommand:!commands!public! !
-!UI.Shell categoriesFor: #queryCommand:!commands!private! !
-!UI.Shell categoriesFor: #redo!commands!public! !
-!UI.Shell categoriesFor: #setInitialFocus!operations!public! !
-!UI.Shell categoriesFor: #shortCaption!accessing!public! !
-!UI.Shell categoriesFor: #undo!commands!public! !
-!UI.Shell categoriesFor: #updateCaption!public!updating! !
-!UI.Shell categoriesFor: #updateIcon!private!updating! !
-!UI.Shell categoriesFor: #view:!accessing!public! !
+!UI.Shell categoriesForMethods!
+addCommandHistory:!accessing!private! !
+allAdditionalKeyBindings!constants!private! !
+caption!accessing!public! !
+caption:!accessing!public! !
+clearCommandHistory!accessing!public! !
+commandHistory!accessing!private! !
+commandPolicyClass!commands!constants!public! !
+commandPolicyWithSource:!commands!public! !
+createView:!operations!private! !
+exit!commands!public! !
+hasCommandHistory!accessing!public! !
+hasCommandHistory:!accessing!public! !
+onAboutToDisplaySystemMenu:!event handling!public! !
+onIdleEntered!event handling!public! !
+onSettingChanged:!event handling-win32!public! !
+onTimeChanged:!event handling-win32!public! !
+onViewActivated:!event handling!public! !
+onViewDeactivated:!event handling!public! !
+onViewDestroyed!event handling!public! !
+onViewMinimized:!event handling!public! !
+onViewNcActivated:!event handling!public! !
+onViewNcDeactivated:!event handling!public! !
+onViewOpened!event handling!public! !
+onViewRestored:!event handling!public! !
+performCommand:!commands!public! !
+queryCommand:!commands!private! !
+redo!commands!public! !
+setInitialFocus!operations!public! !
+shortCaption!accessing!public! !
+undo!commands!public! !
+updateCaption!public!updating! !
+updateIcon!private!updating! !
+view:!accessing!public! !
+!
 
 UI.Shell methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
 
@@ -391,11 +393,13 @@ shutdownOnExit
 	does mean most applications will need to override for their main shell window."
 
 	^false! !
-!UI.Shell class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
-!UI.Shell class categoriesFor: #create:!instance creation!public! !
-!UI.Shell class categoriesFor: #create:in:on:!instance creation!public! !
-!UI.Shell class categoriesFor: #icon!constants!public! !
-!UI.Shell class categoriesFor: #installNew!converting!public!VM and session managerment! !
-!UI.Shell class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.Shell class categoriesFor: #shutdownOnExit!public!testing! !
+!UI.Shell class categoriesForMethods!
+asSessionManagerClass!converting!public!VM and session managerment! !
+create:!instance creation!public! !
+create:in:on:!instance creation!public! !
+icon!constants!public! !
+installNew!converting!public!VM and session managerment! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 

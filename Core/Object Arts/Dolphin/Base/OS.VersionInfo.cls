@@ -156,25 +156,27 @@ specialBuild
 	"Answer the <readableString> product name from the receiver."
 
 	^self at: 'SpecialBuild'! !
-!OS.VersionInfo categoriesFor: #at:!accessing!public! !
-!OS.VersionInfo categoriesFor: #comments!accessing!public! !
-!OS.VersionInfo categoriesFor: #fileDescription!accessing!public! !
-!OS.VersionInfo categoriesFor: #fileInfo:!accessing!private! !
-!OS.VersionInfo categoriesFor: #fileVersion!public! !
-!OS.VersionInfo categoriesFor: #fileVersionString!accessing!public! !
-!OS.VersionInfo categoriesFor: #fixedInfo!accessing!public! !
-!OS.VersionInfo categoriesFor: #formatVersionString:!operations!public! !
-!OS.VersionInfo categoriesFor: #getFixedInfo!accessing!private! !
-!OS.VersionInfo categoriesFor: #getTranslationInfo!accessing!private! !
-!OS.VersionInfo categoriesFor: #legalCopyright!accessing!public! !
-!OS.VersionInfo categoriesFor: #prefix!accessing!private! !
-!OS.VersionInfo categoriesFor: #printOn:!printing!public! !
-!OS.VersionInfo categoriesFor: #productMajor!accessing!public! !
-!OS.VersionInfo categoriesFor: #productMinor!accessing!public! !
-!OS.VersionInfo categoriesFor: #productName!accessing!public! !
-!OS.VersionInfo categoriesFor: #productVersionString!accessing!public! !
-!OS.VersionInfo categoriesFor: #queryValue:into:!accessing!private! !
-!OS.VersionInfo categoriesFor: #specialBuild!accessing!public! !
+!OS.VersionInfo categoriesForMethods!
+at:!accessing!public! !
+comments!accessing!public! !
+fileDescription!accessing!public! !
+fileInfo:!accessing!private! !
+fileVersion!public! !
+fileVersionString!accessing!public! !
+fixedInfo!accessing!public! !
+formatVersionString:!operations!public! !
+getFixedInfo!accessing!private! !
+getTranslationInfo!accessing!private! !
+legalCopyright!accessing!public! !
+prefix!accessing!private! !
+printOn:!printing!public! !
+productMajor!accessing!public! !
+productMinor!accessing!public! !
+productName!accessing!public! !
+productVersionString!accessing!public! !
+queryValue:into:!accessing!private! !
+specialBuild!accessing!public! !
+!
 
 !OS.VersionInfo class methodsFor!
 
@@ -190,6 +192,8 @@ uninitialize
 	"Assist the version library in departing this world"
 
 	#{VersionLibrary} ifDefined: [:lib | lib closeDefault]! !
-!OS.VersionInfo class categoriesFor: #forPath:!instance creation!public! !
-!OS.VersionInfo class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!OS.VersionInfo class categoriesForMethods!
+forPath:!instance creation!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

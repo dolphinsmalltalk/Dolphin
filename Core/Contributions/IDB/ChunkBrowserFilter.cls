@@ -90,26 +90,28 @@ toggleRestrictingMostRecent
 
 toggleRestrictingPicked
 	restrictingPicked := restrictingPicked not! !
-!ChunkBrowserFilter categoriesFor: #chunkSelectAll!operations!public! !
-!ChunkBrowserFilter categoriesFor: #chunkSelectDefault!operations!public! !
-!ChunkBrowserFilter categoriesFor: #chunkSelectNone!operations!public! !
-!ChunkBrowserFilter categoriesFor: #initialize!initializing!public! !
-!ChunkBrowserFilter categoriesFor: #isChunkTypeSelected:!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isCompareNeeded!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isComparisonTypeSelected:!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isInRestrictionClass:!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isInRestrictionRange:!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isRestrictingClass!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isRestrictingMostRecent!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isRestrictingPicked!public!testing! !
-!ChunkBrowserFilter categoriesFor: #isRestrictingRange!public!testing! !
-!ChunkBrowserFilter categoriesFor: #restrictionClass:!accessing!public! !
-!ChunkBrowserFilter categoriesFor: #restrictionRange:!accessing!public! !
-!ChunkBrowserFilter categoriesFor: #restrictionRangeFirst!accessing!public! !
-!ChunkBrowserFilter categoriesFor: #restrictionRangeLast!accessing!public! !
-!ChunkBrowserFilter categoriesFor: #restrictionRangeSize!accessing!public! !
-!ChunkBrowserFilter categoriesFor: #toggleChunkType:!operations!public! !
-!ChunkBrowserFilter categoriesFor: #toggleComparisonType:!operations!public! !
-!ChunkBrowserFilter categoriesFor: #toggleRestrictingMostRecent!operations!public! !
-!ChunkBrowserFilter categoriesFor: #toggleRestrictingPicked!operations!public! !
+!ChunkBrowserFilter categoriesForMethods!
+chunkSelectAll!operations!public! !
+chunkSelectDefault!operations!public! !
+chunkSelectNone!operations!public! !
+initialize!initializing!public! !
+isChunkTypeSelected:!public!testing! !
+isCompareNeeded!public!testing! !
+isComparisonTypeSelected:!public!testing! !
+isInRestrictionClass:!public!testing! !
+isInRestrictionRange:!public!testing! !
+isRestrictingClass!public!testing! !
+isRestrictingMostRecent!public!testing! !
+isRestrictingPicked!public!testing! !
+isRestrictingRange!public!testing! !
+restrictionClass:!accessing!public! !
+restrictionRange:!accessing!public! !
+restrictionRangeFirst!accessing!public! !
+restrictionRangeLast!accessing!public! !
+restrictionRangeSize!accessing!public! !
+toggleChunkType:!operations!public! !
+toggleComparisonType:!operations!public! !
+toggleRestrictingMostRecent!operations!public! !
+toggleRestrictingPicked!operations!public! !
+!
 

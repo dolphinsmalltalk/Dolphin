@@ -16,5 +16,7 @@ pointerClass
 	pointers of the receiver's type."
 
 	^PointerArray! !
-!External.PointerArrayPointerField categoriesFor: #pointerClass!accessing!private! !
+!External.PointerArrayPointerField categoriesForMethods!
+pointerClass!accessing!private! !
+!
 

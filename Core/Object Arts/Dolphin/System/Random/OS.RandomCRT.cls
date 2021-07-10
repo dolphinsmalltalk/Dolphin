@@ -38,7 +38,9 @@ seed: anInteger
 
 	Ucrt srand: anInteger.
 	super seed: anInteger! !
-!OS.RandomCRT categoriesFor: #next!accessing!public! !
-!OS.RandomCRT categoriesFor: #peek!accessing!public! !
-!OS.RandomCRT categoriesFor: #seed:!accessing!public! !
+!OS.RandomCRT categoriesForMethods!
+next!accessing!public! !
+peek!accessing!public! !
+seed:!accessing!public! !
+!
 

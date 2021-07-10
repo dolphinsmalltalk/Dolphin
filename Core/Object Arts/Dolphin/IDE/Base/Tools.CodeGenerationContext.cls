@@ -35,16 +35,20 @@ targetClass
 
 writeStream
 	^writeStream! !
-!Tools.CodeGenerationContext categoriesFor: #contents!private! !
-!Tools.CodeGenerationContext categoriesFor: #environment!accessing!public! !
-!Tools.CodeGenerationContext categoriesFor: #printClass:!operations!public! !
-!Tools.CodeGenerationContext categoriesFor: #setTargetClass:!accessing!initializing!private! !
-!Tools.CodeGenerationContext categoriesFor: #targetClass!accessing!public! !
-!Tools.CodeGenerationContext categoriesFor: #writeStream!accessing!public! !
+!Tools.CodeGenerationContext categoriesForMethods!
+contents!private! !
+environment!accessing!public! !
+printClass:!operations!public! !
+setTargetClass:!accessing!initializing!private! !
+targetClass!accessing!public! !
+writeStream!accessing!public! !
+!
 
 !Tools.CodeGenerationContext class methodsFor!
 
 targetClass: aClass
 	^self new setTargetClass: aClass! !
-!Tools.CodeGenerationContext class categoriesFor: #targetClass:!instance creation!public! !
+!Tools.CodeGenerationContext class categoriesForMethods!
+targetClass:!instance creation!public! !
+!
 

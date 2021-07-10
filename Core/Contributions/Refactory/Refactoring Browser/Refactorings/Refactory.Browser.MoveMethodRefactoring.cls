@@ -279,35 +279,37 @@ transform
 verifyTemporaryVariableDoesNotOverride
 	(parseTree allDefinedVariables includes: selfVariableName) ifTrue: [^false].
 	^(moveToClasses anySatisfy: [:each | each definesVariable: selfVariableName]) not! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #abstractVariables!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #abstractVariablesRefactoring!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #buildParseTree!private! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkAssignmentsToVariable!preconditions!public! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkForPrimitiveMethod!preconditions!public! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkForSuperReferences!preconditions!public! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #checkTemporaryVariableNames!preconditions!public! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #compileDelagatorMethod!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #compileNewMethods!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getAllClassesForGlobalOrClassVariable!accessing!private! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getArgumentNameForSelf!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassesForInstanceVariable!accessing!private! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassesForTemporaryVariable!accessing!private! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassesToMoveTo!accessing!private! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getClassForGlobalOrClassVariable!accessing!private! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #hasOnlySelfReturns!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #hasSelfReferences!public!testing! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #isMovingToArgument!public!testing! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #isMovingToInstVar!public!testing! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #needsToReplaceSelfReferences!public!testing! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #replaceSelfReferences!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #replaceVariableReferences!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #selector:class:variable:!initialize/release!public! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.MoveMethodRefactoring categoriesFor: #verifyTemporaryVariableDoesNotOverride!public!transforming! !
+!Refactory.Browser.MoveMethodRefactoring categoriesForMethods!
+abstractVariables!public!transforming! !
+abstractVariablesRefactoring!public!transforming! !
+addSelfReturn!public!transforming! !
+buildParseTree!private! !
+checkAssignmentsToVariable!preconditions!public! !
+checkForPrimitiveMethod!preconditions!public! !
+checkForSuperReferences!preconditions!public! !
+checkTemporaryVariableNames!preconditions!public! !
+compileDelagatorMethod!public!transforming! !
+compileNewMethods!public!transforming! !
+getAllClassesForGlobalOrClassVariable!accessing!private! !
+getArgumentNameForSelf!public!transforming! !
+getClassesForInstanceVariable!accessing!private! !
+getClassesForTemporaryVariable!accessing!private! !
+getClassesToMoveTo!accessing!private! !
+getClassForGlobalOrClassVariable!accessing!private! !
+getNewMethodName!public!transforming! !
+hasOnlySelfReturns!public!transforming! !
+hasSelfReferences!public!testing! !
+isMovingToArgument!public!testing! !
+isMovingToInstVar!public!testing! !
+needsToReplaceSelfReferences!public!testing! !
+preconditions!preconditions!public! !
+replaceSelfReferences!public!transforming! !
+replaceVariableReferences!public!transforming! !
+selector:class:variable:!initialize/release!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+verifyTemporaryVariableDoesNotOverride!public!transforming! !
+!
 
 !Refactory.Browser.MoveMethodRefactoring class methodsFor!
 
@@ -325,6 +327,8 @@ selector: aSymbol class: aClass variable: aVariableName
 			class: aClass
 			variable: aVariableName;
 		yourself! !
-!Refactory.Browser.MoveMethodRefactoring class categoriesFor: #model:selector:class:variable:!instance creation!public! !
-!Refactory.Browser.MoveMethodRefactoring class categoriesFor: #selector:class:variable:!instance creation!public! !
+!Refactory.Browser.MoveMethodRefactoring class categoriesForMethods!
+model:selector:class:variable:!instance creation!public! !
+selector:class:variable:!instance creation!public! !
+!
 

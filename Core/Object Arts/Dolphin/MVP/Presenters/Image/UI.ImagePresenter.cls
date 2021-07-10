@@ -55,9 +55,11 @@ resource_Static_icon
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticIcon) 34 17 nil nil 34 2 8 1149239555 1 416 918598 2 ##(UI.ValueHolder) nil nil 1704454 ##(Core.PluggableSearchPolicy) 786950 ##(Core.Message) #== 8 #() 546 #hash 8 #() nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil false nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 786 241 221 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 120 0 0 0] 8 #() 786 193 193 nil 27)! !
-!UI.ImagePresenter class categoriesFor: #icon!constants!public! !
-!UI.ImagePresenter class categoriesFor: #resource_Animated_view!public!resources-views! !
-!UI.ImagePresenter class categoriesFor: #resource_Basic_image!public!resources-views! !
-!UI.ImagePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.ImagePresenter class categoriesFor: #resource_Static_icon!public!resources-views! !
+!UI.ImagePresenter class categoriesForMethods!
+icon!constants!public! !
+resource_Animated_view!public!resources-views! !
+resource_Basic_image!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_Static_icon!public!resources-views! !
+!
 

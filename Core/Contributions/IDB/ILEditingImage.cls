@@ -262,36 +262,38 @@ usedRectangleIn: aCanvas within: aPoint
 					[:down | 
 					(0 to: aPoint x) anySatisfy: [:across | (aCanvas pixelAt: across @ down) = Color black]].
 	^left @ top corner: right @ bottom! !
-!ILEditingImage categoriesFor: #beModified!accessing!public! !
-!ILEditingImage categoriesFor: #beNotModified!accessing!public! !
-!ILEditingImage categoriesFor: #brushFor:!accessing!public! !
-!ILEditingImage categoriesFor: #canPaste!public!testing! !
-!ILEditingImage categoriesFor: #canRedo!public!testing! !
-!ILEditingImage categoriesFor: #canUndo!public!testing! !
-!ILEditingImage categoriesFor: #draw:location:with:!operations!public! !
-!ILEditingImage categoriesFor: #draw:on:in:!operations!public! !
-!ILEditingImage categoriesFor: #editCopy:!operations!public! !
-!ILEditingImage categoriesFor: #editCut:with:!operations!public! !
-!ILEditingImage categoriesFor: #editPaste:!operations!public! !
-!ILEditingImage categoriesFor: #editRedo!operations!public! !
-!ILEditingImage categoriesFor: #editUndo!operations!public! !
-!ILEditingImage categoriesFor: #ellipse:with:!operations!public! !
-!ILEditingImage categoriesFor: #fill:with:!operations!public! !
-!ILEditingImage categoriesFor: #hotSpot:!accessing!public! !
-!ILEditingImage categoriesFor: #indexFor:!accessing!public! !
-!ILEditingImage categoriesFor: #isModified!public!testing! !
-!ILEditingImage categoriesFor: #libraryImage!converting!public! !
-!ILEditingImage categoriesFor: #lineTlBr:with:!operations!public! !
-!ILEditingImage categoriesFor: #lineTrBl:with:!operations!public! !
-!ILEditingImage categoriesFor: #modifiedDescription!displaying!public! !
-!ILEditingImage categoriesFor: #notifyChangedPoints:!helpers!public! !
-!ILEditingImage categoriesFor: #notifyChangedRectangle:!helpers!public! !
-!ILEditingImage categoriesFor: #plot:with:!operations!public! !
-!ILEditingImage categoriesFor: #putRGB:at:!accessing!public! !
-!ILEditingImage categoriesFor: #rectangle:with:!operations!public! !
-!ILEditingImage categoriesFor: #setExtent:colors:!initializing!public! !
-!ILEditingImage categoriesFor: #text:with:displaying:!operations!public! !
-!ILEditingImage categoriesFor: #undoAdd:!operations!public! !
-!ILEditingImage categoriesFor: #undoCommit!operations!public! !
-!ILEditingImage categoriesFor: #usedRectangleIn:within:!helpers!public! !
+!ILEditingImage categoriesForMethods!
+beModified!accessing!public! !
+beNotModified!accessing!public! !
+brushFor:!accessing!public! !
+canPaste!public!testing! !
+canRedo!public!testing! !
+canUndo!public!testing! !
+draw:location:with:!operations!public! !
+draw:on:in:!operations!public! !
+editCopy:!operations!public! !
+editCut:with:!operations!public! !
+editPaste:!operations!public! !
+editRedo!operations!public! !
+editUndo!operations!public! !
+ellipse:with:!operations!public! !
+fill:with:!operations!public! !
+hotSpot:!accessing!public! !
+indexFor:!accessing!public! !
+isModified!public!testing! !
+libraryImage!converting!public! !
+lineTlBr:with:!operations!public! !
+lineTrBl:with:!operations!public! !
+modifiedDescription!displaying!public! !
+notifyChangedPoints:!helpers!public! !
+notifyChangedRectangle:!helpers!public! !
+plot:with:!operations!public! !
+putRGB:at:!accessing!public! !
+rectangle:with:!operations!public! !
+setExtent:colors:!initializing!public! !
+text:with:displaying:!operations!public! !
+undoAdd:!operations!public! !
+undoCommit!operations!public! !
+usedRectangleIn:within:!helpers!public! !
+!
 

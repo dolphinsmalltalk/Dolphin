@@ -188,14 +188,16 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
-!Kernel.STLDebugger categoriesFor: #basicNext!accessing!private! !
-!Kernel.STLDebugger categoriesFor: #initialize!initializing!private! !
-!Kernel.STLDebugger categoriesFor: #next!accessing!public! !
-!Kernel.STLDebugger categoriesFor: #objectAt:!accessing!private! !
-!Kernel.STLDebugger categoriesFor: #printOffsets!accessing!public! !
-!Kernel.STLDebugger categoriesFor: #printOffsets:!accessing!public! !
-!Kernel.STLDebugger categoriesFor: #printValueToTrace:!accessing!private! !
-!Kernel.STLDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
-!Kernel.STLDebugger categoriesFor: #traceStream!accessing!public! !
-!Kernel.STLDebugger categoriesFor: #traceStream:!accessing!public! !
+!Kernel.STLDebugger categoriesForMethods!
+basicNext!accessing!private! !
+initialize!initializing!private! !
+next!accessing!public! !
+objectAt:!accessing!private! !
+printOffsets!accessing!public! !
+printOffsets:!accessing!public! !
+printValueToTrace:!accessing!private! !
+readObjectOfClass:format:!operations!private! !
+traceStream!accessing!public! !
+traceStream:!accessing!public! !
+!
 

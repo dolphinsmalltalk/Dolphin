@@ -73,13 +73,15 @@ StateFlags
 	"Answer the <Integer> value of the receiver's 'StateFlags' field."
 
 	^bytes dwordAtOffset: _OffsetOf_StateFlags! !
-!OS.DISPLAY_DEVICEW categoriesFor: #DeviceID!**compiled accessors**!public! !
-!OS.DISPLAY_DEVICEW categoriesFor: #DeviceName!**compiled accessors**!public! !
-!OS.DISPLAY_DEVICEW categoriesFor: #DeviceString!**compiled accessors**!public! !
-!OS.DISPLAY_DEVICEW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.DISPLAY_DEVICEW categoriesFor: #isAttachedToDesktop!public!testing! !
-!OS.DISPLAY_DEVICEW categoriesFor: #isPrimaryAdaptor!public!testing! !
-!OS.DISPLAY_DEVICEW categoriesFor: #StateFlags!**compiled accessors**!public! !
+!OS.DISPLAY_DEVICEW categoriesForMethods!
+DeviceID!**compiled accessors**!public! !
+DeviceName!**compiled accessors**!public! !
+DeviceString!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+isAttachedToDesktop!public!testing! !
+isPrimaryAdaptor!public!testing! !
+StateFlags!**compiled accessors**!public! !
+!
 
 !OS.DISPLAY_DEVICEW class methodsFor!
 
@@ -110,6 +112,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #DeviceName #DeviceString #StateFlags #DeviceID)! !
-!OS.DISPLAY_DEVICEW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.DISPLAY_DEVICEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DISPLAY_DEVICEW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

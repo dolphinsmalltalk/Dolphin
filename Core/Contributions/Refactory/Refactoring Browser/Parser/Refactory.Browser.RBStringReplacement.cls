@@ -28,12 +28,14 @@ string
 
 string: aString 
 	string := aString! !
-!Refactory.Browser.RBStringReplacement categoriesFor: #startPosition!accessing!public! !
-!Refactory.Browser.RBStringReplacement categoriesFor: #startPosition:!accessing!private! !
-!Refactory.Browser.RBStringReplacement categoriesFor: #stopPosition!accessing!public! !
-!Refactory.Browser.RBStringReplacement categoriesFor: #stopPosition:!accessing!private! !
-!Refactory.Browser.RBStringReplacement categoriesFor: #string!accessing!public! !
-!Refactory.Browser.RBStringReplacement categoriesFor: #string:!accessing!private! !
+!Refactory.Browser.RBStringReplacement categoriesForMethods!
+startPosition!accessing!public! !
+startPosition:!accessing!private! !
+stopPosition!accessing!public! !
+stopPosition:!accessing!private! !
+string!accessing!public! !
+string:!accessing!private! !
+!
 
 !Refactory.Browser.RBStringReplacement class methodsFor!
 
@@ -43,5 +45,7 @@ replaceFrom: startInteger to: stopInteger with: aString
 		stopPosition: stopInteger;
 		string: aString;
 		yourself! !
-!Refactory.Browser.RBStringReplacement class categoriesFor: #replaceFrom:to:with:!instance creation!public! !
+!Refactory.Browser.RBStringReplacement class categoriesForMethods!
+replaceFrom:to:with:!instance creation!public! !
+!
 

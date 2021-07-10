@@ -62,14 +62,16 @@ width: aNumber
 	"Set the width of the receiver's arrow cap."
 
 	Gdip gdipSetAdjustableArrowCapWidth: self asParameter width: aNumber! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #height!accessing!public! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #height:!accessing!public! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #isFilled!accessing!public! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #isFilled:!accessing!public! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #middleInset!accessing!public! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #middleInset:!accessing!public! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #width!accessing!public! !
-!Graphics.Gdiplus.AdjustableArrowCap categoriesFor: #width:!accessing!public! !
+!Graphics.Gdiplus.AdjustableArrowCap categoriesForMethods!
+height!accessing!public! !
+height:!accessing!public! !
+isFilled!accessing!public! !
+isFilled:!accessing!public! !
+middleInset!accessing!public! !
+middleInset:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !Graphics.Gdiplus.AdjustableArrowCap class methodsFor!
 
@@ -118,7 +120,9 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 
 strokePath: aStrokePath
 	^self shouldNotImplement! !
-!Graphics.Gdiplus.AdjustableArrowCap class categoriesFor: #exampleGdipAACArrowCap!examples!public!unit tests! !
-!Graphics.Gdiplus.AdjustableArrowCap class categoriesFor: #height:width:isFilled:!instance creation!public! !
-!Graphics.Gdiplus.AdjustableArrowCap class categoriesFor: #strokePath:!instance creation!public! !
+!Graphics.Gdiplus.AdjustableArrowCap class categoriesForMethods!
+exampleGdipAACArrowCap!examples!public!unit tests! !
+height:width:isFilled:!instance creation!public! !
+strokePath:!instance creation!public! !
+!
 

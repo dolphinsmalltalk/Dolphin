@@ -75,9 +75,11 @@ getLogicalDriveStrings: bufferSize buffer: aBuffer
 
 	<stdcall: dword GetLogicalDriveStringsW dword lpwstr>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #getExitCodeProcess:lpExitCode:!public! !
-!KernelLibrary categoriesFor: #getExitCodeThread:lpExitCode:!public! !
-!KernelLibrary categoriesFor: #getLogicalDriveStrings:buffer:!public!win32 functions-system information! !
+!KernelLibrary categoriesForMethods!
+getExitCodeProcess:lpExitCode:!public! !
+getExitCodeThread:lpExitCode:!public! !
+getLogicalDriveStrings:buffer:!public!win32 functions-system information! !
+!
 
 "End of package definition"!
 

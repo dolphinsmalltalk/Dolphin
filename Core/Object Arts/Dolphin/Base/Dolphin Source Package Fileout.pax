@@ -111,8 +111,10 @@ fileOut
 	package directory."
 
 	self sourceManager fileOutPackagedClass: self! !
-!Core.Class categoriesFor: #canFileOut!public!source filing! !
-!Core.Class categoriesFor: #fileOut!public!source filing! !
+!Core.Class categoriesForMethods!
+canFileOut!public!source filing! !
+fileOut!public!source filing! !
+!
 
 !Kernel.AbstractChunkSourceFiler methodsFor!
 
@@ -277,25 +279,27 @@ methodNameSortBlock: aPackage
 	a className = b className
 		ifTrue: [a selector <==> b selector <= 0]
 		ifFalse: [a className <= b className]]! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitCategories:for:in:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageAboutBlock:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageClassNames:!accessing!private! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageDescription:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageManualPrerequisites:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageMethodNames:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageNames:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackagePrerequisiteNames:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageScripts:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageStripperBytes:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageUntracedVariables:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableNames:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableNameSubsets:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVariableReference:!accessing!private!source filing! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPackageVersion:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPaxAttributes:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitPaxPackage:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitVersionNumber:!private!source filing-pax! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #methodNameSortBlock:!private!source filing-pax! !
+!Kernel.AbstractChunkSourceFiler categoriesForMethods!
+emitCategories:for:in:!private!source filing-pax! !
+emitPackageAboutBlock:!private!source filing-pax! !
+emitPackageClassNames:!accessing!private! !
+emitPackageDescription:!private!source filing-pax! !
+emitPackageManualPrerequisites:!private!source filing-pax! !
+emitPackageMethodNames:!private!source filing-pax! !
+emitPackageNames:!private!source filing-pax! !
+emitPackagePrerequisiteNames:!private!source filing-pax! !
+emitPackageScripts:!private!source filing-pax! !
+emitPackageStripperBytes:!private!source filing-pax! !
+emitPackageUntracedVariables:!private!source filing-pax! !
+emitPackageVariableNames:!private!source filing-pax! !
+emitPackageVariableNameSubsets:!private!source filing-pax! !
+emitPackageVariableReference:!accessing!private!source filing! !
+emitPackageVersion:!private!source filing-pax! !
+emitPaxAttributes:!private!source filing-pax! !
+emitPaxPackage:!private!source filing-pax! !
+emitVersionNumber:!private!source filing-pax! !
+methodNameSortBlock:!private!source filing-pax! !
+!
 
 !Kernel.ChunkSourceFiler methodsFor!
 
@@ -373,17 +377,19 @@ emitPaxAttributes: aPackage
 				space;
 				print: namespace fullyQualifiedReference].
 	super emitPaxAttributes: aPackage! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageBinaryVariables:!private!source filing! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageClassNames:!accessing!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageCollection:initializer:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageManualPrerequisites:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageMethodNames:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageNameCollection:initializer:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackagePrerequisiteNames:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageUntracedVariables:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageVariableNames:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPackageVariableNameSubsets:!private!source filing-pax! !
-!Kernel.ChunkSourceFiler categoriesFor: #emitPaxAttributes:!private!source filing-pax! !
+!Kernel.ChunkSourceFiler categoriesForMethods!
+emitPackageBinaryVariables:!private!source filing! !
+emitPackageClassNames:!accessing!private!source filing-pax! !
+emitPackageCollection:initializer:!private!source filing-pax! !
+emitPackageManualPrerequisites:!private!source filing-pax! !
+emitPackageMethodNames:!private!source filing-pax! !
+emitPackageNameCollection:initializer:!private!source filing-pax! !
+emitPackagePrerequisiteNames:!private!source filing-pax! !
+emitPackageUntracedVariables:!private!source filing-pax! !
+emitPackageVariableNames:!private!source filing-pax! !
+emitPackageVariableNameSubsets:!private!source filing-pax! !
+emitPaxAttributes:!private!source filing-pax! !
+!
 
 !Kernel.Package methodsFor!
 
@@ -663,32 +669,34 @@ updateTimestamp
 	"Private - Synchronise the receiver's timestamp with its source file."
 
 	timestamp := self fileModificationTime! !
-!Kernel.Package categoriesFor: #allFileOutNames!accessing!private!source filing! !
-!Kernel.Package categoriesFor: #beNotUsingPAX!modes!public! !
-!Kernel.Package categoriesFor: #beUsingPAX!modes!public! !
-!Kernel.Package categoriesFor: #canFileOut!public!source filing! !
-!Kernel.Package categoriesFor: #checkTimestamps!helpers!private! !
-!Kernel.Package categoriesFor: #createPackagePath!private!source filing! !
-!Kernel.Package categoriesFor: #dotPacPath!helpers!private! !
-!Kernel.Package categoriesFor: #fileModificationTime!helpers!private! !
-!Kernel.Package categoriesFor: #fileOut!public!source filing! !
-!Kernel.Package categoriesFor: #fileOutAll!public!source filing! !
-!Kernel.Package categoriesFor: #fileOutAllChanged!public!source filing! !
-!Kernel.Package categoriesFor: #fileOutBinaryVariables!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutBootDefinitions!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutNames!private!source filing! !
-!Kernel.Package categoriesFor: #fileOutOn:!public!source filing! !
-!Kernel.Package categoriesFor: #isLegacySourceFormat:!public!testing! !
-!Kernel.Package categoriesFor: #isRenegade!public!testing! !
-!Kernel.Package categoriesFor: #isUsingPAX!public!testing! !
-!Kernel.Package categoriesFor: #isUsingPAX:!accessing!public! !
-!Kernel.Package categoriesFor: #save!commands!public! !
-!Kernel.Package categoriesFor: #saveAs:!commands!public! !
-!Kernel.Package categoriesFor: #saveChanges!operations!public! !
-!Kernel.Package categoriesFor: #savePAC!helpers!private! !
-!Kernel.Package categoriesFor: #savePAX!private!source filing-pax! !
-!Kernel.Package categoriesFor: #saveSingleFilePackage!public!source filing! !
-!Kernel.Package categoriesFor: #updateTimestamp!helpers!private! !
+!Kernel.Package categoriesForMethods!
+allFileOutNames!accessing!private!source filing! !
+beNotUsingPAX!modes!public! !
+beUsingPAX!modes!public! !
+canFileOut!public!source filing! !
+checkTimestamps!helpers!private! !
+createPackagePath!private!source filing! !
+dotPacPath!helpers!private! !
+fileModificationTime!helpers!private! !
+fileOut!public!source filing! !
+fileOutAll!public!source filing! !
+fileOutAllChanged!public!source filing! !
+fileOutBinaryVariables!private!source filing! !
+fileOutBootDefinitions!private!source filing! !
+fileOutNames!private!source filing! !
+fileOutOn:!public!source filing! !
+isLegacySourceFormat:!public!testing! !
+isRenegade!public!testing! !
+isUsingPAX!public!testing! !
+isUsingPAX:!accessing!public! !
+save!commands!public! !
+saveAs:!commands!public! !
+saveChanges!operations!public! !
+savePAC!helpers!private! !
+savePAX!private!source filing-pax! !
+saveSingleFilePackage!public!source filing! !
+updateTimestamp!helpers!private! !
+!
 
 !Kernel.SourceFiler methodsFor!
 
@@ -835,19 +843,21 @@ storeCommentString: aString forPackage: aPackage
 	descriptor so that the comment may be retrieved later."
 
 	^self subclassResponsibility! !
-!Kernel.SourceFiler categoriesFor: #emitPackageBinaryVariables:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #emitPackageDescription:!private!source filing-pax! !
-!Kernel.SourceFiler categoriesFor: #fileOutClass:ofPackage:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #fileOutDefinitionOfPackage:!public! !
-!Kernel.SourceFiler categoriesFor: #fileOutPackage:!public! !
-!Kernel.SourceFiler categoriesFor: #fileOutPackage:methodsOfClass:!private! !
-!Kernel.SourceFiler categoriesFor: #fileOutPackageClassDefinitions:!private! !
-!Kernel.SourceFiler categoriesFor: #fileOutPackageClasses:!private! !
-!Kernel.SourceFiler categoriesFor: #fileOutPackageMethods:!private! !
-!Kernel.SourceFiler categoriesFor: #fileOutPackageSourceVariables:!private! !
-!Kernel.SourceFiler categoriesFor: #fileOutPackageVariableAliases:!private! !
-!Kernel.SourceFiler categoriesFor: #packageClassesInFileoutOrder:!private! !
-!Kernel.SourceFiler categoriesFor: #storeCommentString:forPackage:!public!source filing! !
+!Kernel.SourceFiler categoriesForMethods!
+emitPackageBinaryVariables:!private!source filing! !
+emitPackageDescription:!private!source filing-pax! !
+fileOutClass:ofPackage:!public!source filing! !
+fileOutDefinitionOfPackage:!public! !
+fileOutPackage:!public! !
+fileOutPackage:methodsOfClass:!private! !
+fileOutPackageClassDefinitions:!private! !
+fileOutPackageClasses:!private! !
+fileOutPackageMethods:!private! !
+fileOutPackageSourceVariables:!private! !
+fileOutPackageVariableAliases:!private! !
+packageClassesInFileoutOrder:!private! !
+storeCommentString:forPackage:!public!source filing! !
+!
 
 !Kernel.SourceManager methodsFor!
 
@@ -880,8 +890,10 @@ fileOutPackagedClass: aClass to: aFileName
 
 	"Flag the class as being saved, i.e. no longer changed"
 	aClass isChanged: false! !
-!Kernel.SourceManager categoriesFor: #fileOutPackagedClass:!public!source filing! !
-!Kernel.SourceManager categoriesFor: #fileOutPackagedClass:to:!public!source filing! !
+!Kernel.SourceManager categoriesForMethods!
+fileOutPackagedClass:!public!source filing! !
+fileOutPackagedClass:to:!public!source filing! !
+!
 
 "End of package definition"!
 

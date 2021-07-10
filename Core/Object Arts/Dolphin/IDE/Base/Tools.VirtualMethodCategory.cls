@@ -85,14 +85,16 @@ selectorsInBehavior: aBehavior
 	selectors := WriteStream on: (Array new: 8).
 	self methodsInBehavior: aBehavior do: [:each | selectors nextPut: each selector].
 	^selectors contents! !
-!Tools.VirtualMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!Tools.VirtualMethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
-!Tools.VirtualMethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
-!Tools.VirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
-!Tools.VirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
-!Tools.VirtualMethodCategory categoriesFor: #isVirtual!public!testing! !
-!Tools.VirtualMethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!Tools.VirtualMethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!Tools.VirtualMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
-!Tools.VirtualMethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
+!Tools.VirtualMethodCategory categoriesForMethods!
+addMethodSilently:!adding!private! !
+behaviorsDo:!enumerating!public! !
+includesBehavior:!enumerating!public! !
+includesMethod:!public!testing! !
+isSlowToEnumerate!public!testing! !
+isVirtual!public!testing! !
+methodsInBehavior:!enumerating!public! !
+methodsInBehavior:do:!enumerating!public! !
+removeMethodSilently:!private!removing! !
+selectorsInBehavior:!enumerating!public! !
+!
 

@@ -30,10 +30,12 @@ onStyleNeeded: aScintillaView from: startInteger to: stopInteger
 	In this case we just set to the default style, regardless."
 
 	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1! !
-!UI.Scintilla.NullStyler categoriesFor: #initialize!initializing!public! !
-!UI.Scintilla.NullStyler categoriesFor: #normalStyleName!accessing!public! !
-!UI.Scintilla.NullStyler categoriesFor: #normalStyleName:!accessing!public! !
-!UI.Scintilla.NullStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
+!UI.Scintilla.NullStyler categoriesForMethods!
+initialize!initializing!public! !
+normalStyleName!accessing!public! !
+normalStyleName:!accessing!public! !
+onStyleNeeded:from:to:!event handling!public! !
+!
 
 !UI.Scintilla.NullStyler class methodsFor!
 
@@ -42,6 +44,8 @@ stbConvertFrom: anSTBVersion
 
 stbVersion
 	^1! !
-!UI.Scintilla.NullStyler class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.Scintilla.NullStyler class categoriesFor: #stbVersion!binary filing!public! !
+!UI.Scintilla.NullStyler class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

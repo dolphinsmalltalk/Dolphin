@@ -166,24 +166,26 @@ weight: newVal
 		short Weight"
 
 	self setPropertyId: 7 value: newVal! !
-!OS.COM.IFontDisp categoriesFor: #bold!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #bold:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #charset!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #charset:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #italic!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #italic:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #name!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #name:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #size!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #size:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #strikethrough!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #strikethrough:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #underline!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #underline:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #value!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #value:!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #weight!**auto generated**!properties!public! !
-!OS.COM.IFontDisp categoriesFor: #weight:!**auto generated**!properties!public! !
+!OS.COM.IFontDisp categoriesForMethods!
+bold!**auto generated**!properties!public! !
+bold:!**auto generated**!properties!public! !
+charset!**auto generated**!properties!public! !
+charset:!**auto generated**!properties!public! !
+italic!**auto generated**!properties!public! !
+italic:!**auto generated**!properties!public! !
+name!**auto generated**!properties!public! !
+name:!**auto generated**!properties!public! !
+size!**auto generated**!properties!public! !
+size:!**auto generated**!properties!public! !
+strikethrough!**auto generated**!properties!public! !
+strikethrough:!**auto generated**!properties!public! !
+underline!**auto generated**!properties!public! !
+underline:!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+weight!**auto generated**!properties!public! !
+weight:!**auto generated**!properties!public! !
+!
 
 !OS.COM.IFontDisp class methodsFor!
 
@@ -204,6 +206,8 @@ fromFont: aFont
 		riid: IFontDisp iid
 		ppvObj: answer.
 	^answer! !
-!OS.COM.IFontDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
-!OS.COM.IFontDisp class categoriesFor: #fromFont:!instance creation!public! !
+!OS.COM.IFontDisp class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+fromFont:!instance creation!public! !
+!
 

@@ -65,10 +65,12 @@ removeKey: key ifAbsent: exceptionHandler
 			newMe removeIndex: index.
 			self become: newMe.
 			value]! !
-!Kernel.MethodDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!Kernel.MethodDictionary categoriesFor: #hash:max:!private!searching! !
-!Kernel.MethodDictionary categoriesFor: #privateAt:put:!accessing!private! !
-!Kernel.MethodDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!Kernel.MethodDictionary categoriesForMethods!
+findKeyOrNil:!private!searching! !
+hash:max:!private!searching! !
+privateAt:put:!accessing!private! !
+removeKey:ifAbsent:!public!removing! !
+!
 
 !Kernel.MethodDictionary class methodsFor!
 
@@ -83,6 +85,8 @@ sizeFor: anInteger
 	by the VM, and avoid any dependency on the superclass sizing scheme."
 
 	^anInteger < 2 ifTrue: [2] ifFalse: [1 bitShift: ((anInteger - 1) * 100 // 75 + 1) highBit]! !
-!Kernel.MethodDictionary class categoriesFor: #defaultCapacity!constants!private! !
-!Kernel.MethodDictionary class categoriesFor: #sizeFor:!instance creation!private! !
+!Kernel.MethodDictionary class categoriesForMethods!
+defaultCapacity!constants!private! !
+sizeFor:!instance creation!private! !
+!
 

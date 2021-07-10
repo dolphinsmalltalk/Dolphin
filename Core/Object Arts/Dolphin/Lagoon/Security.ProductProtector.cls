@@ -43,12 +43,14 @@ unlockClasses: aCollectionOfClasses
 	"Unlock the given classes using the key we have been configured to use."
 
 	self decryptClasses: aCollectionOfClasses! !
-!Security.ProductProtector categoriesFor: #decryptClasses:!operations!public! !
-!Security.ProductProtector categoriesFor: #encryptClasses:!operations!public! !
-!Security.ProductProtector categoriesFor: #key!initializing!public! !
-!Security.ProductProtector categoriesFor: #key:!initializing!private! !
-!Security.ProductProtector categoriesFor: #lockClasses:!operations!public! !
-!Security.ProductProtector categoriesFor: #unlockClasses:!operations!public! !
+!Security.ProductProtector categoriesForMethods!
+decryptClasses:!operations!public! !
+encryptClasses:!operations!public! !
+key!initializing!public! !
+key:!initializing!private! !
+lockClasses:!operations!public! !
+unlockClasses:!operations!public! !
+!
 
 Security.ProductProtector methodProtocol: #ProductProtector attributes: #() selectors: #(#lockClasses: #unlockClasses:)!
 
@@ -67,6 +69,8 @@ withKey: aKeyObject
 	^(self new)
 		key: aKeyObject;
 		yourself! !
-!Security.ProductProtector class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!Security.ProductProtector class categoriesFor: #withKey:!instance creation!public! !
+!Security.ProductProtector class categoriesForMethods!
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+withKey:!instance creation!public! !
+!
 

@@ -123,16 +123,18 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 
 	<stdcall: bool PathRelativePathToW lpwstr lpwstr dword lpwstr dword>
 	^self invalidCall: _failureCode! !
-!OS.ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathCompactPath:pszPath:dx:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathCompactPathEx:pszSrc:cchMax:dwFlags:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathFindNextComponent:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathIsRelative:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathIsRoot:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathIsURL:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
-!OS.ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesForMethods!
+pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
+pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
+pathCompactPath:pszPath:dx:!**auto generated**!public! !
+pathCompactPathEx:pszSrc:cchMax:dwFlags:!**auto generated**!public! !
+pathFindNextComponent:!**auto generated**!public! !
+pathIsRelative:!**auto generated**!public! !
+pathIsRoot:!**auto generated**!public! !
+pathIsURL:!**auto generated**!public! !
+pathParseIconLocation:!**auto generated**!public! !
+pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
+!
 
 !OS.ShlwapiLibrary class methodsFor!
 
@@ -143,6 +145,8 @@ fileName
 
 sharedVariableName
 	^#{Shlwapi}! !
-!OS.ShlwapiLibrary class categoriesFor: #fileName!constants!public! !
-!OS.ShlwapiLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.ShlwapiLibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

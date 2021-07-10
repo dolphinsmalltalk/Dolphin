@@ -15,5 +15,7 @@ name
 	"Answer the <readableString> identifier of the variable described by the receiver."
 
 	^'super'! !
-!Kernel.StSuperVariable categoriesFor: #name!accessing!public! !
+!Kernel.StSuperVariable categoriesForMethods!
+name!accessing!public! !
+!
 

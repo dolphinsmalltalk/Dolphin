@@ -77,13 +77,15 @@ hashKeyWith: aString
 
 methodsOf: aClass do: aBlockClosure 
 	aClass methodDictionary do: [:each | each whileMutableDo: [aBlockClosure value: each]]! !
-!Security.PC1ProductProtector categoriesFor: #cipherClass:!operations!private! !
-!Security.PC1ProductProtector categoriesFor: #cipherForMethod:!helpers!private! !
-!Security.PC1ProductProtector categoriesFor: #cipherMethod:!operations!private! !
-!Security.PC1ProductProtector categoriesFor: #decipherClass:!operations!private! !
-!Security.PC1ProductProtector categoriesFor: #decipherMethod:!operations!private! !
-!Security.PC1ProductProtector categoriesFor: #decryptClasses:!operations!public! !
-!Security.PC1ProductProtector categoriesFor: #encryptClasses:!operations!public! !
-!Security.PC1ProductProtector categoriesFor: #hashKeyWith:!helpers!public! !
-!Security.PC1ProductProtector categoriesFor: #methodsOf:do:!operations!private! !
+!Security.PC1ProductProtector categoriesForMethods!
+cipherClass:!operations!private! !
+cipherForMethod:!helpers!private! !
+cipherMethod:!operations!private! !
+decipherClass:!operations!private! !
+decipherMethod:!operations!private! !
+decryptClasses:!operations!public! !
+encryptClasses:!operations!public! !
+hashKeyWith:!helpers!public! !
+methodsOf:do:!operations!private! !
+!
 

@@ -16,8 +16,10 @@ refactoring
 
 refactoring: anObject
 	refactoring := anObject! !
-!Refactory.Browser.RefactoringError categoriesFor: #refactoring!accessing!public! !
-!Refactory.Browser.RefactoringError categoriesFor: #refactoring:!accessing!private! !
+!Refactory.Browser.RefactoringError categoriesForMethods!
+refactoring!accessing!public! !
+refactoring:!accessing!private! !
+!
 
 !Refactory.Browser.RefactoringError class methodsFor!
 
@@ -30,6 +32,8 @@ refactoring: aRefactoring signal: messageText with: tag
 	^(self new)
 		refactoring: aRefactoring;
 		signal: messageText with: tag! !
-!Refactory.Browser.RefactoringError class categoriesFor: #refactoring:signal:!public! !
-!Refactory.Browser.RefactoringError class categoriesFor: #refactoring:signal:with:!public! !
+!Refactory.Browser.RefactoringError class categoriesForMethods!
+refactoring:signal:!public! !
+refactoring:signal:with:!public! !
+!
 

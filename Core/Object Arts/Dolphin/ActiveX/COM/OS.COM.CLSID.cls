@@ -29,8 +29,10 @@ progID
 	answer := String fromUtf16String: pProgId.
 	pProgId free.
 	^answer! !
-!OS.COM.CLSID categoriesFor: #displayOn:!displaying!public! !
-!OS.COM.CLSID categoriesFor: #progID!displaying!public! !
+!OS.COM.CLSID categoriesForMethods!
+displayOn:!displaying!public! !
+progID!displaying!public! !
+!
 
 !OS.COM.CLSID class methodsFor!
 
@@ -56,7 +58,9 @@ initialize
 	"
 
 	self extraInstanceSpec: ByteSize! !
-!OS.COM.CLSID class categoriesFor: #fromProgID:!instance creation!public! !
-!OS.COM.CLSID class categoriesFor: #fromString:!instance creation!public! !
-!OS.COM.CLSID class categoriesFor: #initialize!development!initializing!private! !
+!OS.COM.CLSID class categoriesForMethods!
+fromProgID:!instance creation!public! !
+fromString:!instance creation!public! !
+initialize!development!initializing!private! !
+!
 

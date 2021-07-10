@@ -546,71 +546,73 @@ with: otherCollection do: operation
 			[operation value: buffer asObject value: (otherCollection at: i).
 			i := i + 1].
 	i > otherCollection size ifFalse: [^self error: 'collections are of different sizes']! !
-!Database.DBResultSet categoriesFor: #,!copying!public! !
-!Database.DBResultSet categoriesFor: #add:!adding!public! !
-!Database.DBResultSet categoriesFor: #allocBuffer:!allocating!private! !
-!Database.DBResultSet categoriesFor: #appendToStream:!double dispatch!private! !
-!Database.DBResultSet categoriesFor: #approxSize!accessing!private! !
-!Database.DBResultSet categoriesFor: #asArray!converting!public! !
-!Database.DBResultSet categoriesFor: #at:!accessing!public! !
-!Database.DBResultSet categoriesFor: #at:ifAbsent:!accessing!public! !
-!Database.DBResultSet categoriesFor: #at:put:!accessing!public! !
-!Database.DBResultSet categoriesFor: #atIndex:!accessing!public! !
-!Database.DBResultSet categoriesFor: #bind!binding!private! !
-!Database.DBResultSet categoriesFor: #bind:!binding!private! !
-!Database.DBResultSet categoriesFor: #buffer:!accessing!private! !
-!Database.DBResultSet categoriesFor: #bufferClass!constants!private! !
-!Database.DBResultSet categoriesFor: #close!public!realizing/unrealizing! !
-!Database.DBResultSet categoriesFor: #collect:!enumerating!public! !
-!Database.DBResultSet categoriesFor: #copyEmpty:!copying!private! !
-!Database.DBResultSet categoriesFor: #copyFrom:!copying!public! !
-!Database.DBResultSet categoriesFor: #copyingClass!copying!private! !
-!Database.DBResultSet categoriesFor: #copyLike!copying!private! !
-!Database.DBResultSet categoriesFor: #copySize!copying!private! !
-!Database.DBResultSet categoriesFor: #copyWith:!copying!public! !
-!Database.DBResultSet categoriesFor: #countElements!accessing!private! !
-!Database.DBResultSet categoriesFor: #describeCol:!operations!public! !
-!Database.DBResultSet categoriesFor: #describeCols!accessing!public! !
-!Database.DBResultSet categoriesFor: #describeCols:!accessing!public! !
-!Database.DBResultSet categoriesFor: #fetchScroll:offset:!positioning!private! !
-!Database.DBResultSet categoriesFor: #findLast:!public!searching! !
-!Database.DBResultSet categoriesFor: #first!accessing!public! !
-!Database.DBResultSet categoriesFor: #free!public!realizing/unrealizing! !
-!Database.DBResultSet categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!Database.DBResultSet categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!Database.DBResultSet categoriesFor: #hash!comparing!public! !
-!Database.DBResultSet categoriesFor: #identityIndexOf:!public!searching! !
-!Database.DBResultSet categoriesFor: #indexOf:!public!searching! !
-!Database.DBResultSet categoriesFor: #isEmpty!public!testing! !
-!Database.DBResultSet categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Database.DBResultSet categoriesFor: #last!accessing!public! !
-!Database.DBResultSet categoriesFor: #lastIndexOf:!public!searching! !
-!Database.DBResultSet categoriesFor: #lookup:!accessing!public! !
-!Database.DBResultSet categoriesFor: #moveFirst!positioning!private! !
-!Database.DBResultSet categoriesFor: #moveLast!positioning!private! !
-!Database.DBResultSet categoriesFor: #moveNext!positioning!private! !
-!Database.DBResultSet categoriesFor: #movePrevious!positioning!private! !
-!Database.DBResultSet categoriesFor: #moveTo:!positioning!private! !
-!Database.DBResultSet categoriesFor: #next!accessing!public! !
-!Database.DBResultSet categoriesFor: #numColumns!accessing!public! !
-!Database.DBResultSet categoriesFor: #numRows!accessing!public! !
-!Database.DBResultSet categoriesFor: #onStartup!event handling!private! !
-!Database.DBResultSet categoriesFor: #previous!accessing!public! !
-!Database.DBResultSet categoriesFor: #printOn:!printing!public! !
-!Database.DBResultSet categoriesFor: #rawCollect:!enumerating!private! !
-!Database.DBResultSet categoriesFor: #rawDo:!enumerating!private! !
-!Database.DBResultSet categoriesFor: #realize!binding!private! !
-!Database.DBResultSet categoriesFor: #resize:!mutating!private! !
-!Database.DBResultSet categoriesFor: #reverse!copying!public! !
-!Database.DBResultSet categoriesFor: #reverseDo:!enumerating!public! !
-!Database.DBResultSet categoriesFor: #scrollTo:!accessing!private! !
-!Database.DBResultSet categoriesFor: #select:!enumerating!public! !
-!Database.DBResultSet categoriesFor: #size!accessing!public! !
-!Database.DBResultSet categoriesFor: #species!accessing!public! !
-!Database.DBResultSet categoriesFor: #statement!accessing!private! !
-!Database.DBResultSet categoriesFor: #statement:!accessing!private! !
-!Database.DBResultSet categoriesFor: #statementHandle!accessing!private! !
-!Database.DBResultSet categoriesFor: #with:do:!enumerating!public! !
+!Database.DBResultSet categoriesForMethods!
+,!copying!public! !
+add:!adding!public! !
+allocBuffer:!allocating!private! !
+appendToStream:!double dispatch!private! !
+approxSize!accessing!private! !
+asArray!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+atIndex:!accessing!public! !
+bind!binding!private! !
+bind:!binding!private! !
+buffer:!accessing!private! !
+bufferClass!constants!private! !
+close!public!realizing/unrealizing! !
+collect:!enumerating!public! !
+copyEmpty:!copying!private! !
+copyFrom:!copying!public! !
+copyingClass!copying!private! !
+copyLike!copying!private! !
+copySize!copying!private! !
+copyWith:!copying!public! !
+countElements!accessing!private! !
+describeCol:!operations!public! !
+describeCols!accessing!public! !
+describeCols:!accessing!public! !
+fetchScroll:offset:!positioning!private! !
+findLast:!public!searching! !
+first!accessing!public! !
+free!public!realizing/unrealizing! !
+from:keysAndValuesDo:!enumerating!public! !
+from:to:keysAndValuesDo:!enumerating!public! !
+hash!comparing!public! !
+identityIndexOf:!public!searching! !
+indexOf:!public!searching! !
+isEmpty!public!testing! !
+keysAndValuesDo:!enumerating!public! !
+last!accessing!public! !
+lastIndexOf:!public!searching! !
+lookup:!accessing!public! !
+moveFirst!positioning!private! !
+moveLast!positioning!private! !
+moveNext!positioning!private! !
+movePrevious!positioning!private! !
+moveTo:!positioning!private! !
+next!accessing!public! !
+numColumns!accessing!public! !
+numRows!accessing!public! !
+onStartup!event handling!private! !
+previous!accessing!public! !
+printOn:!printing!public! !
+rawCollect:!enumerating!private! !
+rawDo:!enumerating!private! !
+realize!binding!private! !
+resize:!mutating!private! !
+reverse!copying!public! !
+reverseDo:!enumerating!public! !
+scrollTo:!accessing!private! !
+select:!enumerating!public! !
+size!accessing!public! !
+species!accessing!public! !
+statement!accessing!private! !
+statement:!accessing!private! !
+statementHandle!accessing!private! !
+with:do:!enumerating!public! !
+!
 
 !Database.DBResultSet class methodsFor!
 
@@ -632,7 +634,9 @@ statement: aDBStatement
 	^self new
 		statement: aDBStatement;
 		yourself! !
-!Database.DBResultSet class categoriesFor: #new!instance creation!public! !
-!Database.DBResultSet class categoriesFor: #onStartup!event handling!public! !
-!Database.DBResultSet class categoriesFor: #statement:!instance creation!public! !
+!Database.DBResultSet class categoriesForMethods!
+new!instance creation!public! !
+onStartup!event handling!public! !
+statement:!instance creation!public! !
+!
 

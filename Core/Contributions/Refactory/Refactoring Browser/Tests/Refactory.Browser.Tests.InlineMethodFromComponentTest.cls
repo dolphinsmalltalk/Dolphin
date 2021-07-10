@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.InlineMethodFromComponentTest'
 	instanceVariableNames: ''
@@ -158,11 +158,13 @@ testModelInlineMethodWithSameVariableNames2
 	self assert: ((refactoring model classNamed: Object fullName) parseTreeFor: #foo)
 		equals: (RBParser
 				parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')! !
-!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesFor: #testInlineComponentIntoCascadedMessage!public!tests! !
-!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesFor: #testInlineComponentMethodMax!public!tests! !
-!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesFor: #testInlineEmptyComponentMethod!public!tests! !
-!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesFor: #testInlineMethodFromComponentFailure!failure tests!public! !
-!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesFor: #testModelInlineMethodWithSameVariableNames!public!tests! !
-!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesFor: #testModelInlineMethodWithSameVariableNames1!public!tests! !
-!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesFor: #testModelInlineMethodWithSameVariableNames2!public!tests! !
+!Refactory.Browser.Tests.InlineMethodFromComponentTest categoriesForMethods!
+testInlineComponentIntoCascadedMessage!public!tests! !
+testInlineComponentMethodMax!public!tests! !
+testInlineEmptyComponentMethod!public!tests! !
+testInlineMethodFromComponentFailure!failure tests!public! !
+testModelInlineMethodWithSameVariableNames!public!tests! !
+testModelInlineMethodWithSameVariableNames1!public!tests! !
+testModelInlineMethodWithSameVariableNames2!public!tests! !
+!
 

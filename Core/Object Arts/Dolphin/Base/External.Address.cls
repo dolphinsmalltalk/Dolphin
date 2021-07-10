@@ -321,35 +321,37 @@ yourAddress
 	the receiver's bytes"
 
 	^self asInteger! !
-!External.Address categoriesFor: #approxSize!accessing!private! !
-!External.Address categoriesFor: #asExternalAddress!converting!public! !
-!External.Address categoriesFor: #asInteger!accessing!public! !
-!External.Address categoriesFor: #at:!accessing!public! !
-!External.Address categoriesFor: #at:put:!accessing!public! !
-!External.Address categoriesFor: #byteAtOffset:!accessing!primitives!public! !
-!External.Address categoriesFor: #byteAtOffset:put:!accessing!primitives!public! !
-!External.Address categoriesFor: #copyFrom:to:!copying!public! !
-!External.Address categoriesFor: #deepCopy!copying!public! !
-!External.Address categoriesFor: #detach!public!realizing/unrealizing! !
-!External.Address categoriesFor: #displayOn:!displaying!public! !
-!External.Address categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
-!External.Address categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
-!External.Address categoriesFor: #intPtrAtOffset:!accessing!primitives!public! !
-!External.Address categoriesFor: #intPtrAtOffset:put:!accessing!primitives!public! !
-!External.Address categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private!replacing! !
-!External.Address categoriesFor: #resize:!mutating!public! !
-!External.Address categoriesFor: #sdwordAtOffset:!accessing!primitives!public! !
-!External.Address categoriesFor: #sdwordAtOffset:put:!accessing!primitives!public! !
-!External.Address categoriesFor: #stbSaveOn:!binary filing!public! !
-!External.Address categoriesFor: #swordAtOffset:!accessing!primitives!public! !
-!External.Address categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !
-!External.Address categoriesFor: #uintPtrAtOffset:!accessing!primitives!public! !
-!External.Address categoriesFor: #uintPtrAtOffset:put:!accessing!primitives!public! !
-!External.Address categoriesFor: #value!accessing!public! !
-!External.Address categoriesFor: #value:!accessing!public! !
-!External.Address categoriesFor: #wordAtOffset:!accessing!primitives!public! !
-!External.Address categoriesFor: #wordAtOffset:put:!accessing!primitives!public! !
-!External.Address categoriesFor: #yourAddress!accessing!public! !
+!External.Address categoriesForMethods!
+approxSize!accessing!private! !
+asExternalAddress!converting!public! !
+asInteger!accessing!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+byteAtOffset:!accessing!primitives!public! !
+byteAtOffset:put:!accessing!primitives!public! !
+copyFrom:to:!copying!public! !
+deepCopy!copying!public! !
+detach!public!realizing/unrealizing! !
+displayOn:!displaying!public! !
+dwordAtOffset:!accessing!primitives!public! !
+dwordAtOffset:put:!accessing!primitives!public! !
+intPtrAtOffset:!accessing!primitives!public! !
+intPtrAtOffset:put:!accessing!primitives!public! !
+replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private!replacing! !
+resize:!mutating!public! !
+sdwordAtOffset:!accessing!primitives!public! !
+sdwordAtOffset:put:!accessing!primitives!public! !
+stbSaveOn:!binary filing!public! !
+swordAtOffset:!accessing!primitives!public! !
+swordAtOffset:put:!accessing!primitives!public! !
+uintPtrAtOffset:!accessing!primitives!public! !
+uintPtrAtOffset:put:!accessing!primitives!public! !
+value!accessing!public! !
+value:!accessing!public! !
+wordAtOffset:!accessing!primitives!public! !
+wordAtOffset:put:!accessing!primitives!public! !
+yourAddress!accessing!public! !
+!
 
 !External.Address class methodsFor!
 
@@ -377,8 +379,10 @@ fromInteger: anInteger
 	primitive coercion trick."
 
 	^VM addressFromInteger: anInteger! !
-!External.Address class categoriesFor: #alignment!constants!public! !
-!External.Address class categoriesFor: #fromAddress:!instance creation!public! !
-!External.Address class categoriesFor: #fromBytes:!instance creation!public! !
-!External.Address class categoriesFor: #fromInteger:!instance creation!public! !
+!External.Address class categoriesForMethods!
+alignment!constants!public! !
+fromAddress:!instance creation!public! !
+fromBytes:!instance creation!public! !
+fromInteger:!instance creation!public! !
+!
 

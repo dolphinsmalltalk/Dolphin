@@ -44,9 +44,11 @@ psf
 	"Answer the <ExternalAddress> value of the receiver's 'psf' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_psf) asExternalAddress! !
-!OS.OFNOTIFYEXW categoriesFor: #lpOFN!**compiled accessors**!public! !
-!OS.OFNOTIFYEXW categoriesFor: #pidl!**compiled accessors**!public! !
-!OS.OFNOTIFYEXW categoriesFor: #psf!**compiled accessors**!public! !
+!OS.OFNOTIFYEXW categoriesForMethods!
+lpOFN!**compiled accessors**!public! !
+pidl!**compiled accessors**!public! !
+psf!**compiled accessors**!public! !
+!
 
 !OS.OFNOTIFYEXW class methodsFor!
 
@@ -72,6 +74,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #psf #pidl)! !
-!OS.OFNOTIFYEXW class categoriesFor: #defineFields!public!template definition! !
-!OS.OFNOTIFYEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OFNOTIFYEXW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

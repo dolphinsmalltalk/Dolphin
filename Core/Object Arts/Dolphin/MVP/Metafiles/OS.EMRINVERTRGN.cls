@@ -70,12 +70,14 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
-!OS.EMRINVERTRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!OS.EMRINVERTRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!OS.EMRINVERTRGN categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRINVERTRGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!OS.EMRINVERTRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!OS.EMRINVERTRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
+!OS.EMRINVERTRGN categoriesForMethods!
+cbRgnData!**compiled accessors**!public! !
+cbRgnData:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+RGNDATA!**compiled accessors**!public! !
+RGNDATA:!**compiled accessors**!public! !
+!
 
 !OS.EMRINVERTRGN class methodsFor!
 
@@ -112,7 +114,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_INVERTRGN. EMR_PAINTRGN}! !
-!OS.EMRINVERTRGN class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRINVERTRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRINVERTRGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMRINVERTRGN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

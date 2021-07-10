@@ -394,28 +394,32 @@ wmPrintClient: message wParam: wParam lParam: lParam
 						wParam: 0
 						hdc: wParam
 						paintStruct: nil)]! !
-!UI.TabViewXP categoriesFor: #calcClientRectangleFromRectangle:!geometry!private! !
-!UI.TabViewXP categoriesFor: #createVerticalFont!event handling!private! !
-!UI.TabViewXP categoriesFor: #imageTextGap!constants!private! !
-!UI.TabViewXP categoriesFor: #onEraseRequired:!event handling!private! !
-!UI.TabViewXP categoriesFor: #onPaintRequired:!event handling!private! !
-!UI.TabViewXP categoriesFor: #onSelChanged:!event handling!private! !
-!UI.TabViewXP categoriesFor: #onSelectionChanging:!event handling!private! !
-!UI.TabViewXP categoriesFor: #onViewDestroyed!event handling!private! !
-!UI.TabViewXP categoriesFor: #paintLabel:on:in:!painting!private! !
-!UI.TabViewXP categoriesFor: #paintTabLabelsOn:!event handling!private! !
-!UI.TabViewXP categoriesFor: #paintThemedBackgroundOn:in:!painting!private! !
-!UI.TabViewXP categoriesFor: #paintThemedTabsOn:offset:!painting!private! !
-!UI.TabViewXP categoriesFor: #paintVerticalLabel:on:in:!painting!private! !
-!UI.TabViewXP categoriesFor: #paintVerticalTabLabelsOn:!event handling!private! !
-!UI.TabViewXP categoriesFor: #selExtra!constants!private! !
-!UI.TabViewXP categoriesFor: #supportsThemedVertical!constants!private! !
-!UI.TabViewXP categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!UI.TabViewXP categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!UI.TabViewXP categoriesForMethods!
+calcClientRectangleFromRectangle:!geometry!private! !
+createVerticalFont!event handling!private! !
+imageTextGap!constants!private! !
+onEraseRequired:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onSelChanged:!event handling!private! !
+onSelectionChanging:!event handling!private! !
+onViewDestroyed!event handling!private! !
+paintLabel:on:in:!painting!private! !
+paintTabLabelsOn:!event handling!private! !
+paintThemedBackgroundOn:in:!painting!private! !
+paintThemedTabsOn:offset:!painting!private! !
+paintVerticalLabel:on:in:!painting!private! !
+paintVerticalTabLabelsOn:!event handling!private! !
+selExtra!constants!private! !
+supportsThemedVertical!constants!private! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.TabViewXP class methodsFor!
 
 themePartName
 	^'TAB'! !
-!UI.TabViewXP class categoriesFor: #themePartName!public! !
+!UI.TabViewXP class categoriesForMethods!
+themePartName!public! !
+!
 

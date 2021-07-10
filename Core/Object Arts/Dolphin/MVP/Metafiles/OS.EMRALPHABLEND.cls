@@ -235,40 +235,42 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!OS.EMRALPHABLEND categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cxDest!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cxDest:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cxSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cyDest!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cyDest:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cySrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #cySrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #dwRop!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #dwRop:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #xDest!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #xDest:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #xformSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #xSrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #xSrc:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #yDest!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #yDest:!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #ySrc!**compiled accessors**!public! !
-!OS.EMRALPHABLEND categoriesFor: #ySrc:!**compiled accessors**!public! !
+!OS.EMRALPHABLEND categoriesForMethods!
+cbBitsSrc!**compiled accessors**!public! !
+cbBitsSrc:!**compiled accessors**!public! !
+cbBmiSrc!**compiled accessors**!public! !
+cbBmiSrc:!**compiled accessors**!public! !
+crBkColorSrc!**compiled accessors**!public! !
+crBkColorSrc:!**compiled accessors**!public! !
+cxDest!**compiled accessors**!public! !
+cxDest:!**compiled accessors**!public! !
+cxSrc!**compiled accessors**!public! !
+cxSrc:!**compiled accessors**!public! !
+cyDest!**compiled accessors**!public! !
+cyDest:!**compiled accessors**!public! !
+cySrc!**compiled accessors**!public! !
+cySrc:!**compiled accessors**!public! !
+dwRop!**compiled accessors**!public! !
+dwRop:!**compiled accessors**!public! !
+iUsageSrc!**compiled accessors**!public! !
+iUsageSrc:!**compiled accessors**!public! !
+offBitsSrc!**compiled accessors**!public! !
+offBitsSrc:!**compiled accessors**!public! !
+offBmiSrc!**compiled accessors**!public! !
+offBmiSrc:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+xDest!**compiled accessors**!public! !
+xDest:!**compiled accessors**!public! !
+xformSrc!**compiled accessors**!public! !
+xformSrc:!**compiled accessors**!public! !
+xSrc!**compiled accessors**!public! !
+xSrc:!**compiled accessors**!public! !
+yDest!**compiled accessors**!public! !
+yDest:!**compiled accessors**!public! !
+ySrc!**compiled accessors**!public! !
+ySrc:!**compiled accessors**!public! !
+!
 
 !OS.EMRALPHABLEND class methodsFor!
 
@@ -362,7 +364,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ALPHABLEND}! !
-!OS.EMRALPHABLEND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRALPHABLEND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRALPHABLEND class categoriesFor: #iTypes!constants!public! !
+!OS.EMRALPHABLEND class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

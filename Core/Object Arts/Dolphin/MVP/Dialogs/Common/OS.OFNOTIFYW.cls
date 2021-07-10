@@ -37,8 +37,10 @@ pszFile
 	"Answer the <Utf16String> value of the receiver's 'pszFile' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszFile)! !
-!OS.OFNOTIFYW categoriesFor: #lpOFN!**compiled accessors**!public! !
-!OS.OFNOTIFYW categoriesFor: #pszFile!**compiled accessors**!public! !
+!OS.OFNOTIFYW categoriesForMethods!
+lpOFN!**compiled accessors**!public! !
+pszFile!**compiled accessors**!public! !
+!
 
 !OS.OFNOTIFYW class methodsFor!
 
@@ -62,6 +64,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #pszFile)! !
-!OS.OFNOTIFYW class categoriesFor: #defineFields!public!template definition! !
-!OS.OFNOTIFYW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OFNOTIFYW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

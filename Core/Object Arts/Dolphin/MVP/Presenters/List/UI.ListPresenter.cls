@@ -129,26 +129,28 @@ sortBlock
 
 sortBlock: anObject
 	sortBlock := anObject! !
-!UI.ListPresenter categoriesFor: #basicBeSorted!private!sorting! !
-!UI.ListPresenter categoriesFor: #beNotSorted!public!sorting! !
-!UI.ListPresenter categoriesFor: #beSorted!public!sorting! !
-!UI.ListPresenter categoriesFor: #beSorted:!public!sorting! !
-!UI.ListPresenter categoriesFor: #clear!operations!public! !
-!UI.ListPresenter categoriesFor: #defaultSortBlock!constants!private!sorting! !
-!UI.ListPresenter categoriesFor: #isSorted!public!sorting!testing! !
-!UI.ListPresenter categoriesFor: #list!accessing!public! !
-!UI.ListPresenter categoriesFor: #list:!accessing!public! !
-!UI.ListPresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
-!UI.ListPresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
-!UI.ListPresenter categoriesFor: #selectableItems!accessing!private! !
-!UI.ListPresenter categoriesFor: #selectionByIndex!public!selection! !
-!UI.ListPresenter categoriesFor: #selectionByIndex:!public!selection! !
-!UI.ListPresenter categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!UI.ListPresenter categoriesFor: #selectionByIndexIfNone:!public!selection! !
-!UI.ListPresenter categoriesFor: #selectionsByIndex!public!selection! !
-!UI.ListPresenter categoriesFor: #sortAlgorithmClass!accessing!public! !
-!UI.ListPresenter categoriesFor: #sortBlock!accessing!private!sorting! !
-!UI.ListPresenter categoriesFor: #sortBlock:!accessing!private!sorting! !
+!UI.ListPresenter categoriesForMethods!
+basicBeSorted!private!sorting! !
+beNotSorted!public!sorting! !
+beSorted!public!sorting! !
+beSorted:!public!sorting! !
+clear!operations!public! !
+defaultSortBlock!constants!private!sorting! !
+isSorted!public!sorting!testing! !
+list!accessing!public! !
+list:!accessing!public! !
+onAboutToEditLabel:!event handling!public! !
+onLabelOf:editedTo:!event handling!public! !
+selectableItems!accessing!private! !
+selectionByIndex!public!selection! !
+selectionByIndex:!public!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionByIndexIfNone:!public!selection! !
+selectionsByIndex!public!selection! !
+sortAlgorithmClass!accessing!public! !
+sortBlock!accessing!private!sorting! !
+sortBlock:!accessing!private!sorting! !
+!
 
 UI.ListPresenter methodProtocol: #indexSelectableItems attributes: #(#readOnly) selectors: #(#selectionByIndex #selectionByIndex: #selectionByIndex:ifAbsent: #selectionByIndexIfNone:)!
 UI.ListPresenter methodProtocol: #listPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #list #list: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #view)!
@@ -195,9 +197,11 @@ resource_Drop_down_list
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ComboBox) 34 17 nil nil 34 2 8 1412498947 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920475232 786950 ##(Core.Message) #displayString 8 #() 8 #() 401 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 802 251 49 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 34 0 0 0] 8 #() 802 193 193 nil 27)! !
-!UI.ListPresenter class categoriesFor: #defaultModel!models!public! !
-!UI.ListPresenter class categoriesFor: #icon!constants!public! !
-!UI.ListPresenter class categoriesFor: #resource_Combo_box!public!resources-views! !
-!UI.ListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.ListPresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
+!UI.ListPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Combo_box!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_Drop_down_list!public!resources-views! !
+!
 

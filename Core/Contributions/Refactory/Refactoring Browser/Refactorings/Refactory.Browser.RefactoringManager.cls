@@ -29,9 +29,11 @@ printOn: aStream
 				nextPutAll: '		';
 				nextPutAll: name;
 				cr]! !
-!Refactory.Browser.RefactoringManager categoriesFor: #addRefactoring:!public!public access! !
-!Refactory.Browser.RefactoringManager categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.RefactoringManager categoriesFor: #printOn:!printing!public! !
+!Refactory.Browser.RefactoringManager categoriesForMethods!
+addRefactoring:!public!public access! !
+initialize!initialize/release!public! !
+printOn:!printing!public! !
+!
 
 !Refactory.Browser.RefactoringManager class methodsFor!
 
@@ -58,10 +60,12 @@ preUnloadActionFor: aParcel
 
 uninitialize
 	self nuke! !
-!Refactory.Browser.RefactoringManager class categoriesFor: #instance!instance creation!public! !
-!Refactory.Browser.RefactoringManager class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.RefactoringManager class categoriesFor: #nuke!public!public access! !
-!Refactory.Browser.RefactoringManager class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
-!Refactory.Browser.RefactoringManager class categoriesFor: #preUnloadActionFor:!parcel load/unload/save!public! !
-!Refactory.Browser.RefactoringManager class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Refactory.Browser.RefactoringManager class categoriesForMethods!
+instance!instance creation!public! !
+new!instance creation!public! !
+nuke!public!public access! !
+onPreStripImage!class hierarchy-removing!public! !
+preUnloadActionFor:!parcel load/unload/save!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

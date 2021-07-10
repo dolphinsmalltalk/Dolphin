@@ -18,5 +18,7 @@ visitPresenter: presenter
 	to the parent presenter."
 
 	^presenter addToCommandRoute: self! !
-!UI.DelegatingCommandPolicy categoriesFor: #visitPresenter:!operations!private! !
+!UI.DelegatingCommandPolicy categoriesForMethods!
+visitPresenter:!operations!private! !
+!
 

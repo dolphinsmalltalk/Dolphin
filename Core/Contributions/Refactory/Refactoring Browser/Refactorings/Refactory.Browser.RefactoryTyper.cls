@@ -305,35 +305,37 @@ typesFor: anInstVarName
 typesFor: anInstVarName in: aClass
 	class = aClass ifFalse: [self runOn: aClass].
 	^variableTypes at: anInstVarName ifAbsent: [Set new]! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #collectionNameFor:!printing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #computeMessagesSentToVariables!public!selectors! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #computeTypes!computing types!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #executeSearch:!operations!private! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #findTypeFor:!computing types!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #guessTypeFromAssignment:!assignments!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #guessTypesFor:!accessing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #guessTypesFor:in:!accessing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #implementorsOf:!computing types!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #implementorsOf:in:storeIn:!computing types!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #merge:!equivalence classes!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #model!accessing!private! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #model:!accessing!private! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #printType:for:on:!printing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #printTypeFor:on:!printing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #processCollectionFor:messagesTo:in:!public!selectors/collections! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #processCollectionMessagesFor:in:!public!selectors/collections! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #processNode:!equivalence classes!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #refineTypes:with:!computing types!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #refineTypesByLookingAtAssignments!assignments!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #rootClasses!constants!private! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #runOn:!accessing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #selectedClass:!accessing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #typeFor:!assignments!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #typesFor:!accessing!public! !
-!Refactory.Browser.RefactoryTyper categoriesFor: #typesFor:in:!accessing!public! !
+!Refactory.Browser.RefactoryTyper categoriesForMethods!
+collectionNameFor:!printing!public! !
+computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
+computeMessagesSentToVariables!public!selectors! !
+computeTypes!computing types!public! !
+executeSearch:!operations!private! !
+findTypeFor:!computing types!public! !
+guessTypeFromAssignment:!assignments!public! !
+guessTypesFor:!accessing!public! !
+guessTypesFor:in:!accessing!public! !
+implementorsOf:!computing types!public! !
+implementorsOf:in:storeIn:!computing types!public! !
+initialize!initialize/release!public! !
+merge:!equivalence classes!public! !
+model!accessing!private! !
+model:!accessing!private! !
+printOn:!printing!public! !
+printType:for:on:!printing!public! !
+printTypeFor:on:!printing!public! !
+processCollectionFor:messagesTo:in:!public!selectors/collections! !
+processCollectionMessagesFor:in:!public!selectors/collections! !
+processNode:!equivalence classes!public! !
+refineTypes:with:!computing types!public! !
+refineTypesByLookingAtAssignments!assignments!public! !
+rootClasses!constants!private! !
+runOn:!accessing!public! !
+selectedClass:!accessing!public! !
+typeFor:!assignments!public! !
+typesFor:!accessing!public! !
+typesFor:in:!accessing!public! !
+!
 
 !Refactory.Browser.RefactoryTyper class methodsFor!
 
@@ -360,7 +362,9 @@ typesFor: variableName in: aParseTree model: aRBNamespace
 	^self new
 		model: aRBNamespace;
 		findTypeFor: messages! !
-!Refactory.Browser.RefactoryTyper class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.RefactoryTyper class categoriesFor: #newFor:!instance creation!public! !
-!Refactory.Browser.RefactoryTyper class categoriesFor: #typesFor:in:model:!accessing!public! !
+!Refactory.Browser.RefactoryTyper class categoriesForMethods!
+new!instance creation!public! !
+newFor:!instance creation!public! !
+typesFor:in:model:!accessing!public! !
+!
 

@@ -22,8 +22,10 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes sbyteAtOffset: indexInteger - 1 put: valueInteger! !
-!External.SBYTEArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.SBYTEArray categoriesFor: #uncheckedAt:put:!private! !
+!External.SBYTEArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!private! !
+!
 
 !External.SBYTEArray class methodsFor!
 
@@ -31,5 +33,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^BYTE! !
-!External.SBYTEArray class categoriesFor: #elementClass!constants!public! !
+!External.SBYTEArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

@@ -45,10 +45,12 @@ pathologist: anObject
 	"Set the receiver's 'pathologist' to anObject. See #pathologist."
 
 	pathologist := anObject isNil ifTrue: [self class] ifFalse: [anObject]! !
-!Core.MourningWeakArray categoriesFor: #elementsExpired:!finalizing!public! !
-!Core.MourningWeakArray categoriesFor: #initialize!initializing!private! !
-!Core.MourningWeakArray categoriesFor: #pathologist!accessing!public! !
-!Core.MourningWeakArray categoriesFor: #pathologist:!initializing!public! !
+!Core.MourningWeakArray categoriesForMethods!
+elementsExpired:!finalizing!public! !
+initialize!initializing!private! !
+pathologist!accessing!public! !
+pathologist:!initializing!public! !
+!
 
 !Core.MourningWeakArray class methodsFor!
 
@@ -65,6 +67,8 @@ initialize
 	"Initialize the receiver."
 
 	self makeMourner! !
-!Core.MourningWeakArray class categoriesFor: #elementsExpired:of:!finalizing!private! !
-!Core.MourningWeakArray class categoriesFor: #initialize!development!initializing!public! !
+!Core.MourningWeakArray class categoriesForMethods!
+elementsExpired:of:!finalizing!private! !
+initialize!development!initializing!public! !
+!
 

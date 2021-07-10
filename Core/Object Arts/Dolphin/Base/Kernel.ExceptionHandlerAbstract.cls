@@ -90,15 +90,17 @@ try: niladicBlock
 			ensure: [process exceptionEnvironment: old].
 	returnContinuation := nil.
 	^answer! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #actionFor:!helpers!private! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #markAndTry!debugger-step through!evaluating!private! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #on:do:!initializing!private! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #outer!debugger-step over!private! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #printOn:!development!printing!public! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #retry!debugger-step through!handler responses!private! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #retryUsing:!debugger-step through!handler responses!private! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #return:!debugger-step through!handler responses!private! !
-!Kernel.ExceptionHandlerAbstract categoriesFor: #try:!debugger-step through!evaluating!private! !
+!Kernel.ExceptionHandlerAbstract categoriesForMethods!
+actionFor:!helpers!private! !
+markAndTry!debugger-step through!evaluating!private! !
+on:do:!initializing!private! !
+outer!debugger-step over!private! !
+printOn:!development!printing!public! !
+retry!debugger-step through!handler responses!private! !
+retryUsing:!debugger-step through!handler responses!private! !
+return:!debugger-step through!handler responses!private! !
+try:!debugger-step through!evaluating!private! !
+!
 
 !Kernel.ExceptionHandlerAbstract class methodsFor!
 
@@ -106,5 +108,7 @@ initialize
 	"Initialize the receiver's class instance variable."
 
 	RetryCookie := Object new! !
-!Kernel.ExceptionHandlerAbstract class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.ExceptionHandlerAbstract class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

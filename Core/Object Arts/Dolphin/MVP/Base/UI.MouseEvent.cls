@@ -80,18 +80,20 @@ printWParamOn: aStream
 				ifTrue: 
 					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
 					aStream nextPutAll: each]]! !
-!UI.MouseEvent categoriesFor: #button!accessing!public! !
-!UI.MouseEvent categoriesFor: #buttonFlag!accessing!public! !
-!UI.MouseEvent categoriesFor: #isButtonDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isCtrlDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isLButtonDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isMButtonDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isModifierDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isRButtonDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isSelectionButtonDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isShiftDown!public!testing! !
-!UI.MouseEvent categoriesFor: #isXButtonDown:!public!testing! !
-!UI.MouseEvent categoriesFor: #printWParamOn:!development!printing!private! !
+!UI.MouseEvent categoriesForMethods!
+button!accessing!public! !
+buttonFlag!accessing!public! !
+isButtonDown!public!testing! !
+isCtrlDown!public!testing! !
+isLButtonDown!public!testing! !
+isMButtonDown!public!testing! !
+isModifierDown!public!testing! !
+isRButtonDown!public!testing! !
+isSelectionButtonDown!public!testing! !
+isShiftDown!public!testing! !
+isXButtonDown:!public!testing! !
+printWParamOn:!development!printing!private! !
+!
 
 !UI.MouseEvent class methodsFor!
 
@@ -105,5 +107,7 @@ wParamFlags
 				#xButton2 -> MK_XBUTTON2.
 				#shift -> MK_SHIFT.
 				#control -> MK_CONTROL})! !
-!UI.MouseEvent class categoriesFor: #wParamFlags!constants!public! !
+!UI.MouseEvent class categoriesForMethods!
+wParamFlags!constants!public! !
+!
 

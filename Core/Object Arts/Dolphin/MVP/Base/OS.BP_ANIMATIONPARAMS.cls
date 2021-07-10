@@ -65,13 +65,15 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_style put: anInteger! !
-!OS.BP_ANIMATIONPARAMS categoriesFor: #dwDuration!**compiled accessors**!public! !
-!OS.BP_ANIMATIONPARAMS categoriesFor: #dwDuration:!**compiled accessors**!public! !
-!OS.BP_ANIMATIONPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.BP_ANIMATIONPARAMS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!OS.BP_ANIMATIONPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.BP_ANIMATIONPARAMS categoriesFor: #style!**compiled accessors**!public! !
-!OS.BP_ANIMATIONPARAMS categoriesFor: #style:!**compiled accessors**!public! !
+!OS.BP_ANIMATIONPARAMS categoriesForMethods!
+dwDuration!**compiled accessors**!public! !
+dwDuration:!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+style!**compiled accessors**!public! !
+style:!**compiled accessors**!public! !
+!
 
 !OS.BP_ANIMATIONPARAMS class methodsFor!
 
@@ -97,6 +99,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
-!OS.BP_ANIMATIONPARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.BP_ANIMATIONPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BP_ANIMATIONPARAMS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

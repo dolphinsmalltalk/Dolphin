@@ -28,7 +28,9 @@ writeInto: subjectObject value: valueObject
 			[:ex |
 			MessageBox errorMsg: ex description
 				caption: ('Error setting field <1p>' expandMacrosWith: self name)]! !
-!Tools.AXRecordAspect categoriesFor: #defaultFlags!initializing!private! !
-!Tools.AXRecordAspect categoriesFor: #readFrom:!indirect accessing!public! !
-!Tools.AXRecordAspect categoriesFor: #writeInto:value:!indirect accessing!public! !
+!Tools.AXRecordAspect categoriesForMethods!
+defaultFlags!initializing!private! !
+readFrom:!indirect accessing!public! !
+writeInto:value:!indirect accessing!public! !
+!
 

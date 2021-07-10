@@ -69,14 +69,16 @@ lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
 	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
-!OS.NONCLIENTMETRICSW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.NONCLIENTMETRICSW categoriesFor: #iCaptionHeight!**compiled accessors**!public! !
-!OS.NONCLIENTMETRICSW categoriesFor: #iMenuHeight!**compiled accessors**!public! !
-!OS.NONCLIENTMETRICSW categoriesFor: #iMenuWidth!**compiled accessors**!public! !
-!OS.NONCLIENTMETRICSW categoriesFor: #iPaddedBorderWidth!**compiled accessors**!public! !
-!OS.NONCLIENTMETRICSW categoriesFor: #iScrollHeight!**compiled accessors**!public! !
-!OS.NONCLIENTMETRICSW categoriesFor: #iScrollWidth!**compiled accessors**!public! !
-!OS.NONCLIENTMETRICSW categoriesFor: #lfMenuFont!**compiled accessors**!public! !
+!OS.NONCLIENTMETRICSW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+iCaptionHeight!**compiled accessors**!public! !
+iMenuHeight!**compiled accessors**!public! !
+iMenuWidth!**compiled accessors**!public! !
+iPaddedBorderWidth!**compiled accessors**!public! !
+iScrollHeight!**compiled accessors**!public! !
+iScrollWidth!**compiled accessors**!public! !
+lfMenuFont!**compiled accessors**!public! !
+!
 
 !OS.NONCLIENTMETRICSW class methodsFor!
 
@@ -124,6 +126,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
-!OS.NONCLIENTMETRICSW class categoriesFor: #defineFields!public!template definition! !
-!OS.NONCLIENTMETRICSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NONCLIENTMETRICSW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

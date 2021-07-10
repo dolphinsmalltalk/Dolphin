@@ -86,15 +86,17 @@ transcriptMessage: aString
 				space;
 				nextPutAll: aString;
 				cr]! !
-!Database.DBTxn categoriesFor: #beReadOnly!accessing!public! !
-!Database.DBTxn categoriesFor: #beReadWrite!accessing!public! !
-!Database.DBTxn categoriesFor: #commit!operations!public! !
-!Database.DBTxn categoriesFor: #connection!accessing!public! !
-!Database.DBTxn categoriesFor: #connection:!initializing!private! !
-!Database.DBTxn categoriesFor: #creator:!development!private! !
-!Database.DBTxn categoriesFor: #printOn:!printing!public! !
-!Database.DBTxn categoriesFor: #rollback!operations!public! !
-!Database.DBTxn categoriesFor: #transcriptMessage:!operations-logging!private! !
+!Database.DBTxn categoriesForMethods!
+beReadOnly!accessing!public! !
+beReadWrite!accessing!public! !
+commit!operations!public! !
+connection!accessing!public! !
+connection:!initializing!private! !
+creator:!development!private! !
+printOn:!printing!public! !
+rollback!operations!public! !
+transcriptMessage:!operations-logging!private! !
+!
 
 !Database.DBTxn class methodsFor!
 
@@ -113,6 +115,8 @@ newRWOn: aDBConnection
 		connection: aDBConnection;
 		beReadWrite;
 		yourself! !
-!Database.DBTxn class categoriesFor: #newOn:!instance creation!public! !
-!Database.DBTxn class categoriesFor: #newRWOn:!instance creation!public! !
+!Database.DBTxn class categoriesForMethods!
+newOn:!instance creation!public! !
+newRWOn:!instance creation!public! !
+!
 

@@ -90,20 +90,22 @@ pwszServerPrincName: anUtf16String
 	"Set the receiver's 'pwszServerPrincName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszServerPrincName put: anUtf16String yourAddress! !
-!OS.COM.COAUTHINFO categoriesFor: #dwAuthnLevel!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwAuthnLevel:!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwAuthnSvc!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwAuthnSvc:!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwAuthzSvc!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwAuthzSvc:!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwCapabilities!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwCapabilities:!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwImpersonationLevel!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #dwImpersonationLevel:!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #pAuthIdentityData!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #pAuthIdentityData:!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #pwszServerPrincName!**compiled accessors**!public! !
-!OS.COM.COAUTHINFO categoriesFor: #pwszServerPrincName:!**compiled accessors**!public! !
+!OS.COM.COAUTHINFO categoriesForMethods!
+dwAuthnLevel!**compiled accessors**!public! !
+dwAuthnLevel:!**compiled accessors**!public! !
+dwAuthnSvc!**compiled accessors**!public! !
+dwAuthnSvc:!**compiled accessors**!public! !
+dwAuthzSvc!**compiled accessors**!public! !
+dwAuthzSvc:!**compiled accessors**!public! !
+dwCapabilities!**compiled accessors**!public! !
+dwCapabilities:!**compiled accessors**!public! !
+dwImpersonationLevel!**compiled accessors**!public! !
+dwImpersonationLevel:!**compiled accessors**!public! !
+pAuthIdentityData!**compiled accessors**!public! !
+pAuthIdentityData:!**compiled accessors**!public! !
+pwszServerPrincName!**compiled accessors**!public! !
+pwszServerPrincName:!**compiled accessors**!public! !
+!
 
 !OS.COM.COAUTHINFO class methodsFor!
 
@@ -134,6 +136,8 @@ defineFields
 
 getFieldNames
 	^#(#dwAuthnSvc #dwAuthzSvc #pwszServerPrincName #dwAuthnLevel #dwImpersonationLevel #pAuthIdentityData #dwCapabilities)! !
-!OS.COM.COAUTHINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.COM.COAUTHINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.COAUTHINFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -178,20 +178,22 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
-!UI.FlowLayout categoriesFor: #alignment!accessing!public! !
-!UI.FlowLayout categoriesFor: #alignment:!accessing!public! !
-!UI.FlowLayout categoriesFor: #flowSplit:context:!helpers!private! !
-!UI.FlowLayout categoriesFor: #horizontalAlignment!accessing!private! !
-!UI.FlowLayout categoriesFor: #horizontalGap!accessing!public! !
-!UI.FlowLayout categoriesFor: #horizontalGap:!accessing!public! !
-!UI.FlowLayout categoriesFor: #initialize!initializing!private! !
-!UI.FlowLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!UI.FlowLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!UI.FlowLayout categoriesFor: #resize:to:!geometry!public! !
-!UI.FlowLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!UI.FlowLayout categoriesFor: #verticalAlignment!accessing!private! !
-!UI.FlowLayout categoriesFor: #verticalGap!accessing!public! !
-!UI.FlowLayout categoriesFor: #verticalGap:!accessing!public! !
+!UI.FlowLayout categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+flowSplit:context:!helpers!private! !
+horizontalAlignment!accessing!private! !
+horizontalGap!accessing!public! !
+horizontalGap:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+verticalAlignment!accessing!private! !
+verticalGap!accessing!public! !
+verticalGap:!accessing!public! !
+!
 
 !UI.FlowLayout class methodsFor!
 
@@ -234,7 +236,9 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!UI.FlowLayout class categoriesFor: #initialize!development!helpers!public! !
-!UI.FlowLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.FlowLayout class categoriesFor: #stbVersion!constants!public! !
+!UI.FlowLayout class categoriesForMethods!
+initialize!development!helpers!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!constants!public! !
+!
 

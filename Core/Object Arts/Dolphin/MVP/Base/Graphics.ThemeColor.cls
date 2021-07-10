@@ -70,14 +70,16 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler writePreambleFor: self.
 	anSTBOutFiler nextPut: self name! !
-!Graphics.ThemeColor categoriesFor: #actualColor!accessing!public! !
-!Graphics.ThemeColor categoriesFor: #actualColor:!accessing!public! !
-!Graphics.ThemeColor categoriesFor: #basicActualColor!accessing!private! !
-!Graphics.ThemeColor categoriesFor: #name!printing!public! !
-!Graphics.ThemeColor categoriesFor: #printOn:!printing!public! !
-!Graphics.ThemeColor categoriesFor: #setName:actualColor:!initializing!private! !
-!Graphics.ThemeColor categoriesFor: #shallowCopy!copying!public! !
-!Graphics.ThemeColor categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.ThemeColor categoriesForMethods!
+actualColor!accessing!public! !
+actualColor:!accessing!public! !
+basicActualColor!accessing!private! !
+name!printing!public! !
+printOn:!printing!public! !
+setName:actualColor:!initializing!private! !
+shallowCopy!copying!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !Graphics.ThemeColor class methodsFor!
 
@@ -108,9 +110,11 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 uninitialize
 	NamedColors
 		removeAllKeys: ((NamedColors select: [:each | each isKindOf: self]) collect: [:each | each name])! !
-!Graphics.ThemeColor class categoriesFor: #addNamed:color:!instance creation!named colors!public! !
-!Graphics.ThemeColor class categoriesFor: #initialize!class initialization!development!public! !
-!Graphics.ThemeColor class categoriesFor: #name:actualColor:!instance creation!public! !
-!Graphics.ThemeColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Graphics.ThemeColor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.ThemeColor class categoriesForMethods!
+addNamed:color:!instance creation!named colors!public! !
+initialize!class initialization!development!public! !
+name:actualColor:!instance creation!public! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

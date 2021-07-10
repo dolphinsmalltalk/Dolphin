@@ -46,11 +46,13 @@ image: anImage
 
 setImage: anImage
 	^self subclassResponsibility! !
-!UI.StaticImage categoriesFor: #displayValue!private!updating! !
-!UI.StaticImage categoriesFor: #displayValue:!private!updating! !
-!UI.StaticImage categoriesFor: #image!accessing!private! !
-!UI.StaticImage categoriesFor: #image:!accessing!public! !
-!UI.StaticImage categoriesFor: #setImage:!accessing!private! !
+!UI.StaticImage categoriesForMethods!
+displayValue!private!updating! !
+displayValue:!private!updating! !
+image!accessing!private! !
+image:!accessing!public! !
+setImage:!accessing!private! !
+!
 
 !UI.StaticImage class methodsFor!
 
@@ -58,5 +60,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!UI.StaticImage class categoriesFor: #icon!constants!public! !
+!UI.StaticImage class categoriesForMethods!
+icon!constants!public! !
+!
 

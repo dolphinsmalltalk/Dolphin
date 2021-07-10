@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.Point3DTest'
 	instanceVariableNames: ''
@@ -36,7 +36,9 @@ testNew
 	self assert: new y identicalTo: 0.
 	self assert: new z identicalTo: 0.
 	self assert: new equals: Point3D zero! !
-!Graphics.Tests.Point3DTest categoriesFor: #testAsPoint!public!unit tests! !
-!Graphics.Tests.Point3DTest categoriesFor: #testEquals!public!unit tests! !
-!Graphics.Tests.Point3DTest categoriesFor: #testNew!public!unit tests! !
+!Graphics.Tests.Point3DTest categoriesForMethods!
+testAsPoint!public!unit tests! !
+testEquals!public!unit tests! !
+testNew!public!unit tests! !
+!
 

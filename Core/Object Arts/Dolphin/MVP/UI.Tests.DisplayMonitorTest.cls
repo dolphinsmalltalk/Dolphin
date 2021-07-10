@@ -143,15 +143,17 @@ testPrintString
 			[| secondary |
 			secondary := all detect: [:each | each isPrimary not].
 			self assert: secondary printString equals: 'a DisplayMonitor(<1p>)' << secondary deviceName]! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testActive!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testAllIntersecting!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testAllPhysicalMonitors!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testComparing!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testContainingPoint!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testDeviceName!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testDisplayingAndNearestView!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testIntersecting!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testNearestPoint!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testPrimary!public!unit tests! !
-!UI.Tests.DisplayMonitorTest categoriesFor: #testPrintString!public!unit tests! !
+!UI.Tests.DisplayMonitorTest categoriesForMethods!
+testActive!public!unit tests! !
+testAllIntersecting!public!unit tests! !
+testAllPhysicalMonitors!public!unit tests! !
+testComparing!public!unit tests! !
+testContainingPoint!public!unit tests! !
+testDeviceName!public!unit tests! !
+testDisplayingAndNearestView!public!unit tests! !
+testIntersecting!public!unit tests! !
+testNearestPoint!public!unit tests! !
+testPrimary!public!unit tests! !
+testPrintString!public!unit tests! !
+!
 

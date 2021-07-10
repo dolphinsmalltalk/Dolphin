@@ -334,40 +334,42 @@ statusArray: anArrayOfWORDs
 
 suppressErrorsDo: aNiladicBlock
 	aNiladicBlock on: DBError do: [:e | e toTrace]! !
-!Database.DBAbstractStatement categoriesFor: #allocatedHandle!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #asParameter!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Database.DBAbstractStatement categoriesFor: #cancel!operations!public! !
-!Database.DBAbstractStatement categoriesFor: #close!operations!private! !
-!Database.DBAbstractStatement categoriesFor: #columnLength:!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #cursorType!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #cursorType:!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #dbCheckException:!exceptions!private! !
-!Database.DBAbstractStatement categoriesFor: #defaultCursorType!constants!public! !
-!Database.DBAbstractStatement categoriesFor: #describeCol:!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #describeCols:!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #driverHStmt!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #exceptionDetails:!exceptions!private! !
-!Database.DBAbstractStatement categoriesFor: #exec!operations!private! !
-!Database.DBAbstractStatement categoriesFor: #executedHandle!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #executeStatement!operations!private! !
-!Database.DBAbstractStatement categoriesFor: #finalize!finalizing!private! !
-!Database.DBAbstractStatement categoriesFor: #free!public!realizing/unrealizing! !
-!Database.DBAbstractStatement categoriesFor: #getStringAttribute:!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #handle!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #initialize!initializing!private! !
-!Database.DBAbstractStatement categoriesFor: #initialize:!initializing!private! !
-!Database.DBAbstractStatement categoriesFor: #moveTo:!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #numColumns!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #numRows!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #parent!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #reset!initializing!private! !
-!Database.DBAbstractStatement categoriesFor: #results!accessing!public! !
-!Database.DBAbstractStatement categoriesFor: #setAttribute:value:size:!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #setCursorType!helpers!private! !
-!Database.DBAbstractStatement categoriesFor: #setDefaultAttributes!initializing!private! !
-!Database.DBAbstractStatement categoriesFor: #statusArray:!accessing!private! !
-!Database.DBAbstractStatement categoriesFor: #suppressErrorsDo:!accessing!private! !
+!Database.DBAbstractStatement categoriesForMethods!
+allocatedHandle!accessing!private! !
+asParameter!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+cancel!operations!public! !
+close!operations!private! !
+columnLength:!accessing!public! !
+cursorType!accessing!public! !
+cursorType:!accessing!public! !
+dbCheckException:!exceptions!private! !
+defaultCursorType!constants!public! !
+describeCol:!accessing!public! !
+describeCols:!accessing!public! !
+driverHStmt!accessing!private! !
+exceptionDetails:!exceptions!private! !
+exec!operations!private! !
+executedHandle!accessing!private! !
+executeStatement!operations!private! !
+finalize!finalizing!private! !
+free!public!realizing/unrealizing! !
+getStringAttribute:!accessing!private! !
+handle!accessing!private! !
+initialize!initializing!private! !
+initialize:!initializing!private! !
+moveTo:!accessing!private! !
+numColumns!accessing!public! !
+numRows!accessing!public! !
+parent!accessing!public! !
+reset!initializing!private! !
+results!accessing!public! !
+setAttribute:value:size:!accessing!private! !
+setCursorType!helpers!private! !
+setDefaultAttributes!initializing!private! !
+statusArray:!accessing!private! !
+suppressErrorsDo:!accessing!private! !
+!
 
 !Database.DBAbstractStatement class methodsFor!
 
@@ -456,12 +458,14 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!Database.DBAbstractStatement class categoriesFor: #initialize!initializing!public! !
-!Database.DBAbstractStatement class categoriesFor: #new!instance creation!private! !
-!Database.DBAbstractStatement class categoriesFor: #parent:!instance creation!public! !
-!Database.DBAbstractStatement class categoriesFor: #parent:cursorType:!instance creation!public! !
-!Database.DBAbstractStatement class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Database.DBAbstractStatement class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
-!Database.DBAbstractStatement class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
-!Database.DBAbstractStatement class categoriesFor: #stbVersion!binary filing!public! !
+!Database.DBAbstractStatement class categoriesForMethods!
+initialize!initializing!public! !
+new!instance creation!private! !
+parent:!instance creation!public! !
+parent:cursorType:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!private! !
+stbConvertToVersion2:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

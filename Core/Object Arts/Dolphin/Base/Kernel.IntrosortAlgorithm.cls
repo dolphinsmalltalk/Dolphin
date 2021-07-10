@@ -114,6 +114,8 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 		insertionSort: anObject
 		from: lo
 		to: up! !
-!Kernel.IntrosortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
-!Kernel.IntrosortAlgorithm categoriesFor: #sort:from:to:limit:!operations!private! !
+!Kernel.IntrosortAlgorithm categoriesForMethods!
+sort:from:to:!operations!public! !
+sort:from:to:limit:!operations!private! !
+!
 

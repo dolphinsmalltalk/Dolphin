@@ -522,54 +522,56 @@ writeByte: anIntegerOrCharacter
 	Answer 1 or signal a FileException if the operation fails."
 
 	^self write: (ByteArray with: anIntegerOrCharacter asInteger) count: 1! !
-!Core.File categoriesFor: #accessFlags!accessing!private! !
-!Core.File categoriesFor: #asParameter!converting!public! !
-!Core.File categoriesFor: #atEnd!public!testing! !
-!Core.File categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Core.File categoriesFor: #beSparse!converting!public! !
-!Core.File categoriesFor: #checkBoundsOf:startingAt:for:!helpers!private! !
-!Core.File categoriesFor: #close!operations!public! !
-!Core.File categoriesFor: #creationTime!accessing!public! !
-!Core.File categoriesFor: #delete!operations!private! !
-!Core.File categoriesFor: #fileType!accessing!public! !
-!Core.File categoriesFor: #flags:!accessing!private! !
-!Core.File categoriesFor: #flush!operations!public! !
-!Core.File categoriesFor: #free!private!realizing/unrealizing! !
-!Core.File categoriesFor: #getTimes:atime:mtime:!accessing!private! !
-!Core.File categoriesFor: #handle!accessing!public! !
-!Core.File categoriesFor: #isReadable!public!testing! !
-!Core.File categoriesFor: #isWriteable!public!testing! !
-!Core.File categoriesFor: #lastAccessTime!accessing!public! !
-!Core.File categoriesFor: #lastWriteTime!accessing!public! !
-!Core.File categoriesFor: #name!accessing!public! !
-!Core.File categoriesFor: #open!operations!public! !
-!Core.File categoriesFor: #open:flags:share:!operations!private! !
-!Core.File categoriesFor: #open:mode:check:share:!operations!public! !
-!Core.File categoriesFor: #openFlags!accessing!private! !
-!Core.File categoriesFor: #pathName!accessing!public! !
-!Core.File categoriesFor: #position!positioning!public! !
-!Core.File categoriesFor: #position:!operations!positioning!public! !
-!Core.File categoriesFor: #printOn:!printing!public! !
-!Core.File categoriesFor: #read:!operations!public! !
-!Core.File categoriesFor: #read:count:!operations!public! !
-!Core.File categoriesFor: #read:startingAt:count:!operations!public! !
-!Core.File categoriesFor: #readByte!operations!public! !
-!Core.File categoriesFor: #readWriteStream!public!streaming! !
-!Core.File categoriesFor: #reset!positioning!public! !
-!Core.File categoriesFor: #securityAttributes!accessing!public! !
-!Core.File categoriesFor: #seek:sense:!positioning!public! !
-!Core.File categoriesFor: #setHandle:flags:!initializing!private! !
-!Core.File categoriesFor: #setToEnd!positioning!public! !
-!Core.File categoriesFor: #shareFlags:!accessing!private! !
-!Core.File categoriesFor: #signalOsError:!exceptions!private! !
-!Core.File categoriesFor: #size!accessing!public! !
-!Core.File categoriesFor: #size:!operations!public! !
-!Core.File categoriesFor: #sniffEncoding!helpers!private! !
-!Core.File categoriesFor: #spec:!accessing!private! !
-!Core.File categoriesFor: #write:!operations!public! !
-!Core.File categoriesFor: #write:count:!operations!public! !
-!Core.File categoriesFor: #write:startingAt:count:!operations!public! !
-!Core.File categoriesFor: #writeByte:!operations!public! !
+!Core.File categoriesForMethods!
+accessFlags!accessing!private! !
+asParameter!converting!public! !
+atEnd!public!testing! !
+basicFree!private!realizing/unrealizing! !
+beSparse!converting!public! !
+checkBoundsOf:startingAt:for:!helpers!private! !
+close!operations!public! !
+creationTime!accessing!public! !
+delete!operations!private! !
+fileType!accessing!public! !
+flags:!accessing!private! !
+flush!operations!public! !
+free!private!realizing/unrealizing! !
+getTimes:atime:mtime:!accessing!private! !
+handle!accessing!public! !
+isReadable!public!testing! !
+isWriteable!public!testing! !
+lastAccessTime!accessing!public! !
+lastWriteTime!accessing!public! !
+name!accessing!public! !
+open!operations!public! !
+open:flags:share:!operations!private! !
+open:mode:check:share:!operations!public! !
+openFlags!accessing!private! !
+pathName!accessing!public! !
+position!positioning!public! !
+position:!operations!positioning!public! !
+printOn:!printing!public! !
+read:!operations!public! !
+read:count:!operations!public! !
+read:startingAt:count:!operations!public! !
+readByte!operations!public! !
+readWriteStream!public!streaming! !
+reset!positioning!public! !
+securityAttributes!accessing!public! !
+seek:sense:!positioning!public! !
+setHandle:flags:!initializing!private! !
+setToEnd!positioning!public! !
+shareFlags:!accessing!private! !
+signalOsError:!exceptions!private! !
+size!accessing!public! !
+size:!operations!public! !
+sniffEncoding!helpers!private! !
+spec:!accessing!private! !
+write:!operations!public! !
+write:count:!operations!public! !
+write:startingAt:count:!operations!public! !
+writeByte:!operations!public! !
+!
 
 Core.File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors: #(#close #flush #isReadable #isWriteable #position: #read:count: #reset #size #write:count:)!
 
@@ -1562,73 +1564,75 @@ workingDirectory: aString
 	"Set the current working directory."
 
 	^Kernel32 setCurrentDirectory: aString! !
-!Core.File class categoriesFor: #appendPathDelimiter:!filename manipulation!public!testing! !
-!Core.File class categoriesFor: #attributes:!file operations!public! !
-!Core.File class categoriesFor: #commonPrefixOf:and:!filename manipulation!public! !
-!Core.File class categoriesFor: #composePath:stem:extension:!filename manipulation!public! !
-!Core.File class categoriesFor: #composePath:subPath:!filename manipulation!public! !
-!Core.File class categoriesFor: #composeShortStem:extension:!filename manipulation!public! !
-!Core.File class categoriesFor: #composeStem:extension:!filename manipulation!public! !
-!Core.File class categoriesFor: #copy:to:!file operations!public! !
-!Core.File class categoriesFor: #createDirectory:!file operations!public! !
-!Core.File class categoriesFor: #createDirectoryPath:!file operations!public! !
-!Core.File class categoriesFor: #default:extension:!filename manipulation!public! !
-!Core.File class categoriesFor: #delete:!file operations!public! !
-!Core.File class categoriesFor: #deleteDirectory:!file operations!public! !
-!Core.File class categoriesFor: #exists:!file operations!public! !
-!Core.File class categoriesFor: #extensionDelimiter!constants!public! !
-!Core.File class categoriesFor: #find:!public!searching! !
-!Core.File class categoriesFor: #for:do:!enumerating!public! !
-!Core.File class categoriesFor: #for:in:do:!enumerating!public! !
-!Core.File class categoriesFor: #forAll:in:do:!enumerating!public! !
-!Core.File class categoriesFor: #forAllDirectories:in:do:!enumerating!public! !
-!Core.File class categoriesFor: #forAllDirectoriesIn:do:!enumerating!public! !
-!Core.File class categoriesFor: #forDirectories:in:do:!enumerating!public! !
-!Core.File class categoriesFor: #forDirectoriesIn:do:!enumerating!public! !
-!Core.File class categoriesFor: #fromHandle:!instance creation!public! !
-!Core.File class categoriesFor: #fullPathOf:!filename manipulation!public! !
-!Core.File class categoriesFor: #fullPathOf:relativeTo:!filename manipulation!public! !
-!Core.File class categoriesFor: #initialize!development!initializing!public! !
-!Core.File class categoriesFor: #isDirectory:!public!testing! !
-!Core.File class categoriesFor: #isRelativePath:!filename manipulation!public!testing! !
-!Core.File class categoriesFor: #isRootPath:!filename manipulation!public! !
-!Core.File class categoriesFor: #isWriteable:!public!testing! !
-!Core.File class categoriesFor: #isWriteable:set:!file operations!public! !
-!Core.File class categoriesFor: #lastWriteTime:!enquiries!public! !
-!Core.File class categoriesFor: #locateFilename:in:!filename manipulation!public! !
-!Core.File class categoriesFor: #makePath:!filename manipulation!public! !
-!Core.File class categoriesFor: #maxPath!constants!public! !
-!Core.File class categoriesFor: #new!instance creation!public! !
-!Core.File class categoriesFor: #open:!instance creation!public! !
-!Core.File class categoriesFor: #open:mode:!instance creation!public! !
-!Core.File class categoriesFor: #open:mode:check:!instance creation!public! !
-!Core.File class categoriesFor: #open:mode:check:share:!instance creation!public! !
-!Core.File class categoriesFor: #path:extension:!filename manipulation!public! !
-!Core.File class categoriesFor: #pathBuffer!helpers!public! !
-!Core.File class categoriesFor: #pathDelimiter!constants!public! !
-!Core.File class categoriesFor: #pathDelimiters!constants!public! !
-!Core.File class categoriesFor: #readAllBytes:!file operations!public! !
-!Core.File class categoriesFor: #readAllText:!file operations!public! !
-!Core.File class categoriesFor: #relativePathOf:to:!filename manipulation!public! !
-!Core.File class categoriesFor: #removeDirectory:!file operations!public! !
-!Core.File class categoriesFor: #removeExtension:!filename manipulation!public! !
-!Core.File class categoriesFor: #removePathDelimiter:!filename manipulation!public!testing! !
-!Core.File class categoriesFor: #rename:to:!file operations!public! !
-!Core.File class categoriesFor: #replacePath:with:!filename manipulation!public! !
-!Core.File class categoriesFor: #shortenComponent:max:!helpers!private! !
-!Core.File class categoriesFor: #shortPathOf:!filename manipulation!public! !
-!Core.File class categoriesFor: #sniffEncoding:!public! !
-!Core.File class categoriesFor: #splitDriveFrom:!filename manipulation!public! !
-!Core.File class categoriesFor: #splitExtensionFrom:!filename manipulation!public! !
-!Core.File class categoriesFor: #splitFilenameFrom:!filename manipulation!public! !
-!Core.File class categoriesFor: #splitPath:!filename manipulation!public! !
-!Core.File class categoriesFor: #splitPathFrom:!filename manipulation!public! !
-!Core.File class categoriesFor: #splitStemFrom:!filename manipulation!public! !
-!Core.File class categoriesFor: #temporary!instance creation!public! !
-!Core.File class categoriesFor: #temporaryFilename!filename manipulation!public! !
-!Core.File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
-!Core.File class categoriesFor: #tempPath!filename manipulation!public! !
-!Core.File class categoriesFor: #windowsDirectory!accessing!public! !
-!Core.File class categoriesFor: #workingDirectory!file operations!public! !
-!Core.File class categoriesFor: #workingDirectory:!file operations!public! !
+!Core.File class categoriesForMethods!
+appendPathDelimiter:!filename manipulation!public!testing! !
+attributes:!file operations!public! !
+commonPrefixOf:and:!filename manipulation!public! !
+composePath:stem:extension:!filename manipulation!public! !
+composePath:subPath:!filename manipulation!public! !
+composeShortStem:extension:!filename manipulation!public! !
+composeStem:extension:!filename manipulation!public! !
+copy:to:!file operations!public! !
+createDirectory:!file operations!public! !
+createDirectoryPath:!file operations!public! !
+default:extension:!filename manipulation!public! !
+delete:!file operations!public! !
+deleteDirectory:!file operations!public! !
+exists:!file operations!public! !
+extensionDelimiter!constants!public! !
+find:!public!searching! !
+for:do:!enumerating!public! !
+for:in:do:!enumerating!public! !
+forAll:in:do:!enumerating!public! !
+forAllDirectories:in:do:!enumerating!public! !
+forAllDirectoriesIn:do:!enumerating!public! !
+forDirectories:in:do:!enumerating!public! !
+forDirectoriesIn:do:!enumerating!public! !
+fromHandle:!instance creation!public! !
+fullPathOf:!filename manipulation!public! !
+fullPathOf:relativeTo:!filename manipulation!public! !
+initialize!development!initializing!public! !
+isDirectory:!public!testing! !
+isRelativePath:!filename manipulation!public!testing! !
+isRootPath:!filename manipulation!public! !
+isWriteable:!public!testing! !
+isWriteable:set:!file operations!public! !
+lastWriteTime:!enquiries!public! !
+locateFilename:in:!filename manipulation!public! !
+makePath:!filename manipulation!public! !
+maxPath!constants!public! !
+new!instance creation!public! !
+open:!instance creation!public! !
+open:mode:!instance creation!public! !
+open:mode:check:!instance creation!public! !
+open:mode:check:share:!instance creation!public! !
+path:extension:!filename manipulation!public! !
+pathBuffer!helpers!public! !
+pathDelimiter!constants!public! !
+pathDelimiters!constants!public! !
+readAllBytes:!file operations!public! !
+readAllText:!file operations!public! !
+relativePathOf:to:!filename manipulation!public! !
+removeDirectory:!file operations!public! !
+removeExtension:!filename manipulation!public! !
+removePathDelimiter:!filename manipulation!public!testing! !
+rename:to:!file operations!public! !
+replacePath:with:!filename manipulation!public! !
+shortenComponent:max:!helpers!private! !
+shortPathOf:!filename manipulation!public! !
+sniffEncoding:!public! !
+splitDriveFrom:!filename manipulation!public! !
+splitExtensionFrom:!filename manipulation!public! !
+splitFilenameFrom:!filename manipulation!public! !
+splitPath:!filename manipulation!public! !
+splitPathFrom:!filename manipulation!public! !
+splitStemFrom:!filename manipulation!public! !
+temporary!instance creation!public! !
+temporaryFilename!filename manipulation!public! !
+temporaryFilenameWithPrefix:!filename manipulation!public! !
+tempPath!filename manipulation!public! !
+windowsDirectory!accessing!public! !
+workingDirectory!file operations!public! !
+workingDirectory:!file operations!public! !
+!
 

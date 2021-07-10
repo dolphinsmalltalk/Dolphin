@@ -25,8 +25,10 @@ writeInto: anExternal value: anExternalStructure
 		from: offset+1
 		to: offset+self byteSize
 		startingAt: 1! !
-!External.StructureField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.StructureField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.StructureField categoriesForMethods!
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.StructureField class methodsFor!
 
@@ -37,5 +39,7 @@ type: aClass
 	^self basicNew
 		initialize;
 		fieldClass: aClass! !
-!External.StructureField class categoriesFor: #type:!instance creation!public! !
+!External.StructureField class categoriesForMethods!
+type:!instance creation!public! !
+!
 

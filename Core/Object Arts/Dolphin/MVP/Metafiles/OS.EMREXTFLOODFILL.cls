@@ -63,12 +63,14 @@ ptlStart: aPOINTL
 		from: ##(_OffsetOf_ptlStart + 1)
 		to: ##(_OffsetOf_ptlStart + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.EMREXTFLOODFILL categoriesFor: #crColor!**compiled accessors**!public! !
-!OS.EMREXTFLOODFILL categoriesFor: #crColor:!**compiled accessors**!public! !
-!OS.EMREXTFLOODFILL categoriesFor: #iMode!**compiled accessors**!public! !
-!OS.EMREXTFLOODFILL categoriesFor: #iMode:!**compiled accessors**!public! !
-!OS.EMREXTFLOODFILL categoriesFor: #ptlStart!**compiled accessors**!public! !
-!OS.EMREXTFLOODFILL categoriesFor: #ptlStart:!**compiled accessors**!public! !
+!OS.EMREXTFLOODFILL categoriesForMethods!
+crColor!**compiled accessors**!public! !
+crColor:!**compiled accessors**!public! !
+iMode!**compiled accessors**!public! !
+iMode:!**compiled accessors**!public! !
+ptlStart!**compiled accessors**!public! !
+ptlStart:!**compiled accessors**!public! !
+!
 
 !OS.EMREXTFLOODFILL class methodsFor!
 
@@ -106,7 +108,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXTFLOODFILL}! !
-!OS.EMREXTFLOODFILL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMREXTFLOODFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMREXTFLOODFILL class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXTFLOODFILL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

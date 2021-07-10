@@ -52,12 +52,14 @@ style
 	"Answers the style flags to be used when the receiver is opened."
 
 	^self maxFileCount > 1 ifTrue: [style | ##(OFN_ALLOWMULTISELECT | OFN_EXPLORER)] ifFalse: [style]! !
-!UI.FileOpenDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.FileOpenDialog categoriesFor: #defaultMaxFileCount!constants!private! !
-!UI.FileOpenDialog categoriesFor: #defaultStyle!constants!private! !
-!UI.FileOpenDialog categoriesFor: #maxFileCount!accessing!public! !
-!UI.FileOpenDialog categoriesFor: #maxFileCount:!accessing!public! !
-!UI.FileOpenDialog categoriesFor: #style!accessing!public! !
+!UI.FileOpenDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+defaultMaxFileCount!constants!private! !
+defaultStyle!constants!private! !
+maxFileCount!accessing!public! !
+maxFileCount:!accessing!public! !
+style!accessing!public! !
+!
 
 !UI.FileOpenDialog class methodsFor!
 
@@ -67,5 +69,7 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
-!UI.FileOpenDialog class categoriesFor: #initialize!development!initializing!private! !
+!UI.FileOpenDialog class categoriesForMethods!
+initialize!development!initializing!private! !
+!
 

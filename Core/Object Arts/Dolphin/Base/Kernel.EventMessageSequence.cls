@@ -138,14 +138,16 @@ valueWithArguments: anArray
 			receiver == DeadObject.Current
 				ifFalse: [(messages at: index) ifNotNil: [:msg | last := msg valueWithArguments: anArray]]].
 	^last! !
-!Kernel.EventMessageSequence categoriesFor: #add:!adding!public! !
-!Kernel.EventMessageSequence categoriesFor: #elementsExpired:of:!finalizing!private! !
-!Kernel.EventMessageSequence categoriesFor: #forwardTo:!operations!public! !
-!Kernel.EventMessageSequence categoriesFor: #includes:!public!searching! !
-!Kernel.EventMessageSequence categoriesFor: #initialize!initializing!private! !
-!Kernel.EventMessageSequence categoriesFor: #messages!accessing!public! !
-!Kernel.EventMessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
-!Kernel.EventMessageSequence categoriesFor: #size!accessing!public! !
-!Kernel.EventMessageSequence categoriesFor: #value!evaluating!public! !
-!Kernel.EventMessageSequence categoriesFor: #valueWithArguments:!evaluating!public! !
+!Kernel.EventMessageSequence categoriesForMethods!
+add:!adding!public! !
+elementsExpired:of:!finalizing!private! !
+forwardTo:!operations!public! !
+includes:!public!searching! !
+initialize!initializing!private! !
+messages!accessing!public! !
+removeMessagesFor:!public!removing! !
+size!accessing!public! !
+value!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 

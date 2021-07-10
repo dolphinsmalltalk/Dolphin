@@ -24,7 +24,9 @@ ProfStef contents'!
 onViewDestroyed
 	super onViewDestroyed.
 	self class reset! !
-!Tools.ProfStef categoriesFor: #onViewDestroyed!event handling!private! !
+!Tools.ProfStef categoriesForMethods!
+onViewDestroyed!event handling!private! !
+!
 
 !Tools.ProfStef class methodsFor!
 
@@ -75,13 +77,15 @@ show
 	profStef := self default.
 	profStef view beActive.
 	^profStef! !
-!Tools.ProfStef class categoriesFor: #default!initialize!public! !
-!Tools.ProfStef class categoriesFor: #defaultModel!public! !
-!Tools.ProfStef class categoriesFor: #first!navigation!public! !
-!Tools.ProfStef class categoriesFor: #go!navigation!public! !
-!Tools.ProfStef class categoriesFor: #initialize!public! !
-!Tools.ProfStef class categoriesFor: #next!navigation!public! !
-!Tools.ProfStef class categoriesFor: #previous!navigation!public! !
-!Tools.ProfStef class categoriesFor: #reset!initialize!private! !
-!Tools.ProfStef class categoriesFor: #show!initialize!public! !
+!Tools.ProfStef class categoriesForMethods!
+default!initialize!public! !
+defaultModel!public! !
+first!navigation!public! !
+go!navigation!public! !
+initialize!public! !
+next!navigation!public! !
+previous!navigation!public! !
+reset!initialize!private! !
+show!initialize!public! !
+!
 

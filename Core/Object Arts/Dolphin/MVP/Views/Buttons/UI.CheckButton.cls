@@ -142,20 +142,22 @@ onViewCreated
 
 	super onViewCreated.
 	self image: self image! !
-!UI.CheckButton categoriesFor: #alignment!accessing!public! !
-!UI.CheckButton categoriesFor: #alignment:!accessing!public! !
-!UI.CheckButton categoriesFor: #basicWindowStyle!constants!private! !
-!UI.CheckButton categoriesFor: #command:id:!commands!private! !
-!UI.CheckButton categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.CheckButton categoriesFor: #displayValue!private!updating! !
-!UI.CheckButton categoriesFor: #displayValue:!private!updating! !
-!UI.CheckButton categoriesFor: #hasLeftText!accessing-styles!public! !
-!UI.CheckButton categoriesFor: #hasLeftText:!accessing-styles!public! !
-!UI.CheckButton categoriesFor: #image!accessing!public! !
-!UI.CheckButton categoriesFor: #image:!accessing!public! !
-!UI.CheckButton categoriesFor: #isPushLike!accessing-styles!public! !
-!UI.CheckButton categoriesFor: #isPushLike:!accessing-styles!public! !
-!UI.CheckButton categoriesFor: #onViewCreated!event handling!public! !
+!UI.CheckButton categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+basicWindowStyle!constants!private! !
+command:id:!commands!private! !
+defaultWindowStyle!constants!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+hasLeftText!accessing-styles!public! !
+hasLeftText:!accessing-styles!public! !
+image!accessing!public! !
+image:!accessing!public! !
+isPushLike!accessing-styles!public! !
+isPushLike:!accessing-styles!public! !
+onViewCreated!event handling!public! !
+!
 
 !UI.CheckButton class methodsFor!
 
@@ -191,8 +193,10 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."
 
 	^'BUTTON'! !
-!UI.CheckButton class categoriesFor: #defaultModel!models!public! !
-!UI.CheckButton class categoriesFor: #initialize!development!initializing!private! !
-!UI.CheckButton class categoriesFor: #themePartName!accessing!public! !
-!UI.CheckButton class categoriesFor: #winClassName!constants!private! !
+!UI.CheckButton class categoriesForMethods!
+defaultModel!models!public! !
+initialize!development!initializing!private! !
+themePartName!accessing!public! !
+winClassName!constants!private! !
+!
 

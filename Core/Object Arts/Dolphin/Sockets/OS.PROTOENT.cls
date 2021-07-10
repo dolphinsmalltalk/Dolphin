@@ -66,11 +66,13 @@ protocol
 	| bigEndian |
 	bigEndian := self p_proto.
 	^(bigEndian << 8 bitOr: bigEndian >> 8) bitAnd: 16rFFFF! !
-!OS.PROTOENT categoriesFor: #aliases!public! !
-!OS.PROTOENT categoriesFor: #p_name!**compiled accessors**!public! !
-!OS.PROTOENT categoriesFor: #p_proto!**compiled accessors**!public! !
-!OS.PROTOENT categoriesFor: #printFieldsOn:!development!printing!private! !
-!OS.PROTOENT categoriesFor: #protocol!public! !
+!OS.PROTOENT categoriesForMethods!
+aliases!public! !
+p_name!**compiled accessors**!public! !
+p_proto!**compiled accessors**!public! !
+printFieldsOn:!development!printing!private! !
+protocol!public! !
+!
 
 !OS.PROTOENT class methodsFor!
 
@@ -113,8 +115,10 @@ fromString: aString
 
 getFieldNames
 	^#(#p_name #p_proto)! !
-!OS.PROTOENT class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.PROTOENT class categoriesFor: #fromInteger:!instance creation!public! !
-!OS.PROTOENT class categoriesFor: #fromString:!instance creation!public! !
-!OS.PROTOENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.PROTOENT class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+fromInteger:!instance creation!public! !
+fromString:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

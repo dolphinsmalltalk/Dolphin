@@ -39,12 +39,14 @@ printOn: aStream
 setColor: aColor alpha: anInteger
 	color := aColor.
 	alpha := anInteger! !
-!Graphics.ColorAlpha categoriesFor: #actualColor!accessing!private! !
-!Graphics.ColorAlpha categoriesFor: #alpha!accessing!public! !
-!Graphics.ColorAlpha categoriesFor: #alpha:!accessing!public! !
-!Graphics.ColorAlpha categoriesFor: #normalizedAlpha!accessing!public! !
-!Graphics.ColorAlpha categoriesFor: #printOn:!accessing!public! !
-!Graphics.ColorAlpha categoriesFor: #setColor:alpha:!initializing!private! !
+!Graphics.ColorAlpha categoriesForMethods!
+actualColor!accessing!private! !
+alpha!accessing!public! !
+alpha:!accessing!public! !
+normalizedAlpha!accessing!public! !
+printOn:!accessing!public! !
+setColor:alpha:!initializing!private! !
+!
 
 !Graphics.ColorAlpha class methodsFor!
 
@@ -56,6 +58,8 @@ color: aColor alpha: anInteger
 newColor: aColor alpha: anInteger
 	<primitive: 157>
 	^self basicNew setColor: aColor alpha: anInteger! !
-!Graphics.ColorAlpha class categoriesFor: #color:alpha:!instance creation!public! !
-!Graphics.ColorAlpha class categoriesFor: #newColor:alpha:!instance creation!private! !
+!Graphics.ColorAlpha class categoriesForMethods!
+color:alpha:!instance creation!public! !
+newColor:alpha:!instance creation!private! !
+!
 

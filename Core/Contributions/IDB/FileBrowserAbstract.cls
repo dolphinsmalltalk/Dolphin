@@ -43,11 +43,13 @@ setName: aString parent: aFileBrowserFolderOrNil
 	name := aString.
 	parent := aFileBrowserFolderOrNil.
 	^self! !
-!FileBrowserAbstract categoriesFor: #name!accessing!public! !
-!FileBrowserAbstract categoriesFor: #parent!accessing!public! !
-!FileBrowserAbstract categoriesFor: #path!accessing!public! !
-!FileBrowserAbstract categoriesFor: #printOn:!protocols-Object!public! !
-!FileBrowserAbstract categoriesFor: #setName:parent:!initializing!public! !
+!FileBrowserAbstract categoriesForMethods!
+name!accessing!public! !
+parent!accessing!public! !
+path!accessing!public! !
+printOn:!protocols-Object!public! !
+setName:parent:!initializing!public! !
+!
 
 !FileBrowserAbstract class methodsFor!
 
@@ -55,5 +57,7 @@ name: aString parent: aFileBrowserFolderOrNil
 	"Answers a new instance of the receiver"
 
 	^self new setName: aString parent: aFileBrowserFolderOrNil! !
-!FileBrowserAbstract class categoriesFor: #name:parent:!instance creation!public! !
+!FileBrowserAbstract class categoriesForMethods!
+name:parent:!instance creation!public! !
+!
 

@@ -332,35 +332,37 @@ PutSecureBaseURL: pwchSecureBaseUrl
 
 	<virtual stdcall: hresult 19 word*>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXXMLReader categoriesFor: #getBaseURL!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #getContentHandler!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #getDTDHandler!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #getEntityResolver!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #getErrorHandler!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #getFeature:!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetFeature:pvfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #getProperty:!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetProperty:pvarValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #getSecureBaseURL!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #GetSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #parse!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #parse:!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #Parse:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #ParseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!MSXML.ISAXXMLReader categoriesFor: #PutBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!MSXML.ISAXXMLReader categoriesFor: #PutContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!MSXML.ISAXXMLReader categoriesFor: #PutDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!MSXML.ISAXXMLReader categoriesFor: #PutEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!MSXML.ISAXXMLReader categoriesFor: #PutErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!MSXML.ISAXXMLReader categoriesFor: #PutFeature:vfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!MSXML.ISAXXMLReader categoriesFor: #putProperty:varValue:!**auto generated**!methods!public! !
-!MSXML.ISAXXMLReader categoriesFor: #PutProperty:varValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!MSXML.ISAXXMLReader categoriesFor: #PutSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+!MSXML.ISAXXMLReader categoriesForMethods!
+getBaseURL!**auto generated**!methods!public! !
+GetBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getContentHandler!**auto generated**!methods!public! !
+GetContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getDTDHandler!**auto generated**!methods!public! !
+GetDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getEntityResolver!**auto generated**!methods!public! !
+GetEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getErrorHandler!**auto generated**!methods!public! !
+GetErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getFeature:!**auto generated**!methods!public! !
+GetFeature:pvfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getProperty:!**auto generated**!methods!public! !
+GetProperty:pvarValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getSecureBaseURL!**auto generated**!methods!public! !
+GetSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+parse!**auto generated**!methods!public! !
+parse:!**auto generated**!methods!public! !
+Parse:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+ParseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutFeature:vfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+putProperty:varValue:!**auto generated**!methods!public! !
+PutProperty:varValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+PutSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+!
 
 !MSXML.ISAXXMLReader class methodsFor!
 
@@ -406,5 +408,7 @@ defineFunctions
 		defineFunction: #ParseURL:
 			argumentTypes: 'word*'
 ! !
-!MSXML.ISAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXXMLReader class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

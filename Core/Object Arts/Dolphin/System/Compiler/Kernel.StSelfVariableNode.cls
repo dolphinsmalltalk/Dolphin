@@ -25,8 +25,10 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope selfVariable! !
-!Kernel.StSelfVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StSelfVariableNode categoriesFor: #isSelfVariable!public!testing! !
-!Kernel.StSelfVariableNode categoriesFor: #name!constants!public! !
-!Kernel.StSelfVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!Kernel.StSelfVariableNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isSelfVariable!public!testing! !
+name!constants!public! !
+specialVariableInScope:!double dispatch!public! !
+!
 

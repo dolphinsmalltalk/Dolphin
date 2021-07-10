@@ -50,11 +50,13 @@ replaceWith: aString
 	| size |
 	size := self replaceWith size min: aString size.
 	self replaceWith replaceFrom: 1 to: size with: aString.! !
-!UI.FindReplaceDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.FindReplaceDialog categoriesFor: #initialize!initializing!private! !
-!UI.FindReplaceDialog categoriesFor: #prepareStruct!helpers!private! !
-!UI.FindReplaceDialog categoriesFor: #replaceWith!accessing!private! !
-!UI.FindReplaceDialog categoriesFor: #replaceWith:!accessing!private! !
+!UI.FindReplaceDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+initialize!initializing!private! !
+prepareStruct!helpers!private! !
+replaceWith!accessing!private! !
+replaceWith:!accessing!private! !
+!
 
 !UI.FindReplaceDialog class methodsFor!
 
@@ -74,6 +76,8 @@ ownerView: aView findWhat: find replaceWith: replace
 		replaceWith: replace;
 		showModal;
 		yourself! !
-!UI.FindReplaceDialog class categoriesFor: #initialize!development!initializing!private! !
-!UI.FindReplaceDialog class categoriesFor: #ownerView:findWhat:replaceWith:!constants!instance creation!public! !
+!UI.FindReplaceDialog class categoriesForMethods!
+initialize!development!initializing!private! !
+ownerView:findWhat:replaceWith:!constants!instance creation!public! !
+!
 

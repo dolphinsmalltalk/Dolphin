@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RefactoringTest'
 	instanceVariableNames: 'manager changeSet model'
@@ -92,16 +92,18 @@ tearDown
 	RefactoringManager instance release.
 	(RefactoringManager classPool associationAt: #Instance
 		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) value: manager! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #readFile:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupImplementorToInlineFor:toReturn:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupInlineExpressionFor:toReturn:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:withArguments:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupSelfArgumentNameFor:toReturn:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupVariableToMoveToFor:toReturn:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #setupVariableTypesFor:toReturn:!public!set up! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #shouldFail:!private! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #shouldWarn:!private! !
-!Refactory.Browser.Tests.RefactoringTest categoriesFor: #tearDown!public!set up! !
+!Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
+readFile:!public!set up! !
+setUp!public!set up! !
+setupImplementorToInlineFor:toReturn:!public!set up! !
+setupInlineExpressionFor:toReturn:!public!set up! !
+setupMethodNameFor:toReturn:!public!set up! !
+setupMethodNameFor:toReturn:withArguments:!public!set up! !
+setupSelfArgumentNameFor:toReturn:!public!set up! !
+setupVariableToMoveToFor:toReturn:!public!set up! !
+setupVariableTypesFor:toReturn:!public!set up! !
+shouldFail:!private! !
+shouldWarn:!private! !
+tearDown!public!set up! !
+!
 

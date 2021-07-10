@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.Tests.DBConnectionTest subclass: #'Database.Tests.AccessDBTest'
 	instanceVariableNames: ''
@@ -98,19 +98,23 @@ testViewsQuery
 	views := connection views.
 	self assert: (views
 				noDifference: #('Alphabetical List of Products' 'Category Sales for 1997' 'Current Product List' 'Customers and Suppliers by City' 'Employee Sales by Country' 'Invoices' 'Invoices Filter' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Quarterly Orders by Product' 'Sales by Category' 'Sales by Year' 'Ten Most Expensive Products'))! !
-!Database.Tests.AccessDBTest categoriesFor: #databaseResource!private! !
-!Database.Tests.AccessDBTest categoriesFor: #dbmsFeaturesMap!private! !
-!Database.Tests.AccessDBTest categoriesFor: #queryColumns!private! !
-!Database.Tests.AccessDBTest categoriesFor: #testAccessConnectionAttributes!public!unit tests! !
-!Database.Tests.AccessDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
-!Database.Tests.AccessDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
-!Database.Tests.AccessDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
-!Database.Tests.AccessDBTest categoriesFor: #testTablesQuery!public!unit tests! !
-!Database.Tests.AccessDBTest categoriesFor: #testViewsQuery!public!unit tests! !
+!Database.Tests.AccessDBTest categoriesForMethods!
+databaseResource!private! !
+dbmsFeaturesMap!private! !
+queryColumns!private! !
+testAccessConnectionAttributes!public!unit tests! !
+testForeignKeysQuery!public!unit tests! !
+testPrimaryKeysQuery!public!unit tests! !
+testProceduresQuery!public!unit tests! !
+testTablesQuery!public!unit tests! !
+testViewsQuery!public!unit tests! !
+!
 
 !Database.Tests.AccessDBTest class methodsFor!
 
 resources
 	^{AccessNorthwindDB}! !
-!Database.Tests.AccessDBTest class categoriesFor: #resources!public! !
+!Database.Tests.AccessDBTest class categoriesForMethods!
+resources!public! !
+!
 

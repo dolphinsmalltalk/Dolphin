@@ -136,18 +136,20 @@ subValues
 	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKeyValues)."
 
 	^self! !
-!OS.RegKeyValues categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!OS.RegKeyValues categoriesFor: #at:ifAbsent:!accessing!public! !
-!OS.RegKeyValues categoriesFor: #at:put:!accessing!public! !
-!OS.RegKeyValues categoriesFor: #changeKey:to:!accessing!private! !
-!OS.RegKeyValues categoriesFor: #fileOutOn:!public!storing! !
-!OS.RegKeyValues categoriesFor: #includesKey:!public!searching! !
-!OS.RegKeyValues categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OS.RegKeyValues categoriesFor: #keysDo:!enumerating!public! !
-!OS.RegKeyValues categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!OS.RegKeyValues categoriesFor: #size!accessing!public! !
-!OS.RegKeyValues categoriesFor: #subKeys!accessing!public! !
-!OS.RegKeyValues categoriesFor: #subValues!accessing!public! !
+!OS.RegKeyValues categoriesForMethods!
+associationAt:ifAbsent:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+changeKey:to:!accessing!private! !
+fileOutOn:!public!storing! !
+includesKey:!public!searching! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+removeKey:ifAbsent:!public!removing! !
+size!accessing!public! !
+subKeys!accessing!public! !
+subValues!accessing!public! !
+!
 
 !OS.RegKeyValues class methodsFor!
 
@@ -155,5 +157,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
-!OS.RegKeyValues class categoriesFor: #icon!constants!public! !
+!OS.RegKeyValues class categoriesForMethods!
+icon!constants!public! !
+!
 

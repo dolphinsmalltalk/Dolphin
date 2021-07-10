@@ -112,17 +112,19 @@ size
 	count the number of nodes in the tree when fully expanded."
 
 	^self countElements! !
-!UI.ExpandingTreeModel categoriesFor: #approxSize!accessing!private! !
-!UI.ExpandingTreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
-!UI.ExpandingTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!UI.ExpandingTreeModel categoriesFor: #expandNodeChildren:!hierarchy!private! !
-!UI.ExpandingTreeModel categoriesFor: #getChildrenBlock!accessing!public! !
-!UI.ExpandingTreeModel categoriesFor: #getChildrenBlock:!accessing!public! !
-!UI.ExpandingTreeModel categoriesFor: #getChildrenOfNode:!hierarchy!private! !
-!UI.ExpandingTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!UI.ExpandingTreeModel categoriesFor: #hasChildrenBlock!accessing!public! !
-!UI.ExpandingTreeModel categoriesFor: #hasChildrenBlock:!accessing!public! !
-!UI.ExpandingTreeModel categoriesFor: #initialize!initializing!private! !
-!UI.ExpandingTreeModel categoriesFor: #roots!hierarchy!public! !
-!UI.ExpandingTreeModel categoriesFor: #size!accessing!public! !
+!UI.ExpandingTreeModel categoriesForMethods!
+approxSize!accessing!private! !
+childrenOfNode:!hierarchy!private! !
+defaultGetChildrenBlock!initializing!private! !
+expandNodeChildren:!hierarchy!private! !
+getChildrenBlock!accessing!public! !
+getChildrenBlock:!accessing!public! !
+getChildrenOfNode:!hierarchy!private! !
+hasChildren:!hierarchy!public!testing! !
+hasChildrenBlock!accessing!public! !
+hasChildrenBlock:!accessing!public! !
+initialize!initializing!private! !
+roots!hierarchy!public! !
+size!accessing!public! !
+!
 

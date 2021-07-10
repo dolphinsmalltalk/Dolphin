@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageManagerTest'
 	instanceVariableNames: ''
@@ -37,6 +37,8 @@ testLooseMethodCacheUpToDate
 					[:eachSelector :eachPackage |
 					self assert: (allLooseMethods at: eachClass >> eachSelector) identicalTo: eachPackage]].
 	self assert: count equals: allLooseMethods size! !
-!Kernel.Tests.PackageManagerTest categoriesFor: #testAllClassesPackaged!public!unit tests! !
-!Kernel.Tests.PackageManagerTest categoriesFor: #testLooseMethodCacheUpToDate!public!unit tests! !
+!Kernel.Tests.PackageManagerTest categoriesForMethods!
+testAllClassesPackaged!public!unit tests! !
+testLooseMethodCacheUpToDate!public!unit tests! !
+!
 

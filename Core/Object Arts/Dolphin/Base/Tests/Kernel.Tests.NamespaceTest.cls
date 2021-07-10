@@ -221,27 +221,29 @@ testSimpleName
 testUnqualifiedName
 	self nameCases
 		do: [:each | self assert: each value unqualifiedName identicalTo: each unqualifiedName asSymbol]! !
-!Kernel.Tests.NamespaceTest categoriesFor: #canonicalSubject!private! !
-!Kernel.Tests.NamespaceTest categoriesFor: #nameCases!constants!private! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testAbsoluteName!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testAbsoluteReference!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testAllClasses!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testAllEnvironments!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testAssociationAt!public! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testAssociationAtIfAbsent!public! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testBindingFromNamespaceWithCustomEnvironment!public! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testBindingInParentNamespace!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testEnvironment!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testFullName!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testFullyQualifiedReference!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testImportedBinding!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testImportIntoParentNamespace!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testIncludesKey!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testName!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testPrintOn!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testPrivateImportIntoParentNamespace!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testResolveImportIntoCustomEnvironment!public! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testShortName!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testSimpleName!public!unit tests! !
-!Kernel.Tests.NamespaceTest categoriesFor: #testUnqualifiedName!public!unit tests! !
+!Kernel.Tests.NamespaceTest categoriesForMethods!
+canonicalSubject!private! !
+nameCases!constants!private! !
+testAbsoluteName!public!unit tests! !
+testAbsoluteReference!public!unit tests! !
+testAllClasses!public!unit tests! !
+testAllEnvironments!public!unit tests! !
+testAssociationAt!public! !
+testAssociationAtIfAbsent!public! !
+testBindingFromNamespaceWithCustomEnvironment!public! !
+testBindingInParentNamespace!public!unit tests! !
+testEnvironment!public!unit tests! !
+testFullName!public!unit tests! !
+testFullyQualifiedReference!public!unit tests! !
+testImportedBinding!public!unit tests! !
+testImportIntoParentNamespace!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testName!public!unit tests! !
+testPrintOn!public!unit tests! !
+testPrivateImportIntoParentNamespace!public!unit tests! !
+testResolveImportIntoCustomEnvironment!public! !
+testShortName!public!unit tests! !
+testSimpleName!public!unit tests! !
+testUnqualifiedName!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.PathGradientBrushTest'
 	instanceVariableNames: ''
@@ -158,26 +158,28 @@ testWrapMode
 			[:e |
 			model wrapMode: e value.
 			self assert: model wrapMode equals: e value]! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #rgb!accessing!public! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #setSample2Points!accessing!public! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #setSample3Points!accessing!public! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #setSample3PointsPath!accessing!public! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #setSampleEllipsePath!accessing!public! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #setSamplePathEmpty!accessing!public! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testBlendColors!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testBlendFactors!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testBounds!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testCenterColor!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testCenterPoint!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testClone!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testConstructors!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testFocusScales!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testIsGammaCorrected!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testIsPersistent!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testPointCount!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testScaleTransform!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testSurroundColors!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testTransform!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testTranslateTransform!public!unit tests! !
-!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesFor: #testWrapMode!public!unit tests! !
+!Graphics.Gdiplus.Tests.PathGradientBrushTest categoriesForMethods!
+rgb!accessing!public! !
+setSample2Points!accessing!public! !
+setSample3Points!accessing!public! !
+setSample3PointsPath!accessing!public! !
+setSampleEllipsePath!accessing!public! !
+setSamplePathEmpty!accessing!public! !
+testBlendColors!public!unit tests! !
+testBlendFactors!public!unit tests! !
+testBounds!public!unit tests! !
+testCenterColor!public!unit tests! !
+testCenterPoint!public!unit tests! !
+testClone!public!unit tests! !
+testConstructors!public!unit tests! !
+testFocusScales!public!unit tests! !
+testIsGammaCorrected!public!unit tests! !
+testIsPersistent!public!unit tests! !
+testPointCount!public!unit tests! !
+testScaleTransform!public!unit tests! !
+testSurroundColors!public!unit tests! !
+testTransform!public!unit tests! !
+testTranslateTransform!public!unit tests! !
+testWrapMode!public!unit tests! !
+!
 

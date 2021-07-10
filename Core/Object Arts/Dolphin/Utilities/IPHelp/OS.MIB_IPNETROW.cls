@@ -57,11 +57,13 @@ dwType
 	"Answer the <Integer> value of the receiver's 'dwType' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwType! !
-!OS.MIB_IPNETROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
-!OS.MIB_IPNETROW categoriesFor: #dwAddr!**compiled accessors**!public! !
-!OS.MIB_IPNETROW categoriesFor: #dwIndex!**compiled accessors**!public! !
-!OS.MIB_IPNETROW categoriesFor: #dwPhysAddrLen!**compiled accessors**!public! !
-!OS.MIB_IPNETROW categoriesFor: #dwType!**compiled accessors**!public! !
+!OS.MIB_IPNETROW categoriesForMethods!
+bPhysAddr!**compiled accessors**!public! !
+dwAddr!**compiled accessors**!public! !
+dwIndex!**compiled accessors**!public! !
+dwPhysAddrLen!**compiled accessors**!public! !
+dwType!**compiled accessors**!public! !
+!
 
 !OS.MIB_IPNETROW class methodsFor!
 
@@ -101,6 +103,8 @@ defineFields
 
 getFieldNames
 	^#(#dwIndex #dwPhysAddrLen #bPhysAddr #dwAddr #dwType)! !
-!OS.MIB_IPNETROW class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_IPNETROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IPNETROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

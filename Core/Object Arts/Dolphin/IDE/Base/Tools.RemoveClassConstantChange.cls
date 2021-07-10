@@ -22,8 +22,10 @@ changeSymbol
 
 variableName
 	^variable key! !
-!Tools.RemoveClassConstantChange categoriesFor: #asUndoOperation!converting!public! !
-!Tools.RemoveClassConstantChange categoriesFor: #changeStringFormat!constants!printing!private! !
-!Tools.RemoveClassConstantChange categoriesFor: #changeSymbol!constants!private! !
-!Tools.RemoveClassConstantChange categoriesFor: #variableName!accessing!private! !
+!Tools.RemoveClassConstantChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeStringFormat!constants!printing!private! !
+changeSymbol!constants!private! !
+variableName!accessing!private! !
+!
 

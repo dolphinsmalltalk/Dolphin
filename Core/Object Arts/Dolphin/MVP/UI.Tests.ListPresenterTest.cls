@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListPresenterTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ UI.Tests.ListPresenterTest comment: ''!
 
 classToTest
 	^ListPresenter! !
-!UI.Tests.ListPresenterTest categoriesFor: #classToTest!helpers!private! !
+!UI.Tests.ListPresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+!
 

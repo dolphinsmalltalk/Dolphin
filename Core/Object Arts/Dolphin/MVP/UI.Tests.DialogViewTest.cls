@@ -207,15 +207,17 @@ testRemainsOnScreen
 		centered: true.
 	self assert: rect origin
 		equals: (self workAreaNearest: workArea topRight) topRight - (self dialogExtent x @ 0)! !
-!UI.Tests.DialogViewTest categoriesFor: #createShell:text:!private! !
-!UI.Tests.DialogViewTest categoriesFor: #createSubjectDialog:!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #createTestShells:!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #dialogExtent!constants!private! !
-!UI.Tests.DialogViewTest categoriesFor: #evaluateInModalDialog:owner:centered:!helpers!private! !
-!UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwner!public!unit tests! !
-!UI.Tests.DialogViewTest categoriesFor: #testCenteringInOwnerModeless!public!unit tests! !
-!UI.Tests.DialogViewTest categoriesFor: #testInplaceNotRepositioned!public!unit tests! !
-!UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModal!public!unit tests! !
-!UI.Tests.DialogViewTest categoriesFor: #testNearOwnerModeless!public!unit tests! !
-!UI.Tests.DialogViewTest categoriesFor: #testRemainsOnScreen!public!unit tests! !
+!UI.Tests.DialogViewTest categoriesForMethods!
+createShell:text:!private! !
+createSubjectDialog:!helpers!private! !
+createTestShells:!helpers!private! !
+dialogExtent!constants!private! !
+evaluateInModalDialog:owner:centered:!helpers!private! !
+testCenteringInOwner!public!unit tests! !
+testCenteringInOwnerModeless!public!unit tests! !
+testInplaceNotRepositioned!public!unit tests! !
+testNearOwnerModal!public!unit tests! !
+testNearOwnerModeless!public!unit tests! !
+testRemainsOnScreen!public!unit tests! !
+!
 

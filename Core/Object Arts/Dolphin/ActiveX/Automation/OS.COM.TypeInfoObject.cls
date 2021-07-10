@@ -129,23 +129,25 @@ variableName
 	changed)."
 
 	^self binding key! !
-!OS.COM.TypeInfoObject categoriesFor: #asParameter!converting!public! !
-!OS.COM.TypeInfoObject categoriesFor: #attributes!accessing!public! !
-!OS.COM.TypeInfoObject categoriesFor: #basicName!accessing!private! !
-!OS.COM.TypeInfoObject categoriesFor: #binding!accessing!private! !
-!OS.COM.TypeInfoObject categoriesFor: #binding:!accessing!private! !
-!OS.COM.TypeInfoObject categoriesFor: #documentation!accessing!public! !
-!OS.COM.TypeInfoObject categoriesFor: #environment!constants!public! !
-!OS.COM.TypeInfoObject categoriesFor: #free!public!realizing/unrealizing! !
-!OS.COM.TypeInfoObject categoriesFor: #guid!accessing!public! !
-!OS.COM.TypeInfoObject categoriesFor: #helpfile!accessing!public! !
-!OS.COM.TypeInfoObject categoriesFor: #helpstring!accessing!public! !
-!OS.COM.TypeInfoObject categoriesFor: #isHidden!public!testing! !
-!OS.COM.TypeInfoObject categoriesFor: #isNull!public!testing! !
-!OS.COM.TypeInfoObject categoriesFor: #isRestricted!public!testing! !
-!OS.COM.TypeInfoObject categoriesFor: #name!accessing!public! !
-!OS.COM.TypeInfoObject categoriesFor: #realize!private!realizing/unrealizing! !
-!OS.COM.TypeInfoObject categoriesFor: #suggestedGlobalName!accessing!private! !
-!OS.COM.TypeInfoObject categoriesFor: #tlbInterface!accessing!private! !
-!OS.COM.TypeInfoObject categoriesFor: #variableName!accessing!public! !
+!OS.COM.TypeInfoObject categoriesForMethods!
+asParameter!converting!public! !
+attributes!accessing!public! !
+basicName!accessing!private! !
+binding!accessing!private! !
+binding:!accessing!private! !
+documentation!accessing!public! !
+environment!constants!public! !
+free!public!realizing/unrealizing! !
+guid!accessing!public! !
+helpfile!accessing!public! !
+helpstring!accessing!public! !
+isHidden!public!testing! !
+isNull!public!testing! !
+isRestricted!public!testing! !
+name!accessing!public! !
+realize!private!realizing/unrealizing! !
+suggestedGlobalName!accessing!private! !
+tlbInterface!accessing!private! !
+variableName!accessing!public! !
+!
 

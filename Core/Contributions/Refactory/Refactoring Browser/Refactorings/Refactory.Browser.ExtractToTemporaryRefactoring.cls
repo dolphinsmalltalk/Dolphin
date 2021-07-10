@@ -105,17 +105,19 @@ verifySelectedInterval
 				onError: [:message :position | self refactoringError: 'Invalid selection'].
 	selectedParseTree isSequence 
 		ifTrue: [self refactoringError: 'Cannot assign temp from multiple statements']! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #checkVariableName!preconditions!public! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #compileNewMethod!public!transforming! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #constructAssignmentFrom:!public!transforming! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #extract:to:from:in:!initialize/release!public! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #insertTemporary!public!transforming! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #parseTree!accessing!private! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #selectedSource!accessing!private! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #transform!public!transforming! !
-!Refactory.Browser.ExtractToTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring categoriesForMethods!
+checkVariableName!preconditions!public! !
+compileNewMethod!public!transforming! !
+constructAssignmentFrom:!public!transforming! !
+extract:to:from:in:!initialize/release!public! !
+insertTemporary!public!transforming! !
+parseTree!accessing!private! !
+preconditions!preconditions!public! !
+selectedSource!accessing!private! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+verifySelectedInterval!preconditions!public! !
+!
 
 !Refactory.Browser.ExtractToTemporaryRefactoring class methodsFor!
 
@@ -134,6 +136,8 @@ model: aRBNamespace extract: anInterval to: aString from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!Refactory.Browser.ExtractToTemporaryRefactoring class categoriesFor: #extract:to:from:in:!instance creation!public! !
-!Refactory.Browser.ExtractToTemporaryRefactoring class categoriesFor: #model:extract:to:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractToTemporaryRefactoring class categoriesForMethods!
+extract:to:from:in:!instance creation!public! !
+model:extract:to:from:in:!instance creation!public! !
+!
 

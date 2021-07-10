@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameClassVariableTest'
 	instanceVariableNames: ''
@@ -59,8 +59,10 @@ testRenameClassVar
 												[builder compile: rewriteRule tree printString
 													in: class
 													classified: aSmalllintContext protocols]]')! !
-!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
-!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.RenameClassVariableTest categoriesFor: #testRenameClassVar!public!tests! !
+!Refactory.Browser.Tests.RenameClassVariableTest categoriesForMethods!
+testAlreadyExistingName!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testNonExistantName!failure tests!public! !
+testRenameClassVar!public!tests! !
+!
 

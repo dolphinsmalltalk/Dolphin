@@ -120,23 +120,25 @@ roundingModeName
 	"Answer the symbolic name of the rounding mode configured at the time of the exception."
 
 	^self class roundingModes at: self roundingMode + 1 ifAbsent: [#Unknown]! !
-!OS._FPIEEE_RECORD categoriesFor: #cause!**compiled accessors**!public! !
-!OS._FPIEEE_RECORD categoriesFor: #causeDescription!accessing!public! !
-!OS._FPIEEE_RECORD categoriesFor: #causeNames!accessing!public! !
-!OS._FPIEEE_RECORD categoriesFor: #enable!**compiled accessors**!public! !
-!OS._FPIEEE_RECORD categoriesFor: #flags!**compiled accessors**!public! !
-!OS._FPIEEE_RECORD categoriesFor: #isDivide!public!testing! !
-!OS._FPIEEE_RECORD categoriesFor: #isOverflow!public!testing! !
-!OS._FPIEEE_RECORD categoriesFor: #isUnderflow!public!testing! !
-!OS._FPIEEE_RECORD categoriesFor: #isZeroDivide!public!testing! !
-!OS._FPIEEE_RECORD categoriesFor: #operand1!**compiled accessors**!public! !
-!OS._FPIEEE_RECORD categoriesFor: #operand2!**compiled accessors**!public! !
-!OS._FPIEEE_RECORD categoriesFor: #operation!accessing!public! !
-!OS._FPIEEE_RECORD categoriesFor: #operationName!accessing!public! !
-!OS._FPIEEE_RECORD categoriesFor: #precision!accessing!public! !
-!OS._FPIEEE_RECORD categoriesFor: #precisionName!accessing!public! !
-!OS._FPIEEE_RECORD categoriesFor: #roundingMode!accessing!public! !
-!OS._FPIEEE_RECORD categoriesFor: #roundingModeName!accessing!public! !
+!OS._FPIEEE_RECORD categoriesForMethods!
+cause!**compiled accessors**!public! !
+causeDescription!accessing!public! !
+causeNames!accessing!public! !
+enable!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+isDivide!public!testing! !
+isOverflow!public!testing! !
+isUnderflow!public!testing! !
+isZeroDivide!public!testing! !
+operand1!**compiled accessors**!public! !
+operand2!**compiled accessors**!public! !
+operation!accessing!public! !
+operationName!accessing!public! !
+precision!accessing!public! !
+precisionName!accessing!public! !
+roundingMode!accessing!public! !
+roundingModeName!accessing!public! !
+!
 
 !OS._FPIEEE_RECORD class methodsFor!
 
@@ -196,12 +198,14 @@ printFlags: anInteger on: aStream
 
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !
-!OS._FPIEEE_RECORD class categoriesFor: #defineFields!public!template definition! !
-!OS._FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
-!OS._FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
-!OS._FPIEEE_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS._FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
-!OS._FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
-!OS._FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !
-!OS._FPIEEE_RECORD class categoriesFor: #roundingModes!constants!public! !
+!OS._FPIEEE_RECORD class categoriesForMethods!
+defineFields!public!template definition! !
+exceptionFlags!constants!public! !
+exceptionFlags:do:!helpers!private! !
+getFieldNames!**compiled accessors**!constants!private! !
+operationCodes!constants!public! !
+precisionModes!constants!public! !
+printFlags:on:!helpers!private! !
+roundingModes!constants!public! !
+!
 

@@ -170,35 +170,37 @@ superMessages
 
 uses: anObject 
 	^self literals includes: anObject! !
-!Refactory.Browser.SmalllintContext categoriesFor: #addImplementationSpecificLiterals!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #buildParseTree!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #checkLiteral:!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #compiledMethod!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #computeLiterals!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #computeLiteralsForClass:!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #computeMessages!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #implements:!public!testing! !
-!Refactory.Browser.SmalllintContext categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #instVarNames!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #isAbstract:!public!testing! !
-!Refactory.Browser.SmalllintContext categoriesFor: #lintProtocols!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #literals!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #messages!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #parseTree!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #primitiveComputeLiterals!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #protocol!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #protocols!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #release!initialize/release!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #selectedClass!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #selectedClass:!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #selector!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #selector:!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #selectors!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #selfMessages!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #signalProcesses:!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #specialSelectors!helpers!private! !
-!Refactory.Browser.SmalllintContext categoriesFor: #superMessages!accessing!public! !
-!Refactory.Browser.SmalllintContext categoriesFor: #uses:!public!testing! !
+!Refactory.Browser.SmalllintContext categoriesForMethods!
+addImplementationSpecificLiterals!private! !
+buildParseTree!helpers!private! !
+checkLiteral:!helpers!private! !
+compiledMethod!accessing!public! !
+computeLiterals!helpers!private! !
+computeLiteralsForClass:!helpers!private! !
+computeMessages!helpers!private! !
+implements:!public!testing! !
+initialize!initialize/release!public! !
+instVarNames!accessing!public! !
+isAbstract:!public!testing! !
+lintProtocols!accessing!public! !
+literals!accessing!public! !
+messages!accessing!public! !
+parseTree!accessing!public! !
+primitiveComputeLiterals!helpers!private! !
+protocol!accessing!public! !
+protocols!accessing!public! !
+release!initialize/release!public! !
+selectedClass!accessing!public! !
+selectedClass:!accessing!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+selectors!accessing!public! !
+selfMessages!accessing!public! !
+signalProcesses:!helpers!private! !
+specialSelectors!helpers!private! !
+superMessages!accessing!public! !
+uses:!public!testing! !
+!
 
 !Refactory.Browser.SmalllintContext class methodsFor!
 
@@ -209,6 +211,8 @@ new
 
 newNoCache
 	^self basicNew! !
-!Refactory.Browser.SmalllintContext class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.SmalllintContext class categoriesFor: #newNoCache!instance creation!public! !
+!Refactory.Browser.SmalllintContext class categoriesForMethods!
+new!instance creation!public! !
+newNoCache!instance creation!public! !
+!
 

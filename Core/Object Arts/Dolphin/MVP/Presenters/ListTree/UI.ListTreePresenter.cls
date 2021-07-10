@@ -104,18 +104,20 @@ up
 	sels := self view selectionsAsSet.
 	sels := sels collect: [:each | self view parentOf: each].
 	self view selections: sels asOrderedCollection.! !
-!UI.ListTreePresenter categoriesFor: #beNotSorted!accessing!public!sorting! !
-!UI.ListTreePresenter categoriesFor: #beSorted!accessing!public!sorting! !
-!UI.ListTreePresenter categoriesFor: #beSorted:!accessing!public!sorting! !
-!UI.ListTreePresenter categoriesFor: #collapse:!operations!public! !
-!UI.ListTreePresenter categoriesFor: #expand:!operations!public! !
-!UI.ListTreePresenter categoriesFor: #expandAll:!operations!public! !
-!UI.ListTreePresenter categoriesFor: #isMultiSelect!public!testing! !
-!UI.ListTreePresenter categoriesFor: #list!accessing!public! !
-!UI.ListTreePresenter categoriesFor: #list:!accessing!public! !
-!UI.ListTreePresenter categoriesFor: #model:!accessing!public! !
-!UI.ListTreePresenter categoriesFor: #treeModel!accessing!operations!public! !
-!UI.ListTreePresenter categoriesFor: #up!operations!public! !
+!UI.ListTreePresenter categoriesForMethods!
+beNotSorted!accessing!public!sorting! !
+beSorted!accessing!public!sorting! !
+beSorted:!accessing!public!sorting! !
+collapse:!operations!public! !
+expand:!operations!public! !
+expandAll:!operations!public! !
+isMultiSelect!public!testing! !
+list!accessing!public! !
+list:!accessing!public! !
+model:!accessing!public! !
+treeModel!accessing!operations!public! !
+up!operations!public! !
+!
 
 UI.ListTreePresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
 
@@ -136,6 +138,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ListTreeView) 34 59 nil nil 34 2 8 1140920397 1025 416 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1638406 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920618720 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(UI.ListViewColumn) 8 'Column 1' 391 #left ##(UI.BasicListAbstract) 786950 ##(Core.Message) #<= 8 #() nil nil 416 nil 3 nil nil #report 8 #() nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil true 1247046 3 ##(UI.VirtualTreeModel) nil 560 138 144 528 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 2 3 800 #defaultGetChildrenBlock 42440101 8 #[30 105 226 0 106] #children 864 7 257 nil 850 0 nil 882 2 3 800 #defaultGetParentBlock 42415045 8 #[30 105 226 0 106] #parent 928 7 257 nil 850 0 nil 882 2 3 800 #defaultHasChildrenBlock 42500293 8 #[252 1 0 0 1 4 0 65 176 159 106 105] #childrenOf: #notEmpty 17 257 816 850 0 nil 882 1 83886083 800 #defaultFilterBlock 42430373 8 #[29 105 17 157 106] 1024 7 257 nil nil 138 ##(Core.PluggableSet) 528 138 ##(Core.IdentitySet) 528 37 1 nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 1218 399 701 416 1170 #text: 34 1 8 'Column 1' 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 198 12 0 0 104 1 0 0] 8 #() 1218 193 193 nil 2029)! !
-!UI.ListTreePresenter class categoriesFor: #defaultModel!models!public! !
-!UI.ListTreePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.ListTreePresenter class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+!
 

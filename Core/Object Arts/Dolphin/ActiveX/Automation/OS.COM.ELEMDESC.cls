@@ -68,14 +68,16 @@ paramdesc
 	"Answer the <PARAMDESC> value of the receiver's 'paramdesc' field."
 
 	^PARAMDESC fromAddress: bytes yourAddress + _OffsetOf_paramdesc! !
-!OS.COM.ELEMDESC categoriesFor: #defaultValue!accessing!public! !
-!OS.COM.ELEMDESC categoriesFor: #hasDefaultValue!development!helpers!private! !
-!OS.COM.ELEMDESC categoriesFor: #isIn!public!testing! !
-!OS.COM.ELEMDESC categoriesFor: #isOptional!public!testing! !
-!OS.COM.ELEMDESC categoriesFor: #isOut!public!testing! !
-!OS.COM.ELEMDESC categoriesFor: #isRetVal!public!testing! !
-!OS.COM.ELEMDESC categoriesFor: #param!accessing!public! !
-!OS.COM.ELEMDESC categoriesFor: #paramdesc!**compiled accessors**!public! !
+!OS.COM.ELEMDESC categoriesForMethods!
+defaultValue!accessing!public! !
+hasDefaultValue!development!helpers!private! !
+isIn!public!testing! !
+isOptional!public!testing! !
+isOut!public!testing! !
+isRetVal!public!testing! !
+param!accessing!public! !
+paramdesc!**compiled accessors**!public! !
+!
 
 !OS.COM.ELEMDESC class methodsFor!
 
@@ -96,6 +98,8 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #paramdesc)! !
-!OS.COM.ELEMDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.ELEMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.ELEMDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

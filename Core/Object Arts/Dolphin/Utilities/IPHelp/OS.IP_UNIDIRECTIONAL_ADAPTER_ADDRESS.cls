@@ -47,9 +47,11 @@ NumAdapters
 	"Answer the <Integer> value of the receiver's 'NumAdapters' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumAdapters! !
-!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address!**compiled accessors**!public! !
-!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address:!**compiled accessors**!public! !
-!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #NumAdapters!**compiled accessors**!public! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesForMethods!
+Address!**compiled accessors**!public! !
+Address:!**compiled accessors**!public! !
+NumAdapters!**compiled accessors**!public! !
+!
 
 !OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class methodsFor!
 
@@ -71,6 +73,8 @@ defineFields
 
 getFieldNames
 	^#(#NumAdapters #Address)! !
-!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #defineFields!initializing!public! !
-!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

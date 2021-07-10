@@ -79,9 +79,11 @@ asTimeStamp
 		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
 
 	^TimeStamp date: self asDate time: self asTime! !
-!Core.DateAndTime categoriesFor: #asDate!converting!public! !
-!Core.DateAndTime categoriesFor: #asTime!converting!public! !
-!Core.DateAndTime categoriesFor: #asTimeStamp!converting!public! !
+!Core.DateAndTime categoriesForMethods!
+asDate!converting!public! !
+asTime!converting!public! !
+asTimeStamp!converting!public! !
+!
 
 !Kernel.BlockClosure methodsFor!
 
@@ -89,7 +91,9 @@ millisecondsToRepeat: anInteger
 	"Answer the time taken to execute the receiver anInteger times"
 
 	^Time millisecondsToRun: [anInteger timesRepeat: [self value]]! !
-!Kernel.BlockClosure categoriesFor: #millisecondsToRepeat:!development!public! !
+!Kernel.BlockClosure categoriesForMethods!
+millisecondsToRepeat:!development!public! !
+!
 
 !OS.SYSTEMTIME methodsFor!
 
@@ -102,8 +106,10 @@ asTimeStamp
 	"Answer a <TimeStamp> corresponding to the receiver's point in time."
 
 	^self asDateAndTime asTimeStamp! !
-!OS.SYSTEMTIME categoriesFor: #asDate!converting!public! !
-!OS.SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
+!OS.SYSTEMTIME categoriesForMethods!
+asDate!converting!public! !
+asTimeStamp!converting!public! !
+!
 
 "End of package definition"!
 

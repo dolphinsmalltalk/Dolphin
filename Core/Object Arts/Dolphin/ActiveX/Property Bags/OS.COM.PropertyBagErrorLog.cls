@@ -79,15 +79,17 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{IErrorLog. IEnumErrorInfo}! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #AddError:pExcepInfo:!COM Interfaces-IErrorLog!public! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #guid!accessing!private! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #guid:!accessing!private! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #initialize!initializing!private! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #isEmpty!public!testing! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #notEmpty!public!testing! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #queryIEnumErrorInfo!accessing-interfaces!public! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!OS.COM.PropertyBagErrorLog categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.PropertyBagErrorLog categoriesForMethods!
+AddError:pExcepInfo:!COM Interfaces-IErrorLog!public! !
+guid!accessing!private! !
+guid:!accessing!private! !
+initialize!initializing!private! !
+isEmpty!public!testing! !
+notEmpty!public!testing! !
+queryIEnumErrorInfo!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing-interfaces!public! !
+supportedInterfaces!constants!public! !
+!
 
 OS.COM.PropertyBagErrorLog methodProtocol: #IErrorLog attributes: #(#readOnly) selectors: #(#AddError:pExcepInfo:)!
 

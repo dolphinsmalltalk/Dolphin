@@ -154,18 +154,20 @@ testNextLineUpToEof
 			actual := filestream nextLine.
 			self assert: actual equals: expected.
 			filestream close]! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #strings!constants!private! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #subjectCollection:!helpers!public! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnDevice!public!unit tests! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnFile!public!unit tests! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #testFromHandleOnPipe!public!unit tests! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
-!OS.Tests.StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
+!OS.Tests.StdioFileStreamTest categoriesForMethods!
+bufferSize!constants!private! !
+maxPosition!constants!private! !
+streamClass!helpers!private! !
+streamOnFile:type:!helpers!private! !
+strings!constants!private! !
+subjectCollection:!helpers!public! !
+testCharacterTranslation!public!unit tests! !
+testFromHandleOnDevice!public!unit tests! !
+testFromHandleOnFile!public!unit tests! !
+testFromHandleOnPipe!public!unit tests! !
+testNextLineCrOnly!public!unit tests! !
+testNextLineUpToEof!public!unit tests! !
+!
 
 !OS.Tests.StdioFileStreamTest class methodsFor!
 
@@ -173,5 +175,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'strict utf8' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
-!OS.Tests.StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
+!OS.Tests.StdioFileStreamTest class categoriesForMethods!
+allTestSelectors!Accessing!public! !
+!
 

@@ -47,10 +47,12 @@ RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #Realm!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #Realm:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #RealmLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #RealmLength:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesForMethods!
+Realm!**compiled accessors**!public! !
+Realm:!**compiled accessors**!public! !
+RealmLength!**compiled accessors**!public! !
+RealmLength:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class methodsFor!
 
@@ -73,6 +75,8 @@ defineFields
 
 getFieldNames
 	^#(#RealmLength #Realm)! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

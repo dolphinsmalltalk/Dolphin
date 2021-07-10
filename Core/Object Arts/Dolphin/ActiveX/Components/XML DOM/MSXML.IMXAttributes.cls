@@ -222,21 +222,23 @@ SetValue: nIndex strValue: strValue
 
 	<virtual stdcall: hresult 18 sdword bstr>
 	^self invalidCall: _failureCode! !
-!MSXML.IMXAttributes categoriesFor: #AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
-!MSXML.IMXAttributes categoriesFor: #AddAttributeFromIndex:nIndex:!**auto generated**!COM Interfaces-IMXAttributes!private! !
-!MSXML.IMXAttributes categoriesFor: #Clear!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IMXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IMXAttributes categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #SetAttribute:strURI:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #setAttributes:!**auto generated**!methods!public! !
-!MSXML.IMXAttributes categoriesFor: #SetAttributes:!**auto generated**!COM Interfaces-IMXAttributes!private! !
-!MSXML.IMXAttributes categoriesFor: #SetLocalName:strLocalName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #SetQName:strQName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #SetType:strType:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #SetURI:strURI:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!MSXML.IMXAttributes categoriesFor: #SetValue:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!MSXML.IMXAttributes categoriesForMethods!
+AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
+AddAttributeFromIndex:nIndex:!**auto generated**!COM Interfaces-IMXAttributes!private! !
+Clear!**auto generated**!COM Interfaces-IMXAttributes!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+RemoveAttribute:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetAttribute:strURI:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+setAttributes:!**auto generated**!methods!public! !
+SetAttributes:!**auto generated**!COM Interfaces-IMXAttributes!private! !
+SetLocalName:strLocalName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetQName:strQName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetType:strType:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetURI:strURI:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetValue:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!
 
 !MSXML.IMXAttributes class methodsFor!
 
@@ -273,6 +275,8 @@ defineFunctions
 		defineFunction: #SetValue:strValue:
 			argumentTypes: 'sdword bstr'
 ! !
-!MSXML.IMXAttributes class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSXML.IMXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IMXAttributes class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

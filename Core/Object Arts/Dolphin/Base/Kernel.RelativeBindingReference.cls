@@ -104,18 +104,20 @@ setScope: anObject
 
 	<mutable>
 	scope := anObject! !
-!Kernel.RelativeBindingReference categoriesFor: #=!comparing!public! !
-!Kernel.RelativeBindingReference categoriesFor: #baseClass!accessing!public! !
-!Kernel.RelativeBindingReference categoriesFor: #bindingScope!accessing!public! !
-!Kernel.RelativeBindingReference categoriesFor: #environmentName!accessing!public! !
-!Kernel.RelativeBindingReference categoriesFor: #hash!comparing!public! !
-!Kernel.RelativeBindingReference categoriesFor: #home!accessing!public! !
-!Kernel.RelativeBindingReference categoriesFor: #isRelative!public!testing! !
-!Kernel.RelativeBindingReference categoriesFor: #private!converting!public! !
-!Kernel.RelativeBindingReference categoriesFor: #scope!accessing!private! !
-!Kernel.RelativeBindingReference categoriesFor: #setPath:private:scope:!initializing!private! !
-!Kernel.RelativeBindingReference categoriesFor: #setPathString:private:scope:!initializing!private! !
-!Kernel.RelativeBindingReference categoriesFor: #setScope:!accessing!private! !
+!Kernel.RelativeBindingReference categoriesForMethods!
+=!comparing!public! !
+baseClass!accessing!public! !
+bindingScope!accessing!public! !
+environmentName!accessing!public! !
+hash!comparing!public! !
+home!accessing!public! !
+isRelative!public!testing! !
+private!converting!public! !
+scope!accessing!private! !
+setPath:private:scope:!initializing!private! !
+setPathString:private:scope:!initializing!private! !
+setScope:!accessing!private! !
+!
 
 !Kernel.RelativeBindingReference class methodsFor!
 
@@ -125,5 +127,7 @@ newPath: anArray private: aBoolean scope: aBindingScope
 		setPath: anArray
 		private: aBoolean
 		scope: aBindingScope! !
-!Kernel.RelativeBindingReference class categoriesFor: #newPath:private:scope:!instance creation!private! !
+!Kernel.RelativeBindingReference class categoriesForMethods!
+newPath:private:scope:!instance creation!private! !
+!
 

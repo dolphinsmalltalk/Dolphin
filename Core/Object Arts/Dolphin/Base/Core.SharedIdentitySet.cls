@@ -24,6 +24,8 @@ findElementOrNil: anObject
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1! !
-!Core.SharedIdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!Core.SharedIdentitySet categoriesFor: #hash:max:!private!searching! !
+!Core.SharedIdentitySet categoriesForMethods!
+findElementOrNil:!private!searching! !
+hash:max:!private!searching! !
+!
 

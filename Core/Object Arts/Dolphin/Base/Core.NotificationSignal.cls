@@ -28,7 +28,9 @@ exceptionClass
 	is signalled."
 
 	^RaisedNotificationSignal! !
-!Core.NotificationSignal categoriesFor: #defaultAction:!handling!private! !
-!Core.NotificationSignal categoriesFor: #defaultResumption!constants!private! !
-!Core.NotificationSignal categoriesFor: #exceptionClass!constants!private! !
+!Core.NotificationSignal categoriesForMethods!
+defaultAction:!handling!private! !
+defaultResumption!constants!private! !
+exceptionClass!constants!private! !
+!
 

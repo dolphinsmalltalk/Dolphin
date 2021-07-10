@@ -763,75 +763,77 @@ whileTrue: iterationBlock
 	the definition below, so this method is not actually recursive."
 
 	^[self value] whileTrue: [iterationBlock value]! !
-!Kernel.BlockClosure categoriesFor: #=!comparing!public! !
-!Kernel.BlockClosure categoriesFor: #argumentCount!accessing!public! !
-!Kernel.BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
-!Kernel.BlockClosure categoriesFor: #atPriority:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #copiedValues!private! !
-!Kernel.BlockClosure categoriesFor: #critical!private!scheduling! !
-!Kernel.BlockClosure categoriesFor: #cull:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #cull:cull:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #cull:cull:cull:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #deferredValue!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #deferredValueAt:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #ensure:!debugger-step through!not restartable!public!unwinding! !
-!Kernel.BlockClosure categoriesFor: #envTempCount!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #envTempCount:!accessing!development!private! !
-!Kernel.BlockClosure categoriesFor: #fork!public!scheduling! !
-!Kernel.BlockClosure categoriesFor: #forkAt:!public!scheduling! !
-!Kernel.BlockClosure categoriesFor: #forkAt:maxStack:!public!scheduling! !
-!Kernel.BlockClosure categoriesFor: #forkMaxStack:!public!scheduling! !
-!Kernel.BlockClosure categoriesFor: #frameClass!constants!private! !
-!Kernel.BlockClosure categoriesFor: #home!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
-!Kernel.BlockClosure categoriesFor: #info!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #info:!accessing!development!private! !
-!Kernel.BlockClosure categoriesFor: #initialIP!accessing!public! !
-!Kernel.BlockClosure categoriesFor: #initialIP:!accessing!development!private! !
-!Kernel.BlockClosure categoriesFor: #isClean!private!testing! !
-!Kernel.BlockClosure categoriesFor: #localCount!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #method!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #method:!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #newProcess!public!scheduling! !
-!Kernel.BlockClosure categoriesFor: #newProcess:!public!scheduling! !
-!Kernel.BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
-!Kernel.BlockClosure categoriesFor: #numArgs!accessing!public! !
-!Kernel.BlockClosure categoriesFor: #on:do:!debugger-step through!exceptions!public! !
-!Kernel.BlockClosure categoriesFor: #on:do:on:do:!exceptions!public! !
-!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:!exceptions!public! !
-!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:!exceptions!public! !
-!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
-!Kernel.BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
-!Kernel.BlockClosure categoriesFor: #onDo:!exceptions!public! !
-!Kernel.BlockClosure categoriesFor: #outer!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #outer:!accessing!development!private! !
-!Kernel.BlockClosure categoriesFor: #postToInputQueue!event handling!public! !
-!Kernel.BlockClosure categoriesFor: #postToMessageQueue!event handling!public! !
-!Kernel.BlockClosure categoriesFor: #printOn:!development!printing!public! !
-!Kernel.BlockClosure categoriesFor: #receiver!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #receiver:!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #repeat!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #replaceElementsOf:from:to:startingAt:!public!replacing! !
-!Kernel.BlockClosure categoriesFor: #stackTempCount!accessing!private! !
-!Kernel.BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
-!Kernel.BlockClosure categoriesFor: #tempCount!accessing!public! !
-!Kernel.BlockClosure categoriesFor: #ticksToRun!operations!private! !
-!Kernel.BlockClosure categoriesFor: #timeToRepeat:!event handling!public! !
-!Kernel.BlockClosure categoriesFor: #timeToRun!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #value!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #value:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #value:value:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #value:value:value:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #value:value:value:value:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #valueFailed:argumentCount:!exceptions!private! !
-!Kernel.BlockClosure categoriesFor: #valueOnUnwind:!private!unwinding! !
-!Kernel.BlockClosure categoriesFor: #valueWithArguments:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #valueWithArgumentsAt:descriptor:!evaluating!private! !
-!Kernel.BlockClosure categoriesFor: #whileFalse!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #whileFalse:!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #whileTrue!evaluating!public! !
-!Kernel.BlockClosure categoriesFor: #whileTrue:!evaluating!public! !
+!Kernel.BlockClosure categoriesForMethods!
+=!comparing!public! !
+argumentCount!accessing!public! !
+argumentCount:!accessing!development!private! !
+atPriority:!evaluating!public! !
+copiedValues!private! !
+critical!private!scheduling! !
+cull:!evaluating!public! !
+cull:cull:!evaluating!public! !
+cull:cull:cull:!evaluating!public! !
+cull:cull:cull:cull:!evaluating!public! !
+deferredValue!evaluating!public! !
+deferredValueAt:!evaluating!public! !
+ensure:!debugger-step through!not restartable!public!unwinding! !
+envTempCount!accessing!private! !
+envTempCount:!accessing!development!private! !
+fork!public!scheduling! !
+forkAt:!public!scheduling! !
+forkAt:maxStack:!public!scheduling! !
+forkMaxStack:!public!scheduling! !
+frameClass!constants!private! !
+home!accessing!private! !
+ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
+info!accessing!private! !
+info:!accessing!development!private! !
+initialIP!accessing!public! !
+initialIP:!accessing!development!private! !
+isClean!private!testing! !
+localCount!accessing!private! !
+method!accessing!private! !
+method:!accessing!private! !
+newProcess!public!scheduling! !
+newProcess:!public!scheduling! !
+newProcessWithArguments:!public!scheduling! !
+numArgs!accessing!public! !
+on:do:!debugger-step through!exceptions!public! !
+on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
+onDo:!exceptions!public! !
+outer!accessing!private! !
+outer:!accessing!development!private! !
+postToInputQueue!event handling!public! !
+postToMessageQueue!event handling!public! !
+printOn:!development!printing!public! !
+receiver!accessing!private! !
+receiver:!accessing!private! !
+repeat!evaluating!public! !
+replaceElementsOf:from:to:startingAt:!public!replacing! !
+stackTempCount!accessing!private! !
+stackTempCount:!accessing!development!private! !
+tempCount!accessing!public! !
+ticksToRun!operations!private! !
+timeToRepeat:!event handling!public! !
+timeToRun!evaluating!public! !
+value!evaluating!public! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+value:value:value:!evaluating!public! !
+value:value:value:value:!evaluating!public! !
+valueFailed:argumentCount:!exceptions!private! !
+valueOnUnwind:!private!unwinding! !
+valueWithArguments:!evaluating!public! !
+valueWithArgumentsAt:descriptor:!evaluating!private! !
+whileFalse!evaluating!public! !
+whileFalse:!evaluating!public! !
+whileTrue!evaluating!public! !
+whileTrue:!evaluating!public! !
+!
 
 Kernel.BlockClosure methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
 Kernel.BlockClosure methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
@@ -889,7 +891,9 @@ stbVersion
 	"
 
 	^3! !
-!Kernel.BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
-!Kernel.BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
-!Kernel.BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
+!Kernel.BlockClosure class categoriesForMethods!
+attemptToRecompile:!binary filing!development!private! !
+attemptToUpgradeBlock:data:!binary filing!development!private! !
+stbVersion!binary filing!public! !
+!
 

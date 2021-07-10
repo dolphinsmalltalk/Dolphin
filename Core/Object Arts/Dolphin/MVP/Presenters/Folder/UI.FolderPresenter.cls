@@ -230,31 +230,33 @@ viewModel
 	connected to the receiver's contentsModel - not the receiver's tree model"
 
 	^self contents! !
-!UI.FolderPresenter categoriesFor: #beNotSorted!accessing!public!sorting! !
-!UI.FolderPresenter categoriesFor: #collapse:!operations!public! !
-!UI.FolderPresenter categoriesFor: #contents!accessing!public! !
-!UI.FolderPresenter categoriesFor: #expand:!operations!public! !
-!UI.FolderPresenter categoriesFor: #expandAll:!operations!public! !
-!UI.FolderPresenter categoriesFor: #historyBack!commands!public! !
-!UI.FolderPresenter categoriesFor: #historyForward!commands!public! !
-!UI.FolderPresenter categoriesFor: #initialize!initializing!private! !
-!UI.FolderPresenter categoriesFor: #isAutoNavigate!accessing!public! !
-!UI.FolderPresenter categoriesFor: #isAutoNavigate:!accessing!public! !
-!UI.FolderPresenter categoriesFor: #list!accessing!private! !
-!UI.FolderPresenter categoriesFor: #list:!accessing!private! !
-!UI.FolderPresenter categoriesFor: #model:!accessing!public! !
-!UI.FolderPresenter categoriesFor: #onActionPerformed!event handling!public! !
-!UI.FolderPresenter categoriesFor: #onItem:addedInParent:!event handling!private! !
-!UI.FolderPresenter categoriesFor: #onItem:movedToParent:!event handling!private! !
-!UI.FolderPresenter categoriesFor: #onItem:removedFromParent:!event handling!private! !
-!UI.FolderPresenter categoriesFor: #onItemUpdated:!event handling!private! !
-!UI.FolderPresenter categoriesFor: #onKeyTyped:!event handling!public! !
-!UI.FolderPresenter categoriesFor: #onTreeChanged:!event handling!private! !
-!UI.FolderPresenter categoriesFor: #openBlock!accessing!public! !
-!UI.FolderPresenter categoriesFor: #openBlock:!accessing!public! !
-!UI.FolderPresenter categoriesFor: #queryCommand:!commands!private! !
-!UI.FolderPresenter categoriesFor: #up!commands!public! !
-!UI.FolderPresenter categoriesFor: #viewModel!accessing!private! !
+!UI.FolderPresenter categoriesForMethods!
+beNotSorted!accessing!public!sorting! !
+collapse:!operations!public! !
+contents!accessing!public! !
+expand:!operations!public! !
+expandAll:!operations!public! !
+historyBack!commands!public! !
+historyForward!commands!public! !
+initialize!initializing!private! !
+isAutoNavigate!accessing!public! !
+isAutoNavigate:!accessing!public! !
+list!accessing!private! !
+list:!accessing!private! !
+model:!accessing!public! !
+onActionPerformed!event handling!public! !
+onItem:addedInParent:!event handling!private! !
+onItem:movedToParent:!event handling!private! !
+onItem:removedFromParent:!event handling!private! !
+onItemUpdated:!event handling!private! !
+onKeyTyped:!event handling!public! !
+onTreeChanged:!event handling!private! !
+openBlock!accessing!public! !
+openBlock:!accessing!public! !
+queryCommand:!commands!private! !
+up!commands!public! !
+viewModel!accessing!private! !
+!
 
 UI.FolderPresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
 
@@ -270,6 +272,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) instanceClass defaultIcon! !
-!UI.FolderPresenter class categoriesFor: #defaultModel!models!public! !
-!UI.FolderPresenter class categoriesFor: #icon!constants!public! !
+!UI.FolderPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

@@ -277,26 +277,28 @@ UniqueID: pNode pID: pID
 
 	<virtual stdcall: hresult 44 IXMLDOMNode* sdword*>
 	^self invalidCall: _failureCode! !
-!MSXML.IXTLRuntime categoriesFor: #absoluteChildNumber:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #AbsoluteChildNumber:pNumber:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #ancestorChildNumber:pNode:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #AncestorChildNumber:pNode:pNumber:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #childNumber:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #ChildNumber:pNumber:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #depth:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #Depth:pDepth:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #formatDate:bstrFormat:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #formatDate:bstrFormat:varDestLocale:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #FormatDate:bstrFormat:varDestLocale:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #formatIndex:bstrFormat:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #FormatIndex:bstrFormat:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #formatNumber:bstrFormat:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #FormatNumber:bstrFormat:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #formatTime:bstrFormat:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #formatTime:bstrFormat:varDestLocale:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #FormatTime:bstrFormat:varDestLocale:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
-!MSXML.IXTLRuntime categoriesFor: #uniqueID:!**auto generated**!methods!public! !
-!MSXML.IXTLRuntime categoriesFor: #UniqueID:pID:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+!MSXML.IXTLRuntime categoriesForMethods!
+absoluteChildNumber:!**auto generated**!methods!public! !
+AbsoluteChildNumber:pNumber:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+ancestorChildNumber:pNode:!**auto generated**!methods!public! !
+AncestorChildNumber:pNode:pNumber:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+childNumber:!**auto generated**!methods!public! !
+ChildNumber:pNumber:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+depth:!**auto generated**!methods!public! !
+Depth:pDepth:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+formatDate:bstrFormat:!**auto generated**!methods!public! !
+formatDate:bstrFormat:varDestLocale:!**auto generated**!methods!public! !
+FormatDate:bstrFormat:varDestLocale:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+formatIndex:bstrFormat:!**auto generated**!methods!public! !
+FormatIndex:bstrFormat:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+formatNumber:bstrFormat:!**auto generated**!methods!public! !
+FormatNumber:bstrFormat:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+formatTime:bstrFormat:!**auto generated**!methods!public! !
+formatTime:bstrFormat:varDestLocale:!**auto generated**!methods!public! !
+FormatTime:bstrFormat:varDestLocale:pbstrFormattedString:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+uniqueID:!**auto generated**!methods!public! !
+UniqueID:pID:!**auto generated**!COM Interfaces-IXTLRuntime!private! !
+!
 
 !MSXML.IXTLRuntime class methodsFor!
 
@@ -324,5 +326,7 @@ defineFunctions
 		defineFunction: #FormatTime:bstrFormat:varDestLocale:pbstrFormattedString:
 			argumentTypes: 'variant bstr variant bstr*'
 ! !
-!MSXML.IXTLRuntime class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXTLRuntime class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

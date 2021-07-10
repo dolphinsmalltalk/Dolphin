@@ -29,8 +29,10 @@ displayOn: aPuttableStream
 
 printFieldsOn: aStream
 	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self displayOn: aStream]! !
-!OS.AbstractIN_ADDR categoriesFor: #displayOn:!displaying!public! !
-!OS.AbstractIN_ADDR categoriesFor: #printFieldsOn:!development!printing!private! !
+!OS.AbstractIN_ADDR categoriesForMethods!
+displayOn:!displaying!public! !
+printFieldsOn:!development!printing!private! !
+!
 
 !OS.AbstractIN_ADDR class methodsFor!
 
@@ -50,6 +52,8 @@ fromString: aString
 				ifTrue: [InvalidFormat signalWith: self]
 				ifFalse: [Net.SocketError signalWith: Ws2_32 wsaGetLastError]].
 	^answer! !
-!OS.AbstractIN_ADDR class categoriesFor: #addressFamily!constants!public! !
-!OS.AbstractIN_ADDR class categoriesFor: #fromString:!public! !
+!OS.AbstractIN_ADDR class categoriesForMethods!
+addressFamily!constants!public! !
+fromString:!public! !
+!
 

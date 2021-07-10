@@ -368,49 +368,51 @@ wFuncFlags
 	"Answer the <Integer> value of the receiver's 'wFuncFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wFuncFlags! !
-!OS.COM.FUNCDESC categoriesFor: #argumentNameFor:!helpers!private! !
-!OS.COM.FUNCDESC categoriesFor: #argumentNames!accessing!public! !
-!OS.COM.FUNCDESC categoriesFor: #arguments!accessing!public! !
-!OS.COM.FUNCDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.FUNCDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!OS.COM.FUNCDESC categoriesFor: #callconv!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #callingConvention!accessing!public! !
-!OS.COM.FUNCDESC categoriesFor: #clearMethodName!development!initializing!private! !
-!OS.COM.FUNCDESC categoriesFor: #cParams!**compiled accessors**!private! !
-!OS.COM.FUNCDESC categoriesFor: #cParamsOpt!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #cScodes!**compiled accessors**!private! !
-!OS.COM.FUNCDESC categoriesFor: #elemDesc!accessing!public! !
-!OS.COM.FUNCDESC categoriesFor: #elemdescFunc!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #elemDescFunc!accessing!public! !
-!OS.COM.FUNCDESC categoriesFor: #flags!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #funckind!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #getAllCustData!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #hasRetval!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #idlCallingConvention!printing-IDL!private! !
-!OS.COM.FUNCDESC categoriesFor: #invkind!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #isDispatchable!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isMethod!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isPropGet!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isPropPut!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isPropPutRef!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isPropSet!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isReadOnly!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isRequestEdit!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isRestricted!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #isVirtual!public!testing! !
-!OS.COM.FUNCDESC categoriesFor: #lprgelemdescParam!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #lprgscode!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #memid!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #name!accessing!public! !
-!OS.COM.FUNCDESC categoriesFor: #names!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #optionalInputs!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #outputIndices!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #oVft!**compiled accessors**!public! !
-!OS.COM.FUNCDESC categoriesFor: #retvalIndex!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #selector!accessing!public! !
-!OS.COM.FUNCDESC categoriesFor: #tdescFunc!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #vfnIndex!accessing!private! !
-!OS.COM.FUNCDESC categoriesFor: #wFuncFlags!**compiled accessors**!public! !
+!OS.COM.FUNCDESC categoriesForMethods!
+argumentNameFor:!helpers!private! !
+argumentNames!accessing!public! !
+arguments!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+basicIdlAttributes!printing-IDL!private! !
+callconv!**compiled accessors**!public! !
+callingConvention!accessing!public! !
+clearMethodName!development!initializing!private! !
+cParams!**compiled accessors**!private! !
+cParamsOpt!**compiled accessors**!public! !
+cScodes!**compiled accessors**!private! !
+elemDesc!accessing!public! !
+elemdescFunc!**compiled accessors**!public! !
+elemDescFunc!accessing!public! !
+flags!accessing!private! !
+funckind!**compiled accessors**!public! !
+getAllCustData!accessing!private! !
+hasRetval!public!testing! !
+idlCallingConvention!printing-IDL!private! !
+invkind!**compiled accessors**!public! !
+isDispatchable!public!testing! !
+isMethod!public!testing! !
+isPropGet!public!testing! !
+isPropPut!public!testing! !
+isPropPutRef!public!testing! !
+isPropSet!public!testing! !
+isReadOnly!public!testing! !
+isRequestEdit!public!testing! !
+isRestricted!public!testing! !
+isVirtual!public!testing! !
+lprgelemdescParam!**compiled accessors**!public! !
+lprgscode!**compiled accessors**!public! !
+memid!**compiled accessors**!public! !
+name!accessing!public! !
+names!accessing!private! !
+optionalInputs!accessing!private! !
+outputIndices!accessing!private! !
+oVft!**compiled accessors**!public! !
+retvalIndex!accessing!private! !
+selector!accessing!public! !
+tdescFunc!accessing!private! !
+vfnIndex!accessing!private! !
+wFuncFlags!**compiled accessors**!public! !
+!
 
 !OS.COM.FUNCDESC class methodsFor!
 
@@ -471,8 +473,10 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!OS.COM.FUNCDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.FUNCDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.COM.FUNCDESC class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
-!OS.COM.FUNCDESC class categoriesFor: #stbVersion!binary filing!development!public! !
+!OS.COM.FUNCDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+stbConvertFrom:!binary filing!development!public! !
+stbVersion!binary filing!development!public! !
+!
 

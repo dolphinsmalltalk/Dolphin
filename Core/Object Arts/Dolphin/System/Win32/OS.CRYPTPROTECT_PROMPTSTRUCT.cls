@@ -61,13 +61,15 @@ szPrompt: anUtf16String
 	"Set the receiver's 'szPrompt' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_szPrompt put: anUtf16String yourAddress! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags!**compiled accessors**!public! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags:!**compiled accessors**!public! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp!**compiled accessors**!public! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp:!**compiled accessors**!public! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt!**compiled accessors**!public! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt:!**compiled accessors**!public! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT categoriesForMethods!
+dwPromptFlags!**compiled accessors**!public! !
+dwPromptFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+hwndApp!**compiled accessors**!public! !
+hwndApp:!**compiled accessors**!public! !
+szPrompt!**compiled accessors**!public! !
+szPrompt:!**compiled accessors**!public! !
+!
 
 !OS.CRYPTPROTECT_PROMPTSTRUCT class methodsFor!
 
@@ -102,6 +104,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CRYPTPROTECT_PROMPTSTRUCT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

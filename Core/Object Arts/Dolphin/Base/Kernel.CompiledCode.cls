@@ -687,92 +687,94 @@ writesInstVar: aString at: anInteger
 
 	^(self extraIndex between: 1 and: 6) not 
 		and: [self byteCodeDispatcher writesInstVarAt: anInteger]! !
-!Kernel.CompiledCode categoriesFor: #=!comparing!public! !
-!Kernel.CompiledCode categoriesFor: #accessesInstVar:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #accessesInstVar:at:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #allLiteralsDo:!enumerating!private! !
-!Kernel.CompiledCode categoriesFor: #allSymbolLiterals!enumerating!private! !
-!Kernel.CompiledCode categoriesFor: #allSymbolLiteralsDo:!enumerating!private! !
-!Kernel.CompiledCode categoriesFor: #annotations!accessing!public! !
-!Kernel.CompiledCode categoriesFor: #argumentCount!method header!public! !
-!Kernel.CompiledCode categoriesFor: #argumentCount:!accessing!method header!private! !
-!Kernel.CompiledCode categoriesFor: #basicByteCodes!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #byteCodeDispatcher!private!testing! !
-!Kernel.CompiledCode categoriesFor: #byteCodeDispatcherClass!constants!private! !
-!Kernel.CompiledCode categoriesFor: #byteCodes!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #byteCodes:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #byteCodeSegments!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #clear!operations!private! !
-!Kernel.CompiledCode categoriesFor: #compilerClass!constants!private! !
-!Kernel.CompiledCode categoriesFor: #containsSource:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #customEnvironment!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #debugInfo!development!private! !
-!Kernel.CompiledCode categoriesFor: #envInfo!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #environment!accessing!public! !
-!Kernel.CompiledCode categoriesFor: #envTempCount!accessing!development!public! !
-!Kernel.CompiledCode categoriesFor: #evaluationPools!accessing!development!public! !
-!Kernel.CompiledCode categoriesFor: #extraIndex!method header!private! !
-!Kernel.CompiledCode categoriesFor: #extraIndex:!method header!private! !
-!Kernel.CompiledCode categoriesFor: #fullBindingFor:!binding!public! !
-!Kernel.CompiledCode categoriesFor: #getDebugInfo!development!private! !
-!Kernel.CompiledCode categoriesFor: #getSource!accessing!development!public! !
-!Kernel.CompiledCode categoriesFor: #hasAnnotation:!enquiries!public! !
-!Kernel.CompiledCode categoriesFor: #hash!comparing!public! !
-!Kernel.CompiledCode categoriesFor: #header!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #header:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #isAnnotated!public!testing! !
-!Kernel.CompiledCode categoriesFor: #isCompilationFailure!public!testing! !
-!Kernel.CompiledCode categoriesFor: #isDebugMethod!development!private!testing! !
-!Kernel.CompiledCode categoriesFor: #isExpression!private!testing! !
-!Kernel.CompiledCode categoriesFor: #isOverride!public!testing! !
-!Kernel.CompiledCode categoriesFor: #isPacked!private!testing! !
-!Kernel.CompiledCode categoriesFor: #isPrimitive!private!testing! !
-!Kernel.CompiledCode categoriesFor: #isPrivate!private!testing! !
-!Kernel.CompiledCode categoriesFor: #isPrivate:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #isPublic!private!testing! !
-!Kernel.CompiledCode categoriesFor: #isUnbound!public!testing! !
-!Kernel.CompiledCode categoriesFor: #literalArray:do:!enumerating!private! !
-!Kernel.CompiledCode categoriesFor: #literalAt:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #literalAt:put:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #literalCount!method header!private! !
-!Kernel.CompiledCode categoriesFor: #literalReferencesDo:!enumerating!private! !
-!Kernel.CompiledCode categoriesFor: #literals!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #literalsDetect:ifNone:!private!testing! !
-!Kernel.CompiledCode categoriesFor: #literalsDo:!enumerating!private! !
-!Kernel.CompiledCode categoriesFor: #localCount!accessing!method header!private! !
-!Kernel.CompiledCode categoriesFor: #localEnvironment!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #localScope!accessing!public! !
-!Kernel.CompiledCode categoriesFor: #messages!accessing!development!public! !
-!Kernel.CompiledCode categoriesFor: #messagesDo:!development!enumerating!public! !
-!Kernel.CompiledCode categoriesFor: #methodClass!accessing!public! !
-!Kernel.CompiledCode categoriesFor: #methodClass:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #needsContext!development!method header!private!testing! !
-!Kernel.CompiledCode categoriesFor: #owningPackage!accessing!public! !
-!Kernel.CompiledCode categoriesFor: #primitiveIndex!method header!private! !
-!Kernel.CompiledCode categoriesFor: #readsInstVar:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #readsInstVar:at:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #refersToAnyOf:!private!testing! !
-!Kernel.CompiledCode categoriesFor: #refersToLiteral:!private!testing! !
-!Kernel.CompiledCode categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!Kernel.CompiledCode categoriesFor: #selector!accessing!public! !
-!Kernel.CompiledCode categoriesFor: #selector:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #sendsSelector:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #sendsSpecialSelector:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #setByteCodes:!initializing!private! !
-!Kernel.CompiledCode categoriesFor: #sourceDescriptor!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #sourceDescriptor:!accessing!private! !
-!Kernel.CompiledCode categoriesFor: #specialMessages!development!enumerating!private! !
-!Kernel.CompiledCode categoriesFor: #stackTempCount!method header!private! !
-!Kernel.CompiledCode categoriesFor: #stackTempCount:!accessing!development!method header!private! !
-!Kernel.CompiledCode categoriesFor: #storeCategories!categories!private!source filing-methods! !
-!Kernel.CompiledCode categoriesFor: #storeSourceString:!private!source filing-methods! !
-!Kernel.CompiledCode categoriesFor: #superMessages!accessing!development!public! !
-!Kernel.CompiledCode categoriesFor: #tempCount!method header!private! !
-!Kernel.CompiledCode categoriesFor: #tempsMap!accessing!development!private! !
-!Kernel.CompiledCode categoriesFor: #textMap!accessing!development!private! !
-!Kernel.CompiledCode categoriesFor: #value:withArguments:!evaluating!public! !
-!Kernel.CompiledCode categoriesFor: #writesInstVar:!development!public!testing! !
-!Kernel.CompiledCode categoriesFor: #writesInstVar:at:!development!public!testing! !
+!Kernel.CompiledCode categoriesForMethods!
+=!comparing!public! !
+accessesInstVar:!development!public!testing! !
+accessesInstVar:at:!development!public!testing! !
+allLiteralsDo:!enumerating!private! !
+allSymbolLiterals!enumerating!private! !
+allSymbolLiteralsDo:!enumerating!private! !
+annotations!accessing!public! !
+argumentCount!method header!public! !
+argumentCount:!accessing!method header!private! !
+basicByteCodes!accessing!private! !
+byteCodeDispatcher!private!testing! !
+byteCodeDispatcherClass!constants!private! !
+byteCodes!accessing!private! !
+byteCodes:!accessing!private! !
+byteCodeSegments!accessing!private! !
+clear!operations!private! !
+compilerClass!constants!private! !
+containsSource:!development!public!testing! !
+customEnvironment!accessing!private! !
+debugInfo!development!private! !
+envInfo!accessing!private! !
+environment!accessing!public! !
+envTempCount!accessing!development!public! !
+evaluationPools!accessing!development!public! !
+extraIndex!method header!private! !
+extraIndex:!method header!private! !
+fullBindingFor:!binding!public! !
+getDebugInfo!development!private! !
+getSource!accessing!development!public! !
+hasAnnotation:!enquiries!public! !
+hash!comparing!public! !
+header!accessing!private! !
+header:!accessing!private! !
+isAnnotated!public!testing! !
+isCompilationFailure!public!testing! !
+isDebugMethod!development!private!testing! !
+isExpression!private!testing! !
+isOverride!public!testing! !
+isPacked!private!testing! !
+isPrimitive!private!testing! !
+isPrivate!private!testing! !
+isPrivate:!accessing!private! !
+isPublic!private!testing! !
+isUnbound!public!testing! !
+literalArray:do:!enumerating!private! !
+literalAt:!accessing!private! !
+literalAt:put:!accessing!private! !
+literalCount!method header!private! !
+literalReferencesDo:!enumerating!private! !
+literals!accessing!private! !
+literalsDetect:ifNone:!private!testing! !
+literalsDo:!enumerating!private! !
+localCount!accessing!method header!private! !
+localEnvironment!accessing!private! !
+localScope!accessing!public! !
+messages!accessing!development!public! !
+messagesDo:!development!enumerating!public! !
+methodClass!accessing!public! !
+methodClass:!accessing!private! !
+needsContext!development!method header!private!testing! !
+owningPackage!accessing!public! !
+primitiveIndex!method header!private! !
+readsInstVar:!development!public!testing! !
+readsInstVar:at:!development!public!testing! !
+refersToAnyOf:!private!testing! !
+refersToLiteral:!private!testing! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+selector!accessing!public! !
+selector:!accessing!private! !
+sendsSelector:!development!public!testing! !
+sendsSpecialSelector:!development!public!testing! !
+setByteCodes:!initializing!private! !
+sourceDescriptor!accessing!private! !
+sourceDescriptor:!accessing!private! !
+specialMessages!development!enumerating!private! !
+stackTempCount!method header!private! !
+stackTempCount:!accessing!development!method header!private! !
+storeCategories!categories!private!source filing-methods! !
+storeSourceString:!private!source filing-methods! !
+superMessages!accessing!development!public! !
+tempCount!method header!private! !
+tempsMap!accessing!development!private! !
+textMap!accessing!development!private! !
+value:withArguments:!evaluating!public! !
+writesInstVar:!development!public!testing! !
+writesInstVar:at:!development!public!testing! !
+!
 
 Kernel.CompiledCode methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #localScope)!
 Kernel.CompiledCode methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
@@ -831,10 +833,12 @@ packByteCodes: anArray
 					bitShift: -1.
 	self assert: [codes class == SmallInteger].
 	^codes! !
-!Kernel.CompiledCode class categoriesFor: #elementsExpired:of:!development!finalizing!private! !
-!Kernel.CompiledCode class categoriesFor: #initialize!development!initializing!private! !
-!Kernel.CompiledCode class categoriesFor: #initializeInfoCache!development!initializing!private! !
-!Kernel.CompiledCode class categoriesFor: #initializeInfoCache:!development!initializing!private! !
-!Kernel.CompiledCode class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Kernel.CompiledCode class categoriesFor: #packByteCodes:!helpers!private! !
+!Kernel.CompiledCode class categoriesForMethods!
+elementsExpired:of:!development!finalizing!private! !
+initialize!development!initializing!private! !
+initializeInfoCache!development!initializing!private! !
+initializeInfoCache:!development!initializing!private! !
+onPreStripImage!class hierarchy-removing!private! !
+packByteCodes:!helpers!private! !
+!
 

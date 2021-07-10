@@ -89,18 +89,20 @@ writeInto: aStructure value: aByteObject
 		setElementCount: aByteObject
 		of: self
 		in: aStructure! !
-!External.ArrayField categoriesFor: #alignment!constants!public! !
-!External.ArrayField categoriesFor: #allocationLength!accessing!private! !
-!External.ArrayField categoriesFor: #arrayClass!constants!private! !
-!External.ArrayField categoriesFor: #arrayLength:!accessing!private! !
-!External.ArrayField categoriesFor: #byteSize!accessing!private! !
-!External.ArrayField categoriesFor: #elementClass!accessing!private! !
-!External.ArrayField categoriesFor: #elementSize!accessing!private! !
-!External.ArrayField categoriesFor: #elementSizeSelector!automatic generation!constants!private! !
-!External.ArrayField categoriesFor: #isFixedSize!private!testing! !
-!External.ArrayField categoriesFor: #length!accessing!private! !
-!External.ArrayField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.ArrayField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.ArrayField categoriesForMethods!
+alignment!constants!public! !
+allocationLength!accessing!private! !
+arrayClass!constants!private! !
+arrayLength:!accessing!private! !
+byteSize!accessing!private! !
+elementClass!accessing!private! !
+elementSize!accessing!private! !
+elementSizeSelector!automatic generation!constants!private! !
+isFixedSize!private!testing! !
+length!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.ArrayField class methodsFor!
 
@@ -120,6 +122,8 @@ type: aClass length: anInteger
 	embedded arrays of type aClass, with anInteger elements."
 
 	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
-!External.ArrayField class categoriesFor: #type:arrayLength:!instance creation!public! !
-!External.ArrayField class categoriesFor: #type:length:!instance creation!public! !
+!External.ArrayField class categoriesForMethods!
+type:arrayLength:!instance creation!public! !
+type:length:!instance creation!public! !
+!
 

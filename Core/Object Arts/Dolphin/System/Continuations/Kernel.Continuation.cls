@@ -57,15 +57,17 @@ valueWithArguments: anArray
 	^anArray size == 1 
 		ifTrue: [self value: anArray first]
 		ifFalse: [self error: 'Continuation is only possible with a single argument']! !
-!Kernel.Continuation categoriesFor: #argumentCount!accessing!public! !
-!Kernel.Continuation categoriesFor: #continue:with:!helpers!private! !
-!Kernel.Continuation categoriesFor: #oneShotValue!evaluating!public! !
-!Kernel.Continuation categoriesFor: #oneShotValue:!evaluating!public! !
-!Kernel.Continuation categoriesFor: #stack!accessing!private! !
-!Kernel.Continuation categoriesFor: #stack:!accessing!private! !
-!Kernel.Continuation categoriesFor: #value!evaluating!public! !
-!Kernel.Continuation categoriesFor: #value:!evaluating!public! !
-!Kernel.Continuation categoriesFor: #valueWithArguments:!evaluating!public! !
+!Kernel.Continuation categoriesForMethods!
+argumentCount!accessing!public! !
+continue:with:!helpers!private! !
+oneShotValue!evaluating!public! !
+oneShotValue:!evaluating!public! !
+stack!accessing!private! !
+stack:!accessing!private! !
+value!evaluating!public! !
+value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 Kernel.Continuation methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 
@@ -95,6 +97,8 @@ factorialExample: x
 
 fromContext: aStackFrame
 	^self new stack: aStackFrame copyStack! !
-!Kernel.Continuation class categoriesFor: #factorialExample:!examples!public! !
-!Kernel.Continuation class categoriesFor: #fromContext:!instance creation!public! !
+!Kernel.Continuation class categoriesForMethods!
+factorialExample:!examples!public! !
+fromContext:!instance creation!public! !
+!
 

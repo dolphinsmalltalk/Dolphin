@@ -321,33 +321,35 @@ viewRefresh
 
 	self refresh
 ! !
-!Tools.SourceBrowser categoriesFor: #allSourceObjects!accessing!public! !
-!Tools.SourceBrowser categoriesFor: #browseChangedMethods!commands!public! !
-!Tools.SourceBrowser categoriesFor: #browseIt!commands!public! !
-!Tools.SourceBrowser categoriesFor: #browseSourceObject!commands!public! !
-!Tools.SourceBrowser categoriesFor: #createComponents!initializing!public! !
-!Tools.SourceBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.SourceBrowser categoriesFor: #fileOut:!commands!private! !
-!Tools.SourceBrowser categoriesFor: #fileSave!commands!public! !
-!Tools.SourceBrowser categoriesFor: #fileSaveAll!commands!public! !
-!Tools.SourceBrowser categoriesFor: #onClassRemoved:!event handling!private! !
-!Tools.SourceBrowser categoriesFor: #onLoadedPackagesChanged!event handling!private! !
-!Tools.SourceBrowser categoriesFor: #onVariableRemoved:!event handling!private! !
-!Tools.SourceBrowser categoriesFor: #onViewOpened!event handling!private! !
-!Tools.SourceBrowser categoriesFor: #queryCommand:!commands!private! !
-!Tools.SourceBrowser categoriesFor: #refresh!commands!operations!public! !
-!Tools.SourceBrowser categoriesFor: #refreshBlock:!accessing!private! !
-!Tools.SourceBrowser categoriesFor: #selectedSourceClasses!accessing!public! !
-!Tools.SourceBrowser categoriesFor: #selectedSourceFiles!accessing!public! !
-!Tools.SourceBrowser categoriesFor: #selectedSourceObjects!accessing!public! !
-!Tools.SourceBrowser categoriesFor: #selectedWriteableSourceObjects!accessing!private! !
-!Tools.SourceBrowser categoriesFor: #setPackagesFilter:!initializing!private! !
-!Tools.SourceBrowser categoriesFor: #toggleChanged!commands!public! !
-!Tools.SourceBrowser categoriesFor: #toggleWriteable!commands!public! !
-!Tools.SourceBrowser categoriesFor: #updateCaption!public!updating! !
-!Tools.SourceBrowser categoriesFor: #updateSelected!private!updating! !
-!Tools.SourceBrowser categoriesFor: #viewChangedOnly!commands!operations!public! !
-!Tools.SourceBrowser categoriesFor: #viewRefresh!commands!operations!public! !
+!Tools.SourceBrowser categoriesForMethods!
+allSourceObjects!accessing!public! !
+browseChangedMethods!commands!public! !
+browseIt!commands!public! !
+browseSourceObject!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+fileOut:!commands!private! !
+fileSave!commands!public! !
+fileSaveAll!commands!public! !
+onClassRemoved:!event handling!private! !
+onLoadedPackagesChanged!event handling!private! !
+onVariableRemoved:!event handling!private! !
+onViewOpened!event handling!private! !
+queryCommand:!commands!private! !
+refresh!commands!operations!public! !
+refreshBlock:!accessing!private! !
+selectedSourceClasses!accessing!public! !
+selectedSourceFiles!accessing!public! !
+selectedSourceObjects!accessing!public! !
+selectedWriteableSourceObjects!accessing!private! !
+setPackagesFilter:!initializing!private! !
+toggleChanged!commands!public! !
+toggleWriteable!commands!public! !
+updateCaption!public!updating! !
+updateSelected!private!updating! !
+viewChangedOnly!commands!operations!public! !
+viewRefresh!commands!operations!public! !
+!
 
 !Tools.SourceBrowser class methodsFor!
 
@@ -404,12 +406,14 @@ typeOfObject: aSourceObject
 	^(aSourceObject isKindOf: Class)
 		ifTrue: [ 'a Class']
 		ifFalse: [ aSourceObject basicPrintString ]! !
-!Tools.SourceBrowser class categoriesFor: #displayOn:!displaying!public! !
-!Tools.SourceBrowser class categoriesFor: #forSourcesOfPackages:!instance creation!public! !
-!Tools.SourceBrowser class categoriesFor: #icon!constants!public! !
-!Tools.SourceBrowser class categoriesFor: #initialize!initializing!private! !
-!Tools.SourceBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.SourceBrowser class categoriesFor: #show!instance creation!public! !
-!Tools.SourceBrowser class categoriesFor: #toolsFolderHelpId!public! !
-!Tools.SourceBrowser class categoriesFor: #typeOfObject:!helpers!private! !
+!Tools.SourceBrowser class categoriesForMethods!
+displayOn:!displaying!public! !
+forSourcesOfPackages:!instance creation!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+resource_Default_view!public!resources-views! !
+show!instance creation!public! !
+toolsFolderHelpId!public! !
+typeOfObject:!helpers!private! !
+!
 

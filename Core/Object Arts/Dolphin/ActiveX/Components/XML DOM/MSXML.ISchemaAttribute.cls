@@ -149,18 +149,20 @@ use
 	answer := SDWORD new.
 	self get_use: answer.
 	^answer asObject! !
-!MSXML.ISchemaAttribute categoriesFor: #defaultValue!**auto generated**!properties!public! !
-!MSXML.ISchemaAttribute categoriesFor: #fixedValue!**auto generated**!properties!public! !
-!MSXML.ISchemaAttribute categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!MSXML.ISchemaAttribute categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!MSXML.ISchemaAttribute categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!MSXML.ISchemaAttribute categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!MSXML.ISchemaAttribute categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!MSXML.ISchemaAttribute categoriesFor: #get_use:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!MSXML.ISchemaAttribute categoriesFor: #isReference!**auto generated**!properties!public! !
-!MSXML.ISchemaAttribute categoriesFor: #scope!**auto generated**!properties!public! !
-!MSXML.ISchemaAttribute categoriesFor: #type!**auto generated**!properties!public! !
-!MSXML.ISchemaAttribute categoriesFor: #use!**auto generated**!properties!public! !
+!MSXML.ISchemaAttribute categoriesForMethods!
+defaultValue!**auto generated**!properties!public! !
+fixedValue!**auto generated**!properties!public! !
+get_defaultValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_fixedValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_isReference:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_scope:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_type:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_use:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+isReference!**auto generated**!properties!public! !
+scope!**auto generated**!properties!public! !
+type!**auto generated**!properties!public! !
+use!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaAttribute class methodsFor!
 
@@ -182,5 +184,7 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!MSXML.ISchemaAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaAttribute class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -65,15 +65,17 @@ extent
 	"Answer the width and height (in pels) of the the bitmap described by the receiver."
 
 	^self bmWidth @ self bmHeight! !
-!OS.BITMAP categoriesFor: #bmBits!**compiled accessors**!public! !
-!OS.BITMAP categoriesFor: #bmBitsPixel!**compiled accessors**!public! !
-!OS.BITMAP categoriesFor: #bmHeight!**compiled accessors**!public! !
-!OS.BITMAP categoriesFor: #bmPlanes!**compiled accessors**!public! !
-!OS.BITMAP categoriesFor: #bmType!**compiled accessors**!public! !
-!OS.BITMAP categoriesFor: #bmWidth!**compiled accessors**!public! !
-!OS.BITMAP categoriesFor: #bmWidthBytes!**compiled accessors**!public! !
-!OS.BITMAP categoriesFor: #depth!accessing!public! !
-!OS.BITMAP categoriesFor: #extent!accessing!public! !
+!OS.BITMAP categoriesForMethods!
+bmBits!**compiled accessors**!public! !
+bmBitsPixel!**compiled accessors**!public! !
+bmHeight!**compiled accessors**!public! !
+bmPlanes!**compiled accessors**!public! !
+bmType!**compiled accessors**!public! !
+bmWidth!**compiled accessors**!public! !
+bmWidthBytes!**compiled accessors**!public! !
+depth!accessing!public! !
+extent!accessing!public! !
+!
 
 !OS.BITMAP class methodsFor!
 
@@ -102,6 +104,8 @@ defineFields
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
-!OS.BITMAP class categoriesFor: #defineFields!public!template definition! !
-!OS.BITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BITMAP class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -337,22 +337,24 @@ verifyWeakRegistry: aWeakIdentitDictionary
 	self assert: aWeakIdentitDictionary countElements equals: aWeakIdentitDictionary size.
 	self assert: aWeakIdentitDictionary hasWeakKeys.
 	self deny: aWeakIdentitDictionary hasWeakValues! !
-!Core.Tests.ObjectTest categoriesFor: #newEventSource!helpers!private! !
-!Core.Tests.ObjectTest categoriesFor: #testAssert!public!testing / error handling! !
-!Core.Tests.ObjectTest categoriesFor: #testBecome!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testNilCoalesce!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testObjectDependentsRegistry!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testObjectPropertyManager!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testPropertyManager!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testThreeArgEvent!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testTwoArgEvent!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testValue!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #testZeroArgEvent!public!unit tests! !
-!Core.Tests.ObjectTest categoriesFor: #verifyWeakRegistry:!public!unit tests! !
+!Core.Tests.ObjectTest categoriesForMethods!
+newEventSource!helpers!private! !
+testAssert!public!testing / error handling! !
+testBecome!public!unit tests! !
+testDeepCopy!public!unit tests! !
+testEventCollectionWeakness!public!unit tests! !
+testIfNilAndIfNotNil!public!unit tests! !
+testNilCoalesce!public!unit tests! !
+testObjectDependentsRegistry!public!unit tests! !
+testObjectEventRegistry!public!unit tests! !
+testObjectPropertyManager!public!unit tests! !
+testOneArgEvent!public!unit tests! !
+testPropertyManager!public!unit tests! !
+testRemoveEventsTriggeredFor!public!unit tests! !
+testThreeArgEvent!public!unit tests! !
+testTwoArgEvent!public!unit tests! !
+testValue!public!unit tests! !
+testZeroArgEvent!public!unit tests! !
+verifyWeakRegistry:!public!unit tests! !
+!
 

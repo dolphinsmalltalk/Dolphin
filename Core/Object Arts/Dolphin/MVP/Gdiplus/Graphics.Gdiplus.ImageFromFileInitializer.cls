@@ -24,5 +24,7 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipLoadImageFromFile: self absoluteFilename image: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.ImageFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.ImageFromFileInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.AbstractTextEditTest'
 	instanceVariableNames: ''
@@ -48,8 +48,10 @@ testPositionOfChar
 
 text
 	^self subclassResponsibility! !
-!UI.Tests.AbstractTextEditTest categoriesFor: #margins!constants!private! !
-!UI.Tests.AbstractTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
-!UI.Tests.AbstractTextEditTest categoriesFor: #testPositionOfChar!public!unit tests! !
-!UI.Tests.AbstractTextEditTest categoriesFor: #text!constants!private! !
+!UI.Tests.AbstractTextEditTest categoriesForMethods!
+margins!constants!private! !
+nonProportionalFont!constants!private! !
+testPositionOfChar!public!unit tests! !
+text!constants!private! !
+!
 

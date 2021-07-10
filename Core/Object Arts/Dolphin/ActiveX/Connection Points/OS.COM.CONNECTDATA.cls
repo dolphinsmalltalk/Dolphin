@@ -37,10 +37,12 @@ punk: anIUnknown
 	"Set the receiver's 'punk' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_punk put: anIUnknown yourAddress! !
-!OS.COM.CONNECTDATA categoriesFor: #dwCookie!**compiled accessors**!public! !
-!OS.COM.CONNECTDATA categoriesFor: #dwCookie:!**compiled accessors**!public! !
-!OS.COM.CONNECTDATA categoriesFor: #punk!**compiled accessors**!public! !
-!OS.COM.CONNECTDATA categoriesFor: #punk:!**compiled accessors**!public! !
+!OS.COM.CONNECTDATA categoriesForMethods!
+dwCookie!**compiled accessors**!public! !
+dwCookie:!**compiled accessors**!public! !
+punk!**compiled accessors**!public! !
+punk:!**compiled accessors**!public! !
+!
 
 !OS.COM.CONNECTDATA class methodsFor!
 
@@ -61,6 +63,8 @@ defineFields
 
 getFieldNames
 	^#(#punk #dwCookie)! !
-!OS.COM.CONNECTDATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.COM.CONNECTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.CONNECTDATA class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

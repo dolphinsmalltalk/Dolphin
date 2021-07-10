@@ -268,40 +268,42 @@ totalExtent
 uStateFor: aValue enabled: aBoolean
 
 	^self subclassResponsibility! !
-!EmbeddedCheckButton categoriesFor: #_buttonExtent!accessing!private! !
-!EmbeddedCheckButton categoriesFor: #buttonExtent!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedCheckButton categoriesFor: #defaultIStateId!constants!public! !
-!EmbeddedCheckButton categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
-!EmbeddedCheckButton categoriesFor: #displayOnFormats!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #drawNonThemed:in:on:buttonOffset:textRect:enabled:hot:!drawing!private! !
-!EmbeddedCheckButton categoriesFor: #drawThemed:in:on:buttonOffset:textRect:enabled:hot:!drawing!private! !
-!EmbeddedCheckButton categoriesFor: #expectsText!public!testing! !
-!EmbeddedCheckButton categoriesFor: #freeTheme!initialize/release!private! !
-!EmbeddedCheckButton categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedCheckButton categoriesFor: #hasText!public!testing! !
-!EmbeddedCheckButton categoriesFor: #horzMargin!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #initialize!initialize/release!public! !
-!EmbeddedCheckButton categoriesFor: #iPartId!constants!public! !
-!EmbeddedCheckButton categoriesFor: #isAlwaysDrawnEnabled!accessing!private! !
-!EmbeddedCheckButton categoriesFor: #isAlwaysDrawnEnabled:!accessing!private! !
-!EmbeddedCheckButton categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedCheckButton categoriesFor: #iStateFor:enabled:hot:!drawing!private! !
-!EmbeddedCheckButton categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedCheckButton categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedCheckButton categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedCheckButton categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedCheckButton categoriesFor: #setWindowText!operations!private! !
-!EmbeddedCheckButton categoriesFor: #showIn:!operations!public! !
-!EmbeddedCheckButton categoriesFor: #stbSaveOn:!binary filing!public! !
-!EmbeddedCheckButton categoriesFor: #text!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #text:!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #textExtent!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #textExtent:!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #textOffset!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #textRectIn:on:iStateId:!drawing!private! !
-!EmbeddedCheckButton categoriesFor: #totalExtent!accessing!public! !
-!EmbeddedCheckButton categoriesFor: #uStateFor:enabled:!drawing!private! !
+!EmbeddedCheckButton categoriesForMethods!
+_buttonExtent!accessing!private! !
+buttonExtent!accessing!public! !
+createEmbeddedIn:!initialize/release!public! !
+defaultIStateId!constants!public! !
+display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
+displayOnFormats!accessing!public! !
+drawNonThemed:in:on:buttonOffset:textRect:enabled:hot:!drawing!private! !
+drawThemed:in:on:buttonOffset:textRect:enabled:hot:!drawing!private! !
+expectsText!public!testing! !
+freeTheme!initialize/release!private! !
+hasEmbeddedHotTracking!public!testing! !
+hasText!public!testing! !
+horzMargin!accessing!public! !
+initialize!initialize/release!public! !
+iPartId!constants!public! !
+isAlwaysDrawnEnabled!accessing!private! !
+isAlwaysDrawnEnabled:!accessing!private! !
+isDisplayOwnerDrawn!public!testing! !
+iStateFor:enabled:hot:!drawing!private! !
+onCursoredLeft!event handling!public! !
+onKillFocus!event handling!public! !
+onRequestDeactivate!event handling!public! !
+preTranslateKeyboardInput:!event handling!public! !
+setWindowText!operations!private! !
+showIn:!operations!public! !
+stbSaveOn:!binary filing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+textExtent!accessing!public! !
+textExtent:!accessing!public! !
+textOffset!accessing!public! !
+textRectIn:on:iStateId:!drawing!private! !
+totalExtent!accessing!public! !
+uStateFor:enabled:!drawing!private! !
+!
 
 !EmbeddedCheckButton class methodsFor!
 
@@ -317,6 +319,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^22! !
-!EmbeddedCheckButton class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!EmbeddedCheckButton class categoriesFor: #stbVersion!binary filing!public! !
+!EmbeddedCheckButton class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

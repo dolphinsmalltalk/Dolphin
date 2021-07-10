@@ -130,16 +130,18 @@ values: anArrayOfValues
 
 	self close.
 	values := anArrayOfValues! !
-!Database.DBParameterizedStatement categoriesFor: #bindParams!operations!private! !
-!Database.DBParameterizedStatement categoriesFor: #exec!operations!public! !
-!Database.DBParameterizedStatement categoriesFor: #free!public!realizing/unrealizing! !
-!Database.DBParameterizedStatement categoriesFor: #paramCols!accessing!public! !
-!Database.DBParameterizedStatement categoriesFor: #paramCols:!accessing!public! !
-!Database.DBParameterizedStatement categoriesFor: #parameters!accessing!private! !
-!Database.DBParameterizedStatement categoriesFor: #prepare!operations!private! !
-!Database.DBParameterizedStatement categoriesFor: #prepare:!operations!private! !
-!Database.DBParameterizedStatement categoriesFor: #reset!initializing!private! !
-!Database.DBParameterizedStatement categoriesFor: #setValues!operations!private! !
-!Database.DBParameterizedStatement categoriesFor: #values!accessing!public! !
-!Database.DBParameterizedStatement categoriesFor: #values:!accessing!public! !
+!Database.DBParameterizedStatement categoriesForMethods!
+bindParams!operations!private! !
+exec!operations!public! !
+free!public!realizing/unrealizing! !
+paramCols!accessing!public! !
+paramCols:!accessing!public! !
+parameters!accessing!private! !
+prepare!operations!private! !
+prepare:!operations!private! !
+reset!initializing!private! !
+setValues!operations!private! !
+values!accessing!public! !
+values:!accessing!public! !
+!
 

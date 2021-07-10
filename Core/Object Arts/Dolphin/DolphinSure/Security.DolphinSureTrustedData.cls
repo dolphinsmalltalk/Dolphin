@@ -143,20 +143,22 @@ validDataPublishedBy: aPublisherCertificate
 
 	self publisherCertificate = aPublisherCertificate ifFalse: [Security.TrustedDataError signal].
 	^self validData! !
-!Security.DolphinSureTrustedData categoriesFor: #data!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #data:description:privateKey:!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #data:description:signature:!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #dataToSign!accessing!private! !
-!Security.DolphinSureTrustedData categoriesFor: #description!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #isValid!public!testing! !
-!Security.DolphinSureTrustedData categoriesFor: #publisher!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #publisherCertificate!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #publisherCertificate:!initializing!private! !
-!Security.DolphinSureTrustedData categoriesFor: #publisherPublicKey!accessing!private! !
-!Security.DolphinSureTrustedData categoriesFor: #signature!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #trustedData!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #validData!accessing!public! !
-!Security.DolphinSureTrustedData categoriesFor: #validDataPublishedBy:!accessing!public! !
+!Security.DolphinSureTrustedData categoriesForMethods!
+data!accessing!public! !
+data:description:privateKey:!accessing!public! !
+data:description:signature:!accessing!public! !
+dataToSign!accessing!private! !
+description!accessing!public! !
+isValid!public!testing! !
+publisher!accessing!public! !
+publisherCertificate!accessing!public! !
+publisherCertificate:!initializing!private! !
+publisherPublicKey!accessing!private! !
+signature!accessing!public! !
+trustedData!accessing!public! !
+validData!accessing!public! !
+validDataPublishedBy:!accessing!public! !
+!
 
 !Security.DolphinSureTrustedData class methodsFor!
 
@@ -259,15 +261,17 @@ signatureAlgorithm
 	"Private - Answer the signature algorithm of the receiver"
 
 	^DigitalSignatureAlgorithm! !
-!Security.DolphinSureTrustedData class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
-!Security.DolphinSureTrustedData class categoriesFor: #data:description:publisherCertificate:privateKey:!instance creation!public! !
-!Security.DolphinSureTrustedData class categoriesFor: #data:description:publisherCertificate:signature:!instance creation!public! !
-!Security.DolphinSureTrustedData class categoriesFor: #icon!constants!development!public! !
-!Security.DolphinSureTrustedData class categoriesFor: #initialize!class initialization!private! !
-!Security.DolphinSureTrustedData class categoriesFor: #keyGroup!accessing!private! !
-!Security.DolphinSureTrustedData class categoriesFor: #parseByteArrayChunk:!helpers!private!source filing! !
-!Security.DolphinSureTrustedData class categoriesFor: #publisherCertificate:!instance creation!public! !
-!Security.DolphinSureTrustedData class categoriesFor: #secure!public!source filing! !
-!Security.DolphinSureTrustedData class categoriesFor: #secureCertificateClassNames!constants!public! !
-!Security.DolphinSureTrustedData class categoriesFor: #signatureAlgorithm!accessing!private! !
+!Security.DolphinSureTrustedData class categoriesForMethods!
+binaryReadFrom:context:!binary filing!public! !
+data:description:publisherCertificate:privateKey:!instance creation!public! !
+data:description:publisherCertificate:signature:!instance creation!public! !
+icon!constants!development!public! !
+initialize!class initialization!private! !
+keyGroup!accessing!private! !
+parseByteArrayChunk:!helpers!private!source filing! !
+publisherCertificate:!instance creation!public! !
+secure!public!source filing! !
+secureCertificateClassNames!constants!public! !
+signatureAlgorithm!accessing!private! !
+!
 

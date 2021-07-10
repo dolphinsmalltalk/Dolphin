@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #ZeroDivideFactoryANSITest
 	instanceVariableNames: ''
@@ -52,12 +52,14 @@ testXsignal
 testXsignalX
 	" <exceptionSignaler>#signal: "
 	#'Exception'.! !
-!ZeroDivideFactoryANSITest categoriesFor: #canonicalObject!public! !
-!ZeroDivideFactoryANSITest categoriesFor: #protocol!public! !
-!ZeroDivideFactoryANSITest categoriesFor: #testXconcatenateOp!public! !
-!ZeroDivideFactoryANSITest categoriesFor: #testXdividendX!public! !
-!ZeroDivideFactoryANSITest categoriesFor: #testXhandlesX!public! !
-!ZeroDivideFactoryANSITest categoriesFor: #testXnew!public! !
-!ZeroDivideFactoryANSITest categoriesFor: #testXsignal!public! !
-!ZeroDivideFactoryANSITest categoriesFor: #testXsignalX!public! !
+!ZeroDivideFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXconcatenateOp!public! !
+testXdividendX!public! !
+testXhandlesX!public! !
+testXnew!public! !
+testXsignal!public! !
+testXsignalX!public! !
+!
 

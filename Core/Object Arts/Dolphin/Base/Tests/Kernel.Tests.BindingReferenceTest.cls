@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.BindingReferenceTest'
 	instanceVariableNames: ''
@@ -182,19 +182,21 @@ testStbConvertFromVersion0
 	self deny: subject isPrivate.
 	self assert: subject scope identicalTo: Core.
 	self assert: subject value identicalTo: Object! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #subjectClass!constants!private! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testAsQualifiedReference!public! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testEnvironmentName!public!unit tests! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testEnvironmentNameRelative!public!unit tests! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testEqualityOfRelativeAndAbsolute!public!unit tests! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testEqualsLiteral!public!unit tests! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testIsValidGlobalName!public!unit tests! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteral!public! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralExplicitEnvironmentRelative!public! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralExplicitEnvironmentRelative2!public! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralImplicitEnvironmentRelative!public! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testLiteralImplicitExplicitEnvironmentRelative!public! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testRelativeNoScope!public!unit tests! !
-!Kernel.Tests.BindingReferenceTest categoriesFor: #testStbConvertFromVersion0!public! !
+!Kernel.Tests.BindingReferenceTest categoriesForMethods!
+subjectClass!constants!private! !
+testAsQualifiedReference!public! !
+testEnvironmentName!public!unit tests! !
+testEnvironmentNameRelative!public!unit tests! !
+testEqualityOfRelativeAndAbsolute!public!unit tests! !
+testEqualsLiteral!public!unit tests! !
+testIsValidGlobalName!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+testLiteral!public! !
+testLiteralExplicitEnvironmentRelative!public! !
+testLiteralExplicitEnvironmentRelative2!public! !
+testLiteralImplicitEnvironmentRelative!public! !
+testLiteralImplicitExplicitEnvironmentRelative!public! !
+testRelativeNoScope!public!unit tests! !
+testStbConvertFromVersion0!public! !
+!
 

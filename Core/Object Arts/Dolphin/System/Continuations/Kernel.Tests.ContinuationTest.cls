@@ -77,10 +77,12 @@ testSimplestCallCC
 	| x |
 	x := [:cc | cc value: true] callCC.
 	self assert: x! !
-!Kernel.Tests.ContinuationTest categoriesFor: #runCase!public!Running! !
-!Kernel.Tests.ContinuationTest categoriesFor: #testBlockTemps!public!unit tests! !
-!Kernel.Tests.ContinuationTest categoriesFor: #testBlockVars!public!unit tests! !
-!Kernel.Tests.ContinuationTest categoriesFor: #testMethodTemps!public!unit tests! !
-!Kernel.Tests.ContinuationTest categoriesFor: #testSimpleCallCC!public!unit tests! !
-!Kernel.Tests.ContinuationTest categoriesFor: #testSimplestCallCC!public!unit tests! !
+!Kernel.Tests.ContinuationTest categoriesForMethods!
+runCase!public!Running! !
+testBlockTemps!public!unit tests! !
+testBlockVars!public!unit tests! !
+testMethodTemps!public!unit tests! !
+testSimpleCallCC!public!unit tests! !
+testSimplestCallCC!public!unit tests! !
+!
 

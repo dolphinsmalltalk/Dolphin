@@ -230,43 +230,45 @@ setCapture
 	source := self view.
 	oldInteractor := source interactor: self.
 	source setCapture! !
-!UI.CapturingInteractor categoriesFor: #buttonsReleased!event handling!private! !
-!UI.CapturingInteractor categoriesFor: #captureMouse!initializing!public! !
-!UI.CapturingInteractor categoriesFor: #captureReleased!event handling!private! !
-!UI.CapturingInteractor categoriesFor: #changeHotState:!helpers!private! !
-!UI.CapturingInteractor categoriesFor: #initialize!initializing!public! !
-!UI.CapturingInteractor categoriesFor: #isHot!public!testing! !
-!UI.CapturingInteractor categoriesFor: #isHot:!accessing!public! !
-!UI.CapturingInteractor categoriesFor: #isLeftButtonDown!public!testing! !
-!UI.CapturingInteractor categoriesFor: #isLeftButtonDown:!accessing!public! !
-!UI.CapturingInteractor categoriesFor: #isMiddleButtonDown!public!testing! !
-!UI.CapturingInteractor categoriesFor: #isMiddleButtonDown:!accessing!public! !
-!UI.CapturingInteractor categoriesFor: #isRightButtonDown!public!testing! !
-!UI.CapturingInteractor categoriesFor: #isRightButtonDown:!accessing!public! !
-!UI.CapturingInteractor categoriesFor: #onCaptureChanged:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onKeyPressed:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onKeyReleased:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onKeyTyped:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onMiddleButtonReleased:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onMouseLeave:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onMouseMoved:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onMouseWheeled:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onRightButtonPressed:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onRightButtonReleased:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onSysKeyPressed:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onSysKeyReleased:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onSysKeyTyped:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onXButtonPressed:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #onXButtonReleased:!event handling!public! !
-!UI.CapturingInteractor categoriesFor: #releaseCapture!helpers!private! !
-!UI.CapturingInteractor categoriesFor: #setCapture!helpers!private! !
+!UI.CapturingInteractor categoriesForMethods!
+buttonsReleased!event handling!private! !
+captureMouse!initializing!public! !
+captureReleased!event handling!private! !
+changeHotState:!helpers!private! !
+initialize!initializing!public! !
+isHot!public!testing! !
+isHot:!accessing!public! !
+isLeftButtonDown!public!testing! !
+isLeftButtonDown:!accessing!public! !
+isMiddleButtonDown!public!testing! !
+isMiddleButtonDown:!accessing!public! !
+isRightButtonDown!public!testing! !
+isRightButtonDown:!accessing!public! !
+onCaptureChanged:!event handling!public! !
+onKeyPressed:!event handling!public! !
+onKeyReleased:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onLeftButtonReleased:!event handling!public! !
+onMiddleButtonDoubleClicked:!event handling!public! !
+onMiddleButtonPressed:!event handling!public! !
+onMiddleButtonReleased:!event handling!public! !
+onMouseLeave:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onRightButtonDoubleClicked:!event handling!public! !
+onRightButtonPressed:!event handling!public! !
+onRightButtonReleased:!event handling!public! !
+onSysKeyPressed:!event handling!public! !
+onSysKeyReleased:!event handling!public! !
+onSysKeyTyped:!event handling!public! !
+onXButtonDoubleClicked:!event handling!public! !
+onXButtonPressed:!event handling!public! !
+onXButtonReleased:!event handling!public! !
+releaseCapture!helpers!private! !
+setCapture!helpers!private! !
+!
 
 !UI.CapturingInteractor class methodsFor!
 
@@ -283,5 +285,7 @@ stbConvertToVersion1: instVars
 		with: instVars
 		startingAt: 3.
 	^converted! !
-!UI.CapturingInteractor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!UI.CapturingInteractor class categoriesForMethods!
+stbConvertToVersion1:!binary filing!private! !
+!
 

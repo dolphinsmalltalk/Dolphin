@@ -33,10 +33,12 @@ hThread
 	"Answer the <Integer> value of the receiver's 'hThread' field."
 
 	^bytes dwordAtOffset: _OffsetOf_hThread! !
-!PROCESS_INFORMATION categoriesFor: #dwProcessId!**compiled accessors**!public! !
-!PROCESS_INFORMATION categoriesFor: #dwThreadId!**compiled accessors**!public! !
-!PROCESS_INFORMATION categoriesFor: #hProcess!**compiled accessors**!public! !
-!PROCESS_INFORMATION categoriesFor: #hThread!**compiled accessors**!public! !
+!PROCESS_INFORMATION categoriesForMethods!
+dwProcessId!**compiled accessors**!public! !
+dwThreadId!**compiled accessors**!public! !
+hProcess!**compiled accessors**!public! !
+hThread!**compiled accessors**!public! !
+!
 
 !PROCESS_INFORMATION class methodsFor!
 
@@ -60,6 +62,8 @@ defineFields
 
 getFieldNames
 	^#(#hProcess #hThread #dwProcessId #dwThreadId)! !
-!PROCESS_INFORMATION class categoriesFor: #defineFields!initializing!public! !
-!PROCESS_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PROCESS_INFORMATION class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

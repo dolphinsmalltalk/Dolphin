@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SequenceableCollectionTest subclass: #'Core.Tests.SequencedGrowableCollectionTest'
 	instanceVariableNames: ''
@@ -162,9 +162,11 @@ testCopyWithoutIndex
 						removeFirst;
 						yourself.
 			self assert: (subject copyWithoutIndex: each second) equals: (self newCollection: each third)]! !
-!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
-!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
-!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
-!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
-!Core.Tests.SequencedGrowableCollectionTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
+!Core.Tests.SequencedGrowableCollectionTest categoriesForMethods!
+testAddAllFirst!public!unit tests! !
+testAddAllFirst2!public!unit tests! !
+testAddAllLast!public!unit tests! !
+testAddFirst!public!unit tests! !
+testCopyWithoutIndex!public!unit tests! !
+!
 

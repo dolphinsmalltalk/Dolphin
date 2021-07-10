@@ -75,12 +75,14 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 
 setLengthSelector
 	^(lengthField copyWith: $:) asSymbol! !
-!External.ConformantArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!External.ConformantArrayFieldLength categoriesFor: #lengthField:!accessing!private! !
-!External.ConformantArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!External.ConformantArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!External.ConformantArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
-!External.ConformantArrayFieldLength categoriesFor: #setLengthSelector!accessing!private! !
+!External.ConformantArrayFieldLength categoriesForMethods!
+getElementCountOf:in:!indirect accessing!private! !
+lengthField:!accessing!private! !
+printElementCountExpressionFor:on:!automatic generation!private! !
+printSetSizeFor:on:!automatic generation!development!private! !
+setElementCount:of:in:!indirect accessing!private! !
+setLengthSelector!accessing!private! !
+!
 
 !External.ConformantArrayFieldLength class methodsFor!
 
@@ -89,5 +91,7 @@ lengthField: aSymbol
 	in the named field of the <ExternalStructure> of which the owning <ExternalField> is a field."
 
 	^self new lengthField: aSymbol! !
-!External.ConformantArrayFieldLength class categoriesFor: #lengthField:!instance creation!public! !
+!External.ConformantArrayFieldLength class categoriesForMethods!
+lengthField:!instance creation!public! !
+!
 

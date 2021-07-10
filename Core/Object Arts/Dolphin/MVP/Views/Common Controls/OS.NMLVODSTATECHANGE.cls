@@ -35,10 +35,12 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!OS.NMLVODSTATECHANGE categoriesFor: #iFrom!**compiled accessors**!public! !
-!OS.NMLVODSTATECHANGE categoriesFor: #iTo!**compiled accessors**!public! !
-!OS.NMLVODSTATECHANGE categoriesFor: #uNewState!**compiled accessors**!public! !
-!OS.NMLVODSTATECHANGE categoriesFor: #uOldState!**compiled accessors**!public! !
+!OS.NMLVODSTATECHANGE categoriesForMethods!
+iFrom!**compiled accessors**!public! !
+iTo!**compiled accessors**!public! !
+uNewState!**compiled accessors**!public! !
+uOldState!**compiled accessors**!public! !
+!
 
 !OS.NMLVODSTATECHANGE class methodsFor!
 
@@ -56,6 +58,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iFrom #iTo #uNewState #uOldState)! !
-!OS.NMLVODSTATECHANGE class categoriesFor: #defineFields!public!template definition! !
-!OS.NMLVODSTATECHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMLVODSTATECHANGE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

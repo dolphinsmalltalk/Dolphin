@@ -137,14 +137,16 @@ urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserve
 
 	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** dword lpvoid>
 	^self invalidCall: _failureCode! !
-!OS.COM.URLMonLibrary categoriesFor: #overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
-!OS.COM.URLMonLibrary categoriesFor: #overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
-!OS.COM.URLMonLibrary categoriesFor: #urlDownload:toFile:!operations!public! !
-!OS.COM.URLMonLibrary categoriesFor: #urlDownloadToCacheFile:!operations!public! !
-!OS.COM.URLMonLibrary categoriesFor: #urlDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
-!OS.COM.URLMonLibrary categoriesFor: #urlDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
-!OS.COM.URLMonLibrary categoriesFor: #urlOpenBlockingStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
-!OS.COM.URLMonLibrary categoriesFor: #urlOpenPullStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
+!OS.COM.URLMonLibrary categoriesForMethods!
+overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
+overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
+urlDownload:toFile:!operations!public! !
+urlDownloadToCacheFile:!operations!public! !
+urlDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
+urlDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
+urlOpenBlockingStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
+urlOpenPullStream:szURL:ppStream:dwReserved:lpfnCB:!public!win32 functions-internet! !
+!
 
 !OS.COM.URLMonLibrary class methodsFor!
 
@@ -152,5 +154,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^'URLMON'! !
-!OS.COM.URLMonLibrary class categoriesFor: #fileName!constants!public! !
+!OS.COM.URLMonLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

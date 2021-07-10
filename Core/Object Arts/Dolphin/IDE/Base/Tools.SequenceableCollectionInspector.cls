@@ -38,7 +38,9 @@ setField: anInteger to: anObject
 	anInteger > instSize 
 		ifTrue: [self selfField at: anInteger - instSize put: anObject]
 		ifFalse: [self selfField instVarAt: anInteger put: anObject]! !
-!Tools.SequenceableCollectionInspector categoriesFor: #getField:!accessing!private! !
-!Tools.SequenceableCollectionInspector categoriesFor: #getFieldList!accessing!private! !
-!Tools.SequenceableCollectionInspector categoriesFor: #setField:to:!accessing!private! !
+!Tools.SequenceableCollectionInspector categoriesForMethods!
+getField:!accessing!private! !
+getFieldList!accessing!private! !
+setField:to:!accessing!private! !
+!
 

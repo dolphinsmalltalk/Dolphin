@@ -69,10 +69,12 @@ systemIdentifier
 	answer := BSTR new.
 	self get_systemIdentifier: answer.
 	^answer asObject! !
-!MSXML.ISchemaNotation categoriesFor: #get_publicIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
-!MSXML.ISchemaNotation categoriesFor: #get_systemIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
-!MSXML.ISchemaNotation categoriesFor: #publicIdentifier!**auto generated**!properties!public! !
-!MSXML.ISchemaNotation categoriesFor: #systemIdentifier!**auto generated**!properties!public! !
+!MSXML.ISchemaNotation categoriesForMethods!
+get_publicIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
+get_systemIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
+publicIdentifier!**auto generated**!properties!public! !
+systemIdentifier!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaNotation class methodsFor!
 
@@ -86,5 +88,7 @@ defineFunctions
 		defineFunction: #get_publicIdentifier:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.ISchemaNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaNotation class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

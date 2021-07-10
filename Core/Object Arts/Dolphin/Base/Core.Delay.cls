@@ -218,27 +218,29 @@ wakeup
 
 	duration ifNotNil: [resumptionTime := nil].
 	waitSemaphore signal! !
-!Core.Delay categoriesFor: #<=!comparing!public! !
-!Core.Delay categoriesFor: #basicCancel!private!process synchronisation! !
-!Core.Delay categoriesFor: #calcResumptionTime!accessing!private! !
-!Core.Delay categoriesFor: #cancel!process synchronisation!public! !
-!Core.Delay categoriesFor: #delta:!operations!private! !
-!Core.Delay categoriesFor: #duration!accessing!public! !
-!Core.Delay categoriesFor: #duration:!accessing!private! !
-!Core.Delay categoriesFor: #getDuration!accessing!private! !
-!Core.Delay categoriesFor: #hasExpired!private!testing! !
-!Core.Delay categoriesFor: #initialize!initializing!private! !
-!Core.Delay categoriesFor: #microsecondClockValue!enquiries!public! !
-!Core.Delay categoriesFor: #printOn:!development!printing!public! !
-!Core.Delay categoriesFor: #resumptionTime!accessing!public! !
-!Core.Delay categoriesFor: #resumptionTime:!accessing!private! !
-!Core.Delay categoriesFor: #riseAndShine!private!process synchronisation! !
-!Core.Delay categoriesFor: #schedule!initializing!private! !
-!Core.Delay categoriesFor: #signal!process synchronisation!public! !
-!Core.Delay categoriesFor: #snooze!private!process synchronisation! !
-!Core.Delay categoriesFor: #terminateProcess!process synchronisation!public! !
-!Core.Delay categoriesFor: #wait!process synchronisation!public! !
-!Core.Delay categoriesFor: #wakeup!private!process synchronisation! !
+!Core.Delay categoriesForMethods!
+<=!comparing!public! !
+basicCancel!private!process synchronisation! !
+calcResumptionTime!accessing!private! !
+cancel!process synchronisation!public! !
+delta:!operations!private! !
+duration!accessing!public! !
+duration:!accessing!private! !
+getDuration!accessing!private! !
+hasExpired!private!testing! !
+initialize!initializing!private! !
+microsecondClockValue!enquiries!public! !
+printOn:!development!printing!public! !
+resumptionTime!accessing!public! !
+resumptionTime:!accessing!private! !
+riseAndShine!private!process synchronisation! !
+schedule!initializing!private! !
+signal!process synchronisation!public! !
+snooze!private!process synchronisation! !
+terminateProcess!process synchronisation!public! !
+wait!process synchronisation!public! !
+wakeup!private!process synchronisation! !
+!
 
 !Core.Delay class methodsFor!
 
@@ -509,35 +511,37 @@ withTimerResolution: aDuration do: aNiladicValuable
 
 	self timerResolution: aDuration set: true.
 	[aNiladicValuable value] ensure: [self timerResolution: aDuration set: false]! !
-!Core.Delay class categoriesFor: #aboutToIdle!event handling!private! !
-!Core.Delay class categoriesFor: #cancelTimer!operations!private! !
-!Core.Delay class categoriesFor: #clampResolution:!helpers!private! !
-!Core.Delay class categoriesFor: #forDuration:!instance creation!public! !
-!Core.Delay class categoriesFor: #forkTimingProcess!initializing!private! !
-!Core.Delay class categoriesFor: #forMicroseconds:!instance creation!public! !
-!Core.Delay class categoriesFor: #forMilliseconds:!instance creation!public! !
-!Core.Delay class categoriesFor: #forSeconds:!instance creation!public! !
-!Core.Delay class categoriesFor: #getTicksToNanos!helpers!private! !
-!Core.Delay class categoriesFor: #highestResolution!constants!public! !
-!Core.Delay class categoriesFor: #initialize!development!initializing!public! !
-!Core.Delay class categoriesFor: #initializeTimingSemaphore!initializing!private! !
-!Core.Delay class categoriesFor: #keepAlive!helpers!private! !
-!Core.Delay class categoriesFor: #lowestResolution!constants!public! !
-!Core.Delay class categoriesFor: #microsecondClockValue!initializing!public! !
-!Core.Delay class categoriesFor: #millisecondClockValue!accessing!public! !
-!Core.Delay class categoriesFor: #new!instance creation!public! !
-!Core.Delay class categoriesFor: #onExit!event handling!public! !
-!Core.Delay class categoriesFor: #onPreSaveImage!event handling!private! !
-!Core.Delay class categoriesFor: #onPreStripImage!event handling!private! !
-!Core.Delay class categoriesFor: #onStartup!event handling!public! !
-!Core.Delay class categoriesFor: #prod!operations!private! !
-!Core.Delay class categoriesFor: #queryOsTimerResolution!helpers!private! !
-!Core.Delay class categoriesFor: #reschedule!initializing!private! !
-!Core.Delay class categoriesFor: #scheduleNext!initializing!private! !
-!Core.Delay class categoriesFor: #signalTimerAfter:!private!processes-synchronising! !
-!Core.Delay class categoriesFor: #timerResolution!constants!public! !
-!Core.Delay class categoriesFor: #timerResolution:set:!helpers!public! !
-!Core.Delay class categoriesFor: #timingProcess!initializing!private! !
-!Core.Delay class categoriesFor: #untilMilliseconds:!instance creation!public! !
-!Core.Delay class categoriesFor: #withTimerResolution:do:!operations!public! !
+!Core.Delay class categoriesForMethods!
+aboutToIdle!event handling!private! !
+cancelTimer!operations!private! !
+clampResolution:!helpers!private! !
+forDuration:!instance creation!public! !
+forkTimingProcess!initializing!private! !
+forMicroseconds:!instance creation!public! !
+forMilliseconds:!instance creation!public! !
+forSeconds:!instance creation!public! !
+getTicksToNanos!helpers!private! !
+highestResolution!constants!public! !
+initialize!development!initializing!public! !
+initializeTimingSemaphore!initializing!private! !
+keepAlive!helpers!private! !
+lowestResolution!constants!public! !
+microsecondClockValue!initializing!public! !
+millisecondClockValue!accessing!public! !
+new!instance creation!public! !
+onExit!event handling!public! !
+onPreSaveImage!event handling!private! !
+onPreStripImage!event handling!private! !
+onStartup!event handling!public! !
+prod!operations!private! !
+queryOsTimerResolution!helpers!private! !
+reschedule!initializing!private! !
+scheduleNext!initializing!private! !
+signalTimerAfter:!private!processes-synchronising! !
+timerResolution!constants!public! !
+timerResolution:set:!helpers!public! !
+timingProcess!initializing!private! !
+untilMilliseconds:!instance creation!public! !
+withTimerResolution:do:!operations!public! !
+!
 

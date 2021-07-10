@@ -129,22 +129,24 @@ showWindow
 
 	super show.
 	self beTopMost; update! !
-!UI.Splash categoriesFor: #bitmap:!accessing!initializing!private! !
-!UI.Splash categoriesFor: #close!operations!public! !
-!UI.Splash categoriesFor: #defaultExtent!constants!public! !
-!UI.Splash categoriesFor: #defaultSplashDelay!constants!public! !
-!UI.Splash categoriesFor: #defaultWindowExStyle!constants!private! !
-!UI.Splash categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.Splash categoriesFor: #forceClose!event handling!private! !
-!UI.Splash categoriesFor: #initialize!initializing!private! !
-!UI.Splash categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!UI.Splash categoriesFor: #onPaintRequired:!event handling!public! !
-!UI.Splash categoriesFor: #overlayWith!accessing!public! !
-!UI.Splash categoriesFor: #overlayWith:!accessing!public! !
-!UI.Splash categoriesFor: #show!operations!public! !
-!UI.Splash categoriesFor: #showTimed!operations!public! !
-!UI.Splash categoriesFor: #showTimed:!operations!public! !
-!UI.Splash categoriesFor: #showWindow!operations!private! !
+!UI.Splash categoriesForMethods!
+bitmap:!accessing!initializing!private! !
+close!operations!public! !
+defaultExtent!constants!public! !
+defaultSplashDelay!constants!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+forceClose!event handling!private! !
+initialize!initializing!private! !
+onLeftButtonPressed:!event handling!public! !
+onPaintRequired:!event handling!public! !
+overlayWith!accessing!public! !
+overlayWith:!accessing!public! !
+show!operations!public! !
+showTimed!operations!public! !
+showTimed:!operations!public! !
+showWindow!operations!private! !
+!
 
 !UI.Splash class methodsFor!
 
@@ -165,6 +167,8 @@ bitmap: aBitmap overlayWith: aBlock
 		create;
 		yourself
 	! !
-!UI.Splash class categoriesFor: #bitmap:!instance creation!public! !
-!UI.Splash class categoriesFor: #bitmap:overlayWith:!instance creation!public! !
+!UI.Splash class categoriesForMethods!
+bitmap:!instance creation!public! !
+bitmap:overlayWith:!instance creation!public! !
+!
 

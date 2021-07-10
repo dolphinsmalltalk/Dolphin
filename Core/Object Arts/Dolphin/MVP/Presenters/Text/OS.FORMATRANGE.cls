@@ -67,14 +67,16 @@ rcPage: aRECTL
 		from: ##(_OffsetOf_rcPage + 1)
 		to: ##(_OffsetOf_rcPage + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.FORMATRANGE categoriesFor: #cpMax:!**compiled accessors**!public! !
-!OS.FORMATRANGE categoriesFor: #cpMin:!**compiled accessors**!public! !
-!OS.FORMATRANGE categoriesFor: #hdc:!**compiled accessors**!public! !
-!OS.FORMATRANGE categoriesFor: #hdcTarget:!**compiled accessors**!public! !
-!OS.FORMATRANGE categoriesFor: #rc!**compiled accessors**!public! !
-!OS.FORMATRANGE categoriesFor: #rc:!**compiled accessors**!public! !
-!OS.FORMATRANGE categoriesFor: #rcPage!**compiled accessors**!public! !
-!OS.FORMATRANGE categoriesFor: #rcPage:!**compiled accessors**!public! !
+!OS.FORMATRANGE categoriesForMethods!
+cpMax:!**compiled accessors**!public! !
+cpMin:!**compiled accessors**!public! !
+hdc:!**compiled accessors**!public! !
+hdcTarget:!**compiled accessors**!public! !
+rc!**compiled accessors**!public! !
+rc:!**compiled accessors**!public! !
+rcPage!**compiled accessors**!public! !
+rcPage:!**compiled accessors**!public! !
+!
 
 !OS.FORMATRANGE class methodsFor!
 
@@ -96,6 +98,8 @@ defineFields
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !
-!OS.FORMATRANGE class categoriesFor: #defineFields!public!template definition! !
-!OS.FORMATRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FORMATRANGE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

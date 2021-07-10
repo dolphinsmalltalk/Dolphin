@@ -135,7 +135,9 @@ fileOutResource: aResourceIdentifier
 		cr.
 	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
 	self emitChunk: ')'! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing-file out! !
+!Kernel.AbstractChunkSourceFiler categoriesForMethods!
+fileOutResource:!public!source filing-file out! !
+!
 
 !Kernel.BlockClosure class methodsFor!
 
@@ -203,10 +205,12 @@ stbConvertFrom: anSTBClassFormat
 					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]! !
-!Kernel.BlockClosure class categoriesFor: #convertBlockToClosure:!binary filing!development!private! !
-!Kernel.BlockClosure class categoriesFor: #convertMethodContext:!binary filing!development!private! !
-!Kernel.BlockClosure class categoriesFor: #rewriterClass!binary filing!development!private! !
-!Kernel.BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
+!Kernel.BlockClosure class categoriesForMethods!
+convertBlockToClosure:!binary filing!development!private! !
+convertMethodContext:!binary filing!development!private! !
+rewriterClass!binary filing!development!private! !
+stbConvertFrom:!binary filing!development!public! !
+!
 
 !UI.ResourceIdentifier methodsFor!
 
@@ -215,7 +219,9 @@ assignBinaryResourceData: aViewResource
 	view := aViewResource loadWithContext: #{View} value desktop forEdit: true.
 	self assign: view literalStoreArray.
 	view destroy! !
-!UI.ResourceIdentifier categoriesFor: #assignBinaryResourceData:!private! !
+!UI.ResourceIdentifier categoriesForMethods!
+assignBinaryResourceData:!private! !
+!
 
 !UI.ResourceIdentifier class methodsFor!
 
@@ -224,7 +230,9 @@ resourceAt: aResourceIdentifier ifAbsent: aBlock
 	Answers the resource data associated with aResourceIdentifier"
 
 	^aResourceIdentifier resource! !
-!UI.ResourceIdentifier class categoriesFor: #resourceAt:ifAbsent:!accessing!public! !
+!UI.ResourceIdentifier class categoriesForMethods!
+resourceAt:ifAbsent:!accessing!public! !
+!
 
 !UI.RuntimeSessionManager methodsFor!
 
@@ -235,7 +243,9 @@ initializeFromSessionManager: oldSessionManager
 
 	super initializeFromSessionManager: oldSessionManager.
 	#{Smalltalk.ResourceAccessor} ifDefined: [:ra | ra ensureAccessorsAreInternal]! !
-!UI.RuntimeSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
+!UI.RuntimeSessionManager categoriesForMethods!
+initializeFromSessionManager:!initializing!private! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #DyadicValuableANSITest
 	instanceVariableNames: 'blk2args'
@@ -38,10 +38,12 @@ testXvalueXvalueX
 	#'Valuable'.
 	self value: [blk2args value: 1 value: 2] should: [:r | r = #(1 2)]
 		conformTo: #'dyadicValuable' selector: #'value:value:'.! !
-!DyadicValuableANSITest categoriesFor: #canonicalObject!public! !
-!DyadicValuableANSITest categoriesFor: #protocol!public! !
-!DyadicValuableANSITest categoriesFor: #setUp!public! !
-!DyadicValuableANSITest categoriesFor: #testXargumentCount!public! !
-!DyadicValuableANSITest categoriesFor: #testXvalueWithArgumentsX!public! !
-!DyadicValuableANSITest categoriesFor: #testXvalueXvalueX!public! !
+!DyadicValuableANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testXargumentCount!public! !
+testXvalueWithArgumentsX!public! !
+testXvalueXvalueX!public! !
+!
 

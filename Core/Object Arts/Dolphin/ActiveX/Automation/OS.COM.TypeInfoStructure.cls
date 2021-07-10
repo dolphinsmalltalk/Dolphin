@@ -76,16 +76,18 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^self tdesc vtName! !
-!OS.COM.TypeInfoStructure categoriesFor: #analyzer!accessing!private! !
-!OS.COM.TypeInfoStructure categoriesFor: #analyzer:!accessing!private! !
-!OS.COM.TypeInfoStructure categoriesFor: #free!public!realizing/unrealizing! !
-!OS.COM.TypeInfoStructure categoriesFor: #fullName!accessing!public! !
-!OS.COM.TypeInfoStructure categoriesFor: #initializePointer!initializing!private! !
-!OS.COM.TypeInfoStructure categoriesFor: #name!accessing!public! !
-!OS.COM.TypeInfoStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!OS.COM.TypeInfoStructure categoriesFor: #tdesc!accessing!private! !
-!OS.COM.TypeInfoStructure categoriesFor: #typeName!accessing!public! !
-!OS.COM.TypeInfoStructure categoriesFor: #vtName!accessing!private! !
+!OS.COM.TypeInfoStructure categoriesForMethods!
+analyzer!accessing!private! !
+analyzer:!accessing!private! !
+free!public!realizing/unrealizing! !
+fullName!accessing!public! !
+initializePointer!initializing!private! !
+name!accessing!public! !
+needsFree!private!realizing/unrealizing! !
+tdesc!accessing!private! !
+typeName!accessing!public! !
+vtName!accessing!private! !
+!
 
 !OS.COM.TypeInfoStructure class methodsFor!
 
@@ -95,5 +97,7 @@ clear: addressOrBytes
 	as values in a <StructureArray>."
 
 	^self shouldNotImplement! !
-!OS.COM.TypeInfoStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
+!OS.COM.TypeInfoStructure class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+!
 

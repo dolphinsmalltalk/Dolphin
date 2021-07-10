@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.Tests.ClassSelectorTest subclass: #'Tools.Tests.ClassHierarchySelectorTest'
 	instanceVariableNames: ''
@@ -29,7 +29,9 @@ resetSelection
 	super resetSelection.
 	self assertContains: Object.
 	self assertContains: Behavior! !
-!Tools.Tests.ClassHierarchySelectorTest categoriesFor: #classToTest!helpers!private! !
-!Tools.Tests.ClassHierarchySelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!Tools.Tests.ClassHierarchySelectorTest categoriesFor: #resetSelection!helpers!private! !
+!Tools.Tests.ClassHierarchySelectorTest categoriesForMethods!
+classToTest!helpers!private! !
+removalOfSelectionLeaves:!helpers!private! !
+resetSelection!helpers!private! !
+!
 

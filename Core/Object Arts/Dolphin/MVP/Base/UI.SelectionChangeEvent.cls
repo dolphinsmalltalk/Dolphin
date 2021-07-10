@@ -52,16 +52,18 @@ oldSelections: anArray
 
 value
 	^self subclassResponsibility! !
-!UI.SelectionChangeEvent categoriesFor: #canIntercept!public!testing! !
-!UI.SelectionChangeEvent categoriesFor: #cause!accessing!public! !
-!UI.SelectionChangeEvent categoriesFor: #cause:!initializing!public! !
-!UI.SelectionChangeEvent categoriesFor: #newSelection!accessing!public! !
-!UI.SelectionChangeEvent categoriesFor: #newSelection:!initializing!public! !
-!UI.SelectionChangeEvent categoriesFor: #newSelections!accessing!public! !
-!UI.SelectionChangeEvent categoriesFor: #newSelections:!initializing!public! !
-!UI.SelectionChangeEvent categoriesFor: #oldSelection!accessing!public! !
-!UI.SelectionChangeEvent categoriesFor: #oldSelection:!initializing!public! !
-!UI.SelectionChangeEvent categoriesFor: #oldSelections!accessing!public! !
-!UI.SelectionChangeEvent categoriesFor: #oldSelections:!initializing!public! !
-!UI.SelectionChangeEvent categoriesFor: #value!accessing!public! !
+!UI.SelectionChangeEvent categoriesForMethods!
+canIntercept!public!testing! !
+cause!accessing!public! !
+cause:!initializing!public! !
+newSelection!accessing!public! !
+newSelection:!initializing!public! !
+newSelections!accessing!public! !
+newSelections:!initializing!public! !
+oldSelection!accessing!public! !
+oldSelection:!initializing!public! !
+oldSelections!accessing!public! !
+oldSelections:!initializing!public! !
+value!accessing!public! !
+!
 

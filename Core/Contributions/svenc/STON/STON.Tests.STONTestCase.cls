@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'STON.Tests.STONTestCase'
 	instanceVariableNames: ''
@@ -23,6 +23,8 @@ serialize: anObject
 			(Processor activeProcess debugger ifNotNil: [STON prettyPrinter] ifNil: [STON writer])
 				on: stream;
 				nextPut: anObject]! !
-!STON.Tests.STONTestCase categoriesFor: #materialize:!private! !
-!STON.Tests.STONTestCase categoriesFor: #serialize:!private! !
+!STON.Tests.STONTestCase categoriesForMethods!
+materialize:!private! !
+serialize:!private! !
+!
 

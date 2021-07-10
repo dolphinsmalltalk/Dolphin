@@ -87,13 +87,15 @@ storeOn: anIStream clearDirty: aBoolean
 	the stream to be in the standard format)."
 
 	self Save: anIStream fClearDirty: aBoolean! !
-!OS.COM.IPersistStream categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!OS.COM.IPersistStream categoriesFor: #IsDirty!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!OS.COM.IPersistStream categoriesFor: #Load:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!OS.COM.IPersistStream categoriesFor: #maxSize!accessing!public! !
-!OS.COM.IPersistStream categoriesFor: #readFrom:!operations!public! !
-!OS.COM.IPersistStream categoriesFor: #Save:fClearDirty:!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!OS.COM.IPersistStream categoriesFor: #storeOn:clearDirty:!operations!public! !
+!OS.COM.IPersistStream categoriesForMethods!
+GetSizeMax:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+IsDirty!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+Load:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+maxSize!accessing!public! !
+readFrom:!operations!public! !
+Save:fClearDirty:!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+storeOn:clearDirty:!operations!public! !
+!
 
 OS.COM.IPersistStream methodProtocol: #IPersistStream attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #IsDirty #Load: #Save:fClearDirty:)!
 
@@ -114,5 +116,7 @@ defineFunctions
 		defineFunction: #GetSizeMax:
 			argumentTypes: 'qword*'
 ! !
-!OS.COM.IPersistStream class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPersistStream class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

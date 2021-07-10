@@ -193,35 +193,37 @@ storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
 
 	self class sourceManager storeSourceString: aString forMethod: self! !
-!Kernel.CompiledMethod categoriesFor: #<=!comparing!public! !
-!Kernel.CompiledMethod categoriesFor: #categories!categories-accessing!development!public! !
-!Kernel.CompiledMethod categoriesFor: #categories:!categories-accessing!private! !
-!Kernel.CompiledMethod categoriesFor: #changeManager!development!private! !
-!Kernel.CompiledMethod categoriesFor: #changePosition!development!private!testing! !
-!Kernel.CompiledMethod categoriesFor: #displayOn:!printing!public! !
-!Kernel.CompiledMethod categoriesFor: #getDebugInfo!development!private! !
-!Kernel.CompiledMethod categoriesFor: #getSource!accessing!development!public! !
-!Kernel.CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
-!Kernel.CompiledMethod categoriesFor: #isChanged!development!private!testing! !
-!Kernel.CompiledMethod categoriesFor: #isClassMethod!public!testing! !
-!Kernel.CompiledMethod categoriesFor: #isExpression!private!testing! !
-!Kernel.CompiledMethod categoriesFor: #isExternalCall!private!testing! !
-!Kernel.CompiledMethod categoriesFor: #isGetter!public!testing! !
-!Kernel.CompiledMethod categoriesFor: #isLoose!development!public!testing! !
-!Kernel.CompiledMethod categoriesFor: #isOverridden!public!testing! !
-!Kernel.CompiledMethod categoriesFor: #isOverride!public!testing! !
-!Kernel.CompiledMethod categoriesFor: #isSelfEvaluating!public!testing! !
-!Kernel.CompiledMethod categoriesFor: #isUnbound!public!testing! !
-!Kernel.CompiledMethod categoriesFor: #loseSource!private!source filing-methods! !
-!Kernel.CompiledMethod categoriesFor: #owningPackage!accessing!development!public! !
-!Kernel.CompiledMethod categoriesFor: #owningPackage:!accessing!development!public! !
-!Kernel.CompiledMethod categoriesFor: #owningPackageIfLoose!accessing!development!public! !
-!Kernel.CompiledMethod categoriesFor: #printOn:!printing!public! !
-!Kernel.CompiledMethod categoriesFor: #privacyCategory!categories-accessing!private! !
-!Kernel.CompiledMethod categoriesFor: #protocols!categories-accessing!development!public! !
-!Kernel.CompiledMethod categoriesFor: #realCategories!categories-accessing!public! !
-!Kernel.CompiledMethod categoriesFor: #recompile!compiling!development!private! !
-!Kernel.CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !
+!Kernel.CompiledMethod categoriesForMethods!
+<=!comparing!public! !
+categories!categories-accessing!development!public! !
+categories:!categories-accessing!private! !
+changeManager!development!private! !
+changePosition!development!private!testing! !
+displayOn:!printing!public! !
+getDebugInfo!development!private! !
+getSource!accessing!development!public! !
+hasChanged!development!private!testing! !
+isChanged!development!private!testing! !
+isClassMethod!public!testing! !
+isExpression!private!testing! !
+isExternalCall!private!testing! !
+isGetter!public!testing! !
+isLoose!development!public!testing! !
+isOverridden!public!testing! !
+isOverride!public!testing! !
+isSelfEvaluating!public!testing! !
+isUnbound!public!testing! !
+loseSource!private!source filing-methods! !
+owningPackage!accessing!development!public! !
+owningPackage:!accessing!development!public! !
+owningPackageIfLoose!accessing!development!public! !
+printOn:!printing!public! !
+privacyCategory!categories-accessing!private! !
+protocols!categories-accessing!development!public! !
+realCategories!categories-accessing!public! !
+recompile!compiling!development!private! !
+storeSourceString:!private!source filing-methods! !
+!
 
 !Kernel.CompiledMethod class methodsFor!
 
@@ -232,5 +234,7 @@ defaultSortBlock
 	^[:x :y | (x methodClass==y methodClass)
 		ifTrue: [x selector <= y selector]
 		ifFalse: [x methodClass <= y methodClass]] ! !
-!Kernel.CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
+!Kernel.CompiledMethod class categoriesForMethods!
+defaultSortBlock!private!sorting! !
+!
 

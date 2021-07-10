@@ -70,18 +70,20 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!OS.WINDOWPOS categoriesFor: #cx!**compiled accessors**!public! !
-!OS.WINDOWPOS categoriesFor: #cx:!**compiled accessors**!public! !
-!OS.WINDOWPOS categoriesFor: #cy!**compiled accessors**!public! !
-!OS.WINDOWPOS categoriesFor: #cy:!**compiled accessors**!public! !
-!OS.WINDOWPOS categoriesFor: #extent!accessing!public! !
-!OS.WINDOWPOS categoriesFor: #flags!**compiled accessors**!public! !
-!OS.WINDOWPOS categoriesFor: #hwndInsertAfter!**compiled accessors**!public! !
-!OS.WINDOWPOS categoriesFor: #isRectangleChanged!public!testing! !
-!OS.WINDOWPOS categoriesFor: #position!accessing!public! !
-!OS.WINDOWPOS categoriesFor: #rectangle!accessing!public! !
-!OS.WINDOWPOS categoriesFor: #x!**compiled accessors**!public! !
-!OS.WINDOWPOS categoriesFor: #y!**compiled accessors**!public! !
+!OS.WINDOWPOS categoriesForMethods!
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+cy!**compiled accessors**!public! !
+cy:!**compiled accessors**!public! !
+extent!accessing!public! !
+flags!**compiled accessors**!public! !
+hwndInsertAfter!**compiled accessors**!public! !
+isRectangleChanged!public!testing! !
+position!accessing!public! !
+rectangle!accessing!public! !
+x!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+!
 
 !OS.WINDOWPOS class methodsFor!
 
@@ -111,6 +113,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
-!OS.WINDOWPOS class categoriesFor: #defineFields!public!template definition! !
-!OS.WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WINDOWPOS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

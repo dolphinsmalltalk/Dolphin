@@ -55,11 +55,13 @@ wrappedConverter: aTypeConverter
 
 	wrappedConverter := aTypeConverter
 ! !
-!UI.InvertingConverter categoriesFor: #convertFromLeftToRight:!converting!public! !
-!UI.InvertingConverter categoriesFor: #convertFromRightToLeft:!converting!public! !
-!UI.InvertingConverter categoriesFor: #inverted!operations!public! !
-!UI.InvertingConverter categoriesFor: #wrappedConverter!accessing!private! !
-!UI.InvertingConverter categoriesFor: #wrappedConverter:!accessing!private! !
+!UI.InvertingConverter categoriesForMethods!
+convertFromLeftToRight:!converting!public! !
+convertFromRightToLeft:!converting!public! !
+inverted!operations!public! !
+wrappedConverter!accessing!private! !
+wrappedConverter:!accessing!private! !
+!
 
 !UI.InvertingConverter class methodsFor!
 
@@ -73,6 +75,8 @@ new
 	"Use #inverting:"
 
 	self shouldNotImplement! !
-!UI.InvertingConverter class categoriesFor: #inverting:!instance creation!public! !
-!UI.InvertingConverter class categoriesFor: #new!instance creation!public! !
+!UI.InvertingConverter class categoriesForMethods!
+inverting:!instance creation!public! !
+new!instance creation!public! !
+!
 

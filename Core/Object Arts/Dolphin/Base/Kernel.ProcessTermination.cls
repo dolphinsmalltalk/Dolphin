@@ -29,6 +29,8 @@ defaultAction
 	incompletely terminated. The defaultAction here is to do nothing, and
 	if the process is still running, it will shut itself down."
 ! !
-!Kernel.ProcessTermination categoriesFor: #_descriptionFormat!displaying!public! !
-!Kernel.ProcessTermination categoriesFor: #defaultAction!handling!public! !
+!Kernel.ProcessTermination categoriesForMethods!
+_descriptionFormat!displaying!public! !
+defaultAction!handling!public! !
+!
 

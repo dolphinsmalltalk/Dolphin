@@ -42,9 +42,11 @@ isMatch
 					protocol := MethodProtocol name: identity2.
 					(protocol selectors symmetricDifference: selectors) isEmpty
 						and: [(protocol attributes symmetricDifference: attributes) isEmpty]]]! !
-!ChunkBrowserClassProtocolChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserClassProtocolChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserClassProtocolChunk categoriesFor: #isMatch!public!testing! !
+!ChunkBrowserClassProtocolChunk categoriesForMethods!
+browseTarget!operations!public! !
+initialize:!initializing!public! !
+isMatch!public!testing! !
+!
 
 !ChunkBrowserClassProtocolChunk class methodsFor!
 
@@ -60,6 +62,8 @@ isChunkClassFor: aString
 		and:
 			[#(' methodProtocol: #' ' class methodProtocol: #')
 				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]]! !
-!ChunkBrowserClassProtocolChunk class categoriesFor: #chunkType!constants!public! !
-!ChunkBrowserClassProtocolChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserClassProtocolChunk class categoriesForMethods!
+chunkType!constants!public! !
+isChunkClassFor:!public!testing! !
+!
 

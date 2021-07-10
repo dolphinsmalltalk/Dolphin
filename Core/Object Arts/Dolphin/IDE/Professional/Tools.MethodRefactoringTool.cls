@@ -210,23 +210,25 @@ safeRemoveMethods
 
 	presenter performMethodsRefactoring: [:methods | self systemModel safeRemoveMethods: methods]
 		name: 'Safe Remove Methods'! !
-!Tools.MethodRefactoringTool categoriesFor: #addParameter!commands!public!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #allMethodTemps!event handling!menus!public! !
-!Tools.MethodRefactoringTool categoriesFor: #buildTempsMenu:command:identifiers:!helpers!menus!private! !
-!Tools.MethodRefactoringTool categoriesFor: #canPushDownMethods!public!refactoring!testing! !
-!Tools.MethodRefactoringTool categoriesFor: #canPushUpMethods!public!refactoring!testing! !
-!Tools.MethodRefactoringTool categoriesFor: #inlineAllSelfSends!commands!private!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #methodArguments!event handling!menus!public! !
-!Tools.MethodRefactoringTool categoriesFor: #methodTemps!event handling!menus!public! !
-!Tools.MethodRefactoringTool categoriesFor: #moveMethod!commands!private!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
-!Tools.MethodRefactoringTool categoriesFor: #pushDownMethods!commands!private!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #pushMethods:!public!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #pushUpMethods!commands!public!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
-!Tools.MethodRefactoringTool categoriesFor: #renameItCommand!constants!private!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #renameMethod!public!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #renameMethod:!commands!public!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #renameMethodReferences!commands!public!refactoring! !
-!Tools.MethodRefactoringTool categoriesFor: #safeRemoveMethods!commands!public!refactoring! !
+!Tools.MethodRefactoringTool categoriesForMethods!
+addParameter!commands!public!refactoring! !
+allMethodTemps!event handling!menus!public! !
+buildTempsMenu:command:identifiers:!helpers!menus!private! !
+canPushDownMethods!public!refactoring!testing! !
+canPushUpMethods!public!refactoring!testing! !
+inlineAllSelfSends!commands!private!refactoring! !
+methodArguments!event handling!menus!public! !
+methodTemps!event handling!menus!public! !
+moveMethod!commands!private!refactoring! !
+onAboutToDisplayMenu:!event handling!menus!public! !
+pushDownMethods!commands!private!refactoring! !
+pushMethods:!public!refactoring! !
+pushUpMethods!commands!public!refactoring! !
+queryCommand:command:!commands!private! !
+renameItCommand!constants!private!refactoring! !
+renameMethod!public!refactoring! !
+renameMethod:!commands!public!refactoring! !
+renameMethodReferences!commands!public!refactoring! !
+safeRemoveMethods!commands!public!refactoring! !
+!
 

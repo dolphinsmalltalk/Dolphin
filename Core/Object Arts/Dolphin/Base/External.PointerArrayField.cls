@@ -28,7 +28,9 @@ elementSize
 	All pointers are 32-bits."
 
 	^VMConstants.IntPtrSize! !
-!External.PointerArrayField categoriesFor: #alignment!constants!public! !
-!External.PointerArrayField categoriesFor: #arrayClass!constants!private! !
-!External.PointerArrayField categoriesFor: #elementSize!accessing!private! !
+!External.PointerArrayField categoriesForMethods!
+alignment!constants!public! !
+arrayClass!constants!private! !
+elementSize!accessing!private! !
+!
 

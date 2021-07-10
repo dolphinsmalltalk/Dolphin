@@ -54,13 +54,15 @@ width: pixelWidth
 	"Set the width of the receiever to pixelWidth. 0 indicates default width."
 
 	width := pixelWidth! !
-!UI.ToolbarSeparator categoriesFor: #imageIndexIn:!operations!private! !
-!UI.ToolbarSeparator categoriesFor: #isDivider!public!testing! !
-!UI.ToolbarSeparator categoriesFor: #setWidth:!accessing!initializing!private! !
-!UI.ToolbarSeparator categoriesFor: #style!private!style! !
-!UI.ToolbarSeparator categoriesFor: #textIndexIn:!operations!private! !
-!UI.ToolbarSeparator categoriesFor: #width!accessing!public! !
-!UI.ToolbarSeparator categoriesFor: #width:!accessing!public! !
+!UI.ToolbarSeparator categoriesForMethods!
+imageIndexIn:!operations!private! !
+isDivider!public!testing! !
+setWidth:!accessing!initializing!private! !
+style!private!style! !
+textIndexIn:!operations!private! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !UI.ToolbarSeparator class methodsFor!
 
@@ -96,7 +98,9 @@ width: pixelWidth
 	"Answer a new instance of the receiver whose width is set to pixelWidth."
 
 	^self basicNew setWidth: pixelWidth! !
-!UI.ToolbarSeparator class categoriesFor: #new!instance creation!public! !
-!UI.ToolbarSeparator class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!UI.ToolbarSeparator class categoriesFor: #width:!instance creation!public! !
+!UI.ToolbarSeparator class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+width:!instance creation!public! !
+!
 

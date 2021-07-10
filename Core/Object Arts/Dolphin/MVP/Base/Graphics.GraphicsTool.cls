@@ -199,32 +199,34 @@ stbSaveOn: anSTBOutFiler
 	self isPersistent ifFalse: [self error: 'Cannot #stbSaveOn: ' , self printString].
 	anSTBOutFiler override: handle with: nil.
 	[super stbSaveOn: anSTBOutFiler] ensure: [anSTBOutFiler removeOverrideFor: handle]! !
-!Graphics.GraphicsTool categoriesFor: #asParameter!converting!public! !
-!Graphics.GraphicsTool categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.GraphicsTool categoriesFor: #basicHandle!accessing!public! !
-!Graphics.GraphicsTool categoriesFor: #basicRealize!private!realizing/unrealizing! !
-!Graphics.GraphicsTool categoriesFor: #clearCached!private!realizing/unrealizing! !
-!Graphics.GraphicsTool categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.GraphicsTool categoriesFor: #detachHandle!accessing!public! !
-!Graphics.GraphicsTool categoriesFor: #equals:!comparing!public! !
-!Graphics.GraphicsTool categoriesFor: #free!public!realizing/unrealizing! !
-!Graphics.GraphicsTool categoriesFor: #getData:!accessing!private! !
-!Graphics.GraphicsTool categoriesFor: #getDataW:!accessing!private! !
-!Graphics.GraphicsTool categoriesFor: #getStockObject:!accessing!private! !
-!Graphics.GraphicsTool categoriesFor: #handle!accessing!public! !
-!Graphics.GraphicsTool categoriesFor: #handle:!accessing!private! !
-!Graphics.GraphicsTool categoriesFor: #initialize!initializing!public! !
-!Graphics.GraphicsTool categoriesFor: #isPersistent!private!testing! !
-!Graphics.GraphicsTool categoriesFor: #isRealized!public!testing! !
-!Graphics.GraphicsTool categoriesFor: #onExit!event handling!private! !
-!Graphics.GraphicsTool categoriesFor: #onStartup!event handling!private! !
-!Graphics.GraphicsTool categoriesFor: #ownedHandle:!accessing!private! !
-!Graphics.GraphicsTool categoriesFor: #ownsHandle!public!testing! !
-!Graphics.GraphicsTool categoriesFor: #ownsHandle:!initializing!private! !
-!Graphics.GraphicsTool categoriesFor: #postCopy!copying!public! !
-!Graphics.GraphicsTool categoriesFor: #realize!public!realizing/unrealizing! !
-!Graphics.GraphicsTool categoriesFor: #stbFixup:at:!binary filing!public! !
-!Graphics.GraphicsTool categoriesFor: #stbSaveOn:!binary filing!public! !
+!Graphics.GraphicsTool categoriesForMethods!
+asParameter!converting!public! !
+basicFree!private!realizing/unrealizing! !
+basicHandle!accessing!public! !
+basicRealize!private!realizing/unrealizing! !
+clearCached!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+detachHandle!accessing!public! !
+equals:!comparing!public! !
+free!public!realizing/unrealizing! !
+getData:!accessing!private! !
+getDataW:!accessing!private! !
+getStockObject:!accessing!private! !
+handle!accessing!public! !
+handle:!accessing!private! !
+initialize!initializing!public! !
+isPersistent!private!testing! !
+isRealized!public!testing! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+ownedHandle:!accessing!private! !
+ownsHandle!public!testing! !
+ownsHandle:!initializing!private! !
+postCopy!copying!public! !
+realize!public!realizing/unrealizing! !
+stbFixup:at:!binary filing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !Graphics.GraphicsTool class methodsFor!
 
@@ -272,11 +274,13 @@ onStartup2
 	"Private - Perform system startup processing for all subclasses."
 
 	self subclassesDo: [:c | c onStartup2]! !
-!Graphics.GraphicsTool class categoriesFor: #fromHandle:!instance creation!public! !
-!Graphics.GraphicsTool class categoriesFor: #fromOwnedHandle:!instance creation!public! !
-!Graphics.GraphicsTool class categoriesFor: #icon!constants!public! !
-!Graphics.GraphicsTool class categoriesFor: #new!instance creation!public! !
-!Graphics.GraphicsTool class categoriesFor: #onExit!event handling!public! !
-!Graphics.GraphicsTool class categoriesFor: #onStartup!event handling!public! !
-!Graphics.GraphicsTool class categoriesFor: #onStartup2!event handling!private! !
+!Graphics.GraphicsTool class categoriesForMethods!
+fromHandle:!instance creation!public! !
+fromOwnedHandle:!instance creation!public! !
+icon!constants!public! !
+new!instance creation!public! !
+onExit!event handling!public! !
+onStartup!event handling!public! !
+onStartup2!event handling!private! !
+!
 

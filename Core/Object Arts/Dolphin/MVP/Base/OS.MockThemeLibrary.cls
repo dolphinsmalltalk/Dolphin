@@ -642,53 +642,55 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 			[in]LPWSTR pszSubIdList);"
 
 	^E_NOTIMPL! !
-!OS.MockThemeLibrary categoriesFor: #closeThemeData:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #drawThemeParentBackground:hdc:prc:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #enableThemeDialogTexture:dwFlags:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #enableTheming:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeAppProperties!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeBool:iPartId:iStateId:iPropId:pfVal:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeColor:iPartId:iStateId:iPropId:pColor:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeInt:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeIntList:iPartId:iStateId:iPropId:pIntList:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemePosition:iPartId:iStateId:iPropId:pPoint:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeRect:iPartId:iStateId:iPropId:pRect:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeSysBool:iBoolId:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeSysColor:iColorId:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeSysColorBrush:iColorId:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeSysFont:iFontId:plf:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeSysInt:iIntId:piValue:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeSysSize:iSizeId:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #getWindowTheme:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #isAppThemed!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #isThemeActive!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #isThemeDialogTextureEnabled:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #isThemePartDefined:iPartId:iStateId:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #open:!private!realizing/unrealizing! !
-!OS.MockThemeLibrary categoriesFor: #openThemeData:pszClassList:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #setThemeAppProperties:!public!win32 functions-visual styles! !
-!OS.MockThemeLibrary categoriesFor: #setWindowTheme:pszSubAppName:pszSubIdList:!public!win32 functions-visual styles! !
+!OS.MockThemeLibrary categoriesForMethods!
+closeThemeData:!public!win32 functions-visual styles! !
+drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!public!win32 functions-visual styles! !
+drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!public!win32 functions-visual styles! !
+drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!public!win32 functions-visual styles! !
+drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!public!win32 functions-visual styles! !
+drawThemeParentBackground:hdc:prc:!public!win32 functions-visual styles! !
+drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!public!win32 functions-visual styles! !
+enableThemeDialogTexture:dwFlags:!public!win32 functions-visual styles! !
+enableTheming:!public!win32 functions-visual styles! !
+getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!public!win32 functions-visual styles! !
+getThemeAppProperties!public!win32 functions-visual styles! !
+getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!public!win32 functions-visual styles! !
+getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!public!win32 functions-visual styles! !
+getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!public!win32 functions-visual styles! !
+getThemeBool:iPartId:iStateId:iPropId:pfVal:!public!win32 functions-visual styles! !
+getThemeColor:iPartId:iStateId:iPropId:pColor:!public!win32 functions-visual styles! !
+getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!public!win32 functions-visual styles! !
+getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
+getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!public!win32 functions-visual styles! !
+getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!public!win32 functions-visual styles! !
+getThemeInt:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
+getThemeIntList:iPartId:iStateId:iPropId:pIntList:!public!win32 functions-visual styles! !
+getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!public!win32 functions-visual styles! !
+getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!public!win32 functions-visual styles! !
+getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!public!win32 functions-visual styles! !
+getThemePosition:iPartId:iStateId:iPropId:pPoint:!public!win32 functions-visual styles! !
+getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!public!win32 functions-visual styles! !
+getThemeRect:iPartId:iStateId:iPropId:pRect:!public!win32 functions-visual styles! !
+getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!public!win32 functions-visual styles! !
+getThemeSysBool:iBoolId:!public!win32 functions-visual styles! !
+getThemeSysColor:iColorId:!public!win32 functions-visual styles! !
+getThemeSysColorBrush:iColorId:!public!win32 functions-visual styles! !
+getThemeSysFont:iFontId:plf:!public!win32 functions-visual styles! !
+getThemeSysInt:iIntId:piValue:!public!win32 functions-visual styles! !
+getThemeSysSize:iSizeId:!public!win32 functions-visual styles! !
+getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!public!win32 functions-visual styles! !
+getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!public!win32 functions-visual styles! !
+getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!public!win32 functions-visual styles! !
+getWindowTheme:!public!win32 functions-visual styles! !
+hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!public!win32 functions-visual styles! !
+isAppThemed!public!win32 functions-visual styles! !
+isThemeActive!public!win32 functions-visual styles! !
+isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!public!win32 functions-visual styles! !
+isThemeDialogTextureEnabled:!public!win32 functions-visual styles! !
+isThemePartDefined:iPartId:iStateId:!public!win32 functions-visual styles! !
+open:!private!realizing/unrealizing! !
+openThemeData:pszClassList:!public!win32 functions-visual styles! !
+setThemeAppProperties:!public!win32 functions-visual styles! !
+setWindowTheme:pszSubAppName:pszSubIdList:!public!win32 functions-visual styles! !
+!
 

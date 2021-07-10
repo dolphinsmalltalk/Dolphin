@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.MethodCategoryTest'
 	instanceVariableNames: ''
@@ -22,5 +22,7 @@ testMethodsInBehavior
 	testBehavior methodDictionary: (MethodDictionary with: #key -> keyMethod).
 	methods := subject methodsInBehavior: testBehavior.
 	self assert: methods asArray equals: {keyMethod}! !
-!Core.Tests.MethodCategoryTest categoriesFor: #testMethodsInBehavior!public! !
+!Core.Tests.MethodCategoryTest categoriesForMethods!
+testMethodsInBehavior!public! !
+!
 

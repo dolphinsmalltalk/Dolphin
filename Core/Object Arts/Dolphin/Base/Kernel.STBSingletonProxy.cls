@@ -30,9 +30,11 @@ stbFixup: inFiler at: anInteger
 	anObject := class perform: selector.
 	inFiler fixup: anInteger to: anObject.
 	^anObject! !
-!Kernel.STBSingletonProxy categoriesFor: #class:!accessing!public! !
-!Kernel.STBSingletonProxy categoriesFor: #selector:!accessing!public! !
-!Kernel.STBSingletonProxy categoriesFor: #stbFixup:at:!converting!public! !
+!Kernel.STBSingletonProxy categoriesForMethods!
+class:!accessing!public! !
+selector:!accessing!public! !
+stbFixup:at:!converting!public! !
+!
 
 !Kernel.STBSingletonProxy class methodsFor!
 
@@ -52,6 +54,8 @@ forClass: aClass using: aSelectorSymbol
 		class: aClass;
 		selector: aSelectorSymbol;
 		yourself! !
-!Kernel.STBSingletonProxy class categoriesFor: #forClass:!instance creation!public! !
-!Kernel.STBSingletonProxy class categoriesFor: #forClass:using:!instance creation!public! !
+!Kernel.STBSingletonProxy class categoriesForMethods!
+forClass:!instance creation!public! !
+forClass:using:!instance creation!public! !
+!
 

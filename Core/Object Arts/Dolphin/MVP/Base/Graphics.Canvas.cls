@@ -1008,111 +1008,113 @@ windowScaling
 	"Answers a Point that is the ratio of window units to device units for the receiver"
 
 	^self windowExtent / self viewportExtent! !
-!Graphics.Canvas categoriesFor: #alphaBlend:rectangle:to:extent:blend:!drawing!public! !
-!Graphics.Canvas categoriesFor: #alphaBlendBitmap:at:extent:from:extent:blend:!colors!private! !
-!Graphics.Canvas categoriesFor: #asParameter!converting!public! !
-!Graphics.Canvas categoriesFor: #backcolor!accessing!colors!public! !
-!Graphics.Canvas categoriesFor: #backcolor:!accessing!colors!public! !
-!Graphics.Canvas categoriesFor: #backgroundMode!accessing!public! !
-!Graphics.Canvas categoriesFor: #backgroundMode:!accessing!public! !
-!Graphics.Canvas categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Canvas categoriesFor: #bitBlt:rectangle:to:rop:!drawing!public! !
-!Graphics.Canvas categoriesFor: #brush!public!tools! !
-!Graphics.Canvas categoriesFor: #brush:!public!tools! !
-!Graphics.Canvas categoriesFor: #brushColor!accessing!colors!public! !
-!Graphics.Canvas categoriesFor: #brushOrigin:!accessing!public! !
-!Graphics.Canvas categoriesFor: #clipBox!accessing!public! !
-!Graphics.Canvas categoriesFor: #colorDepth!accessing!public! !
-!Graphics.Canvas categoriesFor: #colors!accessing!public! !
-!Graphics.Canvas categoriesFor: #drawBitmap:at:extent:from:extent:rop:!colors!private! !
-!Graphics.Canvas categoriesFor: #drawEdge:edge:grfFlags:!drawing!public! !
-!Graphics.Canvas categoriesFor: #ellipse:!drawing!public! !
-!Graphics.Canvas categoriesFor: #erase!drawing!public! !
-!Graphics.Canvas categoriesFor: #excludeClipRectangle:!operations!public! !
-!Graphics.Canvas categoriesFor: #extent!accessing!public! !
-!Graphics.Canvas categoriesFor: #fillRectangle:!drawing!public! !
-!Graphics.Canvas categoriesFor: #fillRectangle:brush:!drawing!public! !
-!Graphics.Canvas categoriesFor: #fillRectangle:color:!drawing!public! !
-!Graphics.Canvas categoriesFor: #fillRectangle:startColor:endColor:verticalGradient:!drawing!public! !
-!Graphics.Canvas categoriesFor: #fillRegion:brush:!drawing!public! !
-!Graphics.Canvas categoriesFor: #font!accessing!public!tools! !
-!Graphics.Canvas categoriesFor: #font:!accessing!public!tools! !
-!Graphics.Canvas categoriesFor: #fontFamilies:do:!enumerating!public! !
-!Graphics.Canvas categoriesFor: #fontHandle!accessing!private!tools! !
-!Graphics.Canvas categoriesFor: #fontNames!enquiries!public! !
-!Graphics.Canvas categoriesFor: #forecolor!modes!public! !
-!Graphics.Canvas categoriesFor: #forecolor:!modes!public! !
-!Graphics.Canvas categoriesFor: #formatText:in:!drawing!public! !
-!Graphics.Canvas categoriesFor: #formatText:in:flags:!drawing!public! !
-!Graphics.Canvas categoriesFor: #frameRectangle:brush:!drawing!public! !
-!Graphics.Canvas categoriesFor: #free!public!realizing/unrealizing! !
-!Graphics.Canvas categoriesFor: #getCurrentObject:!accessing!public! !
-!Graphics.Canvas categoriesFor: #getDeviceCaps:!accessing!private! !
-!Graphics.Canvas categoriesFor: #getFont!accessing!public!tools! !
-!Graphics.Canvas categoriesFor: #getPixel:!drawing!private! !
-!Graphics.Canvas categoriesFor: #handle!accessing!public! !
-!Graphics.Canvas categoriesFor: #height!accessing!public! !
-!Graphics.Canvas categoriesFor: #hiMetricToPels:!converting!public! !
-!Graphics.Canvas categoriesFor: #intersectClipRectangle:!drawing!public! !
-!Graphics.Canvas categoriesFor: #invertRectangle:!drawing!public! !
-!Graphics.Canvas categoriesFor: #invertRegion:!drawing!public! !
-!Graphics.Canvas categoriesFor: #isRectangleVisible:!drawing!public!testing! !
-!Graphics.Canvas categoriesFor: #lineFrom:to:!drawing!public! !
-!Graphics.Canvas categoriesFor: #lineTo:!drawing!public! !
-!Graphics.Canvas categoriesFor: #mapMode!public!transformations! !
-!Graphics.Canvas categoriesFor: #mapMode:!public!transformations! !
-!Graphics.Canvas categoriesFor: #moveTo:!drawing!public! !
-!Graphics.Canvas categoriesFor: #nonOwnedDC:!initializing!private! !
-!Graphics.Canvas categoriesFor: #offsetWindowOrigin:!public!transformations! !
-!Graphics.Canvas categoriesFor: #onExit!event handling!public! !
-!Graphics.Canvas categoriesFor: #outlineTextMetrics!accessing!public! !
-!Graphics.Canvas categoriesFor: #ownedDC:!initializing!private! !
-!Graphics.Canvas categoriesFor: #paintRegion:!drawing!public! !
-!Graphics.Canvas categoriesFor: #palette:!colors!public! !
-!Graphics.Canvas categoriesFor: #patBlt:rop:!drawing!public! !
-!Graphics.Canvas categoriesFor: #pelsToHiMetric:!converting!public! !
-!Graphics.Canvas categoriesFor: #pen!public!tools! !
-!Graphics.Canvas categoriesFor: #pen:!public!tools! !
-!Graphics.Canvas categoriesFor: #penColor!accessing!colors!public! !
-!Graphics.Canvas categoriesFor: #pixelAt:!accessing!public! !
-!Graphics.Canvas categoriesFor: #pixelAt:put:!accessing!public! !
-!Graphics.Canvas categoriesFor: #plgBlt:rectangle:topLeft:topRight:bottomLeft:!drawing!public! !
-!Graphics.Canvas categoriesFor: #polygon:!drawing!public! !
-!Graphics.Canvas categoriesFor: #realizePalette!colors!public! !
-!Graphics.Canvas categoriesFor: #rectangle:!drawing!public! !
-!Graphics.Canvas categoriesFor: #rectangle:round:!drawing!public! !
-!Graphics.Canvas categoriesFor: #resolution!accessing!public! !
-!Graphics.Canvas categoriesFor: #restore!operations!public! !
-!Graphics.Canvas categoriesFor: #restore:!operations!public! !
-!Graphics.Canvas categoriesFor: #rop2!accessing!public! !
-!Graphics.Canvas categoriesFor: #rop2:!accessing!public! !
-!Graphics.Canvas categoriesFor: #save!operations!public! !
-!Graphics.Canvas categoriesFor: #saved!accessing!private! !
-!Graphics.Canvas categoriesFor: #saveIds!accessing!private! !
-!Graphics.Canvas categoriesFor: #selectClipRegion:!operations!public! !
-!Graphics.Canvas categoriesFor: #selectObject:!operations!private! !
-!Graphics.Canvas categoriesFor: #selectPalette:!colors!public! !
-!Graphics.Canvas categoriesFor: #setDefaultAttributes!private!tools! !
-!Graphics.Canvas categoriesFor: #setTextAlign:!modes!public! !
-!Graphics.Canvas categoriesFor: #source:!accessing!private! !
-!Graphics.Canvas categoriesFor: #stretchBlt:rectangle:to:extent:rop:!drawing!public! !
-!Graphics.Canvas categoriesFor: #text:at:!drawing!public! !
-!Graphics.Canvas categoriesFor: #textExtent:!enquiries!public! !
-!Graphics.Canvas categoriesFor: #textExtent:width:alignment:!enquiries!public! !
-!Graphics.Canvas categoriesFor: #textExtent:width:flags:!enquiries!public! !
-!Graphics.Canvas categoriesFor: #textMetrics!accessing!public! !
-!Graphics.Canvas categoriesFor: #viewportExtent!public!transformations! !
-!Graphics.Canvas categoriesFor: #viewportExtent:!public!transformations! !
-!Graphics.Canvas categoriesFor: #viewportOrigin!public!transformations! !
-!Graphics.Canvas categoriesFor: #viewportOrigin:!public!transformations! !
-!Graphics.Canvas categoriesFor: #viewportRectangle:!public!transformations! !
-!Graphics.Canvas categoriesFor: #width!accessing!public! !
-!Graphics.Canvas categoriesFor: #windowExtent!public!transformations! !
-!Graphics.Canvas categoriesFor: #windowExtent:!public!transformations! !
-!Graphics.Canvas categoriesFor: #windowOrigin!public!transformations! !
-!Graphics.Canvas categoriesFor: #windowOrigin:!public!transformations! !
-!Graphics.Canvas categoriesFor: #windowRectangle:!public!transformations! !
-!Graphics.Canvas categoriesFor: #windowScaling!public!transformations! !
+!Graphics.Canvas categoriesForMethods!
+alphaBlend:rectangle:to:extent:blend:!drawing!public! !
+alphaBlendBitmap:at:extent:from:extent:blend:!colors!private! !
+asParameter!converting!public! !
+backcolor!accessing!colors!public! !
+backcolor:!accessing!colors!public! !
+backgroundMode!accessing!public! !
+backgroundMode:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+bitBlt:rectangle:to:rop:!drawing!public! !
+brush!public!tools! !
+brush:!public!tools! !
+brushColor!accessing!colors!public! !
+brushOrigin:!accessing!public! !
+clipBox!accessing!public! !
+colorDepth!accessing!public! !
+colors!accessing!public! !
+drawBitmap:at:extent:from:extent:rop:!colors!private! !
+drawEdge:edge:grfFlags:!drawing!public! !
+ellipse:!drawing!public! !
+erase!drawing!public! !
+excludeClipRectangle:!operations!public! !
+extent!accessing!public! !
+fillRectangle:!drawing!public! !
+fillRectangle:brush:!drawing!public! !
+fillRectangle:color:!drawing!public! !
+fillRectangle:startColor:endColor:verticalGradient:!drawing!public! !
+fillRegion:brush:!drawing!public! !
+font!accessing!public!tools! !
+font:!accessing!public!tools! !
+fontFamilies:do:!enumerating!public! !
+fontHandle!accessing!private!tools! !
+fontNames!enquiries!public! !
+forecolor!modes!public! !
+forecolor:!modes!public! !
+formatText:in:!drawing!public! !
+formatText:in:flags:!drawing!public! !
+frameRectangle:brush:!drawing!public! !
+free!public!realizing/unrealizing! !
+getCurrentObject:!accessing!public! !
+getDeviceCaps:!accessing!private! !
+getFont!accessing!public!tools! !
+getPixel:!drawing!private! !
+handle!accessing!public! !
+height!accessing!public! !
+hiMetricToPels:!converting!public! !
+intersectClipRectangle:!drawing!public! !
+invertRectangle:!drawing!public! !
+invertRegion:!drawing!public! !
+isRectangleVisible:!drawing!public!testing! !
+lineFrom:to:!drawing!public! !
+lineTo:!drawing!public! !
+mapMode!public!transformations! !
+mapMode:!public!transformations! !
+moveTo:!drawing!public! !
+nonOwnedDC:!initializing!private! !
+offsetWindowOrigin:!public!transformations! !
+onExit!event handling!public! !
+outlineTextMetrics!accessing!public! !
+ownedDC:!initializing!private! !
+paintRegion:!drawing!public! !
+palette:!colors!public! !
+patBlt:rop:!drawing!public! !
+pelsToHiMetric:!converting!public! !
+pen!public!tools! !
+pen:!public!tools! !
+penColor!accessing!colors!public! !
+pixelAt:!accessing!public! !
+pixelAt:put:!accessing!public! !
+plgBlt:rectangle:topLeft:topRight:bottomLeft:!drawing!public! !
+polygon:!drawing!public! !
+realizePalette!colors!public! !
+rectangle:!drawing!public! !
+rectangle:round:!drawing!public! !
+resolution!accessing!public! !
+restore!operations!public! !
+restore:!operations!public! !
+rop2!accessing!public! !
+rop2:!accessing!public! !
+save!operations!public! !
+saved!accessing!private! !
+saveIds!accessing!private! !
+selectClipRegion:!operations!public! !
+selectObject:!operations!private! !
+selectPalette:!colors!public! !
+setDefaultAttributes!private!tools! !
+setTextAlign:!modes!public! !
+source:!accessing!private! !
+stretchBlt:rectangle:to:extent:rop:!drawing!public! !
+text:at:!drawing!public! !
+textExtent:!enquiries!public! !
+textExtent:width:alignment:!enquiries!public! !
+textExtent:width:flags:!enquiries!public! !
+textMetrics!accessing!public! !
+viewportExtent!public!transformations! !
+viewportExtent:!public!transformations! !
+viewportOrigin!public!transformations! !
+viewportOrigin:!public!transformations! !
+viewportRectangle:!public!transformations! !
+width!accessing!public! !
+windowExtent!public!transformations! !
+windowExtent:!public!transformations! !
+windowOrigin!public!transformations! !
+windowOrigin:!public!transformations! !
+windowRectangle:!public!transformations! !
+windowScaling!public!transformations! !
+!
 
 !Graphics.Canvas class methodsFor!
 
@@ -1222,22 +1224,24 @@ withOwnedDC: hDC
 	finalized (or explicitly freed) with a call to DeleteDC()."
 
 	^self withDC: hDC ownedBy: self! !
-!Graphics.Canvas class categoriesFor: #desktopResolution!initializing!public! !
-!Graphics.Canvas class categoriesFor: #forDesktop!instance creation!public! !
-!Graphics.Canvas class categoriesFor: #forDisplay!instance creation!public! !
-!Graphics.Canvas class categoriesFor: #forNonClientView:!instance creation!public! !
-!Graphics.Canvas class categoriesFor: #forView:!instance creation!public! !
-!Graphics.Canvas class categoriesFor: #getDC!accessing!public! !
-!Graphics.Canvas class categoriesFor: #icon!constants!public! !
-!Graphics.Canvas class categoriesFor: #new!instance creation!private! !
-!Graphics.Canvas class categoriesFor: #on:!instance creation!public! !
-!Graphics.Canvas class categoriesFor: #onExit!event handling!public! !
-!Graphics.Canvas class categoriesFor: #onStartup!event handling!private! !
-!Graphics.Canvas class categoriesFor: #releaseDC:!operations!public! !
-!Graphics.Canvas class categoriesFor: #screenResolution!environment!public! !
-!Graphics.Canvas class categoriesFor: #withDC:ownedBy:!instance creation!public! !
-!Graphics.Canvas class categoriesFor: #withNonOwnedDC:!instance creation!public! !
-!Graphics.Canvas class categoriesFor: #withOwnedDC:!instance creation!public! !
+!Graphics.Canvas class categoriesForMethods!
+desktopResolution!initializing!public! !
+forDesktop!instance creation!public! !
+forDisplay!instance creation!public! !
+forNonClientView:!instance creation!public! !
+forView:!instance creation!public! !
+getDC!accessing!public! !
+icon!constants!public! !
+new!instance creation!private! !
+on:!instance creation!public! !
+onExit!event handling!public! !
+onStartup!event handling!private! !
+releaseDC:!operations!public! !
+screenResolution!environment!public! !
+withDC:ownedBy:!instance creation!public! !
+withNonOwnedDC:!instance creation!public! !
+withOwnedDC:!instance creation!public! !
+!
 
 Graphics.Canvas class methodProtocol: #dcSource attributes: #(#readOnly) selectors: #(#getDC #releaseDC:)!
 

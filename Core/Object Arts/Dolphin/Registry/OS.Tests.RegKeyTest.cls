@@ -143,15 +143,17 @@ testSz
 			[:each |
 			testKey valueAt: 'String' put: each.
 			self assert: (testKey valueAt: 'String') equals: each]! !
-!OS.Tests.RegKeyTest categoriesFor: #setUp!private!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #tearDown!private!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testEmptyArraySerialisation!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testEmptySz!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testExpandSz!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testIntegerSerialisation!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testMultiSz!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testParentPath!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testScintillaTextStyleSerialization!public!unit tests! !
-!OS.Tests.RegKeyTest categoriesFor: #testSz!public!unit tests! !
+!OS.Tests.RegKeyTest categoriesForMethods!
+setUp!private!unit tests! !
+tearDown!private!unit tests! !
+testCreateUnderRoot!public!unit tests! !
+testEmptyArraySerialisation!public!unit tests! !
+testEmptySz!public!unit tests! !
+testExpandSz!public!unit tests! !
+testIntegerSerialisation!public!unit tests! !
+testMultiSz!public!unit tests! !
+testParentPath!public!unit tests! !
+testScintillaTextStyleSerialization!public!unit tests! !
+testSz!public!unit tests! !
+!
 

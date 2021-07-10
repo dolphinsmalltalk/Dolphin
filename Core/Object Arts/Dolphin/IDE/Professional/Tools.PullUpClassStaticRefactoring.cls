@@ -22,5 +22,7 @@ transform
 			[:binding |
 			subclass removeClassConstant: binding.
 			class addClassConstant: binding]! !
-!Tools.PullUpClassStaticRefactoring categoriesFor: #transform!public!transforming! !
+!Tools.PullUpClassStaticRefactoring categoriesForMethods!
+transform!public!transforming! !
+!
 

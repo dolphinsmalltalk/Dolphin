@@ -379,48 +379,50 @@ visible: pBool
 	Helpstring: Determines whether the application is visible or hidden."
 
 	self put_Visible: pBool! !
-!SHDocVw.IWebBrowserApp categoriesFor: #clientToWindow:pcy:!methods!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #ClientToWindow:pcy:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #fullName!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #fullScreen!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #fullScreen:!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_FullName:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_FullScreen:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_HWND:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_MenuBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_Path:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_StatusBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_StatusText:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_ToolBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #get_Visible:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #GetProperty:pvtValue:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #hwnd!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!SHDocVw.IWebBrowserApp categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!SHDocVw.IWebBrowserApp categoriesFor: #menuBar!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #menuBar:!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #name!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #path!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #put_FullScreen:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #put_MenuBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #put_StatusBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #put_StatusText:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #put_ToolBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #put_Visible:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #putProperty:vtValue:!**auto generated**!methods!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #PutProperty:vtValue:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
-!SHDocVw.IWebBrowserApp categoriesFor: #Quit!**auto generated**!COM Interfaces-IWebBrowserApp!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #statusBar!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #statusBar:!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #statusText!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #statusText:!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #toolBar!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #toolBar:!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #value!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #visible!**auto generated**!properties!public! !
-!SHDocVw.IWebBrowserApp categoriesFor: #visible:!**auto generated**!properties!public! !
+!SHDocVw.IWebBrowserApp categoriesForMethods!
+clientToWindow:pcy:!methods!public! !
+ClientToWindow:pcy:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+fullName!**auto generated**!properties!public! !
+fullScreen!**auto generated**!properties!public! !
+fullScreen:!**auto generated**!properties!public! !
+get_FullName:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_FullScreen:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_HWND:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_MenuBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_Name:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_Path:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_StatusBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_StatusText:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_ToolBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+get_Visible:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+GetProperty:pvtValue:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+getProperty_:!**auto generated**!methods!public! !
+hwnd!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+menuBar!**auto generated**!properties!public! !
+menuBar:!**auto generated**!properties!public! !
+name!**auto generated**!properties!public! !
+path!**auto generated**!properties!public! !
+put_FullScreen:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+put_MenuBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+put_StatusBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+put_StatusText:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+put_ToolBar:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+put_Visible:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+putProperty:vtValue:!**auto generated**!methods!public! !
+PutProperty:vtValue:!**auto generated**!COM Interfaces-IWebBrowserApp!private! !
+Quit!**auto generated**!COM Interfaces-IWebBrowserApp!public! !
+statusBar!**auto generated**!properties!public! !
+statusBar:!**auto generated**!properties!public! !
+statusText!**auto generated**!properties!public! !
+statusText:!**auto generated**!properties!public! !
+toolBar!**auto generated**!properties!public! !
+toolBar:!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+visible!**auto generated**!properties!public! !
+visible:!**auto generated**!properties!public! !
+!
 
 !SHDocVw.IWebBrowserApp class methodsFor!
 
@@ -475,6 +477,8 @@ initializeTypeLib
 		IWebBrowserApp initializeTypeLib"
 
 	typeLib := SHDocVwLib! !
-!SHDocVw.IWebBrowserApp class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!SHDocVw.IWebBrowserApp class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!SHDocVw.IWebBrowserApp class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

@@ -81,16 +81,18 @@ setSearchPolicy: aSearchPolicy
 
 	searchPolicy := aSearchPolicy.
 	^self! !
-!Core.PluggableSet categoriesFor: #copyEmpty:!copying!private! !
-!Core.PluggableSet categoriesFor: #copyingClass!copying!private! !
-!Core.PluggableSet categoriesFor: #findElementOrNil:!private!searching! !
-!Core.PluggableSet categoriesFor: #hash:max:!private!searching! !
-!Core.PluggableSet categoriesFor: #initialize!initializing!private! !
-!Core.PluggableSet categoriesFor: #newSelection!enumerating!private! !
-!Core.PluggableSet categoriesFor: #preResize:!adding!public! !
-!Core.PluggableSet categoriesFor: #searchPolicy!accessing!public! !
-!Core.PluggableSet categoriesFor: #searchPolicy:!accessing!public! !
-!Core.PluggableSet categoriesFor: #setSearchPolicy:!accessing!private! !
+!Core.PluggableSet categoriesForMethods!
+copyEmpty:!copying!private! !
+copyingClass!copying!private! !
+findElementOrNil:!private!searching! !
+hash:max:!private!searching! !
+initialize!initializing!private! !
+newSelection!enumerating!private! !
+preResize:!adding!public! !
+searchPolicy!accessing!public! !
+searchPolicy:!accessing!public! !
+setSearchPolicy:!accessing!private! !
+!
 
 !Core.PluggableSet class methodsFor!
 
@@ -109,7 +111,9 @@ searchPolicy: policy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: policy! !
-!Core.PluggableSet class categoriesFor: #defaultSearchPolicy!constants!public! !
-!Core.PluggableSet class categoriesFor: #new:searchPolicy:!instance creation!public! !
-!Core.PluggableSet class categoriesFor: #searchPolicy:!instance creation!public! !
+!Core.PluggableSet class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+new:searchPolicy:!instance creation!public! !
+searchPolicy:!instance creation!public! !
+!
 

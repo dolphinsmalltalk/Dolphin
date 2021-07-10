@@ -70,12 +70,14 @@ notations
 	answer := IXMLDOMNamedNodeMap newPointer.
 	self get_notations: answer.
 	^DOMNotationsMap onInterface: answer parentNode: self! !
-!MSXML.IXMLDOMDocumentType categoriesFor: #entities!properties!public! !
-!MSXML.IXMLDOMDocumentType categoriesFor: #get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!MSXML.IXMLDOMDocumentType categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!MSXML.IXMLDOMDocumentType categoriesFor: #get_notations:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!MSXML.IXMLDOMDocumentType categoriesFor: #name!**auto generated**!properties!public! !
-!MSXML.IXMLDOMDocumentType categoriesFor: #notations!properties!public! !
+!MSXML.IXMLDOMDocumentType categoriesForMethods!
+entities!properties!public! !
+get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+get_name:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+get_notations:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+name!**auto generated**!properties!public! !
+notations!properties!public! !
+!
 
 !MSXML.IXMLDOMDocumentType class methodsFor!
 
@@ -91,5 +93,7 @@ defineFunctions
 		defineFunction: #get_notations:
 			argumentTypes: 'IXMLDOMNamedNodeMap**'
 ! !
-!MSXML.IXMLDOMDocumentType class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMDocumentType class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

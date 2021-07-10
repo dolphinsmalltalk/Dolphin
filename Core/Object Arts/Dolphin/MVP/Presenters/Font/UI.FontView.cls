@@ -34,10 +34,12 @@ previewText: aString
 	which details the font name and point size."
 
 	previewText := aString! !
-!UI.FontView categoriesFor: #displayValue!private!updating! !
-!UI.FontView categoriesFor: #displayValue:!private!updating! !
-!UI.FontView categoriesFor: #previewText!accessing!public! !
-!UI.FontView categoriesFor: #previewText:!accessing!public! !
+!UI.FontView categoriesForMethods!
+displayValue!private!updating! !
+displayValue:!private!updating! !
+previewText!accessing!public! !
+previewText:!accessing!public! !
+!
 
 !UI.FontView class methodsFor!
 
@@ -45,5 +47,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!UI.FontView class categoriesFor: #icon!constants!public! !
+!UI.FontView class categoriesForMethods!
+icon!constants!public! !
+!
 

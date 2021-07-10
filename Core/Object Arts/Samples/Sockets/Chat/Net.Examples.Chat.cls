@@ -419,51 +419,53 @@ validateUserInterface
 	super validateUserInterface.
 	calleeAddress view isEnabled: self isIdle.
 	outgoingMessage view isEnabled: self isConnected! !
-!Net.Examples.Chat categoriesFor: #acceptCalls!operations!private! !
-!Net.Examples.Chat categoriesFor: #appendMessage:!operations!private! !
-!Net.Examples.Chat categoriesFor: #calleeAddress!accessing!public! !
-!Net.Examples.Chat categoriesFor: #canConnect!public!testing! !
-!Net.Examples.Chat categoriesFor: #closeConnection!operations!private! !
-!Net.Examples.Chat categoriesFor: #connect!commands!public! !
-!Net.Examples.Chat categoriesFor: #connectFailed:!helpers!private! !
-!Net.Examples.Chat categoriesFor: #createComponents!initializing!public! !
-!Net.Examples.Chat categoriesFor: #createSchematicWiring!initializing!public! !
-!Net.Examples.Chat categoriesFor: #defaultPort!accessing!constants!public! !
-!Net.Examples.Chat categoriesFor: #disconnect!commands!public! !
-!Net.Examples.Chat categoriesFor: #dontAcceptCalls!operations!private! !
-!Net.Examples.Chat categoriesFor: #enqueueConnected:!operations!private! !
-!Net.Examples.Chat categoriesFor: #enqueueDisconnect!helpers!private! !
-!Net.Examples.Chat categoriesFor: #enqueueDisconnected!helpers!private! !
-!Net.Examples.Chat categoriesFor: #enqueueInboundMessage:!helpers!private! !
-!Net.Examples.Chat categoriesFor: #enqueueOutboundMessage:!helpers!private! !
-!Net.Examples.Chat categoriesFor: #forkAccepter!operations!private! !
-!Net.Examples.Chat categoriesFor: #forkConnector:!operations!private! !
-!Net.Examples.Chat categoriesFor: #forkReceiverOn:!private! !
-!Net.Examples.Chat categoriesFor: #forkSender!helpers!private! !
-!Net.Examples.Chat categoriesFor: #incomingPort!accessing!public! !
-!Net.Examples.Chat categoriesFor: #incomingPort:!accessing!public! !
-!Net.Examples.Chat categoriesFor: #isBusy!event handling!public! !
-!Net.Examples.Chat categoriesFor: #isConnected!public!testing! !
-!Net.Examples.Chat categoriesFor: #isIdle!public!testing! !
-!Net.Examples.Chat categoriesFor: #messageReceived:!operations!private! !
-!Net.Examples.Chat categoriesFor: #onGetCursor:!event handling!public! !
-!Net.Examples.Chat categoriesFor: #onStartup!event handling!private! !
-!Net.Examples.Chat categoriesFor: #onViewClosed!event handling!private! !
-!Net.Examples.Chat categoriesFor: #onViewOpened!event handling!private! !
-!Net.Examples.Chat categoriesFor: #outgoingPort!accessing!public! !
-!Net.Examples.Chat categoriesFor: #outgoingPort:!accessing!public! !
-!Net.Examples.Chat categoriesFor: #peerAddress!private! !
-!Net.Examples.Chat categoriesFor: #queryCommand:!commands!private! !
-!Net.Examples.Chat categoriesFor: #receiveMessagesOn:!private! !
-!Net.Examples.Chat categoriesFor: #send!commands!public! !
-!Net.Examples.Chat categoriesFor: #senderMain!operations!private! !
-!Net.Examples.Chat categoriesFor: #setAcceptStatus!operations!private! !
-!Net.Examples.Chat categoriesFor: #socketConnected:!helpers!private! !
-!Net.Examples.Chat categoriesFor: #socketDisconnected!helpers!private! !
-!Net.Examples.Chat categoriesFor: #status!accessing!public! !
-!Net.Examples.Chat categoriesFor: #status:!accessing!public! !
-!Net.Examples.Chat categoriesFor: #userName!operations!private! !
-!Net.Examples.Chat categoriesFor: #validateUserInterface!operations!public! !
+!Net.Examples.Chat categoriesForMethods!
+acceptCalls!operations!private! !
+appendMessage:!operations!private! !
+calleeAddress!accessing!public! !
+canConnect!public!testing! !
+closeConnection!operations!private! !
+connect!commands!public! !
+connectFailed:!helpers!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultPort!accessing!constants!public! !
+disconnect!commands!public! !
+dontAcceptCalls!operations!private! !
+enqueueConnected:!operations!private! !
+enqueueDisconnect!helpers!private! !
+enqueueDisconnected!helpers!private! !
+enqueueInboundMessage:!helpers!private! !
+enqueueOutboundMessage:!helpers!private! !
+forkAccepter!operations!private! !
+forkConnector:!operations!private! !
+forkReceiverOn:!private! !
+forkSender!helpers!private! !
+incomingPort!accessing!public! !
+incomingPort:!accessing!public! !
+isBusy!event handling!public! !
+isConnected!public!testing! !
+isIdle!public!testing! !
+messageReceived:!operations!private! !
+onGetCursor:!event handling!public! !
+onStartup!event handling!private! !
+onViewClosed!event handling!private! !
+onViewOpened!event handling!private! !
+outgoingPort!accessing!public! !
+outgoingPort:!accessing!public! !
+peerAddress!private! !
+queryCommand:!commands!private! !
+receiveMessagesOn:!private! !
+send!commands!public! !
+senderMain!operations!private! !
+setAcceptStatus!operations!private! !
+socketConnected:!helpers!private! !
+socketDisconnected!helpers!private! !
+status!accessing!public! !
+status:!accessing!public! !
+userName!operations!private! !
+validateUserInterface!operations!public! !
+!
 
 !Net.Examples.Chat class methodsFor!
 
@@ -510,8 +512,10 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Sockets Chat'! !
-!Net.Examples.Chat class categoriesFor: #icon!constants!public! !
-!Net.Examples.Chat class categoriesFor: #initialize!development!initializing!private! !
-!Net.Examples.Chat class categoriesFor: #resource_Default_view!public!resources-views! !
-!Net.Examples.Chat class categoriesFor: #sampleDescription!constants!development!private! !
+!Net.Examples.Chat class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+sampleDescription!constants!development!private! !
+!
 

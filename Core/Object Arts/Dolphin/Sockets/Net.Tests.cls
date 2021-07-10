@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Net subclass: #'Net.Tests'
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!Net.Tests class categoriesFor: #icon!constants!public! !
+!Net.Tests class categoriesForMethods!
+icon!constants!public! !
+!
 

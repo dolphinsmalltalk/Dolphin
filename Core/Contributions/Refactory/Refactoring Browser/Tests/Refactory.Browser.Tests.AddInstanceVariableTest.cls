@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddInstanceVariableTest'
 	instanceVariableNames: ''
@@ -98,12 +98,14 @@ testNewHierarchyExistingName
 				variable: 'asdf'
 				class: (model classNamed: #BARFOO).
 	self shouldFail: refactoring! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #testAddInstanceVariable!public!tests! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #testAddToModel!public!tests! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #testModelAlreadyExistingName!failure tests!public! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #testModelMetaclassAlreadyExistingName!failure tests!public! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #testNewExistingName!failure tests!public! !
-!Refactory.Browser.Tests.AddInstanceVariableTest categoriesFor: #testNewHierarchyExistingName!failure tests!public! !
+!Refactory.Browser.Tests.AddInstanceVariableTest categoriesForMethods!
+setUp!public!set up! !
+testAddInstanceVariable!public!tests! !
+testAddToModel!public!tests! !
+testAlreadyExistingName!failure tests!public! !
+testModelAlreadyExistingName!failure tests!public! !
+testModelMetaclassAlreadyExistingName!failure tests!public! !
+testNewExistingName!failure tests!public! !
+testNewHierarchyExistingName!failure tests!public! !
+!
 

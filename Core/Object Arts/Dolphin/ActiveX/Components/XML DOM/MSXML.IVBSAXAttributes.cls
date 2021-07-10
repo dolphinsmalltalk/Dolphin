@@ -339,32 +339,34 @@ length
 	answer := SDWORD new.
 	self get_length: answer.
 	^answer asObject! !
-!MSXML.IVBSAXAttributes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getIndexFromName:strLocalName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetIndexFromName:strLocalName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getIndexFromQName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetIndexFromQName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getLocalName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetLocalName:strLocalName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getQName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetQName:strQName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getType:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetType:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getTypeFromName:strLocalName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetTypeFromName:strLocalName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getTypeFromQName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetTypeFromQName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getURI:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetURI:strURI:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getValue:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetValue:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getValueFromName:strLocalName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetValueFromName:strLocalName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #getValueFromQName:!**auto generated**!methods!public! !
-!MSXML.IVBSAXAttributes categoriesFor: #GetValueFromQName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!MSXML.IVBSAXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IVBSAXAttributes categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IVBSAXAttributes categoriesForMethods!
+get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getIndexFromName:strLocalName:!**auto generated**!methods!public! !
+GetIndexFromName:strLocalName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getIndexFromQName:!**auto generated**!methods!public! !
+GetIndexFromQName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getLocalName:!**auto generated**!methods!public! !
+GetLocalName:strLocalName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getQName:!**auto generated**!methods!public! !
+GetQName:strQName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getType:!**auto generated**!methods!public! !
+GetType:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getTypeFromName:strLocalName:!**auto generated**!methods!public! !
+GetTypeFromName:strLocalName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getTypeFromQName:!**auto generated**!methods!public! !
+GetTypeFromQName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getURI:!**auto generated**!methods!public! !
+GetURI:strURI:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getValue:!**auto generated**!methods!public! !
+GetValue:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getValueFromName:strLocalName:!**auto generated**!methods!public! !
+GetValueFromName:strLocalName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getValueFromQName:!**auto generated**!methods!public! !
+GetValueFromQName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+length!**auto generated**!properties!public! !
+!
 
 !MSXML.IVBSAXAttributes class methodsFor!
 
@@ -398,5 +400,7 @@ defineFunctions
 		defineFunction: #GetValueFromQName:strValue:
 			argumentTypes: 'bstr bstr*'
 ! !
-!MSXML.IVBSAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXAttributes class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

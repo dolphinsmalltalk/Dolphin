@@ -33,10 +33,12 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
-!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
-!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #genericDefault!instance creation!public! !
-!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #genericTypographic!instance creation!public! !
-!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #new!development!instance creation!public! !
-!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Graphics.Gdiplus.StringFormatInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Graphics.Gdiplus.StringFormatInitializer class categoriesForMethods!
+formatFlags:language:!instance creation!public! !
+genericDefault!instance creation!public! !
+genericTypographic!instance creation!public! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

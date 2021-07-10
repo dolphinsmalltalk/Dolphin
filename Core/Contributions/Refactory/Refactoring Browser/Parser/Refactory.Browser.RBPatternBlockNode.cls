@@ -100,17 +100,19 @@ replacingBlock
 
 sentMessages
 	^OrderedCollection new! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #addArgumentWithNameBasedOn:to:!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #constructLookupNodeFor:in:!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #copyInContext:!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #createBlockFor:!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #createMatchingBlock!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #createReplacingBlock!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #lookupMatchFor:in:!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #match:inContext:!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #matchingBlock!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #replacePatternNodesIn:!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #replacingBlock!matching!public! !
-!Refactory.Browser.RBPatternBlockNode categoriesFor: #sentMessages!accessing!public! !
+!Refactory.Browser.RBPatternBlockNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+addArgumentWithNameBasedOn:to:!matching!public! !
+constructLookupNodeFor:in:!matching!public! !
+copyInContext:!matching!public! !
+createBlockFor:!matching!public! !
+createMatchingBlock!matching!public! !
+createReplacingBlock!matching!public! !
+lookupMatchFor:in:!matching!public! !
+match:inContext:!matching!public! !
+matchingBlock!matching!public! !
+replacePatternNodesIn:!matching!public! !
+replacingBlock!matching!public! !
+sentMessages!accessing!public! !
+!
 

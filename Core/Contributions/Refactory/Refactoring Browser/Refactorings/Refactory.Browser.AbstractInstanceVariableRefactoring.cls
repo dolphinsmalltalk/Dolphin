@@ -46,9 +46,11 @@ preconditions
 transform
 	self createAccessors.
 	self abstractReferences! !
-!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #abstractReferences!public!transforming! !
-!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #accessorsRefactoring!accessing!private! !
-!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #createAccessors!public!transforming! !
-!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring categoriesForMethods!
+abstractReferences!public!transforming! !
+accessorsRefactoring!accessing!private! !
+createAccessors!public!transforming! !
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

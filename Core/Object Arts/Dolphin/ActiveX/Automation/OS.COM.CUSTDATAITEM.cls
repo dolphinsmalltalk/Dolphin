@@ -25,8 +25,10 @@ varValue
 	"Answer the <VARIANT> value of the receiver's 'varValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varValue! !
-!OS.COM.CUSTDATAITEM categoriesFor: #guid!**compiled accessors**!public! !
-!OS.COM.CUSTDATAITEM categoriesFor: #varValue!**compiled accessors**!public! !
+!OS.COM.CUSTDATAITEM categoriesForMethods!
+guid!**compiled accessors**!public! !
+varValue!**compiled accessors**!public! !
+!
 
 !OS.COM.CUSTDATAITEM class methodsFor!
 
@@ -47,6 +49,8 @@ defineFields
 
 getFieldNames
 	^#(#guid #varValue)! !
-!OS.COM.CUSTDATAITEM class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.CUSTDATAITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.CUSTDATAITEM class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

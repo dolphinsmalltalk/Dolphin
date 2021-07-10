@@ -76,13 +76,15 @@ tapes
 	"
 
 	^tapes! !
-!UI.Examples.VideoLibrary categoriesFor: #defaultOwner!constants!private! !
-!UI.Examples.VideoLibrary categoriesFor: #displayOn:!printing!public! !
-!UI.Examples.VideoLibrary categoriesFor: #initialize!initializing!private! !
-!UI.Examples.VideoLibrary categoriesFor: #owner!accessing!public! !
-!UI.Examples.VideoLibrary categoriesFor: #owner:!initializing!public! !
-!UI.Examples.VideoLibrary categoriesFor: #printOn:!printing!public! !
-!UI.Examples.VideoLibrary categoriesFor: #tapes!accessing!public! !
+!UI.Examples.VideoLibrary categoriesForMethods!
+defaultOwner!constants!private! !
+displayOn:!printing!public! !
+initialize!initializing!private! !
+owner!accessing!public! !
+owner:!initializing!public! !
+printOn:!printing!public! !
+tapes!accessing!public! !
+!
 
 !UI.Examples.VideoLibrary class methodsFor!
 
@@ -114,8 +116,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	DefaultInstance := nil! !
-!UI.Examples.VideoLibrary class categoriesFor: #default!accessing!public! !
-!UI.Examples.VideoLibrary class categoriesFor: #icon!constants!public! !
-!UI.Examples.VideoLibrary class categoriesFor: #new!instance creation!public! !
-!UI.Examples.VideoLibrary class categoriesFor: #uninitialize!class hierarchy!class hierarchy-removing!private! !
+!UI.Examples.VideoLibrary class categoriesForMethods!
+default!accessing!public! !
+icon!constants!public! !
+new!instance creation!public! !
+uninitialize!class hierarchy!class hierarchy-removing!private! !
+!
 

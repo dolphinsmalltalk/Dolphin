@@ -88,18 +88,20 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_style put: anInteger! !
-!OS.WNDCLASS categoriesFor: #className:!accessing!public! !
-!OS.WNDCLASS categoriesFor: #hbrBackground:!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #hCursor:!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #hIcon:!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #hInstance:!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #lpfnWndProc:!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #lpszClassName!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #lpszClassName:!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #lpszMenuName!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #lpszMenuName:!**compiled accessors**!public! !
-!OS.WNDCLASS categoriesFor: #menuName:!accessing!public! !
-!OS.WNDCLASS categoriesFor: #style:!**compiled accessors**!public! !
+!OS.WNDCLASS categoriesForMethods!
+className:!accessing!public! !
+hbrBackground:!**compiled accessors**!public! !
+hCursor:!**compiled accessors**!public! !
+hIcon:!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+lpfnWndProc:!**compiled accessors**!public! !
+lpszClassName!**compiled accessors**!public! !
+lpszClassName:!**compiled accessors**!public! !
+lpszMenuName!**compiled accessors**!public! !
+lpszMenuName:!**compiled accessors**!public! !
+menuName:!accessing!public! !
+style:!**compiled accessors**!public! !
+!
 
 !OS.WNDCLASS class methodsFor!
 
@@ -138,6 +140,8 @@ defineFields
 
 getFieldNames
 	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
-!OS.WNDCLASS class categoriesFor: #defineFields!public!template definition! !
-!OS.WNDCLASS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.WNDCLASS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

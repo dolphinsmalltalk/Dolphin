@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #NiladicBlockANSITest
 	instanceVariableNames: 'blk0args canonicalObject'
@@ -150,17 +150,19 @@ testXwhileTrueX
 	self value: [ [sum < 0 ] whileTrue: [sum := sum + 1] ]
 		should: [:r | sum = 0]
 		conformTo: #'niladicValuable' selector: #'whileTrue:'.! !
-!NiladicBlockANSITest categoriesFor: #canonicalObject!public! !
-!NiladicBlockANSITest categoriesFor: #protocol!public! !
-!NiladicBlockANSITest categoriesFor: #setUp!public! !
-!NiladicBlockANSITest categoriesFor: #testXargumentCount!public! !
-!NiladicBlockANSITest categoriesFor: #testXensureX!public! !
-!NiladicBlockANSITest categoriesFor: #testXifCurtailedX!public! !
-!NiladicBlockANSITest categoriesFor: #testXonXdoX!public! !
-!NiladicBlockANSITest categoriesFor: #testXvalue!public! !
-!NiladicBlockANSITest categoriesFor: #testXvalueWithArgumentsX!public! !
-!NiladicBlockANSITest categoriesFor: #testXwhileFalse!public! !
-!NiladicBlockANSITest categoriesFor: #testXwhileFalseX!public! !
-!NiladicBlockANSITest categoriesFor: #testXwhileTrue!public! !
-!NiladicBlockANSITest categoriesFor: #testXwhileTrueX!public! !
+!NiladicBlockANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testXargumentCount!public! !
+testXensureX!public! !
+testXifCurtailedX!public! !
+testXonXdoX!public! !
+testXvalue!public! !
+testXvalueWithArgumentsX!public! !
+testXwhileFalse!public! !
+testXwhileFalseX!public! !
+testXwhileTrue!public! !
+testXwhileTrueX!public! !
+!
 

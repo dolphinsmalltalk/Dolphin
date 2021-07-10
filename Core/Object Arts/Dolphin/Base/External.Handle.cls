@@ -26,7 +26,9 @@ stbSaveOn: anSTBOutFiler
 	Output nil in place of the receiver as the future validity of an external handle is uncertain."
 
 	anSTBOutFiler saveObject: self as: nil! !
-!External.Handle categoriesFor: #asExternalHandle!converting!public! !
-!External.Handle categoriesFor: #handle!accessing!private! !
-!External.Handle categoriesFor: #stbSaveOn:!binary filing!public! !
+!External.Handle categoriesForMethods!
+asExternalHandle!converting!public! !
+handle!accessing!private! !
+stbSaveOn:!binary filing!public! !
+!
 

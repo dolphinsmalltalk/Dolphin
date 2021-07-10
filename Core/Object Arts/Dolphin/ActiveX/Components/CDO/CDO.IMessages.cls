@@ -117,18 +117,20 @@ item: index
 	answer := IMessage newPointer.
 	self get_Item: index ppMessage: answer.
 	^answer asObject! !
-!CDO.IMessages categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!CDO.IMessages categoriesFor: #count!**auto generated**!properties!public! !
-!CDO.IMessages categoriesFor: #Delete:!**auto generated**!COM Interfaces-IMessages!public! !
-!CDO.IMessages categoriesFor: #DeleteAll!**auto generated**!COM Interfaces-IMessages!public! !
-!CDO.IMessages categoriesFor: #fileName:!**auto generated**!properties!public! !
-!CDO.IMessages categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDO.IMessages categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDO.IMessages categoriesFor: #get_FileName:FileName:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDO.IMessages categoriesFor: #get_Item:ppMessage:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDO.IMessages categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.IMessages categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDO.IMessages categoriesFor: #item:!**auto generated**!properties!public! !
+!CDO.IMessages categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+count!**auto generated**!properties!public! !
+Delete:!**auto generated**!COM Interfaces-IMessages!public! !
+DeleteAll!**auto generated**!COM Interfaces-IMessages!public! !
+fileName:!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IMessages!private! !
+get_Count:!**auto generated**!COM Interfaces-IMessages!private! !
+get_FileName:FileName:!**auto generated**!COM Interfaces-IMessages!private! !
+get_Item:ppMessage:!**auto generated**!COM Interfaces-IMessages!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !CDO.IMessages class methodsFor!
 
@@ -149,5 +151,7 @@ defineFunctions
 		defineFunction: #get_FileName:FileName:
 			argumentTypes: 'variant bstr*'
 ! !
-!CDO.IMessages class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.IMessages class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

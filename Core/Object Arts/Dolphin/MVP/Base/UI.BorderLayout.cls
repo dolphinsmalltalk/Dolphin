@@ -280,31 +280,33 @@ widthForEdge: aView ofHeight: anInteger inContext: aLayoutContext
 	rect height: anInteger.
 	aLayoutContext setView: aView rectangle: rect.
 	^(aView layoutExtent: aLayoutContext) x! !
-!UI.BorderLayout categoriesFor: #arrangementOf:!accessing!public! !
-!UI.BorderLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!UI.BorderLayout categoriesFor: #center!accessing!public! !
-!UI.BorderLayout categoriesFor: #center:!accessing!public! !
-!UI.BorderLayout categoriesFor: #east!accessing!public! !
-!UI.BorderLayout categoriesFor: #east:!accessing!public! !
-!UI.BorderLayout categoriesFor: #heightForEdge:ofWidth:inContext:!geometry!helpers!private! !
-!UI.BorderLayout categoriesFor: #horizontalGap!accessing!public! !
-!UI.BorderLayout categoriesFor: #horizontalGap:!accessing!public! !
-!UI.BorderLayout categoriesFor: #initialize!initializing!private! !
-!UI.BorderLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!UI.BorderLayout categoriesFor: #north!accessing!public! !
-!UI.BorderLayout categoriesFor: #north:!accessing!public! !
-!UI.BorderLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!UI.BorderLayout categoriesFor: #removeSubView:!public!removing! !
-!UI.BorderLayout categoriesFor: #reposition:to:!geometry!private! !
-!UI.BorderLayout categoriesFor: #resize:to:!geometry!public! !
-!UI.BorderLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!UI.BorderLayout categoriesFor: #south!accessing!public! !
-!UI.BorderLayout categoriesFor: #south:!accessing!public! !
-!UI.BorderLayout categoriesFor: #verticalGap!accessing!public! !
-!UI.BorderLayout categoriesFor: #verticalGap:!accessing!public! !
-!UI.BorderLayout categoriesFor: #west!accessing!public! !
-!UI.BorderLayout categoriesFor: #west:!accessing!public! !
-!UI.BorderLayout categoriesFor: #widthForEdge:ofHeight:inContext:!geometry!helpers!private! !
+!UI.BorderLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+center!accessing!public! !
+center:!accessing!public! !
+east!accessing!public! !
+east:!accessing!public! !
+heightForEdge:ofWidth:inContext:!geometry!helpers!private! !
+horizontalGap!accessing!public! !
+horizontalGap:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+north!accessing!public! !
+north:!accessing!public! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+removeSubView:!public!removing! !
+reposition:to:!geometry!private! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+south!accessing!public! !
+south:!accessing!public! !
+verticalGap!accessing!public! !
+verticalGap:!accessing!public! !
+west!accessing!public! !
+west:!accessing!public! !
+widthForEdge:ofHeight:inContext:!geometry!helpers!private! !
+!
 
 !UI.BorderLayout class methodsFor!
 
@@ -316,5 +318,7 @@ horizontalGap: horizontal verticalGap: vertical
 		horizontalGap: horizontal;
 		verticalGap: vertical;
 		yourself! !
-!UI.BorderLayout class categoriesFor: #horizontalGap:verticalGap:!instance creation!public! !
+!UI.BorderLayout class categoriesForMethods!
+horizontalGap:verticalGap:!instance creation!public! !
+!
 

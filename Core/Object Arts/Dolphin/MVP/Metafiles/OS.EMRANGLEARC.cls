@@ -75,14 +75,16 @@ ptlCenter: aPOINTL
 		from: ##(_OffsetOf_ptlCenter + 1)
 		to: ##(_OffsetOf_ptlCenter + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRANGLEARC categoriesFor: #eStartAngle!**compiled accessors**!public! !
-!OS.EMRANGLEARC categoriesFor: #eStartAngle:!**compiled accessors**!public! !
-!OS.EMRANGLEARC categoriesFor: #eSweepAngle!**compiled accessors**!public! !
-!OS.EMRANGLEARC categoriesFor: #eSweepAngle:!**compiled accessors**!public! !
-!OS.EMRANGLEARC categoriesFor: #nRadius!**compiled accessors**!public! !
-!OS.EMRANGLEARC categoriesFor: #nRadius:!**compiled accessors**!public! !
-!OS.EMRANGLEARC categoriesFor: #ptlCenter!**compiled accessors**!public! !
-!OS.EMRANGLEARC categoriesFor: #ptlCenter:!**compiled accessors**!public! !
+!OS.EMRANGLEARC categoriesForMethods!
+eStartAngle!**compiled accessors**!public! !
+eStartAngle:!**compiled accessors**!public! !
+eSweepAngle!**compiled accessors**!public! !
+eSweepAngle:!**compiled accessors**!public! !
+nRadius!**compiled accessors**!public! !
+nRadius:!**compiled accessors**!public! !
+ptlCenter!**compiled accessors**!public! !
+ptlCenter:!**compiled accessors**!public! !
+!
 
 !OS.EMRANGLEARC class methodsFor!
 
@@ -124,7 +126,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ANGLEARC}! !
-!OS.EMRANGLEARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRANGLEARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRANGLEARC class categoriesFor: #iTypes!constants!public! !
+!OS.EMRANGLEARC class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -22,8 +22,10 @@ initialize
 
 uninitialize
 	self errorCodes do: [:each | ErrorClasses removeKey: each ifAbsent: []]! !
-!Net.SocketClosed class categoriesFor: #errorCode!constants!private! !
-!Net.SocketClosed class categoriesFor: #errorCodes!constants!private! !
-!Net.SocketClosed class categoriesFor: #initialize!initializing!public! !
-!Net.SocketClosed class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Net.SocketClosed class categoriesForMethods!
+errorCode!constants!private! !
+errorCodes!constants!private! !
+initialize!initializing!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

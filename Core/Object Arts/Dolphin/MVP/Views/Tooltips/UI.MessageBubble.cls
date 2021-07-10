@@ -337,49 +337,51 @@ willFade: aBoolean
 	style has no effect after opening."
 
 	tooltipStyle := tooltipStyle mask: TTS_NOFADE set: aBoolean not! !
-!UI.MessageBubble categoriesFor: #activateTooltip:!private!realizing/unrealizing! !
-!UI.MessageBubble categoriesFor: #addTool!private!realizing/unrealizing! !
-!UI.MessageBubble categoriesFor: #areLinksParsed!public!testing! !
-!UI.MessageBubble categoriesFor: #areLinksParsed:!accessing-styles!public! !
-!UI.MessageBubble categoriesFor: #backcolor!accessing!public! !
-!UI.MessageBubble categoriesFor: #backcolor:!accessing!public! !
-!UI.MessageBubble categoriesFor: #close!public!realizing/unrealizing! !
-!UI.MessageBubble categoriesFor: #createTooltip!private!realizing/unrealizing! !
-!UI.MessageBubble categoriesFor: #defaultCaption!displaying!private! !
-!UI.MessageBubble categoriesFor: #font!accessing!public! !
-!UI.MessageBubble categoriesFor: #font:!accessing!public! !
-!UI.MessageBubble categoriesFor: #forecolor!accessing!public! !
-!UI.MessageBubble categoriesFor: #forecolor:!accessing!public! !
-!UI.MessageBubble categoriesFor: #hasCloseButton!public!testing! !
-!UI.MessageBubble categoriesFor: #hasCloseButton:!public!testing! !
-!UI.MessageBubble categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!UI.MessageBubble categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!UI.MessageBubble categoriesFor: #initialize!initializing!private! !
-!UI.MessageBubble categoriesFor: #initializeTooltip!private!realizing/unrealizing! !
-!UI.MessageBubble categoriesFor: #isAnimated!accessing!public!testing! !
-!UI.MessageBubble categoriesFor: #isAnimated:!accessing-styles!public! !
-!UI.MessageBubble categoriesFor: #isBalloon!accessing!public!testing! !
-!UI.MessageBubble categoriesFor: #isBalloon:!accessing-styles!public! !
-!UI.MessageBubble categoriesFor: #isCentered!public!testing! !
-!UI.MessageBubble categoriesFor: #isCentered:!accessing-styles!public! !
-!UI.MessageBubble categoriesFor: #isModal!accessing-styles!public!testing! !
-!UI.MessageBubble categoriesFor: #margins!accessing!public! !
-!UI.MessageBubble categoriesFor: #margins:!accessing!public! !
-!UI.MessageBubble categoriesFor: #maxWidth!accessing!public! !
-!UI.MessageBubble categoriesFor: #maxWidth:!accessing!public! !
-!UI.MessageBubble categoriesFor: #onPopped!event handling!private! !
-!UI.MessageBubble categoriesFor: #onShowTip:!event handling!private! !
-!UI.MessageBubble categoriesFor: #open!public!realizing/unrealizing! !
-!UI.MessageBubble categoriesFor: #owner!public! !
-!UI.MessageBubble categoriesFor: #position!accessing!public! !
-!UI.MessageBubble categoriesFor: #position:!accessing!public! !
-!UI.MessageBubble categoriesFor: #startTimeout!private!realizing/unrealizing! !
-!UI.MessageBubble categoriesFor: #timeout!accessing!public! !
-!UI.MessageBubble categoriesFor: #timeout:!accessing!public! !
-!UI.MessageBubble categoriesFor: #tooltip!accessing!private! !
-!UI.MessageBubble categoriesFor: #trackPosition!operations!private! !
-!UI.MessageBubble categoriesFor: #willFade!accessing-styles!public!testing! !
-!UI.MessageBubble categoriesFor: #willFade:!accessing-styles!public! !
+!UI.MessageBubble categoriesForMethods!
+activateTooltip:!private!realizing/unrealizing! !
+addTool!private!realizing/unrealizing! !
+areLinksParsed!public!testing! !
+areLinksParsed:!accessing-styles!public! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+close!public!realizing/unrealizing! !
+createTooltip!private!realizing/unrealizing! !
+defaultCaption!displaying!private! !
+font!accessing!public! !
+font:!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+hasCloseButton!public!testing! !
+hasCloseButton:!public!testing! !
+iconStyleFlag!accessing-styles!private! !
+iconStyleFlag:!accessing-styles!private! !
+initialize!initializing!private! !
+initializeTooltip!private!realizing/unrealizing! !
+isAnimated!accessing!public!testing! !
+isAnimated:!accessing-styles!public! !
+isBalloon!accessing!public!testing! !
+isBalloon:!accessing-styles!public! !
+isCentered!public!testing! !
+isCentered:!accessing-styles!public! !
+isModal!accessing-styles!public!testing! !
+margins!accessing!public! !
+margins:!accessing!public! !
+maxWidth!accessing!public! !
+maxWidth:!accessing!public! !
+onPopped!event handling!private! !
+onShowTip:!event handling!private! !
+open!public!realizing/unrealizing! !
+owner!public! !
+position!accessing!public! !
+position:!accessing!public! !
+startTimeout!private!realizing/unrealizing! !
+timeout!accessing!public! !
+timeout:!accessing!public! !
+tooltip!accessing!private! !
+trackPosition!operations!private! !
+willFade!accessing-styles!public!testing! !
+willFade:!accessing-styles!public! !
+!
 
 !UI.MessageBubble class methodsFor!
 
@@ -396,6 +398,8 @@ initialize
 				with: MB_ICONINFORMATION
 				with: MB_ICONWARNING
 				with: MB_ICONERROR)! !
-!UI.MessageBubble class categoriesFor: #icon!constants!development!public! !
-!UI.MessageBubble class categoriesFor: #initialize!class initialization!development!private! !
+!UI.MessageBubble class categoriesForMethods!
+icon!constants!development!public! !
+initialize!class initialization!development!private! !
+!
 

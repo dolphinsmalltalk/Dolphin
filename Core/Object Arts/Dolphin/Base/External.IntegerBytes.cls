@@ -87,20 +87,22 @@ value
 
 value: anObject 
 	^self subclassResponsibility! !
-!External.IntegerBytes categoriesFor: #=!comparing!public! !
-!External.IntegerBytes categoriesFor: #asInteger!converting!public! !
-!External.IntegerBytes categoriesFor: #asObject!accessing!public! !
-!External.IntegerBytes categoriesFor: #asSignedInteger!converting!public! !
-!External.IntegerBytes categoriesFor: #asUIntPtr!converting!public! !
-!External.IntegerBytes categoriesFor: #byteSize!accessing!public! !
-!External.IntegerBytes categoriesFor: #clear!initializing!public! !
-!External.IntegerBytes categoriesFor: #copyingClass!copying!private! !
-!External.IntegerBytes categoriesFor: #displayOn:!displaying!public! !
-!External.IntegerBytes categoriesFor: #hash!comparing!public! !
-!External.IntegerBytes categoriesFor: #isNull!public!testing! !
-!External.IntegerBytes categoriesFor: #printOn:!printing!public! !
-!External.IntegerBytes categoriesFor: #value!accessing!public! !
-!External.IntegerBytes categoriesFor: #value:!accessing!public! !
+!External.IntegerBytes categoriesForMethods!
+=!comparing!public! !
+asInteger!converting!public! !
+asObject!accessing!public! !
+asSignedInteger!converting!public! !
+asUIntPtr!converting!public! !
+byteSize!accessing!public! !
+clear!initializing!public! !
+copyingClass!copying!private! !
+displayOn:!displaying!public! !
+hash!comparing!public! !
+isNull!public!testing! !
+printOn:!printing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !External.IntegerBytes class methodsFor!
 
@@ -139,11 +141,13 @@ pointerFieldType
 
 valueAtAddress: anAddress 
 	^self subclassResponsibility! !
-!External.IntegerBytes class categoriesFor: #atAddress:!instance creation!public! !
-!External.IntegerBytes class categoriesFor: #fromAddress:!instance creation!public! !
-!External.IntegerBytes class categoriesFor: #fromInteger:!instance creation!public! !
-!External.IntegerBytes class categoriesFor: #initialize!development!initializing!private! !
-!External.IntegerBytes class categoriesFor: #new!instance creation!public! !
-!External.IntegerBytes class categoriesFor: #pointerFieldType!constants!private! !
-!External.IntegerBytes class categoriesFor: #valueAtAddress:!helpers!private! !
+!External.IntegerBytes class categoriesForMethods!
+atAddress:!instance creation!public! !
+fromAddress:!instance creation!public! !
+fromInteger:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+pointerFieldType!constants!private! !
+valueAtAddress:!helpers!private! !
+!
 

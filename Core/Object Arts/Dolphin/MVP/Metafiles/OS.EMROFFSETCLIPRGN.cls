@@ -39,8 +39,10 @@ ptlOffset: aPOINTL
 		from: ##(_OffsetOf_ptlOffset + 1)
 		to: ##(_OffsetOf_ptlOffset + POINTL basicByteSize)
 		startingAt: 1! !
-!OS.EMROFFSETCLIPRGN categoriesFor: #ptlOffset!**compiled accessors**!public! !
-!OS.EMROFFSETCLIPRGN categoriesFor: #ptlOffset:!**compiled accessors**!public! !
+!OS.EMROFFSETCLIPRGN categoriesForMethods!
+ptlOffset!**compiled accessors**!public! !
+ptlOffset:!**compiled accessors**!public! !
+!
 
 !OS.EMROFFSETCLIPRGN class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_OFFSETCLIPRGN}! !
-!OS.EMROFFSETCLIPRGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMROFFSETCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMROFFSETCLIPRGN class categoriesFor: #iTypes!constants!public! !
+!OS.EMROFFSETCLIPRGN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

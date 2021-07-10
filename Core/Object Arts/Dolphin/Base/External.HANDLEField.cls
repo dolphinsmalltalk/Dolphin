@@ -19,6 +19,8 @@ readFrom: anExternalStructure
 
 valueType
 	^Handle! !
-!External.HANDLEField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.HANDLEField categoriesFor: #valueType!automatic generation!constants!development!private! !
+!External.HANDLEField categoriesForMethods!
+readFrom:!indirect accessing!private! !
+valueType!automatic generation!constants!development!private! !
+!
 

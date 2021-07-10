@@ -33,10 +33,12 @@ nSec: anInteger
 	"Set the receiver's 'nSec' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nSec put: anInteger! !
-!OS.UDACCEL categoriesFor: #nInc!**compiled accessors**!public! !
-!OS.UDACCEL categoriesFor: #nInc:!**compiled accessors**!public! !
-!OS.UDACCEL categoriesFor: #nSec!**compiled accessors**!public! !
-!OS.UDACCEL categoriesFor: #nSec:!**compiled accessors**!public! !
+!OS.UDACCEL categoriesForMethods!
+nInc!**compiled accessors**!public! !
+nInc:!**compiled accessors**!public! !
+nSec!**compiled accessors**!public! !
+nSec:!**compiled accessors**!public! !
+!
 
 !OS.UDACCEL class methodsFor!
 
@@ -56,6 +58,8 @@ defineFields
 
 getFieldNames
 	^#(#nSec #nInc)! !
-!OS.UDACCEL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.UDACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.UDACCEL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

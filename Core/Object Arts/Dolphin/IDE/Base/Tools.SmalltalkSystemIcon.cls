@@ -82,19 +82,21 @@ tool: aToolClass icon: anIcon description: aString openBlock: aMonadicValuable h
 
 whatsThis
 	SessionManager current whatsThis: self! !
-!Tools.SmalltalkSystemIcon categoriesFor: #=!comparing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #description!accessing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #hash!comparing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #helpId!accessing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #icon!accessing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #isFolder!accessing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #openBlock!accessing!private! !
-!Tools.SmalltalkSystemIcon categoriesFor: #openIn:!operations!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #printOn:!printing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #tool!accessing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #tool:!accessing!public! !
-!Tools.SmalltalkSystemIcon categoriesFor: #tool:icon:description:openBlock:helpId:!initializing!private! !
-!Tools.SmalltalkSystemIcon categoriesFor: #whatsThis!public! !
+!Tools.SmalltalkSystemIcon categoriesForMethods!
+=!comparing!public! !
+description!accessing!public! !
+hash!comparing!public! !
+helpId!accessing!public! !
+icon!accessing!public! !
+isFolder!accessing!public! !
+openBlock!accessing!private! !
+openIn:!operations!public! !
+printOn:!printing!public! !
+tool!accessing!public! !
+tool:!accessing!public! !
+tool:icon:description:openBlock:helpId:!initializing!private! !
+whatsThis!public! !
+!
 
 Tools.SmalltalkSystemIcon methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
 
@@ -174,12 +176,14 @@ tool: aToolClass icon: anIcon description: aStringDescription openBlock: aDyadic
 		description: aStringDescription
 		openBlock: aDyadicValuable
 		helpId: anIntegerOrNil! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #icon!constants!public! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #icon:description:openBlock:!instance creation!public! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #icon:description:openBlock:helpId:!instance creation!public! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #new!instance creation!private! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #show:description:!instance creation!public! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #show:description:helpId:!instance creation!public! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #showModal:description:!instance creation!public! !
-!Tools.SmalltalkSystemIcon class categoriesFor: #tool:icon:description:openBlock:helpId:!instance creation!public! !
+!Tools.SmalltalkSystemIcon class categoriesForMethods!
+icon!constants!public! !
+icon:description:openBlock:!instance creation!public! !
+icon:description:openBlock:helpId:!instance creation!public! !
+new!instance creation!private! !
+show:description:!instance creation!public! !
+show:description:helpId:!instance creation!public! !
+showModal:description:!instance creation!public! !
+tool:icon:description:openBlock:helpId:!instance creation!public! !
+!
 

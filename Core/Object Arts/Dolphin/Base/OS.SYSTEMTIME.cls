@@ -146,35 +146,37 @@ wYear: anInteger
 
 year
 	^self wYear! !
-!OS.SYSTEMTIME categoriesFor: #asDateAndTime!converting!public! !
-!OS.SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
-!OS.SYSTEMTIME categoriesFor: #asSYSTEMTIME!public! !
-!OS.SYSTEMTIME categoriesFor: #dayOfMonth!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #dayOfWeek!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !
-!OS.SYSTEMTIME categoriesFor: #hour!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #hour12!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #hour24!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #minute!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #month!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #second!accessing!public! !
-!OS.SYSTEMTIME categoriesFor: #wDay!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wDay:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wDayOfWeek!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wDayOfWeek:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wHour!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wHour:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wMilliseconds!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wMilliseconds:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wMinute!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wMinute:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wMonth!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wMonth:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wSecond!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wSecond:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wYear!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #wYear:!**compiled accessors**!public! !
-!OS.SYSTEMTIME categoriesFor: #year!accessing!public! !
+!OS.SYSTEMTIME categoriesForMethods!
+asDateAndTime!converting!public! !
+asFILETIME!converting!public! !
+asSYSTEMTIME!public! !
+dayOfMonth!accessing!public! !
+dayOfWeek!accessing!public! !
+displayOn:!displaying!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+minute!accessing!public! !
+month!accessing!public! !
+second!accessing!public! !
+wDay!**compiled accessors**!public! !
+wDay:!**compiled accessors**!public! !
+wDayOfWeek!**compiled accessors**!public! !
+wDayOfWeek:!**compiled accessors**!public! !
+wHour!**compiled accessors**!public! !
+wHour:!**compiled accessors**!public! !
+wMilliseconds!**compiled accessors**!public! !
+wMilliseconds:!**compiled accessors**!public! !
+wMinute!**compiled accessors**!public! !
+wMinute:!**compiled accessors**!public! !
+wMonth!**compiled accessors**!public! !
+wMonth:!**compiled accessors**!public! !
+wSecond!**compiled accessors**!public! !
+wSecond:!**compiled accessors**!public! !
+wYear!**compiled accessors**!public! !
+wYear:!**compiled accessors**!public! !
+year!accessing!public! !
+!
 
 !OS.SYSTEMTIME class methodsFor!
 
@@ -225,10 +227,12 @@ nowUTC
 	answer := self new.
 	Kernel32 getSystemTime: answer.
 	^answer! !
-!OS.SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
-!OS.SYSTEMTIME class categoriesFor: #defineFields!public!template definition! !
-!OS.SYSTEMTIME class categoriesFor: #fromFILETIME:!instance creation!public! !
-!OS.SYSTEMTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.SYSTEMTIME class categoriesFor: #now!instance creation!private! !
-!OS.SYSTEMTIME class categoriesFor: #nowUTC!instance creation!public! !
+!OS.SYSTEMTIME class categoriesForMethods!
+day:month:year:!instance creation!private! !
+defineFields!public!template definition! !
+fromFILETIME:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+now!instance creation!private! !
+nowUTC!instance creation!public! !
+!
 

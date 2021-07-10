@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.StTokenTest'
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ Kernel.Tests.StTokenTest comment: ''!
 
 subjectClass
 	^self subclassResponsibility! !
-!Kernel.Tests.StTokenTest categoriesFor: #subjectClass!constants!private! !
+!Kernel.Tests.StTokenTest categoriesForMethods!
+subjectClass!constants!private! !
+!
 

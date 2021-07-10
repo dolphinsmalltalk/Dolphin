@@ -79,14 +79,16 @@ OffsetHigh: anInteger
 	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_OffsetHigh put: anInteger! !
-!OS.OVERLAPPED categoriesFor: #hEvent!**compiled accessors**!public! !
-!OS.OVERLAPPED categoriesFor: #hEvent:!**compiled accessors**!public! !
-!OS.OVERLAPPED categoriesFor: #Internal!**compiled accessors**!public! !
-!OS.OVERLAPPED categoriesFor: #InternalHigh!**compiled accessors**!public! !
-!OS.OVERLAPPED categoriesFor: #Offset!**compiled accessors**!public! !
-!OS.OVERLAPPED categoriesFor: #Offset:!**compiled accessors**!public! !
-!OS.OVERLAPPED categoriesFor: #OffsetHigh!**compiled accessors**!public! !
-!OS.OVERLAPPED categoriesFor: #OffsetHigh:!**compiled accessors**!public! !
+!OS.OVERLAPPED categoriesForMethods!
+hEvent!**compiled accessors**!public! !
+hEvent:!**compiled accessors**!public! !
+Internal!**compiled accessors**!public! !
+InternalHigh!**compiled accessors**!public! !
+Offset!**compiled accessors**!public! !
+Offset:!**compiled accessors**!public! !
+OffsetHigh!**compiled accessors**!public! !
+OffsetHigh:!**compiled accessors**!public! !
+!
 
 !OS.OVERLAPPED class methodsFor!
 
@@ -133,6 +135,8 @@ defineFields
 
 getFieldNames
 	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
-!OS.OVERLAPPED class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.OVERLAPPED class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OVERLAPPED class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

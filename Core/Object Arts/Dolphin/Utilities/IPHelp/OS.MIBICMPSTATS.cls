@@ -113,19 +113,21 @@ dwTimestamps
 	"Answer the <Integer> value of the receiver's 'dwTimestamps' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwTimestamps! !
-!OS.MIBICMPSTATS categoriesFor: #dwAddrMaskReps!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwAddrMasks!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwDestUnreachs!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwEchoReps!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwEchos!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwErrors!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwMsgs!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwParmProbs!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwRedirects!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwSrcQuenchs!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwTimeExcds!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwTimestampReps!**compiled accessors**!public! !
-!OS.MIBICMPSTATS categoriesFor: #dwTimestamps!**compiled accessors**!public! !
+!OS.MIBICMPSTATS categoriesForMethods!
+dwAddrMaskReps!**compiled accessors**!public! !
+dwAddrMasks!**compiled accessors**!public! !
+dwDestUnreachs!**compiled accessors**!public! !
+dwEchoReps!**compiled accessors**!public! !
+dwEchos!**compiled accessors**!public! !
+dwErrors!**compiled accessors**!public! !
+dwMsgs!**compiled accessors**!public! !
+dwParmProbs!**compiled accessors**!public! !
+dwRedirects!**compiled accessors**!public! !
+dwSrcQuenchs!**compiled accessors**!public! !
+dwTimeExcds!**compiled accessors**!public! !
+dwTimestampReps!**compiled accessors**!public! !
+dwTimestamps!**compiled accessors**!public! !
+!
 
 !OS.MIBICMPSTATS class methodsFor!
 
@@ -195,6 +197,8 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #dwDestUnreachs #dwTimeExcds #dwParmProbs #dwSrcQuenchs #dwRedirects #dwEchos #dwEchoReps #dwTimestamps #dwTimestampReps #dwAddrMasks #dwAddrMaskReps)! !
-!OS.MIBICMPSTATS class categoriesFor: #defineFields!initializing!public! !
-!OS.MIBICMPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIBICMPSTATS class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

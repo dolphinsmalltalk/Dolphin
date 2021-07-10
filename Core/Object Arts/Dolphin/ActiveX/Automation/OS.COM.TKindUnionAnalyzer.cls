@@ -15,7 +15,9 @@ isUnion
 	"Answer whether the receiver describes a union."
 
 	^true! !
-!OS.COM.TKindUnionAnalyzer categoriesFor: #isUnion!public!testing! !
+!OS.COM.TKindUnionAnalyzer categoriesForMethods!
+isUnion!public!testing! !
+!
 
 !OS.COM.TKindUnionAnalyzer class methodsFor!
 
@@ -23,5 +25,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_UNION! !
-!OS.COM.TKindUnionAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindUnionAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

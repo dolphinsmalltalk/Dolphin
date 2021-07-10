@@ -51,11 +51,13 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDO.IDropDirectory categoriesFor: #getMessages!**auto generated**!methods!public! !
-!CDO.IDropDirectory categoriesFor: #getMessages:!**auto generated**!methods!public! !
-!CDO.IDropDirectory categoriesFor: #GetMessages:Msgs:!**auto generated**!COM Interfaces-IDropDirectory!private! !
-!CDO.IDropDirectory categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDO.IDropDirectory categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDO.IDropDirectory categoriesForMethods!
+getMessages!**auto generated**!methods!public! !
+getMessages:!**auto generated**!methods!public! !
+GetMessages:Msgs:!**auto generated**!COM Interfaces-IDropDirectory!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !CDO.IDropDirectory class methodsFor!
 
@@ -73,6 +75,8 @@ defineFunctions
 		defineFunction: #GetMessages:Msgs:
 			argumentTypes: 'bstr IMessages**'
 ! !
-!CDO.IDropDirectory class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDO.IDropDirectory class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!CDO.IDropDirectory class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

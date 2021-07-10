@@ -30,9 +30,11 @@ isForSmalllint
 
 lintRuleName: aString 
 	lintRuleName := aString! !
-!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #addFilterForClass:!accessing!actions!public! !
-!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #addFilterForClass:andSelector:!accessing!actions!public! !
-!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #canFilterSelectors!public!testing! !
-!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #isForSmalllint!public!testing! !
-!Refactory.Browser.SmalllintFilterEnvironment categoriesFor: #lintRuleName:!accessing!public! !
+!Refactory.Browser.SmalllintFilterEnvironment categoriesForMethods!
+addFilterForClass:!accessing!actions!public! !
+addFilterForClass:andSelector:!accessing!actions!public! !
+canFilterSelectors!public!testing! !
+isForSmalllint!public!testing! !
+lintRuleName:!accessing!public! !
+!
 

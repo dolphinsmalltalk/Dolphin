@@ -1195,120 +1195,122 @@ validateSuperclassIsSubclassable
 		ifTrue: 
 			[(superclass class isMeta not or: [Unsubclassable includes: superclass])
 				ifTrue: [self error: 'Proposed superclass is not subclassable.']]! !
-!Kernel.ClassBuilder categoriesFor: #allClassVarNamesOf:!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #allInstVarNamesOf:!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #baseEnvironment!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #beBytes!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #beFixed!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #beIndirectBytes!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #beNullTerminatedBytes!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #beVariable!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #canMutateInSitu!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #categories!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #categories:!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #categoryNames:!accessing!public! !
-!Kernel.ClassBuilder categoriesFor: #checkNoInstances!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #checkNoSubclasses!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #class:!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #classCategoryClass!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #classConstants!accessing!public! !
-!Kernel.ClassBuilder categoriesFor: #classConstants:!accessing!public! !
-!Kernel.ClassBuilder categoriesFor: #className:!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #classOf:!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #classVariables!class variables!private! !
-!Kernel.ClassBuilder categoriesFor: #classVariables:!class variables!public! !
-!Kernel.ClassBuilder categoriesFor: #classVariableString:!class variables!public! !
-!Kernel.ClassBuilder categoriesFor: #comment:!comments!private! !
-!Kernel.ClassBuilder categoriesFor: #createNewClass!operations!private! !
-!Kernel.ClassBuilder categoriesFor: #createProper!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #currentClass!accessing!public! !
-!Kernel.ClassBuilder categoriesFor: #declareClassVariablesOf:!private! !
-!Kernel.ClassBuilder categoriesFor: #environment!accessing!public! !
-!Kernel.ClassBuilder categoriesFor: #environment:!accessing!public! !
-!Kernel.ClassBuilder categoriesFor: #errorInvalidRemove:!exceptions!private! !
-!Kernel.ClassBuilder categoriesFor: #fundamentalTypeIsBeingChanged!private!testing! !
-!Kernel.ClassBuilder categoriesFor: #fundamentalTypeOf:!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #generateGUID!operations!private! !
-!Kernel.ClassBuilder categoriesFor: #generateInstanceSpecFor:superclass:!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #generateMapFrom:to:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #ignoreInstances!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #ignoreInstances:!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #imports!pool dictionaries!private! !
-!Kernel.ClassBuilder categoriesFor: #imports:!pool dictionaries!public! !
-!Kernel.ClassBuilder categoriesFor: #initialize!initializing!private! !
-!Kernel.ClassBuilder categoriesFor: #initializeCopy:fromClass:superclass:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #install:in:!environment!private! !
-!Kernel.ClassBuilder categoriesFor: #installInSuperclass:!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #installNewClass!environment!private! !
-!Kernel.ClassBuilder categoriesFor: #instanceShapeIsBeingChanged!private!testing! !
-!Kernel.ClassBuilder categoriesFor: #instanceSpec:!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #instanceSpecIsBytes:!class type!private! !
-!Kernel.ClassBuilder categoriesFor: #instanceVariables!instance variables!private! !
-!Kernel.ClassBuilder categoriesFor: #instanceVariables:!instance variables!public! !
-!Kernel.ClassBuilder categoriesFor: #instanceVariablesAreBeingChanged!private!testing! !
-!Kernel.ClassBuilder categoriesFor: #instanceVariableString:!instance variables!public! !
-!Kernel.ClassBuilder categoriesFor: #isFixedInitialLayout!public!testing! !
-!Kernel.ClassBuilder categoriesFor: #isFixedLayout!public!testing! !
-!Kernel.ClassBuilder categoriesFor: #isFixedType!public!testing! !
-!Kernel.ClassBuilder categoriesFor: #isModifyAction!private!testing! !
-!Kernel.ClassBuilder categoriesFor: #modifyClassVariablesOf:!private! !
-!Kernel.ClassBuilder categoriesFor: #modifyExistingClass!operations!private! !
-!Kernel.ClassBuilder categoriesFor: #modifyImportsOf:!pool dictionaries!private! !
-!Kernel.ClassBuilder categoriesFor: #modifyOrCreate!operations!public! !
-!Kernel.ClassBuilder categoriesFor: #modifyProper!private! !
-!Kernel.ClassBuilder categoriesFor: #mutateClass:toBeASubclassOf:in:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #mutateInSitu!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #mutateInstances:of:toBeInstancesOf:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #mutateMetaclass:toBeASubclassOf:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #mutateToNewClass!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #newClassLike:superclass:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #newMetaclassLike:superclass:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #notifyClassCreated!public!updating! !
-!Kernel.ClassBuilder categoriesFor: #notifyClassRenamed!operations!private! !
-!Kernel.ClassBuilder categoriesFor: #notifyClassUpdated!private!updating! !
-!Kernel.ClassBuilder categoriesFor: #recompilationRequired!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #recompilationRequired:reason:!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #remove!operations!private! !
-!Kernel.ClassBuilder categoriesFor: #removeUnimplementedProtocols!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #rename!operations!private! !
-!Kernel.ClassBuilder categoriesFor: #requiresMutation!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #setCommentOf:!comments!private! !
-!Kernel.ClassBuilder categoriesFor: #setImportsOf:!pool dictionaries!private! !
-!Kernel.ClassBuilder categoriesFor: #setInstanceVariablesOf:!instance variables!private! !
-!Kernel.ClassBuilder categoriesFor: #setNewClassCategories!helpers!private! !
-!Kernel.ClassBuilder categoriesFor: #superclass:!accessing!private! !
-!Kernel.ClassBuilder categoriesFor: #superclassIsBeingChanged!private!testing! !
-!Kernel.ClassBuilder categoriesFor: #translateInstance:intoANewInstanceOf:via:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #updateVMRegistryWith:!mutating!private! !
-!Kernel.ClassBuilder categoriesFor: #validateClass!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateClassForRename!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateClassInstanceVars!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateClassName!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateClassVarName:using:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateClassVars:againstSuperclass:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateClassVarsForCreate!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateClassVarsForModify!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateForCreate!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateForModify!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateForRemove!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateForRename!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateImports!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateInstanceSpec!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateInstanceSpec:size:superclass:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateInstanceSpecForModify!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateInstanceVars:againstSuperclass:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateInstanceVarsForCreate!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateInstanceVarsForModify!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateInstVarName:using:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSpecAsFixedPointers:size:superclass:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSpecAsVariableBytes:size:superclass:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSpecAsVariablePointers:size:superclass:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSubclassesOf:againstInstanceSpec:!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSubclassInstanceSpecs!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSuperclassChainForCreate!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSuperclassChainForModify!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSuperclassForModify!private!validation! !
-!Kernel.ClassBuilder categoriesFor: #validateSuperclassIsSubclassable!private!validation! !
+!Kernel.ClassBuilder categoriesForMethods!
+allClassVarNamesOf:!helpers!private! !
+allInstVarNamesOf:!helpers!private! !
+baseEnvironment!helpers!private! !
+beBytes!class type!private! !
+beFixed!class type!private! !
+beIndirectBytes!class type!private! !
+beNullTerminatedBytes!class type!private! !
+beVariable!class type!private! !
+canMutateInSitu!mutating!private! !
+categories!accessing!private! !
+categories:!accessing!private! !
+categoryNames:!accessing!public! !
+checkNoInstances!private!validation! !
+checkNoSubclasses!private!validation! !
+class:!accessing!private! !
+classCategoryClass!accessing!private! !
+classConstants!accessing!public! !
+classConstants:!accessing!public! !
+className:!accessing!private! !
+classOf:!helpers!private! !
+classVariables!class variables!private! !
+classVariables:!class variables!public! !
+classVariableString:!class variables!public! !
+comment:!comments!private! !
+createNewClass!operations!private! !
+createProper!helpers!private! !
+currentClass!accessing!public! !
+declareClassVariablesOf:!private! !
+environment!accessing!public! !
+environment:!accessing!public! !
+errorInvalidRemove:!exceptions!private! !
+fundamentalTypeIsBeingChanged!private!testing! !
+fundamentalTypeOf:!class type!private! !
+generateGUID!operations!private! !
+generateInstanceSpecFor:superclass:!class type!private! !
+generateMapFrom:to:!mutating!private! !
+ignoreInstances!accessing!private! !
+ignoreInstances:!accessing!private! !
+imports!pool dictionaries!private! !
+imports:!pool dictionaries!public! !
+initialize!initializing!private! !
+initializeCopy:fromClass:superclass:!mutating!private! !
+install:in:!environment!private! !
+installInSuperclass:!helpers!private! !
+installNewClass!environment!private! !
+instanceShapeIsBeingChanged!private!testing! !
+instanceSpec:!class type!private! !
+instanceSpecIsBytes:!class type!private! !
+instanceVariables!instance variables!private! !
+instanceVariables:!instance variables!public! !
+instanceVariablesAreBeingChanged!private!testing! !
+instanceVariableString:!instance variables!public! !
+isFixedInitialLayout!public!testing! !
+isFixedLayout!public!testing! !
+isFixedType!public!testing! !
+isModifyAction!private!testing! !
+modifyClassVariablesOf:!private! !
+modifyExistingClass!operations!private! !
+modifyImportsOf:!pool dictionaries!private! !
+modifyOrCreate!operations!public! !
+modifyProper!private! !
+mutateClass:toBeASubclassOf:in:!mutating!private! !
+mutateInSitu!mutating!private! !
+mutateInstances:of:toBeInstancesOf:!mutating!private! !
+mutateMetaclass:toBeASubclassOf:!mutating!private! !
+mutateToNewClass!mutating!private! !
+newClassLike:superclass:!mutating!private! !
+newMetaclassLike:superclass:!mutating!private! !
+notifyClassCreated!public!updating! !
+notifyClassRenamed!operations!private! !
+notifyClassUpdated!private!updating! !
+recompilationRequired!accessing!private! !
+recompilationRequired:reason:!accessing!private! !
+remove!operations!private! !
+removeUnimplementedProtocols!helpers!private! !
+rename!operations!private! !
+requiresMutation!mutating!private! !
+setCommentOf:!comments!private! !
+setImportsOf:!pool dictionaries!private! !
+setInstanceVariablesOf:!instance variables!private! !
+setNewClassCategories!helpers!private! !
+superclass:!accessing!private! !
+superclassIsBeingChanged!private!testing! !
+translateInstance:intoANewInstanceOf:via:!mutating!private! !
+updateVMRegistryWith:!mutating!private! !
+validateClass!private!validation! !
+validateClassForRename!private!validation! !
+validateClassInstanceVars!private!validation! !
+validateClassName!private!validation! !
+validateClassVarName:using:!private!validation! !
+validateClassVars:againstSuperclass:!private!validation! !
+validateClassVarsForCreate!private!validation! !
+validateClassVarsForModify!private!validation! !
+validateForCreate!private!validation! !
+validateForModify!private!validation! !
+validateForRemove!private!validation! !
+validateForRename!private!validation! !
+validateImports!private!validation! !
+validateInstanceSpec!private!validation! !
+validateInstanceSpec:size:superclass:!private!validation! !
+validateInstanceSpecForModify!private!validation! !
+validateInstanceVars:againstSuperclass:!private!validation! !
+validateInstanceVarsForCreate!private!validation! !
+validateInstanceVarsForModify!private!validation! !
+validateInstVarName:using:!private!validation! !
+validateSpecAsFixedPointers:size:superclass:!private!validation! !
+validateSpecAsVariableBytes:size:superclass:!private!validation! !
+validateSpecAsVariablePointers:size:superclass:!private!validation! !
+validateSubclassesOf:againstInstanceSpec:!private!validation! !
+validateSubclassInstanceSpecs!private!validation! !
+validateSuperclassChainForCreate!private!validation! !
+validateSuperclassChainForModify!private!validation! !
+validateSuperclassForModify!private!validation! !
+validateSuperclassIsSubclassable!private!validation! !
+!
 
 !Kernel.ClassBuilder class methodsFor!
 
@@ -1442,17 +1444,19 @@ renameClass: aClass to: aString
 		class: aClass;
 		className: aString;
 		rename! !
-!Kernel.ClassBuilder class categoriesFor: #forModifying:!instance creation!public! !
-!Kernel.ClassBuilder class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.ClassBuilder class categoriesFor: #invalidRemoveError!constants!private! !
-!Kernel.ClassBuilder class categoriesFor: #isFixedLayout:!enquiries!public! !
-!Kernel.ClassBuilder class categoriesFor: #isValidClassName:!private!testing! !
-!Kernel.ClassBuilder class categoriesFor: #isValidIdentifier:!private!testing! !
-!Kernel.ClassBuilder class categoriesFor: #isValidIdentifierChar:!private!testing! !
-!Kernel.ClassBuilder class categoriesFor: #isValidInitialIdentifierChar:!private!testing! !
-!Kernel.ClassBuilder class categoriesFor: #moveClass:toSuperclass:!operations!public! !
-!Kernel.ClassBuilder class categoriesFor: #new!instance creation!public! !
-!Kernel.ClassBuilder class categoriesFor: #removeClass:!operations!public! !
-!Kernel.ClassBuilder class categoriesFor: #removeClass:ignoreInstances:!operations!public! !
-!Kernel.ClassBuilder class categoriesFor: #renameClass:to:!operations!public! !
+!Kernel.ClassBuilder class categoriesForMethods!
+forModifying:!instance creation!public! !
+initialize!development!initializing!public! !
+invalidRemoveError!constants!private! !
+isFixedLayout:!enquiries!public! !
+isValidClassName:!private!testing! !
+isValidIdentifier:!private!testing! !
+isValidIdentifierChar:!private!testing! !
+isValidInitialIdentifierChar:!private!testing! !
+moveClass:toSuperclass:!operations!public! !
+new!instance creation!public! !
+removeClass:!operations!public! !
+removeClass:ignoreInstances:!operations!public! !
+renameClass:to:!operations!public! !
+!
 

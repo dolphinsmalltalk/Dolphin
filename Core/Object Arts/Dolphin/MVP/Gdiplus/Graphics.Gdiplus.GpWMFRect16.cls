@@ -70,14 +70,16 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_top put: anInteger! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #bottom!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #bottom:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #left!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #left:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #right!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #right:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #top!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpWMFRect16 categoriesFor: #top:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpWMFRect16 categoriesForMethods!
+bottom!**compiled accessors**!public! !
+bottom:!**compiled accessors**!public! !
+left!**compiled accessors**!public! !
+left:!**compiled accessors**!public! !
+right!**compiled accessors**!public! !
+right:!**compiled accessors**!public! !
+top!**compiled accessors**!public! !
+top:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpWMFRect16 class methodsFor!
 
@@ -111,6 +113,8 @@ defineFields
 
 getFieldNames
 	^#(#left #top #right #bottom)! !
-!Graphics.Gdiplus.GpWMFRect16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpWMFRect16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpWMFRect16 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

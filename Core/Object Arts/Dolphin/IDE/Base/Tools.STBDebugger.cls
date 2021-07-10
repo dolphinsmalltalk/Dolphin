@@ -166,13 +166,15 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
-!Tools.STBDebugger categoriesFor: #basicNext!accessing!private! !
-!Tools.STBDebugger categoriesFor: #initialize!initializing!private! !
-!Tools.STBDebugger categoriesFor: #next!accessing!public! !
-!Tools.STBDebugger categoriesFor: #objectAt:!accessing!private! !
-!Tools.STBDebugger categoriesFor: #printOffsets!accessing!public! !
-!Tools.STBDebugger categoriesFor: #printOffsets:!accessing!public! !
-!Tools.STBDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
-!Tools.STBDebugger categoriesFor: #traceStream!accessing!public! !
-!Tools.STBDebugger categoriesFor: #traceStream:!accessing!public! !
+!Tools.STBDebugger categoriesForMethods!
+basicNext!accessing!private! !
+initialize!initializing!private! !
+next!accessing!public! !
+objectAt:!accessing!private! !
+printOffsets!accessing!public! !
+printOffsets:!accessing!public! !
+readObjectOfClass:format:!operations!private! !
+traceStream!accessing!public! !
+traceStream:!accessing!public! !
+!
 

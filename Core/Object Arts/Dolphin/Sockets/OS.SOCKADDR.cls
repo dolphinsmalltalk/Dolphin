@@ -62,11 +62,13 @@ sa_family: anInteger
 	"Set the receiver's 'sa_family' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_sa_family put: anInteger! !
-!OS.SOCKADDR categoriesFor: #displayOn:!displaying!public! !
-!OS.SOCKADDR categoriesFor: #initialize!initializing!private! !
-!OS.SOCKADDR categoriesFor: #printFieldsOn:!development!printing!private! !
-!OS.SOCKADDR categoriesFor: #sa_family!**compiled accessors**!public! !
-!OS.SOCKADDR categoriesFor: #sa_family:!**compiled accessors**!public! !
+!OS.SOCKADDR categoriesForMethods!
+displayOn:!displaying!public! !
+initialize!initializing!private! !
+printFieldsOn:!development!printing!private! !
+sa_family!**compiled accessors**!public! !
+sa_family:!**compiled accessors**!public! !
+!
 
 !OS.SOCKADDR class methodsFor!
 
@@ -129,9 +131,11 @@ fromString: aString
 
 getFieldNames
 	^#(#sa_family)! !
-!OS.SOCKADDR class categoriesFor: #addressFamily!constants!public! !
-!OS.SOCKADDR class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.SOCKADDR class categoriesFor: #fromAddress:!instance creation!public! !
-!OS.SOCKADDR class categoriesFor: #fromString:!public! !
-!OS.SOCKADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SOCKADDR class categoriesForMethods!
+addressFamily!constants!public! !
+defineFields!**auto generated**!private!template definition! !
+fromAddress:!instance creation!public! !
+fromString:!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

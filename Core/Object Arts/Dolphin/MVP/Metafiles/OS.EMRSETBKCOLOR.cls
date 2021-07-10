@@ -35,8 +35,10 @@ crColor: anInteger
 	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_crColor put: anInteger! !
-!OS.EMRSETBKCOLOR categoriesFor: #crColor!**compiled accessors**!public! !
-!OS.EMRSETBKCOLOR categoriesFor: #crColor:!**compiled accessors**!public! !
+!OS.EMRSETBKCOLOR categoriesForMethods!
+crColor!**compiled accessors**!public! !
+crColor:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETBKCOLOR class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETBKCOLOR. EMR_SETTEXTCOLOR}! !
-!OS.EMRSETBKCOLOR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETBKCOLOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETBKCOLOR class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETBKCOLOR class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

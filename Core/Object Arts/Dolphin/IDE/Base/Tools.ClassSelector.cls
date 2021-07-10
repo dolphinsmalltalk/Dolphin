@@ -850,80 +850,82 @@ toggleShowFullNames
 	self isShowingFullNames: self isShowingFullNames not.
 	classesPresenter selectableItems view getTextBlock: (Message
 				selector: (self isShowingFullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName]))! !
-!Tools.ClassSelector categoriesFor: #actualClass!accessing!public! !
-!Tools.ClassSelector categoriesFor: #actualClass:!accessing!public! !
-!Tools.ClassSelector categoriesFor: #actualClass:ifAbsent:!accessing!public! !
-!Tools.ClassSelector categoriesFor: #browseChangedMethods!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseClass!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseClassPackage!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseClassReferences!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseClassVariables!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseHierarchy!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseInstanceVariables!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseIt!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseItCommand!helpers!private! !
-!Tools.ClassSelector categoriesFor: #browsePackages!commands!public! !
-!Tools.ClassSelector categoriesFor: #browsePublishedAspects!commands!public! !
-!Tools.ClassSelector categoriesFor: #browsePublishedEvents!commands!public! !
-!Tools.ClassSelector categoriesFor: #browseReferences!commands!public! !
-!Tools.ClassSelector categoriesFor: #browserEnvironment!public! !
-!Tools.ClassSelector categoriesFor: #browseSystem!commands!public! !
-!Tools.ClassSelector categoriesFor: #buildAllVariablesMenu:!menus!private! !
-!Tools.ClassSelector categoriesFor: #buildViewsMenu:command:!menus!private! !
-!Tools.ClassSelector categoriesFor: #canRefactor!public!testing! !
-!Tools.ClassSelector categoriesFor: #categorizeClass!commands!public! !
-!Tools.ClassSelector categoriesFor: #chooseVariables:caption:!commands!private!refactoring! !
-!Tools.ClassSelector categoriesFor: #classPackage!commands!public! !
-!Tools.ClassSelector categoriesFor: #clearSelection!commands!private! !
-!Tools.ClassSelector categoriesFor: #copyClass!commands!private! !
-!Tools.ClassSelector categoriesFor: #createInstanceVariableAccessors!commands!public!refactoring! !
-!Tools.ClassSelector categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.ClassSelector categoriesFor: #createVariableAccessors:!commands!public!refactoring! !
-!Tools.ClassSelector categoriesFor: #deleteClassHierarchy!commands!private! !
-!Tools.ClassSelector categoriesFor: #deleteItCommand!helpers!private! !
-!Tools.ClassSelector categoriesFor: #dropClass:onto:changes:!operations!private! !
-!Tools.ClassSelector categoriesFor: #dropMethod:onto:changes:!helpers!private! !
-!Tools.ClassSelector categoriesFor: #editView:!commands!public! !
-!Tools.ClassSelector categoriesFor: #fileInClass!commands!public! !
-!Tools.ClassSelector categoriesFor: #fileOutClass!commands!public! !
-!Tools.ClassSelector categoriesFor: #findClass!commands!public! !
-!Tools.ClassSelector categoriesFor: #initialize!initializing!private! !
-!Tools.ClassSelector categoriesFor: #inspectIt!commands!public! !
-!Tools.ClassSelector categoriesFor: #isInstanceMode!modes!public! !
-!Tools.ClassSelector categoriesFor: #isInstanceMode:!modes!public! !
-!Tools.ClassSelector categoriesFor: #isShowingFullNames!modes!public! !
-!Tools.ClassSelector categoriesFor: #isShowingFullNames:!modes!public! !
-!Tools.ClassSelector categoriesFor: #maximumVariableMenuEntries!menus!private! !
-!Tools.ClassSelector categoriesFor: #model:!accessing!public! !
-!Tools.ClassSelector categoriesFor: #newView!commands!public! !
-!Tools.ClassSelector categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
-!Tools.ClassSelector categoriesFor: #onAboutToRenameClass:!event handling!private! !
-!Tools.ClassSelector categoriesFor: #onClass:renamedTo:!event handling!public! !
-!Tools.ClassSelector categoriesFor: #onClass:renameTo:accept:!event handling!public! !
-!Tools.ClassSelector categoriesFor: #onDrag:!event handling!private! !
-!Tools.ClassSelector categoriesFor: #onDragOver:!event handling!private! !
-!Tools.ClassSelector categoriesFor: #onDropOver:!event handling!private! !
-!Tools.ClassSelector categoriesFor: #onSelectionChanged!event handling!public! !
-!Tools.ClassSelector categoriesFor: #onSelectionChanging:!event handling!public! !
-!Tools.ClassSelector categoriesFor: #onTipTextRequired:!event handling!private! !
-!Tools.ClassSelector categoriesFor: #packages:!accessing!public! !
-!Tools.ClassSelector categoriesFor: #performDropChanges:target:!helpers!private! !
-!Tools.ClassSelector categoriesFor: #permitSelectionChange!helpers!private! !
-!Tools.ClassSelector categoriesFor: #populateVarMenu:class:command:variables:format:!menus!private! !
-!Tools.ClassSelector categoriesFor: #queryCommand:!commands!private! !
-!Tools.ClassSelector categoriesFor: #queryMoveClass:toPackage:!operations!private! !
-!Tools.ClassSelector categoriesFor: #renameClass!commands!private!refactoring! !
-!Tools.ClassSelector categoriesFor: #renameClassVariable!commands!private!refactoring! !
-!Tools.ClassSelector categoriesFor: #renameInstanceVariable!commands!private!refactoring! !
-!Tools.ClassSelector categoriesFor: #searchEnvironment!commands!private! !
-!Tools.ClassSelector categoriesFor: #searchEnvironment:!public! !
-!Tools.ClassSelector categoriesFor: #selectableItems!accessing!private! !
-!Tools.ClassSelector categoriesFor: #selectionEnvironment!accessing!private! !
-!Tools.ClassSelector categoriesFor: #setInitialFocus!operations!public! !
-!Tools.ClassSelector categoriesFor: #showPresenter:!commands!public! !
-!Tools.ClassSelector categoriesFor: #systemModel!commands!private! !
-!Tools.ClassSelector categoriesFor: #testBrowserClass!constants!private! !
-!Tools.ClassSelector categoriesFor: #toggleShowFullNames!commands!private!refactoring! !
+!Tools.ClassSelector categoriesForMethods!
+actualClass!accessing!public! !
+actualClass:!accessing!public! !
+actualClass:ifAbsent:!accessing!public! !
+browseChangedMethods!commands!public! !
+browseClass!commands!public! !
+browseClassPackage!commands!public! !
+browseClassReferences!commands!public! !
+browseClassVariables!commands!public! !
+browseHierarchy!commands!public! !
+browseInstanceVariables!commands!public! !
+browseIt!commands!public! !
+browseItCommand!helpers!private! !
+browsePackages!commands!public! !
+browsePublishedAspects!commands!public! !
+browsePublishedEvents!commands!public! !
+browseReferences!commands!public! !
+browserEnvironment!public! !
+browseSystem!commands!public! !
+buildAllVariablesMenu:!menus!private! !
+buildViewsMenu:command:!menus!private! !
+canRefactor!public!testing! !
+categorizeClass!commands!public! !
+chooseVariables:caption:!commands!private!refactoring! !
+classPackage!commands!public! !
+clearSelection!commands!private! !
+copyClass!commands!private! !
+createInstanceVariableAccessors!commands!public!refactoring! !
+createSchematicWiring!initializing!public! !
+createVariableAccessors:!commands!public!refactoring! !
+deleteClassHierarchy!commands!private! !
+deleteItCommand!helpers!private! !
+dropClass:onto:changes:!operations!private! !
+dropMethod:onto:changes:!helpers!private! !
+editView:!commands!public! !
+fileInClass!commands!public! !
+fileOutClass!commands!public! !
+findClass!commands!public! !
+initialize!initializing!private! !
+inspectIt!commands!public! !
+isInstanceMode!modes!public! !
+isInstanceMode:!modes!public! !
+isShowingFullNames!modes!public! !
+isShowingFullNames:!modes!public! !
+maximumVariableMenuEntries!menus!private! !
+model:!accessing!public! !
+newView!commands!public! !
+onAboutToDisplayMenu:!event handling!menus!public! !
+onAboutToRenameClass:!event handling!private! !
+onClass:renamedTo:!event handling!public! !
+onClass:renameTo:accept:!event handling!public! !
+onDrag:!event handling!private! !
+onDragOver:!event handling!private! !
+onDropOver:!event handling!private! !
+onSelectionChanged!event handling!public! !
+onSelectionChanging:!event handling!public! !
+onTipTextRequired:!event handling!private! !
+packages:!accessing!public! !
+performDropChanges:target:!helpers!private! !
+permitSelectionChange!helpers!private! !
+populateVarMenu:class:command:variables:format:!menus!private! !
+queryCommand:!commands!private! !
+queryMoveClass:toPackage:!operations!private! !
+renameClass!commands!private!refactoring! !
+renameClassVariable!commands!private!refactoring! !
+renameInstanceVariable!commands!private!refactoring! !
+searchEnvironment!commands!private! !
+searchEnvironment:!public! !
+selectableItems!accessing!private! !
+selectionEnvironment!accessing!private! !
+setInitialFocus!operations!public! !
+showPresenter:!commands!public! !
+systemModel!commands!private! !
+testBrowserClass!constants!private! !
+toggleShowFullNames!commands!private!refactoring! !
+!
 
 !Tools.ClassSelector class methodsFor!
 
@@ -932,6 +934,8 @@ getCommandQueryHandlers
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray! !
-!Tools.ClassSelector class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!Tools.ClassSelector class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
+!Tools.ClassSelector class categoriesForMethods!
+getCommandQueryHandlers!accessing!private! !
+setCommandQueryHandlers:!accessing!private! !
+!
 

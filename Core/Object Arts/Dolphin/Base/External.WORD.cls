@@ -41,11 +41,13 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_value put: anInteger! !
-!External.WORD categoriesFor: #asSignedInteger!converting!public! !
-!External.WORD categoriesFor: #asUnsignedInteger!converting!public! !
-!External.WORD categoriesFor: #unsignedValue:!accessing!public! !
-!External.WORD categoriesFor: #value!**compiled accessors**!public! !
-!External.WORD categoriesFor: #value:!**compiled accessors**!public! !
+!External.WORD categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+unsignedValue:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.WORD class methodsFor!
 
@@ -66,7 +68,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.WORD class categoriesFor: #defineFields!public!template definition! !
-!External.WORD class categoriesFor: #initialize!development!initializing!private! !
-!External.WORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.WORD class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractMethodToComponentTest'
 	instanceVariableNames: ''
@@ -99,9 +99,11 @@ testNonExistantSelector
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTest)! !
-!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testBadInterval!failure tests!public! !
-!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testExtractFailure!failure tests!public! !
-!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testMoveWithoutSelfReference!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testExtractFailure!failure tests!public! !
+testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+testMoveWithoutSelfReference!public!tests! !
+testNonExistantSelector!failure tests!public! !
+!
 

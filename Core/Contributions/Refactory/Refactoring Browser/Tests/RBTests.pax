@@ -427,7 +427,9 @@ Refactory.Browser.RBFormatter1 := Refactory.Browser.RBConfigurableFormatter!
 
 isEqualTo: aByteArray
 	^self = aByteArray! !
-!Core.ByteArray categoriesFor: #isEqualTo:!comparing!public! !
+!Core.ByteArray categoriesForMethods!
+isEqualTo:!comparing!public! !
+!
 
 !Core.Collection methodsFor!
 
@@ -439,19 +441,25 @@ isEqualTo: anObject
 					self allSatisfy: 
 							[:each |
 							(anObject detect: [:eachOther | each isEqualTo: eachOther] ifNone: [notFound]) ~~ notFound]]]! !
-!Core.Collection categoriesFor: #isEqualTo:!comparing!public! !
+!Core.Collection categoriesForMethods!
+isEqualTo:!comparing!public! !
+!
 
 !Core.Interval methodsFor!
 
 isEqualTo: anObject
 	^self class == anObject class and: [self = anObject]! !
-!Core.Interval categoriesFor: #isEqualTo:!public! !
+!Core.Interval categoriesForMethods!
+isEqualTo:!public! !
+!
 
 !Core.Object methodsFor!
 
 isEqualTo: anObject
 	^self = anObject! !
-!Core.Object categoriesFor: #isEqualTo:!public!testing! !
+!Core.Object categoriesForMethods!
+isEqualTo:!public!testing! !
+!
 
 !Core.String methodsFor!
 
@@ -463,15 +471,19 @@ withCRs
 	stream := self class writeStream: self size.
 	self do: [:each | each = $\ ifTrue: [stream nextPutAll: self class lineDelimiter] ifFalse: [stream nextPut: each]].
 	^stream contents! !
-!Core.String categoriesFor: #isEqualTo:!comparing!public! !
-!Core.String categoriesFor: #withCRs!converting!public! !
+!Core.String categoriesForMethods!
+isEqualTo:!comparing!public! !
+withCRs!converting!public! !
+!
 
 !Kernel.BlockClosure methodsFor!
 
 isEqualTo: aBlockClosure
 	self class = aBlockClosure class ifFalse: [^false].
 	^self method isEqualTo: aBlockClosure method! !
-!Kernel.BlockClosure categoriesFor: #isEqualTo:!public!testing! !
+!Kernel.BlockClosure categoriesForMethods!
+isEqualTo:!public!testing! !
+!
 
 !Kernel.CompiledCode methodsFor!
 
@@ -495,31 +507,41 @@ isEqualTo: aMethod
 				ifTrue: [(b class == BlockClosure and: [b method == aMethod]) ifFalse: [^false]]
 				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
 	^true! !
-!Kernel.CompiledCode categoriesFor: #isEqualTo:!public!testing! !
+!Kernel.CompiledCode categoriesForMethods!
+isEqualTo:!public!testing! !
+!
 
 !Refactory.Browser.AddClassRefactoring class methodsFor!
 
 correspondingTestCase
 	^Tests.AddClassTest! !
-!Refactory.Browser.AddClassRefactoring class categoriesFor: #correspondingTestCase!public! !
+!Refactory.Browser.AddClassRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 !Refactory.Browser.RemoveClassRefactoring class methodsFor!
 
 correspondingTestCase
 	^Refactory.Browser.Tests.RemoveClassTest! !
-!Refactory.Browser.RemoveClassRefactoring class categoriesFor: #correspondingTestCase!public! !
+!Refactory.Browser.RemoveClassRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 !Refactory.Browser.RenameClassRefactoring class methodsFor!
 
 correspondingTestCase
 	^Tests.RenameClassTest! !
-!Refactory.Browser.RenameClassRefactoring class categoriesFor: #correspondingTestCase!public! !
+!Refactory.Browser.RenameClassRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 !Smalltalk class methodsFor!
 
 isEqualTo: aSystemDictionary 
 	^aSystemDictionary == self! !
-!Smalltalk class categoriesFor: #isEqualTo:!comparing!public! !
+!Smalltalk class categoriesForMethods!
+isEqualTo:!comparing!public! !
+!
 
 "End of package definition"!
 

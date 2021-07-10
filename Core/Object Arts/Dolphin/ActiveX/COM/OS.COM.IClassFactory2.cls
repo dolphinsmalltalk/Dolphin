@@ -60,10 +60,12 @@ RequestLicKey: dwReserved pBstrKey: pBstrKey
 
 	<virtual stdcall: hresult 7 dword bstr*>
 	^self invalidCall: _failureCode! !
-!OS.COM.IClassFactory2 categoriesFor: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
-!OS.COM.IClassFactory2 categoriesFor: #GetLicInfo:!COM Interfaces-OCIDL.IClassFactory2!private! !
-!OS.COM.IClassFactory2 categoriesFor: #requestLicenseKey!accessing!enquiries!public! !
-!OS.COM.IClassFactory2 categoriesFor: #RequestLicKey:pBstrKey:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!private! !
+!OS.COM.IClassFactory2 categoriesForMethods!
+CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
+GetLicInfo:!COM Interfaces-OCIDL.IClassFactory2!private! !
+requestLicenseKey!accessing!enquiries!public! !
+RequestLicKey:pBstrKey:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!private! !
+!
 
 !OS.COM.IClassFactory2 class methodsFor!
 
@@ -79,5 +81,7 @@ defineFunctions
 			argumentTypes: 'dword bstr*';
 		defineFunction: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:
 						argumentTypes: 'IUnknown* IUnknown* GUID* bstr IUnknown**'! !
-!OS.COM.IClassFactory2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.IClassFactory2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

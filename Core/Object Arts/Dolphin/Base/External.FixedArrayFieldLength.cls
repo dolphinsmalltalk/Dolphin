@@ -47,14 +47,16 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	"anExternalField describes a fixed length array - nothing to do here"! !
-!External.FixedArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
-!External.FixedArrayFieldLength categoriesFor: #elementCount!accessing!private! !
-!External.FixedArrayFieldLength categoriesFor: #elementCount:!accessing!private! !
-!External.FixedArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!External.FixedArrayFieldLength categoriesFor: #isFixedSize!private!testing! !
-!External.FixedArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!External.FixedArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!External.FixedArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!External.FixedArrayFieldLength categoriesForMethods!
+allocationLength!accessing!private! !
+elementCount!accessing!private! !
+elementCount:!accessing!private! !
+getElementCountOf:in:!indirect accessing!private! !
+isFixedSize!private!testing! !
+printElementCountExpressionFor:on:!automatic generation!private! !
+printSetSizeFor:on:!automatic generation!development!private! !
+setElementCount:of:in:!indirect accessing!private! !
+!
 
 !External.FixedArrayFieldLength class methodsFor!
 
@@ -63,5 +65,7 @@ elementCount: anInteger
 	number of elements on behalf of some kind of <ArrayField>."
 
 	^self new elementCount: anInteger! !
-!External.FixedArrayFieldLength class categoriesFor: #elementCount:!instance creation!public! !
+!External.FixedArrayFieldLength class categoriesForMethods!
+elementCount:!instance creation!public! !
+!
 

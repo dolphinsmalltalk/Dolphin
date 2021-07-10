@@ -15,5 +15,7 @@ STON.ShortListWriter comment: 'STONShortArrayWriter helps in writing short array
 add: anObject
 	first ifTrue: [ first := false ] ifFalse: [ writer shortListElementSeparator ].
 	writer nextPut: anObject! !
-!STON.ShortListWriter categoriesFor: #add:!accessing!public! !
+!STON.ShortListWriter categoriesForMethods!
+add:!accessing!public! !
+!
 

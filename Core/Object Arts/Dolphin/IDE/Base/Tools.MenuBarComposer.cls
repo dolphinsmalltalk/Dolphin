@@ -15,5 +15,7 @@ menuClass
 	"Private - Answer the base menu class that instances of the receiver will edit|"
 
 	^MenuBar! !
-!Tools.MenuBarComposer class categoriesFor: #menuClass!models!private! !
+!Tools.MenuBarComposer class categoriesForMethods!
+menuClass!models!private! !
+!
 

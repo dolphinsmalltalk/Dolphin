@@ -67,14 +67,16 @@ width: anInteger
 	"Set the <integer> width of the pen described by the receiver."
 
 	bytes sdwordAtOffset: 4 put: anInteger! !
-!OS.LOGPEN categoriesFor: #color!accessing!public! !
-!OS.LOGPEN categoriesFor: #color:!accessing!public! !
-!OS.LOGPEN categoriesFor: #lopnColor!**compiled accessors**!public! !
-!OS.LOGPEN categoriesFor: #lopnColor:!**compiled accessors**!public! !
-!OS.LOGPEN categoriesFor: #lopnStyle!**compiled accessors**!public! !
-!OS.LOGPEN categoriesFor: #lopnStyle:!**compiled accessors**!public! !
-!OS.LOGPEN categoriesFor: #width!accessing!public! !
-!OS.LOGPEN categoriesFor: #width:!accessing!public! !
+!OS.LOGPEN categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+lopnColor!**compiled accessors**!public! !
+lopnColor:!**compiled accessors**!public! !
+lopnStyle!**compiled accessors**!public! !
+lopnStyle:!**compiled accessors**!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !OS.LOGPEN class methodsFor!
 
@@ -97,6 +99,8 @@ defineFields
 
 getFieldNames
 	^#(#lopnStyle #lopnColor)! !
-!OS.LOGPEN class categoriesFor: #defineFields!public!template definition! !
-!OS.LOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.LOGPEN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

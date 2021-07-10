@@ -175,22 +175,24 @@ queryCommand: query
 
 	^super queryCommand: query.
 ! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #createComponents!initializing!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #historyBack:!commands!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #historyForward:!commands!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #home!commands!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #homePage!commands!private! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #initialize!initializing!private! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #navigate!commands!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #OnBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #OnCommandStateChange:Enable:!event handling!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #OnDocumentComplete:URL:!event handling!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #OnNavigateComplete2:URL:!event handling!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #OnNewWindow2:Cancel:!event handling!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #onViewOpened!event handling!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #openUrl:!operations!public! !
-!OS.COM.Examples.WebBrowserShell categoriesFor: #queryCommand:!commands!public! !
+!OS.COM.Examples.WebBrowserShell categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+historyBack:!commands!public! !
+historyForward:!commands!public! !
+home!commands!public! !
+homePage!commands!private! !
+initialize!initializing!private! !
+navigate!commands!public! !
+OnBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!public! !
+OnCommandStateChange:Enable:!event handling!public! !
+OnDocumentComplete:URL:!event handling!public! !
+OnNavigateComplete2:URL:!event handling!public! !
+OnNewWindow2:Cancel:!event handling!public! !
+onViewOpened!event handling!public! !
+openUrl:!operations!public! !
+queryCommand:!commands!public! !
+!
 
 !OS.COM.Examples.WebBrowserShell class methodsFor!
 
@@ -231,9 +233,11 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!OS.COM.Examples.WebBrowserShell class categoriesFor: #displayOn:!printing!public! !
-!OS.COM.Examples.WebBrowserShell class categoriesFor: #icon!constants!public! !
-!OS.COM.Examples.WebBrowserShell class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.Examples.WebBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!OS.COM.Examples.WebBrowserShell class categoriesFor: #shutdownOnExit!public!testing! !
+!OS.COM.Examples.WebBrowserShell class categoriesForMethods!
+displayOn:!printing!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 

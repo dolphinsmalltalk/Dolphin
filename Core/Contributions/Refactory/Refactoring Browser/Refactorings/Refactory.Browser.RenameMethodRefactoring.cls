@@ -57,12 +57,14 @@ storeOn: aStream
 		nextPutAll: ' permuation: '.
 	permutation storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.RenameMethodRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
-!Refactory.Browser.RenameMethodRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
-!Refactory.Browser.RenameMethodRefactoring categoriesFor: #myConditions!preconditions!public! !
-!Refactory.Browser.RenameMethodRefactoring categoriesFor: #parseTreeRewriter!public!transforming! !
-!Refactory.Browser.RenameMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RenameMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RenameMethodRefactoring categoriesForMethods!
+hasPermutedArguments!public!testing! !
+implementorsCanBePrimitives!public!testing! !
+myConditions!preconditions!public! !
+parseTreeRewriter!public!transforming! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.RenameMethodRefactoring class methodsFor!
 
@@ -81,6 +83,8 @@ renameMethod: aSelector in: aClass to: newSelector permutation: aMap
 		in: aClass
 		to: newSelector
 		permutation: aMap! !
-!Refactory.Browser.RenameMethodRefactoring class categoriesFor: #model:renameMethod:in:to:permutation:!instance creation!public! !
-!Refactory.Browser.RenameMethodRefactoring class categoriesFor: #renameMethod:in:to:permutation:!instance creation!public! !
+!Refactory.Browser.RenameMethodRefactoring class categoriesForMethods!
+model:renameMethod:in:to:permutation:!instance creation!public! !
+renameMethod:in:to:permutation:!instance creation!public! !
+!
 

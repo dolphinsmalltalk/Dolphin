@@ -77,12 +77,14 @@ threeStateView
 	"Answer the view to be used for presentation of  three states (true, false and indeterminate)."
 
 	^'Three state view'! !
-!UI.BooleanPresenter class categoriesFor: #defaultModel!models!public! !
-!UI.BooleanPresenter class categoriesFor: #defaultView!constants!public! !
-!UI.BooleanPresenter class categoriesFor: #resource_CheckBox_view!public!resources-views! !
-!UI.BooleanPresenter class categoriesFor: #resource_Push_to_toggle!public!resources-views! !
-!UI.BooleanPresenter class categoriesFor: #resource_Three_state_view!public!resources-views! !
-!UI.BooleanPresenter class categoriesFor: #resource_Truefalse_text!public!resources-views! !
-!UI.BooleanPresenter class categoriesFor: #resource_Yesno_text!public!resources-views! !
-!UI.BooleanPresenter class categoriesFor: #threeStateView!public! !
+!UI.BooleanPresenter class categoriesForMethods!
+defaultModel!models!public! !
+defaultView!constants!public! !
+resource_CheckBox_view!public!resources-views! !
+resource_Push_to_toggle!public!resources-views! !
+resource_Three_state_view!public!resources-views! !
+resource_Truefalse_text!public!resources-views! !
+resource_Yesno_text!public!resources-views! !
+threeStateView!public! !
+!
 

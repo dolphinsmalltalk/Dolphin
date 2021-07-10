@@ -198,23 +198,25 @@ visitProcessingInstruction: anIXMLDOMProcessingInstruction
 				nextPutAll: data].
 	stream nextPutAll: '?>'.
 	indent = 0 ifTrue: [newlineNeeded := true]! !
-!MSXML.XmlFormatter categoriesFor: #format:!operations!public! !
-!MSXML.XmlFormatter categoriesFor: #indent:around:!formatting!private! !
-!MSXML.XmlFormatter categoriesFor: #indentAround:!formatting!private! !
-!MSXML.XmlFormatter categoriesFor: #initialize!operations!public! !
-!MSXML.XmlFormatter categoriesFor: #newline!public! !
-!MSXML.XmlFormatter categoriesFor: #newlineIfNeeded!private!visiting! !
-!MSXML.XmlFormatter categoriesFor: #startTag:!private! !
-!MSXML.XmlFormatter categoriesFor: #visitAttribute:!public! !
-!MSXML.XmlFormatter categoriesFor: #visitAttributes:!private! !
-!MSXML.XmlFormatter categoriesFor: #visitCharacterData:!private! !
-!MSXML.XmlFormatter categoriesFor: #visitComment:!public! !
-!MSXML.XmlFormatter categoriesFor: #visitDocument:!public!visiting! !
-!MSXML.XmlFormatter categoriesFor: #visitDocumentType:!public!visiting! !
-!MSXML.XmlFormatter categoriesFor: #visitElement:!public! !
-!MSXML.XmlFormatter categoriesFor: #visitEntity:!public!visiting! !
-!MSXML.XmlFormatter categoriesFor: #visitEntityReference:!public!visiting! !
-!MSXML.XmlFormatter categoriesFor: #visitNodeChildren:!private!visiting! !
-!MSXML.XmlFormatter categoriesFor: #visitNotation:!public!visiting! !
-!MSXML.XmlFormatter categoriesFor: #visitProcessingInstruction:!public! !
+!MSXML.XmlFormatter categoriesForMethods!
+format:!operations!public! !
+indent:around:!formatting!private! !
+indentAround:!formatting!private! !
+initialize!operations!public! !
+newline!public! !
+newlineIfNeeded!private!visiting! !
+startTag:!private! !
+visitAttribute:!public! !
+visitAttributes:!private! !
+visitCharacterData:!private! !
+visitComment:!public! !
+visitDocument:!public!visiting! !
+visitDocumentType:!public!visiting! !
+visitElement:!public! !
+visitEntity:!public!visiting! !
+visitEntityReference:!public!visiting! !
+visitNodeChildren:!private!visiting! !
+visitNotation:!public!visiting! !
+visitProcessingInstruction:!public! !
+!
 

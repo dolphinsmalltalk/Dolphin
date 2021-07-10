@@ -311,34 +311,36 @@ testUUIDs
 	| uuids |
 	uuids := STON listClass withAll: {UUID new. UUID new. UUID nilUUID}.
 	self serializeAndMaterialize: uuids! !
-!STON.Tests.WriteReadTest categoriesFor: #environment!private! !
-!STON.Tests.WriteReadTest categoriesFor: #serializeAndMaterialize:!private! !
-!STON.Tests.WriteReadTest categoriesFor: #serializeAndMaterializeJsonMode:!private! !
-!STON.Tests.WriteReadTest categoriesFor: #serializeJson:!private! !
-!STON.Tests.WriteReadTest categoriesFor: #testAssociations!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testCharacters!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testClasses!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testCollections!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testCollectionsStructured!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testColors!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testCustomAssociations!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testDatesAndTimes!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testDomainObject!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testEmpty!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testFloats!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testFractions!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testIdentityCollections!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testIntervals!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testJsonMode!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testOrderedDictionary!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testPrimitives!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testSmallDictionary!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testSmallIntegers!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testSortedCollections!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testSpecialCharacters!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testStrings!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testSymbols!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testUser!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testUser2!public!tests! !
-!STON.Tests.WriteReadTest categoriesFor: #testUUIDs!public!tests! !
+!STON.Tests.WriteReadTest categoriesForMethods!
+environment!private! !
+serializeAndMaterialize:!private! !
+serializeAndMaterializeJsonMode:!private! !
+serializeJson:!private! !
+testAssociations!public!tests! !
+testCharacters!public!tests! !
+testClasses!public!tests! !
+testCollections!public!tests! !
+testCollectionsStructured!public!tests! !
+testColors!public!tests! !
+testCustomAssociations!public!tests! !
+testDatesAndTimes!public!tests! !
+testDomainObject!public!tests! !
+testEmpty!public!tests! !
+testFloats!public!tests! !
+testFractions!public!tests! !
+testIdentityCollections!public!tests! !
+testIntervals!public!tests! !
+testJsonMode!public!tests! !
+testOrderedDictionary!public!tests! !
+testPrimitives!public!tests! !
+testSmallDictionary!public!tests! !
+testSmallIntegers!public!tests! !
+testSortedCollections!public!tests! !
+testSpecialCharacters!public!tests! !
+testStrings!public!tests! !
+testSymbols!public!tests! !
+testUser!public!tests! !
+testUser2!public!tests! !
+testUUIDs!public!tests! !
+!
 

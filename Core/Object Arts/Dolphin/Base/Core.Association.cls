@@ -108,22 +108,24 @@ value: aValue
 
 	value := aValue
 ! !
-!Core.Association categoriesFor: #<!comparing!public! !
-!Core.Association categoriesFor: #<=!comparing!public! !
-!Core.Association categoriesFor: #=!comparing!public! !
-!Core.Association categoriesFor: #displayOn:!printing!public! !
-!Core.Association categoriesFor: #hash!comparing!public! !
-!Core.Association categoriesFor: #isSelfEvaluating!public!testing! !
-!Core.Association categoriesFor: #isSelfEvaluating:!private!testing! !
-!Core.Association categoriesFor: #key!accessing!public! !
-!Core.Association categoriesFor: #key:!initializing!public! !
-!Core.Association categoriesFor: #key:value:!initializing!private! !
-!Core.Association categoriesFor: #printOn:!printing!public! !
-!Core.Association categoriesFor: #printString!printing!public! !
-!Core.Association categoriesFor: #setKey:!accessing!private! !
-!Core.Association categoriesFor: #setValue:!accessing!private! !
-!Core.Association categoriesFor: #value!accessing!public! !
-!Core.Association categoriesFor: #value:!accessing!public! !
+!Core.Association categoriesForMethods!
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+isSelfEvaluating!public!testing! !
+isSelfEvaluating:!private!testing! !
+key!accessing!public! !
+key:!initializing!public! !
+key:value:!initializing!private! !
+printOn:!printing!public! !
+printString!printing!public! !
+setKey:!accessing!private! !
+setValue:!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 Core.Association methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -134,5 +136,7 @@ key: aKey value: aValue
 	value is aValue."
 
 	^self new key: aKey value: aValue! !
-!Core.Association class categoriesFor: #key:value:!instance creation!public! !
+!Core.Association class categoriesForMethods!
+key:value:!instance creation!public! !
+!
 

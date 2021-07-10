@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.StableSortAlgorithmTest subclass: #'Kernel.Tests.MergesortAlgorithmTest'
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ testTempArrayLargeEnough
 	60 timesRepeat: [sorted removeFirst].
 	sorted addAll: (130 to: 200).
 	self assertSorted: sorted! !
-!Kernel.Tests.MergesortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!Kernel.Tests.MergesortAlgorithmTest categoriesFor: #testTempArrayLargeEnough!public!unit tests! !
+!Kernel.Tests.MergesortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+testTempArrayLargeEnough!public!unit tests! !
+!
 

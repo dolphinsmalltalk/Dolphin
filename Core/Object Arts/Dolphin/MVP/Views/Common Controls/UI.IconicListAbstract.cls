@@ -785,96 +785,98 @@ wmDestroy: message wParam: wParam lParam: lParam
 		wmDestroy: message
 		wParam: wParam
 		lParam: lParam! !
-!UI.IconicListAbstract categoriesFor: #applyImageLists!image management!private! !
-!UI.IconicListAbstract categoriesFor: #attachEditControl:!private! !
-!UI.IconicListAbstract categoriesFor: #basicEditItemLabel:!operations!private! !
-!UI.IconicListAbstract categoriesFor: #basicItemFromPoint:!enquiries!private! !
-!UI.IconicListAbstract categoriesFor: #beLargeIcons!modes!public! !
-!UI.IconicListAbstract categoriesFor: #beSmallIcons!modes!public! !
-!UI.IconicListAbstract categoriesFor: #canEditLabels!accessing-styles!public!testing! !
-!UI.IconicListAbstract categoriesFor: #canEditLabels:!accessing-styles!public! !
-!UI.IconicListAbstract categoriesFor: #customDrawBlock!accessing!public! !
-!UI.IconicListAbstract categoriesFor: #customDrawBlock:!accessing!public! !
-!UI.IconicListAbstract categoriesFor: #customDrawContextClass!constants!private! !
-!UI.IconicListAbstract categoriesFor: #customDrawItem:!event handling!private! !
-!UI.IconicListAbstract categoriesFor: #customDrawSubItem:!event handling!private! !
-!UI.IconicListAbstract categoriesFor: #defaultExtent!constants!private! !
-!UI.IconicListAbstract categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
-!UI.IconicListAbstract categoriesFor: #defaultImageManager!initializing!private! !
-!UI.IconicListAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
-!UI.IconicListAbstract categoriesFor: #disableLabelEdit!helpers!private! !
-!UI.IconicListAbstract categoriesFor: #dragLeave:!drag & drop!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #dragOver:!drag & drop!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #drop:!drag & drop!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #dropHighlight!accessing!private! !
-!UI.IconicListAbstract categoriesFor: #editItemLabel:!operations!private! !
-!UI.IconicListAbstract categoriesFor: #editLabelStyle!constants!private! !
-!UI.IconicListAbstract categoriesFor: #editSelectionLabel!operations!public! !
-!UI.IconicListAbstract categoriesFor: #enableLabelEdit!helpers!private! !
-!UI.IconicListAbstract categoriesFor: #ensureItemVisible:!operations!public! !
-!UI.IconicListAbstract categoriesFor: #ensureSelectionVisible!public!selection! !
-!UI.IconicListAbstract categoriesFor: #ensureVisible:!operations!public! !
-!UI.IconicListAbstract categoriesFor: #errorInCommonControlCall:!exceptions!private! !
-!UI.IconicListAbstract categoriesFor: #getEditControl!accessing!private! !
-!UI.IconicListAbstract categoriesFor: #getImageBlock!adapters!public! !
-!UI.IconicListAbstract categoriesFor: #getImageBlock:!adapters!public! !
-!UI.IconicListAbstract categoriesFor: #getInfoTipBlock!accessing!public! !
-!UI.IconicListAbstract categoriesFor: #getInfoTipBlock:!accessing!public! !
-!UI.IconicListAbstract categoriesFor: #hasGridLines!accessing-styles!public! !
-!UI.IconicListAbstract categoriesFor: #hasGridLines:!accessing-styles!public! !
-!UI.IconicListAbstract categoriesFor: #hasHotTracking!accessing-styles!public! !
-!UI.IconicListAbstract categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!UI.IconicListAbstract categoriesFor: #hasIcons!public!testing! !
-!UI.IconicListAbstract categoriesFor: #hasSubItemCustomDraw!private!testing! !
-!UI.IconicListAbstract categoriesFor: #hideDropHighlight!drag & drop!private! !
-!UI.IconicListAbstract categoriesFor: #imageExtent!accessing!private! !
-!UI.IconicListAbstract categoriesFor: #imageManager!image management!private! !
-!UI.IconicListAbstract categoriesFor: #imageManager:!image management!public! !
-!UI.IconicListAbstract categoriesFor: #initialize!initializing!private! !
-!UI.IconicListAbstract categoriesFor: #itemFromNMHDRA:!helpers!private! !
-!UI.IconicListAbstract categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #itemFromPoint:!enquiries!private! !
-!UI.IconicListAbstract categoriesFor: #itemRect:!accessing!public! !
-!UI.IconicListAbstract categoriesFor: #itemRect:textOnly:!enquiries!public! !
-!UI.IconicListAbstract categoriesFor: #largeIconExtent!constants!public! !
-!UI.IconicListAbstract categoriesFor: #largeIconExtent:!constants!public! !
-!UI.IconicListAbstract categoriesFor: #newSelectionsFromEvent:!event handling!private! !
-!UI.IconicListAbstract categoriesFor: #nmBeginDrag:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #nmBeginLabelEdit:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #nmBeginRDrag:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #nmCustomDraw:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #nmDeleteItem:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #nmEndLabelEdit:!public! !
-!UI.IconicListAbstract categoriesFor: #nmGetDispInfoW:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #nmSelChanged:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #nmSetDispInfoW:!event handling!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #notificationClass!constants!private! !
-!UI.IconicListAbstract categoriesFor: #onAboutToEditLabel:!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #onDisplayDetailsChanged:!event handling!private! !
-!UI.IconicListAbstract categoriesFor: #onDisplayDetailsRequired:!event handling!private! !
-!UI.IconicListAbstract categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #onKeyTyped:!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #onLabelOf:editedTo:!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #onSelRemoved!public!selection! !
-!UI.IconicListAbstract categoriesFor: #onViewCreated!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
-!UI.IconicListAbstract categoriesFor: #queryCommand:!commands!public! !
-!UI.IconicListAbstract categoriesFor: #renameIt!commands!public! !
-!UI.IconicListAbstract categoriesFor: #setViewMode:!accessing!private! !
-!UI.IconicListAbstract categoriesFor: #showDragDrop:highlight:!drag & drop!event handling!public! !
-!UI.IconicListAbstract categoriesFor: #showDropHighlight:!drag & drop!private! !
-!UI.IconicListAbstract categoriesFor: #smallIconExtent!constants!public! !
-!UI.IconicListAbstract categoriesFor: #stateImageManager!image management!public! !
-!UI.IconicListAbstract categoriesFor: #stateImageManager:!image management!public! !
-!UI.IconicListAbstract categoriesFor: #stbSaveOn:!binary filing!public! !
-!UI.IconicListAbstract categoriesFor: #themeSubAppName!constants!private! !
-!UI.IconicListAbstract categoriesFor: #viewMode!accessing!public! !
-!UI.IconicListAbstract categoriesFor: #viewMode:!accessing!public! !
-!UI.IconicListAbstract categoriesFor: #viewModeChanged!helpers!private! !
-!UI.IconicListAbstract categoriesFor: #wantCustomDrawItemNotifications:!event handling-win32!private! !
-!UI.IconicListAbstract categoriesFor: #wmDestroy:wParam:lParam:!event handling-win32!private! !
+!UI.IconicListAbstract categoriesForMethods!
+applyImageLists!image management!private! !
+attachEditControl:!private! !
+basicEditItemLabel:!operations!private! !
+basicItemFromPoint:!enquiries!private! !
+beLargeIcons!modes!public! !
+beSmallIcons!modes!public! !
+canEditLabels!accessing-styles!public!testing! !
+canEditLabels:!accessing-styles!public! !
+customDrawBlock!accessing!public! !
+customDrawBlock:!accessing!public! !
+customDrawContextClass!constants!private! !
+customDrawItem:!event handling!private! !
+customDrawSubItem:!event handling!private! !
+defaultExtent!constants!private! !
+defaultGetImageBlock!adapters!constants!private! !
+defaultImageManager!initializing!private! !
+defaultWindowExStyle!constants!private! !
+disableLabelEdit!helpers!private! !
+dragLeave:!drag & drop!event handling!public! !
+dragOver:!drag & drop!event handling!public! !
+drop:!drag & drop!event handling!public! !
+dropHighlight!accessing!private! !
+editItemLabel:!operations!private! !
+editLabelStyle!constants!private! !
+editSelectionLabel!operations!public! !
+enableLabelEdit!helpers!private! !
+ensureItemVisible:!operations!public! !
+ensureSelectionVisible!public!selection! !
+ensureVisible:!operations!public! !
+errorInCommonControlCall:!exceptions!private! !
+getEditControl!accessing!private! !
+getImageBlock!adapters!public! !
+getImageBlock:!adapters!public! !
+getInfoTipBlock!accessing!public! !
+getInfoTipBlock:!accessing!public! !
+hasGridLines!accessing-styles!public! !
+hasGridLines:!accessing-styles!public! !
+hasHotTracking!accessing-styles!public! !
+hasHotTracking:!accessing-styles!public! !
+hasIcons!public!testing! !
+hasSubItemCustomDraw!private!testing! !
+hideDropHighlight!drag & drop!private! !
+imageExtent!accessing!private! !
+imageManager!image management!private! !
+imageManager:!image management!public! !
+initialize!initializing!private! !
+itemFromNMHDRA:!helpers!private! !
+itemFromNMHDRW:!event handling-win32!private! !
+itemFromPoint:!enquiries!private! !
+itemRect:!accessing!public! !
+itemRect:textOnly:!enquiries!public! !
+largeIconExtent!constants!public! !
+largeIconExtent:!constants!public! !
+newSelectionsFromEvent:!event handling!private! !
+nmBeginDrag:!event handling-win32!private! !
+nmBeginLabelEdit:!event handling-win32!private! !
+nmBeginRDrag:!event handling-win32!private! !
+nmCustomDraw:!event handling-win32!private! !
+nmDeleteItem:!event handling-win32!private! !
+nmEndLabelEdit:!public! !
+nmGetDispInfoW:!event handling-win32!private! !
+nmSelChanged:!event handling-win32!private! !
+nmSetDispInfoW:!event handling!event handling-win32!private! !
+notificationClass!constants!private! !
+onAboutToEditLabel:!event handling!public! !
+onDisplayDetailsChanged:!event handling!private! !
+onDisplayDetailsRequired:!event handling!private! !
+onItem:addedAtIndex:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onLabelOf:editedTo:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onSelRemoved!public!selection! !
+onViewCreated!event handling!public! !
+positionForKeyboardContextMenu!enquiries!public! !
+queryCommand:!commands!public! !
+renameIt!commands!public! !
+setViewMode:!accessing!private! !
+showDragDrop:highlight:!drag & drop!event handling!public! !
+showDropHighlight:!drag & drop!private! !
+smallIconExtent!constants!public! !
+stateImageManager!image management!public! !
+stateImageManager:!image management!public! !
+stbSaveOn:!binary filing!public! !
+themeSubAppName!constants!private! !
+viewMode!accessing!public! !
+viewMode:!accessing!public! !
+viewModeChanged!helpers!private! !
+wantCustomDrawItemNotifications:!event handling-win32!private! !
+wmDestroy:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.IconicListAbstract class methodsFor!
 
@@ -946,9 +948,11 @@ value: anObject
 
 viewModes
 	^ViewModes! !
-!UI.IconicListAbstract class categoriesFor: #initialize!development!initializing!private! !
-!UI.IconicListAbstract class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
-!UI.IconicListAbstract class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!UI.IconicListAbstract class categoriesFor: #value:!evaluating!private! !
-!UI.IconicListAbstract class categoriesFor: #viewModes!accessing!public! !
+!UI.IconicListAbstract class categoriesForMethods!
+initialize!development!initializing!private! !
+stbConvertFromVersion3:!binary filing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+value:!evaluating!private! !
+viewModes!accessing!public! !
+!
 

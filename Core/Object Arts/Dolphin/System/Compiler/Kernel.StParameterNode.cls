@@ -19,6 +19,8 @@ isConstantNode
 	"Answer whether the receiver describes a constant that cannot be assigned to."
 
 	^true! !
-!Kernel.StParameterNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StParameterNode categoriesFor: #isConstantNode!public!testing! !
+!Kernel.StParameterNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isConstantNode!public!testing! !
+!
 

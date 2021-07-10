@@ -36,8 +36,10 @@ main
 			y := Number readFrom: stream.
 			autoplay pageExtent: x@y]].
 	autoplay show! !
-!UI.Examples.AutoplaySessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
-!UI.Examples.AutoplaySessionManager categoriesFor: #main!operations!public! !
+!UI.Examples.AutoplaySessionManager categoriesForMethods!
+allowDuplicate!operations-startup!public! !
+main!operations!public! !
+!
 
 !UI.Examples.AutoplaySessionManager class methodsFor!
 
@@ -45,5 +47,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Autoplay! !
-!UI.Examples.AutoplaySessionManager class categoriesFor: #mainShellClass!constants!public! !
+!UI.Examples.AutoplaySessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

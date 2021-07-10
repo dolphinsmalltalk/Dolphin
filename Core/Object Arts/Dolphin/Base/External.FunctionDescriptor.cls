@@ -253,23 +253,25 @@ returnType
 	type := self retType.
 	class := (self class typeHasArgument: type) ifTrue: [self at: (descriptor at: RetClassIndex) + 1].
 	^self class nameOf: type type: class! !
-!External.FunctionDescriptor categoriesFor: #argumentCount!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #argumentIndexFromOffset:!helpers!private! !
-!External.FunctionDescriptor categoriesFor: #argumentsDo:!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #argumentsSize!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #argumentTypes!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #calleeCleans!public!testing! !
-!External.FunctionDescriptor categoriesFor: #callingConvention!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #convention!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #description!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #descriptor:!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #literals:!accessing!public! !
-!External.FunctionDescriptor categoriesFor: #name!accessing!public! !
-!External.FunctionDescriptor categoriesFor: #name:!accessing!public! !
-!External.FunctionDescriptor categoriesFor: #printDescriptionOn:!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #printOn:!printing!public! !
-!External.FunctionDescriptor categoriesFor: #retType!accessing!private! !
-!External.FunctionDescriptor categoriesFor: #returnType!accessing!private! !
+!External.FunctionDescriptor categoriesForMethods!
+argumentCount!accessing!private! !
+argumentIndexFromOffset:!helpers!private! !
+argumentsDo:!accessing!private! !
+argumentsSize!accessing!private! !
+argumentTypes!accessing!private! !
+calleeCleans!public!testing! !
+callingConvention!accessing!private! !
+convention!accessing!private! !
+description!accessing!private! !
+descriptor:!accessing!private! !
+literals:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+printDescriptionOn:!accessing!private! !
+printOn:!printing!public! !
+retType!accessing!private! !
+returnType!accessing!private! !
+!
 
 !External.FunctionDescriptor class methodsFor!
 
@@ -636,33 +638,35 @@ typeHasArgument: ordinalType
 	accompanying it."
 
 	^ordinalType >= ExtCallArgSTRUCT! !
-!External.FunctionDescriptor class categoriesFor: #argumentTypes:!instance creation!public! !
-!External.FunctionDescriptor class categoriesFor: #callingConvention:returnType:argumentTypes:!instance creation!public! !
-!External.FunctionDescriptor class categoriesFor: #callingConvention:returnType:argumentTypes:environment:!instance creation!public! !
-!External.FunctionDescriptor class categoriesFor: #conventionFromName:!constants!public! !
-!External.FunctionDescriptor class categoriesFor: #descriptor:literals:!instance creation!private! !
-!External.FunctionDescriptor class categoriesFor: #fromString:environment:!instance creation!public! !
-!External.FunctionDescriptor class categoriesFor: #initialize!development!initializing!private! !
-!External.FunctionDescriptor class categoriesFor: #initializeCallingConventions!development!initializing!private! !
-!External.FunctionDescriptor class categoriesFor: #initializeExternalRefTypes!development!initializing!private! !
-!External.FunctionDescriptor class categoriesFor: #initializeExternalTypes!development!initializing!private! !
-!External.FunctionDescriptor class categoriesFor: #isPointerToStruct:!helpers!private! !
-!External.FunctionDescriptor class categoriesFor: #nameOf:type:!constants!public! !
-!External.FunctionDescriptor class categoriesFor: #nameOfConvention:!constants!public! !
-!External.FunctionDescriptor class categoriesFor: #oneStringArg!instance creation!public! !
-!External.FunctionDescriptor class categoriesFor: #parseArgDesc:environment:!parsing!private! !
-!External.FunctionDescriptor class categoriesFor: #parseCallingConvention:!parsing!private! !
-!External.FunctionDescriptor class categoriesFor: #parseDescriptor:environment:!parsing!private! !
-!External.FunctionDescriptor class categoriesFor: #parseDoubleIndirection:typeName:environment:!helpers!private! !
-!External.FunctionDescriptor class categoriesFor: #parsePointerToStruct:environment:!parsing!private! !
-!External.FunctionDescriptor class categoriesFor: #parseSingleIndirection:environment:!helpers!private! !
-!External.FunctionDescriptor class categoriesFor: #parseStructArg:environment:!parsing!private! !
-!External.FunctionDescriptor class categoriesFor: #parseValueType:environment:!parsing!private! !
-!External.FunctionDescriptor class categoriesFor: #referenceTypeFor:!parsing!public! !
-!External.FunctionDescriptor class categoriesFor: #returnType:argumentTypes:!instance creation!public! !
-!External.FunctionDescriptor class categoriesFor: #sizeOf:type:!constants!private! !
-!External.FunctionDescriptor class categoriesFor: #structTypeForSize:!constants!private! !
-!External.FunctionDescriptor class categoriesFor: #typeFromName:!constants!public! !
-!External.FunctionDescriptor class categoriesFor: #typeFromName:ifAbsent:!constants!public! !
-!External.FunctionDescriptor class categoriesFor: #typeHasArgument:!enquiries!private! !
+!External.FunctionDescriptor class categoriesForMethods!
+argumentTypes:!instance creation!public! !
+callingConvention:returnType:argumentTypes:!instance creation!public! !
+callingConvention:returnType:argumentTypes:environment:!instance creation!public! !
+conventionFromName:!constants!public! !
+descriptor:literals:!instance creation!private! !
+fromString:environment:!instance creation!public! !
+initialize!development!initializing!private! !
+initializeCallingConventions!development!initializing!private! !
+initializeExternalRefTypes!development!initializing!private! !
+initializeExternalTypes!development!initializing!private! !
+isPointerToStruct:!helpers!private! !
+nameOf:type:!constants!public! !
+nameOfConvention:!constants!public! !
+oneStringArg!instance creation!public! !
+parseArgDesc:environment:!parsing!private! !
+parseCallingConvention:!parsing!private! !
+parseDescriptor:environment:!parsing!private! !
+parseDoubleIndirection:typeName:environment:!helpers!private! !
+parsePointerToStruct:environment:!parsing!private! !
+parseSingleIndirection:environment:!helpers!private! !
+parseStructArg:environment:!parsing!private! !
+parseValueType:environment:!parsing!private! !
+referenceTypeFor:!parsing!public! !
+returnType:argumentTypes:!instance creation!public! !
+sizeOf:type:!constants!private! !
+structTypeForSize:!constants!private! !
+typeFromName:!constants!public! !
+typeFromName:ifAbsent:!constants!public! !
+typeHasArgument:!enquiries!private! !
+!
 

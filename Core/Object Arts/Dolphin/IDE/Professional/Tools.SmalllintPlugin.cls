@@ -68,11 +68,13 @@ systemModel
 	"Private - Answer the development system model."
 
 	^SmalltalkSystem current! !
-!Tools.SmalllintPlugin categoriesFor: #browserEnvironment!operations!private! !
-!Tools.SmalllintPlugin categoriesFor: #checkerForRule:environment:!helpers!private! !
-!Tools.SmalllintPlugin categoriesFor: #methodFilterForRule:inEnvironment:!helpers!private! !
-!Tools.SmalllintPlugin categoriesFor: #runRule:!helpers!private! !
-!Tools.SmalllintPlugin categoriesFor: #runTransformation:!helpers!private! !
-!Tools.SmalllintPlugin categoriesFor: #status:!operations!private! !
-!Tools.SmalllintPlugin categoriesFor: #systemModel!commands!private! !
+!Tools.SmalllintPlugin categoriesForMethods!
+browserEnvironment!operations!private! !
+checkerForRule:environment:!helpers!private! !
+methodFilterForRule:inEnvironment:!helpers!private! !
+runRule:!helpers!private! !
+runTransformation:!helpers!private! !
+status:!operations!private! !
+systemModel!commands!private! !
+!
 

@@ -27,8 +27,10 @@ fillPath: aFillPath strokePath: aStrokePath baseCap: aLineCapConstant baseInset:
 	strokePath := aStrokePath.
 	baseCap := aLineCapConstant.
 	baseInset := aRealBaseInset! !
-!Graphics.Gdiplus.CustomLineCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.CustomLineCapInitializer categoriesFor: #fillPath:strokePath:baseCap:baseInset:!initializing!private! !
+!Graphics.Gdiplus.CustomLineCapInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+fillPath:strokePath:baseCap:baseInset:!initializing!private! !
+!
 
 !Graphics.Gdiplus.CustomLineCapInitializer class methodsFor!
 
@@ -38,5 +40,7 @@ fillPath: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset
 		strokePath: strokePath
 		baseCap: baseCap
 		baseInset: baseInset! !
-!Graphics.Gdiplus.CustomLineCapInitializer class categoriesFor: #fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
+!Graphics.Gdiplus.CustomLineCapInitializer class categoriesForMethods!
+fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
+!
 

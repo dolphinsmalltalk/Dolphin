@@ -42,6 +42,8 @@ rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode
 	color1 := startColor.
 	color2 := endColor.
 	mode := aLinearGradientMode! !
-!Graphics.Gdiplus.LinearGradientBrushFromRectInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.LinearGradientBrushFromRectInitializer categoriesFor: #rect:color1:color2:mode:!initializing!private! !
+!Graphics.Gdiplus.LinearGradientBrushFromRectInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+rect:color1:color2:mode:!initializing!private! !
+!
 

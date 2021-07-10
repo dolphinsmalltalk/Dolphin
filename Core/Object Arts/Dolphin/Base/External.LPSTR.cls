@@ -23,6 +23,8 @@ value
 	"Answer the String pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
 	^AnsiString fromAddress: super value! !
-!External.LPSTR categoriesFor: #asString!converting!public! !
-!External.LPSTR categoriesFor: #value!accessing!public! !
+!External.LPSTR categoriesForMethods!
+asString!converting!public! !
+value!accessing!public! !
+!
 

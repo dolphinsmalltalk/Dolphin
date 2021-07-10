@@ -45,15 +45,17 @@ source
 
 	#rbFix. "For common interface with AddMethodChange"
 	^''! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #asUndoOperation!converting!public! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #primitiveExecute!private! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #selector!accessing!private! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #selector:!initialize/release!public! !
-!Refactory.Browser.RemoveMethodChange categoriesFor: #source!accessing!public! !
+!Refactory.Browser.RemoveMethodChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+hash!comparing!public! !
+primitiveExecute!private! !
+printOn:!printing!public! !
+selector!accessing!private! !
+selector:!initialize/release!public! !
+source!accessing!public! !
+!
 
 !Refactory.Browser.RemoveMethodChange class methodsFor!
 
@@ -62,5 +64,7 @@ remove: aSymbol from: aClass
 		changeClass: aClass;
 		selector: aSymbol;
 		yourself! !
-!Refactory.Browser.RemoveMethodChange class categoriesFor: #remove:from:!instance creation!public! !
+!Refactory.Browser.RemoveMethodChange class categoriesForMethods!
+remove:from:!instance creation!public! !
+!
 

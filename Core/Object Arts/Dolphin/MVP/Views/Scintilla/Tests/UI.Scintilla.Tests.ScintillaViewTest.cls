@@ -222,17 +222,19 @@ Line 2' 416 1458 #currentLineAlpha: 8 #(63) 416 1458 #caretPeriod: 8 #(530) 416 
 	self assert: presenter activeHotspotForecolor equals: Color lightSkyBlue.
 	self assert: presenter edgeColumn equals: 120.
 	self assert: presenter isCurrentLineHighlighted! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #margins!private!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testCallTipColors!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testImmersiveColorSetChange!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testSetGetEndOfLineAnnotations!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testStateRestoral!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testStbUpgradeFrom15!public!unit tests! !
-!UI.Scintilla.Tests.ScintillaViewTest categoriesFor: #testStbUpgradeFrom16!public!unit tests! !
+!UI.Scintilla.Tests.ScintillaViewTest categoriesForMethods!
+classToTest!helpers!private! !
+initializePresenter!public!Running! !
+margins!private!unit tests! !
+testCallTipColors!public!unit tests! !
+testFindStringStartingAt!public!unit tests! !
+testImmersiveColorSetChange!public!unit tests! !
+testLanguages!public!unit tests! !
+testOverrideDefaultKeyBindings!public!unit tests! !
+testSetGetAnnotations!public!unit tests! !
+testSetGetEndOfLineAnnotations!public!unit tests! !
+testStateRestoral!public!unit tests! !
+testStbUpgradeFrom15!public!unit tests! !
+testStbUpgradeFrom16!public!unit tests! !
+!
 

@@ -390,53 +390,55 @@ version: aSemVer
 
 warnOfUnlistedContent
 ! !
-!Tools.DolphinProduct categoriesFor: #allPackages!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #basicLoad!operations!private! !
-!Tools.DolphinProduct categoriesFor: #beCurrent!operations!public! !
-!Tools.DolphinProduct categoriesFor: #boot!operations!private! !
-!Tools.DolphinProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
-!Tools.DolphinProduct categoriesFor: #contents!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
-!Tools.DolphinProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
-!Tools.DolphinProduct categoriesFor: #diskBasedPackages!accessing!private! !
-!Tools.DolphinProduct categoriesFor: #displayOn:!printing!public! !
-!Tools.DolphinProduct categoriesFor: #encryptedClasses!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #encryptedClasses:!accessing!private! !
-!Tools.DolphinProduct categoriesFor: #encryptedPackageNames!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #foldLiterals!private! !
-!Tools.DolphinProduct categoriesFor: #fullName!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #installProductDetails!operations!private! !
-!Tools.DolphinProduct categoriesFor: #installProductSounds!operations!private! !
-!Tools.DolphinProduct categoriesFor: #installSplash!private! !
-!Tools.DolphinProduct categoriesFor: #installSystemFolderOptions!operations!private! !
-!Tools.DolphinProduct categoriesFor: #installSystemFolderOptions:!private! !
-!Tools.DolphinProduct categoriesFor: #isSafeToEncrypt:!operations!public! !
-!Tools.DolphinProduct categoriesFor: #load!operations!public! !
-!Tools.DolphinProduct categoriesFor: #loadAndShrink!operations!public! !
-!Tools.DolphinProduct categoriesFor: #loadShrinkAndCompress!operations!public! !
-!Tools.DolphinProduct categoriesFor: #majorVersion!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #minorVersion!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #name!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #packageNames!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #packagePaths!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #packages!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #preShrink!private! !
-!Tools.DolphinProduct categoriesFor: #printOn:!printing!public! !
-!Tools.DolphinProduct categoriesFor: #productDetails!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #removeUnlistedPackages!operations!private! !
-!Tools.DolphinProduct categoriesFor: #resizeSymbolTable!operations!public! !
-!Tools.DolphinProduct categoriesFor: #shortProductName!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
-!Tools.DolphinProduct categoriesFor: #shrink!operations!public! !
-!Tools.DolphinProduct categoriesFor: #shrinkEventsRegister!operations!private! !
-!Tools.DolphinProduct categoriesFor: #shrinkHashedCollections!operations!private! !
-!Tools.DolphinProduct categoriesFor: #uninstallPackage:!operations!private! !
-!Tools.DolphinProduct categoriesFor: #unlistedContentException!operations!public! !
-!Tools.DolphinProduct categoriesFor: #unlistedPrerequisites!public! !
-!Tools.DolphinProduct categoriesFor: #unwantedClasses!constants!public! !
-!Tools.DolphinProduct categoriesFor: #version!accessing!public! !
-!Tools.DolphinProduct categoriesFor: #version:!private! !
-!Tools.DolphinProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
+!Tools.DolphinProduct categoriesForMethods!
+allPackages!accessing!public! !
+basicLoad!operations!private! !
+beCurrent!operations!public! !
+boot!operations!private! !
+calcSystemFolderExtentFor:!helpers!private! !
+contents!accessing!public! !
+defaultSystemFolderColor!constants!private! !
+defaultSystemFolderExtent!constants!private! !
+diskBasedPackages!accessing!private! !
+displayOn:!printing!public! !
+encryptedClasses!accessing!public! !
+encryptedClasses:!accessing!private! !
+encryptedPackageNames!accessing!public! !
+foldLiterals!private! !
+fullName!accessing!public! !
+installProductDetails!operations!private! !
+installProductSounds!operations!private! !
+installSplash!private! !
+installSystemFolderOptions!operations!private! !
+installSystemFolderOptions:!private! !
+isSafeToEncrypt:!operations!public! !
+load!operations!public! !
+loadAndShrink!operations!public! !
+loadShrinkAndCompress!operations!public! !
+majorVersion!accessing!public! !
+minorVersion!accessing!public! !
+name!accessing!public! !
+packageNames!accessing!public! !
+packagePaths!accessing!public! !
+packages!accessing!public! !
+preShrink!private! !
+printOn:!printing!public! !
+productDetails!accessing!public! !
+removeUnlistedPackages!operations!private! !
+resizeSymbolTable!operations!public! !
+shortProductName!accessing!public! !
+shouldEncryptMetaclasses!constants!public!testing! !
+shrink!operations!public! !
+shrinkEventsRegister!operations!private! !
+shrinkHashedCollections!operations!private! !
+uninstallPackage:!operations!private! !
+unlistedContentException!operations!public! !
+unlistedPrerequisites!public! !
+unwantedClasses!constants!public! !
+version!accessing!public! !
+version:!private! !
+warnOfUnlistedContent!operations!private! !
+!
 
 !Tools.DolphinProduct class methodsFor!
 
@@ -548,20 +550,22 @@ version: aSemVer
 	^self basicNew
 		version: aSemVer;
 		yourself! !
-!Tools.DolphinProduct class categoriesFor: #boot!operations!public! !
-!Tools.DolphinProduct class categoriesFor: #current!accessing!public! !
-!Tools.DolphinProduct class categoriesFor: #errorInvalidProductDescription:!exceptions!public! !
-!Tools.DolphinProduct class categoriesFor: #fromString:!instance creation!public! !
-!Tools.DolphinProduct class categoriesFor: #icon!constants!public! !
-!Tools.DolphinProduct class categoriesFor: #initialize!initializing!private! !
-!Tools.DolphinProduct class categoriesFor: #loadAndShrink!operations!public! !
-!Tools.DolphinProduct class categoriesFor: #new!instance creation!public! !
-!Tools.DolphinProduct class categoriesFor: #packages:under:encrypted:!private! !
-!Tools.DolphinProduct class categoriesFor: #pacsUnder:encrypted:!private! !
-!Tools.DolphinProduct class categoriesFor: #paxesUnder:encrypted:!private! !
-!Tools.DolphinProduct class categoriesFor: #productName!accessing!public! !
-!Tools.DolphinProduct class categoriesFor: #productPrefix!instance creation!public! !
-!Tools.DolphinProduct class categoriesFor: #release!operations!public! !
-!Tools.DolphinProduct class categoriesFor: #shortProductName!accessing!public! !
-!Tools.DolphinProduct class categoriesFor: #version:!instance creation!public! !
+!Tools.DolphinProduct class categoriesForMethods!
+boot!operations!public! !
+current!accessing!public! !
+errorInvalidProductDescription:!exceptions!public! !
+fromString:!instance creation!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+loadAndShrink!operations!public! !
+new!instance creation!public! !
+packages:under:encrypted:!private! !
+pacsUnder:encrypted:!private! !
+paxesUnder:encrypted:!private! !
+productName!accessing!public! !
+productPrefix!instance creation!public! !
+release!operations!public! !
+shortProductName!accessing!public! !
+version:!instance creation!public! !
+!
 

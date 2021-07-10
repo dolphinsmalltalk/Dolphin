@@ -727,66 +727,68 @@ unterminatedComment: anInteger
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
 	^self literalErrorToken: buffer contents stop: self previousStepPosition! !
-!Kernel.Scanner categoriesFor: #addComment:!private!scanning! !
-!Kernel.Scanner categoriesFor: #atEnd!public!testing! !
-!Kernel.Scanner categoriesFor: #classify:!private!scanning! !
-!Kernel.Scanner categoriesFor: #constantExpected!error handling!private! !
-!Kernel.Scanner categoriesFor: #contents!accessing!public! !
-!Kernel.Scanner categoriesFor: #do:!enumerating!public! !
-!Kernel.Scanner categoriesFor: #environment!accessing!public! !
-!Kernel.Scanner categoriesFor: #environment:!accessing!public! !
-!Kernel.Scanner categoriesFor: #errorHandler:!initializing!private! !
-!Kernel.Scanner categoriesFor: #errorPosition!accessing!error handling!public! !
-!Kernel.Scanner categoriesFor: #extendedLiteralExpected!error handling!private! !
-!Kernel.Scanner categoriesFor: #getComments!accessing!public! !
-!Kernel.Scanner categoriesFor: #identifierTokenClass!constants!private! !
-!Kernel.Scanner categoriesFor: #illegalCharacter!error handling!private! !
-!Kernel.Scanner categoriesFor: #illegalNumber!error handling!private! !
-!Kernel.Scanner categoriesFor: #lexicalError:!error handling!private! !
-!Kernel.Scanner categoriesFor: #lexicalError:range:!error handling!private! !
-!Kernel.Scanner categoriesFor: #line!accessing!public! !
-!Kernel.Scanner categoriesFor: #literalCharacterTokenClass!public!scanning! !
-!Kernel.Scanner categoriesFor: #literalErrorToken:stop:!error handling!private! !
-!Kernel.Scanner categoriesFor: #literalTokenClass!constants!private! !
-!Kernel.Scanner categoriesFor: #metaVariableExpected!error handling!private! !
-!Kernel.Scanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
-!Kernel.Scanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
-!Kernel.Scanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
-!Kernel.Scanner categoriesFor: #next!accessing!public! !
-!Kernel.Scanner categoriesFor: #notificationClass!constants!error handling!private! !
-!Kernel.Scanner categoriesFor: #numberTokenClass!constants!private! !
-!Kernel.Scanner categoriesFor: #on:!initializing!private! !
-!Kernel.Scanner categoriesFor: #previousStepPosition!accessing!private! !
-!Kernel.Scanner categoriesFor: #qualifiedReferenceTokenClass!constants!private! !
-!Kernel.Scanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
-!Kernel.Scanner categoriesFor: #recoverFromUnterminatedComment:!error handling!private! !
-!Kernel.Scanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
-!Kernel.Scanner categoriesFor: #scanAnySymbol!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanBinary:!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanExponentInteger:!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanExtendedLiterals!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanIdentifierOrKeyword!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanKeyword!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanLiteral!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanLiteralArrayToken!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanLiteralCharacter!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanLiteralString!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanName!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanNameSpaceName!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanNumber:!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanOptimized!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanQualifiedReference!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanSign!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanSmalltalkReal:sign:!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanSpecialCharacter!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanStringSymbol!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanSymbol!private!scanning! !
-!Kernel.Scanner categoriesFor: #scanToken!accessing!public! !
-!Kernel.Scanner categoriesFor: #step!operations!private! !
-!Kernel.Scanner categoriesFor: #stepBackTo:!helpers!private! !
-!Kernel.Scanner categoriesFor: #stripSeparators!private!scanning! !
-!Kernel.Scanner categoriesFor: #unterminatedComment:!error handling!private! !
-!Kernel.Scanner categoriesFor: #unterminatedString!error handling!private! !
+!Kernel.Scanner categoriesForMethods!
+addComment:!private!scanning! !
+atEnd!public!testing! !
+classify:!private!scanning! !
+constantExpected!error handling!private! !
+contents!accessing!public! !
+do:!enumerating!public! !
+environment!accessing!public! !
+environment:!accessing!public! !
+errorHandler:!initializing!private! !
+errorPosition!accessing!error handling!public! !
+extendedLiteralExpected!error handling!private! !
+getComments!accessing!public! !
+identifierTokenClass!constants!private! !
+illegalCharacter!error handling!private! !
+illegalNumber!error handling!private! !
+lexicalError:!error handling!private! !
+lexicalError:range:!error handling!private! !
+line!accessing!public! !
+literalCharacterTokenClass!public!scanning! !
+literalErrorToken:stop:!error handling!private! !
+literalTokenClass!constants!private! !
+metaVariableExpected!error handling!private! !
+newFloatToken:precision:exponent:!helpers!private! !
+newIntegerToken:exponent:!helpers!private! !
+newScaledDecimalToken:precision:scale:!helpers!private! !
+next!accessing!public! !
+notificationClass!constants!error handling!private! !
+numberTokenClass!constants!private! !
+on:!initializing!private! !
+previousStepPosition!accessing!private! !
+qualifiedReferenceTokenClass!constants!private! !
+readIntegerOfRadix:!private!scanning! !
+recoverFromUnterminatedComment:!error handling!private! !
+reportError:at:line:range:extras:!error handling!private! !
+scanAnySymbol!private!scanning! !
+scanBinary:!private!scanning! !
+scanExponentInteger:!private!scanning! !
+scanExtendedLiterals!private!scanning! !
+scanIdentifierOrKeyword!private!scanning! !
+scanKeyword!private!scanning! !
+scanLiteral!private!scanning! !
+scanLiteralArrayToken!private!scanning! !
+scanLiteralCharacter!private!scanning! !
+scanLiteralString!private!scanning! !
+scanName!private!scanning! !
+scanNameSpaceName!private!scanning! !
+scanNumber:!private!scanning! !
+scanOptimized!private!scanning! !
+scanQualifiedReference!private!scanning! !
+scanSign!private!scanning! !
+scanSmalltalkReal:sign:!private!scanning! !
+scanSpecialCharacter!private!scanning! !
+scanStringSymbol!private!scanning! !
+scanSymbol!private!scanning! !
+scanToken!accessing!public! !
+step!operations!private! !
+stepBackTo:!helpers!private! !
+stripSeparators!private!scanning! !
+unterminatedComment:!error handling!private! !
+unterminatedString!error handling!private! !
+!
 
 Kernel.Scanner methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
 
@@ -864,12 +866,14 @@ on: aStream errorHandler: parseErrorHandler
 
 patternVariableCharacter
 	^PatternVariableCharacter! !
-!Kernel.Scanner class categoriesFor: #classify:!public!scanning! !
-!Kernel.Scanner class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.Scanner class categoriesFor: #initializeClassificationTable!initializing!private! !
-!Kernel.Scanner class categoriesFor: #isSelector:!public!testing! !
-!Kernel.Scanner class categoriesFor: #isVariable:!public!testing! !
-!Kernel.Scanner class categoriesFor: #on:!instance creation!public! !
-!Kernel.Scanner class categoriesFor: #on:errorHandler:!instance creation!public! !
-!Kernel.Scanner class categoriesFor: #patternVariableCharacter!accessing!public! !
+!Kernel.Scanner class categoriesForMethods!
+classify:!public!scanning! !
+initialize!development!initializing!public! !
+initializeClassificationTable!initializing!private! !
+isSelector:!public!testing! !
+isVariable:!public!testing! !
+on:!instance creation!public! !
+on:errorHandler:!instance creation!public! !
+patternVariableCharacter!accessing!public! !
+!
 

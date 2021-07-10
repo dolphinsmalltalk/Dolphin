@@ -163,28 +163,30 @@ wmSysChar: message wParam: wParam lParam: lParam
 		ifFalse: 
 			[self arena onItemIn: self selectedAtIndex: selected.
 			0]! !
-!Tools.MenuComposerView categoriesFor: #arena!accessing!private! !
-!Tools.MenuComposerView categoriesFor: #conflictingAccelerators:!accessing!public! !
-!Tools.MenuComposerView categoriesFor: #createDragImage:!public!tracking! !
-!Tools.MenuComposerView categoriesFor: #defaultWindowStyle!constants!private! !
-!Tools.MenuComposerView categoriesFor: #evaluateWithCanvas:!private!testing! !
-!Tools.MenuComposerView categoriesFor: #hasSelection!public!testing! !
-!Tools.MenuComposerView categoriesFor: #indexOfItem:!private!searching! !
-!Tools.MenuComposerView categoriesFor: #initialize!initializing!private! !
-!Tools.MenuComposerView categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!Tools.MenuComposerView categoriesFor: #itemAt:!private!searching! !
-!Tools.MenuComposerView categoriesFor: #itemRect:!public! !
-!Tools.MenuComposerView categoriesFor: #menu!accessing!public! !
-!Tools.MenuComposerView categoriesFor: #onEraseRequired:!event handling!painting!public! !
-!Tools.MenuComposerView categoriesFor: #onInputMaskRequired:!event handling!public! !
-!Tools.MenuComposerView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!Tools.MenuComposerView categoriesFor: #onPaintRequired:!event handling!painting!public! !
-!Tools.MenuComposerView categoriesFor: #originForSubmenu:!accessing!public! !
-!Tools.MenuComposerView categoriesFor: #refreshContents!public!updating! !
-!Tools.MenuComposerView categoriesFor: #selectionByIndex!public!selection! !
-!Tools.MenuComposerView categoriesFor: #selectionByIndex:!public!selection! !
-!Tools.MenuComposerView categoriesFor: #selectionOrNil!public!selection! !
-!Tools.MenuComposerView categoriesFor: #wmSysChar:wParam:lParam:!event handling-win32!private! !
+!Tools.MenuComposerView categoriesForMethods!
+arena!accessing!private! !
+conflictingAccelerators:!accessing!public! !
+createDragImage:!public!tracking! !
+defaultWindowStyle!constants!private! !
+evaluateWithCanvas:!private!testing! !
+hasSelection!public!testing! !
+indexOfItem:!private!searching! !
+initialize!initializing!private! !
+insertBefore:position:canvas:!public!testing! !
+itemAt:!private!searching! !
+itemRect:!public! !
+menu!accessing!public! !
+onEraseRequired:!event handling!painting!public! !
+onInputMaskRequired:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onPaintRequired:!event handling!painting!public! !
+originForSubmenu:!accessing!public! !
+refreshContents!public!updating! !
+selectionByIndex!public!selection! !
+selectionByIndex:!public!selection! !
+selectionOrNil!public!selection! !
+wmSysChar:wParam:lParam:!event handling-win32!private! !
+!
 
 !Tools.MenuComposerView class methodsFor!
 
@@ -201,6 +203,8 @@ publishedEventsOfInstances
 		add: #actionPerformed;
 		yourself.
 ! !
-!Tools.MenuComposerView class categoriesFor: #icon!constants!public! !
-!Tools.MenuComposerView class categoriesFor: #publishedEventsOfInstances!events!public! !
+!Tools.MenuComposerView class categoriesForMethods!
+icon!constants!public! !
+publishedEventsOfInstances!events!public! !
+!
 

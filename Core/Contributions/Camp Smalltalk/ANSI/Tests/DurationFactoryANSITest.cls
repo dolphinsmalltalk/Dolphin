@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #DurationFactoryANSITest
 	instanceVariableNames: ''
@@ -39,9 +39,11 @@ testXzero
 	#'Date and Time'.
 	self value: [Duration zero] should: [:r | r asSeconds = 0]
 		conformTo: #'Duration factory' selector: #'seconds:'.! !
-!DurationFactoryANSITest categoriesFor: #canonicalObject!public! !
-!DurationFactoryANSITest categoriesFor: #protocol!public! !
-!DurationFactoryANSITest categoriesFor: #testXdaysXhoursXminutesXsecondsX!public! !
-!DurationFactoryANSITest categoriesFor: #testXsecondsX!public! !
-!DurationFactoryANSITest categoriesFor: #testXzero!public! !
+!DurationFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXdaysXhoursXminutesXsecondsX!public! !
+testXsecondsX!public! !
+testXzero!public! !
+!
 

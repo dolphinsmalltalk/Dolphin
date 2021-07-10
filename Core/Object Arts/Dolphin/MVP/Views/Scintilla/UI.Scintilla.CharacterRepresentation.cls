@@ -68,18 +68,20 @@ representation
 
 representation: aString
 	representation := aString ifNotNil: [aString asUtf8String]! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #applyToView:initializing:!private!updating! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #character!accessing!public! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #character:!public! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #color!accessing!public! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #color:!accessing!public! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #encodedCharacter!accessing!private! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #initialize!initializing!private! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #isBlob!public!testing! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #isBlob:!accessing!public! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #printOn:!development!printing!public! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #representation!accessing!public! !
-!UI.Scintilla.CharacterRepresentation categoriesFor: #representation:!accessing!public! !
+!UI.Scintilla.CharacterRepresentation categoriesForMethods!
+applyToView:initializing:!private!updating! !
+character!accessing!public! !
+character:!public! !
+color!accessing!public! !
+color:!accessing!public! !
+encodedCharacter!accessing!private! !
+initialize!initializing!private! !
+isBlob!public!testing! !
+isBlob:!accessing!public! !
+printOn:!development!printing!public! !
+representation!accessing!public! !
+representation:!accessing!public! !
+!
 
 !UI.Scintilla.CharacterRepresentation class methodsFor!
 
@@ -116,9 +118,11 @@ initialize
 
 new
 	^self basicNew initialize! !
-!UI.Scintilla.CharacterRepresentation class categoriesFor: #forCharacter:!instance creation!public! !
-!UI.Scintilla.CharacterRepresentation class categoriesFor: #forLineEnding!instance creation!public! !
-!UI.Scintilla.CharacterRepresentation class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.CharacterRepresentation class categoriesFor: #initialize!public! !
-!UI.Scintilla.CharacterRepresentation class categoriesFor: #new!instance creation!public! !
+!UI.Scintilla.CharacterRepresentation class categoriesForMethods!
+forCharacter:!instance creation!public! !
+forLineEnding!instance creation!public! !
+icon!constants!development!public! !
+initialize!public! !
+new!instance creation!public! !
+!
 

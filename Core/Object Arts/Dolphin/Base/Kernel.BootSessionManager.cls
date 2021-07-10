@@ -316,36 +316,38 @@ updateBootImage
 	"The only thing done currently is to reload the BCL."
 
 	self reloadBootPackages! !
-!Kernel.BootSessionManager categoriesFor: #allocConsole!operations!private! !
-!Kernel.BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!Kernel.BootSessionManager categoriesFor: #bootFinished!event handling!public! !
-!Kernel.BootSessionManager categoriesFor: #bootStarted!event handling!public! !
-!Kernel.BootSessionManager categoriesFor: #fileInClass:!private! !
-!Kernel.BootSessionManager categoriesFor: #initializeBootPackages!initializing!public! !
-!Kernel.BootSessionManager categoriesFor: #keepAlive!idling!public! !
-!Kernel.BootSessionManager categoriesFor: #logError:!operations-logging!public! !
-!Kernel.BootSessionManager categoriesFor: #main!operations-startup!public! !
-!Kernel.BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
-!Kernel.BootSessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
-!Kernel.BootSessionManager categoriesFor: #openConsole!operations!public! !
-!Kernel.BootSessionManager categoriesFor: #openFd:mode:!operations!private! !
-!Kernel.BootSessionManager categoriesFor: #openSources!operations-source files!private! !
-!Kernel.BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
-!Kernel.BootSessionManager categoriesFor: #productDetails!accessing!private!product! !
-!Kernel.BootSessionManager categoriesFor: #productDetails:!accessing!private!product! !
-!Kernel.BootSessionManager categoriesFor: #productVersion!accessing!product!public! !
-!Kernel.BootSessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!Kernel.BootSessionManager categoriesFor: #reloadBootPackages!operations-startup!public! !
-!Kernel.BootSessionManager categoriesFor: #reloadPackage:!operations-startup!public! !
-!Kernel.BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
-!Kernel.BootSessionManager categoriesFor: #shellClosed:!operations-startup!private! !
-!Kernel.BootSessionManager categoriesFor: #shellOpened:!operations-startup!private! !
-!Kernel.BootSessionManager categoriesFor: #shutdown!operations-shutdown!public! !
-!Kernel.BootSessionManager categoriesFor: #snapshot!operations-saving!private! !
-!Kernel.BootSessionManager categoriesFor: #startUI!operations-startup!public! !
-!Kernel.BootSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!Kernel.BootSessionManager categoriesFor: #unhandledException:!exceptions!private! !
-!Kernel.BootSessionManager categoriesFor: #updateBootImage!operations-startup!public! !
+!Kernel.BootSessionManager categoriesForMethods!
+allocConsole!operations!private! !
+basicTertiaryStartup!operations-startup!public! !
+bootFinished!event handling!public! !
+bootStarted!event handling!public! !
+fileInClass:!private! !
+initializeBootPackages!initializing!public! !
+keepAlive!idling!public! !
+logError:!operations-logging!public! !
+main!operations-startup!public! !
+onPreSaveImage!event handling!public! !
+onUnhandledWarning:!event handling!public! !
+openConsole!operations!public! !
+openFd:mode:!operations!private! !
+openSources!operations-source files!private! !
+primaryStartup!operations-startup!private! !
+productDetails!accessing!private!product! !
+productDetails:!accessing!private!product! !
+productVersion!accessing!product!public! !
+quit:!operations-shutdown!private! !
+reloadBootPackages!operations-startup!public! !
+reloadPackage:!operations-startup!public! !
+saveImageDefault!operations-saving!public! !
+shellClosed:!operations-startup!private! !
+shellOpened:!operations-startup!private! !
+shutdown!operations-shutdown!public! !
+snapshot!operations-saving!private! !
+startUI!operations-startup!public! !
+traceStream!accessing!operations-logging!public! !
+unhandledException:!exceptions!private! !
+updateBootImage!operations-startup!public! !
+!
 
 !Kernel.BootSessionManager class methodsFor!
 
@@ -353,5 +355,7 @@ imageExtension
 	"Answer the suffix for an executable image file"
 
 	^'img8'.! !
-!Kernel.BootSessionManager class categoriesFor: #imageExtension!constants!public! !
+!Kernel.BootSessionManager class categoriesForMethods!
+imageExtension!constants!public! !
+!
 

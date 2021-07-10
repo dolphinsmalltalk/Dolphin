@@ -471,26 +471,28 @@ urlEncoded
 						base: 16
 						nDigits: 2]].
 	^encodedStream grabContents! !
-!Core.Utf8String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Core.Utf8String categoriesFor: #asLowercase!converting!public! !
-!Core.Utf8String categoriesFor: #asUppercase!converting!public! !
-!Core.Utf8String categoriesFor: #asUtf8String!converting!public! !
-!Core.Utf8String categoriesFor: #before:ifAbsent:!public!searching! !
-!Core.Utf8String categoriesFor: #bom!constants!encode/decode!private! !
-!Core.Utf8String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Core.Utf8String categoriesFor: #countElements!accessing!public! !
-!Core.Utf8String categoriesFor: #decodeAt:!encode/decode!private! !
-!Core.Utf8String categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Core.Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Core.Utf8String categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!Core.Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!Core.Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Core.Utf8String categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
-!Core.Utf8String categoriesFor: #maxEncoding!constants!private! !
-!Core.Utf8String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!Core.Utf8String categoriesFor: #reversedFrom:to:!copying!public! !
-!Core.Utf8String categoriesFor: #strlen!accessing!private! !
-!Core.Utf8String categoriesFor: #urlEncoded!public! !
+!Core.Utf8String categoriesForMethods!
+_beginsString:!comparing!double dispatch!private! !
+asLowercase!converting!public! !
+asUppercase!converting!public! !
+asUtf8String!converting!public! !
+before:ifAbsent:!public!searching! !
+bom!constants!encode/decode!private! !
+copyToBuffer:ofSize:!copying!private! !
+countElements!accessing!public! !
+decodeAt:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+encodedAt:put:!accessing!encode/decode!private! !
+encodedSizeAt:!encode/decode!private! !
+encodedSizeOf:!encode/decode!private! !
+encodeOn:put:!encode/decode!private! !
+isLeadCodeUnit:!encode/decode!public!testing! !
+maxEncoding!constants!private! !
+nextIndexOfCharacter:from:to:!private!searching! !
+reversedFrom:to:!copying!public! !
+strlen!accessing!private! !
+urlEncoded!public! !
+!
 
 !Core.Utf8String class methodsFor!
 
@@ -511,8 +513,10 @@ initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
 	VM registryAt: #Utf8String put: self! !
-!Core.Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!Core.Utf8String class categoriesFor: #codePage!instance creation!public! !
-!Core.Utf8String class categoriesFor: #fromAddress:!instance creation!public! !
-!Core.Utf8String class categoriesFor: #initialize!development!initializing!public! !
+!Core.Utf8String class categoriesForMethods!
+characterForCodeUnit:!enquiries!public! !
+codePage!instance creation!public! !
+fromAddress:!instance creation!public! !
+initialize!development!initializing!public! !
+!
 

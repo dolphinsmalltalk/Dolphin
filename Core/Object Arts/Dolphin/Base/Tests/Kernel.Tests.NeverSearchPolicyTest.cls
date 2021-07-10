@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.NeverSearchPolicyTest'
 	instanceVariableNames: ''
@@ -31,6 +31,8 @@ testCompareWith
 	self assert: (policy compare: #hash with: #identityHash) not.
 	self assert: (policy compare: $a with: $a) not.
 	self assert: (policy compare: $a with: $b) not! !
-!Kernel.Tests.NeverSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
-!Kernel.Tests.NeverSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!Kernel.Tests.NeverSearchPolicyTest categoriesForMethods!
+policyClass!private!unit tests! !
+testCompareWith!public!unit tests! !
+!
 

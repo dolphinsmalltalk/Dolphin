@@ -232,34 +232,36 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	enumerators."
 
 	startInteger to: stopInteger do: [:i | aDyadicValuable value: i value: start + (step * (i - 1))]! !
-!Core.Interval categoriesFor: #-!arithmetic!public! !
-!Core.Interval categoriesFor: #+!arithmetic!public! !
-!Core.Interval categoriesFor: #=!comparing!public! !
-!Core.Interval categoriesFor: #add:!adding!public! !
-!Core.Interval categoriesFor: #at:!accessing!public! !
-!Core.Interval categoriesFor: #at:put:!accessing!public! !
-!Core.Interval categoriesFor: #collect:!enumerating!public! !
-!Core.Interval categoriesFor: #copyingClass!copying!private! !
-!Core.Interval categoriesFor: #displayOn:!printing!public! !
-!Core.Interval categoriesFor: #first!accessing!public! !
-!Core.Interval categoriesFor: #hash!comparing!public! !
-!Core.Interval categoriesFor: #includes:!public!testing! !
-!Core.Interval categoriesFor: #inject:into:!enumerating!public! !
-!Core.Interval categoriesFor: #isEmpty!public!testing! !
-!Core.Interval categoriesFor: #isSelfEvaluating!public!testing! !
-!Core.Interval categoriesFor: #last!accessing!public! !
-!Core.Interval categoriesFor: #printOn:!printing!public! !
-!Core.Interval categoriesFor: #setFrom:to:by:!accessing!private! !
-!Core.Interval categoriesFor: #size!accessing!public! !
-!Core.Interval categoriesFor: #species!accessing!public! !
-!Core.Interval categoriesFor: #start!accessing!public! !
-!Core.Interval categoriesFor: #start:!accessing!public! !
-!Core.Interval categoriesFor: #step!accessing!public! !
-!Core.Interval categoriesFor: #step:!accessing!public! !
-!Core.Interval categoriesFor: #stop!accessing!public! !
-!Core.Interval categoriesFor: #stop:!accessing!public! !
-!Core.Interval categoriesFor: #storeOn:!printing!public! !
-!Core.Interval categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+!Core.Interval categoriesForMethods!
+-!arithmetic!public! !
++!arithmetic!public! !
+=!comparing!public! !
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+collect:!enumerating!public! !
+copyingClass!copying!private! !
+displayOn:!printing!public! !
+first!accessing!public! !
+hash!comparing!public! !
+includes:!public!testing! !
+inject:into:!enumerating!public! !
+isEmpty!public!testing! !
+isSelfEvaluating!public!testing! !
+last!accessing!public! !
+printOn:!printing!public! !
+setFrom:to:by:!accessing!private! !
+size!accessing!public! !
+species!accessing!public! !
+start!accessing!public! !
+start:!accessing!public! !
+step!accessing!public! !
+step:!accessing!public! !
+stop!accessing!public! !
+stop:!accessing!public! !
+storeOn:!printing!public! !
+uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+!
 
 Core.Interval methodProtocol: #Interval attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
 
@@ -289,9 +291,11 @@ new
 	"Use #from:to:[by:]"
 
 	^self shouldNotImplement! !
-!Core.Interval class categoriesFor: #from:to:!instance creation!public! !
-!Core.Interval class categoriesFor: #from:to:by:!instance creation!public! !
-!Core.Interval class categoriesFor: #new!instance creation!private! !
+!Core.Interval class categoriesForMethods!
+from:to:!instance creation!public! !
+from:to:by:!instance creation!public! !
+new!instance creation!private! !
+!
 
 Core.Interval class methodProtocol: #'Interval factory' attributes: #(#ansi #readOnly) selectors: #(#from:to: #from:to:by:)!
 

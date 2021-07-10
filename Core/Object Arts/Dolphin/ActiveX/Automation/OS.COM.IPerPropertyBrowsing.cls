@@ -160,16 +160,18 @@ stringsToValues: dispid
 
 	^Dictionary withAll: (self getStringsAndValues: dispid)
 ! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #getDisplayString:!**auto generated**!methods!public! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #GetDisplayString:pbstr:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #getPredefinedStrings:!**auto generated**!methods!public! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #getPredefinedValue:dwCookie:!**auto generated**!methods!public! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #GetPredefinedValue:dwCookie:pVarOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #getStringsAndValues:!accessing!private! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #mapPropertyToPage:!**auto generated**!methods!public! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #MapPropertyToPage:pclsid:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
-!OS.COM.IPerPropertyBrowsing categoriesFor: #stringsToValues:!accessing!public! !
+!OS.COM.IPerPropertyBrowsing categoriesForMethods!
+getDisplayString:!**auto generated**!methods!public! !
+GetDisplayString:pbstr:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+getPredefinedStrings:!**auto generated**!methods!public! !
+GetPredefinedStrings:pCaStringsOut:pCaCookiesOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+getPredefinedValue:dwCookie:!**auto generated**!methods!public! !
+GetPredefinedValue:dwCookie:pVarOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+getStringsAndValues:!accessing!private! !
+mapPropertyToPage:!**auto generated**!methods!public! !
+MapPropertyToPage:pclsid:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+stringsToValues:!accessing!public! !
+!
 
 OS.COM.IPerPropertyBrowsing methodProtocol: #IPerPropertyBrowsing attributes: #(#readOnly) selectors: #(#GetDisplayString:pbstr: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut: #GetPredefinedValue:dwCookie:pVarOut: #MapPropertyToPage:pclsid:)!
 
@@ -191,5 +193,7 @@ defineFunctions
 		defineFunction: #GetPredefinedValue:dwCookie:pVarOut:
 			argumentTypes: 'sdword dword VARIANT*'
 ! !
-!OS.COM.IPerPropertyBrowsing class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPerPropertyBrowsing class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

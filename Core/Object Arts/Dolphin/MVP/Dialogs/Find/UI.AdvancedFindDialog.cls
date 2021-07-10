@@ -162,26 +162,28 @@ validationBlock: aBlock
 	it is valid. The OK button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
-!UI.AdvancedFindDialog categoriesFor: #createComponents!initializing!public! !
-!UI.AdvancedFindDialog categoriesFor: #findNext!commands!public! !
-!UI.AdvancedFindDialog categoriesFor: #initialize!initializing!public! !
-!UI.AdvancedFindDialog categoriesFor: #isRegExpEnabled!public!testing! !
-!UI.AdvancedFindDialog categoriesFor: #isRegExpEnabled:!accessing!public! !
-!UI.AdvancedFindDialog categoriesFor: #isValid!private!testing! !
-!UI.AdvancedFindDialog categoriesFor: #isValidRegularExpression:!private!testing! !
-!UI.AdvancedFindDialog categoriesFor: #isValidSearch:!private!testing! !
-!UI.AdvancedFindDialog categoriesFor: #isWildCardEnabled!public!testing! !
-!UI.AdvancedFindDialog categoriesFor: #isWildCardEnabled:!accessing!public! !
-!UI.AdvancedFindDialog categoriesFor: #model:!accessing!public! !
-!UI.AdvancedFindDialog categoriesFor: #onViewOpened!event handling!public! !
-!UI.AdvancedFindDialog categoriesFor: #prompt:!accessing!public! !
-!UI.AdvancedFindDialog categoriesFor: #queryCommand:!commands!private! !
-!UI.AdvancedFindDialog categoriesFor: #searchMode!accessing!public! !
-!UI.AdvancedFindDialog categoriesFor: #show!operations!public! !
-!UI.AdvancedFindDialog categoriesFor: #showModal!public!realizing/unrealizing! !
-!UI.AdvancedFindDialog categoriesFor: #validateUserInterface!operations!public! !
-!UI.AdvancedFindDialog categoriesFor: #validationBlock!accessing!public! !
-!UI.AdvancedFindDialog categoriesFor: #validationBlock:!accessing!public! !
+!UI.AdvancedFindDialog categoriesForMethods!
+createComponents!initializing!public! !
+findNext!commands!public! !
+initialize!initializing!public! !
+isRegExpEnabled!public!testing! !
+isRegExpEnabled:!accessing!public! !
+isValid!private!testing! !
+isValidRegularExpression:!private!testing! !
+isValidSearch:!private!testing! !
+isWildCardEnabled!public!testing! !
+isWildCardEnabled:!accessing!public! !
+model:!accessing!public! !
+onViewOpened!event handling!public! !
+prompt:!accessing!public! !
+queryCommand:!commands!private! !
+searchMode!accessing!public! !
+show!operations!public! !
+showModal!public!realizing/unrealizing! !
+validateUserInterface!operations!public! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 
 !UI.AdvancedFindDialog class methodsFor!
 
@@ -236,11 +238,13 @@ showModeless: aView on: aFindDetails
 	(self createOn: aFindDetails)
 		ownerView: aView;
 		show! !
-!UI.AdvancedFindDialog class categoriesFor: #createOn:prompt:caption:!instance creation!public! !
-!UI.AdvancedFindDialog class categoriesFor: #defaultModel!models!public! !
-!UI.AdvancedFindDialog class categoriesFor: #icon!constants!public! !
-!UI.AdvancedFindDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.AdvancedFindDialog class categoriesFor: #resource_Directionless_view!public!resources-views! !
-!UI.AdvancedFindDialog class categoriesFor: #resource_Selector_view!public!resources-views! !
-!UI.AdvancedFindDialog class categoriesFor: #showModeless:on:!instance creation!public! !
+!UI.AdvancedFindDialog class categoriesForMethods!
+createOn:prompt:caption:!instance creation!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Directionless_view!public!resources-views! !
+resource_Selector_view!public!resources-views! !
+showModeless:on:!instance creation!public! !
+!
 

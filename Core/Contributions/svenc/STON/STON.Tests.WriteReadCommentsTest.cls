@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.Tests.WriteReadTest subclass: #'STON.Tests.WriteReadCommentsTest'
 	instanceVariableNames: ''
@@ -25,6 +25,8 @@ serialize: anObject
 				on: stream;
 				nextPut: anObject.
 			stream << '/* final comment */']! !
-!STON.Tests.WriteReadCommentsTest categoriesFor: #materialize:!private! !
-!STON.Tests.WriteReadCommentsTest categoriesFor: #serialize:!private! !
+!STON.Tests.WriteReadCommentsTest categoriesForMethods!
+materialize:!private! !
+serialize:!private! !
+!
 

@@ -176,28 +176,30 @@ value: newValue
 			bstr := newValue asBSTR.
 			bstr == newValue ifTrue: [bstr := bstr copy]].
 	super value: (bstr beUnfinalizable; yourself)! !
-!OS.COM.BSTR categoriesFor: #asAnsiString!converting!public! !
-!OS.COM.BSTR categoriesFor: #asBSTR!converting!public! !
-!OS.COM.BSTR categoriesFor: #asByteString:!converting!private! !
-!OS.COM.BSTR categoriesFor: #asString!converting!public! !
-!OS.COM.BSTR categoriesFor: #asUtf16String!converting!public! !
-!OS.COM.BSTR categoriesFor: #asUtf8String!converting!public! !
-!OS.COM.BSTR categoriesFor: #at:!accessing!public! !
-!OS.COM.BSTR categoriesFor: #at:put:!accessing!public! !
-!OS.COM.BSTR categoriesFor: #attach:!accessing!private! !
-!OS.COM.BSTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.BSTR categoriesFor: #byteSize!accessing!public! !
-!OS.COM.BSTR categoriesFor: #copy!copying!public! !
-!OS.COM.BSTR categoriesFor: #copyingClass!copying!private! !
-!OS.COM.BSTR categoriesFor: #deepCopy!copying!public! !
-!OS.COM.BSTR categoriesFor: #displayOn:!printing!public! !
-!OS.COM.BSTR categoriesFor: #free!private!realizing/unrealizing! !
-!OS.COM.BSTR categoriesFor: #onStartup!event handling!private! !
-!OS.COM.BSTR categoriesFor: #printOn:!development!printing!public! !
-!OS.COM.BSTR categoriesFor: #size!accessing!public! !
-!OS.COM.BSTR categoriesFor: #species!constants!public! !
-!OS.COM.BSTR categoriesFor: #value!accessing!public! !
-!OS.COM.BSTR categoriesFor: #value:!accessing!public! !
+!OS.COM.BSTR categoriesForMethods!
+asAnsiString!converting!public! !
+asBSTR!converting!public! !
+asByteString:!converting!private! !
+asString!converting!public! !
+asUtf16String!converting!public! !
+asUtf8String!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+attach:!accessing!private! !
+basicFree!private!realizing/unrealizing! !
+byteSize!accessing!public! !
+copy!copying!public! !
+copyingClass!copying!private! !
+deepCopy!copying!public! !
+displayOn:!printing!public! !
+free!private!realizing/unrealizing! !
+onStartup!event handling!private! !
+printOn:!development!printing!public! !
+size!accessing!public! !
+species!constants!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !OS.COM.BSTR class methodsFor!
 
@@ -273,14 +275,16 @@ uninitialize
 
 	VM registryAt: #BSTR put: nil.
 	SessionManager current removeEventsTriggeredFor: self! !
-!OS.COM.BSTR class categoriesFor: #basicNew!instance creation!private! !
-!OS.COM.BSTR class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OS.COM.BSTR class categoriesFor: #fromInteger:!instance creation!public! !
-!OS.COM.BSTR class categoriesFor: #fromString:!instance creation!public! !
-!OS.COM.BSTR class categoriesFor: #icon!constants!public! !
-!OS.COM.BSTR class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.BSTR class categoriesFor: #new!instance creation!public! !
-!OS.COM.BSTR class categoriesFor: #newBuffer!instance creation!public! !
-!OS.COM.BSTR class categoriesFor: #onStartup!event handling!private! !
-!OS.COM.BSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.BSTR class categoriesForMethods!
+basicNew!instance creation!private! !
+clear:!public!realizing/unrealizing! !
+fromInteger:!instance creation!public! !
+fromString:!instance creation!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+newBuffer!instance creation!public! !
+onStartup!event handling!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

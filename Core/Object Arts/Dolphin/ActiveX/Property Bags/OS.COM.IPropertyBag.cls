@@ -74,10 +74,12 @@ Write: pszPropName pVar: pVar
 
 	<virtual stdcall: hresult 5 lpwstr variant*>
 	^self invalidCall: _failureCode! !
-!OS.COM.IPropertyBag categoriesFor: #read:pErrorLog:!**auto generated**!methods!public! !
-!OS.COM.IPropertyBag categoriesFor: #Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
-!OS.COM.IPropertyBag categoriesFor: #write:pVar:!**auto generated**!methods!public! !
-!OS.COM.IPropertyBag categoriesFor: #Write:pVar:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+!OS.COM.IPropertyBag categoriesForMethods!
+read:pErrorLog:!**auto generated**!methods!public! !
+Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+write:pVar:!**auto generated**!methods!public! !
+Write:pVar:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+!
 
 OS.COM.IPropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
 
@@ -94,5 +96,7 @@ defineFunctions
 		defineFunction: #Write:pVar:
 			argumentTypes: 'lpwstr VARIANT*'
 ! !
-!OS.COM.IPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
+!OS.COM.IPropertyBag class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

@@ -71,14 +71,16 @@ numQuads
 	"Private - Answer the number of <RGBQUAD>s in the receiver's colour table."
 
 	^self bmiHeader numQuads! !
-!OS.BITMAPINFO categoriesFor: #bmiColors!**compiled accessors**!public! !
-!OS.BITMAPINFO categoriesFor: #bmiColors:!**compiled accessors**!public! !
-!OS.BITMAPINFO categoriesFor: #bmiHeader!**compiled accessors**!public! !
-!OS.BITMAPINFO categoriesFor: #bmiHeader:!**compiled accessors**!public! !
-!OS.BITMAPINFO categoriesFor: #byteSize!accessing!public! !
-!OS.BITMAPINFO categoriesFor: #colors!accessing!public! !
-!OS.BITMAPINFO categoriesFor: #initialize:!initializing!private! !
-!OS.BITMAPINFO categoriesFor: #numQuads!accessing!private! !
+!OS.BITMAPINFO categoriesForMethods!
+bmiColors!**compiled accessors**!public! !
+bmiColors:!**compiled accessors**!public! !
+bmiHeader!**compiled accessors**!public! !
+bmiHeader:!**compiled accessors**!public! !
+byteSize!accessing!public! !
+colors!accessing!public! !
+initialize:!initializing!private! !
+numQuads!accessing!private! !
+!
 
 !OS.BITMAPINFO class methodsFor!
 
@@ -108,7 +110,9 @@ defineFields
 
 getFieldNames
 	^#(#bmiHeader #bmiColors)! !
-!OS.BITMAPINFO class categoriesFor: #colorDepth:!instance creation!public! !
-!OS.BITMAPINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.BITMAPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.BITMAPINFO class categoriesForMethods!
+colorDepth:!instance creation!public! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

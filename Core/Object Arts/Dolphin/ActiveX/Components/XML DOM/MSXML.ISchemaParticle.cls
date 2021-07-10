@@ -69,10 +69,12 @@ minOccurs
 	answer := VARIANT new.
 	self get_minOccurs: answer.
 	^answer asObject! !
-!MSXML.ISchemaParticle categoriesFor: #get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
-!MSXML.ISchemaParticle categoriesFor: #get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
-!MSXML.ISchemaParticle categoriesFor: #maxOccurs!**auto generated**!properties!public! !
-!MSXML.ISchemaParticle categoriesFor: #minOccurs!**auto generated**!properties!public! !
+!MSXML.ISchemaParticle categoriesForMethods!
+get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
+get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
+maxOccurs!**auto generated**!properties!public! !
+minOccurs!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaParticle class methodsFor!
 
@@ -86,5 +88,7 @@ defineFunctions
 		defineFunction: #get_maxOccurs:
 			argumentTypes: 'variant*'
 ! !
-!MSXML.ISchemaParticle class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaParticle class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

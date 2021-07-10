@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SortAlgorithmTest subclass: #'Kernel.Tests.HeapsortAlgorithmTest'
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ Kernel.Tests.HeapsortAlgorithmTest comment: ''!
 
 algorithmToTest
 	^HeapsortAlgorithm! !
-!Kernel.Tests.HeapsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!Kernel.Tests.HeapsortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+!
 

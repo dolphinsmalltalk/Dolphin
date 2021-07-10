@@ -126,22 +126,24 @@ tileColor
 
 tileColor: aColor 
 	tileColor := aColor! !
-!Graphics.InternalIcon categoriesFor: #=!comparing!comparison!public! !
-!Graphics.InternalIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Graphics.InternalIcon categoriesFor: #asAlphaBitmap:!converting!public! !
-!Graphics.InternalIcon categoriesFor: #asMenuBitmap!converting!public! !
-!Graphics.InternalIcon categoriesFor: #asParameter!converting!public! !
-!Graphics.InternalIcon categoriesFor: #bitmap!accessing!public! !
-!Graphics.InternalIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.InternalIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!Graphics.InternalIcon categoriesFor: #hash!comparing!comparison!public! !
-!Graphics.InternalIcon categoriesFor: #hotspot!accessing!public! !
-!Graphics.InternalIcon categoriesFor: #imageIndex!accessing!public! !
-!Graphics.InternalIcon categoriesFor: #imageManager!public! !
-!Graphics.InternalIcon categoriesFor: #imageType!constants!public! !
-!Graphics.InternalIcon categoriesFor: #tileBitmapWithExtent:!accessing!helpers!private! !
-!Graphics.InternalIcon categoriesFor: #tileColor!accessing!private! !
-!Graphics.InternalIcon categoriesFor: #tileColor:!accessing!private! !
+!Graphics.InternalIcon categoriesForMethods!
+=!comparing!comparison!public! !
+addToImageList:mask:!double dispatch!private! !
+asAlphaBitmap:!converting!public! !
+asMenuBitmap!converting!public! !
+asParameter!converting!public! !
+bitmap!accessing!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+hash!comparing!comparison!public! !
+hotspot!accessing!public! !
+imageIndex!accessing!public! !
+imageManager!public! !
+imageType!constants!public! !
+tileBitmapWithExtent:!accessing!helpers!private! !
+tileColor!accessing!private! !
+tileColor:!accessing!private! !
+!
 
 !Graphics.InternalIcon class methodsFor!
 
@@ -216,17 +218,19 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!Graphics.InternalIcon class categoriesFor: #badgeTile:color:!instance creation!public! !
-!Graphics.InternalIcon class categoriesFor: #badgeTile:color:extent:!instance creation!public! !
-!Graphics.InternalIcon class categoriesFor: #defaultExtent!constants!private! !
-!Graphics.InternalIcon class categoriesFor: #defaultTileExtent!constants!private! !
-!Graphics.InternalIcon class categoriesFor: #filesType!constants!private! !
-!Graphics.InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
-!Graphics.InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
-!Graphics.InternalIcon class categoriesFor: #icon!public! !
-!Graphics.InternalIcon class categoriesFor: #imageManager!accessing!private! !
-!Graphics.InternalIcon class categoriesFor: #new!instance creation!public! !
-!Graphics.InternalIcon class categoriesFor: #newTile!instance creation!public! !
-!Graphics.InternalIcon class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Graphics.InternalIcon class categoriesFor: #stbVersion!binary filing!public! !
+!Graphics.InternalIcon class categoriesForMethods!
+badgeTile:color:!instance creation!public! !
+badgeTile:color:extent:!instance creation!public! !
+defaultExtent!constants!private! !
+defaultTileExtent!constants!private! !
+filesType!constants!private! !
+fromFile:!instance creation!public! !
+fromFile:extent:!instance creation!public! !
+icon!public! !
+imageManager!accessing!private! !
+new!instance creation!public! !
+newTile!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

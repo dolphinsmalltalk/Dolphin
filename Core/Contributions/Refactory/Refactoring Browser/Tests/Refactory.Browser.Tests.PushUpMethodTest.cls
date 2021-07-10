@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushUpMethodTest'
 	instanceVariableNames: ''
@@ -106,11 +106,13 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 				model: model
 				pushUp: #(#foo)
 				from: class)! !
-!Refactory.Browser.Tests.PushUpMethodTest categoriesFor: #testPushUpAndCopyDown!public!tests! !
-!Refactory.Browser.Tests.PushUpMethodTest categoriesFor: #testPushUpClassMethod!failure tests!public! !
-!Refactory.Browser.Tests.PushUpMethodTest categoriesFor: #testPushUpMethodWithCopyOverriddenMethodsDown!public!tests! !
-!Refactory.Browser.Tests.PushUpMethodTest categoriesFor: #testPushUpReferencesInstVar!failure tests!public! !
-!Refactory.Browser.Tests.PushUpMethodTest categoriesFor: #testPushUpWithInvalidSuperSend!failure tests!public! !
-!Refactory.Browser.Tests.PushUpMethodTest categoriesFor: #testPushUpWithMethodThatCannotBePushedDown!failure tests!public! !
-!Refactory.Browser.Tests.PushUpMethodTest categoriesFor: #testPushUpWithSuperSendThatCannotBeCopiedDown!failure tests!public! !
+!Refactory.Browser.Tests.PushUpMethodTest categoriesForMethods!
+testPushUpAndCopyDown!public!tests! !
+testPushUpClassMethod!failure tests!public! !
+testPushUpMethodWithCopyOverriddenMethodsDown!public!tests! !
+testPushUpReferencesInstVar!failure tests!public! !
+testPushUpWithInvalidSuperSend!failure tests!public! !
+testPushUpWithMethodThatCannotBePushedDown!failure tests!public! !
+testPushUpWithSuperSendThatCannotBeCopiedDown!failure tests!public! !
+!
 

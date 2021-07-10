@@ -28,5 +28,7 @@ createInstance: pUnkOuter
 	current isNil ifTrue: [
 		current := super createInstance: pUnkOuter].
 	^current! !
-!OS.COM.SingletonClassFactory categoriesFor: #createInstance:!instance creation!private! !
+!OS.COM.SingletonClassFactory categoriesForMethods!
+createInstance:!instance creation!private! !
+!
 

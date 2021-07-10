@@ -41,12 +41,14 @@ isSuppressible
 
 isSuppressible: aBoolean
 	isSuppressible := aBoolean! !
-!Core.Notification categoriesFor: #defaultAction!handling!public! !
-!Core.Notification categoriesFor: #hresult!accessing!public! !
-!Core.Notification categoriesFor: #initialize!initializing!public! !
-!Core.Notification categoriesFor: #isResumable!public!testing! !
-!Core.Notification categoriesFor: #isSuppressible!accessing!public! !
-!Core.Notification categoriesFor: #isSuppressible:!accessing!public! !
+!Core.Notification categoriesForMethods!
+defaultAction!handling!public! !
+hresult!accessing!public! !
+initialize!initializing!public! !
+isResumable!public!testing! !
+isSuppressible!accessing!public! !
+isSuppressible:!accessing!public! !
+!
 
 Core.Notification methodProtocol: #Notification attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -66,9 +68,11 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Notification! !
-!Core.Notification class categoriesFor: #deprecated!instance creation!public! !
-!Core.Notification class categoriesFor: #mbIconId!parping!public! !
-!Core.Notification class categoriesFor: #severityClass!constants!public! !
+!Core.Notification class categoriesForMethods!
+deprecated!instance creation!public! !
+mbIconId!parping!public! !
+severityClass!constants!public! !
+!
 
 Core.Notification class methodProtocol: #'Notification class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
 

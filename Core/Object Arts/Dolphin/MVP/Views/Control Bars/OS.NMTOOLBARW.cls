@@ -38,10 +38,12 @@ tbButton
 	"Answer the <TBBUTTON> value of the receiver's 'tbButton' field."
 
 	^TBBUTTON fromAddress: bytes yourAddress + _OffsetOf_tbButton! !
-!OS.NMTOOLBARW categoriesFor: #cchText!**compiled accessors**!public! !
-!OS.NMTOOLBARW categoriesFor: #iItem!**compiled accessors**!public! !
-!OS.NMTOOLBARW categoriesFor: #pszText!**compiled accessors**!public! !
-!OS.NMTOOLBARW categoriesFor: #tbButton!**compiled accessors**!public! !
+!OS.NMTOOLBARW categoriesForMethods!
+cchText!**compiled accessors**!public! !
+iItem!**compiled accessors**!public! !
+pszText!**compiled accessors**!public! !
+tbButton!**compiled accessors**!public! !
+!
 
 !OS.NMTOOLBARW class methodsFor!
 
@@ -67,6 +69,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #tbButton #cchText #pszText)! !
-!OS.NMTOOLBARW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMTOOLBARW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTOOLBARW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

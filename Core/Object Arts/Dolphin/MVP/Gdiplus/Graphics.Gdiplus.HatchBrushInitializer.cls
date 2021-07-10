@@ -25,8 +25,10 @@ style: aNumber forecolor: foreColor backcolor: backColor
 	style := aNumber.
 	forecolor := foreColor.
 	backcolor := backColor! !
-!Graphics.Gdiplus.HatchBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.HatchBrushInitializer categoriesFor: #style:forecolor:backcolor:!initializing!private! !
+!Graphics.Gdiplus.HatchBrushInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+style:forecolor:backcolor:!initializing!private! !
+!
 
 !Graphics.Gdiplus.HatchBrushInitializer class methodsFor!
 
@@ -35,5 +37,7 @@ style: aNumber forecolor: foreARGB backcolor: backARGB
 		style: aNumber
 		forecolor: foreARGB
 		backcolor: backARGB! !
-!Graphics.Gdiplus.HatchBrushInitializer class categoriesFor: #style:forecolor:backcolor:!instance creation!public! !
+!Graphics.Gdiplus.HatchBrushInitializer class categoriesForMethods!
+style:forecolor:backcolor:!instance creation!public! !
+!
 

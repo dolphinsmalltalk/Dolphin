@@ -122,7 +122,9 @@ onPreStripImage
 
 	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
 	classPool removeKey: '_PropertyRegister'! !
-!Core.Object class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Core.Object class categoriesForMethods!
+onPreStripImage!class hierarchy-removing!private! !
+!
 
 !External.Structure class methodsFor!
 
@@ -137,15 +139,19 @@ fullyCompileDefinition
 
 removeTemplate
 	template := nil! !
-!External.Structure class categoriesFor: #fullyCompileDefinition!compiling!public! !
-!External.Structure class categoriesFor: #removeTemplate!private!template definition! !
+!External.Structure class categoriesForMethods!
+fullyCompileDefinition!compiling!public! !
+removeTemplate!private!template definition! !
+!
 
 !OS.UserLibrary methodsFor!
 
 messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
 	<stdcall: sdword MessageBoxW handle lpwstr lpwstr dword>
 	^self invalidCall: _failureCode! !
-!OS.UserLibrary categoriesFor: #messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
+!OS.UserLibrary categoriesForMethods!
+messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
+!
 
 "End of package definition"!
 

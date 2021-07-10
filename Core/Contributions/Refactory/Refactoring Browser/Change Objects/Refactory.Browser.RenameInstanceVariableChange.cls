@@ -14,5 +14,7 @@ Refactory.Browser.RenameInstanceVariableChange comment: ''!
 renameVariable
 	#rbFix.	"Added to implement this change as a rename, rather than an add, copy value, remove sequence"
 	self changeClass renameInstVar: oldName to: newName! !
-!Refactory.Browser.RenameInstanceVariableChange categoriesFor: #renameVariable!private! !
+!Refactory.Browser.RenameInstanceVariableChange categoriesForMethods!
+renameVariable!private! !
+!
 

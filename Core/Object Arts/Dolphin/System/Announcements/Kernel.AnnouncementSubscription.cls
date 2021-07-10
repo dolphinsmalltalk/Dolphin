@@ -67,17 +67,19 @@ valuable: aValuable
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
 	self subscriber: aValuable announcementSubscriber.! !
-!Kernel.AnnouncementSubscription categoriesFor: #action!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #action:!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #announcementClass!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #announcementClass:!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #announcer!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #announcer:!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #deliver:!announcing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #handlesAnnouncement:!public!testing! !
-!Kernel.AnnouncementSubscription categoriesFor: #makeStrong!converting!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #makeWeak!converting!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #subscriber!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #subscriber:!accessing!public! !
-!Kernel.AnnouncementSubscription categoriesFor: #valuable:!accessing!public! !
+!Kernel.AnnouncementSubscription categoriesForMethods!
+action!accessing!public! !
+action:!accessing!public! !
+announcementClass!accessing!public! !
+announcementClass:!accessing!public! !
+announcer!accessing!public! !
+announcer:!accessing!public! !
+deliver:!announcing!public! !
+handlesAnnouncement:!public!testing! !
+makeStrong!converting!public! !
+makeWeak!converting!public! !
+subscriber!accessing!public! !
+subscriber:!accessing!public! !
+valuable:!accessing!public! !
+!
 

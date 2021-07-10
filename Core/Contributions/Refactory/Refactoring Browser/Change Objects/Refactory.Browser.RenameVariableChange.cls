@@ -76,23 +76,25 @@ printOn: aStream
 
 renameVariable
 	^self subclassResponsibility! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #=!comparing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #changeClass!accessing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #changeClass:!accessing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #changeClassName!accessing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #changeClassName:!accessing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #changeString!printing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #classReference!accessing!private! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #displayClassName!printing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #executeNotifying:!private! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #hash!comparing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #isMeta!private! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #newName!accessing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #newName:!private! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #oldName!accessing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #oldName:!private! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #printOn:!printing!public! !
-!Refactory.Browser.RenameVariableChange categoriesFor: #renameVariable!private! !
+!Refactory.Browser.RenameVariableChange categoriesForMethods!
+=!comparing!public! !
+changeClass!accessing!public! !
+changeClass:!accessing!public! !
+changeClassName!accessing!public! !
+changeClassName:!accessing!public! !
+changeString!printing!public! !
+classReference!accessing!private! !
+displayClassName!printing!public! !
+executeNotifying:!private! !
+hash!comparing!public! !
+isMeta!private! !
+newName!accessing!public! !
+newName:!private! !
+oldName!accessing!public! !
+oldName:!private! !
+printOn:!printing!public! !
+renameVariable!private! !
+!
 
 !Refactory.Browser.RenameVariableChange class methodsFor!
 
@@ -102,5 +104,7 @@ rename: oldName to: newName in: aClass
 		newName: newName;
 		changeClass: aClass;
 		yourself! !
-!Refactory.Browser.RenameVariableChange class categoriesFor: #rename:to:in:!instance creation!public! !
+!Refactory.Browser.RenameVariableChange class categoriesForMethods!
+rename:to:in:!instance creation!public! !
+!
 

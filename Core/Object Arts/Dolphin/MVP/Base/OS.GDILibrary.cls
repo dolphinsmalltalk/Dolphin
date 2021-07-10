@@ -1203,105 +1203,107 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 
 	<stdcall: bool TextOutW handle sdword sdword lpwstr sdword>
 	^self invalidCall: _failureCode! !
-!OS.GDILibrary categoriesFor: #addFontResource:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #beginPath:!**auto generated**!public!win32 functions-path! !
-!OS.GDILibrary categoriesFor: #bitBlt:nXDest:nYDest:nWidth:nHeight:hdcSrc:nXSrc:nYSrc:dwRop:!**auto generated**!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #closeFigure:!**auto generated**!public!win32 functions-path! !
-!OS.GDILibrary categoriesFor: #combineRgn:hrgnSrc1:hrgnSrc2:fnCombineMode:!**auto generated**!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #createBitmap:nHeight:cPlanes:cBitsPerPel:lpvBits:!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #createBrushIndirect:!**auto generated**!public!win32 functions-brush! !
-!OS.GDILibrary categoriesFor: #createCompatibleBitmap:nWidth:nHeight:!**auto generated**!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #createCompatibleDC:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #createDC:lpszDevice:lpszOutput:lpInitData:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #createDIBSection:pbmi:iUsage:ppvBits:hSection:dwOffset:!**auto generated**!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #createFontIndirectA:!**auto generated**!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #createFontIndirectW:!**auto generated**!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #createHatchBrush:color:!**auto generated**!public!win32 functions-brush! !
-!OS.GDILibrary categoriesFor: #createIC:lpszDevice:lpszOutput:lpdvminit:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #createPalette:!**auto generated**!public!win32 functions-color! !
-!OS.GDILibrary categoriesFor: #createPen:nWidth:crColor:!**auto generated**!public!win32 functions-pen! !
-!OS.GDILibrary categoriesFor: #createPenIndirect:!**auto generated**!public!win32 functions-pen! !
-!OS.GDILibrary categoriesFor: #createRectRgnIndirect:!**auto generated**!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #deleteDC:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #deleteObject:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #ellipse:nLeftRect:nTopRect:nRightRect:nBottomRect:!public!win32 functions-filled shape! !
-!OS.GDILibrary categoriesFor: #endDoc:!**auto generated**!public!win32 functions-printing and printer spooler! !
-!OS.GDILibrary categoriesFor: #endPage:!**auto generated**!public!win32 functions-printing and printer spooler! !
-!OS.GDILibrary categoriesFor: #endPath:!**auto generated**!public!win32 functions-path! !
-!OS.GDILibrary categoriesFor: #enumFontFamilies:lpszFamily:lpEnumFontFamProc:lParam:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #excludeClipRect:nLeftRect:nTopRect:nRightRect:nBottomRect:!**auto generated**!public!win32 functions-clipping! !
-!OS.GDILibrary categoriesFor: #extTextOut:x:y:fuOptions:lprc:lpString:cbCount:lpDx:!**auto generated**!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #fillRgn:hRgn:hBr:!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #frameRgn:hRgn:hBr:nWidth:nHeight:!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #gdiAlphaBlend:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:ftn:!**auto generated**!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #gdiGradientFill:pVertex:nVertex:pMesh:nCount:ulMode:!**auto generated**!public! !
-!OS.GDILibrary categoriesFor: #gdiTransparentBlt:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:crTransparent:!**auto generated**!public! !
-!OS.GDILibrary categoriesFor: #getBkColor:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getBkMode:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getClipBox:lprc:!**auto generated**!public!win32 functions-clipping! !
-!OS.GDILibrary categoriesFor: #getCurrentObject:uObjectType:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getDCBrushColor:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getDCPenColor:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getDeviceCaps:nIndex:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getDIBColorTable:uStartIndex:cEntries:pColors:!**auto generated**!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #getDIBits:hbm:uStartScan:cScanLines:lpvBits:lpbi:uUsage:!**auto generated**!public! !
-!OS.GDILibrary categoriesFor: #getMapMode:!**auto generated**!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #getNearestPaletteIndex:crColor:!**auto generated**!public!win32 functions-color! !
-!OS.GDILibrary categoriesFor: #getObject:cbBuffer:lpvObject:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getObjectW:cbBuffer:lpvObject:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getOutlineTextMetrics:cbData:lpotm:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #getPaletteEntries:iStartIndex:nEntries:lppe:!**auto generated**!public!win32 functions-color! !
-!OS.GDILibrary categoriesFor: #getPixel:xPos:yPos:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getROP2:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getStockObject:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #getTextColor:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #getTextExtentPoint32:lpString:c:lpSize:!**auto generated**!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #getTextMetrics:lptm:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #getViewportExtEx:lpSize:!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #getViewportOrgEx:lppt:!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #getWindowExtEx:lpSize:!**auto generated**!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #getWindowOrgEx:lppt:!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #intersectClipRect:nLeftRect:nTopRect:nRightRect:nBottomRect:!public!win32 functions-clipping! !
-!OS.GDILibrary categoriesFor: #invertRgn:hRgn:!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #lineTo:nXEnd:nYEnd:!public!win32 functions-line and curve! !
-!OS.GDILibrary categoriesFor: #moveToEx:x:y:lpPoint:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #offsetWindowOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #paintRgn:hRgn:!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #patBlt:nXLeft:nYLeft:nWidth:nHeight:dwRop:!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #plgBlt:lpPoint:hdcSrc:nXSrc:nYSrc:nWidth:nHeight:hbmMask:sMask:yMask:!**auto generated**!public! !
-!OS.GDILibrary categoriesFor: #polygon:lpPoints:nCount:!public!win32 functions-filled shape! !
-!OS.GDILibrary categoriesFor: #ptInRegion:x:y:!public!win32 functions-region! !
-!OS.GDILibrary categoriesFor: #realizePalette:!**auto generated**!public!win32 functions-color! !
-!OS.GDILibrary categoriesFor: #rectangle:nLeftRect:nTopRect:nRightRect:nBottomRect:!public!win32 functions-filled shape! !
-!OS.GDILibrary categoriesFor: #rectVisible:lprc:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #removeFontResource:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #restoreDC:nSavedDC:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #roundRect:nLeftRect:nTopRect:nRightRect:nBottomRect:nWidth:nHeight:!public!win32 functions-filled shape! !
-!OS.GDILibrary categoriesFor: #saveDC:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #selectClipPath:iMode:!**auto generated**!public!win32 functions-clipping! !
-!OS.GDILibrary categoriesFor: #selectClipRgn:hrgn:!public!win32 functions-clipping! !
-!OS.GDILibrary categoriesFor: #selectObject:hgdiobj:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #selectPalette:hPal:bForceBackground:!public!win32 functions-color! !
-!OS.GDILibrary categoriesFor: #setBkColor:crColor:!public!win32 functions-painting and drawing! !
-!OS.GDILibrary categoriesFor: #setBkMode:iBkMode:!public!win32 functions-painting and drawing! !
-!OS.GDILibrary categoriesFor: #setBrushOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-brush!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #setDIBColorTable:uStartIndex:cEntries:pColors:!**auto generated**!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #setDIBits:hbmp:uStartScan:cScanLines:lpvBits:lpbmi:fuColorUse:!**auto generated**!public! !
-!OS.GDILibrary categoriesFor: #setMapMode:fnMapMode:!**auto generated**!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #setPixelV:x:y:crColor:!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #setROP2:fnDrawMode:!**auto generated**!public!win32 functions-device context! !
-!OS.GDILibrary categoriesFor: #setTextAlign:fMode:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #setTextColor:crColor:!public!win32 functions-font and text! !
-!OS.GDILibrary categoriesFor: #setViewportExtEx:nXExtent:nYExtent:lpSize:!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #setViewportOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #setWindowExtEx:nXExtent:nYExtent:lpSize:!**auto generated**!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #setWindowOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-transformations! !
-!OS.GDILibrary categoriesFor: #startDoc:lpdi:!public!win32 functions-printing and printer spooler! !
-!OS.GDILibrary categoriesFor: #startPage:!**auto generated**!public!win32 functions-printing and printer spooler! !
-!OS.GDILibrary categoriesFor: #stretchBlt:nXOriginDest:nYOriginDest:nWidthDest:nHeightDest:hdcSrc:nXOriginSrc:nYOriginSrc:nWidthSrc:nHeightSrc:dwRop:!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #stretchDIBits:xDest:yDest:nDestWidth:nDestHeight:xSrc:ySrc:nSrcWidth:nSrcHeight:lpBits:lpBitsInfo:iUsage:dwRop:!**auto generated**!public!win32 functions-bitmap! !
-!OS.GDILibrary categoriesFor: #textOut:nXStart:nYStart:lpString:cbString:!**auto generated**!public!win32 functions-font and text! !
+!OS.GDILibrary categoriesForMethods!
+addFontResource:!public!win32 functions-font and text! !
+beginPath:!**auto generated**!public!win32 functions-path! !
+bitBlt:nXDest:nYDest:nWidth:nHeight:hdcSrc:nXSrc:nYSrc:dwRop:!**auto generated**!public!win32 functions-bitmap! !
+closeFigure:!**auto generated**!public!win32 functions-path! !
+combineRgn:hrgnSrc1:hrgnSrc2:fnCombineMode:!**auto generated**!public!win32 functions-region! !
+createBitmap:nHeight:cPlanes:cBitsPerPel:lpvBits:!public!win32 functions-bitmap! !
+createBrushIndirect:!**auto generated**!public!win32 functions-brush! !
+createCompatibleBitmap:nWidth:nHeight:!**auto generated**!public!win32 functions-bitmap! !
+createCompatibleDC:!**auto generated**!public!win32 functions-device context! !
+createDC:lpszDevice:lpszOutput:lpInitData:!public!win32 functions-device context! !
+createDIBSection:pbmi:iUsage:ppvBits:hSection:dwOffset:!**auto generated**!public!win32 functions-bitmap! !
+createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
+createFontIndirectA:!**auto generated**!public!win32 functions-font and text! !
+createFontIndirectW:!**auto generated**!public!win32 functions-font and text! !
+createHatchBrush:color:!**auto generated**!public!win32 functions-brush! !
+createIC:lpszDevice:lpszOutput:lpdvminit:!**auto generated**!public!win32 functions-device context! !
+createPalette:!**auto generated**!public!win32 functions-color! !
+createPen:nWidth:crColor:!**auto generated**!public!win32 functions-pen! !
+createPenIndirect:!**auto generated**!public!win32 functions-pen! !
+createRectRgnIndirect:!**auto generated**!public!win32 functions-region! !
+deleteDC:!**auto generated**!public!win32 functions-device context! !
+deleteObject:!**auto generated**!public!win32 functions-device context! !
+ellipse:nLeftRect:nTopRect:nRightRect:nBottomRect:!public!win32 functions-filled shape! !
+endDoc:!**auto generated**!public!win32 functions-printing and printer spooler! !
+endPage:!**auto generated**!public!win32 functions-printing and printer spooler! !
+endPath:!**auto generated**!public!win32 functions-path! !
+enumFontFamilies:lpszFamily:lpEnumFontFamProc:lParam:!public!win32 functions-font and text! !
+excludeClipRect:nLeftRect:nTopRect:nRightRect:nBottomRect:!**auto generated**!public!win32 functions-clipping! !
+extTextOut:x:y:fuOptions:lprc:lpString:cbCount:lpDx:!**auto generated**!public!win32 functions-font and text! !
+fillRgn:hRgn:hBr:!public!win32 functions-region! !
+frameRgn:hRgn:hBr:nWidth:nHeight:!public!win32 functions-region! !
+gdiAlphaBlend:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:ftn:!**auto generated**!public!win32 functions-bitmap! !
+gdiGradientFill:pVertex:nVertex:pMesh:nCount:ulMode:!**auto generated**!public! !
+gdiTransparentBlt:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:crTransparent:!**auto generated**!public! !
+getBkColor:!**auto generated**!public!win32 functions-device context! !
+getBkMode:!**auto generated**!public!win32 functions-device context! !
+getClipBox:lprc:!**auto generated**!public!win32 functions-clipping! !
+getCurrentObject:uObjectType:!**auto generated**!public!win32 functions-device context! !
+getDCBrushColor:!public!win32 functions-device context! !
+getDCPenColor:!public!win32 functions-device context! !
+getDeviceCaps:nIndex:!**auto generated**!public!win32 functions-device context! !
+getDIBColorTable:uStartIndex:cEntries:pColors:!**auto generated**!public!win32 functions-bitmap! !
+getDIBits:hbm:uStartScan:cScanLines:lpvBits:lpbi:uUsage:!**auto generated**!public! !
+getMapMode:!**auto generated**!public!win32 functions-transformations! !
+getNearestPaletteIndex:crColor:!**auto generated**!public!win32 functions-color! !
+getObject:cbBuffer:lpvObject:!public!win32 functions-device context! !
+getObjectW:cbBuffer:lpvObject:!public!win32 functions-device context! !
+getOutlineTextMetrics:cbData:lpotm:!public!win32 functions-font and text! !
+getPaletteEntries:iStartIndex:nEntries:lppe:!**auto generated**!public!win32 functions-color! !
+getPixel:xPos:yPos:!public!win32 functions-device context! !
+getROP2:!**auto generated**!public!win32 functions-device context! !
+getStockObject:!**auto generated**!public!win32 functions-device context! !
+getTextColor:!public!win32 functions-font and text! !
+getTextExtentPoint32:lpString:c:lpSize:!**auto generated**!public!win32 functions-font and text! !
+getTextMetrics:lptm:!public!win32 functions-font and text! !
+getViewportExtEx:lpSize:!public!win32 functions-transformations! !
+getViewportOrgEx:lppt:!public!win32 functions-transformations! !
+getWindowExtEx:lpSize:!**auto generated**!public!win32 functions-transformations! !
+getWindowOrgEx:lppt:!public!win32 functions-transformations! !
+intersectClipRect:nLeftRect:nTopRect:nRightRect:nBottomRect:!public!win32 functions-clipping! !
+invertRgn:hRgn:!public!win32 functions-region! !
+lineTo:nXEnd:nYEnd:!public!win32 functions-line and curve! !
+moveToEx:x:y:lpPoint:!**auto generated**!public!win32 functions-device context! !
+offsetWindowOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-transformations! !
+paintRgn:hRgn:!public!win32 functions-region! !
+patBlt:nXLeft:nYLeft:nWidth:nHeight:dwRop:!public!win32 functions-bitmap! !
+plgBlt:lpPoint:hdcSrc:nXSrc:nYSrc:nWidth:nHeight:hbmMask:sMask:yMask:!**auto generated**!public! !
+polygon:lpPoints:nCount:!public!win32 functions-filled shape! !
+ptInRegion:x:y:!public!win32 functions-region! !
+realizePalette:!**auto generated**!public!win32 functions-color! !
+rectangle:nLeftRect:nTopRect:nRightRect:nBottomRect:!public!win32 functions-filled shape! !
+rectVisible:lprc:!public!win32 functions-device context! !
+removeFontResource:!public!win32 functions-font and text! !
+restoreDC:nSavedDC:!public!win32 functions-device context! !
+roundRect:nLeftRect:nTopRect:nRightRect:nBottomRect:nWidth:nHeight:!public!win32 functions-filled shape! !
+saveDC:!public!win32 functions-device context! !
+selectClipPath:iMode:!**auto generated**!public!win32 functions-clipping! !
+selectClipRgn:hrgn:!public!win32 functions-clipping! !
+selectObject:hgdiobj:!**auto generated**!public!win32 functions-device context! !
+selectPalette:hPal:bForceBackground:!public!win32 functions-color! !
+setBkColor:crColor:!public!win32 functions-painting and drawing! !
+setBkMode:iBkMode:!public!win32 functions-painting and drawing! !
+setBrushOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-brush!win32 functions-transformations! !
+setDIBColorTable:uStartIndex:cEntries:pColors:!**auto generated**!public!win32 functions-bitmap! !
+setDIBits:hbmp:uStartScan:cScanLines:lpvBits:lpbmi:fuColorUse:!**auto generated**!public! !
+setMapMode:fnMapMode:!**auto generated**!public!win32 functions-transformations! !
+setPixelV:x:y:crColor:!public!win32 functions-device context! !
+setROP2:fnDrawMode:!**auto generated**!public!win32 functions-device context! !
+setTextAlign:fMode:!public!win32 functions-font and text! !
+setTextColor:crColor:!public!win32 functions-font and text! !
+setViewportExtEx:nXExtent:nYExtent:lpSize:!public!win32 functions-transformations! !
+setViewportOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-transformations! !
+setWindowExtEx:nXExtent:nYExtent:lpSize:!**auto generated**!public!win32 functions-transformations! !
+setWindowOrgEx:nXOrg:nYOrg:lppt:!public!win32 functions-transformations! !
+startDoc:lpdi:!public!win32 functions-printing and printer spooler! !
+startPage:!**auto generated**!public!win32 functions-printing and printer spooler! !
+stretchBlt:nXOriginDest:nYOriginDest:nWidthDest:nHeightDest:hdcSrc:nXOriginSrc:nYOriginSrc:nWidthSrc:nHeightSrc:dwRop:!public!win32 functions-bitmap! !
+stretchDIBits:xDest:yDest:nDestWidth:nDestHeight:xSrc:ySrc:nSrcWidth:nSrcHeight:lpBits:lpBitsInfo:iUsage:dwRop:!**auto generated**!public!win32 functions-bitmap! !
+textOut:nXStart:nYStart:lpString:cbString:!**auto generated**!public!win32 functions-font and text! !
+!
 
 !OS.GDILibrary class methodsFor!
 
@@ -1313,6 +1315,8 @@ fileName
 
 sharedVariableName
 	^#{Gdi32}! !
-!OS.GDILibrary class categoriesFor: #fileName!constants!public! !
-!OS.GDILibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.GDILibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

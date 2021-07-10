@@ -16,5 +16,7 @@ fileExtension
 	stored in files."
 
 	^'vu'! !
-!ViewResource class categoriesFor: #fileExtension!private! !
+!ViewResource class categoriesForMethods!
+fileExtension!private! !
+!
 

@@ -23,7 +23,9 @@ initializeSystemFolder
 					description: 'User Preferences'
 					openBlock: [:folder :item | self inspectSystemOptions]
 					helpId: 10580)! !
-!Tools.CommunityEditionSmalltalkSystem categoriesFor: #initializeSystemFolder!initializing!private! !
+!Tools.CommunityEditionSmalltalkSystem categoriesForMethods!
+initializeSystemFolder!initializing!private! !
+!
 
 !Tools.CommunityEditionSmalltalkSystem class methodsFor!
 
@@ -48,8 +50,10 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
-!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
-!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
-!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Tools.CommunityEditionSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
+!Tools.CommunityEditionSmalltalkSystem class categoriesForMethods!
+initialize!initializing!private! !
+installCurrent!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+uninstallCurrent!class hierarchy-removing!private! !
+!
 

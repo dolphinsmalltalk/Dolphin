@@ -76,9 +76,11 @@ IgnorableWarning: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErr
 
 	<virtual stdcall: hresult 6 ISAXLocator* word* hresult>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXErrorHandler categoriesFor: #Error:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
-!MSXML.ISAXErrorHandler categoriesFor: #FatalError:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
-!MSXML.ISAXErrorHandler categoriesFor: #IgnorableWarning:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
+!MSXML.ISAXErrorHandler categoriesForMethods!
+Error:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
+FatalError:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
+IgnorableWarning:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
+!
 
 !MSXML.ISAXErrorHandler class methodsFor!
 
@@ -94,5 +96,7 @@ defineFunctions
 		defineFunction: #IgnorableWarning:pwchErrorMessage:hrErrorCode:
 			argumentTypes: 'ISAXLocator* word* hresult'
 ! !
-!MSXML.ISAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXErrorHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

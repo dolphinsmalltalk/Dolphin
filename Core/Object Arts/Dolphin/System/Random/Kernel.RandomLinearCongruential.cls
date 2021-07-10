@@ -35,10 +35,12 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	multiplier := mulInteger.
 	increment := incInteger.
 	seed := 1! !
-!Kernel.RandomLinearCongruential categoriesFor: #lcg!helpers!private! !
-!Kernel.RandomLinearCongruential categoriesFor: #next!accessing!public! !
-!Kernel.RandomLinearCongruential categoriesFor: #peek!accessing!public! !
-!Kernel.RandomLinearCongruential categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
+!Kernel.RandomLinearCongruential categoriesForMethods!
+lcg!helpers!private! !
+next!accessing!public! !
+peek!accessing!public! !
+setModulus:multiplier:increment:!initializing!private! !
+!
 
 !Kernel.RandomLinearCongruential class methodsFor!
 
@@ -78,8 +80,10 @@ newParkMiller2
 		newModulus: 16r7FFFFFFF
 		multiplier: 48271
 		increment: 0! !
-!Kernel.RandomLinearCongruential class categoriesFor: #newANSIC!instance creation!public! !
-!Kernel.RandomLinearCongruential class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
-!Kernel.RandomLinearCongruential class categoriesFor: #newParkMiller!instance creation!public! !
-!Kernel.RandomLinearCongruential class categoriesFor: #newParkMiller2!instance creation!public! !
+!Kernel.RandomLinearCongruential class categoriesForMethods!
+newANSIC!instance creation!public! !
+newModulus:multiplier:increment:!instance creation!public! !
+newParkMiller!instance creation!public! !
+newParkMiller2!instance creation!public! !
+!
 

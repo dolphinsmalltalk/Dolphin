@@ -105,17 +105,19 @@ valueArray
 	"Next line won't work with an array value, i.e., if length > 8."
 	type == PropertyTagTypeSRational ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
 	self error: 'unrecognised type'! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #id!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #id:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #length!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #length:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #name!accessing!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Type!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Type:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #typeName!accessing!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Value!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #Value:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpPropertyItem categoriesFor: #valueArray!accessing!public! !
+!Graphics.Gdiplus.GpPropertyItem categoriesForMethods!
+id!**compiled accessors**!public! !
+id:!**compiled accessors**!public! !
+length!**compiled accessors**!public! !
+length:!**compiled accessors**!public! !
+name!accessing!public! !
+Type!**compiled accessors**!public! !
+Type:!**compiled accessors**!public! !
+typeName!accessing!public! !
+Value!**compiled accessors**!public! !
+Value:!**compiled accessors**!public! !
+valueArray!accessing!public! !
+!
 
 !Graphics.Gdiplus.GpPropertyItem class methodsFor!
 
@@ -149,6 +151,8 @@ defineFields
 
 getFieldNames
 	^#(#id #length #Type #Value)! !
-!Graphics.Gdiplus.GpPropertyItem class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpPropertyItem class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpPropertyItem class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -188,27 +188,29 @@ value
 	"Answer the special property which is the default value for the receiver."
 
 	^self description! !
-!MSScriptControl.IScriptError categoriesFor: #clear!**auto generated**!methods!public! !
-!MSScriptControl.IScriptError categoriesFor: #Clear!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #column!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #description!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #get_Column:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #get_Description:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #get_HelpContext:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #get_HelpFile:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #get_Line:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #get_Number:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #get_Text:!**auto generated**!COM Interfaces-IScriptError!private! !
-!MSScriptControl.IScriptError categoriesFor: #helpContext!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #helpFile!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSScriptControl.IScriptError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSScriptControl.IScriptError categoriesFor: #line!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #number!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #source!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #text!**auto generated**!properties!public! !
-!MSScriptControl.IScriptError categoriesFor: #value!accessing!properties!public! !
+!MSScriptControl.IScriptError categoriesForMethods!
+clear!**auto generated**!methods!public! !
+Clear!**auto generated**!COM Interfaces-IScriptError!private! !
+column!**auto generated**!properties!public! !
+description!**auto generated**!properties!public! !
+get_Column:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Description:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_HelpContext:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_HelpFile:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Line:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Number:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Source:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Text:!**auto generated**!COM Interfaces-IScriptError!private! !
+helpContext!**auto generated**!properties!public! !
+helpFile!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+line!**auto generated**!properties!public! !
+number!**auto generated**!properties!public! !
+source!**auto generated**!properties!public! !
+text!**auto generated**!properties!public! !
+value!accessing!properties!public! !
+!
 
 !MSScriptControl.IScriptError class methodsFor!
 
@@ -247,7 +249,9 @@ initializeTypeLib
 		IScriptError initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!MSScriptControl.IScriptError class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSScriptControl.IScriptError class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSScriptControl.IScriptError class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptError class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

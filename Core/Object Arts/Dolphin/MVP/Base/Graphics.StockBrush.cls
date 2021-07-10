@@ -51,11 +51,13 @@ printOn: aPuttableStream
 		print: Brush;
 		space;
 		display: self name! !
-!Graphics.StockBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.StockBrush categoriesFor: #id:!private!realizing/unrealizing! !
-!Graphics.StockBrush categoriesFor: #name!accessing!public! !
-!Graphics.StockBrush categoriesFor: #ownedHandle:!accessing!private! !
-!Graphics.StockBrush categoriesFor: #printOn:!printing!public! !
+!Graphics.StockBrush categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+id:!private!realizing/unrealizing! !
+name!accessing!public! !
+ownedHandle:!accessing!private! !
+printOn:!printing!public! !
+!
 
 !Graphics.StockBrush class methodsFor!
 
@@ -70,6 +72,8 @@ new
 	"StockBrushes should only be instantiated with #fromID:"
 
 	^self shouldNotImplement! !
-!Graphics.StockBrush class categoriesFor: #fromId:!instance creation!public! !
-!Graphics.StockBrush class categoriesFor: #new!instance creation!public! !
+!Graphics.StockBrush class categoriesForMethods!
+fromId:!instance creation!public! !
+new!instance creation!public! !
+!
 

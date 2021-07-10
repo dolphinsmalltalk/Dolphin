@@ -22,6 +22,8 @@ initialize: anInteger
 
 	super initialize: anInteger.
 	self dwSize: anInteger! !
-!OS.Win32Structure categoriesFor: #dwSize:!initializing!public! !
-!OS.Win32Structure categoriesFor: #initialize:!initializing!private! !
+!OS.Win32Structure categoriesForMethods!
+dwSize:!initializing!public! !
+initialize:!initializing!private! !
+!
 

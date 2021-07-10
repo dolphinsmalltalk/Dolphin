@@ -67,13 +67,15 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!OS.FileSystemWatcher categoriesFor: #getEvents!events!private! !
-!OS.FileSystemWatcher categoriesFor: #handleError:!helpers!private! !
-!OS.FileSystemWatcher categoriesFor: #handleNotifications:!private! !
-!OS.FileSystemWatcher categoriesFor: #informObservers:!helpers!private! !
-!OS.FileSystemWatcher categoriesFor: #postCopy!copying!public! !
-!OS.FileSystemWatcher categoriesFor: #setEvents:!events!private! !
-!OS.FileSystemWatcher categoriesFor: #stbSaveOn:!binary filing!public! !
+!OS.FileSystemWatcher categoriesForMethods!
+getEvents!events!private! !
+handleError:!helpers!private! !
+handleNotifications:!private! !
+informObservers:!helpers!private! !
+postCopy!copying!public! !
+setEvents:!events!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 !OS.FileSystemWatcher class methodsFor!
 
@@ -86,5 +88,7 @@ initialize
 
 	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
 				argumentTypes: 'DWORD DWORD OVERLAPPED*'! !
-!OS.FileSystemWatcher class categoriesFor: #initialize!initializing!public! !
+!OS.FileSystemWatcher class categoriesForMethods!
+initialize!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Bag subclass: #'STON.Tests.IdentityBag'
 	instanceVariableNames: ''
@@ -22,6 +22,8 @@ new
 	which uses equality as the comparison for identifying duplicate elements."
 
 	^self identityNew! !
-!STON.Tests.IdentityBag class categoriesFor: #identityNew:!instance creation!public! !
-!STON.Tests.IdentityBag class categoriesFor: #new!instance creation!public! !
+!STON.Tests.IdentityBag class categoriesForMethods!
+identityNew:!instance creation!public! !
+new!instance creation!public! !
+!
 

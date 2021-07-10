@@ -95,12 +95,14 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^{IEnumRECT}! !
-!OS.COM.Examples.EnumRECT categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Examples.EnumRECT categoriesFor: #initialize!initializing!public! !
-!OS.COM.Examples.EnumRECT categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Examples.EnumRECT categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Examples.EnumRECT categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Examples.EnumRECT categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.Examples.EnumRECT categoriesForMethods!
+Clone:!COM Interfaces-IEnumXXXX!public! !
+initialize!initializing!public! !
+Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
+Reset!COM Interfaces-IEnumXXXX!public! !
+Skip:!COM Interfaces-IEnumXXXX!public! !
+supportedInterfaces!constants!public! !
+!
 
 !OS.COM.Examples.EnumRECT class methodsFor!
 
@@ -113,6 +115,8 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!OS.COM.Examples.EnumRECT class categoriesFor: #initialize!initializing!private! !
-!OS.COM.Examples.EnumRECT class categoriesFor: #new!instance creation!public! !
+!OS.COM.Examples.EnumRECT class categoriesForMethods!
+initialize!initializing!private! !
+new!instance creation!public! !
+!
 

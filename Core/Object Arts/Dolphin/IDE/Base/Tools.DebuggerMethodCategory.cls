@@ -30,10 +30,12 @@ removeMethodSilently: aCompiledMethod
 		of: aCompiledMethod methodClass
 		maskClear: mask.
 	super removeMethodSilently: aCompiledMethod! !
-!Tools.DebuggerMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!Tools.DebuggerMethodCategory categoriesFor: #mask!accessing!public! !
-!Tools.DebuggerMethodCategory categoriesFor: #mask:!accessing!private! !
-!Tools.DebuggerMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!Tools.DebuggerMethodCategory categoriesForMethods!
+addMethodSilently:!adding!private! !
+mask!accessing!public! !
+mask:!accessing!private! !
+removeMethodSilently:!private!removing! !
+!
 
 !Tools.DebuggerMethodCategory class methodsFor!
 
@@ -53,5 +55,7 @@ initialize
 		at: stepOver name put: stepOver.
 	steppedThrough do: [:each | stepThrough addMethodSilently: each].
 	steppedOver do: [:each | stepOver addMethodSilently: each]! !
-!Tools.DebuggerMethodCategory class categoriesFor: #initialize!public! !
+!Tools.DebuggerMethodCategory class categoriesForMethods!
+initialize!public! !
+!
 

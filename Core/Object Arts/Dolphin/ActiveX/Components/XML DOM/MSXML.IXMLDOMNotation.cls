@@ -96,15 +96,17 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
-!MSXML.IXMLDOMNotation categoriesFor: #childNodes!properties!public! !
-!MSXML.IXMLDOMNotation categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
-!MSXML.IXMLDOMNotation categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
-!MSXML.IXMLDOMNotation categoriesFor: #key!accessing!public! !
-!MSXML.IXMLDOMNotation categoriesFor: #key:!accessing!public! !
-!MSXML.IXMLDOMNotation categoriesFor: #publicId!**auto generated**!properties!public! !
-!MSXML.IXMLDOMNotation categoriesFor: #systemId!**auto generated**!properties!public! !
-!MSXML.IXMLDOMNotation categoriesFor: #value!accessing!public! !
-!MSXML.IXMLDOMNotation categoriesFor: #value:!accessing!public! !
+!MSXML.IXMLDOMNotation categoriesForMethods!
+childNodes!properties!public! !
+get_publicId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
+get_systemId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
+key!accessing!public! !
+key:!accessing!public! !
+publicId!**auto generated**!properties!public! !
+systemId!**auto generated**!properties!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 MSXML.IXMLDOMNotation methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -120,5 +122,7 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'variant*'
 ! !
-!MSXML.IXMLDOMNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMNotation class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

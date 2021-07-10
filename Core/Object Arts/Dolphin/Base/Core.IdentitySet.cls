@@ -37,7 +37,9 @@ identityIncludes: anObject
 	identical."
 
 	^(self basicAt: (self findElementOrNil: anObject)) notNil! !
-!Core.IdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!Core.IdentitySet categoriesFor: #hash:max:!private!searching! !
-!Core.IdentitySet categoriesFor: #identityIncludes:!public!searching! !
+!Core.IdentitySet categoriesForMethods!
+findElementOrNil:!private!searching! !
+hash:max:!private!searching! !
+identityIncludes:!public!searching! !
+!
 

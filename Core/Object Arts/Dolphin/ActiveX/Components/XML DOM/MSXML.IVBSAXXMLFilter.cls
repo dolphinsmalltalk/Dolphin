@@ -80,12 +80,14 @@ setParent: oReader
 	Helpstring: Set or get the parent reader"
 
 	self putref_parent: oReader! !
-!MSXML.IVBSAXXMLFilter categoriesFor: #get_parent:!**auto generated**!COM Interfaces-IVBSAXXMLFilter!private! !
-!MSXML.IVBSAXXMLFilter categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXXMLFilter categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IVBSAXXMLFilter categoriesFor: #parent!**auto generated**!properties!public! !
-!MSXML.IVBSAXXMLFilter categoriesFor: #putref_parent:!**auto generated**!COM Interfaces-IVBSAXXMLFilter!private! !
-!MSXML.IVBSAXXMLFilter categoriesFor: #setParent:!**auto generated**!properties!public! !
+!MSXML.IVBSAXXMLFilter categoriesForMethods!
+get_parent:!**auto generated**!COM Interfaces-IVBSAXXMLFilter!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+parent!**auto generated**!properties!public! !
+putref_parent:!**auto generated**!COM Interfaces-IVBSAXXMLFilter!private! !
+setParent:!**auto generated**!properties!public! !
+!
 
 !MSXML.IVBSAXXMLFilter class methodsFor!
 
@@ -99,5 +101,7 @@ defineFunctions
 		defineFunction: #putref_parent:
 			argumentTypes: 'IVBSAXXMLReader*'
 ! !
-!MSXML.IVBSAXXMLFilter class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXXMLFilter class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

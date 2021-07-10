@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #ObjectANSITest
 	instanceVariableNames: 'object'
@@ -19,7 +19,9 @@ protocol
 setUp
 	super setUp.
 	object := Object new.! !
-!ObjectANSITest categoriesFor: #canonicalObject!public! !
-!ObjectANSITest categoriesFor: #protocol!public! !
-!ObjectANSITest categoriesFor: #setUp!public! !
+!ObjectANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+!
 

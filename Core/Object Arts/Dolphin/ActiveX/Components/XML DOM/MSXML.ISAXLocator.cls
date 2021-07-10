@@ -108,14 +108,16 @@ GetSystemId: ppwchSystemId
 
 	<virtual stdcall: hresult 7 word**>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXLocator categoriesFor: #getColumnNumber!**auto generated**!methods!public! !
-!MSXML.ISAXLocator categoriesFor: #GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!MSXML.ISAXLocator categoriesFor: #getLineNumber!**auto generated**!methods!public! !
-!MSXML.ISAXLocator categoriesFor: #GetLineNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!MSXML.ISAXLocator categoriesFor: #getPublicId!**auto generated**!methods!public! !
-!MSXML.ISAXLocator categoriesFor: #GetPublicId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!MSXML.ISAXLocator categoriesFor: #getSystemId!**auto generated**!methods!public! !
-!MSXML.ISAXLocator categoriesFor: #GetSystemId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!MSXML.ISAXLocator categoriesForMethods!
+getColumnNumber!**auto generated**!methods!public! !
+GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+getLineNumber!**auto generated**!methods!public! !
+GetLineNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+getPublicId!**auto generated**!methods!public! !
+GetPublicId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+getSystemId!**auto generated**!methods!public! !
+GetSystemId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!
 
 !MSXML.ISAXLocator class methodsFor!
 
@@ -133,5 +135,7 @@ defineFunctions
 		defineFunction: #GetSystemId:
 			argumentTypes: 'word**'
 ! !
-!MSXML.ISAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXLocator class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

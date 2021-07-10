@@ -102,20 +102,22 @@ writes
 	the variable described by the receiver."
 
 	^writes ?? #()! !
-!Kernel.StVariable categoriesFor: #addAssignment:fromScope:!public! !
-!Kernel.StVariable categoriesFor: #addRead:fromScope:!public! !
-!Kernel.StVariable categoriesFor: #isArgument!public!testing! !
-!Kernel.StVariable categoriesFor: #isConstant!public!testing! !
-!Kernel.StVariable categoriesFor: #isInstanceVariable!public!testing! !
-!Kernel.StVariable categoriesFor: #isLocalVariable!public!testing! !
-!Kernel.StVariable categoriesFor: #isRead!public!testing! !
-!Kernel.StVariable categoriesFor: #isStaticVariable!public!testing! !
-!Kernel.StVariable categoriesFor: #isTempVariable!public!testing! !
-!Kernel.StVariable categoriesFor: #isWritten!public!testing! !
-!Kernel.StVariable categoriesFor: #name!accessing!public! !
-!Kernel.StVariable categoriesFor: #printOn:!public! !
-!Kernel.StVariable categoriesFor: #reads!accessing!public! !
-!Kernel.StVariable categoriesFor: #scope!accessing!public! !
-!Kernel.StVariable categoriesFor: #scope:!accessing!public! !
-!Kernel.StVariable categoriesFor: #writes!accessing!public! !
+!Kernel.StVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
+addRead:fromScope:!public! !
+isArgument!public!testing! !
+isConstant!public!testing! !
+isInstanceVariable!public!testing! !
+isLocalVariable!public!testing! !
+isRead!public!testing! !
+isStaticVariable!public!testing! !
+isTempVariable!public!testing! !
+isWritten!public!testing! !
+name!accessing!public! !
+printOn:!public! !
+reads!accessing!public! !
+scope!accessing!public! !
+scope:!accessing!public! !
+writes!accessing!public! !
+!
 

@@ -40,11 +40,13 @@ ptDrag
 	"Answer the <POINTL> value of the receiver's 'ptDrag' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptDrag! !
-!OS.NMTREEVIEWW categoriesFor: #action!**compiled accessors**!public! !
-!OS.NMTREEVIEWW categoriesFor: #itemHandle!accessing!public! !
-!OS.NMTREEVIEWW categoriesFor: #itemNew!**compiled accessors**!public! !
-!OS.NMTREEVIEWW categoriesFor: #itemOld!**compiled accessors**!public! !
-!OS.NMTREEVIEWW categoriesFor: #ptDrag!**compiled accessors**!public! !
+!OS.NMTREEVIEWW categoriesForMethods!
+action!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+itemNew!**compiled accessors**!public! !
+itemOld!**compiled accessors**!public! !
+ptDrag!**compiled accessors**!public! !
+!
 
 !OS.NMTREEVIEWW class methodsFor!
 
@@ -70,6 +72,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #action #itemOld #itemNew #ptDrag)! !
-!OS.NMTREEVIEWW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMTREEVIEWW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMTREEVIEWW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

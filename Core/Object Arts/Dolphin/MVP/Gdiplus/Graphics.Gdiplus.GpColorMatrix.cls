@@ -55,12 +55,14 @@ row: rowInteger col: colInteger
 
 row: rowInteger col: colInteger put: aNumber
 	self m at: (rowInteger - 1) * 5 + colInteger put: aNumber! !
-!Graphics.Gdiplus.GpColorMatrix categoriesFor: #atPoint:!accessing!public! !
-!Graphics.Gdiplus.GpColorMatrix categoriesFor: #atPoint:put:!accessing!public! !
-!Graphics.Gdiplus.GpColorMatrix categoriesFor: #m!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorMatrix categoriesFor: #m:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorMatrix categoriesFor: #row:col:!accessing!public! !
-!Graphics.Gdiplus.GpColorMatrix categoriesFor: #row:col:put:!accessing!public! !
+!Graphics.Gdiplus.GpColorMatrix categoriesForMethods!
+atPoint:!accessing!public! !
+atPoint:put:!accessing!public! !
+m!**compiled accessors**!public! !
+m:!**compiled accessors**!public! !
+row:col:!accessing!public! !
+row:col:put:!accessing!public! !
+!
 
 !Graphics.Gdiplus.GpColorMatrix class methodsFor!
 
@@ -99,9 +101,11 @@ withAll: anArray
 	anArray should have 25 <Magnitude> elements"
 
 	^self new m: (FLOATArray withAll: anArray)! !
-!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #identity!instance creation!public! !
-!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #identityArray!constants!public! !
-!Graphics.Gdiplus.GpColorMatrix class categoriesFor: #withAll:!instance creation!public! !
+!Graphics.Gdiplus.GpColorMatrix class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+identity!instance creation!public! !
+identityArray!constants!public! !
+withAll:!instance creation!public! !
+!
 

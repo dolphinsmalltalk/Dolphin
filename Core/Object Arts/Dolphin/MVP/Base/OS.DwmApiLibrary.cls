@@ -16,7 +16,9 @@ dwmIsCompositionEnabled: pfEnabled
 
 	<stdcall: hresult DwmIsCompositionEnabled BOOL*>
 	^self invalidCall: _failureCode! !
-!OS.DwmApiLibrary categoriesFor: #dwmIsCompositionEnabled:!public! !
+!OS.DwmApiLibrary categoriesForMethods!
+dwmIsCompositionEnabled:!public! !
+!
 
 !OS.DwmApiLibrary class methodsFor!
 
@@ -29,6 +31,8 @@ isDesktopCompositionEnabled
 			answer := BOOL new.
 			self default dwmIsCompositionEnabled: answer.
 			answer asObject]! !
-!OS.DwmApiLibrary class categoriesFor: #fileName!constants!public! !
-!OS.DwmApiLibrary class categoriesFor: #isDesktopCompositionEnabled!public!queries! !
+!OS.DwmApiLibrary class categoriesForMethods!
+fileName!constants!public! !
+isDesktopCompositionEnabled!public!queries! !
+!
 

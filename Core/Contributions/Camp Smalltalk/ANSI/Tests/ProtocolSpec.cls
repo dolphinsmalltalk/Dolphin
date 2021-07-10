@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ProtocolANYSpec subclass: #ProtocolSpec
 	instanceVariableNames: 'name conformsTo description messageSpecifications'
@@ -227,35 +227,37 @@ zremoveClass: classOrMetaclass
 	"Remove the receiver's name from the class or the metaclass, classOrMetaclass, list of protocol names. 	??not that great an idea???"
 
 	classOrMetaclass removeAnsiProtocolNamed: self protocolName! !
-!ProtocolSpec categoriesFor: #<=!public! !
-!ProtocolSpec categoriesFor: #addAllMessages:!public! !
-!ProtocolSpec categoriesFor: #addMessage:!public! !
-!ProtocolSpec categoriesFor: #addUndefinedProtocolNames!public! !
-!ProtocolSpec categoriesFor: #addUndefinedProtocolNamesInMsgSpec:!public! !
-!ProtocolSpec categoriesFor: #conformingBehaviors!public! !
-!ProtocolSpec categoriesFor: #conformsToProtocolNames!public! !
-!ProtocolSpec categoriesFor: #displayOn:!public! !
-!ProtocolSpec categoriesFor: #errorSelectorNotFound:!public! !
-!ProtocolSpec categoriesFor: #fileOutOnSIFFiler:!public! !
-!ProtocolSpec categoriesFor: #hash!public! !
-!ProtocolSpec categoriesFor: #includesSelector:!public! !
-!ProtocolSpec categoriesFor: #inheritedMessageOrNilAtSelector:!public! !
-!ProtocolSpec categoriesFor: #messageAtSelector:!public! !
-!ProtocolSpec categoriesFor: #messageOrNilAtSelector:!public! !
-!ProtocolSpec categoriesFor: #messages!public! !
-!ProtocolSpec categoriesFor: #messageSelectors!public! !
-!ProtocolSpec categoriesFor: #newProtocolName:conformsToProtocolNames:!public! !
-!ProtocolSpec categoriesFor: #printOn:!public! !
-!ProtocolSpec categoriesFor: #protocolDescription!public! !
-!ProtocolSpec categoriesFor: #protocolDescription:!public! !
-!ProtocolSpec categoriesFor: #protocolName!public! !
-!ProtocolSpec categoriesFor: #removeAllSelectors:!public! !
-!ProtocolSpec categoriesFor: #removeSelector:!public! !
-!ProtocolSpec categoriesFor: #removeSelector:ifAbsent:!public! !
-!ProtocolSpec categoriesFor: #renameToProtocolName:!public! !
-!ProtocolSpec categoriesFor: #selectorsInBehavior:!public! !
-!ProtocolSpec categoriesFor: #setProtocolName:!public! !
-!ProtocolSpec categoriesFor: #zremoveClass:!public! !
+!ProtocolSpec categoriesForMethods!
+<=!public! !
+addAllMessages:!public! !
+addMessage:!public! !
+addUndefinedProtocolNames!public! !
+addUndefinedProtocolNamesInMsgSpec:!public! !
+conformingBehaviors!public! !
+conformsToProtocolNames!public! !
+displayOn:!public! !
+errorSelectorNotFound:!public! !
+fileOutOnSIFFiler:!public! !
+hash!public! !
+includesSelector:!public! !
+inheritedMessageOrNilAtSelector:!public! !
+messageAtSelector:!public! !
+messageOrNilAtSelector:!public! !
+messages!public! !
+messageSelectors!public! !
+newProtocolName:conformsToProtocolNames:!public! !
+printOn:!public! !
+protocolDescription!public! !
+protocolDescription:!public! !
+protocolName!public! !
+removeAllSelectors:!public! !
+removeSelector:!public! !
+removeSelector:ifAbsent:!public! !
+renameToProtocolName:!public! !
+selectorsInBehavior:!public! !
+setProtocolName:!public! !
+zremoveClass:!public! !
+!
 
 !ProtocolSpec class methodsFor!
 
@@ -1089,67 +1091,69 @@ xRuleSourceOfMsgSelector: selector inProtocolNamed: protoName
 	proto := ProtocolSpec protocolNamed: protoName.
 	msgSpec := proto messageAtSelector: selector.
 	^msgSpec specForEachReturnValueList asArray first returnValueRuleBlockSource! !
-!ProtocolSpec class categoriesFor: #addUndefinedProtocolName:!public! !
-!ProtocolSpec class categoriesFor: #allAnsiProtocols!public! !
-!ProtocolSpec class categoriesFor: #allProtocolNames!public! !
-!ProtocolSpec class categoriesFor: #allProtocolNamesSorted!public! !
-!ProtocolSpec class categoriesFor: #classProtocols!public! !
-!ProtocolSpec class categoriesFor: #defaultConformsToCollection!public! !
-!ProtocolSpec class categoriesFor: #defaultEmptyDescription!public! !
-!ProtocolSpec class categoriesFor: #defaultMessageSpecificationCollection!public! !
-!ProtocolSpec class categoriesFor: #defaultProtocolCollection!public! !
-!ProtocolSpec class categoriesFor: #defaultProtocolNameCollection!public! !
-!ProtocolSpec class categoriesFor: #defaultReturnProtocolNameReceiver:operand:!public! !
-!ProtocolSpec class categoriesFor: #defaultSpecSectionsCollection!public! !
-!ProtocolSpec class categoriesFor: #errorProtocolNotFound:!public! !
-!ProtocolSpec class categoriesFor: #fileOutAllProtocolsSIFFiler:!public! !
-!ProtocolSpec class categoriesFor: #fileOutSIFAllProtocolsDescOnFiler:!public! !
-!ProtocolSpec class categoriesFor: #fileOutSIFAllProtocolsToFileLocator:!public! !
-!ProtocolSpec class categoriesFor: #includesProtocolNamed:!public! !
-!ProtocolSpec class categoriesFor: #initialize!public! !
-!ProtocolSpec class categoriesFor: #initializeDefaultConversionTable!public! !
-!ProtocolSpec class categoriesFor: #initializeOperatorTable!public! !
-!ProtocolSpec class categoriesFor: #initializeProtocols!public! !
-!ProtocolSpec class categoriesFor: #initializeUnaryConversionTable!public! !
-!ProtocolSpec class categoriesFor: #instanceProtocol:!public! !
-!ProtocolSpec class categoriesFor: #methodSelector:!private! !
-!ProtocolSpec class categoriesFor: #new!public! !
-!ProtocolSpec class categoriesFor: #newMessagePattern:forProtocolNamed:synopsis:definedIn:definition:refinedIn:refinement:parameters:returnRule:errors:!public! !
-!ProtocolSpec class categoriesFor: #newMessagePattern:forProtocolNamed:synopsis:definedIn:definition:refinedIn:refinement:parameters:returnValues:errors:!public! !
-!ProtocolSpec class categoriesFor: #newProtocolNamed:conformsToProtocolNames:!public! !
-!ProtocolSpec class categoriesFor: #nextTokenFrom:!private! !
-!ProtocolSpec class categoriesFor: #parametersFromList:!public! !
-!ProtocolSpec class categoriesFor: #privateNewProtocolNamed:conformsToProtocolNames:!public! !
-!ProtocolSpec class categoriesFor: #privateRehashProtocols!public! !
-!ProtocolSpec class categoriesFor: #privateValidConformsToProtocolNames:ifError:!public! !
-!ProtocolSpec class categoriesFor: #protocol!public! !
-!ProtocolSpec class categoriesFor: #protocolANY!public! !
-!ProtocolSpec class categoriesFor: #protocolANYName!public! !
-!ProtocolSpec class categoriesFor: #protocolMsgParmSpec!public! !
-!ProtocolSpec class categoriesFor: #protocolMsgReturnValueRuleSpec!public! !
-!ProtocolSpec class categoriesFor: #protocolMsgReturnValueSpec!public! !
-!ProtocolSpec class categoriesFor: #protocolMsgSpec!public! !
-!ProtocolSpec class categoriesFor: #protocolNamed:!public! !
-!ProtocolSpec class categoriesFor: #protocolsInNameList:!public! !
-!ProtocolSpec class categoriesFor: #purgeUnused!public! !
-!ProtocolSpec class categoriesFor: #removeAnsiProtocolNamed:!public! !
-!ProtocolSpec class categoriesFor: #renameProtocolNamed:to:!public! !
-!ProtocolSpec class categoriesFor: #specSectionsFromSynopsis:definedIn:definition:refinedIn:refinement:errors:!public! !
-!ProtocolSpec class categoriesFor: #unaryReturnProtocolNameReceiver:!public! !
-!ProtocolSpec class categoriesFor: #undefinedConformsToProtocolNames!public! !
-!ProtocolSpec class categoriesFor: #uninitialize!public! !
-!ProtocolSpec class categoriesFor: #wrkAllRuleReturnValueList!public! !
-!ProtocolSpec class categoriesFor: #wrkAssocGlobalGenUnitTestsForProtocolGroup:protocolGlobalsClassSideGenTests:!public! !
-!ProtocolSpec class categoriesFor: #wrkAssocProtocolNamed:toClassesNamed:isClassSideProtocol:!public! !
-!ProtocolSpec class categoriesFor: #wrkChkTestsForProtocol:inProtocolGroupNamed:isClassSideProtocol:!public! !
-!ProtocolSpec class categoriesFor: #wrkGenerateMethdodsInTestClassNamed:forProtocolNamed:inProtocolGroupNamed:isClassSideProtocol:!public! !
-!ProtocolSpec class categoriesFor: #wrkGenTestClassForProtocol:inProtocolGroupNamed:isClassSideProtocol:!public! !
-!ProtocolSpec class categoriesFor: #wrkTestClassForProtocol:inProtocolGroupNamed:!public! !
-!ProtocolSpec class categoriesFor: #wrkTestMethdodNameFrom:!public! !
-!ProtocolSpec class categoriesFor: #xCommonTasks!public! !
-!ProtocolSpec class categoriesFor: #xGlobalsImplementAllMsgsOfProtocolNamed:!public! !
-!ProtocolSpec class categoriesFor: #xMessagesAndReturnValuesOfProtocolNamed:!public! !
-!ProtocolSpec class categoriesFor: #xMsgSpecListOfSelector:inProtocolNamed:!public! !
-!ProtocolSpec class categoriesFor: #xRemoveMsgSpecSelectors:fromProtocolNamed:!public! !
-!ProtocolSpec class categoriesFor: #xRuleSourceOfMsgSelector:inProtocolNamed:!public! !
+!ProtocolSpec class categoriesForMethods!
+addUndefinedProtocolName:!public! !
+allAnsiProtocols!public! !
+allProtocolNames!public! !
+allProtocolNamesSorted!public! !
+classProtocols!public! !
+defaultConformsToCollection!public! !
+defaultEmptyDescription!public! !
+defaultMessageSpecificationCollection!public! !
+defaultProtocolCollection!public! !
+defaultProtocolNameCollection!public! !
+defaultReturnProtocolNameReceiver:operand:!public! !
+defaultSpecSectionsCollection!public! !
+errorProtocolNotFound:!public! !
+fileOutAllProtocolsSIFFiler:!public! !
+fileOutSIFAllProtocolsDescOnFiler:!public! !
+fileOutSIFAllProtocolsToFileLocator:!public! !
+includesProtocolNamed:!public! !
+initialize!public! !
+initializeDefaultConversionTable!public! !
+initializeOperatorTable!public! !
+initializeProtocols!public! !
+initializeUnaryConversionTable!public! !
+instanceProtocol:!public! !
+methodSelector:!private! !
+new!public! !
+newMessagePattern:forProtocolNamed:synopsis:definedIn:definition:refinedIn:refinement:parameters:returnRule:errors:!public! !
+newMessagePattern:forProtocolNamed:synopsis:definedIn:definition:refinedIn:refinement:parameters:returnValues:errors:!public! !
+newProtocolNamed:conformsToProtocolNames:!public! !
+nextTokenFrom:!private! !
+parametersFromList:!public! !
+privateNewProtocolNamed:conformsToProtocolNames:!public! !
+privateRehashProtocols!public! !
+privateValidConformsToProtocolNames:ifError:!public! !
+protocol!public! !
+protocolANY!public! !
+protocolANYName!public! !
+protocolMsgParmSpec!public! !
+protocolMsgReturnValueRuleSpec!public! !
+protocolMsgReturnValueSpec!public! !
+protocolMsgSpec!public! !
+protocolNamed:!public! !
+protocolsInNameList:!public! !
+purgeUnused!public! !
+removeAnsiProtocolNamed:!public! !
+renameProtocolNamed:to:!public! !
+specSectionsFromSynopsis:definedIn:definition:refinedIn:refinement:errors:!public! !
+unaryReturnProtocolNameReceiver:!public! !
+undefinedConformsToProtocolNames!public! !
+uninitialize!public! !
+wrkAllRuleReturnValueList!public! !
+wrkAssocGlobalGenUnitTestsForProtocolGroup:protocolGlobalsClassSideGenTests:!public! !
+wrkAssocProtocolNamed:toClassesNamed:isClassSideProtocol:!public! !
+wrkChkTestsForProtocol:inProtocolGroupNamed:isClassSideProtocol:!public! !
+wrkGenerateMethdodsInTestClassNamed:forProtocolNamed:inProtocolGroupNamed:isClassSideProtocol:!public! !
+wrkGenTestClassForProtocol:inProtocolGroupNamed:isClassSideProtocol:!public! !
+wrkTestClassForProtocol:inProtocolGroupNamed:!public! !
+wrkTestMethdodNameFrom:!public! !
+xCommonTasks!public! !
+xGlobalsImplementAllMsgsOfProtocolNamed:!public! !
+xMessagesAndReturnValuesOfProtocolNamed:!public! !
+xMsgSpecListOfSelector:inProtocolNamed:!public! !
+xRemoveMsgSpecSelectors:fromProtocolNamed:!public! !
+xRuleSourceOfMsgSelector:inProtocolNamed:!public! !
+!
 

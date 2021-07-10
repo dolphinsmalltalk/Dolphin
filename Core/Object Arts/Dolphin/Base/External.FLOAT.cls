@@ -27,9 +27,11 @@ value: aFloat
 	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_value put: aFloat! !
-!External.FLOAT categoriesFor: #asFloat!converting!public! !
-!External.FLOAT categoriesFor: #value!**compiled accessors**!public! !
-!External.FLOAT categoriesFor: #value:!**compiled accessors**!public! !
+!External.FLOAT categoriesForMethods!
+asFloat!converting!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.FLOAT class methodsFor!
 
@@ -59,9 +61,11 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.FLOAT class categoriesFor: #defineFields!public!template definition! !
-!External.FLOAT class categoriesFor: #initialize!development!initializing!private! !
-!External.FLOAT class categoriesFor: #maximum!constants!public! !
-!External.FLOAT class categoriesFor: #minimum!constants!public! !
-!External.FLOAT class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.FLOAT class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+maximum!constants!public! !
+minimum!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

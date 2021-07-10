@@ -159,23 +159,25 @@ value: anObject
 	receiver's window directly via #displayValue:."
 
 	self displayValue: (self typeconverter convertFromLeftToRight: anObject)! !
-!UI.StaticText categoriesFor: #alignment!accessing!public! !
-!UI.StaticText categoriesFor: #alignment:!accessing!public! !
-!UI.StaticText categoriesFor: #beCenterAligned!accessing!public! !
-!UI.StaticText categoriesFor: #beLeftAligned!accessing!public! !
-!UI.StaticText categoriesFor: #beNoWordWrap!accessing!public! !
-!UI.StaticText categoriesFor: #beRightAligned!accessing!public! !
-!UI.StaticText categoriesFor: #calculateExtent:!geometry!private! !
-!UI.StaticText categoriesFor: #clear!operations!public! !
-!UI.StaticText categoriesFor: #displayValue!private!updating! !
-!UI.StaticText categoriesFor: #displayValue:!private!updating! !
-!UI.StaticText categoriesFor: #getAlignment!accessing!private! !
-!UI.StaticText categoriesFor: #initialize!initializing!private! !
-!UI.StaticText categoriesFor: #isSingleLine!private!testing! !
-!UI.StaticText categoriesFor: #refreshContents!public!updating! !
-!UI.StaticText categoriesFor: #setAlignment:!accessing!private! !
-!UI.StaticText categoriesFor: #value!accessing!public! !
-!UI.StaticText categoriesFor: #value:!accessing!public! !
+!UI.StaticText categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+beCenterAligned!accessing!public! !
+beLeftAligned!accessing!public! !
+beNoWordWrap!accessing!public! !
+beRightAligned!accessing!public! !
+calculateExtent:!geometry!private! !
+clear!operations!public! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+getAlignment!accessing!private! !
+initialize!initializing!private! !
+isSingleLine!private!testing! !
+refreshContents!public!updating! !
+setAlignment:!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !UI.StaticText class methodsFor!
 
@@ -199,6 +201,8 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself)! !
-!UI.StaticText class categoriesFor: #icon!constants!public! !
-!UI.StaticText class categoriesFor: #initialize!development!initializing!private! !
+!UI.StaticText class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+!
 

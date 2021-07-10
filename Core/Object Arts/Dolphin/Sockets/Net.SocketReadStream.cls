@@ -153,25 +153,27 @@ upToEnd
 	remainder := self contentsSpecies writeStream: 128.
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
-!Net.SocketReadStream categoriesFor: #atEnd!public!testing! !
-!Net.SocketReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!Net.SocketReadStream categoriesFor: #contents!accessing!public! !
-!Net.SocketReadStream categoriesFor: #hasInput!public!testing! !
-!Net.SocketReadStream categoriesFor: #isBinary!public!testing! !
-!Net.SocketReadStream categoriesFor: #isText!public!testing! !
-!Net.SocketReadStream categoriesFor: #isText:!modes!public! !
-!Net.SocketReadStream categoriesFor: #next!accessing!public! !
-!Net.SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!Net.SocketReadStream categoriesFor: #nextAvailable!public! !
-!Net.SocketReadStream categoriesFor: #nextAvailable:!accessing!public! !
-!Net.SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
-!Net.SocketReadStream categoriesFor: #readPage!operations!private! !
-!Net.SocketReadStream categoriesFor: #setToEnd!positioning!public! !
-!Net.SocketReadStream categoriesFor: #size!accessing!public! !
-!Net.SocketReadStream categoriesFor: #socket!accessing!private! !
-!Net.SocketReadStream categoriesFor: #socket:!accessing!private! !
-!Net.SocketReadStream categoriesFor: #upTo:!accessing!public! !
-!Net.SocketReadStream categoriesFor: #upToEnd!accessing!public! !
+!Net.SocketReadStream categoriesForMethods!
+atEnd!public!testing! !
+basicNext:into:startingAt:!accessing!public! !
+contents!accessing!public! !
+hasInput!public!testing! !
+isBinary!public!testing! !
+isText!public!testing! !
+isText:!modes!public! !
+next!accessing!public! !
+next:into:startingAt:!accessing!public! !
+nextAvailable!public! !
+nextAvailable:!accessing!public! !
+on:!accessing!initializing!private! !
+readPage!operations!private! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+socket!accessing!private! !
+socket:!accessing!private! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+!
 
 !Net.SocketReadStream class methodsFor!
 
@@ -193,7 +195,9 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
-!Net.SocketReadStream class categoriesFor: #bufferSize!constants!private! !
-!Net.SocketReadStream class categoriesFor: #on:!instance creation!public! !
-!Net.SocketReadStream class categoriesFor: #on:text:!instance creation!public! !
+!Net.SocketReadStream class categoriesForMethods!
+bufferSize!constants!private! !
+on:!instance creation!public! !
+on:text:!instance creation!public! !
+!
 

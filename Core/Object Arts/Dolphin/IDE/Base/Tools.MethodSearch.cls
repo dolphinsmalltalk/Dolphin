@@ -174,26 +174,28 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^self literalSymbolsFilter: [:each | match match: each ignoreCase: ignoreCase]! !
-!Tools.MethodSearch categoriesFor: #findDetails!accessing!public! !
-!Tools.MethodSearch categoriesFor: #findDetails:!accessing!public! !
-!Tools.MethodSearch categoriesFor: #initialize!initializing!public! !
-!Tools.MethodSearch categoriesFor: #literal!public! !
-!Tools.MethodSearch categoriesFor: #literal:!accessing!public! !
-!Tools.MethodSearch categoriesFor: #literalDefinitionFilter!helpers!private! !
-!Tools.MethodSearch categoriesFor: #literalSymbolsFilter:!helpers!private! !
-!Tools.MethodSearch categoriesFor: #methodDefinitionFilter!helpers!private! !
-!Tools.MethodSearch categoriesFor: #methodReferenceFilter!helpers!private! !
-!Tools.MethodSearch categoriesFor: #pattern!accessing!public! !
-!Tools.MethodSearch categoriesFor: #pattern:!accessing!public! !
-!Tools.MethodSearch categoriesFor: #regexpDefinitionFilter!helpers!private! !
-!Tools.MethodSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
-!Tools.MethodSearch categoriesFor: #regularExpression!accessing!private! !
-!Tools.MethodSearch categoriesFor: #searchMode!accessing!public! !
-!Tools.MethodSearch categoriesFor: #searchMode:!accessing!public! !
-!Tools.MethodSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
-!Tools.MethodSearch categoriesFor: #wildcardDefinitionFilter!helpers!private! !
-!Tools.MethodSearch categoriesFor: #wildcardMatchPattern!helpers!private! !
-!Tools.MethodSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
+!Tools.MethodSearch categoriesForMethods!
+findDetails!accessing!public! !
+findDetails:!accessing!public! !
+initialize!initializing!public! !
+literal!public! !
+literal:!accessing!public! !
+literalDefinitionFilter!helpers!private! !
+literalSymbolsFilter:!helpers!private! !
+methodDefinitionFilter!helpers!private! !
+methodReferenceFilter!helpers!private! !
+pattern!accessing!public! !
+pattern:!accessing!public! !
+regexpDefinitionFilter!helpers!private! !
+regexpReferenceFilter!helpers!private! !
+regularExpression!accessing!private! !
+searchMode!accessing!public! !
+searchMode:!accessing!public! !
+simpleReferenceFilter!helpers!private! !
+wildcardDefinitionFilter!helpers!private! !
+wildcardMatchPattern!helpers!private! !
+wildcardReferenceFilter!helpers!private! !
+!
 
 !Tools.MethodSearch class methodsFor!
 
@@ -216,9 +218,11 @@ newPattern: aString
 
 newSelector: aSymbol 
 	^self newLiteral: aSymbol asSymbol! !
-!Tools.MethodSearch class categoriesFor: #new!instance creation!public! !
-!Tools.MethodSearch class categoriesFor: #newFindDetails:!instance creation!public! !
-!Tools.MethodSearch class categoriesFor: #newLiteral:!instance creation!public! !
-!Tools.MethodSearch class categoriesFor: #newPattern:!instance creation!public! !
-!Tools.MethodSearch class categoriesFor: #newSelector:!instance creation!public! !
+!Tools.MethodSearch class categoriesForMethods!
+new!instance creation!public! !
+newFindDetails:!instance creation!public! !
+newLiteral:!instance creation!public! !
+newPattern:!instance creation!public! !
+newSelector:!instance creation!public! !
+!
 

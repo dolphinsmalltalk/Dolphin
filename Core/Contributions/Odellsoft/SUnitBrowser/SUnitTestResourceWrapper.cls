@@ -29,10 +29,12 @@ testResource
 testResource: aTestResource
 
 	self subject: aTestResource! !
-!SUnitTestResourceWrapper categoriesFor: #name!accessing!constants!public! !
-!SUnitTestResourceWrapper categoriesFor: #status!accessing!public! !
-!SUnitTestResourceWrapper categoriesFor: #testResource!accessing!constants!private! !
-!SUnitTestResourceWrapper categoriesFor: #testResource:!accessing!constants!private! !
+!SUnitTestResourceWrapper categoriesForMethods!
+name!accessing!constants!public! !
+status!accessing!public! !
+testResource!accessing!constants!private! !
+testResource:!accessing!constants!private! !
+!
 
 !SUnitTestResourceWrapper class methodsFor!
 
@@ -41,5 +43,7 @@ newOn: aTestResource model: anSUnitResourceBrowserModel
 	^(self newOn: anSUnitResourceBrowserModel)
 		testResource: aTestResource;
 		yourself! !
-!SUnitTestResourceWrapper class categoriesFor: #newOn:model:!instantiating!public! !
+!SUnitTestResourceWrapper class categoriesForMethods!
+newOn:model:!instantiating!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.RandomTest'
 	instanceVariableNames: 'gen'
@@ -71,10 +71,12 @@ testParkMiller
 				yourself)
 		generates: #(0.1492432697 0.3316330217 0.7561964480 0.3937015400 0.9417831814 0.5499291939 0.6599625962 0.9913545591 0.6960744326 0.9229878997)
 		epsilon: 1.0e-9! !
-!Core.Tests.RandomTest categoriesFor: #assert:generates:epsilon:!helpers!private! !
-!Core.Tests.RandomTest categoriesFor: #setUp!public!setup! !
-!Core.Tests.RandomTest categoriesFor: #testCRT!public!unit tests! !
-!Core.Tests.RandomTest categoriesFor: #testLCG!public!unit tests! !
-!Core.Tests.RandomTest categoriesFor: #testNext!public!testing / accessing! !
-!Core.Tests.RandomTest categoriesFor: #testParkMiller!public!unit tests! !
+!Core.Tests.RandomTest categoriesForMethods!
+assert:generates:epsilon:!helpers!private! !
+setUp!public!setup! !
+testCRT!public!unit tests! !
+testLCG!public!unit tests! !
+testNext!public!testing / accessing! !
+testParkMiller!public!unit tests! !
+!
 

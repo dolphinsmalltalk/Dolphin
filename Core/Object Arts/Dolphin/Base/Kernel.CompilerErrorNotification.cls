@@ -21,6 +21,8 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Error! !
-!Kernel.CompilerErrorNotification class categoriesFor: #severity!constants!public! !
-!Kernel.CompilerErrorNotification class categoriesFor: #severityClass!constants!public! !
+!Kernel.CompilerErrorNotification class categoriesForMethods!
+severity!constants!public! !
+severityClass!constants!public! !
+!
 

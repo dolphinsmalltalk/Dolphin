@@ -21,6 +21,8 @@ signal
 
 	self tag buildErrorInfo.
 	super signal! !
-!Database.DBError categoriesFor: #_descriptionFormat!displaying!public! !
-!Database.DBError categoriesFor: #signal!public!signalling! !
+!Database.DBError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+signal!public!signalling! !
+!
 

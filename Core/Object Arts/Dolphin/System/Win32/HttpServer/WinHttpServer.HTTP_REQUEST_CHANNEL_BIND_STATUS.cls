@@ -63,12 +63,14 @@ ServiceName: aHTTP_SERVICE_BINDING_BASE
 	"Set the receiver's 'ServiceName' field to the value of the argument, aHTTP_SERVICE_BINDING_BASE"
 
 	bytes uintPtrAtOffset: _OffsetOf_ServiceName put: aHTTP_SERVICE_BINDING_BASE yourAddress! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForMethods!
+ChannelToken!**compiled accessors**!public! !
+ChannelToken:!**compiled accessors**!public! !
+ChannelTokenSize!**compiled accessors**!private! !
+ChannelTokenSize:!**compiled accessors**!private! !
+ServiceName!**compiled accessors**!public! !
+ServiceName:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class methodsFor!
 
@@ -95,6 +97,8 @@ defineFields
 
 getFieldNames
 	^#(#ServiceName #ChannelToken #ChannelTokenSize)! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

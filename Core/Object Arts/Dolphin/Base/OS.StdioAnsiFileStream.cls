@@ -53,10 +53,12 @@ peekFor: anObject
 		and: [ch == anObject ansiValue or: 
 					[crtlib ungetc: ch stream: stream.
 					false]]! !
-!OS.StdioAnsiFileStream categoriesFor: #contentsSpecies!accessing!private! !
-!OS.StdioAnsiFileStream categoriesFor: #getString:!accessing!private! !
-!OS.StdioAnsiFileStream categoriesFor: #next!accessing!public! !
-!OS.StdioAnsiFileStream categoriesFor: #nextPutAll:!accessing!public! !
-!OS.StdioAnsiFileStream categoriesFor: #peek!accessing!public! !
-!OS.StdioAnsiFileStream categoriesFor: #peekFor:!accessing!public! !
+!OS.StdioAnsiFileStream categoriesForMethods!
+contentsSpecies!accessing!private! !
+getString:!accessing!private! !
+next!accessing!public! !
+nextPutAll:!accessing!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+!
 

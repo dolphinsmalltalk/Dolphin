@@ -16,6 +16,8 @@ canReadFrom: anObject
 
 canWriteInto: anObject
 	^self isWriteable! !
-!Tools.AXAutomationAspect categoriesFor: #canReadFrom:!public!testing! !
-!Tools.AXAutomationAspect categoriesFor: #canWriteInto:!public!testing! !
+!Tools.AXAutomationAspect categoriesForMethods!
+canReadFrom:!public!testing! !
+canWriteInto:!public!testing! !
+!
 

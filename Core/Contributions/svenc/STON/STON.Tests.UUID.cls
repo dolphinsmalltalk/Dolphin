@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.GUID variableByteSubclass: #'STON.Tests.UUID'
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ new
 
 nilUUID
 	^self newNull! !
-!STON.Tests.UUID class categoriesFor: #new!instance creation!public! !
-!STON.Tests.UUID class categoriesFor: #nilUUID!public! !
+!STON.Tests.UUID class categoriesForMethods!
+new!instance creation!public! !
+nilUUID!public! !
+!
 

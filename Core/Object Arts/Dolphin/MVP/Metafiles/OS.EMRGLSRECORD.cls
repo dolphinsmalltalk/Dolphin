@@ -54,10 +54,12 @@ Data: anExternalArray
 		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
-!OS.EMRGLSRECORD categoriesFor: #cbData!**compiled accessors**!public! !
-!OS.EMRGLSRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
-!OS.EMRGLSRECORD categoriesFor: #Data!**compiled accessors**!public! !
-!OS.EMRGLSRECORD categoriesFor: #Data:!**compiled accessors**!public! !
+!OS.EMRGLSRECORD categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+!
 
 !OS.EMRGLSRECORD class methodsFor!
 
@@ -91,7 +93,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_GLSRECORD}! !
-!OS.EMRGLSRECORD class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRGLSRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRGLSRECORD class categoriesFor: #iTypes!constants!public! !
+!OS.EMRGLSRECORD class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

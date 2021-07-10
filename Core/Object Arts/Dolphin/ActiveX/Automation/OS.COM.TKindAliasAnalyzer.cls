@@ -47,13 +47,15 @@ vt
 	type when represented in a <VARIANT>."
 
 	^self tdesc vartype! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #classDesc!accessing!constants!private! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #isAnonymous!public!testing! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #isStructure!public!testing! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #isUnion!public!testing! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
-!OS.COM.TKindAliasAnalyzer categoriesFor: #vt!accessing!constants!public! !
+!OS.COM.TKindAliasAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+classDesc!accessing!constants!private! !
+isAnonymous!public!testing! !
+isStructure!public!testing! !
+isUnion!public!testing! !
+realTypeInfo!accessing!public! !
+vt!accessing!constants!public! !
+!
 
 !OS.COM.TKindAliasAnalyzer class methodsFor!
 
@@ -84,8 +86,10 @@ typekind
 
 wireHandleNames
 	^#('HACCEL' 'HWND' 'HINSTANCE' 'HDC' 'HFILE' 'HGDIOBJ' 'HICON' 'HCURSOR' 'HFONT' 'HDWP' 'HKEY' 'HPEN' 'HRGN' 'HMODULE' 'HTASK' 'HRSRC' 'HBITMAP' 'HGLOBAL' 'HPALETTE' 'HMETAFILE' 'HENHMETAFILE' 'HBRUSH' 'HMENU' 'HIMAGELIST')! !
-!OS.COM.TKindAliasAnalyzer class categoriesFor: #basicTypes!constants!must not strip!public! !
-!OS.COM.TKindAliasAnalyzer class categoriesFor: #initialize!class initialization!development!public! !
-!OS.COM.TKindAliasAnalyzer class categoriesFor: #typekind!constants!private! !
-!OS.COM.TKindAliasAnalyzer class categoriesFor: #wireHandleNames!constants!private! !
+!OS.COM.TKindAliasAnalyzer class categoriesForMethods!
+basicTypes!constants!must not strip!public! !
+initialize!class initialization!development!public! !
+typekind!constants!private! !
+wireHandleNames!constants!private! !
+!
 

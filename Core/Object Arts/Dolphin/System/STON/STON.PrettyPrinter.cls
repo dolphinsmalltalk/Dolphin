@@ -72,12 +72,14 @@ newlineIndent
 
 prettyPrintSpace
 	writeStream space! !
-!STON.PrettyPrinter categoriesFor: #encodeList:!public!writing! !
-!STON.PrettyPrinter categoriesFor: #encodeMap:!public!writing! !
-!STON.PrettyPrinter categoriesFor: #indentedDo:!helpers!private! !
-!STON.PrettyPrinter categoriesFor: #initialize!initialize/release!private! !
-!STON.PrettyPrinter categoriesFor: #listElementSeparator!helpers!private! !
-!STON.PrettyPrinter categoriesFor: #mapElementSeparator!helpers!private! !
-!STON.PrettyPrinter categoriesFor: #newlineIndent!helpers!private! !
-!STON.PrettyPrinter categoriesFor: #prettyPrintSpace!helpers!private! !
+!STON.PrettyPrinter categoriesForMethods!
+encodeList:!public!writing! !
+encodeMap:!public!writing! !
+indentedDo:!helpers!private! !
+initialize!initialize/release!private! !
+listElementSeparator!helpers!private! !
+mapElementSeparator!helpers!private! !
+newlineIndent!helpers!private! !
+prettyPrintSpace!helpers!private! !
+!
 

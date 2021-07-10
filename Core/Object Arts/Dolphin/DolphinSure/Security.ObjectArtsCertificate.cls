@@ -52,8 +52,10 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!Security.ObjectArtsCertificate class categoriesFor: #generate!instance creation!private! !
-!Security.ObjectArtsCertificate class categoriesFor: #new!instance creation!public! !
-!Security.ObjectArtsCertificate class categoriesFor: #publicKey!constants!private! !
-!Security.ObjectArtsCertificate class categoriesFor: #validYears!constants!private! !
+!Security.ObjectArtsCertificate class categoriesForMethods!
+generate!instance creation!private! !
+new!instance creation!public! !
+publicKey!constants!private! !
+validYears!constants!private! !
+!
 

@@ -52,18 +52,22 @@ when: anAnnouncementClass do: aValuable
 
 when: anAnnouncementClass send: aSelector to: anObject
 	^ self subscribe: anAnnouncementClass send: aSelector to: anObject! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #announcer:!initialize/release!public! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #on:do:!public!wrapped protocol! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #on:send:to:!public!wrapped protocol! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #subscribe:do:!private! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #subscribe:send:to:!public!wrapped protocol! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #weak!public!wrapped protocol! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #when:do:!public!wrapped protocol! !
-!Kernel.WeakSubscriptionBuilder categoriesFor: #when:send:to:!public!wrapped protocol! !
+!Kernel.WeakSubscriptionBuilder categoriesForMethods!
+announcer:!initialize/release!public! !
+on:do:!public!wrapped protocol! !
+on:send:to:!public!wrapped protocol! !
+subscribe:do:!private! !
+subscribe:send:to:!public!wrapped protocol! !
+weak!public!wrapped protocol! !
+when:do:!public!wrapped protocol! !
+when:send:to:!public!wrapped protocol! !
+!
 
 !Kernel.WeakSubscriptionBuilder class methodsFor!
 
 on: announcer
 	^ self new announcer: announcer! !
-!Kernel.WeakSubscriptionBuilder class categoriesFor: #on:!instance creation!public! !
+!Kernel.WeakSubscriptionBuilder class categoriesForMethods!
+on:!instance creation!public! !
+!
 

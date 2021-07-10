@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.KeyboardTest'
 	instanceVariableNames: ''
@@ -22,5 +22,7 @@ testInvariantMap
 			keyName := invariant keyNameFromVKey: each value ifNone: [].
 			self assert: keyName equals: each key].
 	self assert: ((invariant keyNameFromVKey: delete ifNone: []) beginsWith: 'DEL')! !
-!UI.Tests.KeyboardTest categoriesFor: #testInvariantMap!public! !
+!UI.Tests.KeyboardTest categoriesForMethods!
+testInvariantMap!public! !
+!
 

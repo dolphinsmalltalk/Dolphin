@@ -51,12 +51,14 @@ writeInto: anExternalStructure value: anObject
 	the class instance variable 'template')."
 
 	^anExternalStructure bytes uintPtrAtOffset: offset put: anObject yourAddress! !
-!External.PointerField categoriesFor: #byteSize!accessing!private! !
-!External.PointerField categoriesFor: #pointerClass!accessing!private! !
-!External.PointerField categoriesFor: #pointerClass:!accessing!private! !
-!External.PointerField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.PointerField categoriesFor: #valueType!automatic generation!constants!development!private! !
-!External.PointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.PointerField categoriesForMethods!
+byteSize!accessing!private! !
+pointerClass!accessing!private! !
+pointerClass:!accessing!private! !
+readFrom:!indirect accessing!private! !
+valueType!automatic generation!constants!development!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.PointerField class methodsFor!
 
@@ -65,5 +67,7 @@ type: aClass
 	pointers to objects of type aClass"
 
 	^super new pointerClass: aClass! !
-!External.PointerField class categoriesFor: #type:!instance creation!public! !
+!External.PointerField class categoriesForMethods!
+type:!instance creation!public! !
+!
 

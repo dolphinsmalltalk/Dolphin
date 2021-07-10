@@ -81,15 +81,17 @@ printOn: aStream
 		nextPutAll: ': ';
 		print: self lpszVerbName;
 		nextPut: $)! !
-!OS.COM.OLEVERB categoriesFor: #fuFlags!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #fuFlags:!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #grfAttribs!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #grfAttribs:!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #lpszVerbName!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #lpszVerbName:!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #lVerb!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #lVerb:!**compiled accessors**!public! !
-!OS.COM.OLEVERB categoriesFor: #printOn:!development!printing!public! !
+!OS.COM.OLEVERB categoriesForMethods!
+fuFlags!**compiled accessors**!public! !
+fuFlags:!**compiled accessors**!public! !
+grfAttribs!**compiled accessors**!public! !
+grfAttribs:!**compiled accessors**!public! !
+lpszVerbName!**compiled accessors**!public! !
+lpszVerbName:!**compiled accessors**!public! !
+lVerb!**compiled accessors**!public! !
+lVerb:!**compiled accessors**!public! !
+printOn:!development!printing!public! !
+!
 
 !OS.COM.OLEVERB class methodsFor!
 
@@ -115,6 +117,8 @@ defineFields
 
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
-!OS.COM.OLEVERB class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.COM.OLEVERB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.OLEVERB class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

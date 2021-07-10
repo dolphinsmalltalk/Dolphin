@@ -216,22 +216,24 @@ readIntegerPrerelPart: aString
 			stream := aString readStream.
 			int := Integer readFrom: stream.
 			stream atEnd ifTrue: [int]]! !
-!Core.SemVer categoriesFor: #<!comparing!public! !
-!Core.SemVer categoriesFor: #<=>!comparing!public! !
-!Core.SemVer categoriesFor: #=!comparing!public! !
-!Core.SemVer categoriesFor: #buildmetadata!accessing!public! !
-!Core.SemVer categoriesFor: #comparePrerelease:!comparing!private! !
-!Core.SemVer categoriesFor: #displayOn:!displaying!public! !
-!Core.SemVer categoriesFor: #hash!comparing!public! !
-!Core.SemVer categoriesFor: #major!accessing!public! !
-!Core.SemVer categoriesFor: #major:minor:patch:prerelease:buildmetadata:!initializing!private! !
-!Core.SemVer categoriesFor: #majorMinor!accessing!public! !
-!Core.SemVer categoriesFor: #majorMinorPatch!accessing!public! !
-!Core.SemVer categoriesFor: #minor!accessing!public! !
-!Core.SemVer categoriesFor: #patch!accessing!public! !
-!Core.SemVer categoriesFor: #prerelease!accessing!public! !
-!Core.SemVer categoriesFor: #printOn:!printing!public! !
-!Core.SemVer categoriesFor: #readIntegerPrerelPart:!helpers!private! !
+!Core.SemVer categoriesForMethods!
+<!comparing!public! !
+<=>!comparing!public! !
+=!comparing!public! !
+buildmetadata!accessing!public! !
+comparePrerelease:!comparing!private! !
+displayOn:!displaying!public! !
+hash!comparing!public! !
+major!accessing!public! !
+major:minor:patch:prerelease:buildmetadata:!initializing!private! !
+majorMinor!accessing!public! !
+majorMinorPatch!accessing!public! !
+minor!accessing!public! !
+patch!accessing!public! !
+prerelease!accessing!public! !
+printOn:!printing!public! !
+readIntegerPrerelPart:!helpers!private! !
+!
 
 !Core.SemVer class methodsFor!
 
@@ -295,9 +297,11 @@ major: majorInteger minor: minorInteger patch: patchInteger prerelease: prerelSt
 
 readFrom: aReadStream
 	^(SemVerParser on: aReadStream) parse! !
-!Core.SemVer class categoriesFor: #fromGitDescription:!instance creation!public! !
-!Core.SemVer class categoriesFor: #fromString:!instance creation!public! !
-!Core.SemVer class categoriesFor: #isValid:!enquiries!public! !
-!Core.SemVer class categoriesFor: #major:minor:patch:prerelease:buildmetadata:!public! !
-!Core.SemVer class categoriesFor: #readFrom:!public! !
+!Core.SemVer class categoriesForMethods!
+fromGitDescription:!instance creation!public! !
+fromString:!instance creation!public! !
+isValid:!enquiries!public! !
+major:minor:patch:prerelease:buildmetadata:!public! !
+readFrom:!public! !
+!
 

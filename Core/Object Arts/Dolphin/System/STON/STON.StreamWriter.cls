@@ -18,8 +18,10 @@ initialize
 
 on: stonWriter
 	writer := stonWriter! !
-!STON.StreamWriter categoriesFor: #initialize!initialize/release!public! !
-!STON.StreamWriter categoriesFor: #on:!initialize/release!public! !
+!STON.StreamWriter categoriesForMethods!
+initialize!initialize/release!public! !
+on:!initialize/release!public! !
+!
 
 !STON.StreamWriter class methodsFor!
 
@@ -35,7 +37,9 @@ on: stonWriter
 	^ self new
 		on: stonWriter;
 		yourself! !
-!STON.StreamWriter class categoriesFor: #icon!constants!public! !
-!STON.StreamWriter class categoriesFor: #new!public! !
-!STON.StreamWriter class categoriesFor: #on:!instance creation!public! !
+!STON.StreamWriter class categoriesForMethods!
+icon!constants!public! !
+new!public! !
+on:!instance creation!public! !
+!
 

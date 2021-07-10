@@ -228,43 +228,45 @@ yourselfAspect
 	receiver's value."
 
 	^self value publishedAspects at: #yourself! !
-!Tools.AspectAccessor categoriesFor: #<=!comparing!public! !
-!Tools.AspectAccessor categoriesFor: #=!comparing!public! !
-!Tools.AspectAccessor categoriesFor: #aspectDescriptor!accessing!private! !
-!Tools.AspectAccessor categoriesFor: #aspectDescriptor:!accessing!private! !
-!Tools.AspectAccessor categoriesFor: #aspectDisplayOn:!private! !
-!Tools.AspectAccessor categoriesFor: #canEdit!operations!public! !
-!Tools.AspectAccessor categoriesFor: #canGet!public!testing! !
-!Tools.AspectAccessor categoriesFor: #canImmediateAction!public!testing! !
-!Tools.AspectAccessor categoriesFor: #canNil!public!testing! !
-!Tools.AspectAccessor categoriesFor: #canSet!public!testing! !
-!Tools.AspectAccessor categoriesFor: #defaultComparisonPolicy!initializing!private! !
-!Tools.AspectAccessor categoriesFor: #displayOn:!displaying!public! !
-!Tools.AspectAccessor categoriesFor: #editedValue:!accessing!private! !
-!Tools.AspectAccessor categoriesFor: #editUsing:!operations!public! !
-!Tools.AspectAccessor categoriesFor: #getMutableValue!public! !
-!Tools.AspectAccessor categoriesFor: #hash!comparing!public! !
-!Tools.AspectAccessor categoriesFor: #immediateActionUsing:!operations!public! !
-!Tools.AspectAccessor categoriesFor: #isMutable!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #isReadable!public! !
-!Tools.AspectAccessor categoriesFor: #key!public! !
-!Tools.AspectAccessor categoriesFor: #name!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #objectRef!accessing!private! !
-!Tools.AspectAccessor categoriesFor: #objectRefName!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #selectIn:!event handling!private! !
-!Tools.AspectAccessor categoriesFor: #setSubject:aspectDescriptor:!initializing!private! !
-!Tools.AspectAccessor categoriesFor: #setValue:!accessing!private! !
-!Tools.AspectAccessor categoriesFor: #typeIcon!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #typeImage!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #value!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #valueDebugText!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #valueIcon!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #valueImage!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #valueNameInfo!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #valueNameOnly!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #valueText!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #valueTextOnly!accessing!public! !
-!Tools.AspectAccessor categoriesFor: #yourselfAspect!accessing!public! !
+!Tools.AspectAccessor categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+aspectDescriptor!accessing!private! !
+aspectDescriptor:!accessing!private! !
+aspectDisplayOn:!private! !
+canEdit!operations!public! !
+canGet!public!testing! !
+canImmediateAction!public!testing! !
+canNil!public!testing! !
+canSet!public!testing! !
+defaultComparisonPolicy!initializing!private! !
+displayOn:!displaying!public! !
+editedValue:!accessing!private! !
+editUsing:!operations!public! !
+getMutableValue!public! !
+hash!comparing!public! !
+immediateActionUsing:!operations!public! !
+isMutable!accessing!public! !
+isReadable!public! !
+key!public! !
+name!accessing!public! !
+objectRef!accessing!private! !
+objectRefName!accessing!public! !
+selectIn:!event handling!private! !
+setSubject:aspectDescriptor:!initializing!private! !
+setValue:!accessing!private! !
+typeIcon!accessing!public! !
+typeImage!accessing!public! !
+value!accessing!public! !
+valueDebugText!accessing!public! !
+valueIcon!accessing!public! !
+valueImage!accessing!public! !
+valueNameInfo!accessing!public! !
+valueNameOnly!accessing!public! !
+valueText!accessing!public! !
+valueTextOnly!accessing!public! !
+yourselfAspect!accessing!public! !
+!
 
 !Tools.AspectAccessor class methodsFor!
 
@@ -280,6 +282,8 @@ subject: anObject aspect: anAspect
 	^self basicNew
 		setSubject: anObject aspectDescriptor: anAspect;
 		yourself! !
-!Tools.AspectAccessor class categoriesFor: #new!instance creation!private! !
-!Tools.AspectAccessor class categoriesFor: #subject:aspect:!instance creation!public! !
+!Tools.AspectAccessor class categoriesForMethods!
+new!instance creation!private! !
+subject:aspect:!instance creation!public! !
+!
 

@@ -21,7 +21,9 @@ isBinary: aSymbol
 	"Answer whether the receiver is a binary token with the specified value."
 
 	^self value == aSymbol! !
-!Kernel.StBinarySelectorToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StBinarySelectorToken categoriesFor: #isBinary!public!testing! !
-!Kernel.StBinarySelectorToken categoriesFor: #isBinary:!public!testing! !
+!Kernel.StBinarySelectorToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isBinary!public!testing! !
+isBinary:!public!testing! !
+!
 

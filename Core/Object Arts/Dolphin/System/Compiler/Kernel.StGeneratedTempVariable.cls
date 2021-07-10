@@ -16,5 +16,7 @@ isConstant
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
-!Kernel.StGeneratedTempVariable categoriesFor: #isConstant!public!testing! !
+!Kernel.StGeneratedTempVariable categoriesForMethods!
+isConstant!public!testing! !
+!
 

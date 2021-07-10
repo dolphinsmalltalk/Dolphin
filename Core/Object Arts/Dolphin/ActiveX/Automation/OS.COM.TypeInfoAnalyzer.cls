@@ -425,61 +425,63 @@ vt
 	the receiver."
 
 	^VT_USERDEFINED! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #=!comparing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #asImplType!converting!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #attributes!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #basicName!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #binding!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #classDesc!constants!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #constants!enumerating!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #displayOn:!displaying!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #documentation!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #documentationForMember:!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #documentationForMember:ifAbsent:!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #environment!constants!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #fullyQualifiedName!constants!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #funcDescAt:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #functions!enumerating!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #functionsByName!enumerating!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #getImplTypeInfoAt:!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #getNamesOfMember:count:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #getRefType:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #hasConstantsGeneratedAs:!private!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #hasFunctions!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #hash!comparing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #index!constants!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isDispatchable!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isDual!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isGeneratedAs:!private!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isHidden!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isStructure!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isUnion!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #isVariableDefined!public!testing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #nameOfID:!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #nameSansTag!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #programObject!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #releaseFuncDesc:!private!realizing/unrealizing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #releaseTypeAttr:!private!realizing/unrealizing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #releaseVarDesc:!private!realizing/unrealizing! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #setTypeInfo:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #setTypeInfo:typeLib:index:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #tdesc!accessing!constants!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #typeFlags!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #typekind!constants!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #typeLib!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #typeName!constants!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #varDescAt:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #variableName:!accessing!private! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #variables!accessing!public! !
-!OS.COM.TypeInfoAnalyzer categoriesFor: #vt!constants!public! !
+!OS.COM.TypeInfoAnalyzer categoriesForMethods!
+=!comparing!public! !
+asImplType!converting!public! !
+attributes!accessing!public! !
+baseClass!constants!private! !
+basicName!accessing!private! !
+binding!accessing!private! !
+classDesc!constants!private! !
+constants!enumerating!public! !
+displayOn:!displaying!public! !
+documentation!accessing!public! !
+documentationForMember:!accessing!public! !
+documentationForMember:ifAbsent:!accessing!public! !
+environment!constants!public! !
+fullyQualifiedName!constants!private! !
+funcDescAt:!accessing!private! !
+functions!enumerating!public! !
+functionsByName!enumerating!public! !
+getImplTypeInfoAt:!accessing!public! !
+getNamesOfMember:count:!accessing!private! !
+getRefType:!accessing!private! !
+guid!accessing!public! !
+hasConstantsGeneratedAs:!private!testing! !
+hasFunctions!public!testing! !
+hash!comparing!public! !
+idOfName:ifAbsent:!accessing!public! !
+includeIDLInClassComment!constants!private! !
+index!constants!public! !
+isDispatchable!public!testing! !
+isDual!public!testing! !
+isGeneratedAs:!private!testing! !
+isHidden!public!testing! !
+isStructure!public!testing! !
+isUnion!public!testing! !
+isVariableDefined!public!testing! !
+nameOfID:!accessing!public! !
+nameOfID:ifAbsent:!accessing!public! !
+nameSansTag!accessing!private! !
+programObject!accessing!public! !
+realize!private!realizing/unrealizing! !
+realTypeInfo!accessing!public! !
+releaseFuncDesc:!private!realizing/unrealizing! !
+releaseTypeAttr:!private!realizing/unrealizing! !
+releaseVarDesc:!private!realizing/unrealizing! !
+setTypeInfo:!accessing!private! !
+setTypeInfo:typeLib:index:!accessing!private! !
+suggestedBinding!accessing!private! !
+tdesc!accessing!constants!public! !
+typeFlags!accessing!public! !
+typekind!constants!public! !
+typeLib!accessing!public! !
+typeName!constants!public! !
+varDescAt:!accessing!private! !
+variableName:!accessing!private! !
+variables!accessing!public! !
+vt!constants!public! !
+!
 
 !OS.COM.TypeInfoAnalyzer class methodsFor!
 
@@ -615,14 +617,16 @@ typeKindToClassMap
 		at: TKIND_ALIAS + 1 put: TKindAliasAnalyzer;
 		at: TKIND_UNION + 1 put: TKindUnionAnalyzer;
 		yourself)! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #initialize!initializing!private! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #initializeVTtoIDLTypeMap!initializing!private! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #onTypeInfo:!instance creation!public! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:!instance creation!private! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:index:!instance creation!private! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #stbVersion!binary filing!constants!public! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #typekind!constants!public! !
-!OS.COM.TypeInfoAnalyzer class categoriesFor: #typeKindToClassMap!constants!private! !
+!OS.COM.TypeInfoAnalyzer class categoriesForMethods!
+initialize!initializing!private! !
+initializeVTtoIDLTypeMap!initializing!private! !
+onTypeInfo:!instance creation!public! !
+onTypeInfo:typeLib:!instance creation!private! !
+onTypeInfo:typeLib:index:!instance creation!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!public! !
+stbVersion!binary filing!constants!public! !
+typekind!constants!public! !
+typeKindToClassMap!constants!private! !
+!
 

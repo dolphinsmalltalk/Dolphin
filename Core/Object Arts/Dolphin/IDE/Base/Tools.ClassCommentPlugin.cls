@@ -56,16 +56,18 @@ setWordWrap
 
 systemUpdateEvent
 	^#classCommented:! !
-!Tools.ClassCommentPlugin categoriesFor: #applyOptions!options!private! !
-!Tools.ClassCommentPlugin categoriesFor: #aspect!constants!private! !
-!Tools.ClassCommentPlugin categoriesFor: #backgroundUpdate!private!updating! !
-!Tools.ClassCommentPlugin categoriesFor: #caption!constants!private! !
-!Tools.ClassCommentPlugin categoriesFor: #currentClassUpdated!event handling!private! !
-!Tools.ClassCommentPlugin categoriesFor: #defaultHelpId!constants!public! !
-!Tools.ClassCommentPlugin categoriesFor: #icon!accessing!public! !
-!Tools.ClassCommentPlugin categoriesFor: #setTextStyles!helpers!private! !
-!Tools.ClassCommentPlugin categoriesFor: #setWordWrap!helpers!private! !
-!Tools.ClassCommentPlugin categoriesFor: #systemUpdateEvent!constants!private! !
+!Tools.ClassCommentPlugin categoriesForMethods!
+applyOptions!options!private! !
+aspect!constants!private! !
+backgroundUpdate!private!updating! !
+caption!constants!private! !
+currentClassUpdated!event handling!private! !
+defaultHelpId!constants!public! !
+icon!accessing!public! !
+setTextStyles!helpers!private! !
+setWordWrap!helpers!private! !
+systemUpdateEvent!constants!private! !
+!
 
 !Tools.ClassCommentPlugin class methodsFor!
 
@@ -131,17 +133,19 @@ wordWrap: aBoolean
 	WordWrap == aBoolean ifTrue: [^self].
 	WordWrap := aBoolean.
 	self allSubinstances do: [:each | each setWordWrap]! !
-!Tools.ClassCommentPlugin class categoriesFor: #defaultBackcolor!accessing!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #defaultBackcolor:!accessing!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #defaultTextStyles!constants!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #grayedIcon!constants!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #icon!constants!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #initialize!initializing!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #publishedAspects!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ClassCommentPlugin class categoriesFor: #textStyles!accessing!options!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #textStyles:!accessing!options!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Tools.ClassCommentPlugin class categoriesFor: #wordWrap!accessing!options!public! !
-!Tools.ClassCommentPlugin class categoriesFor: #wordWrap:!accessing!options!public! !
+!Tools.ClassCommentPlugin class categoriesForMethods!
+defaultBackcolor!accessing!public! !
+defaultBackcolor:!accessing!public! !
+defaultTextStyles!constants!public! !
+grayedIcon!constants!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+textStyles!accessing!options!public! !
+textStyles:!accessing!options!public! !
+uninitialize!class hierarchy-removing!private! !
+wordWrap!accessing!options!public! !
+wordWrap:!accessing!options!public! !
+!
 

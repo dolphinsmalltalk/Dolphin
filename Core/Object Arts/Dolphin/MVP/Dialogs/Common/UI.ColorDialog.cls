@@ -85,15 +85,17 @@ wmColorOk: msgInteger wParam: wParamInteger lParam: lParamInteger
 	"Private - The user has pressed the OK button."
 
 	^(self validationBlock value: winStruct color) ifTrue: [0] ifFalse: [1]! !
-!UI.ColorDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.ColorDialog categoriesFor: #defaultColor!helpers!private! !
-!UI.ColorDialog categoriesFor: #extractResult:!helpers!private! !
-!UI.ColorDialog categoriesFor: #initialize!accessing!initializing!private! !
-!UI.ColorDialog categoriesFor: #prepareStruct!helpers!private! !
-!UI.ColorDialog categoriesFor: #validationBlock!accessing!public! !
-!UI.ColorDialog categoriesFor: #validationBlock:!initializing!public! !
-!UI.ColorDialog categoriesFor: #winStructClass!constants!private! !
-!UI.ColorDialog categoriesFor: #wmColorOk:wParam:lParam:!event handling-win32!private! !
+!UI.ColorDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+defaultColor!helpers!private! !
+extractResult:!helpers!private! !
+initialize!accessing!initializing!private! !
+prepareStruct!helpers!private! !
+validationBlock!accessing!public! !
+validationBlock:!initializing!public! !
+winStructClass!constants!private! !
+wmColorOk:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.ColorDialog class methodsFor!
 
@@ -153,12 +155,14 @@ uninitialize
 	"
 
 	SessionManager current removeEventsTriggeredFor: self! !
-!UI.ColorDialog class categoriesFor: #customColors!accessing!public! !
-!UI.ColorDialog class categoriesFor: #defaultModel!models!public! !
-!UI.ColorDialog class categoriesFor: #icon!constants!public! !
-!UI.ColorDialog class categoriesFor: #initialize!development!initializing!private! !
-!UI.ColorDialog class categoriesFor: #onStartup!events-session!public! !
-!UI.ColorDialog class categoriesFor: #registerColorOkMessage!events-session!private! !
-!UI.ColorDialog class categoriesFor: #resetCustomColors!accessing!public! !
-!UI.ColorDialog class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.ColorDialog class categoriesForMethods!
+customColors!accessing!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+onStartup!events-session!public! !
+registerColorOkMessage!events-session!private! !
+resetCustomColors!accessing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

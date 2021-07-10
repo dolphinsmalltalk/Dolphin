@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.CollectionTest'
 	instanceVariableNames: ''
@@ -173,17 +173,19 @@ testFold
 			[:i |
 			result := (1 to: i) fold: [:product :each | product * each].
 			self assert: result equals: i factorial]! !
-!Core.Tests.CollectionTest categoriesFor: #assimilate:!private!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #assimilateElements:!helpers!private! !
-!Core.Tests.CollectionTest categoriesFor: #collectionClass!constants!private! !
-!Core.Tests.CollectionTest categoriesFor: #newCollection:!helpers!private! !
-!Core.Tests.CollectionTest categoriesFor: #shouldnt:implement:!helpers!private! !
-!Core.Tests.CollectionTest categoriesFor: #testAllSatisfy!public!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #testAnyone!public!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #testAnySatisfy!public!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #testCount!public!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #testDetectIfNone!public!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #testDistinct!public!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #testDoSeparatedBy!public!unit tests! !
-!Core.Tests.CollectionTest categoriesFor: #testFold!public!unit tests! !
+!Core.Tests.CollectionTest categoriesForMethods!
+assimilate:!private!unit tests! !
+assimilateElements:!helpers!private! !
+collectionClass!constants!private! !
+newCollection:!helpers!private! !
+shouldnt:implement:!helpers!private! !
+testAllSatisfy!public!unit tests! !
+testAnyone!public!unit tests! !
+testAnySatisfy!public!unit tests! !
+testCount!public!unit tests! !
+testDetectIfNone!public!unit tests! !
+testDistinct!public!unit tests! !
+testDoSeparatedBy!public!unit tests! !
+testFold!public!unit tests! !
+!
 

@@ -33,7 +33,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_IFROW! !
-!OS.MIB_IFTABLE categoriesFor: #table!**compiled accessors**!public! !
+!OS.MIB_IFTABLE categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !OS.MIB_IFTABLE class methodsFor!
 
@@ -59,6 +61,8 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!OS.MIB_IFTABLE class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_IFTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_IFTABLE class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

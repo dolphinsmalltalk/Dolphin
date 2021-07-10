@@ -21,6 +21,8 @@ color: anARGB width: aFloat
 	"Creates a Pen object that uses a specified color and width."
 
 	^PenFromColorInitializer new color: anARGB width: aFloat! !
-!Graphics.Gdiplus.PenInitializer class categoriesFor: #brush:width:!instance creation!public! !
-!Graphics.Gdiplus.PenInitializer class categoriesFor: #color:width:!instance creation!public! !
+!Graphics.Gdiplus.PenInitializer class categoriesForMethods!
+brush:width:!instance creation!public! !
+color:width:!instance creation!public! !
+!
 

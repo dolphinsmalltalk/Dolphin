@@ -82,15 +82,17 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^FINDREPLACEW! !
-!UI.FindDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.FindDialog categoriesFor: #extractResult:!helpers!private! !
-!UI.FindDialog categoriesFor: #fdFlags!accessing!private! !
-!UI.FindDialog categoriesFor: #findWhat!accessing!private! !
-!UI.FindDialog categoriesFor: #findWhat:!accessing!private! !
-!UI.FindDialog categoriesFor: #initialize!initializing!private! !
-!UI.FindDialog categoriesFor: #prepareStruct!helpers!private! !
-!UI.FindDialog categoriesFor: #setFindDetails:!accessing!private! !
-!UI.FindDialog categoriesFor: #winStructClass!constants!private! !
+!UI.FindDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+extractResult:!helpers!private! !
+fdFlags!accessing!private! !
+findWhat!accessing!private! !
+findWhat:!accessing!private! !
+initialize!initializing!private! !
+prepareStruct!helpers!private! !
+setFindDetails:!accessing!private! !
+winStructClass!constants!private! !
+!
 
 !UI.FindDialog class methodsFor!
 
@@ -133,9 +135,11 @@ showModeless: aView on: aFindDetails
 				ownerView: aView.
 	"N.B. Doesn't really show as a modal dialog"
 	dialog showModal! !
-!UI.FindDialog class categoriesFor: #defaultModel!public! !
-!UI.FindDialog class categoriesFor: #initialize!development!initializing!private! !
-!UI.FindDialog class categoriesFor: #ownerView:!instance creation!public! !
-!UI.FindDialog class categoriesFor: #ownerView:findWhat:!instance creation!public! !
-!UI.FindDialog class categoriesFor: #showModeless:on:!public! !
+!UI.FindDialog class categoriesForMethods!
+defaultModel!public! !
+initialize!development!initializing!private! !
+ownerView:!instance creation!public! !
+ownerView:findWhat:!instance creation!public! !
+showModeless:on:!public! !
+!
 

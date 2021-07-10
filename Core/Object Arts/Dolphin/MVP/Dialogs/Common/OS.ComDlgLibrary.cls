@@ -103,15 +103,17 @@ systemError
 	"Generate an error based on the last recorded host system error."
 
 	^self systemError: self commDlgExtendedError! !
-!OS.ComDlgLibrary categoriesFor: #chooseColor:!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #chooseFont:!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #findText:!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
-!OS.ComDlgLibrary categoriesFor: #getOpenFileName:!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #getSaveFileName:!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #replaceText:!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #systemError!exceptions!public! !
+!OS.ComDlgLibrary categoriesForMethods!
+chooseColor:!primitives!private!win32 functions-common dialog box! !
+chooseFont:!primitives!private!win32 functions-common dialog box! !
+commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
+findText:!primitives!private!win32 functions-common dialog box! !
+getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
+getOpenFileName:!primitives!private!win32 functions-common dialog box! !
+getSaveFileName:!primitives!private!win32 functions-common dialog box! !
+replaceText:!primitives!private!win32 functions-common dialog box! !
+systemError!exceptions!public! !
+!
 
 !OS.ComDlgLibrary class methodsFor!
 
@@ -122,6 +124,8 @@ fileName
 
 sharedVariableName
 	^#{ComDlg32}! !
-!OS.ComDlgLibrary class categoriesFor: #fileName!constants!public! !
-!OS.ComDlgLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.ComDlgLibrary class categoriesForMethods!
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

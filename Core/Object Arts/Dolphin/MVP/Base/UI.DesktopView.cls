@@ -323,54 +323,56 @@ workArea
 	occuppied by the tool bar."
 
 	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECTL) asRectangle! !
-!UI.DesktopView categoriesFor: #actualFont!accessing!private! !
-!UI.DesktopView categoriesFor: #addCommandHistory:!accessing!private! !
-!UI.DesktopView categoriesFor: #addSubView:!hierarchy!public!sub views! !
-!UI.DesktopView categoriesFor: #allParents!hierarchy!public! !
-!UI.DesktopView categoriesFor: #ambientBackcolor!accessing!private! !
-!UI.DesktopView categoriesFor: #assumeDesktopHandle!accessing!public! !
-!UI.DesktopView categoriesFor: #basicActualBackcolor!accessing!private! !
-!UI.DesktopView categoriesFor: #buttonRemoved:!default button!private! !
-!UI.DesktopView categoriesFor: #canvas!accessing!public! !
-!UI.DesktopView categoriesFor: #caption!accessing!public! !
-!UI.DesktopView categoriesFor: #caption:!accessing!public! !
-!UI.DesktopView categoriesFor: #commandPolicyWithSource:!commands!public! !
-!UI.DesktopView categoriesFor: #defaultExtentOf:!geometry!helpers!private! !
-!UI.DesktopView categoriesFor: #displayOn:!displaying!public! !
-!UI.DesktopView categoriesFor: #ensureSubView:rectangleVisible:!private!updating! !
-!UI.DesktopView categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!UI.DesktopView categoriesFor: #ensureVisible!accessing!public! !
-!UI.DesktopView categoriesFor: #filerProxy!binary filing!private! !
-!UI.DesktopView categoriesFor: #helpId!accessing!public! !
-!UI.DesktopView categoriesFor: #iconTitleFont!geometry!public! !
-!UI.DesktopView categoriesFor: #invalidateLayout!geometry!public! !
-!UI.DesktopView categoriesFor: #invalidateRect:erase:!drawing!public! !
-!UI.DesktopView categoriesFor: #invalidateUserInterface!accessing!public! !
-!UI.DesktopView categoriesFor: #isDesktop!public!testing! !
-!UI.DesktopView categoriesFor: #isLayoutValid!geometry!public!testing! !
-!UI.DesktopView categoriesFor: #layoutManager:!geometry!public! !
-!UI.DesktopView categoriesFor: #name!accessing!public! !
-!UI.DesktopView categoriesFor: #name:!accessing!public! !
-!UI.DesktopView categoriesFor: #name:as:!hierarchy!public!sub views! !
-!UI.DesktopView categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
-!UI.DesktopView categoriesFor: #onStartup!event handling!public! !
-!UI.DesktopView categoriesFor: #onViewActivated:!event handling!public! !
-!UI.DesktopView categoriesFor: #onViewDeactivated:!event handling!public! !
-!UI.DesktopView categoriesFor: #onViewMinimized:!event handling!public! !
-!UI.DesktopView categoriesFor: #onViewRestored:!event handling!public! !
-!UI.DesktopView categoriesFor: #performCommand:!commands!public! !
-!UI.DesktopView categoriesFor: #queryContextMenu!menus!public! !
-!UI.DesktopView categoriesFor: #refresh!drawing!public! !
-!UI.DesktopView categoriesFor: #repositionShell:!helpers!private! !
-!UI.DesktopView categoriesFor: #resolution!accessing!public! !
-!UI.DesktopView categoriesFor: #screenRectangle!geometry!public! !
-!UI.DesktopView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
-!UI.DesktopView categoriesFor: #setFocus!operations!public! !
-!UI.DesktopView categoriesFor: #topShell!hierarchy!public! !
-!UI.DesktopView categoriesFor: #topView!hierarchy!public! !
-!UI.DesktopView categoriesFor: #updateCaption!public!updating! !
-!UI.DesktopView categoriesFor: #withAllParentsDo:!hierarchy!public! !
-!UI.DesktopView categoriesFor: #workArea!geometry!public! !
+!UI.DesktopView categoriesForMethods!
+actualFont!accessing!private! !
+addCommandHistory:!accessing!private! !
+addSubView:!hierarchy!public!sub views! !
+allParents!hierarchy!public! !
+ambientBackcolor!accessing!private! !
+assumeDesktopHandle!accessing!public! !
+basicActualBackcolor!accessing!private! !
+buttonRemoved:!default button!private! !
+canvas!accessing!public! !
+caption!accessing!public! !
+caption:!accessing!public! !
+commandPolicyWithSource:!commands!public! !
+defaultExtentOf:!geometry!helpers!private! !
+displayOn:!displaying!public! !
+ensureSubView:rectangleVisible:!private!updating! !
+ensureSubViewVisible:!public!sub views! !
+ensureVisible!accessing!public! !
+filerProxy!binary filing!private! !
+helpId!accessing!public! !
+iconTitleFont!geometry!public! !
+invalidateLayout!geometry!public! !
+invalidateRect:erase:!drawing!public! !
+invalidateUserInterface!accessing!public! !
+isDesktop!public!testing! !
+isLayoutValid!geometry!public!testing! !
+layoutManager:!geometry!public! !
+name!accessing!public! !
+name:!accessing!public! !
+name:as:!hierarchy!public!sub views! !
+onAboutToDisplaySystemMenu:!event handling!public! !
+onStartup!event handling!public! !
+onViewActivated:!event handling!public! !
+onViewDeactivated:!event handling!public! !
+onViewMinimized:!event handling!public! !
+onViewRestored:!event handling!public! !
+performCommand:!commands!public! !
+queryContextMenu!menus!public! !
+refresh!drawing!public! !
+repositionShell:!helpers!private! !
+resolution!accessing!public! !
+screenRectangle!geometry!public! !
+setDefaultButton:state:!accessing!default button!private! !
+setFocus!operations!public! !
+topShell!hierarchy!public! !
+topView!hierarchy!public! !
+updateCaption!public!updating! !
+withAllParentsDo:!hierarchy!public! !
+workArea!geometry!public! !
+!
 
 UI.DesktopView methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
 UI.DesktopView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
@@ -428,10 +430,12 @@ uninitialize
 		winFinalize;
 		handle: nil.
 	Current := nil! !
-!UI.DesktopView class categoriesFor: #current!accessing!public! !
-!UI.DesktopView class categoriesFor: #current:!accessing!public! !
-!UI.DesktopView class categoriesFor: #icon!constants!public! !
-!UI.DesktopView class categoriesFor: #initialize!development!initializing!private! !
-!UI.DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!UI.DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.DesktopView class categoriesForMethods!
+current!accessing!public! !
+current:!accessing!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

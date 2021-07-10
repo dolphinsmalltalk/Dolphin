@@ -29,5 +29,7 @@ primHookWindowCreate: hookBoolean
 			"Now retry"
 			super primHookWindowCreate: hookBoolean]
 		ifFalse: [self primitiveFailed: _failureCode]! !
-!Tools.DebuggerShellView categoriesFor: #primHookWindowCreate:!helpers!private! !
+!Tools.DebuggerShellView categoriesForMethods!
+primHookWindowCreate:!helpers!private! !
+!
 

@@ -104,24 +104,26 @@ stream
 	"Answer the receiver's <puttableStream>."
 
 	^stream! !
-!Kernel.SourceFiler categoriesFor: #atEnd!public!testing! !
-!Kernel.SourceFiler categoriesFor: #close!operations!public! !
-!Kernel.SourceFiler categoriesFor: #cr!accessing!public! !
-!Kernel.SourceFiler categoriesFor: #emitClassName:!private!source filing-file out! !
-!Kernel.SourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #evaluationContext!accessing!public! !
-!Kernel.SourceFiler categoriesFor: #evaluationContext:!accessing!public! !
-!Kernel.SourceFiler categoriesFor: #fileIn!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #flush!operations!public! !
-!Kernel.SourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #isSourceOnly!accessing!public! !
-!Kernel.SourceFiler categoriesFor: #isSourceOnly:!accessing!public! !
-!Kernel.SourceFiler categoriesFor: #setStream:!initializing!private! !
-!Kernel.SourceFiler categoriesFor: #setToEnd!positioning!public! !
-!Kernel.SourceFiler categoriesFor: #sourcePositionFromDescriptor:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #storeSource:for:!private!source filing! !
-!Kernel.SourceFiler categoriesFor: #storeSourceString:forMethod:!public!source filing! !
-!Kernel.SourceFiler categoriesFor: #stream!accessing!public! !
+!Kernel.SourceFiler categoriesForMethods!
+atEnd!public!testing! !
+close!operations!public! !
+cr!accessing!public! !
+emitClassName:!private!source filing-file out! !
+emitGUIDOfClass:!private!source filing! !
+evaluationContext!accessing!public! !
+evaluationContext:!accessing!public! !
+fileIn!public!source filing! !
+flush!operations!public! !
+getSourceFromDescriptor:!public!source filing! !
+isSourceOnly!accessing!public! !
+isSourceOnly:!accessing!public! !
+setStream:!initializing!private! !
+setToEnd!positioning!public! !
+sourcePositionFromDescriptor:!private!source filing! !
+storeSource:for:!private!source filing! !
+storeSourceString:forMethod:!public!source filing! !
+stream!accessing!public! !
+!
 
 !Kernel.SourceFiler class methodsFor!
 
@@ -145,7 +147,9 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
-!Kernel.SourceFiler class categoriesFor: #fileOutExtensionForClass:!enquiries!public! !
-!Kernel.SourceFiler class categoriesFor: #fileOutNameForClass:!enquiries!public! !
-!Kernel.SourceFiler class categoriesFor: #on:!instance creation!public! !
+!Kernel.SourceFiler class categoriesForMethods!
+fileOutExtensionForClass:!enquiries!public! !
+fileOutNameForClass:!enquiries!public! !
+on:!instance creation!public! !
+!
 

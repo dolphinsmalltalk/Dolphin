@@ -25,6 +25,8 @@ value
 	"Answer the <Utf16String> pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
 	^Utf16String fromAddress: super value! !
-!External.LPWSTR categoriesFor: #asString!converting!public! !
-!External.LPWSTR categoriesFor: #value!accessing!public! !
+!External.LPWSTR categoriesForMethods!
+asString!converting!public! !
+value!accessing!public! !
+!
 

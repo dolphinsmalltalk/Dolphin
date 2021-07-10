@@ -101,14 +101,16 @@ length
 	answer := SDWORD new.
 	self get_length: answer.
 	^answer asObject! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #get_item:prefix:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #item:!**auto generated**!properties!public! !
-!MSXML.IMXNamespacePrefixes categoriesFor: #length!**auto generated**!properties!public! !
+!MSXML.IMXNamespacePrefixes categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+get_item:prefix:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+get_length:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+!
 
 !MSXML.IMXNamespacePrefixes class methodsFor!
 
@@ -124,5 +126,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.IMXNamespacePrefixes class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IMXNamespacePrefixes class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

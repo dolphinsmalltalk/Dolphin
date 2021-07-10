@@ -402,56 +402,58 @@ year
 	"Answer an <integer> representing the year of the local time which includes the receiver."
 
 	^self dayMonthYearDo: [:d :m :y | y]! !
-!Core.DateAndTime categoriesFor: #-!arithmetic!public! !
-!Core.DateAndTime categoriesFor: #+!arithmetic!public! !
-!Core.DateAndTime categoriesFor: #<!comparing!public! !
-!Core.DateAndTime categoriesFor: #=!comparing!public! !
-!Core.DateAndTime categoriesFor: #asLocal!comparing!public! !
-!Core.DateAndTime categoriesFor: #asSeconds!converting!public! !
-!Core.DateAndTime categoriesFor: #asSYSTEMTIME!converting!public! !
-!Core.DateAndTime categoriesFor: #asUnixTime!converting!public! !
-!Core.DateAndTime categoriesFor: #asUTC!converting!public! !
-!Core.DateAndTime categoriesFor: #day!accessing!public! !
-!Core.DateAndTime categoriesFor: #dayMonthYearDo:!accessing!public! !
-!Core.DateAndTime categoriesFor: #dayOfMonth!accessing!public! !
-!Core.DateAndTime categoriesFor: #dayOfWeek!accessing!public! !
-!Core.DateAndTime categoriesFor: #dayOfWeekAbbreviation!accessing!public! !
-!Core.DateAndTime categoriesFor: #dayOfWeekName!accessing!public! !
-!Core.DateAndTime categoriesFor: #dayOfYear!accessing!public! !
-!Core.DateAndTime categoriesFor: #displayOn:!printing!public! !
-!Core.DateAndTime categoriesFor: #hash!comparing!public! !
-!Core.DateAndTime categoriesFor: #hour!accessing!public! !
-!Core.DateAndTime categoriesFor: #hour12!accessing!public! !
-!Core.DateAndTime categoriesFor: #hour24!accessing!public! !
-!Core.DateAndTime categoriesFor: #isLeapYear!public!testing! !
-!Core.DateAndTime categoriesFor: #julianDate!accessing!public! !
-!Core.DateAndTime categoriesFor: #julianDayNumber!accessing!public! !
-!Core.DateAndTime categoriesFor: #lilianDayNumber!accessing!public! !
-!Core.DateAndTime categoriesFor: #localSeconds!converting!public! !
-!Core.DateAndTime categoriesFor: #meridianAbbreviation!accessing!public! !
-!Core.DateAndTime categoriesFor: #midnight!accessing!public! !
-!Core.DateAndTime categoriesFor: #minute!accessing!public! !
-!Core.DateAndTime categoriesFor: #month!accessing!public! !
-!Core.DateAndTime categoriesFor: #monthAbbreviation!accessing!public! !
-!Core.DateAndTime categoriesFor: #monthName!accessing!public! !
-!Core.DateAndTime categoriesFor: #nanosecond!accessing!public! !
-!Core.DateAndTime categoriesFor: #offset!accessing!public! !
-!Core.DateAndTime categoriesFor: #offset:!converting!public! !
-!Core.DateAndTime categoriesFor: #offsetSeconds!accessing!private! !
-!Core.DateAndTime categoriesFor: #offsetSeconds:!converting!private! !
-!Core.DateAndTime categoriesFor: #printOn:!printing!public! !
-!Core.DateAndTime categoriesFor: #printOn:format:!printing!public! !
-!Core.DateAndTime categoriesFor: #printOn:withLeadingSpace:!printing!public! !
-!Core.DateAndTime categoriesFor: #printStringFormat:!printing!public! !
-!Core.DateAndTime categoriesFor: #rataDie!accessing!public! !
-!Core.DateAndTime categoriesFor: #second!accessing!public! !
-!Core.DateAndTime categoriesFor: #seconds!accessing!public! !
-!Core.DateAndTime categoriesFor: #setRataDie:seconds:offset:!initializing!private! !
-!Core.DateAndTime categoriesFor: #storeOn:!printing!public! !
-!Core.DateAndTime categoriesFor: #subtractFromDateAndTime:!arithmetic!double dispatch!private! !
-!Core.DateAndTime categoriesFor: #timeZoneAbbreviation!accessing!public! !
-!Core.DateAndTime categoriesFor: #timeZoneName!accessing!public! !
-!Core.DateAndTime categoriesFor: #year!accessing!public! !
+!Core.DateAndTime categoriesForMethods!
+-!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+=!comparing!public! !
+asLocal!comparing!public! !
+asSeconds!converting!public! !
+asSYSTEMTIME!converting!public! !
+asUnixTime!converting!public! !
+asUTC!converting!public! !
+day!accessing!public! !
+dayMonthYearDo:!accessing!public! !
+dayOfMonth!accessing!public! !
+dayOfWeek!accessing!public! !
+dayOfWeekAbbreviation!accessing!public! !
+dayOfWeekName!accessing!public! !
+dayOfYear!accessing!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+isLeapYear!public!testing! !
+julianDate!accessing!public! !
+julianDayNumber!accessing!public! !
+lilianDayNumber!accessing!public! !
+localSeconds!converting!public! !
+meridianAbbreviation!accessing!public! !
+midnight!accessing!public! !
+minute!accessing!public! !
+month!accessing!public! !
+monthAbbreviation!accessing!public! !
+monthName!accessing!public! !
+nanosecond!accessing!public! !
+offset!accessing!public! !
+offset:!converting!public! !
+offsetSeconds!accessing!private! !
+offsetSeconds:!converting!private! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printOn:withLeadingSpace:!printing!public! !
+printStringFormat:!printing!public! !
+rataDie!accessing!public! !
+second!accessing!public! !
+seconds!accessing!public! !
+setRataDie:seconds:offset:!initializing!private! !
+storeOn:!printing!public! !
+subtractFromDateAndTime:!arithmetic!double dispatch!private! !
+timeZoneAbbreviation!accessing!public! !
+timeZoneName!accessing!public! !
+year!accessing!public! !
+!
 
 Core.DateAndTime methodProtocol: #DateAndTime attributes: #(#ansi #readOnly) selectors: #(#- #~~ #~= #+ #< #<= #= #== #> #>= #asLocal #asUTC #between:and: #class #copy #dayOfMonth #dayOfWeek #dayOfWeekAbbreviation #dayOfWeekName #dayOfYear #doesNotUnderstand: #error: #hash #hour #hour12 #hour24 #identityHash #isKindOf: #isLeapYear #isMemberOf: #isNil #max: #meridianAbbreviation #min: #minute #month #monthAbbreviation #monthName #notNil #offset #offset: #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #second #timeZoneAbbreviation #timeZoneName #year #yourself)!
 
@@ -882,42 +884,44 @@ yesterday
 	"Answer a new <DateAndTime> representing midnight local time on the previous day."
 
 	^self today - 1 days! !
-!Core.DateAndTime class categoriesFor: #clockPrecision!constants!public! !
-!Core.DateAndTime class categoriesFor: #daysInMonth:forYear:!enquiries!public! !
-!Core.DateAndTime class categoriesFor: #daysToMonth:forYear:!enquiries!public! !
-!Core.DateAndTime class categoriesFor: #encodeRataDieYear:month:day:!helpers!private! !
-!Core.DateAndTime class categoriesFor: #errorInvalidFormat!exceptions!public! !
-!Core.DateAndTime class categoriesFor: #fromDate:time:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #fromString:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #fromSYSTEMTIME:offset:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #initialize!class initialization!public! !
-!Core.DateAndTime class categoriesFor: #isLeapYear:!public!testing! !
-!Core.DateAndTime class categoriesFor: #midnight!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #now!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #nowUTC!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #readFrom:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #readOffsetFrom:sign:!helpers!private! !
-!Core.DateAndTime class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Core.DateAndTime class categoriesFor: #stbVersion!binary filing!development!public! !
-!Core.DateAndTime class categoriesFor: #today!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #tomorrow!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #utcSeconds:offset:!instance creation!private! !
-!Core.DateAndTime class categoriesFor: #utcSecondsNow!helpers!private! !
-!Core.DateAndTime class categoriesFor: #validateHour:minute:second:!instance creation!private! !
-!Core.DateAndTime class categoriesFor: #validateOffset:!helpers!private! !
-!Core.DateAndTime class categoriesFor: #year:day:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:day:hour:minute:second:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:day:hour:minute:second:offset:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:day:hour:minute:second:offsetSeconds:!instance creation!private! !
-!Core.DateAndTime class categoriesFor: #year:day:offset:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:day:seconds:offset:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:month:day:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:month:day:hour:minute:second:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:month:day:hour:minute:second:offset:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #year:month:day:hour:minute:second:offsetSeconds:!instance creation!private! !
-!Core.DateAndTime class categoriesFor: #year:month:day:offset:!instance creation!public! !
-!Core.DateAndTime class categoriesFor: #yesterday!instance creation!public! !
+!Core.DateAndTime class categoriesForMethods!
+clockPrecision!constants!public! !
+daysInMonth:forYear:!enquiries!public! !
+daysToMonth:forYear:!enquiries!public! !
+encodeRataDieYear:month:day:!helpers!private! !
+errorInvalidFormat!exceptions!public! !
+fromDate:time:!instance creation!public! !
+fromString:!instance creation!public! !
+fromSYSTEMTIME:!instance creation!public! !
+fromSYSTEMTIME:offset:!instance creation!public! !
+initialize!class initialization!public! !
+isLeapYear:!public!testing! !
+midnight!instance creation!public! !
+now!instance creation!public! !
+nowUTC!instance creation!public! !
+readFrom:!instance creation!public! !
+readOffsetFrom:sign:!helpers!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!development!public! !
+today!instance creation!public! !
+tomorrow!instance creation!public! !
+utcSeconds:offset:!instance creation!private! !
+utcSecondsNow!helpers!private! !
+validateHour:minute:second:!instance creation!private! !
+validateOffset:!helpers!private! !
+year:day:!instance creation!public! !
+year:day:hour:minute:second:!instance creation!public! !
+year:day:hour:minute:second:offset:!instance creation!public! !
+year:day:hour:minute:second:offsetSeconds:!instance creation!private! !
+year:day:offset:!instance creation!public! !
+year:day:seconds:offset:!instance creation!public! !
+year:month:day:!instance creation!public! !
+year:month:day:hour:minute:second:!instance creation!public! !
+year:month:day:hour:minute:second:offset:!instance creation!public! !
+year:month:day:hour:minute:second:offsetSeconds:!instance creation!private! !
+year:month:day:offset:!instance creation!public! !
+yesterday!instance creation!public! !
+!
 
 Core.DateAndTime class methodProtocol: #'DateAndTime factory' attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #clockPrecision #copy #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #now #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #year:day:hour:minute:second: #year:day:hour:minute:second:offset: #year:month:day:hour:minute:second: #year:month:day:hour:minute:second:offset: #yourself)!
 

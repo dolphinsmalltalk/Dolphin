@@ -26,8 +26,10 @@ compileForEvaluation: aCompiler source: aString in: aClass environment: aNamespa
 
 	<stdcall: oop CompileForEval oop lpvoid ote ote ote sdword oop>
 	^self invalidCall: _failureCode! !
-!Kernel.CompilerLibrary categoriesFor: #compile:source:in:environment:flags:notifying:!compiling!private! !
-!Kernel.CompilerLibrary categoriesFor: #compileForEvaluation:source:in:environment:evaluationPools:flags:notifying:!compiling!private! !
+!Kernel.CompilerLibrary categoriesForMethods!
+compile:source:in:environment:flags:notifying:!compiling!private! !
+compileForEvaluation:source:in:environment:evaluationPools:flags:notifying:!compiling!private! !
+!
 
 !Kernel.CompilerLibrary class methodsFor!
 
@@ -36,5 +38,7 @@ fileName
 	the receiver represents."
 
 	^VM compilerFileName! !
-!Kernel.CompilerLibrary class categoriesFor: #fileName!constants!public! !
+!Kernel.CompilerLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

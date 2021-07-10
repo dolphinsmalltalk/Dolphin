@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PullUpClassVariableTest'
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ testPullUpClassVariable
 				directlyDefinesClassVariable: #RecursiveSelfRule).
 	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest')
 				directlyDefinesClassVariable: #RecursiveSelfRule)! !
-!Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testPullUpClassConstant!public!tests! !
-!Refactory.Browser.Tests.PullUpClassVariableTest categoriesFor: #testPullUpClassVariable!public!tests! !
+!Refactory.Browser.Tests.PullUpClassVariableTest categoriesForMethods!
+testMetaClassFailure!failure tests!public! !
+testNonExistantName!failure tests!public! !
+testPullUpClassConstant!public!tests! !
+testPullUpClassVariable!public!tests! !
+!
 

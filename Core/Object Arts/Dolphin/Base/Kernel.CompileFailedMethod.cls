@@ -32,8 +32,10 @@ getDebugInfo
 
 isCompilationFailure
 	^true! !
-!Kernel.CompileFailedMethod categoriesFor: #getDebugInfo!development!private! !
-!Kernel.CompileFailedMethod categoriesFor: #isCompilationFailure!public!testing! !
+!Kernel.CompileFailedMethod categoriesForMethods!
+getDebugInfo!development!private! !
+isCompilationFailure!public!testing! !
+!
 
 !Kernel.CompileFailedMethod class methodsFor!
 
@@ -75,5 +77,7 @@ buildSourceForSelector: aSymbol class: aBehavior
 		crtab;
 		nextPutAll: ' self error: ''This method did not compile'''.
 	^stream contents! !
-!Kernel.CompileFailedMethod class categoriesFor: #buildSourceForSelector:class:!helpers!private! !
+!Kernel.CompileFailedMethod class categoriesForMethods!
+buildSourceForSelector:class:!helpers!private! !
+!
 

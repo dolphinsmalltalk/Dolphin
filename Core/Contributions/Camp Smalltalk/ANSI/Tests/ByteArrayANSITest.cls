@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SequencedReadableCollectionTest subclass: #ByteArrayANSITest
 	instanceVariableNames: ''
@@ -38,13 +38,15 @@ emptyCollection
 
 protocol
 	^#'ByteArray'! !
-!ByteArrayANSITest categoriesFor: #canonicalElement!public! !
-!ByteArrayANSITest categoriesFor: #canonicalObject!public! !
-!ByteArrayANSITest categoriesFor: #conformanceOfPutElementOnXatAllPutX:!public! !
-!ByteArrayANSITest categoriesFor: #conformanceOfPutElementOnXatAllXputX:!public! !
-!ByteArrayANSITest categoriesFor: #conformanceOfPutElementOnXatXputX:!public! !
-!ByteArrayANSITest categoriesFor: #emptyCollection!public! !
-!ByteArrayANSITest categoriesFor: #protocol!public! !
+!ByteArrayANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+conformanceOfPutElementOnXatAllPutX:!public! !
+conformanceOfPutElementOnXatAllXputX:!public! !
+conformanceOfPutElementOnXatXputX:!public! !
+emptyCollection!public! !
+protocol!public! !
+!
 
 !ByteArrayANSITest class methodsFor!
 
@@ -52,5 +54,7 @@ helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper! !
-!ByteArrayANSITest class categoriesFor: #helperClassesDo:!public! !
+!ByteArrayANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

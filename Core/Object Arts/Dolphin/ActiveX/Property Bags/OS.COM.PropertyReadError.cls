@@ -30,8 +30,10 @@ initialize
 	"Private - Initialize the receiver's instance variables."
 
 	messageText := 'Error loading from property bag'.! !
-!OS.COM.PropertyReadError categoriesFor: #errorLog!accessing!public! !
-!OS.COM.PropertyReadError categoriesFor: #errorLog:!accessing!public! !
-!OS.COM.PropertyReadError categoriesFor: #guid!accessing!public! !
-!OS.COM.PropertyReadError categoriesFor: #initialize!initializing!private! !
+!OS.COM.PropertyReadError categoriesForMethods!
+errorLog!accessing!public! !
+errorLog:!accessing!public! !
+guid!accessing!public! !
+initialize!initializing!private! !
+!
 

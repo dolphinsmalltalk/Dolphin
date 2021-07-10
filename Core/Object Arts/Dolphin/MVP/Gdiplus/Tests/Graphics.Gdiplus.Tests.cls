@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus subclass: #'Graphics.Gdiplus.Tests'
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!Graphics.Gdiplus.Tests class categoriesFor: #icon!constants!public! !
+!Graphics.Gdiplus.Tests class categoriesForMethods!
+icon!constants!public! !
+!
 

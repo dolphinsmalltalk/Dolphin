@@ -131,21 +131,23 @@ uId: anInteger
 	"Set the receiver's 'uId' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_uId put: anInteger! !
-!OS.TOOLINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #hinst!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #hwnd!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #hwnd:!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #printOn:!development!printing!public! !
-!OS.TOOLINFOW categoriesFor: #rect!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #rect:!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #text:!accessing!public! !
-!OS.TOOLINFOW categoriesFor: #textCallback!accessing!public! !
-!OS.TOOLINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #uFlags:!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #uId!**compiled accessors**!public! !
-!OS.TOOLINFOW categoriesFor: #uId:!**compiled accessors**!public! !
+!OS.TOOLINFOW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+hinst!**compiled accessors**!public! !
+hwnd!**compiled accessors**!public! !
+hwnd:!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+lpszText:!**compiled accessors**!public! !
+printOn:!development!printing!public! !
+rect!**compiled accessors**!public! !
+rect:!**compiled accessors**!public! !
+text:!accessing!public! !
+textCallback!accessing!public! !
+uFlags!**compiled accessors**!public! !
+uFlags:!**compiled accessors**!public! !
+uId!**compiled accessors**!public! !
+uId:!**compiled accessors**!public! !
+!
 
 !OS.TOOLINFOW class methodsFor!
 
@@ -179,6 +181,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
-!OS.TOOLINFOW class categoriesFor: #defineFields!public!template definition! !
-!OS.TOOLINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TOOLINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

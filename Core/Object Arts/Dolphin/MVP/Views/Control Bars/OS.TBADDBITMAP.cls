@@ -23,8 +23,10 @@ nID: anInteger
 	"Set the receiver's 'nID' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_nID put: anInteger! !
-!OS.TBADDBITMAP categoriesFor: #hInst:!**compiled accessors**!public! !
-!OS.TBADDBITMAP categoriesFor: #nID:!**compiled accessors**!public! !
+!OS.TBADDBITMAP categoriesForMethods!
+hInst:!**compiled accessors**!public! !
+nID:!**compiled accessors**!public! !
+!
 
 !OS.TBADDBITMAP class methodsFor!
 
@@ -44,6 +46,8 @@ defineFields
 
 getFieldNames
 	^#(#hInst #nID)! !
-!OS.TBADDBITMAP class categoriesFor: #defineFields!public!template definition! !
-!OS.TBADDBITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TBADDBITMAP class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

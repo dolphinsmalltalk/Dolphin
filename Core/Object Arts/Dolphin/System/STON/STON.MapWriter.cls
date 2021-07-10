@@ -14,5 +14,7 @@ STON.MapWriter comment: 'STONDictionaryWriter helps in writing dictionary based 
 at: key put: value
 	first ifTrue: [ first := false ] ifFalse: [ writer mapElementSeparator ].
 	writer encodeKey: key value: value! !
-!STON.MapWriter categoriesFor: #at:put:!accessing!public! !
+!STON.MapWriter categoriesForMethods!
+at:put:!accessing!public! !
+!
 

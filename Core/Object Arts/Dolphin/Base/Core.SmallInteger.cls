@@ -524,61 +524,63 @@ species
 	will fail for immediate classes, so we must override here."
 
 	^SmallInteger! !
-!Core.SmallInteger categoriesFor: #-!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #&!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #*!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #/!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #//!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #\\!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #_deepCopy:!copying!private! !
-!Core.SmallInteger categoriesFor: #|!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #+!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #<!comparing!public! !
-!Core.SmallInteger categoriesFor: #<<!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #<=!comparing!public! !
-!Core.SmallInteger categoriesFor: #=!comparing!public! !
-!Core.SmallInteger categoriesFor: #>!comparing!public! !
-!Core.SmallInteger categoriesFor: #>=!comparing!public! !
-!Core.SmallInteger categoriesFor: #allMask:!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #anyMask:!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #asFloat!converting!public! !
-!Core.SmallInteger categoriesFor: #asStackPointer!converting!private! !
-!Core.SmallInteger categoriesFor: #basicAt:!accessing!private! !
-!Core.SmallInteger categoriesFor: #basicAt:put:!accessing!private! !
-!Core.SmallInteger categoriesFor: #basicIdentityHash!comparing!public! !
-!Core.SmallInteger categoriesFor: #basicShallowCopy!copying!public! !
-!Core.SmallInteger categoriesFor: #basicSize!accessing!private! !
-!Core.SmallInteger categoriesFor: #basicYourAddress!accessing!private! !
-!Core.SmallInteger categoriesFor: #bitAnd:!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #bitOr:!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #bitShift:!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #bitXor:!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #byteAt:!accessing!private! !
-!Core.SmallInteger categoriesFor: #byteSize!accessing!private! !
-!Core.SmallInteger categoriesFor: #coerce:!coercing!private! !
-!Core.SmallInteger categoriesFor: #decimalDigitLength!enquiries!private! !
-!Core.SmallInteger categoriesFor: #deepCopy!copying!public! !
-!Core.SmallInteger categoriesFor: #generality!coercing!private! !
-!Core.SmallInteger categoriesFor: #hash!comparing!public! !
-!Core.SmallInteger categoriesFor: #highBit!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #identityHash!comparing!public! !
-!Core.SmallInteger categoriesFor: #instVarAt:!accessing!private! !
-!Core.SmallInteger categoriesFor: #instVarAt:put:!accessing!private! !
-!Core.SmallInteger categoriesFor: #isAtomic!public!testing! !
-!Core.SmallInteger categoriesFor: #isImmediate!public!testing! !
-!Core.SmallInteger categoriesFor: #isZero!public!testing! !
-!Core.SmallInteger categoriesFor: #lowBit!bit manipulation!public! !
-!Core.SmallInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!Core.SmallInteger categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
-!Core.SmallInteger categoriesFor: #printOn:base:!printing!public! !
-!Core.SmallInteger categoriesFor: #printOn:base:nDigits:!printing!public! !
-!Core.SmallInteger categoriesFor: #printString!printing!public! !
-!Core.SmallInteger categoriesFor: #printStringBase:!printing!public! !
-!Core.SmallInteger categoriesFor: #printStringBase:nDigits:!printing!public! !
-!Core.SmallInteger categoriesFor: #quo:!arithmetic!public! !
-!Core.SmallInteger categoriesFor: #refersTo:asLiteralOf:!private!testing! !
-!Core.SmallInteger categoriesFor: #shallowCopy!copying!public! !
-!Core.SmallInteger categoriesFor: #species!accessing!public! !
+!Core.SmallInteger categoriesForMethods!
+-!arithmetic!public! !
+&!bit manipulation!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
+\\!arithmetic!public! !
+_deepCopy:!copying!private! !
+|!bit manipulation!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<<!bit manipulation!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+allMask:!bit manipulation!public! !
+anyMask:!bit manipulation!public! !
+asFloat!converting!public! !
+asStackPointer!converting!private! !
+basicAt:!accessing!private! !
+basicAt:put:!accessing!private! !
+basicIdentityHash!comparing!public! !
+basicShallowCopy!copying!public! !
+basicSize!accessing!private! !
+basicYourAddress!accessing!private! !
+bitAnd:!bit manipulation!public! !
+bitOr:!bit manipulation!public! !
+bitShift:!bit manipulation!public! !
+bitXor:!bit manipulation!public! !
+byteAt:!accessing!private! !
+byteSize!accessing!private! !
+coerce:!coercing!private! !
+decimalDigitLength!enquiries!private! !
+deepCopy!copying!public! !
+generality!coercing!private! !
+hash!comparing!public! !
+highBit!bit manipulation!public! !
+identityHash!comparing!public! !
+instVarAt:!accessing!private! !
+instVarAt:put:!accessing!private! !
+isAtomic!public!testing! !
+isImmediate!public!testing! !
+isZero!public!testing! !
+lowBit!bit manipulation!public! !
+multiplyByInteger:!double dispatch!private! !
+numberOfDigitsInBase:!enquiries!private! !
+printOn:base:!printing!public! !
+printOn:base:nDigits:!printing!public! !
+printString!printing!public! !
+printStringBase:!printing!public! !
+printStringBase:nDigits:!printing!public! !
+quo:!arithmetic!public! !
+refersTo:asLiteralOf:!private!testing! !
+shallowCopy!copying!public! !
+species!accessing!public! !
+!
 
 !Core.SmallInteger class methodsFor!
 
@@ -611,9 +613,11 @@ minimum
 	represented as a SmallInteger"
 
 	^VMConstants.SmallIntegerMin! !
-!Core.SmallInteger class categoriesFor: #basicNew!instance creation!public! !
-!Core.SmallInteger class categoriesFor: #hasImmediateInstances!public!testing! !
-!Core.SmallInteger class categoriesFor: #maxBytes!constants!public! !
-!Core.SmallInteger class categoriesFor: #maximum!constants!public! !
-!Core.SmallInteger class categoriesFor: #minimum!constants!public! !
+!Core.SmallInteger class categoriesForMethods!
+basicNew!instance creation!public! !
+hasImmediateInstances!public!testing! !
+maxBytes!constants!public! !
+maximum!constants!public! !
+minimum!constants!public! !
+!
 

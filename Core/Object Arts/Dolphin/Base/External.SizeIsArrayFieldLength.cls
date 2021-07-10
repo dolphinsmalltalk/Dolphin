@@ -120,16 +120,18 @@ sizeIs: aString
 
 sizeIsExpression
 	^Parser parseExpression: sizeIs! !
-!External.SizeIsArrayFieldLength categoriesFor: #buildLengthReader:!accessing!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #buildLengthWriter:!accessing!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #invertSizeIsExpression:paramName:!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #printSetSizeIsExpression:for:variable:on:!automatic generation!development!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #sizeIs:!accessing!private! !
-!External.SizeIsArrayFieldLength categoriesFor: #sizeIsExpression!automatic generation!private! !
+!External.SizeIsArrayFieldLength categoriesForMethods!
+buildLengthReader:!accessing!private! !
+buildLengthWriter:!accessing!private! !
+getElementCountOf:in:!indirect accessing!private! !
+invertSizeIsExpression:paramName:!private! !
+printElementCountExpressionFor:on:!automatic generation!private! !
+printSetSizeFor:on:!automatic generation!development!private! !
+printSetSizeIsExpression:for:variable:on:!automatic generation!development!private! !
+setElementCount:of:in:!indirect accessing!private! !
+sizeIs:!accessing!private! !
+sizeIsExpression!automatic generation!private! !
+!
 
 !External.SizeIsArrayFieldLength class methodsFor!
 
@@ -140,5 +142,7 @@ sizeIs: aString
 	a field."
 
 	^self new sizeIs: aString! !
-!External.SizeIsArrayFieldLength class categoriesFor: #sizeIs:!instance creation!public! !
+!External.SizeIsArrayFieldLength class categoriesForMethods!
+sizeIs:!instance creation!public! !
+!
 

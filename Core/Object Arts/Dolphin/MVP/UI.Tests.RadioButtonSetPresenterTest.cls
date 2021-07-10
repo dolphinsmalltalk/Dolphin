@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.RadioButtonSetPresenterTest'
 	instanceVariableNames: 'radioSet'
@@ -77,12 +77,14 @@ testValueSelection
 	radioSet value: nil.
 	self assertIsNil: radioSet value.
 	self assertIsNil: self selectedButton! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #selectedButton!private!unit tests! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #selectedButtons!private!unit tests! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #setUp!public!running! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #tearDown!public!running! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testDisableEnableAll!public!unit tests! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testEvents!public!unit tests! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testInitialValue!public!unit tests! !
-!UI.Tests.RadioButtonSetPresenterTest categoriesFor: #testValueSelection!public!unit tests! !
+!UI.Tests.RadioButtonSetPresenterTest categoriesForMethods!
+selectedButton!private!unit tests! !
+selectedButtons!private!unit tests! !
+setUp!public!running! !
+tearDown!public!running! !
+testDisableEnableAll!public!unit tests! !
+testEvents!public!unit tests! !
+testInitialValue!public!unit tests! !
+testValueSelection!public!unit tests! !
+!
 

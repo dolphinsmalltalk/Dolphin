@@ -123,16 +123,18 @@ systemId
 	answer := BSTR new.
 	self get_systemId: answer.
 	^answer asObject! !
-!MSXML.IVBSAXLocator categoriesFor: #columnNumber!**auto generated**!properties!public! !
-!MSXML.IVBSAXLocator categoriesFor: #get_columnNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!MSXML.IVBSAXLocator categoriesFor: #get_lineNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!MSXML.IVBSAXLocator categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!MSXML.IVBSAXLocator categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
-!MSXML.IVBSAXLocator categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXLocator categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IVBSAXLocator categoriesFor: #lineNumber!**auto generated**!properties!public! !
-!MSXML.IVBSAXLocator categoriesFor: #publicId!**auto generated**!properties!public! !
-!MSXML.IVBSAXLocator categoriesFor: #systemId!**auto generated**!properties!public! !
+!MSXML.IVBSAXLocator categoriesForMethods!
+columnNumber!**auto generated**!properties!public! !
+get_columnNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+get_lineNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+get_publicId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+get_systemId:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+lineNumber!**auto generated**!properties!public! !
+publicId!**auto generated**!properties!public! !
+systemId!**auto generated**!properties!public! !
+!
 
 !MSXML.IVBSAXLocator class methodsFor!
 
@@ -150,5 +152,7 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'bstr*'
 ! !
-!MSXML.IVBSAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXLocator class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -260,40 +260,42 @@ visit: item
 	(self isEmpty or: [(self searchPolicy compare: self current with: item) not]) 
 		ifTrue: [self addLast: item]
 		ifFalse: [self current: item]! !
-!UI.HistoryList categoriesFor: #addLast:!adding!public! !
-!UI.HistoryList categoriesFor: #clear!operations!public! !
-!UI.HistoryList categoriesFor: #clearFuture!operations!public! !
-!UI.HistoryList categoriesFor: #clearPast!operations!public! !
-!UI.HistoryList categoriesFor: #close!operations!public! !
-!UI.HistoryList categoriesFor: #contents!accessing!public! !
-!UI.HistoryList categoriesFor: #current!accessing!public! !
-!UI.HistoryList categoriesFor: #current:!accessing!public! !
-!UI.HistoryList categoriesFor: #futureSize!accessing!public! !
-!UI.HistoryList categoriesFor: #goBack:!operations!public! !
-!UI.HistoryList categoriesFor: #goForward:!operations!public! !
-!UI.HistoryList categoriesFor: #hasFuture!public!testing! !
-!UI.HistoryList categoriesFor: #hasPast!accessing!public! !
-!UI.HistoryList categoriesFor: #initialize:!initializing!private! !
-!UI.HistoryList categoriesFor: #isEmpty!public!testing! !
-!UI.HistoryList categoriesFor: #next!accessing!public! !
-!UI.HistoryList categoriesFor: #next:!accessing!public! !
-!UI.HistoryList categoriesFor: #notEmpty!public!testing! !
-!UI.HistoryList categoriesFor: #past!accessing!public! !
-!UI.HistoryList categoriesFor: #pastSize!accessing!public! !
-!UI.HistoryList categoriesFor: #position!positioning!public! !
-!UI.HistoryList categoriesFor: #position:!positioning!public! !
-!UI.HistoryList categoriesFor: #previous!accessing!public! !
-!UI.HistoryList categoriesFor: #previous:!accessing!public! !
-!UI.HistoryList categoriesFor: #remove:!public!removing! !
-!UI.HistoryList categoriesFor: #removeMatching:!public!removing! !
-!UI.HistoryList categoriesFor: #reset!positioning!public! !
-!UI.HistoryList categoriesFor: #searchPolicy!accessing!public! !
-!UI.HistoryList categoriesFor: #searchPolicy:!accessing!public! !
-!UI.HistoryList categoriesFor: #setToEnd!positioning!public! !
-!UI.HistoryList categoriesFor: #shrink!operations!public! !
-!UI.HistoryList categoriesFor: #skip:!operations!public! !
-!UI.HistoryList categoriesFor: #upToEnd!accessing!public! !
-!UI.HistoryList categoriesFor: #visit:!operations!public! !
+!UI.HistoryList categoriesForMethods!
+addLast:!adding!public! !
+clear!operations!public! !
+clearFuture!operations!public! !
+clearPast!operations!public! !
+close!operations!public! !
+contents!accessing!public! !
+current!accessing!public! !
+current:!accessing!public! !
+futureSize!accessing!public! !
+goBack:!operations!public! !
+goForward:!operations!public! !
+hasFuture!public!testing! !
+hasPast!accessing!public! !
+initialize:!initializing!private! !
+isEmpty!public!testing! !
+next!accessing!public! !
+next:!accessing!public! !
+notEmpty!public!testing! !
+past!accessing!public! !
+pastSize!accessing!public! !
+position!positioning!public! !
+position:!positioning!public! !
+previous!accessing!public! !
+previous:!accessing!public! !
+remove:!public!removing! !
+removeMatching:!public!removing! !
+reset!positioning!public! !
+searchPolicy!accessing!public! !
+searchPolicy:!accessing!public! !
+setToEnd!positioning!public! !
+shrink!operations!public! !
+skip:!operations!public! !
+upToEnd!accessing!public! !
+visit:!operations!public! !
+!
 
 UI.HistoryList methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
@@ -316,7 +318,9 @@ new: maxAge
 	with capacity for the specified maximum number of items."
 
 	^super new initialize: maxAge! !
-!UI.HistoryList class categoriesFor: #icon!constants!public! !
-!UI.HistoryList class categoriesFor: #new!instance creation!public! !
-!UI.HistoryList class categoriesFor: #new:!instance creation!public! !
+!UI.HistoryList class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

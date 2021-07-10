@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.EqualitySearchPolicyTest'
 	instanceVariableNames: ''
@@ -33,6 +33,8 @@ testCompareWith
 	self deny: (policy compare: #hash with: #identityHash).
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b) not! !
-!Kernel.Tests.EqualitySearchPolicyTest categoriesFor: #policyClass!public!unit tests! !
-!Kernel.Tests.EqualitySearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!Kernel.Tests.EqualitySearchPolicyTest categoriesForMethods!
+policyClass!public!unit tests! !
+testCompareWith!public!unit tests! !
+!
 

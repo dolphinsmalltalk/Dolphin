@@ -87,31 +87,35 @@ stopWithoutParentheses
 
 uses: aNode
 	^(statements anySatisfy: [:each | each == aNode]) or: [self isUsed]! !
-!Kernel.StBraceArrayNode categoriesFor: #=!comparing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StBraceArrayNode categoriesFor: #children!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #childrenDo:!accessing!enumerating!public! !
-!Kernel.StBraceArrayNode categoriesFor: #hash!comparing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #isDynamicArray!public!testing! !
-!Kernel.StBraceArrayNode categoriesFor: #lastIsReturn!public!testing! !
-!Kernel.StBraceArrayNode categoriesFor: #left!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #left:!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #needsParenthesis!public!testing! !
-!Kernel.StBraceArrayNode categoriesFor: #periods!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #periods:!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #postCopy!copying!public! !
-!Kernel.StBraceArrayNode categoriesFor: #precedence!constants!public! !
-!Kernel.StBraceArrayNode categoriesFor: #right!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #right:!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #statements!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #statements:!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!Kernel.StBraceArrayNode categoriesFor: #uses:!public!testing! !
+!Kernel.StBraceArrayNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+children!accessing!public! !
+childrenDo:!accessing!enumerating!public! !
+hash!comparing!public! !
+isDynamicArray!public!testing! !
+lastIsReturn!public!testing! !
+left!accessing!public! !
+left:!accessing!public! !
+needsParenthesis!public!testing! !
+periods!accessing!public! !
+periods:!accessing!public! !
+postCopy!copying!public! !
+precedence!constants!public! !
+right!accessing!public! !
+right:!accessing!public! !
+startWithoutParentheses!accessing!public! !
+statements!accessing!public! !
+statements:!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+!
 
 !Kernel.StBraceArrayNode class methodsFor!
 
 statements: statements
 	^self new statements: statements! !
-!Kernel.StBraceArrayNode class categoriesFor: #statements:!instance creation!public! !
+!Kernel.StBraceArrayNode class categoriesForMethods!
+statements:!instance creation!public! !
+!
 

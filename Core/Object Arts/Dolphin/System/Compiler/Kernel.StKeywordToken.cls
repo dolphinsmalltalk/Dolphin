@@ -19,7 +19,9 @@ isKeyword
 
 isPatternVariable
 	^value first == Scanner patternVariableCharacter! !
-!Kernel.StKeywordToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StKeywordToken categoriesFor: #isKeyword!public!testing! !
-!Kernel.StKeywordToken categoriesFor: #isPatternVariable!public!testing! !
+!Kernel.StKeywordToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isKeyword!public!testing! !
+isPatternVariable!public!testing! !
+!
 

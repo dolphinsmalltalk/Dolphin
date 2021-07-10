@@ -225,29 +225,31 @@ writePreambleFor: anObject
 	self
 		writeClass: anObject class withPrefix: STBPrefix forData;
 		register: anObject! !
-!Kernel.STBOutFiler categoriesFor: #basicNextPut:!operations!private! !
-!Kernel.STBOutFiler categoriesFor: #nextPut:!operations!public! !
-!Kernel.STBOutFiler categoriesFor: #objectIsGlobal:!globals!private! !
-!Kernel.STBOutFiler categoriesFor: #override:with:!proxies!public! !
-!Kernel.STBOutFiler categoriesFor: #putCharacter:!helpers!private! !
-!Kernel.STBOutFiler categoriesFor: #putGlobal:!globals!private! !
-!Kernel.STBOutFiler categoriesFor: #refForObject:!private!searching! !
-!Kernel.STBOutFiler categoriesFor: #register:!accessing!private! !
-!Kernel.STBOutFiler categoriesFor: #register:asGlobal:!globals!public! !
-!Kernel.STBOutFiler categoriesFor: #removeOverrideFor:!proxies!public! !
-!Kernel.STBOutFiler categoriesFor: #reset!initializing!private! !
-!Kernel.STBOutFiler categoriesFor: #resetStream!initializing!private! !
-!Kernel.STBOutFiler categoriesFor: #saveObject:!operations!public! !
-!Kernel.STBOutFiler categoriesFor: #saveObject:as:!operations!public! !
-!Kernel.STBOutFiler categoriesFor: #serializeObject:!operations!private! !
-!Kernel.STBOutFiler categoriesFor: #setRefOffset:!accessing!private! !
-!Kernel.STBOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
-!Kernel.STBOutFiler categoriesFor: #writeClass:withPrefix:!operations!private! !
-!Kernel.STBOutFiler categoriesFor: #writeInstanceVariables:!operations!private! !
-!Kernel.STBOutFiler categoriesFor: #writeInteger:!helpers!private! !
-!Kernel.STBOutFiler categoriesFor: #writeNil!operations!private! !
-!Kernel.STBOutFiler categoriesFor: #writeObject:as:withPrefix:!operations!private! !
-!Kernel.STBOutFiler categoriesFor: #writePreambleFor:!binary filing!public! !
+!Kernel.STBOutFiler categoriesForMethods!
+basicNextPut:!operations!private! !
+nextPut:!operations!public! !
+objectIsGlobal:!globals!private! !
+override:with:!proxies!public! !
+putCharacter:!helpers!private! !
+putGlobal:!globals!private! !
+refForObject:!private!searching! !
+register:!accessing!private! !
+register:asGlobal:!globals!public! !
+removeOverrideFor:!proxies!public! !
+reset!initializing!private! !
+resetStream!initializing!private! !
+saveObject:!operations!public! !
+saveObject:as:!operations!public! !
+serializeObject:!operations!private! !
+setRefOffset:!accessing!private! !
+writeClass:withLocator:!operations!private! !
+writeClass:withPrefix:!operations!private! !
+writeInstanceVariables:!operations!private! !
+writeInteger:!helpers!private! !
+writeNil!operations!private! !
+writeObject:as:withPrefix:!operations!private! !
+writePreambleFor:!binary filing!public! !
+!
 
 !Kernel.STBOutFiler class methodsFor!
 
@@ -257,5 +259,7 @@ uninitialize
 	them away."
 
 	STBPrefix uninitialize! !
-!Kernel.STBOutFiler class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Kernel.STBOutFiler class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

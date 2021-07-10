@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTestResource subclass: #'Core.Tests.DolphinTestPackages'
 	instanceVariableNames: 'a b c'
@@ -49,11 +49,13 @@ tearDown
 					Package manager removePackage: each]].
 	a := b := c := nil.
 	super tearDown! !
-!Core.Tests.DolphinTestPackages categoriesFor: #a!accessing!public! !
-!Core.Tests.DolphinTestPackages categoriesFor: #b!accessing!public! !
-!Core.Tests.DolphinTestPackages categoriesFor: #c!accessing!public! !
-!Core.Tests.DolphinTestPackages categoriesFor: #isAvailable!public!Testing! !
-!Core.Tests.DolphinTestPackages categoriesFor: #isUnavailable!public!Testing! !
-!Core.Tests.DolphinTestPackages categoriesFor: #setUp!Init / Release!public! !
-!Core.Tests.DolphinTestPackages categoriesFor: #tearDown!public!Running! !
+!Core.Tests.DolphinTestPackages categoriesForMethods!
+a!accessing!public! !
+b!accessing!public! !
+c!accessing!public! !
+isAvailable!public!Testing! !
+isUnavailable!public!Testing! !
+setUp!Init / Release!public! !
+tearDown!public!Running! !
+!
 

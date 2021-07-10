@@ -14,7 +14,9 @@ OS.COM.Examples.RandomStreamSessionManager comment: ''!
 main
 	self mainShellClass show.
 	RandomStream registerClassFactory! !
-!OS.COM.Examples.RandomStreamSessionManager categoriesFor: #main!operations!public! !
+!OS.COM.Examples.RandomStreamSessionManager categoriesForMethods!
+main!operations!public! !
+!
 
 !OS.COM.Examples.RandomStreamSessionManager class methodsFor!
 
@@ -22,5 +24,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^UI.Shell! !
-!OS.COM.Examples.RandomStreamSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!OS.COM.Examples.RandomStreamSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

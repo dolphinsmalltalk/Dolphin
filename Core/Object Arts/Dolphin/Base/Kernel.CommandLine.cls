@@ -270,26 +270,28 @@ parseNextOption
 processOptions
 	options ifNil: [self parse].
 	options do: [:each | each key ifNotNil: [:rule | rule value: each value]]! !
-!Kernel.CommandLine categoriesFor: #addOption:!public! !
-!Kernel.CommandLine categoriesFor: #addOption:whenPresentDo:!public! !
-!Kernel.CommandLine categoriesFor: #addOptionAllowingArgument:!public! !
-!Kernel.CommandLine categoriesFor: #addOptionAllowingArgument:whenPresentDo:!public! !
-!Kernel.CommandLine categoriesFor: #addOptionRequiringArgument:!public! !
-!Kernel.CommandLine categoriesFor: #addOptionRequiringArgument:whenPresentDo:!public! !
-!Kernel.CommandLine categoriesFor: #addRulesFrom:!private! !
-!Kernel.CommandLine categoriesFor: #arguments!accessing!public! !
-!Kernel.CommandLine categoriesFor: #checkForErrors!private! !
-!Kernel.CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
-!Kernel.CommandLine categoriesFor: #initialize:!initializing!private! !
-!Kernel.CommandLine categoriesFor: #optArg!getopt protocol!public! !
-!Kernel.CommandLine categoriesFor: #options!accessing!public! !
-!Kernel.CommandLine categoriesFor: #options:!public! !
-!Kernel.CommandLine categoriesFor: #optOpt!getopt protocol!public! !
-!Kernel.CommandLine categoriesFor: #parse!private! !
-!Kernel.CommandLine categoriesFor: #parseLongOption:!private! !
-!Kernel.CommandLine categoriesFor: #parseNextArg!private! !
-!Kernel.CommandLine categoriesFor: #parseNextOption!private! !
-!Kernel.CommandLine categoriesFor: #processOptions!public! !
+!Kernel.CommandLine categoriesForMethods!
+addOption:!public! !
+addOption:whenPresentDo:!public! !
+addOptionAllowingArgument:!public! !
+addOptionAllowingArgument:whenPresentDo:!public! !
+addOptionRequiringArgument:!public! !
+addOptionRequiringArgument:whenPresentDo:!public! !
+addRulesFrom:!private! !
+arguments!accessing!public! !
+checkForErrors!private! !
+getOpt:!getopt protocol!public! !
+initialize:!initializing!private! !
+optArg!getopt protocol!public! !
+options!accessing!public! !
+options:!public! !
+optOpt!getopt protocol!public! !
+parse!private! !
+parseLongOption:!private! !
+parseNextArg!private! !
+parseNextOption!private! !
+processOptions!public! !
+!
 
 !Kernel.CommandLine class methodsFor!
 
@@ -311,7 +313,9 @@ options: aString
 	^(self argv: SessionManager current argv)
 		options: aString;
 		yourself! !
-!Kernel.CommandLine class categoriesFor: #argv:!public! !
-!Kernel.CommandLine class categoriesFor: #new!public! !
-!Kernel.CommandLine class categoriesFor: #options:!public! !
+!Kernel.CommandLine class categoriesForMethods!
+argv:!public! !
+new!public! !
+options:!public! !
+!
 

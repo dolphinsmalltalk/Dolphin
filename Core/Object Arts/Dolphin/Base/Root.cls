@@ -27,7 +27,9 @@ fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to the Root namespace. Classes in the legacy 'flat' Smalltalk namespace will have Smalltalk as the first element of the binding path."
 
 	^Kernel.BindingReference pathString: #Root! !
-!Root class categoriesFor: #environment!public! !
-!Root class categoriesFor: #fullNameFor:!helpers!private! !
-!Root class categoriesFor: #fullyQualifiedReference!binding!private! !
+!Root class categoriesForMethods!
+environment!public! !
+fullNameFor:!helpers!private! !
+fullyQualifiedReference!binding!private! !
+!
 

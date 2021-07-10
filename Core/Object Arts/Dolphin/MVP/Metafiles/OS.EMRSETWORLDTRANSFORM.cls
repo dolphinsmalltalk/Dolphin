@@ -39,8 +39,10 @@ XFORM: aXFORM
 		from: ##(_OffsetOf_XFORM + 1)
 		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
-!OS.EMRSETWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
-!OS.EMRSETWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
+!OS.EMRSETWORLDTRANSFORM categoriesForMethods!
+XFORM!**compiled accessors**!public! !
+XFORM:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETWORLDTRANSFORM class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETWORLDTRANSFORM}! !
-!OS.EMRSETWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETWORLDTRANSFORM class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

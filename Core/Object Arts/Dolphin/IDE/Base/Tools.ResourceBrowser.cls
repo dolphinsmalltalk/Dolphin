@@ -96,19 +96,21 @@ shortCaption
 showResourcesReferencingView: aResourceIdentifier
 	resourceToolboxPresenter showResourcesReferencingView: aResourceIdentifier.
 	self caption: ('Views referencing <1p>' expandMacrosWith: aResourceIdentifier)! !
-!Tools.ResourceBrowser categoriesFor: #canSaveState!private!saved state! !
-!Tools.ResourceBrowser categoriesFor: #createComponents!**auto generated**!initializing!private! !
-!Tools.ResourceBrowser categoriesFor: #defaultHelpId!public! !
-!Tools.ResourceBrowser categoriesFor: #newView!commands!public! !
-!Tools.ResourceBrowser categoriesFor: #onViewOpened!event handling!private! !
-!Tools.ResourceBrowser categoriesFor: #resource!accessing!public! !
-!Tools.ResourceBrowser categoriesFor: #resource:!accessing!public! !
-!Tools.ResourceBrowser categoriesFor: #resourceToolboxPresenter!private! !
-!Tools.ResourceBrowser categoriesFor: #saveStateOn:!private!saved state! !
-!Tools.ResourceBrowser categoriesFor: #selectCategory:!public! !
-!Tools.ResourceBrowser categoriesFor: #setInitialFocus!operations!public! !
-!Tools.ResourceBrowser categoriesFor: #shortCaption!accessing!public! !
-!Tools.ResourceBrowser categoriesFor: #showResourcesReferencingView:!public! !
+!Tools.ResourceBrowser categoriesForMethods!
+canSaveState!private!saved state! !
+createComponents!**auto generated**!initializing!private! !
+defaultHelpId!public! !
+newView!commands!public! !
+onViewOpened!event handling!private! !
+resource!accessing!public! !
+resource:!accessing!public! !
+resourceToolboxPresenter!private! !
+saveStateOn:!private!saved state! !
+selectCategory:!public! !
+setInitialFocus!operations!public! !
+shortCaption!accessing!public! !
+showResourcesReferencingView:!public! !
+!
 
 !Tools.ResourceBrowser class methodsFor!
 
@@ -166,11 +168,13 @@ showAsToolboxFor: aView at: aPoint
 
 toolsFolderHelpId
 	^10594! !
-!Tools.ResourceBrowser class categoriesFor: #displayOn:!displaying!public! !
-!Tools.ResourceBrowser class categoriesFor: #icon!constants!public! !
-!Tools.ResourceBrowser class categoriesFor: #initialize!initializing!private! !
-!Tools.ResourceBrowser class categoriesFor: #publishedAspects!public! !
-!Tools.ResourceBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ResourceBrowser class categoriesFor: #showAsToolboxFor:at:!instance creation!public! !
-!Tools.ResourceBrowser class categoriesFor: #toolsFolderHelpId!public! !
+!Tools.ResourceBrowser class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+showAsToolboxFor:at:!instance creation!public! !
+toolsFolderHelpId!public! !
+!
 

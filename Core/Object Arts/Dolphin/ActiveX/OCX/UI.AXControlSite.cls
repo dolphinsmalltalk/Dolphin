@@ -838,88 +838,90 @@ usesAmbientColors
 	properties. If it doesn't then there is no point attempting to set them."
 
 	^true! !
-!UI.AXControlSite categoriesFor: #aboutControl!operations!public! !
-!UI.AXControlSite categoriesFor: #allowContextMenu!ambient properties!public!testing! !
-!UI.AXControlSite categoriesFor: #allowContextMenu:!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #allowShowUI!ambient properties!public!testing! !
-!UI.AXControlSite categoriesFor: #allowShowUI:!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #allowWindowless!ambient properties!public!testing! !
-!UI.AXControlSite categoriesFor: #allowWindowless:!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #ambientDispatch!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #backcolor!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #backcolor:!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #binaryStoreControlOnIStream:!binary filing!private! !
-!UI.AXControlSite categoriesFor: #clientSite!operations!public! !
-!UI.AXControlSite categoriesFor: #clsid!accessing!public! !
-!UI.AXControlSite categoriesFor: #connectSink!helpers!private! !
-!UI.AXControlSite categoriesFor: #controlBinaryStoreBytes!binary filing!private! !
-!UI.AXControlSite categoriesFor: #controlBinaryStoreBytes:!binary filing!private! !
-!UI.AXControlSite categoriesFor: #controlDispatch!accessing!public! !
-!UI.AXControlSite categoriesFor: #controlOleObject!public! !
-!UI.AXControlSite categoriesFor: #controlUnknown!accessing!public! !
-!UI.AXControlSite categoriesFor: #controlVerbs!public! !
-!UI.AXControlSite categoriesFor: #create!private!realizing/unrealizing! !
-!UI.AXControlSite categoriesFor: #createControl!private!realizing/unrealizing! !
-!UI.AXControlSite categoriesFor: #defaultProgId!constants!public! !
-!UI.AXControlSite categoriesFor: #disconnectSink!helpers!private! !
-!UI.AXControlSite categoriesFor: #docHostDblClickFlags!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #docHostDblClickFlags:!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #docHostFlags!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #docHostFlags:!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #doPrimaryVerb!public! !
-!UI.AXControlSite categoriesFor: #doVerb:!public! !
-!UI.AXControlSite categoriesFor: #editControlProperties!operations!public! !
-!UI.AXControlSite categoriesFor: #eventSinkClass!constants!public! !
-!UI.AXControlSite categoriesFor: #finalRelease!public!realizing/unrealizing! !
-!UI.AXControlSite categoriesFor: #firesControlEvents!public!testing! !
-!UI.AXControlSite categoriesFor: #firesControlEvents:!accessing!public! !
-!UI.AXControlSite categoriesFor: #firesPropertyNotifications!public!testing! !
-!UI.AXControlSite categoriesFor: #firesPropertyNotifications:!accessing!public! !
-!UI.AXControlSite categoriesFor: #forecolor!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #forecolor:!accessing!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #free!public!realizing/unrealizing! !
-!UI.AXControlSite categoriesFor: #getPropertyNameForDispid:!helpers!private! !
-!UI.AXControlSite categoriesFor: #hasMessageReflect!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #hasMessageReflect:!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #hostInterface!accessing!public! !
-!UI.AXControlSite categoriesFor: #initialize!initializing!private! !
-!UI.AXControlSite categoriesFor: #isDefault!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #isDefault:!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #isDesignMode!ambient properties!public!testing! !
-!UI.AXControlSite categoriesFor: #isDesignMode:!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #isSinkingEvents!public!testing! !
-!UI.AXControlSite categoriesFor: #isTracingEvents!public!testing! !
-!UI.AXControlSite categoriesFor: #isTracingEvents:!accessing!public! !
-!UI.AXControlSite categoriesFor: #isWindowless!public!testing! !
-!UI.AXControlSite categoriesFor: #licenseKey!accessing!public! !
-!UI.AXControlSite categoriesFor: #licenseKey:!accessing!public! !
-!UI.AXControlSite categoriesFor: #observePropertyNotifications!helpers!private! !
-!UI.AXControlSite categoriesFor: #OnChanged:!event handling!private! !
-!UI.AXControlSite categoriesFor: #onDestroyed!event handling!private! !
-!UI.AXControlSite categoriesFor: #OnRequestEdit:!event handling!private! !
-!UI.AXControlSite categoriesFor: #optionKeyPath!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #optionKeyPath:!ambient properties!public! !
-!UI.AXControlSite categoriesFor: #presenter:!initializing!public! !
-!UI.AXControlSite categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!UI.AXControlSite categoriesFor: #progId!accessing!public! !
-!UI.AXControlSite categoriesFor: #progId:!accessing!public! !
-!UI.AXControlSite categoriesFor: #propertyChanged:!event handling!private! !
-!UI.AXControlSite categoriesFor: #propertyNameFromDispid:!helpers!private! !
-!UI.AXControlSite categoriesFor: #publishedEvents!development!events!public! !
-!UI.AXControlSite categoriesFor: #queryControlDispatch!accessing!private! !
-!UI.AXControlSite categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!UI.AXControlSite categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-!UI.AXControlSite categoriesFor: #recreateControl!private!realizing/unrealizing! !
-!UI.AXControlSite categoriesFor: #restoreAmbientProperties!ambient properties!private! !
-!UI.AXControlSite categoriesFor: #safeCreateControlFromStream:!helpers!private! !
-!UI.AXControlSite categoriesFor: #setFont:!accessing!ambient properties!private! !
-!UI.AXControlSite categoriesFor: #showGrabHandles!ambient properties!public!testing! !
-!UI.AXControlSite categoriesFor: #showHatching!ambient properties!public!testing! !
-!UI.AXControlSite categoriesFor: #sink!accessing!public! !
-!UI.AXControlSite categoriesFor: #state!binary filing!private! !
-!UI.AXControlSite categoriesFor: #supportedInterfaces!constants!public! !
-!UI.AXControlSite categoriesFor: #triggeredEvents!events!public! !
-!UI.AXControlSite categoriesFor: #usesAmbientColors!public!testing! !
+!UI.AXControlSite categoriesForMethods!
+aboutControl!operations!public! !
+allowContextMenu!ambient properties!public!testing! !
+allowContextMenu:!ambient properties!public! !
+allowShowUI!ambient properties!public!testing! !
+allowShowUI:!ambient properties!public! !
+allowWindowless!ambient properties!public!testing! !
+allowWindowless:!ambient properties!public! !
+ambientDispatch!ambient properties!public! !
+backcolor!accessing!ambient properties!public! !
+backcolor:!accessing!ambient properties!public! !
+binaryStoreControlOnIStream:!binary filing!private! !
+clientSite!operations!public! !
+clsid!accessing!public! !
+connectSink!helpers!private! !
+controlBinaryStoreBytes!binary filing!private! !
+controlBinaryStoreBytes:!binary filing!private! !
+controlDispatch!accessing!public! !
+controlOleObject!public! !
+controlUnknown!accessing!public! !
+controlVerbs!public! !
+create!private!realizing/unrealizing! !
+createControl!private!realizing/unrealizing! !
+defaultProgId!constants!public! !
+disconnectSink!helpers!private! !
+docHostDblClickFlags!accessing!ambient properties!public! !
+docHostDblClickFlags:!accessing!ambient properties!public! !
+docHostFlags!accessing!ambient properties!public! !
+docHostFlags:!accessing!ambient properties!public! !
+doPrimaryVerb!public! !
+doVerb:!public! !
+editControlProperties!operations!public! !
+eventSinkClass!constants!public! !
+finalRelease!public!realizing/unrealizing! !
+firesControlEvents!public!testing! !
+firesControlEvents:!accessing!public! !
+firesPropertyNotifications!public!testing! !
+firesPropertyNotifications:!accessing!public! !
+forecolor!accessing!ambient properties!public! !
+forecolor:!accessing!ambient properties!public! !
+free!public!realizing/unrealizing! !
+getPropertyNameForDispid:!helpers!private! !
+hasMessageReflect!ambient properties!public! !
+hasMessageReflect:!ambient properties!public! !
+hostInterface!accessing!public! !
+initialize!initializing!private! !
+isDefault!ambient properties!public! !
+isDefault:!ambient properties!public! !
+isDesignMode!ambient properties!public!testing! !
+isDesignMode:!ambient properties!public! !
+isSinkingEvents!public!testing! !
+isTracingEvents!public!testing! !
+isTracingEvents:!accessing!public! !
+isWindowless!public!testing! !
+licenseKey!accessing!public! !
+licenseKey:!accessing!public! !
+observePropertyNotifications!helpers!private! !
+OnChanged:!event handling!private! !
+onDestroyed!event handling!private! !
+OnRequestEdit:!event handling!private! !
+optionKeyPath!ambient properties!public! !
+optionKeyPath:!ambient properties!public! !
+presenter:!initializing!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+progId!accessing!public! !
+progId:!accessing!public! !
+propertyChanged:!event handling!private! !
+propertyNameFromDispid:!helpers!private! !
+publishedEvents!development!events!public! !
+queryControlDispatch!accessing!private! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+recreateControl!private!realizing/unrealizing! !
+restoreAmbientProperties!ambient properties!private! !
+safeCreateControlFromStream:!helpers!private! !
+setFont:!accessing!ambient properties!private! !
+showGrabHandles!ambient properties!public!testing! !
+showHatching!ambient properties!public!testing! !
+sink!accessing!public! !
+state!binary filing!private! !
+supportedInterfaces!constants!public! !
+triggeredEvents!events!public! !
+usesAmbientColors!public!testing! !
+!
 
 UI.AXControlSite methodProtocol: #COMObject attributes: #(#readOnly) selectors: #(#clsid #finalRelease #queryInterface: #queryInterface:ifNone:)!
 UI.AXControlSite methodProtocol: #IPropertyNotifySink attributes: #(#readOnly) selectors: #(#OnChanged: #OnRequestEdit:)!
@@ -1184,16 +1186,18 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'AtlAxWin71'! !
-!UI.AXControlSite class categoriesFor: #chooseControl:!helpers!public! !
-!UI.AXControlSite class categoriesFor: #example1!examples!public! !
-!UI.AXControlSite class categoriesFor: #example2!examples!public! !
-!UI.AXControlSite class categoriesFor: #example3!examples!public! !
-!UI.AXControlSite class categoriesFor: #getHostMsg!initializing!public! !
-!UI.AXControlSite class categoriesFor: #icon!constants!public! !
-!UI.AXControlSite class categoriesFor: #initialize!initializing!public! !
-!UI.AXControlSite class categoriesFor: #onStartup!events-session!public! !
-!UI.AXControlSite class categoriesFor: #progId:!accessing!instance creation!public! !
-!UI.AXControlSite class categoriesFor: #resource_Default_view!public!resources-views! !
-!UI.AXControlSite class categoriesFor: #stbConvertProxy:!binary filing!public! !
-!UI.AXControlSite class categoriesFor: #winClassName!constants!private! !
+!UI.AXControlSite class categoriesForMethods!
+chooseControl:!helpers!public! !
+example1!examples!public! !
+example2!examples!public! !
+example3!examples!public! !
+getHostMsg!initializing!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+onStartup!events-session!public! !
+progId:!accessing!instance creation!public! !
+resource_Default_view!public!resources-views! !
+stbConvertProxy:!binary filing!public! !
+winClassName!constants!private! !
+!
 

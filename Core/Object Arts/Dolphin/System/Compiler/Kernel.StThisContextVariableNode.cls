@@ -19,7 +19,9 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope thisContextVariable! !
-!Kernel.StThisContextVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StThisContextVariableNode categoriesFor: #name!constants!public! !
-!Kernel.StThisContextVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!Kernel.StThisContextVariableNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+name!constants!public! !
+specialVariableInScope:!double dispatch!public! !
+!
 

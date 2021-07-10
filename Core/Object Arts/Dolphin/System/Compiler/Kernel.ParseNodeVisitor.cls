@@ -113,35 +113,37 @@ visitThisContextVariableNode: anStSelfVariableNode
 
 visitVariableNode: aVariableNode
 	^aVariableNode! !
-!Kernel.ParseNodeVisitor categoriesFor: #processBlock:!helpers!private! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitAnnotationNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitArgumentNodes:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitArrayNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitBlockNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitLiteralNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitMessageNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitMethodNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitParameterNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitReturnNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitSelfVariableNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitSequenceNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitSpecialVariableNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitStatements:!helpers!private! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitSuperVariableNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitTempDeclNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitTemporaryNodes:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitThisContextVariableNode:!public!visiting! !
-!Kernel.ParseNodeVisitor categoriesFor: #visitVariableNode:!public!visiting! !
+!Kernel.ParseNodeVisitor categoriesForMethods!
+processBlock:!helpers!private! !
+visitAnnotationNode:!public!visiting! !
+visitArgumentNode:!public!visiting! !
+visitArgumentNodes:!public!visiting! !
+visitArrayNode:!public!visiting! !
+visitAssignmentNode:!public!visiting! !
+visitBlockNode:!public!visiting! !
+visitCascadeNode:!public!visiting! !
+visitExternalArgTypeNode:!public!visiting! !
+visitExternalCallNode:!public!visiting! !
+visitLiteralArrayNode:!public!visiting! !
+visitLiteralNode:!public!visiting! !
+visitMessageNode:!public!visiting! !
+visitMethodNode:!public!visiting! !
+visitNode:!public!visiting! !
+visitOptimizedNode:!public!visiting! !
+visitParameterNode:!public!visiting! !
+visitPrimitiveNode:!public!visiting! !
+visitQualifiedReferenceNode:!public!visiting! !
+visitReturnNode:!public!visiting! !
+visitSelfVariableNode:!public!visiting! !
+visitSequenceNode:!public!visiting! !
+visitSpecialVariableNode:!public!visiting! !
+visitStatements:!helpers!private! !
+visitSuperVariableNode:!public!visiting! !
+visitTempDeclNode:!public!visiting! !
+visitTemporaryNodes:!public!visiting! !
+visitThisContextVariableNode:!public!visiting! !
+visitVariableNode:!public!visiting! !
+!
 
 Kernel.ParseNodeVisitor methodProtocol: #parseNodeVisitor attributes: #() selectors: #(#visitAnnotationNode: #visitArgumentNode: #visitArrayNode: #visitAssignmentNode: #visitBlockNode: #visitCascadeNode: #visitExternalArgTypeNode: #visitExternalCallNode: #visitLiteralArrayNode: #visitLiteralNode: #visitMessageNode: #visitMethodNode: #visitOptimizedNode: #visitParameterNode: #visitPrimitiveNode: #visitQualifiedReferenceNode: #visitReturnNode: #visitSelfVariableNode: #visitSequenceNode: #visitSpecialVariableNode: #visitSuperVariableNode: #visitTempDeclNode: #visitThisContextVariableNode: #visitVariableNode:)!
 
@@ -149,5 +151,7 @@ Kernel.ParseNodeVisitor methodProtocol: #parseNodeVisitor attributes: #() select
 
 new
 	^super new initialize! !
-!Kernel.ParseNodeVisitor class categoriesFor: #new!instance creation!public! !
+!Kernel.ParseNodeVisitor class categoriesForMethods!
+new!instance creation!public! !
+!
 

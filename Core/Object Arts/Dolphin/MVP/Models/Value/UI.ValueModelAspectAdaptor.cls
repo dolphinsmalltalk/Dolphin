@@ -34,7 +34,9 @@ subject: anObject
 				to: self
 				with: #valueChanged].
 	subject := anObject! !
-!UI.ValueModelAspectAdaptor categoriesFor: #notifyChanged!private! !
-!UI.ValueModelAspectAdaptor categoriesFor: #subject!private! !
-!UI.ValueModelAspectAdaptor categoriesFor: #subject:!private! !
+!UI.ValueModelAspectAdaptor categoriesForMethods!
+notifyChanged!private! !
+subject!private! !
+subject:!private! !
+!
 

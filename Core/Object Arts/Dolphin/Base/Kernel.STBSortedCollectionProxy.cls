@@ -31,9 +31,11 @@ value
 		setSortAlgorithm: sortAlgorithm;
 		addAllWithoutSorting: array;
 		yourself! !
-!Kernel.STBSortedCollectionProxy categoriesFor: #sortAlgorithm!accessing!private! !
-!Kernel.STBSortedCollectionProxy categoriesFor: #sortAlgorithm:!accessing!private! !
-!Kernel.STBSortedCollectionProxy categoriesFor: #value!converting!public! !
+!Kernel.STBSortedCollectionProxy categoriesForMethods!
+sortAlgorithm!accessing!private! !
+sortAlgorithm:!accessing!private! !
+value!converting!public! !
+!
 
 !Kernel.STBSortedCollectionProxy class methodsFor!
 
@@ -62,7 +64,9 @@ stbVersion
 		1 - sortBlock becomes sortAlgorithm"
 
 	^1! !
-!Kernel.STBSortedCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
-!Kernel.STBSortedCollectionProxy class categoriesFor: #stbConvertFrom:!instance creation!public! !
-!Kernel.STBSortedCollectionProxy class categoriesFor: #stbVersion!instance creation!public! !
+!Kernel.STBSortedCollectionProxy class categoriesForMethods!
+forCollection:!instance creation!public! !
+stbConvertFrom:!instance creation!public! !
+stbVersion!instance creation!public! !
+!
 

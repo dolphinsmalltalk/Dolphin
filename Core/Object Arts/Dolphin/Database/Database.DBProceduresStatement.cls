@@ -29,7 +29,9 @@ procedureName
 
 procedureName: aString
 	procedureName := aString! !
-!Database.DBProceduresStatement categoriesFor: #executeStatement!operations!private! !
-!Database.DBProceduresStatement categoriesFor: #procedureName!accessing!public! !
-!Database.DBProceduresStatement categoriesFor: #procedureName:!accessing!public! !
+!Database.DBProceduresStatement categoriesForMethods!
+executeStatement!operations!private! !
+procedureName!accessing!public! !
+procedureName:!accessing!public! !
+!
 

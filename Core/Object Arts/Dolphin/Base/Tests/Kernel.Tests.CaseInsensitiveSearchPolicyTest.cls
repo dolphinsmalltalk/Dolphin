@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.SearchPolicyTest subclass: #'Kernel.Tests.CaseInsensitiveSearchPolicyTest'
 	instanceVariableNames: ''
@@ -22,6 +22,8 @@ testCompareWith
 	self deny: (policy compare: 'a' with: 'b').
 	self deny: (policy compare: 'a' with: 'ab').
 ! !
-!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
-!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesForMethods!
+policyClass!private!unit tests! !
+testCompareWith!public!unit tests! !
+!
 

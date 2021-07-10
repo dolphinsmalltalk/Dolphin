@@ -69,10 +69,12 @@ processContents
 	answer := SDWORD new.
 	self get_processContents: answer.
 	^answer asObject! !
-!MSXML.ISchemaAny categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
-!MSXML.ISchemaAny categoriesFor: #get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
-!MSXML.ISchemaAny categoriesFor: #namespaces!**auto generated**!properties!public! !
-!MSXML.ISchemaAny categoriesFor: #processContents!**auto generated**!properties!public! !
+!MSXML.ISchemaAny categoriesForMethods!
+get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
+get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
+namespaces!**auto generated**!properties!public! !
+processContents!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaAny class methodsFor!
 
@@ -86,5 +88,7 @@ defineFunctions
 		defineFunction: #get_processContents:
 			argumentTypes: 'sdword*'
 ! !
-!MSXML.ISchemaAny class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaAny class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

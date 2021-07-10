@@ -102,18 +102,20 @@ rcl: aRECT
 		from: ##(_OffsetOf_rcl + 1)
 		to: ##(_OffsetOf_rcl + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRTEXT categoriesFor: #fOptions!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #fOptions:!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #nChars!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #nChars:!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #offDx!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #offDx:!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #offString!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #offString:!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #ptlReference!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #ptlReference:!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #rcl!**compiled accessors**!public! !
-!OS.EMRTEXT categoriesFor: #rcl:!**compiled accessors**!public! !
+!OS.EMRTEXT categoriesForMethods!
+fOptions!**compiled accessors**!public! !
+fOptions:!**compiled accessors**!public! !
+nChars!**compiled accessors**!public! !
+nChars:!**compiled accessors**!public! !
+offDx!**compiled accessors**!public! !
+offDx:!**compiled accessors**!public! !
+offString!**compiled accessors**!public! !
+offString:!**compiled accessors**!public! !
+ptlReference!**compiled accessors**!public! !
+ptlReference:!**compiled accessors**!public! !
+rcl!**compiled accessors**!public! !
+rcl:!**compiled accessors**!public! !
+!
 
 !OS.EMRTEXT class methodsFor!
 
@@ -156,6 +158,8 @@ defineFields
 
 getFieldNames
 	^#(#ptlReference #nChars #offString #fOptions #rcl #offDx)! !
-!OS.EMRTEXT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRTEXT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EMRTEXT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -35,8 +35,10 @@ ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger! !
-!OS.EMRSETCOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
-!OS.EMRSETCOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
+!OS.EMRSETCOLORSPACE categoriesForMethods!
+ihCS!**compiled accessors**!public! !
+ihCS:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETCOLORSPACE class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETCOLORSPACE. EMR_DELETECOLORSPACE}! !
-!OS.EMRSETCOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETCOLORSPACE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETCOLORSPACE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

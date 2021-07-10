@@ -25,8 +25,10 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 	height := heightReal.
 	width := widthReal.
 	isFilled := isFilledBoolean! !
-!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesFor: #height:width:isFilled:!initializing!private! !
+!Graphics.Gdiplus.AdjustableArrowCapInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+height:width:isFilled:!initializing!private! !
+!
 
 !Graphics.Gdiplus.AdjustableArrowCapInitializer class methodsFor!
 
@@ -35,5 +37,7 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 		height: heightReal
 		width: widthReal
 		isFilled: isFilledBoolean! !
-!Graphics.Gdiplus.AdjustableArrowCapInitializer class categoriesFor: #height:width:isFilled:!instance creation!public! !
+!Graphics.Gdiplus.AdjustableArrowCapInitializer class categoriesForMethods!
+height:width:isFilled:!instance creation!public! !
+!
 

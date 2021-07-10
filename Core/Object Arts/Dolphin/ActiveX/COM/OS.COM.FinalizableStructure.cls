@@ -36,9 +36,11 @@ onStartup
 	self beUnfinalizable.
 	self isPointer ifTrue: [
 		bytes := nil]! !
-!OS.COM.FinalizableStructure categoriesFor: #initialize!initializing!private! !
-!OS.COM.FinalizableStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!OS.COM.FinalizableStructure categoriesFor: #onStartup!event handling!private! !
+!OS.COM.FinalizableStructure categoriesForMethods!
+initialize!initializing!private! !
+needsFree!private!realizing/unrealizing! !
+onStartup!event handling!private! !
+!
 
 !OS.COM.FinalizableStructure class methodsFor!
 
@@ -66,8 +68,10 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OS.COM.FinalizableStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OS.COM.FinalizableStructure class categoriesFor: #initialize!development!initializing!private! !
-!OS.COM.FinalizableStructure class categoriesFor: #onStartup!event handling!private! !
-!OS.COM.FinalizableStructure class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.FinalizableStructure class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+initialize!development!initializing!private! !
+onStartup!event handling!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

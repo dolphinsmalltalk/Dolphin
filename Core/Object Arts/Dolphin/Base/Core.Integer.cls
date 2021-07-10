@@ -785,114 +785,116 @@ yourAddress
 	"Assume that the integer is being used as an address, so answer self."
 
 	^self! !
-!Core.Integer categoriesFor: #-!arithmetic!public! !
-!Core.Integer categoriesFor: #&!bit manipulation!public! !
-!Core.Integer categoriesFor: #*!arithmetic!public! !
-!Core.Integer categoriesFor: #/!arithmetic!public! !
-!Core.Integer categoriesFor: #//!arithmetic!public! !
-!Core.Integer categoriesFor: #|!bit manipulation!public! !
-!Core.Integer categoriesFor: #+!arithmetic!public! !
-!Core.Integer categoriesFor: #<!comparing!public! !
-!Core.Integer categoriesFor: #<<!bit manipulation!public! !
-!Core.Integer categoriesFor: #>>!bit manipulation!public! !
-!Core.Integer categoriesFor: #addToFloat:!double dispatch!private! !
-!Core.Integer categoriesFor: #addToFraction:!double dispatch!private! !
-!Core.Integer categoriesFor: #allMask:!bit manipulation!public! !
-!Core.Integer categoriesFor: #anyBitSetFrom:to:!bit manipulation!public! !
-!Core.Integer categoriesFor: #anyMask:!bit manipulation!public! !
-!Core.Integer categoriesFor: #asBoolean!converting!public! !
-!Core.Integer categoriesFor: #asCharacter!converting!public! !
-!Core.Integer categoriesFor: #asDword!converting!public! !
-!Core.Integer categoriesFor: #asExternalAddress!converting!public! !
-!Core.Integer categoriesFor: #asExternalHandle!converting!public! !
-!Core.Integer categoriesFor: #asFraction!converting!public! !
-!Core.Integer categoriesFor: #asInteger!converting!public! !
-!Core.Integer categoriesFor: #asResourceId!converting!public! !
-!Core.Integer categoriesFor: #asScaledDecimal:!converting!public! !
-!Core.Integer categoriesFor: #asSDword!converting!public! !
-!Core.Integer categoriesFor: #asStackPointer!converting!private! !
-!Core.Integer categoriesFor: #asUIntPtr!converting!public! !
-!Core.Integer categoriesFor: #at:!accessing!public! !
-!Core.Integer categoriesFor: #at:put:!accessing!public! !
-!Core.Integer categoriesFor: #bitAnd:!bit manipulation!public! !
-!Core.Integer categoriesFor: #bitAt:!bit manipulation!public! !
-!Core.Integer categoriesFor: #bitAt:put:!bit manipulation!public! !
-!Core.Integer categoriesFor: #bitInvert!bit manipulation!public! !
-!Core.Integer categoriesFor: #bitOr:!bit manipulation!public! !
-!Core.Integer categoriesFor: #bitShift:!bit manipulation!public! !
-!Core.Integer categoriesFor: #bitXor:!bit manipulation!public! !
-!Core.Integer categoriesFor: #byteAt:!accessing!private! !
-!Core.Integer categoriesFor: #byteSize!accessing!private! !
-!Core.Integer categoriesFor: #ceiling!public!truncation and round off! !
-!Core.Integer categoriesFor: #clearBit:!bit manipulation!public! !
-!Core.Integer categoriesFor: #coerce:!coercing!private! !
-!Core.Integer categoriesFor: #decimalDigitLength!enquiries!private! !
-!Core.Integer categoriesFor: #digitAt:!accessing!public! !
-!Core.Integer categoriesFor: #digitLength!enquiries!public! !
-!Core.Integer categoriesFor: #displayOn:!printing!public! !
-!Core.Integer categoriesFor: #displayString!printing!public! !
-!Core.Integer categoriesFor: #divideIntoFloat:!double dispatch!private! !
-!Core.Integer categoriesFor: #divideIntoFraction:!double dispatch!private! !
-!Core.Integer categoriesFor: #divideIntoInteger:!double dispatch!private! !
-!Core.Integer categoriesFor: #equalToFloat:!double dispatch!private! !
-!Core.Integer categoriesFor: #equalToFraction:!double dispatch!private! !
-!Core.Integer categoriesFor: #equalToInteger:!double dispatch!private! !
-!Core.Integer categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
-!Core.Integer categoriesFor: #even!public!testing! !
-!Core.Integer categoriesFor: #exp10!mathematical!public! !
-!Core.Integer categoriesFor: #factorial!factorization!public! !
-!Core.Integer categoriesFor: #factorial2p!factorization!private! !
-!Core.Integer categoriesFor: #factorialIterative!factorization!private! !
-!Core.Integer categoriesFor: #floor!public!truncation and round off! !
-!Core.Integer categoriesFor: #fractionPart!accessing!public! !
-!Core.Integer categoriesFor: #gcd:!factorization!public! !
-!Core.Integer categoriesFor: #gcdbin:!factorization!public! !
-!Core.Integer categoriesFor: #greaterThanFloat:!double dispatch!private! !
-!Core.Integer categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!Core.Integer categoriesFor: #hashMultiply!comparing!public! !
-!Core.Integer categoriesFor: #hex!printing!public! !
-!Core.Integer categoriesFor: #highBit!bit manipulation!public! !
-!Core.Integer categoriesFor: #highByte!accessing!private! !
-!Core.Integer categoriesFor: #highPartSigned!bit manipulation!public! !
-!Core.Integer categoriesFor: #highWord!bit manipulation!public! !
-!Core.Integer categoriesFor: #integerPart!accessing!public! !
-!Core.Integer categoriesFor: #isBitSet:!bit manipulation!public!testing! !
-!Core.Integer categoriesFor: #isInteger!public!testing! !
-!Core.Integer categoriesFor: #isNull!public!testing! !
-!Core.Integer categoriesFor: #isPowerOfTwo!public!testing! !
-!Core.Integer categoriesFor: #isPrime!public!testing! !
-!Core.Integer categoriesFor: #isSDWORD!public!testing! !
-!Core.Integer categoriesFor: #lcm:!factorization!public! !
-!Core.Integer categoriesFor: #lowBit!bit manipulation!public! !
-!Core.Integer categoriesFor: #lowPart!bit manipulation!public! !
-!Core.Integer categoriesFor: #lowPartSigned!bit manipulation!public! !
-!Core.Integer categoriesFor: #lowWord!bit manipulation!public! !
-!Core.Integer categoriesFor: #mask:set:!bit manipulation!public! !
-!Core.Integer categoriesFor: #maskClear:!bit manipulation!public! !
-!Core.Integer categoriesFor: #maskSet:!bit manipulation!public! !
-!Core.Integer categoriesFor: #multiplyByFloat:!double dispatch!private! !
-!Core.Integer categoriesFor: #multiplyByFraction:!double dispatch!private! !
-!Core.Integer categoriesFor: #negated!arithmetic!public! !
-!Core.Integer categoriesFor: #negative!public!testing! !
-!Core.Integer categoriesFor: #noMask:!bit manipulation!public! !
-!Core.Integer categoriesFor: #normalize!converting!private! !
-!Core.Integer categoriesFor: #notNull!public!testing! !
-!Core.Integer categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
-!Core.Integer categoriesFor: #printOn:!printing!public! !
-!Core.Integer categoriesFor: #printOn:base:!printing!public! !
-!Core.Integer categoriesFor: #printOn:base:nDigits:!printing!public! !
-!Core.Integer categoriesFor: #printOn:base:showRadix:!printing!public! !
-!Core.Integer categoriesFor: #printStringBase:!accessing!public! !
-!Core.Integer categoriesFor: #printStringBase:nDigits:!printing!public! !
-!Core.Integer categoriesFor: #printStringRadix:!printing!public! !
-!Core.Integer categoriesFor: #rounded!public!truncation and round off! !
-!Core.Integer categoriesFor: #setBit:!bit manipulation!public! !
-!Core.Integer categoriesFor: #size!accessing!public! !
-!Core.Integer categoriesFor: #subtractFromFloat:!double dispatch!private! !
-!Core.Integer categoriesFor: #subtractFromFraction:!double dispatch!private! !
-!Core.Integer categoriesFor: #timesRepeat:!evaluating!public! !
-!Core.Integer categoriesFor: #truncated!public!truncation and round off! !
-!Core.Integer categoriesFor: #yourAddress!accessing!public! !
+!Core.Integer categoriesForMethods!
+-!arithmetic!public! !
+&!bit manipulation!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
+|!bit manipulation!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<<!bit manipulation!public! !
+>>!bit manipulation!public! !
+addToFloat:!double dispatch!private! !
+addToFraction:!double dispatch!private! !
+allMask:!bit manipulation!public! !
+anyBitSetFrom:to:!bit manipulation!public! !
+anyMask:!bit manipulation!public! !
+asBoolean!converting!public! !
+asCharacter!converting!public! !
+asDword!converting!public! !
+asExternalAddress!converting!public! !
+asExternalHandle!converting!public! !
+asFraction!converting!public! !
+asInteger!converting!public! !
+asResourceId!converting!public! !
+asScaledDecimal:!converting!public! !
+asSDword!converting!public! !
+asStackPointer!converting!private! !
+asUIntPtr!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+bitAnd:!bit manipulation!public! !
+bitAt:!bit manipulation!public! !
+bitAt:put:!bit manipulation!public! !
+bitInvert!bit manipulation!public! !
+bitOr:!bit manipulation!public! !
+bitShift:!bit manipulation!public! !
+bitXor:!bit manipulation!public! !
+byteAt:!accessing!private! !
+byteSize!accessing!private! !
+ceiling!public!truncation and round off! !
+clearBit:!bit manipulation!public! !
+coerce:!coercing!private! !
+decimalDigitLength!enquiries!private! !
+digitAt:!accessing!public! !
+digitLength!enquiries!public! !
+displayOn:!printing!public! !
+displayString!printing!public! !
+divideIntoFloat:!double dispatch!private! !
+divideIntoFraction:!double dispatch!private! !
+divideIntoInteger:!double dispatch!private! !
+equalToFloat:!double dispatch!private! !
+equalToFraction:!double dispatch!private! !
+equalToInteger:!double dispatch!private! !
+equalToScaledDecimal:!double dispatch!private! !
+even!public!testing! !
+exp10!mathematical!public! !
+factorial!factorization!public! !
+factorial2p!factorization!private! !
+factorialIterative!factorization!private! !
+floor!public!truncation and round off! !
+fractionPart!accessing!public! !
+gcd:!factorization!public! !
+gcdbin:!factorization!public! !
+greaterThanFloat:!double dispatch!private! !
+greaterThanFraction:!double dispatch!private! !
+hashMultiply!comparing!public! !
+hex!printing!public! !
+highBit!bit manipulation!public! !
+highByte!accessing!private! !
+highPartSigned!bit manipulation!public! !
+highWord!bit manipulation!public! !
+integerPart!accessing!public! !
+isBitSet:!bit manipulation!public!testing! !
+isInteger!public!testing! !
+isNull!public!testing! !
+isPowerOfTwo!public!testing! !
+isPrime!public!testing! !
+isSDWORD!public!testing! !
+lcm:!factorization!public! !
+lowBit!bit manipulation!public! !
+lowPart!bit manipulation!public! !
+lowPartSigned!bit manipulation!public! !
+lowWord!bit manipulation!public! !
+mask:set:!bit manipulation!public! !
+maskClear:!bit manipulation!public! !
+maskSet:!bit manipulation!public! !
+multiplyByFloat:!double dispatch!private! !
+multiplyByFraction:!double dispatch!private! !
+negated!arithmetic!public! !
+negative!public!testing! !
+noMask:!bit manipulation!public! !
+normalize!converting!private! !
+notNull!public!testing! !
+numberOfDigitsInBase:!enquiries!private! !
+printOn:!printing!public! !
+printOn:base:!printing!public! !
+printOn:base:nDigits:!printing!public! !
+printOn:base:showRadix:!printing!public! !
+printStringBase:!accessing!public! !
+printStringBase:nDigits:!printing!public! !
+printStringRadix:!printing!public! !
+rounded!public!truncation and round off! !
+setBit:!bit manipulation!public! !
+size!accessing!public! !
+subtractFromFloat:!double dispatch!private! !
+subtractFromFraction:!double dispatch!private! !
+timesRepeat:!evaluating!public! !
+truncated!public!truncation and round off! !
+yourAddress!accessing!public! !
+!
 
 Core.Integer methodProtocol: #integer attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #+ #< #allMask: #anyMask: #asFraction #asInteger #asScaledDecimal: #bitAnd: #bitAt: #bitAt:put: #bitOr: #bitShift: #bitXor: #ceiling #even #factorial #floor #fractionPart #gcd: #highBit #integerPart #lcm: #negated #negative #noMask: #odd #printOn:base:showRadix: #printStringRadix: #quo: #rounded #truncated)!
 
@@ -965,9 +967,11 @@ readPositiveFrom: aStream radix: anInteger
 					[aStream pop.
 					^value]].
 	^value! !
-!Core.Integer class categoriesFor: #primesUpTo:!enquiries!public! !
-!Core.Integer class categoriesFor: #readFrom:!instance creation!public! !
-!Core.Integer class categoriesFor: #readFrom:initialInteger:!instance creation!private! !
-!Core.Integer class categoriesFor: #readFrom:radix:!instance creation!public! !
-!Core.Integer class categoriesFor: #readPositiveFrom:radix:!instance creation!private! !
+!Core.Integer class categoriesForMethods!
+primesUpTo:!enquiries!public! !
+readFrom:!instance creation!public! !
+readFrom:initialInteger:!instance creation!private! !
+readFrom:radix:!instance creation!public! !
+readPositiveFrom:radix:!instance creation!private! !
+!
 

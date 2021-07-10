@@ -39,8 +39,10 @@ rclBox: aRECT
 		from: ##(_OffsetOf_rclBox + 1)
 		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRELLIPSE categoriesFor: #rclBox!**compiled accessors**!public! !
-!OS.EMRELLIPSE categoriesFor: #rclBox:!**compiled accessors**!public! !
+!OS.EMRELLIPSE categoriesForMethods!
+rclBox!**compiled accessors**!public! !
+rclBox:!**compiled accessors**!public! !
+!
 
 !OS.EMRELLIPSE class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_ELLIPSE. EMR_RECTANGLE}! !
-!OS.EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRELLIPSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRELLIPSE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRELLIPSE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

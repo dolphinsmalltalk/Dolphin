@@ -44,9 +44,11 @@ value
 	by sending a message to the receiver's subject."
 
 	^subject! !
-!UI.CompositeValueAdaptor categoriesFor: #aspectValue:!accessing!public! !
-!UI.CompositeValueAdaptor categoriesFor: #displayOn:!displaying!public! !
-!UI.CompositeValueAdaptor categoriesFor: #onAspectChanged!event handling!private! !
-!UI.CompositeValueAdaptor categoriesFor: #setValue:!accessing!private! !
-!UI.CompositeValueAdaptor categoriesFor: #value!accessing!public! !
+!UI.CompositeValueAdaptor categoriesForMethods!
+aspectValue:!accessing!public! !
+displayOn:!displaying!public! !
+onAspectChanged!event handling!private! !
+setValue:!accessing!private! !
+value!accessing!public! !
+!
 

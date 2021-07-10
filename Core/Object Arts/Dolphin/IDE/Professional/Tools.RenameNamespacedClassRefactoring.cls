@@ -130,11 +130,13 @@ transform
 		renameClass: class
 		to: newName
 		around: [:methods | self renameReferences: methods]! !
-!Tools.RenameNamespacedClassRefactoring categoriesFor: #buildParseTreeRewriter!private!transforming! !
-!Tools.RenameNamespacedClassRefactoring categoriesFor: #className:newName:!initializing!private! !
-!Tools.RenameNamespacedClassRefactoring categoriesFor: #newNameForReferenceFrom:!private!transforming! !
-!Tools.RenameNamespacedClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Tools.RenameNamespacedClassRefactoring categoriesFor: #renameImports!private!transforming! !
-!Tools.RenameNamespacedClassRefactoring categoriesFor: #renameReferences:!private!transforming! !
-!Tools.RenameNamespacedClassRefactoring categoriesFor: #transform!public!transforming! !
+!Tools.RenameNamespacedClassRefactoring categoriesForMethods!
+buildParseTreeRewriter!private!transforming! !
+className:newName:!initializing!private! !
+newNameForReferenceFrom:!private!transforming! !
+preconditions!preconditions!public! !
+renameImports!private!transforming! !
+renameReferences:!private!transforming! !
+transform!public!transforming! !
+!
 

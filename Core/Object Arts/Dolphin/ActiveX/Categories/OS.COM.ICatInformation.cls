@@ -201,23 +201,25 @@ requiredCategoriesOfClass: rclsid
 	answer := IEnumStruct elementClass: GUID.
 	self EnumReqCategoriesOfClass: rclsid ppenumCatid: answer.
 	^Enumerable onIEnum: answer! !
-!OS.COM.ICatInformation categoriesFor: #allCategories!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #allCategories:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #buildGuidArray:!helpers!methods!private! !
-!OS.COM.ICatInformation categoriesFor: #categoriesOfClass:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #classesInCategories:requiring:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #classesInCategory:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #descriptionOfCategory:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #descriptionOfCategory:locale:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #enumCategories:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #EnumCategories:ppenumCategoryInfo:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!OS.COM.ICatInformation categoriesFor: #enumClassesOfCategories:requiring:!enquiries!public! !
-!OS.COM.ICatInformation categoriesFor: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid:!COM Interfaces-ICatInformation!private! !
-!OS.COM.ICatInformation categoriesFor: #EnumImplCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!OS.COM.ICatInformation categoriesFor: #EnumReqCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!OS.COM.ICatInformation categoriesFor: #GetCategoryDesc:lcid:pszDesc:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!OS.COM.ICatInformation categoriesFor: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:!COM Interfaces-ICatInformation!private! !
-!OS.COM.ICatInformation categoriesFor: #requiredCategoriesOfClass:!enquiries!public! !
+!OS.COM.ICatInformation categoriesForMethods!
+allCategories!enquiries!public! !
+allCategories:!enquiries!public! !
+buildGuidArray:!helpers!methods!private! !
+categoriesOfClass:!enquiries!public! !
+classesInCategories:requiring:!enquiries!public! !
+classesInCategory:!enquiries!public! !
+descriptionOfCategory:!enquiries!public! !
+descriptionOfCategory:locale:!enquiries!public! !
+enumCategories:!enquiries!public! !
+EnumCategories:ppenumCategoryInfo:!**auto generated**!COM Interfaces-ICatInformation!private! !
+enumClassesOfCategories:requiring:!enquiries!public! !
+EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid:!COM Interfaces-ICatInformation!private! !
+EnumImplCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
+EnumReqCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
+GetCategoryDesc:lcid:pszDesc:!**auto generated**!COM Interfaces-ICatInformation!private! !
+IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:!COM Interfaces-ICatInformation!private! !
+requiredCategoriesOfClass:!enquiries!public! !
+!
 
 OS.COM.ICatInformation methodProtocol: #ICatInformation attributes: #(#readOnly) selectors: #(#EnumCategories:ppenumCategoryInfo: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid: #EnumImplCategoriesOfClass:ppenumCatid: #EnumReqCategoriesOfClass:ppenumCatid: #GetCategoryDesc:lcid:pszDesc: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:)!
 
@@ -286,11 +288,13 @@ uninitialize
 	"Private -  Uninitialize the receiver as it is about to be removed from the image."
 
 	CatMan := Controls := nil.! !
-!OS.COM.ICatInformation class categoriesFor: #clsid!constants!public! !
-!OS.COM.ICatInformation class categoriesFor: #controls!enquiries!public! !
-!OS.COM.ICatInformation class categoriesFor: #current!instance creation!public! !
-!OS.COM.ICatInformation class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.ICatInformation class categoriesFor: #new!instance creation!public! !
-!OS.COM.ICatInformation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!OS.COM.ICatInformation class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OS.COM.ICatInformation class categoriesForMethods!
+clsid!constants!public! !
+controls!enquiries!public! !
+current!instance creation!public! !
+defineFunctions!initializing!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

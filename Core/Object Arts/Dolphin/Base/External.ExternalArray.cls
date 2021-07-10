@@ -418,54 +418,56 @@ with: aCollection do: aDyadicValuable
 			elem initializeAtAddress: addr.
 			aDyadicValuable value: elem value: each.
 			addr + spacing]! !
-!External.ExternalArray categoriesFor: #=!public! !
-!External.ExternalArray categoriesFor: #anySatisfy:!enumerating!public! !
-!External.ExternalArray categoriesFor: #appendToStream:!double dispatch!private! !
-!External.ExternalArray categoriesFor: #asArray!converting!public! !
-!External.ExternalArray categoriesFor: #asOrderedCollection!converting!public! !
-!External.ExternalArray categoriesFor: #at:!accessing!public! !
-!External.ExternalArray categoriesFor: #at:ifAbsent:!accessing!public! !
-!External.ExternalArray categoriesFor: #at:put:!accessing!public! !
-!External.ExternalArray categoriesFor: #basicLength:!accessing!private! !
-!External.ExternalArray categoriesFor: #binarySearchFor:using:!public!searching! !
-!External.ExternalArray categoriesFor: #byteSize!accessing!public! !
-!External.ExternalArray categoriesFor: #collect:!enumerating!public! !
-!External.ExternalArray categoriesFor: #copyFrom:to:!copying!public! !
-!External.ExternalArray categoriesFor: #copyingClass!copying!private! !
-!External.ExternalArray categoriesFor: #detect:!public!searching! !
-!External.ExternalArray categoriesFor: #detect:ifNone:!public!searching! !
-!External.ExternalArray categoriesFor: #displayOn:!printing!private! !
-!External.ExternalArray categoriesFor: #do:!enumerating!public! !
-!External.ExternalArray categoriesFor: #do:separatedBy:!enumerating!public! !
-!External.ExternalArray categoriesFor: #elementClass!constants!public! !
-!External.ExternalArray categoriesFor: #elementSize!instance creation!private! !
-!External.ExternalArray categoriesFor: #first!accessing!public! !
-!External.ExternalArray categoriesFor: #from:do:!enumerating!public! !
-!External.ExternalArray categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!External.ExternalArray categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!External.ExternalArray categoriesFor: #includes:!public!searching! !
-!External.ExternalArray categoriesFor: #includesKey:!public!testing! !
-!External.ExternalArray categoriesFor: #initializePointer!public! !
-!External.ExternalArray categoriesFor: #inject:into:!enumerating!public! !
-!External.ExternalArray categoriesFor: #isEmpty!public!testing! !
-!External.ExternalArray categoriesFor: #keys!accessing!public! !
-!External.ExternalArray categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!External.ExternalArray categoriesFor: #last!accessing!public! !
-!External.ExternalArray categoriesFor: #length!accessing!public! !
-!External.ExternalArray categoriesFor: #length:!accessing!public! !
-!External.ExternalArray categoriesFor: #lookup:!accessing!public! !
-!External.ExternalArray categoriesFor: #notEmpty!public!testing! !
-!External.ExternalArray categoriesFor: #packing!constants!private! !
-!External.ExternalArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
-!External.ExternalArray categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!External.ExternalArray categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!External.ExternalArray categoriesFor: #select:!enumerating!public! !
-!External.ExternalArray categoriesFor: #size!accessing!public! !
-!External.ExternalArray categoriesFor: #species!constants!public! !
-!External.ExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.ExternalArray categoriesFor: #uncheckedAt:put:!accessing!private! !
-!External.ExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
-!External.ExternalArray categoriesFor: #with:do:!enumerating!public! !
+!External.ExternalArray categoriesForMethods!
+=!public! !
+anySatisfy:!enumerating!public! !
+appendToStream:!double dispatch!private! !
+asArray!converting!public! !
+asOrderedCollection!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+basicLength:!accessing!private! !
+binarySearchFor:using:!public!searching! !
+byteSize!accessing!public! !
+collect:!enumerating!public! !
+copyFrom:to:!copying!public! !
+copyingClass!copying!private! !
+detect:!public!searching! !
+detect:ifNone:!public!searching! !
+displayOn:!printing!private! !
+do:!enumerating!public! !
+do:separatedBy:!enumerating!public! !
+elementClass!constants!public! !
+elementSize!instance creation!private! !
+first!accessing!public! !
+from:do:!enumerating!public! !
+from:keysAndValuesDo:!enumerating!public! !
+from:to:keysAndValuesDo:!enumerating!public! !
+includes:!public!searching! !
+includesKey:!public!testing! !
+initializePointer!public! !
+inject:into:!enumerating!public! !
+isEmpty!public!testing! !
+keys!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+last!accessing!public! !
+length!accessing!public! !
+length:!accessing!public! !
+lookup:!accessing!public! !
+notEmpty!public!testing! !
+packing!constants!private! !
+replaceBytesOf:from:to:startingAt:!double dispatch!private! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+select:!enumerating!public! !
+size!accessing!public! !
+species!constants!public! !
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+with:do:!enumerating!public! !
+!
 
 !External.ExternalArray class methodsFor!
 
@@ -537,14 +539,16 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
-!External.ExternalArray class categoriesFor: #alignment!constants!public! !
-!External.ExternalArray class categoriesFor: #elementClass!constants!public! !
-!External.ExternalArray class categoriesFor: #elementSize!instance creation!private! !
-!External.ExternalArray class categoriesFor: #fromAddress:!instance creation!public! !
-!External.ExternalArray class categoriesFor: #fromAddress:length:!instance creation!public! !
-!External.ExternalArray class categoriesFor: #getFieldNames!constants!private! !
-!External.ExternalArray class categoriesFor: #length:elementSize:!instance creation!private! !
-!External.ExternalArray class categoriesFor: #new:!instance creation!public! !
-!External.ExternalArray class categoriesFor: #with:!instance creation!public! !
-!External.ExternalArray class categoriesFor: #withAll:!instance creation!public! !
+!External.ExternalArray class categoriesForMethods!
+alignment!constants!public! !
+elementClass!constants!public! !
+elementSize!instance creation!private! !
+fromAddress:!instance creation!public! !
+fromAddress:length:!instance creation!public! !
+getFieldNames!constants!private! !
+length:elementSize:!instance creation!private! !
+new:!instance creation!public! !
+with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 

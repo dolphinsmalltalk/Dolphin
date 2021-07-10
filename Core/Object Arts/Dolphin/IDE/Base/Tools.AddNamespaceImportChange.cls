@@ -31,11 +31,13 @@ variable
 
 variableName
 	^variable asString! !
-!Tools.AddNamespaceImportChange categoriesFor: #asUndoOperation!converting!public! !
-!Tools.AddNamespaceImportChange categoriesFor: #changeObject!private! !
-!Tools.AddNamespaceImportChange categoriesFor: #changesFileTemplate!constants!private! !
-!Tools.AddNamespaceImportChange categoriesFor: #changeStringFormat!constants!printing!private! !
-!Tools.AddNamespaceImportChange categoriesFor: #changeSymbol!constants!private! !
-!Tools.AddNamespaceImportChange categoriesFor: #variable!private! !
-!Tools.AddNamespaceImportChange categoriesFor: #variableName!accessing!private! !
+!Tools.AddNamespaceImportChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeObject!private! !
+changesFileTemplate!constants!private! !
+changeStringFormat!constants!printing!private! !
+changeSymbol!constants!private! !
+variable!private! !
+variableName!accessing!private! !
+!
 

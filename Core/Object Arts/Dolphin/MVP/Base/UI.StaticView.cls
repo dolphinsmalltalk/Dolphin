@@ -83,16 +83,18 @@ onPositionChanged: aPositionEvent
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
-!UI.StaticView categoriesFor: #defaultBackcolor!colors!constants!private! !
-!UI.StaticView categoriesFor: #defaultExtent!constants!private! !
-!UI.StaticView categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.StaticView categoriesFor: #invalidateOnResize!private!testing! !
-!UI.StaticView categoriesFor: #invalidateRect:erase:!drawing!public! !
-!UI.StaticView categoriesFor: #isSunken!accessing-styles!public!testing! !
-!UI.StaticView categoriesFor: #isSunken:!accessing-styles!public! !
-!UI.StaticView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!UI.StaticView categoriesFor: #onPositionChanged:!event handling-win32!public! !
-!UI.StaticView categoriesFor: #updateModel!public!updating! !
+!UI.StaticView categoriesForMethods!
+defaultBackcolor!colors!constants!private! !
+defaultExtent!constants!private! !
+defaultWindowStyle!constants!private! !
+invalidateOnResize!private!testing! !
+invalidateRect:erase:!drawing!public! !
+isSunken!accessing-styles!public!testing! !
+isSunken:!accessing-styles!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onPositionChanged:!event handling-win32!public! !
+updateModel!public!updating! !
+!
 
 !UI.StaticView class methodsFor!
 
@@ -107,6 +109,8 @@ winClassName
 
 	^'STATIC'
 ! !
-!UI.StaticView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!UI.StaticView class categoriesFor: #winClassName!constants!private! !
+!UI.StaticView class categoriesForMethods!
+stbConvertFromVersion12:!binary filing!private! !
+winClassName!constants!private! !
+!
 

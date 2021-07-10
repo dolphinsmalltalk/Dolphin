@@ -21,6 +21,8 @@ isConstant
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
-!Kernel.StArgumentVariable categoriesFor: #isArgument!public!testing! !
-!Kernel.StArgumentVariable categoriesFor: #isConstant!public!testing! !
+!Kernel.StArgumentVariable categoriesForMethods!
+isArgument!public!testing! !
+isConstant!public!testing! !
+!
 

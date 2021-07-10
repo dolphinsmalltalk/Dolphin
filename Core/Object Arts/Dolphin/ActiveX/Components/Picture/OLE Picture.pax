@@ -118,9 +118,11 @@ oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr
 
 	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* dword sdword guid* void**>
 	^self invalidCall: _failureCode! !
-!OS.COM.OLEAutLibrary categoriesFor: #oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
-!OS.COM.OLEAutLibrary categoriesFor: #oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !
-!OS.COM.OLEAutLibrary categoriesFor: #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:!OLE Functions-OLE!public! !
+!OS.COM.OLEAutLibrary categoriesForMethods!
+oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
+oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !
+oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:!OLE Functions-OLE!public! !
+!
 
 "End of package definition"!
 

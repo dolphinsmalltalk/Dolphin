@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameTemporaryTest'
 	instanceVariableNames: ''
@@ -77,8 +77,10 @@ testRenameTemporary
 								asdf isEmpty ifTrue: [^self].
 								asdf size == 1 ifTrue: [^asdf first viewResults].
 								SmalllintResultEditor openOn: self label: name')! !
-!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
-!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testBadName!failure tests!public! !
-!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testModelBadName!failure tests!public! !
-!Refactory.Browser.Tests.RenameTemporaryTest categoriesFor: #testRenameTemporary!public!tests! !
+!Refactory.Browser.Tests.RenameTemporaryTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testBadName!failure tests!public! !
+testModelBadName!failure tests!public! !
+testRenameTemporary!public!tests! !
+!
 

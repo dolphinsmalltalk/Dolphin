@@ -365,41 +365,43 @@ updateCaption
 	text := self class displayString.
 	self hasProtocol ifTrue: [text := self protocol displayString].
 	self caption: text! !
-!Tools.ProtocolBrowserShell categoriesFor: #actualClass!accessing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #actualClass:!accessing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #addClass!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #addProtocol!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #addSelector!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #addSelectors!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #browseMethods!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #createComponents!initializing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #defaultHelpId!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #hasActualClass!public!testing! !
-!Tools.ProtocolBrowserShell categoriesFor: #hasProtocol!public!testing! !
-!Tools.ProtocolBrowserShell categoriesFor: #hasSelectors!public!testing! !
-!Tools.ProtocolBrowserShell categoriesFor: #onDragProtocol:!event handling!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #onProtocolRemoved:!event handling!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #onProtocolSelected!event handling!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #onProtocolUpdated:!event handling!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #onSelectorSelected!event handling!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #onTipTextRequired:!event handling!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #onViewOpened!event handling!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #protocol!accessing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #protocol:!accessing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #purgeUnused!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #refreshProtocols!event handling!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #removeClassFromProtocol!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #removeProtocol!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #removeSelectors!commands!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #selector!accessing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #selectors!accessing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #setInitialFocus!operations!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #shortCaption!accessing!public! !
-!Tools.ProtocolBrowserShell categoriesFor: #toggleANSI!commands!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #toggleReadOnly!commands!private! !
-!Tools.ProtocolBrowserShell categoriesFor: #updateCaption!public!updating! !
+!Tools.ProtocolBrowserShell categoriesForMethods!
+actualClass!accessing!public! !
+actualClass:!accessing!public! !
+addClass!commands!public! !
+addProtocol!commands!public! !
+addSelector!commands!public! !
+addSelectors!commands!public! !
+browseMethods!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultHelpId!public! !
+hasActualClass!public!testing! !
+hasProtocol!public!testing! !
+hasSelectors!public!testing! !
+onDragProtocol:!event handling!private! !
+onProtocolRemoved:!event handling!private! !
+onProtocolSelected!event handling!private! !
+onProtocolUpdated:!event handling!private! !
+onSelectorSelected!event handling!private! !
+onTipTextRequired:!event handling!public! !
+onViewOpened!event handling!public! !
+protocol!accessing!public! !
+protocol:!accessing!public! !
+purgeUnused!commands!public! !
+queryCommand:!commands!private! !
+refreshProtocols!event handling!private! !
+removeClassFromProtocol!commands!public! !
+removeProtocol!commands!public! !
+removeSelectors!commands!public! !
+selector!accessing!public! !
+selectors!accessing!public! !
+setInitialFocus!operations!public! !
+shortCaption!accessing!public! !
+toggleANSI!commands!private! !
+toggleReadOnly!commands!private! !
+updateCaption!public!updating! !
+!
 
 !Tools.ProtocolBrowserShell class methodsFor!
 
@@ -444,10 +446,12 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10596! !
-!Tools.ProtocolBrowserShell class categoriesFor: #displayOn:!displaying!public! !
-!Tools.ProtocolBrowserShell class categoriesFor: #icon!constants!public! !
-!Tools.ProtocolBrowserShell class categoriesFor: #initialize!initializing!private! !
-!Tools.ProtocolBrowserShell class categoriesFor: #publishedAspects!public! !
-!Tools.ProtocolBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ProtocolBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
+!Tools.ProtocolBrowserShell class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

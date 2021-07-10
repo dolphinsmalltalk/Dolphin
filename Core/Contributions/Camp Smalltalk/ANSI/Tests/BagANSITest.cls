@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 CollectionTest subclass: #BagANSITest
 	instanceVariableNames: ''
@@ -45,19 +45,23 @@ testXaddXwithOccurrencesX
 		should: [:r | (it occurrencesOf: 42) = 3]
 		conformTo: #Bag
 		selector: #add:withOccurrences:! !
-!BagANSITest categoriesFor: #canonicalElement!public! !
-!BagANSITest categoriesFor: #canonicalObject!public! !
-!BagANSITest categoriesFor: #emptyCollection!public! !
-!BagANSITest categoriesFor: #limitedElementType!public! !
-!BagANSITest categoriesFor: #limitedElementTypes!public! !
-!BagANSITest categoriesFor: #protocol!public! !
-!BagANSITest categoriesFor: #returnTypeHasLimitedElementTypes!public! !
-!BagANSITest categoriesFor: #testXaddXwithOccurrencesX!public! !
+!BagANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCollection!public! !
+limitedElementType!public! !
+limitedElementTypes!public! !
+protocol!public! !
+returnTypeHasLimitedElementTypes!public! !
+testXaddXwithOccurrencesX!public! !
+!
 
 !BagANSITest class methodsFor!
 
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: ExtensibleCollectionHelper.! !
-!BagANSITest class categoriesFor: #helperClassesDo:!public! !
+!BagANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

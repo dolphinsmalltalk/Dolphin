@@ -68,10 +68,12 @@ ResolveEntity: strPublicId strSystemId: strSystemId varInput: varInput
 
 	<virtual stdcall: hresult 8 bstr* bstr* variant*>
 	^self invalidCall: _failureCode! !
-!MSXML.IVBSAXEntityResolver categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXEntityResolver categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IVBSAXEntityResolver categoriesFor: #resolveEntity:strSystemId:!**auto generated**!methods!public! !
-!MSXML.IVBSAXEntityResolver categoriesFor: #ResolveEntity:strSystemId:varInput:!**auto generated**!COM Interfaces-IVBSAXEntityResolver!private! !
+!MSXML.IVBSAXEntityResolver categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+resolveEntity:strSystemId:!**auto generated**!methods!public! !
+ResolveEntity:strSystemId:varInput:!**auto generated**!COM Interfaces-IVBSAXEntityResolver!private! !
+!
 
 !MSXML.IVBSAXEntityResolver class methodsFor!
 
@@ -83,5 +85,7 @@ defineFunctions
 		defineFunction: #ResolveEntity:strSystemId:varInput:
 			argumentTypes: 'bstr* bstr* variant*'
 ! !
-!MSXML.IVBSAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXEntityResolver class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

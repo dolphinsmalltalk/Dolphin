@@ -13,7 +13,9 @@ Kernel.CompilerInfoNotification comment: 'CompilerInfoNotification is a resumabl
 
 severityName
 	^#Note! !
-!Kernel.CompilerInfoNotification categoriesFor: #severityName!displaying!public! !
+!Kernel.CompilerInfoNotification categoriesForMethods!
+severityName!displaying!public! !
+!
 
 !Kernel.CompilerInfoNotification class methodsFor!
 
@@ -22,5 +24,7 @@ severity
 	sorting compilation issues by severity."
 
 	^0! !
-!Kernel.CompilerInfoNotification class categoriesFor: #severity!constants!public! !
+!Kernel.CompilerInfoNotification class categoriesForMethods!
+severity!constants!public! !
+!
 

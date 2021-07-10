@@ -69,14 +69,16 @@ woofAndWait
 	| flags |
 	flags := (type bitAnd: ##(SND_ASYNC bitInvert)) bitOr: SND_SYNC.
 	self play: flags! !
-!Core.Sound categoriesFor: #fileLocator:!accessing!private! !
-!Core.Sound categoriesFor: #location:!accessing!private! !
-!Core.Sound categoriesFor: #name:!accessing!private! !
-!Core.Sound categoriesFor: #play:!private!woofing! !
-!Core.Sound categoriesFor: #type!accessing!public! !
-!Core.Sound categoriesFor: #type:!initializing!private! !
-!Core.Sound categoriesFor: #woof!public!woofing! !
-!Core.Sound categoriesFor: #woofAndWait!public!woofing! !
+!Core.Sound categoriesForMethods!
+fileLocator:!accessing!private! !
+location:!accessing!private! !
+name:!accessing!private! !
+play:!private!woofing! !
+type!accessing!public! !
+type:!initializing!private! !
+woof!public!woofing! !
+woofAndWait!public!woofing! !
+!
 
 !Core.Sound class methodsFor!
 
@@ -204,25 +206,27 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 	| sound |
 	sound := Registry lookup: aSymbol.
 	sound notNil ifTrue: [sound woof] ifFalse: [exceptionBlock value]! !
-!Core.Sound class categoriesFor: #beep!parping!public! !
-!Core.Sound class categoriesFor: #beep:!not an aspect!parping!public! !
-!Core.Sound class categoriesFor: #beep:duration:!parping!public! !
-!Core.Sound class categoriesFor: #bell!parping!public! !
-!Core.Sound class categoriesFor: #clearRegistry!development!initializing!public! !
-!Core.Sound class categoriesFor: #defaultBeep!parping!public! !
-!Core.Sound class categoriesFor: #errorBeep!parping!public! !
-!Core.Sound class categoriesFor: #for:ifAbsent:!accessing!public! !
-!Core.Sound class categoriesFor: #for:put:!accessing!public! !
-!Core.Sound class categoriesFor: #fromAlias:!instance creation!public! !
-!Core.Sound class categoriesFor: #fromFile:!instance creation!public! !
-!Core.Sound class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!Core.Sound class categoriesFor: #fromId:in:!instance creation!public! !
-!Core.Sound class categoriesFor: #informationBeep!parping!public! !
-!Core.Sound class categoriesFor: #initialize!development!initializing!private! !
-!Core.Sound class categoriesFor: #promptBeep!parping!public! !
-!Core.Sound class categoriesFor: #warningBeep!parping!public! !
-!Core.Sound class categoriesFor: #woofAndWaitFor:!public!woofing! !
-!Core.Sound class categoriesFor: #woofAndWaitFor:ifAbsent:!public!woofing! !
-!Core.Sound class categoriesFor: #woofFor:!public!woofing! !
-!Core.Sound class categoriesFor: #woofFor:ifAbsent:!public!woofing! !
+!Core.Sound class categoriesForMethods!
+beep!parping!public! !
+beep:!not an aspect!parping!public! !
+beep:duration:!parping!public! !
+bell!parping!public! !
+clearRegistry!development!initializing!public! !
+defaultBeep!parping!public! !
+errorBeep!parping!public! !
+for:ifAbsent:!accessing!public! !
+for:put:!accessing!public! !
+fromAlias:!instance creation!public! !
+fromFile:!instance creation!public! !
+fromFile:usingLocator:!instance creation!public! !
+fromId:in:!instance creation!public! !
+informationBeep!parping!public! !
+initialize!development!initializing!private! !
+promptBeep!parping!public! !
+warningBeep!parping!public! !
+woofAndWaitFor:!public!woofing! !
+woofAndWaitFor:ifAbsent:!public!woofing! !
+woofFor:!public!woofing! !
+woofFor:ifAbsent:!public!woofing! !
+!
 

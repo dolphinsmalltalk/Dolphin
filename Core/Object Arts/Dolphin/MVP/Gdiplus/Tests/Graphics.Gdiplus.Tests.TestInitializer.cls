@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Initializer subclass: #'Graphics.Gdiplus.Tests.TestInitializer'
 	instanceVariableNames: 'mockHandle arg1'
@@ -31,16 +31,20 @@ hash
 initialize
 	super initialize.
 	mockHandle := self! !
-!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #=!accessing!comparison!public! !
-!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #arg1!accessing!public! !
-!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #arg1:!accessing!public! !
-!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #hash!accessing!public! !
-!Graphics.Gdiplus.Tests.TestInitializer categoriesFor: #initialize!initializing!public! !
+!Graphics.Gdiplus.Tests.TestInitializer categoriesForMethods!
+=!accessing!comparison!public! !
+arg1!accessing!public! !
+arg1:!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+hash!accessing!public! !
+initialize!initializing!public! !
+!
 
 !Graphics.Gdiplus.Tests.TestInitializer class methodsFor!
 
 new
 	^self basicNew initialize! !
-!Graphics.Gdiplus.Tests.TestInitializer class categoriesFor: #new!instance creation!public! !
+!Graphics.Gdiplus.Tests.TestInitializer class categoriesForMethods!
+new!instance creation!public! !
+!
 

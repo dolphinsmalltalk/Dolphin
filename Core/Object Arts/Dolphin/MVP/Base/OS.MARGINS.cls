@@ -71,14 +71,16 @@ cyTopHeight: anInteger
 	"Set the receiver's 'cyTopHeight' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_cyTopHeight put: anInteger! !
-!OS.MARGINS categoriesFor: #cxLeftWidth!**compiled accessors**!public! !
-!OS.MARGINS categoriesFor: #cxLeftWidth:!**compiled accessors**!public! !
-!OS.MARGINS categoriesFor: #cxRightWidth!**compiled accessors**!public! !
-!OS.MARGINS categoriesFor: #cxRightWidth:!**compiled accessors**!public! !
-!OS.MARGINS categoriesFor: #cyBottomHeight!**compiled accessors**!public! !
-!OS.MARGINS categoriesFor: #cyBottomHeight:!**compiled accessors**!public! !
-!OS.MARGINS categoriesFor: #cyTopHeight!**compiled accessors**!public! !
-!OS.MARGINS categoriesFor: #cyTopHeight:!**compiled accessors**!public! !
+!OS.MARGINS categoriesForMethods!
+cxLeftWidth!**compiled accessors**!public! !
+cxLeftWidth:!**compiled accessors**!public! !
+cxRightWidth!**compiled accessors**!public! !
+cxRightWidth:!**compiled accessors**!public! !
+cyBottomHeight!**compiled accessors**!public! !
+cyBottomHeight:!**compiled accessors**!public! !
+cyTopHeight!**compiled accessors**!public! !
+cyTopHeight:!**compiled accessors**!public! !
+!
 
 !OS.MARGINS class methodsFor!
 
@@ -103,6 +105,8 @@ defineFields
 
 getFieldNames
 	^#(#cxLeftWidth #cxRightWidth #cyTopHeight #cyBottomHeight)! !
-!OS.MARGINS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.MARGINS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MARGINS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

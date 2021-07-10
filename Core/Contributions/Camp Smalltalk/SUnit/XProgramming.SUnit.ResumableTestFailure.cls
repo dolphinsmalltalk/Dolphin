@@ -27,6 +27,8 @@ isResumable
 sunitExitWith: aValue
 	self resume: aValue
 ! !
-!XProgramming.SUnit.ResumableTestFailure categoriesFor: #isResumable!public! !
-!XProgramming.SUnit.ResumableTestFailure categoriesFor: #sunitExitWith:!public! !
+!XProgramming.SUnit.ResumableTestFailure categoriesForMethods!
+isResumable!public! !
+sunitExitWith:!public! !
+!
 

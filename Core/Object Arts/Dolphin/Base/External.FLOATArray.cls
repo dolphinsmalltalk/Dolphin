@@ -23,8 +23,10 @@ uncheckedAt: anInteger put: aFloat
 	with the Float argument."
 
 	^bytes floatAtOffset: (anInteger - 1) * VMConstants.FloatSize put: aFloat! !
-!External.FLOATArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.FLOATArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.FLOATArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.FLOATArray class methodsFor!
 
@@ -32,5 +34,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^FLOAT! !
-!External.FLOATArray class categoriesFor: #elementClass!constants!public! !
+!External.FLOATArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

@@ -241,26 +241,28 @@ typekindAt: anInteger
 	answer := SDWORD new.
 	self GetTypeInfoType: anInteger-1 pTKind: answer.
 	^answer value! !
-!OS.COM.ITypeLib categoriesFor: #FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
-!OS.COM.ITypeLib categoriesFor: #getAllCustData!accessing!public! !
-!OS.COM.ITypeLib categoriesFor: #GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-ITypeLib!primitives!private! !
-!OS.COM.ITypeLib categoriesFor: #getLibAttr!accessing!public! !
-!OS.COM.ITypeLib categoriesFor: #GetLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
-!OS.COM.ITypeLib categoriesFor: #getTypeComp!**auto generated**!methods!public! !
-!OS.COM.ITypeLib categoriesFor: #GetTypeComp:!COM Interfaces-ITypeLib!primitives!public! !
-!OS.COM.ITypeLib categoriesFor: #GetTypeInfo:ppTInfo:!COM Interfaces-ITypeLib!primitives!public! !
-!OS.COM.ITypeLib categoriesFor: #GetTypeInfoCount!COM Interfaces-ITypeLib!primitives!private! !
-!OS.COM.ITypeLib categoriesFor: #getTypeInfoOfGuid:ifNone:!accessing!public! !
-!OS.COM.ITypeLib categoriesFor: #GetTypeInfoOfGuid:ppTInfo:!COM Interfaces-ITypeLib!private! !
-!OS.COM.ITypeLib categoriesFor: #GetTypeInfoType:pTKind:!COM Interfaces-ITypeLib!primitives!public! !
-!OS.COM.ITypeLib categoriesFor: #isName:!accessing!public! !
-!OS.COM.ITypeLib categoriesFor: #IsName:lHashVal:pfName:!COM Interfaces-ITypeLib!primitives!private! !
-!OS.COM.ITypeLib categoriesFor: #nameAt:!accessing!private! !
-!OS.COM.ITypeLib categoriesFor: #nameAt:ifAbsent:!accessing!private! !
-!OS.COM.ITypeLib categoriesFor: #ReleaseTLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
-!OS.COM.ITypeLib categoriesFor: #typeComp!accessing!public! !
-!OS.COM.ITypeLib categoriesFor: #typeInfoAt:!accessing!public! !
-!OS.COM.ITypeLib categoriesFor: #typekindAt:!accessing!private! !
+!OS.COM.ITypeLib categoriesForMethods!
+FindName:lHashVal:ppTInfo:rgMemId:pcFound:!COM Interfaces-ITypeLib!primitives!public! !
+getAllCustData!accessing!public! !
+GetDocumentation:pBstrName:pBstrDocString:pdwHelpContext:pBstrHelpFile:!COM Interfaces-ITypeLib!primitives!private! !
+getLibAttr!accessing!public! !
+GetLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
+getTypeComp!**auto generated**!methods!public! !
+GetTypeComp:!COM Interfaces-ITypeLib!primitives!public! !
+GetTypeInfo:ppTInfo:!COM Interfaces-ITypeLib!primitives!public! !
+GetTypeInfoCount!COM Interfaces-ITypeLib!primitives!private! !
+getTypeInfoOfGuid:ifNone:!accessing!public! !
+GetTypeInfoOfGuid:ppTInfo:!COM Interfaces-ITypeLib!private! !
+GetTypeInfoType:pTKind:!COM Interfaces-ITypeLib!primitives!public! !
+isName:!accessing!public! !
+IsName:lHashVal:pfName:!COM Interfaces-ITypeLib!primitives!private! !
+nameAt:!accessing!private! !
+nameAt:ifAbsent:!accessing!private! !
+ReleaseTLibAttr:!COM Interfaces-ITypeLib!primitives!private! !
+typeComp!accessing!public! !
+typeInfoAt:!accessing!public! !
+typekindAt:!accessing!private! !
+!
 
 !OS.COM.ITypeLib class methodsFor!
 
@@ -364,11 +366,13 @@ queryPath: libid major: major minor: minor locale: locale ifNone: exceptionHandl
 		ifTrue: 
 			[hr = TYPE_E_LIBNOTREGISTERED ifTrue: [exceptionHandler value] ifFalse: [HRESULTError signalWith: hr]]
 		ifFalse: [answer asString trimNulls]! !
-!OS.COM.ITypeLib class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.ITypeLib class categoriesFor: #fromAttributes:!instance creation!public! !
-!OS.COM.ITypeLib class categoriesFor: #load:major:minor:locale:!instance creation!public! !
-!OS.COM.ITypeLib class categoriesFor: #open:!instance creation!public! !
-!OS.COM.ITypeLib class categoriesFor: #open:register:!instance creation!public! !
-!OS.COM.ITypeLib class categoriesFor: #queryPath:major:minor:locale:!enquiries!public! !
-!OS.COM.ITypeLib class categoriesFor: #queryPath:major:minor:locale:ifNone:!enquiries!public! !
+!OS.COM.ITypeLib class categoriesForMethods!
+defineFunctions!initializing!public! !
+fromAttributes:!instance creation!public! !
+load:major:minor:locale:!instance creation!public! !
+open:!instance creation!public! !
+open:register:!instance creation!public! !
+queryPath:major:minor:locale:!enquiries!public! !
+queryPath:major:minor:locale:ifNone:!enquiries!public! !
+!
 

@@ -71,14 +71,16 @@ nReserved: anInteger
 	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nReserved put: anInteger! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette!**compiled accessors**!public! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette:!**compiled accessors**!public! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry!**compiled accessors**!public! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry:!**compiled accessors**!public! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nReserved!**compiled accessors**!public! !
-!OS.EMRCOLORCORRECTPALETTE categoriesFor: #nReserved:!**compiled accessors**!public! !
+!OS.EMRCOLORCORRECTPALETTE categoriesForMethods!
+ihPalette!**compiled accessors**!public! !
+ihPalette:!**compiled accessors**!public! !
+nFirstEntry!**compiled accessors**!public! !
+nFirstEntry:!**compiled accessors**!public! !
+nPalEntries!**compiled accessors**!public! !
+nPalEntries:!**compiled accessors**!public! !
+nReserved!**compiled accessors**!public! !
+nReserved:!**compiled accessors**!public! !
+!
 
 !OS.EMRCOLORCORRECTPALETTE class methodsFor!
 
@@ -120,7 +122,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_COLORCORRECTPALETTE}! !
-!OS.EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRCOLORCORRECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRCOLORCORRECTPALETTE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCOLORCORRECTPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

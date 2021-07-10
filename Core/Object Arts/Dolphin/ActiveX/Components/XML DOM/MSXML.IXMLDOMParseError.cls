@@ -169,24 +169,26 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self errorCode! !
-!MSXML.IXMLDOMParseError categoriesFor: #displayOn:!printing!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #errorCode!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #filepos!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #get_errorCode:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!MSXML.IXMLDOMParseError categoriesFor: #get_filepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!MSXML.IXMLDOMParseError categoriesFor: #get_line:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!MSXML.IXMLDOMParseError categoriesFor: #get_linepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!MSXML.IXMLDOMParseError categoriesFor: #get_reason:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!MSXML.IXMLDOMParseError categoriesFor: #get_srcText:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!MSXML.IXMLDOMParseError categoriesFor: #get_url:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!MSXML.IXMLDOMParseError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IXMLDOMParseError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IXMLDOMParseError categoriesFor: #line!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #linepos!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #reason!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #srcText!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #url!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseError categoriesFor: #value!**auto generated**!properties!public! !
+!MSXML.IXMLDOMParseError categoriesForMethods!
+displayOn:!printing!public! !
+errorCode!**auto generated**!properties!public! !
+filepos!**auto generated**!properties!public! !
+get_errorCode:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_filepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_line:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_linepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_reason:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_srcText:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_url:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+line!**auto generated**!properties!public! !
+linepos!**auto generated**!properties!public! !
+reason!**auto generated**!properties!public! !
+srcText!**auto generated**!properties!public! !
+url!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+!
 
 !MSXML.IXMLDOMParseError class methodsFor!
 
@@ -213,6 +215,8 @@ defineFunctions
 
 icon
 	^Error icon! !
-!MSXML.IXMLDOMParseError class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSXML.IXMLDOMParseError class categoriesFor: #icon!public! !
+!MSXML.IXMLDOMParseError class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+icon!public! !
+!
 

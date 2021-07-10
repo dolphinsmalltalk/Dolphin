@@ -50,11 +50,13 @@ valueParameterName
 
 valueType
 	^self arrayClass! !
-!External.StructureArrayField categoriesFor: #alignment!constants!public! !
-!External.StructureArrayField categoriesFor: #arrayClass!constants!private! !
-!External.StructureArrayField categoriesFor: #elementClass!accessing!private! !
-!External.StructureArrayField categoriesFor: #elementSize!accessing!private! !
-!External.StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
-!External.StructureArrayField categoriesFor: #valueType!accessing!private! !
+!External.StructureArrayField categoriesForMethods!
+alignment!constants!public! !
+arrayClass!constants!private! !
+elementClass!accessing!private! !
+elementSize!accessing!private! !
+readFrom:!indirect accessing!private! !
+valueParameterName!automatic generation!constants!development!private! !
+valueType!accessing!private! !
+!
 

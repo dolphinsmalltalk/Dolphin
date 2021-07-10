@@ -17,5 +17,7 @@ changed: anAspectSymbol with: aParameter
 
 	ChangeSet changed: anAspectSymbol with: aParameter.
 	super changed: anAspectSymbol with: aParameter! !
-!Refactory.Browser.ChangeSet categoriesFor: #changed:with:!public!RefactoringBrowser! !
+!Refactory.Browser.ChangeSet categoriesForMethods!
+changed:with:!public!RefactoringBrowser! !
+!
 

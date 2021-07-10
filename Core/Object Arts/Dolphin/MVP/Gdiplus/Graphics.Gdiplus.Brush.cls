@@ -29,8 +29,10 @@ clone
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself! !
-!Graphics.Gdiplus.Brush categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Brush categoriesFor: #clone!copying!public! !
+!Graphics.Gdiplus.Brush categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+clone!copying!public! !
+!
 
 !Graphics.Gdiplus.Brush class methodsFor!
 
@@ -38,5 +40,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Graphics.Brush icon! !
-!Graphics.Gdiplus.Brush class categoriesFor: #icon!constants!development!public! !
+!Graphics.Gdiplus.Brush class categoriesForMethods!
+icon!constants!development!public! !
+!
 

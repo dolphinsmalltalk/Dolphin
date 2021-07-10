@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.PushButtonTest'
 	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
@@ -72,10 +72,12 @@ tryDefaultButtonsA: buttonA B: buttonB
 	buttonB isDefault: false.
 	self assertButton: buttonA isDefault: true.
 	self assertButton: buttonB isDefault: false! !
-!UI.Tests.PushButtonTest categoriesFor: #assertButton:isDefault:!helpers!private! !
-!UI.Tests.PushButtonTest categoriesFor: #setUp!public!running! !
-!UI.Tests.PushButtonTest categoriesFor: #tearDown!public!running! !
-!UI.Tests.PushButtonTest categoriesFor: #testDialogDefaultButtons!public!unit tests! !
-!UI.Tests.PushButtonTest categoriesFor: #testShellDefaultButtons!public!unit tests! !
-!UI.Tests.PushButtonTest categoriesFor: #tryDefaultButtonsA:B:!private!unit tests! !
+!UI.Tests.PushButtonTest categoriesForMethods!
+assertButton:isDefault:!helpers!private! !
+setUp!public!running! !
+tearDown!public!running! !
+testDialogDefaultButtons!public!unit tests! !
+testShellDefaultButtons!public!unit tests! !
+tryDefaultButtonsA:B:!private!unit tests! !
+!
 

@@ -19,7 +19,9 @@ isEof
 
 length
 	^0! !
-!Kernel.StEofToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StEofToken categoriesFor: #isEof!public!testing! !
-!Kernel.StEofToken categoriesFor: #length!accessing!public! !
+!Kernel.StEofToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isEof!public!testing! !
+length!accessing!public! !
+!
 

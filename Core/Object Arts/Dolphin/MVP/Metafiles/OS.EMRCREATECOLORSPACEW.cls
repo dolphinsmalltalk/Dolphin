@@ -94,16 +94,18 @@ lcs: aLOGCOLORSPACEW
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW basicByteSize)
 		startingAt: 1! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #cbData!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #cbData:!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #Data!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #Data:!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #ihCS!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #ihCS:!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #lcs!**compiled accessors**!public! !
-!OS.EMRCREATECOLORSPACEW categoriesFor: #lcs:!**compiled accessors**!public! !
+!OS.EMRCREATECOLORSPACEW categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+ihCS!**compiled accessors**!public! !
+ihCS:!**compiled accessors**!public! !
+lcs!**compiled accessors**!public! !
+lcs:!**compiled accessors**!public! !
+!
 
 !OS.EMRCREATECOLORSPACEW class methodsFor!
 
@@ -148,7 +150,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATECOLORSPACEW}! !
-!OS.EMRCREATECOLORSPACEW class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRCREATECOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRCREATECOLORSPACEW class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATECOLORSPACEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

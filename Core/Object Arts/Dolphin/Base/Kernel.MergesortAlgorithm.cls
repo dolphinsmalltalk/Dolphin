@@ -83,7 +83,9 @@ sort: anObject from: startInteger to: stopInteger aux: anArray
 		from: startInteger
 		to: stopInteger
 		pivot: mid! !
-!Kernel.MergesortAlgorithm categoriesFor: #merge:aux:from:to:pivot:!operations!private! !
-!Kernel.MergesortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
-!Kernel.MergesortAlgorithm categoriesFor: #sort:from:to:aux:!operations!private! !
+!Kernel.MergesortAlgorithm categoriesForMethods!
+merge:aux:from:to:pivot:!operations!private! !
+sort:from:to:!operations!public! !
+sort:from:to:aux:!operations!private! !
+!
 

@@ -178,26 +178,28 @@ xor: operand
 	This method was incorrectly defined in Dolphin versions pre-dating beta 2f."
 
 	^self ~~ operand! !
-!Core.Boolean categoriesFor: #&!logical operations!public! !
-!Core.Boolean categoriesFor: #|!logical operations!public! !
-!Core.Boolean categoriesFor: #and:!control flow!public! !
-!Core.Boolean categoriesFor: #asBit!converting!public! !
-!Core.Boolean categoriesFor: #asBoolean!converting!public! !
-!Core.Boolean categoriesFor: #asDword!converting!public! !
-!Core.Boolean categoriesFor: #asParameter!converting!public! !
-!Core.Boolean categoriesFor: #asUIntPtr!converting!public! !
-!Core.Boolean categoriesFor: #deepCopy!copying!public! !
-!Core.Boolean categoriesFor: #eqv:!logical operations!public! !
-!Core.Boolean categoriesFor: #ifFalse:!control flow!public! !
-!Core.Boolean categoriesFor: #ifFalse:ifTrue:!control flow!public! !
-!Core.Boolean categoriesFor: #ifTrue:!control flow!public! !
-!Core.Boolean categoriesFor: #ifTrue:ifFalse:!control flow!public! !
-!Core.Boolean categoriesFor: #isAtomic!public!testing! !
-!Core.Boolean categoriesFor: #isLiteral!public!testing! !
-!Core.Boolean categoriesFor: #not!logical operations!public! !
-!Core.Boolean categoriesFor: #or:!control flow!public! !
-!Core.Boolean categoriesFor: #shallowCopy!copying!public! !
-!Core.Boolean categoriesFor: #xor:!logical operations!public! !
+!Core.Boolean categoriesForMethods!
+&!logical operations!public! !
+|!logical operations!public! !
+and:!control flow!public! !
+asBit!converting!public! !
+asBoolean!converting!public! !
+asDword!converting!public! !
+asParameter!converting!public! !
+asUIntPtr!converting!public! !
+deepCopy!copying!public! !
+eqv:!logical operations!public! !
+ifFalse:!control flow!public! !
+ifFalse:ifTrue:!control flow!public! !
+ifTrue:!control flow!public! !
+ifTrue:ifFalse:!control flow!public! !
+isAtomic!public!testing! !
+isLiteral!public!testing! !
+not!logical operations!public! !
+or:!control flow!public! !
+shallowCopy!copying!public! !
+xor:!logical operations!public! !
+!
 
 Core.Boolean methodProtocol: #boolean attributes: #(#ansi #readOnly) selectors: #(#& #| #and: #eqv: #ifFalse: #ifFalse:ifTrue: #ifTrue: #ifTrue:ifFalse: #not #or: #xor:)!
 
@@ -208,5 +210,7 @@ new
 	and 'false'."
 
 	^self shouldNotImplement! !
-!Core.Boolean class categoriesFor: #new!instance creation!public! !
+!Core.Boolean class categoriesForMethods!
+new!instance creation!public! !
+!
 

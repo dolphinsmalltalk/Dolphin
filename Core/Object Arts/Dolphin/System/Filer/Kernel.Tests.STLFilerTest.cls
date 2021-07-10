@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
@@ -93,15 +93,17 @@ writeLiteralsFor: value
 	out := STLOutFiler on: Array writeStream.
 	out nextPut: value.
 	^out stream contents! !
-!Kernel.Tests.STLFilerTest categoriesFor: #checkSimpleReadWriteOf:!private!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #checkSimpleReadWriteOf:context:!private!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #simpleReadWriteOf:!private!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #simpleReadWriteOf:context:!private!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testClassReadWrite!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testEmptyStream!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testIntegerReadWrite!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testInvalidStream!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testSymbolReadWrite!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #testSystemDictionaryReadWrite!public!unit tests! !
-!Kernel.Tests.STLFilerTest categoriesFor: #writeLiteralsFor:!private!unit tests! !
+!Kernel.Tests.STLFilerTest categoriesForMethods!
+checkSimpleReadWriteOf:!private!unit tests! !
+checkSimpleReadWriteOf:context:!private!unit tests! !
+simpleReadWriteOf:!private!unit tests! !
+simpleReadWriteOf:context:!private!unit tests! !
+testClassReadWrite!public!unit tests! !
+testEmptyStream!public!unit tests! !
+testIntegerReadWrite!public!unit tests! !
+testInvalidStream!public!unit tests! !
+testSymbolReadWrite!public!unit tests! !
+testSystemDictionaryReadWrite!public!unit tests! !
+writeLiteralsFor:!private!unit tests! !
+!
 

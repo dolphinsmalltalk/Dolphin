@@ -475,50 +475,52 @@ subtractFromInteger: anInteger
 	and therefore it is better to send #+ that #addToInteger:."
 
 	^self negated + anInteger! !
-!Core.LargeInteger categoriesFor: #-!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #*!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #/!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #//!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #\\!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #+!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #<!comparing!public! !
-!Core.LargeInteger categoriesFor: #<=!comparing!public! !
-!Core.LargeInteger categoriesFor: #=!comparing!public! !
-!Core.LargeInteger categoriesFor: #>!comparing!public! !
-!Core.LargeInteger categoriesFor: #>=!comparing!public! !
-!Core.LargeInteger categoriesFor: #addToInteger:!double dispatch!private! !
-!Core.LargeInteger categoriesFor: #asFloat!converting!public! !
-!Core.LargeInteger categoriesFor: #bitAnd:!bit manipulation!public! !
-!Core.LargeInteger categoriesFor: #bitInvert!bit manipulation!public! !
-!Core.LargeInteger categoriesFor: #bitOr:!bit manipulation!public! !
-!Core.LargeInteger categoriesFor: #bitShift:!bit manipulation!public! !
-!Core.LargeInteger categoriesFor: #bitXor:!bit manipulation!public! !
-!Core.LargeInteger categoriesFor: #byteAt:!accessing!private! !
-!Core.LargeInteger categoriesFor: #byteSize!accessing!private! !
-!Core.LargeInteger categoriesFor: #digitAt:!accessing!public! !
-!Core.LargeInteger categoriesFor: #digitLength!accessing!public! !
-!Core.LargeInteger categoriesFor: #dwordAtOffset:!accessing!primitives!private! !
-!Core.LargeInteger categoriesFor: #dwordAtOffset:put:!accessing!primitives!private! !
-!Core.LargeInteger categoriesFor: #gcd:!factorization!public! !
-!Core.LargeInteger categoriesFor: #generality!coercing!private! !
-!Core.LargeInteger categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!Core.LargeInteger categoriesFor: #hash!comparing!public! !
-!Core.LargeInteger categoriesFor: #highBit!bit manipulation!public! !
-!Core.LargeInteger categoriesFor: #intPtrAtOffset:put:!initializing!primitives!private! !
-!Core.LargeInteger categoriesFor: #isZero!public!testing! !
-!Core.LargeInteger categoriesFor: #limbSize!accessing!private! !
-!Core.LargeInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!Core.LargeInteger categoriesFor: #negated!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #normalize!converting!private! !
-!Core.LargeInteger categoriesFor: #printOn:base:!printing!private! !
-!Core.LargeInteger categoriesFor: #printOn:base:nDigits:!printing!private! !
-!Core.LargeInteger categoriesFor: #quo:!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #quotientFromInteger:!double dispatch!private! !
-!Core.LargeInteger categoriesFor: #reciprocal!arithmetic!public! !
-!Core.LargeInteger categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!Core.LargeInteger categoriesFor: #sdwordAtOffset:!accessing!private! !
-!Core.LargeInteger categoriesFor: #signBit!private!testing! !
-!Core.LargeInteger categoriesFor: #subtractFromInteger:!double dispatch!private! !
+!Core.LargeInteger categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
+\\!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+addToInteger:!double dispatch!private! !
+asFloat!converting!public! !
+bitAnd:!bit manipulation!public! !
+bitInvert!bit manipulation!public! !
+bitOr:!bit manipulation!public! !
+bitShift:!bit manipulation!public! !
+bitXor:!bit manipulation!public! !
+byteAt:!accessing!private! !
+byteSize!accessing!private! !
+digitAt:!accessing!public! !
+digitLength!accessing!public! !
+dwordAtOffset:!accessing!primitives!private! !
+dwordAtOffset:put:!accessing!primitives!private! !
+gcd:!factorization!public! !
+generality!coercing!private! !
+greaterThanInteger:!double dispatch!private! !
+hash!comparing!public! !
+highBit!bit manipulation!public! !
+intPtrAtOffset:put:!initializing!primitives!private! !
+isZero!public!testing! !
+limbSize!accessing!private! !
+multiplyByInteger:!double dispatch!private! !
+negated!arithmetic!public! !
+normalize!converting!private! !
+printOn:base:!printing!private! !
+printOn:base:nDigits:!printing!private! !
+quo:!arithmetic!public! !
+quotientFromInteger:!double dispatch!private! !
+reciprocal!arithmetic!public! !
+replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+sdwordAtOffset:!accessing!private! !
+signBit!private!testing! !
+subtractFromInteger:!double dispatch!private! !
+!
 
 !Core.LargeInteger class methodsFor!
 
@@ -554,8 +556,10 @@ new64
 	N.B. The answer is not a valid LargeInteger since zero is a SmallInteger."
 
 	^self basicNew: 8! !
-!Core.LargeInteger class categoriesFor: #fromBytes:!instance creation!public! !
-!Core.LargeInteger class categoriesFor: #fromSmallInteger:!instance creation!private! !
-!Core.LargeInteger class categoriesFor: #new:!instance creation!private! !
-!Core.LargeInteger class categoriesFor: #new64!instance creation!private! !
+!Core.LargeInteger class categoriesForMethods!
+fromBytes:!instance creation!public! !
+fromSmallInteger:!instance creation!private! !
+new:!instance creation!private! !
+new64!instance creation!private! !
+!
 

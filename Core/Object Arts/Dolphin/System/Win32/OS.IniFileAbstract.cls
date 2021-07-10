@@ -249,41 +249,43 @@ values
 	values := Array writeStream.
 	self do: [:each | values nextPut: each].
 	^values contents! !
-!OS.IniFileAbstract categoriesFor: #=!comparing!public! !
-!OS.IniFileAbstract categoriesFor: #add:!adding!public! !
-!OS.IniFileAbstract categoriesFor: #associationAt:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #associations!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #associationsDo:!enumerating!public! !
-!OS.IniFileAbstract categoriesFor: #at:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #at:ifAbsent:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #at:put:!adding!public! !
-!OS.IniFileAbstract categoriesFor: #collect:!enumerating!public! !
-!OS.IniFileAbstract categoriesFor: #copyingClass!copying!private! !
-!OS.IniFileAbstract categoriesFor: #copyLike!copying!private! !
-!OS.IniFileAbstract categoriesFor: #copySize!copying!private! !
-!OS.IniFileAbstract categoriesFor: #countElements!accessing!private! !
-!OS.IniFileAbstract categoriesFor: #do:!enumerating!public! !
-!OS.IniFileAbstract categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!OS.IniFileAbstract categoriesFor: #filename!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #filename:!initializing!private! !
-!OS.IniFileAbstract categoriesFor: #getValue:!accessing!private! !
-!OS.IniFileAbstract categoriesFor: #hash!comparing!public! !
-!OS.IniFileAbstract categoriesFor: #includesKey:!public!searching! !
-!OS.IniFileAbstract categoriesFor: #isEmpty!public!testing! !
-!OS.IniFileAbstract categoriesFor: #keyAtValue:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #keys!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OS.IniFileAbstract categoriesFor: #keysDo:!enumerating!public! !
-!OS.IniFileAbstract categoriesFor: #lookup:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #removeAllKeys:!accessing!public! !
-!OS.IniFileAbstract categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
-!OS.IniFileAbstract categoriesFor: #removeKey:!public!removing! !
-!OS.IniFileAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!OS.IniFileAbstract categoriesFor: #select:!enumerating!public! !
-!OS.IniFileAbstract categoriesFor: #values!accessing!public! !
+!OS.IniFileAbstract categoriesForMethods!
+=!comparing!public! !
+add:!adding!public! !
+associationAt:!accessing!public! !
+associationAt:ifAbsent:!accessing!public! !
+associations!accessing!public! !
+associationsDo:!enumerating!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:put:!adding!public! !
+collect:!enumerating!public! !
+copyingClass!copying!private! !
+copyLike!copying!private! !
+copySize!copying!private! !
+countElements!accessing!private! !
+do:!enumerating!public! !
+errorKeyNotFound:!exceptions!private! !
+filename!accessing!public! !
+filename:!initializing!private! !
+getValue:!accessing!private! !
+hash!comparing!public! !
+includesKey:!public!searching! !
+isEmpty!public!testing! !
+keyAtValue:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keys!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+lookup:!accessing!public! !
+removeAllKeys:!accessing!public! !
+removeAllKeys:ifAbsent:!public!removing! !
+removeKey:!public!removing! !
+removeKey:ifAbsent:!public!removing! !
+select:!enumerating!public! !
+values!accessing!public! !
+!
 
 OS.IniFileAbstract methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
 
@@ -295,5 +297,7 @@ open: aString
 
 	^self new 
 		filename: aString! !
-!OS.IniFileAbstract class categoriesFor: #open:!instance creation!public! !
+!OS.IniFileAbstract class categoriesForMethods!
+open:!instance creation!public! !
+!
 

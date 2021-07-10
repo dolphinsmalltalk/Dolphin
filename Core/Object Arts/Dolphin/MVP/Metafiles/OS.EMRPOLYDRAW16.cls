@@ -95,15 +95,17 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRPOLYDRAW16 categoriesFor: #abTypes!public! !
-!OS.EMRPOLYDRAW16 categoriesFor: #abTypes:!public! !
-!OS.EMRPOLYDRAW16 categoriesFor: #abTypesOffset!accessing!private! !
-!OS.EMRPOLYDRAW16 categoriesFor: #apts!**compiled accessors**!public! !
-!OS.EMRPOLYDRAW16 categoriesFor: #apts:!**compiled accessors**!public! !
-!OS.EMRPOLYDRAW16 categoriesFor: #cpts!**compiled accessors**!public! !
-!OS.EMRPOLYDRAW16 categoriesFor: #cpts:!**compiled accessors**!public! !
-!OS.EMRPOLYDRAW16 categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRPOLYDRAW16 categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYDRAW16 categoriesForMethods!
+abTypes!public! !
+abTypes:!public! !
+abTypesOffset!accessing!private! !
+apts!**compiled accessors**!public! !
+apts:!**compiled accessors**!public! !
+cpts!**compiled accessors**!public! !
+cpts:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMRPOLYDRAW16 class methodsFor!
 
@@ -145,7 +147,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYDRAW16}! !
-!OS.EMRPOLYDRAW16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRPOLYDRAW16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRPOLYDRAW16 class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYDRAW16 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

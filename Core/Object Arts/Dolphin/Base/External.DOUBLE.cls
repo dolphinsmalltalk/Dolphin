@@ -25,9 +25,11 @@ value: aFloat
 	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
 	bytes doubleAtOffset: _OffsetOf_value put: aFloat! !
-!External.DOUBLE categoriesFor: #asFloat!converting!public! !
-!External.DOUBLE categoriesFor: #value!**compiled accessors**!public! !
-!External.DOUBLE categoriesFor: #value:!**compiled accessors**!public! !
+!External.DOUBLE categoriesForMethods!
+asFloat!converting!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !External.DOUBLE class methodsFor!
 
@@ -50,7 +52,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VM registryAt: self name put: nil! !
-!External.DOUBLE class categoriesFor: #defineFields!public!template definition! !
-!External.DOUBLE class categoriesFor: #initialize!development!initializing!private! !
-!External.DOUBLE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!External.DOUBLE class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -37,7 +37,9 @@ createHandle
 		unit: UnitWorld
 		pen: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #brush!private!test accessing! !
-!Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #brush:width:!initializing!private! !
-!Graphics.Gdiplus.PenFromBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PenFromBrushInitializer categoriesForMethods!
+brush!private!test accessing! !
+brush:width:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 

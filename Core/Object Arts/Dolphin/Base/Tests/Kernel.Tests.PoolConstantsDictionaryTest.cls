@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.PoolConstantsDictionaryTest'
 	instanceVariableNames: ''
@@ -43,10 +43,12 @@ testRemoveKeyString
 	dictionary := self newDictionary.
 	self assert: (dictionary removeKey: 'key') identicalTo: 1.
 	self should: [dictionary removeKey: 'key'] raise: NotFoundError! !
-!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #key3Value!private! !
-!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
-!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #newEmpty!private!unit tests! !
-!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #testAtIfAbsentString!public!unit tests! !
-!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
-!Kernel.Tests.PoolConstantsDictionaryTest categoriesFor: #testRemoveKeyString!public!unit tests! !
+!Kernel.Tests.PoolConstantsDictionaryTest categoriesForMethods!
+key3Value!private! !
+newDictionary!private!unit tests! !
+newEmpty!private!unit tests! !
+testAtIfAbsentString!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testRemoveKeyString!public!unit tests! !
+!
 

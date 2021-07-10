@@ -468,20 +468,26 @@ Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.RenameInstan
 
 rbClass
 	^Refactory.Browser.RBClass! !
-!Core.Class categoriesFor: #rbClass!constants!public! !
+!Core.Class categoriesForMethods!
+rbClass!constants!public! !
+!
 
 !Core.Class class methodsFor!
 
 rootsOfTheWorld
 	#rbFix.	"Dolphin uses #allRoots"
 	^Smalltalk allRoots! !
-!Core.Class class categoriesFor: #rootsOfTheWorld!class hierarchy-accessing!private! !
+!Core.Class class categoriesForMethods!
+rootsOfTheWorld!class hierarchy-accessing!private! !
+!
 
 !Kernel.Namespace class methodsFor!
 
 rbClass
 	^Refactory.Browser.RBNamespaceClass! !
-!Kernel.Namespace class categoriesFor: #rbClass!constants!public! !
+!Kernel.Namespace class categoriesForMethods!
+rbClass!constants!public! !
+!
 
 "End of package definition"!
 

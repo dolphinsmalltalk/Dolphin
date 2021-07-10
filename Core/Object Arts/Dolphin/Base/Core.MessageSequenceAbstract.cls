@@ -88,19 +88,21 @@ valueWithArguments: anArray
 	"Evaluate the receiver with the specified <Array> of arguments."
 
 	^self subclassResponsibility! !
-!Core.MessageSequenceAbstract categoriesFor: #add:!adding!public! !
-!Core.MessageSequenceAbstract categoriesFor: #argumentCount!accessing!public! !
-!Core.MessageSequenceAbstract categoriesFor: #asMinimumRepresentation!converting!public! !
-!Core.MessageSequenceAbstract categoriesFor: #forwardTo:!operations!public! !
-!Core.MessageSequenceAbstract categoriesFor: #includes:!public!searching! !
-!Core.MessageSequenceAbstract categoriesFor: #isEmpty!public!testing! !
-!Core.MessageSequenceAbstract categoriesFor: #messages!accessing!public! !
-!Core.MessageSequenceAbstract categoriesFor: #notEmpty!public!testing! !
-!Core.MessageSequenceAbstract categoriesFor: #removeMessagesFor:!public!removing! !
-!Core.MessageSequenceAbstract categoriesFor: #value!evaluating!public! !
-!Core.MessageSequenceAbstract categoriesFor: #value:!evaluating!public! !
-!Core.MessageSequenceAbstract categoriesFor: #value:value:!evaluating!public! !
-!Core.MessageSequenceAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
+!Core.MessageSequenceAbstract categoriesForMethods!
+add:!adding!public! !
+argumentCount!accessing!public! !
+asMinimumRepresentation!converting!public! !
+forwardTo:!operations!public! !
+includes:!public!searching! !
+isEmpty!public!testing! !
+messages!accessing!public! !
+notEmpty!public!testing! !
+removeMessagesFor:!public!removing! !
+value!evaluating!public! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 Core.MessageSequenceAbstract methodProtocol: #message attributes: #() selectors: #(#argumentCount #forwardTo: #value: #value:value: #valueWithArguments:)!
 Core.MessageSequenceAbstract methodProtocol: #messageSend attributes: #() selectors: #()!
@@ -111,5 +113,7 @@ new
 	"Answer an instance of the receiver; instance require initialization"
 
 	^super new initialize! !
-!Core.MessageSequenceAbstract class categoriesFor: #new!instance creation!public! !
+!Core.MessageSequenceAbstract class categoriesForMethods!
+new!instance creation!public! !
+!
 

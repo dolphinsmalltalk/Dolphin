@@ -36,7 +36,9 @@ Kernel.ClassBuilder subclass: #'Kernel.AnonymousClassBuilder'
 
 newAnonymousSubclass
 	^(ClassBuilder forAnonymousSubclassOf: self) createNewClass! !
-!Core.Class categoriesFor: #newAnonymousSubclass!class hierarchy-adding!public! !
+!Core.Class categoriesForMethods!
+newAnonymousSubclass!class hierarchy-adding!public! !
+!
 
 !Kernel.ClassBuilder class methodsFor!
 
@@ -44,7 +46,9 @@ forAnonymousSubclassOf: aClass
 	^AnonymousClassBuilder new
 		superclass: aClass;
 		yourself! !
-!Kernel.ClassBuilder class categoriesFor: #forAnonymousSubclassOf:!instance creation!public! !
+!Kernel.ClassBuilder class categoriesForMethods!
+forAnonymousSubclassOf:!instance creation!public! !
+!
 
 "End of package definition"!
 

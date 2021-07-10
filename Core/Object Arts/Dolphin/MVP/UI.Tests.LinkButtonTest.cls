@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.LinkButtonTest'
 	instanceVariableNames: ''
@@ -52,8 +52,10 @@ testQueryCommandEnablement
 		invalidateUserInterface;
 		validateUserInterface.
 	self assert: presenter isEnabled! !
-!UI.Tests.LinkButtonTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.LinkButtonTest categoriesFor: #testClickLinkFiresCommand!public!unit tests! !
-!UI.Tests.LinkButtonTest categoriesFor: #testGetSetText!public!unit tests! !
-!UI.Tests.LinkButtonTest categoriesFor: #testQueryCommandEnablement!public!unit tests! !
+!UI.Tests.LinkButtonTest categoriesForMethods!
+classToTest!helpers!private! !
+testClickLinkFiresCommand!public!unit tests! !
+testGetSetText!public!unit tests! !
+testQueryCommandEnablement!public!unit tests! !
+!
 

@@ -526,52 +526,54 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 
 	startInteger to: stopInteger
 		do: [:i | aDyadicValuable value: i value: (self basicAt: i + firstIndex - 1)]! !
-!Core.OrderedCollection categoriesFor: #add:afterIndex:!adding!public! !
-!Core.OrderedCollection categoriesFor: #addAllFirst:!adding!public! !
-!Core.OrderedCollection categoriesFor: #addAllLast:!adding!public! !
-!Core.OrderedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
-!Core.OrderedCollection categoriesFor: #addFirst:!adding!public! !
-!Core.OrderedCollection categoriesFor: #addLast:!adding!public! !
-!Core.OrderedCollection categoriesFor: #allSatisfy:!enumerating!public! !
-!Core.OrderedCollection categoriesFor: #anySatisfy:!enumerating!public! !
-!Core.OrderedCollection categoriesFor: #asOrderedCollection!converting!public! !
-!Core.OrderedCollection categoriesFor: #at:!accessing!public! !
-!Core.OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.OrderedCollection categoriesFor: #at:put:!accessing!public! !
-!Core.OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
-!Core.OrderedCollection categoriesFor: #copyWith:!copying!public! !
-!Core.OrderedCollection categoriesFor: #copyWithout:!copying!public! !
-!Core.OrderedCollection categoriesFor: #copyWithoutIndex:!copying!public! !
-!Core.OrderedCollection categoriesFor: #detect:ifNone:!public!searching! !
-!Core.OrderedCollection categoriesFor: #do:!enumerating!public! !
-!Core.OrderedCollection categoriesFor: #findFirst:!public!searching! !
-!Core.OrderedCollection categoriesFor: #first!accessing!public! !
-!Core.OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
-!Core.OrderedCollection categoriesFor: #includes:!public!searching! !
-!Core.OrderedCollection categoriesFor: #initialize!initializing!public! !
-!Core.OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
-!Core.OrderedCollection categoriesFor: #insert:before:!adding!private! !
-!Core.OrderedCollection categoriesFor: #isEmpty!public!testing! !
-!Core.OrderedCollection categoriesFor: #last!accessing!public! !
-!Core.OrderedCollection categoriesFor: #lookup:!accessing!public! !
-!Core.OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
-!Core.OrderedCollection categoriesFor: #makeRoomAtFirstFor:!adding!private! !
-!Core.OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!Core.OrderedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!Core.OrderedCollection categoriesFor: #removeAll!public!removing! !
-!Core.OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
-!Core.OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
-!Core.OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!Core.OrderedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Core.OrderedCollection categoriesFor: #resize:!mutating!private! !
-!Core.OrderedCollection categoriesFor: #reversedFrom:to:!copying!public! !
-!Core.OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
-!Core.OrderedCollection categoriesFor: #select:!enumerating!public! !
-!Core.OrderedCollection categoriesFor: #setSize:!accessing!public! !
-!Core.OrderedCollection categoriesFor: #size!accessing!public! !
-!Core.OrderedCollection categoriesFor: #sortUsing:!public!sorting! !
-!Core.OrderedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.OrderedCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!Core.OrderedCollection categoriesForMethods!
+add:afterIndex:!adding!public! !
+addAllFirst:!adding!public! !
+addAllLast:!adding!public! !
+addAnsweringIndex:!adding!public! !
+addFirst:!adding!public! !
+addLast:!adding!public! !
+allSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
+asOrderedCollection!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
+copyWith:!copying!public! !
+copyWithout:!copying!public! !
+copyWithoutIndex:!copying!public! !
+detect:ifNone:!public!searching! !
+do:!enumerating!public! !
+findFirst:!public!searching! !
+first!accessing!public! !
+firstIndex:lastIndex:!accessing!private! !
+includes:!public!searching! !
+initialize!initializing!public! !
+inject:into:!enumerating!public! !
+insert:before:!adding!private! !
+isEmpty!public!testing! !
+last!accessing!public! !
+lookup:!accessing!public! !
+makeRoomAtEndFor:!adding!private! !
+makeRoomAtFirstFor:!adding!private! !
+nextIdentityIndexOf:from:to:!public!searching! !
+nextIndexOf:from:to:!public!searching! !
+removeAll!public!removing! !
+removeAllSuchThat:!accessing!public! !
+removeAtIndex:!public!removing! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+resize:!mutating!private! !
+reversedFrom:to:!copying!public! !
+reverseDo:!enumerating!public! !
+select:!enumerating!public! !
+setSize:!accessing!public! !
+size!accessing!public! !
+sortUsing:!public!sorting! !
+stbSaveOn:!binary filing!public! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!
 
 !Core.OrderedCollection class methodsFor!
 
@@ -600,7 +602,9 @@ ofSize: count
 	^(self basicNew: count)
 		firstIndex: 1
 		lastIndex: count! !
-!Core.OrderedCollection class categoriesFor: #new!instance creation!public! !
-!Core.OrderedCollection class categoriesFor: #new:!instance creation!public! !
-!Core.OrderedCollection class categoriesFor: #ofSize:!instance creation!private! !
+!Core.OrderedCollection class categoriesForMethods!
+new!instance creation!public! !
+new:!instance creation!public! !
+ofSize:!instance creation!private! !
+!
 

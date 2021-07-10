@@ -112,30 +112,32 @@ searchMode
 searchMode: aSymbol 
 	(self class searchModes includes: aSymbol) ifFalse: [self error: 'Invalid search mode: ' , aSymbol].
 	searchMode := aSymbol! !
-!UI.FindDetails categoriesFor: #action!accessing!public! !
-!UI.FindDetails categoriesFor: #action:!accessing!public! !
-!UI.FindDetails categoriesFor: #findIn:range:!public! !
-!UI.FindDetails categoriesFor: #findWhat!accessing!public! !
-!UI.FindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
-!UI.FindDetails categoriesFor: #initialize!initializing!public! !
-!UI.FindDetails categoriesFor: #isCaseSensitive!public!testing! !
-!UI.FindDetails categoriesFor: #isCaseSensitive:!accessing!public! !
-!UI.FindDetails categoriesFor: #isForwards!public!testing! !
-!UI.FindDetails categoriesFor: #isForwards:!accessing!public! !
-!UI.FindDetails categoriesFor: #isRegularExpression!public!testing! !
-!UI.FindDetails categoriesFor: #isWholeWord!public!testing! !
-!UI.FindDetails categoriesFor: #isWholeWord:!accessing!public! !
-!UI.FindDetails categoriesFor: #isWildcard!public!testing! !
-!UI.FindDetails categoriesFor: #isWildcard:!accessing!public! !
-!UI.FindDetails categoriesFor: #isWrapAround!public!testing! !
-!UI.FindDetails categoriesFor: #isWrapAround:!accessing!public! !
-!UI.FindDetails categoriesFor: #pattern!accessing!public! !
-!UI.FindDetails categoriesFor: #pattern:!accessing!public! !
-!UI.FindDetails categoriesFor: #regularExpression!accessing!public! !
-!UI.FindDetails categoriesFor: #replaceWith!accessing!public! !
-!UI.FindDetails categoriesFor: #replaceWith:!accessing!public! !
-!UI.FindDetails categoriesFor: #searchMode!accessing!public! !
-!UI.FindDetails categoriesFor: #searchMode:!accessing!public! !
+!UI.FindDetails categoriesForMethods!
+action!accessing!public! !
+action:!accessing!public! !
+findIn:range:!public! !
+findWhat!accessing!public! !
+hasValidRegularExpression!public!testing! !
+initialize!initializing!public! !
+isCaseSensitive!public!testing! !
+isCaseSensitive:!accessing!public! !
+isForwards!public!testing! !
+isForwards:!accessing!public! !
+isRegularExpression!public!testing! !
+isWholeWord!public!testing! !
+isWholeWord:!accessing!public! !
+isWildcard!public!testing! !
+isWildcard:!accessing!public! !
+isWrapAround!public!testing! !
+isWrapAround:!accessing!public! !
+pattern!accessing!public! !
+pattern:!accessing!public! !
+regularExpression!accessing!public! !
+replaceWith!accessing!public! !
+replaceWith:!accessing!public! !
+searchMode!accessing!public! !
+searchMode:!accessing!public! !
+!
 
 !UI.FindDetails class methodsFor!
 
@@ -171,9 +173,11 @@ newPattern: aString
 
 searchModes
 	^#(#text #wildcardExpression)! !
-!UI.FindDetails class categoriesFor: #icon!constants!public! !
-!UI.FindDetails class categoriesFor: #initialize!development!initializing!public! !
-!UI.FindDetails class categoriesFor: #new!instance creation!public! !
-!UI.FindDetails class categoriesFor: #newPattern:!instance creation!public! !
-!UI.FindDetails class categoriesFor: #searchModes!constants!public! !
+!UI.FindDetails class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+newPattern:!instance creation!public! !
+searchModes!constants!public! !
+!
 

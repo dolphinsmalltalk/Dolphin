@@ -35,8 +35,10 @@ eMiterLimit: aFloat
 	"Set the receiver's 'eMiterLimit' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eMiterLimit put: aFloat! !
-!OS.EMRSETMITERLIMIT categoriesFor: #eMiterLimit!**compiled accessors**!public! !
-!OS.EMRSETMITERLIMIT categoriesFor: #eMiterLimit:!**compiled accessors**!public! !
+!OS.EMRSETMITERLIMIT categoriesForMethods!
+eMiterLimit!**compiled accessors**!public! !
+eMiterLimit:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETMITERLIMIT class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETMITERLIMIT}! !
-!OS.EMRSETMITERLIMIT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETMITERLIMIT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETMITERLIMIT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETMITERLIMIT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

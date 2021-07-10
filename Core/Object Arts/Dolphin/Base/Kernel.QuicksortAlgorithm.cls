@@ -85,5 +85,7 @@ sort: anObject from: startInteger to: stopInteger
 		insertionSort: anObject
 		from: lo
 		to: up! !
-!Kernel.QuicksortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
+!Kernel.QuicksortAlgorithm categoriesForMethods!
+sort:from:to:!operations!public! !
+!
 

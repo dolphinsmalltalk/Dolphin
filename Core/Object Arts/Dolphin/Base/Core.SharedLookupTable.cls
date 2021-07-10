@@ -309,33 +309,35 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
-!Core.SharedLookupTable categoriesFor: #anySatisfy:!enumerating!public! !
-!Core.SharedLookupTable categoriesFor: #asArray!converting!public! !
-!Core.SharedLookupTable categoriesFor: #asByteArray!converting!public! !
-!Core.SharedLookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #at:ifAbsentPutClean:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #at:put:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #changeKey:to:!accessing!private! !
-!Core.SharedLookupTable categoriesFor: #do:!enumerating!public! !
-!Core.SharedLookupTable categoriesFor: #identityIncludes:!public!searching! !
-!Core.SharedLookupTable categoriesFor: #includesAssociation:!public!searching! !
-!Core.SharedLookupTable categoriesFor: #includesKey:!public!searching! !
-!Core.SharedLookupTable categoriesFor: #initialize!initializing!private! !
-!Core.SharedLookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Core.SharedLookupTable categoriesFor: #keysDo:!enumerating!public! !
-!Core.SharedLookupTable categoriesFor: #lookup:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #mutex!accessing!private! !
-!Core.SharedLookupTable categoriesFor: #mutex:!initializing!private! !
-!Core.SharedLookupTable categoriesFor: #postCopy!copying!public! !
-!Core.SharedLookupTable categoriesFor: #preResize:!adding!public! !
-!Core.SharedLookupTable categoriesFor: #printOn:!printing!public! !
-!Core.SharedLookupTable categoriesFor: #removeAllKeys:!public!removing! !
-!Core.SharedLookupTable categoriesFor: #removeKey:ifAbsent:!accessing!public! !
-!Core.SharedLookupTable categoriesFor: #resize:!mutating!private! !
-!Core.SharedLookupTable categoriesFor: #shrink!operations!public! !
-!Core.SharedLookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
+!Core.SharedLookupTable categoriesForMethods!
+anySatisfy:!enumerating!public! !
+asArray!converting!public! !
+asByteArray!converting!public! !
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:ifAbsentPutClean:!accessing!public! !
+at:ifAbsentPutValue:!accessing!public! !
+at:put:!accessing!public! !
+changeKey:to:!accessing!private! !
+do:!enumerating!public! !
+identityIncludes:!public!searching! !
+includesAssociation:!public!searching! !
+includesKey:!public!searching! !
+initialize!initializing!private! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+lookup:!accessing!public! !
+mutex!accessing!private! !
+mutex:!initializing!private! !
+postCopy!copying!public! !
+preResize:!adding!public! !
+printOn:!printing!public! !
+removeAllKeys:!public!removing! !
+removeKey:ifAbsent:!accessing!public! !
+resize:!mutating!private! !
+shrink!operations!public! !
+stbSaveOn:!binary filing!public! !
+!
 

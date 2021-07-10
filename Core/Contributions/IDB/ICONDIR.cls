@@ -62,13 +62,15 @@ idType: anInteger
 	"Set the receiver's 'idType' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_idType put: anInteger! !
-!ICONDIR categoriesFor: #idCount!**compiled accessors**!public! !
-!ICONDIR categoriesFor: #idCount:!**compiled accessors**!public! !
-!ICONDIR categoriesFor: #idEntries!**compiled accessors**!public! !
-!ICONDIR categoriesFor: #idEntries:!**compiled accessors**!public! !
-!ICONDIR categoriesFor: #idReserved!**compiled accessors**!public! !
-!ICONDIR categoriesFor: #idType!**compiled accessors**!public! !
-!ICONDIR categoriesFor: #idType:!**compiled accessors**!public! !
+!ICONDIR categoriesForMethods!
+idCount!**compiled accessors**!public! !
+idCount:!**compiled accessors**!public! !
+idEntries!**compiled accessors**!public! !
+idEntries:!**compiled accessors**!public! !
+idReserved!**compiled accessors**!public! !
+idType!**compiled accessors**!public! !
+idType:!**compiled accessors**!public! !
+!
 
 !ICONDIR class methodsFor!
 
@@ -95,8 +97,10 @@ getFieldNames
 
 packing
 	^1! !
-!ICONDIR class categoriesFor: #defineFields!initializing!public! !
-!ICONDIR class categoriesFor: #for:!instance creation!public! !
-!ICONDIR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ICONDIR class categoriesFor: #packing!constants!public! !
+!ICONDIR class categoriesForMethods!
+defineFields!initializing!public! !
+for:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

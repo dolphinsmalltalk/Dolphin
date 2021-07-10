@@ -58,15 +58,17 @@ setRoots: aCollection
 
 	super setRoots: aCollection.
 	self observeEnvironment! !
-!Tools.ClassHierarchyModel categoriesFor: #approxSize!accessing!private! !
-!Tools.ClassHierarchyModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!Tools.ClassHierarchyModel categoriesFor: #defaultGetParentBlock!initializing!private! !
-!Tools.ClassHierarchyModel categoriesFor: #defaultHasChildrenBlock!constants!private! !
-!Tools.ClassHierarchyModel categoriesFor: #observeEnvironment!initializing!private! !
-!Tools.ClassHierarchyModel categoriesFor: #onClassAdded:!event handling!public! !
-!Tools.ClassHierarchyModel categoriesFor: #onClassRemoved:!event handling!public! !
-!Tools.ClassHierarchyModel categoriesFor: #onClassUpdated:!event handling!public! !
-!Tools.ClassHierarchyModel categoriesFor: #setRoots:!initializing!private! !
+!Tools.ClassHierarchyModel categoriesForMethods!
+approxSize!accessing!private! !
+defaultGetChildrenBlock!initializing!private! !
+defaultGetParentBlock!initializing!private! !
+defaultHasChildrenBlock!constants!private! !
+observeEnvironment!initializing!private! !
+onClassAdded:!event handling!public! !
+onClassRemoved:!event handling!public! !
+onClassUpdated:!event handling!public! !
+setRoots:!initializing!private! !
+!
 
 !Tools.ClassHierarchyModel class methodsFor!
 
@@ -74,5 +76,7 @@ withAllClasses
 	"Answer an instance of the receiver on the entire class hiearchy"
 
 	^self withRoots: Smalltalk allRoots! !
-!Tools.ClassHierarchyModel class categoriesFor: #withAllClasses!instance creation!public! !
+!Tools.ClassHierarchyModel class categoriesForMethods!
+withAllClasses!instance creation!public! !
+!
 

@@ -50,11 +50,13 @@ newPosition
 	receiver be accepted."
 
 	^self iPos + self iDelta! !
-!OS.NMUPDOWN categoriesFor: #allow!accessing!public! !
-!OS.NMUPDOWN categoriesFor: #allow:!accessing!public! !
-!OS.NMUPDOWN categoriesFor: #iDelta!**compiled accessors**!public! !
-!OS.NMUPDOWN categoriesFor: #iPos!**compiled accessors**!public! !
-!OS.NMUPDOWN categoriesFor: #newPosition!accessing!public! !
+!OS.NMUPDOWN categoriesForMethods!
+allow!accessing!public! !
+allow:!accessing!public! !
+iDelta!**compiled accessors**!public! !
+iPos!**compiled accessors**!public! !
+newPosition!accessing!public! !
+!
 
 !OS.NMUPDOWN class methodsFor!
 
@@ -76,6 +78,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !
-!OS.NMUPDOWN class categoriesFor: #defineFields!public!template definition! !
-!OS.NMUPDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMUPDOWN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

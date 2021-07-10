@@ -73,7 +73,9 @@ readFromIStream: anIStream
 		iidInterface: self iid
 		ppvObj: answer.
 	^answer! !
-!OS.COM.Interface class categoriesFor: #readFromIStream:!instance creation!public! !
+!OS.COM.Interface class categoriesForMethods!
+readFromIStream:!instance creation!public! !
+!
 
 !OS.COM.IStream methodsFor!
 
@@ -92,7 +94,9 @@ nextPutObject: unkObj
 						ifNone: [^self error: 'Object not persistable: ' , unkObj printString].
 			self nextPutCLSID: ip clsid]
 		ifFalse: [Ole32 oleSaveToStream: ips pStm: self]! !
-!OS.COM.IStream categoriesFor: #nextPutObject:!accessing!public! !
+!OS.COM.IStream categoriesForMethods!
+nextPutObject:!accessing!public! !
+!
 
 !OS.COM.OLELibrary methodsFor!
 
@@ -131,8 +135,10 @@ oleSaveToStream: pPStm pStm: pStm
 
 	<stdcall: hresult OleSaveToStream IPersistStream* IStream*>
 	^self invalidCall: _failureCode! !
-!OS.COM.OLELibrary categoriesFor: #oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
-!OS.COM.OLELibrary categoriesFor: #oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
+!OS.COM.OLELibrary categoriesForMethods!
+oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
+oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
+!
 
 "End of package definition"!
 

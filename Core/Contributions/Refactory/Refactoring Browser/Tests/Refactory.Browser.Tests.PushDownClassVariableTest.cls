@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushDownClassVariableTest'
 	instanceVariableNames: ''
@@ -109,12 +109,14 @@ testPushDownClassVariable
 	self executeRefactoring: refactoring.
 	(refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest') withAllSubclasses
 		do: [:each | self deny: (each directlyDefinesClassVariable: #Foo1)]! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testModelNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testModelPushDownToMultipleSubclassesFailure!failure tests!public! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testModelPushDownVariable!public!tests! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testModelPushDownVariableToClassDownTwoLevels!public!tests! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testModelPushDownVariableToMultipleClassesInSameHierarchy!public!tests! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testModelRemoveUnusedVariable!public!tests! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.PushDownClassVariableTest categoriesFor: #testPushDownClassVariable!public!tests! !
+!Refactory.Browser.Tests.PushDownClassVariableTest categoriesForMethods!
+testModelNonExistantName!failure tests!public! !
+testModelPushDownToMultipleSubclassesFailure!failure tests!public! !
+testModelPushDownVariable!public!tests! !
+testModelPushDownVariableToClassDownTwoLevels!public!tests! !
+testModelPushDownVariableToMultipleClassesInSameHierarchy!public!tests! !
+testModelRemoveUnusedVariable!public!tests! !
+testNonExistantName!failure tests!public! !
+testPushDownClassVariable!public!tests! !
+!
 

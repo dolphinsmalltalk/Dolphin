@@ -34,9 +34,11 @@ needsOuter
 	to escape from the method context active when the block was created."
 
 	^flags anyMask: NeedsOuterMask! !
-!Kernel.StBlockScope categoriesFor: #isEmptyBlock!public! !
-!Kernel.StBlockScope categoriesFor: #markEmpty!public! !
-!Kernel.StBlockScope categoriesFor: #needsOuter!accessing!public! !
+!Kernel.StBlockScope categoriesForMethods!
+isEmptyBlock!public! !
+markEmpty!public! !
+needsOuter!accessing!public! !
+!
 
 !Kernel.StBlockScope class methodsFor!
 
@@ -44,5 +46,7 @@ forScopeNode: anStBlockNode outer: anStLexicalScope
 	^(anStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new
 		setNode: anStBlockNode outer: anStLexicalScope;
 		yourself! !
-!Kernel.StBlockScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
+!Kernel.StBlockScope class categoriesForMethods!
+forScopeNode:outer:!instance creation!public! !
+!
 

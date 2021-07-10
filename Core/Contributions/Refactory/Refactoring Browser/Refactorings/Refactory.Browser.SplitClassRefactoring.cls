@@ -98,16 +98,18 @@ transform
 		createNewClass;
 		createReference;
 		abstractVariableReferences! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #abstractReferenceTo:!private!transforming! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #addClass!private!transforming! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #addInstanceVariables!private!transforming! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!initialize/release!public! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #createNewClass!public!transforming! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #createReference!public!transforming! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.SplitClassRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.SplitClassRefactoring categoriesForMethods!
+abstractReferenceTo:!private!transforming! !
+abstractVariableReferences!public!transforming! !
+addClass!private!transforming! !
+addInstanceVariables!private!transforming! !
+class:instanceVariables:newClassName:referenceVariableName:!initialize/release!public! !
+createNewClass!public!transforming! !
+createReference!public!transforming! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.SplitClassRefactoring class methodsFor!
 
@@ -127,6 +129,8 @@ model: aRBNamespace class: class instanceVariables: instVars newClassName: class
 			newClassName: className
 			referenceVariableName: newVariable;
 		yourself! !
-!Refactory.Browser.SplitClassRefactoring class categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
-!Refactory.Browser.SplitClassRefactoring class categoriesFor: #model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+!Refactory.Browser.SplitClassRefactoring class categoriesForMethods!
+class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+!
 

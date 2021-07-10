@@ -184,24 +184,26 @@ tagName
 	answer := BSTR new.
 	self get_tagName: answer.
 	^answer asObject! !
-!MSXML.IXMLDOMElement categoriesFor: #=!comparing!public! !
-!MSXML.IXMLDOMElement categoriesFor: #get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!MSXML.IXMLDOMElement categoriesFor: #getAttribute:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMElement categoriesFor: #GetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!MSXML.IXMLDOMElement categoriesFor: #getAttributeNode:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMElement categoriesFor: #GetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!MSXML.IXMLDOMElement categoriesFor: #getElementsByTagName:!methods!public! !
-!MSXML.IXMLDOMElement categoriesFor: #GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!MSXML.IXMLDOMElement categoriesFor: #namespaceURI:!properties!public! !
-!MSXML.IXMLDOMElement categoriesFor: #Normalize!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
-!MSXML.IXMLDOMElement categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
-!MSXML.IXMLDOMElement categoriesFor: #removeAttributeNode:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMElement categoriesFor: #RemoveAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!MSXML.IXMLDOMElement categoriesFor: #setAttribute:value:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMElement categoriesFor: #SetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!MSXML.IXMLDOMElement categoriesFor: #setAttributeNode:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMElement categoriesFor: #SetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!MSXML.IXMLDOMElement categoriesFor: #tagName!**auto generated**!properties!public! !
+!MSXML.IXMLDOMElement categoriesForMethods!
+=!comparing!public! !
+get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+getAttribute:!**auto generated**!methods!public! !
+GetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+getAttributeNode:!**auto generated**!methods!public! !
+GetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+getElementsByTagName:!methods!public! !
+GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+namespaceURI:!properties!public! !
+Normalize!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
+RemoveAttribute:!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
+removeAttributeNode:!**auto generated**!methods!public! !
+RemoveAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+setAttribute:value:!**auto generated**!methods!public! !
+SetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+setAttributeNode:!**auto generated**!methods!public! !
+SetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+tagName!**auto generated**!properties!public! !
+!
 
 !MSXML.IXMLDOMElement class methodsFor!
 
@@ -228,5 +230,7 @@ defineFunctions
 			argumentTypes: 'bstr IXMLDOMNodeList**';
 		defineFunction: #Normalize
 ! !
-!MSXML.IXMLDOMElement class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMElement class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -92,14 +92,18 @@ forPackagesDeployment: aCollectionOfPackages
 	deployed
 		label: 'App deployed from ' , (names size = 1 ifTrue: [names first] ifFalse: [names]) printString.
 	^deployed! !
-!Refactory.Browser.BrowserEnvironment categoriesFor: #forPackagesDeployment:!helpers!public! !
+!Refactory.Browser.BrowserEnvironment categoriesForMethods!
+forPackagesDeployment:!helpers!public! !
+!
 
 !ImageStripper class methodsFor!
 
 newForTests
 
 	^self new initializeForTests! !
-!ImageStripper class categoriesFor: #newForTests!public! !
+!ImageStripper class categoriesForMethods!
+newForTests!public! !
+!
 
 "End of package definition"!
 

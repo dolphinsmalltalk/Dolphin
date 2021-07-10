@@ -46,12 +46,14 @@ rightToLeftMap: aLookupTable
 	leftToRightMap := aLookupTable copyEmpty.
 	rightToLeftMap 
 		keysAndValuesDo: [:eachKey :eachValue | leftToRightMap at: eachValue put: eachKey]! !
-!UI.MappingConverter categoriesFor: #leftToRight:!operations!private! !
-!UI.MappingConverter categoriesFor: #leftToRightMap!accessing!private! !
-!UI.MappingConverter categoriesFor: #leftToRightMap:!accessing!private! !
-!UI.MappingConverter categoriesFor: #rightToLeft:!operations!private! !
-!UI.MappingConverter categoriesFor: #rightToLeftMap!accessing!private! !
-!UI.MappingConverter categoriesFor: #rightToLeftMap:!accessing!private! !
+!UI.MappingConverter categoriesForMethods!
+leftToRight:!operations!private! !
+leftToRightMap!accessing!private! !
+leftToRightMap:!accessing!private! !
+rightToLeft:!operations!private! !
+rightToLeftMap!accessing!private! !
+rightToLeftMap:!accessing!private! !
+!
 
 !UI.MappingConverter class methodsFor!
 
@@ -70,6 +72,8 @@ rightToLeft: aLookupTable
 	^self new 
 		rightToLeftMap: aLookupTable;
 		yourself! !
-!UI.MappingConverter class categoriesFor: #leftToRight:!instance creation!public! !
-!UI.MappingConverter class categoriesFor: #rightToLeft:!instance creation!public! !
+!UI.MappingConverter class categoriesForMethods!
+leftToRight:!instance creation!public! !
+rightToLeft:!instance creation!public! !
+!
 

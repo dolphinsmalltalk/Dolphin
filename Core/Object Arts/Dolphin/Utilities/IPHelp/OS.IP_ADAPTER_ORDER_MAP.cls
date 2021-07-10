@@ -33,7 +33,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: DWORD! !
-!OS.IP_ADAPTER_ORDER_MAP categoriesFor: #table!**compiled accessors**!public! !
+!OS.IP_ADAPTER_ORDER_MAP categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !OS.IP_ADAPTER_ORDER_MAP class methodsFor!
 
@@ -59,6 +61,8 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!OS.IP_ADAPTER_ORDER_MAP class categoriesFor: #defineFields!initializing!public! !
-!OS.IP_ADAPTER_ORDER_MAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_ADAPTER_ORDER_MAP class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

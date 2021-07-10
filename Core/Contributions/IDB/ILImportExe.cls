@@ -25,7 +25,9 @@ initializeFrom: aStream
 								next: size)).
 			offset := offset + size].
 	self assert: [aStream position = self class iconsEndAddress]! !
-!ILImportExe categoriesFor: #initializeFrom:!initializing!public! !
+!ILImportExe categoriesForMethods!
+initializeFrom:!initializing!public! !
+!
 
 !ILImportExe class methodsFor!
 
@@ -69,9 +71,11 @@ iconsStartAddress
 isResponsibleFor: aStream
 	^(aStream next: 2) = 'MZ' asByteArray 
 		and: [aStream size > self iconsEndAddress and: [self iconsCheck: aStream]]! !
-!ILImportExe class categoriesFor: #iconsCheck:!constants!public! !
-!ILImportExe class categoriesFor: #iconsEndAddress!constants!public! !
-!ILImportExe class categoriesFor: #iconsSizes!constants!public! !
-!ILImportExe class categoriesFor: #iconsStartAddress!constants!public! !
-!ILImportExe class categoriesFor: #isResponsibleFor:!public!testing! !
+!ILImportExe class categoriesForMethods!
+iconsCheck:!constants!public! !
+iconsEndAddress!constants!public! !
+iconsSizes!constants!public! !
+iconsStartAddress!constants!public! !
+isResponsibleFor:!public!testing! !
+!
 

@@ -131,17 +131,19 @@ Reset
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get_item:error:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #get_next:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #length!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #next!**auto generated**!properties!public! !
-!MSXML.IXMLDOMParseErrorCollection categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!public! !
+!MSXML.IXMLDOMParseErrorCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+get_item:error:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+get_next:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+next!**auto generated**!properties!public! !
+Reset!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!public! !
+!
 
 !MSXML.IXMLDOMParseErrorCollection class methodsFor!
 
@@ -160,5 +162,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.IXMLDOMParseErrorCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMParseErrorCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -31,8 +31,10 @@ getElements
 		fromAddress: self pElems
 		length: self cElems
 		elementClass: self elementClass! !
-!OS.COM.CALPOLESTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.CALPOLESTR categoriesFor: #getElements!accessing!private! !
+!OS.COM.CALPOLESTR categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+getElements!accessing!private! !
+!
 
 !OS.COM.CALPOLESTR class methodsFor!
 
@@ -55,6 +57,8 @@ elementClass
 
 	^LPWSTR
 ! !
-!OS.COM.CALPOLESTR class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.CALPOLESTR class categoriesFor: #elementClass!constants!public! !
+!OS.COM.CALPOLESTR class categoriesForMethods!
+defineFields!public!template definition! !
+elementClass!constants!public! !
+!
 

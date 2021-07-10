@@ -681,84 +681,86 @@ width
 	buf := ByteArray newFixed: 4.
 	Gdip gdipGetImageWidth: self asParameter width: buf.
 	^buf dwordAtOffset: 0! !
-!Graphics.Gdiplus.Image categoriesFor: #asBitmap!public! !
-!Graphics.Gdiplus.Image categoriesFor: #asByteArray:!converting!public! !
-!Graphics.Gdiplus.Image categoriesFor: #asByteArray:compression:!converting!public! !
-!Graphics.Gdiplus.Image categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Gdiplus.Image categoriesFor: #basicRotate:!operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #bounds!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #buildCompressionParameters:!converting!helpers!private! !
-!Graphics.Gdiplus.Image categoriesFor: #clone!copying!public! !
-!Graphics.Gdiplus.Image categoriesFor: #copy!copying!public! !
-!Graphics.Gdiplus.Image categoriesFor: #copyPropertiesFrom:!accessing-properties!public! !
-!Graphics.Gdiplus.Image categoriesFor: #copyToClipboard!copying!public! !
-!Graphics.Gdiplus.Image categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!Graphics.Gdiplus.Image categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!Graphics.Gdiplus.Image categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.Gdiplus.Image categoriesFor: #drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
-!Graphics.Gdiplus.Image categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!Graphics.Gdiplus.Image categoriesFor: #encoderParameterList:!accessing-encoders!private! !
-!Graphics.Gdiplus.Image categoriesFor: #encoderParameterListSize:!accessing-encoders!private! !
-!Graphics.Gdiplus.Image categoriesFor: #extent!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #filename!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #flags!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #flipX!operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #flipY!operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #frameCount!accessing-frames!public! !
-!Graphics.Gdiplus.Image categoriesFor: #frameCount:!accessing-frames!public! !
-!Graphics.Gdiplus.Image categoriesFor: #frameDimension!accessing-frames!private! !
-!Graphics.Gdiplus.Image categoriesFor: #frameDimensionsCount!accessing-frames!public! !
-!Graphics.Gdiplus.Image categoriesFor: #frameDimensionsList!accessing-frames!public! !
-!Graphics.Gdiplus.Image categoriesFor: #frames!accessing-frames!public! !
-!Graphics.Gdiplus.Image categoriesFor: #freeDC!public! !
-!Graphics.Gdiplus.Image categoriesFor: #getBounds!accessing!private! !
-!Graphics.Gdiplus.Image categoriesFor: #graphics!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #hasPropertyId:!accessing-properties!public!testing! !
-!Graphics.Gdiplus.Image categoriesFor: #hasThumbnail!private!testing!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #hasThumbnailData!public!testing!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #height!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #isLandscape!public!testing! !
-!Graphics.Gdiplus.Image categoriesFor: #isPortrait!public!testing! !
-!Graphics.Gdiplus.Image categoriesFor: #isValid!public!testing! !
-!Graphics.Gdiplus.Image categoriesFor: #mimeType!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #palette!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #palette:!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #paletteSize!accessing!private! !
-!Graphics.Gdiplus.Image categoriesFor: #pixelFormat!accessing!public! !
-!Graphics.Gdiplus.Image categoriesFor: #properties!accessing-properties!public! !
-!Graphics.Gdiplus.Image categoriesFor: #propertiesCount!accessing-properties!private! !
-!Graphics.Gdiplus.Image categoriesFor: #propertiesSize!accessing-properties!private! !
-!Graphics.Gdiplus.Image categoriesFor: #propertiesSizeAndCount!accessing-properties!private! !
-!Graphics.Gdiplus.Image categoriesFor: #property:!accessing-properties!public! !
-!Graphics.Gdiplus.Image categoriesFor: #propertyFromId:!accessing-properties!public! !
-!Graphics.Gdiplus.Image categoriesFor: #propertyIdList!accessing-properties!public! !
-!Graphics.Gdiplus.Image categoriesFor: #propertySize:!accessing-properties!private! !
-!Graphics.Gdiplus.Image categoriesFor: #propertyTagDateTime!accessing-properties!public! !
-!Graphics.Gdiplus.Image categoriesFor: #rectScaledToFit:!helpers!public! !
-!Graphics.Gdiplus.Image categoriesFor: #rectScaledToFit:centered:!helpers!public! !
-!Graphics.Gdiplus.Image categoriesFor: #rotateLeft!operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #rotateRight!operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveAdd:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveAddImage:encoderParams:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveFramesToFiles!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveFramesToFiles:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveToFile:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveToFile:clsidEncoder:encoderParams:!file operations!private! !
-!Graphics.Gdiplus.Image categoriesFor: #saveToFile:compression:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveToFile:encoderParams:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveToIStream:mimeType:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #saveToIStream:mimeType:encoderParams:!file operations!public! !
-!Graphics.Gdiplus.Image categoriesFor: #selectActiveFrame:!accessing-frames!public! !
-!Graphics.Gdiplus.Image categoriesFor: #selectActiveFrame:dimensionID:!accessing-frames!public! !
-!Graphics.Gdiplus.Image categoriesFor: #showExample!development!private! !
-!Graphics.Gdiplus.Image categoriesFor: #thumbnailExtent!public!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #thumbnailHeight!public!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #thumbnailScaledBy:!operations!public!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #thumbnailWidth!public!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #thumbnailWithExtent:!operations!public!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #thumbnailWithExtent2:!operations!public!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #thumbnailWithHeight:!operations!public!thumbnails! !
-!Graphics.Gdiplus.Image categoriesFor: #width!accessing!public! !
+!Graphics.Gdiplus.Image categoriesForMethods!
+asBitmap!public! !
+asByteArray:!converting!public! !
+asByteArray:compression:!converting!public! !
+basicFree!private!realizing/unrealizing! !
+basicRotate:!operations!public! !
+bounds!accessing!public! !
+buildCompressionParameters:!converting!helpers!private! !
+clone!copying!public! !
+copy!copying!public! !
+copyPropertiesFrom:!accessing-properties!public! !
+copyToClipboard!copying!public! !
+drawOn:!drawing-bitmaps!public! !
+drawOn:at:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
+drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+encoderParameterList:!accessing-encoders!private! !
+encoderParameterListSize:!accessing-encoders!private! !
+extent!accessing!public! !
+filename!accessing!public! !
+flags!accessing!public! !
+flipX!operations!public! !
+flipY!operations!public! !
+frameCount!accessing-frames!public! !
+frameCount:!accessing-frames!public! !
+frameDimension!accessing-frames!private! !
+frameDimensionsCount!accessing-frames!public! !
+frameDimensionsList!accessing-frames!public! !
+frames!accessing-frames!public! !
+freeDC!public! !
+getBounds!accessing!private! !
+graphics!accessing!public! !
+hasPropertyId:!accessing-properties!public!testing! !
+hasThumbnail!private!testing!thumbnails! !
+hasThumbnailData!public!testing!thumbnails! !
+height!accessing!public! !
+isLandscape!public!testing! !
+isPortrait!public!testing! !
+isValid!public!testing! !
+mimeType!accessing!public! !
+palette!accessing!public! !
+palette:!accessing!public! !
+paletteSize!accessing!private! !
+pixelFormat!accessing!public! !
+properties!accessing-properties!public! !
+propertiesCount!accessing-properties!private! !
+propertiesSize!accessing-properties!private! !
+propertiesSizeAndCount!accessing-properties!private! !
+property:!accessing-properties!public! !
+propertyFromId:!accessing-properties!public! !
+propertyIdList!accessing-properties!public! !
+propertySize:!accessing-properties!private! !
+propertyTagDateTime!accessing-properties!public! !
+rectScaledToFit:!helpers!public! !
+rectScaledToFit:centered:!helpers!public! !
+rotateLeft!operations!public! !
+rotateRight!operations!public! !
+saveAdd:!file operations!public! !
+saveAddImage:encoderParams:!file operations!public! !
+saveFramesToFiles!file operations!public! !
+saveFramesToFiles:!file operations!public! !
+saveToFile:!file operations!public! !
+saveToFile:clsidEncoder:encoderParams:!file operations!private! !
+saveToFile:compression:!file operations!public! !
+saveToFile:encoderParams:!file operations!public! !
+saveToIStream:mimeType:!file operations!public! !
+saveToIStream:mimeType:encoderParams:!file operations!public! !
+selectActiveFrame:!accessing-frames!public! !
+selectActiveFrame:dimensionID:!accessing-frames!public! !
+showExample!development!private! !
+thumbnailExtent!public!thumbnails! !
+thumbnailHeight!public!thumbnails! !
+thumbnailScaledBy:!operations!public!thumbnails! !
+thumbnailWidth!public!thumbnails! !
+thumbnailWithExtent:!operations!public!thumbnails! !
+thumbnailWithExtent2:!operations!public!thumbnails! !
+thumbnailWithHeight:!operations!public!thumbnails! !
+width!accessing!public! !
+!
 
 !Graphics.Gdiplus.Image class methodsFor!
 
@@ -1697,50 +1699,52 @@ prompt
 	^((UI.FileOpenDialog new fileTypes: self fileTypes)
 		defaultExtension: 'png';
 		showModal) ifNotNil: [:file | self fromFile: file]! !
-!Graphics.Gdiplus.Image class categoriesFor: #decoderFileExtensions!enquiries!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #decoderMimeTypes!enquiries!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #decoders!enquiries!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #encoderClsid:!enquiries!private! !
-!Graphics.Gdiplus.Image class categoriesFor: #encoderClsidForExtension:!enquiries!private! !
-!Graphics.Gdiplus.Image class categoriesFor: #encoderFileExtensions!enquiries!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #encoderMimeTypeForExtension:!enquiries!private! !
-!Graphics.Gdiplus.Image class categoriesFor: #encoderMimeTypes!enquiries!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #encoders!enquiries!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIDecoderFileExtensions!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIDecoders!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderClsid!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderFileExtensions!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderParameters!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoders!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIEncoderValues!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIFlags!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIInterpMode!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIJPEGCompression!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipILoadImage!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipILoadImages!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipILosslessRotation!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMetadata!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMetadata2!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMultiFrame!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMultiFrame2!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIMultiFrame3!examples!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting1!examples!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting2!examples!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting3!examples!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPrinting4LabeledToAPage!examples!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPropertiesCopy!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPropertyItem!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIPropertyItems!examples!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipISaveFrames!examples!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipISkewing!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #exampleGdipIThumbnails!examples!public!sunit! !
-!Graphics.Gdiplus.Image class categoriesFor: #fileTypes!enquiries!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #fromByteArray:!instance creation!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #fromFile:!instance creation!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #fromIStream:!instance creation!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #getImageCodecs:!helpers!private! !
-!Graphics.Gdiplus.Image class categoriesFor: #icon!constants!public! !
-!Graphics.Gdiplus.Image class categoriesFor: #mimeTypeForExtension:!enquiries!private! !
-!Graphics.Gdiplus.Image class categoriesFor: #prompt!development!instance creation!public! !
+!Graphics.Gdiplus.Image class categoriesForMethods!
+decoderFileExtensions!enquiries!public! !
+decoderMimeTypes!enquiries!public! !
+decoders!enquiries!public! !
+encoderClsid:!enquiries!private! !
+encoderClsidForExtension:!enquiries!private! !
+encoderFileExtensions!enquiries!public! !
+encoderMimeTypeForExtension:!enquiries!private! !
+encoderMimeTypes!enquiries!public! !
+encoders!enquiries!public! !
+exampleGdipIDecoderFileExtensions!examples!public!sunit! !
+exampleGdipIDecoders!examples!public!sunit! !
+exampleGdipIEncoderClsid!examples!public!sunit! !
+exampleGdipIEncoderFileExtensions!examples!public!sunit! !
+exampleGdipIEncoderParameters!examples!public!sunit! !
+exampleGdipIEncoders!examples!public!sunit! !
+exampleGdipIEncoderValues!examples!public!sunit! !
+exampleGdipIFlags!examples!public!sunit! !
+exampleGdipIInterpMode!examples!public!sunit! !
+exampleGdipIJPEGCompression!examples!public!sunit! !
+exampleGdipILoadImage!examples!public!sunit! !
+exampleGdipILoadImages!examples!public!sunit! !
+exampleGdipILosslessRotation!examples!public!sunit! !
+exampleGdipIMetadata!examples!public!sunit! !
+exampleGdipIMetadata2!examples!public!sunit! !
+exampleGdipIMultiFrame!examples!public!sunit! !
+exampleGdipIMultiFrame2!examples!public!sunit! !
+exampleGdipIMultiFrame3!examples!public! !
+exampleGdipIPrinting1!examples!public! !
+exampleGdipIPrinting2!examples!public! !
+exampleGdipIPrinting3!examples!public! !
+exampleGdipIPrinting4LabeledToAPage!examples!public! !
+exampleGdipIPropertiesCopy!examples!public!sunit! !
+exampleGdipIPropertyItem!examples!public!sunit! !
+exampleGdipIPropertyItems!examples!public! !
+exampleGdipISaveFrames!examples!public! !
+exampleGdipISkewing!examples!public!sunit! !
+exampleGdipIThumbnails!examples!public!sunit! !
+fileTypes!enquiries!public! !
+fromByteArray:!instance creation!public! !
+fromFile:!instance creation!public! !
+fromFile:usingLocator:!instance creation!public! !
+fromIStream:!instance creation!public! !
+getImageCodecs:!helpers!private! !
+icon!constants!public! !
+mimeTypeForExtension:!enquiries!private! !
+prompt!development!instance creation!public! !
+!
 

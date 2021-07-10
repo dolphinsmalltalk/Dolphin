@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.SliderTest'
 	instanceVariableNames: ''
@@ -29,6 +29,8 @@ testRange
 							range := start to: stop by: step.
 							presenter range: range.
 							self assert: presenter range equals: range]]]! !
-!UI.Tests.SliderTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.SliderTest categoriesFor: #testRange!public!unit tests! !
+!UI.Tests.SliderTest categoriesForMethods!
+classToTest!helpers!private! !
+testRange!public!unit tests! !
+!
 

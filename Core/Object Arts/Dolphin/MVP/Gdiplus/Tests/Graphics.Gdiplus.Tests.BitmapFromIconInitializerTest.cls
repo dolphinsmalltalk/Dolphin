@@ -35,8 +35,10 @@ testCreateHandleRealizesIcon
 	self assertIsNil: icon basicHandle.
 	model createHandle.
 	self denyIsNil: icon basicHandle! !
-!Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest categoriesFor: #gdipCreateBitmapFromHICON:bitmap:!accessing!public! !
-!Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest categoriesFor: #setUp!public!setup! !
-!Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest categoriesFor: #testCreateHandleRealizesIcon!public!unit tests! !
+!Graphics.Gdiplus.Tests.BitmapFromIconInitializerTest categoriesForMethods!
+gdipCreateBitmapFromHICON:bitmap:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+testCreateHandleRealizesIcon!public!unit tests! !
+!
 

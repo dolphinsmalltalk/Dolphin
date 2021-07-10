@@ -56,11 +56,13 @@ value
 			dwordAtOffset: "string?")
 				at: (self format + 1))
 		with: 0]! !
-!OS._FPIEEE_VALUE categoriesFor: #flags!**compiled accessors**!public! !
-!OS._FPIEEE_VALUE categoriesFor: #format!accessing!public! !
-!OS._FPIEEE_VALUE categoriesFor: #formatName!accessing!public! !
-!OS._FPIEEE_VALUE categoriesFor: #isValid!public!testing! !
-!OS._FPIEEE_VALUE categoriesFor: #value!accessing!public! !
+!OS._FPIEEE_VALUE categoriesForMethods!
+flags!**compiled accessors**!public! !
+format!accessing!public! !
+formatName!accessing!public! !
+isValid!public!testing! !
+value!accessing!public! !
+!
 
 !OS._FPIEEE_VALUE class methodsFor!
 
@@ -80,7 +82,9 @@ formatCodes
 
 getFieldNames
 	^#(#flags)! !
-!OS._FPIEEE_VALUE class categoriesFor: #defineFields!public!template definition! !
-!OS._FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
-!OS._FPIEEE_VALUE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS._FPIEEE_VALUE class categoriesForMethods!
+defineFields!public!template definition! !
+formatCodes!constants!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

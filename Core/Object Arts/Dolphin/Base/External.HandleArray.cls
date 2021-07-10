@@ -20,8 +20,10 @@ uncheckedAt: anInteger
 uncheckedAt: indexInteger put: anExternalHandle 
 	super uncheckedAt: indexInteger put: anExternalHandle asInteger.
 	^anExternalHandle! !
-!External.HandleArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.HandleArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.HandleArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.HandleArray class methodsFor!
 
@@ -29,5 +31,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^External.Handle! !
-!External.HandleArray class categoriesFor: #elementClass!constants!public! !
+!External.HandleArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

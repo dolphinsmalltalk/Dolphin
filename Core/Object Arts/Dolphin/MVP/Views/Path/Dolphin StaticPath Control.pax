@@ -49,7 +49,9 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 
 	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
 	^self invalidCall: _failureCode! !
-!OS.ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+!OS.ShlwapiLibrary categoriesForMethods!
+pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+!
 
 !UI.TextPresenter class methodsFor!
 
@@ -62,7 +64,9 @@ resource_Path_text
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticPath) 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 241 39 416 610 #text: 34 1 528 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 658 193 193 nil 27)! !
-!UI.TextPresenter class categoriesFor: #resource_Path_text!public!resources-views! !
+!UI.TextPresenter class categoriesForMethods!
+resource_Path_text!public!resources-views! !
+!
 
 "End of package definition"!
 

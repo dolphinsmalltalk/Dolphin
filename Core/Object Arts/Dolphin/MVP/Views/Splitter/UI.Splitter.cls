@@ -206,30 +206,32 @@ startTrackingAt: aPoint
 	position := self constrainPosition: aPoint.
 	self drawTrackingAt: position.
 	^position! !
-!UI.Splitter categoriesFor: #applyFont!font!private!updating! !
-!UI.Splitter categoriesFor: #calculateExtent:!operations!private! !
-!UI.Splitter categoriesFor: #cancelTrackingAt:!private!tracking! !
-!UI.Splitter categoriesFor: #constrainPosition:!operations!private! !
-!UI.Splitter categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!UI.Splitter categoriesFor: #cursor!constants!public! !
-!UI.Splitter categoriesFor: #defaultBackcolor!constants!private! !
-!UI.Splitter categoriesFor: #defaultExtent!constants!private! !
-!UI.Splitter categoriesFor: #defaultProportion!constants!private! !
-!UI.Splitter categoriesFor: #drawTrackingAt:!private!tracking! !
-!UI.Splitter categoriesFor: #endTrackingAt:!public!tracking! !
-!UI.Splitter categoriesFor: #eraseTrackingAt:!private!tracking! !
-!UI.Splitter categoriesFor: #forecolor!accessing!public! !
-!UI.Splitter categoriesFor: #hasFlatAppearance!accessing-styles!public! !
-!UI.Splitter categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
-!UI.Splitter categoriesFor: #isHot!public!testing! !
-!UI.Splitter categoriesFor: #isSplitter!public!testing! !
-!UI.Splitter categoriesFor: #isVertical!public!testing! !
-!UI.Splitter categoriesFor: #onEraseRequired:!event handling!public! !
-!UI.Splitter categoriesFor: #onGetCursor:!event handling!public! !
-!UI.Splitter categoriesFor: #onInputMaskRequired:!event handling!public! !
-!UI.Splitter categoriesFor: #onPaintRequired:!event handling!private! !
-!UI.Splitter categoriesFor: #onViewCreated!event handling!public! !
-!UI.Splitter categoriesFor: #startTrackingAt:!private!tracking! !
+!UI.Splitter categoriesForMethods!
+applyFont!font!private!updating! !
+calculateExtent:!operations!private! !
+cancelTrackingAt:!private!tracking! !
+constrainPosition:!operations!private! !
+continueTrackingAt:from:!private!tracking! !
+cursor!constants!public! !
+defaultBackcolor!constants!private! !
+defaultExtent!constants!private! !
+defaultProportion!constants!private! !
+drawTrackingAt:!private!tracking! !
+endTrackingAt:!public!tracking! !
+eraseTrackingAt:!private!tracking! !
+forecolor!accessing!public! !
+hasFlatAppearance!accessing-styles!public! !
+hasFlatAppearance:!accessing-styles!public! !
+isHot!public!testing! !
+isSplitter!public!testing! !
+isVertical!public!testing! !
+onEraseRequired:!event handling!public! !
+onGetCursor:!event handling!public! !
+onInputMaskRequired:!event handling!public! !
+onPaintRequired:!event handling!private! !
+onViewCreated!event handling!public! !
+startTrackingAt:!private!tracking! !
+!
 
 UI.Splitter methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -261,7 +263,9 @@ stbConvertFromVersion12: anArray
 	(backcolor = ##(Color brightness: 225 / 255) or: [backcolor = Color face3d])
 		ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray! !
-!UI.Splitter class categoriesFor: #icon!constants!public! !
-!UI.Splitter class categoriesFor: #resource_Horizontalvertical_splitter!public!resources-views! !
-!UI.Splitter class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!UI.Splitter class categoriesForMethods!
+icon!constants!public! !
+resource_Horizontalvertical_splitter!public!resources-views! !
+stbConvertFromVersion12:!binary filing!private! !
+!
 

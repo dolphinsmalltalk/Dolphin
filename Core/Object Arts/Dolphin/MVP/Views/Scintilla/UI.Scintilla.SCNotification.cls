@@ -273,38 +273,40 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!UI.Scintilla.SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #ch!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #character!accessing!public! !
-!UI.Scintilla.SCNotification categoriesFor: #characterSource!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #foldLevelNow!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #foldLevelPrev!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #getValidFields!accessing!private! !
-!UI.Scintilla.SCNotification categoriesFor: #isAltKeyDown!public!testing! !
-!UI.Scintilla.SCNotification categoriesFor: #isSelectionUpdate!public!testing! !
-!UI.Scintilla.SCNotification categoriesFor: #isShiftDown!public!testing! !
-!UI.Scintilla.SCNotification categoriesFor: #length!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #line!accessing!public! !
-!UI.Scintilla.SCNotification categoriesFor: #linesAdded!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #listCompletionMethod!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #listType!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #lParam!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #margin!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #message!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #modificationType!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #modifiers!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #point!accessing!public! !
-!UI.Scintilla.SCNotification categoriesFor: #position!accessing!public! !
-!UI.Scintilla.SCNotification categoriesFor: #scLine!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #scPosition!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #text!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #textString!accessing!public! !
-!UI.Scintilla.SCNotification categoriesFor: #token!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #updated!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #view:!accessing!private! !
-!UI.Scintilla.SCNotification categoriesFor: #wParam!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #x!**compiled accessors**!public! !
-!UI.Scintilla.SCNotification categoriesFor: #y!**compiled accessors**!public! !
+!UI.Scintilla.SCNotification categoriesForMethods!
+annotationLinesAdded!**compiled accessors**!public! !
+ch!**compiled accessors**!public! !
+character!accessing!public! !
+characterSource!**compiled accessors**!public! !
+foldLevelNow!**compiled accessors**!public! !
+foldLevelPrev!**compiled accessors**!public! !
+getValidFields!accessing!private! !
+isAltKeyDown!public!testing! !
+isSelectionUpdate!public!testing! !
+isShiftDown!public!testing! !
+length!**compiled accessors**!public! !
+line!accessing!public! !
+linesAdded!**compiled accessors**!public! !
+listCompletionMethod!**compiled accessors**!public! !
+listType!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+margin!**compiled accessors**!public! !
+message!**compiled accessors**!public! !
+modificationType!**compiled accessors**!public! !
+modifiers!**compiled accessors**!public! !
+point!accessing!public! !
+position!accessing!public! !
+scLine!**compiled accessors**!public! !
+scPosition!**compiled accessors**!public! !
+text!**compiled accessors**!public! !
+textString!accessing!public! !
+token!**compiled accessors**!public! !
+updated!**compiled accessors**!public! !
+view:!accessing!private! !
+wParam!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+!
 
 !UI.Scintilla.SCNotification class methodsFor!
 
@@ -340,6 +342,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !
-!UI.Scintilla.SCNotification class categoriesFor: #defineFields!public!template definition! !
-!UI.Scintilla.SCNotification class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!UI.Scintilla.SCNotification class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

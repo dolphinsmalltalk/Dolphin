@@ -34,8 +34,10 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^self class mainShellClass! !
-!UI.RuntimeSessionManager categoriesFor: #keepAlive!idling!public! !
-!UI.RuntimeSessionManager categoriesFor: #mainShellClass!constants!public! !
+!UI.RuntimeSessionManager categoriesForMethods!
+keepAlive!idling!public! !
+mainShellClass!constants!public! !
+!
 
 !UI.RuntimeSessionManager class methodsFor!
 
@@ -61,8 +63,10 @@ new
 	"Private -  Use #createExecutable:"
 
 	self shouldNotImplement! !
-!UI.RuntimeSessionManager class categoriesFor: #icon!constants!public! !
-!UI.RuntimeSessionManager class categoriesFor: #isRuntime!public!testing! !
-!UI.RuntimeSessionManager class categoriesFor: #mainShellClass!constants!public! !
-!UI.RuntimeSessionManager class categoriesFor: #new!instance creation!private! !
+!UI.RuntimeSessionManager class categoriesForMethods!
+icon!constants!public! !
+isRuntime!public!testing! !
+mainShellClass!constants!public! !
+new!instance creation!private! !
+!
 

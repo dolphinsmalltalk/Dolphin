@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.ListViewTest subclass: #'UI.Tests.SingleSelectListViewTest'
 	instanceVariableNames: ''
@@ -36,6 +36,8 @@ testSelectionModeChange
 	self assert: presenter selectionByIndex equals: caret.
 	presenter view selectionsByIndex: #(1 2).
 	self assert: presenter selectionsByIndex equals: #(1)! !
-!UI.Tests.SingleSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
-!UI.Tests.SingleSelectListViewTest categoriesFor: #testSelectionModeChange!public!unit tests! !
+!UI.Tests.SingleSelectListViewTest categoriesForMethods!
+sortSelections!private!unit tests! !
+testSelectionModeChange!public!unit tests! !
+!
 

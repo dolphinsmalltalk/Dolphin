@@ -147,7 +147,9 @@ choose
 
 	| hDC |
 	^(hDC := UI.PrintDialog showModal) isNil ifFalse: [self withOwnedDC: hDC]! !
-!Graphics.PrinterCanvas class categoriesFor: #choose!instance creation!public! !
+!Graphics.PrinterCanvas class categoriesForMethods!
+choose!instance creation!public! !
+!
 
 !OS.ComDlgLibrary methodsFor!
 
@@ -171,8 +173,10 @@ printDlgEx: lppd
 
 	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
 	^self invalidCall: _failureCode! !
-!OS.ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
-!OS.ComDlgLibrary categoriesFor: #printDlgEx:!**auto generated**!public! !
+!OS.ComDlgLibrary categoriesForMethods!
+printDlg:!primitives!private!win32 functions-common dialog box! !
+printDlgEx:!**auto generated**!public! !
+!
 
 "End of package definition"!
 

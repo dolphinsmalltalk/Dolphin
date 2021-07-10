@@ -28,7 +28,9 @@ originalError: anError
 	in the receivers tag field."
 
 	originalError := anError! !
-!Kernel.ClassRemovalError categoriesFor: #isResumable!public!testing! !
-!Kernel.ClassRemovalError categoriesFor: #originalError!accessing!public! !
-!Kernel.ClassRemovalError categoriesFor: #originalError:!accessing!public! !
+!Kernel.ClassRemovalError categoriesForMethods!
+isResumable!public!testing! !
+originalError!accessing!public! !
+originalError:!accessing!public! !
+!
 

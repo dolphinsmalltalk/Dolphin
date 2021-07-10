@@ -141,23 +141,25 @@ state
 					selector: #range:
 					argument: self range);
 		yourself! !
-!UI.DateTimeCommonControl categoriesFor: #displayValue!private!updating! !
-!UI.DateTimeCommonControl categoriesFor: #displayValue:!private!updating! !
-!UI.DateTimeCommonControl categoriesFor: #dtNotificationMap!private! !
-!UI.DateTimeCommonControl categoriesFor: #getRangeMessage!constants!private! !
-!UI.DateTimeCommonControl categoriesFor: #getSystemTime!accessing!private! !
-!UI.DateTimeCommonControl categoriesFor: #maximum!accessing!public! !
-!UI.DateTimeCommonControl categoriesFor: #maximum:!accessing!public! !
-!UI.DateTimeCommonControl categoriesFor: #minimum!accessing!public! !
-!UI.DateTimeCommonControl categoriesFor: #minimum:!accessing!public! !
-!UI.DateTimeCommonControl categoriesFor: #modelClass!accessing!private! !
-!UI.DateTimeCommonControl categoriesFor: #nmFirst!constants!private! !
-!UI.DateTimeCommonControl categoriesFor: #nmNotify:!event handling-win32!private! !
-!UI.DateTimeCommonControl categoriesFor: #range!accessing!public! !
-!UI.DateTimeCommonControl categoriesFor: #range:!accessing!public! !
-!UI.DateTimeCommonControl categoriesFor: #setRangeMessage!constants!private! !
-!UI.DateTimeCommonControl categoriesFor: #setSystemTime:!accessing!private! !
-!UI.DateTimeCommonControl categoriesFor: #state!accessing!private! !
+!UI.DateTimeCommonControl categoriesForMethods!
+displayValue!private!updating! !
+displayValue:!private!updating! !
+dtNotificationMap!private! !
+getRangeMessage!constants!private! !
+getSystemTime!accessing!private! !
+maximum!accessing!public! !
+maximum:!accessing!public! !
+minimum!accessing!public! !
+minimum:!accessing!public! !
+modelClass!accessing!private! !
+nmFirst!constants!private! !
+nmNotify:!event handling-win32!private! !
+range!accessing!public! !
+range:!accessing!public! !
+setRangeMessage!constants!private! !
+setSystemTime:!accessing!private! !
+state!accessing!private! !
+!
 
 !UI.DateTimeCommonControl class methodsFor!
 
@@ -177,7 +179,9 @@ initialize
 
 uninitialize
 	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskClear: ICC_DATE_CLASSES)! !
-!UI.DateTimeCommonControl class categoriesFor: #icon!constants!public! !
-!UI.DateTimeCommonControl class categoriesFor: #initialize!development!initializing!private! !
-!UI.DateTimeCommonControl class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!UI.DateTimeCommonControl class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!public! !
+!
 

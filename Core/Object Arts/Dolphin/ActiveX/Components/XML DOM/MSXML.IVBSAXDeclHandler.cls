@@ -155,16 +155,18 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #attributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!methods!public! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #AttributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #elementDecl:strModel:!**auto generated**!methods!public! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #ElementDecl:strModel:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #externalEntityDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #ExternalEntityDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #internalEntityDecl:strValue:!**auto generated**!methods!public! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #InternalEntityDecl:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IVBSAXDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!MSXML.IVBSAXDeclHandler categoriesForMethods!
+attributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!methods!public! !
+AttributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+elementDecl:strModel:!**auto generated**!methods!public! !
+ElementDecl:strModel:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+externalEntityDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
+ExternalEntityDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+internalEntityDecl:strValue:!**auto generated**!methods!public! !
+InternalEntityDecl:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !MSXML.IVBSAXDeclHandler class methodsFor!
 
@@ -182,5 +184,7 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:strPublicId:strSystemId:
 			argumentTypes: 'bstr* bstr* bstr*'
 ! !
-!MSXML.IVBSAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IVBSAXDeclHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

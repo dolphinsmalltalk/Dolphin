@@ -94,9 +94,11 @@ testTwoArguments
 				value: 4)
 		equals: #(2 3).
 	self assert: (subject valueWithArguments: #(2 3 4)) equals: #(2 3)! !
-!Kernel.Tests.EventMessageSendTest categoriesFor: #testNoArguments!public!testing! !
-!Kernel.Tests.EventMessageSendTest categoriesFor: #testOneArgument!public!testing! !
-!Kernel.Tests.EventMessageSendTest categoriesFor: #testOneArgumentWithGC!public!testing! !
-!Kernel.Tests.EventMessageSendTest categoriesFor: #testReceiverWithGC!public!testing! !
-!Kernel.Tests.EventMessageSendTest categoriesFor: #testTwoArguments!public!testing! !
+!Kernel.Tests.EventMessageSendTest categoriesForMethods!
+testNoArguments!public!testing! !
+testOneArgument!public!testing! !
+testOneArgumentWithGC!public!testing! !
+testReceiverWithGC!public!testing! !
+testTwoArguments!public!testing! !
+!
 

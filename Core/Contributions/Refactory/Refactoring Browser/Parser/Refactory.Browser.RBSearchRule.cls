@@ -26,10 +26,12 @@ searchForMethod: aString thenDo: aBlock
 searchForTree: aBRProgramNode thenDo: aBlock 
 	searchTree := aBRProgramNode.
 	answerBlock := aBlock! !
-!Refactory.Browser.RBSearchRule categoriesFor: #canMatch:!public!testing! !
-!Refactory.Browser.RBSearchRule categoriesFor: #searchFor:thenDo:!initialize/release!public! !
-!Refactory.Browser.RBSearchRule categoriesFor: #searchForMethod:thenDo:!initialize/release!public! !
-!Refactory.Browser.RBSearchRule categoriesFor: #searchForTree:thenDo:!initialize/release!public! !
+!Refactory.Browser.RBSearchRule categoriesForMethods!
+canMatch:!public!testing! !
+searchFor:thenDo:!initialize/release!public! !
+searchForMethod:thenDo:!initialize/release!public! !
+searchForTree:thenDo:!initialize/release!public! !
+!
 
 !Refactory.Browser.RBSearchRule class methodsFor!
 
@@ -41,7 +43,9 @@ searchForMethod: aString thenDo: aBlock
 
 searchForTree: aBRProgramNode thenDo: aBlock 
 	^self new searchForTree: aBRProgramNode thenDo: aBlock! !
-!Refactory.Browser.RBSearchRule class categoriesFor: #searchFor:thenDo:!instance creation!public! !
-!Refactory.Browser.RBSearchRule class categoriesFor: #searchForMethod:thenDo:!instance creation!public! !
-!Refactory.Browser.RBSearchRule class categoriesFor: #searchForTree:thenDo:!instance creation!public! !
+!Refactory.Browser.RBSearchRule class categoriesForMethods!
+searchFor:thenDo:!instance creation!public! !
+searchForMethod:thenDo:!instance creation!public! !
+searchForTree:thenDo:!instance creation!public! !
+!
 

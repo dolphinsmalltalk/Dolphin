@@ -114,15 +114,17 @@ item: index
 	answer := variant value.
 	variant free.
 	^answer! !
-!VBScript.ISubMatches categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!VBScript.ISubMatches categoriesFor: #asArray!converting!public! !
-!VBScript.ISubMatches categoriesFor: #count!properties!public! !
-!VBScript.ISubMatches categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!VBScript.ISubMatches categoriesFor: #get_Count:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!VBScript.ISubMatches categoriesFor: #get_Item:pSubMatch:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!VBScript.ISubMatches categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!VBScript.ISubMatches categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!VBScript.ISubMatches categoriesFor: #item:!properties!public! !
+!VBScript.ISubMatches categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+asArray!converting!public! !
+count!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-ISubMatches!private! !
+get_Count:!**auto generated**!COM Interfaces-ISubMatches!private! !
+get_Item:pSubMatch:!**auto generated**!COM Interfaces-ISubMatches!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!properties!public! !
+!
 
 !VBScript.ISubMatches class methodsFor!
 
@@ -144,6 +146,8 @@ defineFunctions
 		defineFunction: #get__NewEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!VBScript.ISubMatches class categoriesFor: #clsid!**auto generated**!constants!private! !
-!VBScript.ISubMatches class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.ISubMatches class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+!
 

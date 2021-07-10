@@ -35,10 +35,12 @@ lLbound: anInteger
 	"Set the receiver's 'lLbound' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_lLbound put: anInteger! !
-!OS.COM.SAFEARRAYBOUND categoriesFor: #cElements!**compiled accessors**!public! !
-!OS.COM.SAFEARRAYBOUND categoriesFor: #cElements:!**compiled accessors**!public! !
-!OS.COM.SAFEARRAYBOUND categoriesFor: #lLbound!**compiled accessors**!public! !
-!OS.COM.SAFEARRAYBOUND categoriesFor: #lLbound:!**compiled accessors**!public! !
+!OS.COM.SAFEARRAYBOUND categoriesForMethods!
+cElements!**compiled accessors**!public! !
+cElements:!**compiled accessors**!public! !
+lLbound!**compiled accessors**!public! !
+lLbound:!**compiled accessors**!public! !
+!
 
 !OS.COM.SAFEARRAYBOUND class methodsFor!
 
@@ -59,6 +61,8 @@ defineFields
 
 getFieldNames
 	^#(#cElements #lLbound)! !
-!OS.COM.SAFEARRAYBOUND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.COM.SAFEARRAYBOUND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.SAFEARRAYBOUND class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -42,8 +42,10 @@ text: text
 			tipText := (tipText copyFrom: 1 to: last) , '…'].
 	tipText copyToBuffer: self pszText ofSize: max.
 	^tipText! !
-!OS.NMGETINFOTIP categoriesFor: #cchTextMax!accessing!public! !
-!OS.NMGETINFOTIP categoriesFor: #pszText!accessing!public! !
-!OS.NMGETINFOTIP categoriesFor: #text!accessing!public! !
-!OS.NMGETINFOTIP categoriesFor: #text:!accessing!public! !
+!OS.NMGETINFOTIP categoriesForMethods!
+cchTextMax!accessing!public! !
+pszText!accessing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 

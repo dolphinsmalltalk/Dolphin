@@ -26,9 +26,11 @@ byteSize
 
 valueType
 	^Integer! !
-!External.ScalarField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.ScalarField categoriesFor: #byteSize!constants!private! !
-!External.ScalarField categoriesFor: #valueType!automatic generation!constants!development!private! !
+!External.ScalarField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+byteSize!constants!private! !
+valueType!automatic generation!constants!development!private! !
+!
 
 !External.ScalarField class methodsFor!
 
@@ -37,5 +39,7 @@ byteSize
 	A large number of fields are the same size as an integer."
 
 	^VMConstants.IntSize! !
-!External.ScalarField class categoriesFor: #byteSize!constants!private! !
+!External.ScalarField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

@@ -23,14 +23,18 @@ value
 
 value: aBoolean
 	permit := aBoolean! !
-!UI.SelectionChangingEvent categoriesFor: #canIntercept!public!testing! !
-!UI.SelectionChangingEvent categoriesFor: #setSource:!initializing!private! !
-!UI.SelectionChangingEvent categoriesFor: #value!accessing!public! !
-!UI.SelectionChangingEvent categoriesFor: #value:!accessing!public! !
+!UI.SelectionChangingEvent categoriesForMethods!
+canIntercept!public!testing! !
+setSource:!initializing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !UI.SelectionChangingEvent class methodsFor!
 
 new
 	^self shouldNotImplement! !
-!UI.SelectionChangingEvent class categoriesFor: #new!instance creation!public! !
+!UI.SelectionChangingEvent class categoriesForMethods!
+new!instance creation!public! !
+!
 

@@ -158,31 +158,33 @@ subtractTime: aTimeOrDate
 	"Answer a new Time, aTimeOrDate seconds before the receiver."
 
 	^self class fromSeconds: self seconds - aTimeOrDate seconds! !
-!Core.Time categoriesFor: #<!comparing!public! !
-!Core.Time categoriesFor: #=!comparing!public! !
-!Core.Time categoriesFor: #addTime:!arithmetic!public! !
-!Core.Time categoriesFor: #asDateAndTime!converting!public! !
-!Core.Time categoriesFor: #asMilliseconds!converting!public! !
-!Core.Time categoriesFor: #asParameter!converting!public! !
-!Core.Time categoriesFor: #asSeconds!converting!public! !
-!Core.Time categoriesFor: #asSYSTEMTIME!converting!public! !
-!Core.Time categoriesFor: #asTimeStamp!converting!public! !
-!Core.Time categoriesFor: #displayOn:!printing!public! !
-!Core.Time categoriesFor: #hash!comparing!public! !
-!Core.Time categoriesFor: #hour!accessing!public! !
-!Core.Time categoriesFor: #hour12!accessing!public! !
-!Core.Time categoriesFor: #hour24!accessing!public! !
-!Core.Time categoriesFor: #millisecond!accessing!public! !
-!Core.Time categoriesFor: #minute!accessing!public! !
-!Core.Time categoriesFor: #print24:showSeconds:on:!public!ston! !
-!Core.Time categoriesFor: #printOn:!printing!public! !
-!Core.Time categoriesFor: #printOn:format:!printing!public! !
-!Core.Time categoriesFor: #printStringFormat:!printing!public! !
-!Core.Time categoriesFor: #second!accessing!public! !
-!Core.Time categoriesFor: #seconds!accessing!public! !
-!Core.Time categoriesFor: #seconds:!accessing!private! !
-!Core.Time categoriesFor: #storeOn:!printing!public! !
-!Core.Time categoriesFor: #subtractTime:!arithmetic!public! !
+!Core.Time categoriesForMethods!
+<!comparing!public! !
+=!comparing!public! !
+addTime:!arithmetic!public! !
+asDateAndTime!converting!public! !
+asMilliseconds!converting!public! !
+asParameter!converting!public! !
+asSeconds!converting!public! !
+asSYSTEMTIME!converting!public! !
+asTimeStamp!converting!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+millisecond!accessing!public! !
+minute!accessing!public! !
+print24:showSeconds:on:!public!ston! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printStringFormat:!printing!public! !
+second!accessing!public! !
+seconds!accessing!public! !
+seconds:!accessing!private! !
+storeOn:!printing!public! !
+subtractTime:!arithmetic!public! !
+!
 
 !Core.Time class methodsFor!
 
@@ -359,25 +361,27 @@ totalSeconds
 	"Answer the total seconds since Jan. 1, 1901 (as an Integer) in local time."
 
 	^DateAndTime now localSeconds truncated! !
-!Core.Time class categoriesFor: #amMarker!accessing!public! !
-!Core.Time class categoriesFor: #defaultFormat!enquiries!private! !
-!Core.Time class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Core.Time class categoriesFor: #formats!enquiries!private! !
-!Core.Time class categoriesFor: #fromDuration:!instance creation!public! !
-!Core.Time class categoriesFor: #fromMilliseconds:!instance creation!public! !
-!Core.Time class categoriesFor: #fromSeconds:!instance creation!public! !
-!Core.Time class categoriesFor: #fromString:!instance creation!public! !
-!Core.Time class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Core.Time class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Core.Time class categoriesFor: #microsecondClockValue!enquiries!public! !
-!Core.Time class categoriesFor: #millisecondClockValue!accessing!public! !
-!Core.Time class categoriesFor: #millisecondsToRun:!operations!public! !
-!Core.Time class categoriesFor: #new!instance creation!public! !
-!Core.Time class categoriesFor: #now!instance creation!public! !
-!Core.Time class categoriesFor: #pmMarker!accessing!public! !
-!Core.Time class categoriesFor: #readFrom:!instance creation!public! !
-!Core.Time class categoriesFor: #secondClock!accessing!private! !
-!Core.Time class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Core.Time class categoriesFor: #stbVersion!binary filing!public! !
-!Core.Time class categoriesFor: #totalSeconds!accessing!public! !
+!Core.Time class categoriesForMethods!
+amMarker!accessing!public! !
+defaultFormat!enquiries!private! !
+errorInvalidFormat!exceptions!private! !
+formats!enquiries!private! !
+fromDuration:!instance creation!public! !
+fromMilliseconds:!instance creation!public! !
+fromSeconds:!instance creation!public! !
+fromString:!instance creation!public! !
+fromSYSTEMTIME:!instance creation!private! !
+hours:minutes:seconds:!instance creation!public! !
+microsecondClockValue!enquiries!public! !
+millisecondClockValue!accessing!public! !
+millisecondsToRun:!operations!public! !
+new!instance creation!public! !
+now!instance creation!public! !
+pmMarker!accessing!public! !
+readFrom:!instance creation!public! !
+secondClock!accessing!private! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+totalSeconds!accessing!public! !
+!
 

@@ -76,12 +76,14 @@ relativePathTo: aString
 
 relativeToBase: aFilename
 	^File relativePathOf: aFilename to: self basePath! !
-!Core.FileLocator categoriesFor: #basePath!accessing!public! !
-!Core.FileLocator categoriesFor: #findOrImportForeignClass!operations!private! !
-!Core.FileLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!Core.FileLocator categoriesFor: #relativePathIfSubPath:!accessing!private! !
-!Core.FileLocator categoriesFor: #relativePathTo:!accessing!public! !
-!Core.FileLocator categoriesFor: #relativeToBase:!accessing!private! !
+!Core.FileLocator categoriesForMethods!
+basePath!accessing!public! !
+findOrImportForeignClass!operations!private! !
+localFileSpecFor:!accessing!public! !
+relativePathIfSubPath:!accessing!private! !
+relativePathTo:!accessing!public! !
+relativeToBase:!accessing!private! !
+!
 
 Core.FileLocator methodProtocol: #fileLocator attributes: #(#readOnly) selectors: #(#localFileSpecFor: #relativePathTo:)!
 
@@ -124,12 +126,14 @@ installRelative
 installRelative: aFilenameString
 	^self installRelative localFileSpecFor: aFilenameString
 ! !
-!Core.FileLocator class categoriesFor: #absolute!accessing!public! !
-!Core.FileLocator class categoriesFor: #default!accessing!public! !
-!Core.FileLocator class categoriesFor: #folderRelative:!instance creation!public! !
-!Core.FileLocator class categoriesFor: #imageFolderRelative:!instance creation!public! !
-!Core.FileLocator class categoriesFor: #imageRelative!accessing!public! !
-!Core.FileLocator class categoriesFor: #imageRelative:!instance creation!public! !
-!Core.FileLocator class categoriesFor: #installRelative!accessing!public! !
-!Core.FileLocator class categoriesFor: #installRelative:!instance creation!public! !
+!Core.FileLocator class categoriesForMethods!
+absolute!accessing!public! !
+default!accessing!public! !
+folderRelative:!instance creation!public! !
+imageFolderRelative:!instance creation!public! !
+imageRelative!accessing!public! !
+imageRelative:!instance creation!public! !
+installRelative!accessing!public! !
+installRelative:!instance creation!public! !
+!
 

@@ -220,20 +220,22 @@ Reset
 
 	<virtual stdcall: hresult 6>
 	^self invalidCall: _failureCode! !
-!MSXML.IMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #getAllowOverride!**auto generated**!methods!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #GetAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!MSXML.IMXNamespaceManager categoriesFor: #getDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #GetDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!MSXML.IMXNamespaceManager categoriesFor: #getPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #GetPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!MSXML.IMXNamespaceManager categoriesFor: #getURI:pContextNode:pwchUri:pcchUri:!**auto generated**!methods!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #GetURI:pContextNode:pwchUri:pcchUri:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!MSXML.IMXNamespaceManager categoriesFor: #PopContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #PushContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #PutAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!MSXML.IMXNamespaceManager categoriesFor: #Reset!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!MSXML.IMXNamespaceManager categoriesForMethods!
+DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+getAllowOverride!**auto generated**!methods!public! !
+GetAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+getDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
+GetDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+getPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
+GetPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+getURI:pContextNode:pwchUri:pcchUri:!**auto generated**!methods!public! !
+GetURI:pContextNode:pwchUri:pcchUri:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+PopContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+PushContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+PutAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+Reset!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!
 
 !MSXML.IMXNamespaceManager class methodsFor!
 
@@ -260,5 +262,7 @@ defineFunctions
 		defineFunction: #GetURI:pContextNode:pwchUri:pcchUri:
 			argumentTypes: 'lpwstr IXMLDOMNode* word* sdword*'
 ! !
-!MSXML.IMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IMXNamespaceManager class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

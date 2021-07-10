@@ -255,37 +255,39 @@ slowerTempo
 
 	self plimbole tempo: self plimbole tempo // 1.05.
 	self showHintBubble: 'Tempo ' , self plimbole tempo displayString! !
-!UI.Examples.PlimbolePresenter categoriesFor: #availableGridExtents!constants!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #beChromaticScale!constants!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #beHangScale!constants!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #bePentatonicScale!constants!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #clearAll!constants!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #copyToClipboard!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #fasterTempo!commands!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #favourites!constants!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #initialize!accessing!initializing!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #isPlaying!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #model:!event handling!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #nextAltoVoice!commands!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #nextGridExtent!commands!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #nextTenorVoice!commands!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #onPaletteChanged!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #onPlayStarted!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #onViewClosed!event handling!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #onViewOpened!event handling!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #palette!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #palette:!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #pasteClipboard!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #play!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #plimbole!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #previousAltoVoice!commands!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #previousTenorVoice!commands!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #queryCommand:!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #randomFavourite!commands!public! !
-!UI.Examples.PlimbolePresenter categoriesFor: #showHintBubble:!private! !
-!UI.Examples.PlimbolePresenter categoriesFor: #slowerTempo!commands!public! !
+!UI.Examples.PlimbolePresenter categoriesForMethods!
+availableGridExtents!constants!public! !
+beChromaticScale!constants!public! !
+beHangScale!constants!public! !
+bePentatonicScale!constants!public! !
+clearAll!constants!public! !
+copyToClipboard!public! !
+fasterTempo!commands!public! !
+favourites!constants!public! !
+initialize!accessing!initializing!private! !
+isPlaying!public! !
+model:!event handling!private! !
+nextAltoVoice!commands!public! !
+nextGridExtent!commands!public! !
+nextTenorVoice!commands!public! !
+onLeftButtonDoubleClicked:!event handling!private! !
+onLeftButtonPressed:!event handling!private! !
+onPaletteChanged!private! !
+onPlayStarted!private! !
+onViewClosed!event handling!private! !
+onViewOpened!event handling!private! !
+palette!public! !
+palette:!public! !
+pasteClipboard!public! !
+play!public! !
+plimbole!public! !
+previousAltoVoice!commands!public! !
+previousTenorVoice!commands!public! !
+queryCommand:!private! !
+randomFavourite!commands!public! !
+showHintBubble:!private! !
+slowerTempo!commands!public! !
+!
 
 !UI.Examples.PlimbolePresenter class methodsFor!
 
@@ -307,8 +309,10 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Examples.PlimboleView) 34 12 nil nil 34 2 8 1140850688 1 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 626 201 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 8 #() 626 193 193 nil 27 )! !
-!UI.Examples.PlimbolePresenter class categoriesFor: #defaultModel!public! !
-!UI.Examples.PlimbolePresenter class categoriesFor: #defaultPalette!constants!private! !
-!UI.Examples.PlimbolePresenter class categoriesFor: #icon!constants!public! !
-!UI.Examples.PlimbolePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!UI.Examples.PlimbolePresenter class categoriesForMethods!
+defaultModel!public! !
+defaultPalette!constants!private! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

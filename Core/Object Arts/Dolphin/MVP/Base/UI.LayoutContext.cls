@@ -147,23 +147,25 @@ setView: aView visibility: aBoolean
 
 showView: aView 
 	self setView: aView visibility: true! !
-!UI.LayoutContext categoriesFor: #apply!operations!public! !
-!UI.LayoutContext categoriesFor: #clientExtentOf:!accessing!public! !
-!UI.LayoutContext categoriesFor: #clientRectangleOf:!accessing!public! !
-!UI.LayoutContext categoriesFor: #deferRectangles!private!testing! !
-!UI.LayoutContext categoriesFor: #deferWindowPositions:!operations!public! !
-!UI.LayoutContext categoriesFor: #extentOf:!accessing!public! !
-!UI.LayoutContext categoriesFor: #hideView:!accessing!public! !
-!UI.LayoutContext categoriesFor: #isViewVisible:!enquiries!public! !
-!UI.LayoutContext categoriesFor: #positionForView:!accessing!private! !
-!UI.LayoutContext categoriesFor: #rectangleOf:!accessing!public! !
-!UI.LayoutContext categoriesFor: #repositionSubViewsOf:!operations!private! !
-!UI.LayoutContext categoriesFor: #setContainer:!initializing!private! !
-!UI.LayoutContext categoriesFor: #setView:extent:!accessing!public! !
-!UI.LayoutContext categoriesFor: #setView:origin:!accessing!public! !
-!UI.LayoutContext categoriesFor: #setView:rectangle:!accessing!public! !
-!UI.LayoutContext categoriesFor: #setView:visibility:!accessing!public! !
-!UI.LayoutContext categoriesFor: #showView:!accessing!public! !
+!UI.LayoutContext categoriesForMethods!
+apply!operations!public! !
+clientExtentOf:!accessing!public! !
+clientRectangleOf:!accessing!public! !
+deferRectangles!private!testing! !
+deferWindowPositions:!operations!public! !
+extentOf:!accessing!public! !
+hideView:!accessing!public! !
+isViewVisible:!enquiries!public! !
+positionForView:!accessing!private! !
+rectangleOf:!accessing!public! !
+repositionSubViewsOf:!operations!private! !
+setContainer:!initializing!private! !
+setView:extent:!accessing!public! !
+setView:origin:!accessing!public! !
+setView:rectangle:!accessing!public! !
+setView:visibility:!accessing!public! !
+showView:!accessing!public! !
+!
 
 !UI.LayoutContext class methodsFor!
 
@@ -171,5 +173,7 @@ forContainer: aView
 	^(self new)
 		setContainer: aView;
 		yourself! !
-!UI.LayoutContext class categoriesFor: #forContainer:!instance creation!public! !
+!UI.LayoutContext class categoriesForMethods!
+forContainer:!instance creation!public! !
+!
 

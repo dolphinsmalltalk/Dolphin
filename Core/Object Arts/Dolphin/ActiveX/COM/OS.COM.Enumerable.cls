@@ -130,21 +130,23 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^Array! !
-!OS.COM.Enumerable categoriesFor: #add:!adding!public! !
-!OS.COM.Enumerable categoriesFor: #approxSize!accessing!private! !
-!OS.COM.Enumerable categoriesFor: #at:!accessing!public! !
-!OS.COM.Enumerable categoriesFor: #at:put:!accessing!public! !
-!OS.COM.Enumerable categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.Enumerable categoriesFor: #collect:!enumerating!public! !
-!OS.COM.Enumerable categoriesFor: #copyEmpty:!copying!private! !
-!OS.COM.Enumerable categoriesFor: #copyingClass!copying!private! !
-!OS.COM.Enumerable categoriesFor: #copySize!copying!private! !
-!OS.COM.Enumerable categoriesFor: #free!public!realizing/unrealizing! !
-!OS.COM.Enumerable categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!OS.COM.Enumerable categoriesFor: #growSize!accessing!private! !
-!OS.COM.Enumerable categoriesFor: #interface:!accessing!private! !
-!OS.COM.Enumerable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OS.COM.Enumerable categoriesFor: #species!accessing!public! !
+!OS.COM.Enumerable categoriesForMethods!
+add:!adding!public! !
+approxSize!accessing!private! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+collect:!enumerating!public! !
+copyEmpty:!copying!private! !
+copyingClass!copying!private! !
+copySize!copying!private! !
+free!public!realizing/unrealizing! !
+from:to:keysAndValuesDo:!enumerating!public! !
+growSize!accessing!private! !
+interface:!accessing!private! !
+keysAndValuesDo:!enumerating!public! !
+species!accessing!public! !
+!
 
 !OS.COM.Enumerable class methodsFor!
 
@@ -156,5 +158,7 @@ onIEnum: anIEnum
 		interface: anIEnum
 
 	! !
-!OS.COM.Enumerable class categoriesFor: #onIEnum:!instance creation!public! !
+!OS.COM.Enumerable class categoriesForMethods!
+onIEnum:!instance creation!public! !
+!
 

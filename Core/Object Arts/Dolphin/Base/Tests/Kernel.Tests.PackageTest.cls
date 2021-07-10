@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.PackageTest'
 	instanceVariableNames: 'loadedPackages checkTimestamps'
@@ -533,38 +533,40 @@ verifyTestPackageResources: scribbleTestPackage
 	self assert: (resourceIds includes: scribbleTestViewId).
 	self assert: scribbleTestViewId owningPackage equals: scribbleTestPackage.
 	self assertNotNil: scribbleTestViewId resource! !
-!Kernel.Tests.PackageTest categoriesFor: #checkNoTestPackageContents!helpers!private! !
-!Kernel.Tests.PackageTest categoriesFor: #checkTestPackageContents!helpers!private! !
-!Kernel.Tests.PackageTest categoriesFor: #d5ForwardRefTestPacContents!constants!private! !
-!Kernel.Tests.PackageTest categoriesFor: #filenameFor:!helpers!private! !
-!Kernel.Tests.PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
-!Kernel.Tests.PackageTest categoriesFor: #loadTestAndUninstallPackage:!helpers!private! !
-!Kernel.Tests.PackageTest categoriesFor: #setUp!private!running! !
-!Kernel.Tests.PackageTest categoriesFor: #tearDown!private!running! !
-!Kernel.Tests.PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorAliasToQualifiedName!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorMethodOfNamespacedClass!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedAliasName!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedBinaryVariableName!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedClassName!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedSourceVariableName!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedSuperclassName!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLegacyFormatErrorQualifiedUntracedVariable!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad51Pac!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad51Pax!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad70Pax!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoad72Pax!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLoadedPackagesAreWellFormed!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testLooseResourceIdentifiers!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #testPropertyManager!public! !
-!Kernel.Tests.PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
-!Kernel.Tests.PackageTest categoriesFor: #uninstallTestPackages!private!running! !
-!Kernel.Tests.PackageTest categoriesFor: #verifyPackageElementNamesAreAbsolute:!helpers!private! !
-!Kernel.Tests.PackageTest categoriesFor: #verifyPackageElementsExist:!helpers!private! !
-!Kernel.Tests.PackageTest categoriesFor: #verifyTestPackageResources:!helpers!private! !
+!Kernel.Tests.PackageTest categoriesForMethods!
+checkNoTestPackageContents!helpers!private! !
+checkTestPackageContents!helpers!private! !
+d5ForwardRefTestPacContents!constants!private! !
+filenameFor:!helpers!private! !
+loadAndTestPackage:!helpers!private! !
+loadTestAndUninstallPackage:!helpers!private! !
+setUp!private!running! !
+tearDown!private!running! !
+testForwardRefLoadPac!public!unit tests! !
+testLegacyFormatErrorAliasToQualifiedName!public!unit tests! !
+testLegacyFormatErrorMethodOfNamespacedClass!public!unit tests! !
+testLegacyFormatErrorQualifiedAliasName!public!unit tests! !
+testLegacyFormatErrorQualifiedBinaryVariableName!public!unit tests! !
+testLegacyFormatErrorQualifiedClassName!public!unit tests! !
+testLegacyFormatErrorQualifiedSourceVariableName!public!unit tests! !
+testLegacyFormatErrorQualifiedSuperclassName!public!unit tests! !
+testLegacyFormatErrorQualifiedUntracedVariable!public!unit tests! !
+testLoad21Pac!public!unit tests! !
+testLoad40Pac!public!unit tests! !
+testLoad40Pax!public!unit tests! !
+testLoad51Pac!public!unit tests! !
+testLoad51Pax!public!unit tests! !
+testLoad60Pac!public!unit tests! !
+testLoad60Pax!public!unit tests! !
+testLoad70Pax!public!unit tests! !
+testLoad72Pax!public!unit tests! !
+testLoadedPackagesAreWellFormed!public!unit tests! !
+testLooseResourceIdentifiers!public!unit tests! !
+testPropertyManager!public! !
+testTimestampInitialized!public!unit tests! !
+uninstallTestPackages!private!running! !
+verifyPackageElementNamesAreAbsolute:!helpers!private! !
+verifyPackageElementsExist:!helpers!private! !
+verifyTestPackageResources:!helpers!private! !
+!
 

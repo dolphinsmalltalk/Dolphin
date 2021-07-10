@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.ResourceIdentifierTest'
 	instanceVariableNames: 'tempViewResource'
@@ -100,12 +100,14 @@ testStoreOn
 		equals: '(UI.ResourceIdentifier class: ' , self class fullName , ' name: ''Default view'')'.
 	restored := Compiler evaluate: storeString.
 	self assert: restored equals: rid! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #createResourceNamed:for:on:!helpers!private! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #testAssignResource!public!unit tests! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #testDeserializeAll!public!unit tests! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #testReferenceToNonExistentView!public!unit tests! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #testResourceSelector!public!unit tests! !
-!UI.Tests.ResourceIdentifierTest categoriesFor: #testStoreOn!public!unit tests! !
+!UI.Tests.ResourceIdentifierTest categoriesForMethods!
+createResourceNamed:for:on:!helpers!private! !
+setUp!private!unit tests! !
+tempViewResource!private!unit tests! !
+testAssignResource!public!unit tests! !
+testDeserializeAll!public!unit tests! !
+testReferenceToNonExistentView!public!unit tests! !
+testResourceSelector!public!unit tests! !
+testStoreOn!public!unit tests! !
+!
 

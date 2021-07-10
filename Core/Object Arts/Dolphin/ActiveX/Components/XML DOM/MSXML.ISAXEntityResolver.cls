@@ -55,8 +55,10 @@ ResolveEntity: pwchPublicId pwchSystemId: pwchSystemId pvarInput: pvarInput
 
 	<virtual stdcall: hresult 4 word* word* variant*>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXEntityResolver categoriesFor: #resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
-!MSXML.ISAXEntityResolver categoriesFor: #ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
+!MSXML.ISAXEntityResolver categoriesForMethods!
+resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
+ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
+!
 
 !MSXML.ISAXEntityResolver class methodsFor!
 
@@ -68,5 +70,7 @@ defineFunctions
 		defineFunction: #ResolveEntity:pwchSystemId:pvarInput:
 			argumentTypes: 'word* word* variant*'
 ! !
-!MSXML.ISAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXEntityResolver class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

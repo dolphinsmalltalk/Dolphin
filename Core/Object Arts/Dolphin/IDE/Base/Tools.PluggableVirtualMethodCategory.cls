@@ -38,11 +38,13 @@ setFilter: aMonadicValuable
 setName: aString 
 	super setName: aString.
 	filter := [:each | true]! !
-!Tools.PluggableVirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
-!Tools.PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
-!Tools.PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate:!accessing!public! !
-!Tools.PluggableVirtualMethodCategory categoriesFor: #setFilter:!initializing!private! !
-!Tools.PluggableVirtualMethodCategory categoriesFor: #setName:!initializing!private! !
+!Tools.PluggableVirtualMethodCategory categoriesForMethods!
+includesMethod:!public!testing! !
+isSlowToEnumerate!public!testing! !
+isSlowToEnumerate:!accessing!public! !
+setFilter:!initializing!private! !
+setName:!initializing!private! !
+!
 
 !Tools.PluggableVirtualMethodCategory class methodsFor!
 
@@ -85,7 +87,9 @@ uninitialize
 
 	#('compilation failures' 'primitives') 
 		do: [:each | self removePseud: self pseudPrefix , each]! !
-!Tools.PluggableVirtualMethodCategory class categoriesFor: #initialize!initializing!private! !
-!Tools.PluggableVirtualMethodCategory class categoriesFor: #newNamed:withFilter:!instance creation!public! !
-!Tools.PluggableVirtualMethodCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.PluggableVirtualMethodCategory class categoriesForMethods!
+initialize!initializing!private! !
+newNamed:withFilter:!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

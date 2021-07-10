@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.MethodCategoryEnvironmentTest'
 	instanceVariableNames: ''
@@ -33,5 +33,7 @@ testMethodCategoryEnvironment
 	self assert: selectors size equals: 1.
 	self assert: (env includesSelector: #newSortBlock: in: SortAlgorithm class).
 	self deny: (env includesSelector: #icon in: SortAlgorithm class)! !
-!Tools.Tests.MethodCategoryEnvironmentTest categoriesFor: #testMethodCategoryEnvironment!public! !
+!Tools.Tests.MethodCategoryEnvironmentTest categoriesForMethods!
+testMethodCategoryEnvironment!public! !
+!
 

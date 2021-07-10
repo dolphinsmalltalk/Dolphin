@@ -159,20 +159,22 @@ primitiveFailed: anInteger
 	"Generate an error to the effect that a primitive has failed, including the failure code specified by the primitive."
 
 	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger! !
-!Kernel.ProtoObject categoriesFor: #~~!comparing!public! !
-!Kernel.ProtoObject categoriesFor: #==!comparing!public! !
-!Kernel.ProtoObject categoriesFor: #allReferences!enumerating!public! !
-!Kernel.ProtoObject categoriesFor: #basicClass!accessing!public! !
-!Kernel.ProtoObject categoriesFor: #basicIdentityHash!comparing!public! !
-!Kernel.ProtoObject categoriesFor: #basicPrintOn:!printing!public! !
-!Kernel.ProtoObject categoriesFor: #basicPrintString!printing!public! !
-!Kernel.ProtoObject categoriesFor: #basicSize!accessing!private! !
-!Kernel.ProtoObject categoriesFor: #become:!mutating!public! !
-!Kernel.ProtoObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!Kernel.ProtoObject categoriesFor: #error:!exceptions!public! !
-!Kernel.ProtoObject categoriesFor: #identityHash!comparing!public! !
-!Kernel.ProtoObject categoriesFor: #instVarAt:!accessing!private! !
-!Kernel.ProtoObject categoriesFor: #isKindOf:!public!testing! !
-!Kernel.ProtoObject categoriesFor: #oneWayBecome:!mutating!public! !
-!Kernel.ProtoObject categoriesFor: #primitiveFailed:!exceptions!public! !
+!Kernel.ProtoObject categoriesForMethods!
+~~!comparing!public! !
+==!comparing!public! !
+allReferences!enumerating!public! !
+basicClass!accessing!public! !
+basicIdentityHash!comparing!public! !
+basicPrintOn:!printing!public! !
+basicPrintString!printing!public! !
+basicSize!accessing!private! !
+become:!mutating!public! !
+doesNotUnderstand:!exceptions!public! !
+error:!exceptions!public! !
+identityHash!comparing!public! !
+instVarAt:!accessing!private! !
+isKindOf:!public!testing! !
+oneWayBecome:!mutating!public! !
+primitiveFailed:!exceptions!public! !
+!
 

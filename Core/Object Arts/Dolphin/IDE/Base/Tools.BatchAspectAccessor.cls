@@ -59,16 +59,18 @@ value
 
 valueIcon
 	^self icon! !
-!Tools.BatchAspectAccessor categoriesFor: #aspectClass!accessing!public! !
-!Tools.BatchAspectAccessor categoriesFor: #batchSize!accessing!public! !
-!Tools.BatchAspectAccessor categoriesFor: #displayOn:!displaying!public! !
-!Tools.BatchAspectAccessor categoriesFor: #keys!accessing!public! !
-!Tools.BatchAspectAccessor categoriesFor: #nextBatch:!private! !
-!Tools.BatchAspectAccessor categoriesFor: #selectIn:!event handling!private! !
-!Tools.BatchAspectAccessor categoriesFor: #startKey!accessing!public! !
-!Tools.BatchAspectAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
-!Tools.BatchAspectAccessor categoriesFor: #value!accessing!public! !
-!Tools.BatchAspectAccessor categoriesFor: #valueIcon!accessing!public! !
+!Tools.BatchAspectAccessor categoriesForMethods!
+aspectClass!accessing!public! !
+batchSize!accessing!public! !
+displayOn:!displaying!public! !
+keys!accessing!public! !
+nextBatch:!private! !
+selectIn:!event handling!private! !
+startKey!accessing!public! !
+subjectIncludesKey:!accessing!private! !
+value!accessing!public! !
+valueIcon!accessing!public! !
+!
 
 !Tools.BatchAspectAccessor class methodsFor!
 
@@ -93,7 +95,9 @@ subject: anObject keys: aSequencedReadableCollection startingAt: startInteger ba
 				startingAt: startInteger
 				batchSize: sizeInteger
 				accessorClass: self)! !
-!Tools.BatchAspectAccessor class categoriesFor: #aspectBatchClass!public! !
-!Tools.BatchAspectAccessor class categoriesFor: #icon!constants!public! !
-!Tools.BatchAspectAccessor class categoriesFor: #subject:keys:startingAt:batchSize:!instance creation!public! !
+!Tools.BatchAspectAccessor class categoriesForMethods!
+aspectBatchClass!public! !
+icon!constants!public! !
+subject:keys:startingAt:batchSize:!instance creation!public! !
+!
 

@@ -188,36 +188,38 @@ view
 view: anIconListAbstract
 	"Private -"
 	view := anIconListAbstract! !
-!OS.NMCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
-!OS.NMCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #boundingRectangle!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #canvas!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #dwDrawStage!**compiled accessors**!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #dwItemSpec!**compiled accessors**!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #evaluateDrawBlock:!operations!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #font!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #font:!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #hasFocus!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #hdc!**compiled accessors**!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #isChecked!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #isDefault!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #isDisabled!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #isGrayed!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #isHot!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #isIndeterminate!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #isMarked!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #isSelected!public!testing! !
-!OS.NMCUSTOMDRAW categoriesFor: #item!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #item:!accessing!private! !
-!OS.NMCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
-!OS.NMCUSTOMDRAW categoriesFor: #lParam!**compiled accessors**!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #rc!**compiled accessors**!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #uItemState!**compiled accessors**!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #view!accessing!public! !
-!OS.NMCUSTOMDRAW categoriesFor: #view:!accessing!private! !
+!OS.NMCUSTOMDRAW categoriesForMethods!
+applyFont!operations!private! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+boundingRectangle!accessing!public! !
+canvas!accessing!public! !
+dwDrawStage!**compiled accessors**!public! !
+dwItemSpec!**compiled accessors**!public! !
+evaluateDrawBlock:!operations!public! !
+font!accessing!public! !
+font:!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+hasFocus!public!testing! !
+hdc!**compiled accessors**!public! !
+isChecked!public!testing! !
+isDefault!public!testing! !
+isDisabled!public!testing! !
+isGrayed!public!testing! !
+isHot!public!testing! !
+isIndeterminate!public!testing! !
+isMarked!public!testing! !
+isSelected!public!testing! !
+item!accessing!public! !
+item:!accessing!private! !
+itemHandle!accessing!private! !
+lParam!**compiled accessors**!public! !
+rc!**compiled accessors**!public! !
+uItemState!**compiled accessors**!public! !
+view!accessing!public! !
+view:!accessing!private! !
+!
 
 OS.NMCUSTOMDRAW methodProtocol: #customDrawContext attributes: #(#readOnly) selectors: #(#backcolor #backcolor: #boundingRectangle #canvas #font #font: #forecolor #forecolor: #hasFocus #isChecked #isDefault #isDisabled #isGrayed #isHot #isIndeterminate #isSelected #view)!
 
@@ -239,6 +241,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
-!OS.NMCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
-!OS.NMCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NMCUSTOMDRAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

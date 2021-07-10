@@ -54,11 +54,13 @@ transform
 		renameInstanceVariable: variableName
 		to: newName
 		around: [self renameReferences]! !
-!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
-!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #renameReferences!public!transforming! !
-!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.RenameInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.RenameInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+rename:to:in:!initialize/release!public! !
+renameReferences!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.RenameInstanceVariableRefactoring class methodsFor!
 
@@ -75,6 +77,8 @@ rename: aVarName to: aName in: aClass
 		rename: aVarName
 		to: aName
 		in: aClass! !
-!Refactory.Browser.RenameInstanceVariableRefactoring class categoriesFor: #model:rename:to:in:!instance creation!public! !
-!Refactory.Browser.RenameInstanceVariableRefactoring class categoriesFor: #rename:to:in:!instance creation!public! !
+!Refactory.Browser.RenameInstanceVariableRefactoring class categoriesForMethods!
+model:rename:to:in:!instance creation!public! !
+rename:to:in:!instance creation!public! !
+!
 

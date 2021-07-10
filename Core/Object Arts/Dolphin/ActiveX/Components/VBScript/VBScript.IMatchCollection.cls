@@ -107,16 +107,18 @@ item: anInteger
 
 matchClass
 	^IMatch! !
-!VBScript.IMatchCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!VBScript.IMatchCollection categoriesFor: #asArray!converting!public! !
-!VBScript.IMatchCollection categoriesFor: #count!properties!public! !
-!VBScript.IMatchCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!VBScript.IMatchCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!VBScript.IMatchCollection categoriesFor: #get_Item:ppMatch:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!VBScript.IMatchCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!VBScript.IMatchCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!VBScript.IMatchCollection categoriesFor: #item:!properties!public! !
-!VBScript.IMatchCollection categoriesFor: #matchClass!constants!private! !
+!VBScript.IMatchCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+asArray!converting!public! !
+count!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+get_Count:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+get_Item:ppMatch:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!properties!public! !
+matchClass!constants!private! !
+!
 
 !VBScript.IMatchCollection class methodsFor!
 
@@ -138,6 +140,8 @@ defineFunctions
 		defineFunction: #get__NewEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!VBScript.IMatchCollection class categoriesFor: #clsid!constants!private! !
-!VBScript.IMatchCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.IMatchCollection class categoriesForMethods!
+clsid!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+!
 

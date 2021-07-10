@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.LagoonTests'
 	instanceVariableNames: ''
@@ -46,5 +46,7 @@ testExternalStructureAfterTemplateRemoval
 	self assert: External.Structure template notNil.
 	self assert: #{External.Field} isDefined.
 	self assert: #{Smalltalk.ExternalField} isDefined! !
-!Tools.Tests.LagoonTests categoriesFor: #testExternalStructureAfterTemplateRemoval!public!unit tests! !
+!Tools.Tests.LagoonTests categoriesForMethods!
+testExternalStructureAfterTemplateRemoval!public!unit tests! !
+!
 

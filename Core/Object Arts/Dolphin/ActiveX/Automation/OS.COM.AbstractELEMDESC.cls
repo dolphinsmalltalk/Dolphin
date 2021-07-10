@@ -75,16 +75,18 @@ typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
 
 	^self tdesc typeName! !
-!OS.COM.AbstractELEMDESC categoriesFor: #analyzer!accessing!private! !
-!OS.COM.AbstractELEMDESC categoriesFor: #classDesc!accessing!private! !
-!OS.COM.AbstractELEMDESC categoriesFor: #indirections!accessing!public! !
-!OS.COM.AbstractELEMDESC categoriesFor: #isVariant!private!testing! !
-!OS.COM.AbstractELEMDESC categoriesFor: #objectClass!accessing!public! !
-!OS.COM.AbstractELEMDESC categoriesFor: #owner!accessing!private! !
-!OS.COM.AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
-!OS.COM.AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
-!OS.COM.AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!private! !
-!OS.COM.AbstractELEMDESC categoriesFor: #typeName!accessing!public! !
+!OS.COM.AbstractELEMDESC categoriesForMethods!
+analyzer!accessing!private! !
+classDesc!accessing!private! !
+indirections!accessing!public! !
+isVariant!private!testing! !
+objectClass!accessing!public! !
+owner!accessing!private! !
+owner:!accessing!private! !
+tdesc!accessing!public! !
+tdescElem!**compiled accessors**!private! !
+typeName!accessing!public! !
+!
 
 !OS.COM.AbstractELEMDESC class methodsFor!
 
@@ -94,5 +96,7 @@ defineFields
 	"
 
 	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
-!OS.COM.AbstractELEMDESC class categoriesFor: #defineFields!public!template definition! !
+!OS.COM.AbstractELEMDESC class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

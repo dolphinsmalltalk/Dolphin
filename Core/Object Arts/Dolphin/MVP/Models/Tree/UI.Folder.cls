@@ -97,19 +97,21 @@ volumeName
 
 	^[(DiskVolumeInformation forPath: self pathname) explorerName] on: Win32Error
 		do: [:ex | File removePathDelimiter: self pathname]! !
-!UI.Folder categoriesFor: #<=!comparing!public! !
-!UI.Folder categoriesFor: #=!comparing!public! !
-!UI.Folder categoriesFor: #canonicalPath!accessing!private! !
-!UI.Folder categoriesFor: #displayOn:!displaying!public! !
-!UI.Folder categoriesFor: #folderName!accessing!public! !
-!UI.Folder categoriesFor: #hash!comparing!public! !
-!UI.Folder categoriesFor: #name!accessing!public! !
-!UI.Folder categoriesFor: #parent!accessing!public! !
-!UI.Folder categoriesFor: #pathname!accessing!public! !
-!UI.Folder categoriesFor: #pathname:!accessing!private! !
-!UI.Folder categoriesFor: #printOn:!printing!public! !
-!UI.Folder categoriesFor: #rootName!constants!private! !
-!UI.Folder categoriesFor: #volumeName!accessing!private! !
+!UI.Folder categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+canonicalPath!accessing!private! !
+displayOn:!displaying!public! !
+folderName!accessing!public! !
+hash!comparing!public! !
+name!accessing!public! !
+parent!accessing!public! !
+pathname!accessing!public! !
+pathname:!accessing!private! !
+printOn:!printing!public! !
+rootName!constants!private! !
+volumeName!accessing!private! !
+!
 
 !UI.Folder class methodsFor!
 
@@ -134,8 +136,10 @@ root
 	"Answer an instance of the receiver representing the current root folder."
 
 	^self pathname: ''! !
-!UI.Folder class categoriesFor: #icon!constants!development!public! !
-!UI.Folder class categoriesFor: #new!instance creation!public! !
-!UI.Folder class categoriesFor: #pathname:!instance creation!public! !
-!UI.Folder class categoriesFor: #root!instance creation!public! !
+!UI.Folder class categoriesForMethods!
+icon!constants!development!public! !
+new!instance creation!public! !
+pathname:!instance creation!public! !
+root!instance creation!public! !
+!
 

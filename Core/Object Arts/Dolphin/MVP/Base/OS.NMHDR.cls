@@ -32,10 +32,12 @@ idFrom
 
 itemHandle
 	^self idFrom! !
-!OS.NMHDR categoriesFor: #code!**compiled accessors**!public! !
-!OS.NMHDR categoriesFor: #hwndFrom!**compiled accessors**!public! !
-!OS.NMHDR categoriesFor: #idFrom!**compiled accessors**!public! !
-!OS.NMHDR categoriesFor: #itemHandle!accessing!public! !
+!OS.NMHDR categoriesForMethods!
+code!**compiled accessors**!public! !
+hwndFrom!**compiled accessors**!public! !
+idFrom!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+!
 
 !OS.NMHDR class methodsFor!
 
@@ -62,8 +64,10 @@ new
 
 	^self shouldNotImplement
 ! !
-!OS.NMHDR class categoriesFor: #defineFields!public!template definition! !
-!OS.NMHDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.NMHDR class categoriesFor: #itemFromNMHDR:!public! !
-!OS.NMHDR class categoriesFor: #new!instance creation!public! !
+!OS.NMHDR class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+itemFromNMHDR:!public! !
+new!instance creation!public! !
+!
 

@@ -22,8 +22,10 @@ isSpecial: aCharacter
 
 length
 	^1! !
-!Kernel.StSpecialCharacterToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StSpecialCharacterToken categoriesFor: #isSpecial!public!testing! !
-!Kernel.StSpecialCharacterToken categoriesFor: #isSpecial:!public!testing! !
-!Kernel.StSpecialCharacterToken categoriesFor: #length!accessing!private! !
+!Kernel.StSpecialCharacterToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isSpecial!public!testing! !
+isSpecial:!public!testing! !
+length!accessing!private! !
+!
 

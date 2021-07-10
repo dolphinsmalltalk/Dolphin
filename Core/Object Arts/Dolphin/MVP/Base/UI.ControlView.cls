@@ -415,55 +415,57 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 	super wmWindowPosChanged: message wParam: wParam lParam: lParam.
 	^nil	"Accept default processing"
 ! !
-!UI.ControlView categoriesFor: #applyFont!font!private!updating! !
-!UI.ControlView categoriesFor: #backcolorChanged!helpers!private! !
-!UI.ControlView categoriesFor: #ccmGetVersion!operations!public! !
-!UI.ControlView categoriesFor: #ccmSetVersion:!operations!public! !
-!UI.ControlView categoriesFor: #clearHandle!private!realizing/unrealizing! !
-!UI.ControlView categoriesFor: #commonNotificationMap!constants!private! !
-!UI.ControlView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!UI.ControlView categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.ControlView categoriesFor: #errorInCommonControlCall!exceptions!public! !
-!UI.ControlView categoriesFor: #errorOutOfMemory!exceptions!public! !
-!UI.ControlView categoriesFor: #forecolor!accessing!public! !
-!UI.ControlView categoriesFor: #forecolor:!accessing!public! !
-!UI.ControlView categoriesFor: #getFont!accessing!font!private! !
-!UI.ControlView categoriesFor: #itemFromId:!accessing!private! !
-!UI.ControlView categoriesFor: #nmClick:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmCustomDraw:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmDblClk:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmDummy:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmEndWait:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmHover:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmKeyDown:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmKillFocus:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmNotify:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmOutOfMemory:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmRClick:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmRDblClk:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmReturn:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmSetFocus:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #nmStartWait:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #oldWndProc!accessing!private! !
-!UI.ControlView categoriesFor: #oldWndProc:!accessing!not an aspect!private! !
-!UI.ControlView categoriesFor: #onColorRequired:!event handling!private! !
-!UI.ControlView categoriesFor: #onEraseRequired:!event handling!public! !
-!UI.ControlView categoriesFor: #onInputMaskRequired:!event handling!public! !
-!UI.ControlView categoriesFor: #onViewCreated!event handling!public! !
-!UI.ControlView categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
-!UI.ControlView categoriesFor: #setControlBackcolor!helpers!private! !
-!UI.ControlView categoriesFor: #setControlBackcolor:!helpers!private! !
-!UI.ControlView categoriesFor: #setFont:!accessing!font!private! !
-!UI.ControlView categoriesFor: #subclassWindow:!operations!private! !
-!UI.ControlView categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #ttnGetDispInfoW:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #wantParentNotifications!accessing-styles!public! !
-!UI.ControlView categoriesFor: #wantParentNotifications:!accessing-styles!public! !
-!UI.ControlView categoriesFor: #withOldWndProc:!dispatching!private! !
-!UI.ControlView categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #wmSysColorChange:wParam:lParam:!event handling-win32!private! !
-!UI.ControlView categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
+!UI.ControlView categoriesForMethods!
+applyFont!font!private!updating! !
+backcolorChanged!helpers!private! !
+ccmGetVersion!operations!public! !
+ccmSetVersion:!operations!public! !
+clearHandle!private!realizing/unrealizing! !
+commonNotificationMap!constants!private! !
+defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+defaultWindowStyle!constants!private! !
+errorInCommonControlCall!exceptions!public! !
+errorOutOfMemory!exceptions!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+getFont!accessing!font!private! !
+itemFromId:!accessing!private! !
+nmClick:!event handling-win32!private! !
+nmCustomDraw:!event handling-win32!private! !
+nmDblClk:!event handling-win32!private! !
+nmDummy:!event handling-win32!private! !
+nmEndWait:!event handling-win32!private! !
+nmHover:!event handling-win32!private! !
+nmKeyDown:!event handling-win32!private! !
+nmKillFocus:!event handling-win32!private! !
+nmNotify:!event handling-win32!private! !
+nmOutOfMemory:!event handling-win32!private! !
+nmRClick:!event handling-win32!private! !
+nmRDblClk:!event handling-win32!private! !
+nmReturn:!event handling-win32!private! !
+nmSetFocus:!event handling-win32!private! !
+nmStartWait:!event handling-win32!private! !
+oldWndProc!accessing!private! !
+oldWndProc:!accessing!not an aspect!private! !
+onColorRequired:!event handling!private! !
+onEraseRequired:!event handling!public! !
+onInputMaskRequired:!event handling!public! !
+onViewCreated!event handling!public! !
+paintTransparentBackgroundOn:!private!updating! !
+setControlBackcolor!helpers!private! !
+setControlBackcolor:!helpers!private! !
+setFont:!accessing!font!private! !
+subclassWindow:!operations!private! !
+ttnGetDispInfo:!event handling-win32!private! !
+ttnGetDispInfoW:!event handling-win32!private! !
+wantParentNotifications!accessing-styles!public! !
+wantParentNotifications:!accessing-styles!public! !
+withOldWndProc:!dispatching!private! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmPrintClient:wParam:lParam:!event handling-win32!private! !
+wmSysColorChange:wParam:lParam:!event handling-win32!private! !
+wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.ControlView class methodsFor!
 
@@ -505,11 +507,13 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^self subclassResponsibility! !
-!UI.ControlView class categoriesFor: #commonControlCallError!constants!public! !
-!UI.ControlView class categoriesFor: #controlColorMessages!constants!private! !
-!UI.ControlView class categoriesFor: #initialize!development!initializing!private! !
-!UI.ControlView class categoriesFor: #maxTextLimit!constants!public! !
-!UI.ControlView class categoriesFor: #messageMappings!initializing!must not strip!private! !
-!UI.ControlView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!UI.ControlView class categoriesFor: #winClassName!constants!private! !
+!UI.ControlView class categoriesForMethods!
+commonControlCallError!constants!public! !
+controlColorMessages!constants!private! !
+initialize!development!initializing!private! !
+maxTextLimit!constants!public! !
+messageMappings!initializing!must not strip!private! !
+uninitialize!class hierarchy-removing!private! !
+winClassName!constants!private! !
+!
 

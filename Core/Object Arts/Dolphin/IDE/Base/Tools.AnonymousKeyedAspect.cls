@@ -19,6 +19,8 @@ displayAspectText: anObject on: aStream
 	"Don't display the anonymouse key name"
 
 	[(self readFrom: anObject) aspectDisplayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]! !
-!Tools.AnonymousKeyedAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!Tools.AnonymousKeyedAspect categoriesFor: #displayAspectText:on:!displaying!private! !
+!Tools.AnonymousKeyedAspect categoriesForMethods!
+displayAspectNameOf:on:!displaying!private! !
+displayAspectText:on:!displaying!private! !
+!
 

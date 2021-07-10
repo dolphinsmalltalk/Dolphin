@@ -28,9 +28,11 @@ initialize: aString
 
 isMatch
 	^self identity1AsClass ifNotNil: [:arg | arg instanceClass comment fullPrintString = comment]! !
-!ChunkBrowserClassCommentChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserClassCommentChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserClassCommentChunk categoriesFor: #isMatch!public!testing! !
+!ChunkBrowserClassCommentChunk categoriesForMethods!
+browseTarget!operations!public! !
+initialize:!initializing!public! !
+isMatch!public!testing! !
+!
 
 !ChunkBrowserClassCommentChunk class methodsFor!
 
@@ -45,6 +47,8 @@ isChunkClassFor: aString
 	| firstSpaceIndex |
 	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
 		and: [(aString indexOfSubCollection: ' comment: ''') = firstSpaceIndex]! !
-!ChunkBrowserClassCommentChunk class categoriesFor: #chunkType!constants!public! !
-!ChunkBrowserClassCommentChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserClassCommentChunk class categoriesForMethods!
+chunkType!constants!public! !
+isChunkClassFor:!public!testing! !
+!
 

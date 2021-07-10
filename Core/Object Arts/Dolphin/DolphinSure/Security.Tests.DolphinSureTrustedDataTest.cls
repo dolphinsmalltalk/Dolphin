@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Security.Tests.DolphinSureTrustedDataTest'
 	instanceVariableNames: ''
@@ -27,5 +27,7 @@ testBinaryReadOldCertificate
 	self deny: oaCert data equals: oaCert2 data.
 	self assert: oaCert info binaryStoreBytes equals: oaCert2 data.
 ! !
-!Security.Tests.DolphinSureTrustedDataTest categoriesFor: #testBinaryReadOldCertificate!private! !
+!Security.Tests.DolphinSureTrustedDataTest categoriesForMethods!
+testBinaryReadOldCertificate!private! !
+!
 

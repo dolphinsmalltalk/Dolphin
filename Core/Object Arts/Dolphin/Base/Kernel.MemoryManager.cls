@@ -448,42 +448,44 @@ undertakerMain
 	[undertaker == Processor activeProcess] whileTrue: [
 	 	bereavements wait.
 		self directFunerals]! !
-!Kernel.MemoryManager categoriesFor: #aboutToIdle!accessing!private! !
-!Kernel.MemoryManager categoriesFor: #administerLastRites!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #bereavedOverflow:!interrupts-handling!private! !
-!Kernel.MemoryManager categoriesFor: #bytesUsedByObject:!helpers!private! !
-!Kernel.MemoryManager categoriesFor: #collectGarbage!garbage collection!private! !
-!Kernel.MemoryManager categoriesFor: #compact!garbage collection!private! !
-!Kernel.MemoryManager categoriesFor: #dequeueBereavementInto:!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #dequeueForFinalization!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #directFunerals!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #ensureProcessesRunning!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #finalizer!accessing!private! !
-!Kernel.MemoryManager categoriesFor: #finalizerMain!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #finalizerPriority!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #forkFinalizer!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #forkUndertaker!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #gcInterval!accessing!private! !
-!Kernel.MemoryManager categoriesFor: #getEvents!events!private! !
-!Kernel.MemoryManager categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
-!Kernel.MemoryManager categoriesFor: #initialize!development!initializing!private! !
-!Kernel.MemoryManager categoriesFor: #instanceStats:!enquiries!public! !
-!Kernel.MemoryManager categoriesFor: #maxObjects!accessing!public! !
-!Kernel.MemoryManager categoriesFor: #millisecondClock!enquiries!private! !
-!Kernel.MemoryManager categoriesFor: #minGCInterval!accessing!private! !
-!Kernel.MemoryManager categoriesFor: #objectCount!garbage collection!private! !
-!Kernel.MemoryManager categoriesFor: #onPreSaveImage!event handling!private! !
-!Kernel.MemoryManager categoriesFor: #onStartup!event handling!private! !
-!Kernel.MemoryManager categoriesFor: #otOverflow:!interrupts!interrupts-handling!private! !
-!Kernel.MemoryManager categoriesFor: #primCollectGarbage:!garbage collection!private! !
-!Kernel.MemoryManager categoriesFor: #primCompact!garbage collection!private! !
-!Kernel.MemoryManager categoriesFor: #primInstanceStats:!enquiries!private! !
-!Kernel.MemoryManager categoriesFor: #registerObjects!initializing!private! !
-!Kernel.MemoryManager categoriesFor: #resetGCStats!initializing!private! !
-!Kernel.MemoryManager categoriesFor: #setEvents:!events!private! !
-!Kernel.MemoryManager categoriesFor: #undertaker!accessing!private! !
-!Kernel.MemoryManager categoriesFor: #undertaker:!finalizing!private! !
-!Kernel.MemoryManager categoriesFor: #undertakerMain!finalizing!private! !
+!Kernel.MemoryManager categoriesForMethods!
+aboutToIdle!accessing!private! !
+administerLastRites!finalizing!private! !
+bereavedOverflow:!interrupts-handling!private! !
+bytesUsedByObject:!helpers!private! !
+collectGarbage!garbage collection!private! !
+compact!garbage collection!private! !
+dequeueBereavementInto:!finalizing!private! !
+dequeueForFinalization!finalizing!private! !
+directFunerals!finalizing!private! !
+ensureProcessesRunning!finalizing!private! !
+finalizer!accessing!private! !
+finalizerMain!finalizing!private! !
+finalizerPriority!finalizing!private! !
+forkFinalizer!finalizing!private! !
+forkUndertaker!finalizing!private! !
+gcInterval!accessing!private! !
+getEvents!events!private! !
+hospiceOverflow:!interrupts-handling!private! !
+initialize!development!initializing!private! !
+instanceStats:!enquiries!public! !
+maxObjects!accessing!public! !
+millisecondClock!enquiries!private! !
+minGCInterval!accessing!private! !
+objectCount!garbage collection!private! !
+onPreSaveImage!event handling!private! !
+onStartup!event handling!private! !
+otOverflow:!interrupts!interrupts-handling!private! !
+primCollectGarbage:!garbage collection!private! !
+primCompact!garbage collection!private! !
+primInstanceStats:!enquiries!private! !
+registerObjects!initializing!private! !
+resetGCStats!initializing!private! !
+setEvents:!events!private! !
+undertaker!accessing!private! !
+undertaker:!finalizing!private! !
+undertakerMain!finalizing!private! !
+!
 
 !Kernel.MemoryManager class methodsFor!
 
@@ -520,9 +522,11 @@ removeFromSystem
 	and must not be deleted."
 
 	^self shouldNotImplement! !
-!Kernel.MemoryManager class categoriesFor: #current!instance creation!public! !
-!Kernel.MemoryManager class categoriesFor: #gcInterval:!accessing!public! !
-!Kernel.MemoryManager class categoriesFor: #initialize!development!initializing!must strip!public! !
-!Kernel.MemoryManager class categoriesFor: #new!development!instance creation!public! !
-!Kernel.MemoryManager class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
+!Kernel.MemoryManager class categoriesForMethods!
+current!instance creation!public! !
+gcInterval:!accessing!public! !
+initialize!development!initializing!must strip!public! !
+new!development!instance creation!public! !
+removeFromSystem!class hierarchy-removing!private! !
+!
 

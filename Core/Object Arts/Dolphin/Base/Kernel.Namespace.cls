@@ -317,68 +317,70 @@ variableRenamed: aVariableBinding from: aString
 		trigger: #variableRenamed:from:
 		with: aVariableBinding
 		with: (self fullNameFor: aString) asQualifiedReference! !
-!Kernel.Namespace class categoriesFor: #add:!dictionary-adding!public! !
-!Kernel.Namespace class categoriesFor: #addAll:!dictionary-adding!public! !
-!Kernel.Namespace class categoriesFor: #addNewElement:!dictionary-adding!public! !
-!Kernel.Namespace class categoriesFor: #allBehaviors!accessing!public! !
-!Kernel.Namespace class categoriesFor: #allBehaviorsDo:!enumerating!public! !
-!Kernel.Namespace class categoriesFor: #allBindings!enumerating!public! !
-!Kernel.Namespace class categoriesFor: #allBindingsDo:!enumerating!public! !
-!Kernel.Namespace class categoriesFor: #allClasses!accessing!public! !
-!Kernel.Namespace class categoriesFor: #allClassesDo:!enumerating!public! !
-!Kernel.Namespace class categoriesFor: #allSatisfy:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #anySatisfy:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #asArray!dictionary-converting!public! !
-!Kernel.Namespace class categoriesFor: #asBag!dictionary-converting!public! !
-!Kernel.Namespace class categoriesFor: #asByteArray!dictionary-converting!public! !
-!Kernel.Namespace class categoriesFor: #asOrderedCollection!dictionary-converting!public! !
-!Kernel.Namespace class categoriesFor: #asSet!dictionary-converting!public! !
-!Kernel.Namespace class categoriesFor: #associationAt:!accessing!public! !
-!Kernel.Namespace class categoriesFor: #associationAt:ifAbsent:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #associations!private! !
-!Kernel.Namespace class categoriesFor: #associationsDo:!enumerating!public! !
-!Kernel.Namespace class categoriesFor: #asSortedCollection!dictionary-converting!public! !
-!Kernel.Namespace class categoriesFor: #asSortedCollection:!dictionary-converting!public! !
-!Kernel.Namespace class categoriesFor: #at:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #at:ifAbsent:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #at:ifAbsentPut:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #at:ifPresent:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #at:put:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #baseEnvironment!constants!private! !
-!Kernel.Namespace class categoriesFor: #basicClassPool:!binding!private! !
-!Kernel.Namespace class categoriesFor: #changeKey:to:!private! !
-!Kernel.Namespace class categoriesFor: #collect:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #declareVariable:!public! !
-!Kernel.Namespace class categoriesFor: #detect:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #detect:ifNone:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #do:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #do:separatedBy:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #hierarchyBindingFor:!bindings!private! !
-!Kernel.Namespace class categoriesFor: #includes:!dictionary-searching!public! !
-!Kernel.Namespace class categoriesFor: #includesKey:!dictionary-searching!public! !
-!Kernel.Namespace class categoriesFor: #inject:into:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #isEmpty!dictionary-testing!public! !
-!Kernel.Namespace class categoriesFor: #keyAtValue:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #keyAtValue:ifAbsent:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #keys!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #keysAndValuesDo:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #keysDo:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #localEnvironment!accessing!private! !
-!Kernel.Namespace class categoriesFor: #lookup:!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #new!instance creation!public! !
-!Kernel.Namespace class categoriesFor: #notEmpty!dictionary-testing!public! !
-!Kernel.Namespace class categoriesFor: #occurrencesOf:!dictionary-searching!public! !
-!Kernel.Namespace class categoriesFor: #rehash!dictionary-operations!public! !
-!Kernel.Namespace class categoriesFor: #reject:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #removeAllKeys:!dictionary-removing!public! !
-!Kernel.Namespace class categoriesFor: #removeAllKeys:ifAbsent:!dictionary-removing!public! !
-!Kernel.Namespace class categoriesFor: #removeKey:!dictionary-removing!public! !
-!Kernel.Namespace class categoriesFor: #removeKey:ifAbsent:!dictionary-removing!public! !
-!Kernel.Namespace class categoriesFor: #resolveImportedBinding:!binding!private! !
-!Kernel.Namespace class categoriesFor: #select:!dictionary-enumerating!public! !
-!Kernel.Namespace class categoriesFor: #size!accessing!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #values!dictionary-accessing!public! !
-!Kernel.Namespace class categoriesFor: #variableRenamed:from:!events!private! !
+!Kernel.Namespace class categoriesForMethods!
+add:!dictionary-adding!public! !
+addAll:!dictionary-adding!public! !
+addNewElement:!dictionary-adding!public! !
+allBehaviors!accessing!public! !
+allBehaviorsDo:!enumerating!public! !
+allBindings!enumerating!public! !
+allBindingsDo:!enumerating!public! !
+allClasses!accessing!public! !
+allClassesDo:!enumerating!public! !
+allSatisfy:!dictionary-enumerating!public! !
+anySatisfy:!dictionary-enumerating!public! !
+asArray!dictionary-converting!public! !
+asBag!dictionary-converting!public! !
+asByteArray!dictionary-converting!public! !
+asOrderedCollection!dictionary-converting!public! !
+asSet!dictionary-converting!public! !
+associationAt:!accessing!public! !
+associationAt:ifAbsent:!dictionary-accessing!public! !
+associations!private! !
+associationsDo:!enumerating!public! !
+asSortedCollection!dictionary-converting!public! !
+asSortedCollection:!dictionary-converting!public! !
+at:!dictionary-accessing!public! !
+at:ifAbsent:!dictionary-accessing!public! !
+at:ifAbsentPut:!dictionary-accessing!public! !
+at:ifPresent:!dictionary-accessing!public! !
+at:put:!dictionary-accessing!public! !
+baseEnvironment!constants!private! !
+basicClassPool:!binding!private! !
+changeKey:to:!private! !
+collect:!dictionary-enumerating!public! !
+declareVariable:!public! !
+detect:!dictionary-enumerating!public! !
+detect:ifNone:!dictionary-enumerating!public! !
+do:!dictionary-enumerating!public! !
+do:separatedBy:!dictionary-enumerating!public! !
+hierarchyBindingFor:!bindings!private! !
+includes:!dictionary-searching!public! !
+includesKey:!dictionary-searching!public! !
+inject:into:!dictionary-enumerating!public! !
+isEmpty!dictionary-testing!public! !
+keyAtValue:!dictionary-accessing!public! !
+keyAtValue:ifAbsent:!dictionary-accessing!public! !
+keys!dictionary-accessing!public! !
+keysAndValuesDo:!dictionary-enumerating!public! !
+keysDo:!dictionary-enumerating!public! !
+localEnvironment!accessing!private! !
+lookup:!dictionary-accessing!public! !
+new!instance creation!public! !
+notEmpty!dictionary-testing!public! !
+occurrencesOf:!dictionary-searching!public! !
+rehash!dictionary-operations!public! !
+reject:!dictionary-enumerating!public! !
+removeAllKeys:!dictionary-removing!public! !
+removeAllKeys:ifAbsent:!dictionary-removing!public! !
+removeKey:!dictionary-removing!public! !
+removeKey:ifAbsent:!dictionary-removing!public! !
+resolveImportedBinding:!binding!private! !
+select:!dictionary-enumerating!public! !
+size!accessing!dictionary-accessing!public! !
+values!dictionary-accessing!public! !
+variableRenamed:from:!events!private! !
+!
 
 Kernel.Namespace class methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
 Kernel.Namespace class methodProtocol: #Dictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!

@@ -95,18 +95,20 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBits!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBits:!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBmi!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #cbBmi:!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #ihBrush!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #iUsage!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #iUsage:!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #offBits!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #offBits:!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #offBmi!**compiled accessors**!public! !
-!OS.EMRCREATEMONOBRUSH categoriesFor: #offBmi:!**compiled accessors**!public! !
+!OS.EMRCREATEMONOBRUSH categoriesForMethods!
+cbBits!**compiled accessors**!public! !
+cbBits:!**compiled accessors**!public! !
+cbBmi!**compiled accessors**!public! !
+cbBmi:!**compiled accessors**!public! !
+ihBrush!**compiled accessors**!public! !
+ihBrush:!**compiled accessors**!public! !
+iUsage!**compiled accessors**!public! !
+iUsage:!**compiled accessors**!public! !
+offBits!**compiled accessors**!public! !
+offBits:!**compiled accessors**!public! !
+offBmi!**compiled accessors**!public! !
+offBmi:!**compiled accessors**!public! !
+!
 
 !OS.EMRCREATEMONOBRUSH class methodsFor!
 
@@ -156,7 +158,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_CREATEMONOBRUSH}! !
-!OS.EMRCREATEMONOBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRCREATEMONOBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRCREATEMONOBRUSH class categoriesFor: #iTypes!constants!public! !
+!OS.EMRCREATEMONOBRUSH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

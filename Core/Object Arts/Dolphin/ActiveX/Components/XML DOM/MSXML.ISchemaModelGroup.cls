@@ -49,8 +49,10 @@ particles
 	answer := ISchemaItemCollection newPointer.
 	self get_particles: answer.
 	^answer asObject! !
-!MSXML.ISchemaModelGroup categoriesFor: #get_particles:!**auto generated**!COM Interfaces-ISchemaModelGroup!private! !
-!MSXML.ISchemaModelGroup categoriesFor: #particles!**auto generated**!properties!public! !
+!MSXML.ISchemaModelGroup categoriesForMethods!
+get_particles:!**auto generated**!COM Interfaces-ISchemaModelGroup!private! !
+particles!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaModelGroup class methodsFor!
 
@@ -62,5 +64,7 @@ defineFunctions
 		defineFunction: #get_particles:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
-!MSXML.ISchemaModelGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaModelGroup class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -183,35 +183,37 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^self subclassResponsibility! !
-!Kernel.AttributeDescriptor categoriesFor: #beCompiled!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beImmutable!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beInaccessible!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beMutable!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beNonBrowsable!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beNonNullable!accessing!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beNullable!accessing!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beOverride!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beReadOnly!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beUncompiled!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #beWriteOnly!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #canGenerateAccessor!private!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #canGenerateAccessors!private!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #canGenerateMutator!private!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #defaultFlags!initializing!private! !
-!Kernel.AttributeDescriptor categoriesFor: #flags!accessing!private! !
-!Kernel.AttributeDescriptor categoriesFor: #flags:!initializing!private! !
-!Kernel.AttributeDescriptor categoriesFor: #initialize!initializing!private! !
-!Kernel.AttributeDescriptor categoriesFor: #isBrowsable!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isInaccessible!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isMutable!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isNonBrowsable!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isNullable!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isNullable:!accessing!modes!public! !
-!Kernel.AttributeDescriptor categoriesFor: #isOverride!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isReadable!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #isWriteable!public!testing! !
-!Kernel.AttributeDescriptor categoriesFor: #readFrom:!indirect accessing!private! !
-!Kernel.AttributeDescriptor categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Kernel.AttributeDescriptor categoriesForMethods!
+beCompiled!modes!public! !
+beImmutable!modes!public! !
+beInaccessible!modes!public! !
+beMutable!modes!public! !
+beNonBrowsable!modes!public! !
+beNonNullable!accessing!modes!public! !
+beNullable!accessing!modes!public! !
+beOverride!modes!public! !
+beReadOnly!modes!public! !
+beUncompiled!modes!public! !
+beWriteOnly!modes!public! !
+canGenerateAccessor!private!testing! !
+canGenerateAccessors!private!testing! !
+canGenerateMutator!private!testing! !
+defaultFlags!initializing!private! !
+flags!accessing!private! !
+flags:!initializing!private! !
+initialize!initializing!private! !
+isBrowsable!public!testing! !
+isInaccessible!public!testing! !
+isMutable!public!testing! !
+isNonBrowsable!public!testing! !
+isNullable!public!testing! !
+isNullable:!accessing!modes!public! !
+isOverride!public!testing! !
+isReadable!public!testing! !
+isWriteable!public!testing! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !Kernel.AttributeDescriptor class methodsFor!
 
@@ -244,9 +246,11 @@ writeOnly
 	which cannot be read, only written."
 
 	^self new beWriteOnly! !
-!Kernel.AttributeDescriptor class categoriesFor: #inaccessible!instance creation!private! !
-!Kernel.AttributeDescriptor class categoriesFor: #new!instance creation!public! !
-!Kernel.AttributeDescriptor class categoriesFor: #readOnly!instance creation!public! !
-!Kernel.AttributeDescriptor class categoriesFor: #uncompiled!instance creation!public! !
-!Kernel.AttributeDescriptor class categoriesFor: #writeOnly!instance creation!public! !
+!Kernel.AttributeDescriptor class categoriesForMethods!
+inaccessible!instance creation!private! !
+new!instance creation!public! !
+readOnly!instance creation!public! !
+uncompiled!instance creation!public! !
+writeOnly!instance creation!public! !
+!
 

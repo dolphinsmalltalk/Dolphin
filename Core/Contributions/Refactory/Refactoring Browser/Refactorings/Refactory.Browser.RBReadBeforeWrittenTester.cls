@@ -129,24 +129,26 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	self variableRead: aVariableNode! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #checkNewTemps:!initializing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #copyDictionary:!helpers!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #createScope!helpers!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #currentScope!accessing!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #executeTree:!accessing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #initialize!initializing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #initializeVars:!initializing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #processBlock:!operations!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #processIfTrueIfFalse:!operations!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #processStatementNode:!operations!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #read!accessing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #removeScope!private!removing! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #variableRead:!helpers!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #variableWritten:!helpers!private! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBReadBeforeWrittenTester categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBReadBeforeWrittenTester categoriesForMethods!
+checkNewTemps:!initializing!public! !
+copyDictionary:!helpers!private! !
+createScope!helpers!private! !
+currentScope!accessing!private! !
+executeTree:!accessing!public! !
+initialize!initializing!public! !
+initializeVars:!initializing!public! !
+processBlock:!operations!private! !
+processIfTrueIfFalse:!operations!private! !
+processStatementNode:!operations!private! !
+read!accessing!public! !
+removeScope!private!removing! !
+variableRead:!helpers!private! !
+variableWritten:!helpers!private! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+visitVariableNode:!public!visitor/double dispatching! !
+!
 
 !Refactory.Browser.RBReadBeforeWrittenTester class methodsFor!
 
@@ -167,8 +169,10 @@ variablesReadBeforeWrittenIn: aParseTree
 	^(self new)
 		executeTree: aParseTree;
 		read! !
-!Refactory.Browser.RBReadBeforeWrittenTester class categoriesFor: #isVariable:readBeforeWrittenIn:!accessing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester class categoriesFor: #isVariable:writtenBeforeReadIn:!accessing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester class categoriesFor: #readBeforeWritten:in:!accessing!public! !
-!Refactory.Browser.RBReadBeforeWrittenTester class categoriesFor: #variablesReadBeforeWrittenIn:!accessing!public! !
+!Refactory.Browser.RBReadBeforeWrittenTester class categoriesForMethods!
+isVariable:readBeforeWrittenIn:!accessing!public! !
+isVariable:writtenBeforeReadIn:!accessing!public! !
+readBeforeWritten:in:!accessing!public! !
+variablesReadBeforeWrittenIn:!accessing!public! !
+!
 

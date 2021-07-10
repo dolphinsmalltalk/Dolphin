@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.Tests.AnnouncerTest subclass: #'Kernel.Tests.WeakAnnouncerTest'
 	instanceVariableNames: ''
@@ -55,7 +55,9 @@ testWeakSubscription
 				send: #value
 				to: obj) makeWeak.
 	self assert: obj identicalTo: subscription subscriber! !
-!Kernel.Tests.WeakAnnouncerTest categoriesFor: #testNoWeakBlock!public!testing! !
-!Kernel.Tests.WeakAnnouncerTest categoriesFor: #testWeakObject!public!testing! !
-!Kernel.Tests.WeakAnnouncerTest categoriesFor: #testWeakSubscription!public!testing! !
+!Kernel.Tests.WeakAnnouncerTest categoriesForMethods!
+testNoWeakBlock!public!testing! !
+testWeakObject!public!testing! !
+testWeakSubscription!public!testing! !
+!
 

@@ -141,18 +141,20 @@ paintSeparatorOn: aCanvas in: aRectangle
 				bottom: aRectangle bottom)
 		edge: EDGE_ETCHED
 		grfFlags: BF_TOP! !
-!Tools.PopupMenuPainter categoriesFor: #borderInset!constants!private! !
-!Tools.PopupMenuPainter categoriesFor: #calculateGeometry:!public!updating! !
-!Tools.PopupMenuPainter categoriesFor: #dividerHeight!constants!private! !
-!Tools.PopupMenuPainter categoriesFor: #gutterWidth!constants!private! !
-!Tools.PopupMenuPainter categoriesFor: #heightOfItem:!accessing!private! !
-!Tools.PopupMenuPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!Tools.PopupMenuPainter categoriesFor: #itemHeight!constants!private! !
-!Tools.PopupMenuPainter categoriesFor: #itemRect:using:!accessing!public! !
-!Tools.PopupMenuPainter categoriesFor: #menuColor!constants!private! !
-!Tools.PopupMenuPainter categoriesFor: #offsetForSubmenu:canvas:!accessing!public! !
-!Tools.PopupMenuPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
-!Tools.PopupMenuPainter categoriesFor: #paintItem:on:in:!painting!private! !
-!Tools.PopupMenuPainter categoriesFor: #paintItemAccelerator:on:in:!painting!private! !
-!Tools.PopupMenuPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
+!Tools.PopupMenuPainter categoriesForMethods!
+borderInset!constants!private! !
+calculateGeometry:!public!updating! !
+dividerHeight!constants!private! !
+gutterWidth!constants!private! !
+heightOfItem:!accessing!private! !
+insertBefore:position:canvas:!public!testing! !
+itemHeight!constants!private! !
+itemRect:using:!accessing!public! !
+menuColor!constants!private! !
+offsetForSubmenu:canvas:!accessing!public! !
+paintEdgeOn:in:!painting!private! !
+paintItem:on:in:!painting!private! !
+paintItemAccelerator:on:in:!painting!private! !
+paintSeparatorOn:in:!painting!private! !
+!
 

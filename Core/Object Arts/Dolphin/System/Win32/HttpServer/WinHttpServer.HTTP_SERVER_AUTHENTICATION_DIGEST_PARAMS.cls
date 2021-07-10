@@ -71,14 +71,16 @@ RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForMethods!
+DomainName!**compiled accessors**!public! !
+DomainName:!**compiled accessors**!public! !
+DomainNameLength!**compiled accessors**!public! !
+DomainNameLength:!**compiled accessors**!public! !
+Realm!**compiled accessors**!public! !
+Realm:!**compiled accessors**!public! !
+RealmLength!**compiled accessors**!public! !
+RealmLength:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class methodsFor!
 
@@ -105,6 +107,8 @@ defineFields
 
 getFieldNames
 	^#(#DomainNameLength #DomainName #RealmLength #Realm)! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

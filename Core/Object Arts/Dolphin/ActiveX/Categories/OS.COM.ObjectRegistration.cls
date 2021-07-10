@@ -122,17 +122,19 @@ toolboxImage
 							toolboxImage := Graphics.Bitmap fromId: id in: resLib.
 							toolboxImage setMap3DColors: true]]].
 	^toolboxImage! !
-!OS.COM.ObjectRegistration categoriesFor: #=!comparing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #clsid!accessing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #clsid:!accessing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #defaultToolboxBitmap!accessing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #description!accessing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #displayOn:!displaying!public! !
-!OS.COM.ObjectRegistration categoriesFor: #getUserType:!accessing!private! !
-!OS.COM.ObjectRegistration categoriesFor: #hash!comparing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #name!accessing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #printOn:!printing!public! !
-!OS.COM.ObjectRegistration categoriesFor: #toolboxImage!accessing!public! !
+!OS.COM.ObjectRegistration categoriesForMethods!
+=!comparing!public! !
+clsid!accessing!public! !
+clsid:!accessing!public! !
+defaultToolboxBitmap!accessing!public! !
+description!accessing!public! !
+displayOn:!displaying!public! !
+getUserType:!accessing!private! !
+hash!comparing!public! !
+name!accessing!public! !
+printOn:!printing!public! !
+toolboxImage!accessing!public! !
+!
 
 !OS.COM.ObjectRegistration class methodsFor!
 
@@ -140,5 +142,7 @@ clsid: aCLSID
 	"Answer a new instance of the receiver for the specified class id."
 
 	^self new clsid: aCLSID; yourself! !
-!OS.COM.ObjectRegistration class categoriesFor: #clsid:!instance creation!public! !
+!OS.COM.ObjectRegistration class categoriesForMethods!
+clsid:!instance creation!public! !
+!
 

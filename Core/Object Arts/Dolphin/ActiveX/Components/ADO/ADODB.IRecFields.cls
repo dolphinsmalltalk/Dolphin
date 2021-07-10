@@ -22,7 +22,9 @@ ADOCheck
 
 	<virtual stdcall: hresult 4>
 	^self invalidCall: _failureCode! !
-!ADODB.IRecFields categoriesFor: #ADOCheck!**auto generated**!COM Interfaces-IRecFields!public! !
+!ADODB.IRecFields categoriesForMethods!
+ADOCheck!**auto generated**!COM Interfaces-IRecFields!public! !
+!
 
 !ADODB.IRecFields class methodsFor!
 
@@ -33,5 +35,7 @@ defineFunctions
 	self
 		defineFunction: #ADOCheck
 ! !
-!ADODB.IRecFields class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB.IRecFields class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

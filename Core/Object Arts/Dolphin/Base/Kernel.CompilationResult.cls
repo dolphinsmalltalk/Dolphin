@@ -93,22 +93,24 @@ textMap
 
 	textMap isNil ifTrue: [self buildTextMap].
 	^textMap! !
-!Kernel.CompilationResult categoriesFor: #buildTempsMap!development!private! !
-!Kernel.CompilationResult categoriesFor: #buildTextMap!development!private! !
-!Kernel.CompilationResult categoriesFor: #fireSystemUpdateEvent!helpers!private! !
-!Kernel.CompilationResult categoriesFor: #isNew!accessing!public! !
-!Kernel.CompilationResult categoriesFor: #method!accessing!public! !
-!Kernel.CompilationResult categoriesFor: #method:!accessing!private! !
-!Kernel.CompilationResult categoriesFor: #method:rawTextMap:rawTempsMap:!initializing!private! !
-!Kernel.CompilationResult categoriesFor: #oldMethod!accessing!public! !
-!Kernel.CompilationResult categoriesFor: #oldMethod:!accessing!public! !
-!Kernel.CompilationResult categoriesFor: #package!accessing!public! !
-!Kernel.CompilationResult categoriesFor: #package:!accessing!public! !
-!Kernel.CompilationResult categoriesFor: #rawTempsMap:!accessing!private! !
-!Kernel.CompilationResult categoriesFor: #rawTextMap:!accessing!private! !
-!Kernel.CompilationResult categoriesFor: #tempsAtIp:!accessing!development!private! !
-!Kernel.CompilationResult categoriesFor: #tempsMap!accessing!development!public! !
-!Kernel.CompilationResult categoriesFor: #textMap!accessing!development!public! !
+!Kernel.CompilationResult categoriesForMethods!
+buildTempsMap!development!private! !
+buildTextMap!development!private! !
+fireSystemUpdateEvent!helpers!private! !
+isNew!accessing!public! !
+method!accessing!public! !
+method:!accessing!private! !
+method:rawTextMap:rawTempsMap:!initializing!private! !
+oldMethod!accessing!public! !
+oldMethod:!accessing!public! !
+package!accessing!public! !
+package:!accessing!public! !
+rawTempsMap:!accessing!private! !
+rawTextMap:!accessing!private! !
+tempsAtIp:!accessing!development!private! !
+tempsMap!accessing!development!public! !
+textMap!accessing!development!public! !
+!
 
 !Kernel.CompilationResult class methodsFor!
 
@@ -118,5 +120,7 @@ method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
 		method: aCompiledMethod
 		rawTextMap: textArray
 		rawTempsMap: tempsArray! !
-!Kernel.CompilationResult class categoriesFor: #method:rawTextMap:rawTempsMap:!instance creation!public! !
+!Kernel.CompilationResult class categoriesForMethods!
+method:rawTextMap:rawTempsMap:!instance creation!public! !
+!
 

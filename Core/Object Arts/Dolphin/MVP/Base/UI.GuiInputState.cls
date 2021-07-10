@@ -140,23 +140,27 @@ visibleWindows
 			hWnd := each asParameter.
 			hWnd notNil
 				and: [hWnd ~= hDesktop and: [(User32 isWindow: hWnd) and: [User32 isWindowVisible: hWnd]]]]! !
-!UI.GuiInputState categoriesFor: #aboutToForkUI!idling!private! !
-!UI.GuiInputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
-!UI.GuiInputState categoriesFor: #getLastInputInfo!helpers!private! !
-!UI.GuiInputState categoriesFor: #guiStartup!operations-startup!private! !
-!UI.GuiInputState categoriesFor: #isDolphinWindow:!private!testing! !
-!UI.GuiInputState categoriesFor: #topLevelWindowHandlesDo:!enumerating!private! !
-!UI.GuiInputState categoriesFor: #topLevelWindows!enumerating!public! !
-!UI.GuiInputState categoriesFor: #topLevelWindowsInZOrder!enumerating!public! !
-!UI.GuiInputState categoriesFor: #uiIdle!idling!private! !
-!UI.GuiInputState categoriesFor: #uiIdle:!idling!private! !
-!UI.GuiInputState categoriesFor: #userSessionIdleMs!idling!public! !
-!UI.GuiInputState categoriesFor: #visibleWindows!private!testing! !
+!UI.GuiInputState categoriesForMethods!
+aboutToForkUI!idling!private! !
+allTopLevelWindowHandlesDo:!enumerating!private! !
+getLastInputInfo!helpers!private! !
+guiStartup!operations-startup!private! !
+isDolphinWindow:!private!testing! !
+topLevelWindowHandlesDo:!enumerating!private! !
+topLevelWindows!enumerating!public! !
+topLevelWindowsInZOrder!enumerating!public! !
+uiIdle!idling!private! !
+uiIdle:!idling!private! !
+userSessionIdleMs!idling!public! !
+visibleWindows!private!testing! !
+!
 
 !UI.GuiInputState class methodsFor!
 
 initialize
 	EnumHandlesDescriptor := External.FunctionDescriptor returnType: 'bool'
 				argumentTypes: 'handle uintptr'! !
-!UI.GuiInputState class categoriesFor: #initialize!development!initializing!public! !
+!UI.GuiInputState class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

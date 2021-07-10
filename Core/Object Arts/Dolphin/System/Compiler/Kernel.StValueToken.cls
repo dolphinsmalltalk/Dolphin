@@ -26,10 +26,12 @@ value
 
 value: anObject
 	value := anObject! !
-!Kernel.StValueToken categoriesFor: #length!accessing!private! !
-!Kernel.StValueToken categoriesFor: #printOn:!printing!public! !
-!Kernel.StValueToken categoriesFor: #value!accessing!public! !
-!Kernel.StValueToken categoriesFor: #value:!initializing!private! !
+!Kernel.StValueToken categoriesForMethods!
+length!accessing!private! !
+printOn:!printing!public! !
+value!accessing!public! !
+value:!initializing!private! !
+!
 
 !Kernel.StValueToken class methodsFor!
 
@@ -40,5 +42,7 @@ start: anInteger comments: aCollectionOrNil value: aString
 		comments: aCollectionOrNil;
 		value: aString;
 		yourself! !
-!Kernel.StValueToken class categoriesFor: #start:comments:value:!instance creation!public! !
+!Kernel.StValueToken class categoriesForMethods!
+start:comments:value:!instance creation!public! !
+!
 

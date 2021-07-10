@@ -65,15 +65,17 @@ rcBound: aRECTL
 		from: ##(_OffsetOf_rcBound + 1)
 		to: ##(_OffsetOf_rcBound + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.RGNDATA categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #iType!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #iType:!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #nCount!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #nCount:!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #nRgnSize!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #nRgnSize:!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #rcBound!**compiled accessors**!public! !
-!OS.RGNDATA categoriesFor: #rcBound:!**compiled accessors**!public! !
+!OS.RGNDATA categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+iType!**compiled accessors**!public! !
+iType:!**compiled accessors**!public! !
+nCount!**compiled accessors**!public! !
+nCount:!**compiled accessors**!public! !
+nRgnSize!**compiled accessors**!public! !
+nRgnSize:!**compiled accessors**!public! !
+rcBound!**compiled accessors**!public! !
+rcBound:!**compiled accessors**!public! !
+!
 
 !OS.RGNDATA class methodsFor!
 
@@ -109,6 +111,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
-!OS.RGNDATA class categoriesFor: #defineFields!public!template definition! !
-!OS.RGNDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.RGNDATA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

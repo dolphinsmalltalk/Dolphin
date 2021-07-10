@@ -78,14 +78,16 @@ item: index
 	answer := IScriptProcedure newPointer.
 	self get_Item: index asVariant ppdispProcedure: answer.
 	^answer asObject! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #count!**auto generated**!properties!public! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #get_Item:ppdispProcedure:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSScriptControl.IScriptProcedureCollection categoriesFor: #item:!**auto generated**!properties!public! !
+!MSScriptControl.IScriptProcedureCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+count!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+get_Count:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+get_Item:ppdispProcedure:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !MSScriptControl.IScriptProcedureCollection class methodsFor!
 
@@ -113,7 +115,9 @@ initializeTypeLib
 		IScriptProcedureCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!MSScriptControl.IScriptProcedureCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSScriptControl.IScriptProcedureCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
-!MSScriptControl.IScriptProcedureCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!MSScriptControl.IScriptProcedureCollection class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

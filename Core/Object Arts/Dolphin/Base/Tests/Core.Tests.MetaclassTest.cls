@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.ClassDescriptionTest subclass: #'Core.Tests.MetaclassTest'
 	instanceVariableNames: ''
@@ -84,11 +84,13 @@ testName
 
 testStoreOn
 	self assert: self class class storeString equals: 'Core.Tests.MetaclassTest class'! !
-!Core.Tests.MetaclassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!Core.Tests.MetaclassTest categoriesFor: #testInstances!public!unit tests! !
-!Core.Tests.MetaclassTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!Core.Tests.MetaclassTest categoriesFor: #testLocalEnvironment!public!unit tests! !
-!Core.Tests.MetaclassTest categoriesFor: #testLocalScope!public!unit tests! !
-!Core.Tests.MetaclassTest categoriesFor: #testName!public!unit tests! !
-!Core.Tests.MetaclassTest categoriesFor: #testStoreOn!public!unit tests! !
+!Core.Tests.MetaclassTest categoriesForMethods!
+allClassHierarchyInstancesDo:!helpers!private! !
+testInstances!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+testLocalEnvironment!public!unit tests! !
+testLocalScope!public!unit tests! !
+testName!public!unit tests! !
+testStoreOn!public!unit tests! !
+!
 

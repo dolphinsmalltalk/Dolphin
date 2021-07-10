@@ -199,38 +199,40 @@ textValidMask
 	"This mask value is the same for most of the controls."
 
 	^16r1! !
-!OS.CCITEM categoriesFor: #cchTextMax!accessing!public! !
-!OS.CCITEM categoriesFor: #cchTextMax:!accessing!public! !
-!OS.CCITEM categoriesFor: #dwState!accessing!public! !
-!OS.CCITEM categoriesFor: #dwState:!accessing!public! !
-!OS.CCITEM categoriesFor: #handle!accessing!public! !
-!OS.CCITEM categoriesFor: #iImage!accessing!public! !
-!OS.CCITEM categoriesFor: #iImage:!accessing!public! !
-!OS.CCITEM categoriesFor: #image:!accessing!public! !
-!OS.CCITEM categoriesFor: #imageCallback!accessing!public! !
-!OS.CCITEM categoriesFor: #imageValidMask!constants!private! !
-!OS.CCITEM categoriesFor: #lParam!accessing!public! !
-!OS.CCITEM categoriesFor: #lParam:!accessing!public! !
-!OS.CCITEM categoriesFor: #mask!**compiled accessors**!public! !
-!OS.CCITEM categoriesFor: #mask:!**compiled accessors**!public! !
-!OS.CCITEM categoriesFor: #maskIn:!accessing!public! !
-!OS.CCITEM categoriesFor: #newTextBuffer:!helpers!public! !
-!OS.CCITEM categoriesFor: #param:!accessing!public! !
-!OS.CCITEM categoriesFor: #paramValidMask!constants!private! !
-!OS.CCITEM categoriesFor: #pszText!accessing!public! !
-!OS.CCITEM categoriesFor: #pszText:!accessing!public! !
-!OS.CCITEM categoriesFor: #state:!accessing!public! !
-!OS.CCITEM categoriesFor: #stateMask!accessing!public! !
-!OS.CCITEM categoriesFor: #stateMask:!accessing!public! !
-!OS.CCITEM categoriesFor: #stateMaskIn:!accessing!private! !
-!OS.CCITEM categoriesFor: #stateMaskOut:!accessing!private! !
-!OS.CCITEM categoriesFor: #stateValidMask!constants!private! !
-!OS.CCITEM categoriesFor: #text!accessing!public! !
-!OS.CCITEM categoriesFor: #text:!accessing!public! !
-!OS.CCITEM categoriesFor: #textCallback!accessing!public! !
-!OS.CCITEM categoriesFor: #textInBuffer:!constants!public! !
-!OS.CCITEM categoriesFor: #textPointerOffset!constants!private! !
-!OS.CCITEM categoriesFor: #textValidMask!constants!private! !
+!OS.CCITEM categoriesForMethods!
+cchTextMax!accessing!public! !
+cchTextMax:!accessing!public! !
+dwState!accessing!public! !
+dwState:!accessing!public! !
+handle!accessing!public! !
+iImage!accessing!public! !
+iImage:!accessing!public! !
+image:!accessing!public! !
+imageCallback!accessing!public! !
+imageValidMask!constants!private! !
+lParam!accessing!public! !
+lParam:!accessing!public! !
+mask!**compiled accessors**!public! !
+mask:!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+newTextBuffer:!helpers!public! !
+param:!accessing!public! !
+paramValidMask!constants!private! !
+pszText!accessing!public! !
+pszText:!accessing!public! !
+state:!accessing!public! !
+stateMask!accessing!public! !
+stateMask:!accessing!public! !
+stateMaskIn:!accessing!private! !
+stateMaskOut:!accessing!private! !
+stateValidMask!constants!private! !
+text!accessing!public! !
+text:!accessing!public! !
+textCallback!accessing!public! !
+textInBuffer:!constants!public! !
+textPointerOffset!constants!private! !
+textValidMask!constants!private! !
+!
 
 !OS.CCITEM class methodsFor!
 
@@ -243,5 +245,7 @@ defineFields
 		defineField: #mask
 		type: DWORDField new
 		offset: 0! !
-!OS.CCITEM class categoriesFor: #defineFields!public!template definition! !
+!OS.CCITEM class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

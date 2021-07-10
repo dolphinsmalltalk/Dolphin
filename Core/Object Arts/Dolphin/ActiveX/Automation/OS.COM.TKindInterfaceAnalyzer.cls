@@ -34,8 +34,10 @@ vt
 	the receiver."
 
 	^VT_UNKNOWN! !
-!OS.COM.TKindInterfaceAnalyzer categoriesFor: #baseClass!constants!private! !
-!OS.COM.TKindInterfaceAnalyzer categoriesFor: #vt!constants!public! !
+!OS.COM.TKindInterfaceAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+vt!constants!public! !
+!
 
 !OS.COM.TKindInterfaceAnalyzer class methodsFor!
 
@@ -43,5 +45,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_INTERFACE! !
-!OS.COM.TKindInterfaceAnalyzer class categoriesFor: #typekind!constants!private! !
+!OS.COM.TKindInterfaceAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

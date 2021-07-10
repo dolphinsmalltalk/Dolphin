@@ -60,9 +60,11 @@ state
 	answer := SDWORD new.
 	self get_State: answer.
 	^answer asObject! !
-!ADODB.Command25 categoriesFor: #Cancel!**auto generated**!COM Interfaces-Command25!public! !
-!ADODB.Command25 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Command25!private! !
-!ADODB.Command25 categoriesFor: #state!**auto generated**!properties!public! !
+!ADODB.Command25 categoriesForMethods!
+Cancel!**auto generated**!COM Interfaces-Command25!public! !
+get_State:!**auto generated**!COM Interfaces-Command25!private! !
+state!**auto generated**!properties!public! !
+!
 
 !ADODB.Command25 class methodsFor!
 
@@ -75,5 +77,7 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #Cancel
 ! !
-!ADODB.Command25 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Command25 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

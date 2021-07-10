@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.ReferenceViewTest'
 	instanceVariableNames: ''
@@ -30,7 +30,9 @@ testRecreate
 	presenter recreate.
 	self assert: presenter subViews size equals: 1.
 	self assert: presenter referee hasBorder! !
-!UI.Tests.ReferenceViewTest categoriesFor: #classToTest!helpers!private! !
-!UI.Tests.ReferenceViewTest categoriesFor: #initializePresenter!public!Running! !
-!UI.Tests.ReferenceViewTest categoriesFor: #testRecreate!public!unit tests! !
+!UI.Tests.ReferenceViewTest categoriesForMethods!
+classToTest!helpers!private! !
+initializePresenter!public!Running! !
+testRecreate!public!unit tests! !
+!
 

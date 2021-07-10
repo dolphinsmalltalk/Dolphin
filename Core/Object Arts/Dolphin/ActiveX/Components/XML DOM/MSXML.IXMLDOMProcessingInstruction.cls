@@ -84,15 +84,17 @@ target
 	answer := BSTR new.
 	self get_target: answer.
 	^answer asObject! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #=!comparing!public! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #childNodes!properties!public! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #data!**auto generated**!properties!public! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #data:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #get_target:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #printOn:!development!printing!public! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!MSXML.IXMLDOMProcessingInstruction categoriesFor: #target!**auto generated**!properties!public! !
+!MSXML.IXMLDOMProcessingInstruction categoriesForMethods!
+=!comparing!public! !
+childNodes!properties!public! !
+data!**auto generated**!properties!public! !
+data:!**auto generated**!properties!public! !
+get_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+get_target:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+printOn:!development!printing!public! !
+put_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+target!**auto generated**!properties!public! !
+!
 
 !MSXML.IXMLDOMProcessingInstruction class methodsFor!
 
@@ -108,5 +110,7 @@ defineFunctions
 		defineFunction: #put_data:
 			argumentTypes: 'bstr'
 ! !
-!MSXML.IXMLDOMProcessingInstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMProcessingInstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

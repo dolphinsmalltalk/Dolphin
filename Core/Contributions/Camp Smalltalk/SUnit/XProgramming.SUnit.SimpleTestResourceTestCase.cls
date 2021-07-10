@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.SimpleTestResourceTestCase'
 	instanceVariableNames: 'resource'
@@ -47,14 +47,16 @@ testResourcesCollection
 	| collection |
 	collection := self resources.
 	self assert: collection size equals: 1! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #dummy!public! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #error!public! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #fail!public! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #setRun!public! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #setUp!public! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #testRan!public! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #testResourceInitRelease!public! !
-!XProgramming.SUnit.SimpleTestResourceTestCase categoriesFor: #testResourcesCollection!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase categoriesForMethods!
+dummy!public! !
+error!public! !
+fail!public! !
+setRun!public! !
+setUp!public! !
+testRan!public! !
+testResourceInitRelease!public! !
+testResourcesCollection!public! !
+!
 
 !XProgramming.SUnit.SimpleTestResourceTestCase class methodsFor!
 
@@ -62,5 +64,7 @@ resources
 	^Set new
 		add: SimpleTestResource;
 		yourself! !
-!XProgramming.SUnit.SimpleTestResourceTestCase class categoriesFor: #resources!public! !
+!XProgramming.SUnit.SimpleTestResourceTestCase class categoriesForMethods!
+resources!public! !
+!
 

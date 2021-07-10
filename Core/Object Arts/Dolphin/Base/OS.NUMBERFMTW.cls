@@ -171,34 +171,36 @@ thousandSeparator
 
 thousandSeparator: aString
 	self groupSeparator: aString! !
-!OS.NUMBERFMTW categoriesFor: #decimalPlaces!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #decimalPlaces:!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #decimalSeparator!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #decimalSeparator:!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #grouping!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #Grouping!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #grouping:!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #Grouping:!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #groupSeparator!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #groupSeparator:!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #hasLeadingZero!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #hasLeadingZero:!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #LeadingZero!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #LeadingZero:!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #lpDecimalSep!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #lpDecimalSep:!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #lpThousandSep!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #lpThousandSep:!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #negativeNumberMode!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #negativeNumberMode:!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #NegativeOrder!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #NegativeOrder:!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #numberGrouping!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #numberGrouping:!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #NumDigits!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #NumDigits:!**compiled accessors**!private! !
-!OS.NUMBERFMTW categoriesFor: #thousandSeparator!accessing!public! !
-!OS.NUMBERFMTW categoriesFor: #thousandSeparator:!accessing!public! !
+!OS.NUMBERFMTW categoriesForMethods!
+decimalPlaces!accessing!public! !
+decimalPlaces:!accessing!public! !
+decimalSeparator!accessing!public! !
+decimalSeparator:!accessing!public! !
+grouping!accessing!public! !
+Grouping!**compiled accessors**!private! !
+grouping:!accessing!public! !
+Grouping:!**compiled accessors**!private! !
+groupSeparator!accessing!public! !
+groupSeparator:!accessing!public! !
+hasLeadingZero!accessing!public! !
+hasLeadingZero:!accessing!public! !
+LeadingZero!**compiled accessors**!private! !
+LeadingZero:!**compiled accessors**!private! !
+lpDecimalSep!**compiled accessors**!private! !
+lpDecimalSep:!**compiled accessors**!private! !
+lpThousandSep!**compiled accessors**!private! !
+lpThousandSep:!**compiled accessors**!private! !
+negativeNumberMode!accessing!public! !
+negativeNumberMode:!accessing!public! !
+NegativeOrder!**compiled accessors**!private! !
+NegativeOrder:!**compiled accessors**!private! !
+numberGrouping!accessing!public! !
+numberGrouping:!accessing!public! !
+NumDigits!**compiled accessors**!private! !
+NumDigits:!**compiled accessors**!private! !
+thousandSeparator!accessing!public! !
+thousandSeparator:!accessing!public! !
+!
 
 !OS.NUMBERFMTW class methodsFor!
 
@@ -229,6 +231,8 @@ defineFields
 
 getFieldNames
 	^#(#NumDigits #LeadingZero #Grouping #lpDecimalSep #lpThousandSep #NegativeOrder)! !
-!OS.NUMBERFMTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.NUMBERFMTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.NUMBERFMTW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -158,6 +158,8 @@ icon
 
 newDocument
 	^IXMLDOMDocument3 new! !
-!MSXML class categoriesFor: #icon!constants!public! !
-!MSXML class categoriesFor: #newDocument!private! !
+!MSXML class categoriesForMethods!
+icon!constants!public! !
+newDocument!private! !
+!
 

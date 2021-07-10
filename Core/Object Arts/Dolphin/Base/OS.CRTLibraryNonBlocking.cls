@@ -34,16 +34,20 @@ fgetws: buf n: bufsize stream: aFILE
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall: _failureCode! !
-!OS.CRTLibraryNonBlocking categoriesFor: #_errno!CRT functions-process and environment control!public! !
-!OS.CRTLibraryNonBlocking categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
-!OS.CRTLibraryNonBlocking categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
-!OS.CRTLibraryNonBlocking categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !
-!OS.CRTLibraryNonBlocking categoriesFor: #fgetws:n:stream:!CRT functions-stream I/O!public! !
-!OS.CRTLibraryNonBlocking categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+!OS.CRTLibraryNonBlocking categoriesForMethods!
+_errno!CRT functions-process and environment control!public! !
+fgetc:!CRT functions-stream I/O!public! !
+fgets:n:stream:!CRT functions-stream I/O!public! !
+fgetwc:!CRT functions-stream I/O!public! !
+fgetws:n:stream:!CRT functions-stream I/O!public! !
+fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+!
 
 !OS.CRTLibraryNonBlocking class methodsFor!
 
 sharedVariableName
 	^nil! !
-!OS.CRTLibraryNonBlocking class categoriesFor: #sharedVariableName!constants!private! !
+!OS.CRTLibraryNonBlocking class categoriesForMethods!
+sharedVariableName!constants!private! !
+!
 

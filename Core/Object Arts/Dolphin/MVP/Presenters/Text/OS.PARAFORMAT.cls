@@ -161,32 +161,34 @@ wNumbering: anInteger
 	"Set the receiver's 'wNumbering' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wNumbering put: anInteger! !
-!OS.PARAFORMAT categoriesFor: #alignment!accessing!public! !
-!OS.PARAFORMAT categoriesFor: #alignment:!accessing!public! !
-!OS.PARAFORMAT categoriesFor: #cTabCount!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #cTabCount:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dwMask!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dwMask:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dxOffset!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dxOffset:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dxRightIndent!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dxRightIndent:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dxStartIndent!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #dxStartIndent:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #maskIn:!accessing!private! !
-!OS.PARAFORMAT categoriesFor: #offset!accessing!public! !
-!OS.PARAFORMAT categoriesFor: #offset:!accessing!public! !
-!OS.PARAFORMAT categoriesFor: #rgxTabs!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #rgxTabs:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #startIndent!accessing!public! !
-!OS.PARAFORMAT categoriesFor: #startIndent:!accessing!public! !
-!OS.PARAFORMAT categoriesFor: #wAlignment!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #wAlignment:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #wEffects!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #wEffects:!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #wNumbering!**compiled accessors**!public! !
-!OS.PARAFORMAT categoriesFor: #wNumbering:!**compiled accessors**!public! !
+!OS.PARAFORMAT categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+cTabCount!**compiled accessors**!public! !
+cTabCount:!**compiled accessors**!public! !
+dwMask!**compiled accessors**!public! !
+dwMask:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dxOffset!**compiled accessors**!public! !
+dxOffset:!**compiled accessors**!public! !
+dxRightIndent!**compiled accessors**!public! !
+dxRightIndent:!**compiled accessors**!public! !
+dxStartIndent!**compiled accessors**!public! !
+dxStartIndent:!**compiled accessors**!public! !
+maskIn:!accessing!private! !
+offset!accessing!public! !
+offset:!accessing!public! !
+rgxTabs!**compiled accessors**!public! !
+rgxTabs:!**compiled accessors**!public! !
+startIndent!accessing!public! !
+startIndent:!accessing!public! !
+wAlignment!**compiled accessors**!public! !
+wAlignment:!**compiled accessors**!public! !
+wEffects!**compiled accessors**!public! !
+wEffects:!**compiled accessors**!public! !
+wNumbering!**compiled accessors**!public! !
+wNumbering:!**compiled accessors**!public! !
+!
 
 !OS.PARAFORMAT class methodsFor!
 
@@ -214,7 +216,9 @@ getFieldNames
 
 packing
 	^VMConstants.IntPtrSize! !
-!OS.PARAFORMAT class categoriesFor: #defineFields!public!template definition! !
-!OS.PARAFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.PARAFORMAT class categoriesFor: #packing!constants!public! !
+!OS.PARAFORMAT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STON.Tests.STONTestCase subclass: #'STON.Tests.JSONTest'
 	instanceVariableNames: ''
@@ -116,15 +116,17 @@ testUnknown
 
 	self should: [JSON toString: 1 @ 2] raise: WriterError.
 	self should: [JSON toString: #(1 2 3) asOrderedCollection] raise: WriterError! !
-!STON.Tests.JSONTest categoriesFor: #testBooleans!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testCircular!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testFloats!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testIntegers!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testLists!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testMaps!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testNull!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testOrderedDictionary!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testShared!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testStrings!public!tests! !
-!STON.Tests.JSONTest categoriesFor: #testUnknown!public!tests! !
+!STON.Tests.JSONTest categoriesForMethods!
+testBooleans!public!tests! !
+testCircular!public!tests! !
+testFloats!public!tests! !
+testIntegers!public!tests! !
+testLists!public!tests! !
+testMaps!public!tests! !
+testNull!public!tests! !
+testOrderedDictionary!public!tests! !
+testShared!public!tests! !
+testStrings!public!tests! !
+testUnknown!public!tests! !
+!
 

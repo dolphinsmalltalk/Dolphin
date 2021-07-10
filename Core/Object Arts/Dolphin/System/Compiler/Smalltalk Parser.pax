@@ -388,7 +388,9 @@ parseTreeFor: aSymbol
 		in: self
 		environment: method environment
 		onError: [:aString :pos | ^nil]! !
-!Core.Behavior categoriesFor: #parseTreeFor:!public!RefactoringBrowser! !
+!Core.Behavior categoriesForMethods!
+parseTreeFor:!public!RefactoringBrowser! !
+!
 
 !Kernel.CompiledCode methodsFor!
 
@@ -400,9 +402,11 @@ parseTreeNoError
 
 parseTreeOnError: aBlock 
 	^self subclassResponsibility! !
-!Kernel.CompiledCode categoriesFor: #parseTree!parsing!public! !
-!Kernel.CompiledCode categoriesFor: #parseTreeNoError!parsing!public! !
-!Kernel.CompiledCode categoriesFor: #parseTreeOnError:!parsing!public! !
+!Kernel.CompiledCode categoriesForMethods!
+parseTree!parsing!public! !
+parseTreeNoError!parsing!public! !
+parseTreeOnError:!parsing!public! !
+!
 
 !Kernel.CompiledExpression methodsFor!
 
@@ -412,7 +416,9 @@ parseTreeOnError: aBlock
 		in: self methodClass
 		environment: self environment
 		onError: aBlock! !
-!Kernel.CompiledExpression categoriesFor: #parseTreeOnError:!parsing!public! !
+!Kernel.CompiledExpression categoriesForMethods!
+parseTreeOnError:!parsing!public! !
+!
 
 !Kernel.CompiledMethod methodsFor!
 
@@ -422,7 +428,9 @@ parseTreeOnError: aBlock
 		in: self methodClass
 		environment: self environment
 		onError: aBlock! !
-!Kernel.CompiledMethod categoriesFor: #parseTreeOnError:!parsing!public! !
+!Kernel.CompiledMethod categoriesForMethods!
+parseTreeOnError:!parsing!public! !
+!
 
 !Kernel.CompileFailedMethod methodsFor!
 
@@ -431,7 +439,9 @@ accessesInstVar: aString at: anInteger
 	is the instance variable of its method class with the specified <integer> index."
 
 	^self refersToVariable: aString! !
-!Kernel.CompileFailedMethod categoriesFor: #accessesInstVar:at:!development!public!testing! !
+!Kernel.CompileFailedMethod categoriesForMethods!
+accessesInstVar:at:!development!public!testing! !
+!
 
 "End of package definition"!
 

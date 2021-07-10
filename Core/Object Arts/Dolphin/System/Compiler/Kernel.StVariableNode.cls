@@ -27,8 +27,10 @@ name
 setName: aString start: anInteger
 	name := aString.
 	start := anInteger! !
-!Kernel.StVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StVariableNode categoriesFor: #identifierToken:!initializing!private! !
-!Kernel.StVariableNode categoriesFor: #name!accessing!public! !
-!Kernel.StVariableNode categoriesFor: #setName:start:!initializing!private! !
+!Kernel.StVariableNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+identifierToken:!initializing!private! !
+name!accessing!public! !
+setName:start:!initializing!private! !
+!
 

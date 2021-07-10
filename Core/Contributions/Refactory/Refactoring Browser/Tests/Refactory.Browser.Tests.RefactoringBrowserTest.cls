@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RefactoringBrowserTest'
 	instanceVariableNames: ''
@@ -38,10 +38,12 @@ proceedThroughWarning: aBlock
 	#rbFix.	"Use ANSI standard #resume"
 	"	aBlock on: RefactoringWarning do: [:ex | ex proceed]"
 	aBlock on: RefactoringWarning do: [:ex | ex resume]! !
-!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #convertInterval:for:!private! !
-!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #executeRefactoring:!private! !
-!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #objectClassVariable!private! !
-!Refactory.Browser.Tests.RefactoringBrowserTest categoriesFor: #proceedThroughWarning:!private! !
+!Refactory.Browser.Tests.RefactoringBrowserTest categoriesForMethods!
+convertInterval:for:!private! !
+executeRefactoring:!private! !
+objectClassVariable!private! !
+proceedThroughWarning:!private! !
+!
 
 !Refactory.Browser.Tests.RefactoringBrowserTest class methodsFor!
 
@@ -49,5 +51,7 @@ shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
-!Refactory.Browser.Tests.RefactoringBrowserTest class categoriesFor: #shouldInheritSelectors!public!Testing! !
+!Refactory.Browser.Tests.RefactoringBrowserTest class categoriesForMethods!
+shouldInheritSelectors!public!Testing! !
+!
 

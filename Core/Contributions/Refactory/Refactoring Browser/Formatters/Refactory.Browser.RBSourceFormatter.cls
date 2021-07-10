@@ -155,30 +155,32 @@ visitQualifiedReferenceNode: aQualifiedReferenceNode
 
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #bracketWith:around:!helpers!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #currentLineLength!accessing!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #format:!operations!public! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #formatArray:!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #formatExternalCallName:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #formatTagsFor:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #indent:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #indent:around:!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #initialize!initializing!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #isLineTooLong:!helpers!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #maxLineLength!constants!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #newLine!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #space!formatting!private! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitArrayNode:!public!visiting! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitExternalArgTypeNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
-!Refactory.Browser.RBSourceFormatter categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!Refactory.Browser.RBSourceFormatter categoriesForMethods!
+bracketWith:around:!helpers!private! !
+currentLineLength!accessing!private! !
+format:!operations!public! !
+formatArray:!private! !
+formatExternalCallName:!formatting!private! !
+formatMethodBodyFor:!formatting!private! !
+formatMethodPatternFor:!formatting!private! !
+formatStatementCommentsFor:!formatting!private! !
+formatTagsFor:!formatting!private! !
+indent:!formatting!private! !
+indent:around:!formatting!private! !
+initialize!initializing!private! !
+isLineTooLong:!helpers!private! !
+maxLineLength!constants!private! !
+newLine!formatting!private! !
+space!formatting!private! !
+visitAnnotationNode:!public!visitor/double dispatching! !
+visitArrayNode:!public!visiting! !
+visitExternalArgTypeNode:!public!visitor/double dispatching! !
+visitExternalCallNode:!public!visitor/double dispatching! !
+visitMethodNode:!public!visitor/double dispatching! !
+visitPrimitiveNode:!public!visitor/double dispatching! !
+visitQualifiedReferenceNode:!public!visiting! !
+visitVariableNode:!public!visitor/double dispatching! !
+!
 
 !Refactory.Browser.RBSourceFormatter class methodsFor!
 
@@ -213,11 +215,13 @@ periodsAtEndOfMethod
 
 periodsAtEndOfMethod: aBoolean 
 	PeriodsAtEndOfMethod := aBoolean! !
-!Refactory.Browser.RBSourceFormatter class categoriesFor: #format:!public!public interface! !
-!Refactory.Browser.RBSourceFormatter class categoriesFor: #format:withIndents:!public!public interface! !
-!Refactory.Browser.RBSourceFormatter class categoriesFor: #initialize!initializing!public! !
-!Refactory.Browser.RBSourceFormatter class categoriesFor: #maxLineLength!public!settings! !
-!Refactory.Browser.RBSourceFormatter class categoriesFor: #maxLineLength:!public!settings! !
-!Refactory.Browser.RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod!public! !
-!Refactory.Browser.RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod:!public! !
+!Refactory.Browser.RBSourceFormatter class categoriesForMethods!
+format:!public!public interface! !
+format:withIndents:!public!public interface! !
+initialize!initializing!public! !
+maxLineLength!public!settings! !
+maxLineLength:!public!settings! !
+periodsAtEndOfMethod!public! !
+periodsAtEndOfMethod:!public! !
+!
 

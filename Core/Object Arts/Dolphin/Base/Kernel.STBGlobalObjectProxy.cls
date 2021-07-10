@@ -48,11 +48,13 @@ value
 
 	#namespaceToDo.	"Need to place with qualified name here and current untested"
 	^Smalltalk at: symbol put: object! !
-!Kernel.STBGlobalObjectProxy categoriesFor: #object:!accessing!private! !
-!Kernel.STBGlobalObjectProxy categoriesFor: #stbFixup:at:!accessing!public! !
-!Kernel.STBGlobalObjectProxy categoriesFor: #stbSaveOn:!binary filing!public! !
-!Kernel.STBGlobalObjectProxy categoriesFor: #symbol:!accessing!private! !
-!Kernel.STBGlobalObjectProxy categoriesFor: #value!converting!public! !
+!Kernel.STBGlobalObjectProxy categoriesForMethods!
+object:!accessing!private! !
+stbFixup:at:!accessing!public! !
+stbSaveOn:!binary filing!public! !
+symbol:!accessing!private! !
+value!converting!public! !
+!
 
 !Kernel.STBGlobalObjectProxy class methodsFor!
 
@@ -64,5 +66,7 @@ for: anObject name: aSymbol
 		symbol: aSymbol;
 		object: anObject;
 		yourself! !
-!Kernel.STBGlobalObjectProxy class categoriesFor: #for:name:!instance creation!public! !
+!Kernel.STBGlobalObjectProxy class categoriesForMethods!
+for:name:!instance creation!public! !
+!
 

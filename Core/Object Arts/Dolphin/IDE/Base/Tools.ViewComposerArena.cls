@@ -43,11 +43,13 @@ requestDropOperations: session
 	drag and drop operation symbols."
 
 	composer requestDropOperations: session! !
-!Tools.ViewComposerArena categoriesFor: #composer!public! !
-!Tools.ViewComposerArena categoriesFor: #composer:!public! !
-!Tools.ViewComposerArena categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!Tools.ViewComposerArena categoriesFor: #onMouseMoved:!event handling!private! !
-!Tools.ViewComposerArena categoriesFor: #onPaintRequired:!event handling!private! !
-!Tools.ViewComposerArena categoriesFor: #onViewClosed!event handling!public! !
-!Tools.ViewComposerArena categoriesFor: #requestDropOperations:!drag & drop!private! !
+!Tools.ViewComposerArena categoriesForMethods!
+composer!public! !
+composer:!public! !
+onLeftButtonPressed:!event handling!private! !
+onMouseMoved:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onViewClosed!event handling!public! !
+requestDropOperations:!drag & drop!private! !
+!
 

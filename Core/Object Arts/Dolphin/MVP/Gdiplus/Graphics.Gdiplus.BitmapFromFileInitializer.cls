@@ -28,5 +28,7 @@ createHandle
 	gpHandle := Handle new.
 	self library gdipCreateBitmapFromFile: self absoluteFilename bitmap: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.BitmapFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.BitmapFromFileInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 

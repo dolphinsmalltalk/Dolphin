@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'Graphics.Gdiplus.Tests.GdiplusTest'
 	instanceVariableNames: 'model'
@@ -64,20 +64,24 @@ tearDown
 			[model free.
 			model := nil].
 	super tearDown! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #assertPersistedValid!asserting!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #compare:to:!comparing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #compare:to:epsilon:!comparing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #fileLocator!accessing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #fileResource!accessing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #getSampleBrush!accessing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #getSampleGDIBitmap!accessing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #getSampleLinearGradientBrush!accessing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #getSamplePen!accessing!public! !
-!Graphics.Gdiplus.Tests.GdiplusTest categoriesFor: #tearDown!public!Running! !
+!Graphics.Gdiplus.Tests.GdiplusTest categoriesForMethods!
+assertPersistedValid!asserting!public! !
+compare:to:!comparing!public! !
+compare:to:epsilon:!comparing!public! !
+fileLocator!accessing!public! !
+fileResource!accessing!public! !
+getSampleBrush!accessing!public! !
+getSampleGDIBitmap!accessing!public! !
+getSampleLinearGradientBrush!accessing!public! !
+getSamplePen!accessing!public! !
+tearDown!public!Running! !
+!
 
 !Graphics.Gdiplus.Tests.GdiplusTest class methodsFor!
 
 resources
 	^{FileResource}! !
-!Graphics.Gdiplus.Tests.GdiplusTest class categoriesFor: #resources!accessing!public! !
+!Graphics.Gdiplus.Tests.GdiplusTest class categoriesForMethods!
+resources!accessing!public! !
+!
 

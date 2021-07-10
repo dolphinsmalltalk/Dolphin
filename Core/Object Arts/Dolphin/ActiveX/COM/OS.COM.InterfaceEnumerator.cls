@@ -29,8 +29,10 @@ nextElement
 	pi _addRef.
 	^pi yourAddress
 ! !
-!OS.COM.InterfaceEnumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
-!OS.COM.InterfaceEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
+!OS.COM.InterfaceEnumerator categoriesForMethods!
+arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
+nextElement!COM Interfaces-IEnumXXXX!private! !
+!
 
 !OS.COM.InterfaceEnumerator class methodsFor!
 
@@ -40,5 +42,7 @@ newEnumeratorOn: sequence
 	sequence."
 
 	^self newEnumerator: IEnumUnknown on: sequence! !
-!OS.COM.InterfaceEnumerator class categoriesFor: #newEnumeratorOn:!instance creation!public! !
+!OS.COM.InterfaceEnumerator class categoriesForMethods!
+newEnumeratorOn:!instance creation!public! !
+!
 

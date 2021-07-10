@@ -72,9 +72,11 @@ isUnderflow
 
 	^self tag isUnderflow
 ! !
-!Core.FloatingPointException categoriesFor: #_descriptionArguments!displaying!public! !
-!Core.FloatingPointException categoriesFor: #_descriptionFormat!displaying!public! !
-!Core.FloatingPointException categoriesFor: #_ieeeRecord!accessing!private! !
-!Core.FloatingPointException categoriesFor: #isOverflow!public!testing! !
-!Core.FloatingPointException categoriesFor: #isUnderflow!public!testing! !
+!Core.FloatingPointException categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+_ieeeRecord!accessing!private! !
+isOverflow!public!testing! !
+isUnderflow!public!testing! !
+!
 

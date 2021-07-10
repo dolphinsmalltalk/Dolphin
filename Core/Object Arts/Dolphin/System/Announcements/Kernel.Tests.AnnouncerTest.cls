@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'Kernel.Tests.AnnouncerTest'
 	instanceVariableNames: 'announcer'
@@ -163,25 +163,29 @@ testUnsubscribeSet
 	announcement := nil.
 	announcer announce: AnnouncementMockB new.
 	self assertIsNil: announcement! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #newAnnouncer!private! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #setUp!private!running! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testAnnounceClass!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testAnnounceInstance!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testAnnouncingReentrant!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testNoArgBlock!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeBlock!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeSend!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeSet!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testSubscribeSubclass!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testSymbolIdentifier!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testTwoArgBlock!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testUnsubscribeBlock!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testUnsubscribeSend!public!testing! !
-!Kernel.Tests.AnnouncerTest categoriesFor: #testUnsubscribeSet!public!testing! !
+!Kernel.Tests.AnnouncerTest categoriesForMethods!
+newAnnouncer!private! !
+setUp!private!running! !
+testAnnounceClass!public!testing! !
+testAnnounceInstance!public!testing! !
+testAnnouncingReentrant!public!testing! !
+testNoArgBlock!public!testing! !
+testSubscribeBlock!public!testing! !
+testSubscribeSend!public!testing! !
+testSubscribeSet!public!testing! !
+testSubscribeSubclass!public!testing! !
+testSymbolIdentifier!public!testing! !
+testTwoArgBlock!public!testing! !
+testUnsubscribeBlock!public!testing! !
+testUnsubscribeSend!public!testing! !
+testUnsubscribeSet!public!testing! !
+!
 
 !Kernel.Tests.AnnouncerTest class methodsFor!
 
 shouldInheritSelectors
 	^ true! !
-!Kernel.Tests.AnnouncerTest class categoriesFor: #shouldInheritSelectors!public!testing! !
+!Kernel.Tests.AnnouncerTest class categoriesForMethods!
+shouldInheritSelectors!public!testing! !
+!
 

@@ -154,26 +154,28 @@ stopStepProcess
 	self isRunning ifTrue: [
 		self stepProcess terminate.
 		stepProcess := nil ]! !
-!UI.Examples.SlidingBallDemo categoriesFor: #circleExtent!constants!public! !
-!UI.Examples.SlidingBallDemo categoriesFor: #circleVelocity!constants!public! !
-!UI.Examples.SlidingBallDemo categoriesFor: #defaultExtent!constants!public! !
-!UI.Examples.SlidingBallDemo categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #frameRate!constants!public! !
-!UI.Examples.SlidingBallDemo categoriesFor: #initialize!event handling!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #isCompleted!private!testing! !
-!UI.Examples.SlidingBallDemo categoriesFor: #isRunning!private!testing! !
-!UI.Examples.SlidingBallDemo categoriesFor: #onDestroyed!event handling!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #paintCircleOn:!displaying!public! !
-!UI.Examples.SlidingBallDemo categoriesFor: #paintEndOn:!displaying!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #paintLineOn:!displaying!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #paintStartOn:!displaying!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #rectangleExtent!constants!public! !
-!UI.Examples.SlidingBallDemo categoriesFor: #render!operations!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #showCompletedMessage!operations!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #showStartMessageOn:!displaying!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #startStepProcess!initializing!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #step!operations!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #stepProcess!accessing!private! !
-!UI.Examples.SlidingBallDemo categoriesFor: #stopStepProcess!initializing!private! !
+!UI.Examples.SlidingBallDemo categoriesForMethods!
+circleExtent!constants!public! !
+circleVelocity!constants!public! !
+defaultExtent!constants!public! !
+defaultWindowStyle!constants!private! !
+frameRate!constants!public! !
+initialize!event handling!private! !
+isCompleted!private!testing! !
+isRunning!private!testing! !
+onDestroyed!event handling!private! !
+onLeftButtonDoubleClicked:!event handling!private! !
+paintCircleOn:!displaying!public! !
+paintEndOn:!displaying!private! !
+paintLineOn:!displaying!private! !
+paintStartOn:!displaying!private! !
+rectangleExtent!constants!public! !
+render!operations!private! !
+showCompletedMessage!operations!private! !
+showStartMessageOn:!displaying!private! !
+startStepProcess!initializing!private! !
+step!operations!private! !
+stepProcess!accessing!private! !
+stopStepProcess!initializing!private! !
+!
 

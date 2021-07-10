@@ -169,21 +169,23 @@ saveAsFile: pathString
 	overwritten."
 
 	Gdi32 copyEnhMetaFile: self asParameter lpszFile: pathString! !
-!Graphics.Metafile categoriesFor: #addToImageList:mask:!private!testing! !
-!Graphics.Metafile categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.Metafile categoriesFor: #clearCached!private!realizing/unrealizing! !
-!Graphics.Metafile categoriesFor: #copyHandle!private!realizing/unrealizing! !
-!Graphics.Metafile categoriesFor: #description!accessing!public! !
-!Graphics.Metafile categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.Metafile categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Graphics.Metafile categoriesFor: #extent!accessing!public! !
-!Graphics.Metafile categoriesFor: #getData:!accessing!private! !
-!Graphics.Metafile categoriesFor: #header!public! !
-!Graphics.Metafile categoriesFor: #imageType!constants!private!testing! !
-!Graphics.Metafile categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!Graphics.Metafile categoriesFor: #play:on:at:extent:!enumerating!public! !
-!Graphics.Metafile categoriesFor: #printRecordsOn:!public! !
-!Graphics.Metafile categoriesFor: #saveAsFile:!file operations!public! !
+!Graphics.Metafile categoriesForMethods!
+addToImageList:mask:!private!testing! !
+basicFree!private!realizing/unrealizing! !
+clearCached!private!realizing/unrealizing! !
+copyHandle!private!realizing/unrealizing! !
+description!accessing!public! !
+drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+extent!accessing!public! !
+getData:!accessing!private! !
+header!public! !
+imageType!constants!private!testing! !
+loadFromFile:extent:!private!realizing/unrealizing! !
+play:on:at:extent:!enumerating!public! !
+printRecordsOn:!public! !
+saveAsFile:!file operations!public! !
+!
 
 !Graphics.Metafile class methodsFor!
 
@@ -195,5 +197,7 @@ playRecord: anENHMETARECORD on: aCanvas handleTable: aHandleArray
 		lpHandletable: aHandleArray
 		lpEnhMetaRecord: anENHMETARECORD
 		nHandles: aHandleArray length! !
-!Graphics.Metafile class categoriesFor: #playRecord:on:handleTable:!operations!public! !
+!Graphics.Metafile class categoriesForMethods!
+playRecord:on:handleTable:!operations!public! !
+!
 

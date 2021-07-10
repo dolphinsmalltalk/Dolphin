@@ -30,8 +30,10 @@ literal: anObject
 	"Set the literal, references to which define membership of this category."
 
 	literal := anObject! !
-!Tools.ReferencesCategory categoriesFor: #includesMethod:!public!testing! !
-!Tools.ReferencesCategory categoriesFor: #literal:!accessing!public! !
+!Tools.ReferencesCategory categoriesForMethods!
+includesMethod:!public!testing! !
+literal:!accessing!public! !
+!
 
 !Tools.ReferencesCategory class methodsFor!
 
@@ -76,9 +78,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self referenceSymbols do: [:each | self removePseud: self pseudPrefix , each asPhrase asLowercase]! !
-!Tools.ReferencesCategory class categoriesFor: #createDefaultInstances!initializing!private! !
-!Tools.ReferencesCategory class categoriesFor: #initialize!initializing!private! !
-!Tools.ReferencesCategory class categoriesFor: #newNamed:literal:!public! !
-!Tools.ReferencesCategory class categoriesFor: #referenceSymbols!constants!private! !
-!Tools.ReferencesCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Tools.ReferencesCategory class categoriesForMethods!
+createDefaultInstances!initializing!private! !
+initialize!initializing!private! !
+newNamed:literal:!public! !
+referenceSymbols!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

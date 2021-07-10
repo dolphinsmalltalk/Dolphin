@@ -85,14 +85,16 @@ value: anObject
 	"Evaluate the receiver with the argument, anObject, as its receiver, answering the result."
 
 	^self value: anObject withArguments: #()! !
-!Kernel.CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!private! !
-!Kernel.CompiledExpression categoriesFor: #evaluationPools!accessing!development!public! !
-!Kernel.CompiledExpression categoriesFor: #expressionClass!accessing!private! !
-!Kernel.CompiledExpression categoriesFor: #getDebugInfo!development!private! !
-!Kernel.CompiledExpression categoriesFor: #getSource!accessing!development!public! !
-!Kernel.CompiledExpression categoriesFor: #isExpression!private!testing! !
-!Kernel.CompiledExpression categoriesFor: #owningPackage!accessing!public! !
-!Kernel.CompiledExpression categoriesFor: #storeSourceString:evaluationPools:!accessing!private! !
-!Kernel.CompiledExpression categoriesFor: #value!evaluating!public! !
-!Kernel.CompiledExpression categoriesFor: #value:!evaluating!public! !
+!Kernel.CompiledExpression categoriesForMethods!
+evaluate:for:evaluationPools:!evaluating!private! !
+evaluationPools!accessing!development!public! !
+expressionClass!accessing!private! !
+getDebugInfo!development!private! !
+getSource!accessing!development!public! !
+isExpression!private!testing! !
+owningPackage!accessing!public! !
+storeSourceString:evaluationPools:!accessing!private! !
+value!evaluating!public! !
+value:!evaluating!public! !
+!
 

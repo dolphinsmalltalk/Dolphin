@@ -262,38 +262,40 @@ upToEnd
 	 particular streams, and which counts by raw elements regardless of encoding."
 
 	^self basicNext: self lastPosition - self position! !
-!Core.PositionableStream categoriesFor: #advancePosition!positioning!private! !
-!Core.PositionableStream categoriesFor: #atEnd!public!testing! !
-!Core.PositionableStream categoriesFor: #basicNext:!accessing!private! !
-!Core.PositionableStream categoriesFor: #basicNextAvailable!accessing!private! !
-!Core.PositionableStream categoriesFor: #basicNextAvailable:!private! !
-!Core.PositionableStream categoriesFor: #basicUpTo:!accessing!private! !
-!Core.PositionableStream categoriesFor: #collection!accessing!private! !
-!Core.PositionableStream categoriesFor: #contents!accessing!public! !
-!Core.PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
-!Core.PositionableStream categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!Core.PositionableStream categoriesFor: #lastPosition!accessing!private! !
-!Core.PositionableStream categoriesFor: #locale!accessing!public! !
-!Core.PositionableStream categoriesFor: #locale:!accessing!public! !
-!Core.PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
-!Core.PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
-!Core.PositionableStream categoriesFor: #nextDWORD!binary filing!public! !
-!Core.PositionableStream categoriesFor: #nextFLOAT!binary filing!public! !
-!Core.PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
-!Core.PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
-!Core.PositionableStream categoriesFor: #nextWORD!binary filing!public! !
-!Core.PositionableStream categoriesFor: #on:!initializing!private! !
-!Core.PositionableStream categoriesFor: #originalContents!accessing!public! !
-!Core.PositionableStream categoriesFor: #position!positioning!public! !
-!Core.PositionableStream categoriesFor: #position:!positioning!public! !
-!Core.PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !
-!Core.PositionableStream categoriesFor: #readLimit:!accessing!public! !
-!Core.PositionableStream categoriesFor: #reset!positioning!public! !
-!Core.PositionableStream categoriesFor: #reverseContents!accessing!public! !
-!Core.PositionableStream categoriesFor: #setToEnd!positioning!public! !
-!Core.PositionableStream categoriesFor: #size!accessing!public! !
-!Core.PositionableStream categoriesFor: #upTo:!accessing!public! !
-!Core.PositionableStream categoriesFor: #upToEnd!accessing!public! !
+!Core.PositionableStream categoriesForMethods!
+advancePosition!positioning!private! !
+atEnd!public!testing! !
+basicNext:!accessing!private! !
+basicNextAvailable!accessing!private! !
+basicNextAvailable:!private! !
+basicUpTo:!accessing!private! !
+collection!accessing!private! !
+contents!accessing!public! !
+contentsSpecies!accessing!private! !
+encodedSizeOf:!encode/decode!public! !
+lastPosition!accessing!private! !
+locale!accessing!public! !
+locale:!accessing!public! !
+nextAvailable:!accessing!public! !
+nextDOUBLE!binary filing!public! !
+nextDWORD!binary filing!public! !
+nextFLOAT!binary filing!public! !
+nextSDWORD!binary filing!public! !
+nextSWORD!binary filing!public! !
+nextWORD!binary filing!public! !
+on:!initializing!private! !
+originalContents!accessing!public! !
+position!positioning!public! !
+position:!positioning!public! !
+positionAfterNext:!positioning!private! !
+readLimit:!accessing!public! !
+reset!positioning!public! !
+reverseContents!accessing!public! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+!
 
 Core.PositionableStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
@@ -316,6 +318,8 @@ on: aCollection from: firstIndex to: lastIndex
 
 	^self on: (aCollection copyFrom: firstIndex to: lastIndex)
 ! !
-!Core.PositionableStream class categoriesFor: #on:!instance creation!public! !
-!Core.PositionableStream class categoriesFor: #on:from:to:!instance creation!public! !
+!Core.PositionableStream class categoriesForMethods!
+on:!instance creation!public! !
+on:from:to:!instance creation!public! !
+!
 

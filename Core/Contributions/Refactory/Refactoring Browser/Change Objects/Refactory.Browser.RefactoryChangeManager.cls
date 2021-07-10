@@ -83,22 +83,24 @@ update: anAspectSymbol with: aParameter from: aSender
 	(changeType indexOfSubCollection: 'class' startingAt: 1)
 		+ (changeType indexOfSubCollection: 'selector' startingAt: 1) > 0
 		ifTrue: [self clearUndoRedoList]! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #addUndo:!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #clearUndoRedoList!private! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #connectToChanges!initialize/release!public! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #discardLastChange!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #disconnectFromChanges!initialize/release!public! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #hasRedoableOperations!public! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #hasUndoableOperations!public! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #ignoreChangesWhile:!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #performChange:!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #redoChange!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #redoOperation!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #release!initialize/release!public! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #undoChange!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #undoOperation!public!public access! !
-!Refactory.Browser.RefactoryChangeManager categoriesFor: #update:with:from:!public!updating! !
+!Refactory.Browser.RefactoryChangeManager categoriesForMethods!
+addUndo:!public!public access! !
+clearUndoRedoList!private! !
+connectToChanges!initialize/release!public! !
+discardLastChange!public!public access! !
+disconnectFromChanges!initialize/release!public! !
+hasRedoableOperations!public! !
+hasUndoableOperations!public! !
+ignoreChangesWhile:!public!public access! !
+initialize!initialize/release!public! !
+performChange:!public!public access! !
+redoChange!public!public access! !
+redoOperation!public!public access! !
+release!initialize/release!public! !
+undoChange!public!public access! !
+undoOperation!public!public access! !
+update:with:from:!public!updating! !
+!
 
 !Refactory.Browser.RefactoryChangeManager class methodsFor!
 
@@ -133,12 +135,14 @@ undoSize: anInteger
 
 uninitialize
 	self nuke! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #initialize!class initialization!public! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #instance!instance creation!public! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #new!instance creation!public! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #nuke!public!public access! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #undoSize!class initialization!public! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #undoSize:!class initialization!public! !
-!Refactory.Browser.RefactoryChangeManager class categoriesFor: #uninitialize!class initialization!public! !
+!Refactory.Browser.RefactoryChangeManager class categoriesForMethods!
+initialize!class initialization!public! !
+instance!instance creation!public! !
+new!instance creation!public! !
+nuke!public!public access! !
+onPreStripImage!class hierarchy-removing!private! !
+undoSize!class initialization!public! !
+undoSize:!class initialization!public! !
+uninitialize!class initialization!public! !
+!
 

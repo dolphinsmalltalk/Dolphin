@@ -135,18 +135,20 @@ verifyInitializationExpression
 			[self 
 				refactoringError: 'The initialization code cannot be a return node or a list of statements'].
 	self checkVariableReferencesIn: tree! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #checkSendersAccessTo:!preconditions!public! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #checkVariableReferencesIn:!preconditions!public! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!private! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #newSelectorString!private! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #parseTreeRewriter!private! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #safeVariableNameFor:temporaries:!private! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #senders!private! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #suggestedVariableNameIn:!private! !
-!Refactory.Browser.AddParameterRefactoring categoriesFor: #verifyInitializationExpression!preconditions!public! !
+!Refactory.Browser.AddParameterRefactoring categoriesForMethods!
+addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
+checkSendersAccessTo:!preconditions!public! !
+checkVariableReferencesIn:!preconditions!public! !
+modifyImplementorParseTree:in:!private! !
+myConditions!preconditions!public! !
+newSelectorString!private! !
+parseTreeRewriter!private! !
+safeVariableNameFor:temporaries:!private! !
+senders!private! !
+storeOn:!printing!public! !
+suggestedVariableNameIn:!private! !
+verifyInitializationExpression!preconditions!public! !
+!
 
 !Refactory.Browser.AddParameterRefactoring class methodsFor!
 
@@ -164,6 +166,8 @@ model: aRBNamespace addParameterToMethod: aSelector in: aClass newSelector: newS
 			newSelector: newSelector
 			initializer: init;
 		yourself! !
-!Refactory.Browser.AddParameterRefactoring class categoriesFor: #addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
-!Refactory.Browser.AddParameterRefactoring class categoriesFor: #model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+!Refactory.Browser.AddParameterRefactoring class categoriesForMethods!
+addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+!
 

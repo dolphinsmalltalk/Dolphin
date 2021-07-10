@@ -20,9 +20,11 @@ value
 
 value: anInteger
 	^self subclassResponsibility! !
-!WinHttpServer.HttpQosSetting categoriesFor: #qosType!constants!public! !
-!WinHttpServer.HttpQosSetting categoriesFor: #value!public! !
-!WinHttpServer.HttpQosSetting categoriesFor: #value:!public! !
+!WinHttpServer.HttpQosSetting categoriesForMethods!
+qosType!constants!public! !
+value!public! !
+value:!public! !
+!
 
 !WinHttpServer.HttpQosSetting class methodsFor!
 
@@ -31,6 +33,8 @@ propertyId
 
 qosType
 	^self subclassResponsibility! !
-!WinHttpServer.HttpQosSetting class categoriesFor: #propertyId!constants!public! !
-!WinHttpServer.HttpQosSetting class categoriesFor: #qosType!constants!public! !
+!WinHttpServer.HttpQosSetting class categoriesForMethods!
+propertyId!constants!public! !
+qosType!constants!public! !
+!
 

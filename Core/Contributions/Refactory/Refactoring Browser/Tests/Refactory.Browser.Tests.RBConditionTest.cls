@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RBConditionTest'
 	instanceVariableNames: ''
@@ -34,5 +34,7 @@ testConditions
 	self assert: newCondition errorString equals: 'false'.
 	self assert: (condition not & condition not) check.
 	self assert: (condition & condition) errorString equals: 'false OR false'! !
-!Refactory.Browser.Tests.RBConditionTest categoriesFor: #testConditions!public!tests! !
+!Refactory.Browser.Tests.RBConditionTest categoriesForMethods!
+testConditions!public!tests! !
+!
 

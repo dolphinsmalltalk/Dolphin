@@ -234,30 +234,32 @@ updateInterval: aDuration
 
 	updateInterval := aDuration.
 	self setTimer! !
-!Tools.ProcessMonitor categoriesFor: #createComponents!initializing!public! !
-!Tools.ProcessMonitor categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.ProcessMonitor categoriesFor: #debugIt!commands!public! !
-!Tools.ProcessMonitor categoriesFor: #defaultHelpId!constants!public! !
-!Tools.ProcessMonitor categoriesFor: #inspectIt!commands!public! !
-!Tools.ProcessMonitor categoriesFor: #isSystemProcess:!enquiries!public! !
-!Tools.ProcessMonitor categoriesFor: #onProcess:renameTo:accept:!event handling!private! !
-!Tools.ProcessMonitor categoriesFor: #onStartup!event handling!private! !
-!Tools.ProcessMonitor categoriesFor: #onTimerTick:!event handling!public! !
-!Tools.ProcessMonitor categoriesFor: #onViewDestroyed!event handling!public! !
-!Tools.ProcessMonitor categoriesFor: #onViewOpened!event handling!public! !
-!Tools.ProcessMonitor categoriesFor: #pause!helpers!private! !
-!Tools.ProcessMonitor categoriesFor: #process!accessing!private! !
-!Tools.ProcessMonitor categoriesFor: #process:!accessing!private! !
-!Tools.ProcessMonitor categoriesFor: #queryCommand:!commands!private! !
-!Tools.ProcessMonitor categoriesFor: #refresh!commands!private! !
-!Tools.ProcessMonitor categoriesFor: #renameIt!commands!public! !
-!Tools.ProcessMonitor categoriesFor: #setLowerPriority:!commands!public! !
-!Tools.ProcessMonitor categoriesFor: #setPriority:!commands!public! !
-!Tools.ProcessMonitor categoriesFor: #setSpeed:!commands!public! !
-!Tools.ProcessMonitor categoriesFor: #setTimer!helpers!private! !
-!Tools.ProcessMonitor categoriesFor: #terminateProcess!commands!public! !
-!Tools.ProcessMonitor categoriesFor: #updateInterval!accessing!private! !
-!Tools.ProcessMonitor categoriesFor: #updateInterval:!accessing!private! !
+!Tools.ProcessMonitor categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+debugIt!commands!public! !
+defaultHelpId!constants!public! !
+inspectIt!commands!public! !
+isSystemProcess:!enquiries!public! !
+onProcess:renameTo:accept:!event handling!private! !
+onStartup!event handling!private! !
+onTimerTick:!event handling!public! !
+onViewDestroyed!event handling!public! !
+onViewOpened!event handling!public! !
+pause!helpers!private! !
+process!accessing!private! !
+process:!accessing!private! !
+queryCommand:!commands!private! !
+refresh!commands!private! !
+renameIt!commands!public! !
+setLowerPriority:!commands!public! !
+setPriority:!commands!public! !
+setSpeed:!commands!public! !
+setTimer!helpers!private! !
+terminateProcess!commands!public! !
+updateInterval!accessing!private! !
+updateInterval:!accessing!private! !
+!
 
 !Tools.ProcessMonitor class methodsFor!
 
@@ -329,13 +331,15 @@ reuseIfOpen
 
 toolsFolderHelpId
 	^10597! !
-!Tools.ProcessMonitor class categoriesFor: #defaultUpdateInterval!options!public! !
-!Tools.ProcessMonitor class categoriesFor: #defaultUpdateInterval:!options!public! !
-!Tools.ProcessMonitor class categoriesFor: #displayOn:!displaying!public! !
-!Tools.ProcessMonitor class categoriesFor: #icon!constants!public! !
-!Tools.ProcessMonitor class categoriesFor: #initialize!initializing!private! !
-!Tools.ProcessMonitor class categoriesFor: #publishedAspects!public! !
-!Tools.ProcessMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ProcessMonitor class categoriesFor: #reuseIfOpen!accessing!public! !
-!Tools.ProcessMonitor class categoriesFor: #toolsFolderHelpId!constants!public! !
+!Tools.ProcessMonitor class categoriesForMethods!
+defaultUpdateInterval!options!public! !
+defaultUpdateInterval:!options!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+reuseIfOpen!accessing!public! !
+toolsFolderHelpId!constants!public! !
+!
 

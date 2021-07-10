@@ -21,7 +21,9 @@ defaultAction
 	"Will not return unless execution is to be resumed"
 
 	^SessionManager current onUnhandledWarning: self! !
-!Core.Warning categoriesFor: #defaultAction!handling!public! !
+!Core.Warning categoriesForMethods!
+defaultAction!handling!public! !
+!
 
 Core.Warning methodProtocol: #Warning attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -34,6 +36,8 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Warning! !
-!Core.Warning class categoriesFor: #mbIconId!parping!public! !
-!Core.Warning class categoriesFor: #severityClass!constants!public! !
+!Core.Warning class categoriesForMethods!
+mbIconId!parping!public! !
+severityClass!constants!public! !
+!
 

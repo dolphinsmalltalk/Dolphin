@@ -14,5 +14,7 @@ UI.Scintilla.IntPropertyDescriptor comment: '`IntPropertyDescriptor`s are `Prope
 
 lParamFromAttributeValue: anInteger
 	^anInteger! !
-!UI.Scintilla.IntPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
+!UI.Scintilla.IntPropertyDescriptor categoriesForMethods!
+lParamFromAttributeValue:!helpers!private! !
+!
 

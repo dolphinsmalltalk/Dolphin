@@ -50,11 +50,13 @@ selector: aSymbol
 	implementing the COM virtual function when that function is called."
 
 	selector := aSymbol! !
-!OS.COM.InterfaceFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!OS.COM.InterfaceFunction categoriesFor: #descriptor!accessing!private! !
-!OS.COM.InterfaceFunction categoriesFor: #descriptor:!accessing!private! !
-!OS.COM.InterfaceFunction categoriesFor: #selector!accessing!private! !
-!OS.COM.InterfaceFunction categoriesFor: #selector:!accessing!private! !
+!OS.COM.InterfaceFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+descriptor!accessing!private! !
+descriptor:!accessing!private! !
+selector!accessing!private! !
+selector:!accessing!private! !
+!
 
 !OS.COM.InterfaceFunction class methodsFor!
 
@@ -73,6 +75,8 @@ selector: aSymbol descriptor: aFunctionDescriptor
 	^self new
 		selector: aSymbol;
 		descriptor: aFunctionDescriptor! !
-!OS.COM.InterfaceFunction class categoriesFor: #prototype:!instance creation!public! !
-!OS.COM.InterfaceFunction class categoriesFor: #selector:descriptor:!instance creation!public! !
+!OS.COM.InterfaceFunction class categoriesForMethods!
+prototype:!instance creation!public! !
+selector:descriptor:!instance creation!public! !
+!
 

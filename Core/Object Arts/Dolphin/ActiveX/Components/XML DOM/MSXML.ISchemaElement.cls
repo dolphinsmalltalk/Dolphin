@@ -249,28 +249,30 @@ type
 	answer := ISchemaType newPointer.
 	self get_type: answer.
 	^answer asObject! !
-!MSXML.ISchemaElement categoriesFor: #defaultValue!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #disallowedSubstitutions!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #fixedValue!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_disallowedSubstitutions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_identityConstraints:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_isAbstract:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_isNillable:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_substitutionGroup:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_substitutionGroupExclusions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!MSXML.ISchemaElement categoriesFor: #identityConstraints!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #isAbstract!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #isNillable!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #isReference!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #scope!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #substitutionGroup!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #substitutionGroupExclusions!**auto generated**!properties!public! !
-!MSXML.ISchemaElement categoriesFor: #type!**auto generated**!properties!public! !
+!MSXML.ISchemaElement categoriesForMethods!
+defaultValue!**auto generated**!properties!public! !
+disallowedSubstitutions!**auto generated**!properties!public! !
+fixedValue!**auto generated**!properties!public! !
+get_defaultValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_disallowedSubstitutions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_fixedValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_identityConstraints:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_isAbstract:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_isNillable:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_isReference:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_scope:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_substitutionGroup:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_substitutionGroupExclusions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_type:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+identityConstraints!**auto generated**!properties!public! !
+isAbstract!**auto generated**!properties!public! !
+isNillable!**auto generated**!properties!public! !
+isReference!**auto generated**!properties!public! !
+scope!**auto generated**!properties!public! !
+substitutionGroup!**auto generated**!properties!public! !
+substitutionGroupExclusions!**auto generated**!properties!public! !
+type!**auto generated**!properties!public! !
+!
 
 !MSXML.ISchemaElement class methodsFor!
 
@@ -302,5 +304,7 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!MSXML.ISchemaElement class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISchemaElement class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

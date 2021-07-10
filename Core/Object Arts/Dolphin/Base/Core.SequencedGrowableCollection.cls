@@ -173,27 +173,29 @@ removeLastIfAbsent: exceptionHandler
 
 	self isEmpty ifTrue: [^exceptionHandler value].
 	^self removeAtIndex: self size! !
-!Core.SequencedGrowableCollection categoriesFor: #add:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #add:after:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #add:afterIndex:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #add:before:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #add:beforeIndex:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addAll:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addAll:after:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addAll:afterIndex:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addAll:before:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addAll:beforeIndex:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addAllFirst:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addAllLast:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addFirst:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #addLast:!adding!public! !
-!Core.SequencedGrowableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
-!Core.SequencedGrowableCollection categoriesFor: #removeAll!public!removing! !
-!Core.SequencedGrowableCollection categoriesFor: #removeAtIndex:!public!removing! !
-!Core.SequencedGrowableCollection categoriesFor: #removeFirst!public!removing! !
-!Core.SequencedGrowableCollection categoriesFor: #removeFirstIfAbsent:!public!removing! !
-!Core.SequencedGrowableCollection categoriesFor: #removeLast!public!removing! !
-!Core.SequencedGrowableCollection categoriesFor: #removeLastIfAbsent:!public!removing! !
+!Core.SequencedGrowableCollection categoriesForMethods!
+add:!adding!public! !
+add:after:!adding!public! !
+add:afterIndex:!adding!public! !
+add:before:!adding!public! !
+add:beforeIndex:!adding!public! !
+addAll:!adding!public! !
+addAll:after:!adding!public! !
+addAll:afterIndex:!adding!public! !
+addAll:before:!adding!public! !
+addAll:beforeIndex:!adding!public! !
+addAllFirst:!adding!public! !
+addAllLast:!adding!public! !
+addFirst:!adding!public! !
+addLast:!adding!public! !
+remove:ifAbsent:!public!removing! !
+removeAll!public!removing! !
+removeAtIndex:!public!removing! !
+removeFirst!public!removing! !
+removeFirstIfAbsent:!public!removing! !
+removeLast!public!removing! !
+removeLastIfAbsent:!public!removing! !
+!
 
 Core.SequencedGrowableCollection methodProtocol: #OrderedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #add:after: #add:afterIndex: #add:before: #add:beforeIndex: #addAll: #addAll:after: #addAll:afterIndex: #addAll:before: #addAll:beforeIndex: #addAllFirst: #addAllLast: #addFirst: #addLast: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
 Core.SequencedGrowableCollection methodProtocol: #sequencedContractibleCollection attributes: #(#ansi #readOnly) selectors: #(#allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #removeAtIndex: #removeFirst #removeLast #select: #size)!

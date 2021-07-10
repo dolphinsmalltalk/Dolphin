@@ -26,9 +26,11 @@ preShrink
 	because they contain references to Lagoon, which only belongs in DolphinProfessional"
 
 	self packages do: [:each | each imageStripperBytes: nil]! !
-!Tools.DolphinCommunityEdition categoriesFor: #defaultSystemFolderExtent!private! !
-!Tools.DolphinCommunityEdition categoriesFor: #fullName!accessing!public! !
-!Tools.DolphinCommunityEdition categoriesFor: #preShrink!private! !
+!Tools.DolphinCommunityEdition categoriesForMethods!
+defaultSystemFolderExtent!private! !
+fullName!accessing!public! !
+preShrink!private! !
+!
 
 !Tools.DolphinCommunityEdition class methodsFor!
 
@@ -41,6 +43,8 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCE'! !
-!Tools.DolphinCommunityEdition class categoriesFor: #productName!accessing!public! !
-!Tools.DolphinCommunityEdition class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinCommunityEdition class categoriesForMethods!
+productName!accessing!public! !
+shortProductName!accessing!public! !
+!
 

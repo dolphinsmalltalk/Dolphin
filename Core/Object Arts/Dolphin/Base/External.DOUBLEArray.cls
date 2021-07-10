@@ -23,8 +23,10 @@ uncheckedAt: anInteger put: aFloat
 	with the <Float> argument."
 
 	^bytes doubleAtOffset: (anInteger - 1) * VMConstants.DoubleSize put: aFloat! !
-!External.DOUBLEArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.DOUBLEArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.DOUBLEArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.DOUBLEArray class methodsFor!
 
@@ -32,5 +34,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^DOUBLE! !
-!External.DOUBLEArray class categoriesFor: #elementClass!constants!public! !
+!External.DOUBLEArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

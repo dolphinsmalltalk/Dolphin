@@ -68,13 +68,15 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^PRINTDLGW! !
-!UI.PrintDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.PrintDialog categoriesFor: #copies!accessing!public! !
-!UI.PrintDialog categoriesFor: #copies:!accessing!public! !
-!UI.PrintDialog categoriesFor: #extractResult:!helpers!private! !
-!UI.PrintDialog categoriesFor: #initialize!public! !
-!UI.PrintDialog categoriesFor: #pageRange:!accessing!public! !
-!UI.PrintDialog categoriesFor: #printRange!accessing!public! !
-!UI.PrintDialog categoriesFor: #printRange:!accessing!public! !
-!UI.PrintDialog categoriesFor: #winStructClass!constants!private! !
+!UI.PrintDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+copies!accessing!public! !
+copies:!accessing!public! !
+extractResult:!helpers!private! !
+initialize!public! !
+pageRange:!accessing!public! !
+printRange!accessing!public! !
+printRange:!accessing!public! !
+winStructClass!constants!private! !
+!
 

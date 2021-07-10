@@ -27,9 +27,11 @@ writeInto: anExternalStructure value: anInteger
 	<ExternalStructure, anExternalStructure, at the receiver's offset ."
 
 	^anExternalStructure bytes intPtrAtOffset: offset put: anInteger! !
-!External.INT_PTRField categoriesFor: #accessorMessage!automatic generation!private! !
-!External.INT_PTRField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.INT_PTRField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.INT_PTRField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.INT_PTRField class methodsFor!
 
@@ -38,5 +40,7 @@ byteSize
 	This size will vary between 32 and 64-bit machines."
 
 	^VMConstants.IntPtrSize! !
-!External.INT_PTRField class categoriesFor: #byteSize!constants!private! !
+!External.INT_PTRField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

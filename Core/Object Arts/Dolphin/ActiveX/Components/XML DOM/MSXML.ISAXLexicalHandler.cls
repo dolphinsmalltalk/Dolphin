@@ -122,13 +122,15 @@ StartEntity: pwchName cchName: cchName
 
 	<virtual stdcall: hresult 6 word* sdword>
 	^self invalidCall: _failureCode! !
-!MSXML.ISAXLexicalHandler categoriesFor: #Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!MSXML.ISAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!MSXML.ISAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!MSXML.ISAXLexicalHandler categoriesFor: #EndEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!MSXML.ISAXLexicalHandler categoriesFor: #StartCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!MSXML.ISAXLexicalHandler categoriesFor: #StartDTD:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!MSXML.ISAXLexicalHandler categoriesFor: #StartEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!MSXML.ISAXLexicalHandler categoriesForMethods!
+Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+EndDTD!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+EndEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+StartCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+StartDTD:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+StartEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!
 
 !MSXML.ISAXLexicalHandler class methodsFor!
 
@@ -149,5 +151,7 @@ defineFunctions
 		defineFunction: #Comment:cchChars:
 			argumentTypes: 'word* sdword'
 ! !
-!MSXML.ISAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.ISAXLexicalHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.POINTTest subclass: #'Graphics.Gdiplus.Tests.POINTFTest'
 	instanceVariableNames: ''
@@ -19,6 +19,8 @@ testAsDword
 		should: [super testAsDword]
 		raise: Error
 		matching: [:ex | ex description equals: self subjectClass fullName , ' should not implement #asDword']! !
-!Graphics.Gdiplus.Tests.POINTFTest categoriesFor: #subjectClass!constants!private! !
-!Graphics.Gdiplus.Tests.POINTFTest categoriesFor: #testAsDword!public!unit tests! !
+!Graphics.Gdiplus.Tests.POINTFTest categoriesForMethods!
+subjectClass!constants!private! !
+testAsDword!public!unit tests! !
+!
 

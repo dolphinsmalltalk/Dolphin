@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.ProductReleaseTest'
 	instanceVariableNames: ''
@@ -30,8 +30,10 @@ testCompilationFailures
 	"
 	(Refactory.Browser.BrowserEnvironment new forMethods: failed) browse
 	"! !
-!Tools.Tests.ProductReleaseTest categoriesFor: #checkNoClass:!public!unit tests! !
-!Tools.Tests.ProductReleaseTest categoriesFor: #isReleased!private!unit tests! !
-!Tools.Tests.ProductReleaseTest categoriesFor: #specialAssert:!private!unit tests! !
-!Tools.Tests.ProductReleaseTest categoriesFor: #testCompilationFailures!public!unit tests! !
+!Tools.Tests.ProductReleaseTest categoriesForMethods!
+checkNoClass:!public!unit tests! !
+isReleased!private!unit tests! !
+specialAssert:!private!unit tests! !
+testCompilationFailures!public!unit tests! !
+!
 

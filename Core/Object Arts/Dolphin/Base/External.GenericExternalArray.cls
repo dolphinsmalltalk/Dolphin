@@ -82,15 +82,17 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 			[:i | 
 			operation value: i value: (self newElementAt: address).
 			address := address + spacing]! !
-!External.GenericExternalArray categoriesFor: #asArray!converting!public! !
-!External.GenericExternalArray categoriesFor: #base!accessing!private! !
-!External.GenericExternalArray categoriesFor: #elementClass!accessing!public! !
-!External.GenericExternalArray categoriesFor: #elementClass:!accessing!private! !
-!External.GenericExternalArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
-!External.GenericExternalArray categoriesFor: #newElementAt:!helpers!private! !
-!External.GenericExternalArray categoriesFor: #owner:!accessing!private! !
-!External.GenericExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.GenericExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!External.GenericExternalArray categoriesForMethods!
+asArray!converting!public! !
+base!accessing!private! !
+elementClass!accessing!public! !
+elementClass:!accessing!private! !
+needsFree!initializing!private!realizing/unrealizing! !
+newElementAt:!helpers!private! !
+owner:!accessing!private! !
+uncheckedAt:!accessing!private! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!
 
 !External.GenericExternalArray class methodsFor!
 
@@ -113,6 +115,8 @@ withAll: aCollection elementClass: structClass
 			answer at: i put: elem.
 			i + 1].
 	^answer! !
-!External.GenericExternalArray class categoriesFor: #length:elementClass:!instance creation!public! !
-!External.GenericExternalArray class categoriesFor: #withAll:elementClass:!instance creation!public! !
+!External.GenericExternalArray class categoriesForMethods!
+length:elementClass:!instance creation!public! !
+withAll:elementClass:!instance creation!public! !
+!
 

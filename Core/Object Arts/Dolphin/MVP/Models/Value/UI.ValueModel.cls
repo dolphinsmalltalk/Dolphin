@@ -101,19 +101,21 @@ value: anObject
 	[settingValue := true.
 	self setValue: anObject] ensure: [settingValue := false].
 	self notifyChanged! !
-!UI.ValueModel categoriesFor: #aspectAdaptorClass!constants!private! !
-!UI.ValueModel categoriesFor: #asValue!converting!public! !
-!UI.ValueModel categoriesFor: #canGet!private!testing! !
-!UI.ValueModel categoriesFor: #canSet!private!testing! !
-!UI.ValueModel categoriesFor: #comparisonPolicy!accessing!public! !
-!UI.ValueModel categoriesFor: #comparisonPolicy:!accessing!public! !
-!UI.ValueModel categoriesFor: #defaultComparisonPolicy!initializing!private! !
-!UI.ValueModel categoriesFor: #initialize!initializing!private! !
-!UI.ValueModel categoriesFor: #notifyChanged!operations!private! !
-!UI.ValueModel categoriesFor: #printOn:!printing!public! !
-!UI.ValueModel categoriesFor: #setValue:!accessing!private! !
-!UI.ValueModel categoriesFor: #value!accessing!public! !
-!UI.ValueModel categoriesFor: #value:!accessing!public! !
+!UI.ValueModel categoriesForMethods!
+aspectAdaptorClass!constants!private! !
+asValue!converting!public! !
+canGet!private!testing! !
+canSet!private!testing! !
+comparisonPolicy!accessing!public! !
+comparisonPolicy:!accessing!public! !
+defaultComparisonPolicy!initializing!private! !
+initialize!initializing!private! !
+notifyChanged!operations!private! !
+printOn:!printing!public! !
+setValue:!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 UI.ValueModel methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 UI.ValueModel methodProtocol: #valueModel attributes: #(#readOnly) selectors: #(#value #value:)!
@@ -148,8 +150,10 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!UI.ValueModel class categoriesFor: #comparisonPolicy:!instance creation!public! !
-!UI.ValueModel class categoriesFor: #icon!constants!public! !
-!UI.ValueModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.ValueModel class categoriesFor: #stbVersion!binary filing!public! !
+!UI.ValueModel class categoriesForMethods!
+comparisonPolicy:!instance creation!public! !
+icon!constants!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

@@ -73,13 +73,15 @@ Protocol
 	"Answer the <Integer> value of the receiver's 'Protocol' field."
 
 	^bytes dwordAtOffset: _OffsetOf_Protocol! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherStrength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherType!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashStrength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashType!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeStrength!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeType!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesFor: #Protocol!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO categoriesForMethods!
+CipherStrength!**compiled accessors**!public! !
+CipherType!**compiled accessors**!public! !
+HashStrength!**compiled accessors**!public! !
+HashType!**compiled accessors**!public! !
+KeyExchangeStrength!**compiled accessors**!public! !
+KeyExchangeType!**compiled accessors**!public! !
+Protocol!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO class methodsFor!
 
@@ -112,6 +114,8 @@ defineFields
 
 getFieldNames
 	^#(#Protocol #CipherType #CipherStrength #HashType #HashStrength #KeyExchangeType #KeyExchangeStrength)! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SSL_PROTOCOL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SSL_PROTOCOL_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

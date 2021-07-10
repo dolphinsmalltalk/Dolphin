@@ -55,12 +55,14 @@ union: aRegion
 	"Answers a new region which is the union of the receiver with aRegion"
 
 	^self combine: aRegion mode: RGN_OR! !
-!Graphics.Region categoriesFor: #combine:mode:!operations!private! !
-!Graphics.Region categoriesFor: #containsPoint:!operations!public!testing! !
-!Graphics.Region categoriesFor: #exclude:!operations!public! !
-!Graphics.Region categoriesFor: #intersection:!operations!public! !
-!Graphics.Region categoriesFor: #isPersistent!private!testing! !
-!Graphics.Region categoriesFor: #union:!operations!public! !
+!Graphics.Region categoriesForMethods!
+combine:mode:!operations!private! !
+containsPoint:!operations!public!testing! !
+exclude:!operations!public! !
+intersection:!operations!public! !
+isPersistent!private!testing! !
+union:!operations!public! !
+!
 
 !Graphics.Region class methodsFor!
 
@@ -78,7 +80,9 @@ rectangle: aRectangle
 	"Answer a rectangular region defined by aRectangle"
 
 	^self fromOwnedHandle: (Gdi32 createRectRgnIndirect: aRectangle asParameter)! !
-!Graphics.Region class categoriesFor: #ellipse:!instance creation!public! !
-!Graphics.Region class categoriesFor: #empty!instance creation!public! !
-!Graphics.Region class categoriesFor: #rectangle:!instance creation!public! !
+!Graphics.Region class categoriesForMethods!
+ellipse:!instance creation!public! !
+empty!instance creation!public! !
+rectangle:!instance creation!public! !
+!
 

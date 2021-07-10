@@ -86,19 +86,21 @@ iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger! !
-!OS.TBBUTTONINFOW categoriesFor: #cx!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #cx:!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #dwMask!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #dwMask:!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #fsState!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #fsState:!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #fsStyle!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #fsStyle:!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #idCommand!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #idCommand:!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #iImage!**compiled accessors**!public! !
-!OS.TBBUTTONINFOW categoriesFor: #iImage:!**compiled accessors**!public! !
+!OS.TBBUTTONINFOW categoriesForMethods!
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+dwMask!**compiled accessors**!public! !
+dwMask:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+fsState!**compiled accessors**!public! !
+fsState:!**compiled accessors**!public! !
+fsStyle!**compiled accessors**!public! !
+fsStyle:!**compiled accessors**!public! !
+idCommand!**compiled accessors**!public! !
+idCommand:!**compiled accessors**!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+!
 
 !OS.TBBUTTONINFOW class methodsFor!
 
@@ -133,6 +135,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
-!OS.TBBUTTONINFOW class categoriesFor: #defineFields!public!template definition! !
-!OS.TBBUTTONINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TBBUTTONINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

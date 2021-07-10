@@ -29,7 +29,9 @@ chrgText
 	"Answer the <CHARRANGE> value of the receiver's 'chrgText' field."
 
 	^CHARRANGE fromAddress: bytes yourAddress + _OffsetOf_chrgText! !
-!OS.FINDTEXTEX categoriesFor: #chrgText!**compiled accessors**!public! !
+!OS.FINDTEXTEX categoriesForMethods!
+chrgText!**compiled accessors**!public! !
+!
 
 !OS.FINDTEXTEX class methodsFor!
 
@@ -49,6 +51,8 @@ defineFields
 
 getFieldNames
 	^#(#chrg #lpstrText #chrgText)! !
-!OS.FINDTEXTEX class categoriesFor: #defineFields!public!template definition! !
-!OS.FINDTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.FINDTEXTEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

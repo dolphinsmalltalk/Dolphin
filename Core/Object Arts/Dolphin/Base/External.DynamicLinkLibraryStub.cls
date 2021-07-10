@@ -16,8 +16,10 @@ doesNotUnderstand: failedMessage
 
 libraryClass: aClass
 	libraryClass := aClass! !
-!External.DynamicLinkLibraryStub categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!External.DynamicLinkLibraryStub categoriesFor: #libraryClass:!initializing!private! !
+!External.DynamicLinkLibraryStub categoriesForMethods!
+doesNotUnderstand:!exceptions!public! !
+libraryClass:!initializing!private! !
+!
 
 !External.DynamicLinkLibraryStub class methodsFor!
 
@@ -26,5 +28,7 @@ libraryClass: aClass
 	^self new
 		libraryClass: aClass;
 		yourself! !
-!External.DynamicLinkLibraryStub class categoriesFor: #libraryClass:!public! !
+!External.DynamicLinkLibraryStub class categoriesForMethods!
+libraryClass:!public! !
+!
 

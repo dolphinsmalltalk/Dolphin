@@ -276,45 +276,47 @@ setFont: ppFont
 
 	self putref_Font: ppFont
 ! !
-!UI.IMSControl categoriesFor: #aboutBox!COM Interfaces-IMSControl!public! !
-!UI.IMSControl categoriesFor: #AboutBox!COM Interfaces-IMSControl!public! !
-!UI.IMSControl categoriesFor: #appearance!properties!public! !
-!UI.IMSControl categoriesFor: #appearance:!properties!public! !
-!UI.IMSControl categoriesFor: #backColor!properties!public! !
-!UI.IMSControl categoriesFor: #backColor:!properties!public! !
-!UI.IMSControl categoriesFor: #borderStyle!properties!public! !
-!UI.IMSControl categoriesFor: #borderStyle:!properties!public! !
-!UI.IMSControl categoriesFor: #convertToBackColorRef:!private!properties! !
-!UI.IMSControl categoriesFor: #convertToForeColorRef:!properties!public! !
-!UI.IMSControl categoriesFor: #enabled!properties!public! !
-!UI.IMSControl categoriesFor: #enabled:!properties!public! !
-!UI.IMSControl categoriesFor: #font!properties!public! !
-!UI.IMSControl categoriesFor: #font:!properties!public! !
-!UI.IMSControl categoriesFor: #foreColor!properties!public! !
-!UI.IMSControl categoriesFor: #foreColor:!properties!public! !
-!UI.IMSControl categoriesFor: #get_Appearance:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #get_BackColor:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #get_BorderStyle:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #get_Enabled:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #get_Font:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #get_ForeColor:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #get_hWnd:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #get_OLEDropMode:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #hWnd!properties!public! !
-!UI.IMSControl categoriesFor: #hWnd:!properties!public! !
-!UI.IMSControl categoriesFor: #isExtensible!public!testing! !
-!UI.IMSControl categoriesFor: #isVBCollection!public!testing! !
-!UI.IMSControl categoriesFor: #oleDropMode!properties!public! !
-!UI.IMSControl categoriesFor: #oleDropMode:!properties!public! !
-!UI.IMSControl categoriesFor: #put_Appearance:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #put_BackColor:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #put_BorderStyle:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #put_Enabled:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #put_ForeColor:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #put_hWnd:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #put_OLEDropMode:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #putref_Font:!COM Interfaces-IMSControl!private! !
-!UI.IMSControl categoriesFor: #refresh!COM Interfaces-IMSControl!public! !
-!UI.IMSControl categoriesFor: #Refresh!COM Interfaces-IMSControl!public! !
-!UI.IMSControl categoriesFor: #setFont:!properties!public! !
+!UI.IMSControl categoriesForMethods!
+aboutBox!COM Interfaces-IMSControl!public! !
+AboutBox!COM Interfaces-IMSControl!public! !
+appearance!properties!public! !
+appearance:!properties!public! !
+backColor!properties!public! !
+backColor:!properties!public! !
+borderStyle!properties!public! !
+borderStyle:!properties!public! !
+convertToBackColorRef:!private!properties! !
+convertToForeColorRef:!properties!public! !
+enabled!properties!public! !
+enabled:!properties!public! !
+font!properties!public! !
+font:!properties!public! !
+foreColor!properties!public! !
+foreColor:!properties!public! !
+get_Appearance:!COM Interfaces-IMSControl!private! !
+get_BackColor:!COM Interfaces-IMSControl!private! !
+get_BorderStyle:!COM Interfaces-IMSControl!private! !
+get_Enabled:!COM Interfaces-IMSControl!private! !
+get_Font:!COM Interfaces-IMSControl!private! !
+get_ForeColor:!COM Interfaces-IMSControl!private! !
+get_hWnd:!COM Interfaces-IMSControl!private! !
+get_OLEDropMode:!COM Interfaces-IMSControl!private! !
+hWnd!properties!public! !
+hWnd:!properties!public! !
+isExtensible!public!testing! !
+isVBCollection!public!testing! !
+oleDropMode!properties!public! !
+oleDropMode:!properties!public! !
+put_Appearance:!COM Interfaces-IMSControl!private! !
+put_BackColor:!COM Interfaces-IMSControl!private! !
+put_BorderStyle:!COM Interfaces-IMSControl!private! !
+put_Enabled:!COM Interfaces-IMSControl!private! !
+put_ForeColor:!COM Interfaces-IMSControl!private! !
+put_hWnd:!COM Interfaces-IMSControl!private! !
+put_OLEDropMode:!COM Interfaces-IMSControl!private! !
+putref_Font:!COM Interfaces-IMSControl!private! !
+refresh!COM Interfaces-IMSControl!public! !
+Refresh!COM Interfaces-IMSControl!public! !
+setFont:!properties!public! !
+!
 

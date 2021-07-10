@@ -108,21 +108,23 @@ value: anObject
 
 	self model value: anObject.
 ! !
-!Tools.FlipperInspector categoriesFor: #addToCommandRoute:!commands!public! !
-!Tools.FlipperInspector categoriesFor: #createComponents!initializing!private! !
-!Tools.FlipperInspector categoriesFor: #createRenderers!initializing!private! !
-!Tools.FlipperInspector categoriesFor: #model:!accessing!public! !
-!Tools.FlipperInspector categoriesFor: #object!accessing!public! !
-!Tools.FlipperInspector categoriesFor: #object:!accessing!public! !
-!Tools.FlipperInspector categoriesFor: #onValueChanged!event handling!private! !
-!Tools.FlipperInspector categoriesFor: #onViewOpened!event handling!private! !
-!Tools.FlipperInspector categoriesFor: #renderers!accessing!public! !
-!Tools.FlipperInspector categoriesFor: #setInitialFocus!public! !
-!Tools.FlipperInspector categoriesFor: #setValue:!accessing!private! !
-!Tools.FlipperInspector categoriesFor: #shortCaption!accessing!public! !
-!Tools.FlipperInspector categoriesFor: #updateCaption!public!updating! !
-!Tools.FlipperInspector categoriesFor: #value!accessing!public! !
-!Tools.FlipperInspector categoriesFor: #value:!accessing!public! !
+!Tools.FlipperInspector categoriesForMethods!
+addToCommandRoute:!commands!public! !
+createComponents!initializing!private! !
+createRenderers!initializing!private! !
+model:!accessing!public! !
+object!accessing!public! !
+object:!accessing!public! !
+onValueChanged!event handling!private! !
+onViewOpened!event handling!private! !
+renderers!accessing!public! !
+setInitialFocus!public! !
+setValue:!accessing!private! !
+shortCaption!accessing!public! !
+updateCaption!public!updating! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !Tools.FlipperInspector class methodsFor!
 
@@ -202,15 +204,17 @@ shellOn: anObject
 
 toolsFolderHelpId
 	^10600! !
-!Tools.FlipperInspector class categoriesFor: #defaultModel!models!public! !
-!Tools.FlipperInspector class categoriesFor: #defaultRenderers!constants!private! !
-!Tools.FlipperInspector class categoriesFor: #displayOn:!displaying!public! !
-!Tools.FlipperInspector class categoriesFor: #icon!constants!public! !
-!Tools.FlipperInspector class categoriesFor: #initialize!initializing!private! !
-!Tools.FlipperInspector class categoriesFor: #publishedAspects!public! !
-!Tools.FlipperInspector class categoriesFor: #renderers!accessing!public! !
-!Tools.FlipperInspector class categoriesFor: #renderers:!accessing!public! !
-!Tools.FlipperInspector class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.FlipperInspector class categoriesFor: #shellOn:!instance creation!public! !
-!Tools.FlipperInspector class categoriesFor: #toolsFolderHelpId!public! !
+!Tools.FlipperInspector class categoriesForMethods!
+defaultModel!models!public! !
+defaultRenderers!constants!private! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+renderers!accessing!public! !
+renderers:!accessing!public! !
+resource_Default_view!public!resources-views! !
+shellOn:!instance creation!public! !
+toolsFolderHelpId!public! !
+!
 

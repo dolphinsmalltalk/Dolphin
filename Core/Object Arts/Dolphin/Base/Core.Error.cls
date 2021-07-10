@@ -48,12 +48,14 @@ warningClass
 	"Private - Answer the class of Warning to which the receiver is converted by #asWarning."
 
 	^Warning! !
-!Core.Error categoriesFor: #asWarning!converting!private! !
-!Core.Error categoriesFor: #defaultAction!handling!public! !
-!Core.Error categoriesFor: #isUserResumable!public!testing! !
-!Core.Error categoriesFor: #notify!converting!public! !
-!Core.Error categoriesFor: #resignalAsWarning!handler responses!private! !
-!Core.Error categoriesFor: #warningClass!constants!private! !
+!Core.Error categoriesForMethods!
+asWarning!converting!private! !
+defaultAction!handling!public! !
+isUserResumable!public!testing! !
+notify!converting!public! !
+resignalAsWarning!handler responses!private! !
+warningClass!constants!private! !
+!
 
 Core.Error methodProtocol: #Error attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -104,13 +106,15 @@ subclassResponsibility: selector
 	"Private - Raise an error that some message was sent to an abstract class."
 
 	^SubclassResponsibilityError signal: selector printString , ' is the responsibility of the subclass'! !
-!Core.Error class categoriesFor: #mbIconId!parping!public! !
-!Core.Error class categoriesFor: #nonIntegerIndex:!instance creation!private! !
-!Core.Error class categoriesFor: #notIndexable:!instance creation!private! !
-!Core.Error class categoriesFor: #notYetImplemented!instance creation!private! !
-!Core.Error class categoriesFor: #performFailed:of:for:withArgs:!instance creation!private! !
-!Core.Error class categoriesFor: #severityClass!constants!public! !
-!Core.Error class categoriesFor: #subclassResponsibility:!instance creation!private! !
+!Core.Error class categoriesForMethods!
+mbIconId!parping!public! !
+nonIntegerIndex:!instance creation!private! !
+notIndexable:!instance creation!private! !
+notYetImplemented!instance creation!private! !
+performFailed:of:for:withArgs:!instance creation!private! !
+severityClass!constants!public! !
+subclassResponsibility:!instance creation!private! !
+!
 
 Core.Error class methodProtocol: #'Error class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
 

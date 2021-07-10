@@ -75,14 +75,16 @@ sin_port: anInteger
 	"Set the receiver's 'sin_port' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_sin_port put: anInteger! !
-!OS.SOCKADDR_IN categoriesFor: #port!accessing!public! !
-!OS.SOCKADDR_IN categoriesFor: #port:!accessing!public! !
-!OS.SOCKADDR_IN categoriesFor: #sin_addr!**compiled accessors**!public! !
-!OS.SOCKADDR_IN categoriesFor: #sin_addr:!**compiled accessors**!public! !
-!OS.SOCKADDR_IN categoriesFor: #sin_family!**compiled accessors**!public! !
-!OS.SOCKADDR_IN categoriesFor: #sin_family:!**compiled accessors**!public! !
-!OS.SOCKADDR_IN categoriesFor: #sin_port!**compiled accessors**!public! !
-!OS.SOCKADDR_IN categoriesFor: #sin_port:!**compiled accessors**!public! !
+!OS.SOCKADDR_IN categoriesForMethods!
+port!accessing!public! !
+port:!accessing!public! !
+sin_addr!**compiled accessors**!public! !
+sin_addr:!**compiled accessors**!public! !
+sin_family!**compiled accessors**!public! !
+sin_family:!**compiled accessors**!public! !
+sin_port!**compiled accessors**!public! !
+sin_port:!**compiled accessors**!public! !
+!
 
 !OS.SOCKADDR_IN class methodsFor!
 
@@ -109,6 +111,8 @@ defineFields
 
 getFieldNames
 	^#(#sin_family #sin_port #sin_addr)! !
-!OS.SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!OS.SOCKADDR_IN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.SOCKADDR_IN class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

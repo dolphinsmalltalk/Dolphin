@@ -47,10 +47,12 @@ ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger! !
-!OS.EMRRESIZEPALETTE categoriesFor: #cEntries!**compiled accessors**!public! !
-!OS.EMRRESIZEPALETTE categoriesFor: #cEntries:!**compiled accessors**!public! !
-!OS.EMRRESIZEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
-!OS.EMRRESIZEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
+!OS.EMRRESIZEPALETTE categoriesForMethods!
+cEntries!**compiled accessors**!public! !
+cEntries:!**compiled accessors**!public! !
+ihPal!**compiled accessors**!public! !
+ihPal:!**compiled accessors**!public! !
+!
 
 !OS.EMRRESIZEPALETTE class methodsFor!
 
@@ -84,7 +86,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_RESIZEPALETTE}! !
-!OS.EMRRESIZEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRRESIZEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRRESIZEPALETTE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRRESIZEPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

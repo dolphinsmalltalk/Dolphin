@@ -97,15 +97,17 @@ supportedInterfaces
 	This will vary on a per-instance basis."
 
 	^{enumClass}! !
-!OS.COM.Enumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
-!OS.COM.Enumerator categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Enumerator categoriesFor: #copyElements:length:!COM Interfaces-IEnumXXXX!private! !
-!OS.COM.Enumerator categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Enumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
-!OS.COM.Enumerator categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Enumerator categoriesFor: #setEnumClass:contents:!accessing!private! !
-!OS.COM.Enumerator categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
-!OS.COM.Enumerator categoriesFor: #supportedInterfaces!constants!public! !
+!OS.COM.Enumerator categoriesForMethods!
+arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
+Clone:!COM Interfaces-IEnumXXXX!public! !
+copyElements:length:!COM Interfaces-IEnumXXXX!private! !
+Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
+nextElement!COM Interfaces-IEnumXXXX!private! !
+Reset!COM Interfaces-IEnumXXXX!public! !
+setEnumClass:contents:!accessing!private! !
+Skip:!COM Interfaces-IEnumXXXX!public! !
+supportedInterfaces!constants!public! !
+!
 
 OS.COM.Enumerator methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
 
@@ -124,6 +126,8 @@ newEnumerator: enumClass onStream: stream
 	^self new
 		setEnumClass: enumClass contents: stream;
 		queryInterface: enumClass! !
-!OS.COM.Enumerator class categoriesFor: #newEnumerator:on:!instance creation!public! !
-!OS.COM.Enumerator class categoriesFor: #newEnumerator:onStream:!instance creation!public! !
+!OS.COM.Enumerator class categoriesForMethods!
+newEnumerator:on:!instance creation!public! !
+newEnumerator:onStream:!instance creation!public! !
+!
 

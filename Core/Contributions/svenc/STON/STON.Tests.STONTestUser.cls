@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'STON.Tests.STONTestUser'
 	instanceVariableNames: 'username password enabled'
@@ -52,15 +52,17 @@ username
 
 username: anObject
 	username := anObject! !
-!STON.Tests.STONTestUser categoriesFor: #=!comparing!public! !
-!STON.Tests.STONTestUser categoriesFor: #enabled!accessing!public! !
-!STON.Tests.STONTestUser categoriesFor: #enabled:!accessing!public! !
-!STON.Tests.STONTestUser categoriesFor: #hash!comparing!public! !
-!STON.Tests.STONTestUser categoriesFor: #initialize!initialize/release!public! !
-!STON.Tests.STONTestUser categoriesFor: #password!accessing!public! !
-!STON.Tests.STONTestUser categoriesFor: #password:!accessing!public! !
-!STON.Tests.STONTestUser categoriesFor: #username!accessing!public! !
-!STON.Tests.STONTestUser categoriesFor: #username:!accessing!public! !
+!STON.Tests.STONTestUser categoriesForMethods!
+=!comparing!public! !
+enabled!accessing!public! !
+enabled:!accessing!public! !
+hash!comparing!public! !
+initialize!initialize/release!public! !
+password!accessing!public! !
+password:!accessing!public! !
+username!accessing!public! !
+username:!accessing!public! !
+!
 
 !STON.Tests.STONTestUser class methodsFor!
 
@@ -91,7 +93,9 @@ new
 
 stonName
 	^ #TestUser! !
-!STON.Tests.STONTestUser class categoriesFor: #dummy!instance creation!public! !
-!STON.Tests.STONTestUser class categoriesFor: #new!public! !
-!STON.Tests.STONTestUser class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.STONTestUser class categoriesForMethods!
+dummy!instance creation!public! !
+new!public! !
+stonName!public!ston/core! !
+!
 

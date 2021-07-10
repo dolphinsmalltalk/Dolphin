@@ -13,5 +13,7 @@ XProgramming.SUnit.SUnitNameResolver comment: ''!
 
 classNamed: aSymbol
 	^aSymbol asQualifiedReference valueOrNil! !
-!XProgramming.SUnit.SUnitNameResolver class categoriesFor: #classNamed:!Camp Smalltalk!public! !
+!XProgramming.SUnit.SUnitNameResolver class categoriesForMethods!
+classNamed:!Camp Smalltalk!public! !
+!
 

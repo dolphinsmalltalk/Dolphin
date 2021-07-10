@@ -54,14 +54,16 @@ setName: aSymbol
 	name := aSymbol.
 	newVariables := Dictionary new.
 	removedVariables := Set new! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #addClass:!public! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #addVariableNamed:value:!public! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #baseEnvironmentName!accessing!public! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #environment!accessing!public! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #hierarchyBindingFor:!bindings!private! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #localBindingFor:!bindings!public! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #removeClass:!public! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #removeVariableNamed:!public! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #resolveImportedBinding:!binding!private! !
-!Refactory.Browser.RBNamespaceClass categoriesFor: #setName:!initializing!private! !
+!Refactory.Browser.RBNamespaceClass categoriesForMethods!
+addClass:!public! !
+addVariableNamed:value:!public! !
+baseEnvironmentName!accessing!public! !
+environment!accessing!public! !
+hierarchyBindingFor:!bindings!private! !
+localBindingFor:!bindings!public! !
+removeClass:!public! !
+removeVariableNamed:!public! !
+resolveImportedBinding:!binding!private! !
+setName:!initializing!private! !
+!
 

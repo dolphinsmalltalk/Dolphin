@@ -42,12 +42,14 @@ versionFormatString
 	"
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!'! !
-!UI.Scintilla.ScintillaLibrary categoriesFor: #directBooleanFunction:msg:wParam:lParam:!operations!private! !
-!UI.Scintilla.ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lParam:!operations!private! !
-!UI.Scintilla.ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lpParam:!operations!private! !
-!UI.Scintilla.ScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lParam:!operations!private! !
-!UI.Scintilla.ScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lpParam:!operations!private! !
-!UI.Scintilla.ScintillaLibrary categoriesFor: #versionFormatString!constants!private! !
+!UI.Scintilla.ScintillaLibrary categoriesForMethods!
+directBooleanFunction:msg:wParam:lParam:!operations!private! !
+directFunction:msg:wParam:lParam:!operations!private! !
+directFunction:msg:wParam:lpParam:!operations!private! !
+directFunction:msg:wpParam:lParam:!operations!private! !
+directFunction:msg:wpParam:lpParam:!operations!private! !
+versionFormatString!constants!private! !
+!
 
 !UI.Scintilla.ScintillaLibrary class methodsFor!
 
@@ -64,7 +66,9 @@ versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
 	^'5.1.0'! !
-!UI.Scintilla.ScintillaLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!UI.Scintilla.ScintillaLibrary class categoriesFor: #fileName!constants!public! !
-!UI.Scintilla.ScintillaLibrary class categoriesFor: #versionString!**auto generated**!constants!public!scintilla interface! !
+!UI.Scintilla.ScintillaLibrary class categoriesForMethods!
+closeDefault!private!realizing/unrealizing! !
+fileName!constants!public! !
+versionString!**auto generated**!constants!public!scintilla interface! !
+!
 

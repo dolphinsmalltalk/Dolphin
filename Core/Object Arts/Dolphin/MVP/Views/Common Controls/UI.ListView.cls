@@ -2323,268 +2323,270 @@ viewModeSelect
 
 wantCustomDrawItemNotifications: pNMHDR
 	^self customDrawBlock notNil or: [self hasSubItemCustomDraw]! !
-!UI.ListView categoriesFor: #addAllNonVirtual!private!updating! !
-!UI.ListView categoriesFor: #addColumn!adding!columns!public! !
-!UI.ListView categoriesFor: #addColumn:!adding!columns!public! !
-!UI.ListView categoriesFor: #addColumn:atIndex:!adding!columns!public! !
-!UI.ListView categoriesFor: #addOrUpdate:nonVirtualItems:afterIndex:!private!updating! !
-!UI.ListView categoriesFor: #adjustForStaticEdgeBug:!helpers!private! !
-!UI.ListView categoriesFor: #allColumns!columns!public! !
-!UI.ListView categoriesFor: #anchorIndex!public!selection! !
-!UI.ListView categoriesFor: #anchorIndex:!public!selection! !
-!UI.ListView categoriesFor: #applyImageLists!image management!private! !
-!UI.ListView categoriesFor: #autoResizeColumns!operations!private! !
-!UI.ListView categoriesFor: #autoResizeColumns:!helpers!private! !
-!UI.ListView categoriesFor: #backcolorChanged!helpers!private! !
-!UI.ListView categoriesFor: #backImage!accessing!public! !
-!UI.ListView categoriesFor: #backImage:!accessing!public! !
-!UI.ListView categoriesFor: #backImageAlphaPercent!accessing!public! !
-!UI.ListView categoriesFor: #backImageAlphaPercent:!accessing!public! !
-!UI.ListView categoriesFor: #backImageChanged!accessing!helpers!private! !
-!UI.ListView categoriesFor: #backImageIsTiled!accessing!public! !
-!UI.ListView categoriesFor: #backImageIsTiled:!accessing!public! !
-!UI.ListView categoriesFor: #backImageOffset!accessing!public! !
-!UI.ListView categoriesFor: #backImageOffset:!accessing!public! !
-!UI.ListView categoriesFor: #basicAdd:atIndex:!adding!private! !
-!UI.ListView categoriesFor: #basicAddColumn:atIndex:!adding!columns!private! !
-!UI.ListView categoriesFor: #basicClear!private!removing! !
-!UI.ListView categoriesFor: #basicEditItemLabel:!operations!private! !
-!UI.ListView categoriesFor: #basicItemFromPoint:!accessing!private! !
-!UI.ListView categoriesFor: #basicRefreshContents!private!updating! !
-!UI.ListView categoriesFor: #basicRemoveAtIndex:!private!removing! !
-!UI.ListView categoriesFor: #basicRemoveColumnAtIndex:!columns!public!removing! !
-!UI.ListView categoriesFor: #basicResetSelection!private!selection! !
-!UI.ListView categoriesFor: #basicUpdateColumnAtIndex:!columns!private!updating! !
-!UI.ListView categoriesFor: #beSorted:!public!sorting! !
-!UI.ListView categoriesFor: #buildViewsPopup!helpers!private! !
-!UI.ListView categoriesFor: #cancelLabelEdit!operations!private! !
-!UI.ListView categoriesFor: #caretIndex!public!selection! !
-!UI.ListView categoriesFor: #caretIndex:!public!selection! !
-!UI.ListView categoriesFor: #clearSelectionsByIndex:!public!selection! !
-!UI.ListView categoriesFor: #columnAtIndex:!columns!public! !
-!UI.ListView categoriesFor: #columnClass!constants!private! !
-!UI.ListView categoriesFor: #columnClicked:!helpers!private! !
-!UI.ListView categoriesFor: #columnCount!accessing!private! !
-!UI.ListView categoriesFor: #columnOrder!accessing!public! !
-!UI.ListView categoriesFor: #columnOrder:!accessing!public! !
-!UI.ListView categoriesFor: #columnsList!columns!public! !
-!UI.ListView categoriesFor: #columnsList:!columns!public! !
-!UI.ListView categoriesFor: #customDrawContextClass!constants!private! !
-!UI.ListView categoriesFor: #customDrawSubItem:!event handling!private! !
-!UI.ListView categoriesFor: #customImageExtent!accessing!private! !
-!UI.ListView categoriesFor: #defaultListViewExStyle!accessing-styles!constants!private! !
-!UI.ListView categoriesFor: #defaultThumbnailExtent!constants!private! !
-!UI.ListView categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.ListView categoriesFor: #editLabelStyle!constants!private! !
-!UI.ListView categoriesFor: #ensureItemsVisible:!helpers!private! !
-!UI.ListView categoriesFor: #ensureSelectionVisible!public!selection! !
-!UI.ListView categoriesFor: #ensureVisible:!operations!public! !
-!UI.ListView categoriesFor: #errorInCommonControlCall:!exceptions!private! !
-!UI.ListView categoriesFor: #extraLargeIconMode!commands!public! !
-!UI.ListView categoriesFor: #findItem:startingAt:wrap:!private!searching! !
-!UI.ListView categoriesFor: #forecolor:!accessing!public! !
-!UI.ListView categoriesFor: #forgetLastClickedColumn!helpers!private! !
-!UI.ListView categoriesFor: #getEditControl!accessing!private! !
-!UI.ListView categoriesFor: #getItemChecked:!accessing!public! !
-!UI.ListView categoriesFor: #getItemText:!accessing!private! !
-!UI.ListView categoriesFor: #getSelectedCount!private!selection! !
-!UI.ListView categoriesFor: #getSelectionsByIndex!private!selection! !
-!UI.ListView categoriesFor: #getSingleSelection!private!selection! !
-!UI.ListView categoriesFor: #getThumbnailOf:!helpers!private! !
-!UI.ListView categoriesFor: #hasBorderSelect!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasBorderSelect:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasButtons!accessing-styles!public!testing! !
-!UI.ListView categoriesFor: #hasCheckBoxes!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasCheckBoxes:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasColumnHeaders!accessing!public! !
-!UI.ListView categoriesFor: #hasColumnHeaders:!accessing!public! !
-!UI.ListView categoriesFor: #hasColumnImages!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasColumnImages:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasFlatScrollbars!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasFlatScrollbars:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasFullRowSelect!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasFullRowSelect:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasGridLines!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasGridLines:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasHeaderDragDrop!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasHeaderDragDrop:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasHotTracking!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasInfoTips!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasInfoTips:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasLargeImages!private!testing! !
-!UI.ListView categoriesFor: #hasPrimaryColumnImages!private!testing! !
-!UI.ListView categoriesFor: #hasSortHeaders!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasSortHeaders:!accessing-styles!public! !
-!UI.ListView categoriesFor: #hasSubItemCustomDraw!private!testing! !
-!UI.ListView categoriesFor: #hideDropHighlight!drag & drop!private! !
-!UI.ListView categoriesFor: #iconSpacing!accessing!public! !
-!UI.ListView categoriesFor: #iconSpacing:!accessing!public! !
-!UI.ListView categoriesFor: #imageFromRow:!adapters!private! !
-!UI.ListView categoriesFor: #indentFromRow:!adapters!private! !
-!UI.ListView categoriesFor: #infoTipFromRow:withPrefix:!adapters!private! !
-!UI.ListView categoriesFor: #initialize!initializing!private! !
-!UI.ListView categoriesFor: #invalidateHeader!private!updating! !
-!UI.ListView categoriesFor: #isArrangeable!arranging!public! !
-!UI.ListView categoriesFor: #isAutoArranged!arranging!public! !
-!UI.ListView categoriesFor: #isAutoArranged:!accessing-styles!public! !
-!UI.ListView categoriesFor: #isDoubleBuffered!accessing-styles!public! !
-!UI.ListView categoriesFor: #isDoubleBuffered:!accessing-styles!public! !
-!UI.ListView categoriesFor: #isMultiSelect!public!selection!testing! !
-!UI.ListView categoriesFor: #isMultiSelect:!public!testing! !
-!UI.ListView categoriesFor: #isReportMode!private!updating! !
-!UI.ListView categoriesFor: #isVirtual!accessing-styles!public! !
-!UI.ListView categoriesFor: #isVirtual:!accessing-styles!public! !
-!UI.ListView categoriesFor: #itemCount!accessing!public! !
-!UI.ListView categoriesFor: #itemFromNMHDRW:!helpers!private! !
-!UI.ListView categoriesFor: #itemFromPoint:!enquiries!private! !
-!UI.ListView categoriesFor: #itemRect:textOnly:!enquiries!public! !
-!UI.ListView categoriesFor: #itemsPerPage!geometry!public! !
-!UI.ListView categoriesFor: #largeIconExtent:!constants!public! !
-!UI.ListView categoriesFor: #largeIconMode!commands!public! !
-!UI.ListView categoriesFor: #lastSelIndices!accessing!private! !
-!UI.ListView categoriesFor: #listMode!commands!public! !
-!UI.ListView categoriesFor: #listViewStyleAllMask:!accessing-styles!private! !
-!UI.ListView categoriesFor: #listViewStyleMask:set:!accessing-styles!private! !
-!UI.ListView categoriesFor: #lvFlags!accessing!private! !
-!UI.ListView categoriesFor: #lvmApproximateViewRect:cx:cy:!geometry!private! !
-!UI.ListView categoriesFor: #lvmArrange:!operations!private! !
-!UI.ListView categoriesFor: #lvmCreateDragImage:position:!operations!private! !
-!UI.ListView categoriesFor: #lvmDeleteAllItems!private!removing! !
-!UI.ListView categoriesFor: #lvmDeleteColumn:!columns!private!removing! !
-!UI.ListView categoriesFor: #lvmDeleteItem:!private!removing! !
-!UI.ListView categoriesFor: #lvmEnsureVisible:partial:!operations!private! !
-!UI.ListView categoriesFor: #lvmFindItem:startingAt:!operations!private! !
-!UI.ListView categoriesFor: #lvmGetBkImage:!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetCallbackMask!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetColumnOrderArray!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetColumnWidth:!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetExtendedListViewStyle!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetHeader!geometry!private! !
-!UI.ListView categoriesFor: #lvmGetImageList:!image management!private! !
-!UI.ListView categoriesFor: #lvmGetItem:!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetItemCount!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetItemPosition:!geometry!private! !
-!UI.ListView categoriesFor: #lvmGetItemRect:bounding:!geometry!private! !
-!UI.ListView categoriesFor: #lvmGetItemSpacing!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetItemState:mask:!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetNextItem:flags:!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetOrigin!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetStringWidth:!accessing!private! !
-!UI.ListView categoriesFor: #lvmGetSubItemRect:subitem:bounding:!geometry!private! !
-!UI.ListView categoriesFor: #lvmGetView!accessing-styles!private! !
-!UI.ListView categoriesFor: #lvmGetViewRect!geometry!private! !
-!UI.ListView categoriesFor: #lvmInsertAt:column:!adding!private! !
-!UI.ListView categoriesFor: #lvmInsertItem:!adding!private! !
-!UI.ListView categoriesFor: #lvmRedrawItems:to:!operations!private! !
-!UI.ListView categoriesFor: #lvmSetBkImage:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetCallbackMask:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetColumn:at:!columns!private! !
-!UI.ListView categoriesFor: #lvmSetColumnOrderArray:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetColumnWidth:to:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetExtendedListViewStyle:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetExtendedListViewStyle:dwExStyle:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetIconSpacing:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetImageList:type:!image management!private! !
-!UI.ListView categoriesFor: #lvmSetItem:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetItem:position:!geometry!private! !
-!UI.ListView categoriesFor: #lvmSetItem:state:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetItemCount:!operations!private! !
-!UI.ListView categoriesFor: #lvmSetItemText:index:!accessing!private! !
-!UI.ListView categoriesFor: #lvmSetView:!geometry!private! !
-!UI.ListView categoriesFor: #lvmUpdate:!operations!private! !
-!UI.ListView categoriesFor: #lvnBeginScroll:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnColumnClick:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnColumnDropDown:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnColumnOverflowClick:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnDeleteAllItems:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnEndScroll:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnFindItem:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnGetEmptyMarkup:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnGetInfoTip:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnIncrementalSearch:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnInsertItem:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnItemActivate:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnItemChanged:!private!selection! !
-!UI.ListView categoriesFor: #lvnItemChanging:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnLinkClick:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnMarqueeBegin:!event handling-win32!private! !
-!UI.ListView categoriesFor: #lvnODStateChanged:!event handling-win32!private! !
-!UI.ListView categoriesFor: #maybeSelChanging:!event handling!private! !
-!UI.ListView categoriesFor: #nmBeginDrag:!event handling-win32!private! !
-!UI.ListView categoriesFor: #nmBeginRDrag:!event handling-win32!private! !
-!UI.ListView categoriesFor: #nmClick:!event handling-win32!private! !
-!UI.ListView categoriesFor: #nmNotify:!event handling-win32!private! !
-!UI.ListView categoriesFor: #nmRClick:!event handling-win32!private! !
-!UI.ListView categoriesFor: #nmSelChanged:!event handling-win32!private! !
-!UI.ListView categoriesFor: #notificationClass!constants!private! !
-!UI.ListView categoriesFor: #onButtonPressed:!private! !
-!UI.ListView categoriesFor: #onDisplayDetailsRequired:!event handling!private! !
-!UI.ListView categoriesFor: #onDropDown:!event handling!private! !
-!UI.ListView categoriesFor: #onEraseRequired:!event handling!public! !
-!UI.ListView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!UI.ListView categoriesFor: #onItems:addedAtIndex:!event handling!public! !
-!UI.ListView categoriesFor: #onKeyPressed:!event handling!public! !
-!UI.ListView categoriesFor: #onKeyTyped:!event handling!public! !
-!UI.ListView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!UI.ListView categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!UI.ListView categoriesFor: #onPositionChanged:!event handling!public! !
-!UI.ListView categoriesFor: #onRightButtonPressed:!event handling!public! !
-!UI.ListView categoriesFor: #onSelChanged:!event handling!private! !
-!UI.ListView categoriesFor: #onSelChanging:cause:!event handling!private! !
-!UI.ListView categoriesFor: #onSelRemoved!public!selection! !
-!UI.ListView categoriesFor: #onStateRestored!binary filing!private! !
-!UI.ListView categoriesFor: #onViewCreated!event handling!public! !
-!UI.ListView categoriesFor: #primaryColumn!columns!private! !
-!UI.ListView categoriesFor: #queryCommand:!commands!public! !
-!UI.ListView categoriesFor: #refreshContents!public!updating! !
-!UI.ListView categoriesFor: #refreshNonVirtual!private!updating! !
-!UI.ListView categoriesFor: #removeColumn:!columns!public!removing! !
-!UI.ListView categoriesFor: #removeColumnAtIndex:!columns!public!removing! !
-!UI.ListView categoriesFor: #reportMode!commands!public! !
-!UI.ListView categoriesFor: #resetSelection!public!selection! !
-!UI.ListView categoriesFor: #resolutionScaledBy:!geometry!private! !
-!UI.ListView categoriesFor: #selectAll!public!selection! !
-!UI.ListView categoriesFor: #selectedCount!private!selection! !
-!UI.ListView categoriesFor: #selectIndex:set:!private!selection! !
-!UI.ListView categoriesFor: #selectIndices:set:!private!selection! !
-!UI.ListView categoriesFor: #selectionByIndex!public!selection! !
-!UI.ListView categoriesFor: #selections:ifAbsent:!public!selection! !
-!UI.ListView categoriesFor: #selectionsByIndex!public!selection! !
-!UI.ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
-!UI.ListView categoriesFor: #setColumnIcon:atIndex:!helpers!private! !
-!UI.ListView categoriesFor: #setControlBackcolor:!helpers!private! !
-!UI.ListView categoriesFor: #setIconSpacing:!helpers!private! !
-!UI.ListView categoriesFor: #setItem:checked:!accessing!public! !
-!UI.ListView categoriesFor: #setSelectionsByIndex:!private!selection! !
-!UI.ListView categoriesFor: #setSingleSelection:!private!selection! !
-!UI.ListView categoriesFor: #setViewMode:!accessing!private! !
-!UI.ListView categoriesFor: #setWidthOfColumn:to:!columns!public! !
-!UI.ListView categoriesFor: #showDropHighlight:!drag & drop!private! !
-!UI.ListView categoriesFor: #showsSelAlways!accessing-styles!public! !
-!UI.ListView categoriesFor: #showsSelAlways:!accessing-styles!public! !
-!UI.ListView categoriesFor: #smallIconMode!commands!public! !
-!UI.ListView categoriesFor: #sortOnColumn:!columns!public!sorting! !
-!UI.ListView categoriesFor: #state!accessing!private! !
-!UI.ListView categoriesFor: #stateImageFromRow:!helpers!private! !
-!UI.ListView categoriesFor: #subItemRectRow:column:!geometry!public! !
-!UI.ListView categoriesFor: #text:!accessing!public! !
-!UI.ListView categoriesFor: #textFromRow:!adapters!private! !
-!UI.ListView categoriesFor: #thumbnailExtent!accessing!public! !
-!UI.ListView categoriesFor: #thumbnailExtent:!accessing!public! !
-!UI.ListView categoriesFor: #thumbnailsImageManager!image management!private! !
-!UI.ListView categoriesFor: #thumbnailsMode!commands!public! !
-!UI.ListView categoriesFor: #tileIconMode!commands!public! !
-!UI.ListView categoriesFor: #updateAllNonVirtual!private!updating! !
-!UI.ListView categoriesFor: #updateAllVirtual!private!updating! !
-!UI.ListView categoriesFor: #updateColumn:!columns!private!updating! !
-!UI.ListView categoriesFor: #updateColumnAtIndex:!columns!private!updating! !
-!UI.ListView categoriesFor: #updateItem:atIndex:!event handling!public! !
-!UI.ListView categoriesFor: #updateSelectionCache!helpers!private!selection! !
-!UI.ListView categoriesFor: #viewMode!accessing!public! !
-!UI.ListView categoriesFor: #viewModeChanged!helpers!private! !
-!UI.ListView categoriesFor: #viewModeSelect!commands!public! !
-!UI.ListView categoriesFor: #wantCustomDrawItemNotifications:!helpers!private! !
+!UI.ListView categoriesForMethods!
+addAllNonVirtual!private!updating! !
+addColumn!adding!columns!public! !
+addColumn:!adding!columns!public! !
+addColumn:atIndex:!adding!columns!public! !
+addOrUpdate:nonVirtualItems:afterIndex:!private!updating! !
+adjustForStaticEdgeBug:!helpers!private! !
+allColumns!columns!public! !
+anchorIndex!public!selection! !
+anchorIndex:!public!selection! !
+applyImageLists!image management!private! !
+autoResizeColumns!operations!private! !
+autoResizeColumns:!helpers!private! !
+backcolorChanged!helpers!private! !
+backImage!accessing!public! !
+backImage:!accessing!public! !
+backImageAlphaPercent!accessing!public! !
+backImageAlphaPercent:!accessing!public! !
+backImageChanged!accessing!helpers!private! !
+backImageIsTiled!accessing!public! !
+backImageIsTiled:!accessing!public! !
+backImageOffset!accessing!public! !
+backImageOffset:!accessing!public! !
+basicAdd:atIndex:!adding!private! !
+basicAddColumn:atIndex:!adding!columns!private! !
+basicClear!private!removing! !
+basicEditItemLabel:!operations!private! !
+basicItemFromPoint:!accessing!private! !
+basicRefreshContents!private!updating! !
+basicRemoveAtIndex:!private!removing! !
+basicRemoveColumnAtIndex:!columns!public!removing! !
+basicResetSelection!private!selection! !
+basicUpdateColumnAtIndex:!columns!private!updating! !
+beSorted:!public!sorting! !
+buildViewsPopup!helpers!private! !
+cancelLabelEdit!operations!private! !
+caretIndex!public!selection! !
+caretIndex:!public!selection! !
+clearSelectionsByIndex:!public!selection! !
+columnAtIndex:!columns!public! !
+columnClass!constants!private! !
+columnClicked:!helpers!private! !
+columnCount!accessing!private! !
+columnOrder!accessing!public! !
+columnOrder:!accessing!public! !
+columnsList!columns!public! !
+columnsList:!columns!public! !
+customDrawContextClass!constants!private! !
+customDrawSubItem:!event handling!private! !
+customImageExtent!accessing!private! !
+defaultListViewExStyle!accessing-styles!constants!private! !
+defaultThumbnailExtent!constants!private! !
+defaultWindowStyle!constants!private! !
+editLabelStyle!constants!private! !
+ensureItemsVisible:!helpers!private! !
+ensureSelectionVisible!public!selection! !
+ensureVisible:!operations!public! !
+errorInCommonControlCall:!exceptions!private! !
+extraLargeIconMode!commands!public! !
+findItem:startingAt:wrap:!private!searching! !
+forecolor:!accessing!public! !
+forgetLastClickedColumn!helpers!private! !
+getEditControl!accessing!private! !
+getItemChecked:!accessing!public! !
+getItemText:!accessing!private! !
+getSelectedCount!private!selection! !
+getSelectionsByIndex!private!selection! !
+getSingleSelection!private!selection! !
+getThumbnailOf:!helpers!private! !
+hasBorderSelect!accessing-styles!public! !
+hasBorderSelect:!accessing-styles!public! !
+hasButtons!accessing-styles!public!testing! !
+hasCheckBoxes!accessing-styles!public! !
+hasCheckBoxes:!accessing-styles!public! !
+hasColumnHeaders!accessing!public! !
+hasColumnHeaders:!accessing!public! !
+hasColumnImages!accessing-styles!public! !
+hasColumnImages:!accessing-styles!public! !
+hasFlatScrollbars!accessing-styles!public! !
+hasFlatScrollbars:!accessing-styles!public! !
+hasFullRowSelect!accessing-styles!public! !
+hasFullRowSelect:!accessing-styles!public! !
+hasGridLines!accessing-styles!public! !
+hasGridLines:!accessing-styles!public! !
+hasHeaderDragDrop!accessing-styles!public! !
+hasHeaderDragDrop:!accessing-styles!public! !
+hasHotTracking!accessing-styles!public! !
+hasHotTracking:!accessing-styles!public! !
+hasInfoTips!accessing-styles!public! !
+hasInfoTips:!accessing-styles!public! !
+hasLargeImages!private!testing! !
+hasPrimaryColumnImages!private!testing! !
+hasSortHeaders!accessing-styles!public! !
+hasSortHeaders:!accessing-styles!public! !
+hasSubItemCustomDraw!private!testing! !
+hideDropHighlight!drag & drop!private! !
+iconSpacing!accessing!public! !
+iconSpacing:!accessing!public! !
+imageFromRow:!adapters!private! !
+indentFromRow:!adapters!private! !
+infoTipFromRow:withPrefix:!adapters!private! !
+initialize!initializing!private! !
+invalidateHeader!private!updating! !
+isArrangeable!arranging!public! !
+isAutoArranged!arranging!public! !
+isAutoArranged:!accessing-styles!public! !
+isDoubleBuffered!accessing-styles!public! !
+isDoubleBuffered:!accessing-styles!public! !
+isMultiSelect!public!selection!testing! !
+isMultiSelect:!public!testing! !
+isReportMode!private!updating! !
+isVirtual!accessing-styles!public! !
+isVirtual:!accessing-styles!public! !
+itemCount!accessing!public! !
+itemFromNMHDRW:!helpers!private! !
+itemFromPoint:!enquiries!private! !
+itemRect:textOnly:!enquiries!public! !
+itemsPerPage!geometry!public! !
+largeIconExtent:!constants!public! !
+largeIconMode!commands!public! !
+lastSelIndices!accessing!private! !
+listMode!commands!public! !
+listViewStyleAllMask:!accessing-styles!private! !
+listViewStyleMask:set:!accessing-styles!private! !
+lvFlags!accessing!private! !
+lvmApproximateViewRect:cx:cy:!geometry!private! !
+lvmArrange:!operations!private! !
+lvmCreateDragImage:position:!operations!private! !
+lvmDeleteAllItems!private!removing! !
+lvmDeleteColumn:!columns!private!removing! !
+lvmDeleteItem:!private!removing! !
+lvmEnsureVisible:partial:!operations!private! !
+lvmFindItem:startingAt:!operations!private! !
+lvmGetBkImage:!accessing!private! !
+lvmGetCallbackMask!accessing!private! !
+lvmGetColumnOrderArray!accessing!private! !
+lvmGetColumnWidth:!accessing!private! !
+lvmGetExtendedListViewStyle!accessing!private! !
+lvmGetHeader!geometry!private! !
+lvmGetImageList:!image management!private! !
+lvmGetItem:!accessing!private! !
+lvmGetItemCount!accessing!private! !
+lvmGetItemPosition:!geometry!private! !
+lvmGetItemRect:bounding:!geometry!private! !
+lvmGetItemSpacing!accessing!private! !
+lvmGetItemState:mask:!accessing!private! !
+lvmGetNextItem:flags:!accessing!private! !
+lvmGetOrigin!accessing!private! !
+lvmGetStringWidth:!accessing!private! !
+lvmGetSubItemRect:subitem:bounding:!geometry!private! !
+lvmGetView!accessing-styles!private! !
+lvmGetViewRect!geometry!private! !
+lvmInsertAt:column:!adding!private! !
+lvmInsertItem:!adding!private! !
+lvmRedrawItems:to:!operations!private! !
+lvmSetBkImage:!accessing!private! !
+lvmSetCallbackMask:!accessing!private! !
+lvmSetColumn:at:!columns!private! !
+lvmSetColumnOrderArray:!accessing!private! !
+lvmSetColumnWidth:to:!accessing!private! !
+lvmSetExtendedListViewStyle:!accessing!private! !
+lvmSetExtendedListViewStyle:dwExStyle:!accessing!private! !
+lvmSetIconSpacing:!accessing!private! !
+lvmSetImageList:type:!image management!private! !
+lvmSetItem:!accessing!private! !
+lvmSetItem:position:!geometry!private! !
+lvmSetItem:state:!accessing!private! !
+lvmSetItemCount:!operations!private! !
+lvmSetItemText:index:!accessing!private! !
+lvmSetView:!geometry!private! !
+lvmUpdate:!operations!private! !
+lvnBeginScroll:!event handling-win32!private! !
+lvnColumnClick:!event handling-win32!private! !
+lvnColumnDropDown:!event handling-win32!private! !
+lvnColumnOverflowClick:!event handling-win32!private! !
+lvnDeleteAllItems:!event handling-win32!private! !
+lvnEndScroll:!event handling-win32!private! !
+lvnFindItem:!event handling-win32!private! !
+lvnGetEmptyMarkup:!event handling-win32!private! !
+lvnGetInfoTip:!event handling-win32!private! !
+lvnIncrementalSearch:!event handling-win32!private! !
+lvnInsertItem:!event handling-win32!private! !
+lvnItemActivate:!event handling-win32!private! !
+lvnItemChanged:!private!selection! !
+lvnItemChanging:!event handling-win32!private! !
+lvnLinkClick:!event handling-win32!private! !
+lvnMarqueeBegin:!event handling-win32!private! !
+lvnODStateChanged:!event handling-win32!private! !
+maybeSelChanging:!event handling!private! !
+nmBeginDrag:!event handling-win32!private! !
+nmBeginRDrag:!event handling-win32!private! !
+nmClick:!event handling-win32!private! !
+nmNotify:!event handling-win32!private! !
+nmRClick:!event handling-win32!private! !
+nmSelChanged:!event handling-win32!private! !
+notificationClass!constants!private! !
+onButtonPressed:!private! !
+onDisplayDetailsRequired:!event handling!private! !
+onDropDown:!event handling!private! !
+onEraseRequired:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onItems:addedAtIndex:!event handling!public! !
+onKeyPressed:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onPositionChanged:!event handling!public! !
+onRightButtonPressed:!event handling!public! !
+onSelChanged:!event handling!private! !
+onSelChanging:cause:!event handling!private! !
+onSelRemoved!public!selection! !
+onStateRestored!binary filing!private! !
+onViewCreated!event handling!public! !
+primaryColumn!columns!private! !
+queryCommand:!commands!public! !
+refreshContents!public!updating! !
+refreshNonVirtual!private!updating! !
+removeColumn:!columns!public!removing! !
+removeColumnAtIndex:!columns!public!removing! !
+reportMode!commands!public! !
+resetSelection!public!selection! !
+resolutionScaledBy:!geometry!private! !
+selectAll!public!selection! !
+selectedCount!private!selection! !
+selectIndex:set:!private!selection! !
+selectIndices:set:!private!selection! !
+selectionByIndex!public!selection! !
+selections:ifAbsent:!public!selection! !
+selectionsByIndex!public!selection! !
+selectionsByIndex:ifAbsent:!public!selection! !
+setColumnIcon:atIndex:!helpers!private! !
+setControlBackcolor:!helpers!private! !
+setIconSpacing:!helpers!private! !
+setItem:checked:!accessing!public! !
+setSelectionsByIndex:!private!selection! !
+setSingleSelection:!private!selection! !
+setViewMode:!accessing!private! !
+setWidthOfColumn:to:!columns!public! !
+showDropHighlight:!drag & drop!private! !
+showsSelAlways!accessing-styles!public! !
+showsSelAlways:!accessing-styles!public! !
+smallIconMode!commands!public! !
+sortOnColumn:!columns!public!sorting! !
+state!accessing!private! !
+stateImageFromRow:!helpers!private! !
+subItemRectRow:column:!geometry!public! !
+text:!accessing!public! !
+textFromRow:!adapters!private! !
+thumbnailExtent!accessing!public! !
+thumbnailExtent:!accessing!public! !
+thumbnailsImageManager!image management!private! !
+thumbnailsMode!commands!public! !
+tileIconMode!commands!public! !
+updateAllNonVirtual!private!updating! !
+updateAllVirtual!private!updating! !
+updateColumn:!columns!private!updating! !
+updateColumnAtIndex:!columns!private!updating! !
+updateItem:atIndex:!event handling!public! !
+updateSelectionCache!helpers!private!selection! !
+viewMode!accessing!public! !
+viewModeChanged!helpers!private! !
+viewModeSelect!commands!public! !
+wantCustomDrawItemNotifications:!helpers!private! !
+!
 
 UI.ListView methodProtocol: #multipleIndexSelectableItems attributes: #(#readOnly) selectors: #(#addSelectionsByIndex: #clearSelectionsByIndex: #selectionsByIndex #selectionsByIndex: #selectionsByIndex:ifAbsent:)!
 UI.ListView methodProtocol: #multipleSelectableItems attributes: #(#readOnly) selectors: #(#addSelections: #addSelections:ifAbsent: #hasSelection #selectAll #selections #selections: #selections:ifAbsent:)!
@@ -2721,17 +2723,19 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysListView32'! !
-!UI.ListView class categoriesFor: #columnClass!constants!private! !
-!UI.ListView class categoriesFor: #icon!constants!public! !
-!UI.ListView class categoriesFor: #initialize!development!initializing!private! !
-!UI.ListView class categoriesFor: #onStartup!events-session!public! !
-!UI.ListView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
-!UI.ListView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
-!UI.ListView class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !
-!UI.ListView class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!UI.ListView class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
-!UI.ListView class categoriesFor: #stbVersion!binary filing!public! !
-!UI.ListView class categoriesFor: #themePartName!constants!public! !
-!UI.ListView class categoriesFor: #viewModes!accessing!public! !
-!UI.ListView class categoriesFor: #winClassName!constants!private! !
+!UI.ListView class categoriesForMethods!
+columnClass!constants!private! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+onStartup!events-session!public! !
+stbConvert:fromVersion:!binary filing!public! !
+stbConvertFromVersion10:!binary filing!private! !
+stbConvertFromVersion11:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbConvertFromVersion5:!binary filing!private! !
+stbVersion!binary filing!public! !
+themePartName!constants!public! !
+viewModes!accessing!public! !
+winClassName!constants!private! !
+!
 

@@ -193,35 +193,37 @@ supersentMethods
 
 supersentMethods: anObject
 	supersentMethods := anObject! !
-!DeploymentContext categoriesFor: #aspectGetters!accessing!public! !
-!DeploymentContext categoriesFor: #aspectGetters:!accessing!public! !
-!DeploymentContext categoriesFor: #aspectSetters!accessing!public! !
-!DeploymentContext categoriesFor: #aspectSetters:!accessing!public! !
-!DeploymentContext categoriesFor: #basicDevelopmentClasses!accessing!public! !
-!DeploymentContext categoriesFor: #closeLog!operations!public! !
-!DeploymentContext categoriesFor: #destroyNotifier!operations!private! !
-!DeploymentContext categoriesFor: #developmentClasses!accessing!public! !
-!DeploymentContext categoriesFor: #endElement:!logging!public! !
-!DeploymentContext categoriesFor: #endTag!logging!public! !
-!DeploymentContext categoriesFor: #finishedWithStripping!public!state! !
-!DeploymentContext categoriesFor: #initialize!initializing!private! !
-!DeploymentContext categoriesFor: #logComment:!logging!private! !
-!DeploymentContext categoriesFor: #logElement:attributes:value:!logging!private! !
-!DeploymentContext categoriesFor: #logStrippingError:!logging!private! !
-!DeploymentContext categoriesFor: #logValue:!logging!private! !
-!DeploymentContext categoriesFor: #notifier!accessing!public! !
-!DeploymentContext categoriesFor: #notifier:!accessing!public! !
-!DeploymentContext categoriesFor: #notify:!logging!public! !
-!DeploymentContext categoriesFor: #openLogFile:!logging!public! !
-!DeploymentContext categoriesFor: #preservedMessages!accessing!public! !
-!DeploymentContext categoriesFor: #preservedMessages:!accessing!public! !
-!DeploymentContext categoriesFor: #rootClasses!accessing!public! !
-!DeploymentContext categoriesFor: #rootClasses:!accessing!public! !
-!DeploymentContext categoriesFor: #runFlags!accessing!public! !
-!DeploymentContext categoriesFor: #setRunFlag:!accessing!public! !
-!DeploymentContext categoriesFor: #snapshotDevelopmentClasses!configuration!public! !
-!DeploymentContext categoriesFor: #startElement:attributes:!logging!private! !
-!DeploymentContext categoriesFor: #startTag:attributes:!logging!public! !
-!DeploymentContext categoriesFor: #supersentMethods!accessing!public! !
-!DeploymentContext categoriesFor: #supersentMethods:!accessing!public! !
+!DeploymentContext categoriesForMethods!
+aspectGetters!accessing!public! !
+aspectGetters:!accessing!public! !
+aspectSetters!accessing!public! !
+aspectSetters:!accessing!public! !
+basicDevelopmentClasses!accessing!public! !
+closeLog!operations!public! !
+destroyNotifier!operations!private! !
+developmentClasses!accessing!public! !
+endElement:!logging!public! !
+endTag!logging!public! !
+finishedWithStripping!public!state! !
+initialize!initializing!private! !
+logComment:!logging!private! !
+logElement:attributes:value:!logging!private! !
+logStrippingError:!logging!private! !
+logValue:!logging!private! !
+notifier!accessing!public! !
+notifier:!accessing!public! !
+notify:!logging!public! !
+openLogFile:!logging!public! !
+preservedMessages!accessing!public! !
+preservedMessages:!accessing!public! !
+rootClasses!accessing!public! !
+rootClasses:!accessing!public! !
+runFlags!accessing!public! !
+setRunFlag:!accessing!public! !
+snapshotDevelopmentClasses!configuration!public! !
+startElement:attributes:!logging!private! !
+startTag:attributes:!logging!public! !
+supersentMethods!accessing!public! !
+supersentMethods:!accessing!public! !
+!
 

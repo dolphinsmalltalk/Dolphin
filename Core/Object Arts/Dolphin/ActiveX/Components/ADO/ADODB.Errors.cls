@@ -61,9 +61,11 @@ item: index
 	answer := Error newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODB.Errors categoriesFor: #Clear!**auto generated**!COM Interfaces-Errors!public! !
-!ADODB.Errors categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
-!ADODB.Errors categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODB.Errors categoriesForMethods!
+Clear!**auto generated**!COM Interfaces-Errors!public! !
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODB.Errors class methodsFor!
 
@@ -76,5 +78,7 @@ defineFunctions
 			argumentTypes: 'variant Error**';
 		defineFunction: #Clear
 ! !
-!ADODB.Errors class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!ADODB.Errors class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

@@ -40,10 +40,12 @@ resumeWithStubMethod
 
 	"Resume with this stub"
 	self resume: result! !
-!Kernel.MethodCompileFailed categoriesFor: #defaultAction!handling!public! !
-!Kernel.MethodCompileFailed categoriesFor: #environment!accessing!public! !
-!Kernel.MethodCompileFailed categoriesFor: #error:environment:!initializing!private! !
-!Kernel.MethodCompileFailed categoriesFor: #resumeWithStubMethod!handler responses!operations!private! !
+!Kernel.MethodCompileFailed categoriesForMethods!
+defaultAction!handling!public! !
+environment!accessing!public! !
+error:environment:!initializing!private! !
+resumeWithStubMethod!handler responses!operations!private! !
+!
 
 !Kernel.MethodCompileFailed class methodsFor!
 
@@ -57,6 +59,8 @@ new
 	"Private - Use #error:environment:"
 
 	self shouldNotImplement! !
-!Kernel.MethodCompileFailed class categoriesFor: #error:environment:!instance creation!public! !
-!Kernel.MethodCompileFailed class categoriesFor: #new!instance creation!private! !
+!Kernel.MethodCompileFailed class categoriesForMethods!
+error:environment:!instance creation!public! !
+new!instance creation!private! !
+!
 

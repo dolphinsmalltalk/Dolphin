@@ -43,11 +43,13 @@ visitVariableNode: aVariableNode
 				nextPutAll: variable;
 				space].
 	codeStream nextPutAll: identifier! !
-!External.SizeIsExpressionFormatter categoriesFor: #format:on:!public! !
-!External.SizeIsExpressionFormatter categoriesFor: #structClass:variable:!initializing!private! !
-!External.SizeIsExpressionFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!External.SizeIsExpressionFormatter categoriesFor: #visitMessageNode:!public!visiting! !
-!External.SizeIsExpressionFormatter categoriesFor: #visitVariableNode:!public!visiting! !
+!External.SizeIsExpressionFormatter categoriesForMethods!
+format:on:!public! !
+structClass:variable:!initializing!private! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visiting! !
+visitVariableNode:!public!visiting! !
+!
 
 !External.SizeIsExpressionFormatter class methodsFor!
 
@@ -56,6 +58,8 @@ structClass: anExternalStructureClass
 
 structClass: anExternalStructureClass variable: aString
 	^self new structClass: anExternalStructureClass variable: aString! !
-!External.SizeIsExpressionFormatter class categoriesFor: #structClass:!instance creation!public! !
-!External.SizeIsExpressionFormatter class categoriesFor: #structClass:variable:!instance creation!public! !
+!External.SizeIsExpressionFormatter class categoriesForMethods!
+structClass:!instance creation!public! !
+structClass:variable:!instance creation!public! !
+!
 

@@ -135,20 +135,22 @@ preferredHeight
 	ideal height, given its current width."
 
 	^self sendMessage: LM_GETIDEALHEIGHT! !
-!UI.SysLinkView categoriesFor: #calculateExtent:!geometry!private! !
-!UI.SysLinkView categoriesFor: #displayValue!private!updating! !
-!UI.SysLinkView categoriesFor: #displayValue:!private!updating! !
-!UI.SysLinkView categoriesFor: #itemFromPoint:!enquiries!private! !
-!UI.SysLinkView categoriesFor: #linkAt:!accessing!public! !
-!UI.SysLinkView categoriesFor: #linkAt:ifAbsent:!accessing!public! !
-!UI.SysLinkView categoriesFor: #linkAt:put:!accessing!public! !
-!UI.SysLinkView categoriesFor: #links!accessing!public! !
-!UI.SysLinkView categoriesFor: #lmGetItem:!accessing!private! !
-!UI.SysLinkView categoriesFor: #lmSetItem:!accessing!private! !
-!UI.SysLinkView categoriesFor: #nmClick:!event handling-win32!private! !
-!UI.SysLinkView categoriesFor: #nmReturn:!event handling-win32!private! !
-!UI.SysLinkView categoriesFor: #onLinkClicked:!event handling!private! !
-!UI.SysLinkView categoriesFor: #preferredHeight!enquiries!private! !
+!UI.SysLinkView categoriesForMethods!
+calculateExtent:!geometry!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+itemFromPoint:!enquiries!private! !
+linkAt:!accessing!public! !
+linkAt:ifAbsent:!accessing!public! !
+linkAt:put:!accessing!public! !
+links!accessing!public! !
+lmGetItem:!accessing!private! !
+lmSetItem:!accessing!private! !
+nmClick:!event handling-win32!private! !
+nmReturn:!event handling-win32!private! !
+onLinkClicked:!event handling!private! !
+preferredHeight!enquiries!private! !
+!
 
 !UI.SysLinkView class methodsFor!
 
@@ -162,7 +164,9 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
-!UI.SysLinkView class categoriesFor: #initialize!development!initializing!private! !
-!UI.SysLinkView class categoriesFor: #uninitialize!class hierarchy-removing!public! !
-!UI.SysLinkView class categoriesFor: #winClassName!constants!private! !
+!UI.SysLinkView class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!public! !
+winClassName!constants!private! !
+!
 

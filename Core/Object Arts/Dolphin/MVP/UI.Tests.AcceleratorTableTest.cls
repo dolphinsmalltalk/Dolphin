@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.AbstractKeyboardTest subclass: #'UI.Tests.AcceleratorTableTest'
 	instanceVariableNames: ''
@@ -85,9 +85,11 @@ testRoundTrippingKeyNames
 	localised := AcceleratorTable keyStringFromCode: self numMultCode.
 	self assert: localised equals: 'Alt+Num *'.
 	self assert: (AcceleratorTable keyCodeFromString: localised) equals: self numMultCode! !
-!UI.Tests.AcceleratorTableTest categoriesFor: #numMultCode!constants!private! !
-!UI.Tests.AcceleratorTableTest categoriesFor: #testKeycodeFromString!public!unit tests! !
-!UI.Tests.AcceleratorTableTest categoriesFor: #testKeycodeFromStringAlphaNumerics!public!unit tests! !
-!UI.Tests.AcceleratorTableTest categoriesFor: #testRoundTrippingInvariantKeyNames!public!unit tests! !
-!UI.Tests.AcceleratorTableTest categoriesFor: #testRoundTrippingKeyNames!public!unit tests! !
+!UI.Tests.AcceleratorTableTest categoriesForMethods!
+numMultCode!constants!private! !
+testKeycodeFromString!public!unit tests! !
+testKeycodeFromStringAlphaNumerics!public!unit tests! !
+testRoundTrippingInvariantKeyNames!public!unit tests! !
+testRoundTrippingKeyNames!public!unit tests! !
+!
 

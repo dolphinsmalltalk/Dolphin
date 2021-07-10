@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractNamespaceTest'
 	instanceVariableNames: 'removedVariables'
@@ -64,13 +64,15 @@ testRemoveLocalBindingFor
 			ensure: 
 				[Smalltalk removeEventsTriggeredFor: self.
 				subject basicRemoveBinding: binding]! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #canonicalSubject!private! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #classTestCases!private! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #onVariableRemoved:!private! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #setUp!private! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #testAbsoluteName!public!unit tests! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #testAbsoluteReference!public!unit tests! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #testAllClasses!public! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #testIncludesKey!public! !
-!Kernel.Tests.AbstractNamespaceTest categoriesFor: #testRemoveLocalBindingFor!private! !
+!Kernel.Tests.AbstractNamespaceTest categoriesForMethods!
+canonicalSubject!private! !
+classTestCases!private! !
+onVariableRemoved:!private! !
+setUp!private! !
+testAbsoluteName!public!unit tests! !
+testAbsoluteReference!public!unit tests! !
+testAllClasses!public! !
+testIncludesKey!public! !
+testRemoveLocalBindingFor!private! !
+!
 

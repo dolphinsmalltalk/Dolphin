@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkStylerTest'
 	instanceVariableNames: 'mock scintilla'
@@ -658,37 +658,39 @@ testUnaryMessageToString
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens equals: {{1 to: 3. #literalString. '''s'''}. {4 to: 4. #unaryMessage. 'x'}}! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #restyleFromEachPosition:resumeable:!private!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #scannerClass!private!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #scanNumeric:class:!private!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #setUp!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #tearDown!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testArrayNoSpace!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testBinaryMethodSignature!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testEmptyTemps!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testLegacyLiteralArray!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testLiteralArray!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testLiteralBytes!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testMultipleTags!public! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testNegativeOrSubtract!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testOptimizedExpressionInArray!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testPrimitiveTag!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testPseudoSignature!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testQualifiedReferenceIncompleteIdentifier!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testQualifiedReferenceIncompleteQualifiedIdentifier!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testQualifiedReferenceInvalidIdentifier!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testQualifiedReferenceUnterminated!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testScanningFloats!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testScanningIntegers!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testScanningRadixIntegers!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testScanningScaledDecimals!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testTempBarsAtExpressionStart!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testTempBarsOrBinarySelector!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testUnaryMessageSequence!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testUnaryMessageToArray!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testUnaryMessageToBlock!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testUnaryMessageToBraceArray!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testUnaryMessageToByteArray!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testUnaryMessageToQualifiedReference!public!unit tests! !
-!Tools.Tests.SmalltalkStylerTest categoriesFor: #testUnaryMessageToString!public!unit tests! !
+!Tools.Tests.SmalltalkStylerTest categoriesForMethods!
+restyleFromEachPosition:resumeable:!private!unit tests! !
+scannerClass!private!unit tests! !
+scanNumeric:class:!private!unit tests! !
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testArrayNoSpace!public!unit tests! !
+testBinaryMethodSignature!public!unit tests! !
+testEmptyTemps!public!unit tests! !
+testLegacyLiteralArray!public!unit tests! !
+testLiteralArray!public!unit tests! !
+testLiteralBytes!public!unit tests! !
+testMultipleTags!public! !
+testNegativeOrSubtract!public!unit tests! !
+testOptimizedExpressionInArray!public!unit tests! !
+testPrimitiveTag!public!unit tests! !
+testPseudoSignature!public!unit tests! !
+testQualifiedReferenceIncompleteIdentifier!public!unit tests! !
+testQualifiedReferenceIncompleteQualifiedIdentifier!public!unit tests! !
+testQualifiedReferenceInvalidIdentifier!public!unit tests! !
+testQualifiedReferenceUnterminated!public!unit tests! !
+testScanningFloats!public!unit tests! !
+testScanningIntegers!public!unit tests! !
+testScanningRadixIntegers!public!unit tests! !
+testScanningScaledDecimals!public!unit tests! !
+testTempBarsAtExpressionStart!public!unit tests! !
+testTempBarsOrBinarySelector!public!unit tests! !
+testUnaryMessageSequence!public!unit tests! !
+testUnaryMessageToArray!public!unit tests! !
+testUnaryMessageToBlock!public!unit tests! !
+testUnaryMessageToBraceArray!public!unit tests! !
+testUnaryMessageToByteArray!public!unit tests! !
+testUnaryMessageToQualifiedReference!public!unit tests! !
+testUnaryMessageToString!public!unit tests! !
+!
 

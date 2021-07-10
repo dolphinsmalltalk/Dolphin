@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 External.Tests.GenericExternalArrayTest subclass: #'OS.COM.Tests.SAFEARRAYTest'
 	instanceVariableNames: ''
@@ -175,14 +175,16 @@ threePoints: recordClass
 				x: each;
 				y: each].
 	^sa! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #arrayClass!constants!private! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #elementClassNames!constants!private! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testAXRecords!public!unit tests! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testBoolDisplayString!public! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testBounds!public!unit tests! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testElementAt!public!unit tests! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testElementClasses!public!unit tests! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #testRecordInfo!public!unit tests! !
-!OS.COM.Tests.SAFEARRAYTest categoriesFor: #threePoints:!public!unit tests! !
+!OS.COM.Tests.SAFEARRAYTest categoriesForMethods!
+arrayClass!constants!private! !
+elementClassNames!constants!private! !
+newArrayOfIntegers:!helpers!private! !
+testAXRecords!public!unit tests! !
+testBoolDisplayString!public! !
+testBounds!public!unit tests! !
+testElementAt!public!unit tests! !
+testElementClasses!public!unit tests! !
+testRecordInfo!public!unit tests! !
+threePoints:!public!unit tests! !
+!
 

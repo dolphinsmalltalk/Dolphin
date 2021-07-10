@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RefactoringManagerTest'
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ testPrintRefactoringManager
 		show: RefactoringManager instance printString;
 		cr;
 		flush! !
-!Refactory.Browser.Tests.RefactoringManagerTest categoriesFor: #testPrintRefactoringManager!public!tests! !
+!Refactory.Browser.Tests.RefactoringManagerTest categoriesForMethods!
+testPrintRefactoringManager!public!tests! !
+!
 

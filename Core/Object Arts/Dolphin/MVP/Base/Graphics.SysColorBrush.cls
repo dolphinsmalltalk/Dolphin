@@ -38,9 +38,11 @@ printOn: aStream
 		space;
 		print: self color;
 		nextPut: $)! !
-!Graphics.SysColorBrush categoriesFor: #color!accessing!public! !
-!Graphics.SysColorBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Graphics.SysColorBrush categoriesFor: #printOn:!development!printing!public! !
+!Graphics.SysColorBrush categoriesForMethods!
+color!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+printOn:!development!printing!public! !
+!
 
 !Graphics.SysColorBrush class methodsFor!
 
@@ -48,5 +50,7 @@ newColor: aSystemColor
 	"Private - Answer a new instance of the receiver for painting in the specified solid colour."
 
 	^self fromId: aSystemColor id! !
-!Graphics.SysColorBrush class categoriesFor: #newColor:!instance creation!private! !
+!Graphics.SysColorBrush class categoriesForMethods!
+newColor:!instance creation!private! !
+!
 

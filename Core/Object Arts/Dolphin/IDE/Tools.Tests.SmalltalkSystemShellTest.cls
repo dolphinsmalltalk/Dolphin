@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.SmalltalkSystemShellTest'
 	instanceVariableNames: 'systemShell'
@@ -33,8 +33,10 @@ testIconOrdering
 	self systemFolderPresenter up.
 	finalContents := self systemFolderPresenter contents asArray.
 	self assert: finalContents equals: initialContents! !
-!Tools.Tests.SmalltalkSystemShellTest categoriesFor: #setUp!private!unit tests! !
-!Tools.Tests.SmalltalkSystemShellTest categoriesFor: #systemFolderPresenter!private!unit tests! !
-!Tools.Tests.SmalltalkSystemShellTest categoriesFor: #tearDown!private!unit tests! !
-!Tools.Tests.SmalltalkSystemShellTest categoriesFor: #testIconOrdering!public!unit tests! !
+!Tools.Tests.SmalltalkSystemShellTest categoriesForMethods!
+setUp!private!unit tests! !
+systemFolderPresenter!private!unit tests! !
+tearDown!private!unit tests! !
+testIconOrdering!public!unit tests! !
+!
 

@@ -42,16 +42,20 @@ startPage
 	"Signal the start of a new page."
 
 	Gdi32 startPage: self asParameter! !
-!Graphics.PrinterCanvas categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Graphics.PrinterCanvas categoriesFor: #endDoc!operations!public! !
-!Graphics.PrinterCanvas categoriesFor: #endPage!operations!public! !
-!Graphics.PrinterCanvas categoriesFor: #startDoc!operations!public! !
-!Graphics.PrinterCanvas categoriesFor: #startDocNamed:!operations!public! !
-!Graphics.PrinterCanvas categoriesFor: #startPage!operations!public! !
+!Graphics.PrinterCanvas categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+endDoc!operations!public! !
+endPage!operations!public! !
+startDoc!operations!public! !
+startDocNamed:!operations!public! !
+startPage!operations!public! !
+!
 
 !Graphics.PrinterCanvas class methodsFor!
 
 icon
 	^##(self) defaultIcon! !
-!Graphics.PrinterCanvas class categoriesFor: #icon!constants!development!public! !
+!Graphics.PrinterCanvas class categoriesForMethods!
+icon!constants!development!public! !
+!
 

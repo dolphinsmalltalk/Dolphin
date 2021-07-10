@@ -45,13 +45,15 @@ registerPredefinedObjects
 	"Private - Post version 3 the out filer stores everything."
 
 	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]! !
-!Kernel.STLInFiler categoriesFor: #basicNext!accessing!private! !
-!Kernel.STLInFiler categoriesFor: #readClassLocator:!helpers!private! !
-!Kernel.STLInFiler categoriesFor: #readInteger!helpers!private! !
-!Kernel.STLInFiler categoriesFor: #readLiteralData!private! !
-!Kernel.STLInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
-!Kernel.STLInFiler categoriesFor: #readVersion!initializing!private! !
-!Kernel.STLInFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
+!Kernel.STLInFiler categoriesForMethods!
+basicNext!accessing!private! !
+readClassLocator:!helpers!private! !
+readInteger!helpers!private! !
+readLiteralData!private! !
+readObjectWithPrefix:!accessing!private! !
+readVersion!initializing!private! !
+registerPredefinedObjects!initializing!private! !
+!
 
 !Kernel.STLInFiler class methodsFor!
 
@@ -72,6 +74,8 @@ signature
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
-!Kernel.STLInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
-!Kernel.STLInFiler class categoriesFor: #signature!constants!private! !
+!Kernel.STLInFiler class categoriesForMethods!
+peekForSignatureIn:!public!testing! !
+signature!constants!private! !
+!
 

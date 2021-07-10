@@ -207,23 +207,25 @@ valuesClass
 	is configured to inform the receiver when it suffers losses."
 
 	^MourningWeakArray! !
-!Core.WeakLookupTable categoriesFor: #copyEmpty:!copying!private! !
-!Core.WeakLookupTable categoriesFor: #copyingClass!copying!private! !
-!Core.WeakLookupTable categoriesFor: #do:!enumerating!public! !
-!Core.WeakLookupTable categoriesFor: #elementsExpired:!finalizing!private! !
-!Core.WeakLookupTable categoriesFor: #elementsExpired:of:!finalizing!private! !
-!Core.WeakLookupTable categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
-!Core.WeakLookupTable categoriesFor: #hasWeakKeys!public!testing! !
-!Core.WeakLookupTable categoriesFor: #hasWeakValues!public!testing! !
-!Core.WeakLookupTable categoriesFor: #haveStrongKeys!accessing!public! !
-!Core.WeakLookupTable categoriesFor: #haveStrongValues!accessing!public! !
-!Core.WeakLookupTable categoriesFor: #haveWeakKeys!accessing!public! !
-!Core.WeakLookupTable categoriesFor: #haveWeakValues!accessing!public! !
-!Core.WeakLookupTable categoriesFor: #initialize!initializing!private! !
-!Core.WeakLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Core.WeakLookupTable categoriesFor: #keysDo:!enumerating!public! !
-!Core.WeakLookupTable categoriesFor: #postResize:!adding!private! !
-!Core.WeakLookupTable categoriesFor: #valuesClass!constants!public! !
+!Core.WeakLookupTable categoriesForMethods!
+copyEmpty:!copying!private! !
+copyingClass!copying!private! !
+do:!enumerating!public! !
+elementsExpired:!finalizing!private! !
+elementsExpired:of:!finalizing!private! !
+fixCollisionsIgnoringCorpsesFrom:!private!removing! !
+hasWeakKeys!public!testing! !
+hasWeakValues!public!testing! !
+haveStrongKeys!accessing!public! !
+haveStrongValues!accessing!public! !
+haveWeakKeys!accessing!public! !
+haveWeakValues!accessing!public! !
+initialize!initializing!private! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+postResize:!adding!private! !
+valuesClass!constants!public! !
+!
 
 !Core.WeakLookupTable class methodsFor!
 
@@ -257,8 +259,10 @@ newWithWeakValues: anInteger
 
 	^super new: anInteger
 ! !
-!Core.WeakLookupTable class categoriesFor: #initialize!development!initializing!public! !
-!Core.WeakLookupTable class categoriesFor: #new:!instance creation!public! !
-!Core.WeakLookupTable class categoriesFor: #newWithWeakKeys:!instance creation!public! !
-!Core.WeakLookupTable class categoriesFor: #newWithWeakValues:!instance creation!public! !
+!Core.WeakLookupTable class categoriesForMethods!
+initialize!development!initializing!public! !
+new:!instance creation!public! !
+newWithWeakKeys:!instance creation!public! !
+newWithWeakValues:!instance creation!public! !
+!
 

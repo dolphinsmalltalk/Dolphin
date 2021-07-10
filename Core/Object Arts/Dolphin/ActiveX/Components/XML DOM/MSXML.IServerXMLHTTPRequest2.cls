@@ -78,10 +78,12 @@ SetProxyCredentials: bstrUserName bstrPassword: bstrPassword
 
 	<virtual stdcall: hresult 27 bstr bstr>
 	^self invalidCall: _failureCode! !
-!MSXML.IServerXMLHTTPRequest2 categoriesFor: #setProxy:!**auto generated**!methods!public! !
-!MSXML.IServerXMLHTTPRequest2 categoriesFor: #setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
-!MSXML.IServerXMLHTTPRequest2 categoriesFor: #SetProxy:varProxyServer:varBypassList:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!private! !
-!MSXML.IServerXMLHTTPRequest2 categoriesFor: #SetProxyCredentials:bstrPassword:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!public! !
+!MSXML.IServerXMLHTTPRequest2 categoriesForMethods!
+setProxy:!**auto generated**!methods!public! !
+setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
+SetProxy:varProxyServer:varBypassList:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!private! !
+SetProxyCredentials:bstrPassword:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!public! !
+!
 
 !MSXML.IServerXMLHTTPRequest2 class methodsFor!
 
@@ -101,6 +103,8 @@ defineFunctions
 		defineFunction: #SetProxyCredentials:bstrPassword:
 			argumentTypes: 'bstr bstr'
 ! !
-!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #clsid!**auto generated**!constants!private! !
-!MSXML.IServerXMLHTTPRequest2 class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IServerXMLHTTPRequest2 class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!private! !
+!
 

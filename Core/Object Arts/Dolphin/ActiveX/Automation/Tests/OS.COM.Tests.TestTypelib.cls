@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestResource subclass: #'OS.COM.Tests.TestTypelib'
 	instanceVariableNames: 'analyzer'
@@ -35,8 +35,10 @@ tearDown
 			analyzer free.
 			analyzer := nil].
 	super tearDown! !
-!OS.COM.Tests.TestTypelib categoriesFor: #analyzer!private!unit tests! !
-!OS.COM.Tests.TestTypelib categoriesFor: #libid!Init / Release!public! !
-!OS.COM.Tests.TestTypelib categoriesFor: #setUp!Init / Release!public! !
-!OS.COM.Tests.TestTypelib categoriesFor: #tearDown!public!Running! !
+!OS.COM.Tests.TestTypelib categoriesForMethods!
+analyzer!private!unit tests! !
+libid!Init / Release!public! !
+setUp!Init / Release!public! !
+tearDown!public!Running! !
+!
 

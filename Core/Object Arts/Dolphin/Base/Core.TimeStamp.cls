@@ -158,31 +158,33 @@ time
 
 year
 	^date year! !
-!Core.TimeStamp categoriesFor: #<!comparing!public! !
-!Core.TimeStamp categoriesFor: #=!comparing!public! !
-!Core.TimeStamp categoriesFor: #addSeconds:!arithmetic!comparing!public! !
-!Core.TimeStamp categoriesFor: #asDateAndTime!public! !
-!Core.TimeStamp categoriesFor: #asMilliseconds!converting!public! !
-!Core.TimeStamp categoriesFor: #asParameter!converting!public! !
-!Core.TimeStamp categoriesFor: #asSeconds!converting!public! !
-!Core.TimeStamp categoriesFor: #asTimeStamp!converting!public! !
-!Core.TimeStamp categoriesFor: #date!accessing!public! !
-!Core.TimeStamp categoriesFor: #dayOfMonth!accessing!public! !
-!Core.TimeStamp categoriesFor: #dayOfWeek!public! !
-!Core.TimeStamp categoriesFor: #hash!comparing!public! !
-!Core.TimeStamp categoriesFor: #hour!accessing!public! !
-!Core.TimeStamp categoriesFor: #hour12!accessing!public! !
-!Core.TimeStamp categoriesFor: #hour24!accessing!public! !
-!Core.TimeStamp categoriesFor: #minute!accessing!public! !
-!Core.TimeStamp categoriesFor: #month!accessing!public! !
-!Core.TimeStamp categoriesFor: #printOn:!printing!public! !
-!Core.TimeStamp categoriesFor: #printOn:format:!printing!public! !
-!Core.TimeStamp categoriesFor: #printStringFormat:!printing!public! !
-!Core.TimeStamp categoriesFor: #second!accessing!public! !
-!Core.TimeStamp categoriesFor: #setDate:time:!accessing!initializing!private! !
-!Core.TimeStamp categoriesFor: #storeOn:!printing!public! !
-!Core.TimeStamp categoriesFor: #time!accessing!public! !
-!Core.TimeStamp categoriesFor: #year!accessing!public! !
+!Core.TimeStamp categoriesForMethods!
+<!comparing!public! !
+=!comparing!public! !
+addSeconds:!arithmetic!comparing!public! !
+asDateAndTime!public! !
+asMilliseconds!converting!public! !
+asParameter!converting!public! !
+asSeconds!converting!public! !
+asTimeStamp!converting!public! !
+date!accessing!public! !
+dayOfMonth!accessing!public! !
+dayOfWeek!public! !
+hash!comparing!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+minute!accessing!public! !
+month!accessing!public! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printStringFormat:!printing!public! !
+second!accessing!public! !
+setDate:time:!accessing!initializing!private! !
+storeOn:!printing!public! !
+time!accessing!public! !
+year!accessing!public! !
+!
 
 !Core.TimeStamp class methodsFor!
 
@@ -258,15 +260,17 @@ time: aTime
 	"Answer a new instance of the receiver based on aTime."
 
 	^self date: (Date fromDays: 0) time: aTime! !
-!Core.TimeStamp class categoriesFor: #current!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #currentUTC!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #date:!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #date:time:!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #fromDateAndTime:!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #fromMilliseconds:!public! !
-!Core.TimeStamp class categoriesFor: #fromSeconds:!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #fromString:!public! !
-!Core.TimeStamp class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #new!instance creation!public! !
-!Core.TimeStamp class categoriesFor: #time:!instance creation!public! !
+!Core.TimeStamp class categoriesForMethods!
+current!instance creation!public! !
+currentUTC!instance creation!public! !
+date:!instance creation!public! !
+date:time:!instance creation!public! !
+fromDateAndTime:!instance creation!public! !
+fromMilliseconds:!public! !
+fromSeconds:!instance creation!public! !
+fromString:!public! !
+fromSYSTEMTIME:!instance creation!public! !
+new!instance creation!public! !
+time:!instance creation!public! !
+!
 

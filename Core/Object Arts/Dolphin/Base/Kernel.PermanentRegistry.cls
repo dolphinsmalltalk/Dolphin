@@ -53,8 +53,10 @@ removeAtIndex: anInteger
 	(registry basicAt: anInteger) isInteger ifFalse: [
 		registry basicAt: anInteger put: freeHead.
 		freeHead := anInteger]! !
-!Kernel.PermanentRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!Kernel.PermanentRegistry categoriesFor: #grow!mutating!private! !
-!Kernel.PermanentRegistry categoriesFor: #initialize:!initializing!private! !
-!Kernel.PermanentRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!Kernel.PermanentRegistry categoriesForMethods!
+addAnsweringIndex:!adding!public! !
+grow!mutating!private! !
+initialize:!initializing!private! !
+removeAtIndex:!public!removing! !
+!
 

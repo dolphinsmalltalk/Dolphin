@@ -23,6 +23,8 @@ treeValueFor: aProfilerTreeNode
 	"Answers the value of the field for the receivers type of tree"
 
 	^aProfilerTreeNode tally! !
-!ProfilerTallyTreePresenter categoriesFor: #total!accessing!public! !
-!ProfilerTallyTreePresenter categoriesFor: #treeValueFor:!accessing!public! !
+!ProfilerTallyTreePresenter categoriesForMethods!
+total!accessing!public! !
+treeValueFor:!accessing!public! !
+!
 

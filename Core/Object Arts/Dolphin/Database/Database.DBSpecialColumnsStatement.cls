@@ -44,11 +44,13 @@ scope
 
 scope: anInteger
 	scope := anInteger! !
-!Database.DBSpecialColumnsStatement categoriesFor: #columnType!accessing!public! !
-!Database.DBSpecialColumnsStatement categoriesFor: #columnType:!accessing!public! !
-!Database.DBSpecialColumnsStatement categoriesFor: #executeStatement!operations!private! !
-!Database.DBSpecialColumnsStatement categoriesFor: #nullable!accessing!public! !
-!Database.DBSpecialColumnsStatement categoriesFor: #nullable:!accessing!public! !
-!Database.DBSpecialColumnsStatement categoriesFor: #scope!accessing!public! !
-!Database.DBSpecialColumnsStatement categoriesFor: #scope:!accessing!public! !
+!Database.DBSpecialColumnsStatement categoriesForMethods!
+columnType!accessing!public! !
+columnType:!accessing!public! !
+executeStatement!operations!private! !
+nullable!accessing!public! !
+nullable:!accessing!public! !
+scope!accessing!public! !
+scope:!accessing!public! !
+!
 

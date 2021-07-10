@@ -155,23 +155,25 @@ wmInitDialog: msgInteger wParam: wParam lParam: lParam
 				szParam: path].
 	bfFlags := bfFlags mask: InitializedMask set: true.
 	^0! !
-!UI.BrowseFolderDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.BrowseFolderDialog categoriesFor: #caption:!accessing!public! !
-!UI.BrowseFolderDialog categoriesFor: #defaultStyle!constants!private! !
-!UI.BrowseFolderDialog categoriesFor: #extractResult:!operations!private! !
-!UI.BrowseFolderDialog categoriesFor: #initialize!initializing!private! !
-!UI.BrowseFolderDialog categoriesFor: #isInitialized!private!testing! !
-!UI.BrowseFolderDialog categoriesFor: #iunknown:wParam:lParam:!event handling!private! !
-!UI.BrowseFolderDialog categoriesFor: #pathFromIDList:!helpers!private! !
-!UI.BrowseFolderDialog categoriesFor: #prepareStruct!helpers!private! !
-!UI.BrowseFolderDialog categoriesFor: #root:!accessing!public! !
-!UI.BrowseFolderDialog categoriesFor: #selChanged:wParam:lParam:!event handling!private! !
-!UI.BrowseFolderDialog categoriesFor: #style!accessing!public! !
-!UI.BrowseFolderDialog categoriesFor: #style:!accessing!public! !
-!UI.BrowseFolderDialog categoriesFor: #title:!accessing!public! !
-!UI.BrowseFolderDialog categoriesFor: #validateFailed:wParam:lParam:!event handling!private! !
-!UI.BrowseFolderDialog categoriesFor: #winStructClass!constants!private! !
-!UI.BrowseFolderDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling!private! !
+!UI.BrowseFolderDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+caption:!accessing!public! !
+defaultStyle!constants!private! !
+extractResult:!operations!private! !
+initialize!initializing!private! !
+isInitialized!private!testing! !
+iunknown:wParam:lParam:!event handling!private! !
+pathFromIDList:!helpers!private! !
+prepareStruct!helpers!private! !
+root:!accessing!public! !
+selChanged:wParam:lParam:!event handling!private! !
+style!accessing!public! !
+style:!accessing!public! !
+title:!accessing!public! !
+validateFailed:wParam:lParam:!event handling!private! !
+winStructClass!constants!private! !
+wmInitDialog:wParam:lParam:!event handling!private! !
+!
 
 !UI.BrowseFolderDialog class methodsFor!
 
@@ -196,7 +198,9 @@ initialize
 		at: BFFM_VALIDATEFAILEDA put: #validateFailed:wParam:lParam:;
 		at: 4 put: nil;
 		at: BFFM_IUNKNOWN put: #iunknown:wParam:lParam:! !
-!UI.BrowseFolderDialog class categoriesFor: #defaultModel!models!public! !
-!UI.BrowseFolderDialog class categoriesFor: #icon!constants!public! !
-!UI.BrowseFolderDialog class categoriesFor: #initialize!initializing!must not strip!private! !
+!UI.BrowseFolderDialog class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!initializing!must not strip!private! !
+!
 

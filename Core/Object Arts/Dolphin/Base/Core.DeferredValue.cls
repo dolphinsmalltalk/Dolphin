@@ -110,15 +110,17 @@ value
 	valueAvailable wait; signal.
 	exception == nil ifFalse: [exception copy signal].
 	^value! !
-!Core.DeferredValue categoriesFor: #_evaluate:withArguments:!evaluating!private! !
-!Core.DeferredValue categoriesFor: #deferredValue!evaluating!public! !
-!Core.DeferredValue categoriesFor: #deferredValueAt:!evaluating!public! !
-!Core.DeferredValue categoriesFor: #evaluate:withArguments:at:!evaluating!private! !
-!Core.DeferredValue categoriesFor: #exception:!accessing!private! !
-!Core.DeferredValue categoriesFor: #hasValue!public!testing! !
-!Core.DeferredValue categoriesFor: #initialize!initializing!private! !
-!Core.DeferredValue categoriesFor: #setValue:!accessing!private! !
-!Core.DeferredValue categoriesFor: #value!evaluating!public! !
+!Core.DeferredValue categoriesForMethods!
+_evaluate:withArguments:!evaluating!private! !
+deferredValue!evaluating!public! !
+deferredValueAt:!evaluating!public! !
+evaluate:withArguments:at:!evaluating!private! !
+exception:!accessing!private! !
+hasValue!public!testing! !
+initialize!initializing!private! !
+setValue:!accessing!private! !
+value!evaluating!public! !
+!
 
 !Core.DeferredValue class methodsFor!
 
@@ -168,10 +170,12 @@ new
 	"Answer a instance of the receiver."
 
 	^self shouldNotImplement! !
-!Core.DeferredValue class categoriesFor: #evaluate:at:!instance creation!public! !
-!Core.DeferredValue class categoriesFor: #evaluate:with:at:!instance creation!public! !
-!Core.DeferredValue class categoriesFor: #evaluate:with:with:at:!instance creation!public! !
-!Core.DeferredValue class categoriesFor: #evaluate:withArguments:at:!instance creation!public! !
-!Core.DeferredValue class categoriesFor: #initialize!development!initializing!private! !
-!Core.DeferredValue class categoriesFor: #new!instance creation!public! !
+!Core.DeferredValue class categoriesForMethods!
+evaluate:at:!instance creation!public! !
+evaluate:with:at:!instance creation!public! !
+evaluate:with:with:at:!instance creation!public! !
+evaluate:withArguments:at:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+!
 

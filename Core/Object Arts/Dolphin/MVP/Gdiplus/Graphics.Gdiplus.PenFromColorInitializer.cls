@@ -33,6 +33,8 @@ createHandle
 		unit: UnitWorld
 		pen: gpHandle.
 	^gpHandle! !
-!Graphics.Gdiplus.PenFromColorInitializer categoriesFor: #color:width:!initializing!private! !
-!Graphics.Gdiplus.PenFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!Graphics.Gdiplus.PenFromColorInitializer categoriesForMethods!
+color:width:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 

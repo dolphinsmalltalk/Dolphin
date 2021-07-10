@@ -47,12 +47,14 @@ species
 	Weak types are generally considered as of the same species as their equivalent strong type."
 
 	^IdentityDictionary! !
-!Core.WeakIdentityDictionary categoriesFor: #copyingClass!copying!private! !
-!Core.WeakIdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!Core.WeakIdentityDictionary categoriesFor: #hash:max:!private!searching! !
-!Core.WeakIdentityDictionary categoriesFor: #keysClass!constants!public! !
-!Core.WeakIdentityDictionary categoriesFor: #searchPolicy!constants!public! !
-!Core.WeakIdentityDictionary categoriesFor: #species!accessing!public! !
+!Core.WeakIdentityDictionary categoriesForMethods!
+copyingClass!copying!private! !
+findKeyOrNil:!private!searching! !
+hash:max:!private!searching! !
+keysClass!constants!public! !
+searchPolicy!constants!public! !
+species!accessing!public! !
+!
 
 !Core.WeakIdentityDictionary class methodsFor!
 
@@ -70,8 +72,10 @@ new: anInteger
 	^(super new: anInteger)
 		haveWeakKeys;
 		yourself! !
-!Core.WeakIdentityDictionary class categoriesFor: #initialize!development!initializing!public! !
-!Core.WeakIdentityDictionary class categoriesFor: #new:!instance creation!public! !
+!Core.WeakIdentityDictionary class categoriesForMethods!
+initialize!development!initializing!public! !
+new:!instance creation!public! !
+!
 
 Core.WeakIdentityDictionary class methodProtocol: #'IdentityDictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
 

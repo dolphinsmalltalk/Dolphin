@@ -231,29 +231,31 @@ upToAll: aCollection
 		ifFalse: 
 			[self position: start.
 			self upToEnd]! !
-!Core.SequencedStream categoriesFor: #contents!accessing!public! !
-!Core.SequencedStream categoriesFor: #copyFrom:to:!copying!public! !
-!Core.SequencedStream categoriesFor: #flush!accessing!public! !
-!Core.SequencedStream categoriesFor: #isEmpty!public!testing! !
-!Core.SequencedStream categoriesFor: #isPositionable!public!testing! !
-!Core.SequencedStream categoriesFor: #locale:!accessing!public! !
-!Core.SequencedStream categoriesFor: #nextLine!accessing!public! !
-!Core.SequencedStream categoriesFor: #nextWord!accessing!public! !
-!Core.SequencedStream categoriesFor: #notEmpty!public!testing! !
-!Core.SequencedStream categoriesFor: #peek!accessing!public! !
-!Core.SequencedStream categoriesFor: #peekFor:!accessing!public! !
-!Core.SequencedStream categoriesFor: #pop!positioning!public! !
-!Core.SequencedStream categoriesFor: #position!positioning!public! !
-!Core.SequencedStream categoriesFor: #position:!positioning!public! !
-!Core.SequencedStream categoriesFor: #reset!positioning!public! !
-!Core.SequencedStream categoriesFor: #reverseContents!accessing!public! !
-!Core.SequencedStream categoriesFor: #setToEnd!positioning!public! !
-!Core.SequencedStream categoriesFor: #skip:!positioning!public! !
-!Core.SequencedStream categoriesFor: #skipSeparators!positioning!public! !
-!Core.SequencedStream categoriesFor: #skipToAll:!positioning!public! !
-!Core.SequencedStream categoriesFor: #skipWhile:!positioning!public! !
-!Core.SequencedStream categoriesFor: #skipWhileMatchAll:!positioning!public! !
-!Core.SequencedStream categoriesFor: #upToAll:!positioning!public! !
+!Core.SequencedStream categoriesForMethods!
+contents!accessing!public! !
+copyFrom:to:!copying!public! !
+flush!accessing!public! !
+isEmpty!public!testing! !
+isPositionable!public!testing! !
+locale:!accessing!public! !
+nextLine!accessing!public! !
+nextWord!accessing!public! !
+notEmpty!public!testing! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+pop!positioning!public! !
+position!positioning!public! !
+position:!positioning!public! !
+reset!positioning!public! !
+reverseContents!accessing!public! !
+setToEnd!positioning!public! !
+skip:!positioning!public! !
+skipSeparators!positioning!public! !
+skipToAll:!positioning!public! !
+skipWhile:!positioning!public! !
+skipWhileMatchAll:!positioning!public! !
+upToAll:!positioning!public! !
+!
 
 Core.SequencedStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
 Core.SequencedStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!

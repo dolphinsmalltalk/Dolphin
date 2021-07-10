@@ -155,13 +155,15 @@ setDeviceIndependentBitmap: aDeviceIndependentBitmap formatId: formatId
 		startingAt: 1.
 	KernelLibrary default globalUnlock: hMem.
 	self setData: hMem formatId: formatId! !
-!Clipboard categoriesFor: #getDeviceIndependentBitmap!accessing!idb goodies!public! !
-!Clipboard categoriesFor: #getDeviceIndependentBitmapIfNone:!accessing!idb goodies!public! !
-!Clipboard categoriesFor: #initializeForDeviceIndependentBitmap!idb goodies!initializing!public! !
-!Clipboard categoriesFor: #isDeviceIndependentBitmapAvailable!idb goodies!public!testing! !
-!Clipboard categoriesFor: #setDeviceIndependentBitmap:!accessing!idb goodies!public! !
-!Clipboard categoriesFor: #setDeviceIndependentBitmap:format:!accessing!idb goodies!public! !
-!Clipboard categoriesFor: #setDeviceIndependentBitmap:formatId:!accessing!idb goodies!public! !
+!Clipboard categoriesForMethods!
+getDeviceIndependentBitmap!accessing!idb goodies!public! !
+getDeviceIndependentBitmapIfNone:!accessing!idb goodies!public! !
+initializeForDeviceIndependentBitmap!idb goodies!initializing!public! !
+isDeviceIndependentBitmapAvailable!idb goodies!public!testing! !
+setDeviceIndependentBitmap:!accessing!idb goodies!public! !
+setDeviceIndependentBitmap:format:!accessing!idb goodies!public! !
+setDeviceIndependentBitmap:formatId:!accessing!idb goodies!public! !
+!
 
 "End of package definition"!
 

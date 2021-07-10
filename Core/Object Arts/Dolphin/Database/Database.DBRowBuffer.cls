@@ -46,10 +46,12 @@ sizeInBytes
 
 status
 	^status value! !
-!Database.DBRowBuffer categoriesFor: #asObject!converting!private! !
-!Database.DBRowBuffer categoriesFor: #bind:!operations!private! !
-!Database.DBRowBuffer categoriesFor: #contents!accessing!public! !
-!Database.DBRowBuffer categoriesFor: #objects!accessing!private! !
-!Database.DBRowBuffer categoriesFor: #sizeInBytes!accessing!public! !
-!Database.DBRowBuffer categoriesFor: #status!accessing!private! !
+!Database.DBRowBuffer categoriesForMethods!
+asObject!converting!private! !
+bind:!operations!private! !
+contents!accessing!public! !
+objects!accessing!private! !
+sizeInBytes!accessing!public! !
+status!accessing!private! !
+!
 

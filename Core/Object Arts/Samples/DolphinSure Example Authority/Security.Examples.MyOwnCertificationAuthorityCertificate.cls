@@ -20,8 +20,10 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesFor: #publicKey!accessing!public! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesFor: #publisherPublicKey!accessing!private! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate categoriesForMethods!
+publicKey!accessing!public! !
+publisherPublicKey!accessing!private! !
+!
 
 !Security.Examples.MyOwnCertificationAuthorityCertificate class methodsFor!
 
@@ -76,9 +78,11 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #generate!instance creation!private! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #new!instance creation!public! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #privateKey!constants!private! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #publicKey!constants!public! !
-!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesFor: #validYears!constants!private! !
+!Security.Examples.MyOwnCertificationAuthorityCertificate class categoriesForMethods!
+generate!instance creation!private! !
+new!instance creation!public! !
+privateKey!constants!private! !
+publicKey!constants!public! !
+validYears!constants!private! !
+!
 

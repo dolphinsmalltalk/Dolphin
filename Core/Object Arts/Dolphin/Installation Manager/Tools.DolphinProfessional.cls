@@ -86,9 +86,11 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Professional'! !
-!Tools.DolphinProfessional categoriesFor: #contents!accessing!public! !
-!Tools.DolphinProfessional categoriesFor: #defaultSystemFolderExtent!private! !
-!Tools.DolphinProfessional categoriesFor: #fullName!accessing!public! !
+!Tools.DolphinProfessional categoriesForMethods!
+contents!accessing!public! !
+defaultSystemFolderExtent!private! !
+fullName!accessing!public! !
+!
 
 !Tools.DolphinProfessional class methodsFor!
 
@@ -119,7 +121,9 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DPRO'! !
-!Tools.DolphinProfessional class categoriesFor: #developmentClasses!public! !
-!Tools.DolphinProfessional class categoriesFor: #productName!accessing!public! !
-!Tools.DolphinProfessional class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinProfessional class categoriesForMethods!
+developmentClasses!public! !
+productName!accessing!public! !
+shortProductName!accessing!public! !
+!
 

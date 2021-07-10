@@ -227,28 +227,30 @@ roots
 	"Answer the roots of the receiver's hierarchies."
 
 	^roots select: filter! !
-!UI.VirtualTreeModel categoriesFor: #add:asChildOf:!adding!public! !
-!UI.VirtualTreeModel categoriesFor: #basicRoots:!accessing!private! !
-!UI.VirtualTreeModel categoriesFor: #clear!public!removing! !
-!UI.VirtualTreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
-!UI.VirtualTreeModel categoriesFor: #defaultFilterBlock!constants!private! !
-!UI.VirtualTreeModel categoriesFor: #defaultGetChildrenBlock!constants!private! !
-!UI.VirtualTreeModel categoriesFor: #defaultGetParentBlock!constants!private! !
-!UI.VirtualTreeModel categoriesFor: #defaultHasChildrenBlock!constants!private! !
-!UI.VirtualTreeModel categoriesFor: #filter!accessing!public! !
-!UI.VirtualTreeModel categoriesFor: #filter:!accessing!public! !
-!UI.VirtualTreeModel categoriesFor: #getChildrenBlock:!adapters!public! !
-!UI.VirtualTreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
-!UI.VirtualTreeModel categoriesFor: #getParentBlock:!adapters!public! !
-!UI.VirtualTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!UI.VirtualTreeModel categoriesFor: #hasChildrenBlock:!adapters!public! !
-!UI.VirtualTreeModel categoriesFor: #hasRoot:!hierarchy!public!testing! !
-!UI.VirtualTreeModel categoriesFor: #includes:!hierarchy!public!searching! !
-!UI.VirtualTreeModel categoriesFor: #initialize!initializing!private! !
-!UI.VirtualTreeModel categoriesFor: #move:asChildOf:!public!updating! !
-!UI.VirtualTreeModel categoriesFor: #notifyAdded:toParent:!events!private! !
-!UI.VirtualTreeModel categoriesFor: #notifyRemove:around:!events!private! !
-!UI.VirtualTreeModel categoriesFor: #parentOf:!hierarchy!public! !
-!UI.VirtualTreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
-!UI.VirtualTreeModel categoriesFor: #roots!accessing!public! !
+!UI.VirtualTreeModel categoriesForMethods!
+add:asChildOf:!adding!public! !
+basicRoots:!accessing!private! !
+clear!public!removing! !
+collapse:ifAbsent:!public!removing! !
+defaultFilterBlock!constants!private! !
+defaultGetChildrenBlock!constants!private! !
+defaultGetParentBlock!constants!private! !
+defaultHasChildrenBlock!constants!private! !
+filter!accessing!public! !
+filter:!accessing!public! !
+getChildrenBlock:!adapters!public! !
+getChildrenOf:!hierarchy!private! !
+getParentBlock:!adapters!public! !
+hasChildren:!hierarchy!public!testing! !
+hasChildrenBlock:!adapters!public! !
+hasRoot:!hierarchy!public!testing! !
+includes:!hierarchy!public!searching! !
+initialize!initializing!private! !
+move:asChildOf:!public!updating! !
+notifyAdded:toParent:!events!private! !
+notifyRemove:around:!events!private! !
+parentOf:!hierarchy!public! !
+remove:ifAbsent:!public!removing! !
+roots!accessing!public! !
+!
 

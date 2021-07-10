@@ -233,44 +233,46 @@ txnIsolationOptions
 uniqueIndexOf: aString 
 	#deprecated.
 	^self uniqueIndicesOf: aString! !
-!Database.DBConnection categoriesFor: #accessibleTables!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #autoCommit!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #autoCommit:!accessing!public! !
-!Database.DBConnection categoriesFor: #dbmsVer!enquiries!public! !
-!Database.DBConnection categoriesFor: #defaultTxnIsolation!enquiries!public! !
-!Database.DBConnection categoriesFor: #driverVer!enquiries!public! !
-!Database.DBConnection categoriesFor: #expressionsInOrderBy!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #identifierQuoteChar!enquiries!public! !
-!Database.DBConnection categoriesFor: #iefSupport!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #indicesOf:type:!enquiries!public! !
-!Database.DBConnection categoriesFor: #invalidate!private!realizing/unrealizing! !
-!Database.DBConnection categoriesFor: #maxColumnNameLen!enquiries!public! !
-!Database.DBConnection categoriesFor: #maxCursorNameLen!enquiries!public! !
-!Database.DBConnection categoriesFor: #maxOwnerNameLen!enquiries!public! !
-!Database.DBConnection categoriesFor: #maxProcedureNameLen!enquiries!public! !
-!Database.DBConnection categoriesFor: #maxQualifierNameLen!enquiries!public! !
-!Database.DBConnection categoriesFor: #maxTableNameLen!enquiries!public! !
-!Database.DBConnection categoriesFor: #multipleActiveTxn!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #multResultSets!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #odbcSAGConformance!enquiries!public! !
-!Database.DBConnection categoriesFor: #odbcVer!enquiries!public! !
-!Database.DBConnection categoriesFor: #outerJoins!enquiries!public! !
-!Database.DBConnection categoriesFor: #ownerTerm!enquiries!public! !
-!Database.DBConnection categoriesFor: #qualifierNameSeparator!enquiries!public! !
-!Database.DBConnection categoriesFor: #qualifierTerm!enquiries!public! !
-!Database.DBConnection categoriesFor: #readOnly!accessing!public! !
-!Database.DBConnection categoriesFor: #readOnly:!accessing!private! !
-!Database.DBConnection categoriesFor: #rowIdCols:!enquiries!public! !
-!Database.DBConnection categoriesFor: #rowUpdates!enquiries!public! !
-!Database.DBConnection categoriesFor: #rowVer:!enquiries!public! !
-!Database.DBConnection categoriesFor: #scrollConcurrency!enquiries!public! !
-!Database.DBConnection categoriesFor: #scrollOptions!enquiries!public! !
-!Database.DBConnection categoriesFor: #sourceReadOnly!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #trace!development!private! !
-!Database.DBConnection categoriesFor: #trace:!development!private! !
-!Database.DBConnection categoriesFor: #txnCapable!enquiries!public!testing! !
-!Database.DBConnection categoriesFor: #txnIsolationOptions!enquiries!public! !
-!Database.DBConnection categoriesFor: #uniqueIndexOf:!enquiries!public! !
+!Database.DBConnection categoriesForMethods!
+accessibleTables!enquiries!public!testing! !
+autoCommit!enquiries!public!testing! !
+autoCommit:!accessing!public! !
+dbmsVer!enquiries!public! !
+defaultTxnIsolation!enquiries!public! !
+driverVer!enquiries!public! !
+expressionsInOrderBy!enquiries!public!testing! !
+identifierQuoteChar!enquiries!public! !
+iefSupport!enquiries!public!testing! !
+indicesOf:type:!enquiries!public! !
+invalidate!private!realizing/unrealizing! !
+maxColumnNameLen!enquiries!public! !
+maxCursorNameLen!enquiries!public! !
+maxOwnerNameLen!enquiries!public! !
+maxProcedureNameLen!enquiries!public! !
+maxQualifierNameLen!enquiries!public! !
+maxTableNameLen!enquiries!public! !
+multipleActiveTxn!enquiries!public!testing! !
+multResultSets!enquiries!public!testing! !
+odbcSAGConformance!enquiries!public! !
+odbcVer!enquiries!public! !
+outerJoins!enquiries!public! !
+ownerTerm!enquiries!public! !
+qualifierNameSeparator!enquiries!public! !
+qualifierTerm!enquiries!public! !
+readOnly!accessing!public! !
+readOnly:!accessing!private! !
+rowIdCols:!enquiries!public! !
+rowUpdates!enquiries!public! !
+rowVer:!enquiries!public! !
+scrollConcurrency!enquiries!public! !
+scrollOptions!enquiries!public! !
+sourceReadOnly!enquiries!public!testing! !
+trace!development!private! !
+trace:!development!private! !
+txnCapable!enquiries!public!testing! !
+txnIsolationOptions!enquiries!public! !
+uniqueIndexOf:!enquiries!public! !
+!
 
 !Database.DBConnection class methodsFor!
 
@@ -280,7 +282,9 @@ interpretTxnIsolationMask: mask
 	#deprecated.
 	^#('SQL_TXN_READ_UNCOMMITTED' 'SQL_TXN_READ_COMMITTED' 'SQL_TXN_REPEATABLE_READ' 'SQL_TXN_SERIALIZABLE' 'SQL_TXN_VERSIONING') 
 		select: [:maskName | (mask bitAnd: (OS.ODBCConstants at: maskName)) ~= 0]! !
-!Database.DBConnection class categoriesFor: #interpretTxnIsolationMask:!operations!private! !
+!Database.DBConnection class categoriesForMethods!
+interpretTxnIsolationMask:!operations!private! !
+!
 
 !Database.DBResultSet methodsFor!
 
@@ -291,22 +295,28 @@ invalidate
 prev
 	#deprecated.	"use #previous"
 	^self previous! !
-!Database.DBResultSet categoriesFor: #invalidate!operations!public! !
-!Database.DBResultSet categoriesFor: #prev!accessing!public! !
+!Database.DBResultSet categoriesForMethods!
+invalidate!operations!public! !
+prev!accessing!public! !
+!
 
 !OS.ODBCTIMESTAMP methodsFor!
 
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
-!OS.ODBCTIMESTAMP categoriesFor: #asTimeStamp!converting!public! !
+!OS.ODBCTIMESTAMP categoriesForMethods!
+asTimeStamp!converting!public! !
+!
 
 !OS.ODBCTIMESTAMP class methodsFor!
 
 fromTimeStamp: aTimeStamp
 	Notification deprecated.
 	^self fromTimeStamp: aTimeStamp asDateAndTime! !
-!OS.ODBCTIMESTAMP class categoriesFor: #fromTimeStamp:!instance creation!public! !
+!OS.ODBCTIMESTAMP class categoriesForMethods!
+fromTimeStamp:!instance creation!public! !
+!
 
 "End of package definition"!
 

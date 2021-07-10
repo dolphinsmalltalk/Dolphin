@@ -35,8 +35,10 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!OS.EMRSETMAPPERFLAGS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.EMRSETMAPPERFLAGS categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!OS.EMRSETMAPPERFLAGS categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETMAPPERFLAGS class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETMAPPERFLAGS}! !
-!OS.EMRSETMAPPERFLAGS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETMAPPERFLAGS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETMAPPERFLAGS class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETMAPPERFLAGS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

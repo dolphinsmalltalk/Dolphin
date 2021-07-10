@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
@@ -132,14 +132,16 @@ testTranscript
 	t := Object fromBinaryStoreBytes: stb.
 	self assert: t identityHash equals: i.
 	self assert: t identicalTo: Transcript! !
-!Kernel.Tests.STBTest categoriesFor: #testByteArray!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testCharacters!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testEmptyStream!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testExistentClass!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testInvalidStream!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testNonExistentClass!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testSortedCollection!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testStrings!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testSymbols!public!unit tests! !
-!Kernel.Tests.STBTest categoriesFor: #testTranscript!public!unit tests! !
+!Kernel.Tests.STBTest categoriesForMethods!
+testByteArray!public!unit tests! !
+testCharacters!public!unit tests! !
+testEmptyStream!public!unit tests! !
+testExistentClass!public!unit tests! !
+testInvalidStream!public!unit tests! !
+testNonExistentClass!public!unit tests! !
+testSortedCollection!public!unit tests! !
+testStrings!public!unit tests! !
+testSymbols!public!unit tests! !
+testTranscript!public!unit tests! !
+!
 

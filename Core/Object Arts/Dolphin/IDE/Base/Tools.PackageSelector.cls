@@ -976,89 +976,91 @@ uninstall: package
 	"Select nearest available folder in filter hierarchy"
 	[currentFolder notNil and: [(self filterPresenter selection: currentFolder ifAbsent: []) isNil]]
 		whileTrue: [currentFolder := currentFolder parent]! !
-!Tools.PackageSelector categoriesFor: #aboutPackage!commands!public! !
-!Tools.PackageSelector categoriesFor: #addClass!commands!public! !
-!Tools.PackageSelector categoriesFor: #addSharedVariable!commands!public! !
-!Tools.PackageSelector categoriesFor: #applicationEnvironment!public! !
-!Tools.PackageSelector categoriesFor: #autoSelect!accessing!public! !
-!Tools.PackageSelector categoriesFor: #autoSelect:!accessing!public! !
-!Tools.PackageSelector categoriesFor: #browseFolder!commands!public! !
-!Tools.PackageSelector categoriesFor: #browseIt!commands!public! !
-!Tools.PackageSelector categoriesFor: #browseItCommand!helpers!private! !
-!Tools.PackageSelector categoriesFor: #browsePackages!commands!public! !
-!Tools.PackageSelector categoriesFor: #browseUnimplemented!public! !
-!Tools.PackageSelector categoriesFor: #checkCanUninstall:!helpers!private! !
-!Tools.PackageSelector categoriesFor: #clearSelection!commands!private! !
-!Tools.PackageSelector categoriesFor: #commonFolder:!operations!private! !
-!Tools.PackageSelector categoriesFor: #confirmUninstall:!helpers!private! !
-!Tools.PackageSelector categoriesFor: #createComponents!initializing!private! !
-!Tools.PackageSelector categoriesFor: #createSchematicWiring!initializing!private! !
-!Tools.PackageSelector categoriesFor: #deleteItCommand!helpers!private! !
-!Tools.PackageSelector categoriesFor: #filter!accessing!public! !
-!Tools.PackageSelector categoriesFor: #filteredPackages!helpers!private! !
-!Tools.PackageSelector categoriesFor: #filterPresenter!accessing!private! !
-!Tools.PackageSelector categoriesFor: #folder!accessing!public! !
-!Tools.PackageSelector categoriesFor: #folderClass!constants!private! !
-!Tools.PackageSelector categoriesFor: #hasChangedPackages!private!testing! !
-!Tools.PackageSelector categoriesFor: #hasPackages!private!testing! !
-!Tools.PackageSelector categoriesFor: #hasSinglePackage!private!testing! !
-!Tools.PackageSelector categoriesFor: #initialize!initializing!private! !
-!Tools.PackageSelector categoriesFor: #inspectIt!commands!public! !
-!Tools.PackageSelector categoriesFor: #inspectPackage!commands!public! !
-!Tools.PackageSelector categoriesFor: #isEnabled:!accessing!public! !
-!Tools.PackageSelector categoriesFor: #isSaveablePackage:!private!testing! !
-!Tools.PackageSelector categoriesFor: #model:!public! !
-!Tools.PackageSelector categoriesFor: #newPackage!commands!public! !
-!Tools.PackageSelector categoriesFor: #okToSavePackage:!helpers!private! !
-!Tools.PackageSelector categoriesFor: #onDragOverFolder:!drag & drop!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onDragOverPackage:!drag & drop!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onDragPackages:!drag & drop!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onDropOverFolder:!drag & drop!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onDropOverPackage:!drag & drop!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onFilterSelected!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onPackageChanged:!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onPackageChosen!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onPackagesChanged!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onSelectionChanged!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onSelectionChanging:!private! !
-!Tools.PackageSelector categoriesFor: #onTipTextRequired:!event handling!private! !
-!Tools.PackageSelector categoriesFor: #onViewOpened!event handling!public! !
-!Tools.PackageSelector categoriesFor: #openPackage!commands!public! !
-!Tools.PackageSelector categoriesFor: #openPackageFile:!commands!private! !
-!Tools.PackageSelector categoriesFor: #operationAbortedSignal!constants!private! !
-!Tools.PackageSelector categoriesFor: #packageManager!constants!private! !
-!Tools.PackageSelector categoriesFor: #packages!accessing!private! !
-!Tools.PackageSelector categoriesFor: #packages:!accessing!private! !
-!Tools.PackageSelector categoriesFor: #packagesPresenter!accessing!private! !
-!Tools.PackageSelector categoriesFor: #promptToSavePackageChanges:!helpers!private! !
-!Tools.PackageSelector categoriesFor: #queryCommand:!commands!private! !
-!Tools.PackageSelector categoriesFor: #refresh!private!updating! !
-!Tools.PackageSelector categoriesFor: #removePackage!commands!public! !
-!Tools.PackageSelector categoriesFor: #resetChangeFlags!commands!public! !
-!Tools.PackageSelector categoriesFor: #resetForItem:!event handling!private! !
-!Tools.PackageSelector categoriesFor: #resetForItems:!operations!private! !
-!Tools.PackageSelector categoriesFor: #rootFolder!accessing!private! !
-!Tools.PackageSelector categoriesFor: #saveFileDialogTypes!constants!private! !
-!Tools.PackageSelector categoriesFor: #savePackageAs!commands!public! !
-!Tools.PackageSelector categoriesFor: #savePackageChanges!commands!public! !
-!Tools.PackageSelector categoriesFor: #savePackageChanges:!commands!public! !
-!Tools.PackageSelector categoriesFor: #savePackages!commands!public! !
-!Tools.PackageSelector categoriesFor: #savePackages:!commands!public! !
-!Tools.PackageSelector categoriesFor: #savePackages:toFolder:!helpers!private! !
-!Tools.PackageSelector categoriesFor: #selectableItems!accessing!private! !
-!Tools.PackageSelector categoriesFor: #selectedFolder!commands!public! !
-!Tools.PackageSelector categoriesFor: #selectedSourceObjects!accessing!private! !
-!Tools.PackageSelector categoriesFor: #selectionEnvironment!accessing!private! !
-!Tools.PackageSelector categoriesFor: #selectNoFolder!public! !
-!Tools.PackageSelector categoriesFor: #selectRootFolder!public! !
-!Tools.PackageSelector categoriesFor: #setAsDefaultPackage!commands!private! !
-!Tools.PackageSelector categoriesFor: #singlePackage!accessing!private! !
-!Tools.PackageSelector categoriesFor: #synchronizeFilter!commands!private! !
-!Tools.PackageSelector categoriesFor: #systemModel!accessing!private! !
-!Tools.PackageSelector categoriesFor: #testBrowserClass!constants!private! !
-!Tools.PackageSelector categoriesFor: #toggleLegacySourceFormat!commands!private! !
-!Tools.PackageSelector categoriesFor: #toggleUsingPAX!commands!public! !
-!Tools.PackageSelector categoriesFor: #uninstall:!commands!private! !
+!Tools.PackageSelector categoriesForMethods!
+aboutPackage!commands!public! !
+addClass!commands!public! !
+addSharedVariable!commands!public! !
+applicationEnvironment!public! !
+autoSelect!accessing!public! !
+autoSelect:!accessing!public! !
+browseFolder!commands!public! !
+browseIt!commands!public! !
+browseItCommand!helpers!private! !
+browsePackages!commands!public! !
+browseUnimplemented!public! !
+checkCanUninstall:!helpers!private! !
+clearSelection!commands!private! !
+commonFolder:!operations!private! !
+confirmUninstall:!helpers!private! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+deleteItCommand!helpers!private! !
+filter!accessing!public! !
+filteredPackages!helpers!private! !
+filterPresenter!accessing!private! !
+folder!accessing!public! !
+folderClass!constants!private! !
+hasChangedPackages!private!testing! !
+hasPackages!private!testing! !
+hasSinglePackage!private!testing! !
+initialize!initializing!private! !
+inspectIt!commands!public! !
+inspectPackage!commands!public! !
+isEnabled:!accessing!public! !
+isSaveablePackage:!private!testing! !
+model:!public! !
+newPackage!commands!public! !
+okToSavePackage:!helpers!private! !
+onDragOverFolder:!drag & drop!event handling!private! !
+onDragOverPackage:!drag & drop!event handling!private! !
+onDragPackages:!drag & drop!event handling!private! !
+onDropOverFolder:!drag & drop!event handling!private! !
+onDropOverPackage:!drag & drop!event handling!private! !
+onFilterSelected!event handling!private! !
+onPackageChanged:!event handling!private! !
+onPackageChosen!event handling!private! !
+onPackagesChanged!event handling!private! !
+onSelectionChanged!event handling!private! !
+onSelectionChanging:!private! !
+onTipTextRequired:!event handling!private! !
+onViewOpened!event handling!public! !
+openPackage!commands!public! !
+openPackageFile:!commands!private! !
+operationAbortedSignal!constants!private! !
+packageManager!constants!private! !
+packages!accessing!private! !
+packages:!accessing!private! !
+packagesPresenter!accessing!private! !
+promptToSavePackageChanges:!helpers!private! !
+queryCommand:!commands!private! !
+refresh!private!updating! !
+removePackage!commands!public! !
+resetChangeFlags!commands!public! !
+resetForItem:!event handling!private! !
+resetForItems:!operations!private! !
+rootFolder!accessing!private! !
+saveFileDialogTypes!constants!private! !
+savePackageAs!commands!public! !
+savePackageChanges!commands!public! !
+savePackageChanges:!commands!public! !
+savePackages!commands!public! !
+savePackages:!commands!public! !
+savePackages:toFolder:!helpers!private! !
+selectableItems!accessing!private! !
+selectedFolder!commands!public! !
+selectedSourceObjects!accessing!private! !
+selectionEnvironment!accessing!private! !
+selectNoFolder!public! !
+selectRootFolder!public! !
+setAsDefaultPackage!commands!private! !
+singlePackage!accessing!private! !
+synchronizeFilter!commands!private! !
+systemModel!accessing!private! !
+testBrowserClass!constants!private! !
+toggleLegacySourceFormat!commands!private! !
+toggleUsingPAX!commands!public! !
+uninstall:!commands!private! !
+!
 
 !Tools.PackageSelector class methodsFor!
 
@@ -1111,10 +1113,12 @@ resource_Single_package_selector
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray! !
-!Tools.PackageSelector class categoriesFor: #defaultModel!models!public! !
-!Tools.PackageSelector class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!Tools.PackageSelector class categoriesFor: #resource_Choice_view!public!resources-views! !
-!Tools.PackageSelector class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.PackageSelector class categoriesFor: #resource_Single_package_selector!public!resources-views! !
-!Tools.PackageSelector class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
+!Tools.PackageSelector class categoriesForMethods!
+defaultModel!models!public! !
+getCommandQueryHandlers!accessing!private! !
+resource_Choice_view!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_Single_package_selector!public!resources-views! !
+setCommandQueryHandlers:!accessing!private! !
+!
 

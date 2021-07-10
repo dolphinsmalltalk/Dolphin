@@ -65,19 +65,21 @@ resultClass: aClass
 
 viewResults
 	^self perform: openSymbol! !
-!Refactory.Browser.BasicLintRule categoriesFor: #defaultResultClass!constants!private! !
-!Refactory.Browser.BasicLintRule categoriesFor: #filteredResult!accessing!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.BasicLintRule categoriesFor: #openUsing:!initialize/release!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #openWithFilters!operations!private! !
-!Refactory.Browser.BasicLintRule categoriesFor: #openWithoutFilters!operations!private! !
-!Refactory.Browser.BasicLintRule categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #resetResult!initialize/release!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #result!accessing!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #result:!initialize/release!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #resultClass:!initialize/release!public! !
-!Refactory.Browser.BasicLintRule categoriesFor: #viewResults!helpers!private! !
+!Refactory.Browser.BasicLintRule categoriesForMethods!
+defaultResultClass!constants!private! !
+filteredResult!accessing!public! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+openUsing:!initialize/release!public! !
+openWithFilters!operations!private! !
+openWithoutFilters!operations!private! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+result!accessing!public! !
+result:!initialize/release!public! !
+resultClass:!initialize/release!public! !
+viewResults!helpers!private! !
+!
 
 !Refactory.Browser.BasicLintRule class methodsFor!
 
@@ -114,10 +116,12 @@ storeFiltersOn: aStream
 	aStream
 		tab;
 		nextPutAll: 'yourself))'! !
-!Refactory.Browser.BasicLintRule class categoriesFor: #addFilter:for:!accessing!public! !
-!Refactory.Browser.BasicLintRule class categoriesFor: #filterDictionary!accessing!public! !
-!Refactory.Browser.BasicLintRule class categoriesFor: #filterDictionary:!accessing!public! !
-!Refactory.Browser.BasicLintRule class categoriesFor: #filterFor:!accessing!public! !
-!Refactory.Browser.BasicLintRule class categoriesFor: #lintProtocols!accessing!public! !
-!Refactory.Browser.BasicLintRule class categoriesFor: #storeFiltersOn:!public!storing! !
+!Refactory.Browser.BasicLintRule class categoriesForMethods!
+addFilter:for:!accessing!public! !
+filterDictionary!accessing!public! !
+filterDictionary:!accessing!public! !
+filterFor:!accessing!public! !
+lintProtocols!accessing!public! !
+storeFiltersOn:!public!storing! !
+!
 

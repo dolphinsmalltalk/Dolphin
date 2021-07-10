@@ -117,7 +117,9 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #getSize);
 		add: (Aspect boolean: #isSingle);
 		yourself! !
-!OS.ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
+!OS.ITEMIDLIST class categoriesForMethods!
+publishedAspectsOfInstances!must strip!public! !
+!
 
 !Tools.ClassBrowserAbstract methodsFor!
 
@@ -127,7 +129,9 @@ browseMethodProtocol
 	self model browseProtocols 
 		protocol: self protocols first;
 		actualClass: self actualClass! !
-!Tools.ClassBrowserAbstract categoriesFor: #browseMethodProtocol!commands!private! !
+!Tools.ClassBrowserAbstract categoriesForMethods!
+browseMethodProtocol!commands!private! !
+!
 
 !Tools.SmalltalkSystem methodsFor!
 
@@ -143,8 +147,10 @@ inspectSystemOptions
 	"Open a TwoLevelInspector on the system options."
 
 	^UserPreferencesShell showOn: self systemOptions! !
-!Tools.SmalltalkSystem categoriesFor: #inspectPoolDictionaries!initializing!public! !
-!Tools.SmalltalkSystem categoriesFor: #inspectSystemOptions!commands!public! !
+!Tools.SmalltalkSystem categoriesForMethods!
+inspectPoolDictionaries!initializing!public! !
+inspectSystemOptions!commands!public! !
+!
 
 !UI.Toolbar class methodsFor!
 
@@ -157,7 +163,9 @@ resource_Protocol_tools
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 ##(Graphics.Color) #default 8 1801306032 170 192 8 #() 170 192 34 4 51611 1311814 1 ##(UI.ToolbarIconButton) 416 1 1377606 4 ##(UI.CommandDescription) #toggleReadOnly 8 'Lock/unlock protocol' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'Mutex.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51611 51613 594 416 1 626 #toggleANSI 8 'Toggle ANSI status' 1 1 1378630 1 ##(Graphics.TextTileIcon) $\x1F5FD 8 'Segoe UI Emoji' nil nil nil nil 1 nil nil 51613 34 3 608 800 1245766 1 ##(UI.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 1058 111 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 54 12 0 0 35 0 0 0] 8 #() 1058 193 193 nil 27 )! !
-!UI.Toolbar class categoriesFor: #resource_Protocol_tools!public!resources-views! !
+!UI.Toolbar class categoriesForMethods!
+resource_Protocol_tools!public!resources-views! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.StringTest subclass: #'Core.Tests.AnsiStringTest'
 	instanceVariableNames: ''
@@ -118,13 +118,15 @@ testMatch
 	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
 		do: [:each | self assert: (each match: 'foo')].
 	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]! !
-!Core.Tests.AnsiStringTest categoriesFor: #assimilate:!helpers!private! !
-!Core.Tests.AnsiStringTest categoriesFor: #assimilateString:!helpers!private! !
-!Core.Tests.AnsiStringTest categoriesFor: #collectionClass!helpers!private! !
-!Core.Tests.AnsiStringTest categoriesFor: #testAsPhrase!public!unit tests! !
-!Core.Tests.AnsiStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
-!Core.Tests.AnsiStringTest categoriesFor: #testClassWith!public! !
-!Core.Tests.AnsiStringTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
-!Core.Tests.AnsiStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
-!Core.Tests.AnsiStringTest categoriesFor: #testMatch!public!unit tests! !
+!Core.Tests.AnsiStringTest categoriesForMethods!
+assimilate:!helpers!private! !
+assimilateString:!helpers!private! !
+collectionClass!helpers!private! !
+testAsPhrase!public!unit tests! !
+testBeginsWithIgnoreCase!public!unit tests! !
+testClassWith!public! !
+testCopyReplaceAllWith!public!unit tests! !
+testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
+testMatch!public!unit tests! !
+!
 

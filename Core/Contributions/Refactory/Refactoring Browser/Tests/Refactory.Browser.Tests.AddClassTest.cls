@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AddClassTest'
 	instanceVariableNames: ''
@@ -134,14 +134,16 @@ testModelInvalidSubclass
 				subclasses: {model classNamed: #Bar}
 				category: #'Refactory-Tesing'.
 	self shouldFail: refactoring! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testAddClass!public!tests! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testAddVariableByteClass!public!tests! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testAddVariableClass!public!tests! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testExistingName!failure tests!public! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testInvalidSubclass!failure tests!public! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testModelAddClass!public!tests! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testModelExistingName!failure tests!public! !
-!Refactory.Browser.Tests.AddClassTest categoriesFor: #testModelInvalidSubclass!failure tests!public! !
+!Refactory.Browser.Tests.AddClassTest categoriesForMethods!
+setUp!public!set up! !
+testAddClass!public!tests! !
+testAddVariableByteClass!public!tests! !
+testAddVariableClass!public!tests! !
+testExistingName!failure tests!public! !
+testInvalidSubclass!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelAddClass!public!tests! !
+testModelExistingName!failure tests!public! !
+testModelInvalidSubclass!failure tests!public! !
+!
 

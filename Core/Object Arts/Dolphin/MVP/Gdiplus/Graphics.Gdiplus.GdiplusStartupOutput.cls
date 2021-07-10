@@ -45,10 +45,12 @@ NotificationUnhook: anExternalAddress
 	"Set the receiver's 'NotificationUnhook' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_NotificationUnhook put: anExternalAddress! !
-!Graphics.Gdiplus.GdiplusStartupOutput categoriesFor: #NotificationHook!**compiled accessors**!public! !
-!Graphics.Gdiplus.GdiplusStartupOutput categoriesFor: #NotificationHook:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GdiplusStartupOutput categoriesFor: #NotificationUnhook!**compiled accessors**!public! !
-!Graphics.Gdiplus.GdiplusStartupOutput categoriesFor: #NotificationUnhook:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GdiplusStartupOutput categoriesForMethods!
+NotificationHook!**compiled accessors**!public! !
+NotificationHook:!**compiled accessors**!public! !
+NotificationUnhook!**compiled accessors**!public! !
+NotificationUnhook:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GdiplusStartupOutput class methodsFor!
 
@@ -74,6 +76,8 @@ defineFields
 
 getFieldNames
 	^#(#NotificationHook #NotificationUnhook)! !
-!Graphics.Gdiplus.GdiplusStartupOutput class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GdiplusStartupOutput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GdiplusStartupOutput class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

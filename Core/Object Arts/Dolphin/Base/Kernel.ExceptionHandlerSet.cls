@@ -22,12 +22,16 @@ actionFor: exception
 
 setHandlers: aSequenceableCollection
 	handlers := aSequenceableCollection! !
-!Kernel.ExceptionHandlerSet categoriesFor: #actionFor:!debugger-step over!helpers!private! !
-!Kernel.ExceptionHandlerSet categoriesFor: #setHandlers:!initializing!private! !
+!Kernel.ExceptionHandlerSet categoriesForMethods!
+actionFor:!debugger-step over!helpers!private! !
+setHandlers:!initializing!private! !
+!
 
 !Kernel.ExceptionHandlerSet class methodsFor!
 
 handlers: aSequencedReadableCollectionOfAssociations
 	^self basicNew setHandlers: aSequencedReadableCollectionOfAssociations! !
-!Kernel.ExceptionHandlerSet class categoriesFor: #handlers:!debugger-step over!instance creation!private! !
+!Kernel.ExceptionHandlerSet class categoriesForMethods!
+handlers:!debugger-step over!instance creation!private! !
+!
 

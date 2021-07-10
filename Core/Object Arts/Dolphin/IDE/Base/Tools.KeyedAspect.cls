@@ -50,15 +50,17 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject at: self key put: valueObject! !
-!Tools.KeyedAspect categoriesFor: #=!comparing!public! !
-!Tools.KeyedAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!Tools.KeyedAspect categoriesFor: #displayAspectText:on:!displaying!private! !
-!Tools.KeyedAspect categoriesFor: #getSelector!accessing!private! !
-!Tools.KeyedAspect categoriesFor: #hash!comparing!public! !
-!Tools.KeyedAspect categoriesFor: #objectRefName:!helpers!private! !
-!Tools.KeyedAspect categoriesFor: #putSelector!accessing!private! !
-!Tools.KeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!Tools.KeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Tools.KeyedAspect categoriesForMethods!
+=!comparing!public! !
+displayAspectNameOf:on:!displaying!private! !
+displayAspectText:on:!displaying!private! !
+getSelector!accessing!private! !
+hash!comparing!public! !
+objectRefName:!helpers!private! !
+putSelector!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !Tools.KeyedAspect class methodsFor!
 
@@ -66,5 +68,7 @@ key: aKey
 	"Answer an instance of the receiver created with aKey"
 
 	^self name: aKey! !
-!Tools.KeyedAspect class categoriesFor: #key:!instance creation!public! !
+!Tools.KeyedAspect class categoriesForMethods!
+key:!instance creation!public! !
+!
 

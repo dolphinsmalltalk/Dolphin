@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.AssociationTest'
 	instanceVariableNames: ''
@@ -28,6 +28,8 @@ testPrintOn
 	subject key: #a.
 	subject value: subject.
 	self assert: subject printString equals: '#a -> ... a cyclic ref to an Association...'! !
-!Core.Tests.AssociationTest categoriesFor: #testIsSelfEvaluating!public! !
-!Core.Tests.AssociationTest categoriesFor: #testPrintOn!public! !
+!Core.Tests.AssociationTest categoriesForMethods!
+testIsSelfEvaluating!public! !
+testPrintOn!public! !
+!
 

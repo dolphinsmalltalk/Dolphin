@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools subclass: #'Tools.Tests'
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
 	^TestCase icon! !
-!Tools.Tests class categoriesFor: #icon!constants!public! !
+!Tools.Tests class categoriesForMethods!
+icon!constants!public! !
+!
 

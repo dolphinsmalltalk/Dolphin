@@ -31,10 +31,12 @@ tags
 view: aScintillaView id: anInteger
 	view := aScintillaView.
 	id := anInteger! !
-!UI.Scintilla.LexerNamedStyle categoriesFor: #getDescription!accessing!private! !
-!UI.Scintilla.LexerNamedStyle categoriesFor: #getName!accessing!private! !
-!UI.Scintilla.LexerNamedStyle categoriesFor: #getTags!accessing!private! !
-!UI.Scintilla.LexerNamedStyle categoriesFor: #name!accessing!public! !
-!UI.Scintilla.LexerNamedStyle categoriesFor: #tags!accessing!public! !
-!UI.Scintilla.LexerNamedStyle categoriesFor: #view:id:!initializing!private! !
+!UI.Scintilla.LexerNamedStyle categoriesForMethods!
+getDescription!accessing!private! !
+getName!accessing!private! !
+getTags!accessing!private! !
+name!accessing!public! !
+tags!accessing!public! !
+view:id:!initializing!private! !
+!
 

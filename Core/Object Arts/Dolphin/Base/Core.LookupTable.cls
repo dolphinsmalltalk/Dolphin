@@ -308,35 +308,37 @@ valuesClass
 	the receiver)."
 
 	^Array! !
-!Core.LookupTable categoriesFor: #add:!adding!public! !
-!Core.LookupTable categoriesFor: #anySatisfy:!enumerating!public! !
-!Core.LookupTable categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!Core.LookupTable categoriesFor: #associationsDo:!enumerating!public! !
-!Core.LookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!Core.LookupTable categoriesFor: #at:ifAbsentPutClean:!accessing!public! !
-!Core.LookupTable categoriesFor: #at:put:!accessing!public! !
-!Core.LookupTable categoriesFor: #basicValues!accessing!private! !
-!Core.LookupTable categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Core.LookupTable categoriesFor: #copyElementsInto:!adding!private! !
-!Core.LookupTable categoriesFor: #do:!debugger-step through!enumerating!public! !
-!Core.LookupTable categoriesFor: #findElementOrNil:!private!searching! !
-!Core.LookupTable categoriesFor: #findKeyOrNil:!private!searching! !
-!Core.LookupTable categoriesFor: #identityIncludes:!public!searching! !
-!Core.LookupTable categoriesFor: #includesAssociation:!public!searching! !
-!Core.LookupTable categoriesFor: #initialize!initializing!private! !
-!Core.LookupTable categoriesFor: #isImmutable:!initializing!public! !
-!Core.LookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!Core.LookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!Core.LookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Core.LookupTable categoriesFor: #keysDo:!enumerating!public! !
-!Core.LookupTable categoriesFor: #lookup:!accessing!public! !
-!Core.LookupTable categoriesFor: #moveFrom:to:!private!removing! !
-!Core.LookupTable categoriesFor: #postCopy!copying!public! !
-!Core.LookupTable categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!Core.LookupTable categoriesFor: #select:!enumerating!public! !
-!Core.LookupTable categoriesFor: #species!accessing!public! !
-!Core.LookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.LookupTable categoriesFor: #uncheckedAdd:!adding!private! !
-!Core.LookupTable categoriesFor: #uncheckedAt:put:!accessing!private! !
-!Core.LookupTable categoriesFor: #valuesClass!constants!public! !
+!Core.LookupTable categoriesForMethods!
+add:!adding!public! !
+anySatisfy:!enumerating!public! !
+associationAt:ifAbsent:!accessing!public! !
+associationsDo:!enumerating!public! !
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPutClean:!accessing!public! !
+at:put:!accessing!public! !
+basicValues!accessing!private! !
+bestSlotFor:boundedBy:!development!private!statistics! !
+copyElementsInto:!adding!private! !
+do:!debugger-step through!enumerating!public! !
+findElementOrNil:!private!searching! !
+findKeyOrNil:!private!searching! !
+identityIncludes:!public!searching! !
+includesAssociation:!public!searching! !
+initialize!initializing!private! !
+isImmutable:!initializing!public! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+lookup:!accessing!public! !
+moveFrom:to:!private!removing! !
+postCopy!copying!public! !
+removeKey:ifAbsent:!public!removing! !
+select:!enumerating!public! !
+species!accessing!public! !
+stbSaveOn:!binary filing!public! !
+uncheckedAdd:!adding!private! !
+uncheckedAt:put:!accessing!private! !
+valuesClass!constants!public! !
+!
 

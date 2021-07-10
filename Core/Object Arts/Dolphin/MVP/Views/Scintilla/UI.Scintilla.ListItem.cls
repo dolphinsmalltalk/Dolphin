@@ -33,11 +33,13 @@ text
 text: aString icon: anIcon
 	text := aString.
 	icon := anIcon! !
-!UI.Scintilla.ListItem categoriesFor: #displayOn:!displaying!public! !
-!UI.Scintilla.ListItem categoriesFor: #displayString!displaying!public! !
-!UI.Scintilla.ListItem categoriesFor: #icon!accessing!public! !
-!UI.Scintilla.ListItem categoriesFor: #text!accessing!public! !
-!UI.Scintilla.ListItem categoriesFor: #text:icon:!initializing!private! !
+!UI.Scintilla.ListItem categoriesForMethods!
+displayOn:!displaying!public! !
+displayString!displaying!public! !
+icon!accessing!public! !
+text!accessing!public! !
+text:icon:!initializing!private! !
+!
 
 !UI.Scintilla.ListItem class methodsFor!
 
@@ -46,6 +48,8 @@ icon
 
 text: aString icon: anIcon
 	^self new text: aString icon: anIcon! !
-!UI.Scintilla.ListItem class categoriesFor: #icon!constants!development!public! !
-!UI.Scintilla.ListItem class categoriesFor: #text:icon:!initializing!public! !
+!UI.Scintilla.ListItem class categoriesForMethods!
+icon!constants!development!public! !
+text:icon:!initializing!public! !
+!
 

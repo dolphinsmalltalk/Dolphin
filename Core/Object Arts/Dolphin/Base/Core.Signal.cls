@@ -132,24 +132,26 @@ signalWith: signalerTag
 	This method will not normally return to its sender."
 	
 	^self newException signalWith: signalerTag! !
-!Core.Signal categoriesFor: #,!filtering!public! !
-!Core.Signal categoriesFor: #defaultAction:!handling!private! !
-!Core.Signal categoriesFor: #defaultResumption!constants!private! !
-!Core.Signal categoriesFor: #description!accessing!private! !
-!Core.Signal categoriesFor: #description:!accessing!public! !
-!Core.Signal categoriesFor: #exceptionClass!constants!private! !
-!Core.Signal categoriesFor: #handles:!filtering!public! !
-!Core.Signal categoriesFor: #initialize!initializing!private! !
-!Core.Signal categoriesFor: #isResumable!public!testing! !
-!Core.Signal categoriesFor: #makeNonResumable!accessing!public! !
-!Core.Signal categoriesFor: #makeResumable!accessing!public! !
-!Core.Signal categoriesFor: #newException!public!raising! !
-!Core.Signal categoriesFor: #printOn:!printing!public! !
-!Core.Signal categoriesFor: #resumable:!accessing!public! !
-!Core.Signal categoriesFor: #signal!public!raising! !
-!Core.Signal categoriesFor: #signal:!public!raising! !
-!Core.Signal categoriesFor: #signal:with:!public!raising! !
-!Core.Signal categoriesFor: #signalWith:!public!raising! !
+!Core.Signal categoriesForMethods!
+,!filtering!public! !
+defaultAction:!handling!private! !
+defaultResumption!constants!private! !
+description!accessing!private! !
+description:!accessing!public! !
+exceptionClass!constants!private! !
+handles:!filtering!public! !
+initialize!initializing!private! !
+isResumable!public!testing! !
+makeNonResumable!accessing!public! !
+makeResumable!accessing!public! !
+newException!public!raising! !
+printOn:!printing!public! !
+resumable:!accessing!public! !
+signal!public!raising! !
+signal:!public!raising! !
+signal:with:!public!raising! !
+signalWith:!public!raising! !
+!
 
 Core.Signal methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 Core.Signal methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
@@ -172,7 +174,9 @@ resumableDescription: anObject
 	^self new 
 		description: anObject;
 		makeResumable! !
-!Core.Signal class categoriesFor: #description:!instance creation!public! !
-!Core.Signal class categoriesFor: #new!instance creation!public! !
-!Core.Signal class categoriesFor: #resumableDescription:!instance creation!public! !
+!Core.Signal class categoriesForMethods!
+description:!instance creation!public! !
+new!instance creation!public! !
+resumableDescription:!instance creation!public! !
+!
 

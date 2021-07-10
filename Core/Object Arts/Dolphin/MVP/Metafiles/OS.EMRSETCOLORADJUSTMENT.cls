@@ -39,8 +39,10 @@ COLORADJUSTMENT: aCOLORADJUSTMENT
 		from: ##(_OffsetOf_COLORADJUSTMENT + 1)
 		to: ##(_OffsetOf_COLORADJUSTMENT + COLORADJUSTMENT basicByteSize)
 		startingAt: 1! !
-!OS.EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT!**compiled accessors**!public! !
-!OS.EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT:!**compiled accessors**!public! !
+!OS.EMRSETCOLORADJUSTMENT categoriesForMethods!
+COLORADJUSTMENT!**compiled accessors**!public! !
+COLORADJUSTMENT:!**compiled accessors**!public! !
+!
 
 !OS.EMRSETCOLORADJUSTMENT class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_SETCOLORADJUSTMENT}! !
-!OS.EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMRSETCOLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRSETCOLORADJUSTMENT class categoriesFor: #iTypes!constants!public! !
+!OS.EMRSETCOLORADJUSTMENT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -704,63 +704,65 @@ value: value
 	Raise an HRESULTError if the receiver does not have  a default value property."
 
 	self setPropertyId: DISPID_VALUE value: value! !
-!OS.COM.IDispatch categoriesFor: #_newEnum!enumerating!private! !
-!OS.COM.IDispatch categoriesFor: #asImplType!converting!public! !
-!OS.COM.IDispatch categoriesFor: #asVariant!converting!public! !
-!OS.COM.IDispatch categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.IDispatch categoriesFor: #basicInvokeId:flags:parms:retVal:!dispatching!private! !
-!OS.COM.IDispatch categoriesFor: #contents!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #dispatchImplementor!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #dispatchImplementor:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #displayOn:!printing!public! !
-!OS.COM.IDispatch categoriesFor: #displayValueOn:!printing!private! !
-!OS.COM.IDispatch categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!OS.COM.IDispatch categoriesFor: #downCast!converting!public! !
-!OS.COM.IDispatch categoriesFor: #getIDsOfNames:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!methods!private! !
-!OS.COM.IDispatch categoriesFor: #getProperty:!accessing!properties!public! !
-!OS.COM.IDispatch categoriesFor: #getProperty:item:!accessing!properties!public! !
-!OS.COM.IDispatch categoriesFor: #getPropertyId:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #getPropertyId:item:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #getPropertyId:withArguments:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #getPropertyObj:id:!accessing!private! !
-!OS.COM.IDispatch categoriesFor: #getPropertyObj:id:item:!dispatching!private! !
-!OS.COM.IDispatch categoriesFor: #getTypeInfo:ifNone:!accessing!private! !
-!OS.COM.IDispatch categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!methods!private! !
-!OS.COM.IDispatch categoriesFor: #getTypeInfoCount!**auto generated**!methods!public! !
-!OS.COM.IDispatch categoriesFor: #GetTypeInfoCount:!**auto generated**!COM Interfaces-IDispatch!private! !
-!OS.COM.IDispatch categoriesFor: #has_NewEnum!private!testing! !
-!OS.COM.IDispatch categoriesFor: #hasTypeInfo!public!testing! !
-!OS.COM.IDispatch categoriesFor: #idOfName:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #implementor:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #invoke:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!methods!private! !
-!OS.COM.IDispatch categoriesFor: #invoke:with:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invoke:with:with:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invoke:with:with:with:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invoke:with:with:with:with:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invoke:withArguments:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invokeId:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invokeId:flags:parms:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invokeId:flags:parms:retVal:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invokeId:with:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invokeId:with:with:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invokeId:with:with:with:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #invokeId:withArguments:!dispatching!public! !
-!OS.COM.IDispatch categoriesFor: #isExtensible!public!testing! !
-!OS.COM.IDispatch categoriesFor: #isVBCollection!public!testing! !
-!OS.COM.IDispatch categoriesFor: #newEnum!enumerating!public! !
-!OS.COM.IDispatch categoriesFor: #printValueOn:!printing!private! !
-!OS.COM.IDispatch categoriesFor: #setProperty:item:value:!accessing!properties!public! !
-!OS.COM.IDispatch categoriesFor: #setProperty:value:!accessing!properties!public! !
-!OS.COM.IDispatch categoriesFor: #setPropertyId:item:value:!accessing!properties!public! !
-!OS.COM.IDispatch categoriesFor: #setPropertyId:value:!accessing!properties!public! !
-!OS.COM.IDispatch categoriesFor: #setPropertyId:withArguments:value:!accessing!properties!public! !
-!OS.COM.IDispatch categoriesFor: #signalException:!dispatching!private! !
-!OS.COM.IDispatch categoriesFor: #typeInfoIfNone:!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #value!accessing!public! !
-!OS.COM.IDispatch categoriesFor: #value:!accessing!public! !
+!OS.COM.IDispatch categoriesForMethods!
+_newEnum!enumerating!private! !
+asImplType!converting!public! !
+asVariant!converting!public! !
+basicFree!private!realizing/unrealizing! !
+basicInvokeId:flags:parms:retVal:!dispatching!private! !
+contents!accessing!public! !
+dispatchImplementor!accessing!public! !
+dispatchImplementor:!accessing!public! !
+displayOn:!printing!public! !
+displayValueOn:!printing!private! !
+doesNotUnderstand:!exceptions!public! !
+downCast!converting!public! !
+getIDsOfNames:!accessing!public! !
+GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!methods!private! !
+getProperty:!accessing!properties!public! !
+getProperty:item:!accessing!properties!public! !
+getPropertyId:!accessing!public! !
+getPropertyId:item:!accessing!public! !
+getPropertyId:withArguments:!accessing!public! !
+getPropertyObj:id:!accessing!private! !
+getPropertyObj:id:item:!dispatching!private! !
+getTypeInfo:ifNone:!accessing!private! !
+GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!methods!private! !
+getTypeInfoCount!**auto generated**!methods!public! !
+GetTypeInfoCount:!**auto generated**!COM Interfaces-IDispatch!private! !
+has_NewEnum!private!testing! !
+hasTypeInfo!public!testing! !
+idOfName:!accessing!public! !
+idOfName:ifAbsent:!accessing!public! !
+implementor:!accessing!public! !
+invoke:!dispatching!public! !
+Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!methods!private! !
+invoke:with:!dispatching!public! !
+invoke:with:with:!dispatching!public! !
+invoke:with:with:with:!dispatching!public! !
+invoke:with:with:with:with:!dispatching!public! !
+invoke:withArguments:!dispatching!public! !
+invokeId:!dispatching!public! !
+invokeId:flags:parms:!dispatching!public! !
+invokeId:flags:parms:retVal:!dispatching!public! !
+invokeId:with:!dispatching!public! !
+invokeId:with:with:!dispatching!public! !
+invokeId:with:with:with:!dispatching!public! !
+invokeId:withArguments:!dispatching!public! !
+isExtensible!public!testing! !
+isVBCollection!public!testing! !
+newEnum!enumerating!public! !
+printValueOn:!printing!private! !
+setProperty:item:value:!accessing!properties!public! !
+setProperty:value:!accessing!properties!public! !
+setPropertyId:item:value:!accessing!properties!public! !
+setPropertyId:value:!accessing!properties!public! !
+setPropertyId:withArguments:value:!accessing!properties!public! !
+signalException:!dispatching!private! !
+typeInfoIfNone:!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 OS.COM.IDispatch methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
 
@@ -802,7 +804,9 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DISPATCH! !
-!OS.COM.IDispatch class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IDispatch class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!OS.COM.IDispatch class categoriesFor: #vt!constants!public! !
+!OS.COM.IDispatch class categoriesForMethods!
+defineFunctions!initializing!public! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

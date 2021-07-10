@@ -107,15 +107,17 @@ value
 	answer := bstr asUtf16String.
 	bstr free.
 	^answer! !
-!VBScript.IMatch categoriesFor: #firstIndex!**auto generated**!properties!public! !
-!VBScript.IMatch categoriesFor: #get_FirstIndex:!**auto generated**!COM Interfaces-IMatch!private! !
-!VBScript.IMatch categoriesFor: #get_Length:!**auto generated**!COM Interfaces-IMatch!private! !
-!VBScript.IMatch categoriesFor: #get_Value:!**auto generated**!COM Interfaces-IMatch!private! !
-!VBScript.IMatch categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!VBScript.IMatch categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!VBScript.IMatch categoriesFor: #length!**auto generated**!properties!public! !
-!VBScript.IMatch categoriesFor: #range!accessing!public! !
-!VBScript.IMatch categoriesFor: #value!properties!public! !
+!VBScript.IMatch categoriesForMethods!
+firstIndex!**auto generated**!properties!public! !
+get_FirstIndex:!**auto generated**!COM Interfaces-IMatch!private! !
+get_Length:!**auto generated**!COM Interfaces-IMatch!private! !
+get_Value:!**auto generated**!COM Interfaces-IMatch!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+length!**auto generated**!properties!public! !
+range!accessing!public! !
+value!properties!public! !
+!
 
 !VBScript.IMatch class methodsFor!
 
@@ -135,6 +137,8 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #get_Length:
 			argumentTypes: 'sdword*'! !
-!VBScript.IMatch class categoriesFor: #clsid!constants!private! !
-!VBScript.IMatch class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!VBScript.IMatch class categoriesForMethods!
+clsid!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+!
 

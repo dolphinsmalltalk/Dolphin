@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Database.Tests.DBConnectionTest subclass: #'Database.Tests.SQLServerDBTest'
 	instanceVariableNames: ''
@@ -115,19 +115,23 @@ testViewsQuery
 				types: '''VIEW'''.
 	self assert: (views
 				noDifference: #('Alphabetical list of products' 'Category Sales for 1997' 'Current Product List' 'Customer and Suppliers by City' 'Invoices' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Sales by Category' 'Sales Totals by Amount' 'Summary of Sales by Quarter' 'Summary of Sales by Year'))! !
-!Database.Tests.SQLServerDBTest categoriesFor: #databaseResource!private! !
-!Database.Tests.SQLServerDBTest categoriesFor: #dbmsFeaturesMap!private! !
-!Database.Tests.SQLServerDBTest categoriesFor: #queryColumns!private!unit tests! !
-!Database.Tests.SQLServerDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
-!Database.Tests.SQLServerDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
-!Database.Tests.SQLServerDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
-!Database.Tests.SQLServerDBTest categoriesFor: #testSQLServerConnectionAttributes!public!unit tests! !
-!Database.Tests.SQLServerDBTest categoriesFor: #testTablesQuery!public! !
-!Database.Tests.SQLServerDBTest categoriesFor: #testViewsQuery!public! !
+!Database.Tests.SQLServerDBTest categoriesForMethods!
+databaseResource!private! !
+dbmsFeaturesMap!private! !
+queryColumns!private!unit tests! !
+testForeignKeysQuery!public!unit tests! !
+testPrimaryKeysQuery!public!unit tests! !
+testProceduresQuery!public!unit tests! !
+testSQLServerConnectionAttributes!public!unit tests! !
+testTablesQuery!public! !
+testViewsQuery!public! !
+!
 
 !Database.Tests.SQLServerDBTest class methodsFor!
 
 resources
 	^{SQLServerNorthwindDB}! !
-!Database.Tests.SQLServerDBTest class categoriesFor: #resources!public! !
+!Database.Tests.SQLServerDBTest class categoriesForMethods!
+resources!public! !
+!
 

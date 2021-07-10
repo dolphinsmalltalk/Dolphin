@@ -30,7 +30,9 @@ transform
 	subclass := self subclassDefiningVariable.
 	subclass removeClassVariable: variableName.
 	class addClassVariable: variableName! !
-!Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #subclassDefiningVariable!accessing!private! !
-!Refactory.Browser.PullUpClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.PullUpClassVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+subclassDefiningVariable!accessing!private! !
+transform!public!transforming! !
+!
 

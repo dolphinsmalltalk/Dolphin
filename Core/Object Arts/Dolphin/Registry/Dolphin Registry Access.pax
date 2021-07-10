@@ -272,17 +272,19 @@ regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType
 
 	<stdcall: sdword RegSetValueExW handle lpwstr dword dword lpvoid dword>
 	^self invalidCall: _failureCode! !
-!OS.AdvApiLibrary categoriesFor: #regCloseKey:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regDeleteKey:lpSubKey:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regDeleteValue:lpValueName:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
-!OS.AdvApiLibrary categoriesFor: #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:!public!win32 functions-registry! !
+!OS.AdvApiLibrary categoriesForMethods!
+regCloseKey:!public!win32 functions-registry! !
+regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !
+regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:!public!win32 functions-registry! !
+regDeleteKey:lpSubKey:!public!win32 functions-registry! !
+regDeleteValue:lpValueName:!public!win32 functions-registry! !
+regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:!public!win32 functions-registry! !
+regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
+regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:!public!win32 functions-registry! !
+regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:!public!win32 functions-registry! !
+regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
+regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:!public!win32 functions-registry! !
+!
 
 "End of package definition"!
 

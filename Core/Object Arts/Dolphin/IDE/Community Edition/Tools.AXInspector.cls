@@ -66,9 +66,11 @@ unableToDisplayVariableErrorFormatString
 	printed."
 
 	^'Unable to access or display <1s> [<3s>]'! !
-!Tools.AXInspector categoriesFor: #count!accessing!private! !
-!Tools.AXInspector categoriesFor: #getField:!accessing!private! !
-!Tools.AXInspector categoriesFor: #getFieldList!accessing!private! !
-!Tools.AXInspector categoriesFor: #setField:to:!accessing!private! !
-!Tools.AXInspector categoriesFor: #unableToDisplayVariableErrorFormatString!constants!private! !
+!Tools.AXInspector categoriesForMethods!
+count!accessing!private! !
+getField:!accessing!private! !
+getFieldList!accessing!private! !
+setField:to:!accessing!private! !
+unableToDisplayVariableErrorFormatString!constants!private! !
+!
 

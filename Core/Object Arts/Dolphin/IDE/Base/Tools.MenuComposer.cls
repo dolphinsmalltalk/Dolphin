@@ -489,51 +489,53 @@ update: aMenuComposerView do: operation
 	operation value.
 	aMenuComposerView refreshContents.
 	self openSelectedSubmenuOf: aMenuComposerView! !
-!Tools.MenuComposer categoriesFor: #addCommand!commands!public! !
-!Tools.MenuComposer categoriesFor: #addItem:!adding!private! !
-!Tools.MenuComposer categoriesFor: #addItem:view:index:!adding!private! !
-!Tools.MenuComposer categoriesFor: #addMenu!commands!public! !
-!Tools.MenuComposer categoriesFor: #addSeparator!commands!public! !
-!Tools.MenuComposer categoriesFor: #apply!commands!public! !
-!Tools.MenuComposer categoriesFor: #arena!accessing!public! !
-!Tools.MenuComposer categoriesFor: #clearSelection!commands!public! !
-!Tools.MenuComposer categoriesFor: #closeSubmenuViewsOf:!operations!private! !
-!Tools.MenuComposer categoriesFor: #collectAcceleratorsOf:into:!helpers!private! !
-!Tools.MenuComposer categoriesFor: #commandItemClass!commands!private! !
-!Tools.MenuComposer categoriesFor: #copySelection!commands!public! !
-!Tools.MenuComposer categoriesFor: #cutSelection!commands!public! !
-!Tools.MenuComposer categoriesFor: #dragCoordinator!constants!drag & drop!private! !
-!Tools.MenuComposer categoriesFor: #ensureMinimumMenuContents:!helpers!private! !
-!Tools.MenuComposer categoriesFor: #generateAcceleratorConflicts!helpers!private! !
-!Tools.MenuComposer categoriesFor: #generateAcceleratorConflicts:!helpers!private! !
-!Tools.MenuComposer categoriesFor: #hasClipboard!private!testing! !
-!Tools.MenuComposer categoriesFor: #initialize!initializing!private! !
-!Tools.MenuComposer categoriesFor: #menu!accessing!public! !
-!Tools.MenuComposer categoriesFor: #menuClass!constants!private! !
-!Tools.MenuComposer categoriesFor: #model:!accessing!public! !
-!Tools.MenuComposer categoriesFor: #mutateIntoCommand!commands!private! !
-!Tools.MenuComposer categoriesFor: #mutateIntoMenu!commands!private! !
-!Tools.MenuComposer categoriesFor: #mutateSelection:!helpers!private! !
-!Tools.MenuComposer categoriesFor: #newCommandItem!helpers!private! !
-!Tools.MenuComposer categoriesFor: #newMenu!helpers!private! !
-!Tools.MenuComposer categoriesFor: #onItemFrom:at:droppedBefore:copy:!drag & drop!event handling!private! !
-!Tools.MenuComposer categoriesFor: #onItemIn:selectedAtIndex:!event handling!private! !
-!Tools.MenuComposer categoriesFor: #onMenuClicked:!event handling!private! !
-!Tools.MenuComposer categoriesFor: #onMenuTrack:!event handling!private! !
-!Tools.MenuComposer categoriesFor: #onViewOpened!adding!private! !
-!Tools.MenuComposer categoriesFor: #openMenu:at:!operations!private! !
-!Tools.MenuComposer categoriesFor: #openSelectedSubmenuOf:!operations!private! !
-!Tools.MenuComposer categoriesFor: #pasteClipboard!commands!public! !
-!Tools.MenuComposer categoriesFor: #properties!commands!public! !
-!Tools.MenuComposer categoriesFor: #queryCommand:!commands!private! !
-!Tools.MenuComposer categoriesFor: #removeItemView:index:!private!removing! !
-!Tools.MenuComposer categoriesFor: #selection!public!selection! !
-!Tools.MenuComposer categoriesFor: #selectionView!private!selection! !
-!Tools.MenuComposer categoriesFor: #stripUntitled:!operations!private! !
-!Tools.MenuComposer categoriesFor: #topMenuInset!constants!private! !
-!Tools.MenuComposer categoriesFor: #trackMouse:!helpers!private! !
-!Tools.MenuComposer categoriesFor: #untitledPrefix!constants!private! !
-!Tools.MenuComposer categoriesFor: #update:do:!operations!private! !
+!Tools.MenuComposer categoriesForMethods!
+addCommand!commands!public! !
+addItem:!adding!private! !
+addItem:view:index:!adding!private! !
+addMenu!commands!public! !
+addSeparator!commands!public! !
+apply!commands!public! !
+arena!accessing!public! !
+clearSelection!commands!public! !
+closeSubmenuViewsOf:!operations!private! !
+collectAcceleratorsOf:into:!helpers!private! !
+commandItemClass!commands!private! !
+copySelection!commands!public! !
+cutSelection!commands!public! !
+dragCoordinator!constants!drag & drop!private! !
+ensureMinimumMenuContents:!helpers!private! !
+generateAcceleratorConflicts!helpers!private! !
+generateAcceleratorConflicts:!helpers!private! !
+hasClipboard!private!testing! !
+initialize!initializing!private! !
+menu!accessing!public! !
+menuClass!constants!private! !
+model:!accessing!public! !
+mutateIntoCommand!commands!private! !
+mutateIntoMenu!commands!private! !
+mutateSelection:!helpers!private! !
+newCommandItem!helpers!private! !
+newMenu!helpers!private! !
+onItemFrom:at:droppedBefore:copy:!drag & drop!event handling!private! !
+onItemIn:selectedAtIndex:!event handling!private! !
+onMenuClicked:!event handling!private! !
+onMenuTrack:!event handling!private! !
+onViewOpened!adding!private! !
+openMenu:at:!operations!private! !
+openSelectedSubmenuOf:!operations!private! !
+pasteClipboard!commands!public! !
+properties!commands!public! !
+queryCommand:!commands!private! !
+removeItemView:index:!private!removing! !
+selection!public!selection! !
+selectionView!private!selection! !
+stripUntitled:!operations!private! !
+topMenuInset!constants!private! !
+trackMouse:!helpers!private! !
+untitledPrefix!constants!private! !
+update:do:!operations!private! !
+!
 
 !Tools.MenuComposer class methodsFor!
 
@@ -563,8 +565,10 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DialogView) 34 30 nil nil 8 #(12845056 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #dialog nil 133 nil 852998 ##(Graphics.Font) nil true 721158 ##(OS.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 ##(Graphics.Point) 193 193 nil 416 1376774 ##(UI.ProportionalLayout) 138 ##(Core.Dictionary) 34 2 1049094 ##(Core.Association) 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 704 nil nil nil 7 nil nil nil 704 984838 ##(UI.BorderLayout) 1 1 nil 410 ##(UI.ReferenceView) 34 14 nil 704 34 2 8 1140850688 131073 800 nil nil nil 7 nil nil nil 800 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Presenter) #resource_OK_Cancel_button_block nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 578 15 -3 578 1351 71 800 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 254 255 255 255 170 2 0 0 33 0 0 0] 8 #() 578 193 193 nil 27 nil nil nil 170 192 1088 1180166 ##(Graphics.Rectangle) 578 15 1 578 17 15 898 138 144 34 1 962 #createAt:extent: 34 2 578 5 669 578 1381 81 704 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 2 0 0 0 78 1 0 0 180 2 0 0 118 1 0 0] 34 1 800 1104 nil 27 1 674 410 ##(Tools.MenuComposerArena) 34 20 nil 416 34 2 8 1140850688 393217 1376 nil 917510 ##(Graphics.Color) #applicationWorkspace nil 7 461638 4 ##(UI.Menu) nil true 34 12 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #cutSelection 8 'Cu&t' 1 1 nil nil nil 1522 1 1554 #copySelection 8 '&Copy' 1 1 nil nil nil 1522 1 1554 #pasteClipboard 8 '&Paste' 1 1 nil nil nil 1522 1 1554 #clearSelection 8 '&Delete' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 1522 1 1554 #addMenu 8 'Add &Menu' 1 1 nil nil nil 1522 1 1554 #addCommand 8 '&Add Command' 1 1 nil nil nil 1522 1 1554 #addSeparator 8 'Add &Separator' 1 1 nil nil nil 1746 4097 1474 nil true 34 2 1522 1 1554 #mutateIntoMenu 8 '&Menu' 1 1 nil nil nil 1522 1 1554 #mutateIntoCommand 8 '&Command' 1 1 nil nil nil 8 'M&utate Into' nil 1 nil nil nil nil nil 1760 1522 1 1554 #properties 8 'P&roperties' 1 1 nil nil nil 8 'Menu Composer' nil 1 nil nil nil nil nil nil nil 1376 nil 170 192 1088 1138 578 1 1 578 1 1 nil nil nil nil nil 898 138 144 34 2 962 #createAt:extent: 34 2 578 5 5 578 1381 665 1376 962 #contextMenu: 34 1 1488 1376 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 2 0 0 0 2 0 0 0 180 2 0 0 78 1 0 0] 8 #() 1104 nil 27 3 true 170 192 34 2 1376 8 'arena' 1138 578 5 5 578 5 5 658246 4 ##(UI.MenuBar) nil true 34 2 1474 nil true 34 3 1522 1 1554 #addMenu 8 '&Menu' 9371 1 nil nil nil 1522 1 1554 #addCommand 8 '&Command' 9373 1 nil nil nil 1522 1 1554 #addSeparator 8 '&Separator' 9595 1 nil nil nil 8 '&Add' nil 1 nil nil 45831 nil nil 1474 nil true 34 6 1522 1 1554 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 1522 1 1554 #copySelection 8 '&Copy' 9351 1 nil nil nil 1522 1 1554 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 1522 1 1554 #clearSelection 8 '&Delete' 1629 1 nil nil nil 1746 4097 1522 1 1554 #properties 8 'P&roperties' 5363 1 nil nil nil 8 '&Edit' nil 1 nil nil 45843 nil nil 8 'Menu Composer Bar' nil 1 nil nil nil nil nil nil nil nil 25619 nil nil nil 578 521 641 1 nil nil 918278 ##(Core.Semaphore) nil nil 1 nil 8 1996777232 898 138 144 34 2 962 #createAt:extent: 34 2 578 6143 21 578 1421 871 416 962 #text: 34 1 8 'Menu Composer' 416 1042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 197 14 0 0 189 1 0 0] 34 2 1376 704 1104 nil 27 )! !
-!Tools.MenuComposer class categoriesFor: #defaultModel!models!public! !
-!Tools.MenuComposer class categoriesFor: #icon!constants!public! !
-!Tools.MenuComposer class categoriesFor: #menuClass!constants!private! !
-!Tools.MenuComposer class categoriesFor: #resource_Default_view!public!resources-views! !
+!Tools.MenuComposer class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+menuClass!constants!private! !
+resource_Default_view!public!resources-views! !
+!
 

@@ -69,16 +69,18 @@ setKeywords: keywordsCollection argumentNames: argsCollection indices: indexColl
 	argumentNames := argsCollection.
 	indices := indexCollection.
 	^self! !
-!Tools.AXMethodName categoriesFor: #argumentCount!accessing!public! !
-!Tools.AXMethodName categoriesFor: #argumentNames!accessing!public! !
-!Tools.AXMethodName categoriesFor: #indices!accessing!public! !
-!Tools.AXMethodName categoriesFor: #keywords!accessing!public! !
-!Tools.AXMethodName categoriesFor: #primary!accessing!public! !
-!Tools.AXMethodName categoriesFor: #printOn:!printing!public! !
-!Tools.AXMethodName categoriesFor: #printSelectorOn:!printing!public! !
-!Tools.AXMethodName categoriesFor: #printSignatureOn:!printing!public! !
-!Tools.AXMethodName categoriesFor: #selector!accessing!public! !
-!Tools.AXMethodName categoriesFor: #setKeywords:argumentNames:indices:!initializing!private! !
+!Tools.AXMethodName categoriesForMethods!
+argumentCount!accessing!public! !
+argumentNames!accessing!public! !
+indices!accessing!public! !
+keywords!accessing!public! !
+primary!accessing!public! !
+printOn:!printing!public! !
+printSelectorOn:!printing!public! !
+printSignatureOn:!printing!public! !
+selector!accessing!public! !
+setKeywords:argumentNames:indices:!initializing!private! !
+!
 
 !Tools.AXMethodName class methodsFor!
 
@@ -92,6 +94,8 @@ keywords: keywordsCollection argumentNames: argumentsCollection indices: indexCo
 		setKeywords: keywordsCollection
 		argumentNames: argumentsCollection
 		indices: indexCollection! !
-!Tools.AXMethodName class categoriesFor: #icon!constants!public! !
-!Tools.AXMethodName class categoriesFor: #keywords:argumentNames:indices:!instance creation!public! !
+!Tools.AXMethodName class categoriesForMethods!
+icon!constants!public! !
+keywords:argumentNames:indices:!instance creation!public! !
+!
 

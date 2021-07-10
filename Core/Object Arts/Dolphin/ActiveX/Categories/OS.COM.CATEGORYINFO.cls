@@ -74,15 +74,17 @@ szDescription: anUtf16String
 		to: _OffsetOf_szDescription + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_szDescription + size put: 0! !
-!OS.COM.CATEGORYINFO categoriesFor: #catid!**compiled accessors**!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #catid:!**compiled accessors**!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #description!accessing!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #description:!accessing!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #lcid!**compiled accessors**!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #lcid:!**compiled accessors**!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #locale:!accessing!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #szDescription!**compiled accessors**!public! !
-!OS.COM.CATEGORYINFO categoriesFor: #szDescription:!**compiled accessors**!public! !
+!OS.COM.CATEGORYINFO categoriesForMethods!
+catid!**compiled accessors**!public! !
+catid:!**compiled accessors**!public! !
+description!accessing!public! !
+description:!accessing!public! !
+lcid!**compiled accessors**!public! !
+lcid:!**compiled accessors**!public! !
+locale:!accessing!public! !
+szDescription!**compiled accessors**!public! !
+szDescription:!**compiled accessors**!public! !
+!
 
 !OS.COM.CATEGORYINFO class methodsFor!
 
@@ -108,6 +110,8 @@ defineFields
 
 getFieldNames
 	^#(#catid #lcid #szDescription)! !
-!OS.COM.CATEGORYINFO class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.CATEGORYINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.CATEGORYINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

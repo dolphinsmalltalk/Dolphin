@@ -58,12 +58,14 @@ ciexyzZ: anInteger
 	"Set the receiver's 'ciexyzZ' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ciexyzZ put: anInteger! !
-!OS.CIEXYZ categoriesFor: #ciexyzX!**compiled accessors**!public! !
-!OS.CIEXYZ categoriesFor: #ciexyzX:!**compiled accessors**!public! !
-!OS.CIEXYZ categoriesFor: #ciexyzY!**compiled accessors**!public! !
-!OS.CIEXYZ categoriesFor: #ciexyzY:!**compiled accessors**!public! !
-!OS.CIEXYZ categoriesFor: #ciexyzZ!**compiled accessors**!public! !
-!OS.CIEXYZ categoriesFor: #ciexyzZ:!**compiled accessors**!public! !
+!OS.CIEXYZ categoriesForMethods!
+ciexyzX!**compiled accessors**!public! !
+ciexyzX:!**compiled accessors**!public! !
+ciexyzY!**compiled accessors**!public! !
+ciexyzY:!**compiled accessors**!public! !
+ciexyzZ!**compiled accessors**!public! !
+ciexyzZ:!**compiled accessors**!public! !
+!
 
 !OS.CIEXYZ class methodsFor!
 
@@ -94,6 +96,8 @@ defineFields
 
 getFieldNames
 	^#(#ciexyzX #ciexyzY #ciexyzZ)! !
-!OS.CIEXYZ class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.CIEXYZ class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.CIEXYZ class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -19,7 +19,9 @@ isQualifiedReference
 
 length
 	^2! !
-!Kernel.StQualifiedReferenceToken categoriesFor: #acceptVisitor:!public!visitor! !
-!Kernel.StQualifiedReferenceToken categoriesFor: #isQualifiedReference!helpers!public!testing! !
-!Kernel.StQualifiedReferenceToken categoriesFor: #length!accessing!public! !
+!Kernel.StQualifiedReferenceToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isQualifiedReference!helpers!public!testing! !
+length!accessing!public! !
+!
 

@@ -90,23 +90,25 @@ useDisplayNames: aBoolean
 	self
 		propertyAt: #useDisplayNames
 		put: aBoolean! !
-!SUnitBrowserAbsConfig categoriesFor: #initialize!initializing!private! !
-!SUnitBrowserAbsConfig categoriesFor: #properties!accessing!private! !
-!SUnitBrowserAbsConfig categoriesFor: #properties:!accessing!private! !
-!SUnitBrowserAbsConfig categoriesFor: #propertyAt:!accessing!private! !
-!SUnitBrowserAbsConfig categoriesFor: #propertyAt:put:!accessing!private! !
-!SUnitBrowserAbsConfig categoriesFor: #showBackgroundColors!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #showBackgroundColors:!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #showIcons!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #showIcons:!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #showToolbar!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #showToolbar:!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #toggleShowBackgroundColors!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #toggleShowIcons!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #toggleShowToolbar!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #toggleUseDisplayNames!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #useDisplayNames!configuring!public! !
-!SUnitBrowserAbsConfig categoriesFor: #useDisplayNames:!configuring!public! !
+!SUnitBrowserAbsConfig categoriesForMethods!
+initialize!initializing!private! !
+properties!accessing!private! !
+properties:!accessing!private! !
+propertyAt:!accessing!private! !
+propertyAt:put:!accessing!private! !
+showBackgroundColors!configuring!public! !
+showBackgroundColors:!configuring!public! !
+showIcons!configuring!public! !
+showIcons:!configuring!public! !
+showToolbar!configuring!public! !
+showToolbar:!configuring!public! !
+toggleShowBackgroundColors!configuring!public! !
+toggleShowIcons!configuring!public! !
+toggleShowToolbar!configuring!public! !
+toggleUseDisplayNames!configuring!public! !
+useDisplayNames!configuring!public! !
+useDisplayNames:!configuring!public! !
+!
 
 !SUnitBrowserAbsConfig class methodsFor!
 
@@ -115,5 +117,7 @@ new
 	^super new
 		initialize;
 		yourself! !
-!SUnitBrowserAbsConfig class categoriesFor: #new!instantiating!public! !
+!SUnitBrowserAbsConfig class categoriesForMethods!
+new!instantiating!public! !
+!
 

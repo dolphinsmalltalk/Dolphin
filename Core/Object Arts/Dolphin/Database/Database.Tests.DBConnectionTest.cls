@@ -270,22 +270,24 @@ testTracing
 	self assert: connection isTracing not.
 	File delete: traceFile
 ! !
-!Database.Tests.DBConnectionTest categoriesFor: #databaseResource!public! !
-!Database.Tests.DBConnectionTest categoriesFor: #dbmsFeaturesMap!constants!private! !
-!Database.Tests.DBConnectionTest categoriesFor: #field:fromRow:!private!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #queryColumns!private! !
-!Database.Tests.DBConnectionTest categoriesFor: #shouldRaiseNotSupported:!helpers!public! !
-!Database.Tests.DBConnectionTest categoriesFor: #testAsArray!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testColumnsQuery!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testConnectionAttributes!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testConnectionEnquiries!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testConnectionString!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testConnectStringDo!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testDSNlessConnection!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testODBCTIMEConversion!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testPackagesCorrectlySetUp!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testPreparedQuery!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testSpecialColumnsQuery!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testStatisticsQuery!public!unit tests! !
-!Database.Tests.DBConnectionTest categoriesFor: #testTracing!public!unit tests! !
+!Database.Tests.DBConnectionTest categoriesForMethods!
+databaseResource!public! !
+dbmsFeaturesMap!constants!private! !
+field:fromRow:!private!unit tests! !
+queryColumns!private! !
+shouldRaiseNotSupported:!helpers!public! !
+testAsArray!public!unit tests! !
+testColumnsQuery!public!unit tests! !
+testConnectionAttributes!public!unit tests! !
+testConnectionEnquiries!public!unit tests! !
+testConnectionString!public!unit tests! !
+testConnectStringDo!public!unit tests! !
+testDSNlessConnection!public!unit tests! !
+testODBCTIMEConversion!public!unit tests! !
+testPackagesCorrectlySetUp!public!unit tests! !
+testPreparedQuery!public!unit tests! !
+testSpecialColumnsQuery!public!unit tests! !
+testStatisticsQuery!public!unit tests! !
+testTracing!public!unit tests! !
+!
 

@@ -36,8 +36,10 @@ Name
 	"Answer the <Utf16String> value of the receiver's 'Name' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_Name! !
-!OS.IP_ADAPTER_INDEX_MAP categoriesFor: #index!**compiled accessors**!public! !
-!OS.IP_ADAPTER_INDEX_MAP categoriesFor: #Name!**compiled accessors**!public! !
+!OS.IP_ADAPTER_INDEX_MAP categoriesForMethods!
+index!**compiled accessors**!public! !
+Name!**compiled accessors**!public! !
+!
 
 !OS.IP_ADAPTER_INDEX_MAP class methodsFor!
 
@@ -65,6 +67,8 @@ defineFields
 
 getFieldNames
 	^#(#index #Name)! !
-!OS.IP_ADAPTER_INDEX_MAP class categoriesFor: #defineFields!initializing!public! !
-!OS.IP_ADAPTER_INDEX_MAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.IP_ADAPTER_INDEX_MAP class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

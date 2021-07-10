@@ -29,7 +29,9 @@ loadFromInstance: hModule
 			cxDesired: self extent x
 			cyDesired: self extent y
 			fuLoad: LR_DEFAULTCOLOR! !
-!IconWithExtent categoriesFor: #extent!accessing!private! !
-!IconWithExtent categoriesFor: #extent:!accessing!private! !
-!IconWithExtent categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
+!IconWithExtent categoriesForMethods!
+extent!accessing!private! !
+extent:!accessing!private! !
+loadFromInstance:!private!realizing/unrealizing! !
+!
 

@@ -133,24 +133,26 @@ source
 	was being compiled."
 
 	^source ?? ''! !
-!Kernel.CompilerNotification categoriesFor: #_descriptionArguments!displaying!public! !
-!Kernel.CompilerNotification categoriesFor: #_descriptionFormat!displaying!public! !
-!Kernel.CompilerNotification categoriesFor: #code:in:for:selector:position:line:ranges:extras:!initializing!private! !
-!Kernel.CompilerNotification categoriesFor: #displayOn:!displaying!public! !
-!Kernel.CompilerNotification categoriesFor: #errorCode!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #errorMessage!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #extras!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #line!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #methodClass!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #offset!private! !
-!Kernel.CompilerNotification categoriesFor: #offset:!private! !
-!Kernel.CompilerNotification categoriesFor: #position!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #range!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #ranges!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #selector!accessing!public! !
-!Kernel.CompilerNotification categoriesFor: #severity!constants!public! !
-!Kernel.CompilerNotification categoriesFor: #severityName!displaying!public! !
-!Kernel.CompilerNotification categoriesFor: #source!accessing!public! !
+!Kernel.CompilerNotification categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+code:in:for:selector:position:line:ranges:extras:!initializing!private! !
+displayOn:!displaying!public! !
+errorCode!accessing!public! !
+errorMessage!accessing!public! !
+extras!accessing!public! !
+line!accessing!public! !
+methodClass!accessing!public! !
+offset!private! !
+offset:!private! !
+position!accessing!public! !
+range!accessing!public! !
+ranges!accessing!public! !
+selector!accessing!public! !
+severity!constants!public! !
+severityName!displaying!public! !
+source!accessing!public! !
+!
 
 !Kernel.CompilerNotification class methodsFor!
 
@@ -313,11 +315,13 @@ severity
 	sorting compilation issues by severity."
 
 	^self subclassResponsibility! !
-!Kernel.CompilerNotification class categoriesFor: #beep!parping!public! !
-!Kernel.CompilerNotification class categoriesFor: #classForCode:!private! !
-!Kernel.CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
-!Kernel.CompilerNotification class categoriesFor: #code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
-!Kernel.CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
-!Kernel.CompilerNotification class categoriesFor: #initialize!development!initializing!public! !
-!Kernel.CompilerNotification class categoriesFor: #severity!constants!public! !
+!Kernel.CompilerNotification class categoriesForMethods!
+beep!parping!public! !
+classForCode:!private! !
+code:in:for:selector:position:line:range:extras:!instance creation!private! !
+code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
+errorFormats!accessing!private! !
+initialize!development!initializing!public! !
+severity!constants!public! !
+!
 

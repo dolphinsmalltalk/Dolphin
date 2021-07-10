@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Tools.Tests.ViewComposerTest'
 	instanceVariableNames: 'vc sampleClass'
@@ -284,25 +284,27 @@ testZOrderPreservedByMutate
 	vc selection: shell.
 	vc mutateTo: ContainerView.
 	self assert: (shell subViews collect: [:each | each name]) asArray equals: #('1' '2' '3')! !
-!Tools.Tests.ViewComposerTest categoriesFor: #doArenaDropOf:operation:!helpers!private! !
-!Tools.Tests.ViewComposerTest categoriesFor: #dragResourceFor:!helpers!private! !
-!Tools.Tests.ViewComposerTest categoriesFor: #getButtonResource!helpers!private! !
-!Tools.Tests.ViewComposerTest categoriesFor: #getContainerResource!helpers!private! !
-!Tools.Tests.ViewComposerTest categoriesFor: #openTestSubjectOn:!helpers!private! !
-!Tools.Tests.ViewComposerTest categoriesFor: #openTestSubjectOnNewShell!helpers!private! !
-!Tools.Tests.ViewComposerTest categoriesFor: #sampleClass!accessing!private! !
-!Tools.Tests.ViewComposerTest categoriesFor: #tearDown!private!running! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testBasicEdit!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testCutCopyPaste!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testDragResourceOverEmptyArena!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testDropResourceLinkOverShell!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testDropResourceOverEmptyArena!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testDropResourceOverHierarchy!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testDropResourceOverShell!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testExit!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testIgnoreShellPreferredExtent!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testNoDragResourceOverInUseArena!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testPasteToArena!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testWidenSelection!public!unit tests! !
-!Tools.Tests.ViewComposerTest categoriesFor: #testZOrderPreservedByMutate!public!unit tests! !
+!Tools.Tests.ViewComposerTest categoriesForMethods!
+doArenaDropOf:operation:!helpers!private! !
+dragResourceFor:!helpers!private! !
+getButtonResource!helpers!private! !
+getContainerResource!helpers!private! !
+openTestSubjectOn:!helpers!private! !
+openTestSubjectOnNewShell!helpers!private! !
+sampleClass!accessing!private! !
+tearDown!private!running! !
+testBasicEdit!public!unit tests! !
+testCutCopyPaste!public!unit tests! !
+testDragResourceOverEmptyArena!public!unit tests! !
+testDropResourceLinkOverShell!public!unit tests! !
+testDropResourceOverEmptyArena!public!unit tests! !
+testDropResourceOverHierarchy!public!unit tests! !
+testDropResourceOverShell!public!unit tests! !
+testExit!public!unit tests! !
+testIgnoreShellPreferredExtent!public!unit tests! !
+testNoDragResourceOverInUseArena!public!unit tests! !
+testPasteToArena!public!unit tests! !
+testWidenSelection!public!unit tests! !
+testZOrderPreservedByMutate!public!unit tests! !
+!
 

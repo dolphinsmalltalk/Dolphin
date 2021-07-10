@@ -57,14 +57,16 @@ time: aTime
 		hour: aTime hour;
 		minute: aTime minute;
 		second: aTime second truncated "ODBCTIME doesn't support fractional seconds"! !
-!OS.ODBCTIME categoriesFor: #asTime!converting!public! !
-!OS.ODBCTIME categoriesFor: #hour!**compiled accessors**!public! !
-!OS.ODBCTIME categoriesFor: #hour:!**compiled accessors**!public! !
-!OS.ODBCTIME categoriesFor: #minute!**compiled accessors**!public! !
-!OS.ODBCTIME categoriesFor: #minute:!**compiled accessors**!public! !
-!OS.ODBCTIME categoriesFor: #second!**compiled accessors**!public! !
-!OS.ODBCTIME categoriesFor: #second:!**compiled accessors**!public! !
-!OS.ODBCTIME categoriesFor: #time:!accessing!public! !
+!OS.ODBCTIME categoriesForMethods!
+asTime!converting!public! !
+hour!**compiled accessors**!public! !
+hour:!**compiled accessors**!public! !
+minute!**compiled accessors**!public! !
+minute:!**compiled accessors**!public! !
+second!**compiled accessors**!public! !
+second:!**compiled accessors**!public! !
+time:!accessing!public! !
+!
 
 !OS.ODBCTIME class methodsFor!
 
@@ -91,7 +93,9 @@ fromTime: aTime
 
 getFieldNames
 	^#(#hour #minute #second)! !
-!OS.ODBCTIME class categoriesFor: #defineFields!public!template definition! !
-!OS.ODBCTIME class categoriesFor: #fromTime:!instance creation!public! !
-!OS.ODBCTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.ODBCTIME class categoriesForMethods!
+defineFields!public!template definition! !
+fromTime:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

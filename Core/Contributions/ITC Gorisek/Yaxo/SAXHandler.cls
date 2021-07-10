@@ -116,33 +116,35 @@ startEntity: entityName
 startPrefixMapping: prefix uri: uri
 	"This call corresonds to the Java SAX call
 	startPrefixMapping(java.lang.String prefix, java.lang.String uri)."! !
-!SAXHandler categoriesFor: #characters:!content!public! !
-!SAXHandler categoriesFor: #checkEOD!content!public! !
-!SAXHandler categoriesFor: #comment:!lexical!public! !
-!SAXHandler categoriesFor: #document!accessing!public! !
-!SAXHandler categoriesFor: #document:!accessing!public! !
-!SAXHandler categoriesFor: #documentAttributes:!content!public! !
-!SAXHandler categoriesFor: #driver!accessing!public! !
-!SAXHandler categoriesFor: #driver:!accessing!public! !
-!SAXHandler categoriesFor: #endDocument!content!public! !
-!SAXHandler categoriesFor: #endElement:!content!public! !
-!SAXHandler categoriesFor: #endElement:namespaceURI:qualifiedName:!content!public! !
-!SAXHandler categoriesFor: #endEntity:!lexical!public! !
-!SAXHandler categoriesFor: #endPrefixMapping:!content!public! !
-!SAXHandler categoriesFor: #eod!accessing!public! !
-!SAXHandler categoriesFor: #ignorableWhitespace:!content!public! !
-!SAXHandler categoriesFor: #initialize!initialize!public! !
-!SAXHandler categoriesFor: #parseDocument!parsing!public! !
-!SAXHandler categoriesFor: #processingInstruction:data:!content!public! !
-!SAXHandler categoriesFor: #resolveEntity:systemID:!entity!public! !
-!SAXHandler categoriesFor: #skippedEntity:!content!public! !
-!SAXHandler categoriesFor: #startCData!lexical!public! !
-!SAXHandler categoriesFor: #startDocument!content!public! !
-!SAXHandler categoriesFor: #startDTD:publicID:systemID:!lexical!public! !
-!SAXHandler categoriesFor: #startElement:attributeList:!content!public! !
-!SAXHandler categoriesFor: #startElement:namespaceURI:qualifiedName:attributeList:!content!public! !
-!SAXHandler categoriesFor: #startEntity:!lexical!public! !
-!SAXHandler categoriesFor: #startPrefixMapping:uri:!content!public! !
+!SAXHandler categoriesForMethods!
+characters:!content!public! !
+checkEOD!content!public! !
+comment:!lexical!public! !
+document!accessing!public! !
+document:!accessing!public! !
+documentAttributes:!content!public! !
+driver!accessing!public! !
+driver:!accessing!public! !
+endDocument!content!public! !
+endElement:!content!public! !
+endElement:namespaceURI:qualifiedName:!content!public! !
+endEntity:!lexical!public! !
+endPrefixMapping:!content!public! !
+eod!accessing!public! !
+ignorableWhitespace:!content!public! !
+initialize!initialize!public! !
+parseDocument!parsing!public! !
+processingInstruction:data:!content!public! !
+resolveEntity:systemID:!entity!public! !
+skippedEntity:!content!public! !
+startCData!lexical!public! !
+startDocument!content!public! !
+startDTD:publicID:systemID:!lexical!public! !
+startElement:attributeList:!content!public! !
+startElement:namespaceURI:qualifiedName:attributeList:!content!public! !
+startEntity:!lexical!public! !
+startPrefixMapping:uri:!content!public! !
+!
 
 !SAXHandler class methodsFor!
 
@@ -202,11 +204,13 @@ parseDTDFrom: aStream
 	parser startDocument.
 	parser parseDocument.
 	^parser! !
-!SAXHandler class categoriesFor: #convertWideStream:!helpers!public! !
-!SAXHandler class categoriesFor: #new!instance creation!public! !
-!SAXHandler class categoriesFor: #on:!instance creation!public! !
-!SAXHandler class categoriesFor: #parseDocumentFrom:!instance creation!public! !
-!SAXHandler class categoriesFor: #parseDocumentFromFileNamed:!instance creation!public! !
-!SAXHandler class categoriesFor: #parseDocumentFromFileNamed:readIntoMemory:!instance creation!public! !
-!SAXHandler class categoriesFor: #parseDTDFrom:!instance creation!public! !
+!SAXHandler class categoriesForMethods!
+convertWideStream:!helpers!public! !
+new!instance creation!public! !
+on:!instance creation!public! !
+parseDocumentFrom:!instance creation!public! !
+parseDocumentFromFileNamed:!instance creation!public! !
+parseDocumentFromFileNamed:readIntoMemory:!instance creation!public! !
+parseDTDFrom:!instance creation!public! !
+!
 

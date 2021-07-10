@@ -64,13 +64,15 @@ hwndTrack: anExternalHandle
 	"Set the receiver's 'hwndTrack' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: anExternalHandle! !
-!OS.TRACKMOUSEEVENT categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.TRACKMOUSEEVENT categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!OS.TRACKMOUSEEVENT categoriesFor: #dwHoverTime!**compiled accessors**!public! !
-!OS.TRACKMOUSEEVENT categoriesFor: #dwHoverTime:!**compiled accessors**!public! !
-!OS.TRACKMOUSEEVENT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.TRACKMOUSEEVENT categoriesFor: #hwndTrack!**compiled accessors**!public! !
-!OS.TRACKMOUSEEVENT categoriesFor: #hwndTrack:!**compiled accessors**!public! !
+!OS.TRACKMOUSEEVENT categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwHoverTime!**compiled accessors**!public! !
+dwHoverTime:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+hwndTrack!**compiled accessors**!public! !
+hwndTrack:!**compiled accessors**!public! !
+!
 
 !OS.TRACKMOUSEEVENT class methodsFor!
 
@@ -95,6 +97,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !
-!OS.TRACKMOUSEEVENT class categoriesFor: #defineFields!public!template definition! !
-!OS.TRACKMOUSEEVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TRACKMOUSEEVENT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

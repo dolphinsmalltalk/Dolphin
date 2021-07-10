@@ -156,38 +156,40 @@ restore
 
 showIn: aTextPresenter
 	aTextPresenter text: rawText! !
-!ChunkBrowserChunk categoriesFor: #<=!comparing!public! !
-!ChunkBrowserChunk categoriesFor: #=!comparing!public! !
-!ChunkBrowserChunk categoriesFor: #browse!operations!public! !
-!ChunkBrowserChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserChunk categoriesFor: #canBrowse!public!testing! !
-!ChunkBrowserChunk categoriesFor: #canCompare!public!testing! !
-!ChunkBrowserChunk categoriesFor: #canShowDifferences!public!testing! !
-!ChunkBrowserChunk categoriesFor: #chunkClass!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #chunkIconIndex!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #chunkType!accessing!constants!public! !
-!ChunkBrowserChunk categoriesFor: #classNameFromRawText!helpers!public! !
-!ChunkBrowserChunk categoriesFor: #hash!comparing!public! !
-!ChunkBrowserChunk categoriesFor: #identity1!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #identity1AndIdentity2AsCompiledMethod!helpers!public! !
-!ChunkBrowserChunk categoriesFor: #identity1AsClass!helpers!public! !
-!ChunkBrowserChunk categoriesFor: #identity2!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #index!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #index:!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserChunk categoriesFor: #isFilteredUsing:!operations!public! !
-!ChunkBrowserChunk categoriesFor: #isImageSave!public!testing! !
-!ChunkBrowserChunk categoriesFor: #isMatch!public!testing! !
-!ChunkBrowserChunk categoriesFor: #isSeriesStart!public!testing! !
-!ChunkBrowserChunk categoriesFor: #matchIcon!accessing!constants!public! !
-!ChunkBrowserChunk categoriesFor: #mismatchIcon!accessing!constants!public! !
-!ChunkBrowserChunk categoriesFor: #missingIcon!constants!public! !
-!ChunkBrowserChunk categoriesFor: #picked!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #picked:!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #pickedIconIndex!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #rawText!accessing!public! !
-!ChunkBrowserChunk categoriesFor: #restore!operations!public! !
-!ChunkBrowserChunk categoriesFor: #showIn:!displaying!public! !
+!ChunkBrowserChunk categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+browse!operations!public! !
+browseTarget!operations!public! !
+canBrowse!public!testing! !
+canCompare!public!testing! !
+canShowDifferences!public!testing! !
+chunkClass!accessing!public! !
+chunkIconIndex!accessing!public! !
+chunkType!accessing!constants!public! !
+classNameFromRawText!helpers!public! !
+hash!comparing!public! !
+identity1!accessing!public! !
+identity1AndIdentity2AsCompiledMethod!helpers!public! !
+identity1AsClass!helpers!public! !
+identity2!accessing!public! !
+index!accessing!public! !
+index:!accessing!public! !
+initialize:!initializing!public! !
+isFilteredUsing:!operations!public! !
+isImageSave!public!testing! !
+isMatch!public!testing! !
+isSeriesStart!public!testing! !
+matchIcon!accessing!constants!public! !
+mismatchIcon!accessing!constants!public! !
+missingIcon!constants!public! !
+picked!accessing!public! !
+picked:!accessing!public! !
+pickedIconIndex!accessing!public! !
+rawText!accessing!public! !
+restore!operations!public! !
+showIn:!displaying!public! !
+!
 
 !ChunkBrowserChunk class methodsFor!
 
@@ -256,11 +258,13 @@ newFor: aString
 	"Answer an initialized instance of the receiving chunk class"
 
 	^self new initialize: aString! !
-!ChunkBrowserChunk class categoriesFor: #chunkClasses!constants!public! !
-!ChunkBrowserChunk class categoriesFor: #chunksFromStream:!helpers!public! !
-!ChunkBrowserChunk class categoriesFor: #chunksFromText:!helpers!public! !
-!ChunkBrowserChunk class categoriesFor: #chunkType!accessing!constants!public! !
-!ChunkBrowserChunk class categoriesFor: #instanceFor:!instance creation!public! !
-!ChunkBrowserChunk class categoriesFor: #isChunkClassFor:!public!testing! !
-!ChunkBrowserChunk class categoriesFor: #newFor:!instance creation!public! !
+!ChunkBrowserChunk class categoriesForMethods!
+chunkClasses!constants!public! !
+chunksFromStream:!helpers!public! !
+chunksFromText:!helpers!public! !
+chunkType!accessing!constants!public! !
+instanceFor:!instance creation!public! !
+isChunkClassFor:!public!testing! !
+newFor:!instance creation!public! !
+!
 

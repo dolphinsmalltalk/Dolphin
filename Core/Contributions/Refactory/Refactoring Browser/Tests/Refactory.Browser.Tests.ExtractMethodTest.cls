@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExtractMethodTest'
 	instanceVariableNames: ''
@@ -178,13 +178,15 @@ testNonExistantSelector
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTest)! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testBadInterval!failure tests!public! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractFailure!failure tests!public! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodThatMovesTemporaryVariable!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsArgument!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsTemporaryVariable!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporariesSelected!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporaryAssigned!public!tests! !
-!Refactory.Browser.Tests.ExtractMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!Refactory.Browser.Tests.ExtractMethodTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testExtractFailure!failure tests!public! !
+testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+testExtractMethodThatMovesTemporaryVariable!public!tests! !
+testExtractMethodThatNeedsArgument!public!tests! !
+testExtractMethodThatNeedsTemporaryVariable!public!tests! !
+testModelExtractMethodWithTemporariesSelected!public!tests! !
+testModelExtractMethodWithTemporaryAssigned!public!tests! !
+testNonExistantSelector!failure tests!public! !
+!
 

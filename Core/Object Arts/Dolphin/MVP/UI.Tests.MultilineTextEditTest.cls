@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.AbstractMultilineTextEditTest subclass: #'UI.Tests.MultilineTextEditTest'
 	instanceVariableNames: ''
@@ -49,7 +49,9 @@ The following messages defined in Object have optimized implementations inlined 
 #yourself
 In addition any selector in Object with a ''basic'' prefix may be subject to inlining in future releases, so these should not be overridden.
 '! !
-!UI.Tests.MultilineTextEditTest categoriesFor: #classToTest!constants!private! !
-!UI.Tests.MultilineTextEditTest categoriesFor: #margins!constants!private! !
-!UI.Tests.MultilineTextEditTest categoriesFor: #text!constants!private! !
+!UI.Tests.MultilineTextEditTest categoriesForMethods!
+classToTest!constants!private! !
+margins!constants!private! !
+text!constants!private! !
+!
 

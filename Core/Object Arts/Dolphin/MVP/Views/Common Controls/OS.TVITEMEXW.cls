@@ -35,10 +35,12 @@ uStateEx: anInteger
 	"Set the receiver's 'uStateEx' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uStateEx put: anInteger! !
-!OS.TVITEMEXW categoriesFor: #iExpandedImage!**compiled accessors**!public! !
-!OS.TVITEMEXW categoriesFor: #iExpandedImage:!**compiled accessors**!public! !
-!OS.TVITEMEXW categoriesFor: #uStateEx!**compiled accessors**!public! !
-!OS.TVITEMEXW categoriesFor: #uStateEx:!**compiled accessors**!public! !
+!OS.TVITEMEXW categoriesForMethods!
+iExpandedImage!**compiled accessors**!public! !
+iExpandedImage:!**compiled accessors**!public! !
+uStateEx!**compiled accessors**!public! !
+uStateEx:!**compiled accessors**!public! !
+!
 
 !OS.TVITEMEXW class methodsFor!
 
@@ -65,6 +67,8 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam #iIntegral #uStateEx #hwnd #iExpandedImage)! !
-!OS.TVITEMEXW class categoriesFor: #defineFields!public!template definition! !
-!OS.TVITEMEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TVITEMEXW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

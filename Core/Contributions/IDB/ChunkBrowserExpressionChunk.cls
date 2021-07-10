@@ -30,6 +30,8 @@ restoreAndLog: aBoolean
 			answer := index -> e errorMessage.
 			e resume].
 	^answer! !
-!ChunkBrowserExpressionChunk categoriesFor: #restore!operations!public! !
-!ChunkBrowserExpressionChunk categoriesFor: #restoreAndLog:!operations!public! !
+!ChunkBrowserExpressionChunk categoriesForMethods!
+restore!operations!public! !
+restoreAndLog:!operations!public! !
+!
 

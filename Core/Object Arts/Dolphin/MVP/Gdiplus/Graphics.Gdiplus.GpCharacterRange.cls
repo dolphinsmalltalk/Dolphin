@@ -46,10 +46,12 @@ length: anInteger
 	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_length put: anInteger! !
-!Graphics.Gdiplus.GpCharacterRange categoriesFor: #First!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpCharacterRange categoriesFor: #First:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpCharacterRange categoriesFor: #length!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpCharacterRange categoriesFor: #length:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpCharacterRange categoriesForMethods!
+First!**compiled accessors**!public! !
+First:!**compiled accessors**!public! !
+length!**compiled accessors**!public! !
+length:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpCharacterRange class methodsFor!
 
@@ -75,6 +77,8 @@ defineFields
 
 getFieldNames
 	^#(#First #length)! !
-!Graphics.Gdiplus.GpCharacterRange class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpCharacterRange class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpCharacterRange class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

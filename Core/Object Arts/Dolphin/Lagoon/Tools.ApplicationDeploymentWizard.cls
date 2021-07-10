@@ -335,30 +335,32 @@ validateUserInterface
 	stripClassGuids view isEnabled: stripInfo.
 
 	! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #accept!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #addToCommandRoute:!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #apply!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #browseForExecutableName!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #canDeploy!public!testing! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #createComponents!initializing!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #createSchematicWiring!initializing!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #defaultExtension!constants!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #deployApplication!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #exeFileTypes!constants!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #hasExistingLog!public!testing! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #hasLog!public!testing! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #help!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #model:!accessing!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #onExecutableNameChanged!event handling!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #onImageStripperClassChanged!event handling!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #onViewOpened!event handling!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #queryCommand:!commands!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #refreshContents!accessing!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #reset!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #sessionManagerOrShellChoices!accessing!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #showLog!commands!public! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #strip!commands!private! !
-!Tools.ApplicationDeploymentWizard categoriesFor: #validateUserInterface!operations!public! !
+!Tools.ApplicationDeploymentWizard categoriesForMethods!
+accept!commands!public! !
+addToCommandRoute:!commands!public! !
+apply!commands!public! !
+browseForExecutableName!commands!public! !
+canDeploy!public!testing! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultExtension!constants!private! !
+deployApplication!commands!public! !
+exeFileTypes!constants!private! !
+hasExistingLog!public!testing! !
+hasLog!public!testing! !
+help!commands!public! !
+model:!accessing!public! !
+onExecutableNameChanged!event handling!private! !
+onImageStripperClassChanged!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+refreshContents!accessing!private! !
+reset!commands!public! !
+sessionManagerOrShellChoices!accessing!private! !
+showLog!commands!public! !
+strip!commands!private! !
+validateUserInterface!operations!public! !
+!
 
 !Tools.ApplicationDeploymentWizard class methodsFor!
 
@@ -523,14 +525,16 @@ toolsFolderIcon
 	receiver in the system folder."
 
 	^SmalltalkSystemIcon showModal: self description: self displayString! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #defaultModel!models!public! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #displayOn:!displaying!public! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #icon!constants!public! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #initialize!initializing!private! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #publishedAspects!development!public! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #resource_Default_view!public!resources-views! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #saveImageOnDeploy!options!public! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #saveImageOnDeploy:!options!public! !
-!Tools.ApplicationDeploymentWizard class categoriesFor: #toolsFolderIcon!accessing!public! !
+!Tools.ApplicationDeploymentWizard class categoriesForMethods!
+defaultAdditionalAccelerators!constants!private! !
+defaultModel!models!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!development!public! !
+resource_Default_view!public!resources-views! !
+saveImageOnDeploy!options!public! !
+saveImageOnDeploy:!options!public! !
+toolsFolderIcon!accessing!public! !
+!
 

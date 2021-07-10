@@ -200,24 +200,26 @@ wait: timeout ret: returnValueHolder
 
 	<primitive: 86>
 	^self primitiveFailed: _failureCode! !
-!Core.Semaphore categoriesFor: #=!comparing!public! !
-!Core.Semaphore categoriesFor: #add:afterIndex:!adding!public! !
-!Core.Semaphore categoriesFor: #critical:!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #critical:atPriority:!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #excessSignals!accessing!private! !
-!Core.Semaphore categoriesFor: #excessSignals:!initializing!private! !
-!Core.Semaphore categoriesFor: #hash!comparing!public! !
-!Core.Semaphore categoriesFor: #initialize!initializing!private! !
-!Core.Semaphore categoriesFor: #primSetSignals:!private!process synchronisation! !
-!Core.Semaphore categoriesFor: #printOn:!printing!public! !
-!Core.Semaphore categoriesFor: #pulse!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #reset!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #set!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #signal!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #terminateProcess!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #wait!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #wait:!process synchronisation!public! !
-!Core.Semaphore categoriesFor: #wait:ret:!private!process synchronisation! !
+!Core.Semaphore categoriesForMethods!
+=!comparing!public! !
+add:afterIndex:!adding!public! !
+critical:!process synchronisation!public! !
+critical:atPriority:!process synchronisation!public! !
+excessSignals!accessing!private! !
+excessSignals:!initializing!private! !
+hash!comparing!public! !
+initialize!initializing!private! !
+primSetSignals:!private!process synchronisation! !
+printOn:!printing!public! !
+pulse!process synchronisation!public! !
+reset!process synchronisation!public! !
+set!process synchronisation!public! !
+signal!process synchronisation!public! !
+terminateProcess!process synchronisation!public! !
+wait!process synchronisation!public! !
+wait:!process synchronisation!public! !
+wait:ret:!private!process synchronisation! !
+!
 
 Core.Semaphore methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #(#critical:)!
 
@@ -242,7 +244,9 @@ new
 	(i.e. it's initial value is zero)."
 
 	^self basicNew initialize! !
-!Core.Semaphore class categoriesFor: #boolean!instance creation!public! !
-!Core.Semaphore class categoriesFor: #forMutualExclusion!instance creation!public! !
-!Core.Semaphore class categoriesFor: #new!instance creation!public! !
+!Core.Semaphore class categoriesForMethods!
+boolean!instance creation!public! !
+forMutualExclusion!instance creation!public! !
+new!instance creation!public! !
+!
 

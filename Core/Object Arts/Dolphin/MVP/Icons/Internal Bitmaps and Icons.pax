@@ -143,11 +143,13 @@ to convert to PNG format first?'.
 	^'.
 	internalIcon printOn: methodSourceStream.
 	self class compile: methodSourceStream contents categories: {'public'. 'constants'}! !
-!Core.ClassDescription categoriesFor: #createBadgeMethod!development!public! !
-!Core.ClassDescription categoriesFor: #createIconMethod!development!public! !
-!Core.ClassDescription categoriesFor: #createIconMethod:fromIcon:!development!public! !
-!Core.ClassDescription categoriesFor: #createIconMethod:OfSize:!development!public! !
-!Core.ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!development!public! !
+!Core.ClassDescription categoriesForMethods!
+createBadgeMethod!development!public! !
+createIconMethod!development!public! !
+createIconMethod:fromIcon:!development!public! !
+createIconMethod:OfSize:!development!public! !
+createIconMethod:ofSize:fromFile:!development!public! !
+!
 
 !Graphics.Gdiplus.Image methodsFor!
 
@@ -174,8 +176,10 @@ internalize
 	removes the need for an external file reference"
 
 	^self class fromByteArray: (self asByteArray: 'image/png')! !
-!Graphics.Gdiplus.Image categoriesFor: #addToImageList:mask:!private! !
-!Graphics.Gdiplus.Image categoriesFor: #internalize!public! !
+!Graphics.Gdiplus.Image categoriesForMethods!
+addToImageList:mask:!private! !
+internalize!public! !
+!
 
 "End of package definition"!
 

@@ -111,24 +111,28 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #backSurface!accessing!public! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #flip!operations!public! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #graphics!accessing!public! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #initialize!initializing!private! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #invalidate!operations!public! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #refreshContents!public!updating! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #render!operations!private! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #repaint!operations!public! !
-!Graphics.Gdiplus.DoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!Graphics.Gdiplus.DoubleBufferedView categoriesForMethods!
+backSurface!accessing!public! !
+flip!operations!public! !
+graphics!accessing!public! !
+initialize!initializing!private! !
+initializeSurfacesFor:!initializing!private! !
+invalidate!operations!public! !
+onCreated:!event handling!private! !
+onEraseRequired:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onPositionChanged:!event handling!private! !
+refreshContents!public!updating! !
+render!operations!private! !
+repaint!operations!public! !
+wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!
 
 !Graphics.Gdiplus.DoubleBufferedView class methodsFor!
 
 defaultModel
 	^UI.ListModel new! !
-!Graphics.Gdiplus.DoubleBufferedView class categoriesFor: #defaultModel!public! !
+!Graphics.Gdiplus.DoubleBufferedView class categoriesForMethods!
+defaultModel!public! !
+!
 

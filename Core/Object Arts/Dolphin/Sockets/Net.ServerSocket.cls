@@ -79,12 +79,14 @@ preBindPort: anInteger
 	"Private - Same as #bindPort, but dont call bind."
 
 	self createOnPort: anInteger! !
-!Net.ServerSocket categoriesFor: #accept!operations!public! !
-!Net.ServerSocket categoriesFor: #bind!operations!private! !
-!Net.ServerSocket categoriesFor: #bindPort:!operations!private! !
-!Net.ServerSocket categoriesFor: #createOnPort:!helpers!private! !
-!Net.ServerSocket categoriesFor: #listen:!operations!private! !
-!Net.ServerSocket categoriesFor: #preBindPort:!public!swazoo! !
+!Net.ServerSocket categoriesForMethods!
+accept!operations!public! !
+bind!operations!private! !
+bindPort:!operations!private! !
+createOnPort:!helpers!private! !
+listen:!operations!private! !
+preBindPort:!public!swazoo! !
+!
 
 !Net.ServerSocket class methodsFor!
 
@@ -119,9 +121,11 @@ port: anIntegerPort backlog: anIntegerBacklog
 		bind;
 		listen: anIntegerBacklog;
 		yourself! !
-!Net.ServerSocket class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
-!Net.ServerSocket class categoriesFor: #new!instance creation!public! !
-!Net.ServerSocket class categoriesFor: #newPort:!public! !
-!Net.ServerSocket class categoriesFor: #port:!instance creation!public! !
-!Net.ServerSocket class categoriesFor: #port:backlog:!instance creation!public! !
+!Net.ServerSocket class categoriesForMethods!
+defaultMaxPendingConnects!constants access!public! !
+new!instance creation!public! !
+newPort:!public! !
+port:!instance creation!public! !
+port:backlog:!instance creation!public! !
+!
 

@@ -118,29 +118,33 @@ storeOn: aStream
 	aStream nextPutAll: ' metaClasses: '.
 	metaClasses asArray storeOn: aStream.
 	aStream nextPut: $)! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #addClass:!adding!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #classes:!initialize/release!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #classes:metaClasses:!initialize/release!private! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #defaultLabel!constants!private! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #definesClass:!public!testing! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #includesCategory:!public!testing! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #includesClass:!public!testing! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #initialize!initialize/release!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #isClassEnvironment!public!testing! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #isEmpty!public!testing! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #postCopy!copying!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #problemCount!accessing!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #removeClass:!public!removing! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!Refactory.Browser.ClassEnvironment categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.ClassEnvironment categoriesForMethods!
+addClass:!adding!public! !
+classes:!initialize/release!public! !
+classes:metaClasses:!initialize/release!private! !
+classesAndSelectorsDo:!accessing!public! !
+classesDo:!accessing/classes!public! !
+classNames!accessing/classes!public! !
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+initialize!initialize/release!public! !
+isClassEnvironment!public!testing! !
+isEmpty!public!testing! !
+postCopy!copying!public! !
+problemCount!accessing!public! !
+removeClass:!public!removing! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.ClassEnvironment class methodsFor!
 
 onEnvironment: anEnvironment classes: aCollection
 	^(self onEnvironment: anEnvironment)
 		classes: aCollection; yourself! !
-!Refactory.Browser.ClassEnvironment class categoriesFor: #onEnvironment:classes:!instance creation!public! !
+!Refactory.Browser.ClassEnvironment class categoriesForMethods!
+onEnvironment:classes:!instance creation!public! !
+!
 

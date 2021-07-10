@@ -29,9 +29,11 @@ onPreStripImage
 	which hold sub-instance of the receiver."
 
 	GenericSansSerif := GenericSerif := nil! !
-!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #genericSansSerif!instance creation!public! !
-!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #genericSerif!instance creation!public! !
-!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #name:fontCollection:!instance creation!public! !
-!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #new!instance creation!public! !
-!Graphics.Gdiplus.FontFamilyInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Graphics.Gdiplus.FontFamilyInitializer class categoriesForMethods!
+genericSansSerif!instance creation!public! !
+genericSerif!instance creation!public! !
+name:fontCollection:!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

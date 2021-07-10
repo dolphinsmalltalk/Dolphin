@@ -153,21 +153,23 @@ urlDecoded
 									^self].
 							unescaped basicNextPut: ch]]].
 	^unescaped contents! !
-!Core.AnsiString categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Core.AnsiString categoriesFor: #asAnsiString!converting!public! !
-!Core.AnsiString categoriesFor: #asLowercase!converting!public! !
-!Core.AnsiString categoriesFor: #asUppercase!converting!public! !
-!Core.AnsiString categoriesFor: #codePointsDo:!enumerating!public! !
-!Core.AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Core.AnsiString categoriesFor: #decodeAt:!encode/decode!private! !
-!Core.AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Core.AnsiString categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!Core.AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Core.AnsiString categoriesFor: #first:!copying!public! !
-!Core.AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!Core.AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!Core.AnsiString categoriesFor: #trimNulls!copying!public! !
-!Core.AnsiString categoriesFor: #urlDecoded!operations!public! !
+!Core.AnsiString categoriesForMethods!
+_beginsString:!comparing!double dispatch!private! !
+asAnsiString!converting!public! !
+asLowercase!converting!public! !
+asUppercase!converting!public! !
+codePointsDo:!enumerating!public! !
+copyToBuffer:ofSize:!copying!private! !
+decodeAt:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+encodedSizeAt:!encode/decode!private! !
+encodeOn:put:!encode/decode!private! !
+first:!copying!public! !
+nextIndexOfCharacter:from:to:!private!searching! !
+skipEncodingMarkerFrom:!encode/decode!private! !
+trimNulls!copying!public! !
+urlDecoded!operations!public! !
+!
 
 !Core.AnsiString class methodsFor!
 
@@ -229,13 +231,15 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 		at: 4 put: fourthCharacter;
 		at: 5 put: fifthCharacter;
 		yourself! !
-!Core.AnsiString class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!Core.AnsiString class categoriesFor: #coerceString:!instance creation!public! !
-!Core.AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
-!Core.AnsiString class categoriesFor: #initialize!class initialization!development!public! !
-!Core.AnsiString class categoriesFor: #with:!instance creation!public! !
-!Core.AnsiString class categoriesFor: #with:with:!instance creation!public! !
-!Core.AnsiString class categoriesFor: #with:with:with:!instance creation!public! !
-!Core.AnsiString class categoriesFor: #with:with:with:with:!instance creation!public! !
-!Core.AnsiString class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!Core.AnsiString class categoriesForMethods!
+characterForCodeUnit:!enquiries!public! !
+coerceString:!instance creation!public! !
+fromAddress:!instance creation!public! !
+initialize!class initialization!development!public! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+!
 

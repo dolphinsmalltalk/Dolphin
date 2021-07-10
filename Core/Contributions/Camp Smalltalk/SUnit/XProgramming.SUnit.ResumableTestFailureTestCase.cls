@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'XProgramming.SUnit.ResumableTestFailureTestCase'
 	instanceVariableNames: ''
@@ -47,11 +47,13 @@ testResumable
 				yourself.
 	result := suite run.
 	self assert: result failures size equals: 2! !
-!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #errorTest!public!Running! !
-!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #failureLog!public!Running! !
-!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #isLogging!public!Running! !
-!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #okTest!public!Running! !
-!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #regularTestFailureTest!public!Running! !
-!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #resumableTestFailureTest!public!Running! !
-!XProgramming.SUnit.ResumableTestFailureTestCase categoriesFor: #testResumable!public!Running! !
+!XProgramming.SUnit.ResumableTestFailureTestCase categoriesForMethods!
+errorTest!public!Running! !
+failureLog!public!Running! !
+isLogging!public!Running! !
+okTest!public!Running! !
+regularTestFailureTest!public!Running! !
+resumableTestFailureTest!public!Running! !
+testResumable!public!Running! !
+!
 

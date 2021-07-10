@@ -208,23 +208,25 @@ storeSourceString: aString forMethod: aCompiledMethod
 		emitFooterForMethodsOf: methodClass;
 		flush
 ! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitChunk:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #emitString:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #endChunk!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #environment!accessing!public! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #environment:!accessing!public! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #fileIn!public!source filing-file in! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing-file in! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #nextChunk!private!source filing-file in! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #nextChunkPut:!private!source filing-file out! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #normalizeLineEndings!accessing!public! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #normalizeLineEndings:!accessing!public! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #sourceDescriptorForIndex:position:!private!source filing-file in! !
-!Kernel.AbstractChunkSourceFiler categoriesFor: #storeSourceString:forMethod:!private!source filing-file out! !
+!Kernel.AbstractChunkSourceFiler categoriesForMethods!
+emitChunk:!private!source filing-file out! !
+emitFooterForMethodsOf:!private!source filing-file out! !
+emitGUIDOfClass:!private!source filing-file out! !
+emitHeaderForMethodsOf:!private!source filing-file out! !
+emitString:!private!source filing-file out! !
+endChunk!private!source filing-file out! !
+environment!accessing!public! !
+environment:!accessing!public! !
+fileIn!public!source filing-file in! !
+fileOutExpression:!public!source filing-file out! !
+getSourceFromDescriptor:!public!source filing-file in! !
+nextChunk!private!source filing-file in! !
+nextChunkPut:!private!source filing-file out! !
+normalizeLineEndings!accessing!public! !
+normalizeLineEndings:!accessing!public! !
+sourceDescriptorForIndex:position:!private!source filing-file in! !
+storeSourceString:forMethod:!private!source filing-file out! !
+!
 
 !Kernel.AbstractChunkSourceFiler class methodsFor!
 
@@ -237,5 +239,7 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
-!Kernel.AbstractChunkSourceFiler class categoriesFor: #on:sourceFileIndex:!public! !
+!Kernel.AbstractChunkSourceFiler class categoriesForMethods!
+on:sourceFileIndex:!public! !
+!
 

@@ -298,40 +298,42 @@ wmPrintClient: message wParam: wParam lParam: lParam
 	self ensureLayoutValid.
 	self paintOn: (Canvas withNonOwnedDC: wParam).
 	^0! !
-!UI.ImageViewAbstract categoriesFor: #calcRectangle:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #calculateExtent:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #centered:in:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #default:in:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!UI.ImageViewAbstract categoriesFor: #displayRectangle!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #displayValue!private!updating! !
-!UI.ImageViewAbstract categoriesFor: #displayValue:!private!updating! !
-!UI.ImageViewAbstract categoriesFor: #drawBorderOn:imageRect:displayRect:!drawing!private! !
-!UI.ImageViewAbstract categoriesFor: #eraseBackground:around:!event handling!private! !
-!UI.ImageViewAbstract categoriesFor: #imageBorder!modes!public! !
-!UI.ImageViewAbstract categoriesFor: #imageBorder:!modes!public! !
-!UI.ImageViewAbstract categoriesFor: #initialize!initializing!private! !
-!UI.ImageViewAbstract categoriesFor: #insets!accessing!public! !
-!UI.ImageViewAbstract categoriesFor: #insets:!accessing!public! !
-!UI.ImageViewAbstract categoriesFor: #invalidateRect:erase:!drawing!public! !
-!UI.ImageViewAbstract categoriesFor: #isDoubleBuffered!public!testing! !
-!UI.ImageViewAbstract categoriesFor: #isDoubleBuffered:!accessing!public! !
-!UI.ImageViewAbstract categoriesFor: #isWholeBackgroundErased!public!testing! !
-!UI.ImageViewAbstract categoriesFor: #isWholeBackgroundErased:!accessing!public! !
-!UI.ImageViewAbstract categoriesFor: #ivFlags!private!testing! !
-!UI.ImageViewAbstract categoriesFor: #normal:in:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #onEraseRequired:!drawing!event handling!private! !
-!UI.ImageViewAbstract categoriesFor: #onPaintRequired:!event handling!private! !
-!UI.ImageViewAbstract categoriesFor: #paintImageOn:!drawing!private! !
-!UI.ImageViewAbstract categoriesFor: #paintOn:!drawing!event handling!private! !
-!UI.ImageViewAbstract categoriesFor: #scale:in:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #scaleBestFit:in:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #scaleToFit:in:!geometry!private! !
-!UI.ImageViewAbstract categoriesFor: #subclassWindow:!operations!private! !
-!UI.ImageViewAbstract categoriesFor: #viewMode!modes!public! !
-!UI.ImageViewAbstract categoriesFor: #viewMode:!modes!public! !
-!UI.ImageViewAbstract categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!UI.ImageViewAbstract categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!UI.ImageViewAbstract categoriesForMethods!
+calcRectangle:!geometry!private! !
+calculateExtent:!geometry!private! !
+centered:in:!geometry!private! !
+default:in:!geometry!private! !
+defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+displayRectangle!geometry!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+drawBorderOn:imageRect:displayRect:!drawing!private! !
+eraseBackground:around:!event handling!private! !
+imageBorder!modes!public! !
+imageBorder:!modes!public! !
+initialize!initializing!private! !
+insets!accessing!public! !
+insets:!accessing!public! !
+invalidateRect:erase:!drawing!public! !
+isDoubleBuffered!public!testing! !
+isDoubleBuffered:!accessing!public! !
+isWholeBackgroundErased!public!testing! !
+isWholeBackgroundErased:!accessing!public! !
+ivFlags!private!testing! !
+normal:in:!geometry!private! !
+onEraseRequired:!drawing!event handling!private! !
+onPaintRequired:!event handling!private! !
+paintImageOn:!drawing!private! !
+paintOn:!drawing!event handling!private! !
+scale:in:!geometry!private! !
+scaleBestFit:in:!geometry!private! !
+scaleToFit:in:!geometry!private! !
+subclassWindow:!operations!private! !
+viewMode!modes!public! !
+viewMode:!modes!public! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!
 
 !UI.ImageViewAbstract class methodsFor!
 
@@ -374,11 +376,13 @@ winClassName
 	to instances of the receiver."
 
 	^self wndClassName! !
-!UI.ImageViewAbstract class categoriesFor: #edgeStyles!constants!public! !
-!UI.ImageViewAbstract class categoriesFor: #edgeStyleTable!constants!public! !
-!UI.ImageViewAbstract class categoriesFor: #icon!constants!public! !
-!UI.ImageViewAbstract class categoriesFor: #initialize!development!initializing!private! !
-!UI.ImageViewAbstract class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!UI.ImageViewAbstract class categoriesFor: #viewModes!constants!public! !
-!UI.ImageViewAbstract class categoriesFor: #winClassName!constants!private! !
+!UI.ImageViewAbstract class categoriesForMethods!
+edgeStyles!constants!public! !
+edgeStyleTable!constants!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+stbConvertFromVersion12:!binary filing!private! !
+viewModes!constants!public! !
+winClassName!constants!private! !
+!
 

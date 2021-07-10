@@ -174,20 +174,22 @@ Remove: namespaceURI
 
 	<virtual stdcall: hresult 10 bstr>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #add:var:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #Add:var:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #AddCollection:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #get:!**auto generated**!methods!public! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #Get:schemaNode:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #get_namespaceURI:length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #length!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #namespaceURI:!**auto generated**!properties!public! !
-!MSXML.IXMLDOMSchemaCollection categoriesFor: #Remove:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+!MSXML.IXMLDOMSchemaCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+add:var:!**auto generated**!methods!public! !
+Add:var:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+AddCollection:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+get:!**auto generated**!methods!public! !
+Get:schemaNode:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+get_namespaceURI:length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+length!**auto generated**!properties!public! !
+namespaceURI:!**auto generated**!properties!public! !
+Remove:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+!
 
 !MSXML.IXMLDOMSchemaCollection class methodsFor!
 
@@ -211,5 +213,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!MSXML.IXMLDOMSchemaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLDOMSchemaCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

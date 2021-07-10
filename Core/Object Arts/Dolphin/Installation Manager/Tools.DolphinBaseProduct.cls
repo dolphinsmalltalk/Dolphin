@@ -180,10 +180,12 @@ warnOfUnlistedContent
 			[self unlistedContentException
 				signal: 'The deployed image will include the following unlisted pre-requisite packages: '
 						, unlistedContent displayString]! !
-!Tools.DolphinBaseProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
-!Tools.DolphinBaseProduct categoriesFor: #contents!accessing!public! !
-!Tools.DolphinBaseProduct categoriesFor: #fullName!accessing!public! !
-!Tools.DolphinBaseProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
+!Tools.DolphinBaseProduct categoriesForMethods!
+calcSystemFolderExtentFor:!helpers!private! !
+contents!accessing!public! !
+fullName!accessing!public! !
+warnOfUnlistedContent!operations!private! !
+!
 
 !Tools.DolphinBaseProduct class methodsFor!
 
@@ -196,6 +198,8 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DBASE'! !
-!Tools.DolphinBaseProduct class categoriesFor: #productName!accessing!public! !
-!Tools.DolphinBaseProduct class categoriesFor: #shortProductName!accessing!public! !
+!Tools.DolphinBaseProduct class categoriesForMethods!
+productName!accessing!public! !
+shortProductName!accessing!public! !
+!
 

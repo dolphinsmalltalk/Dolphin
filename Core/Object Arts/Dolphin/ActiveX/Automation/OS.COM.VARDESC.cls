@@ -163,29 +163,31 @@ wVarFlags
 	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVarFlags! !
-!OS.COM.VARDESC categoriesFor: #arguments!accessing!public! !
-!OS.COM.VARDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OS.COM.VARDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!OS.COM.VARDESC categoriesFor: #elemdesc!**compiled accessors**!public! !
-!OS.COM.VARDESC categoriesFor: #elemDesc!accessing!public! !
-!OS.COM.VARDESC categoriesFor: #flags!accessing!private! !
-!OS.COM.VARDESC categoriesFor: #getAllCustData!accessing!private! !
-!OS.COM.VARDESC categoriesFor: #getValidFields!accessing!private! !
-!OS.COM.VARDESC categoriesFor: #isAnonymous!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isConformant!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isReadOnly!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isRequestEdit!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isRestricted!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isStatic!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isStringField!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isSymbolicConstant!public!testing! !
-!OS.COM.VARDESC categoriesFor: #isUnion!public!testing! !
-!OS.COM.VARDESC categoriesFor: #lpvarValue!**compiled accessors**!public! !
-!OS.COM.VARDESC categoriesFor: #memid!**compiled accessors**!public! !
-!OS.COM.VARDESC categoriesFor: #oInst!**compiled accessors**!public! !
-!OS.COM.VARDESC categoriesFor: #value!accessing!public! !
-!OS.COM.VARDESC categoriesFor: #varkind!**compiled accessors**!public! !
-!OS.COM.VARDESC categoriesFor: #wVarFlags!**compiled accessors**!public! !
+!OS.COM.VARDESC categoriesForMethods!
+arguments!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+basicIdlAttributes!printing-IDL!private! !
+elemdesc!**compiled accessors**!public! !
+elemDesc!accessing!public! !
+flags!accessing!private! !
+getAllCustData!accessing!private! !
+getValidFields!accessing!private! !
+isAnonymous!public!testing! !
+isConformant!public!testing! !
+isReadOnly!public!testing! !
+isRequestEdit!public!testing! !
+isRestricted!public!testing! !
+isStatic!public!testing! !
+isStringField!public!testing! !
+isSymbolicConstant!public!testing! !
+isUnion!public!testing! !
+lpvarValue!**compiled accessors**!public! !
+memid!**compiled accessors**!public! !
+oInst!**compiled accessors**!public! !
+value!accessing!public! !
+varkind!**compiled accessors**!public! !
+wVarFlags!**compiled accessors**!public! !
+!
 
 !OS.COM.VARDESC class methodsFor!
 
@@ -229,6 +231,8 @@ defineFields
 
 getFieldNames
 	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
-!OS.COM.VARDESC class categoriesFor: #defineFields!public!template definition! !
-!OS.COM.VARDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COM.VARDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

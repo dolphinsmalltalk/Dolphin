@@ -85,7 +85,9 @@ testBSTRFromAddress
 	empty := OS.COM.BSTR new.
 	self assert: (OS.COM.BSTR fromAddress: nil) equals: empty.
 	self assert: (OS.COM.BSTR fromAddress: 0) equals: empty! !
-!External.Tests.AddressTest categoriesFor: #testBSTRFromAddress!public!unit tests! !
+!External.Tests.AddressTest categoriesForMethods!
+testBSTRFromAddress!public!unit tests! !
+!
 
 !External.Tests.FunctionDescriptorTest methodsFor!
 
@@ -98,7 +100,9 @@ testComPtrs
 		parseStructArg: COM.IDispatch
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !
-!External.Tests.FunctionDescriptorTest categoriesFor: #testComPtrs!public!unit tests! !
+!External.Tests.FunctionDescriptorTest categoriesForMethods!
+testComPtrs!public!unit tests! !
+!
 
 !External.Tests.StructureTest methodsFor!
 
@@ -117,7 +121,9 @@ testExtendedErrorInfo
 	self assertIsNil: error errorInfo.
 	self assert: error hresult
 		equals: (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidPointer)! !
-!External.Tests.StructureTest categoriesFor: #testExtendedErrorInfo!public!unit tests! !
+!External.Tests.StructureTest categoriesForMethods!
+testExtendedErrorInfo!public!unit tests! !
+!
 
 !Kernel.Tests.VMTest methodsFor!
 
@@ -141,7 +147,9 @@ testExtCallArgBstr
 	beers := Utf8String fromByteArray: #[16rF0 16r9F 16r8D 16rBB].
 	self assert: (OS.COM.OleAut32 sysStringLen: beers) equals: 2.
 	self assert: (OS.COM.OleAut32 sysStringLen: beers asUtf16String) equals: 2! !
-!Kernel.Tests.VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
+!Kernel.Tests.VMTest categoriesForMethods!
+testExtCallArgBstr!public!unit tests! !
+!
 
 "End of package definition"!
 

@@ -44,13 +44,15 @@ superclassName
 
 superclassName: aString 
 	superclassName := aString asSymbol! !
-!Tools.MoveClassChange categoriesFor: #=!comparing!public! !
-!Tools.MoveClassChange categoriesFor: #asUndoOperation!converting!public! !
-!Tools.MoveClassChange categoriesFor: #changeString!printing!public! !
-!Tools.MoveClassChange categoriesFor: #expression!private! !
-!Tools.MoveClassChange categoriesFor: #primitiveExecute!public! !
-!Tools.MoveClassChange categoriesFor: #superclassName!accessing!public! !
-!Tools.MoveClassChange categoriesFor: #superclassName:!accessing!public! !
+!Tools.MoveClassChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+expression!private! !
+primitiveExecute!public! !
+superclassName!accessing!public! !
+superclassName:!accessing!public! !
+!
 
 !Tools.MoveClassChange class methodsFor!
 
@@ -63,6 +65,8 @@ moveClassNamed: aSymbol toSuperClassNamed: superSymbol
 	^(self new changeClassName: aSymbol)
 		superclassName: superSymbol;
 		yourself! !
-!Tools.MoveClassChange class categoriesFor: #move:toSuperclass:!instance creation!public! !
-!Tools.MoveClassChange class categoriesFor: #moveClassNamed:toSuperClassNamed:!instance creation!public! !
+!Tools.MoveClassChange class categoriesForMethods!
+move:toSuperclass:!instance creation!public! !
+moveClassNamed:toSuperClassNamed:!instance creation!public! !
+!
 

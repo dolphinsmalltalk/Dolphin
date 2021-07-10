@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.PushDownInstanceVariableTest'
 	instanceVariableNames: ''
@@ -63,9 +63,11 @@ testPushDownInstanceVariable
 	self executeRefactoring: refactoring.
 	(refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest') withAllSubclasses
 		do: [:each | self deny: (each directlyDefinesInstanceVariable: 'foo1')]! !
-!Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesFor: #testModelPushDownToMetaclass!public!tests! !
-!Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesFor: #testModelPushDownToMultipleSubclasses!public!tests! !
-!Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesFor: #testModelRemoveUnusedVariable!public!tests! !
-!Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesFor: #testPushDownInstanceVariable!public!tests! !
+!Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesForMethods!
+testModelPushDownToMetaclass!public!tests! !
+testModelPushDownToMultipleSubclasses!public!tests! !
+testModelRemoveUnusedVariable!public!tests! !
+testNonExistantName!failure tests!public! !
+testPushDownInstanceVariable!public!tests! !
+!
 

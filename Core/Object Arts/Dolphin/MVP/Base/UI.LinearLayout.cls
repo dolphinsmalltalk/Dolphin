@@ -80,13 +80,15 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 		do: [:each | accumulate value: (each layoutExtent: aLayoutContext)].
 	insets := aCompositeView actualInsets: aLayoutContext.
 	^box + insets topLeft + insets bottomRight! !
-!UI.LinearLayout categoriesFor: #beHorizontal!modes!public! !
-!UI.LinearLayout categoriesFor: #beVertical!modes!public! !
-!UI.LinearLayout categoriesFor: #initialize!initializing!private! !
-!UI.LinearLayout categoriesFor: #isHorizontal!public!testing! !
-!UI.LinearLayout categoriesFor: #isVertical!public!testing! !
-!UI.LinearLayout categoriesFor: #isVertical:!accessing!public! !
-!UI.LinearLayout categoriesFor: #majorDimensionOf:!geometry!private! !
-!UI.LinearLayout categoriesFor: #pointWithMajor:minor:!helpers!private! !
-!UI.LinearLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
+!UI.LinearLayout categoriesForMethods!
+beHorizontal!modes!public! !
+beVertical!modes!public! !
+initialize!initializing!private! !
+isHorizontal!public!testing! !
+isVertical!public!testing! !
+isVertical:!accessing!public! !
+majorDimensionOf:!geometry!private! !
+pointWithMajor:minor:!helpers!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+!
 

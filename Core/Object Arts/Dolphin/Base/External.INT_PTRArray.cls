@@ -19,8 +19,10 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes intPtrAtOffset: (indexInteger - 1) * VMConstants.IntPtrSize put: valueInteger! !
-!External.INT_PTRArray categoriesFor: #uncheckedAt:!accessing!private! !
-!External.INT_PTRArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!External.INT_PTRArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !External.INT_PTRArray class methodsFor!
 
@@ -28,5 +30,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^INT_PTR! !
-!External.INT_PTRArray class categoriesFor: #elementClass!constants!public! !
+!External.INT_PTRArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

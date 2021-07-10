@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #CollectionTest
 	instanceVariableNames: ''
@@ -23,15 +23,19 @@ conformanceOfPutElementOnXatXputX: aString
 returnTypeHasLimitedElementTypes
 
 	^false! !
-!CollectionTest categoriesFor: #conformanceOfPutElementOnXatAllPutX:!public! !
-!CollectionTest categoriesFor: #conformanceOfPutElementOnXatAllXputX:!public! !
-!CollectionTest categoriesFor: #conformanceOfPutElementOnXatXputX:!public! !
-!CollectionTest categoriesFor: #returnTypeHasLimitedElementTypes!public! !
+!CollectionTest categoriesForMethods!
+conformanceOfPutElementOnXatAllPutX:!public! !
+conformanceOfPutElementOnXatAllXputX:!public! !
+conformanceOfPutElementOnXatXputX:!public! !
+returnTypeHasLimitedElementTypes!public! !
+!
 
 !CollectionTest class methodsFor!
 
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: CollectionHelper! !
-!CollectionTest class categoriesFor: #helperClassesDo:!public! !
+!CollectionTest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

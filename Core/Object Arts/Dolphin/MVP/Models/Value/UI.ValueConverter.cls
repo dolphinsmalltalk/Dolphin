@@ -75,14 +75,16 @@ value
 	"Answer the <Object> value of the receiver."
 
 	^self typeConverter convertFromLeftToRight: self subject value! !
-!UI.ValueConverter categoriesFor: #format!accessing!public! !
-!UI.ValueConverter categoriesFor: #format:!accessing!public! !
-!UI.ValueConverter categoriesFor: #setValue:!accessing!private! !
-!UI.ValueConverter categoriesFor: #subject!accessing!private! !
-!UI.ValueConverter categoriesFor: #subject:!accessing!private! !
-!UI.ValueConverter categoriesFor: #typeConverter!accessing!public! !
-!UI.ValueConverter categoriesFor: #typeConverter:!accessing!public! !
-!UI.ValueConverter categoriesFor: #value!accessing!public! !
+!UI.ValueConverter categoriesForMethods!
+format!accessing!public! !
+format:!accessing!public! !
+setValue:!accessing!private! !
+subject!accessing!private! !
+subject:!accessing!private! !
+typeConverter!accessing!public! !
+typeConverter:!accessing!public! !
+value!accessing!public! !
+!
 
 !UI.ValueConverter class methodsFor!
 
@@ -101,7 +103,9 @@ subject: aValueModel typeConverter: aTypeConverter
 	using aTypeConverter for the conversion process"
 
 	^super new subject: aValueModel; typeConverter: aTypeConverter; yourself! !
-!UI.ValueConverter class categoriesFor: #icon!constants!public! !
-!UI.ValueConverter class categoriesFor: #new!instance creation!private! !
-!UI.ValueConverter class categoriesFor: #subject:typeConverter:!instance creation!public! !
+!UI.ValueConverter class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!private! !
+subject:typeConverter:!instance creation!public! !
+!
 

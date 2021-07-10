@@ -391,60 +391,62 @@ supportedOperations: ops
 	drop target."
 
 	operationsSupportedByDropTarget := ops! !
-!UI.DragDropSession categoriesFor: #addDragee:!adding!public! !
-!UI.DragDropSession categoriesFor: #addDragObject:!adding!public! !
-!UI.DragDropSession categoriesFor: #availableFormats!accessing!public! !
-!UI.DragDropSession categoriesFor: #defaultOperation!accessing!public! !
-!UI.DragDropSession categoriesFor: #defaultOperation:!accessing!public! !
-!UI.DragDropSession categoriesFor: #defaultScrollDelay!constants!public! !
-!UI.DragDropSession categoriesFor: #defaultScrollInset!constants!public! !
-!UI.DragDropSession categoriesFor: #defaultScrollInterval!constants!public! !
-!UI.DragDropSession categoriesFor: #dragObjectClass!constants!public! !
-!UI.DragDropSession categoriesFor: #dragObjects!accessing!public! !
-!UI.DragDropSession categoriesFor: #dragObjects:!accessing!public! !
-!UI.DragDropSession categoriesFor: #dragPoint!accessing!public! !
-!UI.DragDropSession categoriesFor: #dragPoint:!accessing!private! !
-!UI.DragDropSession categoriesFor: #dragPointInView:!accessing!public! !
-!UI.DragDropSession categoriesFor: #dragSource!accessing!public! !
-!UI.DragDropSession categoriesFor: #dragSource:!accessing!public! !
-!UI.DragDropSession categoriesFor: #dragSourceCut!drag & drop-source!private! !
-!UI.DragDropSession categoriesFor: #dropTarget!accessing!public! !
-!UI.DragDropSession categoriesFor: #dropTarget:!accessing!private! !
-!UI.DragDropSession categoriesFor: #dropTargetDrop!drag & drop-drop target protocol!drag & drop-target!private! !
-!UI.DragDropSession categoriesFor: #dropTargetEnter!drag & drop-target!private! !
-!UI.DragDropSession categoriesFor: #dropTargetLeave!drag & drop-target!private! !
-!UI.DragDropSession categoriesFor: #dropTargetOver!drag & drop-target!private! !
-!UI.DragDropSession categoriesFor: #forcedOperation!keyboard input!public! !
-!UI.DragDropSession categoriesFor: #getCustomDragImages!drag & drop-source!private! !
-!UI.DragDropSession categoriesFor: #hideCursorWhile:!operations!public! !
-!UI.DragDropSession categoriesFor: #hideDragImage!operations!public! !
-!UI.DragDropSession categoriesFor: #imageAt:put:!accessing!public! !
-!UI.DragDropSession categoriesFor: #imageKey!accessing!private! !
-!UI.DragDropSession categoriesFor: #initialize!initializing!private! !
-!UI.DragDropSession categoriesFor: #intendedOperation!keyboard input!public! !
-!UI.DragDropSession categoriesFor: #isCopy!public!testing! !
-!UI.DragDropSession categoriesFor: #isFormatAvailable:!public!testing! !
-!UI.DragDropSession categoriesFor: #isInDropTargetScrollZone!accessing!private! !
-!UI.DragDropSession categoriesFor: #isInDropTargetScrollZone:!accessing!private! !
-!UI.DragDropSession categoriesFor: #isLink!public!testing! !
-!UI.DragDropSession categoriesFor: #isMove!public!testing! !
-!UI.DragDropSession categoriesFor: #isObjectKindAvailable:!public!testing! !
-!UI.DragDropSession categoriesFor: #isTargetSameAsSource!public!testing! !
-!UI.DragDropSession categoriesFor: #newDragObject:!adding!public! !
-!UI.DragDropSession categoriesFor: #operation!accessing!public! !
-!UI.DragDropSession categoriesFor: #operation:!accessing!public! !
-!UI.DragDropSession categoriesFor: #operationDescriptions!accessing!public! !
-!UI.DragDropSession categoriesFor: #resetOperation!accessing!public! !
-!UI.DragDropSession categoriesFor: #showDragImage!operations!public! !
-!UI.DragDropSession categoriesFor: #solidifyOperation!operations!private! !
-!UI.DragDropSession categoriesFor: #startScrollProcess!operations!private! !
-!UI.DragDropSession categoriesFor: #stopScrollProcess!operations!private! !
-!UI.DragDropSession categoriesFor: #suggestedSource!accessing!public! !
-!UI.DragDropSession categoriesFor: #suggestedSource:!accessing!public! !
-!UI.DragDropSession categoriesFor: #suggestedTarget!accessing!public! !
-!UI.DragDropSession categoriesFor: #suggestedTarget:!accessing!public! !
-!UI.DragDropSession categoriesFor: #supportedOperations!accessing!public! !
-!UI.DragDropSession categoriesFor: #supportedOperations:!accessing!public! !
+!UI.DragDropSession categoriesForMethods!
+addDragee:!adding!public! !
+addDragObject:!adding!public! !
+availableFormats!accessing!public! !
+defaultOperation!accessing!public! !
+defaultOperation:!accessing!public! !
+defaultScrollDelay!constants!public! !
+defaultScrollInset!constants!public! !
+defaultScrollInterval!constants!public! !
+dragObjectClass!constants!public! !
+dragObjects!accessing!public! !
+dragObjects:!accessing!public! !
+dragPoint!accessing!public! !
+dragPoint:!accessing!private! !
+dragPointInView:!accessing!public! !
+dragSource!accessing!public! !
+dragSource:!accessing!public! !
+dragSourceCut!drag & drop-source!private! !
+dropTarget!accessing!public! !
+dropTarget:!accessing!private! !
+dropTargetDrop!drag & drop-drop target protocol!drag & drop-target!private! !
+dropTargetEnter!drag & drop-target!private! !
+dropTargetLeave!drag & drop-target!private! !
+dropTargetOver!drag & drop-target!private! !
+forcedOperation!keyboard input!public! !
+getCustomDragImages!drag & drop-source!private! !
+hideCursorWhile:!operations!public! !
+hideDragImage!operations!public! !
+imageAt:put:!accessing!public! !
+imageKey!accessing!private! !
+initialize!initializing!private! !
+intendedOperation!keyboard input!public! !
+isCopy!public!testing! !
+isFormatAvailable:!public!testing! !
+isInDropTargetScrollZone!accessing!private! !
+isInDropTargetScrollZone:!accessing!private! !
+isLink!public!testing! !
+isMove!public!testing! !
+isObjectKindAvailable:!public!testing! !
+isTargetSameAsSource!public!testing! !
+newDragObject:!adding!public! !
+operation!accessing!public! !
+operation:!accessing!public! !
+operationDescriptions!accessing!public! !
+resetOperation!accessing!public! !
+showDragImage!operations!public! !
+solidifyOperation!operations!private! !
+startScrollProcess!operations!private! !
+stopScrollProcess!operations!private! !
+suggestedSource!accessing!public! !
+suggestedSource:!accessing!public! !
+suggestedTarget!accessing!public! !
+suggestedTarget:!accessing!public! !
+supportedOperations!accessing!public! !
+supportedOperations:!accessing!public! !
+!
 
 !UI.DragDropSession class methodsFor!
 
@@ -518,15 +520,17 @@ uninitialize
 
 	Current := nil.
 	DefaultImages := nil! !
-!UI.DragDropSession class categoriesFor: #current!accessing!public! !
-!UI.DragDropSession class categoriesFor: #defaultDragImages!accessing!public! !
-!UI.DragDropSession class categoriesFor: #dragButton!constants!private! !
-!UI.DragDropSession class categoriesFor: #dragSource:!instance creation!public! !
-!UI.DragDropSession class categoriesFor: #dragSource:item:!instance creation!public! !
-!UI.DragDropSession class categoriesFor: #extendedDragButton!constants!private! !
-!UI.DragDropSession class categoriesFor: #initialize!development!initializing!private! !
-!UI.DragDropSession class categoriesFor: #isADragButton:!public!testing! !
-!UI.DragDropSession class categoriesFor: #new!instance creation!public! !
-!UI.DragDropSession class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!UI.DragDropSession class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UI.DragDropSession class categoriesForMethods!
+current!accessing!public! !
+defaultDragImages!accessing!public! !
+dragButton!constants!private! !
+dragSource:!instance creation!public! !
+dragSource:item:!instance creation!public! !
+extendedDragButton!constants!private! !
+initialize!development!initializing!private! !
+isADragButton:!public!testing! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

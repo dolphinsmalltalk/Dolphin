@@ -172,28 +172,30 @@ test: aString
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !
-!VBScript.IRegExpAbstract categoriesFor: #execute:!operations!public! !
-!VBScript.IRegExpAbstract categoriesFor: #Execute:ppMatches:!private! !
-!VBScript.IRegExpAbstract categoriesFor: #get_Global:!private! !
-!VBScript.IRegExpAbstract categoriesFor: #get_IgnoreCase:!private! !
-!VBScript.IRegExpAbstract categoriesFor: #get_Pattern:!private! !
-!VBScript.IRegExpAbstract categoriesFor: #global!properties!public! !
-!VBScript.IRegExpAbstract categoriesFor: #global:!properties!public! !
-!VBScript.IRegExpAbstract categoriesFor: #ignoreCase!properties!public! !
-!VBScript.IRegExpAbstract categoriesFor: #ignoreCase:!properties!public! !
-!VBScript.IRegExpAbstract categoriesFor: #isExtensible!public!testing! !
-!VBScript.IRegExpAbstract categoriesFor: #isVBCollection!public!testing! !
-!VBScript.IRegExpAbstract categoriesFor: #matchCollectionClass!constants!private! !
-!VBScript.IRegExpAbstract categoriesFor: #matchSingle:!operations!public! !
-!VBScript.IRegExpAbstract categoriesFor: #pattern!properties!public! !
-!VBScript.IRegExpAbstract categoriesFor: #pattern:!properties!public! !
-!VBScript.IRegExpAbstract categoriesFor: #printValueOn:!printing!private! !
-!VBScript.IRegExpAbstract categoriesFor: #put_Global:!private! !
-!VBScript.IRegExpAbstract categoriesFor: #put_IgnoreCase:!private! !
-!VBScript.IRegExpAbstract categoriesFor: #put_Pattern:!private! !
-!VBScript.IRegExpAbstract categoriesFor: #replace:replaceString:!operations!public! !
-!VBScript.IRegExpAbstract categoriesFor: #test:!operations!public! !
-!VBScript.IRegExpAbstract categoriesFor: #Test:pMatch:!private! !
+!VBScript.IRegExpAbstract categoriesForMethods!
+execute:!operations!public! !
+Execute:ppMatches:!private! !
+get_Global:!private! !
+get_IgnoreCase:!private! !
+get_Pattern:!private! !
+global!properties!public! !
+global:!properties!public! !
+ignoreCase!properties!public! !
+ignoreCase:!properties!public! !
+isExtensible!public!testing! !
+isVBCollection!public!testing! !
+matchCollectionClass!constants!private! !
+matchSingle:!operations!public! !
+pattern!properties!public! !
+pattern:!properties!public! !
+printValueOn:!printing!private! !
+put_Global:!private! !
+put_IgnoreCase:!private! !
+put_Pattern:!private! !
+replace:replaceString:!operations!public! !
+test:!operations!public! !
+Test:pMatch:!private! !
+!
 
 !VBScript.IRegExpAbstract class methodsFor!
 
@@ -207,6 +209,8 @@ clsid
 
 pattern: aString
 	^self new pattern: aString! !
-!VBScript.IRegExpAbstract class categoriesFor: #clsid!constants!private! !
-!VBScript.IRegExpAbstract class categoriesFor: #pattern:!instance creation!public! !
+!VBScript.IRegExpAbstract class categoriesForMethods!
+clsid!constants!private! !
+pattern:!instance creation!public! !
+!
 

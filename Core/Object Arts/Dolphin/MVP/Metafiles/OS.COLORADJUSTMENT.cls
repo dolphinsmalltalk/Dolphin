@@ -166,30 +166,32 @@ caSize: anInteger
 	"Set the receiver's 'caSize' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_caSize put: anInteger! !
-!OS.COLORADJUSTMENT categoriesFor: #caBlueGamma!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caBlueGamma:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caBrightness!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caBrightness:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caColorfulness!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caColorfulness:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caContrast!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caContrast:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caFlags!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caFlags:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caGreenGamma!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caGreenGamma:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caIlluminantIndex!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caIlluminantIndex:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caRedGamma!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caRedGamma:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caRedGreenTint!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caRedGreenTint:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caReferenceBlack!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caReferenceBlack:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caReferenceWhite!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caReferenceWhite:!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caSize!**compiled accessors**!public! !
-!OS.COLORADJUSTMENT categoriesFor: #caSize:!**compiled accessors**!public! !
+!OS.COLORADJUSTMENT categoriesForMethods!
+caBlueGamma!**compiled accessors**!public! !
+caBlueGamma:!**compiled accessors**!public! !
+caBrightness!**compiled accessors**!public! !
+caBrightness:!**compiled accessors**!public! !
+caColorfulness!**compiled accessors**!public! !
+caColorfulness:!**compiled accessors**!public! !
+caContrast!**compiled accessors**!public! !
+caContrast:!**compiled accessors**!public! !
+caFlags!**compiled accessors**!public! !
+caFlags:!**compiled accessors**!public! !
+caGreenGamma!**compiled accessors**!public! !
+caGreenGamma:!**compiled accessors**!public! !
+caIlluminantIndex!**compiled accessors**!public! !
+caIlluminantIndex:!**compiled accessors**!public! !
+caRedGamma!**compiled accessors**!public! !
+caRedGamma:!**compiled accessors**!public! !
+caRedGreenTint!**compiled accessors**!public! !
+caRedGreenTint:!**compiled accessors**!public! !
+caReferenceBlack!**compiled accessors**!public! !
+caReferenceBlack:!**compiled accessors**!public! !
+caReferenceWhite!**compiled accessors**!public! !
+caReferenceWhite:!**compiled accessors**!public! !
+caSize!**compiled accessors**!public! !
+caSize:!**compiled accessors**!public! !
+!
 
 !OS.COLORADJUSTMENT class methodsFor!
 
@@ -256,6 +258,8 @@ defineFields
 
 getFieldNames
 	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
-!OS.COLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.COLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.COLORADJUSTMENT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -56,19 +56,21 @@ visitStatements: aNodeCollection
 
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #errorInvalidArithmeticExpression:!exceptions!private! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitMessageNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitMethodNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitReturnNode:!public!visiting! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitStatements:!helpers!private! !
-!Kernel.ArithmeticExpressionVisitor categoriesFor: #visitVariableNode:!public!visiting! !
+!Kernel.ArithmeticExpressionVisitor categoriesForMethods!
+errorInvalidArithmeticExpression:!exceptions!private! !
+visitArgumentNode:!public!visiting! !
+visitAssignmentNode:!public!visiting! !
+visitCascadeNode:!public!visiting! !
+visitExternalArgTypeNode:!public!visiting! !
+visitExternalCallNode:!public!visiting! !
+visitLiteralArrayNode:!public!visiting! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visiting! !
+visitMethodNode:!public!visiting! !
+visitOptimizedNode:!public!visiting! !
+visitPrimitiveNode:!public!visiting! !
+visitReturnNode:!public!visiting! !
+visitStatements:!helpers!private! !
+visitVariableNode:!public!visiting! !
+!
 

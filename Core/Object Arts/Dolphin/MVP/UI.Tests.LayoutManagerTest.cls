@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.LayoutManagerTest'
 	instanceVariableNames: 'shell'
@@ -26,7 +26,9 @@ setUp
 
 tearDown
 	shell notNil ifTrue: [shell destroy]! !
-!UI.Tests.LayoutManagerTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!UI.Tests.LayoutManagerTest categoriesFor: #setUp!public!unit tests! !
-!UI.Tests.LayoutManagerTest categoriesFor: #tearDown!public!unit tests! !
+!UI.Tests.LayoutManagerTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+!
 

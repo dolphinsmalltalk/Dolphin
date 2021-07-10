@@ -31,7 +31,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_TCPEXROW! !
-!OS.MIB_TCPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
+!OS.MIB_TCPEXTABLE categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !OS.MIB_TCPEXTABLE class methodsFor!
 
@@ -57,5 +59,7 @@ defineFields
 					yourself)
 			offset: 4.
 	self byteSize: 28! !
-!OS.MIB_TCPEXTABLE class categoriesFor: #defineFields!initializing!public! !
+!OS.MIB_TCPEXTABLE class categoriesForMethods!
+defineFields!initializing!public! !
+!
 

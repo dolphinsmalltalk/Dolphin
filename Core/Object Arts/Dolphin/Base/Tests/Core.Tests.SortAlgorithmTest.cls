@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.SortAlgorithmTest'
 	instanceVariableNames: ''
@@ -258,22 +258,24 @@ testSortIntegers
 	self sortMagnitudes: collection.
 	collection := 1 to: self integerSortSize.
 	self sortMagnitudes: collection! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #assertSorted:!helpers!private! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #assertSorted:by:!helpers!private! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #bigStringSort!private!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #newAscending:!private!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #newDescending:!private!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #partialSort:using:!private!testing! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #sortMagnitudes:!private!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #testAdd!public!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #testDefault!public!testing! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #testIncludes!public!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #testPartialSort!public!testing! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #testRandomSort!public!unit tests! !
-!Core.Tests.SortAlgorithmTest categoriesFor: #testSortIntegers!public!unit tests! !
+!Core.Tests.SortAlgorithmTest categoriesForMethods!
+add:sortBlock:!helpers!private! !
+algorithmToTest!private!unit tests! !
+assertSorted:!helpers!private! !
+assertSorted:by:!helpers!private! !
+bigStringSort!private!unit tests! !
+integerSortSize!constants!private! !
+newAscending:!private!unit tests! !
+newDescending:!private!unit tests! !
+partialSort:using:!private!testing! !
+sort:sortBlock:!helpers!private! !
+sortMagnitudes:!private!unit tests! !
+testAdd!public!unit tests! !
+testDefault!public!testing! !
+testExtremeSortBlocks!public!unit tests! !
+testIncludes!public!unit tests! !
+testPartialSort!public!testing! !
+testRandomSort!public!unit tests! !
+testSortIntegers!public!unit tests! !
+!
 

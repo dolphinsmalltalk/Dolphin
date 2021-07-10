@@ -68,15 +68,17 @@ uninstallPackage
 
 	identity1 := 'Uninstall package'.
 	identity2 := self packageName! !
-!ChunkBrowserSystemChunk categoriesFor: #compressedChanges!operations!public! !
-!ChunkBrowserSystemChunk categoriesFor: #compressedSources!operations!public! !
-!ChunkBrowserSystemChunk categoriesFor: #imageSave!operations!public! !
-!ChunkBrowserSystemChunk categoriesFor: #imageStart!operations!public! !
-!ChunkBrowserSystemChunk categoriesFor: #initializeIdentity!initializing!public! !
-!ChunkBrowserSystemChunk categoriesFor: #isImageSave!public!testing! !
-!ChunkBrowserSystemChunk categoriesFor: #loadPackage!operations!public! !
-!ChunkBrowserSystemChunk categoriesFor: #packageName!helpers!public! !
-!ChunkBrowserSystemChunk categoriesFor: #uninstallPackage!operations!public! !
+!ChunkBrowserSystemChunk categoriesForMethods!
+compressedChanges!operations!public! !
+compressedSources!operations!public! !
+imageSave!operations!public! !
+imageStart!operations!public! !
+initializeIdentity!initializing!public! !
+isImageSave!public!testing! !
+loadPackage!operations!public! !
+packageName!helpers!public! !
+uninstallPackage!operations!public! !
+!
 
 !ChunkBrowserSystemChunk class methodsFor!
 
@@ -139,9 +141,11 @@ symbolFor: aString
 			yourself).
 	^(lookup associations detect: [:each | (aString indexOfSubCollection: each key) ~= 0] ifNone: [nil])
 		ifNotNil: [:arg | arg value]! !
-!ChunkBrowserSystemChunk class categoriesFor: #chunkType!constants!public! !
-!ChunkBrowserSystemChunk class categoriesFor: #hasText:!public!testing! !
-!ChunkBrowserSystemChunk class categoriesFor: #hasTime:!public!testing! !
-!ChunkBrowserSystemChunk class categoriesFor: #isChunkClassFor:!public!testing! !
-!ChunkBrowserSystemChunk class categoriesFor: #symbolFor:!constants!public! !
+!ChunkBrowserSystemChunk class categoriesForMethods!
+chunkType!constants!public! !
+hasText:!public!testing! !
+hasTime:!public!testing! !
+isChunkClassFor:!public!testing! !
+symbolFor:!constants!public! !
+!
 

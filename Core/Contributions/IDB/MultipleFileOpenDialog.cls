@@ -18,5 +18,7 @@ defaultMaxFileCount
 	"Answers the default number of selections that are expected  to fit into the buffer"
 
 	^25! !
-!MultipleFileOpenDialog categoriesFor: #defaultMaxFileCount!accessing!public! !
+!MultipleFileOpenDialog categoriesForMethods!
+defaultMaxFileCount!accessing!public! !
+!
 

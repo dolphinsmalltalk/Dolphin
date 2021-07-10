@@ -16,5 +16,7 @@ scanToken
 		ifTrue: [^self scanPatternVariable].
 	currentCharacter == $} ifTrue: [^self scanSpecialCharacter].
 	^super scanToken! !
-!Refactory.Browser.RBPatternScanner categoriesFor: #scanToken!accessing!public! !
+!Refactory.Browser.RBPatternScanner categoriesForMethods!
+scanToken!accessing!public! !
+!
 

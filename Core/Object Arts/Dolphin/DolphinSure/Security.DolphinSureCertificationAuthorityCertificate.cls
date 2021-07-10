@@ -30,6 +30,8 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate belongs to a DolphinSure certifying authority and guarantees that the owner has the right to issue certificates to DolphinSure publishers.'! !
-!Security.DolphinSureCertificationAuthorityCertificate categoriesFor: #imageAttributes!accessing!private! !
-!Security.DolphinSureCertificationAuthorityCertificate categoriesFor: #purpose!accessing!public! !
+!Security.DolphinSureCertificationAuthorityCertificate categoriesForMethods!
+imageAttributes!accessing!private! !
+purpose!accessing!public! !
+!
 

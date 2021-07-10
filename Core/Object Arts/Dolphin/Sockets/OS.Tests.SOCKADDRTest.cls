@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'OS.Tests.SOCKADDRTest'
 	instanceVariableNames: ''
@@ -26,6 +26,8 @@ testFromString
 			| subject |
 			subject := SOCKADDR fromString: each.
 			self assert: subject displayString equals: each]! !
-!OS.Tests.SOCKADDRTest categoriesFor: #testDisplayOnInvalid!public!unit tests! !
-!OS.Tests.SOCKADDRTest categoriesFor: #testFromString!public!unit tests! !
+!OS.Tests.SOCKADDRTest categoriesForMethods!
+testDisplayOnInvalid!public!unit tests! !
+testFromString!public!unit tests! !
+!
 

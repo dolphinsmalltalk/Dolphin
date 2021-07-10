@@ -247,32 +247,34 @@ text: aString
 
 	super text: aString.
 	commandDescription description: aString! !
-!UI.PushButton categoriesFor: #baseCreationStyle!private!realizing/unrealizing! !
-!UI.PushButton categoriesFor: #bmSetStyle:wParam:lParam:!event handling-win32!private! !
-!UI.PushButton categoriesFor: #command:id:!commands!private! !
-!UI.PushButton categoriesFor: #defaultWindowStyle!constants!private! !
-!UI.PushButton categoriesFor: #getNote!helpers!private! !
-!UI.PushButton categoriesFor: #hasFlatAppearance!accessing-styles!public! !
-!UI.PushButton categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
-!UI.PushButton categoriesFor: #id:!accessing!public! !
-!UI.PushButton categoriesFor: #image!accessing!public! !
-!UI.PushButton categoriesFor: #image:!accessing!public! !
-!UI.PushButton categoriesFor: #initialize!initializing!private! !
-!UI.PushButton categoriesFor: #isChecked!accessing!public! !
-!UI.PushButton categoriesFor: #isChecked:!accessing!public! !
-!UI.PushButton categoriesFor: #isDefault!public!testing! !
-!UI.PushButton categoriesFor: #isDefault:!accessing-styles!public! !
-!UI.PushButton categoriesFor: #isMultiline!accessing-styles!public! !
-!UI.PushButton categoriesFor: #isMultiline:!accessing-styles!public! !
-!UI.PushButton categoriesFor: #note!accessing!public! !
-!UI.PushButton categoriesFor: #note:!accessing!public! !
-!UI.PushButton categoriesFor: #onDestroyed!event handling!private! !
-!UI.PushButton categoriesFor: #onViewCreated!event handling!public! !
-!UI.PushButton categoriesFor: #setDefault:!accessing-styles!private! !
-!UI.PushButton categoriesFor: #setNote!helpers!private! !
-!UI.PushButton categoriesFor: #style!accessing!public! !
-!UI.PushButton categoriesFor: #style:!accessing!public! !
-!UI.PushButton categoriesFor: #text:!accessing!public! !
+!UI.PushButton categoriesForMethods!
+baseCreationStyle!private!realizing/unrealizing! !
+bmSetStyle:wParam:lParam:!event handling-win32!private! !
+command:id:!commands!private! !
+defaultWindowStyle!constants!private! !
+getNote!helpers!private! !
+hasFlatAppearance!accessing-styles!public! !
+hasFlatAppearance:!accessing-styles!public! !
+id:!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+initialize!initializing!private! !
+isChecked!accessing!public! !
+isChecked:!accessing!public! !
+isDefault!public!testing! !
+isDefault:!accessing-styles!public! !
+isMultiline!accessing-styles!public! !
+isMultiline:!accessing-styles!public! !
+note!accessing!public! !
+note:!accessing!public! !
+onDestroyed!event handling!private! !
+onViewCreated!event handling!public! !
+setDefault:!accessing-styles!private! !
+setNote!helpers!private! !
+style!accessing!public! !
+style:!accessing!public! !
+text:!accessing!public! !
+!
 
 UI.PushButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
@@ -383,17 +385,19 @@ winClassName
 
 	^'BUTTON'
 ! !
-!UI.PushButton class categoriesFor: #buttonMessageMappings!constants!must not strip!private! !
-!UI.PushButton class categoriesFor: #icon!constants!public! !
-!UI.PushButton class categoriesFor: #initialize!development!initializing!private! !
-!UI.PushButton class categoriesFor: #resource_Cancel_button!public!resources-views! !
-!UI.PushButton class categoriesFor: #resource_No_button!public!resources-views! !
-!UI.PushButton class categoriesFor: #resource_OK_button!public!resources-views! !
-!UI.PushButton class categoriesFor: #resource_Push_button!public!resources-views! !
-!UI.PushButton class categoriesFor: #resource_Yes_button!public!resources-views! !
-!UI.PushButton class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!UI.PushButton class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!UI.PushButton class categoriesFor: #stbVersion!public! !
-!UI.PushButton class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!UI.PushButton class categoriesFor: #winClassName!constants!private! !
+!UI.PushButton class categoriesForMethods!
+buttonMessageMappings!constants!must not strip!private! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Cancel_button!public!resources-views! !
+resource_No_button!public!resources-views! !
+resource_OK_button!public!resources-views! !
+resource_Push_button!public!resources-views! !
+resource_Yes_button!public!resources-views! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+stbVersion!public! !
+uninitialize!class hierarchy-removing!private! !
+winClassName!constants!private! !
+!
 

@@ -36,5 +36,7 @@ sort: anObject from: startInteger to: stopInteger
 							j := j + d].
 					anObject basicAt: j - d put: ei.
 					i := i - 1]]! !
-!Kernel.ShellsortAlgorithm categoriesFor: #sort:from:to:!algorithms!operations!public! !
+!Kernel.ShellsortAlgorithm categoriesForMethods!
+sort:from:to:!algorithms!operations!public! !
+!
 

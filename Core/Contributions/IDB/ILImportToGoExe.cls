@@ -21,6 +21,8 @@ iconsStartAddress
 	"The start address of the icons in a Dolphin exe"
 
 	^209764! !
-!ILImportToGoExe class categoriesFor: #iconsEndAddress!constants!public! !
-!ILImportToGoExe class categoriesFor: #iconsStartAddress!constants!public! !
+!ILImportToGoExe class categoriesForMethods!
+iconsEndAddress!constants!public! !
+iconsStartAddress!constants!public! !
+!
 

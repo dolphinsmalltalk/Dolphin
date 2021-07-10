@@ -125,17 +125,19 @@ upToEnd
 	fewer than the remaining size of the file."
 
 	^self basicNextAvailable: self size - self position + 1! !
-!OS.StdioTextFileStream categoriesFor: #cr!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #externalType!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #getString:!accessing!private! !
-!OS.StdioTextFileStream categoriesFor: #isText!public!testing! !
-!OS.StdioTextFileStream categoriesFor: #next!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #nextLine!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #nextPut:!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #peek!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #peekFor:!accessing!public! !
-!OS.StdioTextFileStream categoriesFor: #upToEnd!accessing!public! !
+!OS.StdioTextFileStream categoriesForMethods!
+cr!accessing!public! !
+externalType!accessing!public! !
+getString:!accessing!private! !
+isText!public!testing! !
+next!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextLine!accessing!public! !
+nextPut:!accessing!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+upToEnd!accessing!public! !
+!
 
 OS.StdioTextFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 OS.StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
@@ -144,5 +146,7 @@ OS.StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #rea
 
 encodingMode
 	^$t! !
-!OS.StdioTextFileStream class categoriesFor: #encodingMode!constants!private! !
+!OS.StdioTextFileStream class categoriesForMethods!
+encodingMode!constants!private! !
+!
 

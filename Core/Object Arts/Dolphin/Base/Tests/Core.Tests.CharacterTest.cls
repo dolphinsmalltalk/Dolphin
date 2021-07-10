@@ -660,36 +660,38 @@ testStb
 	bytes := Character dolphin binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated equals: Character dolphin! !
-!Core.Tests.CharacterTest categoriesFor: #nonCharacters!constants!private! !
-!Core.Tests.CharacterTest categoriesFor: #testAnsiValue!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testAsciiValue!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testAsLowercase!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testAsUppercase!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testAsUtf16String!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testAsUtf8String!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testClassCodePoint!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testClassify!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testClassNewCode!public! !
-!Core.Tests.CharacterTest categoriesFor: #testCodePoint!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testCodePointString!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testDigitValue!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testEquals!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIdentity!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsAlphaNumeric!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsControl!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsDigit!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsEnglishLetter!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsGraph!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsHexDigit!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsLowercase!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsPrintable!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsPunctuation!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsUppercase!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsUtf16SurrogateTests!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsUtf8SurrogateTests!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testIsWhitespace!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testPrintString!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testSize!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testSplit!public!unit tests! !
-!Core.Tests.CharacterTest categoriesFor: #testStb!public!unit tests! !
+!Core.Tests.CharacterTest categoriesForMethods!
+nonCharacters!constants!private! !
+testAnsiValue!public!unit tests! !
+testAsciiValue!public!unit tests! !
+testAsLowercase!public!unit tests! !
+testAsUppercase!public!unit tests! !
+testAsUtf16String!public!unit tests! !
+testAsUtf8String!public!unit tests! !
+testClassCodePoint!public!unit tests! !
+testClassify!public!unit tests! !
+testClassNewCode!public! !
+testCodePoint!public!unit tests! !
+testCodePointString!public!unit tests! !
+testDigitValue!public!unit tests! !
+testEquals!public!unit tests! !
+testIdentity!public!unit tests! !
+testIsAlphaNumeric!public!unit tests! !
+testIsControl!public!unit tests! !
+testIsDigit!public!unit tests! !
+testIsEnglishLetter!public!unit tests! !
+testIsGraph!public!unit tests! !
+testIsHexDigit!public!unit tests! !
+testIsLowercase!public!unit tests! !
+testIsPrintable!public!unit tests! !
+testIsPunctuation!public!unit tests! !
+testIsUppercase!public!unit tests! !
+testIsUtf16SurrogateTests!public!unit tests! !
+testIsUtf8SurrogateTests!public!unit tests! !
+testIsWhitespace!public!unit tests! !
+testPrintString!public!unit tests! !
+testSize!public!unit tests! !
+testSplit!public!unit tests! !
+testStb!public!unit tests! !
+!
 

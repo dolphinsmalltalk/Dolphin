@@ -27,9 +27,11 @@ save: anObject as: aResourceClass
 
 	self object: anObject.
 	self isChanged: true! !
-!ResourceDummyAccessor categoriesFor: #loadWithContext:forEdit:!operations!public! !
-!ResourceDummyAccessor categoriesFor: #object:!accessing!public! !
-!ResourceDummyAccessor categoriesFor: #save:as:!operations!public! !
+!ResourceDummyAccessor categoriesForMethods!
+loadWithContext:forEdit:!operations!public! !
+object:!accessing!public! !
+save:as:!operations!public! !
+!
 
 !ResourceDummyAccessor class methodsFor!
 
@@ -37,5 +39,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!ResourceDummyAccessor class categoriesFor: #stbVersion!binary filing!public! !
+!ResourceDummyAccessor class categoriesForMethods!
+stbVersion!binary filing!public! !
+!
 

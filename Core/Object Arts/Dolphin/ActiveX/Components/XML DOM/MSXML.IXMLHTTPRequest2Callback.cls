@@ -100,11 +100,13 @@ OnResponseReceived: pXHR pResponseStream: pResponseStream
 
 	<virtual stdcall: hresult 7 IXMLHTTPRequest2* ISequentialStream*>
 	^self invalidCall: _failureCode! !
-!MSXML.IXMLHTTPRequest2Callback categoriesFor: #Ondataavailable:pResponseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
-!MSXML.IXMLHTTPRequest2Callback categoriesFor: #OnError:hrError:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
-!MSXML.IXMLHTTPRequest2Callback categoriesFor: #OnHeadersAvailable:dwStatus:pwszStatus:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
-!MSXML.IXMLHTTPRequest2Callback categoriesFor: #OnRedirect:pwszRedirectUrl:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
-!MSXML.IXMLHTTPRequest2Callback categoriesFor: #OnResponseReceived:pResponseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
+!MSXML.IXMLHTTPRequest2Callback categoriesForMethods!
+Ondataavailable:pResponseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
+OnError:hrError:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
+OnHeadersAvailable:dwStatus:pwszStatus:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
+OnRedirect:pwszRedirectUrl:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
+OnResponseReceived:pResponseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest2Callback!public! !
+!
 
 !MSXML.IXMLHTTPRequest2Callback class methodsFor!
 
@@ -124,5 +126,7 @@ defineFunctions
 		defineFunction: #OnError:hrError:
 			argumentTypes: 'IXMLHTTPRequest2* hresult'
 ! !
-!MSXML.IXMLHTTPRequest2Callback class categoriesFor: #defineFunctions!**auto generated**!initializing!private! !
+!MSXML.IXMLHTTPRequest2Callback class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!private! !
+!
 

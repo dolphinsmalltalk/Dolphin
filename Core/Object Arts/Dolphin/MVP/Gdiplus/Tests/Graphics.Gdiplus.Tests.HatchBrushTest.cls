@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.Tests.GdiplusTest subclass: #'Graphics.Gdiplus.Tests.HatchBrushTest'
 	instanceVariableNames: ''
@@ -41,9 +41,11 @@ testFillingCrossDiagonal
 	bitmap graphics fillRectangle: (Point zero extent: bitmap extent) brush: model.
 	self assert: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 1).
 	self deny: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 0)! !
-!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #setSampleDiagCross!public! !
-!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #setUp!public! !
-!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #testClone!public!unit tests! !
-!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #testConstructors!public! !
-!Graphics.Gdiplus.Tests.HatchBrushTest categoriesFor: #testFillingCrossDiagonal!public!unit tests! !
+!Graphics.Gdiplus.Tests.HatchBrushTest categoriesForMethods!
+setSampleDiagCross!public! !
+setUp!public! !
+testClone!public!unit tests! !
+testConstructors!public! !
+testFillingCrossDiagonal!public!unit tests! !
+!
 

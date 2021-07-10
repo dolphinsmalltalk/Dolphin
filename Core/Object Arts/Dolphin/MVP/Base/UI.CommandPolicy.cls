@@ -215,23 +215,25 @@ visitPresenter: presenter
 	adding its contributions to that chain. Answer the next <presenter> to visit."
 
 	^self subclassResponsibility! !
-!UI.CommandPolicy categoriesFor: #appendPresenter:!adding!public! !
-!UI.CommandPolicy categoriesFor: #appendTarget:!adding!public! !
-!UI.CommandPolicy categoriesFor: #commandPath!accessing!public! !
-!UI.CommandPolicy categoriesFor: #commandQueryClass!constants!public! !
-!UI.CommandPolicy categoriesFor: #insertTarget:after:!adding!public! !
-!UI.CommandPolicy categoriesFor: #insertTarget:atIndex:!adding!public! !
-!UI.CommandPolicy categoriesFor: #insertTarget:before:!adding!public! !
-!UI.CommandPolicy categoriesFor: #newCommandQuery:!helpers!public! !
-!UI.CommandPolicy categoriesFor: #prependTarget:!adding!public! !
-!UI.CommandPolicy categoriesFor: #query:!operations!public! !
-!UI.CommandPolicy categoriesFor: #queryCommand:!operations!private! !
-!UI.CommandPolicy categoriesFor: #queryCommand:ofTarget:!operations!private! !
-!UI.CommandPolicy categoriesFor: #route:!operations!public! !
-!UI.CommandPolicy categoriesFor: #routeFrom:!operations!public! !
-!UI.CommandPolicy categoriesFor: #source!accessing!private! !
-!UI.CommandPolicy categoriesFor: #source:!initializing!private! !
-!UI.CommandPolicy categoriesFor: #visitPresenter:!operations!private! !
+!UI.CommandPolicy categoriesForMethods!
+appendPresenter:!adding!public! !
+appendTarget:!adding!public! !
+commandPath!accessing!public! !
+commandQueryClass!constants!public! !
+insertTarget:after:!adding!public! !
+insertTarget:atIndex:!adding!public! !
+insertTarget:before:!adding!public! !
+newCommandQuery:!helpers!public! !
+prependTarget:!adding!public! !
+query:!operations!public! !
+queryCommand:!operations!private! !
+queryCommand:ofTarget:!operations!private! !
+route:!operations!public! !
+routeFrom:!operations!public! !
+source!accessing!private! !
+source:!initializing!private! !
+visitPresenter:!operations!private! !
+!
 
 UI.CommandPolicy methodProtocol: #commandPolicy attributes: #(#readOnly) selectors: #(#query: #route:)!
 
@@ -254,9 +256,11 @@ new
 	"Instances of the receiver should be created using the #commandSource: message."
 
 	^self shouldNotImplement! !
-!UI.CommandPolicy class categoriesFor: #commandSource:!instance creation!public! !
-!UI.CommandPolicy class categoriesFor: #defaultClass!constants!public! !
-!UI.CommandPolicy class categoriesFor: #new!instance creation!public! !
+!UI.CommandPolicy class categoriesForMethods!
+commandSource:!instance creation!public! !
+defaultClass!constants!public! !
+new!instance creation!public! !
+!
 
 UI.CommandPolicy class methodProtocol: #'commandPolicy factory' attributes: #(#readOnly) selectors: #(#commandSource:)!
 

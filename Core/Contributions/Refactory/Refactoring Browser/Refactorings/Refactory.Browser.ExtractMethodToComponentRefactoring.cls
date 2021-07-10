@@ -75,13 +75,15 @@ transform
 		extractMethod;
 		moveMethod;
 		inlineForwarder! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #extractMethod!public!transforming! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #inlineForwarder!public!transforming! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #moveMethod!public!transforming! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #storeOn:!printing!public! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring categoriesForMethods!
+extract:from:in:!initialize/release!public! !
+extractMethod!public!transforming! !
+inlineForwarder!public!transforming! !
+moveMethod!public!transforming! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !Refactory.Browser.ExtractMethodToComponentRefactoring class methodsFor!
 
@@ -98,6 +100,8 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
-!Refactory.Browser.ExtractMethodToComponentRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring class categoriesForMethods!
+extract:from:in:!instance creation!public! !
+model:extract:from:in:!instance creation!public! !
+!
 

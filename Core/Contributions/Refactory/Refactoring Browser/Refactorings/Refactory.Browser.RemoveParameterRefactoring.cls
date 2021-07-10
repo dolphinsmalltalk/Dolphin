@@ -71,12 +71,14 @@ storeOn: aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.
 	aStream nextPut: $)! !
-!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #computeNewSelector!private! !
-!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #getNewSelector!public!transforming! !
-!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #hasReferencesToTemporaryIn:!public!transforming! !
-!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #removeParameter:in:selector:!initialize/release!public! !
-!Refactory.Browser.RemoveParameterRefactoring categoriesFor: #storeOn:!printing!public! !
+!Refactory.Browser.RemoveParameterRefactoring categoriesForMethods!
+computeNewSelector!private! !
+getNewSelector!public!transforming! !
+hasReferencesToTemporaryIn:!public!transforming! !
+myConditions!preconditions!public! !
+removeParameter:in:selector:!initialize/release!public! !
+storeOn:!printing!public! !
+!
 
 !Refactory.Browser.RemoveParameterRefactoring class methodsFor!
 
@@ -90,6 +92,8 @@ model: aRBNamespace removeParameter: aString in: aClass selector: aSelector
 
 removeParameter: aString in: aClass selector: aSelector
 	^self new removeParameter: aString in: aClass selector: aSelector! !
-!Refactory.Browser.RemoveParameterRefactoring class categoriesFor: #model:removeParameter:in:selector:!instance creation!public! !
-!Refactory.Browser.RemoveParameterRefactoring class categoriesFor: #removeParameter:in:selector:!instance creation!public! !
+!Refactory.Browser.RemoveParameterRefactoring class categoriesForMethods!
+model:removeParameter:in:selector:!instance creation!public! !
+removeParameter:in:selector:!instance creation!public! !
+!
 

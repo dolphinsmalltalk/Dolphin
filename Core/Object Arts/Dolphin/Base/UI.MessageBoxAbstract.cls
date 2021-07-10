@@ -117,23 +117,25 @@ warning: warningString
 	self text: warningString.
 	self iconStyle: #warning.
 	^self open! !
-!UI.MessageBoxAbstract categoriesFor: #beep!parping!private! !
-!UI.MessageBoxAbstract categoriesFor: #caption!accessing!public! !
-!UI.MessageBoxAbstract categoriesFor: #caption:!accessing!public! !
-!UI.MessageBoxAbstract categoriesFor: #defaultCaption!constants!private! !
-!UI.MessageBoxAbstract categoriesFor: #errorMsg:!operations!public! !
-!UI.MessageBoxAbstract categoriesFor: #iconStyle!accessing-styles!public! !
-!UI.MessageBoxAbstract categoriesFor: #iconStyle:!accessing-styles!public! !
-!UI.MessageBoxAbstract categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!UI.MessageBoxAbstract categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!UI.MessageBoxAbstract categoriesFor: #notify:!operations!public! !
-!UI.MessageBoxAbstract categoriesFor: #open!displaying!public! !
-!UI.MessageBoxAbstract categoriesFor: #owner!accessing!public! !
-!UI.MessageBoxAbstract categoriesFor: #owner:!accessing!public! !
-!UI.MessageBoxAbstract categoriesFor: #ownerHandle!accessing!private! !
-!UI.MessageBoxAbstract categoriesFor: #text!accessing!public! !
-!UI.MessageBoxAbstract categoriesFor: #text:!accessing!public! !
-!UI.MessageBoxAbstract categoriesFor: #warning:!operations!public! !
+!UI.MessageBoxAbstract categoriesForMethods!
+beep!parping!private! !
+caption!accessing!public! !
+caption:!accessing!public! !
+defaultCaption!constants!private! !
+errorMsg:!operations!public! !
+iconStyle!accessing-styles!public! !
+iconStyle:!accessing-styles!public! !
+iconStyleFlag!accessing-styles!private! !
+iconStyleFlag:!accessing-styles!private! !
+notify:!operations!public! !
+open!displaying!public! !
+owner!accessing!public! !
+owner:!accessing!public! !
+ownerHandle!accessing!private! !
+text!accessing!public! !
+text:!accessing!public! !
+warning:!operations!public! !
+!
 
 !UI.MessageBoxAbstract class methodsFor!
 
@@ -213,13 +215,15 @@ warning: warningString caption: titleString
 	(self new)
 		caption: titleString;
 		warning: warningString! !
-!UI.MessageBoxAbstract class categoriesFor: #defaultCaption:!constants!private! !
-!UI.MessageBoxAbstract class categoriesFor: #errorMsg:!instance creation!public! !
-!UI.MessageBoxAbstract class categoriesFor: #errorMsg:caption:!instance creation!public! !
-!UI.MessageBoxAbstract class categoriesFor: #initialize!development!initializing!public! !
-!UI.MessageBoxAbstract class categoriesFor: #new!instance creation!public! !
-!UI.MessageBoxAbstract class categoriesFor: #notify:!instance creation!public! !
-!UI.MessageBoxAbstract class categoriesFor: #notify:caption:!instance creation!public! !
-!UI.MessageBoxAbstract class categoriesFor: #warning:!instance creation!public! !
-!UI.MessageBoxAbstract class categoriesFor: #warning:caption:!instance creation!public! !
+!UI.MessageBoxAbstract class categoriesForMethods!
+defaultCaption:!constants!private! !
+errorMsg:!instance creation!public! !
+errorMsg:caption:!instance creation!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+notify:!instance creation!public! !
+notify:caption:!instance creation!public! !
+warning:!instance creation!public! !
+warning:caption:!instance creation!public! !
+!
 

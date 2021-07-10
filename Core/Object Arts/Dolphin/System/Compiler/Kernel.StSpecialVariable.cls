@@ -16,5 +16,7 @@ isConstant
 	variables self, super and thisContext, cannot be assigned to."
 
 	^true! !
-!Kernel.StSpecialVariable categoriesFor: #isConstant!public!testing! !
+!Kernel.StSpecialVariable categoriesForMethods!
+isConstant!public!testing! !
+!
 

@@ -30,10 +30,12 @@ writeInto: anExternalStructure value: aFloat
 	aFloat, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes floatAtOffset: offset put: aFloat! !
-!External.FLOATField categoriesFor: #accessorMessage!initializing!private! !
-!External.FLOATField categoriesFor: #readFrom:!indirect accessing!private! !
-!External.FLOATField categoriesFor: #valueType!automatic generation!constants!development!private! !
-!External.FLOATField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!External.FLOATField categoriesForMethods!
+accessorMessage!initializing!private! !
+readFrom:!indirect accessing!private! !
+valueType!automatic generation!constants!development!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !External.FLOATField class methodsFor!
 
@@ -41,5 +43,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^VMConstants.FloatSize! !
-!External.FLOATField class categoriesFor: #byteSize!constants!private! !
+!External.FLOATField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

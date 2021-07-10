@@ -20,8 +20,10 @@ overwritePrompt
 
 	self style: self style | OFN_OVERWRITEPROMPT.
 ! !
-!UI.FileSaveDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!UI.FileSaveDialog categoriesFor: #overwritePrompt!public! !
+!UI.FileSaveDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+overwritePrompt!public! !
+!
 
 !UI.FileSaveDialog class methodsFor!
 
@@ -31,5 +33,7 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
-!UI.FileSaveDialog class categoriesFor: #initialize!development!initializing!private! !
+!UI.FileSaveDialog class categoriesForMethods!
+initialize!development!initializing!private! !
+!
 

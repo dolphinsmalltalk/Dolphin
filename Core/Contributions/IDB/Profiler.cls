@@ -108,13 +108,15 @@ stopSampling
 	state of the flag will be noticed by the main profiling process and it will start sampling"
 
 	isSampling := false! !
-!Profiler categoriesFor: #initialize!initializing!public! !
-!Profiler categoriesFor: #profile:forSet:ignoring:!profiling!public! !
-!Profiler categoriesFor: #profile:inSetNamed:collect:on:!operations!public! !
-!Profiler categoriesFor: #sampleProcess:forSet:elapsedTime:ignoring:!profiling!public! !
-!Profiler categoriesFor: #samplingInterval:!operations!public! !
-!Profiler categoriesFor: #startSampling!operations!public! !
-!Profiler categoriesFor: #stopSampling!operations!public! !
+!Profiler categoriesForMethods!
+initialize!initializing!public! !
+profile:forSet:ignoring:!profiling!public! !
+profile:inSetNamed:collect:on:!operations!public! !
+sampleProcess:forSet:elapsedTime:ignoring:!profiling!public! !
+samplingInterval:!operations!public! !
+startSampling!operations!public! !
+stopSampling!operations!public! !
+!
 
 !Profiler class methodsFor!
 
@@ -215,18 +217,20 @@ stopSampling
 	"Tells the profiler to stop taking samples until a startSampling instruction is executed"
 
 	self default stopSampling! !
-!Profiler class categoriesFor: #default!instance creation!public! !
-!Profiler class categoriesFor: #icon!constants!public! !
-!Profiler class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
-!Profiler class categoriesFor: #openBrowser!operations!public! !
-!Profiler class categoriesFor: #profile:!operations!public! !
-!Profiler class categoriesFor: #profile:inSetNamed:!operations!public! !
-!Profiler class categoriesFor: #profile:inSetNamed:collect:!operations!public! !
-!Profiler class categoriesFor: #profile:inSetNamed:collect:on:!operations!public! !
-!Profiler class categoriesFor: #removeAllSampleSets!operations!public! !
-!Profiler class categoriesFor: #removeSampleSetNamed:!operations!public! !
-!Profiler class categoriesFor: #reset!operations!public! !
-!Profiler class categoriesFor: #samplingInterval:!operations!public! !
-!Profiler class categoriesFor: #startSampling!operations!public! !
-!Profiler class categoriesFor: #stopSampling!operations!public! !
+!Profiler class categoriesForMethods!
+default!instance creation!public! !
+icon!constants!public! !
+new!instance creation!protocols-instantiator!protocols-Object class!public! !
+openBrowser!operations!public! !
+profile:!operations!public! !
+profile:inSetNamed:!operations!public! !
+profile:inSetNamed:collect:!operations!public! !
+profile:inSetNamed:collect:on:!operations!public! !
+removeAllSampleSets!operations!public! !
+removeSampleSetNamed:!operations!public! !
+reset!operations!public! !
+samplingInterval:!operations!public! !
+startSampling!operations!public! !
+stopSampling!operations!public! !
+!
 

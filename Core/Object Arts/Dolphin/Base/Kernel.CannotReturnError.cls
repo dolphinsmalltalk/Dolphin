@@ -13,5 +13,7 @@ Kernel.CannotReturnError comment: ''!
 
 description
 	^'Cannot return ' , self tag basicPrintString , ' to expired context or across Processes'! !
-!Kernel.CannotReturnError categoriesFor: #description!displaying!public! !
+!Kernel.CannotReturnError categoriesForMethods!
+description!displaying!public! !
+!
 

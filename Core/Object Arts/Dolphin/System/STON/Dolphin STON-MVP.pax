@@ -63,8 +63,10 @@ stonOn: stonWriter
 						at: #blue put: (self normalizedBlue roundTo: 0.001);
 						at: #alpha put: (self normalizedAlpha roundTo: 0.001)]]
 		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
-!Graphics.Color categoriesFor: #stonContainSubObjects!public!ston! !
-!Graphics.Color categoriesFor: #stonOn:!public!ston! !
+!Graphics.Color categoriesForMethods!
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 !Graphics.Color class methodsFor!
 
@@ -84,8 +86,10 @@ fromSton: stonReader
 
 stonName
 	^#Color! !
-!Graphics.Color class categoriesFor: #fromSton:!public!ston! !
-!Graphics.Color class categoriesFor: #stonName!public!ston! !
+!Graphics.Color class categoriesForMethods!
+fromSton:!public!ston! !
+stonName!public!ston! !
+!
 
 !Graphics.GraphicsTool class methodsFor!
 
@@ -93,7 +97,9 @@ stonAllInstVarNames
 	"Override to exclude the handle and ownsHandle instance variable as we never want to serialize these."
 
 	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!Graphics.GraphicsTool class categoriesFor: #stonAllInstVarNames!public!ston! !
+!Graphics.GraphicsTool class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
 
 !Graphics.IconImageManager methodsFor!
 
@@ -101,20 +107,26 @@ stonOn: stonWriter
 	stonWriter 
 		writeObject: self 
 		do: []! !
-!Graphics.IconImageManager categoriesFor: #stonOn:!public!ston! !
+!Graphics.IconImageManager categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Graphics.IconImageManager class methodsFor!
 
 fromSton: stonReader
 	^self current! !
-!Graphics.IconImageManager class categoriesFor: #fromSton:!public! !
+!Graphics.IconImageManager class categoriesForMethods!
+fromSton:!public! !
+!
 
 !Graphics.Point methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeObject: self streamShortList: [ :array |
 		array add: x; add: y ]! !
-!Graphics.Point categoriesFor: #stonOn:!public!ston! !
+!Graphics.Point categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Graphics.Point class methodsFor!
 
@@ -128,7 +140,9 @@ fromSton: stonReader
 			index == 1 ifTrue: [answer x: each].
 			index == 2 ifTrue: [answer y: each]].
 	^answer! !
-!Graphics.Point class categoriesFor: #fromSton:!public! !
+!Graphics.Point class categoriesForMethods!
+fromSton:!public! !
+!
 
 !Kernel.BindingReference class methodsFor!
 
@@ -136,7 +150,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^#('pathString' 'path' 'private')! !
-!Kernel.BindingReference class categoriesFor: #stonAllInstVarNames!public! !
+!Kernel.BindingReference class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !Kernel.RelativeBindingReference class methodsFor!
 
@@ -144,7 +160,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWith: 'scope'! !
-!Kernel.RelativeBindingReference class categoriesFor: #stonAllInstVarNames!public! !
+!Kernel.RelativeBindingReference class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !UI.CardLayout class methodsFor!
 
@@ -153,7 +171,9 @@ stonAllInstVarNames
 
 	^superclass stonAllInstVarNames
 		, ##(self instVarNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
-!UI.CardLayout class categoriesFor: #stonAllInstVarNames!public! !
+!UI.CardLayout class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !UI.ControlView class methodsFor!
 
@@ -161,26 +181,34 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithout: 'oldWndProc'! !
-!UI.ControlView class categoriesFor: #stonAllInstVarNames!public!ston! !
+!UI.ControlView class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
 
 !UI.FramingCalculation methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: name! !
-!UI.FramingCalculation categoriesFor: #stonOn:!public!ston! !
+!UI.FramingCalculation categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !UI.FramingCalculation class methodsFor!
 
 fromSton: stonReader
 	#todo. "Perform is a security risk - provide a lookup table."
 	^self perform: stonReader parseListSingleton! !
-!UI.FramingCalculation class categoriesFor: #fromSton:!public!ston! !
+!UI.FramingCalculation class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !UI.ReferenceView methodsFor!
 
 stonExtras
 	^{#state -> self state}! !
-!UI.ReferenceView categoriesFor: #stonExtras!public!ston! !
+!UI.ReferenceView categoriesForMethods!
+stonExtras!public!ston! !
+!
 
 !UI.ReferenceView class methodsFor!
 
@@ -188,7 +216,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithout: 'referee'! !
-!UI.ReferenceView class categoriesFor: #stonAllInstVarNames!public! !
+!UI.ReferenceView class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !UI.Scintilla.ScintillaView class methodsFor!
 
@@ -197,7 +227,9 @@ stonAllInstVarNames
 
 	^##(super stonAllInstVarNames
 		difference: #('this' 'styleIdMap' 'library'))! !
-!UI.Scintilla.ScintillaView class categoriesFor: #stonAllInstVarNames!public! !
+!UI.Scintilla.ScintillaView class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !UI.Toolbar class methodsFor!
 
@@ -205,7 +237,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithoutAll: #('idMap' 'bitmapsStart')! !
-!UI.Toolbar class categoriesFor: #stonAllInstVarNames!public! !
+!UI.Toolbar class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !UI.View methodsFor!
 
@@ -223,8 +257,10 @@ stonOn: stonWriter
 	"
 
 	stonWriter writeObject: self extra: self stonExtras! !
-!UI.View categoriesFor: #stonExtras!public!ston! !
-!UI.View categoriesFor: #stonOn:!public!ston! !
+!UI.View categoriesForMethods!
+stonExtras!public!ston! !
+stonOn:!public!ston! !
+!
 
 !UI.View class methodsFor!
 
@@ -235,7 +271,9 @@ stonAllInstVarNames
 		ifTrue: 
 			[#('creationStyle' 'model' 'backcolor' 'preferredExtent' 'flags' 'contextMenu' 'font' 'interactor')	"'presenter'"]
 		ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!UI.View class categoriesFor: #stonAllInstVarNames!public!ston! !
+!UI.View class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
 
 "End of package definition"!
 

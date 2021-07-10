@@ -39,8 +39,10 @@ rclClip: aRECT
 		from: ##(_OffsetOf_rclClip + 1)
 		to: ##(_OffsetOf_rclClip + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMREXCLUDECLIPRECT categoriesFor: #rclClip!**compiled accessors**!public! !
-!OS.EMREXCLUDECLIPRECT categoriesFor: #rclClip:!**compiled accessors**!public! !
+!OS.EMREXCLUDECLIPRECT categoriesForMethods!
+rclClip!**compiled accessors**!public! !
+rclClip:!**compiled accessors**!public! !
+!
 
 !OS.EMREXCLUDECLIPRECT class methodsFor!
 
@@ -70,7 +72,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_EXCLUDECLIPRECT. EMR_INTERSECTCLIPRECT}! !
-!OS.EMREXCLUDECLIPRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.EMREXCLUDECLIPRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMREXCLUDECLIPRECT class categoriesFor: #iTypes!constants!public! !
+!OS.EMREXCLUDECLIPRECT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

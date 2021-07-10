@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.BooleanTest'
 	instanceVariableNames: ''
@@ -17,6 +17,8 @@ subjectClass
 
 testNew
 	self should: [self subjectClass new] raise: Error! !
-!Core.Tests.BooleanTest categoriesFor: #subjectClass!constants!private! !
-!Core.Tests.BooleanTest categoriesFor: #testNew!public!testing! !
+!Core.Tests.BooleanTest categoriesForMethods!
+subjectClass!constants!private! !
+testNew!public!testing! !
+!
 

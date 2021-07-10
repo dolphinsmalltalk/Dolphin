@@ -51,10 +51,12 @@ IpPort: aSOCKADDR_STORAGE
 		from: ##(_OffsetOf_IpPort + 1)
 		to: ##(_OffsetOf_IpPort + SOCKADDR_STORAGE basicByteSize)
 		startingAt: 1! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #Host!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #Host:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #IpPort!**compiled accessors**!public! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #IpPort:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesForMethods!
+Host!**compiled accessors**!public! !
+Host:!**compiled accessors**!public! !
+IpPort!**compiled accessors**!public! !
+IpPort:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY class methodsFor!
 
@@ -77,6 +79,8 @@ defineFields
 
 getFieldNames
 	^#(#IpPort #Host)! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

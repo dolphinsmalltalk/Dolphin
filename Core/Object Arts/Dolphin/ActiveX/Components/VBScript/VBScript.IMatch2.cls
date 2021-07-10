@@ -60,8 +60,10 @@ subMatches
 	answer := subMatches asArray.
 	subMatches free.
 	^answer! !
-!VBScript.IMatch2 categoriesFor: #get_SubMatches:!**auto generated**!COM Interfaces-IMatch2!private! !
-!VBScript.IMatch2 categoriesFor: #subMatches!properties!public! !
+!VBScript.IMatch2 categoriesForMethods!
+get_SubMatches:!**auto generated**!COM Interfaces-IMatch2!private! !
+subMatches!properties!public! !
+!
 
 !VBScript.IMatch2 class methodsFor!
 
@@ -73,5 +75,7 @@ defineFunctions
 		defineFunction: #get_SubMatches:
 			argumentTypes: 'IDispatch**'
 ! !
-!VBScript.IMatch2 class categoriesFor: #defineFunctions!initializing!public! !
+!VBScript.IMatch2 class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

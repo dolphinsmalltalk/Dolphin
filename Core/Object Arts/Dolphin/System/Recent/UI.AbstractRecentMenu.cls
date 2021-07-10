@@ -83,23 +83,27 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 	"Private - Save anOrderedCollectionOfFilenameStrings as the list of recently opened files."
 
 	self subclassResponsibility! !
-!UI.AbstractRecentMenu categoriesFor: #addToRecentList:!public! !
-!UI.AbstractRecentMenu categoriesFor: #clearRecentList!public! !
-!UI.AbstractRecentMenu categoriesFor: #getRecentList!helpers!private! !
-!UI.AbstractRecentMenu categoriesFor: #initialize!initializing!private! !
-!UI.AbstractRecentMenu categoriesFor: #isFullPathAlwaysRequired!accessing!private! !
-!UI.AbstractRecentMenu categoriesFor: #isFullPathAlwaysRequired:!accessing!private! !
-!UI.AbstractRecentMenu categoriesFor: #notEmpty!public! !
-!UI.AbstractRecentMenu categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
-!UI.AbstractRecentMenu categoriesFor: #openSelector!accessing!private! !
-!UI.AbstractRecentMenu categoriesFor: #openSelector:!accessing!private! !
-!UI.AbstractRecentMenu categoriesFor: #recentMenuName!accessing!private! !
-!UI.AbstractRecentMenu categoriesFor: #recentMenuName:!accessing!private! !
-!UI.AbstractRecentMenu categoriesFor: #setRecentList:!helpers!private! !
+!UI.AbstractRecentMenu categoriesForMethods!
+addToRecentList:!public! !
+clearRecentList!public! !
+getRecentList!helpers!private! !
+initialize!initializing!private! !
+isFullPathAlwaysRequired!accessing!private! !
+isFullPathAlwaysRequired:!accessing!private! !
+notEmpty!public! !
+onAboutToDisplayMenu:!event handling!private! !
+openSelector!accessing!private! !
+openSelector:!accessing!private! !
+recentMenuName!accessing!private! !
+recentMenuName:!accessing!private! !
+setRecentList:!helpers!private! !
+!
 
 !UI.AbstractRecentMenu class methodsFor!
 
 new
 	^super new initialize! !
-!UI.AbstractRecentMenu class categoriesFor: #new!instance creation!public! !
+!UI.AbstractRecentMenu class categoriesForMethods!
+new!instance creation!public! !
+!
 

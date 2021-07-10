@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.AbstractClassVariableTest'
 	instanceVariableNames: ''
@@ -107,11 +107,13 @@ testModelAbstractClassVariableOverridenMethodsInSubclass
 
 testNonExistantName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo class: BasicLintRuleTest)! !
-!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #setUp!public!set up! !
-!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testAbstractClassVariable!public!tests! !
-!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testInheritedName!failure tests!public! !
-!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariable!public!tests! !
-!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariableOverridenMethodsInSubclass!public!tests! !
-!Refactory.Browser.Tests.AbstractClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!Refactory.Browser.Tests.AbstractClassVariableTest categoriesForMethods!
+setUp!public!set up! !
+testAbstractClassVariable!public!tests! !
+testInheritedName!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelAbstractClassVariable!public!tests! !
+testModelAbstractClassVariableOverridenMethodsInSubclass!public!tests! !
+testNonExistantName!failure tests!public! !
+!
 

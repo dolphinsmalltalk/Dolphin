@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Graphics.Tests.BitmapTest'
 	instanceVariableNames: ''
@@ -22,5 +22,7 @@ testAsColorKeyedBitmap
 	canvas erase.
 	colorKeyed drawOn: canvas.
 	self assert: (canvas pixelAt: Point zero) equals: Color black! !
-!Graphics.Tests.BitmapTest categoriesFor: #testAsColorKeyedBitmap!private!unit tests! !
+!Graphics.Tests.BitmapTest categoriesForMethods!
+testAsColorKeyedBitmap!private!unit tests! !
+!
 

@@ -46,10 +46,12 @@ oldColor: anInteger
 	"Set the receiver's 'oldColor' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_oldColor put: anInteger! !
-!Graphics.Gdiplus.GpColorMap categoriesFor: #newColor!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorMap categoriesFor: #newColor:!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorMap categoriesFor: #oldColor!**compiled accessors**!public! !
-!Graphics.Gdiplus.GpColorMap categoriesFor: #oldColor:!**compiled accessors**!public! !
+!Graphics.Gdiplus.GpColorMap categoriesForMethods!
+newColor!**compiled accessors**!public! !
+newColor:!**compiled accessors**!public! !
+oldColor!**compiled accessors**!public! !
+oldColor:!**compiled accessors**!public! !
+!
 
 !Graphics.Gdiplus.GpColorMap class methodsFor!
 
@@ -75,6 +77,8 @@ defineFields
 
 getFieldNames
 	^#(#oldColor #newColor)! !
-!Graphics.Gdiplus.GpColorMap class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!Graphics.Gdiplus.GpColorMap class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!Graphics.Gdiplus.GpColorMap class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

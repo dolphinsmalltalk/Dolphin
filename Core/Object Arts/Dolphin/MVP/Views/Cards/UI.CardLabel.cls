@@ -55,15 +55,17 @@ text
 
 text: aString 
 	text := aString! !
-!UI.CardLabel categoriesFor: #displayOn:!displaying!public! !
-!UI.CardLabel categoriesFor: #helpId!public! !
-!UI.CardLabel categoriesFor: #helpId:!public! !
-!UI.CardLabel categoriesFor: #icon!accessing!public! !
-!UI.CardLabel categoriesFor: #iconBlock!accessing!public! !
-!UI.CardLabel categoriesFor: #iconBlock:!accessing!public! !
-!UI.CardLabel categoriesFor: #printOn:!printing!public! !
-!UI.CardLabel categoriesFor: #text!accessing!public! !
-!UI.CardLabel categoriesFor: #text:!accessing!public! !
+!UI.CardLabel categoriesForMethods!
+displayOn:!displaying!public! !
+helpId!public! !
+helpId:!public! !
+icon!accessing!public! !
+iconBlock!accessing!public! !
+iconBlock:!accessing!public! !
+printOn:!printing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 UI.CardLabel methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
 
@@ -95,9 +97,11 @@ text: aString iconBlock: aNiladicValuable
 		text: aString;
 		iconBlock: aNiladicValuable;
 		yourself! !
-!UI.CardLabel class categoriesFor: #new!instance creation!public! !
-!UI.CardLabel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!UI.CardLabel class categoriesFor: #stbVersion!binary filing!public! !
-!UI.CardLabel class categoriesFor: #text:!instance creation!public! !
-!UI.CardLabel class categoriesFor: #text:iconBlock:!instance creation!public! !
+!UI.CardLabel class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+text:!instance creation!public! !
+text:iconBlock:!instance creation!public! !
+!
 

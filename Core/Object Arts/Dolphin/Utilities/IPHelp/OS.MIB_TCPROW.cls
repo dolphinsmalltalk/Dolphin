@@ -73,14 +73,16 @@ portName
 	| psrvent |
 	psrvent := Ws2_32 getservbyport: self dwLocalPort proto: 'tcp'.
 	^psrvent isNull ifFalse: [psrvent s_name]! !
-!OS.MIB_TCPROW categoriesFor: #displayOn:!public! !
-!OS.MIB_TCPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
-!OS.MIB_TCPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
-!OS.MIB_TCPROW categoriesFor: #dwRemoteAddr!**compiled accessors**!public! !
-!OS.MIB_TCPROW categoriesFor: #dwRemotePort!**compiled accessors**!public! !
-!OS.MIB_TCPROW categoriesFor: #dwState!**compiled accessors**!public! !
-!OS.MIB_TCPROW categoriesFor: #port!accessing!public! !
-!OS.MIB_TCPROW categoriesFor: #portName!accessing!public! !
+!OS.MIB_TCPROW categoriesForMethods!
+displayOn:!public! !
+dwLocalAddr!**compiled accessors**!public! !
+dwLocalPort!**compiled accessors**!public! !
+dwRemoteAddr!**compiled accessors**!public! !
+dwRemotePort!**compiled accessors**!public! !
+dwState!**compiled accessors**!public! !
+port!accessing!public! !
+portName!accessing!public! !
+!
 
 !OS.MIB_TCPROW class methodsFor!
 
@@ -118,6 +120,8 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort)! !
-!OS.MIB_TCPROW class categoriesFor: #defineFields!initializing!public! !
-!OS.MIB_TCPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.MIB_TCPROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

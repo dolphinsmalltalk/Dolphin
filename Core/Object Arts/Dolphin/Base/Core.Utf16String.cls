@@ -366,37 +366,39 @@ wordAtOffset: anInteger put: anObject
 
 	<primitive: 125>
 	^self primitiveFailed: _failureCode! !
-!Core.Utf16String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Core.Utf16String categoriesFor: #asByteString:!converting!private! !
-!Core.Utf16String categoriesFor: #asLowercase!converting!public! !
-!Core.Utf16String categoriesFor: #asUppercase!converting!public! !
-!Core.Utf16String categoriesFor: #asUtf16String!converting!public! !
-!Core.Utf16String categoriesFor: #at:!accessing!public! !
-!Core.Utf16String categoriesFor: #before:ifAbsent:!public!searching! !
-!Core.Utf16String categoriesFor: #bom!constants!encode/decode!private! !
-!Core.Utf16String categoriesFor: #byteSize!accessing!private! !
-!Core.Utf16String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Core.Utf16String categoriesFor: #countElements!accessing!public! !
-!Core.Utf16String categoriesFor: #decodeAt:!encode/decode!private! !
-!Core.Utf16String categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Core.Utf16String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Core.Utf16String categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!Core.Utf16String categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!Core.Utf16String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Core.Utf16String categoriesFor: #findString:startingAt:!public!searching! !
-!Core.Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
-!Core.Utf16String categoriesFor: #isLeadCodeUnit:!encode/decode!private!testing! !
-!Core.Utf16String categoriesFor: #maxEncoding!constants!private! !
-!Core.Utf16String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!Core.Utf16String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Core.Utf16String categoriesFor: #resize:!mutating!public! !
-!Core.Utf16String categoriesFor: #reversedFrom:to:!copying!public! !
-!Core.Utf16String categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!Core.Utf16String categoriesFor: #stbSaveOn:!binary filing!public! !
-!Core.Utf16String categoriesFor: #strcspn:start:!private!searching! !
-!Core.Utf16String categoriesFor: #strlen!accessing!private! !
-!Core.Utf16String categoriesFor: #wordAtOffset:!accessing!primitives!private! !
-!Core.Utf16String categoriesFor: #wordAtOffset:put:!accessing!primitives!private! !
+!Core.Utf16String categoriesForMethods!
+_beginsString:!comparing!double dispatch!private! !
+asByteString:!converting!private! !
+asLowercase!converting!public! !
+asUppercase!converting!public! !
+asUtf16String!converting!public! !
+at:!accessing!public! !
+before:ifAbsent:!public!searching! !
+bom!constants!encode/decode!private! !
+byteSize!accessing!private! !
+copyToBuffer:ofSize:!copying!private! !
+countElements!accessing!public! !
+decodeAt:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+encodedAt:put:!accessing!encode/decode!private! !
+encodedSizeAt:!encode/decode!private! !
+encodedSizeOf:!encode/decode!private! !
+encodeOn:put:!encode/decode!private! !
+findString:startingAt:!public!searching! !
+indexOfSubCollection:startingAt:!public!searching! !
+isLeadCodeUnit:!encode/decode!private!testing! !
+maxEncoding!constants!private! !
+nextIndexOfCharacter:from:to:!private!searching! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+resize:!mutating!public! !
+reversedFrom:to:!copying!public! !
+skipEncodingMarkerFrom:!encode/decode!private! !
+stbSaveOn:!binary filing!public! !
+strcspn:start:!private!searching! !
+strlen!accessing!private! !
+wordAtOffset:!accessing!primitives!private! !
+wordAtOffset:put:!accessing!primitives!private! !
+!
 
 !Core.Utf16String class methodsFor!
 
@@ -505,15 +507,17 @@ with: aCharacter
 			[(self new: 2)
 				encodedAt: 1 put: aCharacter;
 				yourself]! !
-!Core.Utf16String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!Core.Utf16String class categoriesFor: #codePage!constants!public! !
-!Core.Utf16String class categoriesFor: #coerceString:!instance creation!public! !
-!Core.Utf16String class categoriesFor: #elementSize!constants!public! !
-!Core.Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
-!Core.Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
-!Core.Utf16String class categoriesFor: #fromAtomId:!instance creation!public! !
-!Core.Utf16String class categoriesFor: #fromBytes:codePage:!instance creation!public! !
-!Core.Utf16String class categoriesFor: #fromUtf16String:!instance creation!public! !
-!Core.Utf16String class categoriesFor: #initialize!development!initializing!public! !
-!Core.Utf16String class categoriesFor: #with:!instance creation!public! !
+!Core.Utf16String class categoriesForMethods!
+characterForCodeUnit:!enquiries!public! !
+codePage!constants!public! !
+coerceString:!instance creation!public! !
+elementSize!constants!public! !
+fromAddress:!instance creation!public! !
+fromAddress:length:!instance creation!public! !
+fromAtomId:!instance creation!public! !
+fromBytes:codePage:!instance creation!public! !
+fromUtf16String:!instance creation!public! !
+initialize!development!initializing!public! !
+with:!instance creation!public! !
+!
 

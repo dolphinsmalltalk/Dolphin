@@ -142,27 +142,29 @@ subNames
 	on category separator."
 
 	^self class separator split: self name! !
-!Core.Category categoriesFor: #<=!comparing!public! !
-!Core.Category categoriesFor: #=!comparing!public! !
-!Core.Category categoriesFor: #acceptsAdditions!public!testing! !
-!Core.Category categoriesFor: #addClass:!adding!public! !
-!Core.Category categoriesFor: #asString!converting!public! !
-!Core.Category categoriesFor: #contents!enumerating!public! !
-!Core.Category categoriesFor: #displayOn:!displaying!public! !
-!Core.Category categoriesFor: #hash!comparing!public! !
-!Core.Category categoriesFor: #isEmpty!public!testing! !
-!Core.Category categoriesFor: #isIntermediate!private!testing! !
-!Core.Category categoriesFor: #isPermanent!accessing!public! !
-!Core.Category categoriesFor: #isPermanent:!accessing!public! !
-!Core.Category categoriesFor: #isPseud!public!testing! !
-!Core.Category categoriesFor: #isVirtual!public!testing! !
-!Core.Category categoriesFor: #localName!accessing!public! !
-!Core.Category categoriesFor: #name!accessing!public! !
-!Core.Category categoriesFor: #permanentCategories!accessing!public! !
-!Core.Category categoriesFor: #printOn:!printing!public! !
-!Core.Category categoriesFor: #removeClass:!development!public!removing! !
-!Core.Category categoriesFor: #setName:!initializing!private! !
-!Core.Category categoriesFor: #subNames!accessing!public! !
+!Core.Category categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+acceptsAdditions!public!testing! !
+addClass:!adding!public! !
+asString!converting!public! !
+contents!enumerating!public! !
+displayOn:!displaying!public! !
+hash!comparing!public! !
+isEmpty!public!testing! !
+isIntermediate!private!testing! !
+isPermanent!accessing!public! !
+isPermanent:!accessing!public! !
+isPseud!public!testing! !
+isVirtual!public!testing! !
+localName!accessing!public! !
+name!accessing!public! !
+permanentCategories!accessing!public! !
+printOn:!printing!public! !
+removeClass:!development!public!removing! !
+setName:!initializing!private! !
+subNames!accessing!public! !
+!
 
 !Core.Category class methodsFor!
 
@@ -206,11 +208,13 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	PermanentCategories := nil.! !
-!Core.Category class categoriesFor: #name:!instance creation!public! !
-!Core.Category class categoriesFor: #new!instance creation!public! !
-!Core.Category class categoriesFor: #newNamed:!instance creation!private! !
-!Core.Category class categoriesFor: #separator!constants!private! !
-!Core.Category class categoriesFor: #unclassified!instance creation!public! !
-!Core.Category class categoriesFor: #unclassifiedName!constants!private! !
-!Core.Category class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Core.Category class categoriesForMethods!
+name:!instance creation!public! !
+new!instance creation!public! !
+newNamed:!instance creation!private! !
+separator!constants!private! !
+unclassified!instance creation!public! !
+unclassifiedName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

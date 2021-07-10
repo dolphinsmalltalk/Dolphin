@@ -134,24 +134,26 @@ valueWithArguments: argArray
 	"Evaluate the receiver with an <Array> of arguments in argArray"
 
 	^self forwardTo: argArray first withArguments: (argArray copyFrom: 2)! !
-!Core.Message categoriesFor: #=!comparing!public! !
-!Core.Message categoriesFor: #argumentCount!accessing!public! !
-!Core.Message categoriesFor: #arguments!accessing!public! !
-!Core.Message categoriesFor: #arguments:!accessing!public! !
-!Core.Message categoriesFor: #asSymbol!converting!public! !
-!Core.Message categoriesFor: #forwardTo:!operations!public! !
-!Core.Message categoriesFor: #forwardTo:with:!operations!private! !
-!Core.Message categoriesFor: #forwardTo:withArguments:!operations!private! !
-!Core.Message categoriesFor: #hash!comparing!public! !
-!Core.Message categoriesFor: #messages!enquiries!public! !
-!Core.Message categoriesFor: #numArgs!accessing!public! !
-!Core.Message categoriesFor: #printOn:!printing!public! !
-!Core.Message categoriesFor: #selector!accessing!public! !
-!Core.Message categoriesFor: #selector:!accessing!public! !
-!Core.Message categoriesFor: #setSelector:arguments:!accessing!private! !
-!Core.Message categoriesFor: #value:!evaluating!public! !
-!Core.Message categoriesFor: #value:value:!evaluating!public! !
-!Core.Message categoriesFor: #valueWithArguments:!evaluating!public! !
+!Core.Message categoriesForMethods!
+=!comparing!public! !
+argumentCount!accessing!public! !
+arguments!accessing!public! !
+arguments:!accessing!public! !
+asSymbol!converting!public! !
+forwardTo:!operations!public! !
+forwardTo:with:!operations!private! !
+forwardTo:withArguments:!operations!private! !
+hash!comparing!public! !
+messages!enquiries!public! !
+numArgs!accessing!public! !
+printOn:!printing!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+setSelector:arguments:!accessing!private! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 Core.Message methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
 Core.Message methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
@@ -178,7 +180,9 @@ selector: aSymbol arguments: anArray
 
 	<primitive: 157>
 	^self new setSelector: aSymbol arguments: anArray! !
-!Core.Message class categoriesFor: #selector:!instance creation!public! !
-!Core.Message class categoriesFor: #selector:argument:!instance creation!public! !
-!Core.Message class categoriesFor: #selector:arguments:!instance creation!public! !
+!Core.Message class categoriesForMethods!
+selector:!instance creation!public! !
+selector:argument:!instance creation!public! !
+selector:arguments:!instance creation!public! !
+!
 

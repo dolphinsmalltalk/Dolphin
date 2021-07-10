@@ -60,15 +60,17 @@ snapshot
 
 storeOn: aStream 
 	self snapshot storeOn: aStream! !
-!Tools.PluggableEnvironment categoriesFor: #addMethods:!adding!public! !
-!Tools.PluggableEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!Tools.PluggableEnvironment categoriesFor: #classesDo:!accessing!public! !
-!Tools.PluggableEnvironment categoriesFor: #includesAnyMethodsOf:!private!testing! !
-!Tools.PluggableEnvironment categoriesFor: #includesClass:!public!testing! !
-!Tools.PluggableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!Tools.PluggableEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
-!Tools.PluggableEnvironment categoriesFor: #snapshot!accessing!private! !
-!Tools.PluggableEnvironment categoriesFor: #storeOn:!printing!public! !
+!Tools.PluggableEnvironment categoriesForMethods!
+addMethods:!adding!public! !
+classesAndSelectorsDo:!accessing!public! !
+classesDo:!accessing!public! !
+includesAnyMethodsOf:!private!testing! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+selectorsForClass:do:!enumerating!public! !
+snapshot!accessing!private! !
+storeOn:!printing!public! !
+!
 
 !Tools.PluggableEnvironment class methodsFor!
 
@@ -76,5 +78,7 @@ onEnvironment: anEnvironment select: aMonadicValuable
 	^(self onEnvironment: anEnvironment)
 		filter: aMonadicValuable;
 		yourself! !
-!Tools.PluggableEnvironment class categoriesFor: #onEnvironment:select:!instance creation!public! !
+!Tools.PluggableEnvironment class categoriesForMethods!
+onEnvironment:select:!instance creation!public! !
+!
 

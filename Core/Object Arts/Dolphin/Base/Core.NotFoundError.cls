@@ -25,7 +25,9 @@ receiver: anObject
 	"Set the object which generated the error to be anObject"
 	
 	receiver := anObject! !
-!Core.NotFoundError categoriesFor: #_descriptionFormat!displaying!public! !
-!Core.NotFoundError categoriesFor: #receiver!accessing!public! !
-!Core.NotFoundError categoriesFor: #receiver:!accessing!public! !
+!Core.NotFoundError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 

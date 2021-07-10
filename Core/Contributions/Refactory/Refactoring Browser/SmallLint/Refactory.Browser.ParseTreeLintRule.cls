@@ -31,10 +31,12 @@ resetResult
 	result
 		label: self name;
 		matcher: matcher! !
-!Refactory.Browser.ParseTreeLintRule categoriesFor: #checkMethod:!accessing!public! !
-!Refactory.Browser.ParseTreeLintRule categoriesFor: #defaultResultClass!private! !
-!Refactory.Browser.ParseTreeLintRule categoriesFor: #matcher:!initialize/release!public! !
-!Refactory.Browser.ParseTreeLintRule categoriesFor: #resetResult!initialize/release!public! !
+!Refactory.Browser.ParseTreeLintRule categoriesForMethods!
+checkMethod:!accessing!public! !
+defaultResultClass!private! !
+matcher:!initialize/release!public! !
+resetResult!initialize/release!public! !
+!
 
 !Refactory.Browser.ParseTreeLintRule class methodsFor!
 
@@ -637,50 +639,52 @@ whileTrue
 yourselfNotUsed
 	^self createParseTreeRule: #('`{:node | node parent isUsed not} yourself')
 		name: 'Doesn''t use the result of a yourself message'! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #anySatisfy!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #asOrderedCollectionNotNeeded!miscellaneous!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #assignmentInBlock!miscellaneous!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #assignmentInIfTrue!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #atIfAbsent!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #booleanPrecedence!bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #collectionProtocol!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #collectSelectNotUsed!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #consistencyCheck!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #createMatcherFor:method:!helpers!private! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #createParseTreeRule:method:name:!instance creation!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #createParseTreeRule:name:!instance creation!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #detectAnySatisfy!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #endTrueFalse!public!unnecessary code! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #equalNotUsed!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #equalsTrue!public!unnecessary code! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #extraBlock!public!unnecessary code! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #fileBlocks!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #guardingClause!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #ifTrueBlocks!miscellaneous!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #ifTrueReturns!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #indexOf!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #isArrayOfCharacters:!private!testing! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #isSearchingLiteralExpression:!private!testing! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #isSearchingLiteralExpression:for:!private!testing! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #literalArrayCharacters!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #minMax!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #missingYourself!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #modifiesCollection!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #modifiesTree:in:!helpers!private! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #precedence!miscellaneous!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #returnInEnsure!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #returnsIfTrue!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #searchingLiteral!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #sizeCheck!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #stringConcatenation!miscellaneous!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #threeElementPoint!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #toDo!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #toDoCollect!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #toDoWithIncrement!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #unnecessaryAssignment!public!unnecessary code! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #unoptimizedAndOr!miscellaneous!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #unoptimizedToDo!miscellaneous!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #usesAdd!possible bugs!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #whileTrue!intention revealing!public! !
-!Refactory.Browser.ParseTreeLintRule class categoriesFor: #yourselfNotUsed!miscellaneous!public! !
+!Refactory.Browser.ParseTreeLintRule class categoriesForMethods!
+anySatisfy!intention revealing!public! !
+asOrderedCollectionNotNeeded!miscellaneous!public! !
+assignmentInBlock!miscellaneous!public! !
+assignmentInIfTrue!intention revealing!public! !
+atIfAbsent!intention revealing!public! !
+booleanPrecedence!bugs!public! !
+collectionProtocol!intention revealing!public! !
+collectSelectNotUsed!intention revealing!public! !
+consistencyCheck!intention revealing!public! !
+createMatcherFor:method:!helpers!private! !
+createParseTreeRule:method:name:!instance creation!public! !
+createParseTreeRule:name:!instance creation!public! !
+detectAnySatisfy!intention revealing!public! !
+endTrueFalse!public!unnecessary code! !
+equalNotUsed!possible bugs!public! !
+equalsTrue!public!unnecessary code! !
+extraBlock!public!unnecessary code! !
+fileBlocks!possible bugs!public! !
+guardingClause!intention revealing!public! !
+ifTrueBlocks!miscellaneous!public! !
+ifTrueReturns!intention revealing!public! !
+indexOf!intention revealing!public! !
+isArrayOfCharacters:!private!testing! !
+isSearchingLiteralExpression:!private!testing! !
+isSearchingLiteralExpression:for:!private!testing! !
+literalArrayCharacters!intention revealing!public! !
+minMax!intention revealing!public! !
+missingYourself!possible bugs!public! !
+modifiesCollection!possible bugs!public! !
+modifiesTree:in:!helpers!private! !
+precedence!miscellaneous!public! !
+returnInEnsure!possible bugs!public! !
+returnsIfTrue!possible bugs!public! !
+searchingLiteral!intention revealing!public! !
+sizeCheck!intention revealing!public! !
+stringConcatenation!miscellaneous!public! !
+threeElementPoint!possible bugs!public! !
+toDo!intention revealing!public! !
+toDoCollect!intention revealing!public! !
+toDoWithIncrement!intention revealing!public! !
+unnecessaryAssignment!public!unnecessary code! !
+unoptimizedAndOr!miscellaneous!public! !
+unoptimizedToDo!miscellaneous!public! !
+usesAdd!possible bugs!public! !
+whileTrue!intention revealing!public! !
+yourselfNotUsed!miscellaneous!public! !
+!
 

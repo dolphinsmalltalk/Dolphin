@@ -68,17 +68,19 @@ removeClass: class
 	"Remove the <ClassDescription>, class, from the classes 'held' by the receiver."
 
 	^self shouldNotImplement! !
-!Tools.IntermediateCategory categoriesFor: #acceptsAdditions!public!testing! !
-!Tools.IntermediateCategory categoriesFor: #addClass:!adding!public! !
-!Tools.IntermediateCategory categoriesFor: #addMethod:!adding!public! !
-!Tools.IntermediateCategory categoriesFor: #addMethodSilently:!adding!private! !
-!Tools.IntermediateCategory categoriesFor: #contents!enumerating!public! !
-!Tools.IntermediateCategory categoriesFor: #includesMethod:!public!testing! !
-!Tools.IntermediateCategory categoriesFor: #isEmpty!public!testing! !
-!Tools.IntermediateCategory categoriesFor: #isIntermediate!private!testing! !
-!Tools.IntermediateCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!Tools.IntermediateCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!Tools.IntermediateCategory categoriesFor: #removeClass:!development!public!removing! !
+!Tools.IntermediateCategory categoriesForMethods!
+acceptsAdditions!public!testing! !
+addClass:!adding!public! !
+addMethod:!adding!public! !
+addMethodSilently:!adding!private! !
+contents!enumerating!public! !
+includesMethod:!public!testing! !
+isEmpty!public!testing! !
+isIntermediate!private!testing! !
+methodsInBehavior:!enumerating!public! !
+methodsInBehavior:do:!enumerating!public! !
+removeClass:!development!public!removing! !
+!
 
 !Tools.IntermediateCategory class methodsFor!
 
@@ -87,5 +89,7 @@ name: categoryName
 	<readableString> name, categoryName."
 
 	^self newNamed: categoryName! !
-!Tools.IntermediateCategory class categoriesFor: #name:!instance creation!public! !
+!Tools.IntermediateCategory class categoriesForMethods!
+name:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestCase subclass: #'STON.Tests.CStyleCommentsSkipStreamTest'
 	instanceVariableNames: ''
@@ -82,10 +82,12 @@ testSTON
 		equals: 'abcd'.
 	self assert: (STON fromStream: (CStyleCommentsSkipStream on: '123//456' readStream)) equals: 123.
 	self should: [STON fromStream: (CStyleCommentsSkipStream on: '//456' readStream)] raise: ReaderError! !
-!STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testBlockReading!public!testing! !
-!STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testCommentInString!public!testing! !
-!STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testMultiLineComment!public!testing! !
-!STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testNonComment!public!testing! !
-!STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testSingleLineComment!public!testing! !
-!STON.Tests.CStyleCommentsSkipStreamTest categoriesFor: #testSTON!public!testing! !
+!STON.Tests.CStyleCommentsSkipStreamTest categoriesForMethods!
+testBlockReading!public!testing! !
+testCommentInString!public!testing! !
+testMultiLineComment!public!testing! !
+testNonComment!public!testing! !
+testSingleLineComment!public!testing! !
+testSTON!public!testing! !
+!
 

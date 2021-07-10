@@ -83,16 +83,18 @@ TokenBindingSize: anInteger
 	"Set the receiver's 'TokenBindingSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_TokenBindingSize put: anInteger! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #KeyType!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #KeyType:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TlsUnique!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TlsUnique:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TlsUniqueSize!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TlsUniqueSize:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TokenBinding!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TokenBinding:!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TokenBindingSize!**compiled accessors**!public! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TokenBindingSize:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO categoriesForMethods!
+KeyType!**compiled accessors**!public! !
+KeyType:!**compiled accessors**!public! !
+TlsUnique!**compiled accessors**!public! !
+TlsUnique:!**compiled accessors**!public! !
+TlsUniqueSize!**compiled accessors**!public! !
+TlsUniqueSize:!**compiled accessors**!public! !
+TokenBinding!**compiled accessors**!public! !
+TokenBinding:!**compiled accessors**!public! !
+TokenBindingSize!**compiled accessors**!public! !
+TokenBindingSize:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO class methodsFor!
 
@@ -121,6 +123,8 @@ defineFields
 
 getFieldNames
 	^#(#TokenBinding #TokenBindingSize #TlsUnique #TlsUniqueSize #KeyType)! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

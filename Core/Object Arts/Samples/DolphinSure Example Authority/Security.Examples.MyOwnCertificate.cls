@@ -37,9 +37,11 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
-!Security.Examples.MyOwnCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!Security.Examples.MyOwnCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!Security.Examples.MyOwnCertificate categoriesFor: #purpose!accessing!public! !
+!Security.Examples.MyOwnCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+imageAttributes!drawing!helpers!private! !
+purpose!accessing!public! !
+!
 
 !Security.Examples.MyOwnCertificate class methodsFor!
 
@@ -131,9 +133,11 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!Security.Examples.MyOwnCertificate class categoriesFor: #info:!instance creation!public! !
-!Security.Examples.MyOwnCertificate class categoriesFor: #info:authority:authorityPrivateKey:!instance creation!public! !
-!Security.Examples.MyOwnCertificate class categoriesFor: #rootCertificateClass!instance creation!public! !
-!Security.Examples.MyOwnCertificate class categoriesFor: #serial:owner:details:!operations!public! !
-!Security.Examples.MyOwnCertificate class categoriesFor: #validYears!constants!private! !
+!Security.Examples.MyOwnCertificate class categoriesForMethods!
+info:!instance creation!public! !
+info:authority:authorityPrivateKey:!instance creation!public! !
+rootCertificateClass!instance creation!public! !
+serial:owner:details:!operations!public! !
+validYears!constants!private! !
+!
 

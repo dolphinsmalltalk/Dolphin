@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MultipleSelectionListBoxTest subclass: #MultipleSelectionListViewTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ MultipleSelectionListViewTest comment: 'Test that the behaviour of the deprecate
 
 classToTest
 	^MultipleSelectionListView! !
-!MultipleSelectionListViewTest categoriesFor: #classToTest!constants!private! !
+!MultipleSelectionListViewTest categoriesForMethods!
+classToTest!constants!private! !
+!
 

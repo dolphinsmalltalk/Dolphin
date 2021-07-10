@@ -38,10 +38,12 @@ item: aTVITEMEXW
 		from: ##(_OffsetOf_item + 1)
 		to: ##(_OffsetOf_item + TVITEMEXW basicByteSize)
 		startingAt: 1! !
-!OS.TVINSERTSTRUCTW categoriesFor: #hInsertAfter:!**compiled accessors**!public! !
-!OS.TVINSERTSTRUCTW categoriesFor: #hParent:!**compiled accessors**!public! !
-!OS.TVINSERTSTRUCTW categoriesFor: #item!**compiled accessors**!public! !
-!OS.TVINSERTSTRUCTW categoriesFor: #item:!**compiled accessors**!public! !
+!OS.TVINSERTSTRUCTW categoriesForMethods!
+hInsertAfter:!**compiled accessors**!public! !
+hParent:!**compiled accessors**!public! !
+item!**compiled accessors**!public! !
+item:!**compiled accessors**!public! !
+!
 
 !OS.TVINSERTSTRUCTW class methodsFor!
 
@@ -63,6 +65,8 @@ defineFields
 
 getFieldNames
 	^#(#hParent #hInsertAfter #item)! !
-!OS.TVINSERTSTRUCTW class categoriesFor: #defineFields!public!template definition! !
-!OS.TVINSERTSTRUCTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.TVINSERTSTRUCTW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

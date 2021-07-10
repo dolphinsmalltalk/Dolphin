@@ -37,8 +37,10 @@ Level: anInteger
 	"Set the receiver's 'Level' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Level put: anInteger! !
-!WinHttpServer.HTTP_PROTECTION_LEVEL_INFO categoriesFor: #Level!**compiled accessors**!public! !
-!WinHttpServer.HTTP_PROTECTION_LEVEL_INFO categoriesFor: #Level:!**compiled accessors**!public! !
+!WinHttpServer.HTTP_PROTECTION_LEVEL_INFO categoriesForMethods!
+Level!**compiled accessors**!public! !
+Level:!**compiled accessors**!public! !
+!
 
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class methodsFor!
 
@@ -64,7 +66,9 @@ getFieldNames
 
 propertyId
 	^HttpServerProtectionLevelProperty! !
-!WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #propertyId!public! !
+!WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

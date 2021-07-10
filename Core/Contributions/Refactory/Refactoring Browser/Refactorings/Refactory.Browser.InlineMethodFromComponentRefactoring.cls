@@ -122,16 +122,18 @@ transform
 	self abstractVariableReferences.
 	self renameSelfReferences.
 	super transform! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #addArgumentToSelector:!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToInlineParseTree!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToSourceMessage!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #inlineClass!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #isOverridden!public! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #newNameForSelf!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #renameSelfReferences!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #safeVariableNameBasedOn:!public!transforming! !
-!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesFor: #transform!public!transforming! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring categoriesForMethods!
+abstractVariableReferences!public!transforming! !
+addArgumentToSelector:!public!transforming! !
+addSelfReferenceToInlineParseTree!public!transforming! !
+addSelfReferenceToSourceMessage!public!transforming! !
+checkSuperMessages!public!transforming! !
+findSelectedMessage!public!transforming! !
+inlineClass!public!transforming! !
+isOverridden!public! !
+newNameForSelf!public!transforming! !
+renameSelfReferences!public!transforming! !
+safeVariableNameBasedOn:!public!transforming! !
+transform!public!transforming! !
+!
 

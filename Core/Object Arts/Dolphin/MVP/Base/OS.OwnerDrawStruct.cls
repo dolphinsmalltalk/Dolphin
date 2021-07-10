@@ -30,9 +30,11 @@ itemID
 	"Answer the <Integer> value of the receiver's 'itemID' field."
 
 	^bytes dwordAtOffset: _OffsetOf_itemID! !
-!OS.OwnerDrawStruct categoriesFor: #CtlID!**compiled accessors**!public! !
-!OS.OwnerDrawStruct categoriesFor: #CtlType!**compiled accessors**!public! !
-!OS.OwnerDrawStruct categoriesFor: #itemID!**compiled accessors**!public! !
+!OS.OwnerDrawStruct categoriesForMethods!
+CtlID!**compiled accessors**!public! !
+CtlType!**compiled accessors**!public! !
+itemID!**compiled accessors**!public! !
+!
 
 !OS.OwnerDrawStruct class methodsFor!
 
@@ -48,6 +50,8 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID)! !
-!OS.OwnerDrawStruct class categoriesFor: #defineFields!public!template definition! !
-!OS.OwnerDrawStruct class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.OwnerDrawStruct class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

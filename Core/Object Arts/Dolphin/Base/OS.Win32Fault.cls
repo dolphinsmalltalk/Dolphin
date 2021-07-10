@@ -63,16 +63,18 @@ tagFromExceptionCode: anInteger
 	code, anInteger."
 
 	^HRESULT ntStatusCode: anInteger! !
-!OS.Win32Fault categoriesFor: #_descriptionArguments!displaying!public! !
-!OS.Win32Fault categoriesFor: #_descriptionFormat!displaying!public! !
-!OS.Win32Fault categoriesFor: #exceptionAddress!accessing!public! !
-!OS.Win32Fault categoriesFor: #exceptionCode!accessing!public! !
-!OS.Win32Fault categoriesFor: #exceptionName!accessing!public! !
-!OS.Win32Fault categoriesFor: #exceptionRecord!accessing!public! !
-!OS.Win32Fault categoriesFor: #exceptionRecord:!accessing!private! !
-!OS.Win32Fault categoriesFor: #initialize!initializing!public! !
-!OS.Win32Fault categoriesFor: #moduleFileName!accessing!public! !
-!OS.Win32Fault categoriesFor: #tagFromExceptionCode:!accessing!private! !
+!OS.Win32Fault categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+exceptionAddress!accessing!public! !
+exceptionCode!accessing!public! !
+exceptionName!accessing!public! !
+exceptionRecord!accessing!public! !
+exceptionRecord:!accessing!private! !
+initialize!initializing!public! !
+moduleFileName!accessing!public! !
+tagFromExceptionCode:!accessing!private! !
+!
 
 !OS.Win32Fault class methodsFor!
 
@@ -103,6 +105,8 @@ signal: messageText with: anEXCEPTION_RECORD
 	^self new 
 		exceptionRecord: anEXCEPTION_RECORD;
 		signal! !
-!OS.Win32Fault class categoriesFor: #initialize!development!initializing!private! !
-!OS.Win32Fault class categoriesFor: #signal:with:!instance creation!public! !
+!OS.Win32Fault class categoriesForMethods!
+initialize!development!initializing!private! !
+signal:with:!instance creation!public! !
+!
 

@@ -22,6 +22,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IErrorInfo! !
-!OS.COM.IEnumErrorInfo class categoriesFor: #defineFunctions!initializing!public! !
-!OS.COM.IEnumErrorInfo class categoriesFor: #elementClass!constants!public! !
+!OS.COM.IEnumErrorInfo class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

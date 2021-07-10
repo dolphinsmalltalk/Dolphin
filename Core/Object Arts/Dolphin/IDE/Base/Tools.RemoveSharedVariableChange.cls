@@ -19,13 +19,17 @@ changeString
 
 primitiveExecute
 	self environment removeLocalBindingFor: variable! !
-!Tools.RemoveSharedVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!Tools.RemoveSharedVariableChange categoriesFor: #changeString!printing!public! !
-!Tools.RemoveSharedVariableChange categoriesFor: #primitiveExecute!private! !
+!Tools.RemoveSharedVariableChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+primitiveExecute!private! !
+!
 
 !Tools.RemoveSharedVariableChange class methodsFor!
 
 removeSharedVariable: aVariable from: aNamespace
 	^self new setVariable: aVariable environment: aNamespace! !
-!Tools.RemoveSharedVariableChange class categoriesFor: #removeSharedVariable:from:!instance creation!public! !
+!Tools.RemoveSharedVariableChange class categoriesForMethods!
+removeSharedVariable:from:!instance creation!public! !
+!
 

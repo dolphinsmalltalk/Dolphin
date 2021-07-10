@@ -69,14 +69,16 @@ removeAtIndex: anInteger
 	Raise an error if there is no element indexed by anInteger."
 
 	^self subclassResponsibility! !
-!Kernel.ObjectRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!Kernel.ObjectRegistry categoriesFor: #at:!accessing!debugger-step through!public! !
-!Kernel.ObjectRegistry categoriesFor: #at:ifAbsent:!accessing!public! !
-!Kernel.ObjectRegistry categoriesFor: #indexOf:ifAbsent:!accessing!public! !
-!Kernel.ObjectRegistry categoriesFor: #initialize:!initializing!private! !
-!Kernel.ObjectRegistry categoriesFor: #lookup:!public! !
-!Kernel.ObjectRegistry categoriesFor: #remove:ifAbsent:!public!removing! !
-!Kernel.ObjectRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!Kernel.ObjectRegistry categoriesForMethods!
+addAnsweringIndex:!adding!public! !
+at:!accessing!debugger-step through!public! !
+at:ifAbsent:!accessing!public! !
+indexOf:ifAbsent:!accessing!public! !
+initialize:!initializing!private! !
+lookup:!public! !
+remove:ifAbsent:!public!removing! !
+removeAtIndex:!public!removing! !
+!
 
 !Kernel.ObjectRegistry class methodsFor!
 
@@ -95,7 +97,9 @@ new: anInteger
 	for anInteger elements."
 
 	^self basicNew initialize: anInteger! !
-!Kernel.ObjectRegistry class categoriesFor: #defaultCapacity!constants!private! !
-!Kernel.ObjectRegistry class categoriesFor: #new!instance creation!public! !
-!Kernel.ObjectRegistry class categoriesFor: #new:!instance creation!public! !
+!Kernel.ObjectRegistry class categoriesForMethods!
+defaultCapacity!constants!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

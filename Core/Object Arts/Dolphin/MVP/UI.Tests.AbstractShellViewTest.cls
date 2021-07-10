@@ -54,10 +54,12 @@ tearDown
 
 workAreaNearest: aPoint
 	^(DisplayMonitor nearestPoint: aPoint) workArea! !
-!UI.Tests.AbstractShellViewTest categoriesFor: #createShell:text:!helpers!private! !
-!UI.Tests.AbstractShellViewTest categoriesFor: #getSecondaryMonitorIfAvailable!helpers!private! !
-!UI.Tests.AbstractShellViewTest categoriesFor: #setUp!public!running! !
-!UI.Tests.AbstractShellViewTest categoriesFor: #setUpFakeUserLibrary!helpers!private! !
-!UI.Tests.AbstractShellViewTest categoriesFor: #tearDown!public!running! !
-!UI.Tests.AbstractShellViewTest categoriesFor: #workAreaNearest:!helpers!private! !
+!UI.Tests.AbstractShellViewTest categoriesForMethods!
+createShell:text:!helpers!private! !
+getSecondaryMonitorIfAvailable!helpers!private! !
+setUp!public!running! !
+setUpFakeUserLibrary!helpers!private! !
+tearDown!public!running! !
+workAreaNearest:!helpers!private! !
+!
 

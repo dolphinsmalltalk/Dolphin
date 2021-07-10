@@ -30,9 +30,11 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^sortBlock! !
-!Kernel.PluggableSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!Kernel.PluggableSortAlgorithm categoriesFor: #setSortBlock:!initializing!private! !
-!Kernel.PluggableSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!Kernel.PluggableSortAlgorithm categoriesForMethods!
+compare:with:!comparing!public! !
+setSortBlock:!initializing!private! !
+sortBlock!accessing!public! !
+!
 
 !Kernel.PluggableSortAlgorithm class methodsFor!
 
@@ -48,6 +50,8 @@ newSortBlock: aDyadicValuable
 	^(self basicNew)
 		setSortBlock: aDyadicValuable;
 		yourself! !
-!Kernel.PluggableSortAlgorithm class categoriesFor: #new!public! !
-!Kernel.PluggableSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
+!Kernel.PluggableSortAlgorithm class categoriesForMethods!
+new!public! !
+newSortBlock:!instance creation!public! !
+!
 

@@ -101,14 +101,16 @@ GetLibStatistics: pcUniqueNames pcchUniqueNames: pcchUniqueNames
 
 	<virtual stdcall: hresult 15 dword* dword*>
 	^self invalidCall: _failureCode! !
-!OS.COM.ITypeLib2 categoriesFor: #getAllCustData!**auto generated**!public! !
-!OS.COM.ITypeLib2 categoriesFor: #GetAllCustData:!COM Interfaces-OAIDL.ITypeLib2!private! !
-!OS.COM.ITypeLib2 categoriesFor: #getCustData:!**auto generated**!public! !
-!OS.COM.ITypeLib2 categoriesFor: #GetCustData:pVarVal:!COM Interfaces-OAIDL.ITypeLib2!private! !
-!OS.COM.ITypeLib2 categoriesFor: #getDocumentation2:lcid:!**auto generated**!public! !
-!OS.COM.ITypeLib2 categoriesFor: #GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:!COM Interfaces-OAIDL.ITypeLib2!private! !
-!OS.COM.ITypeLib2 categoriesFor: #getLibStatistics!accessing!public! !
-!OS.COM.ITypeLib2 categoriesFor: #GetLibStatistics:pcchUniqueNames:!COM Interfaces-OAIDL.ITypeLib2!private! !
+!OS.COM.ITypeLib2 categoriesForMethods!
+getAllCustData!**auto generated**!public! !
+GetAllCustData:!COM Interfaces-OAIDL.ITypeLib2!private! !
+getCustData:!**auto generated**!public! !
+GetCustData:pVarVal:!COM Interfaces-OAIDL.ITypeLib2!private! !
+getDocumentation2:lcid:!**auto generated**!public! !
+GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:!COM Interfaces-OAIDL.ITypeLib2!private! !
+getLibStatistics!accessing!public! !
+GetLibStatistics:pcchUniqueNames:!COM Interfaces-OAIDL.ITypeLib2!private! !
+!
 
 !OS.COM.ITypeLib2 class methodsFor!
 
@@ -127,5 +129,7 @@ defineFunctions
 		defineFunction: #GetAllCustData:
 			argumentTypes: 'CUSTDATA*'
 ! !
-!OS.COM.ITypeLib2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!OS.COM.ITypeLib2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

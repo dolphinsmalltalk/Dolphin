@@ -110,17 +110,19 @@ rclBounds: aRECTL
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #aPolyCounts!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #aPolyCounts:!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #aptl!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #aptl:!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #aptlOffset!private! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #cptl!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #cptl:!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #nPolys!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #nPolys:!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #rclBounds!**compiled accessors**!public! !
-!OS.EMRPOLYPOLYLINE categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!OS.EMRPOLYPOLYLINE categoriesForMethods!
+aPolyCounts!**compiled accessors**!public! !
+aPolyCounts:!**compiled accessors**!public! !
+aptl!public! !
+aptl:!public! !
+aptlOffset!private! !
+cptl!**compiled accessors**!public! !
+cptl:!**compiled accessors**!public! !
+nPolys!**compiled accessors**!public! !
+nPolys:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !OS.EMRPOLYPOLYLINE class methodsFor!
 
@@ -164,7 +166,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^{EMR_POLYPOLYLINE. EMR_POLYPOLYGON}! !
-!OS.EMRPOLYPOLYLINE class categoriesFor: #defineFields!public!template definition! !
-!OS.EMRPOLYPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!OS.EMRPOLYPOLYLINE class categoriesFor: #iTypes!constants!public! !
+!OS.EMRPOLYPOLYLINE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

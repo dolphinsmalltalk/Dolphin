@@ -123,19 +123,21 @@ stbSaveOn: anSTBOutFiler
 	super stbSaveOn: anSTBOutFiler.
 
 ! !
-!External.ExternalMethod categoriesFor: #argsLen!accessing!private! !
-!External.ExternalMethod categoriesFor: #argumentTypes!accessing!private! !
-!External.ExternalMethod categoriesFor: #clear!operations!private! !
-!External.ExternalMethod categoriesFor: #descriptor!accessing!private! !
-!External.ExternalMethod categoriesFor: #descriptorClass!constants!private! !
-!External.ExternalMethod categoriesFor: #descriptorLiteral!accessing!private! !
-!External.ExternalMethod categoriesFor: #functionName!accessing!private! !
-!External.ExternalMethod categoriesFor: #isExternalCall!private!testing! !
-!External.ExternalMethod categoriesFor: #isVirtualFunction!private!testing! !
-!External.ExternalMethod categoriesFor: #printOn:!development!printing!public! !
-!External.ExternalMethod categoriesFor: #procAddress!accessing!private! !
-!External.ExternalMethod categoriesFor: #returnType!accessing!private! !
-!External.ExternalMethod categoriesFor: #stbSaveOn:!binary filing!public! !
+!External.ExternalMethod categoriesForMethods!
+argsLen!accessing!private! !
+argumentTypes!accessing!private! !
+clear!operations!private! !
+descriptor!accessing!private! !
+descriptorClass!constants!private! !
+descriptorLiteral!accessing!private! !
+functionName!accessing!private! !
+isExternalCall!private!testing! !
+isVirtualFunction!private!testing! !
+printOn:!development!printing!public! !
+procAddress!accessing!private! !
+returnType!accessing!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 !External.ExternalMethod class methodsFor!
 
@@ -165,5 +167,7 @@ initialize
 	ReturnTypeIndex := 8.
 	ReturnParmIndex := 7.
 	ArgumentStartIndex := 9! !
-!External.ExternalMethod class categoriesFor: #initialize!development!initializing!private! !
+!External.ExternalMethod class categoriesForMethods!
+initialize!development!initializing!private! !
+!
 

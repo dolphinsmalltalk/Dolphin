@@ -27,6 +27,8 @@ rightToLeft: aString
 	"Answers the result of converting aString to a Number."
 
 	^Number fromString: aString! !
-!UI.NumberToText categoriesFor: #leftToRight:!operations!public! !
-!UI.NumberToText categoriesFor: #rightToLeft:!operations!public! !
+!UI.NumberToText categoriesForMethods!
+leftToRight:!operations!public! !
+rightToLeft:!operations!public! !
+!
 

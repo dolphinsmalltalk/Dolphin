@@ -63,12 +63,14 @@ rcClip: aRECT
 		from: ##(_OffsetOf_rcClip + 1)
 		to: ##(_OffsetOf_rcClip + RECTL basicByteSize)
 		startingAt: 1! !
-!OS.DTBGOPTS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!OS.DTBGOPTS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!OS.DTBGOPTS categoriesFor: #dwSize!**compiled accessors**!public! !
-!OS.DTBGOPTS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OS.DTBGOPTS categoriesFor: #rcClip!**compiled accessors**!public! !
-!OS.DTBGOPTS categoriesFor: #rcClip:!**compiled accessors**!public! !
+!OS.DTBGOPTS categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+rcClip!**compiled accessors**!public! !
+rcClip:!**compiled accessors**!public! !
+!
 
 !OS.DTBGOPTS class methodsFor!
 
@@ -91,6 +93,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #rcClip)! !
-!OS.DTBGOPTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OS.DTBGOPTS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.DTBGOPTS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

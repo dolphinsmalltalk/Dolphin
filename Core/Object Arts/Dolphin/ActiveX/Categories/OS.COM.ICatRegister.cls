@@ -209,24 +209,26 @@ UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 
 	<virtual stdcall: hresult 9 guid* dword guid*>
 	^self invalidCall: _failureCode! !
-!OS.COM.ICatRegister categoriesFor: #buildCatIdArray:!helpers!private! !
-!OS.COM.ICatRegister categoriesFor: #registerCategories:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #RegisterCategories:rgCategoryInfo:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!OS.COM.ICatRegister categoriesFor: #registerCategory:description:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #registerCategory:description:locale:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #RegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!OS.COM.ICatRegister categoriesFor: #RegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!OS.COM.ICatRegister categoriesFor: #registerCoClass:categories:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #registerCoClass:category:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #registerCoClass:requiredCategories:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #revokeCategories:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #revokeCategory:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #revokeCoClass:categories:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #revokeCoClass:category:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #revokeCoClass:requiredCategories:!operations!public! !
-!OS.COM.ICatRegister categoriesFor: #UnRegisterCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!OS.COM.ICatRegister categoriesFor: #UnRegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!OS.COM.ICatRegister categoriesFor: #UnRegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!OS.COM.ICatRegister categoriesForMethods!
+buildCatIdArray:!helpers!private! !
+registerCategories:!operations!public! !
+RegisterCategories:rgCategoryInfo:!**auto generated**!COM Interfaces-ICatRegister!private! !
+registerCategory:description:!operations!public! !
+registerCategory:description:locale:!operations!public! !
+RegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+RegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+registerCoClass:categories:!operations!public! !
+registerCoClass:category:!operations!public! !
+registerCoClass:requiredCategories:!operations!public! !
+revokeCategories:!operations!public! !
+revokeCategory:!operations!public! !
+revokeCoClass:categories:!operations!public! !
+revokeCoClass:category:!operations!public! !
+revokeCoClass:requiredCategories:!operations!public! !
+UnRegisterCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+UnRegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+UnRegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!
 
 OS.COM.ICatRegister methodProtocol: #ICatRegister attributes: #(#readOnly) selectors: #(#RegisterCategories:rgCategoryInfo: #RegisterClassImplCategories:cCategories:rgcatid: #RegisterClassReqCategories:cCategories:rgcatid: #UnRegisterCategories:rgcatid: #UnRegisterClassImplCategories:cCategories:rgcatid: #UnRegisterClassReqCategories:cCategories:rgcatid:)!
 
@@ -279,8 +281,10 @@ new
 	"The receiver is a singleton."
 
 	^self shouldNotImplement! !
-!OS.COM.ICatRegister class categoriesFor: #current!instance creation!public! !
-!OS.COM.ICatRegister class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!OS.COM.ICatRegister class categoriesFor: #example1!examples!must strip!public! !
-!OS.COM.ICatRegister class categoriesFor: #new!instance creation!public! !
+!OS.COM.ICatRegister class categoriesForMethods!
+current!instance creation!public! !
+defineFunctions!**auto generated**!initializing!public! !
+example1!examples!must strip!public! !
+new!instance creation!public! !
+!
 

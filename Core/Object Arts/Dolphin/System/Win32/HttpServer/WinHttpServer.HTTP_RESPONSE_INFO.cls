@@ -73,14 +73,16 @@ Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #info!accessing!public! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #Length!**compiled accessors**!private! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #Length:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #pInfo!**compiled accessors**!private! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #pInfo:!**compiled accessors**!private! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #printFields:on:!development!printing!private! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #Type!**compiled accessors**!private! !
-!WinHttpServer.HTTP_RESPONSE_INFO categoriesFor: #Type:!**compiled accessors**!private! !
+!WinHttpServer.HTTP_RESPONSE_INFO categoriesForMethods!
+info!accessing!public! !
+Length!**compiled accessors**!private! !
+Length:!**compiled accessors**!private! !
+pInfo!**compiled accessors**!private! !
+pInfo:!**compiled accessors**!private! !
+printFields:on:!development!printing!private! !
+Type!**compiled accessors**!private! !
+Type:!**compiled accessors**!private! !
+!
 
 !WinHttpServer.HTTP_RESPONSE_INFO class methodsFor!
 
@@ -105,6 +107,8 @@ defineFields
 
 getFieldNames
 	^#(#Type #Length #pInfo)! !
-!WinHttpServer.HTTP_RESPONSE_INFO class categoriesFor: #defineFields!**auto generated**!private!template definition! !
-!WinHttpServer.HTTP_RESPONSE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WinHttpServer.HTTP_RESPONSE_INFO class categoriesForMethods!
+defineFields!**auto generated**!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

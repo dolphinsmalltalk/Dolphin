@@ -116,15 +116,17 @@ species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail)."
 
 	^Array! !
-!Core.WeakArray categoriesFor: #add:!adding!public! !
-!Core.WeakArray categoriesFor: #addAnsweringIndex:!adding!public! !
-!Core.WeakArray categoriesFor: #copyingClass!copying!private! !
-!Core.WeakArray categoriesFor: #corpsesDo:!enumerating!public! !
-!Core.WeakArray categoriesFor: #initialize!initializing!public! !
-!Core.WeakArray categoriesFor: #nilCorpsesAndDo:!enumerating!public! !
-!Core.WeakArray categoriesFor: #nonCorpsesDo:!enumerating!public! !
-!Core.WeakArray categoriesFor: #remove:ifAbsent:!private!removing! !
-!Core.WeakArray categoriesFor: #species!accessing!public! !
+!Core.WeakArray categoriesForMethods!
+add:!adding!public! !
+addAnsweringIndex:!adding!public! !
+copyingClass!copying!private! !
+corpsesDo:!enumerating!public! !
+initialize!initializing!public! !
+nilCorpsesAndDo:!enumerating!public! !
+nonCorpsesDo:!enumerating!public! !
+remove:ifAbsent:!private!removing! !
+species!accessing!public! !
+!
 
 !Core.WeakArray class methodsFor!
 
@@ -133,5 +135,7 @@ new: anInteger
 	The new instance is registered with the memory manager as a weakling"
 
 	^(super new: anInteger) initialize! !
-!Core.WeakArray class categoriesFor: #new:!instance creation!public! !
+!Core.WeakArray class categoriesForMethods!
+new:!instance creation!public! !
+!
 

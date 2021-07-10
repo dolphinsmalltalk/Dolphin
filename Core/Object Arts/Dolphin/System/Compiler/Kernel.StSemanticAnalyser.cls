@@ -735,79 +735,81 @@ visitVariableNode: aStVariableNode
 					(var writes isEmpty and: [(self isReceiverOfNilTest: aStVariableNode) not])
 						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aStVariableNode]]
 				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aStVariableNode]]]! !
-!Kernel.StSemanticAnalyser categoriesFor: #accessStaticVariable:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #addLiteral:value:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #addMessageToFrame:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #addToFrame:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #addToFrameStatic:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #annotations!accessing!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #assignStaticVariable:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #assignVariable:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #bindVariable:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #blockDepth!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkIsLiteralBlockHandler:forMessage:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkLiteralFrameSize:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMessage:hasMonadicBlockArg:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMessage:hasNiladicBlockArg:code:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMessage:hasNiladicOrMonadicBlockArg:code:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMessage:hasNonEmptyNiladicBlockArg:code:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMessageArgumentCount:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMessageHasNiladicBlockReceiver:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMessageHasNonEmptyNiladicBlockReceiver:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkMutatorMethod:!public! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkOptimizedKeywordMessages:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkOptimizedMessages:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkOptimizedUnaryMessages:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkRedefines:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkRestrictedSelectors:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #checkTryBlock:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #compilationErrorClass!constants!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #countOuterTemps!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #currentScope!accessing!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #errorAssignConstant:!error handling!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #errorBlock:!accessing!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #initialize!initializing!public! !
-!Kernel.StSemanticAnalyser categoriesFor: #isReceiverOfNilTest:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #isTempVariable:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #lineOfSourcePosition:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #methodClass!accessing!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #newLiteralsCollection!helpers!initializing!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #pushActiveFrame!instructions-stack ops!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #pushImmediate:!instructions-stack ops!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #pushSelf!instructions-stack ops!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #pushSuper!instructions-stack ops!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #readStaticVariable:!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #removeScope!helpers!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #restrictedSelectors!constants!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #scopes!accessing!public! !
-!Kernel.StSemanticAnalyser categoriesFor: #setMethodNode:methodClass:environment:context:pools:errorBlock:!initializing!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:!error handling!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:extra:!error handling!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:extras:!error handling!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #signalError:forNode:range:extras:!error handling!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #tempDecls!accessing!private! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitAnnotationNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitArgumentNodes:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitExternalCallNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitParameterNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitReturnNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitSelfVariableNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitSuperVariableNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitTempDeclNode:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitTemporaryNodes:!public!visiting! !
-!Kernel.StSemanticAnalyser categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!Kernel.StSemanticAnalyser categoriesForMethods!
+accessStaticVariable:!helpers!private! !
+addLiteral:value:!helpers!private! !
+addMessageToFrame:!helpers!private! !
+addToFrame:!helpers!private! !
+addToFrameStatic:!helpers!private! !
+annotations!accessing!private! !
+assignStaticVariable:!helpers!private! !
+assignVariable:!helpers!private! !
+bindVariable:!helpers!private! !
+blockDepth!helpers!private! !
+checkIsLiteralBlockHandler:forMessage:!helpers!private! !
+checkLiteralFrameSize:!helpers!private! !
+checkMessage:hasMonadicBlockArg:!helpers!private! !
+checkMessage:hasNiladicBlockArg:code:!helpers!private! !
+checkMessage:hasNiladicOrMonadicBlockArg:code:!helpers!private! !
+checkMessage:hasNonEmptyNiladicBlockArg:code:!helpers!private! !
+checkMessageArgumentCount:!helpers!private! !
+checkMessageHasNiladicBlockReceiver:!helpers!private! !
+checkMessageHasNonEmptyNiladicBlockReceiver:!helpers!private! !
+checkMutatorMethod:!public! !
+checkOptimizedKeywordMessages:!helpers!private! !
+checkOptimizedMessages:!helpers!private! !
+checkOptimizedUnaryMessages:!helpers!private! !
+checkRedefines:!helpers!private! !
+checkRestrictedSelectors:!helpers!private! !
+checkSupersend:!helpers!private! !
+checkTryBlock:!helpers!private! !
+compilationErrorClass!constants!private! !
+countOuterTemps!helpers!private! !
+currentScope!accessing!private! !
+errorAssignConstant:!error handling!private! !
+errorBlock:!accessing!private! !
+initialize!initializing!public! !
+isReceiverOfNilTest:!helpers!private! !
+isTempVariable:!helpers!private! !
+lineOfSourcePosition:!helpers!private! !
+methodClass!accessing!private! !
+newLiteralsCollection!helpers!initializing!private! !
+pushActiveFrame!instructions-stack ops!private! !
+pushImmediate:!instructions-stack ops!private! !
+pushSelf!instructions-stack ops!private! !
+pushSuper!instructions-stack ops!private! !
+readStaticVariable:!helpers!private! !
+removeScope!helpers!private! !
+restrictedSelectors!constants!private! !
+scopes!accessing!public! !
+setMethodNode:methodClass:environment:context:pools:errorBlock:!initializing!private! !
+signalError:forNode:!error handling!private! !
+signalError:forNode:extra:!error handling!private! !
+signalError:forNode:extras:!error handling!private! !
+signalError:forNode:range:extras:!error handling!private! !
+tempDecls!accessing!private! !
+visitAnnotationNode:!public!visiting! !
+visitArgumentNodes:!public!visiting! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitExternalArgTypeNode:!public!visiting! !
+visitExternalCallNode:!public!visiting! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitMethodNode:!public!visitor/double dispatching! !
+visitNode:!public!visiting! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitParameterNode:!public!visiting! !
+visitPrimitiveNode:!public!visiting! !
+visitReturnNode:!public!visiting! !
+visitSelfVariableNode:!public!visiting! !
+visitSequenceNode:!public!visitor/double dispatching! !
+visitSuperVariableNode:!public!visiting! !
+visitTempDeclNode:!public!visiting! !
+visitTemporaryNodes:!public!visiting! !
+visitVariableNode:!public!visitor/double dispatching! !
+!
 
 !Kernel.StSemanticAnalyser class methodsFor!
 
@@ -849,6 +851,8 @@ initialize
 	optimizedMessages do: [:each | restrictedSelectors addAll: each].
 	self addClassConstant: 'RestrictedSelectors' value: restrictedSelectors.
 	self addClassConstant: 'SpecialSelectors' value: VM specialSelectors! !
-!Kernel.StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:environment:context:pools:onError:!accessing!public! !
-!Kernel.StSemanticAnalyser class categoriesFor: #initialize!development!initializing!public! !
+!Kernel.StSemanticAnalyser class categoriesForMethods!
+analyzeParseTree:for:environment:context:pools:onError:!accessing!public! !
+initialize!development!initializing!public! !
+!
 

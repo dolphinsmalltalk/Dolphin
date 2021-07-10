@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Dictionary variableSubclass: #'STON.Tests.TestMap'
 	instanceVariableNames: ''
@@ -17,7 +17,9 @@ printElementsOn: stream
 		nextPut: $#;
 		print: self size;
 		nextPut: $)! !
-!STON.Tests.TestMap categoriesFor: #printElementsOn:!public! !
+!STON.Tests.TestMap categoriesForMethods!
+printElementsOn:!public! !
+!
 
 !STON.Tests.TestMap class methodsFor!
 
@@ -80,10 +82,12 @@ sizeFor: anInteger
 
 stonName
 	^ #TestMap! !
-!STON.Tests.TestMap class categoriesFor: #classTree!public!ston/core! !
-!STON.Tests.TestMap class categoriesFor: #classTree:!public!ston/core! !
-!STON.Tests.TestMap class categoriesFor: #classTreeExtended!public!ston/core! !
-!STON.Tests.TestMap class categoriesFor: #classTreeExtended:!public!ston/core! !
-!STON.Tests.TestMap class categoriesFor: #sizeFor:!instance creation!private! !
-!STON.Tests.TestMap class categoriesFor: #stonName!public!ston/core! !
+!STON.Tests.TestMap class categoriesForMethods!
+classTree!public!ston/core! !
+classTree:!public!ston/core! !
+classTreeExtended!public!ston/core! !
+classTreeExtended:!public!ston/core! !
+sizeFor:!instance creation!private! !
+stonName!public!ston/core! !
+!
 

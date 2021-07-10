@@ -19,7 +19,9 @@ pfnCallback: anExternalAddress
 	"Set the receiver's 'pfnCallback' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_pfnCallback put: anExternalAddress! !
-!OS.EDITSTREAM categoriesFor: #pfnCallback:!**compiled accessors**!public! !
+!OS.EDITSTREAM categoriesForMethods!
+pfnCallback:!**compiled accessors**!public! !
+!
 
 !OS.EDITSTREAM class methodsFor!
 
@@ -41,6 +43,8 @@ defineFields
 
 getFieldNames
 	^#(#pfnCallback)! !
-!OS.EDITSTREAM class categoriesFor: #defineFields!public!template definition! !
-!OS.EDITSTREAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OS.EDITSTREAM class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

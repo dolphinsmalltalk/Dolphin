@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XProgramming.SUnit.TestResource subclass: #'XProgramming.SUnit.SimpleTestResource'
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
@@ -56,23 +56,27 @@ stoppedStateSymbol
 tearDown
 
 	self runningState: self stoppedStateSymbol! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #hasRun!Accessing!public! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #hasSetup!Accessing!public! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #isAvailable!public!Testing! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #isStarted!public!Testing! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #isStopped!public!Testing! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #runningState!Accessing!public! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #runningState:!Accessing!public! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #setRun!Accessing!public! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #setUp!public!Running! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #startedStateSymbol!Constants!public! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #stoppedStateSymbol!Constants!public! !
-!XProgramming.SUnit.SimpleTestResource categoriesFor: #tearDown!public!Running! !
+!XProgramming.SUnit.SimpleTestResource categoriesForMethods!
+hasRun!Accessing!public! !
+hasSetup!Accessing!public! !
+isAvailable!public!Testing! !
+isStarted!public!Testing! !
+isStopped!public!Testing! !
+runningState!Accessing!public! !
+runningState:!Accessing!public! !
+setRun!Accessing!public! !
+setUp!public!Running! !
+startedStateSymbol!Constants!public! !
+stoppedStateSymbol!Constants!public! !
+tearDown!public!Running! !
+!
 
 !XProgramming.SUnit.SimpleTestResource class methodsFor!
 
 isAvailable
 
 	^super isAvailable and: [self current isStarted]! !
-!XProgramming.SUnit.SimpleTestResource class categoriesFor: #isAvailable!public! !
+!XProgramming.SUnit.SimpleTestResource class categoriesForMethods!
+isAvailable!public! !
+!
 

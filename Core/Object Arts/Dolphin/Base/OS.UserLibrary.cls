@@ -709,66 +709,68 @@ vkKeyScan: aChar
 
 	<stdcall: sword VkKeyScanW char>
 	^self invalidCall: _failureCode! !
-!OS.UserLibrary categoriesFor: #blockInput:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #charLower:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #charLowerBuffA:cchLength:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #charLowerBuffW:cchLength:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #charUpper:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #charUpperBuffA:cchLength:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #charUpperBuffW:cchLength:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
-!OS.UserLibrary categoriesFor: #createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
-!OS.UserLibrary categoriesFor: #defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
-!OS.UserLibrary categoriesFor: #defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
-!OS.UserLibrary categoriesFor: #destroyWindow:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #disableProcessWindowsGhosting!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #dispatchMessage:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #enableWindow:bEnable:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getActiveWindow!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getAsyncKeyState:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getDesktopWindow!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #getDlgItem:nIDDlgItem:!public!win32 functions-dialog box! !
-!OS.UserLibrary categoriesFor: #getKeyboardLayout:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getKeyboardLayoutName:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getKeyboardState:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getKeyNameText:lpString:nSize:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getKeyState:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #getMessage:hWnd:wMsgFilterMin:wMsgFilterMax:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #getParent:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #getQueueStatus:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #getSysColor:!public!win32 functions-system information! !
-!OS.UserLibrary categoriesFor: #getSysColorBrush:!public!win32 functions-cursor! !
-!OS.UserLibrary categoriesFor: #getSystemMetrics:!public!win32 functions-system information! !
-!OS.UserLibrary categoriesFor: #inSendMessage!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #isWindow:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #isWindowEnabled:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #isWindowVisible:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #killTimer:uIDEvent:!public!win32 functions-timer! !
-!OS.UserLibrary categoriesFor: #loadCursor:lpCursorName:!public!win32 functions-cursor! !
-!OS.UserLibrary categoriesFor: #loadKeyboardLayout:flags:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #loadString:uID:lpBuffer:nBufferMax:!public!win32 functions-string manipulation! !
-!OS.UserLibrary categoriesFor: #mapVirtualKey:uMapType:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #messageBeep:!public!win32 functions-error! !
-!OS.UserLibrary categoriesFor: #messageBox:text:caption:style:icon:instance:!displaying!private! !
-!OS.UserLibrary categoriesFor: #messageBoxIndirect:!public!win32 functions-dialog box! !
-!OS.UserLibrary categoriesFor: #msgWaitForMultipleObjectsEx:pHandles:dwMilliseconds:dwWakeMask:dwFlags:!public!win32 functions-synchronization! !
-!OS.UserLibrary categoriesFor: #overlappedMsgBoxIndirect:!private!win32 functions-dialog box! !
-!OS.UserLibrary categoriesFor: #peekMessage:hWnd:uMsgFilterMin:uMsgFilterMax:wRemoveMsg:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #postMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #postQuitMessage:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #postThreadMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #sendMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #setActiveWindow:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #setCursor:!public!win32 functions-cursor! !
-!OS.UserLibrary categoriesFor: #setDlgItemText:nIDDlgItem:lpString:!public!win32 functions-dialog box! !
-!OS.UserLibrary categoriesFor: #setKeyboardState:!public!win32 functions-keyboard input! !
-!OS.UserLibrary categoriesFor: #setTimer:nIDEvent:uElapse:lpTimerFunc:!public!win32 functions-timer! !
-!OS.UserLibrary categoriesFor: #setWindowDWORD:nIndex:dwNewDWORD:!public!win32 functions-window class! !
-!OS.UserLibrary categoriesFor: #setWindowText:lpString:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #showWindow:nCmdShow:!public!win32 functions-window! !
-!OS.UserLibrary categoriesFor: #translateMessage:!public!win32 functions-message and message queue! !
-!OS.UserLibrary categoriesFor: #updateWindow:!public!win32 functions-painting and drawing! !
-!OS.UserLibrary categoriesFor: #vkKeyScan:!public!win32 functions-keyboard input! !
+!OS.UserLibrary categoriesForMethods!
+blockInput:!public!win32 functions-window! !
+charLower:!public!win32 functions-string manipulation! !
+charLowerBuffA:cchLength:!public!win32 functions-string manipulation! !
+charLowerBuffW:cchLength:!public!win32 functions-string manipulation! !
+charUpper:!public!win32 functions-string manipulation! !
+charUpperBuffA:cchLength:!public!win32 functions-string manipulation! !
+charUpperBuffW:cchLength:!public!win32 functions-string manipulation! !
+copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
+createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
+defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
+defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
+destroyWindow:!public!win32 functions-window! !
+disableProcessWindowsGhosting!public!win32 functions-message and message queue! !
+dispatchMessage:!public!win32 functions-message and message queue! !
+enableWindow:bEnable:!public!win32 functions-keyboard input! !
+getActiveWindow!public!win32 functions-keyboard input! !
+getAsyncKeyState:!public!win32 functions-keyboard input! !
+getDesktopWindow!public!win32 functions-window! !
+getDlgItem:nIDDlgItem:!public!win32 functions-dialog box! !
+getKeyboardLayout:!public!win32 functions-keyboard input! !
+getKeyboardLayoutName:!public!win32 functions-keyboard input! !
+getKeyboardState:!public!win32 functions-keyboard input! !
+getKeyNameText:lpString:nSize:!public!win32 functions-keyboard input! !
+getKeyState:!public!win32 functions-keyboard input! !
+getMessage:hWnd:wMsgFilterMin:wMsgFilterMax:!public!win32 functions-message and message queue! !
+getParent:!public!win32 functions-window! !
+getQueueStatus:!public!win32 functions-message and message queue! !
+getSysColor:!public!win32 functions-system information! !
+getSysColorBrush:!public!win32 functions-cursor! !
+getSystemMetrics:!public!win32 functions-system information! !
+inSendMessage!public!win32 functions-message and message queue! !
+isWindow:!public!win32 functions-window! !
+isWindowEnabled:!public!win32 functions-window! !
+isWindowVisible:!public!win32 functions-window! !
+killTimer:uIDEvent:!public!win32 functions-timer! !
+loadCursor:lpCursorName:!public!win32 functions-cursor! !
+loadKeyboardLayout:flags:!public!win32 functions-keyboard input! !
+loadString:uID:lpBuffer:nBufferMax:!public!win32 functions-string manipulation! !
+mapVirtualKey:uMapType:!public!win32 functions-keyboard input! !
+messageBeep:!public!win32 functions-error! !
+messageBox:text:caption:style:icon:instance:!displaying!private! !
+messageBoxIndirect:!public!win32 functions-dialog box! !
+msgWaitForMultipleObjectsEx:pHandles:dwMilliseconds:dwWakeMask:dwFlags:!public!win32 functions-synchronization! !
+overlappedMsgBoxIndirect:!private!win32 functions-dialog box! !
+peekMessage:hWnd:uMsgFilterMin:uMsgFilterMax:wRemoveMsg:!public!win32 functions-message and message queue! !
+postMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
+postQuitMessage:!public!win32 functions-message and message queue! !
+postThreadMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
+sendMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
+setActiveWindow:!public!win32 functions-keyboard input! !
+setCursor:!public!win32 functions-cursor! !
+setDlgItemText:nIDDlgItem:lpString:!public!win32 functions-dialog box! !
+setKeyboardState:!public!win32 functions-keyboard input! !
+setTimer:nIDEvent:uElapse:lpTimerFunc:!public!win32 functions-timer! !
+setWindowDWORD:nIndex:dwNewDWORD:!public!win32 functions-window class! !
+setWindowText:lpString:!public!win32 functions-window! !
+showWindow:nCmdShow:!public!win32 functions-window! !
+translateMessage:!public!win32 functions-message and message queue! !
+updateWindow:!public!win32 functions-painting and drawing! !
+vkKeyScan:!public!win32 functions-keyboard input! !
+!
 
 !OS.UserLibrary class methodsFor!
 
@@ -787,7 +789,9 @@ fileName
 
 sharedVariableName
 	^#{User32}! !
-!OS.UserLibrary class categoriesFor: #clear!initializing!private! !
-!OS.UserLibrary class categoriesFor: #fileName!constants!public! !
-!OS.UserLibrary class categoriesFor: #sharedVariableName!constants!private! !
+!OS.UserLibrary class categoriesForMethods!
+clear!initializing!private! !
+fileName!constants!public! !
+sharedVariableName!constants!private! !
+!
 

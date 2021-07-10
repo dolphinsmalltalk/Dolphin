@@ -20,6 +20,8 @@ rightToLeft: anObject
 	"Private - For a NullConverter this does nothing"
 	
 	^anObject! !
-!UI.NullConverter categoriesFor: #leftToRight:!operations!private! !
-!UI.NullConverter categoriesFor: #rightToLeft:!operations!private! !
+!UI.NullConverter categoriesForMethods!
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 
