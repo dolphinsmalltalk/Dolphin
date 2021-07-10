@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
@@ -75,17 +75,19 @@ text: buffer
 	Note that buffer should have been allocated from the fixed heap."
 
 	self lpstrText: (text := buffer) yourAddress! !
-!TEXTRANGE categoriesFor: #cpMax!accessing!public! !
-!TEXTRANGE categoriesFor: #cpMax:!accessing!public! !
-!TEXTRANGE categoriesFor: #cpMin!accessing!public! !
-!TEXTRANGE categoriesFor: #cpMin:!accessing!public! !
-!TEXTRANGE categoriesFor: #lpstrText:!**compiled accessors**!public! !
-!TEXTRANGE categoriesFor: #setFrom:to:text:!initializing!private! !
-!TEXTRANGE categoriesFor: #size!accessing!public! !
-!TEXTRANGE categoriesFor: #start!accessing!public! !
-!TEXTRANGE categoriesFor: #stop!accessing!public! !
-!TEXTRANGE categoriesFor: #text!accessing!public! !
-!TEXTRANGE categoriesFor: #text:!accessing!public! !
+!TEXTRANGE categoriesForMethods!
+cpMax!accessing!public! !
+cpMax:!accessing!public! !
+cpMin!accessing!public! !
+cpMin:!accessing!public! !
+lpstrText:!**compiled accessors**!public! !
+setFrom:to:text:!initializing!private! !
+size!accessing!public! !
+start!accessing!public! !
+stop!accessing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 !TEXTRANGE class methodsFor!
 
@@ -126,8 +128,10 @@ from: startInteger to: stopInteger type: aStringClass
 
 getFieldNames
 	^#(#chrg #lpstrText)! !
-!TEXTRANGE class categoriesFor: #defineFields!public!template definition! !
-!TEXTRANGE class categoriesFor: #from:to:text:!instance creation!public! !
-!TEXTRANGE class categoriesFor: #from:to:type:!instance creation!public! !
-!TEXTRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TEXTRANGE class categoriesForMethods!
+defineFields!public!template definition! !
+from:to:text:!instance creation!public! !
+from:to:type:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

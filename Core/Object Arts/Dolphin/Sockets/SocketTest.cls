@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractSocketTest subclass: #SocketTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ SocketTest comment: ''!
 
 serverSocketClass
 	^ServerSocket! !
-!SocketTest categoriesFor: #serverSocketClass!constants!private! !
+!SocketTest categoriesForMethods!
+serverSocketClass!constants!private! !
+!
 

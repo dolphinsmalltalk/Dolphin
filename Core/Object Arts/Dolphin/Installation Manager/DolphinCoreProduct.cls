@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinProduct subclass: #DolphinCoreProduct
 	instanceVariableNames: ''
@@ -111,10 +111,12 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Core'! !
-!DolphinCoreProduct categoriesFor: #contents!accessing!public! !
-!DolphinCoreProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
-!DolphinCoreProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
-!DolphinCoreProduct categoriesFor: #fullName!accessing!public! !
+!DolphinCoreProduct categoriesForMethods!
+contents!accessing!public! !
+defaultSystemFolderColor!constants!private! !
+defaultSystemFolderExtent!constants!private! !
+fullName!accessing!public! !
+!
 
 !DolphinCoreProduct class methodsFor!
 
@@ -132,7 +134,9 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
-!DolphinCoreProduct class categoriesFor: #productLevel!constants!private! !
-!DolphinCoreProduct class categoriesFor: #productName!accessing!public! !
-!DolphinCoreProduct class categoriesFor: #shortProductName!accessing!public! !
+!DolphinCoreProduct class categoriesForMethods!
+productLevel!constants!private! !
+productName!accessing!public! !
+shortProductName!accessing!public! !
+!
 

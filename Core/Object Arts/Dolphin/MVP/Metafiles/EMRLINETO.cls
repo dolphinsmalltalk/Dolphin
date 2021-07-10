@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRLINETO
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ ptl: aPOINTL
 		from: ##(_OffsetOf_ptl + 1)
 		to: ##(_OffsetOf_ptl + POINTL basicByteSize)
 		startingAt: 1! !
-!EMRLINETO categoriesFor: #ptl!**compiled accessors**!public! !
-!EMRLINETO categoriesFor: #ptl:!**compiled accessors**!public! !
+!EMRLINETO categoriesForMethods!
+ptl!**compiled accessors**!public! !
+ptl:!**compiled accessors**!public! !
+!
 
 !EMRLINETO class methodsFor!
 
@@ -68,7 +70,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_LINETO with: EMR_MOVETOEX! !
-!EMRLINETO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRLINETO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRLINETO class categoriesFor: #iTypes!constants!public! !
+!EMRLINETO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
@@ -409,60 +409,62 @@ vt
 	the receiver."
 
 	^VT_USERDEFINED! !
-!AXTypeInfoAnalyzer categoriesFor: #=!comparing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #asImplType!converting!public! !
-!AXTypeInfoAnalyzer categoriesFor: #attributes!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #baseClass!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #basicName!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #classDesc!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #constants!enumerating!public! !
-!AXTypeInfoAnalyzer categoriesFor: #displayOn:!displaying!public! !
-!AXTypeInfoAnalyzer categoriesFor: #documentation!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #documentationForMember:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #documentationForMember:ifAbsent:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #environment!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #fullyQualifiedName!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #funcDescAt:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #functions!enumerating!public! !
-!AXTypeInfoAnalyzer categoriesFor: #functionsByName!enumerating!public! !
-!AXTypeInfoAnalyzer categoriesFor: #getImplTypeInfoAt:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #getNamesOfMember:count:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #getRefType:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #global!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #globalBinding!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #globalBinding:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #globalName:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #guid!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #hash!comparing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #index!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #isDispatchable!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isDual!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isGlobalDefined!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isHidden!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isInstalled!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isStructure!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #isUnion!public!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #nameOfID:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #nameSansTag!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #releaseFuncDesc:!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #releaseTypeAttr:!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #releaseVarDesc:!private!realizing/unrealizing! !
-!AXTypeInfoAnalyzer categoriesFor: #setTypeInfo:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #setTypeInfo:typeLib:index:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #tdesc!accessing!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typeFlags!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typekind!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typeLib!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #typeName!constants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #varDescAt:!accessing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #variables!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #vt!constants!public! !
+!AXTypeInfoAnalyzer categoriesForMethods!
+=!comparing!public! !
+asImplType!converting!public! !
+attributes!accessing!public! !
+baseClass!constants!private! !
+basicName!accessing!private! !
+classDesc!constants!private! !
+constants!enumerating!public! !
+displayOn:!displaying!public! !
+documentation!accessing!public! !
+documentationForMember:!accessing!public! !
+documentationForMember:ifAbsent:!accessing!public! !
+environment!constants!public! !
+fullyQualifiedName!constants!private! !
+funcDescAt:!accessing!private! !
+functions!enumerating!public! !
+functionsByName!enumerating!public! !
+getImplTypeInfoAt:!accessing!public! !
+getNamesOfMember:count:!accessing!private! !
+getRefType:!accessing!private! !
+global!accessing!public! !
+globalBinding!accessing!private! !
+globalBinding:!accessing!private! !
+globalName:!accessing!private! !
+guid!accessing!public! !
+hash!comparing!public! !
+idOfName:ifAbsent:!accessing!public! !
+includeIDLInClassComment!constants!private! !
+index!constants!public! !
+isDispatchable!public!testing! !
+isDual!public!testing! !
+isGlobalDefined!public!testing! !
+isHidden!public!testing! !
+isInstalled!public!testing! !
+isStructure!public!testing! !
+isUnion!public!testing! !
+nameOfID:!accessing!public! !
+nameOfID:ifAbsent:!accessing!public! !
+nameSansTag!accessing!private! !
+realize!private!realizing/unrealizing! !
+realTypeInfo!accessing!public! !
+releaseFuncDesc:!private!realizing/unrealizing! !
+releaseTypeAttr:!private!realizing/unrealizing! !
+releaseVarDesc:!private!realizing/unrealizing! !
+setTypeInfo:!accessing!private! !
+setTypeInfo:typeLib:index:!accessing!private! !
+suggestedBinding!accessing!private! !
+tdesc!accessing!constants!public! !
+typeFlags!accessing!public! !
+typekind!constants!public! !
+typeLib!accessing!public! !
+typeName!constants!public! !
+varDescAt:!accessing!private! !
+variables!accessing!public! !
+vt!constants!public! !
+!
 
 !AXTypeInfoAnalyzer class methodsFor!
 
@@ -598,14 +600,16 @@ typeKindToClassMap
 		at: TKIND_ALIAS + 1 put: TKindAliasAnalyzer;
 		at: TKIND_UNION + 1 put: TKindUnionAnalyzer;
 		yourself)! !
-!AXTypeInfoAnalyzer class categoriesFor: #initialize!initializing!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #initializeVTtoIDLTypeMap!initializing!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #onTypeInfo:!instance creation!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:!instance creation!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #onTypeInfo:typeLib:index:!instance creation!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #stbVersion!binary filing!constants!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #typekind!constants!public! !
-!AXTypeInfoAnalyzer class categoriesFor: #typeKindToClassMap!constants!private! !
+!AXTypeInfoAnalyzer class categoriesForMethods!
+initialize!initializing!private! !
+initializeVTtoIDLTypeMap!initializing!private! !
+onTypeInfo:!instance creation!public! !
+onTypeInfo:typeLib:!instance creation!private! !
+onTypeInfo:typeLib:index:!instance creation!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!public! !
+stbVersion!binary filing!constants!public! !
+typekind!constants!public! !
+typeKindToClassMap!constants!private! !
+!
 

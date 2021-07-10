@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TypeConverter subclass: #EvaluationConverter
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ rightToLeft: anObject
 	"Private - Answers the #storeString of anObject, which can often be converted back to an equal object by evaluating it."
 
 	^anObject storeString! !
-!EvaluationConverter categoriesFor: #leftToRight:!operations!private! !
-!EvaluationConverter categoriesFor: #rightToLeft:!operations!private! !
+!EvaluationConverter categoriesForMethods!
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 

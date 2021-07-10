@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RichText
 	instanceVariableNames: 'rtf'
@@ -104,21 +104,23 @@ setTextInto: aView
 	message back to aView."
 	
 	aView richText: self! !
-!RichText categoriesFor: #=!comparing!public! !
-!RichText categoriesFor: #asParameter!converting!public! !
-!RichText categoriesFor: #asRichText!converting!public! !
-!RichText categoriesFor: #asString!converting!public! !
-!RichText categoriesFor: #copyToClipboard!copying!public! !
-!RichText categoriesFor: #displayOn:!displaying!public! !
-!RichText categoriesFor: #displayString!converting!displaying!public! !
-!RichText categoriesFor: #hash!comparing!public! !
-!RichText categoriesFor: #isEmpty!public!testing! !
-!RichText categoriesFor: #notEmpty!public!testing! !
-!RichText categoriesFor: #printOn:!development!printing!public! !
-!RichText categoriesFor: #replaceSelectionIn:!double dispatch!public! !
-!RichText categoriesFor: #rtf!accessing!private! !
-!RichText categoriesFor: #rtf:!accessing!private! !
-!RichText categoriesFor: #setTextInto:!double dispatch!private! !
+!RichText categoriesForMethods!
+=!comparing!public! !
+asParameter!converting!public! !
+asRichText!converting!public! !
+asString!converting!public! !
+copyToClipboard!copying!public! !
+displayOn:!displaying!public! !
+displayString!converting!displaying!public! !
+hash!comparing!public! !
+isEmpty!public!testing! !
+notEmpty!public!testing! !
+printOn:!development!printing!public! !
+replaceSelectionIn:!double dispatch!public! !
+rtf!accessing!private! !
+rtf:!accessing!private! !
+setTextInto:!double dispatch!private! !
+!
 
 RichText methodProtocol: #richString attributes: #(#readOnly) selectors: #(#setTextInto:)!
 
@@ -184,12 +186,14 @@ uninitialize
 	Converter isNil ifTrue: [^self].
 	Converter destroy.
 	Converter := nil! !
-!RichText class categoriesFor: #fromRtf:!instance creation!public! !
-!RichText class categoriesFor: #fromString:!instance creation!public! !
-!RichText class categoriesFor: #initialize!class initialization!public! !
-!RichText class categoriesFor: #new!instance creation!private! !
-!RichText class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!RichText class categoriesFor: #registerClipboardFormat!class initialization!private! !
-!RichText class categoriesFor: #rtfConverter!accessing!private! !
-!RichText class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!RichText class categoriesForMethods!
+fromRtf:!instance creation!public! !
+fromString:!instance creation!public! !
+initialize!class initialization!public! !
+new!instance creation!private! !
+onPreStripImage!class hierarchy-removing!private! !
+registerClipboardFormat!class initialization!private! !
+rtfConverter!accessing!private! !
+uninitialize!class hierarchy-removing!public! !
+!
 

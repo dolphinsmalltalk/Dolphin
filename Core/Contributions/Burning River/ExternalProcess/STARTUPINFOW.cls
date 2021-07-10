@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
@@ -157,30 +157,32 @@ wShowWindow: anInteger
 	"Set the receiver's 'wShowWindow' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wShowWindow put: anInteger! !
-!STARTUPINFOW categoriesFor: #desktop:!accessing!public! !
-!STARTUPINFOW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwX!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwX:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwXSize!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwXSize:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwY!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwY:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwYSize!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #dwYSize:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #hStdError:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #hStdInput:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #hStdOutput:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #lpDesktop:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #lpTitle!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #lpTitle:!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #stderr:!accessing!public! !
-!STARTUPINFOW categoriesFor: #stdin:!accessing!public! !
-!STARTUPINFOW categoriesFor: #stdout:!accessing!public! !
-!STARTUPINFOW categoriesFor: #title:!accessing!public! !
-!STARTUPINFOW categoriesFor: #wShowWindow!**compiled accessors**!public! !
-!STARTUPINFOW categoriesFor: #wShowWindow:!**compiled accessors**!public! !
+!STARTUPINFOW categoriesForMethods!
+desktop:!accessing!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dwX!**compiled accessors**!public! !
+dwX:!**compiled accessors**!public! !
+dwXSize!**compiled accessors**!public! !
+dwXSize:!**compiled accessors**!public! !
+dwY!**compiled accessors**!public! !
+dwY:!**compiled accessors**!public! !
+dwYSize!**compiled accessors**!public! !
+dwYSize:!**compiled accessors**!public! !
+hStdError:!**compiled accessors**!public! !
+hStdInput:!**compiled accessors**!public! !
+hStdOutput:!**compiled accessors**!public! !
+lpDesktop:!**compiled accessors**!public! !
+lpTitle!**compiled accessors**!public! !
+lpTitle:!**compiled accessors**!public! !
+stderr:!accessing!public! !
+stdin:!accessing!public! !
+stdout:!accessing!public! !
+title:!accessing!public! !
+wShowWindow!**compiled accessors**!public! !
+wShowWindow:!**compiled accessors**!public! !
+!
 
 !STARTUPINFOW class methodsFor!
 
@@ -232,6 +234,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpDesktop #lpTitle #dwX #dwY #dwXSize #dwYSize #dwXCountChars #dwYCountChars #dwFillAttribute #dwFlags #wShowWindow #hStdInput #hStdOutput #hStdError)! !
-!STARTUPINFOW class categoriesFor: #defineFields!automatic generation!public! !
-!STARTUPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!STARTUPINFOW class categoriesForMethods!
+defineFields!automatic generation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

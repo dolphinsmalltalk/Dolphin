@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBSchemaStatement subclass: #DBPrimaryKeysStatement
 	instanceVariableNames: ''
@@ -22,5 +22,7 @@ executeStatement
 		nameLength2: SQL_NTS
 		tableName: tableName
 		nameLength3: SQL_NTS! !
-!DBPrimaryKeysStatement categoriesFor: #executeStatement!operations!private! !
+!DBPrimaryKeysStatement categoriesForMethods!
+executeStatement!operations!private! !
+!
 

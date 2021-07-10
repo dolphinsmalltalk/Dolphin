@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LVFINDINFOW
 	instanceVariableNames: ''
@@ -55,13 +55,15 @@ vkDirection
 	"Answer the <Integer> value of the receiver's 'vkDirection' field."
 
 	^bytes dwordAtOffset: _OffsetOf_vkDirection! !
-!LVFINDINFOW categoriesFor: #flags!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #lParam!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #maskIn:!accessing!public! !
-!LVFINDINFOW categoriesFor: #param:!accessing!public! !
-!LVFINDINFOW categoriesFor: #psz!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #pt!**compiled accessors**!public! !
-!LVFINDINFOW categoriesFor: #vkDirection!**compiled accessors**!public! !
+!LVFINDINFOW categoriesForMethods!
+flags!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+param:!accessing!public! !
+psz!**compiled accessors**!public! !
+pt!**compiled accessors**!public! !
+vkDirection!**compiled accessors**!public! !
+!
 
 !LVFINDINFOW class methodsFor!
 
@@ -79,6 +81,8 @@ defineFields
 
 getFieldNames
 	^#(#flags #psz #lParam #pt #vkDirection)! !
-!LVFINDINFOW class categoriesFor: #defineFields!public!template definition! !
-!LVFINDINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LVFINDINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

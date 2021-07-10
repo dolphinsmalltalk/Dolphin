@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	instanceVariableNames: ''
@@ -55,10 +55,12 @@ AddrList: aStructureArrayOfSOCKADDR_STORAGE
 		to: _OffsetOf_AddrList + size
 		startingAt: 1.
 	self AddrCount: aStructureArrayOfSOCKADDR_STORAGE size! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrCount!**compiled accessors**!private! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrCount:!**compiled accessors**!private! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrList!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrList:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesForMethods!
+AddrCount!**compiled accessors**!private! !
+AddrCount:!**compiled accessors**!private! !
+AddrList!**compiled accessors**!public! !
+AddrList:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class methodsFor!
 
@@ -81,6 +83,8 @@ defineFields
 
 getFieldNames
 	^#(#AddrCount #AddrList)! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

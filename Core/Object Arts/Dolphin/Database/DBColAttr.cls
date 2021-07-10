@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBColAttr
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
@@ -252,40 +252,42 @@ updateRuleMask: anInteger
 		self specialFlagAt:
 			(1 bitShift: (anInteger+8)) 
 			put: true ]! !
-!DBColAttr categoriesFor: #columnNumber!accessing!public! !
-!DBColAttr categoriesFor: #columnNumber:!accessing!private! !
-!DBColAttr categoriesFor: #cType!accessing!private! !
-!DBColAttr categoriesFor: #deleteRuleMask!accessing!public! !
-!DBColAttr categoriesFor: #deleteRuleMask:!accessing!private! !
-!DBColAttr categoriesFor: #hasVariableTransferOctetLength!public!testing! !
-!DBColAttr categoriesFor: #initialize!initializing!private! !
-!DBColAttr categoriesFor: #isBinaryType!private!testing! !
-!DBColAttr categoriesFor: #isCharType!private!testing! !
-!DBColAttr categoriesFor: #isFixedPointType!private!testing! !
-!DBColAttr categoriesFor: #isForeignKey!public!testing! !
-!DBColAttr categoriesFor: #isForeignKey:!accessing!private! !
-!DBColAttr categoriesFor: #isKey!public!testing! !
-!DBColAttr categoriesFor: #isPrimaryKey!public!testing! !
-!DBColAttr categoriesFor: #isPrimaryKey:!accessing!private! !
-!DBColAttr categoriesFor: #length!accessing!public! !
-!DBColAttr categoriesFor: #length:!accessing!private! !
-!DBColAttr categoriesFor: #lengthC!accessing!private! !
-!DBColAttr categoriesFor: #name!accessing!public! !
-!DBColAttr categoriesFor: #name:!accessing!private! !
-!DBColAttr categoriesFor: #parameterType!accessing!public! !
-!DBColAttr categoriesFor: #parameterType:!accessing!public! !
-!DBColAttr categoriesFor: #precision!accessing!public! !
-!DBColAttr categoriesFor: #precision:!accessing!private! !
-!DBColAttr categoriesFor: #printOn:!printing!public! !
-!DBColAttr categoriesFor: #scale!accessing!public! !
-!DBColAttr categoriesFor: #scale:!accessing!private! !
-!DBColAttr categoriesFor: #specialFlagAt:!accessing!private! !
-!DBColAttr categoriesFor: #specialFlagAt:put:!accessing!private! !
-!DBColAttr categoriesFor: #transferOctetLength!accessing!initializing!private! !
-!DBColAttr categoriesFor: #type!accessing!public! !
-!DBColAttr categoriesFor: #type:!accessing!private! !
-!DBColAttr categoriesFor: #updateRuleMask!accessing!public! !
-!DBColAttr categoriesFor: #updateRuleMask:!accessing!private! !
+!DBColAttr categoriesForMethods!
+columnNumber!accessing!public! !
+columnNumber:!accessing!private! !
+cType!accessing!private! !
+deleteRuleMask!accessing!public! !
+deleteRuleMask:!accessing!private! !
+hasVariableTransferOctetLength!public!testing! !
+initialize!initializing!private! !
+isBinaryType!private!testing! !
+isCharType!private!testing! !
+isFixedPointType!private!testing! !
+isForeignKey!public!testing! !
+isForeignKey:!accessing!private! !
+isKey!public!testing! !
+isPrimaryKey!public!testing! !
+isPrimaryKey:!accessing!private! !
+length!accessing!public! !
+length:!accessing!private! !
+lengthC!accessing!private! !
+name!accessing!public! !
+name:!accessing!private! !
+parameterType!accessing!public! !
+parameterType:!accessing!public! !
+precision!accessing!public! !
+precision:!accessing!private! !
+printOn:!printing!public! !
+scale!accessing!public! !
+scale:!accessing!private! !
+specialFlagAt:!accessing!private! !
+specialFlagAt:put:!accessing!private! !
+transferOctetLength!accessing!initializing!private! !
+type!accessing!public! !
+type:!accessing!private! !
+updateRuleMask!accessing!public! !
+updateRuleMask:!accessing!private! !
+!
 
 !DBColAttr class methodsFor!
 
@@ -339,6 +341,8 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!DBColAttr class categoriesFor: #initialize!initializing!private! !
-!DBColAttr class categoriesFor: #new!instance creation!public! !
+!DBColAttr class categoriesForMethods!
+initialize!initializing!private! !
+new!instance creation!public! !
+!
 

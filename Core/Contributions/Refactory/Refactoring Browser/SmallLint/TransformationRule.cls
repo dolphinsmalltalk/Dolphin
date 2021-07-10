@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LintRule subclass: #TransformationRule
 	instanceVariableNames: 'rewriteRule changes class'
@@ -71,16 +71,18 @@ viewResults
 
 	changes inspect.
 	self resetResult! !
-!TransformationRule categoriesFor: #changes!accessing!public! !
-!TransformationRule categoriesFor: #checkMethod:!accessing!public! !
-!TransformationRule categoriesFor: #displayOn:!printing!public! !
-!TransformationRule categoriesFor: #hasConflicts!public!testing! !
-!TransformationRule categoriesFor: #isEmpty!public!testing! !
-!TransformationRule categoriesFor: #problemCount!accessing!public! !
-!TransformationRule categoriesFor: #resetResult!accessing!public! !
-!TransformationRule categoriesFor: #rewriteUsing:!initialize/release!public! !
-!TransformationRule categoriesFor: #superSends!public!rules! !
-!TransformationRule categoriesFor: #viewResults!private! !
+!TransformationRule categoriesForMethods!
+changes!accessing!public! !
+checkMethod:!accessing!public! !
+displayOn:!printing!public! !
+hasConflicts!public!testing! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+resetResult!accessing!public! !
+rewriteUsing:!initialize/release!public! !
+superSends!public!rules! !
+viewResults!private! !
+!
 
 !TransformationRule class methodsFor!
 
@@ -399,23 +401,25 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block'))
 		methods: false
 		name: 'Move assignment out of ensure: blocks'! !
-!TransformationRule class categoriesFor: #assignmentInIfTrue!public!transformations! !
-!TransformationRule class categoriesFor: #atIfAbsent!public!transformations! !
-!TransformationRule class categoriesFor: #betweenAnd!public!transformations! !
-!TransformationRule class categoriesFor: #braceArrays!public!transformations! !
-!TransformationRule class categoriesFor: #cascadedNextPutAlls!public!transformations! !
-!TransformationRule class categoriesFor: #detectIfNone!public!transformations! !
-!TransformationRule class categoriesFor: #equalNil!public!transformations! !
-!TransformationRule class categoriesFor: #guardClause!public!transformations! !
-!TransformationRule class categoriesFor: #initializeRecursiveSelfRule!accessing!public! !
-!TransformationRule class categoriesFor: #minMax!public!transformations! !
-!TransformationRule class categoriesFor: #notElimination!public!transformations! !
-!TransformationRule class categoriesFor: #notEmpty!public!transformations! !
-!TransformationRule class categoriesFor: #recursiveSelfRule!accessing!public! !
-!TransformationRule class categoriesFor: #rewrite:methods:name:!instance creation!public! !
-!TransformationRule class categoriesFor: #showWhileBlocks!public!transformations! !
-!TransformationRule class categoriesFor: #streamLiterals!public!transformations! !
-!TransformationRule class categoriesFor: #superSends!public!transformations! !
-!TransformationRule class categoriesFor: #testCaseAsserts!public!transformations! !
-!TransformationRule class categoriesFor: #unwindBlocks!public!transformations! !
+!TransformationRule class categoriesForMethods!
+assignmentInIfTrue!public!transformations! !
+atIfAbsent!public!transformations! !
+betweenAnd!public!transformations! !
+braceArrays!public!transformations! !
+cascadedNextPutAlls!public!transformations! !
+detectIfNone!public!transformations! !
+equalNil!public!transformations! !
+guardClause!public!transformations! !
+initializeRecursiveSelfRule!accessing!public! !
+minMax!public!transformations! !
+notElimination!public!transformations! !
+notEmpty!public!transformations! !
+recursiveSelfRule!accessing!public! !
+rewrite:methods:name:!instance creation!public! !
+showWhileBlocks!public!transformations! !
+streamLiterals!public!transformations! !
+superSends!public!transformations! !
+testCaseAsserts!public!transformations! !
+unwindBlocks!public!transformations! !
+!
 

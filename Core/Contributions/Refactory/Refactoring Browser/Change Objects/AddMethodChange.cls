@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryClassChange subclass: #AddMethodChange
 	instanceVariableNames: 'source selector protocols'
@@ -99,23 +99,25 @@ selector
 			[selector := RBParser parseMethodPattern: source.
 			selector isNil ifTrue: [selector := #unknown]].
 	^selector! !
-!AddMethodChange categoriesFor: #=!comparing!public! !
-!AddMethodChange categoriesFor: #asUndoOperation!converting!public! !
-!AddMethodChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!AddMethodChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!AddMethodChange categoriesFor: #changeString!printing!public! !
-!AddMethodChange categoriesFor: #class:protocol:source:!initialize/release!public! !
-!AddMethodChange categoriesFor: #class:source:!initialize/release!public! !
-!AddMethodChange categoriesFor: #controller!accessing!private! !
-!AddMethodChange categoriesFor: #currentProtocols!helpers!private! !
-!AddMethodChange categoriesFor: #hash!comparing!public! !
-!AddMethodChange categoriesFor: #parseTree!helpers!private! !
-!AddMethodChange categoriesFor: #primitiveExecute!operations!private! !
-!AddMethodChange categoriesFor: #printOn:!printing!public! !
-!AddMethodChange categoriesFor: #protocol!accessing!public! !
-!AddMethodChange categoriesFor: #protocols!accessing!public! !
-!AddMethodChange categoriesFor: #protocols:!initialize/release!public! !
-!AddMethodChange categoriesFor: #selector!accessing!public! !
+!AddMethodChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+changeForClass:selector:!accessing!public! !
+changeForMetaclass:selector:!accessing!public! !
+changeString!printing!public! !
+class:protocol:source:!initialize/release!public! !
+class:source:!initialize/release!public! !
+controller!accessing!private! !
+currentProtocols!helpers!private! !
+hash!comparing!public! !
+parseTree!helpers!private! !
+primitiveExecute!operations!private! !
+printOn:!printing!public! !
+protocol!accessing!public! !
+protocols!accessing!public! !
+protocols:!initialize/release!public! !
+selector!accessing!public! !
+!
 
 !AddMethodChange class methodsFor!
 
@@ -127,6 +129,8 @@ compile: aString in: aBehavior classified: aProtocol
 		class: aBehavior
 		protocol: aProtocol
 		source: aString! !
-!AddMethodChange class categoriesFor: #compile:in:!instance creation!public! !
-!AddMethodChange class categoriesFor: #compile:in:classified:!instance creation!public! !
+!AddMethodChange class categoriesForMethods!
+compile:in:!instance creation!public! !
+compile:in:classified:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Random subclass: #RandomLinearCongruential
 	instanceVariableNames: 'multiplier increment modulus'
@@ -34,10 +34,12 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	multiplier := mulInteger.
 	increment := incInteger.
 	seed := 1! !
-!RandomLinearCongruential categoriesFor: #lcg!helpers!private! !
-!RandomLinearCongruential categoriesFor: #next!accessing!public! !
-!RandomLinearCongruential categoriesFor: #peek!accessing!public! !
-!RandomLinearCongruential categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
+!RandomLinearCongruential categoriesForMethods!
+lcg!helpers!private! !
+next!accessing!public! !
+peek!accessing!public! !
+setModulus:multiplier:increment:!initializing!private! !
+!
 
 !RandomLinearCongruential class methodsFor!
 
@@ -77,8 +79,10 @@ newParkMiller2
 		newModulus: 16r7FFFFFFF
 		multiplier: 48271
 		increment: 0! !
-!RandomLinearCongruential class categoriesFor: #newANSIC!instance creation!public! !
-!RandomLinearCongruential class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
-!RandomLinearCongruential class categoriesFor: #newParkMiller!instance creation!public! !
-!RandomLinearCongruential class categoriesFor: #newParkMiller2!instance creation!public! !
+!RandomLinearCongruential class categoriesForMethods!
+newANSIC!instance creation!public! !
+newModulus:multiplier:increment:!instance creation!public! !
+newParkMiller!instance creation!public! !
+newParkMiller2!instance creation!public! !
+!
 

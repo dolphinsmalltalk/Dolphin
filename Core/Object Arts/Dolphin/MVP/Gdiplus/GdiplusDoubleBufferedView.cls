@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #GdiplusDoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
@@ -111,24 +111,28 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
-!GdiplusDoubleBufferedView categoriesFor: #backSurface!accessing!public! !
-!GdiplusDoubleBufferedView categoriesFor: #flip!operations!public! !
-!GdiplusDoubleBufferedView categoriesFor: #graphics!accessing!public! !
-!GdiplusDoubleBufferedView categoriesFor: #initialize!initializing!private! !
-!GdiplusDoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
-!GdiplusDoubleBufferedView categoriesFor: #invalidate!operations!public! !
-!GdiplusDoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
-!GdiplusDoubleBufferedView categoriesFor: #refreshContents!public!updating! !
-!GdiplusDoubleBufferedView categoriesFor: #render!operations!private! !
-!GdiplusDoubleBufferedView categoriesFor: #repaint!operations!public! !
-!GdiplusDoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!GdiplusDoubleBufferedView categoriesForMethods!
+backSurface!accessing!public! !
+flip!operations!public! !
+graphics!accessing!public! !
+initialize!initializing!private! !
+initializeSurfacesFor:!initializing!private! !
+invalidate!operations!public! !
+onCreated:!event handling!private! !
+onEraseRequired:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onPositionChanged:!event handling!private! !
+refreshContents!public!updating! !
+render!operations!private! !
+repaint!operations!public! !
+wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!
 
 !GdiplusDoubleBufferedView class methodsFor!
 
 defaultModel	
 	^ListModel new! !
-!GdiplusDoubleBufferedView class categoriesFor: #defaultModel!public! !
+!GdiplusDoubleBufferedView class categoriesForMethods!
+defaultModel!public! !
+!
 

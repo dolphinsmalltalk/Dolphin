@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #AbstractClassVariableTest
 	instanceVariableNames: ''
@@ -109,11 +109,13 @@ testModelAbstractClassVariableOverridenMethodsInSubclass
 testNonExistantName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo
 				class: BasicLintRuleTest)! !
-!AbstractClassVariableTest categoriesFor: #setUp!public!set up! !
-!AbstractClassVariableTest categoriesFor: #testAbstractClassVariable!public!tests! !
-!AbstractClassVariableTest categoriesFor: #testInheritedName!failure tests!public! !
-!AbstractClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariable!public!tests! !
-!AbstractClassVariableTest categoriesFor: #testModelAbstractClassVariableOverridenMethodsInSubclass!public!tests! !
-!AbstractClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!AbstractClassVariableTest categoriesForMethods!
+setUp!public!set up! !
+testAbstractClassVariable!public!tests! !
+testInheritedName!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelAbstractClassVariable!public!tests! !
+testModelAbstractClassVariableOverridenMethodsInSubclass!public!tests! !
+testNonExistantName!failure tests!public! !
+!
 

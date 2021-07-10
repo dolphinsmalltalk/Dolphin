@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalPointTest subclass: #POINTLTest
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ testAsDwordOverflow
 		should: [subject asDword]
 		raise: HRESULTError
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]! !
-!POINTLTest categoriesFor: #subjectClass!constants!private! !
-!POINTLTest categoriesFor: #testAsDwordOverflow!public!unit tests! !
+!POINTLTest categoriesForMethods!
+subjectClass!constants!private! !
+testAsDwordOverflow!public!unit tests! !
+!
 

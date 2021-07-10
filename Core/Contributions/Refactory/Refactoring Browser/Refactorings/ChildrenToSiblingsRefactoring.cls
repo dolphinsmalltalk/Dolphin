@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassRefactoring subclass: #ChildrenToSiblingsRefactoring
 	instanceVariableNames: 'parent subclasses'
@@ -179,29 +179,31 @@ transform
 		pushUpMethods;
 		changeIsKindOfReferences;
 		reparentSubclasses! !
-!ChildrenToSiblingsRefactoring categoriesFor: #abstractSuperclass!accessing!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #addSuperclass!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #changeIsKindOfReferences!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #computeSubclassSupersOf:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #createSubclassResponsibilityFor:in:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #name:class:subclasses:!initialize/release!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassInstanceVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpInstanceVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpPoolVariables!private!variables! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUp:in:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethods!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethodsFrom:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUpVariables!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #selectorsToPushUpFrom:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #shouldPushUp:from:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #storeOn:!printing!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #subclasses!accessing!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #subclasses:!accessing!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #subclassResponsibilityFor:in:!methods!private! !
-!ChildrenToSiblingsRefactoring categoriesFor: #transform!public!transforming! !
+!ChildrenToSiblingsRefactoring categoriesForMethods!
+abstractSuperclass!accessing!private! !
+addSuperclass!public!transforming! !
+changeIsKindOfReferences!public!transforming! !
+computeSubclassSupersOf:!methods!private! !
+createSubclassResponsibilityFor:in:!methods!private! !
+name:class:subclasses:!initialize/release!private! !
+preconditions!preconditions!public! !
+pullUpClassInstanceVariables!private!variables! !
+pullUpClassVariables!private!variables! !
+pullUpInstanceVariables!private!variables! !
+pullUpPoolVariables!private!variables! !
+pushUp:in:!methods!private! !
+pushUpMethods!public!transforming! !
+pushUpMethodsFrom:!methods!private! !
+pushUpVariables!public!transforming! !
+reparentSubclasses!public!transforming! !
+selectorsToPushUpFrom:!methods!private! !
+shouldPushUp:from:!methods!private! !
+storeOn:!printing!public! !
+subclasses!accessing!public! !
+subclasses:!accessing!public! !
+subclassResponsibilityFor:in:!methods!private! !
+transform!public!transforming! !
+!
 
 !ChildrenToSiblingsRefactoring class methodsFor!
 
@@ -219,6 +221,8 @@ name: aClassName class: aClass subclasses: subclassCollection
 			class: aClass
 			subclasses: subclassCollection;
 		yourself! !
-!ChildrenToSiblingsRefactoring class categoriesFor: #model:name:class:subclasses:!instance creation!public! !
-!ChildrenToSiblingsRefactoring class categoriesFor: #name:class:subclasses:!instance creation!public! !
+!ChildrenToSiblingsRefactoring class categoriesForMethods!
+model:name:class:subclasses:!instance creation!public! !
+name:class:subclasses:!instance creation!public! !
+!
 

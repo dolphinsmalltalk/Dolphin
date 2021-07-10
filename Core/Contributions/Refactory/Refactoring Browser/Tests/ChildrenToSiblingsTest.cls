@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #ChildrenToSiblingsTest
 	instanceVariableNames: ''
@@ -95,10 +95,12 @@ testModelChildrenToSibling
 	self assert: (class metaclass parseTreeFor: #bar)
 		equals: (RBParser parseMethod: 'bar
 							^self printString')! !
-!ChildrenToSiblingsTest categoriesFor: #setUp!public!set up! !
-!ChildrenToSiblingsTest categoriesFor: #testBadName!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testExistingName!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testInvalidSubclass!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!ChildrenToSiblingsTest categoriesFor: #testModelChildrenToSibling!public!tests! !
+!ChildrenToSiblingsTest categoriesForMethods!
+setUp!public!set up! !
+testBadName!failure tests!public! !
+testExistingName!failure tests!public! !
+testInvalidSubclass!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelChildrenToSibling!public!tests! !
+!
 

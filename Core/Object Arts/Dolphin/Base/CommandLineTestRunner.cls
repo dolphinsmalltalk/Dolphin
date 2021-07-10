@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CommandLineTestRunner
 	instanceVariableNames: 'results lastCase loggers verbose'
@@ -77,24 +77,28 @@ update: anObject with: argument from: originator
 
 verbose: aBoolean
 	verbose := aBoolean! !
-!CommandLineTestRunner categoriesFor: #addLogger:!initializing!private! !
-!CommandLineTestRunner categoriesFor: #finishRun:knownSlowTests:!operations!private! !
-!CommandLineTestRunner categoriesFor: #initialize!initializing!private! !
-!CommandLineTestRunner categoriesFor: #logFinishedCase:!private!updating! !
-!CommandLineTestRunner categoriesFor: #logStartingCase:!logging!private! !
-!CommandLineTestRunner categoriesFor: #logStartingRun:!logging!private! !
-!CommandLineTestRunner categoriesFor: #newStdOutLogger!logging!private! !
-!CommandLineTestRunner categoriesFor: #result!accessing!public! !
-!CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
-!CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
-!CommandLineTestRunner categoriesFor: #runSuite:knownSlowTests:!operations!public! !
-!CommandLineTestRunner categoriesFor: #startRun:!operations!private! !
-!CommandLineTestRunner categoriesFor: #update:with:from:!private!updating! !
-!CommandLineTestRunner categoriesFor: #verbose:!accessing!public! !
+!CommandLineTestRunner categoriesForMethods!
+addLogger:!initializing!private! !
+finishRun:knownSlowTests:!operations!private! !
+initialize!initializing!private! !
+logFinishedCase:!private!updating! !
+logStartingCase:!logging!private! !
+logStartingRun:!logging!private! !
+newStdOutLogger!logging!private! !
+result!accessing!public! !
+resultFor:!helpers!private! !
+runSuite:!operations!public! !
+runSuite:knownSlowTests:!operations!public! !
+startRun:!operations!private! !
+update:with:from:!private!updating! !
+verbose:!accessing!public! !
+!
 
 !CommandLineTestRunner class methodsFor!
 
 new
 	^super new initialize! !
-!CommandLineTestRunner class categoriesFor: #new!instance creation!public! !
+!CommandLineTestRunner class categoriesForMethods!
+new!instance creation!public! !
+!
 

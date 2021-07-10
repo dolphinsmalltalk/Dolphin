@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADOCollection subclass: #ADODynaCollection
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ removeAtIndex: index
 	Raise a <BoundsError> if there is no element with that index."
 
 	^interface Delete: (index-1) asVariant! !
-!ADODynaCollection categoriesFor: #add:!adding!public! !
-!ADODynaCollection categoriesFor: #removeAtIndex:!public!removing! !
+!ADODynaCollection categoriesForMethods!
+add:!adding!public! !
+removeAtIndex:!public!removing! !
+!
 

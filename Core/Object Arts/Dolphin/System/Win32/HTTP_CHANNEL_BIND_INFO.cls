@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 	instanceVariableNames: ''
@@ -73,14 +73,16 @@ ServiceNames: aStructureArray
 
 	bytes uintPtrAtOffset: _OffsetOf_ServiceNames put: aStructureArray yourAddress.
 	self NumberOfServiceNames: aStructureArray size! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #Hardening!**compiled accessors**!public! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #Hardening:!**compiled accessors**!public! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #NumberOfServiceNames!**compiled accessors**!private! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #NumberOfServiceNames:!**compiled accessors**!private! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #ServiceNames!**compiled accessors**!public! !
-!HTTP_CHANNEL_BIND_INFO categoriesFor: #ServiceNames:!**compiled accessors**!public! !
+!HTTP_CHANNEL_BIND_INFO categoriesForMethods!
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+Hardening!**compiled accessors**!public! !
+Hardening:!**compiled accessors**!public! !
+NumberOfServiceNames!**compiled accessors**!private! !
+NumberOfServiceNames:!**compiled accessors**!private! !
+ServiceNames!**compiled accessors**!public! !
+ServiceNames:!**compiled accessors**!public! !
+!
 
 !HTTP_CHANNEL_BIND_INFO class methodsFor!
 
@@ -107,6 +109,8 @@ defineFields
 
 getFieldNames
 	^#(#Hardening #Flags #ServiceNames #NumberOfServiceNames)! !
-!HTTP_CHANNEL_BIND_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_CHANNEL_BIND_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_CHANNEL_BIND_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

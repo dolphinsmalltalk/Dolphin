@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #AddMethodChangeTest
 	instanceVariableNames: ''
@@ -26,6 +26,8 @@ testPrintOn
 	self assertIsNil: change protocol.
 	self assert: change printString readStream nextLine
 		equals: '!!AddMethodChangeTest class methodsFor: ''''!!'! !
-!AddMethodChangeTest categoriesFor: #changeClass!public!unit tests! !
-!AddMethodChangeTest categoriesFor: #testPrintOn!public!unit tests! !
+!AddMethodChangeTest categoriesForMethods!
+changeClass!public!unit tests! !
+testPrintOn!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #CheckButton
 	instanceVariableNames: 'image'
@@ -141,20 +141,22 @@ onViewCreated
 
 	super onViewCreated.
 	self image: self image! !
-!CheckButton categoriesFor: #alignment!accessing!public! !
-!CheckButton categoriesFor: #alignment:!accessing!public! !
-!CheckButton categoriesFor: #basicWindowStyle!constants!private! !
-!CheckButton categoriesFor: #command:id:!commands!private! !
-!CheckButton categoriesFor: #defaultWindowStyle!constants!private! !
-!CheckButton categoriesFor: #displayValue!private!updating! !
-!CheckButton categoriesFor: #displayValue:!private!updating! !
-!CheckButton categoriesFor: #hasLeftText!accessing-styles!public! !
-!CheckButton categoriesFor: #hasLeftText:!accessing-styles!public! !
-!CheckButton categoriesFor: #image!accessing!public! !
-!CheckButton categoriesFor: #image:!accessing!public! !
-!CheckButton categoriesFor: #isPushLike!accessing-styles!public! !
-!CheckButton categoriesFor: #isPushLike:!accessing-styles!public! !
-!CheckButton categoriesFor: #onViewCreated!event handling!public! !
+!CheckButton categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+basicWindowStyle!constants!private! !
+command:id:!commands!private! !
+defaultWindowStyle!constants!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+hasLeftText!accessing-styles!public! !
+hasLeftText:!accessing-styles!public! !
+image!accessing!public! !
+image:!accessing!public! !
+isPushLike!accessing-styles!public! !
+isPushLike:!accessing-styles!public! !
+onViewCreated!event handling!public! !
+!
 
 !CheckButton class methodsFor!
 
@@ -190,8 +192,10 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."
 
 	^'BUTTON'! !
-!CheckButton class categoriesFor: #defaultModel!models!public! !
-!CheckButton class categoriesFor: #initialize!development!initializing!private! !
-!CheckButton class categoriesFor: #themePartName!accessing!public! !
-!CheckButton class categoriesFor: #winClassName!constants!private! !
+!CheckButton class categoriesForMethods!
+defaultModel!models!public! !
+initialize!development!initializing!private! !
+themePartName!accessing!public! !
+winClassName!constants!private! !
+!
 

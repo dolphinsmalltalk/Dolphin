@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IServiceProvider
 	instanceVariableNames: ''
@@ -39,8 +39,10 @@ QueryService: guidService riid: riid ppvObject: ppvObject
 
 	<virtual stdcall: hresult 4 guid* guid* IUnknown**>
 	^self invalidCall: _failureCode! !
-!IServiceProvider categoriesFor: #queryService:riid:!methods!public! !
-!IServiceProvider categoriesFor: #QueryService:riid:ppvObject:!COM Interfaces-IServiceProvider!private! !
+!IServiceProvider categoriesForMethods!
+queryService:riid:!methods!public! !
+QueryService:riid:ppvObject:!COM Interfaces-IServiceProvider!private! !
+!
 
 IServiceProvider methodProtocol: #IServiceProvider attributes: #(#readOnly) selectors: #(#QueryService:riid:ppvObject:)!
 
@@ -55,5 +57,7 @@ defineFunctions
 		defineFunction: #QueryService:riid:ppvObject:
 			argumentTypes: 'GUID* GUID* IUnknown**'
 ! !
-!IServiceProvider class categoriesFor: #defineFunctions!initializing!public! !
+!IServiceProvider class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

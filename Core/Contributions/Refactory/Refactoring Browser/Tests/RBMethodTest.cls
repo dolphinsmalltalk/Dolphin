@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #RBMethodTest
 	instanceVariableNames: ''
@@ -26,6 +26,8 @@ testRefersToSymbol
 	self assert: (method refersToSymbol: #abc).
 	method := class methodFor: #literalArrayStringsAndSymbols.
 	self assert: (method refersToSymbol: #def)! !
-!RBMethodTest categoriesFor: #testLiteralStringsDoNotMatchSymbols!public! !
-!RBMethodTest categoriesFor: #testRefersToSymbol!public! !
+!RBMethodTest categoriesForMethods!
+testLiteralStringsDoNotMatchSymbols!public! !
+testRefersToSymbol!public! !
+!
 

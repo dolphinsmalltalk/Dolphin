@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBrush subclass: #GdiplusHatchBrush
 	instanceVariableNames: ''
@@ -81,8 +81,10 @@ style: aNumber forecolor: foreARGB backcolor: backARGB
 				style: aNumber
 				forecolor: foreARGB
 				backcolor: backARGB)! !
-!GdiplusHatchBrush class categoriesFor: #exampleGdipHBFillAShape!examples!public!sunit! !
-!GdiplusHatchBrush class categoriesFor: #exampleGdipHBFillAString!examples!public!sunit! !
-!GdiplusHatchBrush class categoriesFor: #exampleGdipHBStyles!examples!public!sunit! !
-!GdiplusHatchBrush class categoriesFor: #style:forecolor:backcolor:!instance creation!public! !
+!GdiplusHatchBrush class categoriesForMethods!
+exampleGdipHBFillAShape!examples!public!sunit! !
+exampleGdipHBFillAString!examples!public!sunit! !
+exampleGdipHBStyles!examples!public!sunit! !
+style:forecolor:backcolor:!instance creation!public! !
+!
 

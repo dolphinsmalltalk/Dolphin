@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #StToken
 	instanceVariableNames: 'start comments'
@@ -98,31 +98,33 @@ start: anInteger
 
 stop
 	^self start + self length - 1! !
-!StToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StToken categoriesFor: #comments!accessing!public! !
-!StToken categoriesFor: #comments:!accessing!private! !
-!StToken categoriesFor: #isAssignment!public!testing! !
-!StToken categoriesFor: #isBinary!public!testing! !
-!StToken categoriesFor: #isBinary:!public!testing! !
-!StToken categoriesFor: #isEof!public!testing! !
-!StToken categoriesFor: #isIdentifier!public!testing! !
-!StToken categoriesFor: #isKeyword!public!testing! !
-!StToken categoriesFor: #isLiteralArrayToken!public!testing! !
-!StToken categoriesFor: #isLiteralToken!public!testing! !
-!StToken categoriesFor: #isNumberLiteralToken!public!testing! !
-!StToken categoriesFor: #isOptimized!public!testing! !
-!StToken categoriesFor: #isPatternBlock!public!testing! !
-!StToken categoriesFor: #isPatternVariable!public!testing! !
-!StToken categoriesFor: #isSpecial!public!testing! !
-!StToken categoriesFor: #isSpecial:!public!testing! !
-!StToken categoriesFor: #length!accessing!public! !
-!StToken categoriesFor: #printOn:!printing!public! !
-!StToken categoriesFor: #removePositions!accessing!public! !
-!StToken categoriesFor: #scannerClass!constants!public! !
-!StToken categoriesFor: #sourceInterval!accessing!public! !
-!StToken categoriesFor: #start!accessing!public! !
-!StToken categoriesFor: #start:!initializing!private! !
-!StToken categoriesFor: #stop!accessing!public! !
+!StToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+comments!accessing!public! !
+comments:!accessing!private! !
+isAssignment!public!testing! !
+isBinary!public!testing! !
+isBinary:!public!testing! !
+isEof!public!testing! !
+isIdentifier!public!testing! !
+isKeyword!public!testing! !
+isLiteralArrayToken!public!testing! !
+isLiteralToken!public!testing! !
+isNumberLiteralToken!public!testing! !
+isOptimized!public!testing! !
+isPatternBlock!public!testing! !
+isPatternVariable!public!testing! !
+isSpecial!public!testing! !
+isSpecial:!public!testing! !
+length!accessing!public! !
+printOn:!printing!public! !
+removePositions!accessing!public! !
+scannerClass!constants!public! !
+sourceInterval!accessing!public! !
+start!accessing!public! !
+start:!initializing!private! !
+stop!accessing!public! !
+!
 
 !StToken class methodsFor!
 
@@ -137,6 +139,8 @@ start: anInteger comments: aCollectionOrNil
 		start: anInteger;
 		comments: aCollectionOrNil;
 		yourself! !
-!StToken class categoriesFor: #start:!instance creation!public! !
-!StToken class categoriesFor: #start:comments:!instance creation!public! !
+!StToken class categoriesForMethods!
+start:!instance creation!public! !
+start:comments:!instance creation!public! !
+!
 

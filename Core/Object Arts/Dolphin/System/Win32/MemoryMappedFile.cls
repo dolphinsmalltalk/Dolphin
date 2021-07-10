@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MemoryMappedFile
 	instanceVariableNames: 'file name handle maximumSize ownsFile'
@@ -122,16 +122,18 @@ setFile: aFile owned: aBoolean name: aString
 	ownsFile := aBoolean.
 	name := aString.
 	maximumSize := 0! !
-!MemoryMappedFile categoriesFor: #asParameter!converting!public! !
-!MemoryMappedFile categoriesFor: #basicFree!private!realizing/unrealizing! !
-!MemoryMappedFile categoriesFor: #createMapping!helpers!private! !
-!MemoryMappedFile categoriesFor: #free!public!realizing/unrealizing! !
-!MemoryMappedFile categoriesFor: #isReadOnly!helpers!public!testing! !
-!MemoryMappedFile categoriesFor: #mapView!operations!public! !
-!MemoryMappedFile categoriesFor: #mapViewFrom:to:!operations!public! !
-!MemoryMappedFile categoriesFor: #maximumSize!accessing!public! !
-!MemoryMappedFile categoriesFor: #maximumSize:!accessing!public! !
-!MemoryMappedFile categoriesFor: #setFile:owned:name:!initializing!private! !
+!MemoryMappedFile categoriesForMethods!
+asParameter!converting!public! !
+basicFree!private!realizing/unrealizing! !
+createMapping!helpers!private! !
+free!public!realizing/unrealizing! !
+isReadOnly!helpers!public!testing! !
+mapView!operations!public! !
+mapViewFrom:to:!operations!public! !
+maximumSize!accessing!public! !
+maximumSize:!accessing!public! !
+setFile:owned:name:!initializing!private! !
+!
 
 !MemoryMappedFile class methodsFor!
 
@@ -183,10 +185,12 @@ open: aString mode: aSymbol check: aBoolean
 			owned: true
 			name: nil;
 		yourself! !
-!MemoryMappedFile class categoriesFor: #icon!constants!public! !
-!MemoryMappedFile class categoriesFor: #onFile:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #onFile:named:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #open:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #open:mode:!instance creation!public! !
-!MemoryMappedFile class categoriesFor: #open:mode:check:!instance creation!public! !
+!MemoryMappedFile class categoriesForMethods!
+icon!constants!public! !
+onFile:!instance creation!public! !
+onFile:named:!instance creation!public! !
+open:!instance creation!public! !
+open:mode:!instance creation!public! !
+open:mode:check:!instance creation!public! !
+!
 

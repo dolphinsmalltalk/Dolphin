@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StVariable subclass: #StLocalVariable
 	instanceVariableNames: 'node storage'
@@ -72,18 +72,22 @@ setNode: anStVariableNode
 
 storage
 	^storage! !
-!StLocalVariable categoriesFor: #addAssignment:fromScope:!public! !
-!StLocalVariable categoriesFor: #addRead:fromScope:!public! !
-!StLocalVariable categoriesFor: #isLocalVariable!public!testing! !
-!StLocalVariable categoriesFor: #markNestedRead!private! !
-!StLocalVariable categoriesFor: #name!accessing!public! !
-!StLocalVariable categoriesFor: #node!accessing!public! !
-!StLocalVariable categoriesFor: #setNode:!accessing!initializing!private! !
-!StLocalVariable categoriesFor: #storage!accessing!private! !
+!StLocalVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
+addRead:fromScope:!public! !
+isLocalVariable!public!testing! !
+markNestedRead!private! !
+name!accessing!public! !
+node!accessing!public! !
+setNode:!accessing!initializing!private! !
+storage!accessing!private! !
+!
 
 !StLocalVariable class methodsFor!
 
 node: anStTempDecl
 	^self new setNode: anStTempDecl! !
-!StLocalVariable class categoriesFor: #node:!public! !
+!StLocalVariable class categoriesForMethods!
+node:!public! !
+!
 

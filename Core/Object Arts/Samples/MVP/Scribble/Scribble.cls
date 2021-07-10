@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #Scribble
 	instanceVariableNames: 'newStroke trackingCanvas'
@@ -67,12 +67,14 @@ startTrackingAt: aPoint
 	"Create a new stroke"
 	newStroke := InkStroke new.
 	^newStroke addPoint: aPoint.! !
-!Scribble categoriesFor: #cancelTrackingAt:!private!tracking! !
-!Scribble categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!Scribble categoriesFor: #endTrackingAt:!private!tracking! !
-!Scribble categoriesFor: #initialize!initializing!private! !
-!Scribble categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!Scribble categoriesFor: #startTrackingAt:!private!tracking! !
+!Scribble categoriesForMethods!
+cancelTrackingAt:!private!tracking! !
+continueTrackingAt:from:!private!tracking! !
+endTrackingAt:!private!tracking! !
+initialize!initializing!private! !
+onLeftButtonPressed:!event handling!public! !
+startTrackingAt:!private!tracking! !
+!
 
 Scribble methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -111,9 +113,11 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Scribble Pad'! !
-!Scribble class categoriesFor: #defaultModel!models!public! !
-!Scribble class categoriesFor: #icon!constants!public! !
-!Scribble class categoriesFor: #initialize!class initialization!private! !
-!Scribble class categoriesFor: #resource_Default_view!public!resources-views! !
-!Scribble class categoriesFor: #sampleDescription!constants!development!private! !
+!Scribble class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!class initialization!private! !
+resource_Default_view!public!resources-views! !
+sampleDescription!constants!development!private! !
+!
 

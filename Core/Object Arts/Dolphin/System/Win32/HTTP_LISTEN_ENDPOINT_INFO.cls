@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ EnableSharing: aBoolean
 	"Set the receiver's 'EnableSharing' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_EnableSharing put: aBoolean asParameter! !
-!HTTP_LISTEN_ENDPOINT_INFO categoriesFor: #EnableSharing!**compiled accessors**!public! !
-!HTTP_LISTEN_ENDPOINT_INFO categoriesFor: #EnableSharing:!**compiled accessors**!public! !
+!HTTP_LISTEN_ENDPOINT_INFO categoriesForMethods!
+EnableSharing!**compiled accessors**!public! !
+EnableSharing:!**compiled accessors**!public! !
+!
 
 !HTTP_LISTEN_ENDPOINT_INFO class methodsFor!
 
@@ -61,7 +63,9 @@ getFieldNames
 
 propertyId
 	^HttpServerListenEndpointProperty! !
-!HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #propertyId!public! !
+!HTTP_LISTEN_ENDPOINT_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

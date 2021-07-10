@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ColorDialogTest
 	instanceVariableNames: ''
@@ -22,5 +22,7 @@ testColorDefault
 	model value: Color black.
 	subject extractResult: true.
 	self assert: model value equals: Color default! !
-!ColorDialogTest categoriesFor: #testColorDefault!public! !
+!ColorDialogTest categoriesForMethods!
+testColorDefault!public! !
+!
 

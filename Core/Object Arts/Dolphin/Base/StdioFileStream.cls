@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedStream subclass: #StdioFileStream
 	instanceVariableNames: 'stream flags name oldFd fd crtlib'
@@ -434,59 +434,61 @@ upTo: anObject
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
 	^self bufferPrototype decodeFrom: self upTo: anObject! !
-!StdioFileStream categoriesFor: #asParameter!converting!public! !
-!StdioFileStream categoriesFor: #atEnd!public!testing! !
-!StdioFileStream categoriesFor: #attach:toFd:mode:!initializing!private! !
-!StdioFileStream categoriesFor: #basicNext!accessing!private! !
-!StdioFileStream categoriesFor: #basicNext:!accessing!private! !
-!StdioFileStream categoriesFor: #basicNext:into:startingAt:!accessing!private! !
-!StdioFileStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
-!StdioFileStream categoriesFor: #basicNextAvailable!accessing!private! !
-!StdioFileStream categoriesFor: #basicNextAvailable:!accessing!private! !
-!StdioFileStream categoriesFor: #basicNextPut:!accessing!private! !
-!StdioFileStream categoriesFor: #basicPeek!accessing!private! !
-!StdioFileStream categoriesFor: #basicUpTo:!accessing!private! !
-!StdioFileStream categoriesFor: #bufferClass!constants!private! !
-!StdioFileStream categoriesFor: #bufferPrototype!constants!private! !
-!StdioFileStream categoriesFor: #close!operations!public! !
-!StdioFileStream categoriesFor: #contents!accessing!public! !
-!StdioFileStream categoriesFor: #contentsSpecies!constants!private! !
-!StdioFileStream categoriesFor: #externalType!accessing!public! !
-!StdioFileStream categoriesFor: #fileno!accessing!private! !
-!StdioFileStream categoriesFor: #fileSize!accessing!public! !
-!StdioFileStream categoriesFor: #finalize!finalizing!private! !
-!StdioFileStream categoriesFor: #flagsFromMode:!helpers!private! !
-!StdioFileStream categoriesFor: #flush!buffer!public! !
-!StdioFileStream categoriesFor: #isBinary!public!testing! !
-!StdioFileStream categoriesFor: #isDevice!public!testing! !
-!StdioFileStream categoriesFor: #isNonBlocking!public!testing! !
-!StdioFileStream categoriesFor: #isReadable!public!testing! !
-!StdioFileStream categoriesFor: #isText!public!testing! !
-!StdioFileStream categoriesFor: #isWriteable!public!testing! !
-!StdioFileStream categoriesFor: #name!accessing!public! !
-!StdioFileStream categoriesFor: #next!accessing!public! !
-!StdioFileStream categoriesFor: #next:put:!accessing!public! !
-!StdioFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!StdioFileStream categoriesFor: #nextAvailable!accessing!public! !
-!StdioFileStream categoriesFor: #nextAvailable:!accessing!public! !
-!StdioFileStream categoriesFor: #nextPut:!accessing!public! !
-!StdioFileStream categoriesFor: #nextPutAll:!accessing!public! !
-!StdioFileStream categoriesFor: #open:mode:!instance creation!private! !
-!StdioFileStream categoriesFor: #peek!accessing!public! !
-!StdioFileStream categoriesFor: #peekFor:!accessing!public! !
-!StdioFileStream categoriesFor: #position!accessing!public! !
-!StdioFileStream categoriesFor: #position:!positioning!public! !
-!StdioFileStream categoriesFor: #reset!positioning!public! !
-!StdioFileStream categoriesFor: #seek:offset:!helpers!positioning!private! !
-!StdioFileStream categoriesFor: #setStream:name:flags:!initializing!private! !
-!StdioFileStream categoriesFor: #setToEnd!positioning!public! !
-!StdioFileStream categoriesFor: #size!accessing!public! !
-!StdioFileStream categoriesFor: #skip:!positioning!public! !
-!StdioFileStream categoriesFor: #space!constants!public! !
-!StdioFileStream categoriesFor: #tab!accessing!public! !
-!StdioFileStream categoriesFor: #tab:!accessing!public! !
-!StdioFileStream categoriesFor: #translationMode!constants!private! !
-!StdioFileStream categoriesFor: #upTo:!accessing!public! !
+!StdioFileStream categoriesForMethods!
+asParameter!converting!public! !
+atEnd!public!testing! !
+attach:toFd:mode:!initializing!private! !
+basicNext!accessing!private! !
+basicNext:!accessing!private! !
+basicNext:into:startingAt:!accessing!private! !
+basicNext:putAll:startingAt:!accessing!private! !
+basicNextAvailable!accessing!private! !
+basicNextAvailable:!accessing!private! !
+basicNextPut:!accessing!private! !
+basicPeek!accessing!private! !
+basicUpTo:!accessing!private! !
+bufferClass!constants!private! !
+bufferPrototype!constants!private! !
+close!operations!public! !
+contents!accessing!public! !
+contentsSpecies!constants!private! !
+externalType!accessing!public! !
+fileno!accessing!private! !
+fileSize!accessing!public! !
+finalize!finalizing!private! !
+flagsFromMode:!helpers!private! !
+flush!buffer!public! !
+isBinary!public!testing! !
+isDevice!public!testing! !
+isNonBlocking!public!testing! !
+isReadable!public!testing! !
+isText!public!testing! !
+isWriteable!public!testing! !
+name!accessing!public! !
+next!accessing!public! !
+next:put:!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextAvailable!accessing!public! !
+nextAvailable:!accessing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+open:mode:!instance creation!private! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+position!accessing!public! !
+position:!positioning!public! !
+reset!positioning!public! !
+seek:offset:!helpers!positioning!private! !
+setStream:name:flags:!initializing!private! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+skip:!positioning!public! !
+space!constants!public! !
+tab!accessing!public! !
+tab:!accessing!public! !
+translationMode!constants!private! !
+upTo:!accessing!public! !
+!
 
 StdioFileStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 StdioFileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!
@@ -737,29 +739,31 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
-!StdioFileStream class categoriesFor: #attach:toFd:mode:!instance creation!public! !
-!StdioFileStream class categoriesFor: #attach:toFd:mode:type:!instance creation!public! !
-!StdioFileStream class categoriesFor: #attachMode:!helpers!private! !
-!StdioFileStream class categoriesFor: #classForEncoding:!helpers!private! !
-!StdioFileStream class categoriesFor: #encodingMode!constants!private! !
-!StdioFileStream class categoriesFor: #encodingType!constants!public! !
-!StdioFileStream class categoriesFor: #fromHandle:!instance creation!public! !
-!StdioFileStream class categoriesFor: #initialize!development!initializing!public! !
-!StdioFileStream class categoriesFor: #newForEncoding:!instance creation!private! !
-!StdioFileStream class categoriesFor: #on:!instance creation!public! !
-!StdioFileStream class categoriesFor: #on:text:!instance creation!public! !
-!StdioFileStream class categoriesFor: #on:type:!instance creation!public! !
-!StdioFileStream class categoriesFor: #open:mode:check:type:!instance creation!private! !
-!StdioFileStream class categoriesFor: #openFd:mode:!instance creation!public! !
-!StdioFileStream class categoriesFor: #read:!instance creation!public! !
-!StdioFileStream class categoriesFor: #read:text:!instance creation!public! !
-!StdioFileStream class categoriesFor: #read:type:!instance creation!public! !
-!StdioFileStream class categoriesFor: #write:!instance creation!public! !
-!StdioFileStream class categoriesFor: #write:mode:!instance creation!public! !
-!StdioFileStream class categoriesFor: #write:mode:check:text:!instance creation!public! !
-!StdioFileStream class categoriesFor: #write:mode:check:type:!instance creation!public! !
-!StdioFileStream class categoriesFor: #write:text:!instance creation!public! !
-!StdioFileStream class categoriesFor: #write:type:!public! !
+!StdioFileStream class categoriesForMethods!
+attach:toFd:mode:!instance creation!public! !
+attach:toFd:mode:type:!instance creation!public! !
+attachMode:!helpers!private! !
+classForEncoding:!helpers!private! !
+encodingMode!constants!private! !
+encodingType!constants!public! !
+fromHandle:!instance creation!public! !
+initialize!development!initializing!public! !
+newForEncoding:!instance creation!private! !
+on:!instance creation!public! !
+on:text:!instance creation!public! !
+on:type:!instance creation!public! !
+open:mode:check:type:!instance creation!private! !
+openFd:mode:!instance creation!public! !
+read:!instance creation!public! !
+read:text:!instance creation!public! !
+read:type:!instance creation!public! !
+write:!instance creation!public! !
+write:mode:!instance creation!public! !
+write:mode:check:text:!instance creation!public! !
+write:mode:check:type:!instance creation!public! !
+write:text:!instance creation!public! !
+write:type:!public! !
+!
 
 StdioFileStream class methodProtocol: #'FileStream factory' attributes: #(#ansi #readOnly) selectors: #(#read: #read:type: #write: #write:mode: #write:mode:check:type:)!
 

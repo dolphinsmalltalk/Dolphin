@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Pen subclass: #StockPen
 	instanceVariableNames: 'id'
@@ -28,9 +28,11 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
-!StockPen categoriesFor: #createHandle!private!realizing/unrealizing! !
-!StockPen categoriesFor: #id:!private!realizing/unrealizing! !
-!StockPen categoriesFor: #ownedHandle:!accessing!private! !
+!StockPen categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+id:!private!realizing/unrealizing! !
+ownedHandle:!accessing!private! !
+!
 
 !StockPen class methodsFor!
 
@@ -41,5 +43,7 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
-!StockPen class categoriesFor: #fromId:!instance creation!public! !
+!StockPen class categoriesForMethods!
+fromId:!instance creation!public! !
+!
 

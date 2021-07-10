@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractELEMDESC subclass: #ARRAYDESC
 	instanceVariableNames: ''
@@ -37,9 +37,11 @@ rgbounds
 		fromAddress: bytes yourAddress + _OffsetOf_rgbounds
 		length: self cDims
 		elementClass: SAFEARRAYBOUND! !
-!ARRAYDESC categoriesFor: #cDims!**compiled accessors**!private! !
-!ARRAYDESC categoriesFor: #elementCount!accessing!private! !
-!ARRAYDESC categoriesFor: #rgbounds!**compiled accessors**!public! !
+!ARRAYDESC categoriesForMethods!
+cDims!**compiled accessors**!private! !
+elementCount!accessing!private! !
+rgbounds!**compiled accessors**!public! !
+!
 
 !ARRAYDESC class methodsFor!
 
@@ -67,6 +69,8 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #cDims #rgbounds)! !
-!ARRAYDESC class categoriesFor: #defineFields!public!template definition! !
-!ARRAYDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ARRAYDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

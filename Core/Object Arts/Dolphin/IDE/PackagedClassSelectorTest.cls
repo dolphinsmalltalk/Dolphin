@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassSelectorTest subclass: #PackagedClassSelectorTest
 	instanceVariableNames: ''
@@ -142,11 +142,13 @@ testFilteredPackagedHierarchyMove
 	"Tidy up"
 	self removeClassesDEF.
 	self removeClassesABC! !
-!PackagedClassSelectorTest categoriesFor: #assertContains:!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #classToTest!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #denyContains:!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!PackagedClassSelectorTest categoriesFor: #testFilteredPackageAddRemove!public!unit tests! !
-!PackagedClassSelectorTest categoriesFor: #testFilteredPackagedHierarchyMove!public!unit tests! !
+!PackagedClassSelectorTest categoriesForMethods!
+assertContains:!helpers!private! !
+classToTest!helpers!private! !
+denyContains:!helpers!private! !
+removalOfSelectionLeaves:!helpers!private! !
+resetSelection!helpers!private! !
+testFilteredPackageAddRemove!public!unit tests! !
+testFilteredPackagedHierarchyMove!public!unit tests! !
+!
 

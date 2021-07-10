@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOIDropDirectory
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDOIDropDirectory categoriesFor: #getMessages:!**auto generated**!methods!public! !
-!CDOIDropDirectory categoriesFor: #GetMessages:Msgs:!**auto generated**!COM Interfaces-IDropDirectory!private! !
-!CDOIDropDirectory categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIDropDirectory categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDOIDropDirectory categoriesForMethods!
+getMessages:!**auto generated**!methods!public! !
+GetMessages:Msgs:!**auto generated**!COM Interfaces-IDropDirectory!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !CDOIDropDirectory class methodsFor!
 
@@ -78,7 +80,9 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIDropDirectory class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDOIDropDirectory class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIDropDirectory class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOIDropDirectory class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

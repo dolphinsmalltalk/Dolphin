@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #WinInetLibrary
 	instanceVariableNames: ''
@@ -50,10 +50,12 @@ ping: aURL
 	"Attempts to ping aURL. Answers true if a reply is received."
 
 	^self internetCheckConnection: aURL dwFlags: 1 dwReserved: 0! !
-!WinInetLibrary categoriesFor: #internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
-!WinInetLibrary categoriesFor: #internetGoOnline:hwndParent:dwReserved:!public!win32 functions-internet! !
-!WinInetLibrary categoriesFor: #internetOpen:dwAccessType:lpszProxyName:lpszProxyBypass:dwFlags:!public!win32 functions-internet! !
-!WinInetLibrary categoriesFor: #ping:!operations!public! !
+!WinInetLibrary categoriesForMethods!
+internetCheckConnection:dwFlags:dwReserved:!public!win32 functions-internet! !
+internetGoOnline:hwndParent:dwReserved:!public!win32 functions-internet! !
+internetOpen:dwAccessType:lpszProxyName:lpszProxyBypass:dwFlags:!public!win32 functions-internet! !
+ping:!operations!public! !
+!
 
 !WinInetLibrary class methodsFor!
 
@@ -61,5 +63,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinInet'! !
-!WinInetLibrary class categoriesFor: #fileName!constants!public! !
+!WinInetLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

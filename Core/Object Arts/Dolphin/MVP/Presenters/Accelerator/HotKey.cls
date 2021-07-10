@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #HotKey
 	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
@@ -151,23 +151,25 @@ wmSysKeyUp: message wParam: wParam lParam: lParam
 
 	self updateModel.
 	^false! !
-!HotKey categoriesFor: #currentModifiers!accessing!private! !
-!HotKey categoriesFor: #defaultExtent!accessing!constants!private! !
-!HotKey categoriesFor: #defaultKeyMask!accessing!public! !
-!HotKey categoriesFor: #defaultKeyMask:!accessing!public! !
-!HotKey categoriesFor: #displayValue!private!updating! !
-!HotKey categoriesFor: #displayValue:!private!updating! !
-!HotKey categoriesFor: #initialize!initializing!private! !
-!HotKey categoriesFor: #invalidCombinationsMask!accessing!public! !
-!HotKey categoriesFor: #invalidCombinationsMask:!accessing!public! !
-!HotKey categoriesFor: #onViewCreated!event handling!public! !
-!HotKey categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!HotKey categoriesFor: #setHotKey:!accessing!private! !
-!HotKey categoriesFor: #setHotKey:modifiers:!accessing!private! !
-!HotKey categoriesFor: #setRules!accessing!private! !
-!HotKey categoriesFor: #wmKeyDown:wParam:lParam:!event handling!event handling-win32!private! !
-!HotKey categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
-!HotKey categoriesFor: #wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
+!HotKey categoriesForMethods!
+currentModifiers!accessing!private! !
+defaultExtent!accessing!constants!private! !
+defaultKeyMask!accessing!public! !
+defaultKeyMask:!accessing!public! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+initialize!initializing!private! !
+invalidCombinationsMask!accessing!public! !
+invalidCombinationsMask:!accessing!public! !
+onViewCreated!event handling!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+setHotKey:!accessing!private! !
+setHotKey:modifiers:!accessing!private! !
+setRules!accessing!private! !
+wmKeyDown:wParam:lParam:!event handling!event handling-win32!private! !
+wmKeyUp:wParam:lParam:!event handling-win32!private! !
+wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
+!
 
 !HotKey class methodsFor!
 
@@ -180,6 +182,8 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_hotkey32'! !
-!HotKey class categoriesFor: #icon!constants!public! !
-!HotKey class categoriesFor: #winClassName!constants!private! !
+!HotKey class categoriesForMethods!
+icon!constants!public! !
+winClassName!constants!private! !
+!
 

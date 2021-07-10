@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRPOLYLINE
 	instanceVariableNames: ''
@@ -71,12 +71,14 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
-!EMRPOLYLINE categoriesFor: #aptl!**compiled accessors**!public! !
-!EMRPOLYLINE categoriesFor: #aptl:!**compiled accessors**!public! !
-!EMRPOLYLINE categoriesFor: #cptl!**compiled accessors**!public! !
-!EMRPOLYLINE categoriesFor: #cptl:!**compiled accessors**!public! !
-!EMRPOLYLINE categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYLINE categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!EMRPOLYLINE categoriesForMethods!
+aptl!**compiled accessors**!public! !
+aptl:!**compiled accessors**!public! !
+cptl!**compiled accessors**!public! !
+cptl:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !EMRPOLYLINE class methodsFor!
 
@@ -119,7 +121,9 @@ iTypes
 		with: EMR_POLYGON
 		with: EMR_POLYBEZIERTO
 		with: EMR_POLYLINETO! !
-!EMRPOLYLINE class categoriesFor: #defineFields!public!template definition! !
-!EMRPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYLINE class categoriesFor: #iTypes!constants!public! !
+!EMRPOLYLINE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

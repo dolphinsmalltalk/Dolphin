@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 String variableByteSubclass: #AnsiString
 	instanceVariableNames: ''
@@ -162,22 +162,24 @@ urlDecoded
 									^self].
 							unescaped basicNextPut: ch]]].
 	^unescaped contents! !
-!AnsiString categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!AnsiString categoriesFor: #asAnsiString!converting!public! !
-!AnsiString categoriesFor: #asLowercase!converting!public! !
-!AnsiString categoriesFor: #asUppercase!converting!public! !
-!AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!AnsiString categoriesFor: #decodeAt:!encode/decode!private! !
-!AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!AnsiString categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
-!AnsiString categoriesFor: #first:!copying!public! !
-!AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!AnsiString categoriesFor: #reverse!copying!public! !
-!AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!AnsiString categoriesFor: #strlen!accessing!private! !
-!AnsiString categoriesFor: #trimNulls!copying!public! !
-!AnsiString categoriesFor: #urlDecoded!operations!public! !
+!AnsiString categoriesForMethods!
+_beginsString:!comparing!double dispatch!private! !
+asAnsiString!converting!public! !
+asLowercase!converting!public! !
+asUppercase!converting!public! !
+copyToBuffer:ofSize:!copying!private! !
+decodeAt:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+encodedSizeAt:!encode/decode!private! !
+encodeOn:put:!encode/decode!private! !
+first:!copying!public! !
+nextIndexOfCharacter:from:to:!private!searching! !
+reverse!copying!public! !
+skipEncodingMarkerFrom:!encode/decode!private! !
+strlen!accessing!private! !
+trimNulls!copying!public! !
+urlDecoded!operations!public! !
+!
 
 !AnsiString class methodsFor!
 
@@ -237,13 +239,15 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 		at: 4 put: fourthCharacter;
 		at: 5 put: fifthCharacter;
 		yourself! !
-!AnsiString class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!AnsiString class categoriesFor: #coerceString:!instance creation!public! !
-!AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
-!AnsiString class categoriesFor: #initialize!class initialization!development!public! !
-!AnsiString class categoriesFor: #with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:with:with:!instance creation!public! !
-!AnsiString class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!AnsiString class categoriesForMethods!
+characterForCodeUnit:!enquiries!public! !
+coerceString:!instance creation!public! !
+fromAddress:!instance creation!public! !
+initialize!class initialization!development!public! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+!
 

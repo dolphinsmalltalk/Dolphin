@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SharedQueue
 	instanceVariableNames: 'accessProtect valueAvailable contents'
@@ -86,14 +86,16 @@ size
 	"Answer the number of objects currently in the queue"
 
 	^accessProtect critical: [contents size]! !
-!SharedQueue categoriesFor: #errorOutOfSync!exceptions!private! !
-!SharedQueue categoriesFor: #initialize:!initializing!private! !
-!SharedQueue categoriesFor: #next!accessing!public! !
-!SharedQueue categoriesFor: #nextNoWait!accessing!public! !
-!SharedQueue categoriesFor: #nextPut:!accessing!public! !
-!SharedQueue categoriesFor: #peek!accessing!public! !
-!SharedQueue categoriesFor: #removeAll!public!removing! !
-!SharedQueue categoriesFor: #size!accessing!public! !
+!SharedQueue categoriesForMethods!
+errorOutOfSync!exceptions!private! !
+initialize:!initializing!private! !
+next!accessing!public! !
+nextNoWait!accessing!public! !
+nextPut:!accessing!public! !
+peek!accessing!public! !
+removeAll!public!removing! !
+size!accessing!public! !
+!
 
 !SharedQueue class methodsFor!
 
@@ -116,7 +118,9 @@ new: anInteger
 	^(self basicNew)
 		initialize: anInteger;
 		yourself! !
-!SharedQueue class categoriesFor: #initialize!development!initializing!private! !
-!SharedQueue class categoriesFor: #new!instance creation!public! !
-!SharedQueue class categoriesFor: #new:!instance creation!public! !
+!SharedQueue class categoriesForMethods!
+initialize!development!initializing!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

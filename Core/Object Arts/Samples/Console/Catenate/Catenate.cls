@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ConsoleSessionManager subclass: #Catenate
 	instanceVariableNames: ''
@@ -40,7 +40,9 @@ openStdOut
 	"Private - We want to open stdout in untranslated mode as we are going to dump the file contents exactly as they are."
 
 	^StdioBinaryFileStream fromHandle: VMLibrary default stdout! !
-!Catenate categoriesFor: #cat:!operations-startup!public! !
-!Catenate categoriesFor: #main!operations-startup!public! !
-!Catenate categoriesFor: #openStdOut!helpers!private! !
+!Catenate categoriesForMethods!
+cat:!operations-startup!public! !
+main!operations-startup!public! !
+openStdOut!helpers!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitBrowserAbsConfig subclass: #SUnitBrowserConfig
 	instanceVariableNames: ''
@@ -65,16 +65,18 @@ toggleShowRunningStatusInList
 toggleShowStatusBackgroundColors
 
 	self showStatusBackgroundColors: self showStatusBackgroundColors not! !
-!SUnitBrowserConfig categoriesFor: #shouldInitializeResources!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #shouldInitializeResources:!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #showAll!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #showAll:!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #showRunningStatusInList!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #showRunningStatusInList:!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #showStatusBackgroundColors!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #showStatusBackgroundColors:!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #toggleShouldInitializeResources!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #toggleShowAll!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #toggleShowRunningStatusInList!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #toggleShowStatusBackgroundColors!configuring!public! !
+!SUnitBrowserConfig categoriesForMethods!
+shouldInitializeResources!configuring!public! !
+shouldInitializeResources:!configuring!public! !
+showAll!configuring!public! !
+showAll:!configuring!public! !
+showRunningStatusInList!configuring!public! !
+showRunningStatusInList:!configuring!public! !
+showStatusBackgroundColors!configuring!public! !
+showStatusBackgroundColors:!configuring!public! !
+toggleShouldInitializeResources!configuring!public! !
+toggleShowAll!configuring!public! !
+toggleShowRunningStatusInList!configuring!public! !
+toggleShowStatusBackgroundColors!configuring!public! !
+!
 

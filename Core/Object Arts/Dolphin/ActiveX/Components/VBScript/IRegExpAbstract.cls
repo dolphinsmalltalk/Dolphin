@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IRegExpAbstract
 	instanceVariableNames: ''
@@ -160,27 +160,29 @@ test: aString
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !
-!IRegExpAbstract categoriesFor: #execute:!operations!public! !
-!IRegExpAbstract categoriesFor: #Execute:ppMatches:!private! !
-!IRegExpAbstract categoriesFor: #get_Global:!private! !
-!IRegExpAbstract categoriesFor: #get_IgnoreCase:!private! !
-!IRegExpAbstract categoriesFor: #get_Pattern:!private! !
-!IRegExpAbstract categoriesFor: #global!properties!public! !
-!IRegExpAbstract categoriesFor: #global:!properties!public! !
-!IRegExpAbstract categoriesFor: #ignoreCase!properties!public! !
-!IRegExpAbstract categoriesFor: #ignoreCase:!properties!public! !
-!IRegExpAbstract categoriesFor: #isExtensible!public!testing! !
-!IRegExpAbstract categoriesFor: #isVBCollection!public!testing! !
-!IRegExpAbstract categoriesFor: #matchCollectionClass!constants!private! !
-!IRegExpAbstract categoriesFor: #pattern!properties!public! !
-!IRegExpAbstract categoriesFor: #pattern:!properties!public! !
-!IRegExpAbstract categoriesFor: #printValueOn:!printing!private! !
-!IRegExpAbstract categoriesFor: #put_Global:!private! !
-!IRegExpAbstract categoriesFor: #put_IgnoreCase:!private! !
-!IRegExpAbstract categoriesFor: #put_Pattern:!private! !
-!IRegExpAbstract categoriesFor: #replace:replaceString:!operations!public! !
-!IRegExpAbstract categoriesFor: #test:!operations!public! !
-!IRegExpAbstract categoriesFor: #Test:pMatch:!private! !
+!IRegExpAbstract categoriesForMethods!
+execute:!operations!public! !
+Execute:ppMatches:!private! !
+get_Global:!private! !
+get_IgnoreCase:!private! !
+get_Pattern:!private! !
+global!properties!public! !
+global:!properties!public! !
+ignoreCase!properties!public! !
+ignoreCase:!properties!public! !
+isExtensible!public!testing! !
+isVBCollection!public!testing! !
+matchCollectionClass!constants!private! !
+pattern!properties!public! !
+pattern:!properties!public! !
+printValueOn:!printing!private! !
+put_Global:!private! !
+put_IgnoreCase:!private! !
+put_Pattern:!private! !
+replace:replaceString:!operations!public! !
+test:!operations!public! !
+Test:pMatch:!private! !
+!
 
 !IRegExpAbstract class methodsFor!
 
@@ -194,6 +196,8 @@ clsid
 
 pattern: aString
 	^self new pattern: aString! !
-!IRegExpAbstract class categoriesFor: #clsid!constants!private! !
-!IRegExpAbstract class categoriesFor: #pattern:!instance creation!public! !
+!IRegExpAbstract class categoriesForMethods!
+clsid!constants!private! !
+pattern:!instance creation!public! !
+!
 

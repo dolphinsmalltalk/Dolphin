@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 EmbeddedCheckButton subclass: #EmbeddedRadioButton
 	instanceVariableNames: ''
@@ -42,11 +42,13 @@ uStateFor: aValue enabled: aBoolean
 	^aValue 
 		ifTrue: [uState | DFCS_CHECKED] 
 		ifFalse: [uState]! !
-!EmbeddedRadioButton categoriesFor: #basicWindowStyle!constants!private! !
-!EmbeddedRadioButton categoriesFor: #defaultIStateId!constants!public! !
-!EmbeddedRadioButton categoriesFor: #iPartId!constants!public! !
-!EmbeddedRadioButton categoriesFor: #iStateFor:enabled:hot:!drawing!private! !
-!EmbeddedRadioButton categoriesFor: #uStateFor:enabled:!drawing!private! !
+!EmbeddedRadioButton categoriesForMethods!
+basicWindowStyle!constants!private! !
+defaultIStateId!constants!public! !
+iPartId!constants!public! !
+iStateFor:enabled:hot:!drawing!private! !
+uStateFor:enabled:!drawing!private! !
+!
 
 !EmbeddedRadioButton class methodsFor!
 
@@ -54,5 +56,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^RadioButton icon! !
-!EmbeddedRadioButton class categoriesFor: #icon!constants!public! !
+!EmbeddedRadioButton class categoriesForMethods!
+icon!constants!public! !
+!
 

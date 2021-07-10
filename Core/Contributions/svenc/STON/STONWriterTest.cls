@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #STONWriterTest
 	instanceVariableNames: ''
@@ -361,50 +361,52 @@ testUserNil
 	| user |
 	user := STONTestUser new.
 	self assert: (self serialize: user) equals: 'TestUser{#enabled:true}'! !
-!STONWriterTest categoriesFor: #serialize:!private! !
-!STONWriterTest categoriesFor: #serializeAsciiOnly:!private! !
-!STONWriterTest categoriesFor: #serializeJson:!private! !
-!STONWriterTest categoriesFor: #serializePretty:!private! !
-!STONWriterTest categoriesFor: #testAssociation!public!tests! !
-!STONWriterTest categoriesFor: #testBag!public!tests! !
-!STONWriterTest categoriesFor: #testBoolean!public!tests! !
-!STONWriterTest categoriesFor: #testByteArray!public!tests! !
-!STONWriterTest categoriesFor: #testClass!public!tests! !
-!STONWriterTest categoriesFor: #testColor!public!tests! !
-!STONWriterTest categoriesFor: #testCustomNewline!public!tests! !
-!STONWriterTest categoriesFor: #testDate!public!tests! !
-!STONWriterTest categoriesFor: #testDateAndTime!public!tests! !
-!STONWriterTest categoriesFor: #testDictionary!public!tests! !
-!STONWriterTest categoriesFor: #testDictionaryWithComplexKeys!public!tests! !
-!STONWriterTest categoriesFor: #testDoubleQuotedString!public!tests! !
-!STONWriterTest categoriesFor: #testEmptyArrayPretty!public!tests! !
-!STONWriterTest categoriesFor: #testEmptyDictionaryPretty!public!tests! !
-!STONWriterTest categoriesFor: #testFloat!public!tests! !
-!STONWriterTest categoriesFor: #testFraction!public!tests! !
-!STONWriterTest categoriesFor: #testIdentityDictionary!public!tests! !
-!STONWriterTest categoriesFor: #testInteger!public!tests! !
-!STONWriterTest categoriesFor: #testIsSimpleSymbol!public!tests! !
-!STONWriterTest categoriesFor: #testKeepingNewLines!public!tests! !
-!STONWriterTest categoriesFor: #testList!public!tests! !
-!STONWriterTest categoriesFor: #testMap!public!tests! !
-!STONWriterTest categoriesFor: #testMetaclass!public!tests! !
-!STONWriterTest categoriesFor: #testNil!public!tests! !
-!STONWriterTest categoriesFor: #testNonBMPCharacterEncoding!public!tests! !
-!STONWriterTest categoriesFor: #testNull!public!tests! !
-!STONWriterTest categoriesFor: #testOrderedCollection!public!tests! !
-!STONWriterTest categoriesFor: #testPoint!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceCycle!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceSharing!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceSharingError!public!tests! !
-!STONWriterTest categoriesFor: #testReferenceSharingIgnore!public!tests! !
-!STONWriterTest categoriesFor: #testRestrictedClassesInJsonMode!public!tests! !
-!STONWriterTest categoriesFor: #testScaledDecimal!public!tests! !
-!STONWriterTest categoriesFor: #testString!public!tests! !
-!STONWriterTest categoriesFor: #testSymbol!public!tests! !
-!STONWriterTest categoriesFor: #testSymbolAsString!public!tests! !
-!STONWriterTest categoriesFor: #testTime!public!tests! !
-!STONWriterTest categoriesFor: #testUser!public!tests! !
-!STONWriterTest categoriesFor: #testUser2!public!tests! !
-!STONWriterTest categoriesFor: #testUser3Nil!public!tests! !
-!STONWriterTest categoriesFor: #testUserNil!public!tests! !
+!STONWriterTest categoriesForMethods!
+serialize:!private! !
+serializeAsciiOnly:!private! !
+serializeJson:!private! !
+serializePretty:!private! !
+testAssociation!public!tests! !
+testBag!public!tests! !
+testBoolean!public!tests! !
+testByteArray!public!tests! !
+testClass!public!tests! !
+testColor!public!tests! !
+testCustomNewline!public!tests! !
+testDate!public!tests! !
+testDateAndTime!public!tests! !
+testDictionary!public!tests! !
+testDictionaryWithComplexKeys!public!tests! !
+testDoubleQuotedString!public!tests! !
+testEmptyArrayPretty!public!tests! !
+testEmptyDictionaryPretty!public!tests! !
+testFloat!public!tests! !
+testFraction!public!tests! !
+testIdentityDictionary!public!tests! !
+testInteger!public!tests! !
+testIsSimpleSymbol!public!tests! !
+testKeepingNewLines!public!tests! !
+testList!public!tests! !
+testMap!public!tests! !
+testMetaclass!public!tests! !
+testNil!public!tests! !
+testNonBMPCharacterEncoding!public!tests! !
+testNull!public!tests! !
+testOrderedCollection!public!tests! !
+testPoint!public!tests! !
+testReferenceCycle!public!tests! !
+testReferenceSharing!public!tests! !
+testReferenceSharingError!public!tests! !
+testReferenceSharingIgnore!public!tests! !
+testRestrictedClassesInJsonMode!public!tests! !
+testScaledDecimal!public!tests! !
+testString!public!tests! !
+testSymbol!public!tests! !
+testSymbolAsString!public!tests! !
+testTime!public!tests! !
+testUser!public!tests! !
+testUser2!public!tests! !
+testUser3Nil!public!tests! !
+testUserNil!public!tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #SimpleTestResourceTestCase
 	instanceVariableNames: 'resource'
@@ -46,18 +46,22 @@ testResourcesCollection
 	| collection |
 	collection := self resources.
 	self assert: collection size equals: 1! !
-!SimpleTestResourceTestCase categoriesFor: #dummy!public! !
-!SimpleTestResourceTestCase categoriesFor: #error!public! !
-!SimpleTestResourceTestCase categoriesFor: #fail!public! !
-!SimpleTestResourceTestCase categoriesFor: #setRun!public! !
-!SimpleTestResourceTestCase categoriesFor: #setUp!public! !
-!SimpleTestResourceTestCase categoriesFor: #testRan!public! !
-!SimpleTestResourceTestCase categoriesFor: #testResourceInitRelease!public! !
-!SimpleTestResourceTestCase categoriesFor: #testResourcesCollection!public! !
+!SimpleTestResourceTestCase categoriesForMethods!
+dummy!public! !
+error!public! !
+fail!public! !
+setRun!public! !
+setUp!public! !
+testRan!public! !
+testResourceInitRelease!public! !
+testResourcesCollection!public! !
+!
 
 !SimpleTestResourceTestCase class methodsFor!
 
 resources
 	^Set new add: SimpleTestResource; yourself! !
-!SimpleTestResourceTestCase class categoriesFor: #resources!public! !
+!SimpleTestResourceTestCase class categoriesForMethods!
+resources!public! !
+!
 

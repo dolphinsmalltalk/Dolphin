@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #MoveVariableDefinitionRefactoring
 	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode'
@@ -106,14 +106,16 @@ usesDirectly: aParseTree
 			do: [:aNode :answer | answer];
 		matches: name do: [:aNode :answer | true].
 	^searcher executeTree: aParseTree initialAnswer: false! !
-!MoveVariableDefinitionRefactoring categoriesFor: #checkNodes:!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #checkParseTree!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #class:selector:interval:!initialize/release!public! !
-!MoveVariableDefinitionRefactoring categoriesFor: #preconditions!preconditions!public! !
-!MoveVariableDefinitionRefactoring categoriesFor: #storeOn:!printing!public! !
-!MoveVariableDefinitionRefactoring categoriesFor: #subblocksIn:!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #transform!public!transforming! !
-!MoveVariableDefinitionRefactoring categoriesFor: #usesDirectly:!public!transforming! !
+!MoveVariableDefinitionRefactoring categoriesForMethods!
+checkNodes:!public!transforming! !
+checkParseTree!public!transforming! !
+class:selector:interval:!initialize/release!public! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+subblocksIn:!public!transforming! !
+transform!public!transforming! !
+usesDirectly:!public!transforming! !
+!
 
 !MoveVariableDefinitionRefactoring class methodsFor!
 
@@ -130,6 +132,8 @@ model: aRBNamespace bindTight: anInterval in: aClass selector: aSelector
 			selector: aSelector
 			interval: anInterval;
 		yourself! !
-!MoveVariableDefinitionRefactoring class categoriesFor: #bindTight:in:selector:!instance creation!public! !
-!MoveVariableDefinitionRefactoring class categoriesFor: #model:bindTight:in:selector:!instance creation!public! !
+!MoveVariableDefinitionRefactoring class categoriesForMethods!
+bindTight:in:selector:!instance creation!public! !
+model:bindTight:in:selector:!instance creation!public! !
+!
 

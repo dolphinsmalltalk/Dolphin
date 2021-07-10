@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScalarField subclass: #FLOATField
 	instanceVariableNames: ''
@@ -29,10 +29,12 @@ writeInto: anExternalStructure value: aFloat
 	aFloat, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes floatAtOffset: offset put: aFloat! !
-!FLOATField categoriesFor: #accessorMessage!initializing!private! !
-!FLOATField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!FLOATField categoriesFor: #readFrom:!indirect accessing!private! !
-!FLOATField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!FLOATField categoriesForMethods!
+accessorMessage!initializing!private! !
+fieldClassName!automatic generation!constants!development!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !FLOATField class methodsFor!
 
@@ -40,5 +42,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^VMConstants.FloatSize! !
-!FLOATField class categoriesFor: #byteSize!constants!private! !
+!FLOATField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestRunLogger subclass: #TestRunConsoleLogger
 	instanceVariableNames: 'stream timings'
@@ -105,13 +105,15 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 				tab;
 				print: each case;
 				cr]! !
-!TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
-!TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
-!TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:threshold:!helpers!private! !
+!TestRunConsoleLogger categoriesForMethods!
+finishedCase:!logging!public! !
+finishedRun:knownSlowTests:!logging!public! !
+startingCase:!logging!public! !
+startingRun:!logging!public! !
+stream:!accessing!private! !
+summarizeFailures:!helpers!private! !
+summarizeTimings:baseline:threshold:!helpers!private! !
+!
 
 !TestRunConsoleLogger class methodsFor!
 
@@ -119,5 +121,7 @@ on: aPuttableStream
 	^(self new)
 		stream: aPuttableStream;
 		yourself! !
-!TestRunConsoleLogger class categoriesFor: #on:!public! !
+!TestRunConsoleLogger class categoriesForMethods!
+on:!public! !
+!
 

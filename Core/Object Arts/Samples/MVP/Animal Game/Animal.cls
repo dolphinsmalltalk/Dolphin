@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Animal
 	instanceVariableNames: 'name'
@@ -64,12 +64,14 @@ printOn: aStream
 	aStream nextPut: $(.
 	self displayOn: aStream.
 	aStream nextPut: $).! !
-!Animal categoriesFor: #ask!operations!public! !
-!Animal categoriesFor: #displayOn:!displaying!public! !
-!Animal categoriesFor: #knowledgeBase!accessing!public! !
-!Animal categoriesFor: #name!accessing!public! !
-!Animal categoriesFor: #name:!accessing!private! !
-!Animal categoriesFor: #printOn:!printing!public! !
+!Animal categoriesForMethods!
+ask!operations!public! !
+displayOn:!displaying!public! !
+knowledgeBase!accessing!public! !
+name!accessing!public! !
+name:!accessing!private! !
+printOn:!printing!public! !
+!
 
 !Animal class methodsFor!
 
@@ -113,10 +115,12 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	KnowledgeBase := nil.! !
-!Animal class categoriesFor: #knowledgeBase!accessing!public! !
-!Animal class categoriesFor: #name:!instance creation!public! !
-!Animal class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Animal class categoriesFor: #playGame!operations!public! !
-!Animal class categoriesFor: #prompt!instance creation!public! !
-!Animal class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Animal class categoriesForMethods!
+knowledgeBase!accessing!public! !
+name:!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+playGame!operations!public! !
+prompt!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

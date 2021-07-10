@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalCallback subclass: #BlockCallback
 	instanceVariableNames: 'block'
@@ -38,7 +38,9 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^block valueWithArgumentsAt: anAddress descriptor: descriptor! !
-!BlockCallback categoriesFor: #block:!accessing!private! !
-!BlockCallback categoriesFor: #printOn:!development!printing!public! !
-!BlockCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!BlockCallback categoriesForMethods!
+block:!accessing!private! !
+printOn:!development!printing!public! !
+valueWithArgumentsAt:!evaluating!private! !
+!
 

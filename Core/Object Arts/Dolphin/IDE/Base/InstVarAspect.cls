@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 KeyedAspect subclass: #InstVarAspect
 	instanceVariableNames: ''
@@ -65,14 +65,16 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject instVarAt: self key put: valueObject! !
-!InstVarAspect categoriesFor: #batchSize!constants!public! !
-!InstVarAspect categoriesFor: #canWriteInto:!private!testing! !
-!InstVarAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!InstVarAspect categoriesFor: #displayAspectText:on:!displaying!private! !
-!InstVarAspect categoriesFor: #instVarName:!accessing!public! !
-!InstVarAspect categoriesFor: #nameIn:!accessing!private! !
-!InstVarAspect categoriesFor: #objectRefName:!helpers!private! !
-!InstVarAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!InstVarAspect categoriesFor: #selectIn:!event handling!private! !
-!InstVarAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!InstVarAspect categoriesForMethods!
+batchSize!constants!public! !
+canWriteInto:!private!testing! !
+displayAspectNameOf:on:!displaying!private! !
+displayAspectText:on:!displaying!private! !
+instVarName:!accessing!public! !
+nameIn:!accessing!private! !
+objectRefName:!helpers!private! !
+readFrom:!indirect accessing!private! !
+selectIn:!event handling!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

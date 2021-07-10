@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RandomLinearCongruential subclass: #RandomParkMiller
 	instanceVariableNames: 'quo rem'
@@ -32,9 +32,11 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	seed := 1.0.
 	quo := (modulus quo: multiplier) asFloat.
 	rem := (modulus \\ multiplier) asFloat! !
-!RandomParkMiller categoriesFor: #lcg!helpers!private! !
-!RandomParkMiller categoriesFor: #seed:!accessing!public! !
-!RandomParkMiller categoriesFor: #setModulus:multiplier:increment:!initializing!private! !
+!RandomParkMiller categoriesForMethods!
+lcg!helpers!private! !
+seed:!accessing!public! !
+setModulus:multiplier:increment:!initializing!private! !
+!
 
 !RandomParkMiller class methodsFor!
 
@@ -48,6 +50,8 @@ newModulus: mInteger multiplier: aInteger increment: cInteger
 	"This generator only supports a fixed set of constants."
 
 	^self shouldNotImplement! !
-!RandomParkMiller class categoriesFor: #new!instance creation!public! !
-!RandomParkMiller class categoriesFor: #newModulus:multiplier:increment:!instance creation!public! !
+!RandomParkMiller class categoriesForMethods!
+new!instance creation!public! !
+newModulus:multiplier:increment:!instance creation!public! !
+!
 

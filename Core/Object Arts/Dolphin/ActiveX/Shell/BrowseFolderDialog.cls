@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialog subclass: #BrowseFolderDialog
 	instanceVariableNames: 'style bfFlags'
@@ -152,23 +152,25 @@ wmInitDialog: msgInteger wParam: wParam lParam: lParam
 				szParam: path].
 	bfFlags := bfFlags mask: InitializedMask set: true.
 	^0! !
-!BrowseFolderDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!BrowseFolderDialog categoriesFor: #caption:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #defaultStyle!constants!private! !
-!BrowseFolderDialog categoriesFor: #extractResult:!operations!private! !
-!BrowseFolderDialog categoriesFor: #initialize!initializing!private! !
-!BrowseFolderDialog categoriesFor: #isInitialized!private!testing! !
-!BrowseFolderDialog categoriesFor: #iunknown:wParam:lParam:!event handling!private! !
-!BrowseFolderDialog categoriesFor: #pathFromIDList:!helpers!private! !
-!BrowseFolderDialog categoriesFor: #prepareStruct!helpers!private! !
-!BrowseFolderDialog categoriesFor: #root:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #selChanged:wParam:lParam:!event handling!private! !
-!BrowseFolderDialog categoriesFor: #style!accessing!public! !
-!BrowseFolderDialog categoriesFor: #style:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #title:!accessing!public! !
-!BrowseFolderDialog categoriesFor: #validateFailed:wParam:lParam:!event handling!private! !
-!BrowseFolderDialog categoriesFor: #winStructClass!constants!private! !
-!BrowseFolderDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling!private! !
+!BrowseFolderDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+caption:!accessing!public! !
+defaultStyle!constants!private! !
+extractResult:!operations!private! !
+initialize!initializing!private! !
+isInitialized!private!testing! !
+iunknown:wParam:lParam:!event handling!private! !
+pathFromIDList:!helpers!private! !
+prepareStruct!helpers!private! !
+root:!accessing!public! !
+selChanged:wParam:lParam:!event handling!private! !
+style!accessing!public! !
+style:!accessing!public! !
+title:!accessing!public! !
+validateFailed:wParam:lParam:!event handling!private! !
+winStructClass!constants!private! !
+wmInitDialog:wParam:lParam:!event handling!private! !
+!
 
 !BrowseFolderDialog class methodsFor!
 
@@ -195,7 +197,9 @@ initialize
 		at: 4 put: nil;
 		at: BFFM_IUNKNOWN put: #iunknown:wParam:lParam:.
 	InitializedMask := 16r1! !
-!BrowseFolderDialog class categoriesFor: #defaultModel!models!public! !
-!BrowseFolderDialog class categoriesFor: #icon!constants!public! !
-!BrowseFolderDialog class categoriesFor: #initialize!initializing!private! !
+!BrowseFolderDialog class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+!
 

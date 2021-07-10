@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AttributeDescriptor subclass: #ExternalField
 	instanceVariableNames: 'offset structClass'
@@ -82,18 +82,20 @@ structClass
 
 structClass: anExternalStructureClass
 	structClass := anExternalStructureClass! !
-!ExternalField categoriesFor: #alignment!constants!public! !
-!ExternalField categoriesFor: #beFiller!modes!public! !
-!ExternalField categoriesFor: #byteSize!accessing!private! !
-!ExternalField categoriesFor: #emitStaticExpression:on:!automatic generation!private! !
-!ExternalField categoriesFor: #fieldClassName!automatic generation!constants!private! !
-!ExternalField categoriesFor: #isFiller!private!testing! !
-!ExternalField categoriesFor: #isFixedSize!private!testing! !
-!ExternalField categoriesFor: #offset!accessing!private! !
-!ExternalField categoriesFor: #offset:!accessing!private! !
-!ExternalField categoriesFor: #printOn:!printing!public! !
-!ExternalField categoriesFor: #structClass!accessing!private! !
-!ExternalField categoriesFor: #structClass:!accessing!private! !
+!ExternalField categoriesForMethods!
+alignment!constants!public! !
+beFiller!modes!public! !
+byteSize!accessing!private! !
+emitStaticExpression:on:!automatic generation!private! !
+fieldClassName!automatic generation!constants!private! !
+isFiller!private!testing! !
+isFixedSize!private!testing! !
+offset!accessing!private! !
+offset:!accessing!private! !
+printOn:!printing!public! !
+structClass!accessing!private! !
+structClass:!accessing!private! !
+!
 
 !ExternalField class methodsFor!
 
@@ -102,5 +104,7 @@ filler
 	(it cannot be read or written)."
 
 	^self new beFiller! !
-!ExternalField class categoriesFor: #filler!instance creation!public! !
+!ExternalField class categoriesForMethods!
+filler!instance creation!public! !
+!
 

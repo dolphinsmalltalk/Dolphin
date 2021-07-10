@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WeakArray variableSubclass: #MourningWeakArray
 	instanceVariableNames: 'pathologist'
@@ -44,10 +44,12 @@ pathologist: anObject
 	"Set the receiver's 'pathologist' to anObject. See #pathologist."
 
 	pathologist := anObject isNil ifTrue: [self class] ifFalse: [anObject]! !
-!MourningWeakArray categoriesFor: #elementsExpired:!finalizing!public! !
-!MourningWeakArray categoriesFor: #initialize!initializing!private! !
-!MourningWeakArray categoriesFor: #pathologist!accessing!public! !
-!MourningWeakArray categoriesFor: #pathologist:!initializing!public! !
+!MourningWeakArray categoriesForMethods!
+elementsExpired:!finalizing!public! !
+initialize!initializing!private! !
+pathologist!accessing!public! !
+pathologist:!initializing!public! !
+!
 
 !MourningWeakArray class methodsFor!
 
@@ -64,6 +66,8 @@ initialize
 	"Initialize the receiver."
 
 	self makeMourner! !
-!MourningWeakArray class categoriesFor: #elementsExpired:of:!finalizing!private! !
-!MourningWeakArray class categoriesFor: #initialize!development!initializing!public! !
+!MourningWeakArray class categoriesForMethods!
+elementsExpired:of:!finalizing!private! !
+initialize!development!initializing!public! !
+!
 

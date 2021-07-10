@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManagerTest subclass: #FramingLayoutTest
 	instanceVariableNames: ''
@@ -92,8 +92,10 @@ testResizeParentRelative
 				+ 5.
 	shell extent: (shell calcExtentFromClientExtent: marginExtents).
 	self assert: button rectangle extent equals: 5 @ 5! !
-!FramingLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!FramingLayoutTest categoriesFor: #testCircularEdgeConstraint!public!unit tests! !
-!FramingLayoutTest categoriesFor: #testFramingCalculationSerialisation!public!unit tests! !
-!FramingLayoutTest categoriesFor: #testResizeParentRelative!public!unit tests! !
+!FramingLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+testCircularEdgeConstraint!public!unit tests! !
+testFramingCalculationSerialisation!public!unit tests! !
+testResizeParentRelative!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
@@ -33,10 +33,12 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!NMLVODSTATECHANGE categoriesFor: #iFrom!**compiled accessors**!public! !
-!NMLVODSTATECHANGE categoriesFor: #iTo!**compiled accessors**!public! !
-!NMLVODSTATECHANGE categoriesFor: #uNewState!**compiled accessors**!public! !
-!NMLVODSTATECHANGE categoriesFor: #uOldState!**compiled accessors**!public! !
+!NMLVODSTATECHANGE categoriesForMethods!
+iFrom!**compiled accessors**!public! !
+iTo!**compiled accessors**!public! !
+uNewState!**compiled accessors**!public! !
+uOldState!**compiled accessors**!public! !
+!
 
 !NMLVODSTATECHANGE class methodsFor!
 
@@ -54,6 +56,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iFrom #iTo #uNewState #uOldState)! !
-!NMLVODSTATECHANGE class categoriesFor: #defineFields!public!template definition! !
-!NMLVODSTATECHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMLVODSTATECHANGE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

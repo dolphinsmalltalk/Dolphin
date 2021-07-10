@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompiledCode variableSubclass: #CompiledMethod
 	instanceVariableNames: ''
@@ -188,35 +188,37 @@ storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
 
 	self class sourceManager storeSourceString: aString forMethod: self! !
-!CompiledMethod categoriesFor: #<=!comparing!public! !
-!CompiledMethod categoriesFor: #categories!categories-accessing!development!public! !
-!CompiledMethod categoriesFor: #categories:!categories-accessing!private! !
-!CompiledMethod categoriesFor: #changeManager!development!private! !
-!CompiledMethod categoriesFor: #changePosition!development!private!testing! !
-!CompiledMethod categoriesFor: #displayOn:!printing!public! !
-!CompiledMethod categoriesFor: #getDebugInfo!development!private! !
-!CompiledMethod categoriesFor: #getSource!accessing!development!public! !
-!CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
-!CompiledMethod categoriesFor: #isChanged!development!private!testing! !
-!CompiledMethod categoriesFor: #isClassMethod!public!testing! !
-!CompiledMethod categoriesFor: #isExpression!private!testing! !
-!CompiledMethod categoriesFor: #isExternalCall!private!testing! !
-!CompiledMethod categoriesFor: #isGetter!public!testing! !
-!CompiledMethod categoriesFor: #isLoose!development!public!testing! !
-!CompiledMethod categoriesFor: #isOverridden!public!testing! !
-!CompiledMethod categoriesFor: #isOverride!public!testing! !
-!CompiledMethod categoriesFor: #isUnbound!public!testing! !
-!CompiledMethod categoriesFor: #loseSource!private!source filing-methods! !
-!CompiledMethod categoriesFor: #name!accessing!public! !
-!CompiledMethod categoriesFor: #owningPackage!accessing!development!public! !
-!CompiledMethod categoriesFor: #owningPackage:!accessing!development!public! !
-!CompiledMethod categoriesFor: #owningPackageIfLoose!accessing!development!public! !
-!CompiledMethod categoriesFor: #printOn:!printing!public! !
-!CompiledMethod categoriesFor: #privacyCategory!categories-accessing!private! !
-!CompiledMethod categoriesFor: #protocols!categories-accessing!development!public! !
-!CompiledMethod categoriesFor: #realCategories!categories-accessing!public! !
-!CompiledMethod categoriesFor: #recompile!compiling!development!private! !
-!CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !
+!CompiledMethod categoriesForMethods!
+<=!comparing!public! !
+categories!categories-accessing!development!public! !
+categories:!categories-accessing!private! !
+changeManager!development!private! !
+changePosition!development!private!testing! !
+displayOn:!printing!public! !
+getDebugInfo!development!private! !
+getSource!accessing!development!public! !
+hasChanged!development!private!testing! !
+isChanged!development!private!testing! !
+isClassMethod!public!testing! !
+isExpression!private!testing! !
+isExternalCall!private!testing! !
+isGetter!public!testing! !
+isLoose!development!public!testing! !
+isOverridden!public!testing! !
+isOverride!public!testing! !
+isUnbound!public!testing! !
+loseSource!private!source filing-methods! !
+name!accessing!public! !
+owningPackage!accessing!development!public! !
+owningPackage:!accessing!development!public! !
+owningPackageIfLoose!accessing!development!public! !
+printOn:!printing!public! !
+privacyCategory!categories-accessing!private! !
+protocols!categories-accessing!development!public! !
+realCategories!categories-accessing!public! !
+recompile!compiling!development!private! !
+storeSourceString:!private!source filing-methods! !
+!
 
 !CompiledMethod class methodsFor!
 
@@ -241,6 +243,8 @@ fromString: aString
 	isMeta ifTrue: [theClass := theClass class].
 	selector := stream upToEnd asSymbol.
 	^theClass compiledMethodAt: selector ifAbsent: []! !
-!CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
-!CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
+!CompiledMethod class categoriesForMethods!
+defaultSortBlock!private!sorting! !
+fromString:!converting!development!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArrayTest subclass: #SWORDArrayTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ SWORDArrayTest comment: ''!
 
 arrayClass
 	^SWORDArray! !
-!SWORDArrayTest categoriesFor: #arrayClass!constants!private! !
+!SWORDArrayTest categoriesForMethods!
+arrayClass!constants!private! !
+!
 

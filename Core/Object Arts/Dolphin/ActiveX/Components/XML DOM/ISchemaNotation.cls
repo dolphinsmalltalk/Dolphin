@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaItem subclass: #ISchemaNotation
 	instanceVariableNames: ''
@@ -70,10 +70,12 @@ systemIdentifier
 	self get_systemIdentifier: answer.
 	^answer asObject
 ! !
-!ISchemaNotation categoriesFor: #get_publicIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
-!ISchemaNotation categoriesFor: #get_systemIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
-!ISchemaNotation categoriesFor: #publicIdentifier!**auto generated**!properties!public! !
-!ISchemaNotation categoriesFor: #systemIdentifier!**auto generated**!properties!public! !
+!ISchemaNotation categoriesForMethods!
+get_publicIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
+get_systemIdentifier:!**auto generated**!COM Interfaces-ISchemaNotation!private! !
+publicIdentifier!**auto generated**!properties!public! !
+systemIdentifier!**auto generated**!properties!public! !
+!
 
 !ISchemaNotation class methodsFor!
 
@@ -87,5 +89,7 @@ defineFunctions
 		defineFunction: #get_publicIdentifier:
 			argumentTypes: 'bstr*'
 ! !
-!ISchemaNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaNotation class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

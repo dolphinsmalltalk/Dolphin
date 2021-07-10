@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MsgReturnSpec
 	instanceVariableNames: 'returnValueProtocols returnValueAliasingAttribute'
@@ -65,13 +65,15 @@ can be rebuilt but NOT reinstantiated via evaluate."
         aStream := WriteStream on: (String new: 50).
         self storeSIFOn: aStream.
         ^ aStream contents! !
-!MsgReturnSpec categoriesFor: #isConformingReturnClass:!public! !
-!MsgReturnSpec categoriesFor: #printOn:!public! !
-!MsgReturnSpec categoriesFor: #returnValueAliasingAttribute!public! !
-!MsgReturnSpec categoriesFor: #returnValueProtocolNames!public! !
-!MsgReturnSpec categoriesFor: #setProtocolNames:aliasing:!public! !
-!MsgReturnSpec categoriesFor: #storeSIFOn:!public! !
-!MsgReturnSpec categoriesFor: #storeSIFString!public! !
+!MsgReturnSpec categoriesForMethods!
+isConformingReturnClass:!public! !
+printOn:!public! !
+returnValueAliasingAttribute!public! !
+returnValueProtocolNames!public! !
+setProtocolNames:aliasing:!public! !
+storeSIFOn:!public! !
+storeSIFString!public! !
+!
 
 !MsgReturnSpec class methodsFor!
 
@@ -145,15 +147,17 @@ returnValueAliasingAttributeUnspecified
 	"Answer a protocol message return value unspecified aliasing attribute constant."
 
 	^ #'unspecified'! !
-!MsgReturnSpec class categoriesFor: #aliasingAttributes!public! !
-!MsgReturnSpec class categoriesFor: #new!public! !
-!MsgReturnSpec class categoriesFor: #newRetValNewProtocolNames:!public! !
-!MsgReturnSpec class categoriesFor: #newRetValProtocolNames:aliasing:!public! !
-!MsgReturnSpec class categoriesFor: #newRetValStateProtocolNames:!public! !
-!MsgReturnSpec class categoriesFor: #newRetValUnspecifiedProtocolNames:!public! !
-!MsgReturnSpec class categoriesFor: #privateNewRetValProtocolNames:aliasing:!public! !
-!MsgReturnSpec class categoriesFor: #privateValidProtocolNames:ifError:!public! !
-!MsgReturnSpec class categoriesFor: #returnValueAliasingAttributeNew!public! !
-!MsgReturnSpec class categoriesFor: #returnValueAliasingAttributeState!public! !
-!MsgReturnSpec class categoriesFor: #returnValueAliasingAttributeUnspecified!public! !
+!MsgReturnSpec class categoriesForMethods!
+aliasingAttributes!public! !
+new!public! !
+newRetValNewProtocolNames:!public! !
+newRetValProtocolNames:aliasing:!public! !
+newRetValStateProtocolNames:!public! !
+newRetValUnspecifiedProtocolNames:!public! !
+privateNewRetValProtocolNames:aliasing:!public! !
+privateValidProtocolNames:ifError:!public! !
+returnValueAliasingAttributeNew!public! !
+returnValueAliasingAttributeState!public! !
+returnValueAliasingAttributeUnspecified!public! !
+!
 

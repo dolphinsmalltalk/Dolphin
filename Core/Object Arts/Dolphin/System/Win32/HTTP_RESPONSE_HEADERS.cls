@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_HEADERS subclass: #HTTP_RESPONSE_HEADERS
 	instanceVariableNames: ''
@@ -43,8 +43,10 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 		from: ##(_OffsetOf_KnownHeaders + 1)
 		to: _OffsetOf_KnownHeaders + size
 		startingAt: 1! !
-!HTTP_RESPONSE_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
-!HTTP_RESPONSE_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
+!HTTP_RESPONSE_HEADERS categoriesForMethods!
+KnownHeaders!**compiled accessors**!public! !
+KnownHeaders:!**compiled accessors**!public! !
+!
 
 !HTTP_RESPONSE_HEADERS class methodsFor!
 
@@ -81,7 +83,9 @@ indexToHeaderMap
 		at: HttpHeaderVary put: 'Vary';
 		at: HttpHeaderWwwAuthenticate put: 'WWW-Authenticate';
 		yourself)! !
-!HTTP_RESPONSE_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_RESPONSE_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_RESPONSE_HEADERS class categoriesFor: #indexToHeaderMap!public! !
+!HTTP_RESPONSE_HEADERS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+indexToHeaderMap!public! !
+!
 

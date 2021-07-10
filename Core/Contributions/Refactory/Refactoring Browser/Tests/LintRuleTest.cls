@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #LintRuleTest
 	instanceVariableNames: 'name foo1'
@@ -75,28 +75,32 @@ runOnEnvironment: anEnvironment
 
 viewResults
 	self subclassResponsibility! !
-!LintRuleTest categoriesFor: #checkClass:!accessing!public! !
-!LintRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!LintRuleTest categoriesFor: #displayName!accessing!public! !
-!LintRuleTest categoriesFor: #failedRules!private! !
-!LintRuleTest categoriesFor: #hasConflicts!public!testing! !
-!LintRuleTest categoriesFor: #initialize!initialize/release!public! !
-!LintRuleTest categoriesFor: #isComposite!public!testing! !
-!LintRuleTest categoriesFor: #isEmpty!public!testing! !
-!LintRuleTest categoriesFor: #junk!public!testing! !
-!LintRuleTest categoriesFor: #name!accessing!public! !
-!LintRuleTest categoriesFor: #name:!accessing!public! !
-!LintRuleTest categoriesFor: #openEditor!accessing!public! !
-!LintRuleTest categoriesFor: #printOn:!printing!public! !
-!LintRuleTest categoriesFor: #problemCount!accessing!public! !
-!LintRuleTest categoriesFor: #resetResult!initialize/release!public! !
-!LintRuleTest categoriesFor: #run!accessing!public! !
-!LintRuleTest categoriesFor: #runOnEnvironment:!accessing!public! !
-!LintRuleTest categoriesFor: #viewResults!private! !
+!LintRuleTest categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+displayName!accessing!public! !
+failedRules!private! !
+hasConflicts!public!testing! !
+initialize!initialize/release!public! !
+isComposite!public!testing! !
+isEmpty!public!testing! !
+junk!public!testing! !
+name!accessing!public! !
+name:!accessing!public! !
+openEditor!accessing!public! !
+printOn:!printing!public! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+run!accessing!public! !
+runOnEnvironment:!accessing!public! !
+viewResults!private! !
+!
 
 !LintRuleTest class methodsFor!
 
 new
 	^super new initialize! !
-!LintRuleTest class categoriesFor: #new!instance creation!public! !
+!LintRuleTest class categoriesForMethods!
+new!instance creation!public! !
+!
 

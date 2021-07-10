@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #PackageBrowserTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
@@ -494,37 +494,41 @@ testRepackageMethods
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync! !
-!PackageBrowserTest categoriesFor: #addRemoveRenameClasses!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertClassesInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertCurrentCardInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertDependencyCard:inSync:!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertGlobalsInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertMethodsInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertResourcesInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #create:subclassOf:!helpers!private! !
-!PackageBrowserTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
-!PackageBrowserTest categoriesFor: #createClassesABC!helpers!private! !
-!PackageBrowserTest categoriesFor: #createGlobals!helpers!private! !
-!PackageBrowserTest categoriesFor: #createMethods!helpers!private! !
-!PackageBrowserTest categoriesFor: #currentCard!public!unit tests! !
-!PackageBrowserTest categoriesFor: #removeClass:!private!unit tests! !
-!PackageBrowserTest categoriesFor: #removeClasses!public!Running! !
-!PackageBrowserTest categoriesFor: #removeGlobals!public!Running! !
-!PackageBrowserTest categoriesFor: #renameClass!private!unit tests! !
-!PackageBrowserTest categoriesFor: #repackageClasses!private!unit tests! !
-!PackageBrowserTest categoriesFor: #resourceManager!constants!public! !
-!PackageBrowserTest categoriesFor: #setUp!public!Running! !
-!PackageBrowserTest categoriesFor: #showClassesPane!public!unit tests! !
-!PackageBrowserTest categoriesFor: #tearDown!public!Running! !
-!PackageBrowserTest categoriesFor: #testAddRemoveClasses!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testAddRemoveMethods!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testGlobals!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testRepackageClasses!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testRepackageMethods!public!unit tests! !
+!PackageBrowserTest categoriesForMethods!
+addRemoveRenameClasses!private!unit tests! !
+assertClassesInSync!private!unit tests! !
+assertCurrentCardInSync!private!unit tests! !
+assertDependencyCard:inSync:!private!unit tests! !
+assertGlobalsInSync!private!unit tests! !
+assertMethodsInSync!private!unit tests! !
+assertResourcesInSync!private!unit tests! !
+create:subclassOf:!helpers!private! !
+create:subclassOf:inPackage:!helpers!private! !
+createClassesABC!helpers!private! !
+createGlobals!helpers!private! !
+createMethods!helpers!private! !
+currentCard!public!unit tests! !
+removeClass:!private!unit tests! !
+removeClasses!public!Running! !
+removeGlobals!public!Running! !
+renameClass!private!unit tests! !
+repackageClasses!private!unit tests! !
+resourceManager!constants!public! !
+setUp!public!Running! !
+showClassesPane!public!unit tests! !
+tearDown!public!Running! !
+testAddRemoveClasses!public!unit tests! !
+testAddRemoveMethods!public!unit tests! !
+testGlobals!public!unit tests! !
+testRepackageClasses!public!unit tests! !
+testRepackageMethods!public!unit tests! !
+!
 
 !PackageBrowserTest class methodsFor!
 
 resources
 	^Array with: DolphinTestPackages! !
-!PackageBrowserTest class categoriesFor: #resources!public! !
+!PackageBrowserTest class categoriesForMethods!
+resources!public! !
+!
 

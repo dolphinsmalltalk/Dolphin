@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #DateTimeCommonControl
 	instanceVariableNames: ''
@@ -137,23 +137,25 @@ state
 	^super state
 		add: (MessageSend receiver: self selector: #range: argument: self range);
 		yourself! !
-!DateTimeCommonControl categoriesFor: #displayValue!private!updating! !
-!DateTimeCommonControl categoriesFor: #displayValue:!private!updating! !
-!DateTimeCommonControl categoriesFor: #dtNotificationMap!private! !
-!DateTimeCommonControl categoriesFor: #getRangeMessage!constants!private! !
-!DateTimeCommonControl categoriesFor: #getSystemTime!accessing!private! !
-!DateTimeCommonControl categoriesFor: #maximum!accessing!public! !
-!DateTimeCommonControl categoriesFor: #maximum:!accessing!public! !
-!DateTimeCommonControl categoriesFor: #minimum!accessing!public! !
-!DateTimeCommonControl categoriesFor: #minimum:!accessing!public! !
-!DateTimeCommonControl categoriesFor: #modelClass!accessing!private! !
-!DateTimeCommonControl categoriesFor: #nmFirst!constants!private! !
-!DateTimeCommonControl categoriesFor: #nmNotify:!event handling-win32!private! !
-!DateTimeCommonControl categoriesFor: #range!accessing!public! !
-!DateTimeCommonControl categoriesFor: #range:!accessing!public! !
-!DateTimeCommonControl categoriesFor: #setRangeMessage!constants!private! !
-!DateTimeCommonControl categoriesFor: #setSystemTime:!accessing!private! !
-!DateTimeCommonControl categoriesFor: #state!accessing!private! !
+!DateTimeCommonControl categoriesForMethods!
+displayValue!private!updating! !
+displayValue:!private!updating! !
+dtNotificationMap!private! !
+getRangeMessage!constants!private! !
+getSystemTime!accessing!private! !
+maximum!accessing!public! !
+maximum:!accessing!public! !
+minimum!accessing!public! !
+minimum:!accessing!public! !
+modelClass!accessing!private! !
+nmFirst!constants!private! !
+nmNotify:!event handling-win32!private! !
+range!accessing!public! !
+range:!accessing!public! !
+setRangeMessage!constants!private! !
+setSystemTime:!accessing!private! !
+state!accessing!private! !
+!
 
 !DateTimeCommonControl class methodsFor!
 
@@ -173,7 +175,9 @@ initialize
 
 uninitialize
 	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskClear: ICC_DATE_CLASSES)! !
-!DateTimeCommonControl class categoriesFor: #icon!constants!public! !
-!DateTimeCommonControl class categoriesFor: #initialize!development!initializing!private! !
-!DateTimeCommonControl class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!DateTimeCommonControl class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Sound
 	instanceVariableNames: 'name location type fileLocator'
@@ -68,14 +68,16 @@ woofAndWait
 	| flags |
 	flags := (type bitAnd: ##(SND_ASYNC bitInvert)) bitOr: SND_SYNC.
 	self play: flags! !
-!Sound categoriesFor: #fileLocator:!accessing!private! !
-!Sound categoriesFor: #location:!accessing!private! !
-!Sound categoriesFor: #name:!accessing!private! !
-!Sound categoriesFor: #play:!private!woofing! !
-!Sound categoriesFor: #type!accessing!public! !
-!Sound categoriesFor: #type:!initializing!private! !
-!Sound categoriesFor: #woof!public!woofing! !
-!Sound categoriesFor: #woofAndWait!public!woofing! !
+!Sound categoriesForMethods!
+fileLocator:!accessing!private! !
+location:!accessing!private! !
+name:!accessing!private! !
+play:!private!woofing! !
+type!accessing!public! !
+type:!initializing!private! !
+woof!public!woofing! !
+woofAndWait!public!woofing! !
+!
 
 !Sound class methodsFor!
 
@@ -204,25 +206,27 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 	| sound |
 	sound := Registry lookup: aSymbol.
 	sound notNil ifTrue: [sound woof] ifFalse: [exceptionBlock value]! !
-!Sound class categoriesFor: #beep!parping!public! !
-!Sound class categoriesFor: #beep:!not an aspect!parping!public! !
-!Sound class categoriesFor: #beep:duration:!parping!public! !
-!Sound class categoriesFor: #bell!parping!public! !
-!Sound class categoriesFor: #clearRegistry!development!initializing!public! !
-!Sound class categoriesFor: #defaultBeep!parping!public! !
-!Sound class categoriesFor: #errorBeep!parping!public! !
-!Sound class categoriesFor: #for:ifAbsent:!accessing!public! !
-!Sound class categoriesFor: #for:put:!accessing!public! !
-!Sound class categoriesFor: #fromAlias:!instance creation!public! !
-!Sound class categoriesFor: #fromFile:!instance creation!public! !
-!Sound class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!Sound class categoriesFor: #fromId:in:!instance creation!public! !
-!Sound class categoriesFor: #informationBeep!parping!public! !
-!Sound class categoriesFor: #initialize!development!initializing!private! !
-!Sound class categoriesFor: #promptBeep!parping!public! !
-!Sound class categoriesFor: #warningBeep!parping!public! !
-!Sound class categoriesFor: #woofAndWaitFor:!public!woofing! !
-!Sound class categoriesFor: #woofAndWaitFor:ifAbsent:!public!woofing! !
-!Sound class categoriesFor: #woofFor:!public!woofing! !
-!Sound class categoriesFor: #woofFor:ifAbsent:!public!woofing! !
+!Sound class categoriesForMethods!
+beep!parping!public! !
+beep:!not an aspect!parping!public! !
+beep:duration:!parping!public! !
+bell!parping!public! !
+clearRegistry!development!initializing!public! !
+defaultBeep!parping!public! !
+errorBeep!parping!public! !
+for:ifAbsent:!accessing!public! !
+for:put:!accessing!public! !
+fromAlias:!instance creation!public! !
+fromFile:!instance creation!public! !
+fromFile:usingLocator:!instance creation!public! !
+fromId:in:!instance creation!public! !
+informationBeep!parping!public! !
+initialize!development!initializing!private! !
+promptBeep!parping!public! !
+warningBeep!parping!public! !
+woofAndWaitFor:!public!woofing! !
+woofAndWaitFor:ifAbsent:!public!woofing! !
+woofFor:!public!woofing! !
+woofFor:ifAbsent:!public!woofing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #PARAMDESCEX
 	instanceVariableNames: ''
@@ -23,7 +23,9 @@ varDefaultValue
 	"Answer the <VARIANT> value of the receiver's 'varDefaultValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varDefaultValue! !
-!PARAMDESCEX categoriesFor: #varDefaultValue!**compiled accessors**!public! !
+!PARAMDESCEX categoriesForMethods!
+varDefaultValue!**compiled accessors**!public! !
+!
 
 !PARAMDESCEX class methodsFor!
 
@@ -47,6 +49,8 @@ defineFields
 
 getFieldNames
 	^#(#varDefaultValue)! !
-!PARAMDESCEX class categoriesFor: #defineFields!public!template definition! !
-!PARAMDESCEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PARAMDESCEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

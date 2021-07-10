@@ -84,8 +84,10 @@ fullyCompileDefinition
 
 removeTemplate
 	template := nil! !
-!ExternalStructure class categoriesFor: #fullyCompileDefinition!compiling!public! !
-!ExternalStructure class categoriesFor: #removeTemplate!private!template definition! !
+!ExternalStructure class categoriesForMethods!
+fullyCompileDefinition!compiling!public! !
+removeTemplate!private!template definition! !
+!
 
 !Object class methodsFor!
 
@@ -94,14 +96,18 @@ onPreStripImage
 
 	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
 	classPool removeKey: '_PropertyRegister'! !
-!Object class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Object class categoriesForMethods!
+onPreStripImage!class hierarchy-removing!private! !
+!
 
 !UserLibrary methodsFor!
 
 messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
 	<stdcall: sdword MessageBoxW handle lpwstr lpwstr dword>
 	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
+!UserLibrary categoriesForMethods!
+messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
+!
 
 "End of package definition"!
 

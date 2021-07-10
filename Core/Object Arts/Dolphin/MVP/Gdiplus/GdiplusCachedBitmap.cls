@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusCachedBitmap
 	instanceVariableNames: ''
@@ -16,7 +16,9 @@ basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
 
 	GdiplusLibrary default gdipDeleteCachedBitmap: handle! !
-!GdiplusCachedBitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
+!GdiplusCachedBitmap categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+!
 
 !GdiplusCachedBitmap class methodsFor!
 
@@ -56,7 +58,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Bitmap icon! !
-!GdiplusCachedBitmap class categoriesFor: #bitmap:graphics:!instance creation!public! !
-!GdiplusCachedBitmap class categoriesFor: #exampleGdipCBPerformance!examples!public!sunit! !
-!GdiplusCachedBitmap class categoriesFor: #icon!constants!development!public! !
+!GdiplusCachedBitmap class categoriesForMethods!
+bitmap:graphics:!instance creation!public! !
+exampleGdipCBPerformance!examples!public!sunit! !
+icon!constants!development!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TreeNode
 	instanceVariableNames: 'parent children object'
@@ -113,19 +113,21 @@ removeChildNode: aTreeNode ifAbsent: exceptionHandler
 
 
 ! !
-!TreeNode categoriesFor: #addChildNode:!adding!public! !
-!TreeNode categoriesFor: #beChildless!modes!public! !
-!TreeNode categoriesFor: #children!accessing!public! !
-!TreeNode categoriesFor: #children:!accessing!public! !
-!TreeNode categoriesFor: #getChildren!accessing!private! !
-!TreeNode categoriesFor: #newChildCollection!accessing!public! !
-!TreeNode categoriesFor: #object!accessing!public! !
-!TreeNode categoriesFor: #object:!accessing!private! !
-!TreeNode categoriesFor: #parent!accessing!public! !
-!TreeNode categoriesFor: #parent:!accessing!private! !
-!TreeNode categoriesFor: #printOn:!printing!public! !
-!TreeNode categoriesFor: #removeChildNode:!public!removing! !
-!TreeNode categoriesFor: #removeChildNode:ifAbsent:!public!removing! !
+!TreeNode categoriesForMethods!
+addChildNode:!adding!public! !
+beChildless!modes!public! !
+children!accessing!public! !
+children:!accessing!public! !
+getChildren!accessing!private! !
+newChildCollection!accessing!public! !
+object!accessing!public! !
+object:!accessing!private! !
+parent!accessing!public! !
+parent:!accessing!private! !
+printOn:!printing!public! !
+removeChildNode:!public!removing! !
+removeChildNode:ifAbsent:!public!removing! !
+!
 
 !TreeNode class methodsFor!
 
@@ -133,5 +135,7 @@ for: anObject
 	"Answer an instance of the receiver that is to represent anObject"
 
 	^self new object: anObject! !
-!TreeNode class categoriesFor: #for:!instance creation!public! !
+!TreeNode class categoriesForMethods!
+for:!instance creation!public! !
+!
 

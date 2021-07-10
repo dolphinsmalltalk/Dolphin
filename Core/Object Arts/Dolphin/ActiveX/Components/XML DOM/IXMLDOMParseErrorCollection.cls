@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXMLDOMParseErrorCollection
 	instanceVariableNames: ''
@@ -136,17 +136,19 @@ Reset
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode! !
-!IXMLDOMParseErrorCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #get_item:error:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #get_next:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
-!IXMLDOMParseErrorCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMParseErrorCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMParseErrorCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #next!**auto generated**!properties!public! !
-!IXMLDOMParseErrorCollection categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!public! !
+!IXMLDOMParseErrorCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+get_item:error:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+get_next:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+next!**auto generated**!properties!public! !
+Reset!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!public! !
+!
 
 !IXMLDOMParseErrorCollection class methodsFor!
 
@@ -165,5 +167,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IXMLDOMParseErrorCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMParseErrorCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #SmalltalkSearchPresenter
 	instanceVariableNames: 'environment'
@@ -244,38 +244,40 @@ tokenStartAt: anInteger
 	^(view styleAt: anInteger) name == #specialCharacter 
 		ifTrue: [anInteger]
 		ifFalse: [view tokenStartAt: anInteger]! !
-!SmalltalkSearchPresenter categoriesFor: #applyOptions!operations!options!private! !
-!SmalltalkSearchPresenter categoriesFor: #autoComplete:at:maxItems:!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #completeWordAt:with:!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #completionListSortBlock!autocompletion!constants!private! !
-!SmalltalkSearchPresenter categoriesFor: #createSchematicWiring!initializing!private! !
-!SmalltalkSearchPresenter categoriesFor: #findDetails!accessing!private! !
-!SmalltalkSearchPresenter categoriesFor: #goSearch!commands!public! !
-!SmalltalkSearchPresenter categoriesFor: #initialize!initializing!private! !
-!SmalltalkSearchPresenter categoriesFor: #insertCompletion:at:!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #isAutoCompletionTruncating!private!testing! !
-!SmalltalkSearchPresenter categoriesFor: #isWhitespaceAt:!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #killAutocompleteTimer!autocompletion!private! !
-!SmalltalkSearchPresenter categoriesFor: #maxAutoCompletionListSize!autocompletion!constants!public! !
-!SmalltalkSearchPresenter categoriesFor: #maybeShowCompletionList!autocompletion!helpers!public! !
-!SmalltalkSearchPresenter categoriesFor: #onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
-!SmalltalkSearchPresenter categoriesFor: #onCharAdded:!autocompletion!event handling!private! !
-!SmalltalkSearchPresenter categoriesFor: #onTimerTick:!event handling!private! !
-!SmalltalkSearchPresenter categoriesFor: #onViewOpened!event handling!private! !
-!SmalltalkSearchPresenter categoriesFor: #performSmalltalkSearchFor:!operations!private! !
-!SmalltalkSearchPresenter categoriesFor: #queryCommand:!commands!private! !
-!SmalltalkSearchPresenter categoriesFor: #rangeToCompleteAt:!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #searchItemsStartingWith:maxItems:!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #searchObject!commands!public! !
-!SmalltalkSearchPresenter categoriesFor: #searchText!accessing!public! !
-!SmalltalkSearchPresenter categoriesFor: #searchText:!accessing!public! !
-!SmalltalkSearchPresenter categoriesFor: #selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #showCompletionList:prefixLength:!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #showCompletionListAt:maxItems:!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #startAutocompleteTimer!autocompletion!helpers!private! !
-!SmalltalkSearchPresenter categoriesFor: #tokenBefore:!accessing!autocompletion!private! !
-!SmalltalkSearchPresenter categoriesFor: #tokenRangeAt:!accessing!autocompletion!private! !
-!SmalltalkSearchPresenter categoriesFor: #tokenStartAt:!accessing!autocompletion!private! !
+!SmalltalkSearchPresenter categoriesForMethods!
+applyOptions!operations!options!private! !
+autoComplete:at:maxItems:!autocompletion!helpers!private! !
+completeWordAt:with:!autocompletion!helpers!private! !
+completionListSortBlock!autocompletion!constants!private! !
+createSchematicWiring!initializing!private! !
+findDetails!accessing!private! !
+goSearch!commands!public! !
+initialize!initializing!private! !
+insertCompletion:at:!autocompletion!helpers!private! !
+isAutoCompletionTruncating!private!testing! !
+isWhitespaceAt:!helpers!private! !
+killAutocompleteTimer!autocompletion!private! !
+maxAutoCompletionListSize!autocompletion!constants!public! !
+maybeShowCompletionList!autocompletion!helpers!public! !
+onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
+onCharAdded:!autocompletion!event handling!private! !
+onTimerTick:!event handling!private! !
+onViewOpened!event handling!private! !
+performSmalltalkSearchFor:!operations!private! !
+queryCommand:!commands!private! !
+rangeToCompleteAt:!autocompletion!helpers!private! !
+searchItemsStartingWith:maxItems:!autocompletion!helpers!private! !
+searchObject!commands!public! !
+searchText!accessing!public! !
+searchText:!accessing!public! !
+selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
+showCompletionList:prefixLength:!autocompletion!helpers!private! !
+showCompletionListAt:maxItems:!helpers!private! !
+startAutocompleteTimer!autocompletion!helpers!private! !
+tokenBefore:!accessing!autocompletion!private! !
+tokenRangeAt:!accessing!autocompletion!private! !
+tokenStartAt:!accessing!autocompletion!private! !
+!
 
 !SmalltalkSearchPresenter class methodsFor!
 
@@ -311,10 +313,12 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1411449156 262145 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 21 nil nil nil 416 nil 8 1533163101 852486 ##(Smalltalk.NullConverter) nil nil 73 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 626 77 327686 ##(Smalltalk.Color) #gray 674 #white 1 nil nil nil nil #callTip nil nil nil nil 1639686 ##(Smalltalk.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 768 138 ##(Smalltalk.IdentitySet) 768 nil 170 176 768 nil nil nil nil nil 674 #silver nil nil 65 nil nil 170 192 34 6 #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' #literalArray 8 '()' 8 '' 1 170 192 34 2 #container 592 nil nil nil nil 130003 138 ##(Smalltalk.Set) 34 5 1245702 ##(Smalltalk.ScintillaKeyBinding) 9385 4345 1010 9951 4345 1010 9353 4345 1010 9435 4345 1010 9431 4345 170 192 34 4 #Warning 1510470 3 ##(Smalltalk.ScintillaIndicatorStyle) 17 416 674 #blue 3 false #Warning nil nil nil nil nil nil #Error 1138 19 416 674 #red 3 false #Error nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 626 1027 674 #darkGoldenrod 674 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 626 1029 nil 674 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 626 1031 674 #firebrick 674 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 9 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1490 371 39 416 1442 #textLimit: 8 #(1073741823) 416 1442 #hoverTime: 8 #(500) 416 1442 #caretPeriod: 8 #(530) 416 1442 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 1682 3 416 1 nil nil 67108863 nil nil 1682 5 416 1 nil nil nil nil nil 416 1442 #canHScroll: 8 #(false) 416 1442 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1442 #maxCompletionListHeight: 8 #(9) 416 1442 #edgeColumn: 8 #(1) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 120 14 0 0 29 0 0 0] 8 #() 1490 193 193 nil 29 )! !
-!SmalltalkSearchPresenter class categoriesFor: #autoCompleteDwell!accessing!autocompletion!public! !
-!SmalltalkSearchPresenter class categoriesFor: #autoCompleteDwell:!accessing!autocompletion!public! !
-!SmalltalkSearchPresenter class categoriesFor: #defaultAdditionalAccelerators!public! !
-!SmalltalkSearchPresenter class categoriesFor: #icon!constants!public! !
-!SmalltalkSearchPresenter class categoriesFor: #initialize!initializing!public! !
-!SmalltalkSearchPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!SmalltalkSearchPresenter class categoriesForMethods!
+autoCompleteDwell!accessing!autocompletion!public! !
+autoCompleteDwell:!accessing!autocompletion!public! !
+defaultAdditionalAccelerators!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+resource_Default_view!public!resources-views! !
+!
 

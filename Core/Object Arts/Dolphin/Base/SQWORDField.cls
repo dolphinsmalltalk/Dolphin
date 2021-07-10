@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScalarField subclass: #SQWORDField
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sqwordAtOffset: offset put: anInteger! !
-!SQWORDField categoriesFor: #accessorMessage!automatic generation!private! !
-!SQWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!SQWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!SQWORDField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !SQWORDField class methodsFor!
 
@@ -37,5 +39,7 @@ byteSize
 	A QWORD is always 8 bytes."
 
 	^8! !
-!SQWORDField class categoriesFor: #byteSize!constants!private! !
+!SQWORDField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

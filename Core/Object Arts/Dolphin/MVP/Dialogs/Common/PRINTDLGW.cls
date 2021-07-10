@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialogStructure subclass: #PRINTDLGW
 	instanceVariableNames: ''
@@ -113,23 +113,25 @@ ownerView: aView
 	| hWnd |
 	hWnd := aView asParameter.
 	hWnd isNull ifFalse: [self hwndOwner: hWnd].! !
-!PRINTDLGW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #flags!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #flags:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #hDC!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #hDC:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #hookFlag!accessing!public! !
-!PRINTDLGW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nCopies!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nCopies:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nFromPage!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nFromPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nMinPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nToPage!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #nToPage:!**compiled accessors**!public! !
-!PRINTDLGW categoriesFor: #ownerView:!accessing!public! !
+!PRINTDLGW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hDC!**compiled accessors**!public! !
+hDC:!**compiled accessors**!public! !
+hookFlag!accessing!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpfnHook:!**compiled accessors**!public! !
+nCopies!**compiled accessors**!public! !
+nCopies:!**compiled accessors**!public! !
+nFromPage!**compiled accessors**!public! !
+nFromPage:!**compiled accessors**!public! !
+nMaxPage:!**compiled accessors**!public! !
+nMinPage:!**compiled accessors**!public! !
+nToPage!**compiled accessors**!public! !
+nToPage:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+!
 
 !PRINTDLGW class methodsFor!
 
@@ -194,7 +196,9 @@ packing
 	PRINTDLG is an old Win16 structure with byte packing."
 
 	^1! !
-!PRINTDLGW class categoriesFor: #defineFields!public!template definition! !
-!PRINTDLGW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PRINTDLGW class categoriesFor: #packing!constants!public! !
+!PRINTDLGW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

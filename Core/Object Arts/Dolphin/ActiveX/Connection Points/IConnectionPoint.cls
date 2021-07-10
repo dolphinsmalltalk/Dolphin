@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IConnectionPoint
 	instanceVariableNames: ''
@@ -134,19 +134,21 @@ Unadvise: dwCookie
 
 	<virtual stdcall: sdword 7 dword>
 	^self invalidCall: _failureCode! !
-!IConnectionPoint categoriesFor: #advise:!adding!public! !
-!IConnectionPoint categoriesFor: #Advise:pdwCookie:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!IConnectionPoint categoriesFor: #connectionIID!accessing!public! !
-!IConnectionPoint categoriesFor: #connections!enumerating!public! !
-!IConnectionPoint categoriesFor: #enumConnections!methods!public! !
-!IConnectionPoint categoriesFor: #EnumConnections:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!IConnectionPoint categoriesFor: #getConnectionInterface!**auto generated**!methods!public! !
-!IConnectionPoint categoriesFor: #GetConnectionInterface:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!IConnectionPoint categoriesFor: #getConnectionPointContainer!**auto generated**!methods!public! !
-!IConnectionPoint categoriesFor: #GetConnectionPointContainer:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!IConnectionPoint categoriesFor: #printOn:!development!printing!public! !
-!IConnectionPoint categoriesFor: #unadvise:!**auto generated**!methods!public! !
-!IConnectionPoint categoriesFor: #Unadvise:!COM Interfaces-IConnectionPoint!private! !
+!IConnectionPoint categoriesForMethods!
+advise:!adding!public! !
+Advise:pdwCookie:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+connectionIID!accessing!public! !
+connections!enumerating!public! !
+enumConnections!methods!public! !
+EnumConnections:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+getConnectionInterface!**auto generated**!methods!public! !
+GetConnectionInterface:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+getConnectionPointContainer!**auto generated**!methods!public! !
+GetConnectionPointContainer:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
+printOn:!development!printing!public! !
+unadvise:!**auto generated**!methods!public! !
+Unadvise:!COM Interfaces-IConnectionPoint!private! !
+!
 
 !IConnectionPoint class methodsFor!
 
@@ -167,5 +169,7 @@ defineFunctions
 		defineFunction: #EnumConnections:
 			argumentTypes: 'void**'
 ! !
-!IConnectionPoint class categoriesFor: #defineFunctions!initializing!public! !
+!IConnectionPoint class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

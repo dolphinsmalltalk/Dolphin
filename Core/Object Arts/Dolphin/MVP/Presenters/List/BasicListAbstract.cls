@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListControlView subclass: #BasicListAbstract
 	instanceVariableNames: 'lastSelIndices'
@@ -242,34 +242,36 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]! !
-!BasicListAbstract categoriesFor: #basicAdd:!adding!private! !
-!BasicListAbstract categoriesFor: #basicRefreshContents!private!updating! !
-!BasicListAbstract categoriesFor: #basicResetSelection!private!selection! !
-!BasicListAbstract categoriesFor: #canHScroll!public! !
-!BasicListAbstract categoriesFor: #canHScroll:!public! !
-!BasicListAbstract categoriesFor: #defaultExtent!constants!private! !
-!BasicListAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
-!BasicListAbstract categoriesFor: #defaultWindowStyle!constants!private! !
-!BasicListAbstract categoriesFor: #displayStringFor:!adding!private! !
-!BasicListAbstract categoriesFor: #ensureSelectionVisible!public!selection! !
-!BasicListAbstract categoriesFor: #initialize!initializing!public! !
-!BasicListAbstract categoriesFor: #lastSelIndices!private! !
-!BasicListAbstract categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!BasicListAbstract categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!BasicListAbstract categoriesFor: #onKeyTyped:!event handling!public! !
-!BasicListAbstract categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!BasicListAbstract categoriesFor: #onSelChanged:!event handling!private! !
-!BasicListAbstract categoriesFor: #onSelChanging!event handling!private! !
-!BasicListAbstract categoriesFor: #onSelChanging:cause:!event handling!private! !
-!BasicListAbstract categoriesFor: #onViewCreated!event handling!public! !
-!BasicListAbstract categoriesFor: #refreshContents!public!updating! !
-!BasicListAbstract categoriesFor: #selectionByIndex!public!selection! !
-!BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
-!BasicListAbstract categoriesFor: #selectionsByIndex!public!selection! !
-!BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
-!BasicListAbstract categoriesFor: #setSelectionsByIndex:!private!selection! !
-!BasicListAbstract categoriesFor: #updateItem:atIndex:!event handling!public! !
-!BasicListAbstract categoriesFor: #updateSelectionCache!helpers!private!selection! !
+!BasicListAbstract categoriesForMethods!
+basicAdd:!adding!private! !
+basicRefreshContents!private!updating! !
+basicResetSelection!private!selection! !
+canHScroll!public! !
+canHScroll:!public! !
+defaultExtent!constants!private! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+displayStringFor:!adding!private! !
+ensureSelectionVisible!public!selection! !
+initialize!initializing!public! !
+lastSelIndices!private! !
+onItem:addedAtIndex:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onSelChanged:!event handling!private! !
+onSelChanging!event handling!private! !
+onSelChanging:cause:!event handling!private! !
+onViewCreated!event handling!public! !
+refreshContents!public!updating! !
+selectionByIndex!public!selection! !
+selections:ifAbsent:!public!selection! !
+selectionsByIndex!public!selection! !
+selectionsByIndex:ifAbsent:!public!selection! !
+setSelectionsByIndex:!private!selection! !
+updateItem:atIndex:!event handling!public! !
+updateSelectionCache!helpers!private!selection! !
+!
 
 !BasicListAbstract class methodsFor!
 
@@ -280,5 +282,7 @@ value: anObject
 	valuable, mainly to save space in view resources."
 
 	^anObject displayString! !
-!BasicListAbstract class categoriesFor: #value:!evaluating!private! !
+!BasicListAbstract class categoriesForMethods!
+value:!evaluating!private! !
+!
 

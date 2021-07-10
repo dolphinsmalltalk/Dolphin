@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Announcer
 	instanceVariableNames: 'registry'
@@ -107,27 +107,31 @@ when: anAnnouncementClass send: aSelector to: anObject
     are passed as argument"
 
 	^ self subscribe: anAnnouncementClass send: aSelector to: anObject! !
-!Announcer categoriesFor: #announce:!announce!public! !
-!Announcer categoriesFor: #basicSubscribe:!private! !
-!Announcer categoriesFor: #hasSubscriber:!public! !
-!Announcer categoriesFor: #initialize!initialization!public! !
-!Announcer categoriesFor: #numberOfSubscriptions!public!statistics! !
-!Announcer categoriesFor: #on:do:!public! !
-!Announcer categoriesFor: #on:send:to:!public! !
-!Announcer categoriesFor: #removeSubscription:!public!subscription! !
-!Announcer categoriesFor: #replace:with:!private! !
-!Announcer categoriesFor: #subscribe:do:!public!subscription! !
-!Announcer categoriesFor: #subscribe:send:to:!public!subscription! !
-!Announcer categoriesFor: #subscriptions!public! !
-!Announcer categoriesFor: #unsubscribe:!public!subscription! !
-!Announcer categoriesFor: #weak!public!weak! !
-!Announcer categoriesFor: #when:do:!convenience!public! !
-!Announcer categoriesFor: #when:do:for:!convenience!public! !
-!Announcer categoriesFor: #when:send:to:!convenience!public! !
+!Announcer categoriesForMethods!
+announce:!announce!public! !
+basicSubscribe:!private! !
+hasSubscriber:!public! !
+initialize!initialization!public! !
+numberOfSubscriptions!public!statistics! !
+on:do:!public! !
+on:send:to:!public! !
+removeSubscription:!public!subscription! !
+replace:with:!private! !
+subscribe:do:!public!subscription! !
+subscribe:send:to:!public!subscription! !
+subscriptions!public! !
+unsubscribe:!public!subscription! !
+weak!public!weak! !
+when:do:!convenience!public! !
+when:do:for:!convenience!public! !
+when:send:to:!convenience!public! !
+!
 
 !Announcer class methodsFor!
 
 new	
 	^super new initialize! !
-!Announcer class categoriesFor: #new!public! !
+!Announcer class categoriesForMethods!
+new!public! !
+!
 

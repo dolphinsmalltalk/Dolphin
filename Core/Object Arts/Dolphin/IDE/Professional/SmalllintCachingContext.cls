@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalllintContext subclass: #SmalllintCachingContext
 	instanceVariableNames: ''
@@ -36,11 +36,13 @@ selectors
 	selectors isNil ifTrue: [self computeLiterals].
 	^selectors
 ! !
-!SmalllintCachingContext categoriesFor: #computeLiterals!helpers!private! !
-!SmalllintCachingContext categoriesFor: #initialize!initialize/release!public! !
-!SmalllintCachingContext categoriesFor: #literals!accessing!public! !
-!SmalllintCachingContext categoriesFor: #mutex!accessing!private! !
-!SmalllintCachingContext categoriesFor: #selectors!accessing!public! !
+!SmalllintCachingContext categoriesForMethods!
+computeLiterals!helpers!private! !
+initialize!initialize/release!public! !
+literals!accessing!public! !
+mutex!accessing!private! !
+selectors!accessing!public! !
+!
 
 !SmalllintCachingContext class methodsFor!
 
@@ -83,9 +85,11 @@ systemModel
 uninitialize
 	self clearCache.
 	self systemModel removeEventsTriggeredFor: self! !
-!SmalllintCachingContext class categoriesFor: #clearCache!operations!private! !
-!SmalllintCachingContext class categoriesFor: #initialize!class initialization!private! !
-!SmalllintCachingContext class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!SmalllintCachingContext class categoriesFor: #systemModel!accessing!private! !
-!SmalllintCachingContext class categoriesFor: #uninitialize!class initialization!private! !
+!SmalllintCachingContext class categoriesForMethods!
+clearCache!operations!private! !
+initialize!class initialization!private! !
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+systemModel!accessing!private! !
+uninitialize!class initialization!private! !
+!
 

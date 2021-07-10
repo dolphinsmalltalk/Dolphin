@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IVBSAXDeclHandler
 	instanceVariableNames: ''
@@ -174,16 +174,18 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!IVBSAXDeclHandler categoriesFor: #attributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #AttributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #elementDecl:strModel:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #ElementDecl:strModel:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #externalEntityDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #ExternalEntityDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #internalEntityDecl:strValue:!**auto generated**!methods!public! !
-!IVBSAXDeclHandler categoriesFor: #InternalEntityDecl:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
-!IVBSAXDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!IVBSAXDeclHandler categoriesForMethods!
+attributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!methods!public! !
+AttributeDecl:strAttributeName:strType:strValueDefault:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+elementDecl:strModel:!**auto generated**!methods!public! !
+ElementDecl:strModel:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+externalEntityDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
+ExternalEntityDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+internalEntityDecl:strValue:!**auto generated**!methods!public! !
+InternalEntityDecl:strValue:!**auto generated**!COM Interfaces-IVBSAXDeclHandler!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !IVBSAXDeclHandler class methodsFor!
 
@@ -201,5 +203,7 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:strPublicId:strSystemId:
 			argumentTypes: 'bstr* bstr* bstr*'
 ! !
-!IVBSAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IVBSAXDeclHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

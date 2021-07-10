@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #UndefinedObjectTest
 	instanceVariableNames: ''
@@ -59,17 +59,19 @@ testStoreOn
 	nil storeOn: stream.
 	string := stream contents.
 	self assert: (Compiler evaluate: string) equals: nil! !
-!UndefinedObjectTest categoriesFor: #testClone!public!testing / copying! !
-!UndefinedObjectTest categoriesFor: #testDeepCopy!public!testing / copying! !
-!UndefinedObjectTest categoriesFor: #testIfNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIfNilIfNotNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIfNotNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIfNotNilIfNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIsLiteral!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testIsNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testNew!public!unit tests! !
-!UndefinedObjectTest categoriesFor: #testNotNil!public!testing / testing! !
-!UndefinedObjectTest categoriesFor: #testPrintOn!public!testing / printing! !
-!UndefinedObjectTest categoriesFor: #testShallowCopy!public!testing / copying! !
-!UndefinedObjectTest categoriesFor: #testStoreOn!public!testing / printing! !
+!UndefinedObjectTest categoriesForMethods!
+testClone!public!testing / copying! !
+testDeepCopy!public!testing / copying! !
+testIfNil!public!testing / testing! !
+testIfNilIfNotNil!public!testing / testing! !
+testIfNotNil!public!testing / testing! !
+testIfNotNilIfNil!public!testing / testing! !
+testIsLiteral!public!testing / testing! !
+testIsNil!public!testing / testing! !
+testNew!public!unit tests! !
+testNotNil!public!testing / testing! !
+testPrintOn!public!testing / printing! !
+testShallowCopy!public!testing / copying! !
+testStoreOn!public!testing / printing! !
+!
 

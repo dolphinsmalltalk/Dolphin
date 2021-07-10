@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManager subclass: #ScrollingDecoratorLayout
 	instanceVariableNames: 'stretchToFit'
@@ -74,13 +74,15 @@ shouldStretchToFit
 
 shouldStretchToFit: aBoolean 
 	stretchToFit := aBoolean! !
-!ScrollingDecoratorLayout categoriesFor: #initialize!initializing!public! !
-!ScrollingDecoratorLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!ScrollingDecoratorLayout categoriesFor: #positionScrolledViewOf:context:!helpers!private! !
-!ScrollingDecoratorLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
-!ScrollingDecoratorLayout categoriesFor: #scrolledChildOf:!helpers!private! !
-!ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit!accessing!public! !
-!ScrollingDecoratorLayout categoriesFor: #shouldStretchToFit:!accessing!public! !
+!ScrollingDecoratorLayout categoriesForMethods!
+initialize!initializing!public! !
+layoutContainer:context:!geometry!private! !
+positionScrolledViewOf:context:!helpers!private! !
+preferredLayoutExtentOf:context:!public! !
+scrolledChildOf:!helpers!private! !
+shouldStretchToFit!accessing!public! !
+shouldStretchToFit:!accessing!public! !
+!
 
 !ScrollingDecoratorLayout class methodsFor!
 
@@ -96,6 +98,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!ScrollingDecoratorLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ScrollingDecoratorLayout class categoriesFor: #stbVersion!constants!public! !
+!ScrollingDecoratorLayout class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!constants!public! !
+!
 

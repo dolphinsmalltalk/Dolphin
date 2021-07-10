@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #FileStreamFactoryANSITest
 	instanceVariableNames: ''
@@ -35,11 +35,13 @@ testXwriteXmodeX
 testXwriteXmodeXcheckXtypeX
 	" <FileStream factory>#write:mode:check:type: "
 	#'File Stream'.! !
-!FileStreamFactoryANSITest categoriesFor: #canonicalObject!public! !
-!FileStreamFactoryANSITest categoriesFor: #protocol!public! !
-!FileStreamFactoryANSITest categoriesFor: #testXreadX!public! !
-!FileStreamFactoryANSITest categoriesFor: #testXreadXtypeX!public! !
-!FileStreamFactoryANSITest categoriesFor: #testXwriteX!public! !
-!FileStreamFactoryANSITest categoriesFor: #testXwriteXmodeX!public! !
-!FileStreamFactoryANSITest categoriesFor: #testXwriteXmodeXcheckXtypeX!public! !
+!FileStreamFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXreadX!public! !
+testXreadXtypeX!public! !
+testXwriteX!public! !
+testXwriteXmodeX!public! !
+testXwriteXmodeXcheckXtypeX!public! !
+!
 

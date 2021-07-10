@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueAdaptor subclass: #ValueAspectAdaptor
 	instanceVariableNames: 'aspect putSelector getSelector'
@@ -95,19 +95,21 @@ value
 	by sending a message to the receiver's subject."
 
 	^self getValue! !
-!ValueAspectAdaptor categoriesFor: #=!comparing!public! !
-!ValueAspectAdaptor categoriesFor: #aspect!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #aspectTriggers:!accessing!public! !
-!ValueAspectAdaptor categoriesFor: #canGet!private!testing! !
-!ValueAspectAdaptor categoriesFor: #canSet!private!testing! !
-!ValueAspectAdaptor categoriesFor: #displayOn:!displaying!public! !
-!ValueAspectAdaptor categoriesFor: #getSelector!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #getValue!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #hash!comparing!public! !
-!ValueAspectAdaptor categoriesFor: #putSelector!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #setValue:!accessing!private! !
-!ValueAspectAdaptor categoriesFor: #subject:aspect:!initializing!private! !
-!ValueAspectAdaptor categoriesFor: #value!accessing!public! !
+!ValueAspectAdaptor categoriesForMethods!
+=!comparing!public! !
+aspect!accessing!private! !
+aspectTriggers:!accessing!public! !
+canGet!private!testing! !
+canSet!private!testing! !
+displayOn:!displaying!public! !
+getSelector!accessing!private! !
+getValue!accessing!private! !
+hash!comparing!public! !
+putSelector!accessing!private! !
+setValue:!accessing!private! !
+subject:aspect:!initializing!private! !
+value!accessing!public! !
+!
 
 !ValueAspectAdaptor class methodsFor!
 
@@ -121,6 +123,8 @@ subject: anObject aspect: aSymbol
 	an aspect of anObject identified by aSymbol"
 
 	^(super new) subject: anObject aspect: aSymbol; yourself! !
-!ValueAspectAdaptor class categoriesFor: #new!instance creation!private! !
-!ValueAspectAdaptor class categoriesFor: #subject:aspect:!instance creation!public! !
+!ValueAspectAdaptor class categoriesForMethods!
+new!instance creation!private! !
+subject:aspect:!instance creation!public! !
+!
 

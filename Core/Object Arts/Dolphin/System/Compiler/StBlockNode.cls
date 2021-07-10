@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StBlockNode
 	instanceVariableNames: 'left right colons body arguments bar'
@@ -155,42 +155,44 @@ uses: aNode
 				includes: parent selector) not 
 				or: [parent isUsed]]
 		ifFalse: [self isUsed]! !
-!StBlockNode categoriesFor: #=!comparing!public! !
-!StBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StBlockNode categoriesFor: #actualScope!public! !
-!StBlockNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
-!StBlockNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
-!StBlockNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
-!StBlockNode categoriesFor: #argumentCount!accessing!public! !
-!StBlockNode categoriesFor: #argumentNames!accessing!public! !
-!StBlockNode categoriesFor: #arguments!accessing!public! !
-!StBlockNode categoriesFor: #arguments:!accessing!public! !
-!StBlockNode categoriesFor: #bar!accessing!public! !
-!StBlockNode categoriesFor: #bar:!accessing!public! !
-!StBlockNode categoriesFor: #barOrStop!accessing!public! !
-!StBlockNode categoriesFor: #blockVariables!accessing!public! !
-!StBlockNode categoriesFor: #body!accessing!public! !
-!StBlockNode categoriesFor: #body:!accessing!public! !
-!StBlockNode categoriesFor: #childrenDo:!accessing!public! !
-!StBlockNode categoriesFor: #colons:!accessing!public! !
-!StBlockNode categoriesFor: #defines:!public!testing! !
-!StBlockNode categoriesFor: #directlyUses:!public!testing! !
-!StBlockNode categoriesFor: #hash!comparing!public! !
-!StBlockNode categoriesFor: #isBlock!public!testing! !
-!StBlockNode categoriesFor: #isEmptyBlock!public!testing! !
-!StBlockNode categoriesFor: #isImmediateNode!public!testing! !
-!StBlockNode categoriesFor: #isInlined!public! !
-!StBlockNode categoriesFor: #isLast:!public!testing! !
-!StBlockNode categoriesFor: #left!accessing!public! !
-!StBlockNode categoriesFor: #left:!accessing!public! !
-!StBlockNode categoriesFor: #needsParenthesis!public!testing! !
-!StBlockNode categoriesFor: #postCopy!copying!public! !
-!StBlockNode categoriesFor: #precedence!accessing!public! !
-!StBlockNode categoriesFor: #right!accessing!public! !
-!StBlockNode categoriesFor: #right:!accessing!public! !
-!StBlockNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StBlockNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StBlockNode categoriesFor: #uses:!public!testing! !
+!StBlockNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+actualScope!public! !
+addStatementCommentsTo:!accessing!private! !
+allArgumentVariableNodesDo:!accessing!public! !
+allDefinedVariableNodesDo:!accessing!public! !
+argumentCount!accessing!public! !
+argumentNames!accessing!public! !
+arguments!accessing!public! !
+arguments:!accessing!public! !
+bar!accessing!public! !
+bar:!accessing!public! !
+barOrStop!accessing!public! !
+blockVariables!accessing!public! !
+body!accessing!public! !
+body:!accessing!public! !
+childrenDo:!accessing!public! !
+colons:!accessing!public! !
+defines:!public!testing! !
+directlyUses:!public!testing! !
+hash!comparing!public! !
+isBlock!public!testing! !
+isEmptyBlock!public!testing! !
+isImmediateNode!public!testing! !
+isInlined!public! !
+isLast:!public!testing! !
+left!accessing!public! !
+left:!accessing!public! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+right!accessing!public! !
+right:!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+!
 
 !StBlockNode class methodsFor!
 
@@ -202,6 +204,8 @@ arguments: argNodes body: sequenceNode
 
 body: sequenceNode 
 	^self arguments: #() body: sequenceNode! !
-!StBlockNode class categoriesFor: #arguments:body:!instance creation!public! !
-!StBlockNode class categoriesFor: #body:!instance creation!public! !
+!StBlockNode class categoriesForMethods!
+arguments:body:!instance creation!public! !
+body:!instance creation!public! !
+!
 

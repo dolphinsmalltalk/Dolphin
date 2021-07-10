@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueModel subclass: #ValueAdaptor
 	instanceVariableNames: 'subject'
@@ -38,10 +38,12 @@ subject: anObject
 
 	subject := anObject.
 ! !
-!ValueAdaptor categoriesFor: #displayOn:!displaying!public! !
-!ValueAdaptor categoriesFor: #printOn:!printing!public! !
-!ValueAdaptor categoriesFor: #subject!accessing!private! !
-!ValueAdaptor categoriesFor: #subject:!initializing!private! !
+!ValueAdaptor categoriesForMethods!
+displayOn:!displaying!public! !
+printOn:!printing!public! !
+subject!accessing!private! !
+subject:!initializing!private! !
+!
 
 !ValueAdaptor class methodsFor!
 
@@ -54,6 +56,8 @@ subject: anObject
 	^(self new)
 		subject: anObject;
 		yourself! !
-!ValueAdaptor class categoriesFor: #icon!constants!public! !
-!ValueAdaptor class categoriesFor: #subject:!instance creation!public! !
+!ValueAdaptor class categoriesForMethods!
+icon!constants!public! !
+subject:!instance creation!public! !
+!
 

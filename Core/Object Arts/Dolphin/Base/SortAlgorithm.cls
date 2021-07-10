@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SortAlgorithm
 	instanceVariableNames: ''
@@ -100,18 +100,22 @@ sortBlock
 	not be the actual sort block, although in many cases it will be."
 
 	^self subclassResponsibility! !
-!SortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!SortAlgorithm categoriesFor: #copyWithSortBlock:!copying!private! !
-!SortAlgorithm categoriesFor: #heapsort:from:to:!operations!private! !
-!SortAlgorithm categoriesFor: #insertionSort:from:to:!operations!private! !
-!SortAlgorithm categoriesFor: #quicksortRecursionLimit:!helpers!private! !
-!SortAlgorithm categoriesFor: #sift:from:between:and:!helpers!private! !
-!SortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
-!SortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!SortAlgorithm categoriesForMethods!
+compare:with:!comparing!public! !
+copyWithSortBlock:!copying!private! !
+heapsort:from:to:!operations!private! !
+insertionSort:from:to:!operations!private! !
+quicksortRecursionLimit:!helpers!private! !
+sift:from:between:and:!helpers!private! !
+sort:from:to:!operations!public! !
+sortBlock!accessing!public! !
+!
 
 !SortAlgorithm class methodsFor!
 
 newSortBlock: aDyadicValuable
 	^self subclassResponsibility! !
-!SortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
+!SortAlgorithm class categoriesForMethods!
+newSortBlock:!instance creation!public! !
+!
 

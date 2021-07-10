@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ConsoleSessionManager subclass: #CommandLineCalculator
 	instanceVariableNames: ''
@@ -44,5 +44,7 @@ main
 								display: x;
 								cr;
 								flush]]! !
-!CommandLineCalculator categoriesFor: #main!operations-startup!public! !
+!CommandLineCalculator categoriesForMethods!
+main!operations-startup!public! !
+!
 

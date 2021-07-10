@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StSemanticScope subclass: #StClassScope
 	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
@@ -46,15 +46,19 @@ superVariable
 			[superVariable := (StSuperVariable new)
 						scope: self;
 						yourself]! !
-!StClassScope categoriesFor: #lookupVariable:!operations!public! !
-!StClassScope categoriesFor: #methodClass!accessing!public! !
-!StClassScope categoriesFor: #selfVariable!operations!public! !
-!StClassScope categoriesFor: #setMethodClass:!accessing!initializing!private! !
-!StClassScope categoriesFor: #superVariable!operations!public! !
+!StClassScope categoriesForMethods!
+lookupVariable:!operations!public! !
+methodClass!accessing!public! !
+selfVariable!operations!public! !
+setMethodClass:!accessing!initializing!private! !
+superVariable!operations!public! !
+!
 
 !StClassScope class methodsFor!
 
 methodClass: aClassDescription
 	^self new setMethodClass: aClassDescription! !
-!StClassScope class categoriesFor: #methodClass:!instance creation!public! !
+!StClassScope class categoriesForMethods!
+methodClass:!instance creation!public! !
+!
 

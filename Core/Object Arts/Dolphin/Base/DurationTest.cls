@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DurationTest
 	instanceVariableNames: ''
@@ -318,35 +318,37 @@ testSubtract
 	self assert: subject - subject equals: 0 seconds.
 	subject := 1.5 hours.
 	self assert: subject - -1800 seconds  equals: 2 hours! !
-!DurationTest categoriesFor: #testAbs!public!unit tests! !
-!DurationTest categoriesFor: #testAdd!public!unit tests! !
-!DurationTest categoriesFor: #testAsMicroseconds!public!unit tests! !
-!DurationTest categoriesFor: #testAsMilliseconds!public!unit tests! !
-!DurationTest categoriesFor: #testAsSeconds!public!unit tests! !
-!DurationTest categoriesFor: #testDays!public!unit tests! !
-!DurationTest categoriesFor: #testDaysHoursMinutesSeconds!public!unit tests! !
-!DurationTest categoriesFor: #testDivide!public!unit tests! !
-!DurationTest categoriesFor: #testEquals!public!unit tests! !
-!DurationTest categoriesFor: #testFromSeconds!public!unit tests! !
-!DurationTest categoriesFor: #testFromString!public!unit tests! !
-!DurationTest categoriesFor: #testGreaterThan!public!unit tests! !
-!DurationTest categoriesFor: #testHash!public!unit tests! !
-!DurationTest categoriesFor: #testHours!public!unit tests! !
-!DurationTest categoriesFor: #testLessThan!public!unit tests! !
-!DurationTest categoriesFor: #testMilliseconds!public!unit tests! !
-!DurationTest categoriesFor: #testMinutes!public!unit tests! !
-!DurationTest categoriesFor: #testMultiply!public!unit tests! !
-!DurationTest categoriesFor: #testNegated!public!unit tests! !
-!DurationTest categoriesFor: #testNegative!public!unit tests! !
-!DurationTest categoriesFor: #testNumberDays!public!unit tests! !
-!DurationTest categoriesFor: #testNumberHours!public!unit tests! !
-!DurationTest categoriesFor: #testNumberMicroseconds!public!unit tests! !
-!DurationTest categoriesFor: #testNumberMilliseconds!public!unit tests! !
-!DurationTest categoriesFor: #testNumberMinutes!public!unit tests! !
-!DurationTest categoriesFor: #testNumberNanoseconds!public!unit tests! !
-!DurationTest categoriesFor: #testNumberSeconds!public!unit tests! !
-!DurationTest categoriesFor: #testPositive!public!unit tests! !
-!DurationTest categoriesFor: #testPrintString!public!unit tests! !
-!DurationTest categoriesFor: #testStoreOn!public!testing! !
-!DurationTest categoriesFor: #testSubtract!public!unit tests! !
+!DurationTest categoriesForMethods!
+testAbs!public!unit tests! !
+testAdd!public!unit tests! !
+testAsMicroseconds!public!unit tests! !
+testAsMilliseconds!public!unit tests! !
+testAsSeconds!public!unit tests! !
+testDays!public!unit tests! !
+testDaysHoursMinutesSeconds!public!unit tests! !
+testDivide!public!unit tests! !
+testEquals!public!unit tests! !
+testFromSeconds!public!unit tests! !
+testFromString!public!unit tests! !
+testGreaterThan!public!unit tests! !
+testHash!public!unit tests! !
+testHours!public!unit tests! !
+testLessThan!public!unit tests! !
+testMilliseconds!public!unit tests! !
+testMinutes!public!unit tests! !
+testMultiply!public!unit tests! !
+testNegated!public!unit tests! !
+testNegative!public!unit tests! !
+testNumberDays!public!unit tests! !
+testNumberHours!public!unit tests! !
+testNumberMicroseconds!public!unit tests! !
+testNumberMilliseconds!public!unit tests! !
+testNumberMinutes!public!unit tests! !
+testNumberNanoseconds!public!unit tests! !
+testNumberSeconds!public!unit tests! !
+testPositive!public!unit tests! !
+testPrintString!public!unit tests! !
+testStoreOn!public!testing! !
+testSubtract!public!unit tests! !
+!
 

@@ -91,8 +91,10 @@ printDlgEx: lppd
 
 	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
 	^self invalidCall: _failureCode! !
-!ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #printDlgEx:!**auto generated**!public! !
+!ComDlgLibrary categoriesForMethods!
+printDlg:!primitives!private!win32 functions-common dialog box! !
+printDlgEx:!**auto generated**!public! !
+!
 
 !PrinterCanvas class methodsFor!
 
@@ -104,7 +106,9 @@ choose
 	| hDC |
 	^(hDC := PrintDialog showModal) isNil
 		ifFalse: [self withOwnedDC: hDC]! !
-!PrinterCanvas class categoriesFor: #choose!instance creation!public! !
+!PrinterCanvas class categoriesForMethods!
+choose!instance creation!public! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETMITERLIMIT
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ eMiterLimit: aFloat
 	"Set the receiver's 'eMiterLimit' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eMiterLimit put: aFloat! !
-!EMRSETMITERLIMIT categoriesFor: #eMiterLimit!**compiled accessors**!public! !
-!EMRSETMITERLIMIT categoriesFor: #eMiterLimit:!**compiled accessors**!public! !
+!EMRSETMITERLIMIT categoriesForMethods!
+eMiterLimit!**compiled accessors**!public! !
+eMiterLimit:!**compiled accessors**!public! !
+!
 
 !EMRSETMITERLIMIT class methodsFor!
 
@@ -64,7 +66,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETMITERLIMIT! !
-!EMRSETMITERLIMIT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETMITERLIMIT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETMITERLIMIT class categoriesFor: #iTypes!constants!public! !
+!EMRSETMITERLIMIT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

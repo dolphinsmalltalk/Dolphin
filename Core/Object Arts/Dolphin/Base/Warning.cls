@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Notification subclass: #Warning
 	instanceVariableNames: ''
@@ -19,7 +19,9 @@ defaultAction
 
 	"Will not return unless execution is to be resumed"
 	^SessionManager current onUnhandledWarning: self! !
-!Warning categoriesFor: #defaultAction!handling!public! !
+!Warning categoriesForMethods!
+defaultAction!handling!public! !
+!
 
 Warning methodProtocol: #Warning attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -32,6 +34,8 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Warning! !
-!Warning class categoriesFor: #mbIconId!parping!public! !
-!Warning class categoriesFor: #severityClass!constants!public! !
+!Warning class categoriesForMethods!
+mbIconId!parping!public! !
+severityClass!constants!public! !
+!
 

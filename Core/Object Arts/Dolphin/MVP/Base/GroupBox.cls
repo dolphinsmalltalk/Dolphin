@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #GroupBox
 	instanceVariableNames: ''
@@ -43,10 +43,12 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isMove ifTrue: [
 		self parentView invalidateRect: self rectangle].
 	^super onPositionChanged: aPositionEvent! !
-!GroupBox categoriesFor: #defaultExtent!constants!private! !
-!GroupBox categoriesFor: #defaultWindowExStyle!constants!private! !
-!GroupBox categoriesFor: #defaultWindowStyle!constants!private! !
-!GroupBox categoriesFor: #onPositionChanged:!event handling!private! !
+!GroupBox categoriesForMethods!
+defaultExtent!constants!private! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+onPositionChanged:!event handling!private! !
+!
 
 !GroupBox class methodsFor!
 
@@ -84,9 +86,11 @@ winClassName
 	comprehension"
 
 	^'BUTTON'! !
-!GroupBox class categoriesFor: #icon!constants!public! !
-!GroupBox class categoriesFor: #resource_Default_view!public!resources-views! !
-!GroupBox class categoriesFor: #resource_Static_group_box!public!resources-views! !
-!GroupBox class categoriesFor: #themePartName!constants!public!theming! !
-!GroupBox class categoriesFor: #winClassName!constants!private! !
+!GroupBox class categoriesForMethods!
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Static_group_box!public!resources-views! !
+themePartName!constants!public!theming! !
+winClassName!constants!private! !
+!
 

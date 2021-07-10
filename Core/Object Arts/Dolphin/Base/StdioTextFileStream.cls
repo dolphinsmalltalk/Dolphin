@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StdioFileStream subclass: #StdioTextFileStream
 	instanceVariableNames: ''
@@ -139,20 +139,22 @@ upToEnd
 	fewer than the remaining size of the file."
 
 	^self basicNextAvailable: self size - self position + 1! !
-!StdioTextFileStream categoriesFor: #basicPrint:!printing!private! !
-!StdioTextFileStream categoriesFor: #cr!accessing!public! !
-!StdioTextFileStream categoriesFor: #crtab!accessing!public! !
-!StdioTextFileStream categoriesFor: #crtab:!accessing!public! !
-!StdioTextFileStream categoriesFor: #externalType!accessing!public! !
-!StdioTextFileStream categoriesFor: #getString:!accessing!private! !
-!StdioTextFileStream categoriesFor: #isText!public!testing! !
-!StdioTextFileStream categoriesFor: #next!accessing!public! !
-!StdioTextFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!StdioTextFileStream categoriesFor: #nextLine!accessing!public! !
-!StdioTextFileStream categoriesFor: #nextPut:!accessing!public! !
-!StdioTextFileStream categoriesFor: #peek!accessing!public! !
-!StdioTextFileStream categoriesFor: #peekFor:!accessing!public! !
-!StdioTextFileStream categoriesFor: #upToEnd!accessing!public! !
+!StdioTextFileStream categoriesForMethods!
+basicPrint:!printing!private! !
+cr!accessing!public! !
+crtab!accessing!public! !
+crtab:!accessing!public! !
+externalType!accessing!public! !
+getString:!accessing!private! !
+isText!public!testing! !
+next!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextLine!accessing!public! !
+nextPut:!accessing!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+upToEnd!accessing!public! !
+!
 
 StdioTextFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
@@ -161,5 +163,7 @@ StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOn
 
 encodingMode
 	^$t! !
-!StdioTextFileStream class categoriesFor: #encodingMode!constants!private! !
+!StdioTextFileStream class categoriesForMethods!
+encodingMode!constants!private! !
+!
 

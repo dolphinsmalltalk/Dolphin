@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StSpecialVariableNode subclass: #StSuperVariableNode
 	instanceVariableNames: ''
@@ -24,8 +24,10 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope superVariable! !
-!StSuperVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StSuperVariableNode categoriesFor: #isSuperVariable!public!testing! !
-!StSuperVariableNode categoriesFor: #name!constants!public! !
-!StSuperVariableNode categoriesFor: #specialVariableInScope:!double dispatch!public! !
+!StSuperVariableNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isSuperVariable!public!testing! !
+name!constants!public! !
+specialVariableInScope:!double dispatch!public! !
+!
 

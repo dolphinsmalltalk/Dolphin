@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBAbstractStatement
 	instanceVariableNames: 'handle parent executed cursorType'
@@ -345,40 +345,42 @@ statusArray: anArrayOfWORDs
 
 suppressErrorsDo: aNiladicBlock 
 	aNiladicBlock on: DBError do: [:e | e toTrace]! !
-!DBAbstractStatement categoriesFor: #allocatedHandle!accessing!private! !
-!DBAbstractStatement categoriesFor: #asParameter!accessing!public! !
-!DBAbstractStatement categoriesFor: #basicFree!private!realizing/unrealizing! !
-!DBAbstractStatement categoriesFor: #cancel!operations!public! !
-!DBAbstractStatement categoriesFor: #close!operations!private! !
-!DBAbstractStatement categoriesFor: #columnLength:!accessing!public! !
-!DBAbstractStatement categoriesFor: #cursorType!accessing!public! !
-!DBAbstractStatement categoriesFor: #cursorType:!accessing!public! !
-!DBAbstractStatement categoriesFor: #dbCheckException:!exceptions!private! !
-!DBAbstractStatement categoriesFor: #defaultCursorType!constants!public! !
-!DBAbstractStatement categoriesFor: #describeCol:!accessing!public! !
-!DBAbstractStatement categoriesFor: #describeCols:!accessing!public! !
-!DBAbstractStatement categoriesFor: #driverHStmt!accessing!private! !
-!DBAbstractStatement categoriesFor: #exceptionDetails:!exceptions!private! !
-!DBAbstractStatement categoriesFor: #exec!operations!private! !
-!DBAbstractStatement categoriesFor: #executedHandle!accessing!private! !
-!DBAbstractStatement categoriesFor: #executeStatement!operations!private! !
-!DBAbstractStatement categoriesFor: #finalize!finalizing!private! !
-!DBAbstractStatement categoriesFor: #free!public!realizing/unrealizing! !
-!DBAbstractStatement categoriesFor: #getStringAttribute:!accessing!private! !
-!DBAbstractStatement categoriesFor: #handle!accessing!private! !
-!DBAbstractStatement categoriesFor: #initialize!initializing!private! !
-!DBAbstractStatement categoriesFor: #initialize:!initializing!private! !
-!DBAbstractStatement categoriesFor: #moveTo:!accessing!private! !
-!DBAbstractStatement categoriesFor: #numColumns!accessing!public! !
-!DBAbstractStatement categoriesFor: #numRows!accessing!public! !
-!DBAbstractStatement categoriesFor: #parent!accessing!public! !
-!DBAbstractStatement categoriesFor: #reset!initializing!private! !
-!DBAbstractStatement categoriesFor: #results!accessing!public! !
-!DBAbstractStatement categoriesFor: #setAttribute:value:size:!accessing!private! !
-!DBAbstractStatement categoriesFor: #setCursorType!helpers!private! !
-!DBAbstractStatement categoriesFor: #setDefaultAttributes!initializing!private! !
-!DBAbstractStatement categoriesFor: #statusArray:!accessing!private! !
-!DBAbstractStatement categoriesFor: #suppressErrorsDo:!accessing!private! !
+!DBAbstractStatement categoriesForMethods!
+allocatedHandle!accessing!private! !
+asParameter!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+cancel!operations!public! !
+close!operations!private! !
+columnLength:!accessing!public! !
+cursorType!accessing!public! !
+cursorType:!accessing!public! !
+dbCheckException:!exceptions!private! !
+defaultCursorType!constants!public! !
+describeCol:!accessing!public! !
+describeCols:!accessing!public! !
+driverHStmt!accessing!private! !
+exceptionDetails:!exceptions!private! !
+exec!operations!private! !
+executedHandle!accessing!private! !
+executeStatement!operations!private! !
+finalize!finalizing!private! !
+free!public!realizing/unrealizing! !
+getStringAttribute:!accessing!private! !
+handle!accessing!private! !
+initialize!initializing!private! !
+initialize:!initializing!private! !
+moveTo:!accessing!private! !
+numColumns!accessing!public! !
+numRows!accessing!public! !
+parent!accessing!public! !
+reset!initializing!private! !
+results!accessing!public! !
+setAttribute:value:size:!accessing!private! !
+setCursorType!helpers!private! !
+setDefaultAttributes!initializing!private! !
+statusArray:!accessing!private! !
+suppressErrorsDo:!accessing!private! !
+!
 
 !DBAbstractStatement class methodsFor!
 
@@ -467,12 +469,14 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!DBAbstractStatement class categoriesFor: #initialize!initializing!public! !
-!DBAbstractStatement class categoriesFor: #new!instance creation!private! !
-!DBAbstractStatement class categoriesFor: #parent:!instance creation!public! !
-!DBAbstractStatement class categoriesFor: #parent:cursorType:!instance creation!public! !
-!DBAbstractStatement class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!DBAbstractStatement class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
-!DBAbstractStatement class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
-!DBAbstractStatement class categoriesFor: #stbVersion!binary filing!public! !
+!DBAbstractStatement class categoriesForMethods!
+initialize!initializing!public! !
+new!instance creation!private! !
+parent:!instance creation!public! !
+parent:cursorType:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!private! !
+stbConvertToVersion2:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

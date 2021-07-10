@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ExternalCallback
 	instanceVariableNames: 'thunk cookie descriptor'
@@ -100,19 +100,21 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^self subclassResponsibility! !
-!ExternalCallback categoriesFor: #argumentCount!accessing!private! !
-!ExternalCallback categoriesFor: #argumentsSize!accessing!private! !
-!ExternalCallback categoriesFor: #argumentTypes!accessing!private! !
-!ExternalCallback categoriesFor: #asParameter!converting!public! !
-!ExternalCallback categoriesFor: #callingConvention!accessing!private! !
-!ExternalCallback categoriesFor: #cookie!accessing!public! !
-!ExternalCallback categoriesFor: #cookie:!accessing!private! !
-!ExternalCallback categoriesFor: #descriptor!accessing!private! !
-!ExternalCallback categoriesFor: #descriptor:!initializing!private! !
-!ExternalCallback categoriesFor: #free!public!realizing/unrealizing! !
-!ExternalCallback categoriesFor: #makeProcInstance!private!realizing/unrealizing! !
-!ExternalCallback categoriesFor: #thunk!converting!private! !
-!ExternalCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!ExternalCallback categoriesForMethods!
+argumentCount!accessing!private! !
+argumentsSize!accessing!private! !
+argumentTypes!accessing!private! !
+asParameter!converting!public! !
+callingConvention!accessing!private! !
+cookie!accessing!public! !
+cookie:!accessing!private! !
+descriptor!accessing!private! !
+descriptor:!initializing!private! !
+free!public!realizing/unrealizing! !
+makeProcInstance!private!realizing/unrealizing! !
+thunk!converting!private! !
+valueWithArgumentsAt:!evaluating!private! !
+!
 
 !ExternalCallback class methodsFor!
 
@@ -276,20 +278,22 @@ uninitializeBeforeRemove
 
 unitializeSubclass: anExternalCallbackClass
 	! !
-!ExternalCallback class categoriesFor: #allocateThunks!helpers!private! !
-!ExternalCallback class categoriesFor: #block:argumentTypes:!instance creation!public! !
-!ExternalCallback class categoriesFor: #block:descriptor:!instance creation!public! !
-!ExternalCallback class categoriesFor: #callback:withArgumentsAt:!operations!private! !
-!ExternalCallback class categoriesFor: #callbackPrimitive!constants!private! !
-!ExternalCallback class categoriesFor: #clear!initializing!private! !
-!ExternalCallback class categoriesFor: #deallocateThunks!initializing!private! !
-!ExternalCallback class categoriesFor: #descriptorClass!constants!private! !
-!ExternalCallback class categoriesFor: #fromCookie:!accessing!public! !
-!ExternalCallback class categoriesFor: #initialize!development!initializing!public! !
-!ExternalCallback class categoriesFor: #new!instance creation!public! !
-!ExternalCallback class categoriesFor: #onStartup!event handling!public! !
-!ExternalCallback class categoriesFor: #receiver:selector:descriptor:!instance creation!public! !
-!ExternalCallback class categoriesFor: #register:!instance creation!private! !
-!ExternalCallback class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!ExternalCallback class categoriesFor: #unitializeSubclass:!development!initializing!public! !
+!ExternalCallback class categoriesForMethods!
+allocateThunks!helpers!private! !
+block:argumentTypes:!instance creation!public! !
+block:descriptor:!instance creation!public! !
+callback:withArgumentsAt:!operations!private! !
+callbackPrimitive!constants!private! !
+clear!initializing!private! !
+deallocateThunks!initializing!private! !
+descriptorClass!constants!private! !
+fromCookie:!accessing!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+onStartup!event handling!public! !
+receiver:selector:descriptor:!instance creation!public! !
+register:!instance creation!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+unitializeSubclass:!development!initializing!public! !
+!
 

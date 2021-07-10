@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #GdiplusInitializer
 	instanceVariableNames: 'library'
@@ -38,10 +38,12 @@ library
 
 library: anObject
 	library := anObject! !
-!GdiplusInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusInitializer categoriesFor: #gdiplusErrorWith:!exceptions!private! !
-!GdiplusInitializer categoriesFor: #isPersistent!public!testing! !
-!GdiplusInitializer categoriesFor: #library!accessing!private! !
-!GdiplusInitializer categoriesFor: #library:!private!test accessing! !
+!GdiplusInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+gdiplusErrorWith:!exceptions!private! !
+isPersistent!public!testing! !
+library!accessing!private! !
+library:!private!test accessing! !
+!
 

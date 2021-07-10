@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DragDropObject subclass: #InternalDragDropObject
 	instanceVariableNames: 'availableFormats'
@@ -35,9 +35,11 @@ isFormatAvailable: formatIdentifier
 	"Answer whether the receiver can render itself in the format identified by formatIdentifier."
 
 	^availableFormats includesKey: formatIdentifier! !
-!InternalDragDropObject categoriesFor: #availableFormats!accessing!public! !
-!InternalDragDropObject categoriesFor: #format:data:!accessing!public! !
-!InternalDragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
-!InternalDragDropObject categoriesFor: #initialize!initializing!private! !
-!InternalDragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
+!InternalDragDropObject categoriesForMethods!
+availableFormats!accessing!public! !
+format:data:!accessing!public! !
+format:ifAbsent:!accessing!public! !
+initialize!initializing!private! !
+isFormatAvailable:!public!testing! !
+!
 

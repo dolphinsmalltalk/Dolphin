@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SocketAbstract subclass: #ServerSocket
 	instanceVariableNames: 'acceptSemaphore'
@@ -114,17 +114,19 @@ waitAccept
 	"Private - Wait on the acceptSemaphore until a connection is accepted."
 
 	self waitOn: acceptSemaphore! !
-!ServerSocket categoriesFor: #accept!operations!public! !
-!ServerSocket categoriesFor: #acceptNoWait!operations!public! !
-!ServerSocket categoriesFor: #basicAccept!operations!private! !
-!ServerSocket categoriesFor: #bind!operations!private! !
-!ServerSocket categoriesFor: #bindPort:!operations!private! !
-!ServerSocket categoriesFor: #cancelWait!operations!private! !
-!ServerSocket categoriesFor: #close!operations!public! !
-!ServerSocket categoriesFor: #initialize!initializing!private! !
-!ServerSocket categoriesFor: #listen:!operations!private! !
-!ServerSocket categoriesFor: #onAsyncAccept!event handling!private! !
-!ServerSocket categoriesFor: #waitAccept!operations!private! !
+!ServerSocket categoriesForMethods!
+accept!operations!public! !
+acceptNoWait!operations!public! !
+basicAccept!operations!private! !
+bind!operations!private! !
+bindPort:!operations!private! !
+cancelWait!operations!private! !
+close!operations!public! !
+initialize!initializing!private! !
+listen:!operations!private! !
+onAsyncAccept!event handling!private! !
+waitAccept!operations!private! !
+!
 
 !ServerSocket class methodsFor!
 
@@ -162,9 +164,11 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #connectionAccepted:;
 		yourself! !
-!ServerSocket class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
-!ServerSocket class categoriesFor: #new!instance creation!public! !
-!ServerSocket class categoriesFor: #port:!instance creation!public! !
-!ServerSocket class categoriesFor: #port:backlog:!instance creation!public! !
-!ServerSocket class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!ServerSocket class categoriesForMethods!
+defaultMaxPendingConnects!constants access!public! !
+new!instance creation!public! !
+port:!instance creation!public! !
+port:backlog:!instance creation!public! !
+publishedEventsOfInstances!development!events!public! !
+!
 

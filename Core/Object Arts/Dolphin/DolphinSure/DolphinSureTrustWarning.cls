@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dialog subclass: #DolphinSureTrustWarning
 	instanceVariableNames: 'certificateImage description alwaysTrust'
@@ -63,12 +63,14 @@ validateUserInterface
 	super validateUserInterface.
 	alwaysTrust view isEnabled: self model canBePermanentlyTrusted
 ! !
-!DolphinSureTrustWarning categoriesFor: #alwaysTrust!accessing!public! !
-!DolphinSureTrustWarning categoriesFor: #createComponents!initializing!public! !
-!DolphinSureTrustWarning categoriesFor: #description:!accessing!private! !
-!DolphinSureTrustWarning categoriesFor: #model:!accessing!public! !
-!DolphinSureTrustWarning categoriesFor: #ok!commands!public! !
-!DolphinSureTrustWarning categoriesFor: #validateUserInterface!operations!public! !
+!DolphinSureTrustWarning categoriesForMethods!
+alwaysTrust!accessing!public! !
+createComponents!initializing!public! !
+description:!accessing!private! !
+model:!accessing!public! !
+ok!commands!public! !
+validateUserInterface!operations!public! !
+!
 
 !DolphinSureTrustWarning class methodsFor!
 
@@ -98,7 +100,9 @@ showModalOn: aDolphinSureCertificate description: aStringDescription
 		description: aStringDescription;
 		showModal
 ! !
-!DolphinSureTrustWarning class categoriesFor: #defaultModel!models!public! !
-!DolphinSureTrustWarning class categoriesFor: #resource_Default_view!public!resources-views! !
-!DolphinSureTrustWarning class categoriesFor: #showModalOn:description:!instance creation!public! !
+!DolphinSureTrustWarning class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+showModalOn:description:!instance creation!public! !
+!
 

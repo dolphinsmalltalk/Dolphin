@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SortAlgorithmTest subclass: #HeapsortAlgorithmTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ HeapsortAlgorithmTest comment: ''!
 
 algorithmToTest
 	^HeapsortAlgorithm! !
-!HeapsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!HeapsortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+!
 

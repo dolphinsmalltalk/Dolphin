@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ILImportIcon subclass: #ILImportCursor
 	instanceVariableNames: ''
@@ -21,12 +21,16 @@ hotSpotFor: anInteger
 
 proxyClass
 	^ILImportCursorProxy! !
-!ILImportCursor categoriesFor: #hotSpotFor:!accessing!public! !
-!ILImportCursor categoriesFor: #proxyClass!constants!public! !
+!ILImportCursor categoriesForMethods!
+hotSpotFor:!accessing!public! !
+proxyClass!constants!public! !
+!
 
 !ILImportCursor class methodsFor!
 
 isResponsibleFor: aStream
 	^(aStream next: 3) = #[0 0 2]! !
-!ILImportCursor class categoriesFor: #isResponsibleFor:!public!testing! !
+!ILImportCursor class categoriesForMethods!
+isResponsibleFor:!public!testing! !
+!
 

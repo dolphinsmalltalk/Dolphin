@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HttpServiceConfigQuery
 	instanceVariableNames: ''
@@ -32,8 +32,10 @@ QueryDesc: anInteger
 	"Set the receiver's 'QueryDesc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_QueryDesc put: anInteger! !
-!HttpServiceConfigQuery categoriesFor: #QueryDesc!**compiled accessors**!public! !
-!HttpServiceConfigQuery categoriesFor: #QueryDesc:!**compiled accessors**!public! !
+!HttpServiceConfigQuery categoriesForMethods!
+QueryDesc!**compiled accessors**!public! !
+QueryDesc:!**compiled accessors**!public! !
+!
 
 !HttpServiceConfigQuery class methodsFor!
 
@@ -54,6 +56,8 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc)! !
-!HttpServiceConfigQuery class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HttpServiceConfigQuery class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HttpServiceConfigQuery class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

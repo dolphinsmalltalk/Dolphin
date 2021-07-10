@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PluggableSortAlgorithm subclass: #ShellsortAlgorithm
 	instanceVariableNames: ''
@@ -35,5 +35,7 @@ sort: anObject from: startInteger to: stopInteger
 							j := j + d].
 					anObject basicAt: j - d put: ei.
 					i := i - 1]]! !
-!ShellsortAlgorithm categoriesFor: #sort:from:to:!algorithms!operations!public! !
+!ShellsortAlgorithm categoriesForMethods!
+sort:from:to:!algorithms!operations!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusMatrixInitializer
 	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'
@@ -34,9 +34,11 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 	m22 := aReal22.
 	m31 := aReal31.
 	m32 := aReal32! !
-!GdiplusMatrixInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusMatrixInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusMatrixInitializer categoriesFor: #m11:m12:m21:m22:m31:m32:!initializing!private! !
+!GdiplusMatrixInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+m11:m12:m21:m22:m31:m32:!initializing!private! !
+!
 
 !GdiplusMatrixInitializer class methodsFor!
 
@@ -48,5 +50,7 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 		m22: aReal22
 		m31: aReal31
 		m32: aReal32! !
-!GdiplusMatrixInitializer class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
+!GdiplusMatrixInitializer class categoriesForMethods!
+m11:m12:m21:m22:m31:m32:!instance creation!public! !
+!
 

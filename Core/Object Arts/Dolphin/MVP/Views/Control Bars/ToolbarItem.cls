@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ToolbarItem
 	instanceVariableNames: 'toolbar'
@@ -93,21 +93,23 @@ update
 
 validateUserInterface: route
 	"Set the UI state of the receiver. Overridden in subclasses"! !
-!ToolbarItem categoriesFor: #commandId!commands!private! !
-!ToolbarItem categoriesFor: #getCommandId!commands!private! !
-!ToolbarItem categoriesFor: #imageIndexIn:!operations!private! !
-!ToolbarItem categoriesFor: #isDivider!public!testing! !
-!ToolbarItem categoriesFor: #isDropdownStyle!public!style! !
-!ToolbarItem categoriesFor: #onClick:!event handling!public! !
-!ToolbarItem categoriesFor: #onDoubleClick:!event handling!public! !
-!ToolbarItem categoriesFor: #onRightClick:!event handling!public! !
-!ToolbarItem categoriesFor: #parent!operations!public! !
-!ToolbarItem categoriesFor: #style!private!style! !
-!ToolbarItem categoriesFor: #textIndexIn:!operations!private! !
-!ToolbarItem categoriesFor: #toolbar!accessing!private! !
-!ToolbarItem categoriesFor: #toolbar:!accessing!private! !
-!ToolbarItem categoriesFor: #update!accessing!private! !
-!ToolbarItem categoriesFor: #validateUserInterface:!operations!public! !
+!ToolbarItem categoriesForMethods!
+commandId!commands!private! !
+getCommandId!commands!private! !
+imageIndexIn:!operations!private! !
+isDivider!public!testing! !
+isDropdownStyle!public!style! !
+onClick:!event handling!public! !
+onDoubleClick:!event handling!public! !
+onRightClick:!event handling!public! !
+parent!operations!public! !
+style!private!style! !
+textIndexIn:!operations!private! !
+toolbar!accessing!private! !
+toolbar:!accessing!private! !
+update!accessing!private! !
+validateUserInterface:!operations!public! !
+!
 
 !ToolbarItem class methodsFor!
 
@@ -151,9 +153,11 @@ findTools
 
 stbVersion
 	^1! !
-!ToolbarItem class categoriesFor: #buttonClass!constants!public! !
-!ToolbarItem class categoriesFor: #editTools!instance creation!public! !
-!ToolbarItem class categoriesFor: #fileTools!instance creation!public! !
-!ToolbarItem class categoriesFor: #findTools!instance creation!public! !
-!ToolbarItem class categoriesFor: #stbVersion!public! !
+!ToolbarItem class categoriesForMethods!
+buttonClass!constants!public! !
+editTools!instance creation!public! !
+fileTools!instance creation!public! !
+findTools!instance creation!public! !
+stbVersion!public! !
+!
 

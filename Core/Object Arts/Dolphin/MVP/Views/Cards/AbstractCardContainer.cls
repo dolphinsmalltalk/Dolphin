@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ContainerView subclass: #AbstractCardContainer
 	instanceVariableNames: ''
@@ -142,23 +142,25 @@ validateSubViewLayouts: aLayoutContext
 	"Private - Validate the layout of the visible sub-views of the receiver."
 
 	self currentCard ifNotNil: [:card | card validateLayout: aLayoutContext]! !
-!AbstractCardContainer categoriesFor: #cardLayout!accessing!private! !
-!AbstractCardContainer categoriesFor: #cards!accessing!public! !
-!AbstractCardContainer categoriesFor: #currentCard!accessing!public! !
-!AbstractCardContainer categoriesFor: #cycleNextCard!commands!public! !
-!AbstractCardContainer categoriesFor: #cyclePreviousCard!commands!public! !
-!AbstractCardContainer categoriesFor: #defaultLayoutManager!initializing!private! !
-!AbstractCardContainer categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!AbstractCardContainer categoriesFor: #firstCard!commands!public! !
-!AbstractCardContainer categoriesFor: #lastCard!commands!public! !
-!AbstractCardContainer categoriesFor: #nextCard!commands!public! !
-!AbstractCardContainer categoriesFor: #onCurrentCardChanged!event handling!private! !
-!AbstractCardContainer categoriesFor: #onSubViewAdded:!event handling!private! !
-!AbstractCardContainer categoriesFor: #onViewCreated!event handling!private! !
-!AbstractCardContainer categoriesFor: #previousCard!commands!public! !
-!AbstractCardContainer categoriesFor: #queryCommand:!commands!private! !
-!AbstractCardContainer categoriesFor: #tabOntoCurrentCard!operations!private! !
-!AbstractCardContainer categoriesFor: #validateSubViewLayouts:!geometry!private! !
+!AbstractCardContainer categoriesForMethods!
+cardLayout!accessing!private! !
+cards!accessing!public! !
+currentCard!accessing!public! !
+cycleNextCard!commands!public! !
+cyclePreviousCard!commands!public! !
+defaultLayoutManager!initializing!private! !
+ensureSubViewVisible:!public!sub views! !
+firstCard!commands!public! !
+lastCard!commands!public! !
+nextCard!commands!public! !
+onCurrentCardChanged!event handling!private! !
+onSubViewAdded:!event handling!private! !
+onViewCreated!event handling!private! !
+previousCard!commands!public! !
+queryCommand:!commands!private! !
+tabOntoCurrentCard!operations!private! !
+validateSubViewLayouts:!geometry!private! !
+!
 
 AbstractCardContainer methodProtocol: #cardView attributes: #(#readOnly) selectors: #(#currentCard #cycleNextCard #cyclePreviousCard #firstCard #lastCard #nextCard #onCurrentCardChanged #previousCard)!
 

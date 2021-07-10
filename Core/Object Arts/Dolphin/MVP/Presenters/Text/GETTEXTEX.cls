@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #GETTEXTEX
 	instanceVariableNames: ''
@@ -34,10 +34,12 @@ flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_flags put: anInteger! !
-!GETTEXTEX categoriesFor: #cb!**compiled accessors**!public! !
-!GETTEXTEX categoriesFor: #cb:!**compiled accessors**!public! !
-!GETTEXTEX categoriesFor: #codepage:!**compiled accessors**!public! !
-!GETTEXTEX categoriesFor: #flags:!**compiled accessors**!public! !
+!GETTEXTEX categoriesForMethods!
+cb!**compiled accessors**!public! !
+cb:!**compiled accessors**!public! !
+codepage:!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+!
 
 !GETTEXTEX class methodsFor!
 
@@ -55,6 +57,8 @@ defineFields
 
 getFieldNames
 	^#(#cb #flags #codepage)! !
-!GETTEXTEX class categoriesFor: #defineFields!public!template definition! !
-!GETTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GETTEXTEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

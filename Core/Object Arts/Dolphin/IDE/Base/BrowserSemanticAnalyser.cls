@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StSemanticAnalyser subclass: #BrowserSemanticAnalyser
 	instanceVariableNames: 'isStub'
@@ -118,15 +118,17 @@ visitSequenceNode: aSequenceNode
 			[self currentScope unreferencedArguments
 				do: [:each | self signalError: CInfoUnreferencedArg forNode: each node]].
 	^answer! !
-!BrowserSemanticAnalyser categoriesFor: #checkHardBreakpoint:!helpers!private! !
-!BrowserSemanticAnalyser categoriesFor: #checkIfStubMessage:!helpers!private! !
-!BrowserSemanticAnalyser categoriesFor: #checkSupersend:!helpers!private! !
-!BrowserSemanticAnalyser categoriesFor: #checkUnimplemented:!helpers!private! !
-!BrowserSemanticAnalyser categoriesFor: #checkUnimplementedSubclassResponsibility:!helpers!private! !
-!BrowserSemanticAnalyser categoriesFor: #contextBindingFor:!helpers!private! !
-!BrowserSemanticAnalyser categoriesFor: #initialize!initializing!public! !
-!BrowserSemanticAnalyser categoriesFor: #readStaticVariable:!helpers!private! !
-!BrowserSemanticAnalyser categoriesFor: #targetOfMessage:!commands!private!refactoring! !
-!BrowserSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!BrowserSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!BrowserSemanticAnalyser categoriesForMethods!
+checkHardBreakpoint:!helpers!private! !
+checkIfStubMessage:!helpers!private! !
+checkSupersend:!helpers!private! !
+checkUnimplemented:!helpers!private! !
+checkUnimplementedSubclassResponsibility:!helpers!private! !
+contextBindingFor:!helpers!private! !
+initialize!initializing!public! !
+readStaticVariable:!helpers!private! !
+targetOfMessage:!commands!private!refactoring! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+!
 

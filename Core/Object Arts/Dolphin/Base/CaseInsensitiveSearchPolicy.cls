@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SingletonSearchPolicy subclass: #CaseInsensitiveSearchPolicy
 	instanceVariableNames: ''
@@ -42,8 +42,10 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^#caseInsensitive! !
-!CaseInsensitiveSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!CaseInsensitiveSearchPolicy categoriesFor: #hash:!comparing!public! !
-!CaseInsensitiveSearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!CaseInsensitiveSearchPolicy categoriesFor: #name!accessing!public! !
+!CaseInsensitiveSearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:!comparing!public! !
+keyAtValue:in:ifAbsent:!public!searching! !
+name!accessing!public! !
+!
 

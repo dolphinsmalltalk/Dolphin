@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ NextEntryOffset
 	"Answer the <Integer> value of the receiver's 'NextEntryOffset' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NextEntryOffset! !
-!FILE_NOTIFY_INFORMATION categoriesFor: #Action!**compiled accessors**!public! !
-!FILE_NOTIFY_INFORMATION categoriesFor: #FileName!**compiled accessors**!public! !
-!FILE_NOTIFY_INFORMATION categoriesFor: #FileNameLength!**compiled accessors**!public! !
-!FILE_NOTIFY_INFORMATION categoriesFor: #NextEntryOffset!**compiled accessors**!public! !
+!FILE_NOTIFY_INFORMATION categoriesForMethods!
+Action!**compiled accessors**!public! !
+FileName!**compiled accessors**!public! !
+FileNameLength!**compiled accessors**!public! !
+NextEntryOffset!**compiled accessors**!public! !
+!
 
 !FILE_NOTIFY_INFORMATION class methodsFor!
 
@@ -82,7 +84,9 @@ getFieldNames
 
 new
 	^self new: ##(_OffsetOf_FileName + ((CRTConstants._MAX_PATH + 1) * 2))! !
-!FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!FILE_NOTIFY_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!FILE_NOTIFY_INFORMATION class categoriesFor: #new!public! !
+!FILE_NOTIFY_INFORMATION class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+new!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETWORLDTRANSFORM
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ XFORM: aXFORM
 		from: ##(_OffsetOf_XFORM + 1)
 		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
-!EMRSETWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
-!EMRSETWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
+!EMRSETWORLDTRANSFORM categoriesForMethods!
+XFORM!**compiled accessors**!public! !
+XFORM:!**compiled accessors**!public! !
+!
 
 !EMRSETWORLDTRANSFORM class methodsFor!
 
@@ -68,7 +70,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETWORLDTRANSFORM! !
-!EMRSETWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
+!EMRSETWORLDTRANSFORM class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

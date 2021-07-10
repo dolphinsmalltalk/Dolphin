@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SessionManager subclass: #ConsoleSessionManager
 	instanceVariableNames: ''
@@ -118,20 +118,22 @@ unhandledException: anException
 	anException isUserResumable ifFalse: [
 		self quit: -1].
 	^anException! !
-!ConsoleSessionManager categoriesFor: #allocConsole!operations!private! !
-!ConsoleSessionManager categoriesFor: #attachFd:stream:!helpers!private! !
-!ConsoleSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!ConsoleSessionManager categoriesFor: #isEmbedded!public!testing! !
-!ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
-!ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
-!ConsoleSessionManager categoriesFor: #openStdErr!helpers!private! !
-!ConsoleSessionManager categoriesFor: #openStdIn!helpers!private! !
-!ConsoleSessionManager categoriesFor: #openStdOut!helpers!private! !
-!ConsoleSessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!ConsoleSessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
-!ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
-!ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!ConsoleSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!ConsoleSessionManager categoriesForMethods!
+allocConsole!operations!private! !
+attachFd:stream:!helpers!private! !
+basicTertiaryStartup!operations-startup!public! !
+isEmbedded!public!testing! !
+logError:!operations-logging!public! !
+onCloseConsole!event handling!private! !
+openStdErr!helpers!private! !
+openStdIn!helpers!private! !
+openStdOut!helpers!private! !
+quit:!operations-shutdown!private! !
+registerConsoleCtrlHandler!operations!private! !
+startUI!operations-startup!public! !
+traceStream!accessing!operations-logging!public! !
+unhandledException:!exceptions!private! !
+!
 
 !ConsoleSessionManager class methodsFor!
 
@@ -160,7 +162,9 @@ run
 	consoleAlreadyOpen := self current openConsole.
 	self new main.
 	consoleAlreadyOpen ifFalse: [self current closeConsole]! !
-!ConsoleSessionManager class categoriesFor: #isRuntime!public!testing! !
-!ConsoleSessionManager class categoriesFor: #new!development!instance creation!public! !
-!ConsoleSessionManager class categoriesFor: #run!development!public! !
+!ConsoleSessionManager class categoriesForMethods!
+isRuntime!public!testing! !
+new!development!instance creation!public! !
+run!development!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOISMTPOnArrival
 	instanceVariableNames: ''
@@ -36,9 +36,11 @@ OnArrival: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
 	^self invalidCall: _failureCode! !
-!CDOISMTPOnArrival categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOISMTPOnArrival categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOISMTPOnArrival categoriesFor: #OnArrival:EventStatus:!**auto generated**!COM Interfaces-ISMTPOnArrival!public! !
+!CDOISMTPOnArrival categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+OnArrival:EventStatus:!**auto generated**!COM Interfaces-ISMTPOnArrival!public! !
+!
 
 !CDOISMTPOnArrival class methodsFor!
 
@@ -58,6 +60,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOISMTPOnArrival class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOISMTPOnArrival class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOISMTPOnArrival class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

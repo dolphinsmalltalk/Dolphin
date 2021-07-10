@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ProtectedProductSerialNumber subclass: #MyCompanySerialNumber
 	instanceVariableNames: ''
@@ -38,7 +38,9 @@ lockedMethodDecodingKeyHash
 
 	^ 1149340459812121771490846453905007528758311757049.
 	! !
-!MyCompanySerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
-!MyCompanySerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
-!MyCompanySerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
+!MyCompanySerialNumber class categoriesForMethods!
+instanceDecodingKey!constants!private! !
+lockedMethodDecodingKey!constants!private! !
+lockedMethodDecodingKeyHash!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RenameMethodRefactoring subclass: #RenameMethodReferencesRefactoring
 	instanceVariableNames: ''
@@ -31,7 +31,9 @@ preconditions
 						[self 
 							refactoringWarning: 'Renaming method references may not preserve behaviour.'.
 						true])! !
-!RenameMethodReferencesRefactoring categoriesFor: #displayOn:!displaying!public! !
-!RenameMethodReferencesRefactoring categoriesFor: #initialize!initializing!public! !
-!RenameMethodReferencesRefactoring categoriesFor: #preconditions!preconditions!public! !
+!RenameMethodReferencesRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+initialize!initializing!public! !
+preconditions!preconditions!public! !
+!
 

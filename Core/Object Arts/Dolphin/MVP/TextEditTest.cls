@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractTextEditTest subclass: #TextEditTest
 	instanceVariableNames: ''
@@ -43,8 +43,10 @@ testCalculateExtent
 
 text
 	^'The quick brown fox jumped over the lazy dog'! !
-!TextEditTest categoriesFor: #classToTest!helpers!private! !
-!TextEditTest categoriesFor: #margins!private!unit tests! !
-!TextEditTest categoriesFor: #testCalculateExtent!public! !
-!TextEditTest categoriesFor: #text!constants!private! !
+!TextEditTest categoriesForMethods!
+classToTest!helpers!private! !
+margins!private!unit tests! !
+testCalculateExtent!public! !
+text!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ILockBytes
 	instanceVariableNames: ''
@@ -207,24 +207,26 @@ WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten
 
 	<virtual stdcall: hresult 5 qword sbyte* dword dword*>
 	^self invalidCall: _failureCode! !
-!ILockBytes categoriesFor: #at:!accessing!public! !
-!ILockBytes categoriesFor: #at:put:!accessing!public! !
-!ILockBytes categoriesFor: #copyFrom:to:!copying!public! !
-!ILockBytes categoriesFor: #flush!operations!public! !
-!ILockBytes categoriesFor: #Flush!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #handle!accessing!public! !
-!ILockBytes categoriesFor: #LockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #readAt:bytes:count:!accessing!public! !
-!ILockBytes categoriesFor: #readAt:count:!accessing!public! !
-!ILockBytes categoriesFor: #ReadAt:pv:cb:pcbRead:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!ILockBytes categoriesFor: #setSize:!accessing!public! !
-!ILockBytes categoriesFor: #SetSize:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #stat!accessing!public! !
-!ILockBytes categoriesFor: #Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #UnlockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
-!ILockBytes categoriesFor: #writeAt:bytes:count:!accessing!public! !
-!ILockBytes categoriesFor: #WriteAt:pv:cb:pcbWritten:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!ILockBytes categoriesForMethods!
+at:!accessing!public! !
+at:put:!accessing!public! !
+copyFrom:to:!copying!public! !
+flush!operations!public! !
+Flush!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+handle!accessing!public! !
+LockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+readAt:bytes:count:!accessing!public! !
+readAt:count:!accessing!public! !
+ReadAt:pv:cb:pcbRead:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+setSize:!accessing!public! !
+SetSize:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+stat!accessing!public! !
+Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+UnlockRegion:cb:dwLockType:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+writeAt:bytes:count:!accessing!public! !
+WriteAt:pv:cb:pcbWritten:!**auto generated**!COM Interfaces-OBJIDL.ILockBytes!primitives!public! !
+!
 
 !ILockBytes class methodsFor!
 
@@ -257,7 +259,9 @@ onHGLOBAL: hGlobal
 		fDeleteOnRelease: true
 		pplkbyt: answer.
 	^answer! !
-!ILockBytes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ILockBytes class categoriesFor: #onHGLOBAL!instance creation!public! !
-!ILockBytes class categoriesFor: #onHGLOBAL:!instance creation!public! !
+!ILockBytes class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+onHGLOBAL!instance creation!public! !
+onHGLOBAL:!instance creation!public! !
+!
 

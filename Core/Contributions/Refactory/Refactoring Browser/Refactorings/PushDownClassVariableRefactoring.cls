@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #PushDownClassVariableRefactoring
 	instanceVariableNames: 'destinationClass'
@@ -61,10 +61,12 @@ transform
 	class removeClassVariable: variableName.
 	destinationClass isNil ifTrue: [^self].
 	destinationClass addClassVariable: variableName! !
-!PushDownClassVariableRefactoring categoriesFor: #findDestinationClass!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #signalMultipleReferenceError!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #signalReferenceError:!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #signalStillReferencedError!preconditions!public! !
-!PushDownClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!PushDownClassVariableRefactoring categoriesForMethods!
+findDestinationClass!preconditions!public! !
+preconditions!preconditions!public! !
+signalMultipleReferenceError!preconditions!public! !
+signalReferenceError:!preconditions!public! !
+signalStillReferencedError!preconditions!public! !
+transform!public!transforming! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LOGBRUSH
 	instanceVariableNames: 'hatch'
@@ -82,19 +82,21 @@ style
 
 style: anInteger 
 	self lbStyle: anInteger! !
-!LOGBRUSH categoriesFor: #color!accessing!public! !
-!LOGBRUSH categoriesFor: #color:!accessing!public! !
-!LOGBRUSH categoriesFor: #hatch!accessing!public! !
-!LOGBRUSH categoriesFor: #hatch:!accessing!public! !
-!LOGBRUSH categoriesFor: #hatchStyleName!accessing!public! !
-!LOGBRUSH categoriesFor: #lbColor!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbColor:!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbHatch!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbHatch:!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbStyle!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #lbStyle:!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #style!accessing!public! !
-!LOGBRUSH categoriesFor: #style:!accessing!public! !
+!LOGBRUSH categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+hatch!accessing!public! !
+hatch:!accessing!public! !
+hatchStyleName!accessing!public! !
+lbColor!**compiled accessors**!public! !
+lbColor:!**compiled accessors**!public! !
+lbHatch!**compiled accessors**!public! !
+lbHatch:!**compiled accessors**!public! !
+lbStyle!**compiled accessors**!public! !
+lbStyle:!**compiled accessors**!public! !
+style!accessing!public! !
+style:!accessing!public! !
+!
 
 !LOGBRUSH class methodsFor!
 
@@ -131,8 +133,10 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!LOGBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!LOGBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!LOGBRUSH class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!LOGBRUSH class categoriesFor: #stbVersion!binary filing!public! !
+!LOGBRUSH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

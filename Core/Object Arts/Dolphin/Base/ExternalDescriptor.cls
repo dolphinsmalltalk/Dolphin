@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object variableSubclass: #ExternalDescriptor
 	instanceVariableNames: 'descriptor'
@@ -249,23 +249,25 @@ returnType
 	type := self retType.
 	class := (self class typeHasArgument: type) ifTrue: [self at: (descriptor at: RetClassIndex) + 1].
 	^self class nameOf: type type: class! !
-!ExternalDescriptor categoriesFor: #argumentCount!accessing!private! !
-!ExternalDescriptor categoriesFor: #argumentIndexFromOffset:!helpers!private! !
-!ExternalDescriptor categoriesFor: #argumentsDo:!accessing!private! !
-!ExternalDescriptor categoriesFor: #argumentsSize!accessing!private! !
-!ExternalDescriptor categoriesFor: #argumentTypes!accessing!private! !
-!ExternalDescriptor categoriesFor: #calleeCleans!public!testing! !
-!ExternalDescriptor categoriesFor: #callingConvention!accessing!private! !
-!ExternalDescriptor categoriesFor: #convention!accessing!private! !
-!ExternalDescriptor categoriesFor: #description!accessing!private! !
-!ExternalDescriptor categoriesFor: #descriptor:!accessing!private! !
-!ExternalDescriptor categoriesFor: #literals:!accessing!public! !
-!ExternalDescriptor categoriesFor: #name!accessing!public! !
-!ExternalDescriptor categoriesFor: #name:!accessing!public! !
-!ExternalDescriptor categoriesFor: #printDescriptionOn:!accessing!private! !
-!ExternalDescriptor categoriesFor: #printOn:!printing!public! !
-!ExternalDescriptor categoriesFor: #retType!accessing!private! !
-!ExternalDescriptor categoriesFor: #returnType!accessing!private! !
+!ExternalDescriptor categoriesForMethods!
+argumentCount!accessing!private! !
+argumentIndexFromOffset:!helpers!private! !
+argumentsDo:!accessing!private! !
+argumentsSize!accessing!private! !
+argumentTypes!accessing!private! !
+calleeCleans!public!testing! !
+callingConvention!accessing!private! !
+convention!accessing!private! !
+description!accessing!private! !
+descriptor:!accessing!private! !
+literals:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+printDescriptionOn:!accessing!private! !
+printOn:!printing!public! !
+retType!accessing!private! !
+returnType!accessing!private! !
+!
 
 !ExternalDescriptor class methodsFor!
 
@@ -629,32 +631,34 @@ typeHasArgument: ordinalType
 	accompanying it."
 
 	^ordinalType >= ExtCallArgSTRUCT! !
-!ExternalDescriptor class categoriesFor: #argumentTypes:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #callingConvention:returnType:argumentTypes:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #conventionFromName:!constants!public! !
-!ExternalDescriptor class categoriesFor: #descriptor:literals:!instance creation!private! !
-!ExternalDescriptor class categoriesFor: #fromString:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #initialize!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #initializeCallingConventions!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #initializeExternalRefTypes!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #initializeExternalTypes!development!initializing!private! !
-!ExternalDescriptor class categoriesFor: #isPointerToStruct:!helpers!private! !
-!ExternalDescriptor class categoriesFor: #nameOf:type:!constants!public! !
-!ExternalDescriptor class categoriesFor: #nameOfConvention:!constants!public! !
-!ExternalDescriptor class categoriesFor: #newFromString:!instance creation!private! !
-!ExternalDescriptor class categoriesFor: #parseArgDesc:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseCallingConvention:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseDescriptor:!parsing!public! !
-!ExternalDescriptor class categoriesFor: #parseDoubleIndirection:typeName:!helpers!private! !
-!ExternalDescriptor class categoriesFor: #parsePointerToStruct:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseSingleIndirection:!helpers!private! !
-!ExternalDescriptor class categoriesFor: #parseStructArg:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #parseValueType:!parsing!private! !
-!ExternalDescriptor class categoriesFor: #referenceTypeFor:!parsing!public! !
-!ExternalDescriptor class categoriesFor: #returnType:argumentTypes:!instance creation!public! !
-!ExternalDescriptor class categoriesFor: #sizeOf:type:!constants!private! !
-!ExternalDescriptor class categoriesFor: #structTypeForSize:!constants!private! !
-!ExternalDescriptor class categoriesFor: #typeFromName:!constants!public! !
-!ExternalDescriptor class categoriesFor: #typeFromName:ifAbsent:!constants!public! !
-!ExternalDescriptor class categoriesFor: #typeHasArgument:!enquiries!private! !
+!ExternalDescriptor class categoriesForMethods!
+argumentTypes:!instance creation!public! !
+callingConvention:returnType:argumentTypes:!instance creation!public! !
+conventionFromName:!constants!public! !
+descriptor:literals:!instance creation!private! !
+fromString:!instance creation!public! !
+initialize!development!initializing!private! !
+initializeCallingConventions!development!initializing!private! !
+initializeExternalRefTypes!development!initializing!private! !
+initializeExternalTypes!development!initializing!private! !
+isPointerToStruct:!helpers!private! !
+nameOf:type:!constants!public! !
+nameOfConvention:!constants!public! !
+newFromString:!instance creation!private! !
+parseArgDesc:!parsing!private! !
+parseCallingConvention:!parsing!private! !
+parseDescriptor:!parsing!public! !
+parseDoubleIndirection:typeName:!helpers!private! !
+parsePointerToStruct:!parsing!private! !
+parseSingleIndirection:!helpers!private! !
+parseStructArg:!parsing!private! !
+parseValueType:!parsing!private! !
+referenceTypeFor:!parsing!public! !
+returnType:argumentTypes:!instance creation!public! !
+sizeOf:type:!constants!private! !
+structTypeForSize:!constants!private! !
+typeFromName:!constants!public! !
+typeFromName:ifAbsent:!constants!public! !
+typeHasArgument:!enquiries!private! !
+!
 

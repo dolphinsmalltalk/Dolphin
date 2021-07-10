@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OrderedCollectionTest subclass: #SortedCollectionTest
 	instanceVariableNames: ''
@@ -69,17 +69,19 @@ verifyConcatenation: b with: a
 		ifTrue: [self assert: ((a symmetricDifference: result) noDifference: b)]
 		ifFalse: [super verifyConcatenation: b with: a].
 	^result! !
-!SortedCollectionTest categoriesFor: #collectionClass!constants!private! !
-!SortedCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testBinaryIncludes!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testResize!public!unit tests! !
-!SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !
-!SortedCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
-!SortedCollectionTest categoriesFor: #verifyConcatenation:with:!public!unit tests! !
+!SortedCollectionTest categoriesForMethods!
+collectionClass!constants!private! !
+testAddAllFirst!public!unit tests! !
+testAddAllFirst2!public!unit tests! !
+testAddAllLast!public!unit tests! !
+testAddFirst!public!unit tests! !
+testBinaryIncludes!public!unit tests! !
+testCopyReplaceAllWith!public!unit tests! !
+testCopyWithAtIndex!public!unit tests! !
+testReplaceFromToWithStartingAt!public!unit tests! !
+testResize!public!unit tests! !
+testStrongTalkTests!public!unit tests! !
+unsortedCollectionClass!constants!private! !
+verifyConcatenation:with:!public!unit tests! !
+!
 

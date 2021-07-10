@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TestCase
 	instanceVariableNames: 'testSelector'
@@ -203,47 +203,49 @@ skip: aComment
 	TestSkip signal: aComment!
 
 tearDown! !
-!TestCase categoriesFor: #addDependentToHierachy:!dependencies!public! !
-!TestCase categoriesFor: #assert:!asserting!public! !
-!TestCase categoriesFor: #assert:description:!asserting!public! !
-!TestCase categoriesFor: #assert:description:resumable:!asserting!public! !
-!TestCase categoriesFor: #assert:equals:!asserting!public! !
-!TestCase categoriesFor: #comparingStringBetween:and:!helpers!private! !
-!TestCase categoriesFor: #debug!public!running! !
-!TestCase categoriesFor: #debugAsFailure!public!running! !
-!TestCase categoriesFor: #deny:!asserting!public! !
-!TestCase categoriesFor: #deny:description:!asserting!public! !
-!TestCase categoriesFor: #deny:description:resumable:!asserting!public! !
-!TestCase categoriesFor: #executeShould:inScopeOf:!private!running! !
-!TestCase categoriesFor: #fail:!asserting!public! !
-!TestCase categoriesFor: #failureLog!accessing!public! !
-!TestCase categoriesFor: #getDescription:!helpers!private! !
-!TestCase categoriesFor: #isLogging!accessing!public! !
-!TestCase categoriesFor: #logFailure:!asserting!public! !
-!TestCase categoriesFor: #openDebuggerOnFailingTestMethod!public!running! !
-!TestCase categoriesFor: #performTest!private!running! !
-!TestCase categoriesFor: #printOn:!printing!public! !
-!TestCase categoriesFor: #removeDependentFromHierachy:!dependencies!public! !
-!TestCase categoriesFor: #resources!accessing!public! !
-!TestCase categoriesFor: #run!public!running! !
-!TestCase categoriesFor: #run:!public!running! !
-!TestCase categoriesFor: #runCase!public!running! !
-!TestCase categoriesFor: #runCaseAsFailure:!public!running! !
-!TestCase categoriesFor: #selector!accessing!public! !
-!TestCase categoriesFor: #setTestSelector:!initializing!private! !
-!TestCase categoriesFor: #setUp!public!running! !
-!TestCase categoriesFor: #should:!asserting!public! !
-!TestCase categoriesFor: #should:description:!asserting!public! !
-!TestCase categoriesFor: #should:raise:!asserting!public! !
-!TestCase categoriesFor: #should:raise:description:!asserting!public! !
-!TestCase categoriesFor: #shouldnt:!asserting!public! !
-!TestCase categoriesFor: #shouldnt:description:!asserting!public! !
-!TestCase categoriesFor: #shouldnt:raise:!asserting!public! !
-!TestCase categoriesFor: #shouldnt:raise:description:!asserting!public! !
-!TestCase categoriesFor: #signalFailure:!asserting!public! !
-!TestCase categoriesFor: #skip!asserting!public! !
-!TestCase categoriesFor: #skip:!asserting!public! !
-!TestCase categoriesFor: #tearDown!public!running! !
+!TestCase categoriesForMethods!
+addDependentToHierachy:!dependencies!public! !
+assert:!asserting!public! !
+assert:description:!asserting!public! !
+assert:description:resumable:!asserting!public! !
+assert:equals:!asserting!public! !
+comparingStringBetween:and:!helpers!private! !
+debug!public!running! !
+debugAsFailure!public!running! !
+deny:!asserting!public! !
+deny:description:!asserting!public! !
+deny:description:resumable:!asserting!public! !
+executeShould:inScopeOf:!private!running! !
+fail:!asserting!public! !
+failureLog!accessing!public! !
+getDescription:!helpers!private! !
+isLogging!accessing!public! !
+logFailure:!asserting!public! !
+openDebuggerOnFailingTestMethod!public!running! !
+performTest!private!running! !
+printOn:!printing!public! !
+removeDependentFromHierachy:!dependencies!public! !
+resources!accessing!public! !
+run!public!running! !
+run:!public!running! !
+runCase!public!running! !
+runCaseAsFailure:!public!running! !
+selector!accessing!public! !
+setTestSelector:!initializing!private! !
+setUp!public!running! !
+should:!asserting!public! !
+should:description:!asserting!public! !
+should:raise:!asserting!public! !
+should:raise:description:!asserting!public! !
+shouldnt:!asserting!public! !
+shouldnt:description:!asserting!public! !
+shouldnt:raise:!asserting!public! !
+shouldnt:raise:description:!asserting!public! !
+signalFailure:!asserting!public! !
+skip!asserting!public! !
+skip:!asserting!public! !
+tearDown!public!running! !
+!
 
 !TestCase class methodsFor!
 
@@ -313,19 +315,21 @@ testSelectors
 
 version
 	^'3.1'! !
-!TestCase class categoriesFor: #allTestSelectors!Accessing!public! !
-!TestCase class categoriesFor: #buildSuite!Building Suites!public! !
-!TestCase class categoriesFor: #buildSuiteFromAllSelectors!Building Suites!public! !
-!TestCase class categoriesFor: #buildSuiteFromLocalSelectors!Building Suites!public! !
-!TestCase class categoriesFor: #buildSuiteFromMethods:!Building Suites!public! !
-!TestCase class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
-!TestCase class categoriesFor: #debug:!Instance Creation!public! !
-!TestCase class categoriesFor: #debugAsFailure:!Instance Creation!public! !
-!TestCase class categoriesFor: #resources!Accessing!public! !
-!TestCase class categoriesFor: #run:!Instance Creation!public! !
-!TestCase class categoriesFor: #selector:!Instance Creation!public! !
-!TestCase class categoriesFor: #shouldInheritSelectors!public!Testing! !
-!TestCase class categoriesFor: #suite!Instance Creation!public! !
-!TestCase class categoriesFor: #testSelectors!Accessing!public! !
-!TestCase class categoriesFor: #version!Accessing!public! !
+!TestCase class categoriesForMethods!
+allTestSelectors!Accessing!public! !
+buildSuite!Building Suites!public! !
+buildSuiteFromAllSelectors!Building Suites!public! !
+buildSuiteFromLocalSelectors!Building Suites!public! !
+buildSuiteFromMethods:!Building Suites!public! !
+buildSuiteFromSelectors!Building Suites!public! !
+debug:!Instance Creation!public! !
+debugAsFailure:!Instance Creation!public! !
+resources!Accessing!public! !
+run:!Instance Creation!public! !
+selector:!Instance Creation!public! !
+shouldInheritSelectors!public!Testing! !
+suite!Instance Creation!public! !
+testSelectors!Accessing!public! !
+version!Accessing!public! !
+!
 

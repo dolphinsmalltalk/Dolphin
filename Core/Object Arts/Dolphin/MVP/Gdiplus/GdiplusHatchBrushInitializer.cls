@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusHatchBrushInitializer
 	instanceVariableNames: 'style forecolor backcolor'
@@ -28,9 +28,11 @@ style: aNumber forecolor: foreColor backcolor: backColor
 	style := aNumber.
 	forecolor := foreColor.
 	backcolor := backColor! !
-!GdiplusHatchBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusHatchBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusHatchBrushInitializer categoriesFor: #style:forecolor:backcolor:!initializing!private! !
+!GdiplusHatchBrushInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+style:forecolor:backcolor:!initializing!private! !
+!
 
 !GdiplusHatchBrushInitializer class methodsFor!
 
@@ -39,5 +41,7 @@ style: aNumber forecolor: foreARGB backcolor: backARGB
 		style: aNumber
 		forecolor: foreARGB
 		backcolor: backARGB! !
-!GdiplusHatchBrushInitializer class categoriesFor: #style:forecolor:backcolor:!instance creation!public! !
+!GdiplusHatchBrushInitializer class categoriesForMethods!
+style:forecolor:backcolor:!instance creation!public! !
+!
 

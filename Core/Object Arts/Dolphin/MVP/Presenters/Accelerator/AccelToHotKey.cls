@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TypeConverter subclass: #AccelToHotKey
 	instanceVariableNames: ''
@@ -43,8 +43,10 @@ rightToLeft: anInteger
 	"Preserve the HOTKEYF_EXT flag by combining KF_EXTENDED with the VK_"
 	(hotKeyModifiers allMask: HOTKEYF_EXT) ifTrue: [vKey := vKey bitOr: KF_EXTENDED].
 	^AcceleratorTable keyCode: vKey modifiers: (self class hotKeyToAccelModifiers: hotKeyModifiers)! !
-!AccelToHotKey categoriesFor: #leftToRight:!operations!private! !
-!AccelToHotKey categoriesFor: #rightToLeft:!operations!private! !
+!AccelToHotKey categoriesForMethods!
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 
 !AccelToHotKey class methodsFor!
 
@@ -82,7 +84,9 @@ initialize
 
 	self addClassConstant: 'ModifierMap'
 		value: {HOTKEYF_SHIFT. FSHIFT. HOTKEYF_CONTROL. FCONTROL. HOTKEYF_ALT. FALT}! !
-!AccelToHotKey class categoriesFor: #accelToHotKeyModifiers:!initializing!private! !
-!AccelToHotKey class categoriesFor: #hotKeyToAccelModifiers:!initializing!private! !
-!AccelToHotKey class categoriesFor: #initialize!development!initializing!private! !
+!AccelToHotKey class categoriesForMethods!
+accelToHotKeyModifiers:!initializing!private! !
+hotKeyToAccelModifiers:!initializing!private! !
+initialize!development!initializing!private! !
+!
 

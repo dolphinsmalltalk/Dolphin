@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #ChangeMethodNameRefactoring
 	instanceVariableNames: 'newSelector oldSelector permutation implementors'
@@ -134,17 +134,19 @@ transform
 	self removeRenamedImplementors
 
 ! !
-!ChangeMethodNameRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
-!ChangeMethodNameRefactoring categoriesFor: #implementors!accessing!private! !
-!ChangeMethodNameRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
-!ChangeMethodNameRefactoring categoriesFor: #modifyImplementorParseTree:in:!public! !
-!ChangeMethodNameRefactoring categoriesFor: #myConditions!preconditions!public! !
-!ChangeMethodNameRefactoring categoriesFor: #newSelector!accessing!public! !
-!ChangeMethodNameRefactoring categoriesFor: #parseTreeRewriter!accessing!private! !
-!ChangeMethodNameRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ChangeMethodNameRefactoring categoriesFor: #removeRenamedImplementors!public!transforming! !
-!ChangeMethodNameRefactoring categoriesFor: #renameImplementors!public!transforming! !
-!ChangeMethodNameRefactoring categoriesFor: #renameMessageSends!public!transforming! !
-!ChangeMethodNameRefactoring categoriesFor: #renameMethod:in:to:permutation:!initialize/release!public! !
-!ChangeMethodNameRefactoring categoriesFor: #transform!public!transforming! !
+!ChangeMethodNameRefactoring categoriesForMethods!
+hasPermutedArguments!public!testing! !
+implementors!accessing!private! !
+implementorsCanBePrimitives!public!testing! !
+modifyImplementorParseTree:in:!public! !
+myConditions!preconditions!public! !
+newSelector!accessing!public! !
+parseTreeRewriter!accessing!private! !
+preconditions!preconditions!public! !
+removeRenamedImplementors!public!transforming! !
+renameImplementors!public!transforming! !
+renameMessageSends!public!transforming! !
+renameMethod:in:to:permutation:!initialize/release!public! !
+transform!public!transforming! !
+!
 

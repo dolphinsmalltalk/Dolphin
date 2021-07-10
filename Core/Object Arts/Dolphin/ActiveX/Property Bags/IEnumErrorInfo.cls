@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IEnumUnknown subclass: #IEnumErrorInfo
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IErrorInfo! !
-!IEnumErrorInfo class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumErrorInfo class categoriesFor: #elementClass!constants!public! !
+!IEnumErrorInfo class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

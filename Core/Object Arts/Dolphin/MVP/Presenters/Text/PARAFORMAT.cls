@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #PARAFORMAT
 	instanceVariableNames: ''
@@ -159,32 +159,34 @@ wNumbering: anInteger
 	"Set the receiver's 'wNumbering' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wNumbering put: anInteger! !
-!PARAFORMAT categoriesFor: #alignment!accessing!public! !
-!PARAFORMAT categoriesFor: #alignment:!accessing!public! !
-!PARAFORMAT categoriesFor: #cTabCount!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #cTabCount:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dwMask!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dwMask:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxOffset!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxOffset:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxRightIndent!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxRightIndent:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxStartIndent!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #dxStartIndent:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #maskIn:!accessing!private! !
-!PARAFORMAT categoriesFor: #offset!accessing!public! !
-!PARAFORMAT categoriesFor: #offset:!accessing!public! !
-!PARAFORMAT categoriesFor: #rgxTabs!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #rgxTabs:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #startIndent!accessing!public! !
-!PARAFORMAT categoriesFor: #startIndent:!accessing!public! !
-!PARAFORMAT categoriesFor: #wAlignment!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wAlignment:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wEffects!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wEffects:!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wNumbering!**compiled accessors**!public! !
-!PARAFORMAT categoriesFor: #wNumbering:!**compiled accessors**!public! !
+!PARAFORMAT categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+cTabCount!**compiled accessors**!public! !
+cTabCount:!**compiled accessors**!public! !
+dwMask!**compiled accessors**!public! !
+dwMask:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dxOffset!**compiled accessors**!public! !
+dxOffset:!**compiled accessors**!public! !
+dxRightIndent!**compiled accessors**!public! !
+dxRightIndent:!**compiled accessors**!public! !
+dxStartIndent!**compiled accessors**!public! !
+dxStartIndent:!**compiled accessors**!public! !
+maskIn:!accessing!private! !
+offset!accessing!public! !
+offset:!accessing!public! !
+rgxTabs!**compiled accessors**!public! !
+rgxTabs:!**compiled accessors**!public! !
+startIndent!accessing!public! !
+startIndent:!accessing!public! !
+wAlignment!**compiled accessors**!public! !
+wAlignment:!**compiled accessors**!public! !
+wEffects!**compiled accessors**!public! !
+wEffects:!**compiled accessors**!public! !
+wNumbering!**compiled accessors**!public! !
+wNumbering:!**compiled accessors**!public! !
+!
 
 !PARAFORMAT class methodsFor!
 
@@ -214,7 +216,9 @@ packing
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [8] ifFalse: [4]! !
-!PARAFORMAT class categoriesFor: #defineFields!public!template definition! !
-!PARAFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PARAFORMAT class categoriesFor: #packing!constants!public! !
+!PARAFORMAT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #RegEdit
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
@@ -380,42 +380,44 @@ toggleStatusBar
 	| statusBar |
 	statusBar := self statusBar.
 	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show]! !
-!RegEdit categoriesFor: #aboutRegistryEditor!commands!private! !
-!RegEdit categoriesFor: #additionalAccelerators!constants!private! !
-!RegEdit categoriesFor: #chooseFont!commands!private! !
-!RegEdit categoriesFor: #copyKeyName!commands!private! !
-!RegEdit categoriesFor: #createComponents!initializing!public! !
-!RegEdit categoriesFor: #createSchematicWiring!initializing!public! !
-!RegEdit categoriesFor: #delete!commands!private! !
-!RegEdit categoriesFor: #deleteSelectedKey!commands!private! !
-!RegEdit categoriesFor: #deleteSelectedValue!commands!private! !
-!RegEdit categoriesFor: #exportKey:toFile:!filing!private! !
-!RegEdit categoriesFor: #exportRegistryFile!commands!private! !
-!RegEdit categoriesFor: #fileTypes!constants!private! !
-!RegEdit categoriesFor: #importRegistryFile!commands!private! !
-!RegEdit categoriesFor: #initialize!initializing!private! !
-!RegEdit categoriesFor: #newBinaryValue!commands!public! !
-!RegEdit categoriesFor: #newDWORDValue!commands!public! !
-!RegEdit categoriesFor: #newKey!commands!public! !
-!RegEdit categoriesFor: #newStringValue!commands!public! !
-!RegEdit categoriesFor: #newValue:!commands!public! !
-!RegEdit categoriesFor: #newValueName!commands!private! !
-!RegEdit categoriesFor: #onAboutToRenameKey:accept:!event handling!public! !
-!RegEdit categoriesFor: #onAboutToRenameValue:accept:!event handling!public! !
-!RegEdit categoriesFor: #onKey:renamedTo:accept:!event handling!public! !
-!RegEdit categoriesFor: #onKeySelected!event handling!private! !
-!RegEdit categoriesFor: #onValue:renamedTo:accept:!event handling!public! !
-!RegEdit categoriesFor: #onViewOpened!event handling!public! !
-!RegEdit categoriesFor: #queryCommand:!commands!private! !
-!RegEdit categoriesFor: #refresh!commands!private! !
-!RegEdit categoriesFor: #rename!commands!private! !
-!RegEdit categoriesFor: #renameSelectedKey!commands!private! !
-!RegEdit categoriesFor: #renameSelectedValue!commands!private! !
-!RegEdit categoriesFor: #resourceLib!constants!public! !
-!RegEdit categoriesFor: #selectedKey!accessing!public! !
-!RegEdit categoriesFor: #selectedValue!accessing!public! !
-!RegEdit categoriesFor: #statusBar!commands!private! !
-!RegEdit categoriesFor: #toggleStatusBar!commands!private! !
+!RegEdit categoriesForMethods!
+aboutRegistryEditor!commands!private! !
+additionalAccelerators!constants!private! !
+chooseFont!commands!private! !
+copyKeyName!commands!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+delete!commands!private! !
+deleteSelectedKey!commands!private! !
+deleteSelectedValue!commands!private! !
+exportKey:toFile:!filing!private! !
+exportRegistryFile!commands!private! !
+fileTypes!constants!private! !
+importRegistryFile!commands!private! !
+initialize!initializing!private! !
+newBinaryValue!commands!public! !
+newDWORDValue!commands!public! !
+newKey!commands!public! !
+newStringValue!commands!public! !
+newValue:!commands!public! !
+newValueName!commands!private! !
+onAboutToRenameKey:accept:!event handling!public! !
+onAboutToRenameValue:accept:!event handling!public! !
+onKey:renamedTo:accept:!event handling!public! !
+onKeySelected!event handling!private! !
+onValue:renamedTo:accept:!event handling!public! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+refresh!commands!private! !
+rename!commands!private! !
+renameSelectedKey!commands!private! !
+renameSelectedValue!commands!private! !
+resourceLib!constants!public! !
+selectedKey!accessing!public! !
+selectedValue!accessing!public! !
+statusBar!commands!private! !
+toggleStatusBar!commands!private! !
+!
 
 !RegEdit class methodsFor!
 
@@ -517,16 +519,18 @@ stringIcon
 	"Answers an Icon that can be used to string values."
 
 	^RegKeyValues icon! !
-!RegEdit class categoriesFor: #about!enquiries!private! !
-!RegEdit class categoriesFor: #binaryIcon!constants!public! !
-!RegEdit class categoriesFor: #displayOn:!displaying!public! !
-!RegEdit class categoriesFor: #displayStringForValue:!displaying!private! !
-!RegEdit class categoriesFor: #icon!constants!public! !
-!RegEdit class categoriesFor: #iconFor:!constants!displaying!private! !
-!RegEdit class categoriesFor: #initialize!development!initializing!private! !
-!RegEdit class categoriesFor: #keyIcon!constants!public! !
-!RegEdit class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!RegEdit class categoriesFor: #resource_Default_view!public!resources-views! !
-!RegEdit class categoriesFor: #shutdownOnExit!public!testing! !
-!RegEdit class categoriesFor: #stringIcon!constants!public! !
+!RegEdit class categoriesForMethods!
+about!enquiries!private! !
+binaryIcon!constants!public! !
+displayOn:!displaying!public! !
+displayStringForValue:!displaying!private! !
+icon!constants!public! !
+iconFor:!constants!displaying!private! !
+initialize!development!initializing!private! !
+keyIcon!constants!public! !
+onPreStripImage!class hierarchy-removing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+stringIcon!constants!public! !
+!
 

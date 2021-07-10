@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #AddMethodTest
 	instanceVariableNames: ''
@@ -65,11 +65,13 @@ testModelInheritedSelector
 				toClass: (model classNamed: #Bar)
 				inProtocols: #(#accessing).
 	self shouldFail: refactoring! !
-!AddMethodTest categoriesFor: #setUp!public!set up! !
-!AddMethodTest categoriesFor: #testAddMethod!public!tests! !
-!AddMethodTest categoriesFor: #testBadMethod!failure tests!public! !
-!AddMethodTest categoriesFor: #testExistingSelector!failure tests!public! !
-!AddMethodTest categoriesFor: #testModelAddMethod!public!tests! !
-!AddMethodTest categoriesFor: #testModelExistingSelector!failure tests!public! !
-!AddMethodTest categoriesFor: #testModelInheritedSelector!failure tests!public! !
+!AddMethodTest categoriesForMethods!
+setUp!public!set up! !
+testAddMethod!public!tests! !
+testBadMethod!failure tests!public! !
+testExistingSelector!failure tests!public! !
+testModelAddMethod!public!tests! !
+testModelExistingSelector!failure tests!public! !
+testModelInheritedSelector!failure tests!public! !
+!
 

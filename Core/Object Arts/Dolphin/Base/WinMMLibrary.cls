@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #WinMMLibrary
 	instanceVariableNames: ''
@@ -43,10 +43,12 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 
 	<stdcall: bool PlaySoundW lpvoid handle dword>
 	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesFor: #mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
-!WinMMLibrary categoriesFor: #mciSendString:!public!win32 functions-MCI! !
-!WinMMLibrary categoriesFor: #mciSendString:lpszReturnString:cchReturn:hwndCallback:!public!win32 functions-MCI! !
-!WinMMLibrary categoriesFor: #playSound:hmod:fdwSound:!public!win32 functions-wave audio! !
+!WinMMLibrary categoriesForMethods!
+mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
+mciSendString:!public!win32 functions-MCI! !
+mciSendString:lpszReturnString:cchReturn:hwndCallback:!public!win32 functions-MCI! !
+playSound:hmod:fdwSound:!public!win32 functions-wave audio! !
+!
 
 !WinMMLibrary class methodsFor!
 
@@ -54,5 +56,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WinMM'! !
-!WinMMLibrary class categoriesFor: #fileName!constants!public! !
+!WinMMLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

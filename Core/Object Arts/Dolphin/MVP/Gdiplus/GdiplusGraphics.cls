@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusGraphics
 	instanceVariableNames: ''
@@ -812,82 +812,84 @@ translateTransform: aRealPoint order: aMatrixOrderConstant
 				dy: aRealPoint y
 				order: aMatrixOrderConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipTranslateWorldTransform failed' with: status]! !
-!GdiplusGraphics categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusGraphics categoriesFor: #beginContainer!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #clear!operations!public! !
-!GdiplusGraphics categoriesFor: #clear:!operations!public! !
-!GdiplusGraphics categoriesFor: #clipRectangle:combineMode:!operations!public! !
-!GdiplusGraphics categoriesFor: #clipRegion:combineMode:!operations!public! !
-!GdiplusGraphics categoriesFor: #compositingMode!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #compositingMode:!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #compositingQuality!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #compositingQuality:!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #doWithCanvas:!gdi interop!public! !
-!GdiplusGraphics categoriesFor: #doWithDC:!gdi interop!public! !
-!GdiplusGraphics categoriesFor: #drawArc:pen:startAngle:sweepAngle:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawBezier:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawCachedBitmap:at:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawClosedCurve:pen:tension:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawCurve:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawCurve:pen:tension:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawDropShadowRectangle:offset:alpha:!public! !
-!GdiplusGraphics categoriesFor: #drawEllipse:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawImage:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawImage:at:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawImage:at:extent:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawImage:at:extent:from:extent:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawImage:at:extent:from:extent:unit:attributes:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawImage:points:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawImage:rectangle:!drawing-bitmaps!public! !
-!GdiplusGraphics categoriesFor: #drawLine:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawLineFrom:to:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawPath:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawPie:pen:startAngle:sweepAngle:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawPolygon:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawRectangle:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawRectangle:pen:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #drawString:at:!drawing-strings!public! !
-!GdiplusGraphics categoriesFor: #drawString:font:at:format:brush:!drawing-strings!public! !
-!GdiplusGraphics categoriesFor: #drawString:font:rect:format:brush:!drawing-strings!public! !
-!GdiplusGraphics categoriesFor: #drawString:layoutRect:!drawing-strings!public! !
-!GdiplusGraphics categoriesFor: #endContainer:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #fillClosedCurve:brush:!drawing-lines!public! !
-!GdiplusGraphics categoriesFor: #fillEllipse:brush:!filling!public! !
-!GdiplusGraphics categoriesFor: #fillPath:brush:!filling!public! !
-!GdiplusGraphics categoriesFor: #fillPie:brush:startAngle:sweepAngle:!filling!public! !
-!GdiplusGraphics categoriesFor: #fillPolygon:brush:!filling!public! !
-!GdiplusGraphics categoriesFor: #fillPolygon:brush:fillMode:!filling!public! !
-!GdiplusGraphics categoriesFor: #fillRectangle:brush:!filling!public! !
-!GdiplusGraphics categoriesFor: #fillRegion:brush:!filling!public! !
-!GdiplusGraphics categoriesFor: #getHDC!gdi interop!private! !
-!GdiplusGraphics categoriesFor: #interpolationMode!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #interpolationMode:!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #measureString:font:!drawing-strings!public! !
-!GdiplusGraphics categoriesFor: #measureString:font:rect:format:!drawing-strings!public! !
-!GdiplusGraphics categoriesFor: #pageScale!accessing!public! !
-!GdiplusGraphics categoriesFor: #pageScale:!accessing!public! !
-!GdiplusGraphics categoriesFor: #pageUnit!accessing!public! !
-!GdiplusGraphics categoriesFor: #pageUnit:!accessing!public! !
-!GdiplusGraphics categoriesFor: #pageUnitName!accessing!public! !
-!GdiplusGraphics categoriesFor: #pixelOffsetMode!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #pixelOffsetMode:!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #releaseHDC:!gdi interop!private! !
-!GdiplusGraphics categoriesFor: #resetClip!operations!public! !
-!GdiplusGraphics categoriesFor: #resetTransform!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #resolution!accessing!public! !
-!GdiplusGraphics categoriesFor: #rotate:at:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #rotateTransform:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #rotateTransform:order:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #scaleTransform:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #scaleTransform:order:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #smoothingMode!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #smoothingMode:!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #textRenderingHint:!accessing-modes!public! !
-!GdiplusGraphics categoriesFor: #transform!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #transform:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #transformPoints:destSpace:srcSpace:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #translateTransform:!accessing-transformations!public! !
-!GdiplusGraphics categoriesFor: #translateTransform:order:!accessing-transformations!public! !
+!GdiplusGraphics categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+beginContainer!accessing-transformations!public! !
+clear!operations!public! !
+clear:!operations!public! !
+clipRectangle:combineMode:!operations!public! !
+clipRegion:combineMode:!operations!public! !
+compositingMode!accessing-modes!public! !
+compositingMode:!accessing-modes!public! !
+compositingQuality!accessing-modes!public! !
+compositingQuality:!accessing-modes!public! !
+doWithCanvas:!gdi interop!public! !
+doWithDC:!gdi interop!public! !
+drawArc:pen:startAngle:sweepAngle:!drawing-lines!public! !
+drawBezier:pen:!drawing-lines!public! !
+drawCachedBitmap:at:!drawing-bitmaps!public! !
+drawClosedCurve:pen:tension:!drawing-lines!public! !
+drawCurve:pen:!drawing-lines!public! !
+drawCurve:pen:tension:!drawing-lines!public! !
+drawDropShadowRectangle:offset:alpha:!public! !
+drawEllipse:pen:!drawing-lines!public! !
+drawImage:!drawing-bitmaps!public! !
+drawImage:at:!drawing-bitmaps!public! !
+drawImage:at:extent:!drawing-bitmaps!public! !
+drawImage:at:extent:from:extent:!drawing-bitmaps!public! !
+drawImage:at:extent:from:extent:unit:attributes:!drawing-bitmaps!public! !
+drawImage:points:!drawing-bitmaps!public! !
+drawImage:rectangle:!drawing-bitmaps!public! !
+drawLine:pen:!drawing-lines!public! !
+drawLineFrom:to:pen:!drawing-lines!public! !
+drawPath:pen:!drawing-lines!public! !
+drawPie:pen:startAngle:sweepAngle:!drawing-lines!public! !
+drawPolygon:pen:!drawing-lines!public! !
+drawRectangle:!drawing-lines!public! !
+drawRectangle:pen:!drawing-lines!public! !
+drawString:at:!drawing-strings!public! !
+drawString:font:at:format:brush:!drawing-strings!public! !
+drawString:font:rect:format:brush:!drawing-strings!public! !
+drawString:layoutRect:!drawing-strings!public! !
+endContainer:!accessing-transformations!public! !
+fillClosedCurve:brush:!drawing-lines!public! !
+fillEllipse:brush:!filling!public! !
+fillPath:brush:!filling!public! !
+fillPie:brush:startAngle:sweepAngle:!filling!public! !
+fillPolygon:brush:!filling!public! !
+fillPolygon:brush:fillMode:!filling!public! !
+fillRectangle:brush:!filling!public! !
+fillRegion:brush:!filling!public! !
+getHDC!gdi interop!private! !
+interpolationMode!accessing-modes!public! !
+interpolationMode:!accessing-modes!public! !
+measureString:font:!drawing-strings!public! !
+measureString:font:rect:format:!drawing-strings!public! !
+pageScale!accessing!public! !
+pageScale:!accessing!public! !
+pageUnit!accessing!public! !
+pageUnit:!accessing!public! !
+pageUnitName!accessing!public! !
+pixelOffsetMode!accessing-modes!public! !
+pixelOffsetMode:!accessing-modes!public! !
+releaseHDC:!gdi interop!private! !
+resetClip!operations!public! !
+resetTransform!accessing-transformations!public! !
+resolution!accessing!public! !
+rotate:at:!accessing-transformations!public! !
+rotateTransform:!accessing-transformations!public! !
+rotateTransform:order:!accessing-transformations!public! !
+scaleTransform:!accessing-transformations!public! !
+scaleTransform:order:!accessing-transformations!public! !
+smoothingMode!accessing-modes!public! !
+smoothingMode:!accessing-modes!public! !
+textRenderingHint:!accessing-modes!public! !
+transform!accessing-transformations!public! !
+transform:!accessing-transformations!public! !
+transformPoints:destSpace:srcSpace:!accessing-transformations!public! !
+translateTransform:!accessing-transformations!public! !
+translateTransform:order:!accessing-transformations!public! !
+!
 
 !GdiplusGraphics class methodsFor!
 
@@ -1357,19 +1359,21 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Canvas icon! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGAlphaBlending!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGCropAndScale!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGDrawingALine!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGDrawingAString!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGDrawingShapes!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGFromCanvas!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGMeasureString!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGRotate!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGTransformations!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipGTransformPoints!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipNestedContainers!examples!public!sunit! !
-!GdiplusGraphics class categoriesFor: #exampleGdipState!examples!public! !
-!GdiplusGraphics class categoriesFor: #fromCanvas:!instance creation!public! !
-!GdiplusGraphics class categoriesFor: #fromImage:!instance creation!public! !
-!GdiplusGraphics class categoriesFor: #icon!constants!development!public! !
+!GdiplusGraphics class categoriesForMethods!
+exampleGdipGAlphaBlending!examples!public!sunit! !
+exampleGdipGCropAndScale!examples!public!sunit! !
+exampleGdipGDrawingALine!examples!public!sunit! !
+exampleGdipGDrawingAString!examples!public!sunit! !
+exampleGdipGDrawingShapes!examples!public!sunit! !
+exampleGdipGFromCanvas!examples!public!sunit! !
+exampleGdipGMeasureString!examples!public!sunit! !
+exampleGdipGRotate!examples!public!sunit! !
+exampleGdipGTransformations!examples!public!sunit! !
+exampleGdipGTransformPoints!examples!public!sunit! !
+exampleGdipNestedContainers!examples!public!sunit! !
+exampleGdipState!examples!public! !
+fromCanvas:!instance creation!public! !
+fromImage:!instance creation!public! !
+icon!constants!development!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
 	instanceVariableNames: ''
@@ -69,14 +69,16 @@ nReserved: anInteger
 	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nReserved put: anInteger! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette:!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry:!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nReserved!**compiled accessors**!public! !
-!EMRCOLORCORRECTPALETTE categoriesFor: #nReserved:!**compiled accessors**!public! !
+!EMRCOLORCORRECTPALETTE categoriesForMethods!
+ihPalette!**compiled accessors**!public! !
+ihPalette:!**compiled accessors**!public! !
+nFirstEntry!**compiled accessors**!public! !
+nFirstEntry:!**compiled accessors**!public! !
+nPalEntries!**compiled accessors**!public! !
+nPalEntries:!**compiled accessors**!public! !
+nReserved!**compiled accessors**!public! !
+nReserved:!**compiled accessors**!public! !
+!
 
 !EMRCOLORCORRECTPALETTE class methodsFor!
 
@@ -118,7 +120,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_COLORCORRECTPALETTE! !
-!EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCOLORCORRECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCOLORCORRECTPALETTE class categoriesFor: #iTypes!constants!public! !
+!EMRCOLORCORRECTPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCREATEPALETTE
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ lgpl: aLOGPALETTE
 		from: ##(_OffsetOf_lgpl + 1)
 		to: ##(_OffsetOf_lgpl + LOGPALETTE basicByteSize)
 		startingAt: 1! !
-!EMRCREATEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
-!EMRCREATEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
-!EMRCREATEPALETTE categoriesFor: #lgpl!**compiled accessors**!public! !
-!EMRCREATEPALETTE categoriesFor: #lgpl:!**compiled accessors**!public! !
+!EMRCREATEPALETTE categoriesForMethods!
+ihPal!**compiled accessors**!public! !
+ihPal:!**compiled accessors**!public! !
+lgpl!**compiled accessors**!public! !
+lgpl:!**compiled accessors**!public! !
+!
 
 !EMRCREATEPALETTE class methodsFor!
 
@@ -86,7 +88,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEPALETTE! !
-!EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEPALETTE class categoriesFor: #iTypes!constants!public! !
+!EMRCREATEPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

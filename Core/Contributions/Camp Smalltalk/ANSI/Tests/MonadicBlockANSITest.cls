@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #MonadicBlockANSITest
 	instanceVariableNames: 'blk1args'
@@ -38,10 +38,12 @@ testXvalueX
 	#'Valuable'.
 	self value: [blk1args value: 1] should: [:r | r = #(1)]
 		conformTo: #'monadicValuable' selector: #'value:'.! !
-!MonadicBlockANSITest categoriesFor: #canonicalObject!public! !
-!MonadicBlockANSITest categoriesFor: #protocol!public! !
-!MonadicBlockANSITest categoriesFor: #setUp!public! !
-!MonadicBlockANSITest categoriesFor: #testXargumentCount!public! !
-!MonadicBlockANSITest categoriesFor: #testXvalueWithArgumentsX!public! !
-!MonadicBlockANSITest categoriesFor: #testXvalueX!public! !
+!MonadicBlockANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testXargumentCount!public! !
+testXvalueWithArgumentsX!public! !
+testXvalueX!public! !
+!
 

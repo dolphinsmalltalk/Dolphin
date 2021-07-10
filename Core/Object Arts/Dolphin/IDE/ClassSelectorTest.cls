@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableItemsTest subclass: #ClassSelectorTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
@@ -302,27 +302,31 @@ testSelection
 			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
 	self removeClassesABC! !
-!ClassSelectorTest categoriesFor: #create:subclassOf:!helpers!private! !
-!ClassSelectorTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
-!ClassSelectorTest categoriesFor: #createClassesABC!helpers!private! !
-!ClassSelectorTest categoriesFor: #createClassesDEF!helpers!private! !
-!ClassSelectorTest categoriesFor: #createClassesGHI!helpers!private! !
-!ClassSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesABC!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesDEF!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesGHI!helpers!private! !
-!ClassSelectorTest categoriesFor: #removeClassesNamed:!helpers!private! !
-!ClassSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!ClassSelectorTest categoriesFor: #setUp!public!Running! !
-!ClassSelectorTest categoriesFor: #tearDown!public!Running! !
-!ClassSelectorTest categoriesFor: #testAddRemove!public!unit tests! !
-!ClassSelectorTest categoriesFor: #testHierarchyMove!public!unit tests! !
-!ClassSelectorTest categoriesFor: #testPackageMove!public!unit tests! !
-!ClassSelectorTest categoriesFor: #testSelection!public!unit tests! !
+!ClassSelectorTest categoriesForMethods!
+create:subclassOf:!helpers!private! !
+create:subclassOf:inPackage:!helpers!private! !
+createClassesABC!helpers!private! !
+createClassesDEF!helpers!private! !
+createClassesGHI!helpers!private! !
+removalOfSelectionLeaves:!helpers!private! !
+removeClassesABC!helpers!private! !
+removeClassesDEF!helpers!private! !
+removeClassesGHI!helpers!private! !
+removeClassesNamed:!helpers!private! !
+resetSelection!helpers!private! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testAddRemove!public!unit tests! !
+testHierarchyMove!public!unit tests! !
+testPackageMove!public!unit tests! !
+testSelection!public!unit tests! !
+!
 
 !ClassSelectorTest class methodsFor!
 
 resources
 	^Array with: DolphinTestPackages! !
-!ClassSelectorTest class categoriesFor: #resources!Accessing!public! !
+!ClassSelectorTest class categoriesForMethods!
+resources!Accessing!public! !
+!
 

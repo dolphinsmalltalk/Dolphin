@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBAbstractClass subclass: #RBMetaclass
 	instanceVariableNames: ''
@@ -39,15 +39,17 @@ realName: aSymbol
 storeOn: aStream 
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'! !
-!RBMetaclass categoriesFor: #allClassVariableNames!accessing!public! !
-!RBMetaclass categoriesFor: #allPoolDictionaryNames!accessing!public! !
-!RBMetaclass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!RBMetaclass categoriesFor: #directlyDefinesPoolDictionary:!public!testing! !
-!RBMetaclass categoriesFor: #isMeta!public!testing! !
-!RBMetaclass categoriesFor: #metaclass!accessing!public! !
-!RBMetaclass categoriesFor: #printOn:!printing!public! !
-!RBMetaclass categoriesFor: #realName:!initialize/release!public! !
-!RBMetaclass categoriesFor: #storeOn:!printing!public! !
+!RBMetaclass categoriesForMethods!
+allClassVariableNames!accessing!public! !
+allPoolDictionaryNames!accessing!public! !
+directlyDefinesClassVariable:!public!testing! !
+directlyDefinesPoolDictionary:!public!testing! !
+isMeta!public!testing! !
+metaclass!accessing!public! !
+printOn:!printing!public! !
+realName:!initialize/release!public! !
+storeOn:!printing!public! !
+!
 
 !RBMetaclass class methodsFor!
 
@@ -60,6 +62,8 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
-!RBMetaclass class categoriesFor: #existingNamed:!instance creation!public! !
-!RBMetaclass class categoriesFor: #named:!instance creation!public! !
+!RBMetaclass class categoriesForMethods!
+existingNamed:!instance creation!public! !
+named:!instance creation!public! !
+!
 

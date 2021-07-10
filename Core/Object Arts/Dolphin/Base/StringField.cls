@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayField subclass: #StringField
 	instanceVariableNames: ''
@@ -57,12 +57,14 @@ writeInto: bytes value: anObject
 		startingAt: 1.
 	"We need 2 null-terminator bytes for a wide-char string of course"
 	1 to: elemSize do: [:i | bytes at: offset + size + i put: 0]! !
-!StringField categoriesFor: #allocationLength!accessing!private! !
-!StringField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!StringField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
-!StringField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
-!StringField categoriesFor: #readFrom:!indirect accessing!private! !
-!StringField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!StringField categoriesForMethods!
+allocationLength!accessing!private! !
+printElementSizeExpressionBodyOn:!automatic generation!private! !
+printFieldSizeExpressionOn:!automatic generation!private! !
+printStaticElementSizeExpressionOn:!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !StringField class methodsFor!
 
@@ -71,5 +73,7 @@ length: anInteger
 	embedded arrays of type aClass, and of byte size anInteger"
 
 	^self type: AnsiString length: anInteger! !
-!StringField class categoriesFor: #length:!instance creation!public! !
+!StringField class categoriesForMethods!
+length:!instance creation!public! !
+!
 

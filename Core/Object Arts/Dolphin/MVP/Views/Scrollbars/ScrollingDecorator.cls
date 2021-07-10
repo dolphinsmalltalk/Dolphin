@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ContainerView subclass: #ScrollingDecorator
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
@@ -343,39 +343,41 @@ verticalScrollTo: anInteger
 
 wheelScrollLines
 	^SystemMetrics current getSysParamSdword: SPI_GETWHEELSCROLLLINES! !
-!ScrollingDecorator categoriesFor: #addSubView:!hierarchy!public!sub views! !
-!ScrollingDecorator categoriesFor: #defaultLayoutManager!constants!private! !
-!ScrollingDecorator categoriesFor: #defaultWindowStyle!constants!private! !
-!ScrollingDecorator categoriesFor: #ensureSubView:rectangleVisible:!accessing!private! !
-!ScrollingDecorator categoriesFor: #getScrollPage:!accessing!private! !
-!ScrollingDecorator categoriesFor: #getScrollRange:!accessing!private! !
-!ScrollingDecorator categoriesFor: #horizontalRange!accessing!private! !
-!ScrollingDecorator categoriesFor: #horizontalScrollTo:!operations!private! !
-!ScrollingDecorator categoriesFor: #initialize!initializing!private! !
-!ScrollingDecorator categoriesFor: #isTrackingContinuous!accessing-styles!public! !
-!ScrollingDecorator categoriesFor: #isTrackingContinuous:!accessing-styles!public! !
-!ScrollingDecorator categoriesFor: #lineExtent!accessing!public! !
-!ScrollingDecorator categoriesFor: #lineExtent:!accessing!public! !
-!ScrollingDecorator categoriesFor: #onHScroll:!event handling!public! !
-!ScrollingDecorator categoriesFor: #onMouseWheeled:!event handling!public! !
-!ScrollingDecorator categoriesFor: #onVScroll:!event handling!public! !
-!ScrollingDecorator categoriesFor: #placement:!geometry!public! !
-!ScrollingDecorator categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!ScrollingDecorator categoriesFor: #scrollColumns:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollHorizontalPages:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollLines:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset!accessing!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollOffset:context:!operations!public! !
-!ScrollingDecorator categoriesFor: #scrollPage!accessing!private! !
-!ScrollingDecorator categoriesFor: #scrollPages:!operations!public! !
-!ScrollingDecorator categoriesFor: #setScrollInfo:!private!updating! !
-!ScrollingDecorator categoriesFor: #setScrollInfo:position:range:page:!accessing!private! !
-!ScrollingDecorator categoriesFor: #updateScrollBarOffsets:!private!updating! !
-!ScrollingDecorator categoriesFor: #updateScrollBars:!private!updating! !
-!ScrollingDecorator categoriesFor: #verticalRange!accessing!private! !
-!ScrollingDecorator categoriesFor: #verticalScrollTo:!operations!private! !
-!ScrollingDecorator categoriesFor: #wheelScrollLines!constants!private! !
+!ScrollingDecorator categoriesForMethods!
+addSubView:!hierarchy!public!sub views! !
+defaultLayoutManager!constants!private! !
+defaultWindowStyle!constants!private! !
+ensureSubView:rectangleVisible:!accessing!private! !
+getScrollPage:!accessing!private! !
+getScrollRange:!accessing!private! !
+horizontalRange!accessing!private! !
+horizontalScrollTo:!operations!private! !
+initialize!initializing!private! !
+isTrackingContinuous!accessing-styles!public! !
+isTrackingContinuous:!accessing-styles!public! !
+lineExtent!accessing!public! !
+lineExtent:!accessing!public! !
+onHScroll:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onVScroll:!event handling!public! !
+placement:!geometry!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+scrollColumns:!operations!public! !
+scrollHorizontalPages:!operations!public! !
+scrollLines:!operations!public! !
+scrollOffset!accessing!public! !
+scrollOffset:!operations!public! !
+scrollOffset:context:!operations!public! !
+scrollPage!accessing!private! !
+scrollPages:!operations!public! !
+setScrollInfo:!private!updating! !
+setScrollInfo:position:range:page:!accessing!private! !
+updateScrollBarOffsets:!private!updating! !
+updateScrollBars:!private!updating! !
+verticalRange!accessing!private! !
+verticalScrollTo:!operations!private! !
+wheelScrollLines!constants!private! !
+!
 
 ScrollingDecorator methodProtocol: #scrollingDecoratorView attributes: #(#readOnly) selectors: #(#isTrackingContinuous #isTrackingContinuous: #lineExtent #lineExtent: #onHScroll: #onVScroll: #scrollOffset #scrollOffset:context: #scrollPage)!
 
@@ -395,6 +397,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollingDecorator) 34 18 nil nil 34 2 8 1143996416 131073 416 nil nil nil 5 nil nil nil 416 1573190 1 ##(Smalltalk.ScrollingDecoratorLayout) true 170 192 8 #() nil 328198 ##(Smalltalk.Point) 1 1 true 546 17 17 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 1 1 546 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 546 193 193 nil 27 )! !
-!ScrollingDecorator class categoriesFor: #icon!constants!public! !
-!ScrollingDecorator class categoriesFor: #resource_Default_view!public!resources-views! !
+!ScrollingDecorator class categoriesForMethods!
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

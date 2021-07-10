@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #PresenterTest
 	instanceVariableNames: 'presenter'
@@ -51,10 +51,12 @@ tearDown
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
-!PresenterTest categoriesFor: #classToTest!helpers!private! !
-!PresenterTest categoriesFor: #initializePresenter!public!Running! !
-!PresenterTest categoriesFor: #leftClickAt:!private!unit tests! !
-!PresenterTest categoriesFor: #setUp!public!Running! !
-!PresenterTest categoriesFor: #tearDown!public!Running! !
-!PresenterTest categoriesFor: #waitForInputIdle!private!unit tests! !
+!PresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+initializePresenter!public!Running! !
+leftClickAt:!private!unit tests! !
+setUp!public!Running! !
+tearDown!public!Running! !
+waitForInputIdle!private!unit tests! !
+!
 

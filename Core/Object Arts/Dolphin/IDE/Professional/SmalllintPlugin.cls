@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassBrowserPlugin subclass: #SmalllintPlugin
 	instanceVariableNames: ''
@@ -67,11 +67,13 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
-!SmalllintPlugin categoriesFor: #browserEnvironment!operations!private! !
-!SmalllintPlugin categoriesFor: #checkerForRule:environment:!helpers!private! !
-!SmalllintPlugin categoriesFor: #methodFilterForRule:inEnvironment:!helpers!private! !
-!SmalllintPlugin categoriesFor: #runRule:!helpers!private! !
-!SmalllintPlugin categoriesFor: #runTransformation:!helpers!private! !
-!SmalllintPlugin categoriesFor: #status:!operations!private! !
-!SmalllintPlugin categoriesFor: #systemModel!commands!private! !
+!SmalllintPlugin categoriesForMethods!
+browserEnvironment!operations!private! !
+checkerForRule:environment:!helpers!private! !
+methodFilterForRule:inEnvironment:!helpers!private! !
+runRule:!helpers!private! !
+runTransformation:!helpers!private! !
+status:!operations!private! !
+systemModel!commands!private! !
+!
 

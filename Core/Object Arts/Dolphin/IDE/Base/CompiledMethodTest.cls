@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #CompiledMethodTest
 	instanceVariableNames: ''
@@ -63,10 +63,12 @@ testValueWithReceiverArguments
 	method := self class compiledMethodAt: #returnPlusOne:.
 	value := method value: self withArguments: #(1).
 	self assert: value equals: 2! !
-!CompiledMethodTest categoriesFor: #returnPlusOne:!examples!public! !
-!CompiledMethodTest categoriesFor: #returnTrue!examples!public! !
-!CompiledMethodTest categoriesFor: #testExtraIndex!public!testing / testing! !
-!CompiledMethodTest categoriesFor: #testIsQuick!public!testing / testing! !
-!CompiledMethodTest categoriesFor: #testIsSimpleSelfSend!public!testing / testing! !
-!CompiledMethodTest categoriesFor: #testValueWithReceiverArguments!public!testing / evaluating! !
+!CompiledMethodTest categoriesForMethods!
+returnPlusOne:!examples!public! !
+returnTrue!examples!public! !
+testExtraIndex!public!testing / testing! !
+testIsQuick!public!testing / testing! !
+testIsSimpleSelfSend!public!testing / testing! !
+testValueWithReceiverArguments!public!testing / evaluating! !
+!
 

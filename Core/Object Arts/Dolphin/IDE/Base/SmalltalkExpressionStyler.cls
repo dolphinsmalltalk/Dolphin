@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkStyler subclass: #SmalltalkExpressionStyler
 	instanceVariableNames: ''
@@ -24,7 +24,9 @@ initialKeywordStyle
 
 initialUnaryStyle
 	^#identifier! !
-!SmalltalkExpressionStyler categoriesFor: #initialBinaryStyle:!constants!private! !
-!SmalltalkExpressionStyler categoriesFor: #initialKeywordStyle!constants!private! !
-!SmalltalkExpressionStyler categoriesFor: #initialUnaryStyle!constants!private! !
+!SmalltalkExpressionStyler categoriesForMethods!
+initialBinaryStyle:!constants!private! !
+initialKeywordStyle!constants!private! !
+initialUnaryStyle!constants!private! !
+!
 

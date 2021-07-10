@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMCharacterData subclass: #IXMLDOMText
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ SplitText: offset rightHandTextNode: rightHandTextNode
 
 	<virtual stdcall: hresult 52 sdword IXMLDOMText**>
 	^self invalidCall: _failureCode! !
-!IXMLDOMText categoriesFor: #splitText:!**auto generated**!methods!public! !
-!IXMLDOMText categoriesFor: #SplitText:rightHandTextNode:!**auto generated**!COM Interfaces-IXMLDOMText!private! !
+!IXMLDOMText categoriesForMethods!
+splitText:!**auto generated**!methods!public! !
+SplitText:rightHandTextNode:!**auto generated**!COM Interfaces-IXMLDOMText!private! !
+!
 
 !IXMLDOMText class methodsFor!
 
@@ -47,5 +49,7 @@ defineFunctions
 		defineFunction: #SplitText:rightHandTextNode:
 			argumentTypes: 'sdword IXMLDOMText**'
 ! !
-!IXMLDOMText class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMText class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

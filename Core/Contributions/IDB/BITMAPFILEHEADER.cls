@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #BITMAPFILEHEADER
 	instanceVariableNames: ''
@@ -68,16 +68,18 @@ bfType: anInteger
 	"Set the receiver's 'bfType' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_bfType put: anInteger! !
-!BITMAPFILEHEADER categoriesFor: #bfOffBits!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfOffBits:!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfReserved1!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfReserved1:!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfReserved2!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfReserved2:!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfSize!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfSize:!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfType!**compiled accessors**!public! !
-!BITMAPFILEHEADER categoriesFor: #bfType:!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesForMethods!
+bfOffBits!**compiled accessors**!public! !
+bfOffBits:!**compiled accessors**!public! !
+bfReserved1!**compiled accessors**!public! !
+bfReserved1:!**compiled accessors**!public! !
+bfReserved2!**compiled accessors**!public! !
+bfReserved2:!**compiled accessors**!public! !
+bfSize!**compiled accessors**!public! !
+bfSize:!**compiled accessors**!public! !
+bfType!**compiled accessors**!public! !
+bfType:!**compiled accessors**!public! !
+!
 
 !BITMAPFILEHEADER class methodsFor!
 
@@ -108,7 +110,9 @@ packing
 	1-byte boundaries - probably a 16-bit inheritance."
 
 	^1! !
-!BITMAPFILEHEADER class categoriesFor: #defineFields!initializing!public! !
-!BITMAPFILEHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!BITMAPFILEHEADER class categoriesFor: #packing!constants!public! !
+!BITMAPFILEHEADER class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

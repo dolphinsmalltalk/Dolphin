@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
@@ -271,38 +271,40 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
-!SCNotification categoriesFor: #ch!**compiled accessors**!public! !
-!SCNotification categoriesFor: #character!accessing!public! !
-!SCNotification categoriesFor: #characterSource!**compiled accessors**!public! !
-!SCNotification categoriesFor: #foldLevelNow!**compiled accessors**!public! !
-!SCNotification categoriesFor: #foldLevelPrev!**compiled accessors**!public! !
-!SCNotification categoriesFor: #getValidFields!accessing!private! !
-!SCNotification categoriesFor: #isAltKeyDown!public!testing! !
-!SCNotification categoriesFor: #isSelectionUpdate!public!testing! !
-!SCNotification categoriesFor: #isShiftDown!public!testing! !
-!SCNotification categoriesFor: #length!**compiled accessors**!public! !
-!SCNotification categoriesFor: #line!accessing!public! !
-!SCNotification categoriesFor: #linesAdded!**compiled accessors**!public! !
-!SCNotification categoriesFor: #listCompletionMethod!**compiled accessors**!public! !
-!SCNotification categoriesFor: #listType!**compiled accessors**!public! !
-!SCNotification categoriesFor: #lParam!**compiled accessors**!public! !
-!SCNotification categoriesFor: #margin!**compiled accessors**!public! !
-!SCNotification categoriesFor: #message!**compiled accessors**!public! !
-!SCNotification categoriesFor: #modificationType!**compiled accessors**!public! !
-!SCNotification categoriesFor: #modifiers!**compiled accessors**!public! !
-!SCNotification categoriesFor: #point!accessing!public! !
-!SCNotification categoriesFor: #position!accessing!public! !
-!SCNotification categoriesFor: #scLine!**compiled accessors**!public! !
-!SCNotification categoriesFor: #scPosition!**compiled accessors**!public! !
-!SCNotification categoriesFor: #text!**compiled accessors**!public! !
-!SCNotification categoriesFor: #textString!accessing!public! !
-!SCNotification categoriesFor: #token!**compiled accessors**!public! !
-!SCNotification categoriesFor: #updated!**compiled accessors**!public! !
-!SCNotification categoriesFor: #view:!accessing!private! !
-!SCNotification categoriesFor: #wParam!**compiled accessors**!public! !
-!SCNotification categoriesFor: #x!**compiled accessors**!public! !
-!SCNotification categoriesFor: #y!**compiled accessors**!public! !
+!SCNotification categoriesForMethods!
+annotationLinesAdded!**compiled accessors**!public! !
+ch!**compiled accessors**!public! !
+character!accessing!public! !
+characterSource!**compiled accessors**!public! !
+foldLevelNow!**compiled accessors**!public! !
+foldLevelPrev!**compiled accessors**!public! !
+getValidFields!accessing!private! !
+isAltKeyDown!public!testing! !
+isSelectionUpdate!public!testing! !
+isShiftDown!public!testing! !
+length!**compiled accessors**!public! !
+line!accessing!public! !
+linesAdded!**compiled accessors**!public! !
+listCompletionMethod!**compiled accessors**!public! !
+listType!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+margin!**compiled accessors**!public! !
+message!**compiled accessors**!public! !
+modificationType!**compiled accessors**!public! !
+modifiers!**compiled accessors**!public! !
+point!accessing!public! !
+position!accessing!public! !
+scLine!**compiled accessors**!public! !
+scPosition!**compiled accessors**!public! !
+text!**compiled accessors**!public! !
+textString!accessing!public! !
+token!**compiled accessors**!public! !
+updated!**compiled accessors**!public! !
+view:!accessing!private! !
+wParam!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+!
 
 !SCNotification class methodsFor!
 
@@ -338,6 +340,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !
-!SCNotification class categoriesFor: #defineFields!public!template definition! !
-!SCNotification class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SCNotification class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

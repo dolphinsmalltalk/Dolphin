@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkScanner subclass: #SmalltalkStylingScanner
 	instanceVariableNames: ''
@@ -53,8 +53,10 @@ reportError: anInteger at: posInteger line: lineInteger range: anInterval extras
 	styling/auto-completion remain as useful as possible."
 
 	! !
-!SmalltalkStylingScanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
-!SmalltalkStylingScanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
-!SmalltalkStylingScanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
-!SmalltalkStylingScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
+!SmalltalkStylingScanner categoriesForMethods!
+newFloatToken:precision:exponent:!helpers!private! !
+newIntegerToken:exponent:!helpers!private! !
+newScaledDecimalToken:precision:scale:!helpers!private! !
+reportError:at:line:range:extras:!error handling!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromBitmapInitializerTest
 	instanceVariableNames: ''
@@ -45,8 +45,10 @@ testCreateHandleFreesDC
 	"SW: note comment in GdiplusBitmap class>>fromBitmap: ... not sure if this should succeed"
 	model createHandle.
 	self assertIsNil: bitmap hdc! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #gdipCreateBitmapFromHBITMAP:hpal:bitmap:!accessing!public! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusBitmapFromBitmapInitializerTest categoriesFor: #testCreateHandleFreesDC!public!unit tests! !
+!GdiplusBitmapFromBitmapInitializerTest categoriesForMethods!
+gdipCreateBitmapFromHBITMAP:hpal:bitmap:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+testCreateHandleFreesDC!public!unit tests! !
+!
 

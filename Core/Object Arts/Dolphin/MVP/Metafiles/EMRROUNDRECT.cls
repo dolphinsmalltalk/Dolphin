@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRROUNDRECT
 	instanceVariableNames: ''
@@ -53,10 +53,12 @@ szlCorner: aSIZE
 		from: ##(_OffsetOf_szlCorner + 1)
 		to: ##(_OffsetOf_szlCorner + SIZE basicByteSize)
 		startingAt: 1! !
-!EMRROUNDRECT categoriesFor: #rclBox!**compiled accessors**!public! !
-!EMRROUNDRECT categoriesFor: #rclBox:!**compiled accessors**!public! !
-!EMRROUNDRECT categoriesFor: #szlCorner!**compiled accessors**!public! !
-!EMRROUNDRECT categoriesFor: #szlCorner:!**compiled accessors**!public! !
+!EMRROUNDRECT categoriesForMethods!
+rclBox!**compiled accessors**!public! !
+rclBox:!**compiled accessors**!public! !
+szlCorner!**compiled accessors**!public! !
+szlCorner:!**compiled accessors**!public! !
+!
 
 !EMRROUNDRECT class methodsFor!
 
@@ -90,7 +92,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ROUNDRECT! !
-!EMRROUNDRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRROUNDRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRROUNDRECT class categoriesFor: #iTypes!constants!public! !
+!EMRROUNDRECT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

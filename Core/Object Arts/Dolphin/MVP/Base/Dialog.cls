@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #Dialog
 	instanceVariableNames: 'confirmed ownerView'
@@ -132,23 +132,25 @@ subject
 	"Answer the original model onto which the receiver was created"
 	
 	^self model subject! !
-!Dialog categoriesFor: #answer!accessing!public! !
-!Dialog categoriesFor: #apply!commands!public! !
-!Dialog categoriesFor: #bufferedModelFor:!accessing!private! !
-!Dialog categoriesFor: #cancel!commands!public! !
-!Dialog categoriesFor: #flushChanges!commands!private! !
-!Dialog categoriesFor: #initialize!initializing!private! !
-!Dialog categoriesFor: #isConfirmed!public!testing! !
-!Dialog categoriesFor: #model:!accessing!public! !
-!Dialog categoriesFor: #ok!commands!public! !
-!Dialog categoriesFor: #ownerView!accessing!public! !
-!Dialog categoriesFor: #ownerView:!accessing!not an aspect!private! !
-!Dialog categoriesFor: #revert!commands!public! !
-!Dialog categoriesFor: #show!operations!public! !
-!Dialog categoriesFor: #showModal!public!realizing/unrealizing! !
-!Dialog categoriesFor: #showModalView!private!realizing/unrealizing! !
-!Dialog categoriesFor: #showShell!operations!public! !
-!Dialog categoriesFor: #subject!accessing!public! !
+!Dialog categoriesForMethods!
+answer!accessing!public! !
+apply!commands!public! !
+bufferedModelFor:!accessing!private! !
+cancel!commands!public! !
+flushChanges!commands!private! !
+initialize!initializing!private! !
+isConfirmed!public!testing! !
+model:!accessing!public! !
+ok!commands!public! !
+ownerView!accessing!public! !
+ownerView:!accessing!not an aspect!private! !
+revert!commands!public! !
+show!operations!public! !
+showModal!public!realizing/unrealizing! !
+showModalView!private!realizing/unrealizing! !
+showShell!operations!public! !
+subject!accessing!public! !
+!
 
 Dialog methodProtocol: #dialogPresenter attributes: #(#readOnly) selectors: #(#apply #cancel #caption #caption: #clearCommandHistory #ensureVisible #hasCommandHistory #hasCommandHistory: #ok #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #redo #revert #setFocus #show #topShell #undo #updateCaption #view)!
 
@@ -196,10 +198,12 @@ showModalOn: aModel
 	Answers the result of dialog if confirmed or nil otherwise"
 
 	^(self createOn: aModel) showModal! !
-!Dialog class categoriesFor: #icon!constants!public! !
-!Dialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!Dialog class categoriesFor: #showModal!instance creation!public! !
-!Dialog class categoriesFor: #showModal:!instance creation!public! !
-!Dialog class categoriesFor: #showModal:on:!instance creation!public! !
-!Dialog class categoriesFor: #showModalOn:!instance creation!public! !
+!Dialog class categoriesForMethods!
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+showModal!instance creation!public! !
+showModal:!instance creation!public! !
+showModal:on:!instance creation!public! !
+showModalOn:!instance creation!public! !
+!
 

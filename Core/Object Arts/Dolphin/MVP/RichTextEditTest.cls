@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MultilineTextEditTest subclass: #RichTextEditTest
 	instanceVariableNames: 'savedLocale'
@@ -143,13 +143,15 @@ text
 	"As of v2.0 of the RichEdit control, it strips out CRs internally, and so positions will be out relative to the original text"
 
 	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'! !
-!RichTextEditTest categoriesFor: #classToTest!helpers!private! !
-!RichTextEditTest categoriesFor: #margins!private!unit tests! !
-!RichTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
-!RichTextEditTest categoriesFor: #setUp!private!unit tests! !
-!RichTextEditTest categoriesFor: #tearDown!private!running! !
-!RichTextEditTest categoriesFor: #testCharNearestPosition!public!unit tests! !
-!RichTextEditTest categoriesFor: #testStreamInAnsiText!public!unit tests! !
-!RichTextEditTest categoriesFor: #testStreamInUtfText!public!unit tests! !
-!RichTextEditTest categoriesFor: #text!public! !
+!RichTextEditTest categoriesForMethods!
+classToTest!helpers!private! !
+margins!private!unit tests! !
+nonProportionalFont!constants!private! !
+setUp!private!unit tests! !
+tearDown!private!running! !
+testCharNearestPosition!public!unit tests! !
+testStreamInAnsiText!public!unit tests! !
+testStreamInUtfText!public!unit tests! !
+text!public! !
+!
 

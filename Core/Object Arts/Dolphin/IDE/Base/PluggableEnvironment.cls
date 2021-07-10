@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #PluggableEnvironment
 	instanceVariableNames: ''
@@ -60,15 +60,17 @@ snapshot
 
 storeOn: aStream 
 	self snapshot storeOn: aStream! !
-!PluggableEnvironment categoriesFor: #addMethods:!adding!public! !
-!PluggableEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!PluggableEnvironment categoriesFor: #classesDo:!accessing!public! !
-!PluggableEnvironment categoriesFor: #includesAnyMethodsOf:!private!testing! !
-!PluggableEnvironment categoriesFor: #includesClass:!public!testing! !
-!PluggableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!PluggableEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
-!PluggableEnvironment categoriesFor: #snapshot!accessing!private! !
-!PluggableEnvironment categoriesFor: #storeOn:!printing!public! !
+!PluggableEnvironment categoriesForMethods!
+addMethods:!adding!public! !
+classesAndSelectorsDo:!accessing!public! !
+classesDo:!accessing!public! !
+includesAnyMethodsOf:!private!testing! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+selectorsForClass:do:!enumerating!public! !
+snapshot!accessing!private! !
+storeOn:!printing!public! !
+!
 
 !PluggableEnvironment class methodsFor!
 
@@ -76,5 +78,7 @@ onEnvironment: anEnvironment select: aMonadicValuable
 	^(self onEnvironment: anEnvironment)
 		filter: aMonadicValuable;
 		yourself! !
-!PluggableEnvironment class categoriesFor: #onEnvironment:select:!instance creation!public! !
+!PluggableEnvironment class categoriesForMethods!
+onEnvironment:select:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #PC1Cipher
 	instanceVariableNames: 'key box i j'
@@ -96,16 +96,18 @@ reset
 			j := (key at: x \\ n + 1) + (box at: x + 1) + j bitAnd: 255.
 			box swap: x + 1 with: j + 1].
 	i := j := 0! !
-!PC1Cipher categoriesFor: #advance!ciphering!public! !
-!PC1Cipher categoriesFor: #advance:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipher:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipherByte:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipherBytes:!ciphering!public! !
-!PC1Cipher categoriesFor: #cipherString:!ciphering!public! !
-!PC1Cipher categoriesFor: #key!accessing!initializing!public! !
-!PC1Cipher categoriesFor: #key:!accessing!initializing!private! !
-!PC1Cipher categoriesFor: #postCopy!copying!public! !
-!PC1Cipher categoriesFor: #reset!accessing!initializing!public! !
+!PC1Cipher categoriesForMethods!
+advance!ciphering!public! !
+advance:!ciphering!public! !
+cipher:!ciphering!public! !
+cipherByte:!ciphering!public! !
+cipherBytes:!ciphering!public! !
+cipherString:!ciphering!public! !
+key!accessing!initializing!public! !
+key:!accessing!initializing!private! !
+postCopy!copying!public! !
+reset!accessing!initializing!public! !
+!
 
 !PC1Cipher class methodsFor!
 
@@ -203,14 +205,16 @@ withStrength: bits
 	"Answer an instance of the receiver with <Integer> bits strength"
 
 	^self withKeyInteger: (self generateRandomWithBits: bits)! !
-!PC1Cipher class categoriesFor: #byteArrayFromInteger:!helpers!private! !
-!PC1Cipher class categoriesFor: #churnRandPool!helpers!private! !
-!PC1Cipher class categoriesFor: #example1!examples!public! !
-!PC1Cipher class categoriesFor: #example2!examples!public! !
-!PC1Cipher class categoriesFor: #generateRandomWithBits:!helpers!public! !
-!PC1Cipher class categoriesFor: #randPool!helpers!private! !
-!PC1Cipher class categoriesFor: #withKeyBytes:!instance creation!public! !
-!PC1Cipher class categoriesFor: #withKeyInteger:!instance creation!public! !
-!PC1Cipher class categoriesFor: #withKeyString:!instance creation!public! !
-!PC1Cipher class categoriesFor: #withStrength:!instance creation!public! !
+!PC1Cipher class categoriesForMethods!
+byteArrayFromInteger:!helpers!private! !
+churnRandPool!helpers!private! !
+example1!examples!public! !
+example2!examples!public! !
+generateRandomWithBits:!helpers!public! !
+randPool!helpers!private! !
+withKeyBytes:!instance creation!public! !
+withKeyInteger:!instance creation!public! !
+withKeyString:!instance creation!public! !
+withStrength:!instance creation!public! !
+!
 

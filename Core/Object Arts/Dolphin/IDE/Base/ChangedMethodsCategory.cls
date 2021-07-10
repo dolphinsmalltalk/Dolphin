@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualMethodCategory subclass: #ChangedMethodsCategory
 	instanceVariableNames: ''
@@ -26,8 +26,10 @@ includesMethod: aCompiledMethod
 	The 'All' methods category includes all methods!!"
 
 	^aCompiledMethod isChanged! !
-!ChangedMethodsCategory categoriesFor: #behaviorsDo:!enumerating!private! !
-!ChangedMethodsCategory categoriesFor: #includesMethod:!public!testing! !
+!ChangedMethodsCategory categoriesForMethods!
+behaviorsDo:!enumerating!private! !
+includesMethod:!public!testing! !
+!
 
 !ChangedMethodsCategory class methodsFor!
 
@@ -44,6 +46,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self removePseud: self pseudPrefix , 'changed'! !
-!ChangedMethodsCategory class categoriesFor: #initialize!initializing!private! !
-!ChangedMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ChangedMethodsCategory class categoriesForMethods!
+initialize!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

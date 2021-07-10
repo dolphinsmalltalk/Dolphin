@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ResourceIdentifierTest
 	instanceVariableNames: 'tempViewResource'
@@ -92,11 +92,13 @@ testResourceSelector
 	self assert: (rid class nameFromSelector: selector) equals: rid name.
 	rid := ResourceIdentifier class: self class name: '1Default:view'.
 	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview! !
-!ResourceIdentifierTest categoriesFor: #createResourceNamed:for:on:!private!unit tests! !
-!ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
-!ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testAssignResource!public!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testDeserializeAll!public!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testReferenceViewRemoved!public!unit tests! !
-!ResourceIdentifierTest categoriesFor: #testResourceSelector!public!unit tests! !
+!ResourceIdentifierTest categoriesForMethods!
+createResourceNamed:for:on:!private!unit tests! !
+setUp!private!unit tests! !
+tempViewResource!private!unit tests! !
+testAssignResource!public!unit tests! !
+testDeserializeAll!public!unit tests! !
+testReferenceViewRemoved!public!unit tests! !
+testResourceSelector!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StToken subclass: #StEofToken
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ isEof
 
 length
 	^0! !
-!StEofToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StEofToken categoriesFor: #isEof!public!testing! !
-!StEofToken categoriesFor: #length!accessing!public! !
+!StEofToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isEof!public!testing! !
+length!accessing!public! !
+!
 

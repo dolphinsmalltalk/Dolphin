@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ILImport subclass: #ILImportIcon
 	instanceVariableNames: 'iconDir icons'
@@ -59,14 +59,18 @@ initializeFrom: aStream
 
 proxyClass
 	^ILImportIconProxy! !
-!ILImportIcon categoriesFor: #hotSpotFor:!accessing!public! !
-!ILImportIcon categoriesFor: #images!operations!public! !
-!ILImportIcon categoriesFor: #initializeFrom:!initializing!public! !
-!ILImportIcon categoriesFor: #proxyClass!constants!public! !
+!ILImportIcon categoriesForMethods!
+hotSpotFor:!accessing!public! !
+images!operations!public! !
+initializeFrom:!initializing!public! !
+proxyClass!constants!public! !
+!
 
 !ILImportIcon class methodsFor!
 
 isResponsibleFor: aStream
 	^(aStream next: 3) = #[0 0 1]! !
-!ILImportIcon class categoriesFor: #isResponsibleFor:!public!testing! !
+!ILImportIcon class categoriesForMethods!
+isResponsibleFor:!public!testing! !
+!
 

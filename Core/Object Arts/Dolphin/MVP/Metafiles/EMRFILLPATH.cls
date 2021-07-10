@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRFILLPATH
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
-!EMRFILLPATH categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRFILLPATH categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!EMRFILLPATH categoriesForMethods!
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !EMRFILLPATH class methodsFor!
 
@@ -71,7 +73,9 @@ iTypes
 		with: EMR_FILLPATH
 		with: EMR_STROKEANDFILLPATH
 		with: EMR_STROKEPATH! !
-!EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRFILLPATH class categoriesFor: #iTypes!constants!public! !
+!EMRFILLPATH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

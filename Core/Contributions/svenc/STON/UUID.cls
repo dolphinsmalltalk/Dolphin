@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GUID variableByteSubclass: #UUID
 	instanceVariableNames: ''
@@ -17,6 +17,8 @@ new
 
 nilUUID
 	^self newNull! !
-!UUID class categoriesFor: #new!instance creation!public! !
-!UUID class categoriesFor: #nilUUID!public! !
+!UUID class categoriesForMethods!
+new!instance creation!public! !
+nilUUID!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LocaleTest subclass: #SmalltalkLocaleTest
 	instanceVariableNames: ''
@@ -65,8 +65,10 @@ testPrintFloatSeparators
 		decimalSeparator: $@;
 		thousandSeparator: $^.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'! !
-!SmalltalkLocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!SmalltalkLocaleTest categoriesFor: #testPrintFloat!public! !
-!SmalltalkLocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
-!SmalltalkLocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
+!SmalltalkLocaleTest categoriesForMethods!
+defaultSubject!helpers!private! !
+testPrintFloat!public! !
+testPrintFloatGrouping!public!unit tests! !
+testPrintFloatSeparators!public!unit tests! !
+!
 

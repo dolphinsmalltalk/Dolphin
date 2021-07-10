@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusRegion
 	instanceVariableNames: ''
@@ -110,21 +110,23 @@ xorRegion: aRegion
 	"Update the receiver to the nonintersecting portions of itself and aRegion."
 
 	self combineRegion: aRegion mode: CombineModeXor! !
-!GdiplusRegion categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusRegion categoriesFor: #bounds:!accessing!public! !
-!GdiplusRegion categoriesFor: #clone!copying!public! !
-!GdiplusRegion categoriesFor: #combinePath:mode:!operations!public! !
-!GdiplusRegion categoriesFor: #combineRectangle:mode:!operations!public! !
-!GdiplusRegion categoriesFor: #combineRegion:mode:!operations!public! !
-!GdiplusRegion categoriesFor: #complementPath:!helpers!public! !
-!GdiplusRegion categoriesFor: #complementRegion:!helpers!public! !
-!GdiplusRegion categoriesFor: #intersectRegion:!helpers!public! !
-!GdiplusRegion categoriesFor: #isVisible:!public!testing! !
-!GdiplusRegion categoriesFor: #isVisible:graphics:!public!testing! !
-!GdiplusRegion categoriesFor: #makeEmpty!operations!public! !
-!GdiplusRegion categoriesFor: #makeInfinite!operations!public! !
-!GdiplusRegion categoriesFor: #unionRegion:!helpers!public! !
-!GdiplusRegion categoriesFor: #xorRegion:!helpers!public! !
+!GdiplusRegion categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+bounds:!accessing!public! !
+clone!copying!public! !
+combinePath:mode:!operations!public! !
+combineRectangle:mode:!operations!public! !
+combineRegion:mode:!operations!public! !
+complementPath:!helpers!public! !
+complementRegion:!helpers!public! !
+intersectRegion:!helpers!public! !
+isVisible:!public!testing! !
+isVisible:graphics:!public!testing! !
+makeEmpty!operations!public! !
+makeInfinite!operations!public! !
+unionRegion:!helpers!public! !
+xorRegion:!helpers!public! !
+!
 
 !GdiplusRegion class methodsFor!
 
@@ -248,11 +250,13 @@ new
 	"Answer an instance of the receiver that is infinite."
 
 	^self fromInitializer: GdiplusRegionInitializer default! !
-!GdiplusRegion class categoriesFor: #exampleClippingSimple!examples!private! !
-!GdiplusRegion class categoriesFor: #exampleClippingSimple2!examples!private! !
-!GdiplusRegion class categoriesFor: #exampleGdipRClipWithRegion!examples!public!sunit! !
-!GdiplusRegion class categoriesFor: #exampleGdipRHitTesting!examples!public! !
-!GdiplusRegion class categoriesFor: #fromPath:!instance creation!public! !
-!GdiplusRegion class categoriesFor: #fromRectangle:!instance creation!public! !
-!GdiplusRegion class categoriesFor: #new!instance creation!public! !
+!GdiplusRegion class categoriesForMethods!
+exampleClippingSimple!examples!private! !
+exampleClippingSimple2!examples!private! !
+exampleGdipRClipWithRegion!examples!public!sunit! !
+exampleGdipRHitTesting!examples!public! !
+fromPath:!instance creation!public! !
+fromRectangle:!instance creation!public! !
+new!instance creation!public! !
+!
 

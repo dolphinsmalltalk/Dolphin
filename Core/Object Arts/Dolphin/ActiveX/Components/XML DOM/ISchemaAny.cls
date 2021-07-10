@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaParticle subclass: #ISchemaAny
 	instanceVariableNames: ''
@@ -70,10 +70,12 @@ processContents
 	self get_processContents: answer.
 	^answer asObject
 ! !
-!ISchemaAny categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
-!ISchemaAny categoriesFor: #get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
-!ISchemaAny categoriesFor: #namespaces!**auto generated**!properties!public! !
-!ISchemaAny categoriesFor: #processContents!**auto generated**!properties!public! !
+!ISchemaAny categoriesForMethods!
+get_namespaces:!**auto generated**!COM Interfaces-ISchemaAny!private! !
+get_processContents:!**auto generated**!COM Interfaces-ISchemaAny!private! !
+namespaces!**auto generated**!properties!public! !
+processContents!**auto generated**!properties!public! !
+!
 
 !ISchemaAny class methodsFor!
 
@@ -87,5 +89,7 @@ defineFunctions
 		defineFunction: #get_processContents:
 			argumentTypes: 'sdword*'
 ! !
-!ISchemaAny class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaAny class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

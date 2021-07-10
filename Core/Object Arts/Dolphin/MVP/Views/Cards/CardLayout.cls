@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManager subclass: #CardLayout
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
@@ -212,26 +212,28 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!CardLayout categoriesFor: #arrangementOf:!accessing!public! !
-!CardLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!CardLayout categoriesFor: #cards!accessing!private! !
-!CardLayout categoriesFor: #cardViews!accessing!private! !
-!CardLayout categoriesFor: #currentCard!accessing!public! !
-!CardLayout categoriesFor: #cycleNextCard!operations!public! !
-!CardLayout categoriesFor: #cyclePreviousCard!operations!public! !
-!CardLayout categoriesFor: #firstCard!operations!public! !
-!CardLayout categoriesFor: #getEvents!events!private! !
-!CardLayout categoriesFor: #initialize!initializing!private! !
-!CardLayout categoriesFor: #lastCard!operations!public! !
-!CardLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!CardLayout categoriesFor: #nextCard!operations!public! !
-!CardLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
-!CardLayout categoriesFor: #previousCard!operations!public! !
-!CardLayout categoriesFor: #removeSubView:!public!removing! !
-!CardLayout categoriesFor: #setEvents:!events!private! !
-!CardLayout categoriesFor: #showCard:!operations!public! !
-!CardLayout categoriesFor: #showCardWithArrangement:!operations!public! !
-!CardLayout categoriesFor: #stbSaveOn:!binary filing!public! !
+!CardLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+cards!accessing!private! !
+cardViews!accessing!private! !
+currentCard!accessing!public! !
+cycleNextCard!operations!public! !
+cyclePreviousCard!operations!public! !
+firstCard!operations!public! !
+getEvents!events!private! !
+initialize!initializing!private! !
+lastCard!operations!public! !
+layoutContainer:context:!geometry!private! !
+nextCard!operations!public! !
+preferredLayoutExtentOf:context:!public! !
+previousCard!operations!public! !
+removeSubView:!public!removing! !
+setEvents:!events!private! !
+showCard:!operations!public! !
+showCardWithArrangement:!operations!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !CardLayout class methodsFor!
 
@@ -247,6 +249,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!CardLayout class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!CardLayout class categoriesFor: #stbVersion!binary filing!public! !
+!CardLayout class categoriesForMethods!
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

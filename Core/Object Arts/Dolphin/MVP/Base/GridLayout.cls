@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManager subclass: #GridLayout
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
@@ -149,16 +149,18 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
-!GridLayout categoriesFor: #columns!accessing!public! !
-!GridLayout categoriesFor: #columns:!accessing!public! !
-!GridLayout categoriesFor: #horizontalGap!accessing!public! !
-!GridLayout categoriesFor: #horizontalGap:!accessing!public! !
-!GridLayout categoriesFor: #initialize!initializing!private! !
-!GridLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!GridLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!GridLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!GridLayout categoriesFor: #rows!accessing!public! !
-!GridLayout categoriesFor: #rows:!accessing!public! !
-!GridLayout categoriesFor: #verticalGap!accessing!public! !
-!GridLayout categoriesFor: #verticalGap:!accessing!public! !
+!GridLayout categoriesForMethods!
+columns!accessing!public! !
+columns:!accessing!public! !
+horizontalGap!accessing!public! !
+horizontalGap:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+resolutionScaledBy:!geometry!private! !
+rows!accessing!public! !
+rows:!accessing!public! !
+verticalGap!accessing!public! !
+verticalGap:!accessing!public! !
+!
 

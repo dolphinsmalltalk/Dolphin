@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
@@ -399,50 +399,52 @@ with: otherCollection do: operation
 		operation
 			value: elem
 			value: (otherCollection at: i)]! !
-!SAFEARRAY categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
-!SAFEARRAY categoriesFor: #accessData!helpers!private! !
-!SAFEARRAY categoriesFor: #asObject!converting!public! !
-!SAFEARRAY categoriesFor: #asSAFEARRAY!converting!public! !
-!SAFEARRAY categoriesFor: #asVariant!converting!public! !
-!SAFEARRAY categoriesFor: #base!accessing!private! !
-!SAFEARRAY categoriesFor: #cbElements!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #cDims!**compiled accessors**!private! !
-!SAFEARRAY categoriesFor: #cLocks!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #copy!copying!public! !
-!SAFEARRAY categoriesFor: #data!accessing!public! !
-!SAFEARRAY categoriesFor: #deduceElementClass!helpers!private! !
-!SAFEARRAY categoriesFor: #detach!public!realizing/unrealizing! !
-!SAFEARRAY categoriesFor: #dimensions!accessing!public! !
-!SAFEARRAY categoriesFor: #elementAt:!accessing!public! !
-!SAFEARRAY categoriesFor: #elementAt:put:!accessing!public! !
-!SAFEARRAY categoriesFor: #elementClass!constants!public! !
-!SAFEARRAY categoriesFor: #elementCount!accessing!private! !
-!SAFEARRAY categoriesFor: #elementSize!accessing!public! !
-!SAFEARRAY categoriesFor: #fFeatures!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #free!public!realizing/unrealizing! !
-!SAFEARRAY categoriesFor: #genericRecordClass!constants!private! !
-!SAFEARRAY categoriesFor: #hasRecordInfo!private!testing! !
-!SAFEARRAY categoriesFor: #iid!accessing!public! !
-!SAFEARRAY categoriesFor: #initializePointer!initializing!private! !
-!SAFEARRAY categoriesFor: #length!accessing!public! !
-!SAFEARRAY categoriesFor: #length:!accessing!public! !
-!SAFEARRAY categoriesFor: #lowerBound:!accessing!public! !
-!SAFEARRAY categoriesFor: #newElementAt:!helpers!private! !
-!SAFEARRAY categoriesFor: #onStartup!event handling!private! !
-!SAFEARRAY categoriesFor: #pvData!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #queryRecordInfo!helpers!private! !
-!SAFEARRAY categoriesFor: #recordClass!helpers!private! !
-!SAFEARRAY categoriesFor: #recordInfo!accessing!public! !
-!SAFEARRAY categoriesFor: #redim:!operations!public! !
-!SAFEARRAY categoriesFor: #rgsabound!**compiled accessors**!public! !
-!SAFEARRAY categoriesFor: #sizeOfDimension:!accessing!public! !
-!SAFEARRAY categoriesFor: #start!accessing!private! !
-!SAFEARRAY categoriesFor: #unaccessData!helpers!private! !
-!SAFEARRAY categoriesFor: #uncheckedAt:put:!accessing!private! !
-!SAFEARRAY categoriesFor: #upperBound:!accessing!public! !
-!SAFEARRAY categoriesFor: #vartype!accessing!public! !
-!SAFEARRAY categoriesFor: #vt!constants!public! !
-!SAFEARRAY categoriesFor: #with:do:!enumerating!public! !
+!SAFEARRAY categoriesForMethods!
+_deepenShallowCopy:trail:!copying!private! !
+accessData!helpers!private! !
+asObject!converting!public! !
+asSAFEARRAY!converting!public! !
+asVariant!converting!public! !
+base!accessing!private! !
+cbElements!**compiled accessors**!public! !
+cDims!**compiled accessors**!private! !
+cLocks!**compiled accessors**!public! !
+copy!copying!public! !
+data!accessing!public! !
+deduceElementClass!helpers!private! !
+detach!public!realizing/unrealizing! !
+dimensions!accessing!public! !
+elementAt:!accessing!public! !
+elementAt:put:!accessing!public! !
+elementClass!constants!public! !
+elementCount!accessing!private! !
+elementSize!accessing!public! !
+fFeatures!**compiled accessors**!public! !
+free!public!realizing/unrealizing! !
+genericRecordClass!constants!private! !
+hasRecordInfo!private!testing! !
+iid!accessing!public! !
+initializePointer!initializing!private! !
+length!accessing!public! !
+length:!accessing!public! !
+lowerBound:!accessing!public! !
+newElementAt:!helpers!private! !
+onStartup!event handling!private! !
+pvData!**compiled accessors**!public! !
+queryRecordInfo!helpers!private! !
+recordClass!helpers!private! !
+recordInfo!accessing!public! !
+redim:!operations!public! !
+rgsabound!**compiled accessors**!public! !
+sizeOfDimension:!accessing!public! !
+start!accessing!private! !
+unaccessData!helpers!private! !
+uncheckedAt:put:!accessing!private! !
+upperBound:!accessing!public! !
+vartype!accessing!public! !
+vt!constants!public! !
+with:do:!enumerating!public! !
+!
 
 SAFEARRAY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 
@@ -657,23 +659,25 @@ vt
 	depend on the element type, but it will always include this array modifier."
 
 	^VT_ARRAY! !
-!SAFEARRAY class categoriesFor: #clear:!public!realizing/unrealizing! !
-!SAFEARRAY class categoriesFor: #createVector:vt:extra:!helpers!private! !
-!SAFEARRAY class categoriesFor: #defineFields!public!template definition! !
-!SAFEARRAY class categoriesFor: #elementSize!accessing!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:elementClass:owner:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:owner:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #fromAddress:vt:owner:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #initialize!development!initializing!private! !
-!SAFEARRAY class categoriesFor: #length:elementClass:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:elementSize:!instance creation!private! !
-!SAFEARRAY class categoriesFor: #length:interfaceClass:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:recordClass:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:vt:!instance creation!public! !
-!SAFEARRAY class categoriesFor: #length:vt:elementClass:!instance creation!private! !
-!SAFEARRAY class categoriesFor: #newBuffer!instance creation!public! !
-!SAFEARRAY class categoriesFor: #onStartup!event handling!private! !
-!SAFEARRAY class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SAFEARRAY class categoriesFor: #vt!constants!public! !
+!SAFEARRAY class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+createVector:vt:extra:!helpers!private! !
+defineFields!public!template definition! !
+elementSize!accessing!public! !
+fromAddress:!instance creation!public! !
+fromAddress:elementClass:owner:!instance creation!public! !
+fromAddress:owner:!instance creation!public! !
+fromAddress:vt:owner:!instance creation!public! !
+initialize!development!initializing!private! !
+length:elementClass:!instance creation!public! !
+length:elementSize:!instance creation!private! !
+length:interfaceClass:!instance creation!public! !
+length:recordClass:!instance creation!public! !
+length:vt:!instance creation!public! !
+length:vt:elementClass:!instance creation!private! !
+newBuffer!instance creation!public! !
+onStartup!event handling!private! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

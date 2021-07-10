@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
@@ -188,34 +188,36 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
-!TVITEMW categoriesFor: #allCallbacks!accessing!public! !
-!TVITEMW categoriesFor: #beStateExpandedOnce!accessing!public! !
-!TVITEMW categoriesFor: #cChildren!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cChildren:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
-!TVITEMW categoriesFor: #children:!accessing!public! !
-!TVITEMW categoriesFor: #childrenCallback!accessing!public! !
-!TVITEMW categoriesFor: #dwState!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #getValidFields!accessing!private! !
-!TVITEMW categoriesFor: #handle!accessing!public! !
-!TVITEMW categoriesFor: #hItem!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #hItem:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iImage!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iSelectedImage!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #iSelectedImage:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #isStateExpandedOnce!public!testing! !
-!TVITEMW categoriesFor: #lParam!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #pszText!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #selectedImage:!accessing!public! !
-!TVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
-!TVITEMW categoriesFor: #textPointerOffset!constants!private! !
+!TVITEMW categoriesForMethods!
+allCallbacks!accessing!public! !
+beStateExpandedOnce!accessing!public! !
+cChildren!**compiled accessors**!public! !
+cChildren:!**compiled accessors**!public! !
+cchTextMax!**compiled accessors**!public! !
+cchTextMax:!**compiled accessors**!public! !
+cchTextMaxOffset!constants!private! !
+children:!accessing!public! !
+childrenCallback!accessing!public! !
+dwState!**compiled accessors**!public! !
+dwState:!**compiled accessors**!public! !
+getValidFields!accessing!private! !
+handle!accessing!public! !
+hItem!**compiled accessors**!public! !
+hItem:!**compiled accessors**!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+iSelectedImage!**compiled accessors**!public! !
+iSelectedImage:!**compiled accessors**!public! !
+isStateExpandedOnce!public!testing! !
+lParam!**compiled accessors**!public! !
+lParam:!**compiled accessors**!public! !
+pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+selectedImage:!accessing!public! !
+stateMask!**compiled accessors**!public! !
+stateMask:!**compiled accessors**!public! !
+textPointerOffset!constants!private! !
+!
 
 !TVITEMW class methodsFor!
 
@@ -258,6 +260,8 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
-!TVITEMW class categoriesFor: #defineFields!public!template definition! !
-!TVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TVITEMW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

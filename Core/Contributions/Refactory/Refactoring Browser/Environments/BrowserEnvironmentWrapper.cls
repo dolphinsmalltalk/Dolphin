@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironment subclass: #BrowserEnvironmentWrapper
 	instanceVariableNames: 'environment progressBlock'
@@ -114,23 +114,25 @@ storeOn: aStream
 		nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.
 	aStream nextPut: $)! !
-!BrowserEnvironmentWrapper categoriesFor: #allClasses!enumerating!public! !
-!BrowserEnvironmentWrapper categoriesFor: #allClassesDo:!enumerating!private! !
-!BrowserEnvironmentWrapper categoriesFor: #classesDo:!accessing/classes!public! !
-!BrowserEnvironmentWrapper categoriesFor: #classNames!accessing/classes!public! !
-!BrowserEnvironmentWrapper categoriesFor: #definesClass:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #environment!accessing!private! !
-!BrowserEnvironmentWrapper categoriesFor: #includesCategory:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #includesClass:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #includesProtocol:in:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #includesSelector:in:!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #isEmpty!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #isSystem!public!testing! !
-!BrowserEnvironmentWrapper categoriesFor: #numberSelectors!accessing!public! !
-!BrowserEnvironmentWrapper categoriesFor: #onEnvironment:!initialize/release!public! !
-!BrowserEnvironmentWrapper categoriesFor: #progressBlock!accessing!public! !
-!BrowserEnvironmentWrapper categoriesFor: #progressBlock:!accessing!public! !
-!BrowserEnvironmentWrapper categoriesFor: #storeOn:!printing!public! !
+!BrowserEnvironmentWrapper categoriesForMethods!
+allClasses!enumerating!public! !
+allClassesDo:!enumerating!private! !
+classesDo:!accessing/classes!public! !
+classNames!accessing/classes!public! !
+definesClass:!public!testing! !
+environment!accessing!private! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+isEmpty!public!testing! !
+isSystem!public!testing! !
+numberSelectors!accessing!public! !
+onEnvironment:!initialize/release!public! !
+progressBlock!accessing!public! !
+progressBlock:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !BrowserEnvironmentWrapper class methodsFor!
 
@@ -142,6 +144,8 @@ onEnvironment: anEnvironment
 		initialize;
 		onEnvironment: anEnvironment;
 		yourself! !
-!BrowserEnvironmentWrapper class categoriesFor: #new!instance creation!public! !
-!BrowserEnvironmentWrapper class categoriesFor: #onEnvironment:!instance creation!public! !
+!BrowserEnvironmentWrapper class categoriesForMethods!
+new!instance creation!public! !
+onEnvironment:!instance creation!public! !
+!
 

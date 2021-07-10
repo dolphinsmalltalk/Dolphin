@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXAutomationAspect subclass: #AXRecordAspect
 	instanceVariableNames: ''
@@ -26,7 +26,9 @@ writeInto: subjectObject value: valueObject
 		do: 
 			[:ex | 
 			MessageBox errorMsg: ex description caption: ('Error setting field <1p>' expandMacrosWith: self name)]! !
-!AXRecordAspect categoriesFor: #defaultFlags!initializing!private! !
-!AXRecordAspect categoriesFor: #readFrom:!indirect accessing!public! !
-!AXRecordAspect categoriesFor: #writeInto:value:!indirect accessing!public! !
+!AXRecordAspect categoriesForMethods!
+defaultFlags!initializing!private! !
+readFrom:!indirect accessing!public! !
+writeInto:value:!indirect accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
 	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
@@ -30,9 +30,11 @@ fillPath: aFillPath strokePath: aStrokePath baseCap: aLineCapConstant baseInset:
 
 gdiplusConstructorErrorDescription
 	^'Error creating CustomLineCap'! !
-!GdiplusCustomLineCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusCustomLineCapInitializer categoriesFor: #fillPath:strokePath:baseCap:baseInset:!initializing!private! !
-!GdiplusCustomLineCapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusCustomLineCapInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+fillPath:strokePath:baseCap:baseInset:!initializing!private! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusCustomLineCapInitializer class methodsFor!
 
@@ -42,5 +44,7 @@ fillPath: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset
 		strokePath: strokePath
 		baseCap: baseCap
 		baseInset: baseInset! !
-!GdiplusCustomLineCapInitializer class categoriesFor: #fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
+!GdiplusCustomLineCapInitializer class categoriesForMethods!
+fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
+!
 

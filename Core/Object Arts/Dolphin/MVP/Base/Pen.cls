@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #Pen
 	instanceVariableNames: 'logPen'
@@ -72,17 +72,19 @@ width: anInteger
 	self width = anInteger ifTrue: [^self].
 	logPen width: anInteger.
 	self free! !
-!Pen categoriesFor: #color!accessing!public! !
-!Pen categoriesFor: #color:!accessing!public! !
-!Pen categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Pen categoriesFor: #handle:!accessing!private! !
-!Pen categoriesFor: #logPen:!accessing!private! !
-!Pen categoriesFor: #style!accessing!private! !
-!Pen categoriesFor: #style:!accessing!private! !
-!Pen categoriesFor: #styleName!accessing!public! !
-!Pen categoriesFor: #styleName:!accessing!public! !
-!Pen categoriesFor: #width!accessing!public! !
-!Pen categoriesFor: #width:!accessing!public! !
+!Pen categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+handle:!accessing!private! !
+logPen:!accessing!private! !
+style!accessing!private! !
+style:!accessing!private! !
+styleName!accessing!public! !
+styleName:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !Pen class methodsFor!
 
@@ -183,23 +185,25 @@ withStyleName: aString
 		withStyle: (self styleNames indexOf: aString) - 1
 		width: 0
 		color: Color black! !
-!Pen class categoriesFor: #black!instance creation!public! !
-!Pen class categoriesFor: #blue!instance creation!public! !
-!Pen class categoriesFor: #color:!instance creation!public! !
-!Pen class categoriesFor: #dashDot!instance creation!public! !
-!Pen class categoriesFor: #dashDotDot!instance creation!public! !
-!Pen class categoriesFor: #dashed!instance creation!public! !
-!Pen class categoriesFor: #dotted!instance creation!public! !
-!Pen class categoriesFor: #fromLogPen:!instance creation!public! !
-!Pen class categoriesFor: #green!instance creation!public! !
-!Pen class categoriesFor: #icon!constants!public! !
-!Pen class categoriesFor: #insideFrame!instance creation!public! !
-!Pen class categoriesFor: #newColor:!instance creation!private! !
-!Pen class categoriesFor: #none!instance creation!public! !
-!Pen class categoriesFor: #red!instance creation!public! !
-!Pen class categoriesFor: #solid!instance creation!public! !
-!Pen class categoriesFor: #styleNames!constants!private! !
-!Pen class categoriesFor: #white!instance creation!public! !
-!Pen class categoriesFor: #withStyle:width:color:!instance creation!public! !
-!Pen class categoriesFor: #withStyleName:!public! !
+!Pen class categoriesForMethods!
+black!instance creation!public! !
+blue!instance creation!public! !
+color:!instance creation!public! !
+dashDot!instance creation!public! !
+dashDotDot!instance creation!public! !
+dashed!instance creation!public! !
+dotted!instance creation!public! !
+fromLogPen:!instance creation!public! !
+green!instance creation!public! !
+icon!constants!public! !
+insideFrame!instance creation!public! !
+newColor:!instance creation!private! !
+none!instance creation!public! !
+red!instance creation!public! !
+solid!instance creation!public! !
+styleNames!constants!private! !
+white!instance creation!public! !
+withStyle:width:color:!instance creation!public! !
+withStyleName:!public! !
+!
 

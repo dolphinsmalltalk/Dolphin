@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IClassFactory
 	instanceVariableNames: ''
@@ -51,9 +51,11 @@ LockServer: fLock
 
 	<virtual stdcall: hresult 5 sdword>
 	^self invalidCall: _failureCode! !
-!IClassFactory categoriesFor: #createInstance:iid:!instance creation!public! !
-!IClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
-!IClassFactory categoriesFor: #LockServer:!**auto generated**!public! !
+!IClassFactory categoriesForMethods!
+createInstance:iid:!instance creation!public! !
+CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
+LockServer:!**auto generated**!public! !
+!
 
 !IClassFactory class methodsFor!
 
@@ -83,7 +85,9 @@ defineFunctions
 			argumentTypes: 'IUnknown* GUID* IUnknown**';
 		defineFunction: #LockServer:
 			argumentTypes: 'bool'! !
-!IClassFactory class categoriesFor: #ctxAll!constants!public! !
-!IClassFactory class categoriesFor: #ctxServer!constants!public! !
-!IClassFactory class categoriesFor: #defineFunctions!initializing!public! !
+!IClassFactory class categoriesForMethods!
+ctxAll!constants!public! !
+ctxServer!constants!public! !
+defineFunctions!initializing!public! !
+!
 

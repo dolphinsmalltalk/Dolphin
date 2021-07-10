@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueHolder subclass: #ValueBuffer
 	instanceVariableNames: 'subject modified gate'
@@ -82,16 +82,18 @@ value
 	value otherwise answer that of the subject"
 
 	^modified ifTrue: [super value] ifFalse: [subject value]! !
-!ValueBuffer categoriesFor: #apply!accessing!commands!public! !
-!ValueBuffer categoriesFor: #gate!accessing!public! !
-!ValueBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
-!ValueBuffer categoriesFor: #isModified!public!testing! !
-!ValueBuffer categoriesFor: #isValid!public!testing! !
-!ValueBuffer categoriesFor: #onGateChanged!event handling!private! !
-!ValueBuffer categoriesFor: #setValue:!accessing!private! !
-!ValueBuffer categoriesFor: #subject!initializing!public! !
-!ValueBuffer categoriesFor: #subject:!initializing!private! !
-!ValueBuffer categoriesFor: #value!accessing!public! !
+!ValueBuffer categoriesForMethods!
+apply!accessing!commands!public! !
+gate!accessing!public! !
+gate:!accessing!not an aspect!public! !
+isModified!public!testing! !
+isValid!public!testing! !
+onGateChanged!event handling!private! !
+setValue:!accessing!private! !
+subject!initializing!public! !
+subject:!initializing!private! !
+value!accessing!public! !
+!
 
 !ValueBuffer class methodsFor!
 
@@ -109,7 +111,9 @@ subject: aSubjectValueModel
 	"Answer an instance of the receiver that buffers the value of aSubjectValueModel."
 
 	^super new subject: aSubjectValueModel! !
-!ValueBuffer class categoriesFor: #icon!constants!public! !
-!ValueBuffer class categoriesFor: #new!instance creation!private! !
-!ValueBuffer class categoriesFor: #subject:!instance creation!public! !
+!ValueBuffer class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!private! !
+subject:!instance creation!public! !
+!
 

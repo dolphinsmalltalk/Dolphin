@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #CommonDialogStructure
 	instanceVariableNames: ''
@@ -31,10 +31,12 @@ lpfnHook: anExternalAddress
 
 maskIn: anInteger 
 	self flags: (self flags maskSet: anInteger)! !
-!CommonDialogStructure categoriesFor: #flags!accessing!public! !
-!CommonDialogStructure categoriesFor: #flags:!accessing!public! !
-!CommonDialogStructure categoriesFor: #hook:!accessing!public! !
-!CommonDialogStructure categoriesFor: #hookFlag!constants!public! !
-!CommonDialogStructure categoriesFor: #lpfnHook:!public! !
-!CommonDialogStructure categoriesFor: #maskIn:!accessing!public! !
+!CommonDialogStructure categoriesForMethods!
+flags!accessing!public! !
+flags:!accessing!public! !
+hook:!accessing!public! !
+hookFlag!constants!public! !
+lpfnHook:!public! !
+maskIn:!accessing!public! !
+!
 

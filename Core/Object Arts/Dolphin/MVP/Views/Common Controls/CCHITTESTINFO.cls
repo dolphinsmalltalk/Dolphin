@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #CCHITTESTINFO
 	instanceVariableNames: ''
@@ -36,10 +36,12 @@ pt: aPOINTL
 		from: ##(_OffsetOf_pt + 1)
 		to: ##(_OffsetOf_pt + POINTL basicByteSize)
 		startingAt: 1! !
-!CCHITTESTINFO categoriesFor: #flags!**compiled accessors**!public! !
-!CCHITTESTINFO categoriesFor: #handle!accessing!private! !
-!CCHITTESTINFO categoriesFor: #isItemHit!public!testing! !
-!CCHITTESTINFO categoriesFor: #pt:!**compiled accessors**!public! !
+!CCHITTESTINFO categoriesForMethods!
+flags!**compiled accessors**!public! !
+handle!accessing!private! !
+isItemHit!public!testing! !
+pt:!**compiled accessors**!public! !
+!
 
 !CCHITTESTINFO class methodsFor!
 
@@ -55,6 +57,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags)! !
-!CCHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
-!CCHITTESTINFO class categoriesFor: #getFieldNames!constants!private! !
+!CCHITTESTINFO class categoriesForMethods!
+defineFields!development!public!template definition! !
+getFieldNames!constants!private! !
+!
 

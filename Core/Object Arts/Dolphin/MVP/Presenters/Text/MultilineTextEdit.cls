@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TextEdit subclass: #MultilineTextEdit
 	instanceVariableNames: ''
@@ -351,45 +351,47 @@ wordWrap: aBoolean
 	<boolean> argument. This is a synonym for #canHScroll:, except that its effect is reversed."
 
 	self canHScroll: aBoolean not! !
-!MultilineTextEdit categoriesFor: #calculateExtent:!geometry!private! !
-!MultilineTextEdit categoriesFor: #canHScroll!public!testing! !
-!MultilineTextEdit categoriesFor: #canHScroll:!accessing-styles!public! !
-!MultilineTextEdit categoriesFor: #canVScroll!public!testing! !
-!MultilineTextEdit categoriesFor: #canVScroll:!accessing-styles!public! !
-!MultilineTextEdit categoriesFor: #copyLine!clipboard operations!commands!public! !
-!MultilineTextEdit categoriesFor: #copySelectionOrLine!clipboard operations!commands!public! !
-!MultilineTextEdit categoriesFor: #currentLine!public!selection! !
-!MultilineTextEdit categoriesFor: #cutLine!clipboard operations!commands!public! !
-!MultilineTextEdit categoriesFor: #defaultExtent!constants!private! !
-!MultilineTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!MultilineTextEdit categoriesFor: #deleteLine!commands!public! !
-!MultilineTextEdit categoriesFor: #displayOnFormats!displaying!private! !
-!MultilineTextEdit categoriesFor: #displayOnText!displaying!private! !
-!MultilineTextEdit categoriesFor: #dlgCode!constants!private! !
-!MultilineTextEdit categoriesFor: #duplicateLine!commands!public! !
-!MultilineTextEdit categoriesFor: #duplicateSelection!commands!public! !
-!MultilineTextEdit categoriesFor: #goto:!caret!public! !
-!MultilineTextEdit categoriesFor: #gotoLine:!caret!commands!public! !
-!MultilineTextEdit categoriesFor: #initialize!initializing!private! !
-!MultilineTextEdit categoriesFor: #insertText:at:!public!text retrieval & modification! !
-!MultilineTextEdit categoriesFor: #lineCount!accessing!public! !
-!MultilineTextEdit categoriesFor: #lineHeight:!public! !
-!MultilineTextEdit categoriesFor: #lineLength:!accessing!public! !
-!MultilineTextEdit categoriesFor: #queryCommand:!commands!private! !
-!MultilineTextEdit categoriesFor: #resetCharFormat!operations!public! !
-!MultilineTextEdit categoriesFor: #selectCurrentLine!public!selection! !
-!MultilineTextEdit categoriesFor: #selectLine:!public!selection! !
-!MultilineTextEdit categoriesFor: #selectLineAndTerminator:!public!selection! !
-!MultilineTextEdit categoriesFor: #setTabStops:!operations!private! !
-!MultilineTextEdit categoriesFor: #showVerticalScrollBar:!accessing-styles!private! !
-!MultilineTextEdit categoriesFor: #tabFocus!private!tabbing! !
-!MultilineTextEdit categoriesFor: #tabWidth:!accessing!public! !
-!MultilineTextEdit categoriesFor: #textAtLine:!accessing!private! !
-!MultilineTextEdit categoriesFor: #toggleWordWrap!commands!public! !
-!MultilineTextEdit categoriesFor: #wmKeyDown:wParam:lParam:!event handling-win32!private! !
-!MultilineTextEdit categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
-!MultilineTextEdit categoriesFor: #wordWrap!accessing-styles!public! !
-!MultilineTextEdit categoriesFor: #wordWrap:!accessing-styles!public! !
+!MultilineTextEdit categoriesForMethods!
+calculateExtent:!geometry!private! !
+canHScroll!public!testing! !
+canHScroll:!accessing-styles!public! !
+canVScroll!public!testing! !
+canVScroll:!accessing-styles!public! !
+copyLine!clipboard operations!commands!public! !
+copySelectionOrLine!clipboard operations!commands!public! !
+currentLine!public!selection! !
+cutLine!clipboard operations!commands!public! !
+defaultExtent!constants!private! !
+defaultWindowStyle!constants!private! !
+deleteLine!commands!public! !
+displayOnFormats!displaying!private! !
+displayOnText!displaying!private! !
+dlgCode!constants!private! !
+duplicateLine!commands!public! !
+duplicateSelection!commands!public! !
+goto:!caret!public! !
+gotoLine:!caret!commands!public! !
+initialize!initializing!private! !
+insertText:at:!public!text retrieval & modification! !
+lineCount!accessing!public! !
+lineHeight:!public! !
+lineLength:!accessing!public! !
+queryCommand:!commands!private! !
+resetCharFormat!operations!public! !
+selectCurrentLine!public!selection! !
+selectLine:!public!selection! !
+selectLineAndTerminator:!public!selection! !
+setTabStops:!operations!private! !
+showVerticalScrollBar:!accessing-styles!private! !
+tabFocus!private!tabbing! !
+tabWidth:!accessing!public! !
+textAtLine:!accessing!private! !
+toggleWordWrap!commands!public! !
+wmKeyDown:wParam:lParam:!event handling-win32!private! !
+wmKeyUp:wParam:lParam:!event handling-win32!private! !
+wordWrap!accessing-styles!public! !
+wordWrap:!accessing-styles!public! !
+!
 
 !MultilineTextEdit class methodsFor!
 
@@ -397,5 +399,7 @@ maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
 
 	^16rFFFFFFFF! !
-!MultilineTextEdit class categoriesFor: #maxTextLimit!constants!private! !
+!MultilineTextEdit class categoriesForMethods!
+maxTextLimit!constants!private! !
+!
 

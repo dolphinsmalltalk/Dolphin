@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #TrustedDataError
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ _descriptionFormat
 
 	^'It was not possible to decode some trusted signed data. The data is either corrupt or has been tampered with.'
 ! !
-!TrustedDataError categoriesFor: #_descriptionFormat!displaying!public! !
+!TrustedDataError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

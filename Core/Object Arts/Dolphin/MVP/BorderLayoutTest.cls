@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManagerTest subclass: #BorderLayoutTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ BorderLayoutTest comment: ''!
 
 layoutManagerClass
 	^BorderLayout! !
-!BorderLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
+!BorderLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+!
 

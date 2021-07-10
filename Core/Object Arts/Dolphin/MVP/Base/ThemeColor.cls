@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualColor subclass: #ThemeColor
 	instanceVariableNames: 'name actualColor'
@@ -66,13 +66,15 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler writePreambleFor: self.
 	anSTBOutFiler nextPut: self name! !
-!ThemeColor categoriesFor: #actualColor!accessing!public! !
-!ThemeColor categoriesFor: #actualColor:!accessing!public! !
-!ThemeColor categoriesFor: #name!printing!public! !
-!ThemeColor categoriesFor: #printOn:!printing!public! !
-!ThemeColor categoriesFor: #setName:actualColor:!initializing!private! !
-!ThemeColor categoriesFor: #shallowCopy!copying!public! !
-!ThemeColor categoriesFor: #stbSaveOn:!binary filing!public! !
+!ThemeColor categoriesForMethods!
+actualColor!accessing!public! !
+actualColor:!accessing!public! !
+name!printing!public! !
+printOn:!printing!public! !
+setName:actualColor:!initializing!private! !
+shallowCopy!copying!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !ThemeColor class methodsFor!
 
@@ -103,9 +105,11 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 uninitialize
 	NamedColors
 		removeAllKeys: ((NamedColors select: [:each | each isKindOf: self]) collect: [:each | each name])! !
-!ThemeColor class categoriesFor: #addNamed:color:!instance creation!named colors!public! !
-!ThemeColor class categoriesFor: #initialize!class initialization!development!public! !
-!ThemeColor class categoriesFor: #name:actualColor:!instance creation!public! !
-!ThemeColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ThemeColor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ThemeColor class categoriesForMethods!
+addNamed:color:!instance creation!named colors!public! !
+initialize!class initialization!development!public! !
+name:actualColor:!instance creation!public! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXDispatchImpAbstract subclass: #AXEventSink
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'
@@ -176,24 +176,26 @@ triggerIndividualEvents: aBoolean
 	its target on receipt of events from the COM event source. By default this is on."
 
 	flags := flags mask: NoIndividualEventsMask set: aBoolean not! !
-!AXEventSink categoriesFor: #connect:!operations!public! !
-!AXEventSink categoriesFor: #disconnect!operations!public! !
-!AXEventSink categoriesFor: #eventNames!events!public! !
-!AXEventSink categoriesFor: #handleEvent:withArguments:!event handling!public! !
-!AXEventSink categoriesFor: #invokeId:flags:withArguments:!operations!public! !
-!AXEventSink categoriesFor: #isTracingEnabled!event handling!private! !
-!AXEventSink categoriesFor: #isTracingEnabled:!event handling!private! !
-!AXEventSink categoriesFor: #printOn:!development!printing!public! !
-!AXEventSink categoriesFor: #publishedEventNames!events!public! !
-!AXEventSink categoriesFor: #setTarget:sourceTypeInfo:!initializing!private! !
-!AXEventSink categoriesFor: #sourceTypeInfo!accessing!public! !
-!AXEventSink categoriesFor: #target!accessing!public! !
-!AXEventSink categoriesFor: #target:!accessing!public! !
-!AXEventSink categoriesFor: #traceEvent:withArguments:!event handling!private! !
-!AXEventSink categoriesFor: #triggerGenericEvent!accessing!public! !
-!AXEventSink categoriesFor: #triggerGenericEvent:!accessing!public! !
-!AXEventSink categoriesFor: #triggerIndividualEvents!accessing!public! !
-!AXEventSink categoriesFor: #triggerIndividualEvents:!accessing!public! !
+!AXEventSink categoriesForMethods!
+connect:!operations!public! !
+disconnect!operations!public! !
+eventNames!events!public! !
+handleEvent:withArguments:!event handling!public! !
+invokeId:flags:withArguments:!operations!public! !
+isTracingEnabled!event handling!private! !
+isTracingEnabled:!event handling!private! !
+printOn:!development!printing!public! !
+publishedEventNames!events!public! !
+setTarget:sourceTypeInfo:!initializing!private! !
+sourceTypeInfo!accessing!public! !
+target!accessing!public! !
+target:!accessing!public! !
+traceEvent:withArguments:!event handling!private! !
+triggerGenericEvent!accessing!public! !
+triggerGenericEvent:!accessing!public! !
+triggerIndividualEvents!accessing!public! !
+triggerIndividualEvents:!accessing!public! !
+!
 
 !AXEventSink class methodsFor!
 
@@ -220,7 +222,9 @@ target: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer
 	to which this sink is connected invokes the methods."
 
 	^super new setTarget: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer! !
-!AXEventSink class categoriesFor: #initialize!development!initializing!private! !
-!AXEventSink class categoriesFor: #new!instance creation!public! !
-!AXEventSink class categoriesFor: #target:sourceTypeInfo:!instance creation!public! !
+!AXEventSink class categoriesForMethods!
+initialize!development!initializing!private! !
+new!instance creation!public! !
+target:sourceTypeInfo:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StVariable subclass: #StInstanceVariable
 	instanceVariableNames: 'index name'
@@ -36,14 +36,18 @@ setIndex: anInteger name: aString
 	index := anInteger.
 	name := aString.
 	self initialize! !
-!StInstanceVariable categoriesFor: #index!accessing!public! !
-!StInstanceVariable categoriesFor: #isInstanceVariable!public!testing! !
-!StInstanceVariable categoriesFor: #name!accessing!public! !
-!StInstanceVariable categoriesFor: #setIndex:name:!initializing!private! !
+!StInstanceVariable categoriesForMethods!
+index!accessing!public! !
+isInstanceVariable!public!testing! !
+name!accessing!public! !
+setIndex:name:!initializing!private! !
+!
 
 !StInstanceVariable class methodsFor!
 
 index: anInteger name: aString
 	^self new setIndex: anInteger name: aString! !
-!StInstanceVariable class categoriesFor: #index:name:!public! !
+!StInstanceVariable class categoriesForMethods!
+index:name:!public! !
+!
 

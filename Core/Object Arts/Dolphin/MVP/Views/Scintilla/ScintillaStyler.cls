@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaStyler
 	instanceVariableNames: ''
@@ -93,13 +93,15 @@ stylingStartBefore: startInteger in: aScintillaView
 			[prev > 0 and: [(aScintillaView styleIdAt: prev) == id]] whileTrue: [prev := prev - 1].
 			[prev == 0 or: [(aScintillaView styleIdAt: prev) == id]] whileFalse: [prev := prev - 1]].
 	^prev + 1! !
-!ScintillaStyler categoriesFor: #blockSize!constants!private! !
-!ScintillaStyler categoriesFor: #colorText:in:startingAt:!operations!private! !
-!ScintillaStyler categoriesFor: #colorTextFrom:to:in:!event handling!public! !
-!ScintillaStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
-!ScintillaStyler categoriesFor: #prepareToStyleView:!initializing!public! !
-!ScintillaStyler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
-!ScintillaStyler categoriesFor: #stylingStartBefore:in:!event handling!public! !
+!ScintillaStyler categoriesForMethods!
+blockSize!constants!private! !
+colorText:in:startingAt:!operations!private! !
+colorTextFrom:to:in:!event handling!public! !
+onStyleNeeded:from:to:!event handling!public! !
+prepareToStyleView:!initializing!public! !
+resetStylingIn:from:to:!helpers!private! !
+stylingStartBefore:in:!event handling!public! !
+!
 
 !ScintillaStyler class methodsFor!
 
@@ -108,6 +110,8 @@ icon
 
 new
 	^super new initialize! !
-!ScintillaStyler class categoriesFor: #icon!constants!development!public! !
-!ScintillaStyler class categoriesFor: #new!instance creation!public! !
+!ScintillaStyler class categoriesForMethods!
+icon!constants!development!public! !
+new!instance creation!public! !
+!
 

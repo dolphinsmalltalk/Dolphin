@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
@@ -76,17 +76,19 @@ save: anObject as: aResourceClass
 	"Save out anObject in the format dictated by aResourceClass."
 
 	^self subclassResponsibility! !
-!ResourceAccessor categoriesFor: #asInternalAccessor!converting!private! !
-!ResourceAccessor categoriesFor: #canSave!public!testing! !
-!ResourceAccessor categoriesFor: #hiddenObjects!image stripping!private! !
-!ResourceAccessor categoriesFor: #initialize!operations!private! !
-!ResourceAccessor categoriesFor: #isChanged!public!testing! !
-!ResourceAccessor categoriesFor: #isChanged:!accessing!private! !
-!ResourceAccessor categoriesFor: #isInternalAccessor!public!testing! !
-!ResourceAccessor categoriesFor: #loadWithContext:forEdit:!operations!public! !
-!ResourceAccessor categoriesFor: #makeByteArrayClass:usingContext:!converting!private! !
-!ResourceAccessor categoriesFor: #makeFile:class:usingContext:!converting!private! !
-!ResourceAccessor categoriesFor: #save:as:!operations!public! !
+!ResourceAccessor categoriesForMethods!
+asInternalAccessor!converting!private! !
+canSave!public!testing! !
+hiddenObjects!image stripping!private! !
+initialize!operations!private! !
+isChanged!public!testing! !
+isChanged:!accessing!private! !
+isInternalAccessor!public!testing! !
+loadWithContext:forEdit:!operations!public! !
+makeByteArrayClass:usingContext:!converting!private! !
+makeFile:class:usingContext:!converting!private! !
+save:as:!operations!public! !
+!
 
 !ResourceAccessor class methodsFor!
 
@@ -146,10 +148,12 @@ stbConvertFromVersion0: version0Array
 		nextPutAll: version0Array;
 		contents
 ! !
-!ResourceAccessor class categoriesFor: #ensureAccessorsAreInternal!operations!private! !
-!ResourceAccessor class categoriesFor: #icon!constants!development!public! !
-!ResourceAccessor class categoriesFor: #initialize!development!initializing!private! !
-!ResourceAccessor class categoriesFor: #new!instance creation!public! !
-!ResourceAccessor class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ResourceAccessor class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
+!ResourceAccessor class categoriesForMethods!
+ensureAccessorsAreInternal!operations!private! !
+icon!constants!development!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+!
 

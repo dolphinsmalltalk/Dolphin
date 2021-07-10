@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 XMLNodeWithEntities subclass: #XMLElement
 	instanceVariableNames: 'name contents attributes'
@@ -135,33 +135,35 @@ valueFor: aSymbol
 
 valueFor: aSymbol ifAbsent: aBlock 
 	^self attributes at: aSymbol ifAbsent: aBlock! !
-!XMLElement categoriesFor: #addContent:!initialize!public! !
-!XMLElement categoriesFor: #attributeAt:!accessing!public! !
-!XMLElement categoriesFor: #attributeAt:ifAbsent:!accessing!public! !
-!XMLElement categoriesFor: #attributeAt:put:!accessing!public! !
-!XMLElement categoriesFor: #attributes!accessing!public! !
-!XMLElement categoriesFor: #characterData!accessing!public! !
-!XMLElement categoriesFor: #contents!accessing!public! !
-!XMLElement categoriesFor: #contentsDo:!enumerating!public! !
-!XMLElement categoriesFor: #contentString!accessing!public! !
-!XMLElement categoriesFor: #contentStringAt:!accessing!public! !
-!XMLElement categoriesFor: #elements!accessing!public! !
-!XMLElement categoriesFor: #firstTagNamed:!public!searching! !
-!XMLElement categoriesFor: #firstTagNamed:with:!public!searching! !
-!XMLElement categoriesFor: #isEmpty!public!testing! !
-!XMLElement categoriesFor: #isTag!public!testing! !
-!XMLElement categoriesFor: #name!accessing!public! !
-!XMLElement categoriesFor: #name:!initialize!public! !
-!XMLElement categoriesFor: #printXMLOn:!printing!public! !
-!XMLElement categoriesFor: #setAttributes:!initialize!public! !
-!XMLElement categoriesFor: #tag!accessing!public! !
-!XMLElement categoriesFor: #tagsNamed:contentsDo:!public!searching! !
-!XMLElement categoriesFor: #tagsNamed:do:!public!searching! !
-!XMLElement categoriesFor: #tagsNamed:ifReceiverDo:!public!searching! !
-!XMLElement categoriesFor: #tagsNamed:ifReceiverDoAndRecurse:!public!searching! !
-!XMLElement categoriesFor: #tagsNamed:ifReceiverOrChildDo:!public!searching! !
-!XMLElement categoriesFor: #valueFor:!accessing!public! !
-!XMLElement categoriesFor: #valueFor:ifAbsent:!accessing!public! !
+!XMLElement categoriesForMethods!
+addContent:!initialize!public! !
+attributeAt:!accessing!public! !
+attributeAt:ifAbsent:!accessing!public! !
+attributeAt:put:!accessing!public! !
+attributes!accessing!public! !
+characterData!accessing!public! !
+contents!accessing!public! !
+contentsDo:!enumerating!public! !
+contentString!accessing!public! !
+contentStringAt:!accessing!public! !
+elements!accessing!public! !
+firstTagNamed:!public!searching! !
+firstTagNamed:with:!public!searching! !
+isEmpty!public!testing! !
+isTag!public!testing! !
+name!accessing!public! !
+name:!initialize!public! !
+printXMLOn:!printing!public! !
+setAttributes:!initialize!public! !
+tag!accessing!public! !
+tagsNamed:contentsDo:!public!searching! !
+tagsNamed:do:!public!searching! !
+tagsNamed:ifReceiverDo:!public!searching! !
+tagsNamed:ifReceiverDoAndRecurse:!public!searching! !
+tagsNamed:ifReceiverOrChildDo:!public!searching! !
+valueFor:!accessing!public! !
+valueFor:ifAbsent:!accessing!public! !
+!
 
 !XMLElement class methodsFor!
 
@@ -172,6 +174,8 @@ named: aString attributes: attributeList
 	^self new
 		name: aString;
 		setAttributes: attributeList! !
-!XMLElement class categoriesFor: #named:!instance creation!public! !
-!XMLElement class categoriesFor: #named:attributes:!instance creation!public! !
+!XMLElement class categoriesForMethods!
+named:!instance creation!public! !
+named:attributes:!instance creation!public! !
+!
 

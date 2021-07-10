@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SecureHashAlgorithmTest
 	instanceVariableNames: 'hash'
@@ -32,7 +32,9 @@ testExample3
 
 	hash := SecureHashAlgorithm new hashMessage: (String new: 1000000 withAll: $a).
 	self assert: hash equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F! !
-!SecureHashAlgorithmTest categoriesFor: #testExample1!public!testing / examples! !
-!SecureHashAlgorithmTest categoriesFor: #testExample2!public!testing / examples! !
-!SecureHashAlgorithmTest categoriesFor: #testExample3!public!testing / examples! !
+!SecureHashAlgorithmTest categoriesForMethods!
+testExample1!public!testing / examples! !
+testExample2!public!testing / examples! !
+testExample3!public!testing / examples! !
+!
 

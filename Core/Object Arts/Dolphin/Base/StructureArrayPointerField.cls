@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayPointerField subclass: #StructureArrayPointerField
 	instanceVariableNames: ''
@@ -31,7 +31,9 @@ readFrom: anExternalStructure
 		fromAddress: (anExternalStructure bytes sdwordAtOffset: offset)
 		length: (arrayLength getElementCountOf: self in: anExternalStructure)
 		elementClass: self elementClass! !
-!StructureArrayPointerField categoriesFor: #elementClass!accessing!private! !
-!StructureArrayPointerField categoriesFor: #pointerClass!accessing!private! !
-!StructureArrayPointerField categoriesFor: #readFrom:!accessing!private! !
+!StructureArrayPointerField categoriesForMethods!
+elementClass!accessing!private! !
+pointerClass!accessing!private! !
+readFrom:!accessing!private! !
+!
 

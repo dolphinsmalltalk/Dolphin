@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #Association
 	instanceVariableNames: 'key value'
@@ -93,20 +93,22 @@ value: aValue
 
 	value := aValue
 ! !
-!Association categoriesFor: #<!comparing!public! !
-!Association categoriesFor: #<=!comparing!public! !
-!Association categoriesFor: #=!comparing!public! !
-!Association categoriesFor: #displayOn:!printing!public! !
-!Association categoriesFor: #hash!comparing!public! !
-!Association categoriesFor: #key!accessing!public! !
-!Association categoriesFor: #key:!initializing!public! !
-!Association categoriesFor: #key:value:!initializing!public! !
-!Association categoriesFor: #owningPackage:!accessing!development!public! !
-!Association categoriesFor: #printOn:!printing!public! !
-!Association categoriesFor: #setKey:!accessing!public! !
-!Association categoriesFor: #setValue:!accessing!public! !
-!Association categoriesFor: #value!accessing!public! !
-!Association categoriesFor: #value:!accessing!public! !
+!Association categoriesForMethods!
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+key!accessing!public! !
+key:!initializing!public! !
+key:value:!initializing!public! !
+owningPackage:!accessing!development!public! !
+printOn:!printing!public! !
+setKey:!accessing!public! !
+setValue:!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 Association methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -118,5 +120,7 @@ key: aKey value: aValue
 
 	<primitive: 157>
 	^self new key: aKey value: aValue! !
-!Association class categoriesFor: #key:value:!instance creation!public! !
+!Association class categoriesForMethods!
+key:value:!instance creation!public! !
+!
 

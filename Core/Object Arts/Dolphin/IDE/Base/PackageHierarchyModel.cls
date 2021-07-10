@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FolderHierarchyModel subclass: #PackageHierarchyModel
 	instanceVariableNames: ''
@@ -39,9 +39,11 @@ refresh
 
 	self reset.
 	self buildTree! !
-!PackageHierarchyModel categoriesFor: #addPackage:!adding!private! !
-!PackageHierarchyModel categoriesFor: #buildTree!private!updating! !
-!PackageHierarchyModel categoriesFor: #folderClass!constants!private! !
-!PackageHierarchyModel categoriesFor: #initialize!initializing!public! !
-!PackageHierarchyModel categoriesFor: #refresh!private!updating! !
+!PackageHierarchyModel categoriesForMethods!
+addPackage:!adding!private! !
+buildTree!private!updating! !
+folderClass!constants!private! !
+initialize!initializing!public! !
+refresh!private!updating! !
+!
 

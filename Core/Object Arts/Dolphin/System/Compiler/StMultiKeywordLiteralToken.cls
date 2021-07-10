@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLiteralToken subclass: #StMultiKeywordLiteralToken
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ StMultiKeywordLiteralToken comment: ''!
 
 isMultiKeyword
 	^true! !
-!StMultiKeywordLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
+!StMultiKeywordLiteralToken categoriesForMethods!
+isMultiKeyword!public!testing! !
+!
 

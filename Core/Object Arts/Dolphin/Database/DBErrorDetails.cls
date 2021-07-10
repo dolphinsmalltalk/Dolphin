@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBErrorDetails
 	instanceVariableNames: 'msg nativeErr sqlState origin'
@@ -54,13 +54,15 @@ sqlState: aString
 	"Private - Set the sqlState instance variable to aString."
 
 	sqlState := aString! !
-!DBErrorDetails categoriesFor: #messageText!accessing!public! !
-!DBErrorDetails categoriesFor: #msg!accessing!public! !
-!DBErrorDetails categoriesFor: #msg:!accessing!private! !
-!DBErrorDetails categoriesFor: #nativeErr:!accessing!private! !
-!DBErrorDetails categoriesFor: #origin:!accessing!private! !
-!DBErrorDetails categoriesFor: #sqlState!accessing!public! !
-!DBErrorDetails categoriesFor: #sqlState:!accessing!private! !
+!DBErrorDetails categoriesForMethods!
+messageText!accessing!public! !
+msg!accessing!public! !
+msg:!accessing!private! !
+nativeErr:!accessing!private! !
+origin:!accessing!private! !
+sqlState!accessing!public! !
+sqlState:!accessing!private! !
+!
 
 !DBErrorDetails class methodsFor!
 
@@ -74,5 +76,7 @@ fromSQLError: errorString
 		msg: errorString;
 		origin: (errorString copyFrom: 1 to: lastBrkt);
 		yourself! !
-!DBErrorDetails class categoriesFor: #fromSQLError:!instance creation!public! !
+!DBErrorDetails class categoriesForMethods!
+fromSQLError:!instance creation!public! !
+!
 

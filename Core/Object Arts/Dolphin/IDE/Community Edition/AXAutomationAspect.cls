@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Aspect subclass: #AXAutomationAspect
 	instanceVariableNames: ''
@@ -15,6 +15,8 @@ canReadFrom: anObject
 
 canWriteInto: anObject
 	^self isWriteable! !
-!AXAutomationAspect categoriesFor: #canReadFrom:!public!testing! !
-!AXAutomationAspect categoriesFor: #canWriteInto:!public!testing! !
+!AXAutomationAspect categoriesForMethods!
+canReadFrom:!public!testing! !
+canWriteInto:!public!testing! !
+!
 

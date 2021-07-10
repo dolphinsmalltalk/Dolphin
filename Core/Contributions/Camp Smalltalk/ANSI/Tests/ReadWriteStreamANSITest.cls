@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #ReadWriteStreamANSITest
 	instanceVariableNames: 'readWriteStream'
@@ -19,9 +19,11 @@ protocol
 setUp
 	super setUp.
 	readWriteStream := ReadWriteStream with: 'this is a string'! !
-!ReadWriteStreamANSITest categoriesFor: #canonicalObject!public! !
-!ReadWriteStreamANSITest categoriesFor: #protocol!public! !
-!ReadWriteStreamANSITest categoriesFor: #setUp!public! !
+!ReadWriteStreamANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+!
 
 !ReadWriteStreamANSITest class methodsFor!
 
@@ -29,5 +31,7 @@ helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: ReadStreamHelper.
 	aBlock value: WriteStreamHelper! !
-!ReadWriteStreamANSITest class categoriesFor: #helperClassesDo:!public! !
+!ReadWriteStreamANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

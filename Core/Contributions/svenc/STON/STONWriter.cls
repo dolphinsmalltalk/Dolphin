@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONWriter
 	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly jsonMode keepNewLines referencePolicy level objects'
@@ -422,59 +422,61 @@ writeSymbol: symbol
 					writeStream nextPutAll: symbol ]
 				ifFalse: [
 					self encodeString: symbol ] ]! !
-!STONWriter categoriesFor: #asciiOnly:!initialize/release!public! !
-!STONWriter categoriesFor: #close!initialize/release!public! !
-!STONWriter categoriesFor: #encodeCharacter:!private! !
-!STONWriter categoriesFor: #encodeKey:value:!private! !
-!STONWriter categoriesFor: #encodeList:!public!writing! !
-!STONWriter categoriesFor: #encodeMap:!public!writing! !
-!STONWriter categoriesFor: #encodeString:!private! !
-!STONWriter categoriesFor: #encodeStringKeepingNewLines:!private! !
-!STONWriter categoriesFor: #error:!error handling!public! !
-!STONWriter categoriesFor: #escape:with:!initialize/release!public! !
-!STONWriter categoriesFor: #escapeUnicode:!initialize/release!public! !
-!STONWriter categoriesFor: #escapeUnicode4:!private! !
-!STONWriter categoriesFor: #indentedDo:!private! !
-!STONWriter categoriesFor: #initialize!initialize/release!public! !
-!STONWriter categoriesFor: #isSimpleSymbol:!private! !
-!STONWriter categoriesFor: #jsonMode!initialize/release!public! !
-!STONWriter categoriesFor: #jsonMode:!initialize/release!public! !
-!STONWriter categoriesFor: #keepNewLines:!initialize/release!public! !
-!STONWriter categoriesFor: #listElementSeparator!private! !
-!STONWriter categoriesFor: #mapElementSeparator!private! !
-!STONWriter categoriesFor: #newLine:!initialize/release!public! !
-!STONWriter categoriesFor: #newlineIndent!private! !
-!STONWriter categoriesFor: #nextPut:!public! !
-!STONWriter categoriesFor: #on:!initialize/release!public! !
-!STONWriter categoriesFor: #optimizeForLargeStructures!initialize/release!public! !
-!STONWriter categoriesFor: #prettyPrint:!initialize/release!public! !
-!STONWriter categoriesFor: #prettyPrintSpace!private! !
-!STONWriter categoriesFor: #referencePolicy:!initialize/release!public! !
-!STONWriter categoriesFor: #reset!initialize/release!public! !
-!STONWriter categoriesFor: #shortListElementSeparator!private! !
-!STONWriter categoriesFor: #stonCharacters!private! !
-!STONWriter categoriesFor: #with:do:!private! !
-!STONWriter categoriesFor: #writeableStonCharacters!public!writing! !
-!STONWriter categoriesFor: #writeAssociation:!public!writing! !
-!STONWriter categoriesFor: #writeBoolean:!public!writing! !
-!STONWriter categoriesFor: #writeFloat:!public!writing! !
-!STONWriter categoriesFor: #writeFraction:!public!writing! !
-!STONWriter categoriesFor: #writeInteger:!public!writing! !
-!STONWriter categoriesFor: #writeList:!public!writing! !
-!STONWriter categoriesFor: #writeMap:!public!writing! !
-!STONWriter categoriesFor: #writeNull!public!writing! !
-!STONWriter categoriesFor: #writeObject:!public!writing! !
-!STONWriter categoriesFor: #writeObject:do:!public!writing! !
-!STONWriter categoriesFor: #writeObject:listSingleton:!public!writing! !
-!STONWriter categoriesFor: #writeObject:named:do:!public!writing! !
-!STONWriter categoriesFor: #writeObject:named:listSingleton:!public!writing! !
-!STONWriter categoriesFor: #writeObject:streamList:!public!writing! !
-!STONWriter categoriesFor: #writeObject:streamMap:!public!writing! !
-!STONWriter categoriesFor: #writeObject:streamShortList:!public!writing! !
-!STONWriter categoriesFor: #writeReference:!public!writing! !
-!STONWriter categoriesFor: #writeScaledDecimal:!public!writing! !
-!STONWriter categoriesFor: #writeString:!public!writing! !
-!STONWriter categoriesFor: #writeSymbol:!public!writing! !
+!STONWriter categoriesForMethods!
+asciiOnly:!initialize/release!public! !
+close!initialize/release!public! !
+encodeCharacter:!private! !
+encodeKey:value:!private! !
+encodeList:!public!writing! !
+encodeMap:!public!writing! !
+encodeString:!private! !
+encodeStringKeepingNewLines:!private! !
+error:!error handling!public! !
+escape:with:!initialize/release!public! !
+escapeUnicode:!initialize/release!public! !
+escapeUnicode4:!private! !
+indentedDo:!private! !
+initialize!initialize/release!public! !
+isSimpleSymbol:!private! !
+jsonMode!initialize/release!public! !
+jsonMode:!initialize/release!public! !
+keepNewLines:!initialize/release!public! !
+listElementSeparator!private! !
+mapElementSeparator!private! !
+newLine:!initialize/release!public! !
+newlineIndent!private! !
+nextPut:!public! !
+on:!initialize/release!public! !
+optimizeForLargeStructures!initialize/release!public! !
+prettyPrint:!initialize/release!public! !
+prettyPrintSpace!private! !
+referencePolicy:!initialize/release!public! !
+reset!initialize/release!public! !
+shortListElementSeparator!private! !
+stonCharacters!private! !
+with:do:!private! !
+writeableStonCharacters!public!writing! !
+writeAssociation:!public!writing! !
+writeBoolean:!public!writing! !
+writeFloat:!public!writing! !
+writeFraction:!public!writing! !
+writeInteger:!public!writing! !
+writeList:!public!writing! !
+writeMap:!public!writing! !
+writeNull!public!writing! !
+writeObject:!public!writing! !
+writeObject:do:!public!writing! !
+writeObject:listSingleton:!public!writing! !
+writeObject:named:do:!public!writing! !
+writeObject:named:listSingleton:!public!writing! !
+writeObject:streamList:!public!writing! !
+writeObject:streamMap:!public!writing! !
+writeObject:streamShortList:!public!writing! !
+writeReference:!public!writing! !
+writeScaledDecimal:!public!writing! !
+writeString:!public!writing! !
+writeSymbol:!public!writing! !
+!
 
 !STONWriter class methodsFor!
 
@@ -512,9 +514,11 @@ on: writeStream
 	^ self new
 		on: writeStream;
 		yourself! !
-!STONWriter class categoriesFor: #initialize!class initialization!public! !
-!STONWriter class categoriesFor: #initializeSTONCharacters!class initialization!public! !
-!STONWriter class categoriesFor: #initializeSTONSimpleSymbolCharacters!class initialization!public! !
-!STONWriter class categoriesFor: #isSimpleSymbolChar:!private! !
-!STONWriter class categoriesFor: #on:!instance creation!public! !
+!STONWriter class categoriesForMethods!
+initialize!class initialization!public! !
+initializeSTONCharacters!class initialization!public! !
+initializeSTONSimpleSymbolCharacters!class initialization!public! !
+isSimpleSymbolChar:!private! !
+on:!instance creation!public! !
+!
 

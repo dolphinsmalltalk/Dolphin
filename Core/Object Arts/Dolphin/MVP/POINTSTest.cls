@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalPointTest subclass: #POINTSTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ POINTSTest comment: ''!
 
 subjectClass
 	^POINTS! !
-!POINTSTest categoriesFor: #subjectClass!constants!private! !
+!POINTSTest categoriesForMethods!
+subjectClass!constants!private! !
+!
 

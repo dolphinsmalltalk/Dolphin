@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusImageAttributes
 	instanceVariableNames: ''
@@ -100,17 +100,19 @@ threshold: aFloat type: aColorAdjustTypeConstant
 				enableFlag: true asParameter
 				threshold: aFloat) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesThreshold  failed' with: status]! !
-!GdiplusImageAttributes categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusImageAttributes categoriesFor: #colorKeys:colorLow:colorHigh:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #colorMatrix:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #colorMatrix:type:mode:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #gamma:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #gamma:type:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #outputChannel:channelFlags:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #remapTable:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #remapTable:type:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #threshold:!accessing!public! !
-!GdiplusImageAttributes categoriesFor: #threshold:type:!accessing!public! !
+!GdiplusImageAttributes categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+colorKeys:colorLow:colorHigh:!accessing!public! !
+colorMatrix:!accessing!public! !
+colorMatrix:type:mode:!accessing!public! !
+gamma:!accessing!public! !
+gamma:type:!accessing!public! !
+outputChannel:channelFlags:!accessing!public! !
+remapTable:!accessing!public! !
+remapTable:type:!accessing!public! !
+threshold:!accessing!public! !
+threshold:type:!accessing!public! !
+!
 
 !GdiplusImageAttributes class methodsFor!
 
@@ -558,21 +560,23 @@ exampleRemapInput
 
 new
 	^self fromInitializer: GdiplusImageAttributesInitializer default! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars1!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars2!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars3!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorBars4!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleColorKeyTest!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAAlphaBlending!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAColorKey!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAColorMatrix!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAColorRemap!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAGamma!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAOutputChannel!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAScaleColors!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAShearColors!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIAThreshold!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleGdipIATranslateColors!examples!public!sunit! !
-!GdiplusImageAttributes class categoriesFor: #exampleRemapInput!examples!private! !
-!GdiplusImageAttributes class categoriesFor: #new!instance creation!public! !
+!GdiplusImageAttributes class categoriesForMethods!
+exampleColorBars1!examples!private! !
+exampleColorBars2!examples!private! !
+exampleColorBars3!examples!private! !
+exampleColorBars4!examples!private! !
+exampleColorKeyTest!examples!private! !
+exampleGdipIAAlphaBlending!examples!public!sunit! !
+exampleGdipIAColorKey!examples!public!sunit! !
+exampleGdipIAColorMatrix!examples!public!sunit! !
+exampleGdipIAColorRemap!examples!public!sunit! !
+exampleGdipIAGamma!examples!public!sunit! !
+exampleGdipIAOutputChannel!examples!public!sunit! !
+exampleGdipIAScaleColors!examples!public!sunit! !
+exampleGdipIAShearColors!examples!public!sunit! !
+exampleGdipIAThreshold!examples!public!sunit! !
+exampleGdipIATranslateColors!examples!public!sunit! !
+exampleRemapInput!examples!private! !
+new!instance creation!public! !
+!
 

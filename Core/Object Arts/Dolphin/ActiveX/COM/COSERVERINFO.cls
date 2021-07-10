@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #COSERVERINFO
 	instanceVariableNames: 'hostName'
@@ -50,12 +50,14 @@ pwszName: anUtf16String
 	"Set the receiver's 'pwszName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszName put: anUtf16String yourAddress! !
-!COSERVERINFO categoriesFor: #hostName!accessing!public! !
-!COSERVERINFO categoriesFor: #hostName:!accessing!public! !
-!COSERVERINFO categoriesFor: #pAuthInfo!**compiled accessors**!public! !
-!COSERVERINFO categoriesFor: #pAuthInfo:!**compiled accessors**!public! !
-!COSERVERINFO categoriesFor: #pwszName!**compiled accessors**!public! !
-!COSERVERINFO categoriesFor: #pwszName:!**compiled accessors**!public! !
+!COSERVERINFO categoriesForMethods!
+hostName!accessing!public! !
+hostName:!accessing!public! !
+pAuthInfo!**compiled accessors**!public! !
+pAuthInfo:!**compiled accessors**!public! !
+pwszName!**compiled accessors**!public! !
+pwszName:!**compiled accessors**!public! !
+!
 
 !COSERVERINFO class methodsFor!
 
@@ -80,6 +82,8 @@ defineFields
 
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !
-!COSERVERINFO class categoriesFor: #defineFields!public!template definition! !
-!COSERVERINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!COSERVERINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

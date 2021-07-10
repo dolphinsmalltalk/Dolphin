@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodCategory subclass: #DebuggerMethodCategory
 	instanceVariableNames: 'mask'
@@ -29,10 +29,12 @@ removeMethodSilently: aCompiledMethod
 		of: aCompiledMethod methodClass
 		maskClear: mask.
 	super removeMethodSilently: aCompiledMethod! !
-!DebuggerMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!DebuggerMethodCategory categoriesFor: #mask!accessing!public! !
-!DebuggerMethodCategory categoriesFor: #mask:!accessing!private! !
-!DebuggerMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!DebuggerMethodCategory categoriesForMethods!
+addMethodSilently:!adding!private! !
+mask!accessing!public! !
+mask:!accessing!private! !
+removeMethodSilently:!private!removing! !
+!
 
 !DebuggerMethodCategory class methodsFor!
 
@@ -52,5 +54,7 @@ initialize
 		at: stepOver name put: stepOver.
 	steppedThrough do: [:each | stepThrough addMethodSilently: each].
 	steppedOver do: [:each | stepOver addMethodSilently: each]! !
-!DebuggerMethodCategory class categoriesFor: #initialize!public! !
+!DebuggerMethodCategory class categoriesForMethods!
+initialize!public! !
+!
 

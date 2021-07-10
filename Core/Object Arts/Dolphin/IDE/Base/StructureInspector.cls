@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BasicInspector subclass: #StructureInspector
 	instanceVariableNames: ''
@@ -41,8 +41,10 @@ setField: anInteger to: anObject
 				setField: (self variableNamesList at: anInteger + self headerSize)
 				value: anObject]
 		ifFalse: [super setField: anInteger to: anObject]! !
-!StructureInspector categoriesFor: #fields!accessing!private! !
-!StructureInspector categoriesFor: #getField:!accessing!private! !
-!StructureInspector categoriesFor: #getFieldList!accessing!private! !
-!StructureInspector categoriesFor: #setField:to:!accessing!private! !
+!StructureInspector categoriesForMethods!
+fields!accessing!private! !
+getField:!accessing!private! !
+getFieldList!accessing!private! !
+setField:to:!accessing!private! !
+!
 

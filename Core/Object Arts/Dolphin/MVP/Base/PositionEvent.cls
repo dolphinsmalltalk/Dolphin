@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #PositionEvent
 	instanceVariableNames: 'lpwp'
@@ -127,27 +127,29 @@ y
 	"Answer the y-position of the window origin."
 
 	^self lpwp y! !
-!PositionEvent categoriesFor: #extent!accessing!public! !
-!PositionEvent categoriesFor: #extent:!accessing!public! !
-!PositionEvent categoriesFor: #flags!accessing!public! !
-!PositionEvent categoriesFor: #height!accessing!public! !
-!PositionEvent categoriesFor: #height:!accessing!public! !
-!PositionEvent categoriesFor: #isActivate!public!testing! !
-!PositionEvent categoriesFor: #isClientAreaChanged!public!testing! !
-!PositionEvent categoriesFor: #isHideWindow!public!testing! !
-!PositionEvent categoriesFor: #isMove!public!testing! !
-!PositionEvent categoriesFor: #isRectangleChanged!public!testing! !
-!PositionEvent categoriesFor: #isResize!public!testing! !
-!PositionEvent categoriesFor: #isVisibilityChange!public!testing! !
-!PositionEvent categoriesFor: #isZOrderChanged!public!testing! !
-!PositionEvent categoriesFor: #lpwp!accessing!private! !
-!PositionEvent categoriesFor: #position!accessing!public! !
-!PositionEvent categoriesFor: #printLParamOn:!development!printing!private! !
-!PositionEvent categoriesFor: #rectangle!accessing!public! !
-!PositionEvent categoriesFor: #width!accessing!public! !
-!PositionEvent categoriesFor: #width:!accessing!public! !
-!PositionEvent categoriesFor: #x!accessing!public! !
-!PositionEvent categoriesFor: #y!accessing!public! !
+!PositionEvent categoriesForMethods!
+extent!accessing!public! !
+extent:!accessing!public! !
+flags!accessing!public! !
+height!accessing!public! !
+height:!accessing!public! !
+isActivate!public!testing! !
+isClientAreaChanged!public!testing! !
+isHideWindow!public!testing! !
+isMove!public!testing! !
+isRectangleChanged!public!testing! !
+isResize!public!testing! !
+isVisibilityChange!public!testing! !
+isZOrderChanged!public!testing! !
+lpwp!accessing!private! !
+position!accessing!public! !
+printLParamOn:!development!printing!private! !
+rectangle!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 
 !PositionEvent class methodsFor!
 
@@ -159,5 +161,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger asExternalAddress! !
-!PositionEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
+!PositionEvent class categoriesForMethods!
+window:message:wParam:lParam:!instance creation!public! !
+!
 

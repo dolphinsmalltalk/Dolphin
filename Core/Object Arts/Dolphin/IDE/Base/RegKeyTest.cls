@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #RegKeyTest
 	instanceVariableNames: 'testKey'
@@ -136,14 +136,16 @@ testSz
 			[:each |
 			testKey valueAt: 'String' put: each.
 			self assert: (testKey valueAt: 'String') equals: each]! !
-!RegKeyTest categoriesFor: #setUp!private!unit tests! !
-!RegKeyTest categoriesFor: #tearDown!private!unit tests! !
-!RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
-!RegKeyTest categoriesFor: #testEmptySz!public!unit tests! !
-!RegKeyTest categoriesFor: #testExpandSz!public!unit tests! !
-!RegKeyTest categoriesFor: #testIntegerSerialisation!public!unit tests! !
-!RegKeyTest categoriesFor: #testMultiSz!public!unit tests! !
-!RegKeyTest categoriesFor: #testParentPath!public!unit tests! !
-!RegKeyTest categoriesFor: #testScintillaTextStyleSerialization!public!unit tests! !
-!RegKeyTest categoriesFor: #testSz!public!unit tests! !
+!RegKeyTest categoriesForMethods!
+setUp!private!unit tests! !
+tearDown!private!unit tests! !
+testCreateUnderRoot!public!unit tests! !
+testEmptySz!public!unit tests! !
+testExpandSz!public!unit tests! !
+testIntegerSerialisation!public!unit tests! !
+testMultiSz!public!unit tests! !
+testParentPath!public!unit tests! !
+testScintillaTextStyleSerialization!public!unit tests! !
+testSz!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CollectionTest subclass: #DictionaryANSITest
 	instanceVariableNames: ''
@@ -50,17 +50,19 @@ testXatXputX
 testXincludesKeyX
 	" <abstractDictionary>#includesKey: "
 	#'Collection'.! !
-!DictionaryANSITest categoriesFor: #canonicalElement!public! !
-!DictionaryANSITest categoriesFor: #canonicalObject!public! !
-!DictionaryANSITest categoriesFor: #emptyCanonicalObject!public! !
-!DictionaryANSITest categoriesFor: #emptyCollection!public! !
-!DictionaryANSITest categoriesFor: #protocol!public! !
-!DictionaryANSITest categoriesFor: #testXaddAllX!public! !
-!DictionaryANSITest categoriesFor: #testXatX!public! !
-!DictionaryANSITest categoriesFor: #testXatXifAbsentPutX!public! !
-!DictionaryANSITest categoriesFor: #testXatXifAbsentX!public! !
-!DictionaryANSITest categoriesFor: #testXatXputX!public! !
-!DictionaryANSITest categoriesFor: #testXincludesKeyX!public! !
+!DictionaryANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCanonicalObject!public! !
+emptyCollection!public! !
+protocol!public! !
+testXaddAllX!public! !
+testXatX!public! !
+testXatXifAbsentPutX!public! !
+testXatXifAbsentX!public! !
+testXatXputX!public! !
+testXincludesKeyX!public! !
+!
 
 !DictionaryANSITest class methodsFor!
 
@@ -69,5 +71,7 @@ helperClassesDo: aBlock
 
 	aBlock value: AbstractDictionaryHelper.
 	super helperClassesDo: aBlock! !
-!DictionaryANSITest class categoriesFor: #helperClassesDo:!public! !
+!DictionaryANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

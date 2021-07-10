@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TutorialPlayer subclass: #ProfStef
 	instanceVariableNames: ''
@@ -23,7 +23,9 @@ ProfStef contents'!
 onViewDestroyed
 	super onViewDestroyed.
 	self class reset! !
-!ProfStef categoriesFor: #onViewDestroyed!event handling!private! !
+!ProfStef categoriesForMethods!
+onViewDestroyed!event handling!private! !
+!
 
 !ProfStef class methodsFor!
 
@@ -74,13 +76,15 @@ show
 	profStef := self default.
 	profStef view beActive.
 	^profStef! !
-!ProfStef class categoriesFor: #default!initialize!public! !
-!ProfStef class categoriesFor: #defaultModel!public! !
-!ProfStef class categoriesFor: #first!navigation!public! !
-!ProfStef class categoriesFor: #go!navigation!public! !
-!ProfStef class categoriesFor: #initialize!public! !
-!ProfStef class categoriesFor: #next!navigation!public! !
-!ProfStef class categoriesFor: #previous!navigation!public! !
-!ProfStef class categoriesFor: #reset!initialize!private! !
-!ProfStef class categoriesFor: #show!initialize!public! !
+!ProfStef class categoriesForMethods!
+default!initialize!public! !
+defaultModel!public! !
+first!navigation!public! !
+go!navigation!public! !
+initialize!public! !
+next!navigation!public! !
+previous!navigation!public! !
+reset!initialize!private! !
+show!initialize!public! !
+!
 

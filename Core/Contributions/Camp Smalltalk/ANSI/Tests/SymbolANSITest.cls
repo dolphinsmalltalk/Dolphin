@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedReadableCollectionTest subclass: #SymbolANSITest
 	instanceVariableNames: 'smalltalkSymbol'
@@ -238,42 +238,46 @@ testXsameAsX
 testXsubStringsX
 	" <readableString>#subStrings: "
 	#'Collection'.! !
-!SymbolANSITest categoriesFor: #canonicalElement!constants!public! !
-!SymbolANSITest categoriesFor: #canonicalObject!constants!public! !
-!SymbolANSITest categoriesFor: #emptyCollection!constants!public! !
-!SymbolANSITest categoriesFor: #limitedElementTypes!constants!public! !
-!SymbolANSITest categoriesFor: #protocol!constants!public! !
-!SymbolANSITest categoriesFor: #returnTypeHasLimitedElementTypes!public!testing! !
-!SymbolANSITest categoriesFor: #setUp!public! !
-!SymbolANSITest categoriesFor: #testXasLowercase!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXasString!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXasSymbol!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXasUppercase!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXbetweenXandX!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXcopy!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXequalityOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXgreaterThanOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXgreaterThanOrEqualToOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXhash!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXidentityHash!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXidentityOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXisKindOfX!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXisMemberOfX!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXkeysAndValuesDoX!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXlast!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXlessThanOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXlessThanOrEqualToOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXmaxX!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXminX!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXnotEqualityOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXnotIdentityOp!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXsameAsX!public!unit tests! !
-!SymbolANSITest categoriesFor: #testXsubStringsX!public!unit tests! !
+!SymbolANSITest categoriesForMethods!
+canonicalElement!constants!public! !
+canonicalObject!constants!public! !
+emptyCollection!constants!public! !
+limitedElementTypes!constants!public! !
+protocol!constants!public! !
+returnTypeHasLimitedElementTypes!public!testing! !
+setUp!public! !
+testXasLowercase!public!unit tests! !
+testXasString!public!unit tests! !
+testXasSymbol!public!unit tests! !
+testXasUppercase!public!unit tests! !
+testXbetweenXandX!public!unit tests! !
+testXcopy!public!unit tests! !
+testXequalityOp!public!unit tests! !
+testXgreaterThanOp!public!unit tests! !
+testXgreaterThanOrEqualToOp!public!unit tests! !
+testXhash!public!unit tests! !
+testXidentityHash!public!unit tests! !
+testXidentityOp!public!unit tests! !
+testXisKindOfX!public!unit tests! !
+testXisMemberOfX!public!unit tests! !
+testXkeysAndValuesDoX!public!unit tests! !
+testXlast!public!unit tests! !
+testXlessThanOp!public!unit tests! !
+testXlessThanOrEqualToOp!public!unit tests! !
+testXmaxX!public!unit tests! !
+testXminX!public!unit tests! !
+testXnotEqualityOp!public!unit tests! !
+testXnotIdentityOp!public!unit tests! !
+testXsameAsX!public!unit tests! !
+testXsubStringsX!public!unit tests! !
+!
 
 !SymbolANSITest class methodsFor!
 
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedReadableCollectionHelper! !
-!SymbolANSITest class categoriesFor: #helperClassesDo:!public! !
+!SymbolANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

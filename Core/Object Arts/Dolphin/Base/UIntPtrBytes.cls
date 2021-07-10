@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalIntegerBytes variableByteSubclass: #UIntPtrBytes
 	instanceVariableNames: ''
@@ -64,16 +64,18 @@ value: anObject
 	"Set the unsigned <integer> value stored in the receiver."
 
 	self uintPtrAtOffset: 0 put: anObject! !
-!UIntPtrBytes categoriesFor: #asInteger!converting!public! !
-!UIntPtrBytes categoriesFor: #asSignedInteger!converting!public! !
-!UIntPtrBytes categoriesFor: #asUIntPtr!converting!public! !
-!UIntPtrBytes categoriesFor: #highPart!accessing!public! !
-!UIntPtrBytes categoriesFor: #highPart:!accessing!public! !
-!UIntPtrBytes categoriesFor: #highPartSigned!accessing!public! !
-!UIntPtrBytes categoriesFor: #lowPart!accessing!public! !
-!UIntPtrBytes categoriesFor: #lowPart:!accessing!public! !
-!UIntPtrBytes categoriesFor: #lowPartSigned!accessing!public! !
-!UIntPtrBytes categoriesFor: #value:!accessing!public! !
+!UIntPtrBytes categoriesForMethods!
+asInteger!converting!public! !
+asSignedInteger!converting!public! !
+asUIntPtr!converting!public! !
+highPart!accessing!public! !
+highPart:!accessing!public! !
+highPartSigned!accessing!public! !
+lowPart!accessing!public! !
+lowPart:!accessing!public! !
+lowPartSigned!accessing!public! !
+value:!accessing!public! !
+!
 
 !UIntPtrBytes class methodsFor!
 
@@ -84,6 +86,8 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !
-!UIntPtrBytes class categoriesFor: #elementSize!constants!private! !
-!UIntPtrBytes class categoriesFor: #valueAtAddress:!instance creation!private! !
+!UIntPtrBytes class categoriesForMethods!
+elementSize!constants!private! !
+valueAtAddress:!instance creation!private! !
+!
 

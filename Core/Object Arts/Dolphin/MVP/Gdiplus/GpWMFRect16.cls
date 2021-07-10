@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpWMFRect16
 	instanceVariableNames: ''
@@ -68,14 +68,16 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_top put: anInteger! !
-!GpWMFRect16 categoriesFor: #bottom!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #bottom:!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #left!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #left:!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #right!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #right:!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #top!**compiled accessors**!public! !
-!GpWMFRect16 categoriesFor: #top:!**compiled accessors**!public! !
+!GpWMFRect16 categoriesForMethods!
+bottom!**compiled accessors**!public! !
+bottom:!**compiled accessors**!public! !
+left!**compiled accessors**!public! !
+left:!**compiled accessors**!public! !
+right!**compiled accessors**!public! !
+right:!**compiled accessors**!public! !
+top!**compiled accessors**!public! !
+top:!**compiled accessors**!public! !
+!
 
 !GpWMFRect16 class methodsFor!
 
@@ -101,6 +103,8 @@ defineFields
 
 getFieldNames
 	^#(#left #top #right #bottom)! !
-!GpWMFRect16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpWMFRect16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpWMFRect16 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

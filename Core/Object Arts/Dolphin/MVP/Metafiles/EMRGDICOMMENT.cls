@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRGDICOMMENT
 	instanceVariableNames: ''
@@ -52,10 +52,12 @@ Data: anExternalArray
 		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
-!EMRGDICOMMENT categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRGDICOMMENT categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRGDICOMMENT categoriesFor: #Data!**compiled accessors**!public! !
-!EMRGDICOMMENT categoriesFor: #Data:!**compiled accessors**!public! !
+!EMRGDICOMMENT categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+!
 
 !EMRGDICOMMENT class methodsFor!
 
@@ -89,7 +91,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GDICOMMENT! !
-!EMRGDICOMMENT class categoriesFor: #defineFields!public!template definition! !
-!EMRGDICOMMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRGDICOMMENT class categoriesFor: #iTypes!constants!public! !
+!EMRGDICOMMENT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

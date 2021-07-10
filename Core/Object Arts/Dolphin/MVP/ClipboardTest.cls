@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ClipboardTest
 	instanceVariableNames: ''
@@ -114,19 +114,21 @@ testUtf8String
 	"We'll get back UTF-16, but the content should be the same."
 	actual := Clipboard current getText.
 	self assert: actual equals: utf8! !
-!ClipboardTest categoriesFor: #sampleAnsiString!constants!private! !
-!ClipboardTest categoriesFor: #sampleBitmap!constants!private! !
-!ClipboardTest categoriesFor: #sampleDIBSection!constants!private! !
-!ClipboardTest categoriesFor: #sampleRichText!constants!private! !
-!ClipboardTest categoriesFor: #sampleUnicodeString!constants!private! !
-!ClipboardTest categoriesFor: #setUp!private!running! !
-!ClipboardTest categoriesFor: #tearDown!private!running! !
-!ClipboardTest categoriesFor: #testAnsiString!public!unit tests! !
-!ClipboardTest categoriesFor: #testAvailableFormatsBitmaps!public!unit tests! !
-!ClipboardTest categoriesFor: #testAvailableFormatsStrings!public!unit tests! !
-!ClipboardTest categoriesFor: #testBitmap!public!unit tests! !
-!ClipboardTest categoriesFor: #testDIBSection!public!unit tests! !
-!ClipboardTest categoriesFor: #testRichText!public!unit tests! !
-!ClipboardTest categoriesFor: #testUtf16String!public!unit tests! !
-!ClipboardTest categoriesFor: #testUtf8String!public!unit tests! !
+!ClipboardTest categoriesForMethods!
+sampleAnsiString!constants!private! !
+sampleBitmap!constants!private! !
+sampleDIBSection!constants!private! !
+sampleRichText!constants!private! !
+sampleUnicodeString!constants!private! !
+setUp!private!running! !
+tearDown!private!running! !
+testAnsiString!public!unit tests! !
+testAvailableFormatsBitmaps!public!unit tests! !
+testAvailableFormatsStrings!public!unit tests! !
+testBitmap!public!unit tests! !
+testDIBSection!public!unit tests! !
+testRichText!public!unit tests! !
+testUtf16String!public!unit tests! !
+testUtf8String!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestFailure subclass: #ResumableTestFailure
 	instanceVariableNames: ''
@@ -26,6 +26,8 @@ isResumable
 sunitExitWith: aValue
 	self resume: aValue
 ! !
-!ResumableTestFailure categoriesFor: #isResumable!public! !
-!ResumableTestFailure categoriesFor: #sunitExitWith:!public! !
+!ResumableTestFailure categoriesForMethods!
+isResumable!public! !
+sunitExitWith:!public! !
+!
 

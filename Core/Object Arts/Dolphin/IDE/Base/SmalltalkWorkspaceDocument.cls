@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDocumentShell subclass: #SmalltalkWorkspaceDocument
 	instanceVariableNames: 'workspacePresenter searchPresenter'
@@ -334,61 +334,63 @@ workspace
 	"Answers the SmalltalkWorkspace held by the receiver."
 
 	^workspacePresenter! !
-!SmalltalkWorkspaceDocument categoriesFor: #aboutDolphin!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #applyOptions!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #browsePackages!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #buildPopupForCommand:!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #canSaveState!private!saved state! !
-!SmalltalkWorkspaceDocument categoriesFor: #chooseDefaultFont!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #createComponents!initializing!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #createSchematicWiring!initializing!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #defaultHelpId!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #destroy!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #dropClassFile:!commands!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #dropPackageFile:!commands!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #dropScriptFile:!commands!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #dropTextFile:!commands!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #dropXmlFile:!commands!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #educationCenter!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #exit!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #fileFileIn!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #fileLoad!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #fileNew!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #fileOpen!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #forgetSize!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #getDocumentData!accessing!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #guidedTour!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #hasContents!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #help!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #ideaSpace!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #inspectSystemOptions!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #isIdeaSpaceCard!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #isModified!public!testing! !
-!SmalltalkWorkspaceDocument categoriesFor: #isModified:!modes!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #isText!public!testing! !
-!SmalltalkWorkspaceDocument categoriesFor: #language:!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #onDropDown:!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #onViewOpened!event handling!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #openViewComposer!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #openWorkspace!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #queryCommand:!commands!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #rememberThisSize!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #saveStateOn:!private!saved state! !
-!SmalltalkWorkspaceDocument categoriesFor: #searchForClass:!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #searchForMethod:!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #searchForObject:!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #searchForPackage:!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #searchForSymbol:!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #searchSmalltalk!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #searchSmalltalkFor:!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #setDocumentData:!accessing!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #setInitialFocus!operations!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #setLexer!helpers!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #show!operations!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #smalltalkExit!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #systemModel!accessing!private! !
-!SmalltalkWorkspaceDocument categoriesFor: #workspace!accessing!public! !
+!SmalltalkWorkspaceDocument categoriesForMethods!
+aboutDolphin!commands!public! !
+applyOptions!public! !
+browsePackages!commands!public! !
+buildPopupForCommand:!private! !
+canSaveState!private!saved state! !
+chooseDefaultFont!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultHelpId!public! !
+destroy!commands!public! !
+displayOn:!displaying!public! !
+dropClassFile:!commands!private! !
+dropPackageFile:!commands!private! !
+dropScriptFile:!commands!private! !
+dropTextFile:!commands!private! !
+dropXmlFile:!commands!private! !
+educationCenter!commands!public! !
+exit!commands!public! !
+fileFileIn!commands!public! !
+fileLoad!commands!public! !
+fileNew!commands!public! !
+fileOpen!commands!public! !
+forgetSize!commands!public! !
+getDocumentData!accessing!private! !
+guidedTour!commands!public! !
+hasContents!public! !
+help!commands!public! !
+ideaSpace!public! !
+inspectSystemOptions!commands!public! !
+isIdeaSpaceCard!public! !
+isModified!public!testing! !
+isModified:!modes!public! !
+isText!public!testing! !
+language:!public! !
+onDropDown:!private! !
+onViewOpened!event handling!private! !
+openViewComposer!commands!public! !
+openWorkspace!public! !
+queryCommand:!commands!private! !
+rememberThisSize!commands!public! !
+saveStateOn:!private!saved state! !
+searchForClass:!private! !
+searchForMethod:!private! !
+searchForObject:!public! !
+searchForPackage:!public! !
+searchForSymbol:!private! !
+searchSmalltalk!commands!public! !
+searchSmalltalkFor:!commands!public! !
+setDocumentData:!accessing!private! !
+setInitialFocus!operations!public! !
+setLexer!helpers!private! !
+show!operations!public! !
+smalltalkExit!commands!public! !
+systemModel!accessing!private! !
+workspace!accessing!public! !
+!
 
 !SmalltalkWorkspaceDocument class methodsFor!
 
@@ -648,44 +650,46 @@ wordWrap: aBoolean
 
 workspaceClass
 	^Smalltalk developmentSystem workspaceClass! !
-!SmalltalkWorkspaceDocument class categoriesFor: #activeIdeaSpace!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #canUseIdeaSpace!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #canUseIdeaSpace:!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultBackcolor!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultBackcolor:!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultCaretColor!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultCaretColor:!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultExtent!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultExtent:!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultFileExtension!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultFont!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultFont:!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultModel!models!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultTabWidth!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultTabWidth:!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultView!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #defaultView:!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #fileTypes!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #icon!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #initialize!initializing!private! !
-!SmalltalkWorkspaceDocument class categoriesFor: #isRichTextFile:!helpers!private! !
-!SmalltalkWorkspaceDocument class categoriesFor: #openIcon!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #publishedAspects!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #resource_Default_view!public!resources-views! !
-!SmalltalkWorkspaceDocument class categoriesFor: #reuseIfOpen!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #reuseIfOpen:!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #show!instance creation!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #textStyles!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #textStyles:!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #toolsFolderHelpId!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #toolsFolderIcon!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #variableTips!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #variableTips:!accessing!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #wordWrap!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #wordWrap:!accessing!options!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #workspaceClass!accessing!options!public! !
+!SmalltalkWorkspaceDocument class categoriesForMethods!
+activeIdeaSpace!public! !
+canUseIdeaSpace!accessing!public! !
+canUseIdeaSpace:!accessing!public! !
+defaultAdditionalAccelerators!constants!private! !
+defaultBackcolor!accessing!options!public! !
+defaultBackcolor:!accessing!options!public! !
+defaultCaretColor!accessing!options!public! !
+defaultCaretColor:!accessing!options!public! !
+defaultExtent!accessing!public! !
+defaultExtent:!accessing!public! !
+defaultFileExtension!constants!public! !
+defaultFont!accessing!options!public! !
+defaultFont:!accessing!options!public! !
+defaultModel!models!public! !
+defaultTabWidth!accessing!options!public! !
+defaultTabWidth:!accessing!options!public! !
+defaultView!constants!public! !
+defaultView:!accessing!public! !
+displayOn:!displaying!public! !
+fileTypes!constants!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+isRichTextFile:!helpers!private! !
+openIcon!constants!public! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+reuseIfOpen!accessing!public! !
+reuseIfOpen:!accessing!public! !
+show!instance creation!public! !
+textStyles!accessing!public! !
+textStyles:!accessing!public! !
+toolsFolderHelpId!public! !
+toolsFolderIcon!constants!public! !
+variableTips!accessing!public! !
+variableTips:!accessing!public! !
+wordWrap!accessing!options!public! !
+wordWrap:!accessing!options!public! !
+workspaceClass!accessing!options!public! !
+!
 
 SmalltalkWorkspaceDocument class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

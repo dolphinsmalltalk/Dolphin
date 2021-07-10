@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractRectangleTest subclass: #RectangleTest
 	instanceVariableNames: ''
@@ -47,7 +47,9 @@ testInsetBy
 	self assert: (desktop insetBy: 1 @ 2) equals: (1 @ 2 corner: 1279 @ 1022).
 	self assert: ((1 @ 2 corner: 3 @ 4) insetBy: (2 @ 0 corner: 0 @ 0)) equals: (3 @ 2 corner: 3 @ 4).
 	#todo	"Add more insetBy: <Rectangle> tests"! !
-!RectangleTest categoriesFor: #subjectClass!constants!private! !
-!RectangleTest categoriesFor: #testAreasOutside!public!unit tests! !
-!RectangleTest categoriesFor: #testInsetBy!public!unit tests! !
+!RectangleTest categoriesForMethods!
+subjectClass!constants!private! !
+testAreasOutside!public!unit tests! !
+testInsetBy!public!unit tests! !
+!
 

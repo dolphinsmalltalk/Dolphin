@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SemaphoreTest
 	instanceVariableNames: ''
@@ -24,5 +24,7 @@ testCriticalEarlyTermination
 	Processor sleep: 10 milliseconds.
 	"The Semaphore should have been released."
 	self assert: s excessSignals identicalTo: 1! !
-!SemaphoreTest categoriesFor: #testCriticalEarlyTermination!public!unit tests! !
+!SemaphoreTest categoriesForMethods!
+testCriticalEarlyTermination!public!unit tests! !
+!
 

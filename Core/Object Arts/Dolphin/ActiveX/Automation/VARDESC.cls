@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
@@ -158,28 +158,30 @@ wVarFlags
 	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVarFlags! !
-!VARDESC categoriesFor: #arguments!accessing!public! !
-!VARDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
-!VARDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!VARDESC categoriesFor: #elemdesc!**compiled accessors**!public! !
-!VARDESC categoriesFor: #elemDesc!accessing!public! !
-!VARDESC categoriesFor: #flags!accessing!private! !
-!VARDESC categoriesFor: #getAllCustData!accessing!private! !
-!VARDESC categoriesFor: #getValidFields!accessing!private! !
-!VARDESC categoriesFor: #isAnonymous!public!testing! !
-!VARDESC categoriesFor: #isConformant!public!testing! !
-!VARDESC categoriesFor: #isReadOnly!public!testing! !
-!VARDESC categoriesFor: #isRequestEdit!public!testing! !
-!VARDESC categoriesFor: #isRestricted!public!testing! !
-!VARDESC categoriesFor: #isStatic!public!testing! !
-!VARDESC categoriesFor: #isStringField!public!testing! !
-!VARDESC categoriesFor: #isSymbolicConstant!public!testing! !
-!VARDESC categoriesFor: #isUnion!public!testing! !
-!VARDESC categoriesFor: #lpvarValue!**compiled accessors**!public! !
-!VARDESC categoriesFor: #memid!**compiled accessors**!public! !
-!VARDESC categoriesFor: #oInst!**compiled accessors**!public! !
-!VARDESC categoriesFor: #varkind!**compiled accessors**!public! !
-!VARDESC categoriesFor: #wVarFlags!**compiled accessors**!public! !
+!VARDESC categoriesForMethods!
+arguments!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+basicIdlAttributes!printing-IDL!private! !
+elemdesc!**compiled accessors**!public! !
+elemDesc!accessing!public! !
+flags!accessing!private! !
+getAllCustData!accessing!private! !
+getValidFields!accessing!private! !
+isAnonymous!public!testing! !
+isConformant!public!testing! !
+isReadOnly!public!testing! !
+isRequestEdit!public!testing! !
+isRestricted!public!testing! !
+isStatic!public!testing! !
+isStringField!public!testing! !
+isSymbolicConstant!public!testing! !
+isUnion!public!testing! !
+lpvarValue!**compiled accessors**!public! !
+memid!**compiled accessors**!public! !
+oInst!**compiled accessors**!public! !
+varkind!**compiled accessors**!public! !
+wVarFlags!**compiled accessors**!public! !
+!
 
 !VARDESC class methodsFor!
 
@@ -223,6 +225,8 @@ defineFields
 
 getFieldNames
 	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
-!VARDESC class categoriesFor: #defineFields!public!template definition! !
-!VARDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!VARDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

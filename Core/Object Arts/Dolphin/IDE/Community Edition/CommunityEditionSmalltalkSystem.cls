@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkSystem subclass: #CommunityEditionSmalltalkSystem
 	instanceVariableNames: ''
@@ -22,7 +22,9 @@ initializeSystemFolder
 					description: 'User Preferences'
 					openBlock: [:folder :item | self inspectSystemOptions]
 					helpId: 10580)! !
-!CommunityEditionSmalltalkSystem categoriesFor: #initializeSystemFolder!initializing!private! !
+!CommunityEditionSmalltalkSystem categoriesForMethods!
+initializeSystemFolder!initializing!private! !
+!
 
 !CommunityEditionSmalltalkSystem class methodsFor!
 
@@ -47,8 +49,10 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!CommunityEditionSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
+!CommunityEditionSmalltalkSystem class categoriesForMethods!
+initialize!initializing!private! !
+installCurrent!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+uninstallCurrent!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ShellView subclass: #HelloWorld
 	instanceVariableNames: ''
@@ -74,11 +74,13 @@ onPositionChanged: aPositionEvent
 
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent! !
-!HelloWorld categoriesFor: #defaultExtent!constants!private! !
-!HelloWorld categoriesFor: #helloWorldText!constants!public! !
-!HelloWorld categoriesFor: #minExtent!accessing!public! !
-!HelloWorld categoriesFor: #onPaintRequired:!event handling!public! !
-!HelloWorld categoriesFor: #onPositionChanged:!event handling!public! !
+!HelloWorld categoriesForMethods!
+defaultExtent!constants!private! !
+helloWorldText!constants!public! !
+minExtent!accessing!public! !
+onPaintRequired:!event handling!public! !
+onPositionChanged:!event handling!public! !
+!
 
 !HelloWorld class methodsFor!
 
@@ -93,6 +95,8 @@ show
 	self new show
 
 	! !
-!HelloWorld class categoriesFor: #icon!constants!public! !
-!HelloWorld class categoriesFor: #show!instance creation!public! !
+!HelloWorld class categoriesForMethods!
+icon!constants!public! !
+show!instance creation!public! !
+!
 

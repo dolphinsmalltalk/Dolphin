@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalPoint subclass: #POINTF
 	instanceVariableNames: ''
@@ -38,11 +38,13 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
-!POINTF categoriesFor: #asDword!converting!public! !
-!POINTF categoriesFor: #x!**compiled accessors**!public! !
-!POINTF categoriesFor: #x:!**compiled accessors**!public! !
-!POINTF categoriesFor: #y!**compiled accessors**!public! !
-!POINTF categoriesFor: #y:!**compiled accessors**!public! !
+!POINTF categoriesForMethods!
+asDword!converting!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !POINTF class methodsFor!
 
@@ -73,6 +75,8 @@ x: x y: y
 				floatAtOffset: 4 put: y;
 				yourself)
 ! !
-!POINTF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!POINTF class categoriesFor: #x:y:!instance creation!public! !
+!POINTF class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+x:y:!instance creation!public! !
+!
 

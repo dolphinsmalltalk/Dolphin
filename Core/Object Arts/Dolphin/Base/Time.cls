@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #Time
 	instanceVariableNames: 'seconds'
@@ -148,30 +148,32 @@ subtractTime: aTimeOrDate
 	"Answer a new Time, aTimeOrDate seconds before the receiver."
 
 	^self class fromSeconds: self seconds - aTimeOrDate seconds! !
-!Time categoriesFor: #<!comparing!public! !
-!Time categoriesFor: #=!comparing!public! !
-!Time categoriesFor: #addTime:!arithmetic!public! !
-!Time categoriesFor: #asDateAndTime!converting!public! !
-!Time categoriesFor: #asMilliseconds!converting!public! !
-!Time categoriesFor: #asParameter!converting!public! !
-!Time categoriesFor: #asSeconds!converting!public! !
-!Time categoriesFor: #asSYSTEMTIME!converting!public! !
-!Time categoriesFor: #asTimeStamp!converting!public! !
-!Time categoriesFor: #displayOn:!printing!public! !
-!Time categoriesFor: #hash!comparing!public! !
-!Time categoriesFor: #hour!accessing!public! !
-!Time categoriesFor: #hour12!accessing!public! !
-!Time categoriesFor: #hour24!accessing!public! !
-!Time categoriesFor: #millisecond!accessing!public! !
-!Time categoriesFor: #minute!accessing!public! !
-!Time categoriesFor: #printOn:!printing!public! !
-!Time categoriesFor: #printOn:format:!printing!public! !
-!Time categoriesFor: #printStringFormat:!printing!public! !
-!Time categoriesFor: #second!accessing!public! !
-!Time categoriesFor: #seconds!accessing!public! !
-!Time categoriesFor: #seconds:!accessing!private! !
-!Time categoriesFor: #storeOn:!printing!public! !
-!Time categoriesFor: #subtractTime:!arithmetic!public! !
+!Time categoriesForMethods!
+<!comparing!public! !
+=!comparing!public! !
+addTime:!arithmetic!public! !
+asDateAndTime!converting!public! !
+asMilliseconds!converting!public! !
+asParameter!converting!public! !
+asSeconds!converting!public! !
+asSYSTEMTIME!converting!public! !
+asTimeStamp!converting!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+millisecond!accessing!public! !
+minute!accessing!public! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printStringFormat:!printing!public! !
+second!accessing!public! !
+seconds!accessing!public! !
+seconds:!accessing!private! !
+storeOn:!printing!public! !
+subtractTime:!arithmetic!public! !
+!
 
 !Time class methodsFor!
 
@@ -348,25 +350,27 @@ totalSeconds
 	"Answer the total seconds since Jan. 1, 1901 (as an Integer) in local time."
 	
 	^DateAndTime now localSeconds truncated! !
-!Time class categoriesFor: #amMarker!accessing!public! !
-!Time class categoriesFor: #defaultFormat!enquiries!private! !
-!Time class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Time class categoriesFor: #formats!enquiries!private! !
-!Time class categoriesFor: #fromDuration:!instance creation!public! !
-!Time class categoriesFor: #fromMilliseconds:!instance creation!public! !
-!Time class categoriesFor: #fromSeconds:!instance creation!public! !
-!Time class categoriesFor: #fromString:!instance creation!public! !
-!Time class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Time class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Time class categoriesFor: #microsecondClockValue!enquiries!public! !
-!Time class categoriesFor: #millisecondClockValue!accessing!public! !
-!Time class categoriesFor: #millisecondsToRun:!operations!public! !
-!Time class categoriesFor: #new!instance creation!public! !
-!Time class categoriesFor: #now!instance creation!public! !
-!Time class categoriesFor: #pmMarker!accessing!public! !
-!Time class categoriesFor: #readFrom:!instance creation!public! !
-!Time class categoriesFor: #secondClock!accessing!private! !
-!Time class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Time class categoriesFor: #stbVersion!binary filing!public! !
-!Time class categoriesFor: #totalSeconds!accessing!public! !
+!Time class categoriesForMethods!
+amMarker!accessing!public! !
+defaultFormat!enquiries!private! !
+errorInvalidFormat!exceptions!private! !
+formats!enquiries!private! !
+fromDuration:!instance creation!public! !
+fromMilliseconds:!instance creation!public! !
+fromSeconds:!instance creation!public! !
+fromString:!instance creation!public! !
+fromSYSTEMTIME:!instance creation!private! !
+hours:minutes:seconds:!instance creation!public! !
+microsecondClockValue!enquiries!public! !
+millisecondClockValue!accessing!public! !
+millisecondsToRun:!operations!public! !
+new!instance creation!public! !
+now!instance creation!public! !
+pmMarker!accessing!public! !
+readFrom:!instance creation!public! !
+secondClock!accessing!private! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+totalSeconds!accessing!public! !
+!
 

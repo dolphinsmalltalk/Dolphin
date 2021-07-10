@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
 	instanceVariableNames: 'bitmap graphics'
@@ -26,13 +26,17 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating CachedBitmap'! !
-!GdiplusCachedBitmapInitializer categoriesFor: #bitmap:graphics:!initializing!private! !
-!GdiplusCachedBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusCachedBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusCachedBitmapInitializer categoriesForMethods!
+bitmap:graphics:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusCachedBitmapInitializer class methodsFor!
 
 bitmap: aBitmap graphics: aGraphics
 	^self new bitmap: aBitmap graphics: aGraphics! !
-!GdiplusCachedBitmapInitializer class categoriesFor: #bitmap:graphics:!instance creation!public! !
+!GdiplusCachedBitmapInitializer class categoriesForMethods!
+bitmap:graphics:!instance creation!public! !
+!
 

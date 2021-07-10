@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #PROPBAG2
 	instanceVariableNames: ''
@@ -80,18 +80,20 @@ vt: anInteger
 	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_vt put: anInteger! !
-!PROPBAG2 categoriesFor: #cfType!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #cfType:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #clsid!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #clsid:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwHint!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwHint:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwType!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #dwType:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #pstrName!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #pstrName:!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #vt!**compiled accessors**!public! !
-!PROPBAG2 categoriesFor: #vt:!**compiled accessors**!public! !
+!PROPBAG2 categoriesForMethods!
+cfType!**compiled accessors**!public! !
+cfType:!**compiled accessors**!public! !
+clsid!**compiled accessors**!public! !
+clsid:!**compiled accessors**!public! !
+dwHint!**compiled accessors**!public! !
+dwHint:!**compiled accessors**!public! !
+dwType!**compiled accessors**!public! !
+dwType:!**compiled accessors**!public! !
+pstrName!**compiled accessors**!public! !
+pstrName:!**compiled accessors**!public! !
+vt!**compiled accessors**!public! !
+vt:!**compiled accessors**!public! !
+!
 
 !PROPBAG2 class methodsFor!
 
@@ -120,6 +122,8 @@ defineFields
 
 getFieldNames
 	^#(#dwType #vt #cfType #dwHint #pstrName #clsid)! !
-!PROPBAG2 class categoriesFor: #defineFields!public!template definition! !
-!PROPBAG2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PROPBAG2 class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

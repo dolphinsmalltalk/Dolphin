@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SessionManager subclass: #AXDllSessionManager
 	instanceVariableNames: ''
@@ -51,11 +51,13 @@ unhandledException: anException
 		self quit: -1].
 	"Resume execution"
 	^anException! !
-!AXDllSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!AXDllSessionManager categoriesFor: #keepAlive!idling!public! !
-!AXDllSessionManager categoriesFor: #openConsoleStreams!operations!private! !
-!AXDllSessionManager categoriesFor: #startUI!operations-startup!public! !
-!AXDllSessionManager categoriesFor: #unhandledException:!exceptions!private! !
+!AXDllSessionManager categoriesForMethods!
+basicTertiaryStartup!operations-startup!public! !
+keepAlive!idling!public! !
+openConsoleStreams!operations!private! !
+startUI!operations-startup!public! !
+unhandledException:!exceptions!private! !
+!
 
 !AXDllSessionManager class methodsFor!
 
@@ -79,8 +81,10 @@ isRuntime
 	(as opposed to development, or abstract)."
 
 	^true! !
-!AXDllSessionManager class categoriesFor: #icon!constants!development!must strip!public! !
-!AXDllSessionManager class categoriesFor: #imageExtension!constants!public! !
-!AXDllSessionManager class categoriesFor: #isDLL!private!testing! !
-!AXDllSessionManager class categoriesFor: #isRuntime!public!testing! !
+!AXDllSessionManager class categoriesForMethods!
+icon!constants!development!must strip!public! !
+imageExtension!constants!public! !
+isDLL!private!testing! !
+isRuntime!public!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManager subclass: #FramingLayout
 	instanceVariableNames: 'framings'
@@ -108,13 +108,15 @@ resolutionScaledBy: aPoint
 	scale."
 
 	framings do: [:each | each resolutionScaledBy: aPoint]! !
-!FramingLayout categoriesFor: #arrangementOf:!accessing!public! !
-!FramingLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!FramingLayout categoriesFor: #initialize!initializing!private! !
-!FramingLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!FramingLayout categoriesFor: #newConstraintFor:!helpers!private! !
-!FramingLayout categoriesFor: #removeSubView:!public!removing! !
-!FramingLayout categoriesFor: #reposition:to:!geometry!private! !
-!FramingLayout categoriesFor: #resize:to:!geometry!public! !
-!FramingLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
+!FramingLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+newConstraintFor:!helpers!private! !
+removeSubView:!public!removing! !
+reposition:to:!geometry!private! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+!
 

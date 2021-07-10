@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ProductReleaseTest
 	instanceVariableNames: ''
@@ -26,8 +26,10 @@ testCompilationFailures
 	| failed |
 	failed := '*-compilation failures' asMethodCategory methods.
 	self assert: failed asArray equals: #()! !
-!ProductReleaseTest categoriesFor: #checkNoClass:!public!unit tests! !
-!ProductReleaseTest categoriesFor: #isReleased!private!unit tests! !
-!ProductReleaseTest categoriesFor: #specialAssert:!private!unit tests! !
-!ProductReleaseTest categoriesFor: #testCompilationFailures!public!unit tests! !
+!ProductReleaseTest categoriesForMethods!
+checkNoClass:!public!unit tests! !
+isReleased!private!unit tests! !
+specialAssert:!private!unit tests! !
+testCompilationFailures!public!unit tests! !
+!
 

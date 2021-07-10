@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StdioUnicodeFileStream subclass: #StdioUtf8FileStream
 	instanceVariableNames: ''
@@ -58,17 +58,21 @@ upToEnd
 	the current position to the end)."
 
 	^super upToEnd asUtf8String! !
-!StdioUtf8FileStream categoriesFor: #contents!accessing!public! !
-!StdioUtf8FileStream categoriesFor: #contentsSpecies!constants!private! !
-!StdioUtf8FileStream categoriesFor: #position!accessing!public! !
-!StdioUtf8FileStream categoriesFor: #position:!positioning!public! !
-!StdioUtf8FileStream categoriesFor: #size!accessing!public! !
-!StdioUtf8FileStream categoriesFor: #translationMode!constants!private! !
-!StdioUtf8FileStream categoriesFor: #upToEnd!accessing!public! !
+!StdioUtf8FileStream categoriesForMethods!
+contents!accessing!public! !
+contentsSpecies!constants!private! !
+position!accessing!public! !
+position:!positioning!public! !
+size!accessing!public! !
+translationMode!constants!private! !
+upToEnd!accessing!public! !
+!
 
 !StdioUtf8FileStream class methodsFor!
 
 encodingType
 	^#utf8! !
-!StdioUtf8FileStream class categoriesFor: #encodingType!constants!public! !
+!StdioUtf8FileStream class categoriesForMethods!
+encodingType!constants!public! !
+!
 

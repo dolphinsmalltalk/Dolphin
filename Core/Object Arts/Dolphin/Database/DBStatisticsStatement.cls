@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBSchemaStatement subclass: #DBStatisticsStatement
 	instanceVariableNames: 'type accurate'
@@ -47,11 +47,13 @@ type: statisticsTypeInteger
 
 unique: aBoolean 
 	self type: (aBoolean ifTrue: [SQL_INDEX_UNIQUE] ifFalse: [SQL_INDEX_ALL])! !
-!DBStatisticsStatement categoriesFor: #accurate!accessing!public! !
-!DBStatisticsStatement categoriesFor: #accurate:!accessing!public! !
-!DBStatisticsStatement categoriesFor: #executeStatement!operations!private! !
-!DBStatisticsStatement categoriesFor: #initialize:!initializing!private!searching! !
-!DBStatisticsStatement categoriesFor: #type!accessing!public! !
-!DBStatisticsStatement categoriesFor: #type:!accessing!public! !
-!DBStatisticsStatement categoriesFor: #unique:!accessing!public! !
+!DBStatisticsStatement categoriesForMethods!
+accurate!accessing!public! !
+accurate:!accessing!public! !
+executeStatement!operations!private! !
+initialize:!initializing!private!searching! !
+type!accessing!public! !
+type:!accessing!public! !
+unique:!accessing!public! !
+!
 

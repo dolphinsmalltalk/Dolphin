@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Association subclass: #VariableBinding
 	instanceVariableNames: ''
@@ -20,7 +20,9 @@ displayString
 
 refersToLiteral: anObject
 	^self == anObject! !
-!VariableBinding categoriesFor: #displayOn:!printing!public! !
-!VariableBinding categoriesFor: #displayString!displaying!public! !
-!VariableBinding categoriesFor: #refersToLiteral:!private!testing! !
+!VariableBinding categoriesForMethods!
+displayOn:!printing!public! !
+displayString!displaying!public! !
+refersToLiteral:!private!testing! !
+!
 

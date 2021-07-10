@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #CUSTDATAITEM
 	instanceVariableNames: ''
@@ -23,8 +23,10 @@ varValue
 	"Answer the <VARIANT> value of the receiver's 'varValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varValue! !
-!CUSTDATAITEM categoriesFor: #guid!**compiled accessors**!public! !
-!CUSTDATAITEM categoriesFor: #varValue!**compiled accessors**!public! !
+!CUSTDATAITEM categoriesForMethods!
+guid!**compiled accessors**!public! !
+varValue!**compiled accessors**!public! !
+!
 
 !CUSTDATAITEM class methodsFor!
 
@@ -45,6 +47,8 @@ defineFields
 
 getFieldNames
 	^#(#guid #varValue)! !
-!CUSTDATAITEM class categoriesFor: #defineFields!public!template definition! !
-!CUSTDATAITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CUSTDATAITEM class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

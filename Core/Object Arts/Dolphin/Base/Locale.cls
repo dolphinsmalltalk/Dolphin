@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
@@ -660,66 +660,68 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self subclassResponsibility! !
-!Locale categoriesFor: #amDesignator!constants!public! !
-!Locale categoriesFor: #dateAndTimeFormatters!printing!private! !
-!Locale categoriesFor: #dateFormat!constants!public! !
-!Locale categoriesFor: #dayOfWeek:!mapping!public! !
-!Locale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!Locale categoriesFor: #dayOfWeekName:!constants!public! !
-!Locale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!Locale categoriesFor: #decimalPlaces!constants!public! !
-!Locale categoriesFor: #decimalSeparator!constants!public! !
-!Locale categoriesFor: #displayDate:on:!printing!public! !
-!Locale categoriesFor: #displayDateTime:on:!printing!public! !
-!Locale categoriesFor: #displayDuration:on:!printing!public! !
-!Locale categoriesFor: #displayFloat:on:!printing!public! !
-!Locale categoriesFor: #displayName!displaying!public! !
-!Locale categoriesFor: #displayTime:on:!printing!public! !
-!Locale categoriesFor: #durationFormat!constants!public! !
-!Locale categoriesFor: #durationFormatters!printing!private! !
-!Locale categoriesFor: #englishDisplayName!constants!public! !
-!Locale categoriesFor: #englishLanguageName!constants!public! !
-!Locale categoriesFor: #firstDayOfWeek!constants!public! !
-!Locale categoriesFor: #getNumberFormat!helpers!private! !
-!Locale categoriesFor: #hasLeadingZero!constants!public! !
-!Locale categoriesFor: #indexOfMonth:!enquiries!public! !
-!Locale categoriesFor: #infinity!constants!public! !
-!Locale categoriesFor: #lastTwoDigitYear!constants!public! !
-!Locale categoriesFor: #lcid!accessing!public! !
-!Locale categoriesFor: #listSeparator!constants!public! !
-!Locale categoriesFor: #longDateFormat!constants!public! !
-!Locale categoriesFor: #longTimeFormat!constants!public! !
-!Locale categoriesFor: #monthAbbreviation:!enquiries!public! !
-!Locale categoriesFor: #monthName:!enquiries!public! !
-!Locale categoriesFor: #name!constants!public! !
-!Locale categoriesFor: #nan!constants!public! !
-!Locale categoriesFor: #nativeDigits!constants!public! !
-!Locale categoriesFor: #negativeInfinity!constants!public! !
-!Locale categoriesFor: #negativeNumberMode!constants!public! !
-!Locale categoriesFor: #negativeSign!constants!public! !
-!Locale categoriesFor: #numberFormat!constants!public! !
-!Locale categoriesFor: #numberFormat:!accessing!private! !
-!Locale categoriesFor: #numberGrouping!constants!public! !
-!Locale categoriesFor: #percentSymbol!constants!public! !
-!Locale categoriesFor: #pmDesignator!constants!public! !
-!Locale categoriesFor: #print:on:format:alphabet:formatters:!printing!private! !
-!Locale categoriesFor: #printDate:on:format:!printing!public! !
-!Locale categoriesFor: #printDateTime:on:format:!printing!public! !
-!Locale categoriesFor: #printDuration:on:format:!printing!public! !
-!Locale categoriesFor: #printFloat:!printing!public! !
-!Locale categoriesFor: #printFloat:format:!printing!public! !
-!Locale categoriesFor: #printFloat:format:lcid:!printing!public! !
-!Locale categoriesFor: #printFloat:on:format:!printing!public! !
-!Locale categoriesFor: #printFractionalPart:on:places:!printing!private! !
-!Locale categoriesFor: #printTime:on:format:!printing!public! !
-!Locale categoriesFor: #shortAmDesignator!constants!public! !
-!Locale categoriesFor: #shortDateFormat!constants!public! !
-!Locale categoriesFor: #shortPmDesignator!constants!public! !
-!Locale categoriesFor: #shortTimeFormat!constants!public! !
-!Locale categoriesFor: #tag!constants!public! !
-!Locale categoriesFor: #thousandSeparator!constants!public! !
-!Locale categoriesFor: #timeFormat!constants!public! !
-!Locale categoriesFor: #yearMonthFormat!constants!public! !
+!Locale categoriesForMethods!
+amDesignator!constants!public! !
+dateAndTimeFormatters!printing!private! !
+dateFormat!constants!public! !
+dayOfWeek:!mapping!public! !
+dayOfWeekAbbreviation:!constants!public! !
+dayOfWeekName:!constants!public! !
+dayOfWeekShortAbbreviation:!constants!public! !
+decimalPlaces!constants!public! !
+decimalSeparator!constants!public! !
+displayDate:on:!printing!public! !
+displayDateTime:on:!printing!public! !
+displayDuration:on:!printing!public! !
+displayFloat:on:!printing!public! !
+displayName!displaying!public! !
+displayTime:on:!printing!public! !
+durationFormat!constants!public! !
+durationFormatters!printing!private! !
+englishDisplayName!constants!public! !
+englishLanguageName!constants!public! !
+firstDayOfWeek!constants!public! !
+getNumberFormat!helpers!private! !
+hasLeadingZero!constants!public! !
+indexOfMonth:!enquiries!public! !
+infinity!constants!public! !
+lastTwoDigitYear!constants!public! !
+lcid!accessing!public! !
+listSeparator!constants!public! !
+longDateFormat!constants!public! !
+longTimeFormat!constants!public! !
+monthAbbreviation:!enquiries!public! !
+monthName:!enquiries!public! !
+name!constants!public! !
+nan!constants!public! !
+nativeDigits!constants!public! !
+negativeInfinity!constants!public! !
+negativeNumberMode!constants!public! !
+negativeSign!constants!public! !
+numberFormat!constants!public! !
+numberFormat:!accessing!private! !
+numberGrouping!constants!public! !
+percentSymbol!constants!public! !
+pmDesignator!constants!public! !
+print:on:format:alphabet:formatters:!printing!private! !
+printDate:on:format:!printing!public! !
+printDateTime:on:format:!printing!public! !
+printDuration:on:format:!printing!public! !
+printFloat:!printing!public! !
+printFloat:format:!printing!public! !
+printFloat:format:lcid:!printing!public! !
+printFloat:on:format:!printing!public! !
+printFractionalPart:on:places:!printing!private! !
+printTime:on:format:!printing!public! !
+shortAmDesignator!constants!public! !
+shortDateFormat!constants!public! !
+shortPmDesignator!constants!public! !
+shortTimeFormat!constants!public! !
+tag!constants!public! !
+thousandSeparator!constants!public! !
+timeFormat!constants!public! !
+yearMonthFormat!constants!public! !
+!
 
 !Locale class methodsFor!
 
@@ -835,22 +837,24 @@ userDefault: aLocale
 	oldDefault := UserDefault.
 	UserDefault := aLocale.
 	^oldDefault! !
-!Locale class categoriesFor: #default!accessing!public! !
-!Locale class categoriesFor: #getTimeZoneInfo!enquiries!public! !
-!Locale class categoriesFor: #initialize!class initialization!public! !
-!Locale class categoriesFor: #installedSystemLocales!enquiries!private! !
-!Locale class categoriesFor: #invariant!instance creation!public! !
-!Locale class categoriesFor: #lcid:!instance creation!public! !
-!Locale class categoriesFor: #makeLangId:subLang:!enquiries!private! !
-!Locale class categoriesFor: #makeLcId:sortId:!enquiries!private! !
-!Locale class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Locale class categoriesFor: #onSettingChanged:!event handling!private! !
-!Locale class categoriesFor: #onStartup!event handling!private! !
-!Locale class categoriesFor: #reset!initializing!private! !
-!Locale class categoriesFor: #smalltalk!instance creation!public! !
-!Locale class categoriesFor: #supportedSystemLocales!enquiries!private! !
-!Locale class categoriesFor: #systemDefault!instance creation!public! !
-!Locale class categoriesFor: #timeZoneInformation!enquiries!public! !
-!Locale class categoriesFor: #userDefault!instance creation!public! !
-!Locale class categoriesFor: #userDefault:!instance creation!public! !
+!Locale class categoriesForMethods!
+default!accessing!public! !
+getTimeZoneInfo!enquiries!public! !
+initialize!class initialization!public! !
+installedSystemLocales!enquiries!private! !
+invariant!instance creation!public! !
+lcid:!instance creation!public! !
+makeLangId:subLang:!enquiries!private! !
+makeLcId:sortId:!enquiries!private! !
+onPreStripImage!class hierarchy-removing!private! !
+onSettingChanged:!event handling!private! !
+onStartup!event handling!private! !
+reset!initializing!private! !
+smalltalk!instance creation!public! !
+supportedSystemLocales!enquiries!private! !
+systemDefault!instance creation!public! !
+timeZoneInformation!enquiries!public! !
+userDefault!instance creation!public! !
+userDefault:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #AspectBuffer
 	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
@@ -124,21 +124,23 @@ value
 	"Answer the copy of the subject model"
 
 	^subjectCopy! !
-!AspectBuffer categoriesFor: #apply!commands!public! !
-!AspectBuffer categoriesFor: #aspectValue:!accessing!public! !
-!AspectBuffer categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!AspectBuffer categoriesFor: #gate!accessing!public! !
-!AspectBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
-!AspectBuffer categoriesFor: #initialize!initializing!private! !
-!AspectBuffer categoriesFor: #isValid!public!testing! !
-!AspectBuffer categoriesFor: #isValidBlock!accessing!public! !
-!AspectBuffer categoriesFor: #isValidBlock:!accessing!not an aspect!public! !
-!AspectBuffer categoriesFor: #notifyChanged!operations!public! !
-!AspectBuffer categoriesFor: #onGateChanged!event handling!private! !
-!AspectBuffer categoriesFor: #revert!commands!public! !
-!AspectBuffer categoriesFor: #subject!accessing!public! !
-!AspectBuffer categoriesFor: #subject:!accessing!not an aspect!public! !
-!AspectBuffer categoriesFor: #value!accessing!public! !
+!AspectBuffer categoriesForMethods!
+apply!commands!public! !
+aspectValue:!accessing!public! !
+doesNotUnderstand:!exceptions!public! !
+gate!accessing!public! !
+gate:!accessing!not an aspect!public! !
+initialize!initializing!private! !
+isValid!public!testing! !
+isValidBlock!accessing!public! !
+isValidBlock:!accessing!not an aspect!public! !
+notifyChanged!operations!public! !
+onGateChanged!event handling!private! !
+revert!commands!public! !
+subject!accessing!public! !
+subject:!accessing!not an aspect!public! !
+value!accessing!public! !
+!
 
 !AspectBuffer class methodsFor!
 
@@ -157,7 +159,9 @@ subject: aSubjectModel
 
 	^super new subject: aSubjectModel
 ! !
-!AspectBuffer class categoriesFor: #icon!constants!development!public! !
-!AspectBuffer class categoriesFor: #new!instance creation!private! !
-!AspectBuffer class categoriesFor: #subject:!instance creation!public! !
+!AspectBuffer class categoriesForMethods!
+icon!constants!development!public! !
+new!instance creation!private! !
+subject:!instance creation!public! !
+!
 

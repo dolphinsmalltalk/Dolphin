@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMNode subclass: #IXMLDOMNotation
 	instanceVariableNames: ''
@@ -97,15 +97,17 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
-!IXMLDOMNotation categoriesFor: #childNodes!properties!public! !
-!IXMLDOMNotation categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
-!IXMLDOMNotation categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
-!IXMLDOMNotation categoriesFor: #key!accessing!public! !
-!IXMLDOMNotation categoriesFor: #key:!accessing!public! !
-!IXMLDOMNotation categoriesFor: #publicId!**auto generated**!properties!public! !
-!IXMLDOMNotation categoriesFor: #systemId!**auto generated**!properties!public! !
-!IXMLDOMNotation categoriesFor: #value!accessing!public! !
-!IXMLDOMNotation categoriesFor: #value:!accessing!public! !
+!IXMLDOMNotation categoriesForMethods!
+childNodes!properties!public! !
+get_publicId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
+get_systemId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
+key!accessing!public! !
+key:!accessing!public! !
+publicId!**auto generated**!properties!public! !
+systemId!**auto generated**!properties!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 IXMLDOMNotation methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -121,5 +123,7 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'variant*'
 ! !
-!IXMLDOMNotation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMNotation class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

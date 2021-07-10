@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #VariableEnvironment
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
@@ -340,48 +340,50 @@ storeOn: aStream
 			(self perform: each) storeOn: aStream.
 			aStream nextPutAll: '; '].
 	aStream nextPutAll: ' yourself)'! !
-!VariableEnvironment categoriesFor: #accessorMethods!constants!private! !
-!VariableEnvironment categoriesFor: #addClass:classVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #addClass:instanceVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #addClass:instanceVariableReader:!accessing!public! !
-!VariableEnvironment categoriesFor: #addClass:instanceVariableWriter:!accessing!public! !
-!VariableEnvironment categoriesFor: #allClassesDo:!enumerating!private! !
-!VariableEnvironment categoriesFor: #classForName:!helpers!private! !
-!VariableEnvironment categoriesFor: #classNamesWithVariables!accessing!public! !
-!VariableEnvironment categoriesFor: #classVariables!accessing!private! !
-!VariableEnvironment categoriesFor: #classVariables:!accessing!private! !
-!VariableEnvironment categoriesFor: #classVariableSelectorsFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #classVariablesFor:!accessing!public! !
-!VariableEnvironment categoriesFor: #computeSelectorCacheFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #copyDictionary:!copying!public! !
-!VariableEnvironment categoriesFor: #environmentForClassVariable:in:!accessing!public! !
-!VariableEnvironment categoriesFor: #environmentForInstanceVariable:in:!accessing!public! !
-!VariableEnvironment categoriesFor: #flushCachesFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #includesCategory:!public!testing! !
-!VariableEnvironment categoriesFor: #includesClass:!public!testing! !
-!VariableEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!VariableEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!VariableEnvironment categoriesFor: #initialize!initialize/release!public! !
-!VariableEnvironment categoriesFor: #instanceVariableReaders!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariableReaders:!public! !
-!VariableEnvironment categoriesFor: #instanceVariables!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariables:!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariableSelectorsFor:!helpers!private! !
-!VariableEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
-!VariableEnvironment categoriesFor: #instanceVariableWriters!accessing!private! !
-!VariableEnvironment categoriesFor: #instanceVariableWriters:!accessing!private! !
-!VariableEnvironment categoriesFor: #instVarsFor:in:!helpers!private! !
-!VariableEnvironment categoriesFor: #isEmpty!public!testing! !
-!VariableEnvironment categoriesFor: #lookupTableClass!constants!private! !
-!VariableEnvironment categoriesFor: #numberVariables!accessing!public! !
-!VariableEnvironment categoriesFor: #postCopy!copying!public! !
-!VariableEnvironment categoriesFor: #problemCount!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:classVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:instanceVariable:!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:instanceVariableReader:!accessing!public! !
-!VariableEnvironment categoriesFor: #removeClass:instanceVariableWriter:!accessing!public! !
-!VariableEnvironment categoriesFor: #selectorCacheFor:!accessing!private! !
-!VariableEnvironment categoriesFor: #storeOn:!printing!public! !
+!VariableEnvironment categoriesForMethods!
+accessorMethods!constants!private! !
+addClass:classVariable:!accessing!public! !
+addClass:instanceVariable:!accessing!public! !
+addClass:instanceVariableReader:!accessing!public! !
+addClass:instanceVariableWriter:!accessing!public! !
+allClassesDo:!enumerating!private! !
+classForName:!helpers!private! !
+classNamesWithVariables!accessing!public! !
+classVariables!accessing!private! !
+classVariables:!accessing!private! !
+classVariableSelectorsFor:!helpers!private! !
+classVariablesFor:!accessing!public! !
+computeSelectorCacheFor:!helpers!private! !
+copyDictionary:!copying!public! !
+environmentForClassVariable:in:!accessing!public! !
+environmentForInstanceVariable:in:!accessing!public! !
+flushCachesFor:!helpers!private! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+initialize!initialize/release!public! !
+instanceVariableReaders!accessing!private! !
+instanceVariableReaders:!public! !
+instanceVariables!accessing!private! !
+instanceVariables:!accessing!private! !
+instanceVariableSelectorsFor:!helpers!private! !
+instanceVariablesFor:!accessing!public! !
+instanceVariableWriters!accessing!private! !
+instanceVariableWriters:!accessing!private! !
+instVarsFor:in:!helpers!private! !
+isEmpty!public!testing! !
+lookupTableClass!constants!private! !
+numberVariables!accessing!public! !
+postCopy!copying!public! !
+problemCount!accessing!public! !
+removeClass:classVariable:!accessing!public! !
+removeClass:instanceVariable:!accessing!public! !
+removeClass:instanceVariableReader:!accessing!public! !
+removeClass:instanceVariableWriter:!accessing!public! !
+selectorCacheFor:!accessing!private! !
+storeOn:!printing!public! !
+!
 
 !VariableEnvironment class methodsFor!
 
@@ -432,12 +434,14 @@ writersOfInstanceVariable: aString in: aClass
 		on: BrowserEnvironment new
 		writersOfInstanceVariable: aString
 		in: aClass! !
-!VariableEnvironment class categoriesFor: #on:readersOfInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #on:referencesToClassVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #on:referencesToInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #on:writersOfInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #readersOfInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #referencesToClassVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #referencesToInstanceVariable:in:!instance creation!public! !
-!VariableEnvironment class categoriesFor: #writersOfInstanceVariable:in:!instance creation!public! !
+!VariableEnvironment class categoriesForMethods!
+on:readersOfInstanceVariable:in:!instance creation!public! !
+on:referencesToClassVariable:in:!instance creation!public! !
+on:referencesToInstanceVariable:in:!instance creation!public! !
+on:writersOfInstanceVariable:in:!instance creation!public! !
+readersOfInstanceVariable:in:!instance creation!public! !
+referencesToClassVariable:in:!instance creation!public! !
+referencesToInstanceVariable:in:!instance creation!public! !
+writersOfInstanceVariable:in:!instance creation!public! !
+!
 

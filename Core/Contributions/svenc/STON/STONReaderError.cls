@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #STONReaderError
 	instanceVariableNames: 'streamPosition'
@@ -24,9 +24,11 @@ streamPosition
 
 streamPosition: aNumber
 	streamPosition := aNumber! !
-!STONReaderError categoriesFor: #messageText!accessing!public! !
-!STONReaderError categoriesFor: #streamPosition!accessing!public! !
-!STONReaderError categoriesFor: #streamPosition:!accessing!public! !
+!STONReaderError categoriesForMethods!
+messageText!accessing!public! !
+streamPosition!accessing!public! !
+streamPosition:!accessing!public! !
+!
 
 !STONReaderError class methodsFor!
 
@@ -35,5 +37,7 @@ signal: aString streamPosition: streamPosition
 		streamPosition: streamPosition;
 		signal: aString;
 		yourself! !
-!STONReaderError class categoriesFor: #signal:streamPosition:!instance creation!public! !
+!STONReaderError class categoriesForMethods!
+signal:streamPosition:!instance creation!public! !
+!
 

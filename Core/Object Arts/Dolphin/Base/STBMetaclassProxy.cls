@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBClassProxy subclass: #STBMetaclassProxy
 	instanceVariableNames: ''
@@ -22,8 +22,10 @@ resolveWithClassLocator: aClassLocator
 withClassLocator: aClassLocator
 	^(Smalltalk lookup: #MetaclassStub)
 		ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
-!STBMetaclassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
-!STBMetaclassProxy categoriesFor: #withClassLocator:!converting!private! !
+!STBMetaclassProxy categoriesForMethods!
+resolveWithClassLocator:!converting!private! !
+withClassLocator:!converting!private! !
+!
 
 !STBMetaclassProxy class methodsFor!
 
@@ -31,5 +33,7 @@ forClass: aMetaclass
 	"Answer a new instance representing aMetaclass."
 
 	^super forClass: aMetaclass instanceClass! !
-!STBMetaclassProxy class categoriesFor: #forClass:!instance creation!public! !
+!STBMetaclassProxy class categoriesForMethods!
+forClass:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedGrowableCollection subclass: #ListModel
 	instanceVariableNames: 'list events searchPolicy'
@@ -301,43 +301,45 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!ListModel categoriesFor: #add:!adding!public! !
-!ListModel categoriesFor: #add:afterIndex:!adding!public! !
-!ListModel categoriesFor: #addAll:!adding!public! !
-!ListModel categoriesFor: #addAnsweringIndex:!adding!public! !
-!ListModel categoriesFor: #at:!accessing!public! !
-!ListModel categoriesFor: #at:put:!accessing!public! !
-!ListModel categoriesFor: #beSorted!public!sorting! !
-!ListModel categoriesFor: #beSorted:!public!sorting! !
-!ListModel categoriesFor: #beUnsorted!public!sorting! !
-!ListModel categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!ListModel categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!ListModel categoriesFor: #getEvents!events!private! !
-!ListModel categoriesFor: #includes:!public!searching! !
-!ListModel categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!ListModel categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!ListModel categoriesFor: #list!accessing!public! !
-!ListModel categoriesFor: #list:!accessing!public! !
-!ListModel categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!ListModel categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!ListModel categoriesFor: #notifyItem:updatedAtIndex:!private!updating! !
-!ListModel categoriesFor: #notifyListChanged!private!updating! !
-!ListModel categoriesFor: #postCopy!copying!public! !
-!ListModel categoriesFor: #refresh:!public!updating! !
-!ListModel categoriesFor: #refresh:ifAbsent:!public!updating! !
-!ListModel categoriesFor: #refreshAtIndex:!public!updating! !
-!ListModel categoriesFor: #removeAll!public!removing! !
-!ListModel categoriesFor: #removeAtIndex:!public!removing! !
-!ListModel categoriesFor: #resize:!mutating!private! !
-!ListModel categoriesFor: #searchPolicy!accessing!public! !
-!ListModel categoriesFor: #searchPolicy:!accessing!public! !
-!ListModel categoriesFor: #select:!enumerating!public! !
-!ListModel categoriesFor: #setEvents:!events!private! !
-!ListModel categoriesFor: #setList:searchPolicy:!initializing!private! !
-!ListModel categoriesFor: #size!accessing!public! !
-!ListModel categoriesFor: #sortAlgorithmClass!public!sorting! !
-!ListModel categoriesFor: #species!constants!public! !
-!ListModel categoriesFor: #stbSaveOn:!binary filing!public! !
+!ListModel categoriesForMethods!
+add:!adding!public! !
+add:afterIndex:!adding!public! !
+addAll:!adding!public! !
+addAnsweringIndex:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+beSorted!public!sorting! !
+beSorted:!public!sorting! !
+beUnsorted!public!sorting! !
+from:keysAndValuesDo:!enumerating!public! !
+from:to:keysAndValuesDo:!enumerating!public! !
+getEvents!events!private! !
+includes:!public!searching! !
+keyAtValue:ifAbsent:!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+list!accessing!public! !
+list:!accessing!public! !
+nextIdentityIndexOf:from:to:!public!searching! !
+nextIndexOf:from:to:!public!searching! !
+notifyItem:updatedAtIndex:!private!updating! !
+notifyListChanged!private!updating! !
+postCopy!copying!public! !
+refresh:!public!updating! !
+refresh:ifAbsent:!public!updating! !
+refreshAtIndex:!public!updating! !
+removeAll!public!removing! !
+removeAtIndex:!public!removing! !
+resize:!mutating!private! !
+searchPolicy!accessing!public! !
+searchPolicy:!accessing!public! !
+select:!enumerating!public! !
+setEvents:!events!private! !
+setList:searchPolicy:!initializing!private! !
+size!accessing!public! !
+sortAlgorithmClass!public!sorting! !
+species!constants!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 ListModel methodProtocol: #listModel attributes: #(#readOnly) selectors: #(#list #list:)!
 ListModel methodProtocol: #model attributes: #(#readOnly) selectors: #()!
@@ -398,13 +400,15 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^2! !
-!ListModel class categoriesFor: #defaultSearchPolicy!constants!public! !
-!ListModel class categoriesFor: #new!instance creation!public! !
-!ListModel class categoriesFor: #new:!instance creation!public! !
-!ListModel class categoriesFor: #newEquality!instance creation!public! !
-!ListModel class categoriesFor: #newWithSearchPolicy:!instance creation!public! !
-!ListModel class categoriesFor: #on:!instance creation!public! !
-!ListModel class categoriesFor: #on:searchPolicy:!instance creation!public! !
-!ListModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ListModel class categoriesFor: #stbVersion!binary filing!public! !
+!ListModel class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+new!instance creation!public! !
+new:!instance creation!public! !
+newEquality!instance creation!public! !
+newWithSearchPolicy:!instance creation!public! !
+on:!instance creation!public! !
+on:searchPolicy:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

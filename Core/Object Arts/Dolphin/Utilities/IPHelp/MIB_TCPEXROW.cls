@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MIB_TCPROW subclass: #MIB_TCPEXROW
 	instanceVariableNames: ''
@@ -32,7 +32,9 @@ dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
-!MIB_TCPEXROW categoriesFor: #dwProcessId!**compiled accessors**!public! !
+!MIB_TCPEXROW categoriesForMethods!
+dwProcessId!**compiled accessors**!public! !
+!
 
 !MIB_TCPEXROW class methodsFor!
 
@@ -60,6 +62,8 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort #dwProcessId)! !
-!MIB_TCPEXROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_TCPEXROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_TCPEXROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

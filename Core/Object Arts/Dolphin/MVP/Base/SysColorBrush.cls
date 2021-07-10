@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StockBrush subclass: #SysColorBrush
 	instanceVariableNames: ''
@@ -37,9 +37,11 @@ printOn: aStream
 		space;
 		print: self color;
 		nextPut: $)! !
-!SysColorBrush categoriesFor: #color!accessing!public! !
-!SysColorBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!SysColorBrush categoriesFor: #printOn:!development!printing!public! !
+!SysColorBrush categoriesForMethods!
+color!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+printOn:!development!printing!public! !
+!
 
 !SysColorBrush class methodsFor!
 
@@ -47,5 +49,7 @@ newColor: aSystemColor
 	"Private - Answer a new instance of the receiver for painting in the specified solid colour."
 
 	^self fromId: aSystemColor id! !
-!SysColorBrush class categoriesFor: #newColor:!instance creation!private! !
+!SysColorBrush class categoriesForMethods!
+newColor:!instance creation!private! !
+!
 

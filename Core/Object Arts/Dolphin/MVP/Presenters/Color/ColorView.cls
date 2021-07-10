@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticView subclass: #ColorView
 	instanceVariableNames: ''
@@ -32,10 +32,12 @@ paintTransparentBackgroundOn: aCanvas
 	aCanvas
 		brush: (HatchBrush diamond: Color whiteSmoke);
 		fillRectangle: self clientRectangle! !
-!ColorView categoriesFor: #basicActualBackcolor!accessing!private! !
-!ColorView categoriesFor: #displayValue!private!updating! !
-!ColorView categoriesFor: #displayValue:!private!updating! !
-!ColorView categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
+!ColorView categoriesForMethods!
+basicActualBackcolor!accessing!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+paintTransparentBackgroundOn:!private!updating! !
+!
 
 !ColorView class methodsFor!
 
@@ -48,6 +50,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ColorView class categoriesFor: #defaultModel!models!public! !
-!ColorView class categoriesFor: #icon!constants!public! !
+!ColorView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

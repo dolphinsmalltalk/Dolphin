@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ RequestQueueHandle: anExternalHandle
 	"Set the receiver's 'RequestQueueHandle' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_RequestQueueHandle put: anExternalHandle! !
-!HTTP_BINDING_INFO categoriesFor: #requestQueueHandle!accessing!public! !
-!HTTP_BINDING_INFO categoriesFor: #RequestQueueHandle!**compiled accessors**!public! !
-!HTTP_BINDING_INFO categoriesFor: #requestQueueHandle:!accessing!public! !
-!HTTP_BINDING_INFO categoriesFor: #RequestQueueHandle:!**compiled accessors**!public! !
+!HTTP_BINDING_INFO categoriesForMethods!
+requestQueueHandle!accessing!public! !
+RequestQueueHandle!**compiled accessors**!public! !
+requestQueueHandle:!accessing!public! !
+RequestQueueHandle:!**compiled accessors**!public! !
+!
 
 !HTTP_BINDING_INFO class methodsFor!
 
@@ -77,7 +79,9 @@ getFieldNames
 
 propertyId
 	^HttpServerBindingProperty! !
-!HTTP_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_BINDING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_BINDING_INFO class categoriesFor: #propertyId!public! !
+!HTTP_BINDING_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

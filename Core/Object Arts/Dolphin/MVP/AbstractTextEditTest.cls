@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PresenterTest subclass: #AbstractTextEditTest
 	instanceVariableNames: ''
@@ -47,8 +47,10 @@ testPositionOfChar
 
 text
 	^self subclassResponsibility! !
-!AbstractTextEditTest categoriesFor: #margins!private!unit tests! !
-!AbstractTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
-!AbstractTextEditTest categoriesFor: #testPositionOfChar!public!unit tests! !
-!AbstractTextEditTest categoriesFor: #text!constants!private! !
+!AbstractTextEditTest categoriesForMethods!
+margins!private!unit tests! !
+nonProportionalFont!constants!private! !
+testPositionOfChar!public!unit tests! !
+text!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusBrush
 	instanceVariableNames: ''
@@ -28,8 +28,10 @@ clone
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself! !
-!GdiplusBrush categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusBrush categoriesFor: #clone!copying!public! !
+!GdiplusBrush categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+clone!copying!public! !
+!
 
 !GdiplusBrush class methodsFor!
 
@@ -37,5 +39,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Brush icon! !
-!GdiplusBrush class categoriesFor: #icon!constants!development!public! !
+!GdiplusBrush class categoriesForMethods!
+icon!constants!development!public! !
+!
 

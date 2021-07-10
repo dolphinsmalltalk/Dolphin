@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RBStringReplacement
 	instanceVariableNames: 'startPosition stopPosition string'
@@ -27,12 +27,14 @@ string
 
 string: aString 
 	string := aString! !
-!RBStringReplacement categoriesFor: #startPosition!accessing!public! !
-!RBStringReplacement categoriesFor: #startPosition:!accessing!private! !
-!RBStringReplacement categoriesFor: #stopPosition!accessing!public! !
-!RBStringReplacement categoriesFor: #stopPosition:!accessing!private! !
-!RBStringReplacement categoriesFor: #string!accessing!public! !
-!RBStringReplacement categoriesFor: #string:!accessing!private! !
+!RBStringReplacement categoriesForMethods!
+startPosition!accessing!public! !
+startPosition:!accessing!private! !
+stopPosition!accessing!public! !
+stopPosition:!accessing!private! !
+string!accessing!public! !
+string:!accessing!private! !
+!
 
 !RBStringReplacement class methodsFor!
 
@@ -42,5 +44,7 @@ replaceFrom: startInteger to: stopInteger with: aString
 		stopPosition: stopInteger;
 		string: aString;
 		yourself! !
-!RBStringReplacement class categoriesFor: #replaceFrom:to:with:!instance creation!public! !
+!RBStringReplacement class categoriesForMethods!
+replaceFrom:to:with:!instance creation!public! !
+!
 

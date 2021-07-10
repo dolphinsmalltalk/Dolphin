@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractContainerViewTest subclass: #StyledContainerTest
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ parentBackcolor
 
 styledBorderColor
 	^Color blue! !
-!StyledContainerTest categoriesFor: #containerClass!private! !
-!StyledContainerTest categoriesFor: #parentBackcolor!private! !
-!StyledContainerTest categoriesFor: #styledBorderColor!private! !
+!StyledContainerTest categoriesForMethods!
+containerClass!private! !
+parentBackcolor!private! !
+styledBorderColor!private! !
+!
 

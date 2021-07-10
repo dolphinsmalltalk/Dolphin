@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #IntervalFactoryANSITest
 	instanceVariableNames: ''
@@ -23,8 +23,10 @@ testXfromXtoX
 testXfromXtoXbyX
 	" <Interval factory>#from:to:by: "
 	#'Collection'.! !
-!IntervalFactoryANSITest categoriesFor: #canonicalObject!public! !
-!IntervalFactoryANSITest categoriesFor: #protocol!public! !
-!IntervalFactoryANSITest categoriesFor: #testXfromXtoX!public! !
-!IntervalFactoryANSITest categoriesFor: #testXfromXtoXbyX!public! !
+!IntervalFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXfromXtoX!public! !
+testXfromXtoXbyX!public! !
+!
 

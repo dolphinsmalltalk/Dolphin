@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodSearch subclass: #MethodSourceSearch
 	instanceVariableNames: ''
@@ -51,9 +51,11 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^[:text | match match: text ignoreCase: ignoreCase]! !
-!MethodSourceSearch categoriesFor: #methodFilter:!helpers!private! !
-!MethodSourceSearch categoriesFor: #methodReferenceFilter!helpers!private! !
-!MethodSourceSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
-!MethodSourceSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
-!MethodSourceSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
+!MethodSourceSearch categoriesForMethods!
+methodFilter:!helpers!private! !
+methodReferenceFilter!helpers!private! !
+regexpReferenceFilter!helpers!private! !
+simpleReferenceFilter!helpers!private! !
+wildcardReferenceFilter!helpers!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #NotFoundError
 	instanceVariableNames: 'receiver'
@@ -24,7 +24,9 @@ receiver: anObject
 	"Set the object which generated the error to be anObject"
 	
 	receiver := anObject! !
-!NotFoundError categoriesFor: #_descriptionFormat!displaying!public! !
-!NotFoundError categoriesFor: #receiver!accessing!public! !
-!NotFoundError categoriesFor: #receiver:!accessing!public! !
+!NotFoundError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 

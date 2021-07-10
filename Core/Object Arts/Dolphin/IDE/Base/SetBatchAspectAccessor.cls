@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IndexedInstVarBatchAccessor subclass: #SetBatchAspectAccessor
 	instanceVariableNames: ''
@@ -29,6 +29,8 @@ getBatchAccessors
 			i := i + 1].
 	(self nextBatch: i) ifNotNil: [:nextBatch | accessors add: nextBatch].
 	^accessors! !
-!SetBatchAspectAccessor categoriesFor: #aspectClass!public! !
-!SetBatchAspectAccessor categoriesFor: #getBatchAccessors!public! !
+!SetBatchAspectAccessor categoriesForMethods!
+aspectClass!public! !
+getBatchAccessors!public! !
+!
 

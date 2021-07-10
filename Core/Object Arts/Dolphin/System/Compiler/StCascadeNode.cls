@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StCascadeNode
 	instanceVariableNames: 'messages semicolons'
@@ -107,27 +107,29 @@ whichNodeIsContainedBy: anInterval
 				collect: [:each | each whichNodeIsContainedBy: anInterval]) 
 					reject: [:each | each isNil].
 	^selectedChildren detect: [:each | true] ifNone: [nil]! !
-!StCascadeNode categoriesFor: #=!comparing!public! !
-!StCascadeNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StCascadeNode categoriesFor: #addStatementCommentsTo:!accessing!private! !
-!StCascadeNode categoriesFor: #bestNodeFor:!public!querying! !
-!StCascadeNode categoriesFor: #children!accessing!public! !
-!StCascadeNode categoriesFor: #childrenDo:!accessing!public! !
-!StCascadeNode categoriesFor: #directlyUses:!public!testing! !
-!StCascadeNode categoriesFor: #hash!comparing!public! !
-!StCascadeNode categoriesFor: #isCascade!public!testing! !
-!StCascadeNode categoriesFor: #messages!accessing!public! !
-!StCascadeNode categoriesFor: #messages:!accessing!public! !
-!StCascadeNode categoriesFor: #messages:semicolons:!initializing!public! !
-!StCascadeNode categoriesFor: #needsParenthesis!public!testing! !
-!StCascadeNode categoriesFor: #postCopy!copying!public! !
-!StCascadeNode categoriesFor: #precedence!accessing!public! !
-!StCascadeNode categoriesFor: #receiver!accessing!public! !
-!StCascadeNode categoriesFor: #semicolons!accessing!public! !
-!StCascadeNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StCascadeNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StCascadeNode categoriesFor: #uses:!public!testing! !
-!StCascadeNode categoriesFor: #whichNodeIsContainedBy:!public!querying! !
+!StCascadeNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+addStatementCommentsTo:!accessing!private! !
+bestNodeFor:!public!querying! !
+children!accessing!public! !
+childrenDo:!accessing!public! !
+directlyUses:!public!testing! !
+hash!comparing!public! !
+isCascade!public!testing! !
+messages!accessing!public! !
+messages:!accessing!public! !
+messages:semicolons:!initializing!public! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+receiver!accessing!public! !
+semicolons!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+whichNodeIsContainedBy:!public!querying! !
+!
 
 !StCascadeNode class methodsFor!
 
@@ -136,6 +138,8 @@ messages: messageNodes
 
 messages: messageNodes semicolons: integerCollection 
 	^self new messages: messageNodes semicolons: integerCollection! !
-!StCascadeNode class categoriesFor: #messages:!instance creation!public! !
-!StCascadeNode class categoriesFor: #messages:semicolons:!instance creation!public! !
+!StCascadeNode class categoriesForMethods!
+messages:!instance creation!public! !
+messages:semicolons:!instance creation!public! !
+!
 

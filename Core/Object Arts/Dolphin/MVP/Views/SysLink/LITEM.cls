@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
@@ -163,30 +163,32 @@ url: aString
 	self
 		maskIn: LIF_URL;
 		szURL: text! !
-!LITEM categoriesFor: #handle!accessing!public! !
-!LITEM categoriesFor: #id!accessing!public! !
-!LITEM categoriesFor: #id:!accessing!public! !
-!LITEM categoriesFor: #iLink!**compiled accessors**!public! !
-!LITEM categoriesFor: #iLink:!**compiled accessors**!public! !
-!LITEM categoriesFor: #isEnabled!public!testing! !
-!LITEM categoriesFor: #isEnabled:!accessing!public! !
-!LITEM categoriesFor: #isFocused!public!testing! !
-!LITEM categoriesFor: #isVisited!public!testing! !
-!LITEM categoriesFor: #item!accessing!public! !
-!LITEM categoriesFor: #itemIndex:!accessing!public! !
-!LITEM categoriesFor: #mask!**compiled accessors**!public! !
-!LITEM categoriesFor: #mask:!**compiled accessors**!public! !
-!LITEM categoriesFor: #maskIn:!accessing!public! !
-!LITEM categoriesFor: #state!**compiled accessors**!public! !
-!LITEM categoriesFor: #state:!**compiled accessors**!public! !
-!LITEM categoriesFor: #stateMask!**compiled accessors**!public! !
-!LITEM categoriesFor: #stateMask:!**compiled accessors**!public! !
-!LITEM categoriesFor: #szID!**compiled accessors**!public! !
-!LITEM categoriesFor: #szID:!**compiled accessors**!public! !
-!LITEM categoriesFor: #szURL!**compiled accessors**!public! !
-!LITEM categoriesFor: #szURL:!**compiled accessors**!public! !
-!LITEM categoriesFor: #url!accessing!public! !
-!LITEM categoriesFor: #url:!accessing!public! !
+!LITEM categoriesForMethods!
+handle!accessing!public! !
+id!accessing!public! !
+id:!accessing!public! !
+iLink!**compiled accessors**!public! !
+iLink:!**compiled accessors**!public! !
+isEnabled!public!testing! !
+isEnabled:!accessing!public! !
+isFocused!public!testing! !
+isVisited!public!testing! !
+item!accessing!public! !
+itemIndex:!accessing!public! !
+mask!**compiled accessors**!public! !
+mask:!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+state!**compiled accessors**!public! !
+state:!**compiled accessors**!public! !
+stateMask!**compiled accessors**!public! !
+stateMask:!**compiled accessors**!public! !
+szID!**compiled accessors**!public! !
+szID:!**compiled accessors**!public! !
+szURL!**compiled accessors**!public! !
+szURL:!**compiled accessors**!public! !
+url!accessing!public! !
+url:!accessing!public! !
+!
 
 !LITEM class methodsFor!
 
@@ -206,6 +208,8 @@ defineFields
 
 getFieldNames
 	^#(#mask #iLink #state #stateMask #szID #szURL)! !
-!LITEM class categoriesFor: #defineFields!public!template definition! !
-!LITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LITEM class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LintRule subclass: #BasicLintRule
 	instanceVariableNames: 'result openSymbol'
@@ -64,19 +64,21 @@ resultClass: aClass
 
 viewResults
 	^self perform: openSymbol! !
-!BasicLintRule categoriesFor: #defaultResultClass!constants!private! !
-!BasicLintRule categoriesFor: #filteredResult!accessing!public! !
-!BasicLintRule categoriesFor: #initialize!initialize/release!public! !
-!BasicLintRule categoriesFor: #isEmpty!public!testing! !
-!BasicLintRule categoriesFor: #openUsing:!initialize/release!public! !
-!BasicLintRule categoriesFor: #openWithFilters!operations!private! !
-!BasicLintRule categoriesFor: #openWithoutFilters!operations!private! !
-!BasicLintRule categoriesFor: #problemCount!accessing!public! !
-!BasicLintRule categoriesFor: #resetResult!initialize/release!public! !
-!BasicLintRule categoriesFor: #result!accessing!public! !
-!BasicLintRule categoriesFor: #result:!initialize/release!public! !
-!BasicLintRule categoriesFor: #resultClass:!initialize/release!public! !
-!BasicLintRule categoriesFor: #viewResults!helpers!private! !
+!BasicLintRule categoriesForMethods!
+defaultResultClass!constants!private! !
+filteredResult!accessing!public! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+openUsing:!initialize/release!public! !
+openWithFilters!operations!private! !
+openWithoutFilters!operations!private! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+result!accessing!public! !
+result:!initialize/release!public! !
+resultClass:!initialize/release!public! !
+viewResults!helpers!private! !
+!
 
 !BasicLintRule class methodsFor!
 
@@ -115,10 +117,12 @@ storeFiltersOn: aStream
 	aStream
 		tab;
 		nextPutAll: 'yourself))'! !
-!BasicLintRule class categoriesFor: #addFilter:for:!accessing!public! !
-!BasicLintRule class categoriesFor: #filterDictionary!accessing!public! !
-!BasicLintRule class categoriesFor: #filterDictionary:!accessing!public! !
-!BasicLintRule class categoriesFor: #filterFor:!accessing!public! !
-!BasicLintRule class categoriesFor: #lintProtocols!accessing!public! !
-!BasicLintRule class categoriesFor: #storeFiltersOn:!public!storing! !
+!BasicLintRule class categoriesForMethods!
+addFilter:for:!accessing!public! !
+filterDictionary!accessing!public! !
+filterDictionary:!accessing!public! !
+filterFor:!accessing!public! !
+lintProtocols!accessing!public! !
+storeFiltersOn:!public!storing! !
+!
 

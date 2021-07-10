@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #MessageTest
 	instanceVariableNames: ''
@@ -23,5 +23,7 @@ testSelectorArguments
 	"Invoke the method directly so we don't need to install it."
 	msg2 := testMethod value: Message withArguments: #(#x:y: #(123 456)).
 	self assert: msg2 equals: msg1! !
-!MessageTest categoriesFor: #testSelectorArguments!public!unit tests! !
+!MessageTest categoriesForMethods!
+testSelectorArguments!public!unit tests! !
+!
 

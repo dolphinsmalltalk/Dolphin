@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusPenFromBrushInitializerTest
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ testCreateHandleDefaultWidth
 	self assert: constructorArgs first identicalTo: brush basicHandle.
 	self assert: constructorArgs second equals: 1.0.
 	self assertLastArgIsHandle! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #gdipCreatePen2:width:unit:pen:!accessing!public! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusPenFromBrushInitializerTest categoriesFor: #testCreateHandleDefaultWidth!public!unit tests! !
+!GdiplusPenFromBrushInitializerTest categoriesForMethods!
+gdipCreatePen2:width:unit:pen:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+testCreateHandleDefaultWidth!public!unit tests! !
+!
 

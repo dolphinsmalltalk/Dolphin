@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISAXXMLReader
 	instanceVariableNames: ''
@@ -347,35 +347,37 @@ PutSecureBaseURL: pwchSecureBaseUrl
 
 	<virtual stdcall: hresult 19 word*>
 	^self invalidCall: _failureCode! !
-!ISAXXMLReader categoriesFor: #getBaseURL!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #getContentHandler!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #getDTDHandler!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #getEntityResolver!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #getErrorHandler!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #getFeature:!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetFeature:pvfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #getProperty:!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetProperty:pvarValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #getSecureBaseURL!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #GetSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #parse!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #parse:!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #Parse:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #ParseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!ISAXXMLReader categoriesFor: #PutBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!ISAXXMLReader categoriesFor: #PutContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!ISAXXMLReader categoriesFor: #PutDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!ISAXXMLReader categoriesFor: #PutEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!ISAXXMLReader categoriesFor: #PutErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!ISAXXMLReader categoriesFor: #PutFeature:vfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
-!ISAXXMLReader categoriesFor: #putProperty:varValue:!**auto generated**!methods!public! !
-!ISAXXMLReader categoriesFor: #PutProperty:varValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
-!ISAXXMLReader categoriesFor: #PutSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+!ISAXXMLReader categoriesForMethods!
+getBaseURL!**auto generated**!methods!public! !
+GetBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getContentHandler!**auto generated**!methods!public! !
+GetContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getDTDHandler!**auto generated**!methods!public! !
+GetDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getEntityResolver!**auto generated**!methods!public! !
+GetEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getErrorHandler!**auto generated**!methods!public! !
+GetErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getFeature:!**auto generated**!methods!public! !
+GetFeature:pvfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getProperty:!**auto generated**!methods!public! !
+GetProperty:pvarValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+getSecureBaseURL!**auto generated**!methods!public! !
+GetSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+parse!**auto generated**!methods!public! !
+parse:!**auto generated**!methods!public! !
+Parse:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+ParseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutContentHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutDTDHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutEntityResolver:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutErrorHandler:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+PutFeature:vfValue:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+putProperty:varValue:!**auto generated**!methods!public! !
+PutProperty:varValue:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
+PutSecureBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!public! !
+!
 
 !ISAXXMLReader class methodsFor!
 
@@ -421,5 +423,7 @@ defineFunctions
 		defineFunction: #ParseURL:
 			argumentTypes: 'word*'
 ! !
-!ISAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISAXXMLReader class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

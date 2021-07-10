@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractFileStreamTest subclass: #StdioFileStreamTest
 	instanceVariableNames: ''
@@ -153,18 +153,20 @@ testNextLineUpToEof
 			actual := filestream nextLine.
 			self assert: actual equals: expected.
 			filestream close]! !
-!StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
-!StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
-!StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
-!StdioFileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!StdioFileStreamTest categoriesFor: #strings!constants!private! !
-!StdioFileStreamTest categoriesFor: #subjectCollection:!public! !
-!StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
-!StdioFileStreamTest categoriesFor: #testFromHandleOnDevice!public! !
-!StdioFileStreamTest categoriesFor: #testFromHandleOnFile!public! !
-!StdioFileStreamTest categoriesFor: #testFromHandleOnPipe!public! !
-!StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
-!StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
+!StdioFileStreamTest categoriesForMethods!
+bufferSize!constants!private! !
+maxPosition!constants!private! !
+streamClass!helpers!private! !
+streamOnFile:type:!helpers!private! !
+strings!constants!private! !
+subjectCollection:!public! !
+testCharacterTranslation!public!unit tests! !
+testFromHandleOnDevice!public! !
+testFromHandleOnFile!public! !
+testFromHandleOnPipe!public! !
+testNextLineCrOnly!public!unit tests! !
+testNextLineUpToEof!public!unit tests! !
+!
 
 !StdioFileStreamTest class methodsFor!
 
@@ -172,5 +174,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'strict utf8' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
-!StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
+!StdioFileStreamTest class categoriesForMethods!
+allTestSelectors!Accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Random subclass: #RandomCRT
 	instanceVariableNames: 'next'
@@ -37,7 +37,9 @@ seed: anInteger
 
 	CRTLibrary default srand: anInteger.
 	super seed: anInteger! !
-!RandomCRT categoriesFor: #next!accessing!public! !
-!RandomCRT categoriesFor: #peek!accessing!public! !
-!RandomCRT categoriesFor: #seed:!accessing!public! !
+!RandomCRT categoriesForMethods!
+next!accessing!public! !
+peek!accessing!public! !
+seed:!accessing!public! !
+!
 

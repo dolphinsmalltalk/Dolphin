@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #MoveMethodRefactoring
 	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName'
@@ -290,35 +290,37 @@ transform
 verifyTemporaryVariableDoesNotOverride
 	(parseTree allDefinedVariables includes: selfVariableName) ifTrue: [^false].
 	^(moveToClasses anySatisfy: [:each | each definesVariable: selfVariableName]) not! !
-!MoveMethodRefactoring categoriesFor: #abstractVariables!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #abstractVariablesRefactoring!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #buildParseTree!private! !
-!MoveMethodRefactoring categoriesFor: #checkAssignmentsToVariable!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #checkForPrimitiveMethod!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #checkForSuperReferences!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #checkTemporaryVariableNames!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #compileDelagatorMethod!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #compileNewMethods!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #getAllClassesForGlobalOrClassVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getArgumentNameForSelf!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #getClassesForInstanceVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getClassesForTemporaryVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getClassesToMoveTo!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getClassForGlobalOrClassVariable!accessing!private! !
-!MoveMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #hasOnlySelfReturns!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #hasSelfReferences!public!testing! !
-!MoveMethodRefactoring categoriesFor: #isMovingToArgument!public!testing! !
-!MoveMethodRefactoring categoriesFor: #isMovingToInstVar!public!testing! !
-!MoveMethodRefactoring categoriesFor: #needsToReplaceSelfReferences!public!testing! !
-!MoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!MoveMethodRefactoring categoriesFor: #replaceSelfReferences!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #replaceVariableReferences!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #selector:class:variable:!initialize/release!public! !
-!MoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!MoveMethodRefactoring categoriesFor: #transform!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #verifyTemporaryVariableDoesNotOverride!public!transforming! !
+!MoveMethodRefactoring categoriesForMethods!
+abstractVariables!public!transforming! !
+abstractVariablesRefactoring!public!transforming! !
+addSelfReturn!public!transforming! !
+buildParseTree!private! !
+checkAssignmentsToVariable!preconditions!public! !
+checkForPrimitiveMethod!preconditions!public! !
+checkForSuperReferences!preconditions!public! !
+checkTemporaryVariableNames!preconditions!public! !
+compileDelagatorMethod!public!transforming! !
+compileNewMethods!public!transforming! !
+getAllClassesForGlobalOrClassVariable!accessing!private! !
+getArgumentNameForSelf!public!transforming! !
+getClassesForInstanceVariable!accessing!private! !
+getClassesForTemporaryVariable!accessing!private! !
+getClassesToMoveTo!accessing!private! !
+getClassForGlobalOrClassVariable!accessing!private! !
+getNewMethodName!public!transforming! !
+hasOnlySelfReturns!public!transforming! !
+hasSelfReferences!public!testing! !
+isMovingToArgument!public!testing! !
+isMovingToInstVar!public!testing! !
+needsToReplaceSelfReferences!public!testing! !
+preconditions!preconditions!public! !
+replaceSelfReferences!public!transforming! !
+replaceVariableReferences!public!transforming! !
+selector:class:variable:!initialize/release!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+verifyTemporaryVariableDoesNotOverride!public!transforming! !
+!
 
 !MoveMethodRefactoring class methodsFor!
 
@@ -336,6 +338,8 @@ selector: aSymbol class: aClass variable: aVariableName
 			class: aClass
 			variable: aVariableName;
 		yourself! !
-!MoveMethodRefactoring class categoriesFor: #model:selector:class:variable:!instance creation!public! !
-!MoveMethodRefactoring class categoriesFor: #selector:class:variable:!instance creation!public! !
+!MoveMethodRefactoring class categoriesForMethods!
+model:selector:class:variable:!instance creation!public! !
+selector:class:variable:!instance creation!public! !
+!
 

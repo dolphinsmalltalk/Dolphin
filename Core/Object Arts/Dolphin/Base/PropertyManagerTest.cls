@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #PropertyManagerTest
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ testRegisterIsWeaklyKeyed
 	self assert: subject register hasWeakKeys.
 	self deny: subject register hasWeakValues
 ! !
-!PropertyManagerTest categoriesFor: #testRegisterIsWeaklyKeyed!public! !
+!PropertyManagerTest categoriesForMethods!
+testRegisterIsWeaklyKeyed!public! !
+!
 

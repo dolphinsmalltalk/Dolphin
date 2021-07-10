@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserSeriesChunk subclass: #ChunkBrowserCategoryChunk
 	instanceVariableNames: ''
@@ -17,5 +17,7 @@ Public Domain Freeware'!
 initializeFromSeriesStart: aChunkBrowserSeriesStartChunk
 	super initializeFromSeriesStart: aChunkBrowserSeriesStartChunk.
 	identity2 := aChunkBrowserSeriesStartChunk identity2! !
-!ChunkBrowserCategoryChunk categoriesFor: #initializeFromSeriesStart:!initializing!public! !
+!ChunkBrowserCategoryChunk categoriesForMethods!
+initializeFromSeriesStart:!initializing!public! !
+!
 

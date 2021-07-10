@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CollectionCombinator
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
@@ -47,6 +47,8 @@ forArrays: anArray processWith: aBlock
   buffer := Array new: anArray size.
   self combineFromIdx: 1
    ! !
-!CollectionCombinator categoriesFor: #combineFromIdx:!helpers!private! !
-!CollectionCombinator categoriesFor: #forArrays:processWith:!helpers!private! !
+!CollectionCombinator categoriesForMethods!
+combineFromIdx:!helpers!private! !
+forArrays:processWith:!helpers!private! !
+!
 

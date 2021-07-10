@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMGETINFOTIP
 	instanceVariableNames: ''
@@ -41,8 +41,10 @@ text: text
 			tipText := (tipText copyFrom: 1 to: last) , '...'].
 	tipText copyToBuffer: self pszText ofSize: max.
 	^tipText! !
-!NMGETINFOTIP categoriesFor: #cchTextMax!accessing!public! !
-!NMGETINFOTIP categoriesFor: #pszText!accessing!public! !
-!NMGETINFOTIP categoriesFor: #text!accessing!public! !
-!NMGETINFOTIP categoriesFor: #text:!accessing!public! !
+!NMGETINFOTIP categoriesForMethods!
+cchTextMax!accessing!public! !
+pszText!accessing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 

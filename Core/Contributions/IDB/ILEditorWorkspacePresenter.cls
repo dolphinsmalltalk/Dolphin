@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #ILEditorWorkspacePresenter
 	instanceVariableNames: 'dum1 dum2 dum3 dum4 dum5'
@@ -54,19 +54,21 @@ zoomBy: anInteger
 
 zoomDescription
 	^self view zoomDescription! !
-!ILEditorWorkspacePresenter categoriesFor: #backcolor:!accessing!public! !
-!ILEditorWorkspacePresenter categoriesFor: #canDraw!public!testing! !
-!ILEditorWorkspacePresenter categoriesFor: #canEdit!public!testing! !
-!ILEditorWorkspacePresenter categoriesFor: #canFillAll!public!testing! !
-!ILEditorWorkspacePresenter categoriesFor: #defaultBackcolor!constants!event handling!public! !
-!ILEditorWorkspacePresenter categoriesFor: #defaultZoom!constants!event handling!public! !
-!ILEditorWorkspacePresenter categoriesFor: #locationDescription!accessing!public! !
-!ILEditorWorkspacePresenter categoriesFor: #onViewOpened!event handling!public! !
-!ILEditorWorkspacePresenter categoriesFor: #zoneDescription!accessing!public! !
-!ILEditorWorkspacePresenter categoriesFor: #zoneRectangle!accessing!public! !
-!ILEditorWorkspacePresenter categoriesFor: #zoom:!accessing!public! !
-!ILEditorWorkspacePresenter categoriesFor: #zoomBy:!accessing!public! !
-!ILEditorWorkspacePresenter categoriesFor: #zoomDescription!accessing!public! !
+!ILEditorWorkspacePresenter categoriesForMethods!
+backcolor:!accessing!public! !
+canDraw!public!testing! !
+canEdit!public!testing! !
+canFillAll!public!testing! !
+defaultBackcolor!constants!event handling!public! !
+defaultZoom!constants!event handling!public! !
+locationDescription!accessing!public! !
+onViewOpened!event handling!public! !
+zoneDescription!accessing!public! !
+zoneRectangle!accessing!public! !
+zoom:!accessing!public! !
+zoomBy:!accessing!public! !
+zoomDescription!accessing!public! !
+!
 
 !ILEditorWorkspacePresenter class methodsFor!
 
@@ -82,6 +84,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ILEditorWorkspace)  98 16 0 0 98 2 8 1140850688 1 416 0 524550 ##(ColorRef)  8 4278190080 0 519 0 0 0 416 0 0 0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 674 225 201 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 117 0 0 0 105 0 0 0] 98 0 674 193 193 0 27 )! !
-!ILEditorWorkspacePresenter class categoriesFor: #defaultModel!models!public! !
-!ILEditorWorkspacePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!ILEditorWorkspacePresenter class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+!
 

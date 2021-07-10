@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestResource subclass: #SimpleTestResource
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
@@ -55,23 +55,27 @@ stoppedStateSymbol
 tearDown
 
 	self runningState: self stoppedStateSymbol! !
-!SimpleTestResource categoriesFor: #hasRun!Accessing!public! !
-!SimpleTestResource categoriesFor: #hasSetup!Accessing!public! !
-!SimpleTestResource categoriesFor: #isAvailable!public!Testing! !
-!SimpleTestResource categoriesFor: #isStarted!public!Testing! !
-!SimpleTestResource categoriesFor: #isStopped!public!Testing! !
-!SimpleTestResource categoriesFor: #runningState!Accessing!public! !
-!SimpleTestResource categoriesFor: #runningState:!Accessing!public! !
-!SimpleTestResource categoriesFor: #setRun!Accessing!public! !
-!SimpleTestResource categoriesFor: #setUp!public!Running! !
-!SimpleTestResource categoriesFor: #startedStateSymbol!Constants!public! !
-!SimpleTestResource categoriesFor: #stoppedStateSymbol!Constants!public! !
-!SimpleTestResource categoriesFor: #tearDown!public!Running! !
+!SimpleTestResource categoriesForMethods!
+hasRun!Accessing!public! !
+hasSetup!Accessing!public! !
+isAvailable!public!Testing! !
+isStarted!public!Testing! !
+isStopped!public!Testing! !
+runningState!Accessing!public! !
+runningState:!Accessing!public! !
+setRun!Accessing!public! !
+setUp!public!Running! !
+startedStateSymbol!Constants!public! !
+stoppedStateSymbol!Constants!public! !
+tearDown!public!Running! !
+!
 
 !SimpleTestResource class methodsFor!
 
 isAvailable
 
 	^super isAvailable and: [self current isStarted]! !
-!SimpleTestResource class categoriesFor: #isAvailable!public! !
+!SimpleTestResource class categoriesForMethods!
+isAvailable!public! !
+!
 

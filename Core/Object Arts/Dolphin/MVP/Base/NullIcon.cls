@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Icon subclass: #NullIcon
 	instanceVariableNames: ''
@@ -15,7 +15,9 @@ imageIndex
 
 	^0
 ! !
-!NullIcon categoriesFor: #imageIndex!accessing!public! !
+!NullIcon categoriesForMethods!
+imageIndex!accessing!public! !
+!
 
 !NullIcon class methodsFor!
 
@@ -29,7 +31,9 @@ icon
 
 initialize
 	Current := self new! !
-!NullIcon class categoriesFor: #current!instance creation!public! !
-!NullIcon class categoriesFor: #icon!constants!public! !
-!NullIcon class categoriesFor: #initialize!initializing!public! !
+!NullIcon class categoriesForMethods!
+current!instance creation!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+!
 

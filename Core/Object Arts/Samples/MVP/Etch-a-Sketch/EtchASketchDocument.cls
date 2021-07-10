@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScribbleDocument subclass: #EtchASketchDocument
 	instanceVariableNames: ''
@@ -25,7 +25,9 @@ resource_Default_view
 
 scribblePresenterClass
 	^EtchASketch! !
-!EtchASketchDocument class categoriesFor: #fileType!constants!public! !
-!EtchASketchDocument class categoriesFor: #resource_Default_view!public!resources-views! !
-!EtchASketchDocument class categoriesFor: #scribblePresenterClass!constants!private! !
+!EtchASketchDocument class categoriesForMethods!
+fileType!constants!public! !
+resource_Default_view!public!resources-views! !
+scribblePresenterClass!constants!private! !
+!
 

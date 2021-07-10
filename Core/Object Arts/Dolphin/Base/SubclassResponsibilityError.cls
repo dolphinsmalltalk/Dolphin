@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #SubclassResponsibilityError
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ initialize
 	"Private - Initialize the receiver's instance variables"
 
 	messageText := 'Not implemented'! !
-!SubclassResponsibilityError categoriesFor: #hresult!accessing!public! !
-!SubclassResponsibilityError categoriesFor: #initialize!initializing!private! !
+!SubclassResponsibilityError categoriesForMethods!
+hresult!accessing!public! !
+initialize!initializing!private! !
+!
 

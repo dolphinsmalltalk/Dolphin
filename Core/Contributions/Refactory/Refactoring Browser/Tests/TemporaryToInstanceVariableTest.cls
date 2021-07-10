@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #TemporaryToInstanceVariableTest
 	instanceVariableNames: ''
@@ -55,8 +55,10 @@ testTemporaryToInstanceVariable
 								nameStream nextPut: $).
 								^nameStream contents').
 	self assert: (class directlyDefinesInstanceVariable: 'nameStream')! !
-!TemporaryToInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!TemporaryToInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!TemporaryToInstanceVariableTest categoriesFor: #testRedefinedTemporary!failure tests!public! !
-!TemporaryToInstanceVariableTest categoriesFor: #testTemporaryToInstanceVariable!public!tests! !
+!TemporaryToInstanceVariableTest categoriesForMethods!
+setUp!public!set up! !
+testNonExistantName!failure tests!public! !
+testRedefinedTemporary!failure tests!public! !
+testTemporaryToInstanceVariable!public!tests! !
+!
 

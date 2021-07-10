@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCaseHelper subclass: #WriteStreamHelper
 	instanceVariableNames: ''
@@ -19,14 +19,18 @@ object: anObject!
 protocol
 
 	^#'WriteStream'! !
-!WriteStreamHelper categoriesFor: #canonicalObject!public! !
-!WriteStreamHelper categoriesFor: #object:!public! !
-!WriteStreamHelper categoriesFor: #protocol!public! !
+!WriteStreamHelper categoriesForMethods!
+canonicalObject!public! !
+object:!public! !
+protocol!public! !
+!
 
 !WriteStreamHelper class methodsFor!
 
 initialize
 	"WriteStreamHelper  initialize"
 	super initialize! !
-!WriteStreamHelper class categoriesFor: #initialize!public! !
+!WriteStreamHelper class categoriesForMethods!
+initialize!public! !
+!
 

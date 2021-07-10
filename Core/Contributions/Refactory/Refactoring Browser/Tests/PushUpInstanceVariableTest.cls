@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #PushUpInstanceVariableTest
 	instanceVariableNames: ''
@@ -25,6 +25,8 @@ testPullUpVariableNotDefined
 	self shouldFail: (PullUpInstanceVariableRefactoring 
 				variable: 'notDefinedVariable'
 				class: LintRuleTest)! !
-!PushUpInstanceVariableTest categoriesFor: #testPullUpInstVar!public!tests! !
-!PushUpInstanceVariableTest categoriesFor: #testPullUpVariableNotDefined!failure tests!public! !
+!PushUpInstanceVariableTest categoriesForMethods!
+testPullUpInstVar!public!tests! !
+testPullUpVariableNotDefined!failure tests!public! !
+!
 

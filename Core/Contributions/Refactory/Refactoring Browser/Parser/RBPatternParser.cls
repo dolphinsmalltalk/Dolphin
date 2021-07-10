@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkParser subclass: #RBPatternParser
 	instanceVariableNames: ''
@@ -96,17 +96,19 @@ tempDeclClass
 
 variableNodeClass
 	^RBPatternVariableNode! !
-!RBPatternParser categoriesFor: #evaluateStatements:!parsing!private! !
-!RBPatternParser categoriesFor: #messageNodeClass!constants!private! !
-!RBPatternParser categoriesFor: #methodNodeClass!constants!private! !
-!RBPatternParser categoriesFor: #parameterNodeClass!constants!private! !
-!RBPatternParser categoriesFor: #parseLiteralByteArrayObject!parsing!public! !
-!RBPatternParser categoriesFor: #parsePatternBlock:!parsing!private! !
-!RBPatternParser categoriesFor: #parsePrimitiveLiteral!parsing!public! !
-!RBPatternParser categoriesFor: #parsePrimitiveObject!parsing!private! !
-!RBPatternParser categoriesFor: #parseUnaryMessage!parsing!private! !
-!RBPatternParser categoriesFor: #patchLiteralArrayToken!helpers!public! !
-!RBPatternParser categoriesFor: #scannerClass!accessing!public! !
-!RBPatternParser categoriesFor: #tempDeclClass!parsing!private! !
-!RBPatternParser categoriesFor: #variableNodeClass!constants!private! !
+!RBPatternParser categoriesForMethods!
+evaluateStatements:!parsing!private! !
+messageNodeClass!constants!private! !
+methodNodeClass!constants!private! !
+parameterNodeClass!constants!private! !
+parseLiteralByteArrayObject!parsing!public! !
+parsePatternBlock:!parsing!private! !
+parsePrimitiveLiteral!parsing!public! !
+parsePrimitiveObject!parsing!private! !
+parseUnaryMessage!parsing!private! !
+patchLiteralArrayToken!helpers!public! !
+scannerClass!accessing!public! !
+tempDeclClass!parsing!private! !
+variableNodeClass!constants!private! !
+!
 

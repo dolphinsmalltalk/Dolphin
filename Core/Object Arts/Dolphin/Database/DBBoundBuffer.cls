@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBRowBuffer subclass: #DBBoundBuffer
 	instanceVariableNames: ''
@@ -37,6 +37,8 @@ bind: aDBStatement
 getData: aDBStatement
 	"Private - Not currently relevant to a bound row, though it might be if
 	we wanted to use SQLGetData for long values."! !
-!DBBoundBuffer categoriesFor: #bind:!operations!private! !
-!DBBoundBuffer categoriesFor: #getData:!data retrieval!private! !
+!DBBoundBuffer categoriesForMethods!
+bind:!operations!private! !
+getData:!data retrieval!private! !
+!
 

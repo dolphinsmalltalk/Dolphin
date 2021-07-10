@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOISMTPScriptConnector
 	instanceVariableNames: ''
@@ -24,8 +24,10 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDOISMTPScriptConnector categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOISMTPScriptConnector categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDOISMTPScriptConnector categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !CDOISMTPScriptConnector class methodsFor!
 
@@ -42,6 +44,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOISMTPScriptConnector class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDOISMTPScriptConnector class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOISMTPScriptConnector class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

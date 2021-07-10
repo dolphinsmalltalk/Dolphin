@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #PoolDictionariesShell
 	instanceVariableNames: 'dictionariesPresenter'
@@ -130,23 +130,25 @@ selectionOrNil
 
 selectionOrNil: aPoolConstantsDictionary
 	dictionariesPresenter selectionOrNil: aPoolConstantsDictionary! !
-!PoolDictionariesShell categoriesFor: #addEntry!public! !
-!PoolDictionariesShell categoriesFor: #addPool!commands!public! !
-!PoolDictionariesShell categoriesFor: #browseEntryReferences!commands!public! !
-!PoolDictionariesShell categoriesFor: #classesReferencingSelectedPool!commands!private! !
-!PoolDictionariesShell categoriesFor: #createComponents!private! !
-!PoolDictionariesShell categoriesFor: #hasSelectedItemAccessor!public!selection! !
-!PoolDictionariesShell categoriesFor: #hasSelection!public!selection! !
-!PoolDictionariesShell categoriesFor: #methodsReferencingSelectedEntry!commands!private! !
-!PoolDictionariesShell categoriesFor: #model:!public! !
-!PoolDictionariesShell categoriesFor: #poolPackage!commands!public! !
-!PoolDictionariesShell categoriesFor: #queryCommand:!commands!private! !
-!PoolDictionariesShell categoriesFor: #removeEntry!public! !
-!PoolDictionariesShell categoriesFor: #removePool!commands!public! !
-!PoolDictionariesShell categoriesFor: #selectedItemAccessorOrNil!commands!private! !
-!PoolDictionariesShell categoriesFor: #selectedItemKey!commands!private! !
-!PoolDictionariesShell categoriesFor: #selectionOrNil!private!selection! !
-!PoolDictionariesShell categoriesFor: #selectionOrNil:!private!selection! !
+!PoolDictionariesShell categoriesForMethods!
+addEntry!public! !
+addPool!commands!public! !
+browseEntryReferences!commands!public! !
+classesReferencingSelectedPool!commands!private! !
+createComponents!private! !
+hasSelectedItemAccessor!public!selection! !
+hasSelection!public!selection! !
+methodsReferencingSelectedEntry!commands!private! !
+model:!public! !
+poolPackage!commands!public! !
+queryCommand:!commands!private! !
+removeEntry!public! !
+removePool!commands!public! !
+selectedItemAccessorOrNil!commands!private! !
+selectedItemKey!commands!private! !
+selectionOrNil!private!selection! !
+selectionOrNil:!private!selection! !
+!
 
 !PoolDictionariesShell class methodsFor!
 
@@ -194,11 +196,13 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10550! !
-!PoolDictionariesShell class categoriesFor: #defaultModel!public! !
-!PoolDictionariesShell class categoriesFor: #displayOn:!public! !
-!PoolDictionariesShell class categoriesFor: #icon!constants!public! !
-!PoolDictionariesShell class categoriesFor: #initialize!initializing!private! !
-!PoolDictionariesShell class categoriesFor: #publishedAspects!public! !
-!PoolDictionariesShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!PoolDictionariesShell class categoriesFor: #toolsFolderHelpId!private! !
+!PoolDictionariesShell class categoriesForMethods!
+defaultModel!public! !
+displayOn:!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!private! !
+!
 

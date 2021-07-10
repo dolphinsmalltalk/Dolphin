@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ResourceSTBAccessor subclass: #ResourceSTBFileAccessor
 	instanceVariableNames: 'fileName'
@@ -88,17 +88,19 @@ stbSaveOn: anSTBOutFiler
 		ifFalse: [STBResourceSTBFileAccessorProxy withExternalFile: self].
 
 	anSTBOutFiler saveObject: self as: proxy! !
-!ResourceSTBFileAccessor categoriesFor: #asInternalAccessor!converting!private! !
-!ResourceSTBFileAccessor categoriesFor: #byteArray!accessing!private! !
-!ResourceSTBFileAccessor categoriesFor: #copy!copying!private! !
-!ResourceSTBFileAccessor categoriesFor: #fileName!accessing!private! !
-!ResourceSTBFileAccessor categoriesFor: #fileName:!accessing!private! !
-!ResourceSTBFileAccessor categoriesFor: #isInternalAccessor!public!testing! !
-!ResourceSTBFileAccessor categoriesFor: #makeByteArrayClass:usingContext:!mutating!private! !
-!ResourceSTBFileAccessor categoriesFor: #makeFile:class:usingContext:!mutating!private! !
-!ResourceSTBFileAccessor categoriesFor: #readStream!accessing!private! !
-!ResourceSTBFileAccessor categoriesFor: #save:as:!operations!public! !
-!ResourceSTBFileAccessor categoriesFor: #stbSaveOn:!binary filing!public! !
+!ResourceSTBFileAccessor categoriesForMethods!
+asInternalAccessor!converting!private! !
+byteArray!accessing!private! !
+copy!copying!private! !
+fileName!accessing!private! !
+fileName:!accessing!private! !
+isInternalAccessor!public!testing! !
+makeByteArrayClass:usingContext:!mutating!private! !
+makeFile:class:usingContext:!mutating!private! !
+readStream!accessing!private! !
+save:as:!operations!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !ResourceSTBFileAccessor class methodsFor!
 
@@ -128,7 +130,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!ResourceSTBFileAccessor class categoriesFor: #onFileName:!instance creation!public! !
-!ResourceSTBFileAccessor class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!ResourceSTBFileAccessor class categoriesFor: #stbVersion!binary filing!public! !
+!ResourceSTBFileAccessor class categoriesForMethods!
+onFileName:!instance creation!public! !
+stbConvertFromVersion1:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ODBCTIMESTAMP
 	instanceVariableNames: ''
@@ -113,23 +113,25 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
-!ODBCTIMESTAMP categoriesFor: #asDateAndTime!converting!public! !
-!ODBCTIMESTAMP categoriesFor: #dateAndTime:!accessing!public! !
-!ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #fraction!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #fraction:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #hour!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #hour:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #milliseconds!accessing!public! !
-!ODBCTIMESTAMP categoriesFor: #minute!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #minute:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #month!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #month:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #second!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #second:!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #year!**compiled accessors**!public! !
-!ODBCTIMESTAMP categoriesFor: #year:!**compiled accessors**!public! !
+!ODBCTIMESTAMP categoriesForMethods!
+asDateAndTime!converting!public! !
+dateAndTime:!accessing!public! !
+day!**compiled accessors**!public! !
+day:!**compiled accessors**!public! !
+fraction!**compiled accessors**!public! !
+fraction:!**compiled accessors**!public! !
+hour!**compiled accessors**!public! !
+hour:!**compiled accessors**!public! !
+milliseconds!accessing!public! !
+minute!**compiled accessors**!public! !
+minute:!**compiled accessors**!public! !
+month!**compiled accessors**!public! !
+month:!**compiled accessors**!public! !
+second!**compiled accessors**!public! !
+second:!**compiled accessors**!public! !
+year!**compiled accessors**!public! !
+year:!**compiled accessors**!public! !
+!
 
 !ODBCTIMESTAMP class methodsFor!
 
@@ -166,7 +168,9 @@ fromDateAndTime: aDateAndTime
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !
-!ODBCTIMESTAMP class categoriesFor: #defineFields!public!template definition! !
-!ODBCTIMESTAMP class categoriesFor: #fromDateAndTime:!instance creation!public! !
-!ODBCTIMESTAMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ODBCTIMESTAMP class categoriesForMethods!
+defineFields!public!template definition! !
+fromDateAndTime:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

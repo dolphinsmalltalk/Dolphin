@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BasicInspector subclass: #AXInspector
 	instanceVariableNames: 'collection'
@@ -65,9 +65,11 @@ unableToDisplayVariableErrorFormatString
 	printed."
 
 	^'Unable to access or display <1s> [<3s>]'! !
-!AXInspector categoriesFor: #count!accessing!private! !
-!AXInspector categoriesFor: #getField:!accessing!private! !
-!AXInspector categoriesFor: #getFieldList!accessing!private! !
-!AXInspector categoriesFor: #setField:to:!accessing!private! !
-!AXInspector categoriesFor: #unableToDisplayVariableErrorFormatString!constants!private! !
+!AXInspector categoriesForMethods!
+count!accessing!private! !
+getField:!accessing!private! !
+getFieldList!accessing!private! !
+setField:to:!accessing!private! !
+unableToDisplayVariableErrorFormatString!constants!private! !
+!
 

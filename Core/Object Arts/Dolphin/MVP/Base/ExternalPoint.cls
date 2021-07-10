@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ExternalPoint
 	instanceVariableNames: ''
@@ -57,16 +57,18 @@ y
 
 y: anObject
 	self subclassResponsibility! !
-!ExternalPoint categoriesFor: #asDword!converting!public! !
-!ExternalPoint categoriesFor: #asObject!converting!public! !
-!ExternalPoint categoriesFor: #asPoint!converting!public! !
-!ExternalPoint categoriesFor: #asUIntPtr!converting!public! !
-!ExternalPoint categoriesFor: #value!accessing!public! !
-!ExternalPoint categoriesFor: #value:!accessing!public! !
-!ExternalPoint categoriesFor: #x!accessing!public! !
-!ExternalPoint categoriesFor: #x:!accessing!public! !
-!ExternalPoint categoriesFor: #y!accessing!public! !
-!ExternalPoint categoriesFor: #y:!accessing!public! !
+!ExternalPoint categoriesForMethods!
+asDword!converting!public! !
+asObject!converting!public! !
+asPoint!converting!public! !
+asUIntPtr!converting!public! !
+value!accessing!public! !
+value:!accessing!public! !
+x!accessing!public! !
+x:!accessing!public! !
+y!accessing!public! !
+y:!accessing!public! !
+!
 
 !ExternalPoint class methodsFor!
 
@@ -91,8 +93,10 @@ x: x y: y
 		x: x;
 		y: y;
 		yourself! !
-!ExternalPoint class categoriesFor: #fromPoint:!instance creation!public! !
-!ExternalPoint class categoriesFor: #getFieldNames!constants!private! !
-!ExternalPoint class categoriesFor: #icon!constants!development!public! !
-!ExternalPoint class categoriesFor: #x:y:!instance creation!public! !
+!ExternalPoint class categoriesForMethods!
+fromPoint:!instance creation!public! !
+getFieldNames!constants!private! !
+icon!constants!development!public! !
+x:y:!instance creation!public! !
+!
 

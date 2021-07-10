@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IMatchCollection
 	instanceVariableNames: ''
@@ -106,16 +106,18 @@ item: anInteger
 
 matchClass
 	^IMatch! !
-!IMatchCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IMatchCollection categoriesFor: #asArray!converting!public! !
-!IMatchCollection categoriesFor: #count!**auto generated**!properties!public! !
-!IMatchCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!IMatchCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!IMatchCollection categoriesFor: #get_Item:ppMatch:!**auto generated**!COM Interfaces-IMatchCollection!private! !
-!IMatchCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMatchCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMatchCollection categoriesFor: #item:!properties!public! !
-!IMatchCollection categoriesFor: #matchClass!constants!private! !
+!IMatchCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+asArray!converting!public! !
+count!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+get_Count:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+get_Item:ppMatch:!**auto generated**!COM Interfaces-IMatchCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!properties!public! !
+matchClass!constants!private! !
+!
 
 !IMatchCollection class methodsFor!
 
@@ -137,6 +139,8 @@ defineFunctions
 		defineFunction: #get__NewEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IMatchCollection class categoriesFor: #clsid!constants!private! !
-!IMatchCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IMatchCollection class categoriesForMethods!
+clsid!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+!
 

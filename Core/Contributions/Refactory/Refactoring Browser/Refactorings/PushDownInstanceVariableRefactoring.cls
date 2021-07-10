@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #PushDownInstanceVariableRefactoring
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ transform
 			(each withAllSubclasses 
 				anySatisfy: [:aClass | (aClass whichSelectorsReferToInstanceVariable: variableName) notEmpty]) 
 					ifTrue: [each addInstanceVariable: variableName]]! !
-!PushDownInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PushDownInstanceVariableRefactoring categoriesFor: #transform!public! !
+!PushDownInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public! !
+!
 

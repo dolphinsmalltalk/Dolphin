@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoAnalyzer subclass: #TKindCoclassAnalyzer
 	instanceVariableNames: ''
@@ -128,21 +128,23 @@ sourceInterfaces
 	^((1 to: self attributes cImplTypes) 
 		select: [:i | (piTI getImplTypeFlags: i - 1) allMask: IMPLTYPEFLAG_FSOURCE]) 
 			collect: [:i | self getImplTypeInfoAt: i]! !
-!TKindCoclassAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindCoclassAnalyzer categoriesFor: #classDesc!accessing!constants!private! !
-!TKindCoclassAnalyzer categoriesFor: #clsid!accessing!public! !
-!TKindCoclassAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
-!TKindCoclassAnalyzer categoriesFor: #defaultSourceInterface!enquiries!public! !
-!TKindCoclassAnalyzer categoriesFor: #interfaceFlags!enumerating!public! !
-!TKindCoclassAnalyzer categoriesFor: #interfaces!enumerating!public! !
-!TKindCoclassAnalyzer categoriesFor: #isAggregatable!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isAppObject!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isControl!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isInstantiable!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #isLicensed!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #nonSourceInterfaces!enumerating!public! !
-!TKindCoclassAnalyzer categoriesFor: #notInstantiable!public!testing! !
-!TKindCoclassAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
+!TKindCoclassAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+classDesc!accessing!constants!private! !
+clsid!accessing!public! !
+defaultInterface!enquiries!public! !
+defaultSourceInterface!enquiries!public! !
+interfaceFlags!enumerating!public! !
+interfaces!enumerating!public! !
+isAggregatable!public!testing! !
+isAppObject!public!testing! !
+isControl!public!testing! !
+isInstantiable!public!testing! !
+isLicensed!public!testing! !
+nonSourceInterfaces!enumerating!public! !
+notInstantiable!public!testing! !
+sourceInterfaces!enumerating!public! !
+!
 
 !TKindCoclassAnalyzer class methodsFor!
 
@@ -150,5 +152,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_COCLASS! !
-!TKindCoclassAnalyzer class categoriesFor: #typekind!constants!private! !
+!TKindCoclassAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

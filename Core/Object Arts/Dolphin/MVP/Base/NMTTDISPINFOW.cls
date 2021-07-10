@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: 'text'
@@ -49,12 +49,14 @@ uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uFlags! !
-!NMTTDISPINFOW categoriesFor: #idIsHandle!private!testing! !
-!NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
-!NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!NMTTDISPINFOW categoriesFor: #text!accessing!public! !
-!NMTTDISPINFOW categoriesFor: #text:!accessing!public! !
-!NMTTDISPINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
+!NMTTDISPINFOW categoriesForMethods!
+idIsHandle!private!testing! !
+lpszText!**compiled accessors**!public! !
+lpszText:!**compiled accessors**!public! !
+text!accessing!public! !
+text:!accessing!public! !
+uFlags!**compiled accessors**!public! !
+!
 
 !NMTTDISPINFOW class methodsFor!
 
@@ -82,6 +84,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !
-!NMTTDISPINFOW class categoriesFor: #defineFields!public!template definition! !
-!NMTTDISPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMTTDISPINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DTDEntityDeclaration subclass: #DTDExternalEntityDeclaration
 	instanceVariableNames: ''
@@ -22,5 +22,7 @@ initialize
 		at: #attributeValue put: #forbidden;
 		at: #entityValue put: #bypass;
 		at: #dtd put: #forbidden! !
-!DTDExternalEntityDeclaration class categoriesFor: #initialize!class initialization!public! !
+!DTDExternalEntityDeclaration class categoriesForMethods!
+initialize!class initialization!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Image'! !
-!GdiplusImageFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusImageFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusImageFromBytesInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RenameInstanceVariableTest
 	instanceVariableNames: ''
@@ -46,7 +46,9 @@ testRenameInstVar
 								asdf := [:context :aResult | ].
 								methodBlock := [:context :aResult | ].
 								self resultClass: SelectorEnvironment.')! !
-!RenameInstanceVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
-!RenameInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!RenameInstanceVariableTest categoriesFor: #testRenameInstVar!public!tests! !
+!RenameInstanceVariableTest categoriesForMethods!
+testAlreadyExistingName!failure tests!public! !
+testNonExistantName!failure tests!public! !
+testRenameInstVar!public!tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SessionManager
 	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged events'
@@ -1159,156 +1159,158 @@ windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session."
 
 	^File windowsDirectory! !
-!SessionManager categoriesFor: #allocConsole!operations!private! !
-!SessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
-!SessionManager categoriesFor: #appIdString!constants!public! !
-!SessionManager categoriesFor: #applicationName!constants!public! !
-!SessionManager categoriesFor: #applicationShortName!constants!public! !
-!SessionManager categoriesFor: #argc!accessing!public! !
-!SessionManager categoriesFor: #argv!accessing!public! !
-!SessionManager categoriesFor: #argvLegacyOptionsRemoved!accessing!private! !
-!SessionManager categoriesFor: #backupOnImageSave!public!testing! !
-!SessionManager categoriesFor: #basicPrimaryStartup!operations-startup!public! !
-!SessionManager categoriesFor: #basicSecondaryStartup!operations-startup!public! !
-!SessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
-!SessionManager categoriesFor: #basicStdioStreams!accessing!private! !
-!SessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!SessionManager categoriesFor: #clearSessionState!operations!public! !
-!SessionManager categoriesFor: #closeConsole!operations!public! !
-!SessionManager categoriesFor: #closeConsoleStreams!operations!public! !
-!SessionManager categoriesFor: #closeEventLog!operations-logging!private! !
-!SessionManager categoriesFor: #computerName!accessing!public! !
-!SessionManager categoriesFor: #comShutdown!operations-shutdown!private! !
-!SessionManager categoriesFor: #consoleStreamClass!constants!private! !
-!SessionManager categoriesFor: #createInputState!initializing!private! !
-!SessionManager categoriesFor: #createSentinel!operations-startup!private! !
-!SessionManager categoriesFor: #defaultResLibPath!constants!public! !
-!SessionManager categoriesFor: #defaultResourceLibrary!accessing!private! !
-!SessionManager categoriesFor: #embeddedStartup!operations-startup!private! !
-!SessionManager categoriesFor: #errorLogExtension!constants!public! !
-!SessionManager categoriesFor: #errorLogName!constants!public! !
-!SessionManager categoriesFor: #eventLogSource!constants!public! !
-!SessionManager categoriesFor: #exit!must not strip!operations-shutdown!public! !
-!SessionManager categoriesFor: #exit:!operations-shutdown!public! !
-!SessionManager categoriesFor: #fileStreamClass!constants!private! !
-!SessionManager categoriesFor: #forkMain!operations!public! !
-!SessionManager categoriesFor: #free!public!realizing/unrealizing! !
-!SessionManager categoriesFor: #freeConsole!operations!private! !
-!SessionManager categoriesFor: #getCommandLine!accessing!private! !
-!SessionManager categoriesFor: #getenv:!accessing!public! !
-!SessionManager categoriesFor: #getEvents!events!private! !
-!SessionManager categoriesFor: #hasActiveServers!private!testing! !
-!SessionManager categoriesFor: #imageBase!accessing!public! !
-!SessionManager categoriesFor: #imageExtension!constants!private! !
-!SessionManager categoriesFor: #imageFileName!accessing!public! !
-!SessionManager categoriesFor: #imagePath!accessing!public! !
-!SessionManager categoriesFor: #imagePath:!accessing!private! !
-!SessionManager categoriesFor: #imageVersion!accessing!public! !
-!SessionManager categoriesFor: #imageVersionMajor!accessing!public! !
-!SessionManager categoriesFor: #imageVersionMinor!accessing!public! !
-!SessionManager categoriesFor: #initialize!initializing!private! !
-!SessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
-!SessionManager categoriesFor: #inputState!accessing!public! !
-!SessionManager categoriesFor: #inputState:!accessing!private! !
-!SessionManager categoriesFor: #inputStateClass!constants!private! !
-!SessionManager categoriesFor: #install!operations!public! !
-!SessionManager categoriesFor: #installationDirectory!constants!private! !
-!SessionManager categoriesFor: #isBinaryLooseMethodInstallationAllowed!private!testing! !
-!SessionManager categoriesFor: #isConsoleApplication!public!testing! !
-!SessionManager categoriesFor: #isDebug!public!testing! !
-!SessionManager categoriesFor: #isDLL!private!testing! !
-!SessionManager categoriesFor: #isEmbedded!public!testing! !
-!SessionManager categoriesFor: #isEmbedding!public!testing! !
-!SessionManager categoriesFor: #isHeadless!private!testing! !
-!SessionManager categoriesFor: #isOAD!accessing!private!product! !
-!SessionManager categoriesFor: #isRuntime!public!testing! !
-!SessionManager categoriesFor: #keepAlive!idling!public! !
-!SessionManager categoriesFor: #logComment:!operations-logging!public! !
-!SessionManager categoriesFor: #logError:!operations-logging!public! !
-!SessionManager categoriesFor: #logErrorEvent:!operations-logging!public! !
-!SessionManager categoriesFor: #logEvent:type:!operations-logging!public! !
-!SessionManager categoriesFor: #logInformationEvent:!operations-logging!public! !
-!SessionManager categoriesFor: #logSuccessEvent:!operations-logging!public! !
-!SessionManager categoriesFor: #logWarningEvent:!operations-logging!public! !
-!SessionManager categoriesFor: #main!operations!public! !
-!SessionManager categoriesFor: #mainLoopStarted!operations-startup!private! !
-!SessionManager categoriesFor: #noVisibleWindows!event handling!private! !
-!SessionManager categoriesFor: #onCloseConsole!event handling!private! !
-!SessionManager categoriesFor: #onConsoleCtrl:!event handling!private! !
-!SessionManager categoriesFor: #onExit!event handling!public! !
-!SessionManager categoriesFor: #onInputLanguageChanged:!event handling!private! !
-!SessionManager categoriesFor: #onPostSaveImage!event handling!private! !
-!SessionManager categoriesFor: #onPreSaveImage!event handling!private! !
-!SessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
-!SessionManager categoriesFor: #onQuit:!event handling!public! !
-!SessionManager categoriesFor: #onStartup:!event handling!public! !
-!SessionManager categoriesFor: #onTimeChanged:!event handling!private! !
-!SessionManager categoriesFor: #onTimer:!event handling!private! !
-!SessionManager categoriesFor: #onUnhandledError:!event handling!public! !
-!SessionManager categoriesFor: #onUnhandledNotification:!event handling!public! !
-!SessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
-!SessionManager categoriesFor: #onUserBreak!event handling!private! !
-!SessionManager categoriesFor: #openConsole!operations!public! !
-!SessionManager categoriesFor: #openConsoleStreams!operations!private! !
-!SessionManager categoriesFor: #openEventLog!operations-logging!private! !
-!SessionManager categoriesFor: #openFd:mode:!operations!private! !
-!SessionManager categoriesFor: #openLibraries!operations-startup!private! !
-!SessionManager categoriesFor: #openStdErr!helpers!private! !
-!SessionManager categoriesFor: #openStdIn!helpers!private! !
-!SessionManager categoriesFor: #openStdOut!helpers!private! !
-!SessionManager categoriesFor: #outer!accessing!public! !
-!SessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
-!SessionManager categoriesFor: #popupHelpFile!constants!public! !
-!SessionManager categoriesFor: #preStart!operations-startup!public! !
-!SessionManager categoriesFor: #primaryStartup!operations-startup!public! !
-!SessionManager categoriesFor: #primQuit:!operations-shutdown!private! !
-!SessionManager categoriesFor: #primSnapshot:backup:type:maxObjects:!operations-saving!private! !
-!SessionManager categoriesFor: #productName!accessing-version!public! !
-!SessionManager categoriesFor: #productRegistryKey!accessing!product!public! !
-!SessionManager categoriesFor: #queryEndSession!event handling!public! !
-!SessionManager categoriesFor: #quit!operations-shutdown!public! !
-!SessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!SessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
-!SessionManager categoriesFor: #registerRunning!operations-startup!private! !
-!SessionManager categoriesFor: #registerServer:!accessing!public! !
-!SessionManager categoriesFor: #resourcesLocatorForClass:!helpers!private! !
-!SessionManager categoriesFor: #retire!public!uninitializing! !
-!SessionManager categoriesFor: #saveImage!operations-saving!public! !
-!SessionManager categoriesFor: #saveImage:!operations-saving!public! !
-!SessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
-!SessionManager categoriesFor: #saveImageTo:!operations-saving!public! !
-!SessionManager categoriesFor: #saveSessionState!operations!public! !
-!SessionManager categoriesFor: #secondaryStartup!operations-startup!public! !
-!SessionManager categoriesFor: #sentinelName!constants!public! !
-!SessionManager categoriesFor: #servers!accessing!private! !
-!SessionManager categoriesFor: #serverShutdown!operations-shutdown!private! !
-!SessionManager categoriesFor: #sessionId!accessing!public! !
-!SessionManager categoriesFor: #setenv:value:!accessing!public! !
-!SessionManager categoriesFor: #setEvents:!events!private! !
-!SessionManager categoriesFor: #shutdown!operations-shutdown!public! !
-!SessionManager categoriesFor: #snapshot:!operations-saving!private! !
-!SessionManager categoriesFor: #startUI!operations-startup!public! !
-!SessionManager categoriesFor: #startupArgs!accessing!private! !
-!SessionManager categoriesFor: #stderr!accessing!public! !
-!SessionManager categoriesFor: #stderr:!accessing!public! !
-!SessionManager categoriesFor: #stdin!accessing!public! !
-!SessionManager categoriesFor: #stdin:!accessing!public! !
-!SessionManager categoriesFor: #stdioStreams!accessing!private! !
-!SessionManager categoriesFor: #stdout!accessing!public! !
-!SessionManager categoriesFor: #stdout:!accessing!public! !
-!SessionManager categoriesFor: #systemDirectory!accessing!public! !
-!SessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
-!SessionManager categoriesFor: #trace:!operations-logging!public! !
-!SessionManager categoriesFor: #traceLine:!operations-logging!public! !
-!SessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!SessionManager categoriesFor: #triggerSettingsChanged!event handling!private! !
-!SessionManager categoriesFor: #unhandledException:!exceptions!private! !
-!SessionManager categoriesFor: #unregisterConsoleCtrlHandler!operations!private! !
-!SessionManager categoriesFor: #unregisterServer:!accessing!public! !
-!SessionManager categoriesFor: #userName!accessing!public! !
-!SessionManager categoriesFor: #versionInfo!accessing-version!public! !
-!SessionManager categoriesFor: #whatsThis:!commands!public! !
-!SessionManager categoriesFor: #windowsDirectory!accessing!public! !
+!SessionManager categoriesForMethods!
+allocConsole!operations!private! !
+allowDuplicate!operations-startup!public! !
+appIdString!constants!public! !
+applicationName!constants!public! !
+applicationShortName!constants!public! !
+argc!accessing!public! !
+argv!accessing!public! !
+argvLegacyOptionsRemoved!accessing!private! !
+backupOnImageSave!public!testing! !
+basicPrimaryStartup!operations-startup!public! !
+basicSecondaryStartup!operations-startup!public! !
+basicShutdown!operations-shutdown!private! !
+basicStdioStreams!accessing!private! !
+basicTertiaryStartup!operations-startup!public! !
+clearSessionState!operations!public! !
+closeConsole!operations!public! !
+closeConsoleStreams!operations!public! !
+closeEventLog!operations-logging!private! !
+computerName!accessing!public! !
+comShutdown!operations-shutdown!private! !
+consoleStreamClass!constants!private! !
+createInputState!initializing!private! !
+createSentinel!operations-startup!private! !
+defaultResLibPath!constants!public! !
+defaultResourceLibrary!accessing!private! !
+embeddedStartup!operations-startup!private! !
+errorLogExtension!constants!public! !
+errorLogName!constants!public! !
+eventLogSource!constants!public! !
+exit!must not strip!operations-shutdown!public! !
+exit:!operations-shutdown!public! !
+fileStreamClass!constants!private! !
+forkMain!operations!public! !
+free!public!realizing/unrealizing! !
+freeConsole!operations!private! !
+getCommandLine!accessing!private! !
+getenv:!accessing!public! !
+getEvents!events!private! !
+hasActiveServers!private!testing! !
+imageBase!accessing!public! !
+imageExtension!constants!private! !
+imageFileName!accessing!public! !
+imagePath!accessing!public! !
+imagePath:!accessing!private! !
+imageVersion!accessing!public! !
+imageVersionMajor!accessing!public! !
+imageVersionMinor!accessing!public! !
+initialize!initializing!private! !
+initializeFromSessionManager:!initializing!private! !
+inputState!accessing!public! !
+inputState:!accessing!private! !
+inputStateClass!constants!private! !
+install!operations!public! !
+installationDirectory!constants!private! !
+isBinaryLooseMethodInstallationAllowed!private!testing! !
+isConsoleApplication!public!testing! !
+isDebug!public!testing! !
+isDLL!private!testing! !
+isEmbedded!public!testing! !
+isEmbedding!public!testing! !
+isHeadless!private!testing! !
+isOAD!accessing!private!product! !
+isRuntime!public!testing! !
+keepAlive!idling!public! !
+logComment:!operations-logging!public! !
+logError:!operations-logging!public! !
+logErrorEvent:!operations-logging!public! !
+logEvent:type:!operations-logging!public! !
+logInformationEvent:!operations-logging!public! !
+logSuccessEvent:!operations-logging!public! !
+logWarningEvent:!operations-logging!public! !
+main!operations!public! !
+mainLoopStarted!operations-startup!private! !
+noVisibleWindows!event handling!private! !
+onCloseConsole!event handling!private! !
+onConsoleCtrl:!event handling!private! !
+onExit!event handling!public! !
+onInputLanguageChanged:!event handling!private! !
+onPostSaveImage!event handling!private! !
+onPreSaveImage!event handling!private! !
+onQueryWindowsShutdown!event handling!public! !
+onQuit:!event handling!public! !
+onStartup:!event handling!public! !
+onTimeChanged:!event handling!private! !
+onTimer:!event handling!private! !
+onUnhandledError:!event handling!public! !
+onUnhandledNotification:!event handling!public! !
+onUnhandledWarning:!event handling!public! !
+onUserBreak!event handling!private! !
+openConsole!operations!public! !
+openConsoleStreams!operations!private! !
+openEventLog!operations-logging!private! !
+openFd:mode:!operations!private! !
+openLibraries!operations-startup!private! !
+openStdErr!helpers!private! !
+openStdIn!helpers!private! !
+openStdOut!helpers!private! !
+outer!accessing!public! !
+parseCmdLineFlags!operations-startup!private! !
+popupHelpFile!constants!public! !
+preStart!operations-startup!public! !
+primaryStartup!operations-startup!public! !
+primQuit:!operations-shutdown!private! !
+primSnapshot:backup:type:maxObjects:!operations-saving!private! !
+productName!accessing-version!public! !
+productRegistryKey!accessing!product!public! !
+queryEndSession!event handling!public! !
+quit!operations-shutdown!public! !
+quit:!operations-shutdown!private! !
+registerConsoleCtrlHandler!operations!private! !
+registerRunning!operations-startup!private! !
+registerServer:!accessing!public! !
+resourcesLocatorForClass:!helpers!private! !
+retire!public!uninitializing! !
+saveImage!operations-saving!public! !
+saveImage:!operations-saving!public! !
+saveImageDefault!operations-saving!public! !
+saveImageTo:!operations-saving!public! !
+saveSessionState!operations!public! !
+secondaryStartup!operations-startup!public! !
+sentinelName!constants!public! !
+servers!accessing!private! !
+serverShutdown!operations-shutdown!private! !
+sessionId!accessing!public! !
+setenv:value:!accessing!public! !
+setEvents:!events!private! !
+shutdown!operations-shutdown!public! !
+snapshot:!operations-saving!private! !
+startUI!operations-startup!public! !
+startupArgs!accessing!private! !
+stderr!accessing!public! !
+stderr:!accessing!public! !
+stdin!accessing!public! !
+stdin:!accessing!public! !
+stdioStreams!accessing!private! !
+stdout!accessing!public! !
+stdout:!accessing!public! !
+systemDirectory!accessing!public! !
+tertiaryStartup!operations-startup!public! !
+trace:!operations-logging!public! !
+traceLine:!operations-logging!public! !
+traceStream!accessing!operations-logging!public! !
+triggerSettingsChanged!event handling!private! !
+unhandledException:!exceptions!private! !
+unregisterConsoleCtrlHandler!operations!private! !
+unregisterServer:!accessing!public! !
+userName!accessing!public! !
+versionInfo!accessing-version!public! !
+whatsThis:!commands!public! !
+windowsDirectory!accessing!public! !
+!
 
 !SessionManager class methodsFor!
 
@@ -1388,16 +1390,18 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current class==self ifTrue: [Current := nil]! !
-!SessionManager class categoriesFor: #asSessionManagerClass!converting!public! !
-!SessionManager class categoriesFor: #current!accessing!public! !
-!SessionManager class categoriesFor: #current:!accessing!public! !
-!SessionManager class categoriesFor: #imageExtension!constants!public! !
-!SessionManager class categoriesFor: #initialize!initializing!must strip!private! !
-!SessionManager class categoriesFor: #inputState!accessing!public! !
-!SessionManager class categoriesFor: #installNew!instance creation!public! !
-!SessionManager class categoriesFor: #isConsoleApplication!public!testing! !
-!SessionManager class categoriesFor: #isDLL!private!testing! !
-!SessionManager class categoriesFor: #isRuntime!public!testing! !
-!SessionManager class categoriesFor: #new!instance creation!public! !
-!SessionManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!SessionManager class categoriesForMethods!
+asSessionManagerClass!converting!public! !
+current!accessing!public! !
+current:!accessing!public! !
+imageExtension!constants!public! !
+initialize!initializing!must strip!private! !
+inputState!accessing!public! !
+installNew!instance creation!public! !
+isConsoleApplication!public!testing! !
+isDLL!private!testing! !
+isRuntime!public!testing! !
+new!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

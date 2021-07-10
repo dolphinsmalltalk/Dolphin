@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #FILETIMETest
 	instanceVariableNames: ''
@@ -26,6 +26,8 @@ testFromInteger
 	self assertFromIntegerInvertible: -2 ** 31.
 	self assertFromIntegerInvertible: -2 ** 32.
 	self assertFromIntegerInvertible: -2 ** 63! !
-!FILETIMETest categoriesFor: #assertFromIntegerInvertible:!helpers!private! !
-!FILETIMETest categoriesFor: #testFromInteger!public!unit tests! !
+!FILETIMETest categoriesForMethods!
+assertFromIntegerInvertible:!helpers!private! !
+testFromInteger!public!unit tests! !
+!
 

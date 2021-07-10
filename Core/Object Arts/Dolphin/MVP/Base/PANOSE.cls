@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #PANOSE
 	instanceVariableNames: ''
@@ -70,16 +70,18 @@ bXHeight
 	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
 	^bytes byteAtOffset: _OffsetOf_bXHeight! !
-!PANOSE categoriesFor: #bArmStyle!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bContrast!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bFamilyType!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bLetterform!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bMidline!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bProportion!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bSerifStyle!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bStrokeVariation!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bWeight!**compiled accessors**!public! !
-!PANOSE categoriesFor: #bXHeight!**compiled accessors**!public! !
+!PANOSE categoriesForMethods!
+bArmStyle!**compiled accessors**!public! !
+bContrast!**compiled accessors**!public! !
+bFamilyType!**compiled accessors**!public! !
+bLetterform!**compiled accessors**!public! !
+bMidline!**compiled accessors**!public! !
+bProportion!**compiled accessors**!public! !
+bSerifStyle!**compiled accessors**!public! !
+bStrokeVariation!**compiled accessors**!public! !
+bWeight!**compiled accessors**!public! !
+bXHeight!**compiled accessors**!public! !
+!
 
 !PANOSE class methodsFor!
 
@@ -116,6 +118,8 @@ defineFields
 
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
-!PANOSE class categoriesFor: #defineFields!public!template definition! !
-!PANOSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PANOSE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

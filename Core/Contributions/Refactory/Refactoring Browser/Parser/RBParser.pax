@@ -385,7 +385,9 @@ refersToVariable: aString
 		matches: aString do: [:node :answer | true];
 		matches: '[:`@vars | | `@temps | `@.Stmts]' do: [:node :answer | answer or: [((node defines: aString) or: [node body defines: aString]) not and: [searcher executeTree: node body initialAnswer: false]]].
 	^searcher executeTree: self parseTree initialAnswer: false! !
-!CompileFailedMethod categoriesFor: #refersToVariable:!development!private!testing! !
+!CompileFailedMethod categoriesForMethods!
+refersToVariable:!development!private!testing! !
+!
 
 !RBConfigurableFormatter methodsFor!
 
@@ -393,7 +395,9 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
 	self bracketWith: '{}' around: [self formatBlock: aRBPatternWrapperBlockNode]! !
-!RBConfigurableFormatter categoriesFor: #visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
+!RBConfigurableFormatter categoriesForMethods!
+visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
+!
 
 !RBFormatter methodsFor!
 
@@ -403,7 +407,9 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 		acceptBlockNode: aRBPatternWrapperBlockNode
 		startBlockString: '`{'
 		endBlockString: '}'! !
-!RBFormatter categoriesFor: #visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesForMethods!
+visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
+!
 
 !SmalltalkParser class methodsFor!
 
@@ -418,10 +424,12 @@ parseRewriteMethod: aString
 
 parseRewriteMethod: aString onError: aBlock 
 	^RBPatternParser parseMethod: aString onError: aBlock! !
-!SmalltalkParser class categoriesFor: #parseRewriteExpression:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseRewriteExpression:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseRewriteMethod:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseRewriteMethod:onError:!parsing!public! !
+!SmalltalkParser class categoriesForMethods!
+parseRewriteExpression:!parsing!public! !
+parseRewriteExpression:onError:!parsing!public! !
+parseRewriteMethod:!parsing!public! !
+parseRewriteMethod:onError:!parsing!public! !
+!
 
 !StAbstractVariableNode methodsFor!
 
@@ -445,11 +453,13 @@ replaceSourceWith: aNode
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
-!StAbstractVariableNode categoriesFor: #copyInContext:!matching!public! !
-!StAbstractVariableNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StAbstractVariableNode categoriesFor: #references:!public!testing! !
-!StAbstractVariableNode categoriesFor: #replaceSourceFrom:!public!replacing! !
-!StAbstractVariableNode categoriesFor: #replaceSourceWith:!public!replacing! !
+!StAbstractVariableNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+references:!public!testing! !
+replaceSourceFrom:!public!replacing! !
+replaceSourceWith:!public!replacing! !
+!
 
 !StAssignmentNode methodsFor!
 
@@ -497,11 +507,13 @@ replaceSourceWith: aNode
 				replaceFrom: self variable start
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)! !
-!StAssignmentNode categoriesFor: #copyInContext:!matching!public! !
-!StAssignmentNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StAssignmentNode categoriesFor: #match:inContext:!matching!public! !
-!StAssignmentNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StAssignmentNode categoriesFor: #replaceSourceWith:!public!replacing! !
+!StAssignmentNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+replaceSourceWith:!public!replacing! !
+!
 
 !StBlockNode methodsFor!
 
@@ -539,11 +551,13 @@ replaceNode: aNode withNode: anotherNode
 	body == aNode ifTrue: [self body: anotherNode].
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StBlockNode categoriesFor: #copyInContext:!matching!public! !
-!StBlockNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StBlockNode categoriesFor: #match:inContext:!matching!public! !
-!StBlockNode categoriesFor: #references:!public!testing! !
-!StBlockNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StBlockNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+match:inContext:!matching!public! !
+references:!public!testing! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !StBraceArrayNode methodsFor!
 
@@ -620,18 +634,20 @@ references: aVariableName
 
 replaceNode: aNode withNode: anotherNode
 	self statements: (statements collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StBraceArrayNode categoriesFor: #addNode:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNode:before:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodeFirst:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodes:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodes:before:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #addNodesFirst:!adding nodes!public! !
-!StBraceArrayNode categoriesFor: #copyInContext:!matching!public! !
-!StBraceArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StBraceArrayNode categoriesFor: #indexOfNode:!helpers!private! !
-!StBraceArrayNode categoriesFor: #match:inContext:!matching!public! !
-!StBraceArrayNode categoriesFor: #references:!public!testing! !
-!StBraceArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StBraceArrayNode categoriesForMethods!
+addNode:!adding nodes!public! !
+addNode:before:!adding nodes!public! !
+addNodeFirst:!adding nodes!public! !
+addNodes:!adding nodes!public! !
+addNodes:before:!adding nodes!public! !
+addNodesFirst:!adding nodes!public! !
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+indexOfNode:!helpers!private! !
+match:inContext:!matching!public! !
+references:!public!testing! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !StCascadeNode methodsFor!
 
@@ -660,10 +676,12 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self messages: (messages 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StCascadeNode categoriesFor: #copyInContext:!matching!public! !
-!StCascadeNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StCascadeNode categoriesFor: #match:inContext:!matching!public! !
-!StCascadeNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StCascadeNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !StLiteralArrayNode methodsFor!
 
@@ -696,10 +714,12 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self contents: (contents 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StLiteralArrayNode categoriesFor: #copyInContext:!matching!public! !
-!StLiteralArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StLiteralArrayNode categoriesFor: #match:inContext:!matching!public! !
-!StLiteralArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StLiteralArrayNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !StLiteralNode methodsFor!
 
@@ -714,14 +734,18 @@ replaceSourceWith: aNode
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
-!StLiteralNode categoriesFor: #replaceSourceFrom:!private!replacing! !
-!StLiteralNode categoriesFor: #replaceSourceWith:!private!replacing! !
+!StLiteralNode categoriesForMethods!
+replaceSourceFrom:!private!replacing! !
+replaceSourceWith:!private!replacing! !
+!
 
 !StLiteralValueNode methodsFor!
 
 copyInContext: aDictionary
 	^self class literalToken: token removePositions! !
-!StLiteralValueNode categoriesFor: #copyInContext:!matching!public! !
+!StLiteralValueNode categoriesForMethods!
+copyInContext:!matching!public! !
+!
 
 !StMessageNode methodsFor!
 
@@ -823,14 +847,16 @@ replaceSourceWithMessageNode: aNode
 										and: [(self source at: old start - 1) isSeparator not]) 
 											ifTrue: [' ' , new value]
 											ifFalse: [new value]))]]! !
-!StMessageNode categoriesFor: #copyInContext:!matching!public! !
-!StMessageNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StMessageNode categoriesFor: #isContainmentReplacement:!private!replacing! !
-!StMessageNode categoriesFor: #match:inContext:!matching!public! !
-!StMessageNode categoriesFor: #replaceContainmentSourceWith:!private!replacing! !
-!StMessageNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StMessageNode categoriesFor: #replaceSourceWith:!private!replacing! !
-!StMessageNode categoriesFor: #replaceSourceWithMessageNode:!private!replacing! !
+!StMessageNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+isContainmentReplacement:!private!replacing! !
+match:inContext:!matching!public! !
+replaceContainmentSourceWith:!private!replacing! !
+replaceNode:withNode:!public!replacing! !
+replaceSourceWith:!private!replacing! !
+replaceSourceWithMessageNode:!private!replacing! !
+!
 
 !StMethodNode methodsFor!
 
@@ -953,23 +979,25 @@ replaceNode: aNode withNode: anotherNode
 	aNode == body ifTrue: [self body: anotherNode].
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!StMethodNode categoriesFor: #addNode:!accessing!public! !
-!StMethodNode categoriesFor: #addReplacement:!public!replacing! !
-!StMethodNode categoriesFor: #addReturn!accessing!public! !
-!StMethodNode categoriesFor: #addSelfReturn!accessing!public! !
-!StMethodNode categoriesFor: #changeSourceSelectors:arguments:!private!replacing! !
-!StMethodNode categoriesFor: #clearReplacements!public!replacing! !
-!StMethodNode categoriesFor: #copyInContext:!matching!public! !
-!StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StMethodNode categoriesFor: #initialize!initializing!public! !
-!StMethodNode categoriesFor: #map:to:!public!replacing! !
-!StMethodNode categoriesFor: #mappingFor:!public!replacing! !
-!StMethodNode categoriesFor: #match:inContext:!matching!public! !
-!StMethodNode categoriesFor: #newSource!accessing!public! !
-!StMethodNode categoriesFor: #references:!public!testing! !
-!StMethodNode categoriesFor: #reformatSource!operations!private! !
-!StMethodNode categoriesFor: #renameSelector:andArguments:!accessing!public! !
-!StMethodNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StMethodNode categoriesForMethods!
+addNode:!accessing!public! !
+addReplacement:!public!replacing! !
+addReturn!accessing!public! !
+addSelfReturn!accessing!public! !
+changeSourceSelectors:arguments:!private!replacing! !
+clearReplacements!public!replacing! !
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+initialize!initializing!public! !
+map:to:!public!replacing! !
+mappingFor:!public!replacing! !
+match:inContext:!matching!public! !
+newSource!accessing!public! !
+references:!public!testing! !
+reformatSource!operations!private! !
+renameSelector:andArguments:!accessing!public! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !StOptimizedNode methodsFor!
 
@@ -986,10 +1014,12 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	body == aNode ifTrue: [self body: anotherNode]! !
-!StOptimizedNode categoriesFor: #copyInContext:!matching!public! !
-!StOptimizedNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StOptimizedNode categoriesFor: #match:inContext:!matching!public! !
-!StOptimizedNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StOptimizedNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !StParseNodeVisitor methodsFor!
 
@@ -1001,8 +1031,10 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
 	self visitNode: aRBPatternWrapperBlockNode body! !
-!StParseNodeVisitor categoriesFor: #visitPatternBlockNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitPatternWrapperBlockNode:!public!visiting! !
+!StParseNodeVisitor categoriesForMethods!
+visitPatternBlockNode:!public!visiting! !
+visitPatternWrapperBlockNode:!public!visiting! !
+!
 
 !StProgramNode methodsFor!
 
@@ -1154,25 +1186,27 @@ superMessages
 						add: aNode selector;
 						yourself]).
 	^searcher executeTree: self initialAnswer: Set new! !
-!StProgramNode categoriesFor: #addReplacement:!public!replacing! !
-!StProgramNode categoriesFor: #asReturn!accessing!public! !
-!StProgramNode categoriesFor: #clearReplacements!public!replacing! !
-!StProgramNode categoriesFor: #copyInContext:!matching!public! !
-!StProgramNode categoriesFor: #copyList:inContext:!matching!public! !
-!StProgramNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StProgramNode categoriesFor: #mappingFor:!accessing!public! !
-!StProgramNode categoriesFor: #match:inContext:!matching!public! !
-!StProgramNode categoriesFor: #matchList:against:inContext:!matching!public! !
-!StProgramNode categoriesFor: #matchList:index:against:index:inContext:!matching!public! !
-!StProgramNode categoriesFor: #references:!public!testing! !
-!StProgramNode categoriesFor: #removeDeadCode!public!replacing! !
-!StProgramNode categoriesFor: #replaceMethodSource:!public!replacing! !
-!StProgramNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StProgramNode categoriesFor: #replaceSourceFrom:!private!replacing! !
-!StProgramNode categoriesFor: #replaceSourceWith:!private!replacing! !
-!StProgramNode categoriesFor: #replaceWith:!public!replacing! !
-!StProgramNode categoriesFor: #selfMessages!public!querying! !
-!StProgramNode categoriesFor: #superMessages!public!querying! !
+!StProgramNode categoriesForMethods!
+addReplacement:!public!replacing! !
+asReturn!accessing!public! !
+clearReplacements!public!replacing! !
+copyInContext:!matching!public! !
+copyList:inContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+mappingFor:!accessing!public! !
+match:inContext:!matching!public! !
+matchList:against:inContext:!matching!public! !
+matchList:index:against:index:inContext:!matching!public! !
+references:!public!testing! !
+removeDeadCode!public!replacing! !
+replaceMethodSource:!public!replacing! !
+replaceNode:withNode:!public!replacing! !
+replaceSourceFrom:!private!replacing! !
+replaceSourceWith:!private!replacing! !
+replaceWith:!public!replacing! !
+selfMessages!public!querying! !
+superMessages!public!querying! !
+!
 
 !StReturnNode methodsFor!
 
@@ -1191,10 +1225,12 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	value == aNode ifTrue: [self value: anotherNode]! !
-!StReturnNode categoriesFor: #copyInContext:!matching!public! !
-!StReturnNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StReturnNode categoriesFor: #match:inContext:!matching!public! !
-!StReturnNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+!StReturnNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !StSequenceNode methodsFor!
 
@@ -1342,26 +1378,28 @@ replaceNode: aNode withNodes: aCollection
 		do: [:i | newStatements add: (statements at: i)].
 	aCollection do: [:each | each parent: self].
 	statements := newStatements! !
-!StSequenceNode categoriesFor: #addNode:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNode:before:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodeFirst:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodes:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodes:before:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodesFirst:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addReturn!accessing!public! !
-!StSequenceNode categoriesFor: #addSelfReturn!adding nodes!public! !
-!StSequenceNode categoriesFor: #addTemporariesNamed:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addTemporaryNamed:!adding nodes!public! !
-!StSequenceNode categoriesFor: #copyInContext:!matching!public! !
-!StSequenceNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StSequenceNode categoriesFor: #indexOfNode:!helpers!private! !
-!StSequenceNode categoriesFor: #match:inContext:!matching!public! !
-!StSequenceNode categoriesFor: #references:!public!testing! !
-!StSequenceNode categoriesFor: #removeDeadCode!public!replacing! !
-!StSequenceNode categoriesFor: #removeNode:!public!replacing! !
-!StSequenceNode categoriesFor: #removeTemporaryNamed:!accessing!public! !
-!StSequenceNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StSequenceNode categoriesFor: #replaceNode:withNodes:!public!replacing! !
+!StSequenceNode categoriesForMethods!
+addNode:!adding nodes!public! !
+addNode:before:!adding nodes!public! !
+addNodeFirst:!adding nodes!public! !
+addNodes:!adding nodes!public! !
+addNodes:before:!adding nodes!public! !
+addNodesFirst:!adding nodes!public! !
+addReturn!accessing!public! !
+addSelfReturn!adding nodes!public! !
+addTemporariesNamed:!adding nodes!public! !
+addTemporaryNamed:!adding nodes!public! !
+copyInContext:!matching!public! !
+equalTo:withMapping:!comparing!public! !
+indexOfNode:!helpers!private! !
+match:inContext:!matching!public! !
+references:!public!testing! !
+removeDeadCode!public!replacing! !
+removeNode:!public!replacing! !
+removeTemporaryNamed:!accessing!public! !
+replaceNode:withNode:!public!replacing! !
+replaceNode:withNodes:!public!replacing! !
+!
 
 "End of package definition"!
 

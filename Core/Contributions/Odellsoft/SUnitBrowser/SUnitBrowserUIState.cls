@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitBrowserAbsUIState subclass: #SUnitBrowserUIState
 	instanceVariableNames: ''
@@ -166,20 +166,22 @@ testResult
 yellowBallIconSymbol
 
 	^#yellowBallIcon! !
-!SUnitBrowserUIState categoriesFor: #areAnyTestsCompleted!private!querying! !
-!SUnitBrowserUIState categoriesFor: #colorSymbolFor:!color!public! !
-!SUnitBrowserUIState categoriesFor: #detailState!public!strings! !
-!SUnitBrowserUIState categoriesFor: #errorColorSymbol!constants!private! !
-!SUnitBrowserUIState categoriesFor: #failureColorSymbol!constants!private! !
-!SUnitBrowserUIState categoriesFor: #grayBallIconSymbol!constants!private! !
-!SUnitBrowserUIState categoriesFor: #iconSymbolFor:!icons!public! !
-!SUnitBrowserUIState categoriesFor: #notYetRunColorSymbol!constants!private! !
-!SUnitBrowserUIState categoriesFor: #passedColorSymbol!constants!private! !
-!SUnitBrowserUIState categoriesFor: #resultStateColorSymbol!color!public! !
-!SUnitBrowserUIState categoriesFor: #resultStateFor:!icons!private! !
-!SUnitBrowserUIState categoriesFor: #resultStateString!public!strings! !
-!SUnitBrowserUIState categoriesFor: #showAllColorSymbol!color!public! !
-!SUnitBrowserUIState categoriesFor: #showAllLabel!public!strings! !
-!SUnitBrowserUIState categoriesFor: #testResult!accessing!private! !
-!SUnitBrowserUIState categoriesFor: #yellowBallIconSymbol!constants!private! !
+!SUnitBrowserUIState categoriesForMethods!
+areAnyTestsCompleted!private!querying! !
+colorSymbolFor:!color!public! !
+detailState!public!strings! !
+errorColorSymbol!constants!private! !
+failureColorSymbol!constants!private! !
+grayBallIconSymbol!constants!private! !
+iconSymbolFor:!icons!public! !
+notYetRunColorSymbol!constants!private! !
+passedColorSymbol!constants!private! !
+resultStateColorSymbol!color!public! !
+resultStateFor:!icons!private! !
+resultStateString!public!strings! !
+showAllColorSymbol!color!public! !
+showAllLabel!public!strings! !
+testResult!accessing!private! !
+yellowBallIconSymbol!constants!private! !
+!
 

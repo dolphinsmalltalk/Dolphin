@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Association subclass: #STONTestAssociation
 	instanceVariableNames: 'timestamp'
@@ -24,8 +24,10 @@ timestamp
 value: anObject
 	super value: anObject.
 	timestamp := self now! !
-!STONTestAssociation categoriesFor: #key:value:!accessing!public! !
-!STONTestAssociation categoriesFor: #now!accessing!public! !
-!STONTestAssociation categoriesFor: #timestamp!accessing!public! !
-!STONTestAssociation categoriesFor: #value:!accessing!public! !
+!STONTestAssociation categoriesForMethods!
+key:value:!accessing!public! !
+now!accessing!public! !
+timestamp!accessing!public! !
+value:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalFieldTest subclass: #StructureArrayPointerFieldTest
 	instanceVariableNames: ''
@@ -45,5 +45,7 @@ testGenerateAccessorsForSizedArray
 	struct Test: data.
 	self assert: struct Size equals: 2.
 	self assert: struct Test equals: data! !
-!StructureArrayPointerFieldTest categoriesFor: #testGenerateAccessorsForSizedArray!public! !
+!StructureArrayPointerFieldTest categoriesForMethods!
+testGenerateAccessorsForSizedArray!public! !
+!
 

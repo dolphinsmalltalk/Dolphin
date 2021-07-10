@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 KeyedAspect subclass: #AnonymousKeyedAspect
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ displayAspectText: anObject on: aStream
 	"Don't display the anonymouse key name"
 
 	[(self readFrom: anObject) aspectDisplayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]! !
-!AnonymousKeyedAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!AnonymousKeyedAspect categoriesFor: #displayAspectText:on:!displaying!private! !
+!AnonymousKeyedAspect categoriesForMethods!
+displayAspectNameOf:on:!displaying!private! !
+displayAspectText:on:!displaying!private! !
+!
 

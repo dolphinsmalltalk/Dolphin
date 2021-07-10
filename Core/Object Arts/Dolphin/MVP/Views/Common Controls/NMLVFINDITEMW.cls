@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMLVFINDITEMW
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ lvfi
 	"Answer the <LVFINDINFOW> value of the receiver's 'lvfi' field."
 
 	^LVFINDINFOW fromAddress: bytes yourAddress + _OffsetOf_lvfi! !
-!NMLVFINDITEMW categoriesFor: #iStart!**compiled accessors**!public! !
-!NMLVFINDITEMW categoriesFor: #lvfi!**compiled accessors**!public! !
+!NMLVFINDITEMW categoriesForMethods!
+iStart!**compiled accessors**!public! !
+lvfi!**compiled accessors**!public! !
+!
 
 !NMLVFINDITEMW class methodsFor!
 
@@ -38,6 +40,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iStart #lvfi)! !
-!NMLVFINDITEMW class categoriesFor: #defineFields!public!template definition! !
-!NMLVFINDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMLVFINDITEMW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #BoundsError
 	instanceVariableNames: 'receiver'
@@ -24,7 +24,9 @@ receiver: anObject
 	"Set the object which generated the bounds error to be anObject"
 	
 	receiver := anObject! !
-!BoundsError categoriesFor: #_descriptionFormat!displaying!public! !
-!BoundsError categoriesFor: #receiver!accessing!public! !
-!BoundsError categoriesFor: #receiver:!accessing!public! !
+!BoundsError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 

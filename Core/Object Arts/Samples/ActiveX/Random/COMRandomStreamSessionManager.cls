@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #COMRandomStreamSessionManager
 	instanceVariableNames: ''
@@ -13,7 +13,9 @@ COMRandomStreamSessionManager comment: ''!
 main
 	self mainShellClass show.
 	COMRandomStream registerClassFactory! !
-!COMRandomStreamSessionManager categoriesFor: #main!operations!public! !
+!COMRandomStreamSessionManager categoriesForMethods!
+main!operations!public! !
+!
 
 !COMRandomStreamSessionManager class methodsFor!
 
@@ -21,5 +23,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Shell! !
-!COMRandomStreamSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!COMRandomStreamSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

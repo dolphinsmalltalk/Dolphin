@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SOCKADDR subclass: #SOCKADDR_STORAGE
 	instanceVariableNames: ''
@@ -53,6 +53,8 @@ defineFields
 
 getFieldNames
 	^#()! !
-!SOCKADDR_STORAGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SOCKADDR_STORAGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SOCKADDR_STORAGE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

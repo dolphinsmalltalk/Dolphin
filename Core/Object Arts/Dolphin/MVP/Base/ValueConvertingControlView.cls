@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #ValueConvertingControlView
 	instanceVariableNames: 'typeconverter'
@@ -141,23 +141,25 @@ value: anObject
 	"Set the receiver's model value to anObject"
 
 	self model value: anObject! !
-!ValueConvertingControlView categoriesFor: #connectModel!models!public! !
-!ValueConvertingControlView categoriesFor: #defaultExtent!constants!private! !
-!ValueConvertingControlView categoriesFor: #defaultTypeConverter!accessing!public! !
-!ValueConvertingControlView categoriesFor: #defaultTypeConverterClass!initializing!private! !
-!ValueConvertingControlView categoriesFor: #displayValue!private!updating! !
-!ValueConvertingControlView categoriesFor: #displayValue:!private!updating! !
-!ValueConvertingControlView categoriesFor: #initializeNewTypeConverter:!accessing!private! !
-!ValueConvertingControlView categoriesFor: #onViewCreated!event handling!public! !
-!ValueConvertingControlView categoriesFor: #refreshContents!public!updating! !
-!ValueConvertingControlView categoriesFor: #typeconverter!accessing!public! !
-!ValueConvertingControlView categoriesFor: #typeconverter:!accessing!public! !
-!ValueConvertingControlView categoriesFor: #typeconverterClass!accessing!public! !
-!ValueConvertingControlView categoriesFor: #typeconverterClass:!accessing!public! !
-!ValueConvertingControlView categoriesFor: #updateModel!private!updating! !
-!ValueConvertingControlView categoriesFor: #updateModel:!private!updating! !
-!ValueConvertingControlView categoriesFor: #value!accessing!public! !
-!ValueConvertingControlView categoriesFor: #value:!accessing!public! !
+!ValueConvertingControlView categoriesForMethods!
+connectModel!models!public! !
+defaultExtent!constants!private! !
+defaultTypeConverter!accessing!public! !
+defaultTypeConverterClass!initializing!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+initializeNewTypeConverter:!accessing!private! !
+onViewCreated!event handling!public! !
+refreshContents!public!updating! !
+typeconverter!accessing!public! !
+typeconverter:!accessing!public! !
+typeconverterClass!accessing!public! !
+typeconverterClass:!accessing!public! !
+updateModel!private!updating! !
+updateModel:!private!updating! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 ValueConvertingControlView methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 ValueConvertingControlView methodProtocol: #valueView attributes: #(#readOnly) selectors: #(#value #value:)!
@@ -173,6 +175,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ValueConvertingControlView class categoriesFor: #defaultModel!models!public! !
-!ValueConvertingControlView class categoriesFor: #icon!constants!public! !
+!ValueConvertingControlView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

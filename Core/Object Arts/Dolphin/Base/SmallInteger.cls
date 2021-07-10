@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Integer subclass: #SmallInteger
 	instanceVariableNames: ''
@@ -523,61 +523,63 @@ species
 	will fail for immediate classes, so we must override here."
 
 	^SmallInteger! !
-!SmallInteger categoriesFor: #-!arithmetic!public! !
-!SmallInteger categoriesFor: #&!bit manipulation!public! !
-!SmallInteger categoriesFor: #*!arithmetic!public! !
-!SmallInteger categoriesFor: #/!arithmetic!public! !
-!SmallInteger categoriesFor: #//!arithmetic!public! !
-!SmallInteger categoriesFor: #\\!arithmetic!public! !
-!SmallInteger categoriesFor: #_deepCopy:!copying!private! !
-!SmallInteger categoriesFor: #|!bit manipulation!public! !
-!SmallInteger categoriesFor: #+!arithmetic!public! !
-!SmallInteger categoriesFor: #<!comparing!public! !
-!SmallInteger categoriesFor: #<<!bit manipulation!public! !
-!SmallInteger categoriesFor: #<=!comparing!public! !
-!SmallInteger categoriesFor: #=!comparing!public! !
-!SmallInteger categoriesFor: #>!comparing!public! !
-!SmallInteger categoriesFor: #>=!comparing!public! !
-!SmallInteger categoriesFor: #allMask:!bit manipulation!public! !
-!SmallInteger categoriesFor: #anyMask:!bit manipulation!public! !
-!SmallInteger categoriesFor: #asFloat!converting!public! !
-!SmallInteger categoriesFor: #asStackPointer!converting!private! !
-!SmallInteger categoriesFor: #basicAt:!accessing!private! !
-!SmallInteger categoriesFor: #basicAt:put:!accessing!private! !
-!SmallInteger categoriesFor: #basicIdentityHash!comparing!public! !
-!SmallInteger categoriesFor: #basicShallowCopy!copying!public! !
-!SmallInteger categoriesFor: #basicSize!accessing!private! !
-!SmallInteger categoriesFor: #basicYourAddress!accessing!private! !
-!SmallInteger categoriesFor: #bitAnd:!bit manipulation!public! !
-!SmallInteger categoriesFor: #bitOr:!bit manipulation!public! !
-!SmallInteger categoriesFor: #bitShift:!bit manipulation!public! !
-!SmallInteger categoriesFor: #bitXor:!bit manipulation!public! !
-!SmallInteger categoriesFor: #byteAt:!accessing!private! !
-!SmallInteger categoriesFor: #byteSize!accessing!private! !
-!SmallInteger categoriesFor: #coerce:!coercing!private! !
-!SmallInteger categoriesFor: #decimalDigitLength!enquiries!private! !
-!SmallInteger categoriesFor: #deepCopy!copying!public! !
-!SmallInteger categoriesFor: #generality!coercing!private! !
-!SmallInteger categoriesFor: #hash!comparing!public! !
-!SmallInteger categoriesFor: #highBit!bit manipulation!public! !
-!SmallInteger categoriesFor: #identityHash!comparing!public! !
-!SmallInteger categoriesFor: #instVarAt:!accessing!private! !
-!SmallInteger categoriesFor: #instVarAt:put:!accessing!private! !
-!SmallInteger categoriesFor: #isAtomic!public!testing! !
-!SmallInteger categoriesFor: #isImmediate!public!testing! !
-!SmallInteger categoriesFor: #isZero!public!testing! !
-!SmallInteger categoriesFor: #lowBit!bit manipulation!public! !
-!SmallInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!SmallInteger categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
-!SmallInteger categoriesFor: #printOn:base:!printing!public! !
-!SmallInteger categoriesFor: #printOn:base:nDigits:!printing!public! !
-!SmallInteger categoriesFor: #printString!printing!public! !
-!SmallInteger categoriesFor: #printStringBase:!printing!public! !
-!SmallInteger categoriesFor: #printStringBase:nDigits:!printing!public! !
-!SmallInteger categoriesFor: #quo:!arithmetic!public! !
-!SmallInteger categoriesFor: #refersToLiteral:!private!testing! !
-!SmallInteger categoriesFor: #shallowCopy!copying!public! !
-!SmallInteger categoriesFor: #species!accessing!public! !
+!SmallInteger categoriesForMethods!
+-!arithmetic!public! !
+&!bit manipulation!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
+\\!arithmetic!public! !
+_deepCopy:!copying!private! !
+|!bit manipulation!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<<!bit manipulation!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+allMask:!bit manipulation!public! !
+anyMask:!bit manipulation!public! !
+asFloat!converting!public! !
+asStackPointer!converting!private! !
+basicAt:!accessing!private! !
+basicAt:put:!accessing!private! !
+basicIdentityHash!comparing!public! !
+basicShallowCopy!copying!public! !
+basicSize!accessing!private! !
+basicYourAddress!accessing!private! !
+bitAnd:!bit manipulation!public! !
+bitOr:!bit manipulation!public! !
+bitShift:!bit manipulation!public! !
+bitXor:!bit manipulation!public! !
+byteAt:!accessing!private! !
+byteSize!accessing!private! !
+coerce:!coercing!private! !
+decimalDigitLength!enquiries!private! !
+deepCopy!copying!public! !
+generality!coercing!private! !
+hash!comparing!public! !
+highBit!bit manipulation!public! !
+identityHash!comparing!public! !
+instVarAt:!accessing!private! !
+instVarAt:put:!accessing!private! !
+isAtomic!public!testing! !
+isImmediate!public!testing! !
+isZero!public!testing! !
+lowBit!bit manipulation!public! !
+multiplyByInteger:!double dispatch!private! !
+numberOfDigitsInBase:!enquiries!private! !
+printOn:base:!printing!public! !
+printOn:base:nDigits:!printing!public! !
+printString!printing!public! !
+printStringBase:!printing!public! !
+printStringBase:nDigits:!printing!public! !
+quo:!arithmetic!public! !
+refersToLiteral:!private!testing! !
+shallowCopy!copying!public! !
+species!accessing!public! !
+!
 
 !SmallInteger class methodsFor!
 
@@ -610,9 +612,11 @@ minimum
 	represented as a SmallInteger"
 
 	^VMConstants.SmallIntegerMin! !
-!SmallInteger class categoriesFor: #basicNew!instance creation!public! !
-!SmallInteger class categoriesFor: #hasImmediateInstances!public!testing! !
-!SmallInteger class categoriesFor: #maxBytes!constants!public! !
-!SmallInteger class categoriesFor: #maximum!constants!public! !
-!SmallInteger class categoriesFor: #minimum!constants!public! !
+!SmallInteger class categoriesForMethods!
+basicNew!instance creation!public! !
+hasImmediateInstances!public!testing! !
+maxBytes!constants!public! !
+maximum!constants!public! !
+minimum!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #DTBGOPTS
 	instanceVariableNames: ''
@@ -61,12 +61,14 @@ rcClip: aRECT
 		from: ##(_OffsetOf_rcClip + 1)
 		to: ##(_OffsetOf_rcClip + RECT basicByteSize)
 		startingAt: 1! !
-!DTBGOPTS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #dwSize!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #rcClip!**compiled accessors**!public! !
-!DTBGOPTS categoriesFor: #rcClip:!**compiled accessors**!public! !
+!DTBGOPTS categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+rcClip!**compiled accessors**!public! !
+rcClip:!**compiled accessors**!public! !
+!
 
 !DTBGOPTS class methodsFor!
 
@@ -89,6 +91,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #rcClip)! !
-!DTBGOPTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!DTBGOPTS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!DTBGOPTS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

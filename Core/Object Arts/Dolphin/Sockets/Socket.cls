@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SocketAbstract subclass: #Socket
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'
@@ -378,41 +378,43 @@ writeStream
 
 	writeStream isNil ifTrue: [writeStream := SocketWriteStream on: self].
 	^writeStream! !
-!Socket categoriesFor: #address!accessing!public! !
-!Socket categoriesFor: #basicConnect!operations!private! !
-!Socket categoriesFor: #basicReceiveByte!operations!private! !
-!Socket categoriesFor: #basicReceiveByteArray:!operations!private! !
-!Socket categoriesFor: #basicSendByte:!operations!private! !
-!Socket categoriesFor: #basicSendByteArray:!operations!private! !
-!Socket categoriesFor: #cancelWait!accessing!private! !
-!Socket categoriesFor: #connect!operations!public! !
-!Socket categoriesFor: #connectNoWait!operations!public! !
-!Socket categoriesFor: #hasInput!private!testing! !
-!Socket categoriesFor: #initialize!initializing!private! !
-!Socket categoriesFor: #onAsyncClose!event handling!private! !
-!Socket categoriesFor: #onAsyncConnect!event handling!private! !
-!Socket categoriesFor: #onAsyncRead!event handling!private! !
-!Socket categoriesFor: #onAsyncWrite!event handling!private! !
-!Socket categoriesFor: #peerAddress!accessing!public! !
-!Socket categoriesFor: #port:address:!initializing!private! !
-!Socket categoriesFor: #readStream!accessing!public! !
-!Socket categoriesFor: #receive!operations!public! !
-!Socket categoriesFor: #receive:!public! !
-!Socket categoriesFor: #receiveByte!operations!public! !
-!Socket categoriesFor: #receiveByteArray:!operations!public! !
-!Socket categoriesFor: #receiveByteArrayPartial:!operations!public! !
-!Socket categoriesFor: #receiveSome:count:startingAt:!public! !
-!Socket categoriesFor: #send:!operations!public! !
-!Socket categoriesFor: #send:count:!operations!public! !
-!Socket categoriesFor: #send:count:startingAt:!operations!public! !
-!Socket categoriesFor: #sendByte:!operations!public! !
-!Socket categoriesFor: #sendByteArray:!operations!public! !
-!Socket categoriesFor: #sendByteArrayPartial:!operations!private! !
-!Socket categoriesFor: #sendSome:count:startingAt:!private! !
-!Socket categoriesFor: #waitConnect!operations!private! !
-!Socket categoriesFor: #waitRead!operations!private! !
-!Socket categoriesFor: #waitWrite!operations!private! !
-!Socket categoriesFor: #writeStream!accessing!public! !
+!Socket categoriesForMethods!
+address!accessing!public! !
+basicConnect!operations!private! !
+basicReceiveByte!operations!private! !
+basicReceiveByteArray:!operations!private! !
+basicSendByte:!operations!private! !
+basicSendByteArray:!operations!private! !
+cancelWait!accessing!private! !
+connect!operations!public! !
+connectNoWait!operations!public! !
+hasInput!private!testing! !
+initialize!initializing!private! !
+onAsyncClose!event handling!private! !
+onAsyncConnect!event handling!private! !
+onAsyncRead!event handling!private! !
+onAsyncWrite!event handling!private! !
+peerAddress!accessing!public! !
+port:address:!initializing!private! !
+readStream!accessing!public! !
+receive!operations!public! !
+receive:!public! !
+receiveByte!operations!public! !
+receiveByteArray:!operations!public! !
+receiveByteArrayPartial:!operations!public! !
+receiveSome:count:startingAt:!public! !
+send:!operations!public! !
+send:count:!operations!public! !
+send:count:startingAt:!operations!public! !
+sendByte:!operations!public! !
+sendByteArray:!operations!public! !
+sendByteArrayPartial:!operations!private! !
+sendSome:count:startingAt:!private! !
+waitConnect!operations!private! !
+waitRead!operations!private! !
+waitWrite!operations!private! !
+writeStream!accessing!public! !
+!
 
 !Socket class methodsFor!
 
@@ -461,10 +463,12 @@ publishedEventsOfInstances
 		add: #dataRead;
 		add: #connected;
 		yourself! !
-!Socket class categoriesFor: #descriptor:port:address:!instance creation!public! !
-!Socket class categoriesFor: #new!instance creation!private! !
-!Socket class categoriesFor: #port:address:!instance creation!public! !
-!Socket class categoriesFor: #port:host:!instance creation!public! !
-!Socket class categoriesFor: #port:ipAddress:!instance creation!public! !
-!Socket class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!Socket class categoriesForMethods!
+descriptor:port:address:!instance creation!public! !
+new!instance creation!private! !
+port:address:!instance creation!public! !
+port:host:!instance creation!public! !
+port:ipAddress:!instance creation!public! !
+publishedEventsOfInstances!development!events!public! !
+!
 

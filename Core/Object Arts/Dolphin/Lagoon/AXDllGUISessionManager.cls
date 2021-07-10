@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GUISessionManager subclass: #AXDllGUISessionManager
 	instanceVariableNames: ''
@@ -23,8 +23,10 @@ openConsoleStreams
 	"Do nothing - when running as a DLL we cannot assume we have access to the console"
 
 	! !
-!AXDllGUISessionManager categoriesFor: #keepAlive!idling!public! !
-!AXDllGUISessionManager categoriesFor: #openConsoleStreams!operations!private! !
+!AXDllGUISessionManager categoriesForMethods!
+keepAlive!idling!public! !
+openConsoleStreams!operations!private! !
+!
 
 !AXDllGUISessionManager class methodsFor!
 
@@ -48,8 +50,10 @@ isRuntime
 	(as opposed to development, or abstract)."
 
 	^true! !
-!AXDllGUISessionManager class categoriesFor: #icon!constants!development!must strip!public! !
-!AXDllGUISessionManager class categoriesFor: #imageExtension!constants!public! !
-!AXDllGUISessionManager class categoriesFor: #isDLL!private!testing! !
-!AXDllGUISessionManager class categoriesFor: #isRuntime!public!testing! !
+!AXDllGUISessionManager class categoriesForMethods!
+icon!constants!development!must strip!public! !
+imageExtension!constants!public! !
+isDLL!private!testing! !
+isRuntime!public!testing! !
+!
 

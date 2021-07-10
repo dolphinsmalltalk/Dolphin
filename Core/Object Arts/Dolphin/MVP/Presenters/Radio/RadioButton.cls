@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CheckButton subclass: #RadioButton
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ Windows'' standard behaviour for radio buttons is that a among a group of such b
 
 basicWindowStyle
 	^BS_AUTORADIOBUTTON! !
-!RadioButton categoriesFor: #basicWindowStyle!constants!private! !
+!RadioButton categoriesForMethods!
+basicWindowStyle!constants!private! !
+!
 

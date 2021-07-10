@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBOutFiler subclass: #STLOutFiler
 	instanceVariableNames: ''
@@ -55,14 +55,16 @@ writeInteger: anInteger
 
 writeNil
 	stream nextPut: nil! !
-!STLOutFiler categoriesFor: #putCharacter:!helpers!private! !
-!STLOutFiler categoriesFor: #putLiteral:!private! !
-!STLOutFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
-!STLOutFiler categoriesFor: #resetStream!initializing!private! !
-!STLOutFiler categoriesFor: #serializeObject:!operations!private! !
-!STLOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
-!STLOutFiler categoriesFor: #writeInteger:!helpers!private! !
-!STLOutFiler categoriesFor: #writeNil!operations!private! !
+!STLOutFiler categoriesForMethods!
+putCharacter:!helpers!private! !
+putLiteral:!private! !
+registerPredefinedObjects!initializing!private! !
+resetStream!initializing!private! !
+serializeObject:!operations!private! !
+writeClass:withLocator:!operations!private! !
+writeInteger:!helpers!private! !
+writeNil!operations!private! !
+!
 
 !STLOutFiler class methodsFor!
 
@@ -71,5 +73,7 @@ signature
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
-!STLOutFiler class categoriesFor: #signature!constants!private! !
+!STLOutFiler class categoriesForMethods!
+signature!constants!private! !
+!
 

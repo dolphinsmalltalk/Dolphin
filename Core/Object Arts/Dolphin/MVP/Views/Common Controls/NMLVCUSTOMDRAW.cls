@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	instanceVariableNames: 'column'
@@ -103,22 +103,24 @@ subItem
 	item := self item.
 	self column ifNotNil: [:col | col getContentsBlock ifNotNil: [:getblock | ^getblock value: item]].
 	^item! !
-!NMLVCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
-!NMLVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrText:!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrTextBk!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #column!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #column:!accessing!private! !
-!NMLVCUSTOMDRAW categoriesFor: #font!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
-!NMLVCUSTOMDRAW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMLVCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
-!NMLVCUSTOMDRAW categoriesFor: #reset!public! !
-!NMLVCUSTOMDRAW categoriesFor: #subItem!accessing!public! !
+!NMLVCUSTOMDRAW categoriesForMethods!
+applyFont!operations!private! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+clrText!**compiled accessors**!public! !
+clrText:!**compiled accessors**!public! !
+clrTextBk!**compiled accessors**!public! !
+clrTextBk:!**compiled accessors**!public! !
+column!accessing!public! !
+column:!accessing!private! !
+font!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+iSubItem!**compiled accessors**!public! !
+itemHandle!accessing!private! !
+reset!public! !
+subItem!accessing!public! !
+!
 
 !NMLVCUSTOMDRAW class methodsFor!
 
@@ -135,6 +137,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !
-!NMLVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
-!NMLVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMLVCUSTOMDRAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

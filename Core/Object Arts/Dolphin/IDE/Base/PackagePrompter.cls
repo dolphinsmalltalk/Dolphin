@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueDialog subclass: #PackagePrompter
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
@@ -82,16 +82,18 @@ validationBlock: aBlock
 	is valid. The OK button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
-!PackagePrompter categoriesFor: #createComponents!initializing!public! !
-!PackagePrompter categoriesFor: #createSchematicWiring!initializing!public! !
-!PackagePrompter categoriesFor: #defaultPackage:!accessing!private! !
-!PackagePrompter categoriesFor: #initialize!initializing!private! !
-!PackagePrompter categoriesFor: #onPackageSelected!event handling!public! !
-!PackagePrompter categoriesFor: #onViewOpened!event handling!public! !
-!PackagePrompter categoriesFor: #queryCommand:!commands!private! !
-!PackagePrompter categoriesFor: #toggleSetPackage!commands!public! !
-!PackagePrompter categoriesFor: #validationBlock!accessing!public! !
-!PackagePrompter categoriesFor: #validationBlock:!accessing!public! !
+!PackagePrompter categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultPackage:!accessing!private! !
+initialize!initializing!private! !
+onPackageSelected!event handling!public! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+toggleSetPackage!commands!public! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 
 !PackagePrompter class methodsFor!
 
@@ -138,9 +140,11 @@ showModalOn: aModel caption: aString default: aPackage validationBlock: aBlock
 		caption: aString;
 		validationBlock: aBlock;
 		showModal! !
-!PackagePrompter class categoriesFor: #defaultValidationBlock!constants!public! !
-!PackagePrompter class categoriesFor: #icon!accessing!constants!public! !
-!PackagePrompter class categoriesFor: #resource_Default_view!public!resources-views! !
-!PackagePrompter class categoriesFor: #showModalOn:caption:default:!instance creation!public! !
-!PackagePrompter class categoriesFor: #showModalOn:caption:default:validationBlock:!instance creation!public! !
+!PackagePrompter class categoriesForMethods!
+defaultValidationBlock!constants!public! !
+icon!accessing!constants!public! !
+resource_Default_view!public!resources-views! !
+showModalOn:caption:default:!instance creation!public! !
+showModalOn:caption:default:validationBlock:!instance creation!public! !
+!
 

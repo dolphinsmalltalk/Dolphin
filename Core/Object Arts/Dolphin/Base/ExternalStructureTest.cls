@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ExternalStructureTest
 	instanceVariableNames: ''
@@ -117,10 +117,12 @@ testIsNull
 
 	struct bytes: ExternalAddress new.
 	self assert: struct isNull.! !
-!ExternalStructureTest categoriesFor: #testCanUnderstand!public!unit tests! !
-!ExternalStructureTest categoriesFor: #testCompileDefinition!public!unit tests! !
-!ExternalStructureTest categoriesFor: #testDynamicSelectors!public!unit tests! !
-!ExternalStructureTest categoriesFor: #testEquals!public!unit tests! !
-!ExternalStructureTest categoriesFor: #testExtendedErrorInfo!public!unit tests! !
-!ExternalStructureTest categoriesFor: #testIsNull!public!unit tests! !
+!ExternalStructureTest categoriesForMethods!
+testCanUnderstand!public!unit tests! !
+testCompileDefinition!public!unit tests! !
+testDynamicSelectors!public!unit tests! !
+testEquals!public!unit tests! !
+testExtendedErrorInfo!public!unit tests! !
+testIsNull!public!unit tests! !
+!
 

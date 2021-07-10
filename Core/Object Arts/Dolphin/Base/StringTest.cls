@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayedCollectionTest subclass: #StringTest
 	instanceVariableNames: ''
@@ -1060,58 +1060,60 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 
 withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
-!StringTest categoriesFor: #afterTestCases!constants!private! !
-!StringTest categoriesFor: #assimilate:!helpers!private! !
-!StringTest categoriesFor: #assimilateString:!helpers!private! !
-!StringTest categoriesFor: #beforeTestCases!constants!private! !
-!StringTest categoriesFor: #caseConversionCases!constants!private! !
-!StringTest categoriesFor: #equalityTestCases!constants!private! !
-!StringTest categoriesFor: #findActualIndicesOf:in:!helpers!private! !
-!StringTest categoriesFor: #indexOfTestCases!constants!private! !
-!StringTest categoriesFor: #lengthTestCases!constants!private! !
-!StringTest categoriesFor: #newNumericArray:!helpers!private! !
-!StringTest categoriesFor: #reverseTestCases!constants!private! !
-!StringTest categoriesFor: #testAfter!public!unit tests! !
-!StringTest categoriesFor: #testAsByteArray!public!unit tests! !
-!StringTest categoriesFor: #testAt!public!unit tests! !
-!StringTest categoriesFor: #testBefore!public!unit tests! !
-!StringTest categoriesFor: #testBeginsWithEmbeddedNulls!public!unit tests! !
-!StringTest categoriesFor: #testBeginsWithMixedEncodings!public!unit tests! !
-!StringTest categoriesFor: #testBinarySelectorExpandMacrosWith!public!unit tests! !
-!StringTest categoriesFor: #testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
-!StringTest categoriesFor: #testBinarySelectorExpandMacrosWithCollection!public!unit tests! !
-!StringTest categoriesFor: #testCapitalized!public!unit tests! !
-!StringTest categoriesFor: #testCaseConversions!public!unit tests! !
-!StringTest categoriesFor: #testClassFromAddress!public!unit tests! !
-!StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
-!StringTest categoriesFor: #testCopyWithout!public! !
-!StringTest categoriesFor: #testEmpty!public!testing / accessing! !
-!StringTest categoriesFor: #testEquals!public!unit tests! !
-!StringTest categoriesFor: #testExpandMacrosWith!public!unit tests! !
-!StringTest categoriesFor: #testExpandMacrosWithArguments!public!unit tests! !
-!StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
-!StringTest categoriesFor: #testHash!public!unit tests! !
-!StringTest categoriesFor: #testIndexOfStartingAt!public!unit tests! !
-!StringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
-!StringTest categoriesFor: #testLastIndexOf!public!unit tests! !
-!StringTest categoriesFor: #testLength!public!unit tests! !
-!StringTest categoriesFor: #testLines!public!unit tests! !
-!StringTest categoriesFor: #testMutableCopy!public!unit tests! !
-!StringTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!StringTest categoriesFor: #testReverse!public!unit tests! !
-!StringTest categoriesFor: #testReverseDo!public!unit tests! !
-!StringTest categoriesFor: #testSplitByCharacterArray!public!unit tests! !
-!StringTest categoriesFor: #testSplitByString!public!unit tests! !
-!StringTest categoriesFor: #testSplitSingle!public!unit tests! !
-!StringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
-!StringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
-!StringTest categoriesFor: #testSubStringsByString!public!unit tests! !
-!StringTest categoriesFor: #testTrimNulls!public!unit tests! !
-!StringTest categoriesFor: #testUrlDecoded!public!unit tests! !
-!StringTest categoriesFor: #testUrlEncoded!public!unit tests! !
-!StringTest categoriesFor: #testWithAll!public!unit tests! !
-!StringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
-!StringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
-!StringTest categoriesFor: #withAllTestCases!constants!private! !
+!StringTest categoriesForMethods!
+afterTestCases!constants!private! !
+assimilate:!helpers!private! !
+assimilateString:!helpers!private! !
+beforeTestCases!constants!private! !
+caseConversionCases!constants!private! !
+equalityTestCases!constants!private! !
+findActualIndicesOf:in:!helpers!private! !
+indexOfTestCases!constants!private! !
+lengthTestCases!constants!private! !
+newNumericArray:!helpers!private! !
+reverseTestCases!constants!private! !
+testAfter!public!unit tests! !
+testAsByteArray!public!unit tests! !
+testAt!public!unit tests! !
+testBefore!public!unit tests! !
+testBeginsWithEmbeddedNulls!public!unit tests! !
+testBeginsWithMixedEncodings!public!unit tests! !
+testBinarySelectorExpandMacrosWith!public!unit tests! !
+testBinarySelectorExpandMacrosWithArguments!public!unit tests! !
+testBinarySelectorExpandMacrosWithCollection!public!unit tests! !
+testCapitalized!public!unit tests! !
+testCaseConversions!public!unit tests! !
+testClassFromAddress!public!unit tests! !
+testClassReadFrom!public!unit tests! !
+testCopyWithout!public! !
+testEmpty!public!testing / accessing! !
+testEquals!public!unit tests! !
+testExpandMacrosWith!public!unit tests! !
+testExpandMacrosWithArguments!public!unit tests! !
+testFindStringStartingAt!public!unit tests! !
+testFindStringStartingAtIgnoreCase!public!unit tests! !
+testHash!public!unit tests! !
+testIndexOfStartingAt!public!unit tests! !
+testInvalidComparisons!public!unit tests! !
+testLastIndexOf!public!unit tests! !
+testLength!public!unit tests! !
+testLines!public!unit tests! !
+testMutableCopy!public!unit tests! !
+testRefersToLiteral!public!unit tests! !
+testReverse!public!unit tests! !
+testReverseDo!public!unit tests! !
+testSplitByCharacterArray!public!unit tests! !
+testSplitByString!public!unit tests! !
+testSplitSingle!public!unit tests! !
+testStreamUtfRoundTrip!public!unit tests! !
+testSubStringsByCharacter!public!unit tests! !
+testSubStringsByString!public!unit tests! !
+testTrimNulls!public!unit tests! !
+testUrlDecoded!public!unit tests! !
+testUrlEncoded!public!unit tests! !
+testWithAll!public!unit tests! !
+testWithNormalizedLineDelimiters!public!unit tests! !
+verifyConcatenationResult:of:with:!helpers!private! !
+withAllTestCases!constants!private! !
+!
 

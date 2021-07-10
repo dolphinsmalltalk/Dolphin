@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #ViewComposer
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
@@ -2474,256 +2474,258 @@ zOrderChangedFor: aView
 	view hierarchy model so that its views update appropriately"
 
 	viewHierarchyPresenter model move: aView asChildOf: (viewHierarchyPresenter model parentOf: aView)! !
-!ViewComposer categoriesFor: #addGrabberFor:of:!adornments!private! !
-!ViewComposer categoriesFor: #addGrabbers!adornments!private! !
-!ViewComposer categoriesFor: #addSelectionFor:!adornments!private! !
-!ViewComposer categoriesFor: #adjustScroll!geometry!private! !
-!ViewComposer categoriesFor: #adornmentRectanglesFor:!adornments!private! !
-!ViewComposer categoriesFor: #adornmentRectanglesFor:do:!adornments!private! !
-!ViewComposer categoriesFor: #adornmentRegion!adornments!private! !
-!ViewComposer categoriesFor: #adornmentRegionFor:!adornments!private! !
-!ViewComposer categoriesFor: #alignBottoms!commands!public! !
-!ViewComposer categoriesFor: #alignCenters!commands!public! !
-!ViewComposer categoriesFor: #alignLefts!commands!public! !
-!ViewComposer categoriesFor: #alignMiddles!commands!public! !
-!ViewComposer categoriesFor: #alignRights!commands!public! !
-!ViewComposer categoriesFor: #alignTops!commands!public! !
-!ViewComposer categoriesFor: #allResourceIdentifiers!public! !
-!ViewComposer categoriesFor: #areDragObjects:acceptableFor:inView:!drag & drop!private! !
-!ViewComposer categoriesFor: #arena!accessing!private! !
-!ViewComposer categoriesFor: #arenaBorderSize!constants!private! !
-!ViewComposer categoriesFor: #arenaLeftButtonPressed:!event handling!private! !
-!ViewComposer categoriesFor: #arenaMouseMoved:!private! !
-!ViewComposer categoriesFor: #aspectAccessor!public! !
-!ViewComposer categoriesFor: #aspectAccessor:!public! !
-!ViewComposer categoriesFor: #basicCaption!accessing!private! !
-!ViewComposer categoriesFor: #basicPasteResource:context:!operations!private! !
-!ViewComposer categoriesFor: #basicPasteResourceLink:context:!private! !
-!ViewComposer categoriesFor: #borderRectanglesFor:!adornments!private! !
-!ViewComposer categoriesFor: #borderRegionFor:!adornments!private! !
-!ViewComposer categoriesFor: #browseIt!commands!public! !
-!ViewComposer categoriesFor: #calculatePositionOf:offsetBy:!adornments!private! !
-!ViewComposer categoriesFor: #cancelSelectionFor:!adornments!private! !
-!ViewComposer categoriesFor: #cancelSelections!adornments!private! !
-!ViewComposer categoriesFor: #cancelTrackingAt:!private!tracking! !
-!ViewComposer categoriesFor: #canMove:!private!testing! !
-!ViewComposer categoriesFor: #canPaste!private!testing! !
-!ViewComposer categoriesFor: #canSaveState!private!saved state! !
-!ViewComposer categoriesFor: #canSize:!private!testing! !
-!ViewComposer categoriesFor: #centerHorizontally!commands!private! !
-!ViewComposer categoriesFor: #centerVertically!commands!private! !
-!ViewComposer categoriesFor: #chooseBackgroundColor!commands!public! !
-!ViewComposer categoriesFor: #chooseFont!commands!public! !
-!ViewComposer categoriesFor: #chooseForegroundColor!commands!public! !
-!ViewComposer categoriesFor: #clearSelection!commands!public! !
-!ViewComposer categoriesFor: #clearUndoState!operations!private! !
-!ViewComposer categoriesFor: #clipboard!accessing!public! !
-!ViewComposer categoriesFor: #closeComposingView!helpers!private! !
-!ViewComposer categoriesFor: #composingView!accessing!public! !
-!ViewComposer categoriesFor: #composingView:isOwned:!accessing!private! !
-!ViewComposer categoriesFor: #constrainPoint:!geometry!private! !
-!ViewComposer categoriesFor: #constrainRectangle:!geometry!private! !
-!ViewComposer categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!ViewComposer categoriesFor: #copyAspectsFrom:to:!operations!private! !
-!ViewComposer categoriesFor: #copySelection!commands!public! !
-!ViewComposer categoriesFor: #createComponents!initializing!private! !
-!ViewComposer categoriesFor: #createGrabberFor:of:!adornments!private! !
-!ViewComposer categoriesFor: #createSchematicWiring!initializing!private! !
-!ViewComposer categoriesFor: #createViewHierarchyModel!helpers!initializing!private! !
-!ViewComposer categoriesFor: #cursor!accessing!public! !
-!ViewComposer categoriesFor: #cursorAt:!helpers!private! !
-!ViewComposer categoriesFor: #cutSelection!commands!public! !
-!ViewComposer categoriesFor: #decreaseHeight!commands!public! !
-!ViewComposer categoriesFor: #decreaseHorizontalGaps!commands!public! !
-!ViewComposer categoriesFor: #decreaseVerticalGaps!commands!public! !
-!ViewComposer categoriesFor: #decreaseWidth!commands!public! !
-!ViewComposer categoriesFor: #defaultComposingPosition!constants!private! !
-!ViewComposer categoriesFor: #defaultGridResolution!constants!private! !
-!ViewComposer categoriesFor: #defaultHelpId!public! !
-!ViewComposer categoriesFor: #defaultSelectionWidth!constants!private! !
-!ViewComposer categoriesFor: #deleteSelections!commands!public! !
-!ViewComposer categoriesFor: #dereference!commands!private! !
-!ViewComposer categoriesFor: #distributeHorizontally!commands!public! !
-!ViewComposer categoriesFor: #distributeVertically!commands!public! !
-!ViewComposer categoriesFor: #drawAdornment!adornments!private! !
-!ViewComposer categoriesFor: #drawSelectionFor:!adornments!private! !
-!ViewComposer categoriesFor: #drawTrackingAt:!adornments!private! !
-!ViewComposer categoriesFor: #dropIncrement!constants!private! !
-!ViewComposer categoriesFor: #dropTargetFromSession:!drag & drop!private! !
-!ViewComposer categoriesFor: #dropUndoState!operations!private! !
-!ViewComposer categoriesFor: #dropView:onto:at:!drag & drop!private! !
-!ViewComposer categoriesFor: #dropViewResource:onto:at:named:!drag & drop!private! !
-!ViewComposer categoriesFor: #editContextMenu!commands!public! !
-!ViewComposer categoriesFor: #editMenuBar!commands!public! !
-!ViewComposer categoriesFor: #editReference!commands!private! !
-!ViewComposer categoriesFor: #endComposition!commands!public! !
-!ViewComposer categoriesFor: #endTrackingAt:!private!tracking! !
-!ViewComposer categoriesFor: #eraseAdornment!adornments!private! !
-!ViewComposer categoriesFor: #eraseTrackingAt:!adornments!private! !
-!ViewComposer categoriesFor: #fileNew!commands!public! !
-!ViewComposer categoriesFor: #fileOpen!commands!public! !
-!ViewComposer categoriesFor: #fileSave!commands!public! !
-!ViewComposer categoriesFor: #forceLayoutFor:!geometry!private! !
-!ViewComposer categoriesFor: #getAdornmentRegion!adornments!private! !
-!ViewComposer categoriesFor: #grabberHitBy:!adornments!private! !
-!ViewComposer categoriesFor: #grabbers!adornments!private! !
-!ViewComposer categoriesFor: #grid!accessing!private! !
-!ViewComposer categoriesFor: #grid:!accessing!private! !
-!ViewComposer categoriesFor: #gridSetting!commands!private! !
-!ViewComposer categoriesFor: #hasClipboard!private!testing! !
-!ViewComposer categoriesFor: #hasComposingView!private!testing! !
-!ViewComposer categoriesFor: #hasMoveableSelection!private!testing! !
-!ViewComposer categoriesFor: #hasOwnedComposingView:!public! !
-!ViewComposer categoriesFor: #hasPreferredExtent!public!testing! !
-!ViewComposer categoriesFor: #hasResource!private!testing! !
-!ViewComposer categoriesFor: #hasSelection!private!testing! !
-!ViewComposer categoriesFor: #hidingOffset!constants!private! !
-!ViewComposer categoriesFor: #increaseHeight!commands!public! !
-!ViewComposer categoriesFor: #increaseHorizontalGaps!commands!public! !
-!ViewComposer categoriesFor: #increaseVerticalGaps!commands!public! !
-!ViewComposer categoriesFor: #increaseWidth!commands!public! !
-!ViewComposer categoriesFor: #incrementAddPositionOffset!operations!private! !
-!ViewComposer categoriesFor: #initialComposingPosition!constants!private! !
-!ViewComposer categoriesFor: #initialize!initializing!private! !
-!ViewComposer categoriesFor: #inspector!accessing!private! !
-!ViewComposer categoriesFor: #inspectSelection!commands!public! !
-!ViewComposer categoriesFor: #invalidateAdornmentFor:!adornments!private! !
-!ViewComposer categoriesFor: #isAdornmentModified!operations!private! !
-!ViewComposer categoriesFor: #isAdornmentModified:!operations!private! !
-!ViewComposer categoriesFor: #isImageDirty!private! !
-!ViewComposer categoriesFor: #isImageDirty:!private! !
-!ViewComposer categoriesFor: #isModified!public!testing! !
-!ViewComposer categoriesFor: #isModified:!accessing!private! !
-!ViewComposer categoriesFor: #isMouseClick!private!testing! !
-!ViewComposer categoriesFor: #isMouseClick:!accessing!private! !
-!ViewComposer categoriesFor: #isMouseTarget!private!testing! !
-!ViewComposer categoriesFor: #isSelected:!private!testing! !
-!ViewComposer categoriesFor: #isUndoRedoInProgress!private! !
-!ViewComposer categoriesFor: #mapPoint:toArenaFromView:!helpers!private! !
-!ViewComposer categoriesFor: #mapPoint:toViewFromArena:!private! !
-!ViewComposer categoriesFor: #mapRectangle:toArenaFromView:!private! !
-!ViewComposer categoriesFor: #mapRectangle:toViewFromArena:!private! !
-!ViewComposer categoriesFor: #matchBackgroundColors!commands!public! !
-!ViewComposer categoriesFor: #matchFonts!commands!public! !
-!ViewComposer categoriesFor: #matchForegroundColors!commands!public! !
-!ViewComposer categoriesFor: #matchGeometryAspect:!geometry!private! !
-!ViewComposer categoriesFor: #matchHeights!commands!public! !
-!ViewComposer categoriesFor: #matchSizes!commands!public! !
-!ViewComposer categoriesFor: #matchWidths!commands!public! !
-!ViewComposer categoriesFor: #maxUndoStates!public! !
-!ViewComposer categoriesFor: #moveableSelections!adornments!private! !
-!ViewComposer categoriesFor: #mutate!commands!public! !
-!ViewComposer categoriesFor: #mutate:to:!operations!public! !
-!ViewComposer categoriesFor: #mutateTo:!operations!public! !
-!ViewComposer categoriesFor: #newDialogView!commands!public! !
-!ViewComposer categoriesFor: #newShellView!commands!public! !
-!ViewComposer categoriesFor: #nudgeBy:!operations!private! !
-!ViewComposer categoriesFor: #nudgeDown!commands!public! !
-!ViewComposer categoriesFor: #nudgeHorizontalGaps:!commands!public! !
-!ViewComposer categoriesFor: #nudgeLeft!commands!public! !
-!ViewComposer categoriesFor: #nudgeRight!commands!public! !
-!ViewComposer categoriesFor: #nudgeUp!commands!public! !
-!ViewComposer categoriesFor: #nudgeVerticalGaps:!commands!public! !
-!ViewComposer categoriesFor: #onCloseRequested:!event handling!private! !
-!ViewComposer categoriesFor: #onDragCutHierarchy:!event handling!private! !
-!ViewComposer categoriesFor: #onDragEnterArena:!event handling!private! !
-!ViewComposer categoriesFor: #onDragHierarchy:!event handling!private! !
-!ViewComposer categoriesFor: #onDragLeaveArena:!event handling!private! !
-!ViewComposer categoriesFor: #onDragOverArena:!event handling!private! !
-!ViewComposer categoriesFor: #onDragOverHierarchy:!event handling!private! !
-!ViewComposer categoriesFor: #onDropOverArena:!event handling!private! !
-!ViewComposer categoriesFor: #onDropOverHierarchy:!event handling!private! !
-!ViewComposer categoriesFor: #onHierarchySelection!event handling!private! !
-!ViewComposer categoriesFor: #onIdleEntered!operations!private! !
-!ViewComposer categoriesFor: #onImageSaveCompleted!private! !
-!ViewComposer categoriesFor: #onImageSaveStarting!private! !
-!ViewComposer categoriesFor: #onInspecteeChanged!event handling!private! !
-!ViewComposer categoriesFor: #onPromptToSaveChanges:!private!testing! !
-!ViewComposer categoriesFor: #onRequestDropOpsForShield:!event handling!private! !
-!ViewComposer categoriesFor: #onSelectionPositioned:!event handling!private! !
-!ViewComposer categoriesFor: #onSessionStarted!private! !
-!ViewComposer categoriesFor: #onSettingChanged:!event handling-win32!private! !
-!ViewComposer categoriesFor: #onViewClosed!event handling!private! !
-!ViewComposer categoriesFor: #onViewOpened!event handling!private! !
-!ViewComposer categoriesFor: #openOn:!operations!private! !
-!ViewComposer categoriesFor: #openOnCopyOf:!operations!private! !
-!ViewComposer categoriesFor: #ownsComposingView!public! !
-!ViewComposer categoriesFor: #pasteClipboard!commands!public! !
-!ViewComposer categoriesFor: #pasteContext!operations!private! !
-!ViewComposer categoriesFor: #pastedView:context:!operations!private! !
-!ViewComposer categoriesFor: #pasteResource:context:position:!operations!public! !
-!ViewComposer categoriesFor: #pasteResourceLink:context:position:!operations!public! !
-!ViewComposer categoriesFor: #performCommand:!commands!public! !
-!ViewComposer categoriesFor: #performUndoRedo:!helpers!private! !
-!ViewComposer categoriesFor: #primarySelection!adornments!private! !
-!ViewComposer categoriesFor: #primarySelection:!adornments!private! !
-!ViewComposer categoriesFor: #printShortCaptionOn:!private!updating! !
-!ViewComposer categoriesFor: #queryCommand:!commands!private! !
-!ViewComposer categoriesFor: #refreshImage!private! !
-!ViewComposer categoriesFor: #refreshPublishedAspects!commands!private! !
-!ViewComposer categoriesFor: #removeGrabbers!adornments!private! !
-!ViewComposer categoriesFor: #removeHorizontalGaps!commands!public! !
-!ViewComposer categoriesFor: #removeVerticalGaps!commands!public! !
-!ViewComposer categoriesFor: #removeView:!operations!private! !
-!ViewComposer categoriesFor: #repositionView:to:!private!tracking! !
-!ViewComposer categoriesFor: #resetAddPositionOffset!operations!private! !
-!ViewComposer categoriesFor: #resizeBy:!operations!private! !
-!ViewComposer categoriesFor: #resizeView:to:!operations!private! !
-!ViewComposer categoriesFor: #resourceIdentifier!accessing!public! !
-!ViewComposer categoriesFor: #resourceIdentifier:!public! !
-!ViewComposer categoriesFor: #resourceManager!accessing!public! !
-!ViewComposer categoriesFor: #restoreComposition:!private! !
-!ViewComposer categoriesFor: #restoreUndoState:!public! !
-!ViewComposer categoriesFor: #safetyWrap:!operations!private! !
-!ViewComposer categoriesFor: #saveAdornmentRegion!adornments!private! !
-!ViewComposer categoriesFor: #saveStateOn:!private!saved state! !
-!ViewComposer categoriesFor: #saveUndoState!operations!private! !
-!ViewComposer categoriesFor: #secondarySelections!adornments!private! !
-!ViewComposer categoriesFor: #selectAll!private! !
-!ViewComposer categoriesFor: #selection:!adornments!private! !
-!ViewComposer categoriesFor: #selections!adornments!private! !
-!ViewComposer categoriesFor: #selections:!adornments!private! !
-!ViewComposer categoriesFor: #selectionsByHorizontalPosition!helpers!private! !
-!ViewComposer categoriesFor: #selectionsByVerticalPosition!helpers!private! !
-!ViewComposer categoriesFor: #setModified!accessing!private! !
-!ViewComposer categoriesFor: #shortCaption!accessing!public! !
-!ViewComposer categoriesFor: #slideyPinNames!accessing!private! !
-!ViewComposer categoriesFor: #snapPoint:context:!geometry!private! !
-!ViewComposer categoriesFor: #startTrackingAt:!private!tracking! !
-!ViewComposer categoriesFor: #status!accessing!private! !
-!ViewComposer categoriesFor: #toggleGroupStop!commands!public!tabbing! !
-!ViewComposer categoriesFor: #toggleSelectionFor:!adornments!private! !
-!ViewComposer categoriesFor: #toggleTabStop!commands!public!tabbing! !
-!ViewComposer categoriesFor: #trackGrabber:from:!adornments!private! !
-!ViewComposer categoriesFor: #undoState!public! !
-!ViewComposer categoriesFor: #updateAdornment!operations!private! !
-!ViewComposer categoriesFor: #updateCaption!private!updating! !
-!ViewComposer categoriesFor: #updatePrimarySelection!adornments!private! !
-!ViewComposer categoriesFor: #validateAdornment!operations!private! !
-!ViewComposer categoriesFor: #validateImage!private! !
-!ViewComposer categoriesFor: #validateLayout!geometry!private! !
-!ViewComposer categoriesFor: #validateUserInterface!operations!private! !
-!ViewComposer categoriesFor: #viewClose!commands!public! !
-!ViewComposer categoriesFor: #viewCloseNoPrompt!commands!public! !
-!ViewComposer categoriesFor: #viewExport!commands!public! !
-!ViewComposer categoriesFor: #viewExportTo:!helpers!private! !
-!ViewComposer categoriesFor: #viewHierarchyPresenter!accessing!private! !
-!ViewComposer categoriesFor: #viewHitBy:!accessing!private! !
-!ViewComposer categoriesFor: #viewImport!commands!public! !
-!ViewComposer categoriesFor: #viewImportFrom:!helpers!private! !
-!ViewComposer categoriesFor: #viewOpen!commands!public! !
-!ViewComposer categoriesFor: #viewRedo!public! !
-!ViewComposer categoriesFor: #viewRevert!commands!public! !
-!ViewComposer categoriesFor: #viewSave!commands!public! !
-!ViewComposer categoriesFor: #viewSaveAs!commands!public! !
-!ViewComposer categoriesFor: #viewTest!commands!public! !
-!ViewComposer categoriesFor: #viewUndo!public! !
-!ViewComposer categoriesFor: #widenSelection!commands!public! !
-!ViewComposer categoriesFor: #zBack!commands!public! !
-!ViewComposer categoriesFor: #zBackward!commands!public! !
-!ViewComposer categoriesFor: #zForward!commands!public! !
-!ViewComposer categoriesFor: #zFront!commands!public! !
-!ViewComposer categoriesFor: #zOrderChangedFor:!private!updating! !
+!ViewComposer categoriesForMethods!
+addGrabberFor:of:!adornments!private! !
+addGrabbers!adornments!private! !
+addSelectionFor:!adornments!private! !
+adjustScroll!geometry!private! !
+adornmentRectanglesFor:!adornments!private! !
+adornmentRectanglesFor:do:!adornments!private! !
+adornmentRegion!adornments!private! !
+adornmentRegionFor:!adornments!private! !
+alignBottoms!commands!public! !
+alignCenters!commands!public! !
+alignLefts!commands!public! !
+alignMiddles!commands!public! !
+alignRights!commands!public! !
+alignTops!commands!public! !
+allResourceIdentifiers!public! !
+areDragObjects:acceptableFor:inView:!drag & drop!private! !
+arena!accessing!private! !
+arenaBorderSize!constants!private! !
+arenaLeftButtonPressed:!event handling!private! !
+arenaMouseMoved:!private! !
+aspectAccessor!public! !
+aspectAccessor:!public! !
+basicCaption!accessing!private! !
+basicPasteResource:context:!operations!private! !
+basicPasteResourceLink:context:!private! !
+borderRectanglesFor:!adornments!private! !
+borderRegionFor:!adornments!private! !
+browseIt!commands!public! !
+calculatePositionOf:offsetBy:!adornments!private! !
+cancelSelectionFor:!adornments!private! !
+cancelSelections!adornments!private! !
+cancelTrackingAt:!private!tracking! !
+canMove:!private!testing! !
+canPaste!private!testing! !
+canSaveState!private!saved state! !
+canSize:!private!testing! !
+centerHorizontally!commands!private! !
+centerVertically!commands!private! !
+chooseBackgroundColor!commands!public! !
+chooseFont!commands!public! !
+chooseForegroundColor!commands!public! !
+clearSelection!commands!public! !
+clearUndoState!operations!private! !
+clipboard!accessing!public! !
+closeComposingView!helpers!private! !
+composingView!accessing!public! !
+composingView:isOwned:!accessing!private! !
+constrainPoint:!geometry!private! !
+constrainRectangle:!geometry!private! !
+continueTrackingAt:from:!private!tracking! !
+copyAspectsFrom:to:!operations!private! !
+copySelection!commands!public! !
+createComponents!initializing!private! !
+createGrabberFor:of:!adornments!private! !
+createSchematicWiring!initializing!private! !
+createViewHierarchyModel!helpers!initializing!private! !
+cursor!accessing!public! !
+cursorAt:!helpers!private! !
+cutSelection!commands!public! !
+decreaseHeight!commands!public! !
+decreaseHorizontalGaps!commands!public! !
+decreaseVerticalGaps!commands!public! !
+decreaseWidth!commands!public! !
+defaultComposingPosition!constants!private! !
+defaultGridResolution!constants!private! !
+defaultHelpId!public! !
+defaultSelectionWidth!constants!private! !
+deleteSelections!commands!public! !
+dereference!commands!private! !
+distributeHorizontally!commands!public! !
+distributeVertically!commands!public! !
+drawAdornment!adornments!private! !
+drawSelectionFor:!adornments!private! !
+drawTrackingAt:!adornments!private! !
+dropIncrement!constants!private! !
+dropTargetFromSession:!drag & drop!private! !
+dropUndoState!operations!private! !
+dropView:onto:at:!drag & drop!private! !
+dropViewResource:onto:at:named:!drag & drop!private! !
+editContextMenu!commands!public! !
+editMenuBar!commands!public! !
+editReference!commands!private! !
+endComposition!commands!public! !
+endTrackingAt:!private!tracking! !
+eraseAdornment!adornments!private! !
+eraseTrackingAt:!adornments!private! !
+fileNew!commands!public! !
+fileOpen!commands!public! !
+fileSave!commands!public! !
+forceLayoutFor:!geometry!private! !
+getAdornmentRegion!adornments!private! !
+grabberHitBy:!adornments!private! !
+grabbers!adornments!private! !
+grid!accessing!private! !
+grid:!accessing!private! !
+gridSetting!commands!private! !
+hasClipboard!private!testing! !
+hasComposingView!private!testing! !
+hasMoveableSelection!private!testing! !
+hasOwnedComposingView:!public! !
+hasPreferredExtent!public!testing! !
+hasResource!private!testing! !
+hasSelection!private!testing! !
+hidingOffset!constants!private! !
+increaseHeight!commands!public! !
+increaseHorizontalGaps!commands!public! !
+increaseVerticalGaps!commands!public! !
+increaseWidth!commands!public! !
+incrementAddPositionOffset!operations!private! !
+initialComposingPosition!constants!private! !
+initialize!initializing!private! !
+inspector!accessing!private! !
+inspectSelection!commands!public! !
+invalidateAdornmentFor:!adornments!private! !
+isAdornmentModified!operations!private! !
+isAdornmentModified:!operations!private! !
+isImageDirty!private! !
+isImageDirty:!private! !
+isModified!public!testing! !
+isModified:!accessing!private! !
+isMouseClick!private!testing! !
+isMouseClick:!accessing!private! !
+isMouseTarget!private!testing! !
+isSelected:!private!testing! !
+isUndoRedoInProgress!private! !
+mapPoint:toArenaFromView:!helpers!private! !
+mapPoint:toViewFromArena:!private! !
+mapRectangle:toArenaFromView:!private! !
+mapRectangle:toViewFromArena:!private! !
+matchBackgroundColors!commands!public! !
+matchFonts!commands!public! !
+matchForegroundColors!commands!public! !
+matchGeometryAspect:!geometry!private! !
+matchHeights!commands!public! !
+matchSizes!commands!public! !
+matchWidths!commands!public! !
+maxUndoStates!public! !
+moveableSelections!adornments!private! !
+mutate!commands!public! !
+mutate:to:!operations!public! !
+mutateTo:!operations!public! !
+newDialogView!commands!public! !
+newShellView!commands!public! !
+nudgeBy:!operations!private! !
+nudgeDown!commands!public! !
+nudgeHorizontalGaps:!commands!public! !
+nudgeLeft!commands!public! !
+nudgeRight!commands!public! !
+nudgeUp!commands!public! !
+nudgeVerticalGaps:!commands!public! !
+onCloseRequested:!event handling!private! !
+onDragCutHierarchy:!event handling!private! !
+onDragEnterArena:!event handling!private! !
+onDragHierarchy:!event handling!private! !
+onDragLeaveArena:!event handling!private! !
+onDragOverArena:!event handling!private! !
+onDragOverHierarchy:!event handling!private! !
+onDropOverArena:!event handling!private! !
+onDropOverHierarchy:!event handling!private! !
+onHierarchySelection!event handling!private! !
+onIdleEntered!operations!private! !
+onImageSaveCompleted!private! !
+onImageSaveStarting!private! !
+onInspecteeChanged!event handling!private! !
+onPromptToSaveChanges:!private!testing! !
+onRequestDropOpsForShield:!event handling!private! !
+onSelectionPositioned:!event handling!private! !
+onSessionStarted!private! !
+onSettingChanged:!event handling-win32!private! !
+onViewClosed!event handling!private! !
+onViewOpened!event handling!private! !
+openOn:!operations!private! !
+openOnCopyOf:!operations!private! !
+ownsComposingView!public! !
+pasteClipboard!commands!public! !
+pasteContext!operations!private! !
+pastedView:context:!operations!private! !
+pasteResource:context:position:!operations!public! !
+pasteResourceLink:context:position:!operations!public! !
+performCommand:!commands!public! !
+performUndoRedo:!helpers!private! !
+primarySelection!adornments!private! !
+primarySelection:!adornments!private! !
+printShortCaptionOn:!private!updating! !
+queryCommand:!commands!private! !
+refreshImage!private! !
+refreshPublishedAspects!commands!private! !
+removeGrabbers!adornments!private! !
+removeHorizontalGaps!commands!public! !
+removeVerticalGaps!commands!public! !
+removeView:!operations!private! !
+repositionView:to:!private!tracking! !
+resetAddPositionOffset!operations!private! !
+resizeBy:!operations!private! !
+resizeView:to:!operations!private! !
+resourceIdentifier!accessing!public! !
+resourceIdentifier:!public! !
+resourceManager!accessing!public! !
+restoreComposition:!private! !
+restoreUndoState:!public! !
+safetyWrap:!operations!private! !
+saveAdornmentRegion!adornments!private! !
+saveStateOn:!private!saved state! !
+saveUndoState!operations!private! !
+secondarySelections!adornments!private! !
+selectAll!private! !
+selection:!adornments!private! !
+selections!adornments!private! !
+selections:!adornments!private! !
+selectionsByHorizontalPosition!helpers!private! !
+selectionsByVerticalPosition!helpers!private! !
+setModified!accessing!private! !
+shortCaption!accessing!public! !
+slideyPinNames!accessing!private! !
+snapPoint:context:!geometry!private! !
+startTrackingAt:!private!tracking! !
+status!accessing!private! !
+toggleGroupStop!commands!public!tabbing! !
+toggleSelectionFor:!adornments!private! !
+toggleTabStop!commands!public!tabbing! !
+trackGrabber:from:!adornments!private! !
+undoState!public! !
+updateAdornment!operations!private! !
+updateCaption!private!updating! !
+updatePrimarySelection!adornments!private! !
+validateAdornment!operations!private! !
+validateImage!private! !
+validateLayout!geometry!private! !
+validateUserInterface!operations!private! !
+viewClose!commands!public! !
+viewCloseNoPrompt!commands!public! !
+viewExport!commands!public! !
+viewExportTo:!helpers!private! !
+viewHierarchyPresenter!accessing!private! !
+viewHitBy:!accessing!private! !
+viewImport!commands!public! !
+viewImportFrom:!helpers!private! !
+viewOpen!commands!public! !
+viewRedo!public! !
+viewRevert!commands!public! !
+viewSave!commands!public! !
+viewSaveAs!commands!public! !
+viewTest!commands!public! !
+viewUndo!public! !
+widenSelection!commands!public! !
+zBack!commands!public! !
+zBackward!commands!public! !
+zForward!commands!public! !
+zFront!commands!public! !
+zOrderChangedFor:!private!updating! !
+!
 
 !ViewComposer class methodsFor!
 
@@ -2842,23 +2844,25 @@ resource_Vertical_view
 
 toolsFolderHelpId
 	^10593! !
-!ViewComposer class categoriesFor: #addToClipboard:!clipboard operations!private! !
-!ViewComposer class categoriesFor: #appendToClipboard:!clipboard operations!private! !
-!ViewComposer class categoriesFor: #clearClipboard!clipboard operations!public! !
-!ViewComposer class categoriesFor: #clipboard!accessing!public! !
-!ViewComposer class categoriesFor: #clipboard:!accessing!public! !
-!ViewComposer class categoriesFor: #copyAllToClipboard:!clipboard operations!public! !
-!ViewComposer class categoriesFor: #copyToClipboard:!clipboard operations!public! !
-!ViewComposer class categoriesFor: #defaultDefaultView!initializing!private! !
-!ViewComposer class categoriesFor: #defaultGridResolution!constants!public! !
-!ViewComposer class categoriesFor: #defaultGridResolution:!constants!public! !
-!ViewComposer class categoriesFor: #displayOn:!displaying!public! !
-!ViewComposer class categoriesFor: #extentImage!constants!private! !
-!ViewComposer class categoriesFor: #icon!constants!public! !
-!ViewComposer class categoriesFor: #initialize!initializing!private! !
-!ViewComposer class categoriesFor: #openOn:!instance creation!public! !
-!ViewComposer class categoriesFor: #positionImage!constants!private! !
-!ViewComposer class categoriesFor: #publishedAspects!constants!public! !
-!ViewComposer class categoriesFor: #resource_Vertical_view!public!resources-views! !
-!ViewComposer class categoriesFor: #toolsFolderHelpId!public! !
+!ViewComposer class categoriesForMethods!
+addToClipboard:!clipboard operations!private! !
+appendToClipboard:!clipboard operations!private! !
+clearClipboard!clipboard operations!public! !
+clipboard!accessing!public! !
+clipboard:!accessing!public! !
+copyAllToClipboard:!clipboard operations!public! !
+copyToClipboard:!clipboard operations!public! !
+defaultDefaultView!initializing!private! !
+defaultGridResolution!constants!public! !
+defaultGridResolution:!constants!public! !
+displayOn:!displaying!public! !
+extentImage!constants!private! !
+icon!constants!public! !
+initialize!initializing!private! !
+openOn:!instance creation!public! !
+positionImage!constants!private! !
+publishedAspects!constants!public! !
+resource_Vertical_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

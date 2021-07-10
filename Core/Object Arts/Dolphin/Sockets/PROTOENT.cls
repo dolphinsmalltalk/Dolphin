@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
@@ -64,11 +64,13 @@ protocol
 	| bigEndian |
 	bigEndian := self p_proto.
 	^(bigEndian << 8 bitOr: bigEndian >> 8) bitAnd: 16rFFFF! !
-!PROTOENT categoriesFor: #aliases!public! !
-!PROTOENT categoriesFor: #p_name!**compiled accessors**!public! !
-!PROTOENT categoriesFor: #p_proto!**compiled accessors**!public! !
-!PROTOENT categoriesFor: #printFieldsOn:limit:!development!printing!private! !
-!PROTOENT categoriesFor: #protocol!public! !
+!PROTOENT categoriesForMethods!
+aliases!public! !
+p_name!**compiled accessors**!public! !
+p_proto!**compiled accessors**!public! !
+printFieldsOn:limit:!development!printing!private! !
+protocol!public! !
+!
 
 !PROTOENT class methodsFor!
 
@@ -103,7 +105,9 @@ fromString: aString
 
 getFieldNames
 	^#(#p_name #p_proto)! !
-!PROTOENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PROTOENT class categoriesFor: #fromString:!public! !
-!PROTOENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PROTOENT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+fromString:!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

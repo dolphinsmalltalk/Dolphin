@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DialogView subclass: #WalkbackDialog
 	instanceVariableNames: 'callStack resumable caption debuggable'
@@ -161,20 +161,22 @@ wmSize: message wParam: wParam lParam: lParam
 	#todo "Resize the controls".
 	^nil
 ! !
-!WalkbackDialog categoriesFor: #actualBackcolor!accessing!private! !
-!WalkbackDialog categoriesFor: #callStack:!accessing!public! !
-!WalkbackDialog categoriesFor: #caption:!accessing!public! !
-!WalkbackDialog categoriesFor: #copyWalkbackToClipboard!commands!public! !
-!WalkbackDialog categoriesFor: #debuggable:!accessing!public! !
-!WalkbackDialog categoriesFor: #defaultExtent!constants!public! !
-!WalkbackDialog categoriesFor: #onInitDialog!event handling!private! !
-!WalkbackDialog categoriesFor: #primHookWindowCreate:!helpers!private! !
-!WalkbackDialog categoriesFor: #resumable:!accessing!public! !
-!WalkbackDialog categoriesFor: #runModalLoop!operations!private! !
-!WalkbackDialog categoriesFor: #templateId!constants!private! !
-!WalkbackDialog categoriesFor: #unhookWindowCreate:!operations!private! !
-!WalkbackDialog categoriesFor: #wmCommand:wParam:lParam:!event handling-win32!public! !
-!WalkbackDialog categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
+!WalkbackDialog categoriesForMethods!
+actualBackcolor!accessing!private! !
+callStack:!accessing!public! !
+caption:!accessing!public! !
+copyWalkbackToClipboard!commands!public! !
+debuggable:!accessing!public! !
+defaultExtent!constants!public! !
+onInitDialog!event handling!private! !
+primHookWindowCreate:!helpers!private! !
+resumable:!accessing!public! !
+runModalLoop!operations!private! !
+templateId!constants!private! !
+unhookWindowCreate:!operations!private! !
+wmCommand:wParam:lParam:!event handling-win32!public! !
+wmSize:wParam:lParam:!event handling-win32!private! !
+!
 
 !WalkbackDialog class methodsFor!
 
@@ -194,5 +196,7 @@ initialize
 				yourself).
 	self addClassConstant: 'CallStackId' value: 1001.
 	self addClassConstant: 'IconId' value: 1009! !
-!WalkbackDialog class categoriesFor: #initialize!initializing!private! !
+!WalkbackDialog class categoriesForMethods!
+initialize!initializing!private! !
+!
 

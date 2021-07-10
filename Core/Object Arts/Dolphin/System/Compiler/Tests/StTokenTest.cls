@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #StTokenTest
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ StTokenTest comment: ''!
 
 subjectClass
 	^self subclassResponsibility! !
-!StTokenTest categoriesFor: #subjectClass!constants!private! !
+!StTokenTest categoriesForMethods!
+subjectClass!constants!private! !
+!
 

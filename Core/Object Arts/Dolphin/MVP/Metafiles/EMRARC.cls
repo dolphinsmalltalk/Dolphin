@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRARC
 	instanceVariableNames: ''
@@ -69,12 +69,14 @@ rclBox: aRECT
 		from: ##(_OffsetOf_rclBox + 1)
 		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
 		startingAt: 1! !
-!EMRARC categoriesFor: #ptlEnd!**compiled accessors**!public! !
-!EMRARC categoriesFor: #ptlEnd:!**compiled accessors**!public! !
-!EMRARC categoriesFor: #ptlStart!**compiled accessors**!public! !
-!EMRARC categoriesFor: #ptlStart:!**compiled accessors**!public! !
-!EMRARC categoriesFor: #rclBox!**compiled accessors**!public! !
-!EMRARC categoriesFor: #rclBox:!**compiled accessors**!public! !
+!EMRARC categoriesForMethods!
+ptlEnd!**compiled accessors**!public! !
+ptlEnd:!**compiled accessors**!public! !
+ptlStart!**compiled accessors**!public! !
+ptlStart:!**compiled accessors**!public! !
+rclBox!**compiled accessors**!public! !
+rclBox:!**compiled accessors**!public! !
+!
 
 !EMRARC class methodsFor!
 
@@ -110,7 +112,9 @@ iTypes
 		with: EMR_ARCTO
 		with: EMR_CHORD
 		with: EMR_PIE! !
-!EMRARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRARC class categoriesFor: #iTypes!constants!public! !
+!EMRARC class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

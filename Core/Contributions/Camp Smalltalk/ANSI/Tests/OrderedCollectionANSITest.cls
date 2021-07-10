@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedReadableCollectionTest subclass: #OrderedCollectionANSITest
 	instanceVariableNames: ''
@@ -283,23 +283,25 @@ testXaddXbeforeX
 		should: [:result | (result = 999) and: [(orderedCollection at: 5) = 999]]
 		conformTo: #OrderedCollection
 		selector: #add:before:! !
-!OrderedCollectionANSITest categoriesFor: #canonicalElement!public! !
-!OrderedCollectionANSITest categoriesFor: #canonicalObject!public! !
-!OrderedCollectionANSITest categoriesFor: #emptyCollection!public! !
-!OrderedCollectionANSITest categoriesFor: #protocol!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddAllFirstX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddAllLastX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddAllXafterIndexX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddAllXafterX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddAllXbeforeIndexX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddAllXbeforeX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddFirstX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddLastX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddXafterIndexX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddXafterX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddXbeforeIndexX!public! !
-!OrderedCollectionANSITest categoriesFor: #testXaddXbeforeX!public! !
+!OrderedCollectionANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCollection!public! !
+protocol!public! !
+testXaddAllFirstX!public! !
+testXaddAllLastX!public! !
+testXaddAllXafterIndexX!public! !
+testXaddAllXafterX!public! !
+testXaddAllXbeforeIndexX!public! !
+testXaddAllXbeforeX!public! !
+testXaddFirstX!public! !
+testXaddLastX!public! !
+testXaddX!public! !
+testXaddXafterIndexX!public! !
+testXaddXafterX!public! !
+testXaddXbeforeIndexX!public! !
+testXaddXbeforeX!public! !
+!
 
 !OrderedCollectionANSITest class methodsFor!
 
@@ -309,5 +311,7 @@ helperClassesDo: aBlock
 	aBlock value: SequencedContractibleCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper.
 	aBlock value: SequencedCollectionHelper.! !
-!OrderedCollectionANSITest class categoriesFor: #helperClassesDo:!public! !
+!OrderedCollectionANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

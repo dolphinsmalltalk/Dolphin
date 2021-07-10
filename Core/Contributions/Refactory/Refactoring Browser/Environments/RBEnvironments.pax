@@ -118,8 +118,10 @@ isVariableBinding
 	to #key and #value methods."
 
 	^true! !
-!Association categoriesFor: #binding!public!testing! !
-!Association categoriesFor: #isVariableBinding!public!testing! !
+!Association categoriesForMethods!
+binding!public!testing! !
+isVariableBinding!public!testing! !
+!
 
 !Behavior methodsFor!
 
@@ -170,13 +172,15 @@ withAllSubBehaviorsDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubBehaviorsDo: aMonadicValuable! !
-!Behavior categoriesFor: #allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
-!Behavior categoriesFor: #allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
-!Behavior categoriesFor: #isBehavior!public!testing! !
-!Behavior categoriesFor: #numberSelectors!enumerating!public! !
-!Behavior categoriesFor: #selectorsAndMethodsDo:!enumerating!public! !
-!Behavior categoriesFor: #subBehaviors!class hierarchy-accessing!public! !
-!Behavior categoriesFor: #withAllSubBehaviorsDo:!enumerating!public! !
+!Behavior categoriesForMethods!
+allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
+allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
+isBehavior!public!testing! !
+numberSelectors!enumerating!public! !
+selectorsAndMethodsDo:!enumerating!public! !
+subBehaviors!class hierarchy-accessing!public! !
+withAllSubBehaviorsDo:!enumerating!public! !
+!
 
 !CompiledCode methodsFor!
 
@@ -185,7 +189,9 @@ allLiterals
 
 	#rbFix. "Dolphin uses #literals"
 	^self literals! !
-!CompiledCode categoriesFor: #allLiterals!accessing!private! !
+!CompiledCode categoriesForMethods!
+allLiterals!accessing!private! !
+!
 
 !Metaclass methodsFor!
 
@@ -195,7 +201,9 @@ soleInstance
 	#rbFix. "Dolphin normally uses #instanceClass"
 	^instanceClass
 ! !
-!Metaclass categoriesFor: #soleInstance!accessing!public! !
+!Metaclass categoriesForMethods!
+soleInstance!accessing!public! !
+!
 
 !Object methodsFor!
 
@@ -210,8 +218,10 @@ isVariableBinding
 	to #key and #value methods."
 
 	^false! !
-!Object categoriesFor: #isBehavior!public!testing! !
-!Object categoriesFor: #isVariableBinding!public!testing! !
+!Object categoriesForMethods!
+isBehavior!public!testing! !
+isVariableBinding!public!testing! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 EventsCollection variableSubclass: #NullEventsCollection
 	instanceVariableNames: ''
@@ -63,16 +63,18 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^nil! !
-!NullEventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
-!NullEventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !
-!NullEventsCollection categoriesFor: #initialize!initializing!private! !
-!NullEventsCollection categoriesFor: #removeActionsForEvent:!adding!private! !
-!NullEventsCollection categoriesFor: #removeEventsTriggeredFor:!private!removing! !
-!NullEventsCollection categoriesFor: #shrink!private!removing! !
-!NullEventsCollection categoriesFor: #triggerEvent:!private!triggering! !
-!NullEventsCollection categoriesFor: #triggerEvent:with:!private!triggering! !
-!NullEventsCollection categoriesFor: #triggerEvent:with:with:!private!triggering! !
-!NullEventsCollection categoriesFor: #triggerEvent:withArguments:!private!triggering! !
+!NullEventsCollection categoriesForMethods!
+asMinimumRepresentation!converting!private! !
+hasActionsForEvent:!private!testing! !
+initialize!initializing!private! !
+removeActionsForEvent:!adding!private! !
+removeEventsTriggeredFor:!private!removing! !
+shrink!private!removing! !
+triggerEvent:!private!triggering! !
+triggerEvent:with:!private!triggering! !
+triggerEvent:with:with:!private!triggering! !
+triggerEvent:withArguments:!private!triggering! !
+!
 
 !NullEventsCollection class methodsFor!
 
@@ -81,6 +83,8 @@ current
 
 initialize
 	Current := self new! !
-!NullEventsCollection class categoriesFor: #current!accessing!public! !
-!NullEventsCollection class categoriesFor: #initialize!initializing!public! !
+!NullEventsCollection class categoriesForMethods!
+current!accessing!public! !
+initialize!initializing!public! !
+!
 

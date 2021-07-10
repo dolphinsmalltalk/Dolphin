@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMKEYDOWN
 	instanceVariableNames: ''
@@ -22,8 +22,10 @@ wVKey
 	"Answer the <Integer> value of the receiver's 'wVKey' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVKey! !
-!NMKEYDOWN categoriesFor: #flags!**compiled accessors**!public! !
-!NMKEYDOWN categoriesFor: #wVKey!**compiled accessors**!public! !
+!NMKEYDOWN categoriesForMethods!
+flags!**compiled accessors**!public! !
+wVKey!**compiled accessors**!public! !
+!
 
 !NMKEYDOWN class methodsFor!
 
@@ -38,6 +40,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #wVKey #flags)! !
-!NMKEYDOWN class categoriesFor: #defineFields!public!template definition! !
-!NMKEYDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMKEYDOWN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

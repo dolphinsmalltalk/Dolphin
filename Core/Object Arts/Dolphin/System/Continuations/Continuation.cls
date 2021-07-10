@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Continuation
 	instanceVariableNames: 'stack'
@@ -56,15 +56,17 @@ valueWithArguments: anArray
 	^anArray size == 1 
 		ifTrue: [self value: anArray first]
 		ifFalse: [self error: 'Continuation is only possible with a single argument']! !
-!Continuation categoriesFor: #argumentCount!accessing!public! !
-!Continuation categoriesFor: #continue:with:!helpers!private! !
-!Continuation categoriesFor: #oneShotValue!evaluating!public! !
-!Continuation categoriesFor: #oneShotValue:!evaluating!public! !
-!Continuation categoriesFor: #stack!accessing!private! !
-!Continuation categoriesFor: #stack:!accessing!private! !
-!Continuation categoriesFor: #value!evaluating!public! !
-!Continuation categoriesFor: #value:!evaluating!public! !
-!Continuation categoriesFor: #valueWithArguments:!evaluating!public! !
+!Continuation categoriesForMethods!
+argumentCount!accessing!public! !
+continue:with:!helpers!private! !
+oneShotValue!evaluating!public! !
+oneShotValue:!evaluating!public! !
+stack!accessing!private! !
+stack:!accessing!private! !
+value!evaluating!public! !
+value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 Continuation methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 
@@ -94,6 +96,8 @@ factorialExample: x
 
 fromContext: aStackFrame
 	^self new stack: aStackFrame copyStack! !
-!Continuation class categoriesFor: #factorialExample:!examples!public! !
-!Continuation class categoriesFor: #fromContext:!instance creation!public! !
+!Continuation class categoriesForMethods!
+factorialExample:!examples!public! !
+fromContext:!instance creation!public! !
+!
 

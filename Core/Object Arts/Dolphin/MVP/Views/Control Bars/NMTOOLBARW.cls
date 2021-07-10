@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
@@ -36,10 +36,12 @@ tbButton
 	"Answer the <TBBUTTON> value of the receiver's 'tbButton' field."
 
 	^TBBUTTON fromAddress: bytes yourAddress + _OffsetOf_tbButton! !
-!NMTOOLBARW categoriesFor: #cchText!**compiled accessors**!public! !
-!NMTOOLBARW categoriesFor: #iItem!**compiled accessors**!public! !
-!NMTOOLBARW categoriesFor: #pszText!**compiled accessors**!public! !
-!NMTOOLBARW categoriesFor: #tbButton!**compiled accessors**!public! !
+!NMTOOLBARW categoriesForMethods!
+cchText!**compiled accessors**!public! !
+iItem!**compiled accessors**!public! !
+pszText!**compiled accessors**!public! !
+tbButton!**compiled accessors**!public! !
+!
 
 !NMTOOLBARW class methodsFor!
 
@@ -65,6 +67,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #tbButton #cchText #pszText)! !
-!NMTOOLBARW class categoriesFor: #defineFields!public!template definition! !
-!NMTOOLBARW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMTOOLBARW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

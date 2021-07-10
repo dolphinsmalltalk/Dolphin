@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MessageSendAbstract subclass: #MessageSend
 	instanceVariableNames: 'receiver'
@@ -43,9 +43,11 @@ receiver
 receiver: anObject
 	receiver := anObject.
 ! !
-!MessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
-!MessageSend categoriesFor: #receiver!accessing!public! !
-!MessageSend categoriesFor: #receiver:!accessing!public! !
+!MessageSend categoriesForMethods!
+forwardTo:withArguments:!evaluating!private! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 
 MessageSend methodProtocol: #messageSend attributes: #() selectors: #()!
 MessageSend methodProtocol: #valuable attributes: #(#ansi #readOnly) selectors: #(#argumentCount #valueWithArguments:)!
@@ -59,5 +61,7 @@ empty
 	EmptySend isNil ifTrue: [
 		EmptySend := self receiver: nil selector: #isNil].
 	^EmptySend! !
-!MessageSend class categoriesFor: #empty!instance creation!public! !
+!MessageSend class categoriesForMethods!
+empty!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromFileInitializerTest
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ testCreateHandle
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first equals: self fileResource pafRgb0000FF_100x100bmp.
 	self assertLastArgIsHandle! !
-!GdiplusBitmapFromFileInitializerTest categoriesFor: #gdipCreateBitmapFromFile:bitmap:!accessing!public! !
-!GdiplusBitmapFromFileInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapFromFileInitializerTest categoriesFor: #testAbsoluteFilename!public!unit tests! !
-!GdiplusBitmapFromFileInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!GdiplusBitmapFromFileInitializerTest categoriesForMethods!
+gdipCreateBitmapFromFile:bitmap:!accessing!public! !
+setUp!public!setup! !
+testAbsoluteFilename!public!unit tests! !
+testCreateHandle!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusImageTests subclass: #GdiplusBitmapTest
 	instanceVariableNames: ''
@@ -77,13 +77,15 @@ testPixelAfterSave
 			bitmap saveToFile: toFile.
 			image := GdiplusBitmap fromFile: toFile.
 			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported]! !
-!GdiplusBitmapTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapTest categoriesFor: #testAsByteArrayRoundTripBmp!public!unit tests! !
-!GdiplusBitmapTest categoriesFor: #testFromBitmap!public!unit tests! !
-!GdiplusBitmapTest categoriesFor: #testFromFile!public!unit tests! !
-!GdiplusBitmapTest categoriesFor: #testFromIcon!public!unit tests! !
-!GdiplusBitmapTest categoriesFor: #testFromIconXP!public!unit tests! !
-!GdiplusBitmapTest categoriesFor: #testFromWidthHeight!public!unit tests! !
-!GdiplusBitmapTest categoriesFor: #testGetPixel!public!unit tests! !
-!GdiplusBitmapTest categoriesFor: #testPixelAfterSave!public!unit tests! !
+!GdiplusBitmapTest categoriesForMethods!
+setUp!public!setup! !
+testAsByteArrayRoundTripBmp!public!unit tests! !
+testFromBitmap!public!unit tests! !
+testFromFile!public!unit tests! !
+testFromIcon!public!unit tests! !
+testFromIconXP!public!unit tests! !
+testFromWidthHeight!public!unit tests! !
+testGetPixel!public!unit tests! !
+testPixelAfterSave!public!unit tests! !
+!
 

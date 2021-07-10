@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ToolbarButton subclass: #ToolbarBitmapButton
 	instanceVariableNames: 'bitmap bitmapIndex'
@@ -55,12 +55,14 @@ imageIndexIn: aToolbar
 
 	^aToolbar addBitmap: self bitmap index: self bitmapIndex
 ! !
-!ToolbarBitmapButton categoriesFor: #bitmap!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #bitmap:!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #bitmap:index:commandDescription:!initializing!private! !
-!ToolbarBitmapButton categoriesFor: #bitmapIndex!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #bitmapIndex:!accessing!public! !
-!ToolbarBitmapButton categoriesFor: #imageIndexIn:!operations!private! !
+!ToolbarBitmapButton categoriesForMethods!
+bitmap!accessing!public! !
+bitmap:!accessing!public! !
+bitmap:index:commandDescription:!initializing!private! !
+bitmapIndex!accessing!public! !
+bitmapIndex:!accessing!public! !
+imageIndexIn:!operations!private! !
+!
 
 ToolbarBitmapButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
@@ -78,6 +80,8 @@ new
 	"Answer a new default ToolbarButton"
 
 	^self dolphinImage: 35 command: #noCommand description: 'No command'! !
-!ToolbarBitmapButton class categoriesFor: #bitmap:index:commandDescription:!instance creation!public! !
-!ToolbarBitmapButton class categoriesFor: #new!instance creation!public! !
+!ToolbarBitmapButton class categoriesForMethods!
+bitmap:index:commandDescription:!instance creation!public! !
+new!instance creation!public! !
+!
 

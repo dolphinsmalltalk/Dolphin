@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #StreamTest
 	instanceVariableNames: ''
@@ -21,7 +21,9 @@ streamOn: aString
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
 	^self streamClass on: aString! !
-!StreamTest categoriesFor: #closeTempStream:!helpers!private! !
-!StreamTest categoriesFor: #streamClass!helpers!private! !
-!StreamTest categoriesFor: #streamOn:!helpers!private! !
+!StreamTest categoriesForMethods!
+closeTempStream:!helpers!private! !
+streamClass!helpers!private! !
+streamOn:!helpers!private! !
+!
 

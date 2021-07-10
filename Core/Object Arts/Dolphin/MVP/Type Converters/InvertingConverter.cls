@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TypeConverter subclass: #InvertingConverter
 	instanceVariableNames: 'wrappedConverter'
@@ -54,11 +54,13 @@ wrappedConverter: aTypeConverter
 
 	wrappedConverter := aTypeConverter
 ! !
-!InvertingConverter categoriesFor: #convertFromLeftToRight:!converting!public! !
-!InvertingConverter categoriesFor: #convertFromRightToLeft:!converting!public! !
-!InvertingConverter categoriesFor: #inverted!operations!public! !
-!InvertingConverter categoriesFor: #wrappedConverter!accessing!private! !
-!InvertingConverter categoriesFor: #wrappedConverter:!accessing!private! !
+!InvertingConverter categoriesForMethods!
+convertFromLeftToRight:!converting!public! !
+convertFromRightToLeft:!converting!public! !
+inverted!operations!public! !
+wrappedConverter!accessing!private! !
+wrappedConverter:!accessing!private! !
+!
 
 !InvertingConverter class methodsFor!
 
@@ -72,6 +74,8 @@ new
 	"Use #inverting:"
 
 	self shouldNotImplement! !
-!InvertingConverter class categoriesFor: #inverting:!instance creation!public! !
-!InvertingConverter class categoriesFor: #new!instance creation!public! !
+!InvertingConverter class categoriesForMethods!
+inverting:!instance creation!public! !
+new!instance creation!public! !
+!
 

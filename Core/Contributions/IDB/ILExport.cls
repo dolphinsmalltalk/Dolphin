@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ILExport
 	instanceVariableNames: 'images colorTable bitmap'
@@ -45,13 +45,17 @@ createColorTable: aBag force256: aBoolean
 
 setImages: aCollection
 	images := aCollection! !
-!ILExport categoriesFor: #createBitmap:!operations!public! !
-!ILExport categoriesFor: #createColorTable:force256:!operations!public! !
-!ILExport categoriesFor: #setImages:!accessing!public! !
+!ILExport categoriesForMethods!
+createBitmap:!operations!public! !
+createColorTable:force256:!operations!public! !
+setImages:!accessing!public! !
+!
 
 !ILExport class methodsFor!
 
 export: aCollection to: aStream
 	(self new setImages: aCollection) exportTo: aStream! !
-!ILExport class categoriesFor: #export:to:!operations!public! !
+!ILExport class categoriesForMethods!
+export:to:!operations!public! !
+!
 

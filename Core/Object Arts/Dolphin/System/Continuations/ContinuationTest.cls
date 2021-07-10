@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #ContinuationTest
 	instanceVariableNames: 'tmp tmp2'
@@ -79,11 +79,13 @@ testSimplestCallCC
 
 testVMVersion
 	self assert: VMLibrary default versionString asNumber > 5.01! !
-!ContinuationTest categoriesFor: #runCase!public!Running! !
-!ContinuationTest categoriesFor: #testBlockTemps!public!unit tests! !
-!ContinuationTest categoriesFor: #testBlockVars!public!unit tests! !
-!ContinuationTest categoriesFor: #testMethodTemps!public!unit tests! !
-!ContinuationTest categoriesFor: #testSimpleCallCC!public!unit tests! !
-!ContinuationTest categoriesFor: #testSimplestCallCC!public!unit tests! !
-!ContinuationTest categoriesFor: #testVMVersion!public!unit tests! !
+!ContinuationTest categoriesForMethods!
+runCase!public!Running! !
+testBlockTemps!public!unit tests! !
+testBlockVars!public!unit tests! !
+testMethodTemps!public!unit tests! !
+testSimpleCallCC!public!unit tests! !
+testSimplestCallCC!public!unit tests! !
+testVMVersion!public!unit tests! !
+!
 

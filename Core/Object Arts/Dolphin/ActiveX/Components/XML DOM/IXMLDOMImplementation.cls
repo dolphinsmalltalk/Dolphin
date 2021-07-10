@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXMLDOMImplementation
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!IXMLDOMImplementation categoriesFor: #hasFeature:version:!methods!public! !
-!IXMLDOMImplementation categoriesFor: #HasFeature:version:hasFeature:!**auto generated**!COM Interfaces-IXMLDOMImplementation!private! !
-!IXMLDOMImplementation categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMImplementation categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!IXMLDOMImplementation categoriesForMethods!
+hasFeature:version:!methods!public! !
+HasFeature:version:hasFeature:!**auto generated**!COM Interfaces-IXMLDOMImplementation!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !IXMLDOMImplementation class methodsFor!
 
@@ -63,5 +65,7 @@ defineFunctions
 		defineFunction: #HasFeature:version:hasFeature:
 			argumentTypes: 'bstr bstr varbool*'
 ! !
-!IXMLDOMImplementation class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMImplementation class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

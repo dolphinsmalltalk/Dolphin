@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SingletonSearchPolicy subclass: #EqualitySearchPolicy
 	instanceVariableNames: ''
@@ -55,11 +55,13 @@ nextIndexOf: anElement in: collection from: start to: stop
 	answer 0."
 
 	^collection nextIndexOf: anElement from: start to: stop! !
-!EqualitySearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!EqualitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!EqualitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!EqualitySearchPolicy categoriesFor: #name!accessing!public! !
-!EqualitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!EqualitySearchPolicy categoriesFor: #newSet!operations!public! !
-!EqualitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+!EqualitySearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:max:!comparing!public! !
+keyAtValue:in:ifAbsent:!public!searching! !
+name!accessing!public! !
+newLookupTable!operations!public! !
+newSet!operations!public! !
+nextIndexOf:in:from:to:!public!searching! !
+!
 

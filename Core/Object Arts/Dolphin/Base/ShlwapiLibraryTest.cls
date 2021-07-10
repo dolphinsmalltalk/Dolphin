@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ShlwapiLibraryTest
 	instanceVariableNames: ''
@@ -19,5 +19,7 @@ testPathCompactPathEx
 				cchMax: buf size - 1
 				dwFlags: 0).
 	self assert: buf trimNulls equals: 'c:\dolphin\'! !
-!ShlwapiLibraryTest categoriesFor: #testPathCompactPathEx!public!unit tests! !
+!ShlwapiLibraryTest categoriesForMethods!
+testPathCompactPathEx!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #AbstractContainerViewTest
 	instanceVariableNames: 'containerView'
@@ -175,20 +175,22 @@ waitForScreenUpdate
 	"5 timesRepeat: 
 			[SessionManager current inputState pumpMessages.
 			Processor sleep: 100]"! !
-!AbstractContainerViewTest categoriesFor: #backgroundColor!private! !
-!AbstractContainerViewTest categoriesFor: #bitmapOfPrintView:!helpers!private! !
-!AbstractContainerViewTest categoriesFor: #borderColor!private! !
-!AbstractContainerViewTest categoriesFor: #borderRectangleOf:!private! !
-!AbstractContainerViewTest categoriesFor: #checkBorderedNcRectangle:!private! !
-!AbstractContainerViewTest categoriesFor: #checkPoints:inBitmap:color:!private! !
-!AbstractContainerViewTest categoriesFor: #checkRectangle:inBitmap:color:!private! !
-!AbstractContainerViewTest categoriesFor: #containerClass!private! !
-!AbstractContainerViewTest categoriesFor: #initialParentExtent!private!Running! !
-!AbstractContainerViewTest categoriesFor: #initialParentRect!private!Running! !
-!AbstractContainerViewTest categoriesFor: #setUp!public!Running! !
-!AbstractContainerViewTest categoriesFor: #tearDown!public!Running! !
-!AbstractContainerViewTest categoriesFor: #testBorderedNcRectangle!public! !
-!AbstractContainerViewTest categoriesFor: #testNcCalcSize!public! !
-!AbstractContainerViewTest categoriesFor: #testNonBorderedNcRectangle!public! !
-!AbstractContainerViewTest categoriesFor: #waitForScreenUpdate!private! !
+!AbstractContainerViewTest categoriesForMethods!
+backgroundColor!private! !
+bitmapOfPrintView:!helpers!private! !
+borderColor!private! !
+borderRectangleOf:!private! !
+checkBorderedNcRectangle:!private! !
+checkPoints:inBitmap:color:!private! !
+checkRectangle:inBitmap:color:!private! !
+containerClass!private! !
+initialParentExtent!private!Running! !
+initialParentRect!private!Running! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testBorderedNcRectangle!public! !
+testNcCalcSize!public! !
+testNonBorderedNcRectangle!public! !
+waitForScreenUpdate!private! !
+!
 

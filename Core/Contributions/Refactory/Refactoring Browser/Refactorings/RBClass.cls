@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBAbstractClass subclass: #RBClass
 	instanceVariableNames: 'classVariableNames poolDictionaryNames category'
@@ -169,31 +169,33 @@ renameClassVariable: oldName to: newName around: aBlock
 sharedPools
 	^self allPoolDictionaryNames 
 		collect: [:each | Smalltalk at: each asSymbol ifAbsent: [Dictionary new]]! !
-!RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
-!RBClass categoriesFor: #addPoolDictionary:!public!variable accessing! !
-!RBClass categoriesFor: #allClassVariableNames!accessing!public! !
-!RBClass categoriesFor: #allPoolDictionaryNames!accessing!public! !
-!RBClass categoriesFor: #category!accessing!public! !
-!RBClass categoriesFor: #category:!accessing!public! !
-!RBClass categoriesFor: #classVariableNames!accessing!public! !
-!RBClass categoriesFor: #classVariableNames:!accessing!public! !
-!RBClass categoriesFor: #definitionString!accessing!public! !
-!RBClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!RBClass categoriesFor: #directlyDefinesPoolDictionary:!public!testing! !
-!RBClass categoriesFor: #getPoolDictionaryNames!helpers!private! !
-!RBClass categoriesFor: #isMeta!public!testing! !
-!RBClass categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
-!RBClass categoriesFor: #nonMetaclass!accessing!public! !
-!RBClass categoriesFor: #poolDictionaryNames!accessing!public! !
-!RBClass categoriesFor: #poolDictionaryNames:!accessing!public! !
-!RBClass categoriesFor: #printDefinitionOn:!accessing!public! !
-!RBClass categoriesFor: #privateClassVariableNames!private! !
-!RBClass categoriesFor: #privatePoolDictionaryNames!private! !
-!RBClass categoriesFor: #realName:!initialize/release!public! !
-!RBClass categoriesFor: #removeClassVariable:!public!variable accessing! !
-!RBClass categoriesFor: #removePoolDictionary:!public!variable accessing! !
-!RBClass categoriesFor: #renameClassVariable:to:around:!public!variable accessing! !
-!RBClass categoriesFor: #sharedPools!accessing!public! !
+!RBClass categoriesForMethods!
+addClassVariable:!public!variable accessing! !
+addPoolDictionary:!public!variable accessing! !
+allClassVariableNames!accessing!public! !
+allPoolDictionaryNames!accessing!public! !
+category!accessing!public! !
+category:!accessing!public! !
+classVariableNames!accessing!public! !
+classVariableNames:!accessing!public! !
+definitionString!accessing!public! !
+directlyDefinesClassVariable:!public!testing! !
+directlyDefinesPoolDictionary:!public!testing! !
+getPoolDictionaryNames!helpers!private! !
+isMeta!public!testing! !
+kindOfSubclass!class hierarchy-testing!private! !
+nonMetaclass!accessing!public! !
+poolDictionaryNames!accessing!public! !
+poolDictionaryNames:!accessing!public! !
+printDefinitionOn:!accessing!public! !
+privateClassVariableNames!private! !
+privatePoolDictionaryNames!private! !
+realName:!initialize/release!public! !
+removeClassVariable:!public!variable accessing! !
+removePoolDictionary:!public!variable accessing! !
+renameClassVariable:to:around:!public!variable accessing! !
+sharedPools!accessing!public! !
+!
 
 !RBClass class methodsFor!
 
@@ -206,6 +208,8 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
-!RBClass class categoriesFor: #existingNamed:!instance creation!public! !
-!RBClass class categoriesFor: #named:!instance creation!public! !
+!RBClass class categoriesForMethods!
+existingNamed:!instance creation!public! !
+named:!instance creation!public! !
+!
 

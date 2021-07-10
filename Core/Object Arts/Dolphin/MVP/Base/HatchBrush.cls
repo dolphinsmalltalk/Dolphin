@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Brush subclass: #HatchBrush
 	instanceVariableNames: 'id color'
@@ -49,10 +49,12 @@ printOn: aPuttableStream
 setId: anInteger color: aColor 
 	id := anInteger.
 	color := aColor! !
-!HatchBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!HatchBrush categoriesFor: #name!accessing!public! !
-!HatchBrush categoriesFor: #printOn:!printing!public! !
-!HatchBrush categoriesFor: #setId:color:!initializing!private! !
+!HatchBrush categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+name!accessing!public! !
+printOn:!printing!public! !
+setId:color:!initializing!private! !
+!
 
 !HatchBrush class methodsFor!
 
@@ -60,5 +62,7 @@ fromId: anInteger color: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of the type identifiedby the <integer> argument, anInteger, which should be a code from the HS_xxx enumeration, in the <Color>, aColor."
 
 	^self new setId: anInteger color: aColor! !
-!HatchBrush class categoriesFor: #fromId:color:!instance creation!public! !
+!HatchBrush class categoriesForMethods!
+fromId:color:!instance creation!public! !
+!
 

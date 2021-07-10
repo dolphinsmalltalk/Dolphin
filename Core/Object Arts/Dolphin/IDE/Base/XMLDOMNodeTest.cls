@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #XMLDOMNodeTest
 	instanceVariableNames: ''
@@ -42,7 +42,9 @@ testSetNodeTypeAndValue
 	elem setNodeTypeAndValue: false.
 	self assert: elem dataType equals: 'boolean'.
 	self assert: elem nodeTypedValue not! !
-!XMLDOMNodeTest categoriesFor: #testDisplayOn!public!unit tests! !
-!XMLDOMNodeTest categoriesFor: #testDownCast!public!unit tests! !
-!XMLDOMNodeTest categoriesFor: #testSetNodeTypeAndValue!public!unit tests! !
+!XMLDOMNodeTest categoriesForMethods!
+testDisplayOn!public!unit tests! !
+testDownCast!public!unit tests! !
+testSetNodeTypeAndValue!public!unit tests! !
+!
 

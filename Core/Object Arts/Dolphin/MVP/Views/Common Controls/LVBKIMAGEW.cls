@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
@@ -129,27 +129,29 @@ yOffsetPercent: anInteger
 	"Set the receiver's 'yOffsetPercent' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yOffsetPercent put: anInteger! !
-!LVBKIMAGEW categoriesFor: #bitmap:!accessing!public! !
-!LVBKIMAGEW categoriesFor: #cchImageMax:!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #hbm!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #hbm:!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #imageSource:!accessing!private! !
-!LVBKIMAGEW categoriesFor: #imageUrl:!accessing!public! !
-!LVBKIMAGEW categoriesFor: #isTiled!public!testing! !
-!LVBKIMAGEW categoriesFor: #isTiled:!accessing!public! !
-!LVBKIMAGEW categoriesFor: #isWatermark!public!testing! !
-!LVBKIMAGEW categoriesFor: #isWatermark:!accessing!public! !
-!LVBKIMAGEW categoriesFor: #offsetPercent:!accessing!public! !
-!LVBKIMAGEW categoriesFor: #offsetTile:!public! !
-!LVBKIMAGEW categoriesFor: #position:!accessing!public! !
-!LVBKIMAGEW categoriesFor: #pszImage!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #pszImage:!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #ulFlags!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #ulFlags:!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #xOffsetPercent!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #xOffsetPercent:!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #yOffsetPercent!**compiled accessors**!public! !
-!LVBKIMAGEW categoriesFor: #yOffsetPercent:!**compiled accessors**!public! !
+!LVBKIMAGEW categoriesForMethods!
+bitmap:!accessing!public! !
+cchImageMax:!**compiled accessors**!public! !
+hbm!**compiled accessors**!public! !
+hbm:!**compiled accessors**!public! !
+imageSource:!accessing!private! !
+imageUrl:!accessing!public! !
+isTiled!public!testing! !
+isTiled:!accessing!public! !
+isWatermark!public!testing! !
+isWatermark:!accessing!public! !
+offsetPercent:!accessing!public! !
+offsetTile:!public! !
+position:!accessing!public! !
+pszImage!**compiled accessors**!public! !
+pszImage:!**compiled accessors**!public! !
+ulFlags!**compiled accessors**!public! !
+ulFlags:!**compiled accessors**!public! !
+xOffsetPercent!**compiled accessors**!public! !
+xOffsetPercent:!**compiled accessors**!public! !
+yOffsetPercent!**compiled accessors**!public! !
+yOffsetPercent:!**compiled accessors**!public! !
+!
 
 !LVBKIMAGEW class methodsFor!
 
@@ -168,6 +170,8 @@ defineFields
 
 getFieldNames
 	^#(#ulFlags #hbm #pszImage #cchImageMax #xOffsetPercent #yOffsetPercent)! !
-!LVBKIMAGEW class categoriesFor: #defineFields!public!template definition! !
-!LVBKIMAGEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LVBKIMAGEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

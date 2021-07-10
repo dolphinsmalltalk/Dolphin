@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
@@ -42,11 +42,13 @@ requestDropOperations: session
 	drag and drop operation symbols."
 
 	composer requestDropOperations: session! !
-!ViewComposerArena categoriesFor: #composer!public! !
-!ViewComposerArena categoriesFor: #composer:!public! !
-!ViewComposerArena categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!ViewComposerArena categoriesFor: #onMouseMoved:!event handling!private! !
-!ViewComposerArena categoriesFor: #onPaintRequired:!event handling!private! !
-!ViewComposerArena categoriesFor: #onViewClosed!event handling!public! !
-!ViewComposerArena categoriesFor: #requestDropOperations:!drag & drop!private! !
+!ViewComposerArena categoriesForMethods!
+composer!public! !
+composer:!public! !
+onLeftButtonPressed:!event handling!private! !
+onMouseMoved:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onViewClosed!event handling!public! !
+requestDropOperations:!drag & drop!private! !
+!
 

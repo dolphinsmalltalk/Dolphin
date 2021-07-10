@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RelativeFileLocator subclass: #PackageRelativeFileLocator
 	instanceVariableNames: 'packageName'
@@ -27,10 +27,12 @@ packageName
 
 setPackageName: aString 
 	packageName := aString! !
-!PackageRelativeFileLocator categoriesFor: #basePath!accessing!public! !
-!PackageRelativeFileLocator categoriesFor: #package!accessing!public! !
-!PackageRelativeFileLocator categoriesFor: #packageName!accessing!public! !
-!PackageRelativeFileLocator categoriesFor: #setPackageName:!initializing!private! !
+!PackageRelativeFileLocator categoriesForMethods!
+basePath!accessing!public! !
+package!accessing!public! !
+packageName!accessing!public! !
+setPackageName:!initializing!private! !
+!
 
 !PackageRelativeFileLocator class methodsFor!
 
@@ -49,6 +51,8 @@ packageNamed: aString
 	^(super new)
 		setPackageName: aString;
 		yourself! !
-!PackageRelativeFileLocator class categoriesFor: #package:!instance creation!public! !
-!PackageRelativeFileLocator class categoriesFor: #packageNamed:!instance creation!public! !
+!PackageRelativeFileLocator class categoriesForMethods!
+package:!instance creation!public! !
+packageNamed:!instance creation!public! !
+!
 

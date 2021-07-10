@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ThemeLibrary subclass: #VistaThemeLibrary
 	instanceVariableNames: ''
@@ -174,20 +174,22 @@ onStartup
 	"Private - Perform any initialization required at system startup time"
 
 	self bufferedPaintInit! !
-!VistaThemeLibrary categoriesFor: #beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintClear:prc:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintInit!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintStopAllAnimations:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #bufferedPaintUnInit!public! !
-!VistaThemeLibrary categoriesFor: #endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintDC:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintTargetDC:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #getBufferedPaintTargetRect:prc:!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #isCompositionActive!**auto generated**!public! !
-!VistaThemeLibrary categoriesFor: #onExit!private! !
-!VistaThemeLibrary categoriesFor: #onStartup!private! !
+!VistaThemeLibrary categoriesForMethods!
+beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
+beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
+bufferedPaintClear:prc:!**auto generated**!public! !
+bufferedPaintInit!**auto generated**!public! !
+bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
+bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
+bufferedPaintStopAllAnimations:!**auto generated**!public! !
+bufferedPaintUnInit!public! !
+endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
+getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
+getBufferedPaintDC:!**auto generated**!public! !
+getBufferedPaintTargetDC:!**auto generated**!public! !
+getBufferedPaintTargetRect:prc:!**auto generated**!public! !
+isCompositionActive!**auto generated**!public! !
+onExit!private! !
+onStartup!private! !
+!
 

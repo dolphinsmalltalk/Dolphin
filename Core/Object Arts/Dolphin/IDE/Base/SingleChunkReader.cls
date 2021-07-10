@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkReader subclass: #SingleChunkReader
 	instanceVariableNames: ''
@@ -18,5 +18,7 @@ fileInFrom: aSourceFiler
 	(aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]) 
 		ifFalse: [self chunk: chunk].
 	^endAction value! !
-!SingleChunkReader categoriesFor: #fileInFrom:!private!source filing! !
+!SingleChunkReader categoriesForMethods!
+fileInFrom:!private!source filing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONWriteReadTest subclass: #STONLargeWriteReadTest
 	instanceVariableNames: ''
@@ -30,7 +30,9 @@ serializeJson: anObject
 			prettyPrint: true;
 			optimizeForLargeStructures; 
 			nextPut: anObject ]! !
-!STONLargeWriteReadTest categoriesFor: #materialize:!private! !
-!STONLargeWriteReadTest categoriesFor: #serialize:!private! !
-!STONLargeWriteReadTest categoriesFor: #serializeJson:!private! !
+!STONLargeWriteReadTest categoriesForMethods!
+materialize:!private! !
+serialize:!private! !
+serializeJson:!private! !
+!
 

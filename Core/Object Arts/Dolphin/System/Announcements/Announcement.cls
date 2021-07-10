@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Announcement
 	instanceVariableNames: ''
@@ -15,7 +15,9 @@ Announcement comment: 'This class is the superclass for events that someone migh
 
 asAnnouncement
 	^ self! !
-!Announcement categoriesFor: #asAnnouncement!converting!public! !
+!Announcement categoriesForMethods!
+asAnnouncement!converting!public! !
+!
 
 !Announcement class methodsFor!
 
@@ -30,7 +32,9 @@ handlesAnnouncement: anAnnouncement
 
 
 	^ anAnnouncement class == self or: [ anAnnouncement class inheritsFrom: self ]! !
-!Announcement class categoriesFor: #,!public! !
-!Announcement class categoriesFor: #asAnnouncement!converting!public! !
-!Announcement class categoriesFor: #handlesAnnouncement:!public!testing! !
+!Announcement class categoriesForMethods!
+,!public! !
+asAnnouncement!converting!public! !
+handlesAnnouncement:!public!testing! !
+!
 

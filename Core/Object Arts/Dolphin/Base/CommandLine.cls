@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CommandLine
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
@@ -278,26 +278,28 @@ parseNextOption
 processOptions
 	options ifNil: [self parse].
 	options do: [:each | each key ifNotNil: [:rule | rule value: each value]]! !
-!CommandLine categoriesFor: #addOption:!public! !
-!CommandLine categoriesFor: #addOption:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addOptionAllowingArgument:!public! !
-!CommandLine categoriesFor: #addOptionAllowingArgument:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addOptionRequiringArgument:!public! !
-!CommandLine categoriesFor: #addOptionRequiringArgument:whenPresentDo:!public! !
-!CommandLine categoriesFor: #addRulesFrom:!private! !
-!CommandLine categoriesFor: #arguments!accessing!public! !
-!CommandLine categoriesFor: #checkForErrors!private! !
-!CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
-!CommandLine categoriesFor: #initialize:!initializing!private! !
-!CommandLine categoriesFor: #optArg!getopt protocol!public! !
-!CommandLine categoriesFor: #options!accessing!public! !
-!CommandLine categoriesFor: #options:!public! !
-!CommandLine categoriesFor: #optOpt!getopt protocol!public! !
-!CommandLine categoriesFor: #parse!private! !
-!CommandLine categoriesFor: #parseLongOption:!private! !
-!CommandLine categoriesFor: #parseNextArg!private! !
-!CommandLine categoriesFor: #parseNextOption!private! !
-!CommandLine categoriesFor: #processOptions!public! !
+!CommandLine categoriesForMethods!
+addOption:!public! !
+addOption:whenPresentDo:!public! !
+addOptionAllowingArgument:!public! !
+addOptionAllowingArgument:whenPresentDo:!public! !
+addOptionRequiringArgument:!public! !
+addOptionRequiringArgument:whenPresentDo:!public! !
+addRulesFrom:!private! !
+arguments!accessing!public! !
+checkForErrors!private! !
+getOpt:!getopt protocol!public! !
+initialize:!initializing!private! !
+optArg!getopt protocol!public! !
+options!accessing!public! !
+options:!public! !
+optOpt!getopt protocol!public! !
+parse!private! !
+parseLongOption:!private! !
+parseNextArg!private! !
+parseNextOption!private! !
+processOptions!public! !
+!
 
 !CommandLine class methodsFor!
 
@@ -319,7 +321,9 @@ options: aString
 	^(self argv: SessionManager current argv)
 		options: aString;
 		yourself! !
-!CommandLine class categoriesFor: #argv:!public! !
-!CommandLine class categoriesFor: #new!public! !
-!CommandLine class categoriesFor: #options:!public! !
+!CommandLine class categoriesForMethods!
+argv:!public! !
+new!public! !
+options:!public! !
+!
 

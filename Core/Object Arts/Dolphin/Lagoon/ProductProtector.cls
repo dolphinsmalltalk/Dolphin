@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProductProtector
 	instanceVariableNames: 'key'
@@ -42,12 +42,14 @@ unlockClasses: aCollectionOfClasses
 	"Unlock the given classes using the key we have been configured to use."
 
 	self decryptClasses: aCollectionOfClasses! !
-!ProductProtector categoriesFor: #decryptClasses:!operations!public! !
-!ProductProtector categoriesFor: #encryptClasses:!operations!public! !
-!ProductProtector categoriesFor: #key!initializing!public! !
-!ProductProtector categoriesFor: #key:!initializing!private! !
-!ProductProtector categoriesFor: #lockClasses:!operations!public! !
-!ProductProtector categoriesFor: #unlockClasses:!operations!public! !
+!ProductProtector categoriesForMethods!
+decryptClasses:!operations!public! !
+encryptClasses:!operations!public! !
+key!initializing!public! !
+key:!initializing!private! !
+lockClasses:!operations!public! !
+unlockClasses:!operations!public! !
+!
 
 ProductProtector methodProtocol: #ProductProtector attributes: #() selectors: #(#lockClasses: #unlockClasses:)!
 
@@ -66,6 +68,8 @@ withKey: aKeyObject
 	^(self new)
 		key: aKeyObject;
 		yourself! !
-!ProductProtector class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!ProductProtector class categoriesFor: #withKey:!instance creation!public! !
+!ProductProtector class categoriesForMethods!
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+withKey:!instance creation!public! !
+!
 

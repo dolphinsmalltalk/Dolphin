@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IScriptModuleCollection
 	instanceVariableNames: ''
@@ -115,17 +115,19 @@ item: index
 		ppmod: answer.
 	^answer asObject
 ! !
-!IScriptModuleCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IScriptModuleCollection categoriesFor: #add:!**auto generated**!methods!public! !
-!IScriptModuleCollection categoriesFor: #add:object:!**auto generated**!methods!public! !
-!IScriptModuleCollection categoriesFor: #Add:Object:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #count!**auto generated**!properties!public! !
-!IScriptModuleCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #get_Item:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
-!IScriptModuleCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptModuleCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptModuleCollection categoriesFor: #item:!**auto generated**!properties!public! !
+!IScriptModuleCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+add:!**auto generated**!methods!public! !
+add:object:!**auto generated**!methods!public! !
+Add:Object:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+count!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+get_Count:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+get_Item:ppmod:!**auto generated**!COM Interfaces-IScriptModuleCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !IScriptModuleCollection class methodsFor!
 
@@ -155,7 +157,9 @@ initializeTypeLib
 		IScriptModuleCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptModuleCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptModuleCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptModuleCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!IScriptModuleCollection class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SecureHashAlgorithm
 	instanceVariableNames: 'context'
@@ -107,17 +107,19 @@ shaLibrary
 	"Private - Answers the <ExternalLibrary> containing the SHA functions"
 
 	^ BCryptLibrary default! !
-!SecureHashAlgorithm categoriesFor: #context!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #finalHash!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #hashIn:!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #hashInInteger:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashInMessage:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashInStream:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashInteger:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashMessage:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #hashStream:!operations!public! !
-!SecureHashAlgorithm categoriesFor: #resetContext!helpers!private! !
-!SecureHashAlgorithm categoriesFor: #shaLibrary!helpers!private! !
+!SecureHashAlgorithm categoriesForMethods!
+context!helpers!private! !
+finalHash!helpers!private! !
+hashIn:!helpers!private! !
+hashInInteger:!operations!public! !
+hashInMessage:!operations!public! !
+hashInStream:!operations!public! !
+hashInteger:!operations!public! !
+hashMessage:!operations!public! !
+hashStream:!operations!public! !
+resetContext!helpers!private! !
+shaLibrary!helpers!private! !
+!
 
 !SecureHashAlgorithm class methodsFor!
 
@@ -153,6 +155,8 @@ example2
 		self error: 'Test #3 failed!!'].
 	^true
 ! !
-!SecureHashAlgorithm class categoriesFor: #example!examples!public! !
-!SecureHashAlgorithm class categoriesFor: #example2!examples!public! !
+!SecureHashAlgorithm class categoriesForMethods!
+example!examples!public! !
+example2!examples!public! !
+!
 

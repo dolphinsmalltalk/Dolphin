@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusGraphicsFromHDCInitializerTest
 	instanceVariableNames: ''
@@ -30,7 +30,9 @@ testCreateHandle
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first identicalTo: canvas asParameter.
 	self assertLastArgIsHandle! !
-!GdiplusGraphicsFromHDCInitializerTest categoriesFor: #gdipCreateFromHDC:graphics:!accessing!public! !
-!GdiplusGraphicsFromHDCInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusGraphicsFromHDCInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!GdiplusGraphicsFromHDCInitializerTest categoriesForMethods!
+gdipCreateFromHDC:graphics:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+!
 

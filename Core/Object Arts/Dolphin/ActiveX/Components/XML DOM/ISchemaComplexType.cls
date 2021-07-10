@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaType subclass: #ISchemaComplexType
 	instanceVariableNames: ''
@@ -154,18 +154,20 @@ prohibitedSubstitutions
 	self get_prohibitedSubstitutions: answer.
 	^answer asObject
 ! !
-!ISchemaComplexType categoriesFor: #anyAttribute!**auto generated**!properties!public! !
-!ISchemaComplexType categoriesFor: #attributes!**auto generated**!properties!public! !
-!ISchemaComplexType categoriesFor: #contentModel!**auto generated**!properties!public! !
-!ISchemaComplexType categoriesFor: #contentType!**auto generated**!properties!public! !
-!ISchemaComplexType categoriesFor: #get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!ISchemaComplexType categoriesFor: #get_attributes:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!ISchemaComplexType categoriesFor: #get_contentModel:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!ISchemaComplexType categoriesFor: #get_contentType:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!ISchemaComplexType categoriesFor: #get_isAbstract:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!ISchemaComplexType categoriesFor: #get_prohibitedSubstitutions:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
-!ISchemaComplexType categoriesFor: #isAbstract!**auto generated**!properties!public! !
-!ISchemaComplexType categoriesFor: #prohibitedSubstitutions!**auto generated**!properties!public! !
+!ISchemaComplexType categoriesForMethods!
+anyAttribute!**auto generated**!properties!public! !
+attributes!**auto generated**!properties!public! !
+contentModel!**auto generated**!properties!public! !
+contentType!**auto generated**!properties!public! !
+get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_attributes:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_contentModel:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_contentType:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_isAbstract:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+get_prohibitedSubstitutions:!**auto generated**!COM Interfaces-ISchemaComplexType!private! !
+isAbstract!**auto generated**!properties!public! !
+prohibitedSubstitutions!**auto generated**!properties!public! !
+!
 
 !ISchemaComplexType class methodsFor!
 
@@ -187,5 +189,7 @@ defineFunctions
 		defineFunction: #get_prohibitedSubstitutions:
 			argumentTypes: 'sdword*'
 ! !
-!ISchemaComplexType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaComplexType class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TVITEMW subclass: #TVITEMEXW
 	instanceVariableNames: ''
@@ -33,10 +33,12 @@ uStateEx: anInteger
 	"Set the receiver's 'uStateEx' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uStateEx put: anInteger! !
-!TVITEMEXW categoriesFor: #iExpandedImage!**compiled accessors**!public! !
-!TVITEMEXW categoriesFor: #iExpandedImage:!**compiled accessors**!public! !
-!TVITEMEXW categoriesFor: #uStateEx!**compiled accessors**!public! !
-!TVITEMEXW categoriesFor: #uStateEx:!**compiled accessors**!public! !
+!TVITEMEXW categoriesForMethods!
+iExpandedImage!**compiled accessors**!public! !
+iExpandedImage:!**compiled accessors**!public! !
+uStateEx!**compiled accessors**!public! !
+uStateEx:!**compiled accessors**!public! !
+!
 
 !TVITEMEXW class methodsFor!
 
@@ -55,6 +57,8 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam #iIntegral #uStateEx #hwnd #iExpandedImage)! !
-!TVITEMEXW class categoriesFor: #defineFields!public!template definition! !
-!TVITEMEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TVITEMEXW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

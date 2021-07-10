@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommandButton subclass: #LinkButton
 	instanceVariableNames: ''
@@ -96,14 +96,16 @@ text: aString
 	text := ('*<a*>*</a>*' match: aString) ifTrue: [aString] ifFalse: ['<a>' , aString , '</a>'].
 	super text: text.
 	commandDescription description: (self stripTags: text)! !
-!LinkButton categoriesFor: #calculateExtent:!geometry!private! !
-!LinkButton categoriesFor: #getWindowText!accessing!private! !
-!LinkButton categoriesFor: #isEnabled:!accessing!public! !
-!LinkButton categoriesFor: #nmClick:!event handling-win32!private! !
-!LinkButton categoriesFor: #nmReturn:!event handling-win32!private! !
-!LinkButton categoriesFor: #preferredHeight!enquiries!private! !
-!LinkButton categoriesFor: #stripTags:!helpers!private! !
-!LinkButton categoriesFor: #text:!accessing!public! !
+!LinkButton categoriesForMethods!
+calculateExtent:!geometry!private! !
+getWindowText!accessing!private! !
+isEnabled:!accessing!public! !
+nmClick:!event handling-win32!private! !
+nmReturn:!event handling-win32!private! !
+preferredHeight!enquiries!private! !
+stripTags:!helpers!private! !
+text:!accessing!public! !
+!
 
 !LinkButton class methodsFor!
 
@@ -121,6 +123,8 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
-!LinkButton class categoriesFor: #resource_Link_button!public!resources-views! !
-!LinkButton class categoriesFor: #winClassName!constants!private! !
+!LinkButton class categoriesForMethods!
+resource_Link_button!public!resources-views! !
+winClassName!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MenuItem
 	instanceVariableNames: 'flags'
@@ -168,33 +168,35 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self subclassResponsibility! !
-!MenuItem categoriesFor: #acceleratorKey!accessing!public! !
-!MenuItem categoriesFor: #acceleratorKey:!accessing!private! !
-!MenuItem categoriesFor: #allItems!accessing!public! !
-!MenuItem categoriesFor: #command!commands!public! !
-!MenuItem categoriesFor: #commandDescription!accessing!private! !
-!MenuItem categoriesFor: #edit!accessing!operations!private! !
-!MenuItem categoriesFor: #flags!accessing!private! !
-!MenuItem categoriesFor: #flags:!accessing!private! !
-!MenuItem categoriesFor: #hasSubmenu!menus!private! !
-!MenuItem categoriesFor: #id!accessing!private! !
-!MenuItem categoriesFor: #image!accessing!public! !
-!MenuItem categoriesFor: #insertIntoMenu:at:info:!public!realizing/unrealizing! !
-!MenuItem categoriesFor: #isDefault!public!testing! !
-!MenuItem categoriesFor: #isDefault:!accessing!public! !
-!MenuItem categoriesFor: #isDivider!public!testing! !
-!MenuItem categoriesFor: #items!accessing!public! !
-!MenuItem categoriesFor: #itemsDo:!accessing!private! !
-!MenuItem categoriesFor: #itemWithId:!accessing!public! !
-!MenuItem categoriesFor: #menuFromHandle:!accessing!public! !
-!MenuItem categoriesFor: #name!public! !
-!MenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!MenuItem categoriesFor: #printOn:!printing!public! !
-!MenuItem categoriesFor: #queryAlong:!operations!public! !
-!MenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
-!MenuItem categoriesFor: #styleFlags!accessing!private! !
-!MenuItem categoriesFor: #styleFlags:!accessing!not an aspect!private! !
-!MenuItem categoriesFor: #text!accessing!public! !
+!MenuItem categoriesForMethods!
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!private! !
+allItems!accessing!public! !
+command!commands!public! !
+commandDescription!accessing!private! !
+edit!accessing!operations!private! !
+flags!accessing!private! !
+flags:!accessing!private! !
+hasSubmenu!menus!private! !
+id!accessing!private! !
+image!accessing!public! !
+insertIntoMenu:at:info:!public!realizing/unrealizing! !
+isDefault!public!testing! !
+isDefault:!accessing!public! !
+isDivider!public!testing! !
+items!accessing!public! !
+itemsDo:!accessing!private! !
+itemWithId:!accessing!public! !
+menuFromHandle:!accessing!public! !
+name!public! !
+populateItemInfo:!private!realizing/unrealizing! !
+printOn:!printing!public! !
+queryAlong:!operations!public! !
+registerAcceleratorKeyIn:!menus!public! !
+styleFlags!accessing!private! !
+styleFlags:!accessing!not an aspect!private! !
+text!accessing!public! !
+!
 
 MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
@@ -270,10 +272,12 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!MenuItem class categoriesFor: #errorIllegalMenuString:!exceptions!private! !
-!MenuItem class categoriesFor: #fromString:!instance creation!public! !
-!MenuItem class categoriesFor: #initialize!development!initializing!private! !
-!MenuItem class categoriesFor: #new!instance creation!private! !
-!MenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!MenuItem class categoriesFor: #stbVersion!binary filing!public! !
+!MenuItem class categoriesForMethods!
+errorIllegalMenuString:!exceptions!private! !
+fromString:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

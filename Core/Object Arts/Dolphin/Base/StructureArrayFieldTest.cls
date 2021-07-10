@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalFieldTest subclass: #StructureArrayFieldTest
 	instanceVariableNames: ''
@@ -25,6 +25,8 @@ testWriteInto
 	subject offset: 8.
 	subject writeInto: struct value: (DWORDArray withAll: #(10 11 12 13)) bytes.
 	self assert: struct asArray equals: {0 @ 0. 10 @ 11. 12 @ 13. 0 @ 0}! !
-!StructureArrayFieldTest categoriesFor: #testReadFrom!public! !
-!StructureArrayFieldTest categoriesFor: #testWriteInto!public! !
+!StructureArrayFieldTest categoriesForMethods!
+testReadFrom!public! !
+testWriteInto!public! !
+!
 

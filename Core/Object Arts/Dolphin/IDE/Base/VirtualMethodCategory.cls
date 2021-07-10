@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodCategory subclass: #VirtualMethodCategory
 	instanceVariableNames: ''
@@ -84,14 +84,16 @@ selectorsInBehavior: aBehavior
 	selectors := WriteStream on: (Array new: 8).
 	self methodsInBehavior: aBehavior do: [:each | selectors nextPut: each selector].
 	^selectors contents! !
-!VirtualMethodCategory categoriesFor: #addMethodSilently:!adding!private! !
-!VirtualMethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #includesBehavior:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
-!VirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
-!VirtualMethodCategory categoriesFor: #isVirtual!public!testing! !
-!VirtualMethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!VirtualMethodCategory categoriesFor: #removeMethodSilently:!private!removing! !
-!VirtualMethodCategory categoriesFor: #selectorsInBehavior:!enumerating!public! !
+!VirtualMethodCategory categoriesForMethods!
+addMethodSilently:!adding!private! !
+behaviorsDo:!enumerating!public! !
+includesBehavior:!enumerating!public! !
+includesMethod:!public!testing! !
+isSlowToEnumerate!public!testing! !
+isVirtual!public!testing! !
+methodsInBehavior:!enumerating!public! !
+methodsInBehavior:do:!enumerating!public! !
+removeMethodSilently:!private!removing! !
+selectorsInBehavior:!enumerating!public! !
+!
 

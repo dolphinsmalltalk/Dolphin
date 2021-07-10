@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
@@ -147,24 +147,26 @@ osName
 
 	osName isNil ifTrue: [osName := self calculateOsName].
 	^osName! !
-!OSVERSIONINFO categoriesFor: #calculateOsName!helpers!private! !
-!OSVERSIONINFO categoriesFor: #hasThemes!accessing!private! !
-!OSVERSIONINFO categoriesFor: #isNT!public!testing! !
-!OSVERSIONINFO categoriesFor: #isNT4!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin2K!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin2K3!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin2K3OrLater!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin95!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin98!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWin9X!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinMe!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinV5!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinV5OrLater!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinV6OrLater!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinVista!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinXP!public!testing! !
-!OSVERSIONINFO categoriesFor: #isWinXPOrLater!public!testing! !
-!OSVERSIONINFO categoriesFor: #osName!accessing!public! !
+!OSVERSIONINFO categoriesForMethods!
+calculateOsName!helpers!private! !
+hasThemes!accessing!private! !
+isNT!public!testing! !
+isNT4!public!testing! !
+isWin2K!public!testing! !
+isWin2K3!public!testing! !
+isWin2K3OrLater!public!testing! !
+isWin95!public!testing! !
+isWin98!public!testing! !
+isWin9X!public!testing! !
+isWinMe!public!testing! !
+isWinV5!public!testing! !
+isWinV5OrLater!public!testing! !
+isWinV6OrLater!public!testing! !
+isWinVista!public!testing! !
+isWinXP!public!testing! !
+isWinXPOrLater!public!testing! !
+osName!accessing!public! !
+!
 
 !OSVERSIONINFO class methodsFor!
 
@@ -200,9 +202,11 @@ uninitialize
 
 	self clear.
 ! !
-!OSVERSIONINFO class categoriesFor: #clear!initializing!private! !
-!OSVERSIONINFO class categoriesFor: #current!instance creation!public! !
-!OSVERSIONINFO class categoriesFor: #defineFields!public!template definition! !
-!OSVERSIONINFO class categoriesFor: #getCurrent!instance creation!private! !
-!OSVERSIONINFO class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OSVERSIONINFO class categoriesForMethods!
+clear!initializing!private! !
+current!instance creation!public! !
+defineFields!public!template definition! !
+getCurrent!instance creation!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

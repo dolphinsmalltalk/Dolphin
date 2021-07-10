@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #STONJSONTest
 	instanceVariableNames: ''
@@ -116,15 +116,17 @@ testUnknown
 	
 	self should: [ STONJSON toString: 1@2 ] raise: STONWriterError.
 	self should: [ STONJSON toString: #(1 2 3) asOrderedCollection ] raise: STONWriterError.! !
-!STONJSONTest categoriesFor: #testBooleans!public!tests! !
-!STONJSONTest categoriesFor: #testCircular!public!tests! !
-!STONJSONTest categoriesFor: #testFloats!public!tests! !
-!STONJSONTest categoriesFor: #testIntegers!public!tests! !
-!STONJSONTest categoriesFor: #testLists!public!tests! !
-!STONJSONTest categoriesFor: #testMaps!public!tests! !
-!STONJSONTest categoriesFor: #testNull!public!tests! !
-!STONJSONTest categoriesFor: #testOrderedDictionary!public!tests! !
-!STONJSONTest categoriesFor: #testShared!public!tests! !
-!STONJSONTest categoriesFor: #testStrings!public!tests! !
-!STONJSONTest categoriesFor: #testUnknown!public!tests! !
+!STONJSONTest categoriesForMethods!
+testBooleans!public!tests! !
+testCircular!public!tests! !
+testFloats!public!tests! !
+testIntegers!public!tests! !
+testLists!public!tests! !
+testMaps!public!tests! !
+testNull!public!tests! !
+testOrderedDictionary!public!tests! !
+testShared!public!tests! !
+testStrings!public!tests! !
+testUnknown!public!tests! !
+!
 

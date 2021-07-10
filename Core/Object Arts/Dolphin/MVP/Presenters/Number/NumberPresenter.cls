@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #NumberPresenter
 	instanceVariableNames: ''
@@ -40,8 +40,10 @@ resource_Integer_text
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1140924416 1025 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903872368 852742 ##(Smalltalk.IntegerToText) nil 8 '' nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 690 231 39 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 242 7 0 0 29 0 0 0] 8 #() 690 193 193 nil 27 )! !
-!NumberPresenter class categoriesFor: #defaultModel!models!public! !
-!NumberPresenter class categoriesFor: #icon!constants!public! !
-!NumberPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!NumberPresenter class categoriesFor: #resource_Integer_text!public!resources-views! !
+!NumberPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Integer_text!public!resources-views! !
+!
 

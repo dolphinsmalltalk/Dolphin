@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Lesson
 	instanceVariableNames: 'title contents'
@@ -25,10 +25,12 @@ title
 title: aString
 	title := aString
 ! !
-!Lesson categoriesFor: #contents!accessing!public! !
-!Lesson categoriesFor: #contents:!accessing!public! !
-!Lesson categoriesFor: #title!accessing!public! !
-!Lesson categoriesFor: #title:!accessing!public! !
+!Lesson categoriesForMethods!
+contents!accessing!public! !
+contents:!accessing!public! !
+title!accessing!public! !
+title:!accessing!public! !
+!
 
 !Lesson class methodsFor!
 
@@ -40,6 +42,8 @@ title: aTitle contents: someContents
 		title: aTitle;
 		contents: someContents
 ! !
-!Lesson class categoriesFor: #icon!constants!public! !
-!Lesson class categoriesFor: #title:contents:!instance creation!public! !
+!Lesson class categoriesForMethods!
+icon!constants!public! !
+title:contents:!instance creation!public! !
+!
 

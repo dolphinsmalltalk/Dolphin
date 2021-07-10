@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #NotepadSessionManager
 	instanceVariableNames: ''
@@ -16,7 +16,9 @@ main
 	| pad |
 	pad := self mainShellClass show.
 	self argc > 1 ifTrue: [pad openFile: (self argv at: 2)]! !
-!NotepadSessionManager categoriesFor: #main!operations!public! !
+!NotepadSessionManager categoriesForMethods!
+main!operations!public! !
+!
 
 !NotepadSessionManager class methodsFor!
 
@@ -24,5 +26,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Notepad! !
-!NotepadSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!NotepadSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

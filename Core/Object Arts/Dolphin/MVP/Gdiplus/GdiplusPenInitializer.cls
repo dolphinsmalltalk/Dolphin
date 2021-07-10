@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusPenInitializer
 	instanceVariableNames: ''
@@ -13,7 +13,9 @@ GdiplusPenInitializer comment: ''!
 
 gdiplusConstructorErrorDescription
 	^'Error creating Pen'! !
-!GdiplusPenInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusPenInitializer categoriesForMethods!
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusPenInitializer class methodsFor!
 
@@ -26,6 +28,8 @@ color: anARGB width: aFloat
 	"Creates a Pen object that uses a specified color and width."
 
 	^GdiplusPenFromColorInitializer new color: anARGB width: aFloat! !
-!GdiplusPenInitializer class categoriesFor: #brush:width:!instance creation!public! !
-!GdiplusPenInitializer class categoriesFor: #color:width:!instance creation!public! !
+!GdiplusPenInitializer class categoriesForMethods!
+brush:width:!instance creation!public! !
+color:width:!instance creation!public! !
+!
 

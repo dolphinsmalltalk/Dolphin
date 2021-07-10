@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRINVERTRGN
 	instanceVariableNames: ''
@@ -68,12 +68,14 @@ RGNDATA: anExternalArray
 		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
-!EMRINVERTRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!EMRINVERTRGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
+!EMRINVERTRGN categoriesForMethods!
+cbRgnData!**compiled accessors**!public! !
+cbRgnData:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+RGNDATA!**compiled accessors**!public! !
+RGNDATA:!**compiled accessors**!public! !
+!
 
 !EMRINVERTRGN class methodsFor!
 
@@ -110,7 +112,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_INVERTRGN with: EMR_PAINTRGN! !
-!EMRINVERTRGN class categoriesFor: #defineFields!public!template definition! !
-!EMRINVERTRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRINVERTRGN class categoriesFor: #iTypes!constants!public! !
+!EMRINVERTRGN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

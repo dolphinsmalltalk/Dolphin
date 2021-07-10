@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #FontPresenter
 	instanceVariableNames: ''
@@ -30,7 +30,9 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.FontView) 34 17 nil nil 34 2 8 1409286400 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 706 571 51 416 658 #text: 34 1 8 'Default' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 148 6 0 0 35 0 0 0] 8 #() 706 193 193 nil 27 )! !
-!FontPresenter class categoriesFor: #defaultModel!models!public! !
-!FontPresenter class categoriesFor: #icon!constants!public! !
-!FontPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!FontPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

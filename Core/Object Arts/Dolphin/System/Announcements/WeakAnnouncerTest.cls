@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AnnouncerTest subclass: #WeakAnnouncerTest
 	instanceVariableNames: ''
@@ -53,7 +53,9 @@ testWeakSubscription
 				send: #value
 				to: obj) makeWeak.
 	self assert: obj identicalTo: subscription subscriber! !
-!WeakAnnouncerTest categoriesFor: #testNoWeakBlock!public!testing! !
-!WeakAnnouncerTest categoriesFor: #testWeakObject!public!testing! !
-!WeakAnnouncerTest categoriesFor: #testWeakSubscription!public!testing! !
+!WeakAnnouncerTest categoriesForMethods!
+testNoWeakBlock!public!testing! !
+testWeakObject!public!testing! !
+testWeakSubscription!public!testing! !
+!
 

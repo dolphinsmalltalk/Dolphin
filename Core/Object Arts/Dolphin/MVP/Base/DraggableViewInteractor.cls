@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MouseTracker subclass: #DraggableViewInteractor
 	instanceVariableNames: ''
@@ -44,7 +44,9 @@ onMouseMoved: aMouseEvent
 				isTracking: false;
 				isHot: true].
 	^false	"Suppress perform default processing"! !
-!DraggableViewInteractor categoriesFor: #changeHotState:!accessing!private! !
-!DraggableViewInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!DraggableViewInteractor categoriesFor: #onMouseMoved:!event handling!public! !
+!DraggableViewInteractor categoriesForMethods!
+changeHotState:!accessing!private! !
+onLeftButtonPressed:!event handling!public! !
+onMouseMoved:!event handling!public! !
+!
 

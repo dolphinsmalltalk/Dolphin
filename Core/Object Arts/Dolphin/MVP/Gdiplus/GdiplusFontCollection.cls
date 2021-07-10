@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusFontCollection
 	instanceVariableNames: ''
@@ -46,9 +46,11 @@ familyCount
 	(status := GdiplusLibrary default gdipGetFontCollectionFamilyCount: self asParameter numFound: count) 
 		= Ok ifFalse: [GdiplusError signal: 'GdipGetFontCollectionFamilyCount failed' with: status].
 	^count asInteger! !
-!GdiplusFontCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusFontCollection categoriesFor: #families!accessing!public! !
-!GdiplusFontCollection categoriesFor: #familyCount!accessing!public! !
+!GdiplusFontCollection categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+families!accessing!public! !
+familyCount!accessing!public! !
+!
 
 !GdiplusFontCollection class methodsFor!
 
@@ -56,5 +58,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Font icon! !
-!GdiplusFontCollection class categoriesFor: #icon!constants!development!public! !
+!GdiplusFontCollection class categoriesForMethods!
+icon!constants!development!public! !
+!
 

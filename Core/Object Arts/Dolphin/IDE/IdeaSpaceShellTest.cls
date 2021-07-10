@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #IdeaSpaceShellTest
 	instanceVariableNames: 'ideaShell browserPlugins'
@@ -333,24 +333,26 @@ testSaveRestoreErrors
 	self should: [newIdeaShell configureFromSavedStateString: saveString]
 		raise: Compiler notificationClass.
 	newIdeaShell view destroy! !
-!IdeaSpaceShellTest categoriesFor: #create:subclassOf:!helpers!private! !
-!IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
-!IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newInspectorShellCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newViewBrowserCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newViewComposerCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #newWorkspaceCard!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #setUp!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #tearDown!private!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testAbsorbCard!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testAbsorbedCardRemoval!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testBreakoutCard!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testBreakoutCardOrdering!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testHistoryRemove!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testRemoveCard!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testSaveRestore!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testSaveRestoreEmpty!public!unit tests! !
-!IdeaSpaceShellTest categoriesFor: #testSaveRestoreErrors!public!unit tests! !
+!IdeaSpaceShellTest categoriesForMethods!
+create:subclassOf:!helpers!private! !
+createThreeCards!helpers!private! !
+newClassBrowserCard!private!unit tests! !
+newEnvironmentBrowserCard!private!unit tests! !
+newInspectorShellCard!private!unit tests! !
+newSystemBrowserCard!private!unit tests! !
+newViewBrowserCard!private!unit tests! !
+newViewComposerCard!private!unit tests! !
+newWorkspaceCard!private!unit tests! !
+setUp!private!unit tests! !
+tearDown!private!unit tests! !
+testAbsorbCard!public!unit tests! !
+testAbsorbedCardRemoval!public!unit tests! !
+testBreakoutCard!public!unit tests! !
+testBreakoutCardOrdering!public!unit tests! !
+testHistoryRemove!public!unit tests! !
+testRemoveCard!public!unit tests! !
+testSaveRestore!public!unit tests! !
+testSaveRestoreEmpty!public!unit tests! !
+testSaveRestoreErrors!public!unit tests! !
+!
 

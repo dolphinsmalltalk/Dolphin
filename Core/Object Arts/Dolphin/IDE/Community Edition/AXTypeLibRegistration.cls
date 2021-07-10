@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #AXTypeLibRegistration
 	instanceVariableNames: 'description guidString versionString minor major'
@@ -86,17 +86,19 @@ versionString
 	"Answer the version string from the typelib's registration details."
 
 	^versionString! !
-!AXTypeLibRegistration categoriesFor: #<!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #<=!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #=!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #buildVersionNumbers!accessing!helpers!private! !
-!AXTypeLibRegistration categoriesFor: #description!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #description:guidString:versionString:!initializing!private! !
-!AXTypeLibRegistration categoriesFor: #hash!comparing!public! !
-!AXTypeLibRegistration categoriesFor: #libid!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #majorVersion!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #minorVersion!accessing!public! !
-!AXTypeLibRegistration categoriesFor: #versionString!accessing!public! !
+!AXTypeLibRegistration categoriesForMethods!
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+buildVersionNumbers!accessing!helpers!private! !
+description!accessing!public! !
+description:guidString:versionString:!initializing!private! !
+hash!comparing!public! !
+libid!accessing!public! !
+majorVersion!accessing!public! !
+minorVersion!accessing!public! !
+versionString!accessing!public! !
+!
 
 !AXTypeLibRegistration class methodsFor!
 
@@ -111,6 +113,8 @@ icon
 	"Answers an <Icon> that can be used to represent this class"
 
 	^AXTypeLibraryAnalyzer icon! !
-!AXTypeLibRegistration class categoriesFor: #description:guidString:versionString:!instance creation!public! !
-!AXTypeLibRegistration class categoriesFor: #icon!constants!public! !
+!AXTypeLibRegistration class categoriesForMethods!
+description:guidString:versionString:!instance creation!public! !
+icon!constants!public! !
+!
 

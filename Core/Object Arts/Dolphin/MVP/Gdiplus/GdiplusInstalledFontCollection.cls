@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusFontCollection subclass: #GdiplusInstalledFontCollection
 	instanceVariableNames: ''
@@ -35,6 +35,8 @@ exampleGdipIFCEnumerating
 
 new
 	^self fromInitializer: GdiplusInstalledFontCollectionInitializer default! !
-!GdiplusInstalledFontCollection class categoriesFor: #exampleGdipIFCEnumerating!examples!public!sunit! !
-!GdiplusInstalledFontCollection class categoriesFor: #new!instance creation!public! !
+!GdiplusInstalledFontCollection class categoriesForMethods!
+exampleGdipIFCEnumerating!examples!public!sunit! !
+new!instance creation!public! !
+!
 

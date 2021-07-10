@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StSemanticScope subclass: #StEvalScope
 	instanceVariableNames: 'pools'
@@ -23,12 +23,16 @@ lookupVariable: anStVariableNode
 
 setPools: anArray
 	pools := anArray! !
-!StEvalScope categoriesFor: #lookupVariable:!operations!public! !
-!StEvalScope categoriesFor: #setPools:!initializing!private! !
+!StEvalScope categoriesForMethods!
+lookupVariable:!operations!public! !
+setPools:!initializing!private! !
+!
 
 !StEvalScope class methodsFor!
 
 pools: pools
 	^self new setPools: pools! !
-!StEvalScope class categoriesFor: #pools:!instance creation!public! !
+!StEvalScope class categoriesForMethods!
+pools:!instance creation!public! !
+!
 

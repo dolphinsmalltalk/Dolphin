@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLiteralNode subclass: #StLiteralValueNode
 	instanceVariableNames: 'token'
@@ -38,15 +38,17 @@ value
 
 valueClass
 	^token value class! !
-!StLiteralValueNode categoriesFor: #=!comparing!public! !
-!StLiteralValueNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralValueNode categoriesFor: #formattedCode!accessing!public! !
-!StLiteralValueNode categoriesFor: #literalToken:!accessing!private! !
-!StLiteralValueNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StLiteralValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StLiteralValueNode categoriesFor: #token!accessing!public! !
-!StLiteralValueNode categoriesFor: #value!accessing!public! !
-!StLiteralValueNode categoriesFor: #valueClass!accessing!public! !
+!StLiteralValueNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+formattedCode!accessing!public! !
+literalToken:!accessing!private! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+token!accessing!public! !
+value!accessing!public! !
+valueClass!accessing!public! !
+!
 
 !StLiteralValueNode class methodsFor!
 
@@ -57,6 +59,8 @@ literalToken: aLiteralToken
 
 value: aValue 
 	^self literalToken: (StLiteralToken value: aValue)! !
-!StLiteralValueNode class categoriesFor: #literalToken:!instance creation!public! !
-!StLiteralValueNode class categoriesFor: #value:!instance creation!public! !
+!StLiteralValueNode class categoriesForMethods!
+literalToken:!instance creation!public! !
+value:!instance creation!public! !
+!
 

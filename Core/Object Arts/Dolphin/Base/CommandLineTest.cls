@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #CommandLineTest
 	instanceVariableNames: ''
@@ -489,43 +489,45 @@ testUnrecognizedOption
 			raise: CommandLineError;
 		yourself.
 ! !
-!CommandLineTest categoriesFor: #test_getOpt_01!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_02!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_03!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_04!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_05!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_06!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_07!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_08!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_09!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_10!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_11!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_12!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_13!getopt protocol!public! !
-!CommandLineTest categoriesFor: #test_getOpt_14!getopt protocol!public! !
-!CommandLineTest categoriesFor: #testAccessors!public! !
-!CommandLineTest categoriesFor: #testBlockNoArgument!block!public! !
-!CommandLineTest categoriesFor: #testBlockOptionalArgumentAbsent!block!public! !
-!CommandLineTest categoriesFor: #testBlockOptionalArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testBlockRequiredArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testLongAmbiguousOption!errors!public! !
-!CommandLineTest categoriesFor: #testLongEquals!long tests!public! !
-!CommandLineTest categoriesFor: #testLongMissingRequiredArgument!errors!public! !
-!CommandLineTest categoriesFor: #testLongNoArgument!long tests!public! !
-!CommandLineTest categoriesFor: #testLongOptionalArgumentAbsent!long tests!public! !
-!CommandLineTest categoriesFor: #testLongOptionalArgumentPresent!long tests!public! !
-!CommandLineTest categoriesFor: #testLongOptionEmptyArgument!errors!public! !
-!CommandLineTest categoriesFor: #testLongRequiredArgumentPresent!long tests!public! !
-!CommandLineTest categoriesFor: #testLongUnexpectedArgument!errors!public! !
-!CommandLineTest categoriesFor: #testLongUnexpectedOption!errors!public! !
-!CommandLineTest categoriesFor: #testMissingRequiredArgument!errors!public! !
-!CommandLineTest categoriesFor: #testPartialLong!long tests!public! !
-!CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentAbsent!block!public! !
-!CommandLineTest categoriesFor: #testRepeatBlockOptionalArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testRepeatShortBlockNoArgument!block!public! !
-!CommandLineTest categoriesFor: #testShortBlockNoArgument!block!public! !
-!CommandLineTest categoriesFor: #testShortBlockOptionalArgumentAbsent!block!public! !
-!CommandLineTest categoriesFor: #testShortBlockRequiredArgumentPresent!block!public! !
-!CommandLineTest categoriesFor: #testSlashPrefix!public! !
-!CommandLineTest categoriesFor: #testUnrecognizedOption!errors!public! !
+!CommandLineTest categoriesForMethods!
+test_getOpt_01!getopt protocol!public! !
+test_getOpt_02!getopt protocol!public! !
+test_getOpt_03!getopt protocol!public! !
+test_getOpt_04!getopt protocol!public! !
+test_getOpt_05!getopt protocol!public! !
+test_getOpt_06!getopt protocol!public! !
+test_getOpt_07!getopt protocol!public! !
+test_getOpt_08!getopt protocol!public! !
+test_getOpt_09!getopt protocol!public! !
+test_getOpt_10!getopt protocol!public! !
+test_getOpt_11!getopt protocol!public! !
+test_getOpt_12!getopt protocol!public! !
+test_getOpt_13!getopt protocol!public! !
+test_getOpt_14!getopt protocol!public! !
+testAccessors!public! !
+testBlockNoArgument!block!public! !
+testBlockOptionalArgumentAbsent!block!public! !
+testBlockOptionalArgumentPresent!block!public! !
+testBlockRequiredArgumentPresent!block!public! !
+testLongAmbiguousOption!errors!public! !
+testLongEquals!long tests!public! !
+testLongMissingRequiredArgument!errors!public! !
+testLongNoArgument!long tests!public! !
+testLongOptionalArgumentAbsent!long tests!public! !
+testLongOptionalArgumentPresent!long tests!public! !
+testLongOptionEmptyArgument!errors!public! !
+testLongRequiredArgumentPresent!long tests!public! !
+testLongUnexpectedArgument!errors!public! !
+testLongUnexpectedOption!errors!public! !
+testMissingRequiredArgument!errors!public! !
+testPartialLong!long tests!public! !
+testRepeatBlockOptionalArgumentAbsent!block!public! !
+testRepeatBlockOptionalArgumentPresent!block!public! !
+testRepeatShortBlockNoArgument!block!public! !
+testShortBlockNoArgument!block!public! !
+testShortBlockOptionalArgumentAbsent!block!public! !
+testShortBlockRequiredArgumentPresent!block!public! !
+testSlashPrefix!public! !
+testUnrecognizedOption!errors!public! !
+!
 

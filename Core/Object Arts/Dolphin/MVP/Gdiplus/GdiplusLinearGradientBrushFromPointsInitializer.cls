@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromPointsInitializer
 	instanceVariableNames: 'point1 point2 color1 color2'
@@ -42,6 +42,8 @@ point1: aPoint1 point2: aPoint2 color1: startColor color2: endColor
 	point2 := aPoint2.
 	color1 := startColor.
 	color2 := endColor! !
-!GdiplusLinearGradientBrushFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusLinearGradientBrushFromPointsInitializer categoriesFor: #point1:point2:color1:color2:!initializing!private! !
+!GdiplusLinearGradientBrushFromPointsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+point1:point2:color1:color2:!initializing!private! !
+!
 

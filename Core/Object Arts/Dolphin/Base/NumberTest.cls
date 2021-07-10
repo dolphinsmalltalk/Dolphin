@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #NumberTest
 	instanceVariableNames: ''
@@ -267,11 +267,13 @@ testRoundUpTo
 	self assert: (21.5 roundUpTo: 9) equals: 27.
 	self assert: (21.5 roundUpTo: 10) equals: 30.
 	self assert: (1.4 @ 2.6 roundUpTo: 1 @ 2) equals: 2 @ 4! !
-!NumberTest categoriesFor: #scan:value:class:!helpers!private! !
-!NumberTest categoriesFor: #scanNoSeparator:value:next:!private!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonFloats!public!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonFractions!public!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonIntegers!public!unit tests! !
-!NumberTest categoriesFor: #testClassReadFromColonScaledDecimals!public!unit tests! !
-!NumberTest categoriesFor: #testRoundUpTo!public!unit tests! !
+!NumberTest categoriesForMethods!
+scan:value:class:!helpers!private! !
+scanNoSeparator:value:next:!private!unit tests! !
+testClassReadFromColonFloats!public!unit tests! !
+testClassReadFromColonFractions!public!unit tests! !
+testClassReadFromColonIntegers!public!unit tests! !
+testClassReadFromColonScaledDecimals!public!unit tests! !
+testRoundUpTo!public!unit tests! !
+!
 

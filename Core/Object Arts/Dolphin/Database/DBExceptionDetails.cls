@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBExceptionDetails
 	instanceVariableNames: 'errors hEnv hDBC hStmt code'
@@ -142,19 +142,21 @@ retCodeError: anInteger
 					(ODBCRetCodes keyAtValue: code
 				                ifAbsent: ['Unknown']));
 			yourself)! !
-!DBExceptionDetails categoriesFor: #addErrorDetails:!operations!private! !
-!DBExceptionDetails categoriesFor: #buildErrorInfo!operations!private! !
-!DBExceptionDetails categoriesFor: #buildErrorInfoFrom:type:!operations!private! !
-!DBExceptionDetails categoriesFor: #code!accessing!public! !
-!DBExceptionDetails categoriesFor: #code:!accessing!private! !
-!DBExceptionDetails categoriesFor: #errors!accessing!public! !
-!DBExceptionDetails categoriesFor: #errors:!accessing!private! !
-!DBExceptionDetails categoriesFor: #hDBC!accessing!public! !
-!DBExceptionDetails categoriesFor: #hDBC:!accessing!private! !
-!DBExceptionDetails categoriesFor: #hEnv!accessing!public! !
-!DBExceptionDetails categoriesFor: #hEnv:!accessing!private! !
-!DBExceptionDetails categoriesFor: #hStmt!accessing!public! !
-!DBExceptionDetails categoriesFor: #hStmt:!accessing!private! !
-!DBExceptionDetails categoriesFor: #printOn:!printing!public! !
-!DBExceptionDetails categoriesFor: #retCodeError:!accessing!private! !
+!DBExceptionDetails categoriesForMethods!
+addErrorDetails:!operations!private! !
+buildErrorInfo!operations!private! !
+buildErrorInfoFrom:type:!operations!private! !
+code!accessing!public! !
+code:!accessing!private! !
+errors!accessing!public! !
+errors:!accessing!private! !
+hDBC!accessing!public! !
+hDBC:!accessing!private! !
+hEnv!accessing!public! !
+hEnv:!accessing!private! !
+hStmt!accessing!public! !
+hStmt:!accessing!private! !
+printOn:!printing!public! !
+retCodeError:!accessing!private! !
+!
 

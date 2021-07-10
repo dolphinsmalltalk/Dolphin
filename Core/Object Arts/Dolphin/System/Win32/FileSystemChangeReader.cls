@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #FileSystemChangeReader
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
@@ -338,53 +338,55 @@ watchSubDirs: aBoolean
 	"Set whether the receiver monitors sub-directories of the main watch directory for changes."
 
 	self changeWatchProperty: [watchSubDirs := aBoolean]! !
-!FileSystemChangeReader categoriesFor: #addFilter:!accessing!private! !
-!FileSystemChangeReader categoriesFor: #bufferSize!constants!private! !
-!FileSystemChangeReader categoriesFor: #changeWatchProperty:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #createCallback!helpers!private! !
-!FileSystemChangeReader categoriesFor: #defaultNotificationMask!constants!private! !
-!FileSystemChangeReader categoriesFor: #directory!accessing!public! !
-!FileSystemChangeReader categoriesFor: #directory:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filters!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filters:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filterString!accessing!public! !
-!FileSystemChangeReader categoriesFor: #filterString:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #free!public!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #freeDirectoryHandle:!helpers!private!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #getDirectoryHandle!helpers!private!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #handleError:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #handleNotifications:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #initialize!initializing!private! !
-!FileSystemChangeReader categoriesFor: #isMonitoring!public!testing! !
-!FileSystemChangeReader categoriesFor: #isMonitoring:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notificationMask!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notificationMask:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyAttributes!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyAttributes:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyCreationTime!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyCreationTime:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyDirectoryName!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyDirectoryName:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyFileName!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyFileName:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyLastAccess!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyLastAccess:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifyLastWrite!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifyLastWrite:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifySecurity!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifySecurity:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #notifySize!public!testing! !
-!FileSystemChangeReader categoriesFor: #notifySize:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #processError:!accessing!private! !
-!FileSystemChangeReader categoriesFor: #processNotifications!helpers!private! !
-!FileSystemChangeReader categoriesFor: #readDirectoryChanges!helpers!private! !
-!FileSystemChangeReader categoriesFor: #removeFilter:!accessing!public! !
-!FileSystemChangeReader categoriesFor: #shouldNotifyChange:!helpers!private! !
-!FileSystemChangeReader categoriesFor: #startMonitoring!operations!public! !
-!FileSystemChangeReader categoriesFor: #stopMonitoring!public!realizing/unrealizing! !
-!FileSystemChangeReader categoriesFor: #unpackNotifications!helpers!private! !
-!FileSystemChangeReader categoriesFor: #watchSubDirs!accessing!public! !
-!FileSystemChangeReader categoriesFor: #watchSubDirs:!accessing!public! !
+!FileSystemChangeReader categoriesForMethods!
+addFilter:!accessing!private! !
+bufferSize!constants!private! !
+changeWatchProperty:!helpers!private! !
+createCallback!helpers!private! !
+defaultNotificationMask!constants!private! !
+directory!accessing!public! !
+directory:!accessing!public! !
+filters!accessing!public! !
+filters:!accessing!public! !
+filterString!accessing!public! !
+filterString:!accessing!public! !
+free!public!realizing/unrealizing! !
+freeDirectoryHandle:!helpers!private!realizing/unrealizing! !
+getDirectoryHandle!helpers!private!realizing/unrealizing! !
+handleError:!helpers!private! !
+handleNotifications:!helpers!private! !
+initialize!initializing!private! !
+isMonitoring!public!testing! !
+isMonitoring:!accessing!public! !
+notificationMask!accessing!public! !
+notificationMask:!accessing!public! !
+notifyAttributes!public!testing! !
+notifyAttributes:!accessing!public! !
+notifyCreationTime!public!testing! !
+notifyCreationTime:!accessing!public! !
+notifyDirectoryName!public!testing! !
+notifyDirectoryName:!accessing!public! !
+notifyFileName!public!testing! !
+notifyFileName:!accessing!public! !
+notifyLastAccess!public!testing! !
+notifyLastAccess:!accessing!public! !
+notifyLastWrite!public!testing! !
+notifyLastWrite:!accessing!public! !
+notifySecurity!public!testing! !
+notifySecurity:!accessing!public! !
+notifySize!public!testing! !
+notifySize:!accessing!public! !
+processError:!accessing!private! !
+processNotifications!helpers!private! !
+readDirectoryChanges!helpers!private! !
+removeFilter:!accessing!public! !
+shouldNotifyChange:!helpers!private! !
+startMonitoring!operations!public! !
+stopMonitoring!public!realizing/unrealizing! !
+unpackNotifications!helpers!private! !
+watchSubDirs!accessing!public! !
+watchSubDirs:!accessing!public! !
+!
 
 !FileSystemChangeReader class methodsFor!
 
@@ -422,9 +424,11 @@ publishedEventsOfInstances
 		add: #fileModified:;
 		add: #fileRenamedFrom:to:;
 		yourself! !
-!FileSystemChangeReader class categoriesFor: #directory:!instance creation!public! !
-!FileSystemChangeReader class categoriesFor: #initialize!initializing!public! !
-!FileSystemChangeReader class categoriesFor: #monitorDirectory:!instance creation!public! !
-!FileSystemChangeReader class categoriesFor: #new!public! !
-!FileSystemChangeReader class categoriesFor: #publishedEventsOfInstances!events!public! !
+!FileSystemChangeReader class categoriesForMethods!
+directory:!instance creation!public! !
+initialize!initializing!public! !
+monitorDirectory:!instance creation!public! !
+new!public! !
+publishedEventsOfInstances!events!public! !
+!
 

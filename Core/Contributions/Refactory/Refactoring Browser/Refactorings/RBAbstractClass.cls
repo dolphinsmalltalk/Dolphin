@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RBAbstractClass
 	instanceVariableNames: 'name newMethods instanceVariableNames model superclass subclasses removedMethods realClass'
@@ -507,92 +507,94 @@ withAllSuperclasses
 	^(self allSuperclasses)
 		addFirst: self;
 		yourself! !
-!RBAbstractClass categoriesFor: #=!comparing!public! !
-!RBAbstractClass categoriesFor: #addInstanceVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #addMethod:!method accessing!public! !
-!RBAbstractClass categoriesFor: #addSubclass:!private! !
-!RBAbstractClass categoriesFor: #allClassVariableNames!accessing!public! !
-!RBAbstractClass categoriesFor: #allInstanceVariableNames!accessing!public! !
-!RBAbstractClass categoriesFor: #allPoolDictionaryNames!accessing!public! !
-!RBAbstractClass categoriesFor: #allSelectors!method accessing!public! !
-!RBAbstractClass categoriesFor: #allSubclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #allSuperclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #bindingFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #classBinding!accessing!public! !
-!RBAbstractClass categoriesFor: #classVarNames!public! !
-!RBAbstractClass categoriesFor: #compile:!method accessing!public! !
-!RBAbstractClass categoriesFor: #compile:classified:!method accessing!public! !
-!RBAbstractClass categoriesFor: #compileTree:!method accessing!public! !
-!RBAbstractClass categoriesFor: #compileTree:classified:!method accessing!public! !
-!RBAbstractClass categoriesFor: #definesClassVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #definesInstanceVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #definesMethod:!public!testing! !
-!RBAbstractClass categoriesFor: #definesPoolDictionary:!public!testing! !
-!RBAbstractClass categoriesFor: #definesVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesInstanceVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesMethod:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesPoolDictionary:!public!testing! !
-!RBAbstractClass categoriesFor: #directlyDefinesVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #existingMethodsThatReferTo:!method accessing!public! !
-!RBAbstractClass categoriesFor: #hash!comparing!public! !
-!RBAbstractClass categoriesFor: #hasRemoved:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesClassVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesInstanceVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesMethod:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesPoolDictionary:!public!testing! !
-!RBAbstractClass categoriesFor: #hierarchyDefinesVariable:!public!testing! !
-!RBAbstractClass categoriesFor: #includesClass:!public!testing! !
-!RBAbstractClass categoriesFor: #inheritsPoolDictionaries!public!testing! !
-!RBAbstractClass categoriesFor: #initialize!initialize/release!public! !
-!RBAbstractClass categoriesFor: #instanceClass!accessing!public! !
-!RBAbstractClass categoriesFor: #instanceVariableNames!accessing!public! !
-!RBAbstractClass categoriesFor: #instanceVariableNames:!accessing!public! !
-!RBAbstractClass categoriesFor: #isAbstract!public!testing! !
-!RBAbstractClass categoriesFor: #isBytes!instance specification-testing!public! !
-!RBAbstractClass categoriesFor: #isDefined!public!testing! !
-!RBAbstractClass categoriesFor: #isMeta!public!testing! !
-!RBAbstractClass categoriesFor: #isPointers!public!testing! !
-!RBAbstractClass categoriesFor: #isVariable!public!testing! !
-!RBAbstractClass categoriesFor: #metaclass!accessing!public! !
-!RBAbstractClass categoriesFor: #methodFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #model!accessing!public! !
-!RBAbstractClass categoriesFor: #model:!initialize/release!public! !
-!RBAbstractClass categoriesFor: #name!accessing!public! !
-!RBAbstractClass categoriesFor: #name:!accessing!public! !
-!RBAbstractClass categoriesFor: #nearestRealClass!accessing!private! !
-!RBAbstractClass categoriesFor: #newMethods!accessing!public! !
-!RBAbstractClass categoriesFor: #nonMetaclass!accessing!public! !
-!RBAbstractClass categoriesFor: #parseTreeFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #primaryInstance!accessing!public! !
-!RBAbstractClass categoriesFor: #printOn:!printing!public! !
-!RBAbstractClass categoriesFor: #privateInstanceVariableNames!accessing!private! !
-!RBAbstractClass categoriesFor: #protocolsFor:!accessing!public! !
-!RBAbstractClass categoriesFor: #realClass!accessing!public! !
-!RBAbstractClass categoriesFor: #realClass:!accessing!public! !
-!RBAbstractClass categoriesFor: #removedMethods!accessing!public! !
-!RBAbstractClass categoriesFor: #removeInstanceVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #removeMethod:!method accessing!public! !
-!RBAbstractClass categoriesFor: #removeSubclass:!accessing!public! !
-!RBAbstractClass categoriesFor: #renameInstanceVariable:to:around:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #selectors!method accessing!public! !
-!RBAbstractClass categoriesFor: #soleInstance!accessing!public! !
-!RBAbstractClass categoriesFor: #sourceCodeFor:!method accessing!public! !
-!RBAbstractClass categoriesFor: #storeOn:!printing!public! !
-!RBAbstractClass categoriesFor: #subclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #subclassRedefines:!public!testing! !
-!RBAbstractClass categoriesFor: #superclass!accessing!public! !
-!RBAbstractClass categoriesFor: #superclass:!accessing!private! !
-!RBAbstractClass categoriesFor: #typeOfClassVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #whichMethodsReferToSymbol:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whichSelectorsReferToClass:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whichSelectorsReferToClassVariable:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whichSelectorsReferToInstanceVariable:!method accessing!public! !
-!RBAbstractClass categoriesFor: #whoDefinesClassVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #whoDefinesInstanceVariable:!public!variable accessing! !
-!RBAbstractClass categoriesFor: #whoDefinesMethod:!method accessing!public! !
-!RBAbstractClass categoriesFor: #withAllSubclasses!accessing!public! !
-!RBAbstractClass categoriesFor: #withAllSuperclasses!accessing!public! !
+!RBAbstractClass categoriesForMethods!
+=!comparing!public! !
+addInstanceVariable:!public!variable accessing! !
+addMethod:!method accessing!public! !
+addSubclass:!private! !
+allClassVariableNames!accessing!public! !
+allInstanceVariableNames!accessing!public! !
+allPoolDictionaryNames!accessing!public! !
+allSelectors!method accessing!public! !
+allSubclasses!accessing!public! !
+allSuperclasses!accessing!public! !
+bindingFor:!method accessing!public! !
+classBinding!accessing!public! !
+classVarNames!public! !
+compile:!method accessing!public! !
+compile:classified:!method accessing!public! !
+compileTree:!method accessing!public! !
+compileTree:classified:!method accessing!public! !
+definesClassVariable:!public!testing! !
+definesInstanceVariable:!public!testing! !
+definesMethod:!public!testing! !
+definesPoolDictionary:!public!testing! !
+definesVariable:!public!testing! !
+directlyDefinesClassVariable:!public!testing! !
+directlyDefinesInstanceVariable:!public!testing! !
+directlyDefinesMethod:!public!testing! !
+directlyDefinesPoolDictionary:!public!testing! !
+directlyDefinesVariable:!public!testing! !
+existingMethodsThatReferTo:!method accessing!public! !
+hash!comparing!public! !
+hasRemoved:!public!testing! !
+hierarchyDefinesClassVariable:!public!testing! !
+hierarchyDefinesInstanceVariable:!public!testing! !
+hierarchyDefinesMethod:!public!testing! !
+hierarchyDefinesPoolDictionary:!public!testing! !
+hierarchyDefinesVariable:!public!testing! !
+includesClass:!public!testing! !
+inheritsPoolDictionaries!public!testing! !
+initialize!initialize/release!public! !
+instanceClass!accessing!public! !
+instanceVariableNames!accessing!public! !
+instanceVariableNames:!accessing!public! !
+isAbstract!public!testing! !
+isBytes!instance specification-testing!public! !
+isDefined!public!testing! !
+isMeta!public!testing! !
+isPointers!public!testing! !
+isVariable!public!testing! !
+metaclass!accessing!public! !
+methodFor:!method accessing!public! !
+model!accessing!public! !
+model:!initialize/release!public! !
+name!accessing!public! !
+name:!accessing!public! !
+nearestRealClass!accessing!private! !
+newMethods!accessing!public! !
+nonMetaclass!accessing!public! !
+parseTreeFor:!method accessing!public! !
+primaryInstance!accessing!public! !
+printOn:!printing!public! !
+privateInstanceVariableNames!accessing!private! !
+protocolsFor:!accessing!public! !
+realClass!accessing!public! !
+realClass:!accessing!public! !
+removedMethods!accessing!public! !
+removeInstanceVariable:!public!variable accessing! !
+removeMethod:!method accessing!public! !
+removeSubclass:!accessing!public! !
+renameInstanceVariable:to:around:!public!variable accessing! !
+selectors!method accessing!public! !
+soleInstance!accessing!public! !
+sourceCodeFor:!method accessing!public! !
+storeOn:!printing!public! !
+subclasses!accessing!public! !
+subclassRedefines:!public!testing! !
+superclass!accessing!public! !
+superclass:!accessing!private! !
+typeOfClassVariable:!public!variable accessing! !
+whichMethodsReferToSymbol:!method accessing!public! !
+whichSelectorsReferToClass:!method accessing!public! !
+whichSelectorsReferToClassVariable:!method accessing!public! !
+whichSelectorsReferToInstanceVariable:!method accessing!public! !
+whoDefinesClassVariable:!public!variable accessing! !
+whoDefinesInstanceVariable:!public!variable accessing! !
+whoDefinesMethod:!method accessing!public! !
+withAllSubclasses!accessing!public! !
+withAllSuperclasses!accessing!public! !
+!
 
 !RBAbstractClass class methodsFor!
 
@@ -603,6 +605,8 @@ new
 	^(super new)
 		initialize;
 		yourself! !
-!RBAbstractClass class categoriesFor: #initialize!class initialization!public! !
-!RBAbstractClass class categoriesFor: #new!instance creation!public! !
+!RBAbstractClass class categoriesForMethods!
+initialize!class initialization!public! !
+new!instance creation!public! !
+!
 

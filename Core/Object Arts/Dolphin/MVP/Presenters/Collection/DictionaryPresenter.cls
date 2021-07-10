@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HashedCollectionPresenter subclass: #DictionaryPresenter
 	instanceVariableNames: ''
@@ -50,9 +50,11 @@ removeElement: anAssociation
 	self value: ((self value)
 				removeKey: anAssociation key;
 				yourself)! !
-!DictionaryPresenter categoriesFor: #defaultAddItem!helpers!private! !
-!DictionaryPresenter categoriesFor: #elements!accessing!public! !
-!DictionaryPresenter categoriesFor: #removeElement:!private!removing! !
+!DictionaryPresenter categoriesForMethods!
+defaultAddItem!helpers!private! !
+elements!accessing!public! !
+removeElement:!private!removing! !
+!
 
 !DictionaryPresenter class methodsFor!
 
@@ -61,5 +63,7 @@ defaultModel
 	is initialized."
 
 	^Dictionary new asValue! !
-!DictionaryPresenter class categoriesFor: #defaultModel!models!public! !
+!DictionaryPresenter class categoriesForMethods!
+defaultModel!models!public! !
+!
 

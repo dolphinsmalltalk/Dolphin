@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LookupTable variableSubclass: #PluggableLookupTable
 	instanceVariableNames: 'searchPolicy'
@@ -80,16 +80,18 @@ species
 
 	^LookupTable
 ! !
-!PluggableLookupTable categoriesFor: #copyEmpty:!copying!private! !
-!PluggableLookupTable categoriesFor: #findKeyOrNil:!private!searching! !
-!PluggableLookupTable categoriesFor: #hash:max:!private!searching! !
-!PluggableLookupTable categoriesFor: #initialize!initializing!private! !
-!PluggableLookupTable categoriesFor: #newSelection!enumerating!private! !
-!PluggableLookupTable categoriesFor: #preResize:!adding!public! !
-!PluggableLookupTable categoriesFor: #searchPolicy!accessing!public! !
-!PluggableLookupTable categoriesFor: #searchPolicy:!accessing!public! !
-!PluggableLookupTable categoriesFor: #setSearchPolicy:!accessing!private! !
-!PluggableLookupTable categoriesFor: #species!constants!public! !
+!PluggableLookupTable categoriesForMethods!
+copyEmpty:!copying!private! !
+findKeyOrNil:!private!searching! !
+hash:max:!private!searching! !
+initialize!initializing!private! !
+newSelection!enumerating!private! !
+preResize:!adding!public! !
+searchPolicy!accessing!public! !
+searchPolicy:!accessing!public! !
+setSearchPolicy:!accessing!private! !
+species!constants!public! !
+!
 
 !PluggableLookupTable class methodsFor!
 
@@ -108,7 +110,9 @@ searchPolicy: policy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: policy! !
-!PluggableLookupTable class categoriesFor: #defaultSearchPolicy!constants!public! !
-!PluggableLookupTable class categoriesFor: #new:searchPolicy:!instance creation!public! !
-!PluggableLookupTable class categoriesFor: #searchPolicy:!instance creation!public! !
+!PluggableLookupTable class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+new:searchPolicy:!instance creation!public! !
+searchPolicy:!instance creation!public! !
+!
 

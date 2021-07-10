@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'
@@ -152,25 +152,27 @@ upToEnd
 	remainder := self contentsSpecies writeStream: 128.
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
-!SocketReadStream categoriesFor: #atEnd!public!testing! !
-!SocketReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!SocketReadStream categoriesFor: #contents!accessing!public! !
-!SocketReadStream categoriesFor: #hasInput!public!testing! !
-!SocketReadStream categoriesFor: #isBinary!public!testing! !
-!SocketReadStream categoriesFor: #isText!public!testing! !
-!SocketReadStream categoriesFor: #isText:!modes!public! !
-!SocketReadStream categoriesFor: #next!accessing!public! !
-!SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!SocketReadStream categoriesFor: #nextAvailable!public! !
-!SocketReadStream categoriesFor: #nextAvailable:!accessing!public! !
-!SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
-!SocketReadStream categoriesFor: #readPage!operations!private! !
-!SocketReadStream categoriesFor: #setToEnd!positioning!public! !
-!SocketReadStream categoriesFor: #size!accessing!public! !
-!SocketReadStream categoriesFor: #socket!accessing!private! !
-!SocketReadStream categoriesFor: #socket:!accessing!private! !
-!SocketReadStream categoriesFor: #upTo:!accessing!public! !
-!SocketReadStream categoriesFor: #upToEnd!accessing!public! !
+!SocketReadStream categoriesForMethods!
+atEnd!public!testing! !
+basicNext:into:startingAt:!accessing!public! !
+contents!accessing!public! !
+hasInput!public!testing! !
+isBinary!public!testing! !
+isText!public!testing! !
+isText:!modes!public! !
+next!accessing!public! !
+next:into:startingAt:!accessing!public! !
+nextAvailable!public! !
+nextAvailable:!accessing!public! !
+on:!accessing!initializing!private! !
+readPage!operations!private! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+socket!accessing!private! !
+socket:!accessing!private! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+!
 
 !SocketReadStream class methodsFor!
 
@@ -192,7 +194,9 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
-!SocketReadStream class categoriesFor: #bufferSize!constants!private! !
-!SocketReadStream class categoriesFor: #on:!instance creation!public! !
-!SocketReadStream class categoriesFor: #on:text:!instance creation!public! !
+!SocketReadStream class categoriesForMethods!
+bufferSize!constants!private! !
+on:!instance creation!public! !
+on:text:!instance creation!public! !
+!
 

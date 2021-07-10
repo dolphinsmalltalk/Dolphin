@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #BCryptConstants put: (PoolConstantsDictionary named: #BCryptConstants)!
 BCryptConstants at: 'BCRYPT_3DES_112_ALGORITHM' put: '3DES_112'!

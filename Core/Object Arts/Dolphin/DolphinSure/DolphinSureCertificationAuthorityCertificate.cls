@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureCertificate subclass: #DolphinSureCertificationAuthorityCertificate
 	instanceVariableNames: ''
@@ -29,6 +29,8 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate belongs to a DolphinSure certifying authority and guarantees that the owner has the right to issue certificates to DolphinSure publishers.'! !
-!DolphinSureCertificationAuthorityCertificate categoriesFor: #imageAttributes!accessing!private! !
-!DolphinSureCertificationAuthorityCertificate categoriesFor: #purpose!accessing!public! !
+!DolphinSureCertificationAuthorityCertificate categoriesForMethods!
+imageAttributes!accessing!private! !
+purpose!accessing!public! !
+!
 

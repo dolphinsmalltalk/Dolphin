@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ISubMatches
 	instanceVariableNames: ''
@@ -105,15 +105,17 @@ item: index
 	answer := variant value.
 	variant free.
 	^answer! !
-!ISubMatches categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!ISubMatches categoriesFor: #asArray!converting!public! !
-!ISubMatches categoriesFor: #count!**auto generated**!properties!public! !
-!ISubMatches categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!ISubMatches categoriesFor: #get_Count:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!ISubMatches categoriesFor: #get_Item:pSubMatch:!**auto generated**!COM Interfaces-ISubMatches!private! !
-!ISubMatches categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ISubMatches categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ISubMatches categoriesFor: #item:!properties!public! !
+!ISubMatches categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+asArray!converting!public! !
+count!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-ISubMatches!private! !
+get_Count:!**auto generated**!COM Interfaces-ISubMatches!private! !
+get_Item:pSubMatch:!**auto generated**!COM Interfaces-ISubMatches!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!properties!public! !
+!
 
 !ISubMatches class methodsFor!
 
@@ -135,6 +137,8 @@ defineFunctions
 		defineFunction: #get__NewEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!ISubMatches class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ISubMatches class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISubMatches class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+!
 

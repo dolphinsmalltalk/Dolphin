@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalMemory variableByteSubclass: #COMTaskMemory
 	instanceVariableNames: ''
@@ -24,6 +24,8 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
-!COMTaskMemory class categoriesFor: #allocator!accessing!private! !
-!COMTaskMemory class categoriesFor: #initialize!development!initializing!private! !
+!COMTaskMemory class categoriesForMethods!
+allocator!accessing!private! !
+initialize!development!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 	instanceVariableNames: ''
@@ -107,18 +107,20 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
-!EMRPOLYTEXTOUTA categoriesFor: #aemrtext!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #aemrtext:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #cStrings!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #cStrings:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #exScale!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #exScale:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #eyScale!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #eyScale:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYTEXTOUTA categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!EMRPOLYTEXTOUTA categoriesForMethods!
+aemrtext!**compiled accessors**!public! !
+aemrtext:!**compiled accessors**!public! !
+cStrings!**compiled accessors**!public! !
+cStrings:!**compiled accessors**!public! !
+exScale!**compiled accessors**!public! !
+exScale:!**compiled accessors**!public! !
+eyScale!**compiled accessors**!public! !
+eyScale:!**compiled accessors**!public! !
+iGraphicsMode!**compiled accessors**!public! !
+iGraphicsMode:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !EMRPOLYTEXTOUTA class methodsFor!
 
@@ -167,7 +169,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYTEXTOUTA with: EMR_POLYTEXTOUTW! !
-!EMRPOLYTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
-!EMRPOLYTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYTEXTOUTA class categoriesFor: #iTypes!constants!public! !
+!EMRPOLYTEXTOUTA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBRowBuffer subclass: #DBUnboundBuffer
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ getData: aDBStatement
 	"Private - Copy data from the result table into fields of the receiver."
 
 	self contents do: [:f | f getData: aDBStatement]! !
-!DBUnboundBuffer categoriesFor: #getData:!data retrieval!private! !
+!DBUnboundBuffer categoriesForMethods!
+getData:!data retrieval!private! !
+!
 

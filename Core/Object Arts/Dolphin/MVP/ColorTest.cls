@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ColorTest
 	instanceVariableNames: ''
@@ -525,45 +525,47 @@ testStlRoundTrip
 	self assert: rehydrated equals: subject.
 	self assert: rehydrated actualColor identicalTo: Color window
 ! !
-!ColorTest categoriesFor: #shouldRaiseNotARealColorError:!helpers!private! !
-!ColorTest categoriesFor: #testActualColor!public!unit tests! !
-!ColorTest categoriesFor: #testAlpha!public!unit tests! !
-!ColorTest categoriesFor: #testArgbCode!public!unit tests! !
-!ColorTest categoriesFor: #testAsColorRef!public!unit tests! !
-!ColorTest categoriesFor: #testAsCOLORREF!public!unit tests! !
-!ColorTest categoriesFor: #testAsRGB!public!unit tests! !
-!ColorTest categoriesFor: #testBlue!public!unit tests! !
-!ColorTest categoriesFor: #testBrightness!public!unit tests! !
-!ColorTest categoriesFor: #testBrush!public!unit tests! !
-!ColorTest categoriesFor: #testChroma!public!unit tests! !
-!ColorTest categoriesFor: #testClassBlack!public!unit tests! !
-!ColorTest categoriesFor: #testClassBrightness!public!unit tests! !
-!ColorTest categoriesFor: #testClassFromArray!public! !
-!ColorTest categoriesFor: #testClassFromHtmlSpec!public! !
-!ColorTest categoriesFor: #testClassWhite!public!unit tests! !
-!ColorTest categoriesFor: #testConversions!public!unit tests! !
-!ColorTest categoriesFor: #testEquals!public!unit tests! !
-!ColorTest categoriesFor: #testFaded!public!unit tests! !
-!ColorTest categoriesFor: #testGreen!public!unit tests! !
-!ColorTest categoriesFor: #testHash!public!unit tests! !
-!ColorTest categoriesFor: #testHls!public!unit tests! !
-!ColorTest categoriesFor: #testHsv!public!unit tests! !
-!ColorTest categoriesFor: #testHue!public!unit tests! !
-!ColorTest categoriesFor: #testIntensity!public!unit tests! !
-!ColorTest categoriesFor: #testIsDefault!public!unit tests! !
-!ColorTest categoriesFor: #testIsGrayscale!public!unit tests! !
-!ColorTest categoriesFor: #testIsNone!public!unit tests! !
-!ColorTest categoriesFor: #testIsTransparent!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedAlpha!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedBlue!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedGreen!public!unit tests! !
-!ColorTest categoriesFor: #testNormalizedRed!public!unit tests! !
-!ColorTest categoriesFor: #testPen!public!unit tests! !
-!ColorTest categoriesFor: #testPrintString!public!unit tests! !
-!ColorTest categoriesFor: #testRed!public!unit tests! !
-!ColorTest categoriesFor: #testRgb!public!unit tests! !
-!ColorTest categoriesFor: #testRgbCode!public!unit tests! !
-!ColorTest categoriesFor: #testRGBNamedColors!public!unit tests! !
-!ColorTest categoriesFor: #testSingletons!public!unit tests! !
-!ColorTest categoriesFor: #testStlRoundTrip!public! !
+!ColorTest categoriesForMethods!
+shouldRaiseNotARealColorError:!helpers!private! !
+testActualColor!public!unit tests! !
+testAlpha!public!unit tests! !
+testArgbCode!public!unit tests! !
+testAsColorRef!public!unit tests! !
+testAsCOLORREF!public!unit tests! !
+testAsRGB!public!unit tests! !
+testBlue!public!unit tests! !
+testBrightness!public!unit tests! !
+testBrush!public!unit tests! !
+testChroma!public!unit tests! !
+testClassBlack!public!unit tests! !
+testClassBrightness!public!unit tests! !
+testClassFromArray!public! !
+testClassFromHtmlSpec!public! !
+testClassWhite!public!unit tests! !
+testConversions!public!unit tests! !
+testEquals!public!unit tests! !
+testFaded!public!unit tests! !
+testGreen!public!unit tests! !
+testHash!public!unit tests! !
+testHls!public!unit tests! !
+testHsv!public!unit tests! !
+testHue!public!unit tests! !
+testIntensity!public!unit tests! !
+testIsDefault!public!unit tests! !
+testIsGrayscale!public!unit tests! !
+testIsNone!public!unit tests! !
+testIsTransparent!public!unit tests! !
+testNormalizedAlpha!public!unit tests! !
+testNormalizedBlue!public!unit tests! !
+testNormalizedGreen!public!unit tests! !
+testNormalizedRed!public!unit tests! !
+testPen!public!unit tests! !
+testPrintString!public!unit tests! !
+testRed!public!unit tests! !
+testRgb!public!unit tests! !
+testRgbCode!public!unit tests! !
+testRGBNamedColors!public!unit tests! !
+testSingletons!public!unit tests! !
+testStlRoundTrip!public! !
+!
 

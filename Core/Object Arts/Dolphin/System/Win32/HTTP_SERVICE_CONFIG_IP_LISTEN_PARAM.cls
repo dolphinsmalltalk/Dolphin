@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 	instanceVariableNames: 'address'
@@ -54,12 +54,14 @@ pAddress: aSOCKADDR
 	"Set the receiver's 'pAddress' field to the value of the argument, aSOCKADDR"
 
 	bytes uintPtrAtOffset: _OffsetOf_pAddress put: aSOCKADDR yourAddress! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address!accessing!public! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address:!accessing!public! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength!**compiled accessors**!private! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength:!**compiled accessors**!private! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #pAddress:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForMethods!
+address!accessing!public! !
+address:!accessing!public! !
+AddrLength!**compiled accessors**!private! !
+AddrLength:!**compiled accessors**!private! !
+pAddress!**compiled accessors**!public! !
+pAddress:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class methodsFor!
 
@@ -82,6 +84,8 @@ defineFields
 
 getFieldNames
 	^#(#AddrLength #pAddress)! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

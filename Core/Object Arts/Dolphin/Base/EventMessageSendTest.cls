@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #EventMessageSendTest
 	instanceVariableNames: ''
@@ -47,9 +47,11 @@ testTwoArguments
 				arguments: #(1 2).
 	MemoryManager current collectGarbage.
 	self should: [m value = #(1 2)]! !
-!EventMessageSendTest categoriesFor: #testNoArguments!public!testing! !
-!EventMessageSendTest categoriesFor: #testOneArgument!public!testing! !
-!EventMessageSendTest categoriesFor: #testOneArgumentWithGC!public!testing! !
-!EventMessageSendTest categoriesFor: #testReceiverWithGC!public!testing! !
-!EventMessageSendTest categoriesFor: #testTwoArguments!public!testing! !
+!EventMessageSendTest categoriesForMethods!
+testNoArguments!public!testing! !
+testOneArgument!public!testing! !
+testOneArgumentWithGC!public!testing! !
+testReceiverWithGC!public!testing! !
+testTwoArguments!public!testing! !
+!
 

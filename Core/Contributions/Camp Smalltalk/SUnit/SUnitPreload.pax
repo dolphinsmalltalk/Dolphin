@@ -60,7 +60,9 @@ SUnitDelay := Delay!
 
 sunitExitWith: aValue
 	self return: aValue! !
-!Exception categoriesFor: #sunitExitWith:!Camp Smalltalk!handler responses!public! !
+!Exception categoriesForMethods!
+sunitExitWith:!Camp Smalltalk!handler responses!public! !
+!
 
 "End of package definition"!
 

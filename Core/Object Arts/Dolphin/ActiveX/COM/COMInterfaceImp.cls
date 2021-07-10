@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #COMInterfaceImp
 	instanceVariableNames: ''
@@ -99,13 +99,15 @@ supportedInterfaces
 	as necessary."
 
 	^self subclassResponsibility! !
-!COMInterfaceImp categoriesFor: #aggregatee!accessing!public! !
-!COMInterfaceImp categoriesFor: #clsid!accessing!public! !
-!COMInterfaceImp categoriesFor: #finalRelease!public!realizing/unrealizing! !
-!COMInterfaceImp categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!COMInterfaceImp categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-!COMInterfaceImp categoriesFor: #server!accessing!public! !
-!COMInterfaceImp categoriesFor: #supportedInterfaces!constants!public! !
+!COMInterfaceImp categoriesForMethods!
+aggregatee!accessing!public! !
+clsid!accessing!public! !
+finalRelease!public!realizing/unrealizing! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+server!accessing!public! !
+supportedInterfaces!constants!public! !
+!
 
 COMInterfaceImp methodProtocol: #COMObject attributes: #(#readOnly) selectors: #(#clsid #finalRelease #queryInterface: #queryInterface:ifNone:)!
 
@@ -282,20 +284,22 @@ versionIndependentProgID
 	| pid |
 	pid := self progID.
 	^pid copyFrom: 1 to: (pid lastIndexOf: $.)-1! !
-!COMInterfaceImp class categoriesFor: #clsid!constants!public! !
-!COMInterfaceImp class categoriesFor: #inprocSurrogate:!constants!public! !
-!COMInterfaceImp class categoriesFor: #new!instance creation!public! !
-!COMInterfaceImp class categoriesFor: #progDescription!accessing!public! !
-!COMInterfaceImp class categoriesFor: #progID!constants!public! !
-!COMInterfaceImp class categoriesFor: #register!operations!public! !
-!COMInterfaceImp class categoriesFor: #register:!operations!public! !
-!COMInterfaceImp class categoriesFor: #registerAsInProcServer:!helpers!private! !
-!COMInterfaceImp class categoriesFor: #registerAsLocalServer:!helpers!private! !
-!COMInterfaceImp class categoriesFor: #registerClassFactory!operations!public! !
-!COMInterfaceImp class categoriesFor: #revokeClassFactories!operations!public! !
-!COMInterfaceImp class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!COMInterfaceImp class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!COMInterfaceImp class categoriesFor: #unregister!operations!public! !
-!COMInterfaceImp class categoriesFor: #unregisterClassFactory!operations!public! !
-!COMInterfaceImp class categoriesFor: #versionIndependentProgID!constants!public! !
+!COMInterfaceImp class categoriesForMethods!
+clsid!constants!public! !
+inprocSurrogate:!constants!public! !
+new!instance creation!public! !
+progDescription!accessing!public! !
+progID!constants!public! !
+register!operations!public! !
+register:!operations!public! !
+registerAsInProcServer:!helpers!private! !
+registerAsLocalServer:!helpers!private! !
+registerClassFactory!operations!public! !
+revokeClassFactories!operations!public! !
+uninitialize!class hierarchy-removing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+unregister!operations!public! !
+unregisterClassFactory!operations!public! !
+versionIndependentProgID!constants!public! !
+!
 

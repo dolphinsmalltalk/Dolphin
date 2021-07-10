@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMNode subclass: #IXMLDOMEntity
 	instanceVariableNames: ''
@@ -107,16 +107,18 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
-!IXMLDOMEntity categoriesFor: #get_notationName:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
-!IXMLDOMEntity categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
-!IXMLDOMEntity categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
-!IXMLDOMEntity categoriesFor: #key!accessing!public! !
-!IXMLDOMEntity categoriesFor: #key:!accessing!public! !
-!IXMLDOMEntity categoriesFor: #notationName!**auto generated**!properties!public! !
-!IXMLDOMEntity categoriesFor: #publicId!**auto generated**!properties!public! !
-!IXMLDOMEntity categoriesFor: #systemId!**auto generated**!properties!public! !
-!IXMLDOMEntity categoriesFor: #value!accessing!public! !
-!IXMLDOMEntity categoriesFor: #value:!accessing!public! !
+!IXMLDOMEntity categoriesForMethods!
+get_notationName:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
+get_publicId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
+get_systemId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
+key!accessing!public! !
+key:!accessing!public! !
+notationName!**auto generated**!properties!public! !
+publicId!**auto generated**!properties!public! !
+systemId!**auto generated**!properties!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 IXMLDOMEntity methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -134,5 +136,7 @@ defineFunctions
 		defineFunction: #get_notationName:
 			argumentTypes: 'bstr*'
 ! !
-!IXMLDOMEntity class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMEntity class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

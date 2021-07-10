@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TextDocument subclass: #Notepad
 	instanceVariableNames: ''
@@ -74,13 +74,15 @@ saveChangesPrompt
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['Untitled'].
 	^'The text in the <1s> file has changed.<n><n>Do you want to save the changes?' 
 		expandMacrosWith: docName! !
-!Notepad categoriesFor: #aboutNotepad!commands!public! !
-!Notepad categoriesFor: #chooseFont!commands!public! !
-!Notepad categoriesFor: #editGoto!public! !
-!Notepad categoriesFor: #editTimeStamp!commands!public! !
-!Notepad categoriesFor: #hasWordWrap!public!testing! !
-!Notepad categoriesFor: #queryCommand:!commands!private! !
-!Notepad categoriesFor: #saveChangesPrompt!private! !
+!Notepad categoriesForMethods!
+aboutNotepad!commands!public! !
+chooseFont!commands!public! !
+editGoto!public! !
+editTimeStamp!commands!public! !
+hasWordWrap!public!testing! !
+queryCommand:!commands!private! !
+saveChangesPrompt!private! !
+!
 
 !Notepad class methodsFor!
 
@@ -141,12 +143,14 @@ uninitialize
 	"
 
 	self closeResourceLib! !
-!Notepad class categoriesFor: #about!enquiries!private! !
-!Notepad class categoriesFor: #aboutTemplate!enquiries!private! !
-!Notepad class categoriesFor: #closeResourceLib!helpers!private! !
-!Notepad class categoriesFor: #icon!constants!public! !
-!Notepad class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Notepad class categoriesFor: #resource_Default_view!public!resources-views! !
-!Notepad class categoriesFor: #resourceLib!constants!public! !
-!Notepad class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Notepad class categoriesForMethods!
+about!enquiries!private! !
+aboutTemplate!enquiries!private! !
+closeResourceLib!helpers!private! !
+icon!constants!public! !
+onPreStripImage!class hierarchy-removing!private! !
+resource_Default_view!public!resources-views! !
+resourceLib!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

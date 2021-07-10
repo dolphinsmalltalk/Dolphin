@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #RemoveMethodRefactoring
 	instanceVariableNames: 'selectors'
@@ -99,15 +99,17 @@ superclassEquivalentlyDefines: aSelector
 
 transform
 	selectors do: [:each | class removeMethod: each]! !
-!RemoveMethodRefactoring categoriesFor: #checkReferencesToAnyOf:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #checkSuperMethods!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #justSendsSuper:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #removeMethods:from:!initialize/release!public! !
-!RemoveMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!RemoveMethodRefactoring categoriesFor: #superclassEquivalentlyDefines:!preconditions!public! !
-!RemoveMethodRefactoring categoriesFor: #transform!public!transforming! !
+!RemoveMethodRefactoring categoriesForMethods!
+checkReferencesToAnyOf:!preconditions!public! !
+checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
+checkSuperMethods!preconditions!public! !
+justSendsSuper:!preconditions!public! !
+preconditions!preconditions!public! !
+removeMethods:from:!initialize/release!public! !
+storeOn:!printing!public! !
+superclassEquivalentlyDefines:!preconditions!public! !
+transform!public!transforming! !
+!
 
 !RemoveMethodRefactoring class methodsFor!
 
@@ -119,6 +121,8 @@ model: aRBNamespace removeMethods: selectorCollection from: aClass
 
 removeMethods: selectorCollection from: aClass
 	^self new removeMethods: selectorCollection from: aClass! !
-!RemoveMethodRefactoring class categoriesFor: #model:removeMethods:from:!instance creation!public! !
-!RemoveMethodRefactoring class categoriesFor: #removeMethods:from:!instance creation!public! !
+!RemoveMethodRefactoring class categoriesForMethods!
+model:removeMethods:from:!instance creation!public! !
+removeMethods:from:!instance creation!public! !
+!
 

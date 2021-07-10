@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #InvalidArgumentError
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ _descriptionFormat
 	"Answer the description format string for the receiver."
 
 	^'Invalid argument ''%2'': %1'! !
-!InvalidArgumentError categoriesFor: #_descriptionFormat!displaying!public! !
+!InvalidArgumentError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

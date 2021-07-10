@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #StructurePointer
 	instanceVariableNames: 'elementClass'
@@ -24,9 +24,11 @@ value
 	"Answer the receiver's value field as a Smalltalk object."
 
 	^self elementClass fromAddress: bytes! !
-!StructurePointer categoriesFor: #elementClass!accessing!private! !
-!StructurePointer categoriesFor: #elementClass:!accessing!private! !
-!StructurePointer categoriesFor: #value!accessing!public! !
+!StructurePointer categoriesForMethods!
+elementClass!accessing!private! !
+elementClass:!accessing!private! !
+value!accessing!public! !
+!
 
 !StructurePointer class methodsFor!
 
@@ -63,9 +65,11 @@ newNull: pointerClass elementClass: elementClass
 		initializeAtAddress: pointerClass new;
 		elementClass: elementClass;
 		yourself! !
-!StructurePointer class categoriesFor: #byteSize!accessing!public! !
-!StructurePointer class categoriesFor: #elementClass:!instance creation!public! !
-!StructurePointer class categoriesFor: #fromAddress:elementClass:!instance creation!public! !
-!StructurePointer class categoriesFor: #getFieldNames!constants!private! !
-!StructurePointer class categoriesFor: #newNull:elementClass:!instance creation!public! !
+!StructurePointer class categoriesForMethods!
+byteSize!accessing!public! !
+elementClass:!instance creation!public! !
+fromAddress:elementClass:!instance creation!public! !
+getFieldNames!constants!private! !
+newNull:elementClass:!instance creation!public! !
+!
 

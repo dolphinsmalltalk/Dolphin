@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
@@ -1119,146 +1119,148 @@ willAutoCommit: aBoolean
 		setAttribute: SQL_ATTR_AUTOCOMMIT
 		value: (aBoolean ifTrue: [SQL_AUTOCOMMIT_ON] ifFalse: [SQL_AUTOCOMMIT_OFF])
 		size: SQL_IS_UINTEGER! !
-!DBConnection categoriesFor: #allocStmtHandle:!helpers!private! !
-!DBConnection categoriesFor: #asParameter!converting!public! !
-!DBConnection categoriesFor: #basicConnect!operations!private! !
-!DBConnection categoriesFor: #beginRWTxn!public!transactions! !
-!DBConnection categoriesFor: #beginTxn!public!transactions! !
-!DBConnection categoriesFor: #buildConnectString!helpers!private! !
-!DBConnection categoriesFor: #catalogNameSeparator!enquiries!public! !
-!DBConnection categoriesFor: #catalogTerm!enquiries!public! !
-!DBConnection categoriesFor: #checkEmptyEnvironment!helpers!private! !
-!DBConnection categoriesFor: #close!operations!public! !
-!DBConnection categoriesFor: #closeNoFail!operations!public! !
-!DBConnection categoriesFor: #columns:!enquiries!public! !
-!DBConnection categoriesFor: #columns:qualifier:owner:table:!enquiries!public! !
-!DBConnection categoriesFor: #commitTxn!public!transactions! !
-!DBConnection categoriesFor: #connect!operations!public! !
-!DBConnection categoriesFor: #connectString!accessing!public! !
-!DBConnection categoriesFor: #connectString:!accessing!public! !
-!DBConnection categoriesFor: #convertFunctions!enquiries!public! !
-!DBConnection categoriesFor: #cursorCommitBehaviour!enquiries!public! !
-!DBConnection categoriesFor: #cursorRollbackBehaviour!enquiries!public! !
-!DBConnection categoriesFor: #databaseName!enquiries!public! !
-!DBConnection categoriesFor: #dataSourceName!enquiries!public! !
-!DBConnection categoriesFor: #dbCheckException:!exceptions!private! !
-!DBConnection categoriesFor: #dbmsName!enquiries!public! !
-!DBConnection categoriesFor: #dbmsVersion!enquiries!public! !
-!DBConnection categoriesFor: #decodeBitMask:map:!helpers!private! !
-!DBConnection categoriesFor: #defaultCursorType!constants!public! !
-!DBConnection categoriesFor: #defaultFlags!constants!private! !
-!DBConnection categoriesFor: #defaultTransactionIsolation!enquiries!public! !
-!DBConnection categoriesFor: #disconnect!operations!private! !
-!DBConnection categoriesFor: #driverHDBC!accessing!private! !
-!DBConnection categoriesFor: #driverHEnv!accessing!private! !
-!DBConnection categoriesFor: #driverName!enquiries!public! !
-!DBConnection categoriesFor: #driverVersion!enquiries!public! !
-!DBConnection categoriesFor: #dsn!accessing!public! !
-!DBConnection categoriesFor: #dsn:!accessing!public! !
-!DBConnection categoriesFor: #exceptionDetails:!exceptions!private! !
-!DBConnection categoriesFor: #exec:!executing!public! !
-!DBConnection categoriesFor: #exec:cursorType:!executing!public! !
-!DBConnection categoriesFor: #finalize!finalizing!private! !
-!DBConnection categoriesFor: #free!private!realizing/unrealizing! !
-!DBConnection categoriesFor: #freeNoFail!private!realizing/unrealizing! !
-!DBConnection categoriesFor: #freeStmtHandle:!helpers!private! !
-!DBConnection categoriesFor: #getBoolInfo:!enquiries!private! !
-!DBConnection categoriesFor: #getDWordAttribute:!accessing!private! !
-!DBConnection categoriesFor: #getDWordInfo:!enquiries!private! !
-!DBConnection categoriesFor: #getHandle!accessing!private! !
-!DBConnection categoriesFor: #getHandle:!helpers!private! !
-!DBConnection categoriesFor: #getStringAttribute:!accessing!private! !
-!DBConnection categoriesFor: #getStringInfo:!enquiries!private! !
-!DBConnection categoriesFor: #getWordInfo:!enquiries!private! !
-!DBConnection categoriesFor: #hasAccessibleTables!enquiries!public!testing! !
-!DBConnection categoriesFor: #hasIntegrityEnhancementFacility!enquiries!public!testing! !
-!DBConnection categoriesFor: #identifierCase!enquiries!public! !
-!DBConnection categoriesFor: #identifierQuoteCharacter!enquiries!public! !
-!DBConnection categoriesFor: #indicesOf:!enquiries!public! !
-!DBConnection categoriesFor: #initialize!initializing!private! !
-!DBConnection categoriesFor: #initializeStatements!initializing!private! !
-!DBConnection categoriesFor: #invalidateAllStmts!private!realizing/unrealizing! !
-!DBConnection categoriesFor: #isReadOnly!accessing!public! !
-!DBConnection categoriesFor: #isReadOnly:!accessing!public! !
-!DBConnection categoriesFor: #isSAGCompliant!enquiries!public!testing! !
-!DBConnection categoriesFor: #isSourceReadOnly!enquiries!public!testing! !
-!DBConnection categoriesFor: #isTracing!public!testing! !
-!DBConnection categoriesFor: #isTracing:!accessing!public! !
-!DBConnection categoriesFor: #isTransactionCapable!enquiries!public!testing! !
-!DBConnection categoriesFor: #loginTimeout!accessing!public! !
-!DBConnection categoriesFor: #loginTimeout:!accessing!public! !
-!DBConnection categoriesFor: #maxCatalogNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxColumnNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxConnections!enquiries!public! !
-!DBConnection categoriesFor: #maxCursorNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxProcedureNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxSchemaNameLength!enquiries!public! !
-!DBConnection categoriesFor: #maxStatements!enquiries!public! !
-!DBConnection categoriesFor: #maxTableNameLength!enquiries!public! !
-!DBConnection categoriesFor: #newParameterizedStatement:!operations!private! !
-!DBConnection categoriesFor: #newStatement:!operations!private! !
-!DBConnection categoriesFor: #numericFunctions!enquiries!public! !
-!DBConnection categoriesFor: #odbcConformance!enquiries!public! !
-!DBConnection categoriesFor: #odbcSQLConformance!enquiries!public! !
-!DBConnection categoriesFor: #odbcVersion!enquiries!public! !
-!DBConnection categoriesFor: #open!operations!public! !
-!DBConnection categoriesFor: #postCopy!copying!public! !
-!DBConnection categoriesFor: #prepare:!executing!public! !
-!DBConnection categoriesFor: #prepare:cursorType:!executing!public! !
-!DBConnection categoriesFor: #primaryKeysOf:!enquiries!public! !
-!DBConnection categoriesFor: #printOn:!printing!public! !
-!DBConnection categoriesFor: #procedure:owner:name:!enquiries!public! !
-!DBConnection categoriesFor: #procedures!enquiries!public! !
-!DBConnection categoriesFor: #procedureTerm!enquiries!public! !
-!DBConnection categoriesFor: #pwd!accessing!public! !
-!DBConnection categoriesFor: #pwd:!accessing!public! !
-!DBConnection categoriesFor: #query:!executing!public! !
-!DBConnection categoriesFor: #query:cursorType:!executing!public! !
-!DBConnection categoriesFor: #query:forwardOnly:!executing!public! !
-!DBConnection categoriesFor: #queryForeignKeysOf:!enquiries!private! !
-!DBConnection categoriesFor: #rollbackTxn!public!transactions! !
-!DBConnection categoriesFor: #rowIdColumns:!enquiries!public! !
-!DBConnection categoriesFor: #rowVersionColumns:!enquiries!public! !
-!DBConnection categoriesFor: #schemaTerm!enquiries!public! !
-!DBConnection categoriesFor: #searchPatternEscape!enquiries!public! !
-!DBConnection categoriesFor: #serverName!enquiries!public! !
-!DBConnection categoriesFor: #setAttribute:value:size:!accessing!private! !
-!DBConnection categoriesFor: #setDefaultAttributes!helpers!private! !
-!DBConnection categoriesFor: #specialColumns:qualifier:owner:name:scope:nullable:!enquiries!public! !
-!DBConnection categoriesFor: #statements!accessing!public! !
-!DBConnection categoriesFor: #statisticsFor:type:accurate:!enquiries!public! !
-!DBConnection categoriesFor: #stringFunctions!enquiries!public! !
-!DBConnection categoriesFor: #supportedCursorTypes!enquiries!public! !
-!DBConnection categoriesFor: #supportedTransactionIsolationLevels!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsExpressionsInOrderBy!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsMultipleActiveTransactions!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsMultipleResultSets!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsOuterJoins!enquiries!public!testing! !
-!DBConnection categoriesFor: #supportsRowUpdates!enquiries!public!testing! !
-!DBConnection categoriesFor: #systemFunctions!enquiries!public! !
-!DBConnection categoriesFor: #tables!enquiries!public! !
-!DBConnection categoriesFor: #tables:owners:tables:types:!enquiries!public! !
-!DBConnection categoriesFor: #tableTerm!enquiries!public! !
-!DBConnection categoriesFor: #timeDateFunctions!enquiries!public! !
-!DBConnection categoriesFor: #traceFile!accessing!public! !
-!DBConnection categoriesFor: #traceFile:!accessing!public! !
-!DBConnection categoriesFor: #transaction!public!transactions! !
-!DBConnection categoriesFor: #transaction:!private!transactions! !
-!DBConnection categoriesFor: #transactionIsolation!accessing!public! !
-!DBConnection categoriesFor: #transactionIsolation:!accessing!public! !
-!DBConnection categoriesFor: #translate!accessing!public! !
-!DBConnection categoriesFor: #translate:!accessing!public! !
-!DBConnection categoriesFor: #translationDLL!accessing!public! !
-!DBConnection categoriesFor: #translationDLL:!accessing!public! !
-!DBConnection categoriesFor: #uid!accessing!public! !
-!DBConnection categoriesFor: #uid:!accessing!public! !
-!DBConnection categoriesFor: #uniqueIndicesOf:!enquiries!public! !
-!DBConnection categoriesFor: #useDriverCompletion!accessing!public! !
-!DBConnection categoriesFor: #useDriverCompletion:!accessing!public! !
-!DBConnection categoriesFor: #userName!enquiries!public! !
-!DBConnection categoriesFor: #views!enquiries!public! !
-!DBConnection categoriesFor: #willAutoCommit!public!testing! !
-!DBConnection categoriesFor: #willAutoCommit:!accessing!public! !
+!DBConnection categoriesForMethods!
+allocStmtHandle:!helpers!private! !
+asParameter!converting!public! !
+basicConnect!operations!private! !
+beginRWTxn!public!transactions! !
+beginTxn!public!transactions! !
+buildConnectString!helpers!private! !
+catalogNameSeparator!enquiries!public! !
+catalogTerm!enquiries!public! !
+checkEmptyEnvironment!helpers!private! !
+close!operations!public! !
+closeNoFail!operations!public! !
+columns:!enquiries!public! !
+columns:qualifier:owner:table:!enquiries!public! !
+commitTxn!public!transactions! !
+connect!operations!public! !
+connectString!accessing!public! !
+connectString:!accessing!public! !
+convertFunctions!enquiries!public! !
+cursorCommitBehaviour!enquiries!public! !
+cursorRollbackBehaviour!enquiries!public! !
+databaseName!enquiries!public! !
+dataSourceName!enquiries!public! !
+dbCheckException:!exceptions!private! !
+dbmsName!enquiries!public! !
+dbmsVersion!enquiries!public! !
+decodeBitMask:map:!helpers!private! !
+defaultCursorType!constants!public! !
+defaultFlags!constants!private! !
+defaultTransactionIsolation!enquiries!public! !
+disconnect!operations!private! !
+driverHDBC!accessing!private! !
+driverHEnv!accessing!private! !
+driverName!enquiries!public! !
+driverVersion!enquiries!public! !
+dsn!accessing!public! !
+dsn:!accessing!public! !
+exceptionDetails:!exceptions!private! !
+exec:!executing!public! !
+exec:cursorType:!executing!public! !
+finalize!finalizing!private! !
+free!private!realizing/unrealizing! !
+freeNoFail!private!realizing/unrealizing! !
+freeStmtHandle:!helpers!private! !
+getBoolInfo:!enquiries!private! !
+getDWordAttribute:!accessing!private! !
+getDWordInfo:!enquiries!private! !
+getHandle!accessing!private! !
+getHandle:!helpers!private! !
+getStringAttribute:!accessing!private! !
+getStringInfo:!enquiries!private! !
+getWordInfo:!enquiries!private! !
+hasAccessibleTables!enquiries!public!testing! !
+hasIntegrityEnhancementFacility!enquiries!public!testing! !
+identifierCase!enquiries!public! !
+identifierQuoteCharacter!enquiries!public! !
+indicesOf:!enquiries!public! !
+initialize!initializing!private! !
+initializeStatements!initializing!private! !
+invalidateAllStmts!private!realizing/unrealizing! !
+isReadOnly!accessing!public! !
+isReadOnly:!accessing!public! !
+isSAGCompliant!enquiries!public!testing! !
+isSourceReadOnly!enquiries!public!testing! !
+isTracing!public!testing! !
+isTracing:!accessing!public! !
+isTransactionCapable!enquiries!public!testing! !
+loginTimeout!accessing!public! !
+loginTimeout:!accessing!public! !
+maxCatalogNameLength!enquiries!public! !
+maxColumnNameLength!enquiries!public! !
+maxConnections!enquiries!public! !
+maxCursorNameLength!enquiries!public! !
+maxProcedureNameLength!enquiries!public! !
+maxSchemaNameLength!enquiries!public! !
+maxStatements!enquiries!public! !
+maxTableNameLength!enquiries!public! !
+newParameterizedStatement:!operations!private! !
+newStatement:!operations!private! !
+numericFunctions!enquiries!public! !
+odbcConformance!enquiries!public! !
+odbcSQLConformance!enquiries!public! !
+odbcVersion!enquiries!public! !
+open!operations!public! !
+postCopy!copying!public! !
+prepare:!executing!public! !
+prepare:cursorType:!executing!public! !
+primaryKeysOf:!enquiries!public! !
+printOn:!printing!public! !
+procedure:owner:name:!enquiries!public! !
+procedures!enquiries!public! !
+procedureTerm!enquiries!public! !
+pwd!accessing!public! !
+pwd:!accessing!public! !
+query:!executing!public! !
+query:cursorType:!executing!public! !
+query:forwardOnly:!executing!public! !
+queryForeignKeysOf:!enquiries!private! !
+rollbackTxn!public!transactions! !
+rowIdColumns:!enquiries!public! !
+rowVersionColumns:!enquiries!public! !
+schemaTerm!enquiries!public! !
+searchPatternEscape!enquiries!public! !
+serverName!enquiries!public! !
+setAttribute:value:size:!accessing!private! !
+setDefaultAttributes!helpers!private! !
+specialColumns:qualifier:owner:name:scope:nullable:!enquiries!public! !
+statements!accessing!public! !
+statisticsFor:type:accurate:!enquiries!public! !
+stringFunctions!enquiries!public! !
+supportedCursorTypes!enquiries!public! !
+supportedTransactionIsolationLevels!enquiries!public!testing! !
+supportsExpressionsInOrderBy!enquiries!public!testing! !
+supportsMultipleActiveTransactions!enquiries!public!testing! !
+supportsMultipleResultSets!enquiries!public!testing! !
+supportsOuterJoins!enquiries!public!testing! !
+supportsRowUpdates!enquiries!public!testing! !
+systemFunctions!enquiries!public! !
+tables!enquiries!public! !
+tables:owners:tables:types:!enquiries!public! !
+tableTerm!enquiries!public! !
+timeDateFunctions!enquiries!public! !
+traceFile!accessing!public! !
+traceFile:!accessing!public! !
+transaction!public!transactions! !
+transaction:!private!transactions! !
+transactionIsolation!accessing!public! !
+transactionIsolation:!accessing!public! !
+translate!accessing!public! !
+translate:!accessing!public! !
+translationDLL!accessing!public! !
+translationDLL:!accessing!public! !
+uid!accessing!public! !
+uid:!accessing!public! !
+uniqueIndicesOf:!enquiries!public! !
+useDriverCompletion!accessing!public! !
+useDriverCompletion:!accessing!public! !
+userName!enquiries!public! !
+views!enquiries!public! !
+willAutoCommit!public!testing! !
+willAutoCommit:!accessing!public! !
+!
 
 !DBConnection class methodsFor!
 
@@ -1485,20 +1487,22 @@ transact: aDBConnection action: anInteger
 				handle: aDBConnection asParameter
 				completionType: anInteger.
 	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (aDBConnection exceptionDetails: ret)].! !
-!DBConnection class categoriesFor: #allocHandle!helpers!private! !
-!DBConnection class categoriesFor: #connections!accessing!public! !
-!DBConnection class categoriesFor: #connectString:do:!operations!private! !
-!DBConnection class categoriesFor: #dbCheckException:!exceptions!private! !
-!DBConnection class categoriesFor: #enumerateDataSources!accessing!public! !
-!DBConnection class categoriesFor: #environmentHandle!accessing!private! !
-!DBConnection class categoriesFor: #exceptionDetails:!exceptions!private! !
-!DBConnection class categoriesFor: #freeAll!private!realizing/unrealizing! !
-!DBConnection class categoriesFor: #freeEnvironment!private!realizing/unrealizing! !
-!DBConnection class categoriesFor: #initialize!initializing!private! !
-!DBConnection class categoriesFor: #invalidateHandle:!private!realizing/unrealizing! !
-!DBConnection class categoriesFor: #new!instance creation!public! !
-!DBConnection class categoriesFor: #newConnections!accessing!private! !
-!DBConnection class categoriesFor: #odbcVersion!accessing!public! !
-!DBConnection class categoriesFor: #setDefaultEnvAttrs!accessing!private! !
-!DBConnection class categoriesFor: #transact:action:!operations!private! !
+!DBConnection class categoriesForMethods!
+allocHandle!helpers!private! !
+connections!accessing!public! !
+connectString:do:!operations!private! !
+dbCheckException:!exceptions!private! !
+enumerateDataSources!accessing!public! !
+environmentHandle!accessing!private! !
+exceptionDetails:!exceptions!private! !
+freeAll!private!realizing/unrealizing! !
+freeEnvironment!private!realizing/unrealizing! !
+initialize!initializing!private! !
+invalidateHandle:!private!realizing/unrealizing! !
+new!instance creation!public! !
+newConnections!accessing!private! !
+odbcVersion!accessing!public! !
+setDefaultEnvAttrs!accessing!private! !
+transact:action:!operations!private! !
+!
 

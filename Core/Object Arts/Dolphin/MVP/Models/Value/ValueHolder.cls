@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueModel subclass: #ValueHolder
 	instanceVariableNames: 'value'
@@ -25,8 +25,10 @@ value
 	"Answers the value of the receiver"
 	
 	^value! !
-!ValueHolder categoriesFor: #setValue:!accessing!private! !
-!ValueHolder categoriesFor: #value!accessing!public! !
+!ValueHolder categoriesForMethods!
+setValue:!accessing!private! !
+value!accessing!public! !
+!
 
 !ValueHolder class methodsFor!
 
@@ -39,6 +41,8 @@ with: anObject
 	"Answers an instance of the receiver holding anObject as its value"
 
 	^(self new) setValue: anObject; yourself! !
-!ValueHolder class categoriesFor: #icon!constants!public! !
-!ValueHolder class categoriesFor: #with:!instance creation!public! !
+!ValueHolder class categoriesForMethods!
+icon!constants!public! !
+with:!instance creation!public! !
+!
 

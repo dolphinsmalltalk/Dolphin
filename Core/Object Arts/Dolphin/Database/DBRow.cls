@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBAbstractRow subclass: #DBRow
 	instanceVariableNames: ''
@@ -21,13 +21,17 @@ initializeFromBuffer: aDBRow
 	contents := aDBRow objects.
 	status := aDBRow status.
 	^self! !
-!DBRow categoriesFor: #asObject!converting!private! !
-!DBRow categoriesFor: #initializeFromBuffer:!instance creation!private! !
+!DBRow categoriesForMethods!
+asObject!converting!private! !
+initializeFromBuffer:!instance creation!private! !
+!
 
 !DBRow class methodsFor!
 
 fromBuffer: aDBRow
 	^super new
 		initializeFromBuffer: aDBRow! !
-!DBRow class categoriesFor: #fromBuffer:!instance creation!private! !
+!DBRow class categoriesForMethods!
+fromBuffer:!instance creation!private! !
+!
 

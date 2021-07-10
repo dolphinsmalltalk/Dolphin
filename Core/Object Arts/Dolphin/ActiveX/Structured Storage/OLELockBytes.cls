@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLELockBytesAbstract subclass: #OLELockBytes
 	instanceVariableNames: 'bytes'
@@ -79,14 +79,16 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
-!OLELockBytes categoriesFor: #bytes:!accessing!private! !
-!OLELockBytes categoriesFor: #contents!accessing!public! !
-!OLELockBytes categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OLELockBytes categoriesFor: #initialize!initializing!private! !
-!OLELockBytes categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OLELockBytes categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
-!OLELockBytes categoriesFor: #size!accessing!public! !
-!OLELockBytes categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!OLELockBytes categoriesForMethods!
+bytes:!accessing!private! !
+contents!accessing!public! !
+copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+initialize!initializing!private! !
+replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+resize:!COM Interfaces-ILockBytes!private! !
+size!accessing!public! !
+WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!
 
 !OLELockBytes class methodsFor!
 
@@ -97,5 +99,7 @@ on: bytes
 	^(self basicNew)
 		bytes: bytes;
 		queryInterface: ILockBytes! !
-!OLELockBytes class categoriesFor: #on:!instance creation!public! !
+!OLELockBytes class categoriesForMethods!
+on:!instance creation!public! !
+!
 

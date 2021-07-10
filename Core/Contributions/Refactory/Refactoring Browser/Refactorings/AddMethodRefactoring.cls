@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #AddMethodRefactoring
 	instanceVariableNames: 'protocols source'
@@ -43,10 +43,12 @@ storeOn: aStream
 
 transform
 	class compile: source classified: protocols! !
-!AddMethodRefactoring categoriesFor: #addMethod:toClass:inProtocols:!initialize/release!public! !
-!AddMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AddMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!AddMethodRefactoring categoriesFor: #transform!public!transforming! !
+!AddMethodRefactoring categoriesForMethods!
+addMethod:toClass:inProtocols:!initialize/release!public! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !AddMethodRefactoring class methodsFor!
 
@@ -62,6 +64,8 @@ model: aRBNamespace addMethod: aString toClass: aClass inProtocols: protocolList
 			toClass: aClass
 			inProtocols: protocolList;
 		yourself! !
-!AddMethodRefactoring class categoriesFor: #addMethod:toClass:inProtocols:!instance creation!public! !
-!AddMethodRefactoring class categoriesFor: #model:addMethod:toClass:inProtocols:!instance creation!public! !
+!AddMethodRefactoring class categoriesForMethods!
+addMethod:toClass:inProtocols:!instance creation!public! !
+model:addMethod:toClass:inProtocols:!instance creation!public! !
+!
 

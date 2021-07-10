@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #OrEnvironment
 	instanceVariableNames: 'oredEnvironment'
@@ -56,15 +56,17 @@ storeOn: aStream
 	aStream nextPutAll: ' | '.
 	oredEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
-!OrEnvironment categoriesFor: #classesDo:!accessing!public! !
-!OrEnvironment categoriesFor: #definesClass:!public!testing! !
-!OrEnvironment categoriesFor: #includesCategory:!public!testing! !
-!OrEnvironment categoriesFor: #includesClass:!public!testing! !
-!OrEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!OrEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!OrEnvironment categoriesFor: #oredEnvironment:!initialization!private! !
-!OrEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!OrEnvironment categoriesFor: #storeOn:!printing!public! !
+!OrEnvironment categoriesForMethods!
+classesDo:!accessing!public! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+oredEnvironment:!initialization!private! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !OrEnvironment class methodsFor!
 
@@ -72,5 +74,7 @@ onEnvironment: anEnvironment or: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		oredEnvironment: anotherEnvironment;
 		yourself! !
-!OrEnvironment class categoriesFor: #onEnvironment:or:!instance creation!public! !
+!OrEnvironment class categoriesForMethods!
+onEnvironment:or:!instance creation!public! !
+!
 

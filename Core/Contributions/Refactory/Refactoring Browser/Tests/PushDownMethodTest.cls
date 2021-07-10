@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #PushDownMethodTest
 	instanceVariableNames: ''
@@ -46,8 +46,10 @@ testPushDownNonExistantMenu
 				pushDown: #(#someMethodThatDoesNotExist)
 				from: LintRuleTest.
 	self shouldFail: refactoring! !
-!PushDownMethodTest categoriesFor: #testPushDownMethod!public!tests! !
-!PushDownMethodTest categoriesFor: #testPushDownMethodOnNonAbstractClass!failure tests!public! !
-!PushDownMethodTest categoriesFor: #testPushDownMethodThatReferencesPoolDictionary!public!tests! !
-!PushDownMethodTest categoriesFor: #testPushDownNonExistantMenu!failure tests!public! !
+!PushDownMethodTest categoriesForMethods!
+testPushDownMethod!public!tests! !
+testPushDownMethodOnNonAbstractClass!failure tests!public! !
+testPushDownMethodThatReferencesPoolDictionary!public!tests! !
+testPushDownNonExistantMenu!failure tests!public! !
+!
 

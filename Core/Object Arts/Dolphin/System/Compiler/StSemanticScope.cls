@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #StSemanticScope
 	instanceVariableNames: 'outer'
@@ -37,12 +37,14 @@ temps
 
 thisContextVariable
 	^self shouldNotImplement! !
-!StSemanticScope categoriesFor: #isInlined!accessing!public! !
-!StSemanticScope categoriesFor: #lookupVariable:!operations!public! !
-!StSemanticScope categoriesFor: #outer!accessing!public! !
-!StSemanticScope categoriesFor: #outer:!accessing!public! !
-!StSemanticScope categoriesFor: #selfVariable!public! !
-!StSemanticScope categoriesFor: #superVariable!public! !
-!StSemanticScope categoriesFor: #temps!accessing!private! !
-!StSemanticScope categoriesFor: #thisContextVariable!public! !
+!StSemanticScope categoriesForMethods!
+isInlined!accessing!public! !
+lookupVariable:!operations!public! !
+outer!accessing!public! !
+outer:!accessing!public! !
+selfVariable!public! !
+superVariable!public! !
+temps!accessing!private! !
+thisContextVariable!public! !
+!
 

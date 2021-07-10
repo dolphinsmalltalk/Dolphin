@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_RESPONSE_V1
 	instanceVariableNames: 'contentType content'
@@ -142,25 +142,27 @@ Version: aHTTP_VERSION
 		from: ##(_OffsetOf_Version + 1)
 		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
-!HTTP_RESPONSE_V1 categoriesFor: #content:!accessing!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #contentType:!accessing!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Headers!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #initialize!initializing!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #pEntityChunks:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #pReason!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #pReason:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #ReasonLength!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #ReasonLength:!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #StatusCode!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #StatusCode:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Version!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #Version:!**compiled accessors**!public! !
+!HTTP_RESPONSE_V1 categoriesForMethods!
+content:!accessing!public! !
+contentType:!accessing!public! !
+EntityChunkCount!**compiled accessors**!private! !
+EntityChunkCount:!**compiled accessors**!private! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+Headers!**compiled accessors**!public! !
+Headers:!**compiled accessors**!public! !
+initialize!initializing!private! !
+pEntityChunks!**compiled accessors**!public! !
+pEntityChunks:!**compiled accessors**!public! !
+pReason!**compiled accessors**!public! !
+pReason:!**compiled accessors**!public! !
+ReasonLength!**compiled accessors**!private! !
+ReasonLength:!**compiled accessors**!private! !
+StatusCode!**compiled accessors**!public! !
+StatusCode:!**compiled accessors**!public! !
+Version!**compiled accessors**!public! !
+Version:!**compiled accessors**!public! !
+!
 
 !HTTP_RESPONSE_V1 class methodsFor!
 
@@ -195,6 +197,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks)! !
-!HTTP_RESPONSE_V1 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_RESPONSE_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_RESPONSE_V1 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

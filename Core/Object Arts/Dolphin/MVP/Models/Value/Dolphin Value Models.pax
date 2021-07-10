@@ -120,10 +120,12 @@ asValue
 	In the general case create an answer a ValueHolder onto the receiver"
 
 	^ValueHolder with: self! !
-!Object categoriesFor: #aspectAdaptorClass!constants!private! !
-!Object categoriesFor: #aspectValue:!converting!public! !
-!Object categoriesFor: #aspectValue:triggers:!converting!public! !
-!Object categoriesFor: #asValue!converting!public! !
+!Object categoriesForMethods!
+aspectAdaptorClass!constants!private! !
+aspectValue:!converting!public! !
+aspectValue:triggers:!converting!public! !
+asValue!converting!public! !
+!
 
 "End of package definition"!
 

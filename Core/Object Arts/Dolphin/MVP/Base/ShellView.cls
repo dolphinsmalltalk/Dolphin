@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ContainerView subclass: #ShellView
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
@@ -1206,141 +1206,143 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 	super wmWindowPosChanged: message wParam: wParam lParam: lParam.
 	^nil	"Accept default processing"
 ! !
-!ShellView categoriesFor: #acceleratorTable!accelerator!public! !
-!ShellView categoriesFor: #acceleratorTable:!accelerator!public! !
-!ShellView categoriesFor: #activateLastPopup!helpers!private! !
-!ShellView categoriesFor: #addCommandHistory:!accessing!private! !
-!ShellView categoriesFor: #allAdditionalAccelerators!accessing!public! !
-!ShellView categoriesFor: #allAdditionalKeyBindings!accessing!public! !
-!ShellView categoriesFor: #basicMenu:!menus!private! !
-!ShellView categoriesFor: #buildCombinedAcceleratorTable!private!realizing/unrealizing! !
-!ShellView categoriesFor: #buttonRemoved:!default button!private! !
-!ShellView categoriesFor: #caption!accessing!public! !
-!ShellView categoriesFor: #caption:!accessing!public! !
-!ShellView categoriesFor: #centerNear:!helpers!private! !
-!ShellView categoriesFor: #close!public!realizing/unrealizing! !
-!ShellView categoriesFor: #combinedAcceleratorTable!accelerator!accessing!private! !
-!ShellView categoriesFor: #commandPolicyClass!commands!constants!public! !
-!ShellView categoriesFor: #commandPolicyWithSource:!commands!public! !
-!ShellView categoriesFor: #commandSource!accessing!public! !
-!ShellView categoriesFor: #createAt:extent:!public!realizing/unrealizing! !
-!ShellView categoriesFor: #defaultButtonId!accessing!default button!private! !
-!ShellView categoriesFor: #defaultButtonId:!accessing!default button!private! !
-!ShellView categoriesFor: #defaultExtent!constants!public! !
-!ShellView categoriesFor: #defaultExtentWithin:!geometry!private! !
-!ShellView categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
-!ShellView categoriesFor: #defaultShowStyle!constants!private! !
-!ShellView categoriesFor: #defaultWindowStyle!constants!private! !
-!ShellView categoriesFor: #dialogMessageMap!private! !
-!ShellView categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
-!ShellView categoriesFor: #displayOnMonitor:!geometry!helpers!public! !
-!ShellView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!ShellView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!ShellView categoriesFor: #drawMenuBar!menus!public! !
-!ShellView categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!ShellView categoriesFor: #exit!commands!public! !
-!ShellView categoriesFor: #filerProxy!binary filing!private! !
-!ShellView categoriesFor: #flash:!operations!public! !
-!ShellView categoriesFor: #flash:flags:!operations!public! !
-!ShellView categoriesFor: #getDefId!default button!private! !
-!ShellView categoriesFor: #getLastActivePopup!hierarchy!private! !
-!ShellView categoriesFor: #hasCaption!accessing-styles!public! !
-!ShellView categoriesFor: #hasCaption:!accessing-styles!public! !
-!ShellView categoriesFor: #hasMaximize!accessing-styles!public! !
-!ShellView categoriesFor: #hasMaximize:!accessing-styles!public! !
-!ShellView categoriesFor: #hasMenu!accessing!private! !
-!ShellView categoriesFor: #hasMinimize!accessing-styles!public! !
-!ShellView categoriesFor: #hasMinimize:!accessing-styles!public! !
-!ShellView categoriesFor: #hasSysMenu!accessing-styles!public! !
-!ShellView categoriesFor: #hasSysMenu:!accessing-styles!public! !
-!ShellView categoriesFor: #hasTaskbarIcon!accessing-styles!public! !
-!ShellView categoriesFor: #hasTaskbarIcon:!accessing-styles!public! !
-!ShellView categoriesFor: #hasVisibleStyle:!public!testing! !
-!ShellView categoriesFor: #initialize!initializing!private! !
-!ShellView categoriesFor: #invalidateUserInterface!accessing!public! !
-!ShellView categoriesFor: #isInitiallyCentered!dispatching!private! !
-!ShellView categoriesFor: #isInitiallyCentered:!accessing!public! !
-!ShellView categoriesFor: #isLayeredWindow!accessing!public! !
-!ShellView categoriesFor: #isLayeredWindow:!accessing!public! !
-!ShellView categoriesFor: #isMaximized!public!testing! !
-!ShellView categoriesFor: #isMinimized!public!testing! !
-!ShellView categoriesFor: #isMinimized:!private!testing! !
-!ShellView categoriesFor: #isPersistentlyDisabled!private!testing! !
-!ShellView categoriesFor: #isPersistentView!public!testing! !
-!ShellView categoriesFor: #isPersistentView:!public!testing! !
-!ShellView categoriesFor: #isToolWindow!accessing!public! !
-!ShellView categoriesFor: #isToolWindow:!accessing!public! !
-!ShellView categoriesFor: #isUserInterfaceValid!public!testing! !
-!ShellView categoriesFor: #keyboardCommands!accessing!public! !
-!ShellView categoriesFor: #largeIcon!accessing!public! !
-!ShellView categoriesFor: #largeIcon:!accessing!public! !
-!ShellView categoriesFor: #lastFocus!accessing!private! !
-!ShellView categoriesFor: #lastFocus:!accessing!private! !
-!ShellView categoriesFor: #maxExtent!accessing!public! !
-!ShellView categoriesFor: #maxExtent:!accessing!public! !
-!ShellView categoriesFor: #menuBar!menus!public! !
-!ShellView categoriesFor: #menuBar:!menus!public! !
-!ShellView categoriesFor: #minExtent!accessing!public! !
-!ShellView categoriesFor: #minExtent:!accessing!public! !
-!ShellView categoriesFor: #minimize!operations!public! !
-!ShellView categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
-!ShellView categoriesFor: #onCloseRequested!event handling!public! !
-!ShellView categoriesFor: #onDrawMenuItem:!event handling-win32!public! !
-!ShellView categoriesFor: #onGetCursor:!event handling!public! !
-!ShellView categoriesFor: #onIdleEntered!event handling!public! !
-!ShellView categoriesFor: #onPositionChanged:!event handling!public! !
-!ShellView categoriesFor: #onPostSaveImage!event handling!public! !
-!ShellView categoriesFor: #onPreSaveImage!event handling!public! !
-!ShellView categoriesFor: #onSettingChanged:!event handling-win32!public! !
-!ShellView categoriesFor: #onStateRestored!event handling!private! !
-!ShellView categoriesFor: #onSubViewRemoved:!event handling!public! !
-!ShellView categoriesFor: #onTimeChanged:!event handling-win32!public! !
-!ShellView categoriesFor: #onViewActivated:!event handling!public! !
-!ShellView categoriesFor: #onViewCreated!event handling!public! !
-!ShellView categoriesFor: #onViewDeactivated:!event handling!public! !
-!ShellView categoriesFor: #onViewMinimized:!event handling!public! !
-!ShellView categoriesFor: #onViewNcActivated:!event handling!public! !
-!ShellView categoriesFor: #onViewNcDeactivated:!event handling!public! !
-!ShellView categoriesFor: #onViewRestored:!event handling!public! !
-!ShellView categoriesFor: #parentView:!hierarchy!private! !
-!ShellView categoriesFor: #performCommand:!commands!public! !
-!ShellView categoriesFor: #positionNear:!geometry!public! !
-!ShellView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!ShellView categoriesFor: #preTranslateMouseInput:!dispatching!public! !
-!ShellView categoriesFor: #queryClose!event handling!public! !
-!ShellView categoriesFor: #releaseAccelerators!private!realizing/unrealizing! !
-!ShellView categoriesFor: #releaseMenu!private!realizing/unrealizing! !
-!ShellView categoriesFor: #resetDefaultButton!accessing!default button!private! !
-!ShellView categoriesFor: #resolutionScaledBy:!geometry!private! !
-!ShellView categoriesFor: #restorePlacement:resolution:!geometry!private! !
-!ShellView categoriesFor: #setButtonId:style:!accessing!default button!private! !
-!ShellView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
-!ShellView categoriesFor: #setDefId:!default button!private! !
-!ShellView categoriesFor: #setInitialFocus!operations!public! !
-!ShellView categoriesFor: #showMaximized!operations!public! !
-!ShellView categoriesFor: #showMinimized!operations!public! !
-!ShellView categoriesFor: #showMinimizedNoActivate!operations!public! !
-!ShellView categoriesFor: #showShell!operations!private! !
-!ShellView categoriesFor: #smallIcon!accessing!public! !
-!ShellView categoriesFor: #smallIcon:!accessing!public! !
-!ShellView categoriesFor: #svFlags!accessing!private! !
-!ShellView categoriesFor: #topShell!hierarchy!public! !
-!ShellView categoriesFor: #translateAccelerator:!accelerator!private! !
-!ShellView categoriesFor: #updateCaption!public!updating! !
-!ShellView categoriesFor: #updateIcons!accessing!private! !
-!ShellView categoriesFor: #updateMenuBar!menus!public! !
-!ShellView categoriesFor: #validateUserInterface!operations!public! !
-!ShellView categoriesFor: #winFinalize!event handling!private! !
-!ShellView categoriesFor: #wmActivate:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmNcActivate:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmSetCursor:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmSettingChange:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmSize:wParam:lParam:!event handling!event handling-win32!private! !
-!ShellView categoriesFor: #wmTimeChange:wParam:lParam:!event handling-win32!private! !
-!ShellView categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
+!ShellView categoriesForMethods!
+acceleratorTable!accelerator!public! !
+acceleratorTable:!accelerator!public! !
+activateLastPopup!helpers!private! !
+addCommandHistory:!accessing!private! !
+allAdditionalAccelerators!accessing!public! !
+allAdditionalKeyBindings!accessing!public! !
+basicMenu:!menus!private! !
+buildCombinedAcceleratorTable!private!realizing/unrealizing! !
+buttonRemoved:!default button!private! !
+caption!accessing!public! !
+caption:!accessing!public! !
+centerNear:!helpers!private! !
+close!public!realizing/unrealizing! !
+combinedAcceleratorTable!accelerator!accessing!private! !
+commandPolicyClass!commands!constants!public! !
+commandPolicyWithSource:!commands!public! !
+commandSource!accessing!public! !
+createAt:extent:!public!realizing/unrealizing! !
+defaultButtonId!accessing!default button!private! !
+defaultButtonId:!accessing!default button!private! !
+defaultExtent!constants!public! !
+defaultExtentWithin:!geometry!private! !
+defaultPositionWithin:forExtent:!geometry!private! !
+defaultShowStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+dialogMessageMap!private! !
+dispatchUser:wParam:lParam:!dispatching!private! !
+displayOnMonitor:!geometry!helpers!public! !
+dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
+dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
+drawMenuBar!menus!public! !
+ensureSubViewVisible:!public!sub views! !
+exit!commands!public! !
+filerProxy!binary filing!private! !
+flash:!operations!public! !
+flash:flags:!operations!public! !
+getDefId!default button!private! !
+getLastActivePopup!hierarchy!private! !
+hasCaption!accessing-styles!public! !
+hasCaption:!accessing-styles!public! !
+hasMaximize!accessing-styles!public! !
+hasMaximize:!accessing-styles!public! !
+hasMenu!accessing!private! !
+hasMinimize!accessing-styles!public! !
+hasMinimize:!accessing-styles!public! !
+hasSysMenu!accessing-styles!public! !
+hasSysMenu:!accessing-styles!public! !
+hasTaskbarIcon!accessing-styles!public! !
+hasTaskbarIcon:!accessing-styles!public! !
+hasVisibleStyle:!public!testing! !
+initialize!initializing!private! !
+invalidateUserInterface!accessing!public! !
+isInitiallyCentered!dispatching!private! !
+isInitiallyCentered:!accessing!public! !
+isLayeredWindow!accessing!public! !
+isLayeredWindow:!accessing!public! !
+isMaximized!public!testing! !
+isMinimized!public!testing! !
+isMinimized:!private!testing! !
+isPersistentlyDisabled!private!testing! !
+isPersistentView!public!testing! !
+isPersistentView:!public!testing! !
+isToolWindow!accessing!public! !
+isToolWindow:!accessing!public! !
+isUserInterfaceValid!public!testing! !
+keyboardCommands!accessing!public! !
+largeIcon!accessing!public! !
+largeIcon:!accessing!public! !
+lastFocus!accessing!private! !
+lastFocus:!accessing!private! !
+maxExtent!accessing!public! !
+maxExtent:!accessing!public! !
+menuBar!menus!public! !
+menuBar:!menus!public! !
+minExtent!accessing!public! !
+minExtent:!accessing!public! !
+minimize!operations!public! !
+onAboutToDisplaySystemMenu:!event handling!public! !
+onCloseRequested!event handling!public! !
+onDrawMenuItem:!event handling-win32!public! !
+onGetCursor:!event handling!public! !
+onIdleEntered!event handling!public! !
+onPositionChanged:!event handling!public! !
+onPostSaveImage!event handling!public! !
+onPreSaveImage!event handling!public! !
+onSettingChanged:!event handling-win32!public! !
+onStateRestored!event handling!private! !
+onSubViewRemoved:!event handling!public! !
+onTimeChanged:!event handling-win32!public! !
+onViewActivated:!event handling!public! !
+onViewCreated!event handling!public! !
+onViewDeactivated:!event handling!public! !
+onViewMinimized:!event handling!public! !
+onViewNcActivated:!event handling!public! !
+onViewNcDeactivated:!event handling!public! !
+onViewRestored:!event handling!public! !
+parentView:!hierarchy!private! !
+performCommand:!commands!public! !
+positionNear:!geometry!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+preTranslateMouseInput:!dispatching!public! !
+queryClose!event handling!public! !
+releaseAccelerators!private!realizing/unrealizing! !
+releaseMenu!private!realizing/unrealizing! !
+resetDefaultButton!accessing!default button!private! !
+resolutionScaledBy:!geometry!private! !
+restorePlacement:resolution:!geometry!private! !
+setButtonId:style:!accessing!default button!private! !
+setDefaultButton:state:!accessing!default button!private! !
+setDefId:!default button!private! !
+setInitialFocus!operations!public! !
+showMaximized!operations!public! !
+showMinimized!operations!public! !
+showMinimizedNoActivate!operations!public! !
+showShell!operations!private! !
+smallIcon!accessing!public! !
+smallIcon:!accessing!public! !
+svFlags!accessing!private! !
+topShell!hierarchy!public! !
+translateAccelerator:!accelerator!private! !
+updateCaption!public!updating! !
+updateIcons!accessing!private! !
+updateMenuBar!menus!public! !
+validateUserInterface!operations!public! !
+winFinalize!event handling!private! !
+wmActivate:wParam:lParam:!event handling-win32!private! !
+wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
+wmInitMenu:wParam:lParam:!event handling-win32!private! !
+wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
+wmNcActivate:wParam:lParam:!event handling-win32!private! !
+wmSetCursor:wParam:lParam:!event handling-win32!private! !
+wmSettingChange:wParam:lParam:!event handling-win32!private! !
+wmSize:wParam:lParam:!event handling!event handling-win32!private! !
+wmTimeChange:wParam:lParam:!event handling-win32!private! !
+wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
+!
 
 ShellView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
 ShellView methodProtocol: #topView attributes: #(#readOnly) selectors: #(#acceleratorTable #acceleratorTable: #beActive #beForeground #beNotTopMost #bePopupFor: #beTopMost #buttonRemoved: #caption #caption: #exit #flash: #frameWidths #hasCaption #hasCaption: #hasMaximize #hasMaximize: #hasMinimize #hasMinimize: #hasSysMenu #hasSysMenu: #isActive #isForeground #isInitiallyCentered: #isMinimized #isResizable #isResizable: #isToolWindow #isToolWindow: #largeIcon #largeIcon: #maxExtent #menuBar #menuBar: #minExtent #onAboutToDisplaySystemMenu: #onCloseRequested #onViewMinimized: #onViewRestored: #showMaximized #showMinimized #smallIcon #smallIcon:)!
@@ -1450,17 +1452,19 @@ stbConvertFromVersion9: anArray
 
 themePartName
 	^'WINDOW'! !
-!ShellView class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
-!ShellView class categoriesFor: #createHookBlock!accessing!private!realizing/unrealizing! !
-!ShellView class categoriesFor: #createHookBlock:!accessing!private!realizing/unrealizing! !
-!ShellView class categoriesFor: #defaultExtentBlock!accessing!geometry!private! !
-!ShellView class categoriesFor: #defaultExtentBlock:!accessing!geometry!private! !
-!ShellView class categoriesFor: #icon!constants!public! !
-!ShellView class categoriesFor: #installNew!public! !
-!ShellView class categoriesFor: #shutdownOnExit!public!testing! !
-!ShellView class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!ShellView class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
-!ShellView class categoriesFor: #stbConvertFromVersion8:!binary filing!private! !
-!ShellView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!ShellView class categoriesFor: #themePartName!constants!public!theming! !
+!ShellView class categoriesForMethods!
+asSessionManagerClass!converting!public!VM and session managerment! !
+createHookBlock!accessing!private!realizing/unrealizing! !
+createHookBlock:!accessing!private!realizing/unrealizing! !
+defaultExtentBlock!accessing!geometry!private! !
+defaultExtentBlock:!accessing!geometry!private! !
+icon!constants!public! !
+installNew!public! !
+shutdownOnExit!public!testing! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion4:!binary filing!private! !
+stbConvertFromVersion8:!binary filing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+themePartName!constants!public!theming! !
+!
 

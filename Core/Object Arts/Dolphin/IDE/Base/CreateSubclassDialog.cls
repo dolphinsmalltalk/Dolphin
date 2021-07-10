@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dialog subclass: #CreateSubclassDialog
 	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter usePackagePresenter package superclassPresenter'
@@ -140,25 +140,27 @@ updatePackage
 		ifFalse: 
 			[usePackagePresenter value: true.
 			packagesPresenter selection: package]! !
-!CreateSubclassDialog categoriesFor: #canApply!private!testing! !
-!CreateSubclassDialog categoriesFor: #chooseSuperclass!commands!public! !
-!CreateSubclassDialog categoriesFor: #createComponents!initializing!public! !
-!CreateSubclassDialog categoriesFor: #createSchematicWiring!initializing!public! !
-!CreateSubclassDialog categoriesFor: #environment!constants!private! !
-!CreateSubclassDialog categoriesFor: #isPackaged!commands!private! !
-!CreateSubclassDialog categoriesFor: #model:!accessing!public! !
-!CreateSubclassDialog categoriesFor: #onPackageSelected!event handling!private! !
-!CreateSubclassDialog categoriesFor: #onSuperclassChanged!event handling!private! !
-!CreateSubclassDialog categoriesFor: #onViewOpened!event handling!public! !
-!CreateSubclassDialog categoriesFor: #package!accessing!public! !
-!CreateSubclassDialog categoriesFor: #package:!accessing!public! !
-!CreateSubclassDialog categoriesFor: #queryCommand:!commands!private! !
-!CreateSubclassDialog categoriesFor: #subclasses!accessing!public! !
-!CreateSubclassDialog categoriesFor: #subclassName!accessing!public! !
-!CreateSubclassDialog categoriesFor: #subclassName:!accessing!public! !
-!CreateSubclassDialog categoriesFor: #superclass!accessing!public! !
-!CreateSubclassDialog categoriesFor: #toggleSetPackage!commands!private! !
-!CreateSubclassDialog categoriesFor: #updatePackage!private!updating! !
+!CreateSubclassDialog categoriesForMethods!
+canApply!private!testing! !
+chooseSuperclass!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+environment!constants!private! !
+isPackaged!commands!private! !
+model:!accessing!public! !
+onPackageSelected!event handling!private! !
+onSuperclassChanged!event handling!private! !
+onViewOpened!event handling!public! !
+package!accessing!public! !
+package:!accessing!public! !
+queryCommand:!commands!private! !
+subclasses!accessing!public! !
+subclassName!accessing!public! !
+subclassName:!accessing!public! !
+superclass!accessing!public! !
+toggleSetPackage!commands!private! !
+updatePackage!private!updating! !
+!
 
 !CreateSubclassDialog class methodsFor!
 
@@ -207,10 +209,12 @@ subclassOf: aClassOrNil inPackage: aPackage
 	^dialog
 		showModal;
 		yourself! !
-!CreateSubclassDialog class categoriesFor: #icon!accessing!constants!public! !
-!CreateSubclassDialog class categoriesFor: #newSubclassOf:inPackage:!instance creation!public! !
-!CreateSubclassDialog class categoriesFor: #refactoringView!constants!private! !
-!CreateSubclassDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!CreateSubclassDialog class categoriesFor: #resource_Refactoring_view!public!resources-views! !
-!CreateSubclassDialog class categoriesFor: #subclassOf:inPackage:!operations!public! !
+!CreateSubclassDialog class categoriesForMethods!
+icon!accessing!constants!public! !
+newSubclassOf:inPackage:!instance creation!public! !
+refactoringView!constants!private! !
+resource_Default_view!public!resources-views! !
+resource_Refactoring_view!public!resources-views! !
+subclassOf:inPackage:!operations!public! !
+!
 

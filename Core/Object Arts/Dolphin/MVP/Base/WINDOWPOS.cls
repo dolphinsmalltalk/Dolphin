@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #WINDOWPOS
 	instanceVariableNames: ''
@@ -68,18 +68,20 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!WINDOWPOS categoriesFor: #cx!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #cx:!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #cy!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #cy:!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #extent!accessing!public! !
-!WINDOWPOS categoriesFor: #flags!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #hwndInsertAfter!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #isRectangleChanged!public!testing! !
-!WINDOWPOS categoriesFor: #position!accessing!public! !
-!WINDOWPOS categoriesFor: #rectangle!accessing!public! !
-!WINDOWPOS categoriesFor: #x!**compiled accessors**!public! !
-!WINDOWPOS categoriesFor: #y!**compiled accessors**!public! !
+!WINDOWPOS categoriesForMethods!
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+cy!**compiled accessors**!public! !
+cy:!**compiled accessors**!public! !
+extent!accessing!public! !
+flags!**compiled accessors**!public! !
+hwndInsertAfter!**compiled accessors**!public! !
+isRectangleChanged!public!testing! !
+position!accessing!public! !
+rectangle!accessing!public! !
+x!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+!
 
 !WINDOWPOS class methodsFor!
 
@@ -110,6 +112,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
-!WINDOWPOS class categoriesFor: #defineFields!public!template definition! !
-!WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WINDOWPOS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

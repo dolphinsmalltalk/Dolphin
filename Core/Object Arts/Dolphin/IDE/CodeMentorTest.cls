@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #CodeMentorTest
 	instanceVariableNames: ''
@@ -23,5 +23,7 @@ testLintRulesXml
 			xpath := './/LintRule[name="<1s>"]' expandMacrosWith: name.
 			node := xml selectSingleNode: xpath.
 			self deny: node isNil]! !
-!CodeMentorTest categoriesFor: #testLintRulesXml!public!unit tests! !
+!CodeMentorTest categoriesForMethods!
+testLintRulesXml!public!unit tests! !
+!
 

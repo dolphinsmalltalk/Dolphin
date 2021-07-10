@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #VersionResourceTest
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
@@ -93,13 +93,15 @@ testVersionStrings
 	self assertResource: res atVersion: newVersion.
 	res bumpProductVersion.
 	self assertResource: res atVersion: '101.202.304.404'! !
-!VersionResourceTest categoriesFor: #assertResource:atVersion:!public!unit tests! !
-!VersionResourceTest categoriesFor: #assertVersionResource:equalTo:!private!unit tests! !
-!VersionResourceTest categoriesFor: #modifyVersionResource:!public!unit tests! !
-!VersionResourceTest categoriesFor: #setUp!private!Running! !
-!VersionResourceTest categoriesFor: #sourcePath!constants!private! !
-!VersionResourceTest categoriesFor: #tearDown!private!Running! !
-!VersionResourceTest categoriesFor: #testRoundTripUnpackPack!public!unit tests! !
-!VersionResourceTest categoriesFor: #testRoundTripUpdate!public!unit tests! !
-!VersionResourceTest categoriesFor: #testVersionStrings!public!unit tests! !
+!VersionResourceTest categoriesForMethods!
+assertResource:atVersion:!public!unit tests! !
+assertVersionResource:equalTo:!private!unit tests! !
+modifyVersionResource:!public!unit tests! !
+setUp!private!Running! !
+sourcePath!constants!private! !
+tearDown!private!Running! !
+testRoundTripUnpackPack!public!unit tests! !
+testRoundTripUpdate!public!unit tests! !
+testVersionStrings!public!unit tests! !
+!
 

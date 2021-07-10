@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusFromFileInitializer
 	instanceVariableNames: 'filename fileLocator'
@@ -17,12 +17,16 @@ absoluteFilename
 filename: aFilename fileLocator: aFileLocator
 	filename := aFilename.
 	fileLocator := aFileLocator! !
-!GdiplusFromFileInitializer categoriesFor: #absoluteFilename!enquiries!public! !
-!GdiplusFromFileInitializer categoriesFor: #filename:fileLocator:!initializing!private! !
+!GdiplusFromFileInitializer categoriesForMethods!
+absoluteFilename!enquiries!public! !
+filename:fileLocator:!initializing!private! !
+!
 
 !GdiplusFromFileInitializer class methodsFor!
 
 filename: aFilename fileLocator: aFileLocator
 	^self new filename: aFilename fileLocator: aFileLocator! !
-!GdiplusFromFileInitializer class categoriesFor: #filename:fileLocator:!instance creation!public! !
+!GdiplusFromFileInitializer class categoriesForMethods!
+filename:fileLocator:!instance creation!public! !
+!
 

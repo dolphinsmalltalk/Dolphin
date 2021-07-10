@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitAbsModel subclass: #SUnitBrowserModel
 	instanceVariableNames: 'suiteBuilder suite testResult numberOfTests'
@@ -443,80 +443,82 @@ withSelectedItem: aSingleArgumentBlock
 		ifTrue: [^self].
 
 	aSingleArgumentBlock value: selectedItem! !
-!SUnitBrowserModel categoriesFor: #areAllTestsCompleted!private!querying! !
-!SUnitBrowserModel categoriesFor: #basicNumberOfTests!accessing!private! !
-!SUnitBrowserModel categoriesFor: #buildList!actions!private! !
-!SUnitBrowserModel categoriesFor: #canAnalyze!public!querying! !
-!SUnitBrowserModel categoriesFor: #canDebug!public!querying! !
-!SUnitBrowserModel categoriesFor: #canRemove!public!querying! !
-!SUnitBrowserModel categoriesFor: #canRun!public!querying! !
-!SUnitBrowserModel categoriesFor: #caseClass!accessing!private! !
-!SUnitBrowserModel categoriesFor: #debugIndividualTests:!actions!private! !
-!SUnitBrowserModel categoriesFor: #debugSelected!actions!public! !
-!SUnitBrowserModel categoriesFor: #debugTest:!actions!private! !
-!SUnitBrowserModel categoriesFor: #debugTests:!actions!private! !
-!SUnitBrowserModel categoriesFor: #individualTests:do:!actions!private! !
-!SUnitBrowserModel categoriesFor: #initialize!initializing!private! !
-!SUnitBrowserModel categoriesFor: #inspectSelected!actions!public! !
-!SUnitBrowserModel categoriesFor: #invalidateNumberOfTests!private!statistics! !
-!SUnitBrowserModel categoriesFor: #isARootTestCase:!private!querying! !
-!SUnitBrowserModel categoriesFor: #isOneDebuggableItemSelected!private!querying! !
-!SUnitBrowserModel categoriesFor: #name!accessing!public! !
-!SUnitBrowserModel categoriesFor: #numberCorrectFor:!public!statistics! !
-!SUnitBrowserModel categoriesFor: #numberErrorsFor:!public!statistics! !
-!SUnitBrowserModel categoriesFor: #numberFailuresFor:!public!statistics! !
-!SUnitBrowserModel categoriesFor: #numberNotYetRunFor:!public!statistics! !
-!SUnitBrowserModel categoriesFor: #numberOfTests!public!statistics! !
-!SUnitBrowserModel categoriesFor: #numberOfTests:!accessing!private! !
-!SUnitBrowserModel categoriesFor: #numberTestsIn:!public!statistics! !
-!SUnitBrowserModel categoriesFor: #recalculateNumberOfTests!private!statistics! !
-!SUnitBrowserModel categoriesFor: #removeListItems:!actions!private! !
-!SUnitBrowserModel categoriesFor: #resetAllListItems!actions!private! !
-!SUnitBrowserModel categoriesFor: #resetDefectListItems!actions!public! !
-!SUnitBrowserModel categoriesFor: #resetListItems!actions!private! !
-!SUnitBrowserModel categoriesFor: #resourcesFor:!actions!private! !
-!SUnitBrowserModel categoriesFor: #resultClass!constants!private! !
-!SUnitBrowserModel categoriesFor: #resultStateString!displaying!public! !
-!SUnitBrowserModel categoriesFor: #runAll!actions!public! !
-!SUnitBrowserModel categoriesFor: #runIndividualTests:!actions!private! !
-!SUnitBrowserModel categoriesFor: #runIndividualTestsWithResources:!actions!private! !
-!SUnitBrowserModel categoriesFor: #runSelected!actions!public! !
-!SUnitBrowserModel categoriesFor: #runTest:!actions!private! !
-!SUnitBrowserModel categoriesFor: #runTests:!actions!private! !
-!SUnitBrowserModel categoriesFor: #shouldInitializeResources!configuring!public! !
-!SUnitBrowserModel categoriesFor: #shouldInitializeResources:!configuring!public! !
-!SUnitBrowserModel categoriesFor: #showAll!configuring!public! !
-!SUnitBrowserModel categoriesFor: #showAll:!configuring!public! !
-!SUnitBrowserModel categoriesFor: #showAllColorSymbol!displaying!public! !
-!SUnitBrowserModel categoriesFor: #showAllLabel!displaying!public! !
-!SUnitBrowserModel categoriesFor: #showRunningStatusInList!configuring!public! !
-!SUnitBrowserModel categoriesFor: #showRunningStatusInList:!configuring!public! !
-!SUnitBrowserModel categoriesFor: #showStatusBackgroundColors!configuring!public! !
-!SUnitBrowserModel categoriesFor: #showStatusBackgroundColors:!configuring!public! !
-!SUnitBrowserModel categoriesFor: #signalResetResults:!private!signalling! !
-!SUnitBrowserModel categoriesFor: #signalResetRunningStatus!private!signalling! !
-!SUnitBrowserModel categoriesFor: #signalSetRunningStatus:!private!signalling! !
-!SUnitBrowserModel categoriesFor: #signalToggledShowAll!private!signalling! !
-!SUnitBrowserModel categoriesFor: #signalToggledShowStatusBackgroundColors!private!signalling! !
-!SUnitBrowserModel categoriesFor: #signalUpdateTestCaseStatus:withResult:!private!signalling! !
-!SUnitBrowserModel categoriesFor: #startResources:!actions!private! !
-!SUnitBrowserModel categoriesFor: #stepSelected!actions!public! !
-!SUnitBrowserModel categoriesFor: #stopResources:!actions!private! !
-!SUnitBrowserModel categoriesFor: #suite!accessing!private! !
-!SUnitBrowserModel categoriesFor: #suite:!accessing!private! !
-!SUnitBrowserModel categoriesFor: #suiteBuilder!accessing!private! !
-!SUnitBrowserModel categoriesFor: #suiteBuilder:!accessing!private! !
-!SUnitBrowserModel categoriesFor: #testCaseSortBlock!actions!private! !
-!SUnitBrowserModel categoriesFor: #testResult!accessing!private! !
-!SUnitBrowserModel categoriesFor: #testResult:!accessing!private! !
-!SUnitBrowserModel categoriesFor: #toggleShouldInitializeResources!configuring!public! !
-!SUnitBrowserModel categoriesFor: #toggleShowAll!configuring!public! !
-!SUnitBrowserModel categoriesFor: #toggleShowRunningStatusInList!configuring!public! !
-!SUnitBrowserModel categoriesFor: #toggleShowStatusBackgroundColors!configuring!public! !
-!SUnitBrowserModel categoriesFor: #topLevelTests!accessing!private! !
-!SUnitBrowserModel categoriesFor: #updateListItemsFor:with:!actions!private! !
-!SUnitBrowserModel categoriesFor: #updateTestCase:result:!actions!private! !
-!SUnitBrowserModel categoriesFor: #withSelectedItem:!actions!private! !
+!SUnitBrowserModel categoriesForMethods!
+areAllTestsCompleted!private!querying! !
+basicNumberOfTests!accessing!private! !
+buildList!actions!private! !
+canAnalyze!public!querying! !
+canDebug!public!querying! !
+canRemove!public!querying! !
+canRun!public!querying! !
+caseClass!accessing!private! !
+debugIndividualTests:!actions!private! !
+debugSelected!actions!public! !
+debugTest:!actions!private! !
+debugTests:!actions!private! !
+individualTests:do:!actions!private! !
+initialize!initializing!private! !
+inspectSelected!actions!public! !
+invalidateNumberOfTests!private!statistics! !
+isARootTestCase:!private!querying! !
+isOneDebuggableItemSelected!private!querying! !
+name!accessing!public! !
+numberCorrectFor:!public!statistics! !
+numberErrorsFor:!public!statistics! !
+numberFailuresFor:!public!statistics! !
+numberNotYetRunFor:!public!statistics! !
+numberOfTests!public!statistics! !
+numberOfTests:!accessing!private! !
+numberTestsIn:!public!statistics! !
+recalculateNumberOfTests!private!statistics! !
+removeListItems:!actions!private! !
+resetAllListItems!actions!private! !
+resetDefectListItems!actions!public! !
+resetListItems!actions!private! !
+resourcesFor:!actions!private! !
+resultClass!constants!private! !
+resultStateString!displaying!public! !
+runAll!actions!public! !
+runIndividualTests:!actions!private! !
+runIndividualTestsWithResources:!actions!private! !
+runSelected!actions!public! !
+runTest:!actions!private! !
+runTests:!actions!private! !
+shouldInitializeResources!configuring!public! !
+shouldInitializeResources:!configuring!public! !
+showAll!configuring!public! !
+showAll:!configuring!public! !
+showAllColorSymbol!displaying!public! !
+showAllLabel!displaying!public! !
+showRunningStatusInList!configuring!public! !
+showRunningStatusInList:!configuring!public! !
+showStatusBackgroundColors!configuring!public! !
+showStatusBackgroundColors:!configuring!public! !
+signalResetResults:!private!signalling! !
+signalResetRunningStatus!private!signalling! !
+signalSetRunningStatus:!private!signalling! !
+signalToggledShowAll!private!signalling! !
+signalToggledShowStatusBackgroundColors!private!signalling! !
+signalUpdateTestCaseStatus:withResult:!private!signalling! !
+startResources:!actions!private! !
+stepSelected!actions!public! !
+stopResources:!actions!private! !
+suite!accessing!private! !
+suite:!accessing!private! !
+suiteBuilder!accessing!private! !
+suiteBuilder:!accessing!private! !
+testCaseSortBlock!actions!private! !
+testResult!accessing!private! !
+testResult:!accessing!private! !
+toggleShouldInitializeResources!configuring!public! !
+toggleShowAll!configuring!public! !
+toggleShowRunningStatusInList!configuring!public! !
+toggleShowStatusBackgroundColors!configuring!public! !
+topLevelTests!accessing!private! !
+updateListItemsFor:with:!actions!private! !
+updateTestCase:result:!actions!private! !
+withSelectedItem:!actions!private! !
+!
 
 !SUnitBrowserModel class methodsFor!
 
@@ -584,19 +586,21 @@ stateClass
 
 uninitialize
 	defaultConfiguration := nil! !
-!SUnitBrowserModel class categoriesFor: #builderClass!constants!public! !
-!SUnitBrowserModel class categoriesFor: #caseClass!constants!public! !
-!SUnitBrowserModel class categoriesFor: #configurationClass!constants!public! !
-!SUnitBrowserModel class categoriesFor: #initializeDefaultConfiguration!initializing!public! !
-!SUnitBrowserModel class categoriesFor: #resultClass!constants!public! !
-!SUnitBrowserModel class categoriesFor: #shouldInitializeResources!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #shouldInitializeResources:!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #showAll!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #showAll:!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #showRunningStatusInList!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #showRunningStatusInList:!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #showStatusBackgroundColors!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #showStatusBackgroundColors:!configuring!public! !
-!SUnitBrowserModel class categoriesFor: #stateClass!constants!public! !
-!SUnitBrowserModel class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!SUnitBrowserModel class categoriesForMethods!
+builderClass!constants!public! !
+caseClass!constants!public! !
+configurationClass!constants!public! !
+initializeDefaultConfiguration!initializing!public! !
+resultClass!constants!public! !
+shouldInitializeResources!configuring!public! !
+shouldInitializeResources:!configuring!public! !
+showAll!configuring!public! !
+showAll:!configuring!public! !
+showRunningStatusInList!configuring!public! !
+showRunningStatusInList:!configuring!public! !
+showStatusBackgroundColors!configuring!public! !
+showStatusBackgroundColors:!configuring!public! !
+stateClass!constants!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

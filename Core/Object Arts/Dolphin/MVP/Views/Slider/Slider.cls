@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #Slider
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
@@ -391,56 +391,58 @@ tickStyle: aSymbol
 		baseStyle: (HorizontalTickStyles at: aSymbol ifAbsent: [VerticalTickStyles at: aSymbol])
 		maskedBy: TickStyleMask
 		recreateIfChanged: false! !
-!Slider categoriesFor: #applicableTickStyles!constants!private! !
-!Slider categoriesFor: #autoTickFrequency:!accessing!private! !
-!Slider categoriesFor: #backcolorChanged!accessing!helpers!private! !
-!Slider categoriesFor: #channelRectangle!accessing!public! !
-!Slider categoriesFor: #clearTicks!operations!public! !
-!Slider categoriesFor: #defaultExtent!constants!private! !
-!Slider categoriesFor: #displayValue!private!updating! !
-!Slider categoriesFor: #displayValue:!private!updating! !
-!Slider categoriesFor: #getRect:!helpers!private! !
-!Slider categoriesFor: #hasAutoTicks!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasAutoTicks:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasFixedLength!accessing-styles!private!updating! !
-!Slider categoriesFor: #hasFixedLength:!accessing-styles!private!updating! !
-!Slider categoriesFor: #hasThumb!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasThumb:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicks!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicks:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasToolTips!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasToolTips:!accessing-styles!public!updating! !
-!Slider categoriesFor: #initialize!initializing!public! !
-!Slider categoriesFor: #isSelectionEnabled!accessing-styles!private! !
-!Slider categoriesFor: #isSelectionEnabled:!accessing-styles!private! !
-!Slider categoriesFor: #isVertical!accessing-styles!public! !
-!Slider categoriesFor: #isVertical:!accessing-styles!public! !
-!Slider categoriesFor: #lineSize!accessing!public! !
-!Slider categoriesFor: #lineSize:!accessing!public! !
-!Slider categoriesFor: #onHScroll:!event handling!private! !
-!Slider categoriesFor: #onVScroll:!event handling!private! !
-!Slider categoriesFor: #pageSize!accessing!public! !
-!Slider categoriesFor: #pageSize:!accessing!public! !
-!Slider categoriesFor: #range!accessing!public! !
-!Slider categoriesFor: #range:!accessing!public! !
-!Slider categoriesFor: #selectionRange!accessing!public! !
-!Slider categoriesFor: #selectionRange:!accessing!public! !
-!Slider categoriesFor: #state!accessing!private! !
-!Slider categoriesFor: #tbmClearSel!helpers!private! !
-!Slider categoriesFor: #tbmGetBuddy:!helpers!private! !
-!Slider categoriesFor: #tbmGetTicPos:!helpers!private! !
-!Slider categoriesFor: #tbmGetToolTips!helpers!private! !
-!Slider categoriesFor: #tbmGetUnicodeFormat!helpers!private! !
-!Slider categoriesFor: #tbmSetBuddy:handle:!helpers!private! !
-!Slider categoriesFor: #tbmSetTipSide:!helpers!private! !
-!Slider categoriesFor: #tbmSetToolTips:!helpers!private! !
-!Slider categoriesFor: #thumbLength!accessing!public! !
-!Slider categoriesFor: #thumbLength:!accessing!public! !
-!Slider categoriesFor: #thumbRectangle!accessing!public! !
-!Slider categoriesFor: #ticks!accessing!public! !
-!Slider categoriesFor: #ticks:!operations!public! !
-!Slider categoriesFor: #tickStyle!accessing!public! !
-!Slider categoriesFor: #tickStyle:!accessing!public! !
+!Slider categoriesForMethods!
+applicableTickStyles!constants!private! !
+autoTickFrequency:!accessing!private! !
+backcolorChanged!accessing!helpers!private! !
+channelRectangle!accessing!public! !
+clearTicks!operations!public! !
+defaultExtent!constants!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+getRect:!helpers!private! !
+hasAutoTicks!accessing-styles!public!updating! !
+hasAutoTicks:!accessing-styles!public!updating! !
+hasFixedLength!accessing-styles!private!updating! !
+hasFixedLength:!accessing-styles!private!updating! !
+hasThumb!accessing-styles!public!updating! !
+hasThumb:!accessing-styles!public!updating! !
+hasTicks!accessing-styles!public!updating! !
+hasTicks:!accessing-styles!public!updating! !
+hasToolTips!accessing-styles!public!updating! !
+hasToolTips:!accessing-styles!public!updating! !
+initialize!initializing!public! !
+isSelectionEnabled!accessing-styles!private! !
+isSelectionEnabled:!accessing-styles!private! !
+isVertical!accessing-styles!public! !
+isVertical:!accessing-styles!public! !
+lineSize!accessing!public! !
+lineSize:!accessing!public! !
+onHScroll:!event handling!private! !
+onVScroll:!event handling!private! !
+pageSize!accessing!public! !
+pageSize:!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+selectionRange!accessing!public! !
+selectionRange:!accessing!public! !
+state!accessing!private! !
+tbmClearSel!helpers!private! !
+tbmGetBuddy:!helpers!private! !
+tbmGetTicPos:!helpers!private! !
+tbmGetToolTips!helpers!private! !
+tbmGetUnicodeFormat!helpers!private! !
+tbmSetBuddy:handle:!helpers!private! !
+tbmSetTipSide:!helpers!private! !
+tbmSetToolTips:!helpers!private! !
+thumbLength!accessing!public! !
+thumbLength:!accessing!public! !
+thumbRectangle!accessing!public! !
+ticks!accessing!public! !
+ticks:!operations!public! !
+tickStyle!accessing!public! !
+tickStyle:!accessing!public! !
+!
 
 !Slider class methodsFor!
 
@@ -490,10 +492,12 @@ winClassName
 	"Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_trackbar32'! !
-!Slider class categoriesFor: #defaultModel!models!public! !
-!Slider class categoriesFor: #icon!constants!public! !
-!Slider class categoriesFor: #initialize!development!initializing!private! !
-!Slider class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!Slider class categoriesFor: #themePartName!constants!private! !
-!Slider class categoriesFor: #winClassName!constants!private! !
+!Slider class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+themePartName!constants!private! !
+winClassName!constants!private! !
+!
 

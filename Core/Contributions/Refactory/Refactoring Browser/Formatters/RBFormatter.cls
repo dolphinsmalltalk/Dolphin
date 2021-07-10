@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBSourceFormatter subclass: #RBFormatter
 	instanceVariableNames: 'firstLineLength'
@@ -363,42 +363,44 @@ visitSequenceNode: aSequenceNode
 	self formatTemporariesFor: aSequenceNode.
 	self formatMethodCommentFor: aSequenceNode indentBefore: false.
 	self formatStatementsFor: aSequenceNode! !
-!RBFormatter categoriesFor: #acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
-!RBFormatter categoriesFor: #firstLineLength!accessing!public! !
-!RBFormatter categoriesFor: #for:do:separatedBy:!enumerating!private! !
-!RBFormatter categoriesFor: #formatArray:!formatting!private! !
-!RBFormatter categoriesFor: #formatMessage:cascade:!formatting!private! !
-!RBFormatter categoriesFor: #formatMessageSelector:withArguments:multiline:!formatting!private! !
-!RBFormatter categoriesFor: #formatMethodBodyFor:!private!visitor/double dispatching! !
-!RBFormatter categoriesFor: #formatMethodCommentFor:indentBefore:!formatting!private! !
-!RBFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!RBFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!RBFormatter categoriesFor: #formatStatementsFor:!formatting!private! !
-!RBFormatter categoriesFor: #formatTemporariesFor:!formatting!private! !
-!RBFormatter categoriesFor: #indentWhile:!helpers!private! !
-!RBFormatter categoriesFor: #isMultiLine!accessing!public! !
-!RBFormatter categoriesFor: #lastLineLength!accessing!public! !
-!RBFormatter categoriesFor: #lineStart:!accessing!private! !
-!RBFormatter categoriesFor: #maximumArgumentsPerLine!constants!public! !
-!RBFormatter categoriesFor: #needsParenthesisFor:!helpers!private! !
-!RBFormatter categoriesFor: #newLine!helpers!private! !
-!RBFormatter categoriesFor: #newLinesFor:startingAt:!formatting!private! !
-!RBFormatter categoriesFor: #postCopy!copying!public! !
-!RBFormatter categoriesFor: #precedenceOf:greaterThan:!helpers!private! !
-!RBFormatter categoriesFor: #selectorsToLeaveOnLine!constants!public! !
-!RBFormatter categoriesFor: #selectorsToStartOnNewLine!constants!public! !
-!RBFormatter categoriesFor: #startMessageSendOnNewLine:!private!testing! !
-!RBFormatter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitNode:!public!visiting! !
-!RBFormatter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitPatternBlockNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!RBFormatter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!RBFormatter categoriesForMethods!
+acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
+firstLineLength!accessing!public! !
+for:do:separatedBy:!enumerating!private! !
+formatArray:!formatting!private! !
+formatMessage:cascade:!formatting!private! !
+formatMessageSelector:withArguments:multiline:!formatting!private! !
+formatMethodBodyFor:!private!visitor/double dispatching! !
+formatMethodCommentFor:indentBefore:!formatting!private! !
+formatMethodPatternFor:!formatting!private! !
+formatStatementCommentsFor:!formatting!private! !
+formatStatementsFor:!formatting!private! !
+formatTemporariesFor:!formatting!private! !
+indentWhile:!helpers!private! !
+isMultiLine!accessing!public! !
+lastLineLength!accessing!public! !
+lineStart:!accessing!private! !
+maximumArgumentsPerLine!constants!public! !
+needsParenthesisFor:!helpers!private! !
+newLine!helpers!private! !
+newLinesFor:startingAt:!formatting!private! !
+postCopy!copying!public! !
+precedenceOf:greaterThan:!helpers!private! !
+selectorsToLeaveOnLine!constants!public! !
+selectorsToStartOnNewLine!constants!public! !
+startMessageSendOnNewLine:!private!testing! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitNode:!public!visiting! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitPatternBlockNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+!
 
 !RBFormatter class methodsFor!
 
@@ -432,11 +434,13 @@ selectorsToStartOnNewLine
 
 selectorsToStartOnNewLine: anArrayOfSymbols
 	SelectorsToStartOnNewLine := anArrayOfSymbols! !
-!RBFormatter class categoriesFor: #initialize!initializing!public! !
-!RBFormatter class categoriesFor: #maximumArgumentsPerLine!options!public! !
-!RBFormatter class categoriesFor: #maximumArgumentsPerLine:!options!public! !
-!RBFormatter class categoriesFor: #selectorsToLeaveOnLine!options!public! !
-!RBFormatter class categoriesFor: #selectorsToLeaveOnLine:!options!public! !
-!RBFormatter class categoriesFor: #selectorsToStartOnNewLine!options!public! !
-!RBFormatter class categoriesFor: #selectorsToStartOnNewLine:!options!public! !
+!RBFormatter class categoriesForMethods!
+initialize!initializing!public! !
+maximumArgumentsPerLine!options!public! !
+maximumArgumentsPerLine:!options!public! !
+selectorsToLeaveOnLine!options!public! !
+selectorsToLeaveOnLine:!options!public! !
+selectorsToStartOnNewLine!options!public! !
+selectorsToStartOnNewLine:!options!public! !
+!
 

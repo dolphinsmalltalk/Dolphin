@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	instanceVariableNames: ''
@@ -47,6 +47,8 @@ testPackageEnvironment
 			self assert: (env definesClass: each)].
 	self assert: (env includesSelector: #choose in: Font class).
 	self deny: (env includesSelector: #icon in: Font class)! !
-!PackageEnvironmentTest categoriesFor: #classNamesFor:!BrowserEnvironment tests!public! !
-!PackageEnvironmentTest categoriesFor: #testPackageEnvironment!public!unit tests! !
+!PackageEnvironmentTest categoriesForMethods!
+classNamesFor:!BrowserEnvironment tests!public! !
+testPackageEnvironment!public!unit tests! !
+!
 

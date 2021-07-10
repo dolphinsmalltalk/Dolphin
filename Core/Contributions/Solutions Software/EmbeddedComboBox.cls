@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ComboBox subclass: #EmbeddedComboBox
 	instanceVariableNames: 'choiceModel allowNilSelection'
@@ -212,39 +212,41 @@ stbSaveOn: anSTBOutFiler
 	handle isNil 
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
-!EmbeddedComboBox categoriesFor: #allowNilSelection!accessing!public! !
-!EmbeddedComboBox categoriesFor: #allowNilSelection:!accessing!public! !
-!EmbeddedComboBox categoriesFor: #cbnSelChange!event handling!public! !
-!EmbeddedComboBox categoriesFor: #choiceModel!accessing!private! !
-!EmbeddedComboBox categoriesFor: #choiceModel:!accessing!private! !
-!EmbeddedComboBox categoriesFor: #choices:!public!testing! !
-!EmbeddedComboBox categoriesFor: #column!accessing!public! !
-!EmbeddedComboBox categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedComboBox categoriesFor: #cueBanner!displaying!public! !
-!EmbeddedComboBox categoriesFor: #cueBanner:!displaying!public! !
-!EmbeddedComboBox categoriesFor: #defaultWindowExStyle!constants!private! !
-!EmbeddedComboBox categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedComboBox categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
-!EmbeddedComboBox categoriesFor: #displayOnFormats!binary filing!public! !
-!EmbeddedComboBox categoriesFor: #editRectFor:!accessing!private! !
-!EmbeddedComboBox categoriesFor: #embeddedValue!accessing!public! !
-!EmbeddedComboBox categoriesFor: #embeddedValue:!accessing!public! !
-!EmbeddedComboBox categoriesFor: #expectsText!public!testing! !
-!EmbeddedComboBox categoriesFor: #hasCueBanner!displaying!public! !
-!EmbeddedComboBox categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedComboBox categoriesFor: #hide!displaying!public! !
-!EmbeddedComboBox categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedComboBox categoriesFor: #listModel:!public!testing! !
-!EmbeddedComboBox categoriesFor: #model:!accessing!public! !
-!EmbeddedComboBox categoriesFor: #offsetX!accessing!public! !
-!EmbeddedComboBox categoriesFor: #offsetY!accessing!public! !
-!EmbeddedComboBox categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedComboBox categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedComboBox categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedComboBox categoriesFor: #onViewCreated!event handling!public! !
-!EmbeddedComboBox categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedComboBox categoriesFor: #showIn:!displaying!public! !
-!EmbeddedComboBox categoriesFor: #stbSaveOn:!binary filing!public! !
+!EmbeddedComboBox categoriesForMethods!
+allowNilSelection!accessing!public! !
+allowNilSelection:!accessing!public! !
+cbnSelChange!event handling!public! !
+choiceModel!accessing!private! !
+choiceModel:!accessing!private! !
+choices:!public!testing! !
+column!accessing!public! !
+createEmbeddedIn:!initialize/release!public! !
+cueBanner!displaying!public! !
+cueBanner:!displaying!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+display:in:on:forecolor:backcolor:editable:hot:!displaying!public! !
+displayOnFormats!binary filing!public! !
+editRectFor:!accessing!private! !
+embeddedValue!accessing!public! !
+embeddedValue:!accessing!public! !
+expectsText!public!testing! !
+hasCueBanner!displaying!public! !
+hasEmbeddedHotTracking!public!testing! !
+hide!displaying!public! !
+isDisplayOwnerDrawn!public!testing! !
+listModel:!public!testing! !
+model:!accessing!public! !
+offsetX!accessing!public! !
+offsetY!accessing!public! !
+onCursoredLeft!event handling!public! !
+onKillFocus!event handling!public! !
+onRequestDeactivate!event handling!public! !
+onViewCreated!event handling!public! !
+preTranslateKeyboardInput:!event handling!public! !
+showIn:!displaying!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !EmbeddedComboBox class methodsFor!
 
@@ -265,6 +267,8 @@ stbVersion
 	"21 - lastSelIndices already initialized to #() - see #1030"
 
 	^21! !
-!EmbeddedComboBox class categoriesFor: #stbConvertFrom:!public! !
-!EmbeddedComboBox class categoriesFor: #stbVersion!binary filing!public! !
+!EmbeddedComboBox class categoriesForMethods!
+stbConvertFrom:!public! !
+stbVersion!binary filing!public! !
+!
 

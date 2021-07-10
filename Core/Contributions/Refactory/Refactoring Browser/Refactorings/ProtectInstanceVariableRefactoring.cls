@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #ProtectInstanceVariableRefactoring
 	instanceVariableNames: ''
@@ -46,8 +46,10 @@ preconditions
 transform
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]! !
-!ProtectInstanceVariableRefactoring categoriesFor: #getterSetterMethods!accessing!private! !
-!ProtectInstanceVariableRefactoring categoriesFor: #inline:!public!transforming! !
-!ProtectInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ProtectInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!ProtectInstanceVariableRefactoring categoriesForMethods!
+getterSetterMethods!accessing!private! !
+inline:!public!transforming! !
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

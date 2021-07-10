@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #InplaceTextEditor
 	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationBlock'
@@ -256,42 +256,44 @@ value: anObject
 	the original subject model until #apply is received"
 
 	self model value: anObject.! !
-!InplaceTextEditor categoriesFor: #answer!accessing!public! !
-!InplaceTextEditor categoriesFor: #apply!commands!public! !
-!InplaceTextEditor categoriesFor: #bufferClass!accessing!private! !
-!InplaceTextEditor categoriesFor: #bufferedModelFor:!accessing!private! !
-!InplaceTextEditor categoriesFor: #cancel!commands!public! !
-!InplaceTextEditor categoriesFor: #createSchematicWiring!initializing!public! !
-!InplaceTextEditor categoriesFor: #createView:!operations!private! !
-!InplaceTextEditor categoriesFor: #editBox!helpers!private! !
-!InplaceTextEditor categoriesFor: #findDetails!public!searching & replacing! !
-!InplaceTextEditor categoriesFor: #font:!initializing!public! !
-!InplaceTextEditor categoriesFor: #implicitBorder!constants!private! !
-!InplaceTextEditor categoriesFor: #initialize!initializing!private! !
-!InplaceTextEditor categoriesFor: #isConfirmed!public!testing! !
-!InplaceTextEditor categoriesFor: #isInputValid!private!testing! !
-!InplaceTextEditor categoriesFor: #model:!accessing!public! !
-!InplaceTextEditor categoriesFor: #ok!commands!public! !
-!InplaceTextEditor categoriesFor: #onFocusLost!event handling!private! !
-!InplaceTextEditor categoriesFor: #onGetCursor:!event handling!public! !
-!InplaceTextEditor categoriesFor: #onKeyTyped:!event handling!private! !
-!InplaceTextEditor categoriesFor: #onTextChanged!event handling!private! !
-!InplaceTextEditor categoriesFor: #onValueChanged!event handling!public! !
-!InplaceTextEditor categoriesFor: #onViewOpened!event handling!private! !
-!InplaceTextEditor categoriesFor: #ownerView!accessing!public! !
-!InplaceTextEditor categoriesFor: #ownerView:!accessing!public! !
-!InplaceTextEditor categoriesFor: #queryCommand:!commands!private! !
-!InplaceTextEditor categoriesFor: #requiredExtent!helpers!private! !
-!InplaceTextEditor categoriesFor: #resizeToFit!helpers!private! !
-!InplaceTextEditor categoriesFor: #runModalInProcessLoop!helpers!private! !
-!InplaceTextEditor categoriesFor: #setInitialFocus!operations!public! !
-!InplaceTextEditor categoriesFor: #showModal!public!realizing/unrealizing! !
-!InplaceTextEditor categoriesFor: #showModalView!helpers!private! !
-!InplaceTextEditor categoriesFor: #textRectangle:!initializing!public! !
-!InplaceTextEditor categoriesFor: #validationBlock!accessing!public! !
-!InplaceTextEditor categoriesFor: #validationBlock:!accessing!public! !
-!InplaceTextEditor categoriesFor: #value!accessing!public! !
-!InplaceTextEditor categoriesFor: #value:!accessing!public! !
+!InplaceTextEditor categoriesForMethods!
+answer!accessing!public! !
+apply!commands!public! !
+bufferClass!accessing!private! !
+bufferedModelFor:!accessing!private! !
+cancel!commands!public! !
+createSchematicWiring!initializing!public! !
+createView:!operations!private! !
+editBox!helpers!private! !
+findDetails!public!searching & replacing! !
+font:!initializing!public! !
+implicitBorder!constants!private! !
+initialize!initializing!private! !
+isConfirmed!public!testing! !
+isInputValid!private!testing! !
+model:!accessing!public! !
+ok!commands!public! !
+onFocusLost!event handling!private! !
+onGetCursor:!event handling!public! !
+onKeyTyped:!event handling!private! !
+onTextChanged!event handling!private! !
+onValueChanged!event handling!public! !
+onViewOpened!event handling!private! !
+ownerView!accessing!public! !
+ownerView:!accessing!public! !
+queryCommand:!commands!private! !
+requiredExtent!helpers!private! !
+resizeToFit!helpers!private! !
+runModalInProcessLoop!helpers!private! !
+setInitialFocus!operations!public! !
+showModal!public!realizing/unrealizing! !
+showModalView!helpers!private! !
+textRectangle:!initializing!public! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !InplaceTextEditor class methodsFor!
 
@@ -317,8 +319,10 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #window nil 1543 nil nil nil 416 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil 8 '' 65 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 754 191 41 416 706 #text: 34 1 8 'Text to be edited' 416 706 #setMarginWidths: 34 1 8 #(2 2) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 222 7 0 0 30 0 0 0] 8 #() 754 193 193 nil 27 )! !
-!InplaceTextEditor class categoriesFor: #createOn:!public! !
-!InplaceTextEditor class categoriesFor: #defaultModel!models!public! !
-!InplaceTextEditor class categoriesFor: #icon!constants!public! !
-!InplaceTextEditor class categoriesFor: #resource_Default_view!public!resources-views! !
+!InplaceTextEditor class categoriesForMethods!
+createOn:!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #ListControlView
 	instanceVariableNames: 'getTextBlock'
@@ -600,87 +600,89 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	! !
-!ListControlView categoriesFor: #addSelections:!public!selection! !
-!ListControlView categoriesFor: #addSelections:ifAbsent:!public!selection! !
-!ListControlView categoriesFor: #addSelectionsByIndex:!public!selection! !
-!ListControlView categoriesFor: #anchorIndex!public!selection! !
-!ListControlView categoriesFor: #basicAdd:atIndex:!adding!private! !
-!ListControlView categoriesFor: #basicClear!private!removing! !
-!ListControlView categoriesFor: #basicRefreshContents!private!updating! !
-!ListControlView categoriesFor: #basicRemoveAtIndex:!private!removing! !
-!ListControlView categoriesFor: #basicResetSelection!private!selection! !
-!ListControlView categoriesFor: #basicSelectionsByIndex:!private!selection! !
-!ListControlView categoriesFor: #caretIndex!public!selection! !
-!ListControlView categoriesFor: #connectModel!models!public! !
-!ListControlView categoriesFor: #defaultGetTextBlock!constants!private! !
-!ListControlView categoriesFor: #dispatchRegistered:wParam:lParam:!operations!private! !
-!ListControlView categoriesFor: #ensureSelectionVisible!public!selection! !
-!ListControlView categoriesFor: #errorNoSelection!exceptions!private! !
-!ListControlView categoriesFor: #errorNotMultiSelect!private!selection! !
-!ListControlView categoriesFor: #getInfoTipBlock!accessing!public! !
-!ListControlView categoriesFor: #getInfoTipBlock:!accessing!public! !
-!ListControlView categoriesFor: #getSelectionsByIndex!private!selection! !
-!ListControlView categoriesFor: #getTextBlock!adapters!public! !
-!ListControlView categoriesFor: #getTextBlock:!adapters!public! !
-!ListControlView categoriesFor: #handleFromObject:!accessing!private! !
-!ListControlView categoriesFor: #handleFromObject:ifAbsent:!accessing!private! !
-!ListControlView categoriesFor: #handlesFromObjects:whenAbsent:!helpers!private! !
-!ListControlView categoriesFor: #hasSelection!public!selection! !
-!ListControlView categoriesFor: #hasSingleSelection!public!selection! !
-!ListControlView categoriesFor: #initialize!initializing!private! !
-!ListControlView categoriesFor: #isMultiSelect!public!selection!testing! !
-!ListControlView categoriesFor: #isVirtual!accessing-styles!public! !
-!ListControlView categoriesFor: #itemCount!accessing!public! !
-!ListControlView categoriesFor: #itemFromPoint:!enquiries!private! !
-!ListControlView categoriesFor: #lastSelIndices!private! !
-!ListControlView categoriesFor: #list!accessing!public! !
-!ListControlView categoriesFor: #list:!accessing!public! !
-!ListControlView categoriesFor: #newSelectionsFromEvent:!event handling!private! !
-!ListControlView categoriesFor: #noSelection!constants!private! !
-!ListControlView categoriesFor: #objectFromHandle:!accessing!private! !
-!ListControlView categoriesFor: #objectFromHandle:ifAbsent:!accessing!private! !
-!ListControlView categoriesFor: #onActionPerformed!event handling!public! !
-!ListControlView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!ListControlView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!ListControlView categoriesFor: #onItem:updatedAtIndex:!event handling!public! !
-!ListControlView categoriesFor: #onListChanged!event handling!public! !
-!ListControlView categoriesFor: #onSelChanged!private! !
-!ListControlView categoriesFor: #onSelChanged:!event handling!private! !
-!ListControlView categoriesFor: #onSelectionChanged!event handling!public! !
-!ListControlView categoriesFor: #onSelectionChanging:!event handling!public! !
-!ListControlView categoriesFor: #primarySelectionIndex!public!selection! !
-!ListControlView categoriesFor: #refreshContents!public!updating! !
-!ListControlView categoriesFor: #requestDragObjects:!drag & drop!public! !
-!ListControlView categoriesFor: #resetSelection!public!selection! !
-!ListControlView categoriesFor: #revertSelection!helpers!private!selection! !
-!ListControlView categoriesFor: #selectedCount!public!selection! !
-!ListControlView categoriesFor: #selectIndex:set:!private!selection! !
-!ListControlView categoriesFor: #selectIndices:set:!private!selection! !
-!ListControlView categoriesFor: #selection!public!selection! !
-!ListControlView categoriesFor: #selection:!public!selection! !
-!ListControlView categoriesFor: #selection:ifAbsent:!public!selection! !
-!ListControlView categoriesFor: #selectionByIndex!public!selection! !
-!ListControlView categoriesFor: #selectionByIndex:!public!selection! !
-!ListControlView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!ListControlView categoriesFor: #selectionByIndexIfNone:!public!selection! !
-!ListControlView categoriesFor: #selectionIfNone:!public!selection! !
-!ListControlView categoriesFor: #selectionOrNil!public!selection! !
-!ListControlView categoriesFor: #selectionOrNil:!public!selection! !
-!ListControlView categoriesFor: #selections!public!selection! !
-!ListControlView categoriesFor: #selections:!public!selection! !
-!ListControlView categoriesFor: #selections:ifAbsent:!public!selection! !
-!ListControlView categoriesFor: #selectionsByIndex!public!selection! !
-!ListControlView categoriesFor: #selectionsByIndex:!public!selection! !
-!ListControlView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
-!ListControlView categoriesFor: #selectionState!accessing!private! !
-!ListControlView categoriesFor: #setSingleSelection:!public!selection! !
-!ListControlView categoriesFor: #size!accessing!public! !
-!ListControlView categoriesFor: #state!accessing!private! !
-!ListControlView categoriesFor: #updateAll!public!updating! !
-!ListControlView categoriesFor: #updateAllNonVirtual!private!updating! !
-!ListControlView categoriesFor: #updateAllVirtual!private!updating! !
-!ListControlView categoriesFor: #updateItem:atIndex:!event handling!public! !
-!ListControlView categoriesFor: #updateSelectionCache!helpers!private!selection! !
+!ListControlView categoriesForMethods!
+addSelections:!public!selection! !
+addSelections:ifAbsent:!public!selection! !
+addSelectionsByIndex:!public!selection! !
+anchorIndex!public!selection! !
+basicAdd:atIndex:!adding!private! !
+basicClear!private!removing! !
+basicRefreshContents!private!updating! !
+basicRemoveAtIndex:!private!removing! !
+basicResetSelection!private!selection! !
+basicSelectionsByIndex:!private!selection! !
+caretIndex!public!selection! !
+connectModel!models!public! !
+defaultGetTextBlock!constants!private! !
+dispatchRegistered:wParam:lParam:!operations!private! !
+ensureSelectionVisible!public!selection! !
+errorNoSelection!exceptions!private! !
+errorNotMultiSelect!private!selection! !
+getInfoTipBlock!accessing!public! !
+getInfoTipBlock:!accessing!public! !
+getSelectionsByIndex!private!selection! !
+getTextBlock!adapters!public! !
+getTextBlock:!adapters!public! !
+handleFromObject:!accessing!private! !
+handleFromObject:ifAbsent:!accessing!private! !
+handlesFromObjects:whenAbsent:!helpers!private! !
+hasSelection!public!selection! !
+hasSingleSelection!public!selection! !
+initialize!initializing!private! !
+isMultiSelect!public!selection!testing! !
+isVirtual!accessing-styles!public! !
+itemCount!accessing!public! !
+itemFromPoint:!enquiries!private! !
+lastSelIndices!private! !
+list!accessing!public! !
+list:!accessing!public! !
+newSelectionsFromEvent:!event handling!private! !
+noSelection!constants!private! !
+objectFromHandle:!accessing!private! !
+objectFromHandle:ifAbsent:!accessing!private! !
+onActionPerformed!event handling!public! !
+onItem:addedAtIndex:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onItem:updatedAtIndex:!event handling!public! !
+onListChanged!event handling!public! !
+onSelChanged!private! !
+onSelChanged:!event handling!private! !
+onSelectionChanged!event handling!public! !
+onSelectionChanging:!event handling!public! !
+primarySelectionIndex!public!selection! !
+refreshContents!public!updating! !
+requestDragObjects:!drag & drop!public! !
+resetSelection!public!selection! !
+revertSelection!helpers!private!selection! !
+selectedCount!public!selection! !
+selectIndex:set:!private!selection! !
+selectIndices:set:!private!selection! !
+selection!public!selection! !
+selection:!public!selection! !
+selection:ifAbsent:!public!selection! !
+selectionByIndex!public!selection! !
+selectionByIndex:!public!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionByIndexIfNone:!public!selection! !
+selectionIfNone:!public!selection! !
+selectionOrNil!public!selection! !
+selectionOrNil:!public!selection! !
+selections!public!selection! !
+selections:!public!selection! !
+selections:ifAbsent:!public!selection! !
+selectionsByIndex!public!selection! !
+selectionsByIndex:!public!selection! !
+selectionsByIndex:ifAbsent:!public!selection! !
+selectionState!accessing!private! !
+setSingleSelection:!public!selection! !
+size!accessing!public! !
+state!accessing!private! !
+updateAll!public!updating! !
+updateAllNonVirtual!private!updating! !
+updateAllVirtual!private!updating! !
+updateItem:atIndex:!event handling!public! !
+updateSelectionCache!helpers!private!selection! !
+!
 
 ListControlView methodProtocol: #indexSelectableItems attributes: #(#readOnly) selectors: #(#selectionByIndex #selectionByIndex: #selectionByIndex:ifAbsent: #selectionByIndexIfNone:)!
 ListControlView methodProtocol: #listView attributes: #(#readOnly) selectors: #(#list #list: #onItem:addedAtIndex: #onItem:removedAtIndex: #onItem:updatedAtIndex: #onListChanged)!
@@ -703,7 +705,9 @@ onStartup
 	the fact."
 
 	RevertSelMessage := self registerMessage: 'RevertSelection'! !
-!ListControlView class categoriesFor: #defaultModel!models!public! !
-!ListControlView class categoriesFor: #icon!constants!public! !
-!ListControlView class categoriesFor: #onStartup!events-session!public! !
+!ListControlView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+onStartup!events-session!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #TextAndImageButtonTest
 	instanceVariableNames: 'button canvas anon'
@@ -83,8 +83,10 @@ testLabelWithAmpersand
 	self deny: (imageRect intersects: textRect).
 	canvas free.
 ! !
-!TextAndImageButtonTest categoriesFor: #setUp!public!running! !
-!TextAndImageButtonTest categoriesFor: #tearDown!public!running! !
-!TextAndImageButtonTest categoriesFor: #testButtonWithMenuClick!public!unit tests! !
-!TextAndImageButtonTest categoriesFor: #testLabelWithAmpersand!public!unit tests! !
+!TextAndImageButtonTest categoriesForMethods!
+setUp!public!running! !
+tearDown!public!running! !
+testButtonWithMenuClick!public!unit tests! !
+testLabelWithAmpersand!public!unit tests! !
+!
 

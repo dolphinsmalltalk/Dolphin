@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BasicLintRule subclass: #BlockLintRule
 	instanceVariableNames: 'classBlock methodBlock'
@@ -32,12 +32,14 @@ undeclaredVariables
 
 	#rbFix. "Dolphin does not support forward refs. to undeclared variables"
 	^Dictionary new! !
-!BlockLintRule categoriesFor: #checkClass:!accessing!public! !
-!BlockLintRule categoriesFor: #checkMethod:!accessing!public! !
-!BlockLintRule categoriesFor: #classBlock:!initialize/release!public! !
-!BlockLintRule categoriesFor: #initialize!initialize/release!public! !
-!BlockLintRule categoriesFor: #methodBlock:!initialize/release!public! !
-!BlockLintRule categoriesFor: #undeclaredVariables!public! !
+!BlockLintRule categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+classBlock:!initialize/release!public! !
+initialize!initialize/release!public! !
+methodBlock:!initialize/release!public! !
+undeclaredVariables!public! !
+!
 
 !BlockLintRule class methodsFor!
 
@@ -735,49 +737,51 @@ vernacularSelector
 
 vernacularSelectors
 	^#(#arse #fart)! !
-!BlockLintRule class categoriesFor: #abstractClass!possible bugs!public! !
-!BlockLintRule class categoriesFor: #addRemoveDependents!possible bugs!public! !
-!BlockLintRule class categoriesFor: #badMessage!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #badSelectors!constants!private! !
-!BlockLintRule class categoriesFor: #classInstVarNotInitialized!possible bugs!public! !
-!BlockLintRule class categoriesFor: #classNameInSelector!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #classNotReferenced!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #classShouldNotOverride!constants!private! !
-!BlockLintRule class categoriesFor: #collectionCopyEmpty!possible bugs!public! !
-!BlockLintRule class categoriesFor: #collectionMessagesToExternalObject!intention revealing!public! !
-!BlockLintRule class categoriesFor: #definesEqualNotHash!possible bugs!public! !
-!BlockLintRule class categoriesFor: #doesLiteralArrayContainComma:!helpers!private! !
-!BlockLintRule class categoriesFor: #equivalentSuperclassMethods!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #fullBlocks!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #implementedNotSent!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #instVarInSubclasses!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #justSendsSuper!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #literalArrayContainsComma!possible bugs!public! !
-!BlockLintRule class categoriesFor: #longMethods!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #longMethodSize!constants!private! !
-!BlockLintRule class categoriesFor: #metaclassShouldNotOverride!constants!private! !
-!BlockLintRule class categoriesFor: #missingSubclassResponsibility!intention revealing!public! !
-!BlockLintRule class categoriesFor: #onlyReadOrWritten!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #overridesSpecialMessage!bugs!public! !
-!BlockLintRule class categoriesFor: #refersToClass!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #returnsBooleanAndOther!possible bugs!public! !
-!BlockLintRule class categoriesFor: #sendsDifferentSuper!possible bugs!public! !
-!BlockLintRule class categoriesFor: #sentNotImplemented!bugs!public! !
-!BlockLintRule class categoriesFor: #subclassOf:overrides:!helpers!private! !
-!BlockLintRule class categoriesFor: #subclassResponsibilityNotDefined!bugs!public! !
-!BlockLintRule class categoriesFor: #superMessages!constants!private! !
-!BlockLintRule class categoriesFor: #superSends!possible bugs!public! !
-!BlockLintRule class categoriesFor: #tempsReadBeforeWritten!possible bugs!public! !
-!BlockLintRule class categoriesFor: #tempsUnused!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #tempVarOverridesInstVar!possible bugs!public! !
-!BlockLintRule class categoriesFor: #undeclaredVariables!accessing!constants!private! !
-!BlockLintRule class categoriesFor: #unreferencedVariables!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #usesTrue!possible bugs!public! !
-!BlockLintRule class categoriesFor: #utilityMethods!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #utilityProtocols!constants!private! !
-!BlockLintRule class categoriesFor: #variableAssignedLiteral!miscellaneous!public! !
-!BlockLintRule class categoriesFor: #variableNotDefined!possible bugs!public! !
-!BlockLintRule class categoriesFor: #variableReferencedOnce!public!unnecessary code! !
-!BlockLintRule class categoriesFor: #vernacularSelector!intention revealing!public! !
-!BlockLintRule class categoriesFor: #vernacularSelectors!constants!private! !
+!BlockLintRule class categoriesForMethods!
+abstractClass!possible bugs!public! !
+addRemoveDependents!possible bugs!public! !
+badMessage!miscellaneous!public! !
+badSelectors!constants!private! !
+classInstVarNotInitialized!possible bugs!public! !
+classNameInSelector!miscellaneous!public! !
+classNotReferenced!public!unnecessary code! !
+classShouldNotOverride!constants!private! !
+collectionCopyEmpty!possible bugs!public! !
+collectionMessagesToExternalObject!intention revealing!public! !
+definesEqualNotHash!possible bugs!public! !
+doesLiteralArrayContainComma:!helpers!private! !
+equivalentSuperclassMethods!public!unnecessary code! !
+fullBlocks!miscellaneous!public! !
+implementedNotSent!public!unnecessary code! !
+instVarInSubclasses!miscellaneous!public! !
+justSendsSuper!public!unnecessary code! !
+literalArrayContainsComma!possible bugs!public! !
+longMethods!miscellaneous!public! !
+longMethodSize!constants!private! !
+metaclassShouldNotOverride!constants!private! !
+missingSubclassResponsibility!intention revealing!public! !
+onlyReadOrWritten!public!unnecessary code! !
+overridesSpecialMessage!bugs!public! !
+refersToClass!miscellaneous!public! !
+returnsBooleanAndOther!possible bugs!public! !
+sendsDifferentSuper!possible bugs!public! !
+sentNotImplemented!bugs!public! !
+subclassOf:overrides:!helpers!private! !
+subclassResponsibilityNotDefined!bugs!public! !
+superMessages!constants!private! !
+superSends!possible bugs!public! !
+tempsReadBeforeWritten!possible bugs!public! !
+tempsUnused!public!unnecessary code! !
+tempVarOverridesInstVar!possible bugs!public! !
+undeclaredVariables!accessing!constants!private! !
+unreferencedVariables!public!unnecessary code! !
+usesTrue!possible bugs!public! !
+utilityMethods!miscellaneous!public! !
+utilityProtocols!constants!private! !
+variableAssignedLiteral!miscellaneous!public! !
+variableNotDefined!possible bugs!public! !
+variableReferencedOnce!public!unnecessary code! !
+vernacularSelector!intention revealing!public! !
+vernacularSelectors!constants!private! !
+!
 

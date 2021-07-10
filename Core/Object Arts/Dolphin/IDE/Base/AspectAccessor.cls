@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueAdaptor subclass: #AspectAccessor
 	instanceVariableNames: 'aspectDescriptor'
@@ -207,39 +207,41 @@ yourselfAspect
 	receiver's value."
 
 	^self value publishedAspects detect: [:each | each name == #yourself]! !
-!AspectAccessor categoriesFor: #<=!comparing!public! !
-!AspectAccessor categoriesFor: #=!comparing!public! !
-!AspectAccessor categoriesFor: #aspectDescriptor!accessing!private! !
-!AspectAccessor categoriesFor: #aspectDescriptor:!accessing!private! !
-!AspectAccessor categoriesFor: #aspectDisplayOn:!private! !
-!AspectAccessor categoriesFor: #canEdit!operations!public! !
-!AspectAccessor categoriesFor: #canGet!public!testing! !
-!AspectAccessor categoriesFor: #canImmediateAction!public!testing! !
-!AspectAccessor categoriesFor: #canNil!public!testing! !
-!AspectAccessor categoriesFor: #canSet!public!testing! !
-!AspectAccessor categoriesFor: #defaultComparisonPolicy!initializing!private! !
-!AspectAccessor categoriesFor: #displayOn:!displaying!public! !
-!AspectAccessor categoriesFor: #editedValue:!accessing!private! !
-!AspectAccessor categoriesFor: #editUsing:!operations!public! !
-!AspectAccessor categoriesFor: #getMutableValue!public! !
-!AspectAccessor categoriesFor: #hash!comparing!public! !
-!AspectAccessor categoriesFor: #immediateActionUsing:!operations!public! !
-!AspectAccessor categoriesFor: #isMutable!accessing!public! !
-!AspectAccessor categoriesFor: #isReadable!public! !
-!AspectAccessor categoriesFor: #name!accessing!public! !
-!AspectAccessor categoriesFor: #objectRef!accessing!private! !
-!AspectAccessor categoriesFor: #objectRefName!accessing!public! !
-!AspectAccessor categoriesFor: #selectIn:!event handling!private! !
-!AspectAccessor categoriesFor: #setSubject:aspectDescriptor:!initializing!private! !
-!AspectAccessor categoriesFor: #setValue:!accessing!private! !
-!AspectAccessor categoriesFor: #value!accessing!public! !
-!AspectAccessor categoriesFor: #valueIcon!accessing!public! !
-!AspectAccessor categoriesFor: #valueImage!accessing!public! !
-!AspectAccessor categoriesFor: #valueNameInfo!accessing!public! !
-!AspectAccessor categoriesFor: #valueNameOnly!accessing!public! !
-!AspectAccessor categoriesFor: #valueText!accessing!public! !
-!AspectAccessor categoriesFor: #valueTextOnly!accessing!public! !
-!AspectAccessor categoriesFor: #yourselfAspect!accessing!public! !
+!AspectAccessor categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+aspectDescriptor!accessing!private! !
+aspectDescriptor:!accessing!private! !
+aspectDisplayOn:!private! !
+canEdit!operations!public! !
+canGet!public!testing! !
+canImmediateAction!public!testing! !
+canNil!public!testing! !
+canSet!public!testing! !
+defaultComparisonPolicy!initializing!private! !
+displayOn:!displaying!public! !
+editedValue:!accessing!private! !
+editUsing:!operations!public! !
+getMutableValue!public! !
+hash!comparing!public! !
+immediateActionUsing:!operations!public! !
+isMutable!accessing!public! !
+isReadable!public! !
+name!accessing!public! !
+objectRef!accessing!private! !
+objectRefName!accessing!public! !
+selectIn:!event handling!private! !
+setSubject:aspectDescriptor:!initializing!private! !
+setValue:!accessing!private! !
+value!accessing!public! !
+valueIcon!accessing!public! !
+valueImage!accessing!public! !
+valueNameInfo!accessing!public! !
+valueNameOnly!accessing!public! !
+valueText!accessing!public! !
+valueTextOnly!accessing!public! !
+yourselfAspect!accessing!public! !
+!
 
 !AspectAccessor class methodsFor!
 
@@ -255,6 +257,8 @@ subject: anObject aspect: anAspect
 	^self basicNew
 		setSubject: anObject aspectDescriptor: anAspect;
 		yourself! !
-!AspectAccessor class categoriesFor: #new!instance creation!private! !
-!AspectAccessor class categoriesFor: #subject:aspect:!instance creation!public! !
+!AspectAccessor class categoriesForMethods!
+new!instance creation!private! !
+subject:aspect:!instance creation!public! !
+!
 

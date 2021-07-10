@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBFiler subclass: #STBOutFiler
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
@@ -222,29 +222,31 @@ writePreambleFor: anObject
 	self
 		writeClass: anObject class withPrefix: STBPrefix forData;
 		register: anObject! !
-!STBOutFiler categoriesFor: #basicNextPut:!operations!private! !
-!STBOutFiler categoriesFor: #nextPut:!operations!public! !
-!STBOutFiler categoriesFor: #objectIsGlobal:!globals!private! !
-!STBOutFiler categoriesFor: #override:with:!proxies!public! !
-!STBOutFiler categoriesFor: #putCharacter:!helpers!private! !
-!STBOutFiler categoriesFor: #putGlobal:!globals!private! !
-!STBOutFiler categoriesFor: #refForObject:!private!searching! !
-!STBOutFiler categoriesFor: #register:!accessing!private! !
-!STBOutFiler categoriesFor: #register:asGlobal:!globals!public! !
-!STBOutFiler categoriesFor: #removeOverrideFor:!proxies!public! !
-!STBOutFiler categoriesFor: #reset!initializing!private! !
-!STBOutFiler categoriesFor: #resetStream!initializing!private! !
-!STBOutFiler categoriesFor: #saveObject:!operations!public! !
-!STBOutFiler categoriesFor: #saveObject:as:!operations!public! !
-!STBOutFiler categoriesFor: #serializeObject:!operations!private! !
-!STBOutFiler categoriesFor: #setRefOffset:!accessing!private! !
-!STBOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
-!STBOutFiler categoriesFor: #writeClass:withPrefix:!operations!private! !
-!STBOutFiler categoriesFor: #writeInstanceVariables:!operations!private! !
-!STBOutFiler categoriesFor: #writeInteger:!helpers!private! !
-!STBOutFiler categoriesFor: #writeNil!operations!private! !
-!STBOutFiler categoriesFor: #writeObject:as:withPrefix:!operations!private! !
-!STBOutFiler categoriesFor: #writePreambleFor:!binary filing!public! !
+!STBOutFiler categoriesForMethods!
+basicNextPut:!operations!private! !
+nextPut:!operations!public! !
+objectIsGlobal:!globals!private! !
+override:with:!proxies!public! !
+putCharacter:!helpers!private! !
+putGlobal:!globals!private! !
+refForObject:!private!searching! !
+register:!accessing!private! !
+register:asGlobal:!globals!public! !
+removeOverrideFor:!proxies!public! !
+reset!initializing!private! !
+resetStream!initializing!private! !
+saveObject:!operations!public! !
+saveObject:as:!operations!public! !
+serializeObject:!operations!private! !
+setRefOffset:!accessing!private! !
+writeClass:withLocator:!operations!private! !
+writeClass:withPrefix:!operations!private! !
+writeInstanceVariables:!operations!private! !
+writeInteger:!helpers!private! !
+writeNil!operations!private! !
+writeObject:as:withPrefix:!operations!private! !
+writePreambleFor:!binary filing!public! !
+!
 
 !STBOutFiler class methodsFor!
 
@@ -254,5 +256,7 @@ uninitialize
 	them away."
 
 	STBPrefix uninitialize! !
-!STBOutFiler class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!STBOutFiler class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

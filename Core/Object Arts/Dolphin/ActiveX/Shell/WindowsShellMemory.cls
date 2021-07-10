@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalMemory variableByteSubclass: #WindowsShellMemory
 	instanceVariableNames: ''
@@ -24,6 +24,8 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
-!WindowsShellMemory class categoriesFor: #allocator!accessing!private! !
-!WindowsShellMemory class categoriesFor: #initialize!development!initializing!private! !
+!WindowsShellMemory class categoriesForMethods!
+allocator!accessing!private! !
+initialize!development!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SearchPolicyTest
 	instanceVariableNames: 'policy'
@@ -19,7 +19,9 @@ setUp
 
 testNewLookupTable
 	self assert: policy newLookupTable searchPolicy class identicalTo: self policyClass! !
-!SearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
-!SearchPolicyTest categoriesFor: #setUp!public!unit tests! !
-!SearchPolicyTest categoriesFor: #testNewLookupTable!public!unit tests! !
+!SearchPolicyTest categoriesForMethods!
+policyClass!private!unit tests! !
+setUp!public!unit tests! !
+testNewLookupTable!public!unit tests! !
+!
 

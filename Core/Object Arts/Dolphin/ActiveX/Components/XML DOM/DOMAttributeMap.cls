@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DOMNamedNodeMap variableSubclass: #DOMAttributeMap
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ createNamedNode: key
 	"Private - Instantiate and answer a new named node of the type contained in the receiver."
 
 	^parentNode ownerDocument createAttribute: key! !
-!DOMAttributeMap categoriesFor: #associationClass!constants!private! !
-!DOMAttributeMap categoriesFor: #createNamedNode:!helpers!private! !
+!DOMAttributeMap categoriesForMethods!
+associationClass!constants!private! !
+createNamedNode:!helpers!private! !
+!
 

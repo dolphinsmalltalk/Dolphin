@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #FileSystemChange
 	instanceVariableNames: 'time code fileNames'
@@ -41,13 +41,15 @@ setCode: anInteger fileName: aString
 	time := FILETIME now.
 	code := anInteger.
 	fileNames := Array with: aString! !
-!FileSystemChange categoriesFor: #=!comparing!public! !
-!FileSystemChange categoriesFor: #action!public! !
-!FileSystemChange categoriesFor: #code!accessing!private! !
-!FileSystemChange categoriesFor: #fileNames!accessing!public! !
-!FileSystemChange categoriesFor: #fileNames:!accessing!public! !
-!FileSystemChange categoriesFor: #printOn:!public! !
-!FileSystemChange categoriesFor: #setCode:fileName:!initializing!private! !
+!FileSystemChange categoriesForMethods!
+=!comparing!public! !
+action!public! !
+code!accessing!private! !
+fileNames!accessing!public! !
+fileNames:!accessing!public! !
+printOn:!public! !
+setCode:fileName:!initializing!private! !
+!
 
 !FileSystemChange class methodsFor!
 
@@ -58,6 +60,8 @@ code: anInteger fileName: aString
 
 initialize
 	ActionMap := #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)! !
-!FileSystemChange class categoriesFor: #code:fileName:!instance creation!public! !
-!FileSystemChange class categoriesFor: #initialize!initializing!public! !
+!FileSystemChange class categoriesForMethods!
+code:fileName:!instance creation!public! !
+initialize!initializing!public! !
+!
 

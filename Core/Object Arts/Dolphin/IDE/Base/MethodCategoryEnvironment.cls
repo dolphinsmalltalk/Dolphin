@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #MethodCategoryEnvironment
 	instanceVariableNames: 'categories'
@@ -88,16 +88,18 @@ storeOn: aStream
 		space.
 	(categories asArray collect: [:each | each name]) storeOn: aStream.
 	aStream nextPut: $)! !
-!MethodCategoryEnvironment categoriesFor: #categories:!accessing!private! !
-!MethodCategoryEnvironment categoriesFor: #categoryNames:!accessing!private! !
-!MethodCategoryEnvironment categoriesFor: #classesAndSelectorsDo:!enumerating!public! !
-!MethodCategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
-!MethodCategoryEnvironment categoriesFor: #includesClass:!public!testing! !
-!MethodCategoryEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!MethodCategoryEnvironment categoriesFor: #isEmpty!public!testing! !
-!MethodCategoryEnvironment categoriesFor: #postCopy!copying!public! !
-!MethodCategoryEnvironment categoriesFor: #selectorsForClass:do:!enumerating!public! !
-!MethodCategoryEnvironment categoriesFor: #storeOn:!printing!public! !
+!MethodCategoryEnvironment categoriesForMethods!
+categories:!accessing!private! !
+categoryNames:!accessing!private! !
+classesAndSelectorsDo:!enumerating!public! !
+defaultLabel!constants!private! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+isEmpty!public!testing! !
+postCopy!copying!public! !
+selectorsForClass:do:!enumerating!public! !
+storeOn:!printing!public! !
+!
 
 !MethodCategoryEnvironment class methodsFor!
 
@@ -116,6 +118,8 @@ referencesTo: aLiteral in: anEnvironment
 		label: label;
 		searchStrings: {literalName};
 		yourself! !
-!MethodCategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
-!MethodCategoryEnvironment class categoriesFor: #referencesTo:in:!instance creation!public! !
+!MethodCategoryEnvironment class categoriesForMethods!
+onEnvironment:categories:!instance creation!public! !
+referencesTo:in:!instance creation!public! !
+!
 

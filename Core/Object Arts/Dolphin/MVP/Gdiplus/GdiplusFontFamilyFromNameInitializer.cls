@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyFromNameInitializer
 	instanceVariableNames: 'name fontCollection'
@@ -26,6 +26,8 @@ createHandle
 name: aString fontCollection: aFontCollection
 	name := aString.
 	fontCollection := aFontCollection! !
-!GdiplusFontFamilyFromNameInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusFontFamilyFromNameInitializer categoriesFor: #name:fontCollection:!initializing!private! !
+!GdiplusFontFamilyFromNameInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+name:fontCollection:!initializing!private! !
+!
 

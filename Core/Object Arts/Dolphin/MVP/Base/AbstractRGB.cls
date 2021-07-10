@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Color subclass: #AbstractRGB
 	instanceVariableNames: 'code'
@@ -208,24 +208,26 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that encoded integer value passed to API calls to represent the color)."
 
 	code := anInteger! !
-!AbstractRGB categoriesFor: #asGrayscale!converting!public! !
-!AbstractRGB categoriesFor: #asInteger!converting!public! !
-!AbstractRGB categoriesFor: #asParameter!converting!public! !
-!AbstractRGB categoriesFor: #brightness!accessing!public! !
-!AbstractRGB categoriesFor: #chroma!accessing!public! !
-!AbstractRGB categoriesFor: #code!accessing!private! !
-!AbstractRGB categoriesFor: #fadedBy:!converting!public! !
-!AbstractRGB categoriesFor: #green!accessing!public! !
-!AbstractRGB categoriesFor: #hls!converting!public! !
-!AbstractRGB categoriesFor: #hslSaturation!accessing!public! !
-!AbstractRGB categoriesFor: #hsv!converting!public! !
-!AbstractRGB categoriesFor: #hsvSaturation!accessing!public! !
-!AbstractRGB categoriesFor: #hue!accessing!public! !
-!AbstractRGB categoriesFor: #intensity:!converting!public! !
-!AbstractRGB categoriesFor: #isGrayscale!public!testing! !
-!AbstractRGB categoriesFor: #lightness!accessing!public! !
-!AbstractRGB categoriesFor: #luminance!accessing!public! !
-!AbstractRGB categoriesFor: #registerName:!helpers!private! !
-!AbstractRGB categoriesFor: #rgb!converting!public! !
-!AbstractRGB categoriesFor: #setCode:!accessing!private! !
+!AbstractRGB categoriesForMethods!
+asGrayscale!converting!public! !
+asInteger!converting!public! !
+asParameter!converting!public! !
+brightness!accessing!public! !
+chroma!accessing!public! !
+code!accessing!private! !
+fadedBy:!converting!public! !
+green!accessing!public! !
+hls!converting!public! !
+hslSaturation!accessing!public! !
+hsv!converting!public! !
+hsvSaturation!accessing!public! !
+hue!accessing!public! !
+intensity:!converting!public! !
+isGrayscale!public!testing! !
+lightness!accessing!public! !
+luminance!accessing!public! !
+registerName:!helpers!private! !
+rgb!converting!public! !
+setCode:!accessing!private! !
+!
 

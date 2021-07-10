@@ -40,8 +40,10 @@ stonOn: stonWriter
 	"Overwritten to get back the standard object behavior"
 	
 	stonWriter writeObject: self! !
-!RunArray categoriesFor: #fromSton:!public!ston! !
-!RunArray categoriesFor: #stonOn:!public!ston! !
+!RunArray categoriesForMethods!
+fromSton:!public!ston! !
+stonOn:!public!ston! !
+!
 
 !RunArray class methodsFor!
 
@@ -49,7 +51,9 @@ fromSton: stonReader
 	^ self new
 		fromSton: stonReader;
 		yourself! !
-!RunArray class categoriesFor: #fromSton:!public!ston! !
+!RunArray class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 "End of package definition"!
 

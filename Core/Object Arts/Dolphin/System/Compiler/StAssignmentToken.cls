@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StToken subclass: #StAssignmentToken
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ isAssignment
 
 length
 	^2! !
-!StAssignmentToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StAssignmentToken categoriesFor: #isAssignment!public!testing! !
-!StAssignmentToken categoriesFor: #length!accessing!private! !
+!StAssignmentToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isAssignment!public!testing! !
+length!accessing!private! !
+!
 

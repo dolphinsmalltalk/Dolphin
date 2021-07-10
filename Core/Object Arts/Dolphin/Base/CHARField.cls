@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractCHARField subclass: #CHARField
 	instanceVariableNames: ''
@@ -18,8 +18,10 @@ readFrom: anExternalStructure
 	<ExternalStructure> argument."
 
 	^(Character ansiValue: (anExternalStructure bytes byteAtOffset: offset))! !
-!CHARField categoriesFor: #basicWriteInto:value:!accessing!private! !
-!CHARField categoriesFor: #readFrom:!indirect accessing!private! !
+!CHARField categoriesForMethods!
+basicWriteInto:value:!accessing!private! !
+readFrom:!indirect accessing!private! !
+!
 
 !CHARField class methodsFor!
 
@@ -27,5 +29,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
-!CHARField class categoriesFor: #byteSize!constants!private! !
+!CHARField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

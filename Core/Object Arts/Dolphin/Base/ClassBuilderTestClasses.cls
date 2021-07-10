@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTestClassResource subclass: #ClassBuilderTestClasses
 	instanceVariableNames: 'testClass testSubclass1 testSubclass2 testPool1 testPool2 testPool3'
@@ -64,12 +64,14 @@ testSubclass1
 
 testSubclass2
 	^testSubclass2! !
-!ClassBuilderTestClasses categoriesFor: #compileMethods!public!unit tests! !
-!ClassBuilderTestClasses categoriesFor: #createClasses!private!unit tests! !
-!ClassBuilderTestClasses categoriesFor: #createPools!Init / Release!private! !
-!ClassBuilderTestClasses categoriesFor: #isAvailable!public!Testing! !
-!ClassBuilderTestClasses categoriesFor: #tearDown!public!Running! !
-!ClassBuilderTestClasses categoriesFor: #testClass!accessing!public! !
-!ClassBuilderTestClasses categoriesFor: #testSubclass1!accessing!public! !
-!ClassBuilderTestClasses categoriesFor: #testSubclass2!accessing!public! !
+!ClassBuilderTestClasses categoriesForMethods!
+compileMethods!public!unit tests! !
+createClasses!private!unit tests! !
+createPools!Init / Release!private! !
+isAvailable!public!Testing! !
+tearDown!public!Running! !
+testClass!accessing!public! !
+testSubclass1!accessing!public! !
+testSubclass2!accessing!public! !
+!
 

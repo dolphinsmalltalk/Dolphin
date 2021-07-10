@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	instanceVariableNames: ''
@@ -60,12 +60,14 @@ ServiceName: aHTTP_SERVICE_BINDING_BASE
 	"Set the receiver's 'ServiceName' field to the value of the argument, aHTTP_SERVICE_BINDING_BASE"
 
 	bytes uintPtrAtOffset: _OffsetOf_ServiceName put: aHTTP_SERVICE_BINDING_BASE yourAddress! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken!**compiled accessors**!public! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken:!**compiled accessors**!public! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize!**compiled accessors**!private! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize:!**compiled accessors**!private! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName!**compiled accessors**!public! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ServiceName:!**compiled accessors**!public! !
+!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForMethods!
+ChannelToken!**compiled accessors**!public! !
+ChannelToken:!**compiled accessors**!public! !
+ChannelTokenSize!**compiled accessors**!private! !
+ChannelTokenSize:!**compiled accessors**!private! !
+ServiceName!**compiled accessors**!public! !
+ServiceName:!**compiled accessors**!public! !
+!
 
 !HTTP_REQUEST_CHANNEL_BIND_STATUS class methodsFor!
 
@@ -92,6 +94,8 @@ defineFields
 
 getFieldNames
 	^#(#ServiceName #ChannelToken #ChannelTokenSize)! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

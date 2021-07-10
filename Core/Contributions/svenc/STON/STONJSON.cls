@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONJSON
 	instanceVariableNames: ''
@@ -58,10 +58,12 @@ toString: object
 
 toStringPretty: object
 	^ STON toJsonStringPretty: object! !
-!STONJSON class categoriesFor: #fromStream:!convenience!public! !
-!STONJSON class categoriesFor: #fromString:!convenience!public! !
-!STONJSON class categoriesFor: #put:onStream:!convenience!public! !
-!STONJSON class categoriesFor: #put:onStreamPretty:!convenience!public! !
-!STONJSON class categoriesFor: #toString:!convenience!public! !
-!STONJSON class categoriesFor: #toStringPretty:!convenience!public! !
+!STONJSON class categoriesForMethods!
+fromStream:!convenience!public! !
+fromString:!convenience!public! !
+put:onStream:!convenience!public! !
+put:onStreamPretty:!convenience!public! !
+toString:!convenience!public! !
+toStringPretty:!convenience!public! !
+!
 

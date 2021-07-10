@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalAddress variableByteSubclass: #MemoryMappedFileView
 	instanceVariableNames: ''
@@ -33,7 +33,9 @@ free
 		self beUnfinalizable.
 		self basicFree.
 		self clear]! !
-!MemoryMappedFileView categoriesFor: #basicFree!private!realizing/unrealizing! !
-!MemoryMappedFileView categoriesFor: #flush!operations!public! !
-!MemoryMappedFileView categoriesFor: #free!public!realizing/unrealizing! !
+!MemoryMappedFileView categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+flush!operations!public! !
+free!public!realizing/unrealizing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMLISTVIEW
 	instanceVariableNames: ''
@@ -56,14 +56,16 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!NMLISTVIEW categoriesFor: #iItem!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #itemHandle!accessing!public! !
-!NMLISTVIEW categoriesFor: #lParam!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #ptAction!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #uChanged!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #uNewState!**compiled accessors**!public! !
-!NMLISTVIEW categoriesFor: #uOldState!**compiled accessors**!public! !
+!NMLISTVIEW categoriesForMethods!
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+lParam!**compiled accessors**!public! !
+ptAction!**compiled accessors**!public! !
+uChanged!**compiled accessors**!public! !
+uNewState!**compiled accessors**!public! !
+uOldState!**compiled accessors**!public! !
+!
 
 !NMLISTVIEW class methodsFor!
 
@@ -84,6 +86,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #lParam)! !
-!NMLISTVIEW class categoriesFor: #defineFields!public!template definition! !
-!NMLISTVIEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMLISTVIEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

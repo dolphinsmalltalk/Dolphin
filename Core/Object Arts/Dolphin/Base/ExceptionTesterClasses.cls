@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTestClassResource subclass: #ExceptionTesterClasses
 	instanceVariableNames: 'testNotificationClass resumableErrorClass testErrorClass'
@@ -43,10 +43,12 @@ testErrorClass
 
 testNotificationClass
 	^testNotificationClass! !
-!ExceptionTesterClasses categoriesFor: #createClasses!Init / Release!public! !
-!ExceptionTesterClasses categoriesFor: #isAvailable!public!Testing! !
-!ExceptionTesterClasses categoriesFor: #resumableErrorClass!accessing!public! !
-!ExceptionTesterClasses categoriesFor: #tearDown!public!Running! !
-!ExceptionTesterClasses categoriesFor: #testErrorClass!accessing!public! !
-!ExceptionTesterClasses categoriesFor: #testNotificationClass!accessing!public! !
+!ExceptionTesterClasses categoriesForMethods!
+createClasses!Init / Release!public! !
+isAvailable!public!Testing! !
+resumableErrorClass!accessing!public! !
+tearDown!public!Running! !
+testErrorClass!accessing!public! !
+testNotificationClass!accessing!public! !
+!
 

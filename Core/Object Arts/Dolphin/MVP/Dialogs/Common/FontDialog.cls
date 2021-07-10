@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialog subclass: #FontDialog
 	instanceVariableNames: ''
@@ -53,11 +53,13 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^CHOOSEFONTW! !
-!FontDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FontDialog categoriesFor: #extractResult:!helpers!private! !
-!FontDialog categoriesFor: #initialize!public! !
-!FontDialog categoriesFor: #model:!public! !
-!FontDialog categoriesFor: #winStructClass!constants!private! !
+!FontDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+extractResult:!helpers!private! !
+initialize!public! !
+model:!public! !
+winStructClass!constants!private! !
+!
 
 !FontDialog class methodsFor!
 
@@ -78,7 +80,9 @@ initialize
 
 	hookHandlers := IdentityDictionary new.
 	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:! !
-!FontDialog class categoriesFor: #defaultModel!models!public! !
-!FontDialog class categoriesFor: #icon!constants!public! !
-!FontDialog class categoriesFor: #initialize!development!initializing!private! !
+!FontDialog class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+!
 

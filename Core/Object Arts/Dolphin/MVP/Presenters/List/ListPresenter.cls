@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableItemsPresenter subclass: #ListPresenter
 	instanceVariableNames: 'sortBlock'
@@ -129,26 +129,28 @@ sortBlock
 
 sortBlock: anObject
 	sortBlock := anObject! !
-!ListPresenter categoriesFor: #basicBeSorted!private!sorting! !
-!ListPresenter categoriesFor: #beNotSorted!public!sorting! !
-!ListPresenter categoriesFor: #beSorted!public!sorting! !
-!ListPresenter categoriesFor: #beSorted:!public!sorting! !
-!ListPresenter categoriesFor: #clear!operations!public! !
-!ListPresenter categoriesFor: #defaultSortBlock!constants!private!sorting! !
-!ListPresenter categoriesFor: #isSorted!public!sorting!testing! !
-!ListPresenter categoriesFor: #list!accessing!public! !
-!ListPresenter categoriesFor: #list:!accessing!public! !
-!ListPresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
-!ListPresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
-!ListPresenter categoriesFor: #selectableItems!accessing!private! !
-!ListPresenter categoriesFor: #selectionByIndex!public!selection! !
-!ListPresenter categoriesFor: #selectionByIndex:!public!selection! !
-!ListPresenter categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!ListPresenter categoriesFor: #selectionByIndexIfNone:!public!selection! !
-!ListPresenter categoriesFor: #selectionsByIndex!public!selection! !
-!ListPresenter categoriesFor: #sortAlgorithmClass!accessing!public! !
-!ListPresenter categoriesFor: #sortBlock!accessing!private!sorting! !
-!ListPresenter categoriesFor: #sortBlock:!accessing!private!sorting! !
+!ListPresenter categoriesForMethods!
+basicBeSorted!private!sorting! !
+beNotSorted!public!sorting! !
+beSorted!public!sorting! !
+beSorted:!public!sorting! !
+clear!operations!public! !
+defaultSortBlock!constants!private!sorting! !
+isSorted!public!sorting!testing! !
+list!accessing!public! !
+list:!accessing!public! !
+onAboutToEditLabel:!event handling!public! !
+onLabelOf:editedTo:!event handling!public! !
+selectableItems!accessing!private! !
+selectionByIndex!public!selection! !
+selectionByIndex:!public!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionByIndexIfNone:!public!selection! !
+selectionsByIndex!public!selection! !
+sortAlgorithmClass!accessing!public! !
+sortBlock!accessing!private!sorting! !
+sortBlock:!accessing!private!sorting! !
+!
 
 ListPresenter methodProtocol: #indexSelectableItems attributes: #(#readOnly) selectors: #(#selectionByIndex #selectionByIndex: #selectionByIndex:ifAbsent: #selectionByIndexIfNone:)!
 ListPresenter methodProtocol: #listPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #list #list: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #view)!
@@ -195,9 +197,11 @@ resource_Drop_down_list
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ComboBox) 34 17 nil nil 34 2 8 1412498947 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903738896 459270 ##(Smalltalk.Message) #displayString 8 #() 528 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 786 193 193 nil 27 )! !
-!ListPresenter class categoriesFor: #defaultModel!models!public! !
-!ListPresenter class categoriesFor: #icon!constants!public! !
-!ListPresenter class categoriesFor: #resource_Combo_box!public!resources-views! !
-!ListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ListPresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
+!ListPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Combo_box!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_Drop_down_list!public!resources-views! !
+!
 

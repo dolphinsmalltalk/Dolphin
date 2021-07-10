@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayedCollection subclass: #RunArray
 	instanceVariableNames: 'values runs'
@@ -131,21 +131,23 @@ size
 
 species
 	^Array! !
-!RunArray categoriesFor: #allSatisfy:!enumerating!public! !
-!RunArray categoriesFor: #anySatisfy:!enumerating!public! !
-!RunArray categoriesFor: #asRunArray!converting!public! !
-!RunArray categoriesFor: #at:!accessing!public! !
-!RunArray categoriesFor: #at:ifAbsent:!accessing!public! !
-!RunArray categoriesFor: #at:put:!accessing!public! !
-!RunArray categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!RunArray categoriesFor: #postCopy!copying!public! !
-!RunArray categoriesFor: #resize:!mutating!public! !
-!RunArray categoriesFor: #runs:values:!accessing!private! !
-!RunArray categoriesFor: #runsAndValuesDo:!enumerating!public! !
-!RunArray categoriesFor: #runStartAndValueAt:!accessing!private! !
-!RunArray categoriesFor: #runStartAt:!accessing!public! !
-!RunArray categoriesFor: #size!accessing!public! !
-!RunArray categoriesFor: #species!accessing!public! !
+!RunArray categoriesForMethods!
+allSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
+asRunArray!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+decodeNextFrom:!encode/decode!private! !
+postCopy!copying!public! !
+resize:!mutating!public! !
+runs:values:!accessing!private! !
+runsAndValuesDo:!enumerating!public! !
+runStartAndValueAt:!accessing!private! !
+runStartAt:!accessing!public! !
+size!accessing!public! !
+species!accessing!public! !
+!
 
 !RunArray class methodsFor!
 
@@ -213,14 +215,16 @@ withAll: aCollection
 			[runs nextPut: runLength.
 			values nextPut: current].
 	^self runs: runs contents values: values contents! !
-!RunArray class categoriesFor: #new!instance creation!public! !
-!RunArray class categoriesFor: #new:!instance creation!public! !
-!RunArray class categoriesFor: #new:withAll:!instance creation!public! !
-!RunArray class categoriesFor: #runs:values:!instance creation!public! !
-!RunArray class categoriesFor: #with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:with:with:!instance creation!public! !
-!RunArray class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!RunArray class categoriesFor: #withAll:!instance creation!public! !
+!RunArray class categoriesForMethods!
+new!instance creation!public! !
+new:!instance creation!public! !
+new:withAll:!instance creation!public! !
+runs:values:!instance creation!public! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 

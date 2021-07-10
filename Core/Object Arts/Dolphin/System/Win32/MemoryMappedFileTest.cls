@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #MemoryMappedFileTest
 	instanceVariableNames: ''
@@ -85,7 +85,9 @@ testReadOnly
 	view free.
 	mmf free.
 	File delete: fname! !
-!MemoryMappedFileTest categoriesFor: #testDoubleArray!public! !
-!MemoryMappedFileTest categoriesFor: #testMaximumSize!public! !
-!MemoryMappedFileTest categoriesFor: #testReadOnly!public! !
+!MemoryMappedFileTest categoriesForMethods!
+testDoubleArray!public! !
+testMaximumSize!public! !
+testReadOnly!public! !
+!
 

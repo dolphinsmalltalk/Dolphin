@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaAttribute subclass: #QueryableScintillaAttribute
 	instanceVariableNames: 'view'
@@ -29,10 +29,12 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
-!QueryableScintillaAttribute categoriesFor: #populateFromView:at:!initializing!private! !
-!QueryableScintillaAttribute categoriesFor: #postCopy!copying!public! !
-!QueryableScintillaAttribute categoriesFor: #view!accessing!private! !
-!QueryableScintillaAttribute categoriesFor: #view:!accessing!private! !
+!QueryableScintillaAttribute categoriesForMethods!
+populateFromView:at:!initializing!private! !
+postCopy!copying!public! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !QueryableScintillaAttribute class methodsFor!
 
@@ -40,5 +42,7 @@ view: aScintillaView index: anInteger
 	^(self new)
 		populateFromView: aScintillaView at: anInteger;
 		yourself! !
-!QueryableScintillaAttribute class categoriesFor: #view:index:!instance creation!public! !
+!QueryableScintillaAttribute class categoriesForMethods!
+view:index:!instance creation!public! !
+!
 

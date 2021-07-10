@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #AXPropertyBag
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
@@ -210,19 +210,21 @@ Write: pszPropName pVar: pVar
 				ifTrue: [self class new save: pVar value clearDirty: clearDirty saveAll: saveAll]
 				ifFalse: [pVar value]).
 	^hr! !
-!AXPropertyBag categoriesFor: #asVariant!converting!public! !
-!AXPropertyBag categoriesFor: #inStream:!accessing!public! !
-!AXPropertyBag categoriesFor: #load!operations!public! !
-!AXPropertyBag categoriesFor: #printOn:indent:!printing!public! !
-!AXPropertyBag categoriesFor: #propertyTable!accessing!private! !
-!AXPropertyBag categoriesFor: #propertyTable:!accessing!private! !
-!AXPropertyBag categoriesFor: #Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!public! !
-!AXPropertyBag categoriesFor: #restoreInto:!operations!public! !
-!AXPropertyBag categoriesFor: #save:clearDirty:!operations!public! !
-!AXPropertyBag categoriesFor: #save:clearDirty:saveAll:!operations!public! !
-!AXPropertyBag categoriesFor: #setProperties:!helpers!private! !
-!AXPropertyBag categoriesFor: #supportedInterfaces!constants!public! !
-!AXPropertyBag categoriesFor: #Write:pVar:!COM Interfaces-IPropertyBag!public! !
+!AXPropertyBag categoriesForMethods!
+asVariant!converting!public! !
+inStream:!accessing!public! !
+load!operations!public! !
+printOn:indent:!printing!public! !
+propertyTable!accessing!private! !
+propertyTable:!accessing!private! !
+Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!public! !
+restoreInto:!operations!public! !
+save:clearDirty:!operations!public! !
+save:clearDirty:saveAll:!operations!public! !
+setProperties:!helpers!private! !
+supportedInterfaces!constants!public! !
+Write:pVar:!COM Interfaces-IPropertyBag!public! !
+!
 
 AXPropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
 

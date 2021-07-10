@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusImageFromIStreamInitializerTest
 	instanceVariableNames: ''
@@ -31,8 +31,10 @@ testIsPersistent
 	"Cant persist an <IStream>"
 
 	self deny: model isPersistent! !
-!GdiplusImageFromIStreamInitializerTest categoriesFor: #gdipLoadImageFromStream:image:!accessing!public! !
-!GdiplusImageFromIStreamInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusImageFromIStreamInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusImageFromIStreamInitializerTest categoriesFor: #testIsPersistent!public!unit tests! !
+!GdiplusImageFromIStreamInitializerTest categoriesForMethods!
+gdipLoadImageFromStream:image:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+testIsPersistent!public!unit tests! !
+!
 

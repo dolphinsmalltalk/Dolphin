@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBProxy subclass: #STBExternalResourceLibraryProxy
 	instanceVariableNames: 'fileName _reserved1'
@@ -33,9 +33,11 @@ value
 	file path name."
 
 	^ExternalResourceLibrary open: fileName! !
-!STBExternalResourceLibraryProxy categoriesFor: #fileName:!accessing!private! !
-!STBExternalResourceLibraryProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBExternalResourceLibraryProxy categoriesFor: #value!converting!public! !
+!STBExternalResourceLibraryProxy categoriesForMethods!
+fileName:!accessing!private! !
+stbFixup:at:!converting!public! !
+value!converting!public! !
+!
 
 !STBExternalResourceLibraryProxy class methodsFor!
 
@@ -45,5 +47,7 @@ forLibrary: lib
 	^self basicNew
 		fileName: lib fileName;
 		yourself! !
-!STBExternalResourceLibraryProxy class categoriesFor: #forLibrary:!instance creation!public! !
+!STBExternalResourceLibraryProxy class categoriesForMethods!
+forLibrary:!instance creation!public! !
+!
 

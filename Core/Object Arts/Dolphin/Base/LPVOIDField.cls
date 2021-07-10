@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UINT_PTRField subclass: #LPVOIDField
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ readFrom: anExternalStructure
 	receiver's offset in the <ExternalStructure> argument."
 
 	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalAddress! !
-!LPVOIDField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!LPVOIDField categoriesFor: #readFrom:!indirect accessing!private! !
+!LPVOIDField categoriesForMethods!
+fieldClassName!automatic generation!constants!development!private! !
+readFrom:!indirect accessing!private! !
+!
 

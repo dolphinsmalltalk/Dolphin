@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArray subclass: #UINT_PTRArray
 	instanceVariableNames: ''
@@ -18,8 +18,10 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes uintPtrAtOffset: (indexInteger - 1) * VMConstants.IntPtrSize put: valueInteger! !
-!UINT_PTRArray categoriesFor: #uncheckedAt:!accessing!private! !
-!UINT_PTRArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!UINT_PTRArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !UINT_PTRArray class methodsFor!
 
@@ -27,5 +29,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^UINT_PTR! !
-!UINT_PTRArray class categoriesFor: #elementClass!constants!public! !
+!UINT_PTRArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

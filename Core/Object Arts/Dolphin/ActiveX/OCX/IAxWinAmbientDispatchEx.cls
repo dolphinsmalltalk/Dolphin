@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IAxWinAmbientDispatch subclass: #IAxWinAmbientDispatchEx
 	instanceVariableNames: ''
@@ -44,8 +44,10 @@ SetAmbientDispatch: pDispatch
 
 	<virtual stdcall: hresult 36 IDispatch*>
 	^self invalidCall: _failureCode! !
-!IAxWinAmbientDispatchEx categoriesFor: #setAmbientDispatch:!**auto generated**!methods!public! !
-!IAxWinAmbientDispatchEx categoriesFor: #SetAmbientDispatch:!**auto generated**!COM Interfaces-IAxWinAmbientDispatchEx!private! !
+!IAxWinAmbientDispatchEx categoriesForMethods!
+setAmbientDispatch:!**auto generated**!methods!public! !
+SetAmbientDispatch:!**auto generated**!COM Interfaces-IAxWinAmbientDispatchEx!private! !
+!
 
 !IAxWinAmbientDispatchEx class methodsFor!
 
@@ -57,5 +59,7 @@ defineFunctions
 		defineFunction: #SetAmbientDispatch:
 			argumentTypes: 'IDispatch*'
 ! !
-!IAxWinAmbientDispatchEx class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IAxWinAmbientDispatchEx class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

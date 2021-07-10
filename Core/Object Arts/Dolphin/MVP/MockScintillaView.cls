@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MockScintillaView
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
@@ -126,20 +126,22 @@ tokens
 								with: style
 								with: (self plainTextRange: each first))]].
 	^answer! !
-!MockScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
-!MockScintillaView categoriesFor: #characterAt:!public!unit tests! !
-!MockScintillaView categoriesFor: #maxStyle!public!unit tests! !
-!MockScintillaView categoriesFor: #plainTextFrom:to:!public!unit tests! !
-!MockScintillaView categoriesFor: #plainTextRange:!accessing!public! !
-!MockScintillaView categoriesFor: #setCurrentTextStyles:!private!style definition! !
-!MockScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
-!MockScintillaView categoriesFor: #startStylingFrom:!public!unit tests! !
-!MockScintillaView categoriesFor: #styleNamed:!accessing!public!styling! !
-!MockScintillaView categoriesFor: #styleNext:mask:!public!unit tests! !
-!MockScintillaView categoriesFor: #styleWithId:!accessing!public!style definition! !
-!MockScintillaView categoriesFor: #stylingPosition!accessing!public! !
-!MockScintillaView categoriesFor: #text:!public!unit tests! !
-!MockScintillaView categoriesFor: #textLength!public!unit tests! !
-!MockScintillaView categoriesFor: #textStyles:!public!unit tests! !
-!MockScintillaView categoriesFor: #tokens!public!unit tests! !
+!MockScintillaView categoriesForMethods!
+applyStyle:toNext:!public!styling! !
+characterAt:!public!unit tests! !
+maxStyle!public!unit tests! !
+plainTextFrom:to:!public!unit tests! !
+plainTextRange:!accessing!public! !
+setCurrentTextStyles:!private!style definition! !
+setIndicator:from:length:!indicators!public! !
+startStylingFrom:!public!unit tests! !
+styleNamed:!accessing!public!styling! !
+styleNext:mask:!public!unit tests! !
+styleWithId:!accessing!public!style definition! !
+stylingPosition!accessing!public! !
+text:!public!unit tests! !
+textLength!public!unit tests! !
+textStyles:!public!unit tests! !
+tokens!public!unit tests! !
+!
 

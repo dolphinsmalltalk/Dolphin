@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IEnumXXXX subclass: #IEnumStruct
 	instanceVariableNames: 'elementClass'
@@ -20,8 +20,10 @@ elementClass
 
 elementClass: anExternalStructure 
 	elementClass := anExternalStructure! !
-!IEnumStruct categoriesFor: #elementClass!accessing!private! !
-!IEnumStruct categoriesFor: #elementClass:!accessing!private! !
+!IEnumStruct categoriesForMethods!
+elementClass!accessing!private! !
+elementClass:!accessing!private! !
+!
 
 !IEnumStruct class methodsFor!
 
@@ -32,5 +34,7 @@ elementClass: elementClass
 	^(self newPointer)
 		elementClass: elementClass;
 		yourself! !
-!IEnumStruct class categoriesFor: #elementClass:!instance creation!public! !
+!IEnumStruct class categoriesForMethods!
+elementClass:!instance creation!public! !
+!
 

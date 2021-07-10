@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMParseError subclass: #IXMLDOMParseError2
 	instanceVariableNames: ''
@@ -116,14 +116,16 @@ get_errorXPath: xpathexpr
 
 	<virtual stdcall: hresult 15 bstr*>
 	^self invalidCall: _failureCode! !
-!IXMLDOMParseError2 categoriesFor: #allErrors!**auto generated**!properties!public! !
-!IXMLDOMParseError2 categoriesFor: #errorParameters:!**auto generated**!methods!public! !
-!IXMLDOMParseError2 categoriesFor: #ErrorParameters:param:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!IXMLDOMParseError2 categoriesFor: #errorParametersCount!**auto generated**!properties!public! !
-!IXMLDOMParseError2 categoriesFor: #errorXPath!**auto generated**!properties!public! !
-!IXMLDOMParseError2 categoriesFor: #get_allErrors:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!IXMLDOMParseError2 categoriesFor: #get_errorParametersCount:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
-!IXMLDOMParseError2 categoriesFor: #get_errorXPath:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!IXMLDOMParseError2 categoriesForMethods!
+allErrors!**auto generated**!properties!public! !
+errorParameters:!**auto generated**!methods!public! !
+ErrorParameters:param:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+errorParametersCount!**auto generated**!properties!public! !
+errorXPath!**auto generated**!properties!public! !
+get_allErrors:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+get_errorParametersCount:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+get_errorXPath:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !
+!
 
 !IXMLDOMParseError2 class methodsFor!
 
@@ -141,5 +143,7 @@ defineFunctions
 		defineFunction: #get_errorParametersCount:
 			argumentTypes: 'sdword*'
 ! !
-!IXMLDOMParseError2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMParseError2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

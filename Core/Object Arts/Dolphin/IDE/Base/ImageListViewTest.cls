@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageViewAbstractTest subclass: #ImageListViewTest
 	instanceVariableNames: ''
@@ -15,6 +15,8 @@ classToTest
 
 image
 	^IconImageManager current imageListWithExtent: 16@16! !
-!ImageListViewTest categoriesFor: #classToTest!helpers!private! !
-!ImageListViewTest categoriesFor: #image!private!Running! !
+!ImageListViewTest categoriesForMethods!
+classToTest!helpers!private! !
+image!private!Running! !
+!
 

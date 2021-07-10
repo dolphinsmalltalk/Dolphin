@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LookupTableTest subclass: #IdentityDictionaryTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ IdentityDictionaryTest comment: ''!
 
 collectionClass
 	^IdentityDictionary! !
-!IdentityDictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!IdentityDictionaryTest categoriesForMethods!
+collectionClass!helpers!private! !
+!
 

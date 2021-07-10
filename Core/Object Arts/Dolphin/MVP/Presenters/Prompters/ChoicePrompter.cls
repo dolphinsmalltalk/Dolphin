@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueDialog subclass: #ChoicePrompter
 	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt'
@@ -169,22 +169,24 @@ nilChoice: anObject
 	"Sets the choice that can be used to represent a nil value in the model"
 
 	choicePresenter nilChoice: anObject! !
-!ChoicePrompter categoriesFor: #choices:!accessing!private! !
-!ChoicePrompter categoriesFor: #createComponents!initializing!public! !
-!ChoicePrompter categoriesFor: #createSchematicWiring!initializing!public! !
-!ChoicePrompter categoriesFor: #getImageBlock:!accessing!public! !
-!ChoicePrompter categoriesFor: #getTextBlock:!accessing!public! !
-!ChoicePrompter categoriesFor: #imageManager:!accessing!public! !
-!ChoicePrompter categoriesFor: #initialize!initializing!private! !
-!ChoicePrompter categoriesFor: #model:!accessing!public! !
-!ChoicePrompter categoriesFor: #newBlock:!accessing!public! !
-!ChoicePrompter categoriesFor: #newCaption!accessing!public! !
-!ChoicePrompter categoriesFor: #newCaption:!accessing!public! !
-!ChoicePrompter categoriesFor: #newChoice!commands!public! !
-!ChoicePrompter categoriesFor: #newMultipleChoice!commands!public! !
-!ChoicePrompter categoriesFor: #newPrompt!accessing!public! !
-!ChoicePrompter categoriesFor: #newPrompt:!accessing!public! !
-!ChoicePrompter categoriesFor: #nilChoice:!accessing!public! !
+!ChoicePrompter categoriesForMethods!
+choices:!accessing!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+getImageBlock:!accessing!public! !
+getTextBlock:!accessing!public! !
+imageManager:!accessing!public! !
+initialize!initializing!private! !
+model:!accessing!public! !
+newBlock:!accessing!public! !
+newCaption!accessing!public! !
+newCaption:!accessing!public! !
+newChoice!commands!public! !
+newMultipleChoice!commands!public! !
+newPrompt!accessing!public! !
+newPrompt:!accessing!public! !
+nilChoice:!accessing!public! !
+!
 
 !ChoicePrompter class methodsFor!
 
@@ -376,24 +378,26 @@ resource_Multiselection_choice_prompter
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13369344 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog 328198 ##(Smalltalk.Point) 501 701 133 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 498 193 193 nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 656 nil nil nil 7 nil nil nil 656 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 15 549 498 459 71 656 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 18 1 0 0 236 0 0 0 53 1 0 0] 8 #() 498 193 193 nil 27 nil nil 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140969801 1025 976 590662 2 ##(Smalltalk.ListModel) 138 144 944 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default 498 485 577 7 nil nil nil 976 nil 8 1883852064 459270 ##(Smalltalk.Message) #displayString 8 #() nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 '' 451 #left nil 1186 #<= 8 #() nil nil 976 nil 3 nil nil #report 944 nil 133121 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 754 138 144 34 1 818 #createAt:extent: 34 2 498 15 15 498 459 535 976 898 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 7 0 0 0 236 0 0 0 18 1 0 0] 8 #() 960 nil 35 170 192 34 2 976 8 'choices' 590342 ##(Smalltalk.Rectangle) 498 15 15 498 17 15 nil nil nil nil 34919 nil nil nil 498 501 311 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 2010284960 754 138 144 34 3 818 #createAt:extent: 34 2 498 7039 21 498 521 711 416 818 #text: 34 1 8 'Choose one or more of:' 416 818 #updateMenuBar 944 416 898 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 195 14 0 0 109 1 0 0] 34 2 976 656 960 nil 27 )! !
-!ChoicePrompter class categoriesFor: #choices:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #choices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #create:on:choices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #create:on:multipleChoices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #createOn:choices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #createOn:multipleChoices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!ChoicePrompter class categoriesFor: #defaultMultipleChoiceView!constants!private! !
-!ChoicePrompter class categoriesFor: #defaultView!constants!private! !
-!ChoicePrompter class categoriesFor: #icon!constants!public! !
-!ChoicePrompter class categoriesFor: #multipleChoices:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #multipleChoices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #on:choices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #on:multipleChoices:caption:!instance creation!public! !
-!ChoicePrompter class categoriesFor: #resource_Combo_choice_prompter!public!resources-views! !
-!ChoicePrompter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ChoicePrompter class categoriesFor: #resource_Extensible_choice_prompter!public!resources-views! !
-!ChoicePrompter class categoriesFor: #resource_Extensible_multiselection_choice_prompter!public!resources-views! !
-!ChoicePrompter class categoriesFor: #resource_List_view!public!resources-views! !
-!ChoicePrompter class categoriesFor: #resource_Multiselection_choice_prompter!public!resources-views! !
+!ChoicePrompter class categoriesForMethods!
+choices:!instance creation!public! !
+choices:caption:!instance creation!public! !
+create:on:choices:caption:!instance creation!public! !
+create:on:multipleChoices:caption:!instance creation!public! !
+createOn:choices:caption:!instance creation!public! !
+createOn:multipleChoices:caption:!instance creation!public! !
+defaultAdditionalAccelerators!constants!private! !
+defaultMultipleChoiceView!constants!private! !
+defaultView!constants!private! !
+icon!constants!public! !
+multipleChoices:!instance creation!public! !
+multipleChoices:caption:!instance creation!public! !
+on:choices:caption:!instance creation!public! !
+on:multipleChoices:caption:!instance creation!public! !
+resource_Combo_choice_prompter!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_Extensible_choice_prompter!public!resources-views! !
+resource_Extensible_multiselection_choice_prompter!public!resources-views! !
+resource_List_view!public!resources-views! !
+resource_Multiselection_choice_prompter!public!resources-views! !
+!
 

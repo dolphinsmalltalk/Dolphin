@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	instanceVariableNames: 'data'
@@ -159,26 +159,28 @@ printableFields
 	^Array
 		with: (#(#FromMemory_pBuffer #FromFileHandle_FileHandle #FromFragmentCache_pFragmentName #FromFragmentCacheEx_pFragmentName)
 				at: self DataChunkType + 1)! !
-!HTTP_DATA_CHUNK categoriesFor: #data:!accessing!public! !
-!HTTP_DATA_CHUNK categoriesFor: #DataChunkType!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #DataChunkType:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_ByteRange!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_ByteRange:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_FileHandle!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFileHandle_FileHandle:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_FragmentNameLength!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_FragmentNameLength:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_pFragmentName!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCache_pFragmentName:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_ByteRange!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_ByteRange:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_pFragmentName!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromFragmentCacheEx_pFragmentName:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromMemory_BufferLength!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromMemory_BufferLength:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromMemory_pBuffer!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #FromMemory_pBuffer:!**compiled accessors**!public! !
-!HTTP_DATA_CHUNK categoriesFor: #printableFields!development!printing!private! !
+!HTTP_DATA_CHUNK categoriesForMethods!
+data:!accessing!public! !
+DataChunkType!**compiled accessors**!public! !
+DataChunkType:!**compiled accessors**!public! !
+FromFileHandle_ByteRange!**compiled accessors**!public! !
+FromFileHandle_ByteRange:!**compiled accessors**!public! !
+FromFileHandle_FileHandle!**compiled accessors**!public! !
+FromFileHandle_FileHandle:!**compiled accessors**!public! !
+FromFragmentCache_FragmentNameLength!**compiled accessors**!public! !
+FromFragmentCache_FragmentNameLength:!**compiled accessors**!public! !
+FromFragmentCache_pFragmentName!**compiled accessors**!public! !
+FromFragmentCache_pFragmentName:!**compiled accessors**!public! !
+FromFragmentCacheEx_ByteRange!**compiled accessors**!public! !
+FromFragmentCacheEx_ByteRange:!**compiled accessors**!public! !
+FromFragmentCacheEx_pFragmentName!**compiled accessors**!public! !
+FromFragmentCacheEx_pFragmentName:!**compiled accessors**!public! !
+FromMemory_BufferLength!**compiled accessors**!public! !
+FromMemory_BufferLength:!**compiled accessors**!public! !
+FromMemory_pBuffer!**compiled accessors**!public! !
+FromMemory_pBuffer:!**compiled accessors**!public! !
+printableFields!development!printing!private! !
+!
 
 !HTTP_DATA_CHUNK class methodsFor!
 
@@ -230,7 +232,9 @@ defineFields
 
 getFieldNames
 	^#(#DataChunkType #FromFileHandle_ByteRange #FromFragmentCache_FragmentNameLength #FromFragmentCacheEx_ByteRange #FromMemory_pBuffer #FromFragmentCache_pFragmentName #FromMemory_BufferLength #FromFileHandle_FileHandle #FromFragmentCacheEx_pFragmentName)! !
-!HTTP_DATA_CHUNK class categoriesFor: #data:!instance creation!public! !
-!HTTP_DATA_CHUNK class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_DATA_CHUNK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_DATA_CHUNK class categoriesForMethods!
+data:!instance creation!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #InlineTemporaryRefactoring
 	instanceVariableNames: 'sourceInterval selector sourceTree assignmentNode definingNode'
@@ -94,20 +94,22 @@ verifySelectedInterval
 	self determineVariableDefinition.
 	self checkMultipleAssignments.
 	self checkReadBeforeWritten! !
-!InlineTemporaryRefactoring categoriesFor: #checkMultipleAssignments!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #checkReadBeforeWritten!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #compileMethod!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #determineAssignmentNode!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #determineVariableDefinition!preconditions!private! !
-!InlineTemporaryRefactoring categoriesFor: #hasOnlyOneAssignment!public!testing! !
-!InlineTemporaryRefactoring categoriesFor: #inline:from:in:!initialize/release!public! !
-!InlineTemporaryRefactoring categoriesFor: #parseMethod!helpers!private! !
-!InlineTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!InlineTemporaryRefactoring categoriesFor: #replaceAssignment!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #replaceReferences!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!InlineTemporaryRefactoring categoriesFor: #transform!public!transforming! !
-!InlineTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
+!InlineTemporaryRefactoring categoriesForMethods!
+checkMultipleAssignments!preconditions!private! !
+checkReadBeforeWritten!preconditions!private! !
+compileMethod!public!transforming! !
+determineAssignmentNode!preconditions!private! !
+determineVariableDefinition!preconditions!private! !
+hasOnlyOneAssignment!public!testing! !
+inline:from:in:!initialize/release!public! !
+parseMethod!helpers!private! !
+preconditions!preconditions!public! !
+replaceAssignment!public!transforming! !
+replaceReferences!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+verifySelectedInterval!preconditions!public! !
+!
 
 !InlineTemporaryRefactoring class methodsFor!
 
@@ -124,6 +126,8 @@ model: aRBNamespace inline: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!InlineTemporaryRefactoring class categoriesFor: #inline:from:in:!instance creation!public! !
-!InlineTemporaryRefactoring class categoriesFor: #model:inline:from:in:!instance creation!public! !
+!InlineTemporaryRefactoring class categoriesForMethods!
+inline:from:in:!instance creation!public! !
+model:inline:from:in:!instance creation!public! !
+!
 

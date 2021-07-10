@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableItemsPresenter subclass: #TreePresenter
 	instanceVariableNames: ''
@@ -64,15 +64,17 @@ up
 	| parent |
 	parent := self model parentOf: self selectionOrNil.
 	self expand: parent! !
-!TreePresenter categoriesFor: #collapse:!operations!public! !
-!TreePresenter categoriesFor: #expand:!operations!public! !
-!TreePresenter categoriesFor: #expandAll:!operations!public! !
-!TreePresenter categoriesFor: #hasSelection!public!selection! !
-!TreePresenter categoriesFor: #isExpanded:!public!testing! !
-!TreePresenter categoriesFor: #onAboutToEditLabel:!event handling!public! !
-!TreePresenter categoriesFor: #onLabelOf:editedTo:!event handling!public! !
-!TreePresenter categoriesFor: #selectableItems!accessing!private! !
-!TreePresenter categoriesFor: #up!operations!public! !
+!TreePresenter categoriesForMethods!
+collapse:!operations!public! !
+expand:!operations!public! !
+expandAll:!operations!public! !
+hasSelection!public!selection! !
+isExpanded:!public!testing! !
+onAboutToEditLabel:!event handling!public! !
+onLabelOf:editedTo:!event handling!public! !
+selectableItems!accessing!private! !
+up!operations!public! !
+!
 
 TreePresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
 
@@ -98,7 +100,9 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903706176 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 592 nil #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 592 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 882 401 571 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 71 8 0 0 39 1 0 0] 8 #() 882 193 193 nil 27 )! !
-!TreePresenter class categoriesFor: #defaultModel!models!public! !
-!TreePresenter class categoriesFor: #icon!constants!public! !
-!TreePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!TreePresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

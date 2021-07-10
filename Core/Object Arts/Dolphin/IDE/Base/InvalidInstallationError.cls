@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #InvalidInstallationError
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ _descriptionFormat
 
 	^'This copy of Dolphin Smalltalk has not been installed correctly; please re-install from the original source medium.'
 ! !
-!InvalidInstallationError categoriesFor: #_descriptionFormat!displaying!public! !
+!InvalidInstallationError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

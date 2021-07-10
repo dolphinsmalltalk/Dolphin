@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StructureArrayField subclass: #PointerArrayField
 	instanceVariableNames: ''
@@ -27,7 +27,9 @@ elementSize
 	All pointers are 32-bits."
 
 	^VMConstants.IntPtrSize! !
-!PointerArrayField categoriesFor: #alignment!constants!public! !
-!PointerArrayField categoriesFor: #arrayClass!constants!private! !
-!PointerArrayField categoriesFor: #elementSize!accessing!private! !
+!PointerArrayField categoriesForMethods!
+alignment!constants!public! !
+arrayClass!constants!private! !
+elementSize!accessing!private! !
+!
 

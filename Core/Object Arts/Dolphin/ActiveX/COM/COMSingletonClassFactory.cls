@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMClassFactory subclass: #COMSingletonClassFactory
 	instanceVariableNames: 'current'
@@ -27,5 +27,7 @@ createInstance: pUnkOuter
 	current isNil ifTrue: [
 		current := super createInstance: pUnkOuter].
 	^current! !
-!COMSingletonClassFactory categoriesFor: #createInstance:!instance creation!private! !
+!COMSingletonClassFactory categoriesForMethods!
+createInstance:!instance creation!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 EmbeddedField subclass: #ArrayField
 	instanceVariableNames: 'arrayLength'
@@ -115,22 +115,24 @@ writeInto: anExternalStructure value: aByteObject
 		setElementCount: aByteObject
 		of: self
 		in: anExternalStructure! !
-!ArrayField categoriesFor: #alignment!constants!public! !
-!ArrayField categoriesFor: #allocationLength!accessing!private! !
-!ArrayField categoriesFor: #arrayClass!constants!private! !
-!ArrayField categoriesFor: #arrayLength:!accessing!private! !
-!ArrayField categoriesFor: #byteSize!accessing!private! !
-!ArrayField categoriesFor: #elementClass!accessing!private! !
-!ArrayField categoriesFor: #elementSize!accessing!private! !
-!ArrayField categoriesFor: #elementSizeSelector!automatic generation!constants!private! !
-!ArrayField categoriesFor: #isFixedSize!private!testing! !
-!ArrayField categoriesFor: #length!accessing!private! !
-!ArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printFieldSizeExpressionBodyOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printFieldSizeExpressionOn:!automatic generation!private! !
-!ArrayField categoriesFor: #printStaticElementSizeExpressionOn:!automatic generation!private! !
-!ArrayField categoriesFor: #readFrom:!indirect accessing!private! !
-!ArrayField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!ArrayField categoriesForMethods!
+alignment!constants!public! !
+allocationLength!accessing!private! !
+arrayClass!constants!private! !
+arrayLength:!accessing!private! !
+byteSize!accessing!private! !
+elementClass!accessing!private! !
+elementSize!accessing!private! !
+elementSizeSelector!automatic generation!constants!private! !
+isFixedSize!private!testing! !
+length!accessing!private! !
+printElementSizeExpressionBodyOn:!automatic generation!private! !
+printFieldSizeExpressionBodyOn:!automatic generation!private! !
+printFieldSizeExpressionOn:!automatic generation!private! !
+printStaticElementSizeExpressionOn:!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !ArrayField class methodsFor!
 
@@ -150,6 +152,8 @@ type: aClass length: anInteger
 	embedded arrays of type aClass, with anInteger elements."
 
 	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
-!ArrayField class categoriesFor: #type:arrayLength:!instance creation!public! !
-!ArrayField class categoriesFor: #type:length:!instance creation!public! !
+!ArrayField class categoriesForMethods!
+type:arrayLength:!instance creation!public! !
+type:length:!instance creation!public! !
+!
 

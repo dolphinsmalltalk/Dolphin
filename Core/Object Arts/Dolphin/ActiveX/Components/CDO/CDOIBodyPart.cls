@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOIBodyPart
 	instanceVariableNames: ''
@@ -496,51 +496,53 @@ SaveToFile: fileName
 
 	<virtual stdcall: hresult 24 bstr>
 	^self invalidCall: _failureCode! !
-!CDOIBodyPart categoriesFor: #addBodyPart:!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #AddBodyPart:ppPart:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #bodyParts!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #charset!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #charset:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClass!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClass:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClassName!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentClassName:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentMediaType!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentMediaType:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentTransferEncoding!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #contentTransferEncoding:!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #dataSource!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #fields!properties!public! !
-!CDOIBodyPart categoriesFor: #fileName!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #get_BodyParts:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_FileName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #get_Parent:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getDecodedContentStream!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetDecodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getEncodedContentStream!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetEncodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getFieldParameter:parameter:!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetFieldParameter:Parameter:pbstrValue:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getInterface:!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #getStream!**auto generated**!methods!public! !
-!CDOIBodyPart categoriesFor: #GetStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIBodyPart categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIBodyPart categoriesFor: #parent!**auto generated**!properties!public! !
-!CDOIBodyPart categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #put_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
-!CDOIBodyPart categoriesFor: #SaveToFile:!**auto generated**!COM Interfaces-IBodyPart!public! !
+!CDOIBodyPart categoriesForMethods!
+addBodyPart:!**auto generated**!methods!public! !
+AddBodyPart:ppPart:!**auto generated**!COM Interfaces-IBodyPart!private! !
+bodyParts!**auto generated**!properties!public! !
+charset!**auto generated**!properties!public! !
+charset:!**auto generated**!properties!public! !
+contentClass!**auto generated**!properties!public! !
+contentClass:!**auto generated**!properties!public! !
+contentClassName!**auto generated**!properties!public! !
+contentClassName:!**auto generated**!properties!public! !
+contentMediaType!**auto generated**!properties!public! !
+contentMediaType:!**auto generated**!properties!public! !
+contentTransferEncoding!**auto generated**!properties!public! !
+contentTransferEncoding:!**auto generated**!properties!public! !
+dataSource!**auto generated**!properties!public! !
+fields!properties!public! !
+fileName!**auto generated**!properties!public! !
+get_BodyParts:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_DataSource:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_Fields:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_FileName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+get_Parent:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getDecodedContentStream!**auto generated**!methods!public! !
+GetDecodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getEncodedContentStream!**auto generated**!methods!public! !
+GetEncodedContentStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getFieldParameter:parameter:!**auto generated**!methods!public! !
+GetFieldParameter:Parameter:pbstrValue:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getInterface:!**auto generated**!methods!public! !
+GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IBodyPart!private! !
+getStream!**auto generated**!methods!public! !
+GetStream:!**auto generated**!COM Interfaces-IBodyPart!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+parent!**auto generated**!properties!public! !
+put_Charset:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentClass:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentClassName:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentMediaType:!**auto generated**!COM Interfaces-IBodyPart!private! !
+put_ContentTransferEncoding:!**auto generated**!COM Interfaces-IBodyPart!private! !
+SaveToFile:!**auto generated**!COM Interfaces-IBodyPart!public! !
+!
 
 !CDOIBodyPart class methodsFor!
 
@@ -602,6 +604,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIBodyPart class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIBodyPart class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOIBodyPart class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #DefaultShellSessionManager
 	instanceVariableNames: 'mainShellClass'
@@ -20,13 +20,17 @@ mainShellClass
 
 mainShellClass: aShellClass 
 	mainShellClass := aShellClass! !
-!DefaultShellSessionManager categoriesFor: #main!operations-startup!public! !
-!DefaultShellSessionManager categoriesFor: #mainShellClass!constants!public! !
-!DefaultShellSessionManager categoriesFor: #mainShellClass:!constants!public! !
+!DefaultShellSessionManager categoriesForMethods!
+main!operations-startup!public! !
+mainShellClass!constants!public! !
+mainShellClass:!constants!public! !
+!
 
 !DefaultShellSessionManager class methodsFor!
 
 installNew
 	self shouldNotImplement! !
-!DefaultShellSessionManager class categoriesFor: #installNew!public! !
+!DefaultShellSessionManager class categoriesForMethods!
+installNew!public! !
+!
 

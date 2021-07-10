@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArray subclass: #DOUBLEArray
 	instanceVariableNames: ''
@@ -22,8 +22,10 @@ uncheckedAt: anInteger put: aFloat
 	with the <Float> argument."
 
 	^bytes doubleAtOffset: (anInteger - 1) * VMConstants.DoubleSize put: aFloat! !
-!DOUBLEArray categoriesFor: #uncheckedAt:!accessing!private! !
-!DOUBLEArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!DOUBLEArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !DOUBLEArray class methodsFor!
 
@@ -31,5 +33,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^DOUBLE! !
-!DOUBLEArray class categoriesFor: #elementClass!constants!public! !
+!DOUBLEArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

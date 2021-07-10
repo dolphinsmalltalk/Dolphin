@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
 	instanceVariableNames: 'iStream'
@@ -45,14 +45,18 @@ isPersistent
 
 iStream: pStream
 	iStream := pStream! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public!realizing/unrealizing! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #isPersistent!constants!public!realizing/unrealizing!testing! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #iStream:!constants!initializing!private!realizing/unrealizing!testing! !
+!GdiplusImageFromIStreamInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!public!realizing/unrealizing! !
+isPersistent!constants!public!realizing/unrealizing!testing! !
+iStream:!constants!initializing!private!realizing/unrealizing!testing! !
+!
 
 !GdiplusImageFromIStreamInitializer class methodsFor!
 
 iStream: pStream
 	^self new iStream: pStream! !
-!GdiplusImageFromIStreamInitializer class categoriesFor: #iStream:!instance creation!public! !
+!GdiplusImageFromIStreamInitializer class categoriesForMethods!
+iStream:!instance creation!public! !
+!
 

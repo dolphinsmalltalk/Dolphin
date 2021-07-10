@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONWriter subclass: #DolphinSTONWriter
 	instanceVariableNames: 'classInstVarMaps stringQuote'
@@ -85,20 +85,24 @@ writeObject: anObject extra: extraPairs
 										ifNotNil: [:value | dictionary at: each asSymbol put: value]
 										ifNil: [anObject stonShouldWriteNilInstVars ifTrue: [dictionary at: each asSymbol put: nil]]]].
 					extraPairs do: [:each | dictionary at: each key put: each value]]]! !
-!DolphinSTONWriter categoriesFor: #encodeString:!private! !
-!DolphinSTONWriter categoriesFor: #escape:with:!initialize/release!public! !
-!DolphinSTONWriter categoriesFor: #initialize!private! !
-!DolphinSTONWriter categoriesFor: #instVarMapFor:!private! !
-!DolphinSTONWriter categoriesFor: #isSimpleSymbol:!private! !
-!DolphinSTONWriter categoriesFor: #jsonMode:!initialize/release!public! !
-!DolphinSTONWriter categoriesFor: #stonCharacters!accessing!private! !
-!DolphinSTONWriter categoriesFor: #writeObject:!public!writing! !
-!DolphinSTONWriter categoriesFor: #writeObject:extra:!public!writing! !
+!DolphinSTONWriter categoriesForMethods!
+encodeString:!private! !
+escape:with:!initialize/release!public! !
+initialize!private! !
+instVarMapFor:!private! !
+isSimpleSymbol:!private! !
+jsonMode:!initialize/release!public! !
+stonCharacters!accessing!private! !
+writeObject:!public!writing! !
+writeObject:extra:!public!writing! !
+!
 
 !DolphinSTONWriter class methodsFor!
 
 initialize
 	STONCharacters isImmutable: true.
 	STONSimpleSymbolCharacters isImmutable: true! !
-!DolphinSTONWriter class categoriesFor: #initialize!class initialization!public! !
+!DolphinSTONWriter class categoriesForMethods!
+initialize!class initialization!public! !
+!
 

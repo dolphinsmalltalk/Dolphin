@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TEXTRANGE subclass: #FINDTEXTEX
 	instanceVariableNames: ''
@@ -27,7 +27,9 @@ chrgText
 	"Answer the <CHARRANGE> value of the receiver's 'chrgText' field."
 
 	^CHARRANGE fromAddress: bytes yourAddress + _OffsetOf_chrgText! !
-!FINDTEXTEX categoriesFor: #chrgText!**compiled accessors**!public! !
+!FINDTEXTEX categoriesForMethods!
+chrgText!**compiled accessors**!public! !
+!
 
 !FINDTEXTEX class methodsFor!
 
@@ -47,6 +49,8 @@ defineFields
 
 getFieldNames
 	^#(#chrg #lpstrText #chrgText)! !
-!FINDTEXTEX class categoriesFor: #defineFields!public!template definition! !
-!FINDTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!FINDTEXTEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

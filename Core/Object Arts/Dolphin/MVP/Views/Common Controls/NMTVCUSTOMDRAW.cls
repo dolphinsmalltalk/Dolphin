@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	instanceVariableNames: ''
@@ -63,15 +63,17 @@ iLevel
 	"Answer the <Integer> value of the receiver's 'iLevel' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_iLevel! !
-!NMTVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
-!NMTVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
-!NMTVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
-!NMTVCUSTOMDRAW categoriesFor: #clrText:!**compiled accessors**!public! !
-!NMTVCUSTOMDRAW categoriesFor: #clrTextBk!**compiled accessors**!public! !
-!NMTVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
-!NMTVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
-!NMTVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
-!NMTVCUSTOMDRAW categoriesFor: #iLevel!**compiled accessors**!public! !
+!NMTVCUSTOMDRAW categoriesForMethods!
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+clrText!**compiled accessors**!public! !
+clrText:!**compiled accessors**!public! !
+clrTextBk!**compiled accessors**!public! !
+clrTextBk:!**compiled accessors**!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+iLevel!**compiled accessors**!public! !
+!
 
 !NMTVCUSTOMDRAW class methodsFor!
 
@@ -88,6 +90,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iLevel)! !
-!NMTVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
-!NMTVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMTVCUSTOMDRAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

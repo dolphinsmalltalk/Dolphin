@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLELockBytesAbstract subclass: #OLELockFileBytes
 	instanceVariableNames: 'file'
@@ -62,13 +62,15 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 		mtime: pstatstg mtime.
 	(grfStatFlag allMask: STATFLAG_NONAME) ifFalse: [pstatstg name: file name].
 	^S_OK! !
-!OLELockFileBytes categoriesFor: #contents!accessing!public! !
-!OLELockFileBytes categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OLELockFileBytes categoriesFor: #file!accessing!private! !
-!OLELockFileBytes categoriesFor: #file:!accessing!private! !
-!OLELockFileBytes categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OLELockFileBytes categoriesFor: #size!accessing!public! !
-!OLELockFileBytes categoriesFor: #Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
+!OLELockFileBytes categoriesForMethods!
+contents!accessing!public! !
+copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+file!accessing!private! !
+file:!accessing!private! !
+replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+size!accessing!public! !
+Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
+!
 
 !OLELockFileBytes class methodsFor!
 
@@ -79,5 +81,7 @@ on: aFile
 	^(self new)
 		file: aFile;
 		queryInterface: ILockBytes! !
-!OLELockFileBytes class categoriesFor: #on:!instance creation!public! !
+!OLELockFileBytes class categoriesForMethods!
+on:!instance creation!public! !
+!
 

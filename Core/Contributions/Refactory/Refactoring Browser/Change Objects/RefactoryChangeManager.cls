@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RefactoryChangeManager
 	instanceVariableNames: 'undo redo isPerformingRefactoring'
@@ -83,22 +83,24 @@ update: anAspectSymbol with: aParameter from: aSender
 	(changeType indexOfSubCollection: 'class' startingAt: 1) 
 		+ (changeType indexOfSubCollection: 'selector' startingAt: 1) > 0 
 		ifTrue: [self clearUndoRedoList]! !
-!RefactoryChangeManager categoriesFor: #addUndo:!public!public access! !
-!RefactoryChangeManager categoriesFor: #clearUndoRedoList!private! !
-!RefactoryChangeManager categoriesFor: #connectToChanges!initialize/release!public! !
-!RefactoryChangeManager categoriesFor: #discardLastChange!public!public access! !
-!RefactoryChangeManager categoriesFor: #disconnectFromChanges!initialize/release!public! !
-!RefactoryChangeManager categoriesFor: #hasRedoableOperations!public! !
-!RefactoryChangeManager categoriesFor: #hasUndoableOperations!public! !
-!RefactoryChangeManager categoriesFor: #ignoreChangesWhile:!public!public access! !
-!RefactoryChangeManager categoriesFor: #initialize!initialize/release!public! !
-!RefactoryChangeManager categoriesFor: #performChange:!public!public access! !
-!RefactoryChangeManager categoriesFor: #redoChange!public!public access! !
-!RefactoryChangeManager categoriesFor: #redoOperation!public!public access! !
-!RefactoryChangeManager categoriesFor: #release!initialize/release!public! !
-!RefactoryChangeManager categoriesFor: #undoChange!public!public access! !
-!RefactoryChangeManager categoriesFor: #undoOperation!public!public access! !
-!RefactoryChangeManager categoriesFor: #update:with:from:!public!updating! !
+!RefactoryChangeManager categoriesForMethods!
+addUndo:!public!public access! !
+clearUndoRedoList!private! !
+connectToChanges!initialize/release!public! !
+discardLastChange!public!public access! !
+disconnectFromChanges!initialize/release!public! !
+hasRedoableOperations!public! !
+hasUndoableOperations!public! !
+ignoreChangesWhile:!public!public access! !
+initialize!initialize/release!public! !
+performChange:!public!public access! !
+redoChange!public!public access! !
+redoOperation!public!public access! !
+release!initialize/release!public! !
+undoChange!public!public access! !
+undoOperation!public!public access! !
+update:with:from:!public!updating! !
+!
 
 !RefactoryChangeManager class methodsFor!
 
@@ -133,12 +135,14 @@ undoSize: anInteger
 
 uninitialize
 	self nuke! !
-!RefactoryChangeManager class categoriesFor: #initialize!class initialization!public! !
-!RefactoryChangeManager class categoriesFor: #instance!instance creation!public! !
-!RefactoryChangeManager class categoriesFor: #new!instance creation!public! !
-!RefactoryChangeManager class categoriesFor: #nuke!public!public access! !
-!RefactoryChangeManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!RefactoryChangeManager class categoriesFor: #undoSize!class initialization!public! !
-!RefactoryChangeManager class categoriesFor: #undoSize:!class initialization!public! !
-!RefactoryChangeManager class categoriesFor: #uninitialize!class initialization!public! !
+!RefactoryChangeManager class categoriesForMethods!
+initialize!class initialization!public! !
+instance!instance creation!public! !
+new!instance creation!public! !
+nuke!public!public access! !
+onPreStripImage!class hierarchy-removing!private! !
+undoSize!class initialization!public! !
+undoSize:!class initialization!public! !
+uninitialize!class initialization!public! !
+!
 

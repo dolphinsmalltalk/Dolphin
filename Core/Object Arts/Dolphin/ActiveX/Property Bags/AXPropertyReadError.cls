@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #AXPropertyReadError
 	instanceVariableNames: ''
@@ -29,8 +29,10 @@ initialize
 	"Private - Initialize the receiver's instance variables."
 
 	messageText := 'Error loading from property bag'.! !
-!AXPropertyReadError categoriesFor: #errorLog!accessing!public! !
-!AXPropertyReadError categoriesFor: #errorLog:!accessing!public! !
-!AXPropertyReadError categoriesFor: #guid!accessing!public! !
-!AXPropertyReadError categoriesFor: #initialize!initializing!private! !
+!AXPropertyReadError categoriesForMethods!
+errorLog!accessing!public! !
+errorLog:!accessing!public! !
+guid!accessing!public! !
+initialize!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 	instanceVariableNames: ''
@@ -58,12 +58,14 @@ MaxPeakBandwidth: anInteger
 	"Set the receiver's 'MaxPeakBandwidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_MaxPeakBandwidth put: anInteger! !
-!HTTP_FLOWRATE_INFO categoriesFor: #BurstSize!**compiled accessors**!public! !
-!HTTP_FLOWRATE_INFO categoriesFor: #BurstSize:!**compiled accessors**!public! !
-!HTTP_FLOWRATE_INFO categoriesFor: #MaxBandwidth!**compiled accessors**!public! !
-!HTTP_FLOWRATE_INFO categoriesFor: #MaxBandwidth:!**compiled accessors**!public! !
-!HTTP_FLOWRATE_INFO categoriesFor: #MaxPeakBandwidth!**compiled accessors**!public! !
-!HTTP_FLOWRATE_INFO categoriesFor: #MaxPeakBandwidth:!**compiled accessors**!public! !
+!HTTP_FLOWRATE_INFO categoriesForMethods!
+BurstSize!**compiled accessors**!public! !
+BurstSize:!**compiled accessors**!public! !
+MaxBandwidth!**compiled accessors**!public! !
+MaxBandwidth:!**compiled accessors**!public! !
+MaxPeakBandwidth!**compiled accessors**!public! !
+MaxPeakBandwidth:!**compiled accessors**!public! !
+!
 
 !HTTP_FLOWRATE_INFO class methodsFor!
 
@@ -101,8 +103,10 @@ maxBandwidth: maxInteger maxPeakBandwidth: peakInteger burstSize: burstInteger
 
 qosType
 	^HttpQosSettingTypeFlowRate! !
-!HTTP_FLOWRATE_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_FLOWRATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_FLOWRATE_INFO class categoriesFor: #maxBandwidth:maxPeakBandwidth:burstSize:!constants!instance creation!public! !
-!HTTP_FLOWRATE_INFO class categoriesFor: #qosType!constants!public! !
+!HTTP_FLOWRATE_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxBandwidth:maxPeakBandwidth:burstSize:!constants!instance creation!public! !
+qosType!constants!public! !
+!
 

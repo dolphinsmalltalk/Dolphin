@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONCStyleCommentsSkipStream subclass: #DolphinSTONCStyleCommentsSkipStream
 	instanceVariableNames: ''
@@ -62,9 +62,11 @@ nextNonCommentChar
 				[self consumeComment.
 				stream nextAvailable]
 			ifFalse: [char]! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #consumeToEOL!private! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #insideString!private! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #isPositionable!public! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #nextAvailable!public! !
-!DolphinSTONCStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
+!DolphinSTONCStyleCommentsSkipStream categoriesForMethods!
+consumeToEOL!private! !
+insideString!private! !
+isPositionable!public! !
+nextAvailable!public! !
+nextNonCommentChar!private! !
+!
 

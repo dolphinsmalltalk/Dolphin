@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #STONCStyleCommentsSkipStreamTest
 	instanceVariableNames: ''
@@ -82,10 +82,12 @@ testSTON
 		should: [ STON fromStream: (STONCStyleCommentsSkipStream on: '//456' readStream) ] 
 		raise: STONReaderError
 ! !
-!STONCStyleCommentsSkipStreamTest categoriesFor: #testBlockReading!public!testing! !
-!STONCStyleCommentsSkipStreamTest categoriesFor: #testCommentInString!public!testing! !
-!STONCStyleCommentsSkipStreamTest categoriesFor: #testMultiLineComment!public!testing! !
-!STONCStyleCommentsSkipStreamTest categoriesFor: #testNonComment!public!testing! !
-!STONCStyleCommentsSkipStreamTest categoriesFor: #testSingleLineComment!public!testing! !
-!STONCStyleCommentsSkipStreamTest categoriesFor: #testSTON!public!testing! !
+!STONCStyleCommentsSkipStreamTest categoriesForMethods!
+testBlockReading!public!testing! !
+testCommentInString!public!testing! !
+testMultiLineComment!public!testing! !
+testNonComment!public!testing! !
+testSingleLineComment!public!testing! !
+testSTON!public!testing! !
+!
 

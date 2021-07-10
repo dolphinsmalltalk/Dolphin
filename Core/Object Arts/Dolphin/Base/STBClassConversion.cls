@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STBClassConversion
 	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'
@@ -78,17 +78,19 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	self isBytes: (anInteger allMask: STBPrefix.BytesMask).
 	isVariable := anInteger allMask: STBPrefix.VariableMask.
 	filer := anSTBInFiler! !
-!STBClassConversion categoriesFor: #converterBlock!accessing!public! !
-!STBClassConversion categoriesFor: #converterBlock:!accessing!public! !
-!STBClassConversion categoriesFor: #dataClass!accessing!public! !
-!STBClassConversion categoriesFor: #instSize!accessing!public! !
-!STBClassConversion categoriesFor: #isBytes!public!testing! !
-!STBClassConversion categoriesFor: #isBytes:!accessing!public! !
-!STBClassConversion categoriesFor: #isUpgrading!public!testing! !
-!STBClassConversion categoriesFor: #isVariable!public!testing! !
-!STBClassConversion categoriesFor: #prefix:!accessing!public! !
-!STBClassConversion categoriesFor: #version!accessing!public! !
-!STBClassConversion categoriesFor: #version:prefix:filer:!accessing!private! !
+!STBClassConversion categoriesForMethods!
+converterBlock!accessing!public! !
+converterBlock:!accessing!public! !
+dataClass!accessing!public! !
+instSize!accessing!public! !
+isBytes!public!testing! !
+isBytes:!accessing!public! !
+isUpgrading!public!testing! !
+isVariable!public!testing! !
+prefix:!accessing!public! !
+version!accessing!public! !
+version:prefix:filer:!accessing!private! !
+!
 
 !STBClassConversion class methodsFor!
 
@@ -102,5 +104,7 @@ forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger
 				filer: anSTBInFiler.
 	format converterBlock: (aClass stbConvertFrom: format).
 	^format! !
-!STBClassConversion class categoriesFor: #forFiler:class:version:prefix:!instance creation!public! !
+!STBClassConversion class categoriesForMethods!
+forFiler:class:version:prefix:!instance creation!public! !
+!
 

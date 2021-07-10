@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefactoring
 	instanceVariableNames: 'newName'
@@ -73,12 +73,14 @@ setSetterMethod
 
 	setterMethod isNil ifTrue: [setterMethod := self findSetterMethod]
 			! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #createGetterAccessor!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #createSetterAccessor!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #newName:!accessing!public! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #renameGetterRefactoring!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #renameSetterRefactoring!public!transforming! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #setGetterMethod!composite-accessing!public! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #setSetterMethod!composite-accessing!public! !
+!RenameAccessorsForVariableRefactoring categoriesForMethods!
+createGetterAccessor!public!transforming! !
+createSetterAccessor!public!transforming! !
+newName:!accessing!public! !
+preconditions!preconditions!public! !
+renameGetterRefactoring!public!transforming! !
+renameSetterRefactoring!public!transforming! !
+setGetterMethod!composite-accessing!public! !
+setSetterMethod!composite-accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Collection subclass: #RBSmallDictionary
 	instanceVariableNames: 'keys values size'
@@ -146,29 +146,31 @@ removeKey: key ifAbsent: aBlock
 
 size
 	^size! !
-!RBSmallDictionary categoriesFor: #add:!adding!public! !
-!RBSmallDictionary categoriesFor: #associationsDo:!enumerating!public! !
-!RBSmallDictionary categoriesFor: #at:!accessing!public! !
-!RBSmallDictionary categoriesFor: #at:ifAbsent:!accessing!public! !
-!RBSmallDictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!RBSmallDictionary categoriesFor: #at:put:!adding!public! !
-!RBSmallDictionary categoriesFor: #do:!enumerating!public! !
-!RBSmallDictionary categoriesFor: #empty!accessing!public! !
-!RBSmallDictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!RBSmallDictionary categoriesFor: #findIndexFor:!private!searching! !
-!RBSmallDictionary categoriesFor: #growKeysAndValues!helpers!private! !
-!RBSmallDictionary categoriesFor: #growTo:!helpers!private! !
-!RBSmallDictionary categoriesFor: #includesKey:!public!testing! !
-!RBSmallDictionary categoriesFor: #initialize!initializing!public! !
-!RBSmallDictionary categoriesFor: #keys!accessing!public! !
-!RBSmallDictionary categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!RBSmallDictionary categoriesFor: #keysDo:!enumerating!public! !
-!RBSmallDictionary categoriesFor: #postCopy!copying!public! !
-!RBSmallDictionary categoriesFor: #privateAt:put:!helpers!private! !
-!RBSmallDictionary categoriesFor: #remove:ifAbsent:!public!removing! !
-!RBSmallDictionary categoriesFor: #removeKey:!public!removing! !
-!RBSmallDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!RBSmallDictionary categoriesFor: #size!accessing!public! !
+!RBSmallDictionary categoriesForMethods!
+add:!adding!public! !
+associationsDo:!enumerating!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:put:!adding!public! !
+do:!enumerating!public! !
+empty!accessing!public! !
+errorKeyNotFound:!exceptions!private! !
+findIndexFor:!private!searching! !
+growKeysAndValues!helpers!private! !
+growTo:!helpers!private! !
+includesKey:!public!testing! !
+initialize!initializing!public! !
+keys!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+postCopy!copying!public! !
+privateAt:put:!helpers!private! !
+remove:ifAbsent:!public!removing! !
+removeKey:!public!removing! !
+removeKey:ifAbsent:!public!removing! !
+size!accessing!public! !
+!
 
 !RBSmallDictionary class methodsFor!
 
@@ -179,6 +181,8 @@ new: aSize
 	"Ignore the size"
 
 	^self basicNew initialize! !
-!RBSmallDictionary class categoriesFor: #new!instance creation!public! !
-!RBSmallDictionary class categoriesFor: #new:!instance creation!public! !
+!RBSmallDictionary class categoriesForMethods!
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

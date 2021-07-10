@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #IniFileTest
 	instanceVariableNames: 'iniFile'
@@ -225,28 +225,32 @@ testValues
 	self assert: sections fourth values equals: #('NoSectionNoKeyValue').
 	subject := self makeEmptyIniFile.
 	self assert: subject values isEmpty! !
-!IniFileTest categoriesFor: #fileResource!accessing!private! !
-!IniFileTest categoriesFor: #makeEmptyIniFile!helpers!private! !
-!IniFileTest categoriesFor: #makeIniFile!helpers!private! !
-!IniFileTest categoriesFor: #makeModifiableIniFile!helpers!private! !
-!IniFileTest categoriesFor: #tearDown!private!running! !
-!IniFileTest categoriesFor: #testAdd!public!unit tests! !
-!IniFileTest categoriesFor: #testAsByteArray!public!unit tests! !
-!IniFileTest categoriesFor: #testAt!public!unit tests! !
-!IniFileTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
-!IniFileTest categoriesFor: #testAtPut!public!unit tests! !
-!IniFileTest categoriesFor: #testCollect!public!unit tests! !
-!IniFileTest categoriesFor: #testIncludesKey!public!unit tests! !
-!IniFileTest categoriesFor: #testIsEmpty!public!unit tests! !
-!IniFileTest categoriesFor: #testKeys!public!unit tests! !
-!IniFileTest categoriesFor: #testLookup!public!unit tests! !
-!IniFileTest categoriesFor: #testRemoveAllKeys!public!unit tests! !
-!IniFileTest categoriesFor: #testRemoveKey!public!unit tests! !
-!IniFileTest categoriesFor: #testValues!public!unit tests! !
+!IniFileTest categoriesForMethods!
+fileResource!accessing!private! !
+makeEmptyIniFile!helpers!private! !
+makeIniFile!helpers!private! !
+makeModifiableIniFile!helpers!private! !
+tearDown!private!running! !
+testAdd!public!unit tests! !
+testAsByteArray!public!unit tests! !
+testAt!public!unit tests! !
+testAtIfAbsentPut!public!unit tests! !
+testAtPut!public!unit tests! !
+testCollect!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testIsEmpty!public!unit tests! !
+testKeys!public!unit tests! !
+testLookup!public!unit tests! !
+testRemoveAllKeys!public!unit tests! !
+testRemoveKey!public!unit tests! !
+testValues!public!unit tests! !
+!
 
 !IniFileTest class methodsFor!
 
 resources
 	^{IniFileTestResource}! !
-!IniFileTest class categoriesFor: #resources!accessing!public! !
+!IniFileTest class categoriesForMethods!
+resources!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IProvideClassInfo subclass: #IProvideClassInfo2
 	instanceVariableNames: ''
@@ -35,8 +35,10 @@ GetGUID: dwGuidKind pGUID: pGUID
 
 	<virtual stdcall: hresult 5 dword guid*>
 	^self invalidCall: _failureCode! !
-!IProvideClassInfo2 categoriesFor: #getGUID:!**auto generated**!methods!public! !
-!IProvideClassInfo2 categoriesFor: #GetGUID:pGUID:!**auto generated**!COM Interfaces-IProvideClassInfo2!private! !
+!IProvideClassInfo2 categoriesForMethods!
+getGUID:!**auto generated**!methods!public! !
+GetGUID:pGUID:!**auto generated**!COM Interfaces-IProvideClassInfo2!private! !
+!
 
 IProvideClassInfo2 methodProtocol: #IProvideClassInfo2 attributes: #(#readOnly) selectors: #(#GetClassInfo: #GetGUID:pGUID:)!
 
@@ -51,5 +53,7 @@ defineFunctions
 		defineFunction: #GetGUID:pGUID:
 			argumentTypes: 'dword GUID*'
 ! !
-!IProvideClassInfo2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IProvideClassInfo2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

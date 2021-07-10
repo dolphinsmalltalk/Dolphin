@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #HttpApiLibrary
 	instanceVariableNames: ''
@@ -1013,61 +1013,63 @@ setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
 				property: aWinHttpPropertyInfo propertyId
 				propertyInformation: aWinHttpPropertyInfo
 				propertyInformationLength: aWinHttpPropertyInfo byteSize)! !
-!HttpApiLibrary categoriesFor: #addUrl:toUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!operations!public! !
-!HttpApiLibrary categoriesFor: #bindQueue:toUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #checkReturnCode:!helpers!private! !
-!HttpApiLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!HttpApiLibrary categoriesFor: #createRequestQueue:!operations!public! !
-!HttpApiLibrary categoriesFor: #createServerSession!operations!public! !
-!HttpApiLibrary categoriesFor: #createUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #httpAddFragmentToCache:urlPrefix:dataChunk:cachePolicy:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpAddUrlToUrlGroup:pFullyQualifiedUrl:urlContext:reserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCancelHttpRequest:requestId:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCloseRequestQueue:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCloseServerSession:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCloseUrlGroup:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCreateRequestQueue:name:securityAttributes:flags:requestQueueHandle:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCreateServerSession:serverSessionId:reserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpCreateUrlGroup:pUrlGroupId:reserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpDeclarePush:requestId:verb:path:query:headers:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpDeleteServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpFlushResponseCache:urlPrefix:flags:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpInitialize:flags:pReserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpPrepareUrl:flags:url:preparedUrl:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:returnLength:reserved2:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryServerSessionProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryServiceConfiguration:configId:pInput:inputLength:pOutput:outputLength:pReturnLength:pOverlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpQueryUrlGroupProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReadFragmentFromCache:urlPrefix:byteRange:buffer:bufferLength:bytesRead:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReceiveClientCertificate:connectionId:flags:sslClientCertInfo:sslClientCertInfoSize:bytesReceived:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpReceiveRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpRemoveUrlFromUrlGroup:pFullyQualifiedUrl:flags:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSendResponseEntityBody:requestId:flags:entityChunkCount:entityChunks:bytesSent:reserved1:reserved2:overlapped:logData:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:reserved2:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetServerSessionProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpSetUrlGroupProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpShutdownRequestQueue:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpTerminate:pReserved:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpWaitForDemandStart:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpWaitForDisconnect:connectionId:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #httpWaitForDisconnectEx:connectionId:reserved:overlapped:!**auto generated**!public! !
-!HttpApiLibrary categoriesFor: #initialize!initializing!private! !
-!HttpApiLibrary categoriesFor: #querySession:property:!operations!public! !
-!HttpApiLibrary categoriesFor: #querySession:qosProperty:!operations!public! !
-!HttpApiLibrary categoriesFor: #queryUrlGroup:qosSetting:!operations!public! !
-!HttpApiLibrary categoriesFor: #receiveRequest:!operations!public! !
-!HttpApiLibrary categoriesFor: #receiveRequest:flags:!operations!public! !
-!HttpApiLibrary categoriesFor: #receiveRequestEntityBody:requestId:!operations!public! !
-!HttpApiLibrary categoriesFor: #sendResponse:queue:id:!operations!public! !
-!HttpApiLibrary categoriesFor: #setQueue:property:!accessing!public! !
-!HttpApiLibrary categoriesFor: #setSession:property:!public! !
-!HttpApiLibrary categoriesFor: #setUrlGroup:property:!operations!public! !
+!HttpApiLibrary categoriesForMethods!
+addUrl:toUrlGroup:!operations!public! !
+asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!operations!public! !
+asyncReceiveHttpRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!operations!public! !
+asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!operations!public! !
+bindQueue:toUrlGroup:!operations!public! !
+checkReturnCode:!helpers!private! !
+close!public!realizing/unrealizing! !
+createRequestQueue:!operations!public! !
+createServerSession!operations!public! !
+createUrlGroup:!operations!public! !
+httpAddFragmentToCache:urlPrefix:dataChunk:cachePolicy:overlapped:!**auto generated**!public! !
+httpAddUrlToUrlGroup:pFullyQualifiedUrl:urlContext:reserved:!**auto generated**!public! !
+httpCancelHttpRequest:requestId:overlapped:!**auto generated**!public! !
+httpCloseRequestQueue:!**auto generated**!public! !
+httpCloseServerSession:!**auto generated**!public! !
+httpCloseUrlGroup:!**auto generated**!public! !
+httpCreateRequestQueue:name:securityAttributes:flags:requestQueueHandle:!**auto generated**!public! !
+httpCreateServerSession:serverSessionId:reserved:!**auto generated**!public! !
+httpCreateUrlGroup:pUrlGroupId:reserved:!**auto generated**!public! !
+httpDeclarePush:requestId:verb:path:query:headers:!**auto generated**!public! !
+httpDeleteServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
+httpFlushResponseCache:urlPrefix:flags:overlapped:!**auto generated**!public! !
+httpInitialize:flags:pReserved:!**auto generated**!public! !
+httpPrepareUrl:flags:url:preparedUrl:!**auto generated**!public! !
+httpQueryRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:returnLength:reserved2:!**auto generated**!public! !
+httpQueryServerSessionProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
+httpQueryServiceConfiguration:configId:pInput:inputLength:pOutput:outputLength:pReturnLength:pOverlapped:!**auto generated**!public! !
+httpQueryUrlGroupProperty:property:propertyInformation:propertyInformationLength:returnLength:!**auto generated**!public! !
+httpReadFragmentFromCache:urlPrefix:byteRange:buffer:bufferLength:bytesRead:overlapped:!**auto generated**!public! !
+httpReceiveClientCertificate:connectionId:flags:sslClientCertInfo:sslClientCertInfoSize:bytesReceived:overlapped:!**auto generated**!public! !
+httpReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
+httpReceiveRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!**auto generated**!public! !
+httpRemoveUrlFromUrlGroup:pFullyQualifiedUrl:flags:!**auto generated**!public! !
+httpSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!**auto generated**!public! !
+httpSendResponseEntityBody:requestId:flags:entityChunkCount:entityChunks:bytesSent:reserved1:reserved2:overlapped:logData:!**auto generated**!public! !
+httpSetRequestQueueProperty:property:propertyInformation:propertyInformationLength:reserved1:reserved2:!**auto generated**!public! !
+httpSetServerSessionProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
+httpSetServiceConfiguration:configId:pConfigInformation:configInformationLength:pOverlapped:!**auto generated**!public! !
+httpSetUrlGroupProperty:property:propertyInformation:propertyInformationLength:!**auto generated**!public! !
+httpShutdownRequestQueue:!**auto generated**!public! !
+httpTerminate:pReserved:!**auto generated**!public! !
+httpWaitForDemandStart:overlapped:!**auto generated**!public! !
+httpWaitForDisconnect:connectionId:overlapped:!**auto generated**!public! !
+httpWaitForDisconnectEx:connectionId:reserved:overlapped:!**auto generated**!public! !
+initialize!initializing!private! !
+querySession:property:!operations!public! !
+querySession:qosProperty:!operations!public! !
+queryUrlGroup:qosSetting:!operations!public! !
+receiveRequest:!operations!public! !
+receiveRequest:flags:!operations!public! !
+receiveRequestEntityBody:requestId:!operations!public! !
+sendResponse:queue:id:!operations!public! !
+setQueue:property:!accessing!public! !
+setSession:property:!public! !
+setUrlGroup:property:!operations!public! !
+!
 
 !HttpApiLibrary class methodsFor!
 
@@ -1428,15 +1430,17 @@ queryUrlAclInfo
 				answer addLast: buf.
 				count := count + 1].
 	^answer! !
-!HttpApiLibrary class categoriesFor: #apiVersion!constants!public! !
-!HttpApiLibrary class categoriesFor: #example1!examples!public! !
-!HttpApiLibrary class categoriesFor: #example3!examples!public! !
-!HttpApiLibrary class categoriesFor: #example4!examples!public! !
-!HttpApiLibrary class categoriesFor: #example6!examples!public! !
-!HttpApiLibrary class categoriesFor: #example7!examples!public! !
-!HttpApiLibrary class categoriesFor: #example8!examples!public! !
-!HttpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!HttpApiLibrary class categoriesFor: #initFlags!constants!public! !
-!HttpApiLibrary class categoriesFor: #querySslCertInfo!examples!public! !
-!HttpApiLibrary class categoriesFor: #queryUrlAclInfo!examples!public! !
+!HttpApiLibrary class categoriesForMethods!
+apiVersion!constants!public! !
+example1!examples!public! !
+example3!examples!public! !
+example4!examples!public! !
+example6!examples!public! !
+example7!examples!public! !
+example8!examples!public! !
+fileName!**auto generated**!constants!public! !
+initFlags!constants!public! !
+querySslCertInfo!examples!public! !
+queryUrlAclInfo!examples!public! !
+!
 

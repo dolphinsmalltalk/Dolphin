@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'
@@ -912,43 +912,45 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 
 	<stdcall: sdword WSAStartup word WSADATA*>
 	^self invalidCall: _failureCode! !
-!WS2_32Library categoriesFor: #accept:addr:addrlen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #bind:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #close!public!realizing/unrealizing! !
-!WS2_32Library categoriesFor: #closesocket:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #connect:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #gethostbyaddr:len:type:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #gethostbyname:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #gethostname:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getpeername:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getprotobyname:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getprotobynumber:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getservbyname:proto:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getservbyport:proto:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getsockname:name:namelen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #getsockopt:level:optname:optval:optlen:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #htonl:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #htons:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #inet_addr:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #initialize!initializing!private! !
-!WS2_32Library categoriesFor: #ioctlsocket:cmd:argp:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #listen:backlog:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #ntohl:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #ntohs:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #recv:buf:len:flags:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #select:readfds:writefds:exceptfds:timeout:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #send:buf:len:flags:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #socket:type:protocol:!public!win32 functions-sockets library! !
-!WS2_32Library categoriesFor: #wsaAddressToStringA:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public! !
-!WS2_32Library categoriesFor: #wsaCleanup!**auto generated**!public! !
-!WS2_32Library categoriesFor: #wsaGetLastError!**auto generated**!public! !
-!WS2_32Library categoriesFor: #wsaStartup:lpWSAData:!**auto generated**!public! !
+!WS2_32Library categoriesForMethods!
+accept:addr:addrlen:!public!win32 functions-sockets library! !
+bind:name:namelen:!public!win32 functions-sockets library! !
+close!public!realizing/unrealizing! !
+closesocket:!public!win32 functions-sockets library! !
+connect:name:namelen:!public!win32 functions-sockets library! !
+gethostbyaddr:len:type:!public!win32 functions-sockets library! !
+gethostbyname:!public!win32 functions-sockets library! !
+gethostname:namelen:!public!win32 functions-sockets library! !
+getpeername:name:namelen:!public!win32 functions-sockets library! !
+getprotobyname:!public!win32 functions-sockets library! !
+getprotobynumber:!public!win32 functions-sockets library! !
+getservbyname:proto:!public!win32 functions-sockets library! !
+getservbyport:proto:!public!win32 functions-sockets library! !
+getsockname:name:namelen:!public!win32 functions-sockets library! !
+getsockopt:level:optname:optval:optlen:!**auto generated**!public! !
+htonl:!**auto generated**!public!win32 functions-sockets library! !
+htons:!**auto generated**!public!win32 functions-sockets library! !
+inet_addr:!public!win32 functions-sockets library! !
+inet_ntop:pAddr:pStringBuf:stringBufSize:!public!win32 functions-sockets library! !
+inet_pton:pszAddrString:pAddrBuf:!public!win32 functions-sockets library! !
+initialize!initializing!private! !
+ioctlsocket:cmd:argp:!**auto generated**!public! !
+listen:backlog:!**auto generated**!public! !
+ntohl:!**auto generated**!public!win32 functions-sockets library! !
+ntohs:!**auto generated**!public!win32 functions-sockets library! !
+recv:buf:len:flags:!public!win32 functions-sockets library! !
+recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-sockets library! !
+select:readfds:writefds:exceptfds:timeout:!public!win32 functions-sockets library! !
+send:buf:len:flags:!public!win32 functions-sockets library! !
+sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
+setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
+shutdown:how:!**auto generated**!public!win32 functions-sockets library! !
+socket:type:protocol:!public!win32 functions-sockets library! !
+wsaAddressToStringA:dwAddressLength:lpProtocolInfo:lpszAddressString:lpdwAddressStringLength:!**auto generated**!public! !
+wsaCleanup!**auto generated**!public! !
+wsaGetLastError!**auto generated**!public! !
+wsaStartup:lpWSAData:!**auto generated**!public! !
+!
 
 !WS2_32Library class methodsFor!
 
@@ -957,5 +959,7 @@ fileName
 	receiver represents"
 
 	^'WS2_32'! !
-!WS2_32Library class categoriesFor: #fileName!constants!public! !
+!WS2_32Library class categoriesForMethods!
+fileName!constants!public! !
+!
 

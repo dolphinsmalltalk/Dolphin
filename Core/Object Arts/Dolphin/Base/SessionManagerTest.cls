@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SessionManagerTest
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ testWindowsDirectory
 	actual := SessionManager current windowsDirectory.
 	self assert: (File isDirectory: actual).
 	self assert: (actual sameAs: windows)! !
-!SessionManagerTest categoriesFor: #testComputerName!public!unit tests! !
-!SessionManagerTest categoriesFor: #testDocumentsDirectory!public!unit tests! !
-!SessionManagerTest categoriesFor: #testGetEnv!public!unit tests! !
-!SessionManagerTest categoriesFor: #testSystemDirectory!public!unit tests! !
-!SessionManagerTest categoriesFor: #testUsername!public!unit tests! !
-!SessionManagerTest categoriesFor: #testWindowsDirectory!public!unit tests! !
+!SessionManagerTest categoriesForMethods!
+testComputerName!public!unit tests! !
+testDocumentsDirectory!public!unit tests! !
+testGetEnv!public!unit tests! !
+testSystemDirectory!public!unit tests! !
+testUsername!public!unit tests! !
+testWindowsDirectory!public!unit tests! !
+!
 

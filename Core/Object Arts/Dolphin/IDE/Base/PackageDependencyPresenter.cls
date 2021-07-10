@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #PackageDependencyPresenter
 	instanceVariableNames: 'treePresenter tracesPresenter traces packages'
@@ -263,32 +263,34 @@ selectedPair: anAssociation
 toggleStatusIcons
 	treePresenter view 
 		viewMode: (treePresenter view viewMode == #noIcons ifTrue: [#smallIcons] ifFalse: [#noIcons])! !
-!PackageDependencyPresenter categoriesFor: #browsePackages!commands!public! !
-!PackageDependencyPresenter categoriesFor: #browseTrace!commands!public! !
-!PackageDependencyPresenter categoriesFor: #buildChildNodes:for:!helpers!private! !
-!PackageDependencyPresenter categoriesFor: #childrenFor:!helpers!private! !
-!PackageDependencyPresenter categoriesFor: #choosePackage!helpers!private! !
-!PackageDependencyPresenter categoriesFor: #clear!commands!public! !
-!PackageDependencyPresenter categoriesFor: #createComponents!initializing!public! !
-!PackageDependencyPresenter categoriesFor: #createSchematicWiring!initializing!public! !
-!PackageDependencyPresenter categoriesFor: #dependencyModelWithRoots:!helpers!private! !
-!PackageDependencyPresenter categoriesFor: #dependentPackage!accessing!private! !
-!PackageDependencyPresenter categoriesFor: #initialize!initializing!private! !
-!PackageDependencyPresenter categoriesFor: #onPackageSelected!event handling!private! !
-!PackageDependencyPresenter categoriesFor: #onPrerequisitesReset!event handling!private! !
-!PackageDependencyPresenter categoriesFor: #onPrerequisitesReset:!event handling!private! !
-!PackageDependencyPresenter categoriesFor: #onViewClosed!event handling!public! !
-!PackageDependencyPresenter categoriesFor: #onViewOpened!event handling!public! !
-!PackageDependencyPresenter categoriesFor: #packageManager!constants!private! !
-!PackageDependencyPresenter categoriesFor: #packages!accessing!public! !
-!PackageDependencyPresenter categoriesFor: #packages:!accessing!public! !
-!PackageDependencyPresenter categoriesFor: #prerequisitePackage!accessing!private! !
-!PackageDependencyPresenter categoriesFor: #prerequisiteTraceFor:!event handling!private! !
-!PackageDependencyPresenter categoriesFor: #queryCommand:!commands!private! !
-!PackageDependencyPresenter categoriesFor: #queryMoveObjects:toPackage:!helpers!private! !
-!PackageDependencyPresenter categoriesFor: #selectedPair!accessing!public! !
-!PackageDependencyPresenter categoriesFor: #selectedPair:!accessing!public! !
-!PackageDependencyPresenter categoriesFor: #toggleStatusIcons!commands!public! !
+!PackageDependencyPresenter categoriesForMethods!
+browsePackages!commands!public! !
+browseTrace!commands!public! !
+buildChildNodes:for:!helpers!private! !
+childrenFor:!helpers!private! !
+choosePackage!helpers!private! !
+clear!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+dependencyModelWithRoots:!helpers!private! !
+dependentPackage!accessing!private! !
+initialize!initializing!private! !
+onPackageSelected!event handling!private! !
+onPrerequisitesReset!event handling!private! !
+onPrerequisitesReset:!event handling!private! !
+onViewClosed!event handling!public! !
+onViewOpened!event handling!public! !
+packageManager!constants!private! !
+packages!accessing!public! !
+packages:!accessing!public! !
+prerequisitePackage!accessing!private! !
+prerequisiteTraceFor:!event handling!private! !
+queryCommand:!commands!private! !
+queryMoveObjects:toPackage:!helpers!private! !
+selectedPair!accessing!public! !
+selectedPair:!accessing!public! !
+toggleStatusIcons!commands!public! !
+!
 
 !PackageDependencyPresenter class methodsFor!
 
@@ -307,6 +309,8 @@ resource_Default_view
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409482752 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 138 ##(Smalltalk.Dictionary) 34 3 721414 ##(Smalltalk.Association) 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140920393 1 608 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 496 nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 2 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseTrace 8 'Browse' 1 1 nil nil nil 818 1 850 #choosePackage 8 'Package...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 608 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil 328198 ##(Smalltalk.Point) 65 65 nil nil 138 144 34 3 920646 5 ##(Smalltalk.ListViewColumn) 8 'Owned' 507 #left ##(Smalltalk.BasicListAbstract) 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a displayString < b displayString]' 8 #[30 105 17 158 18 158 128 106] #displayString 1136 7 513 nil 459270 ##(Smalltalk.Message) #first 8 #() nil 608 ##(Smalltalk.IconicListAbstract) 3 nil nil 1074 8 'Dependency' 337 #left ##(Smalltalk.BasicListAbstract) 1234 #<= 8 #() 1234 #last 1264 nil 608 nil 1 nil nil 1074 8 'Prerequisite Object' 339 #left ##(Smalltalk.BasicListAbstract) 1122 0 nil 1154 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a displayString < b displayString]' 8 #[30 105 17 158 18 158 128 106] #displayString 1392 7 513 nil 1122 0 nil 1154 1 83886081 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a | a at: 2]' 8 #[29 105 17 64 148 106] 1472 7 257 nil nil 608 ##(Smalltalk.IconicListAbstract) 1 nil nil #report 720 nil 131173 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1010 1 171 1010 1189 285 608 1618 #contextMenu: 34 1 784 608 1618 #text: 34 1 8 'Owned' 608 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 85 0 0 0 82 2 0 0 227 0 0 0] 8 #() 1010 193 193 nil 35 524806 ##(Smalltalk.Fraction) 24567 10361 578 410 ##(Smalltalk.TreeView) 34 27 nil 416 34 2 8 1140916775 1 1904 590918 3 ##(Smalltalk.TreeModel) nil 752 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 720 496 nil 5 770 nil true 34 2 818 1 850 #browsePackages 8 'Browse' 1 1 nil nil nil 818 1 850 #toggleStatusIcons 8 'Show Status Icons' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1904 nil 8 1883652128 1122 0 nil 1154 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a | a key name]' 8 #[31 105 17 158 159 106] #key #name 2208 7 257 nil 1122 0 nil 1154 7 1 1120 8 'doIt' 8 '[:each |  (each key hasCyclicPrerequisites or: [each key hasUncommittedPrerequisites]) not icon 
 	imageIndex]' 8 #[35 105 226 0 159 119 58 112 226 0 160 161 162 163 106] #key #hasCyclicPrerequisites #hasUncommittedPrerequisites #not #icon #imageIndex 2288 7 257 nil 992 nil nil nil nil nil 170 176 720 nil #smallIcons 11 170 ##(Smalltalk.PluggableLookupTable) 720 1554 138 144 34 2 1618 #createAt:extent: 34 2 1010 1 1 1010 1189 161 1904 1618 #contextMenu: 34 1 2048 1904 1778 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 82 2 0 0 80 0 0 0] 8 #() 1840 nil 27 1858 693 519 578 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 2624 nil 496 nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 2624 nil 1 #left nil nil nil 1010 1 1 1010 9 9 nil 2720 nil 1554 138 144 34 1 1618 #createAt:extent: 34 2 1010 1 161 1010 1189 11 2624 1778 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 80 0 0 0 82 2 0 0 85 0 0 0] 8 #() 1840 nil 27 1 true 170 192 34 4 608 8 'traces' 1904 8 'tree' 590342 ##(Smalltalk.Rectangle) 1010 1 1 1010 1 1 1554 138 144 34 1 1618 #createAt:extent: 34 2 1010 7039 21 1010 1189 455 416 1778 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 17 16 0 0 237 0 0 0] 34 3 1904 2624 608 1840 nil 27 )! !
-!PackageDependencyPresenter class categoriesFor: #icon!constants!public! !
-!PackageDependencyPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!PackageDependencyPresenter class categoriesForMethods!
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

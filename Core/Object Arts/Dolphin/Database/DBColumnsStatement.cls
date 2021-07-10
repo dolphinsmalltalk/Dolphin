@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBSchemaStatement subclass: #DBColumnsStatement
 	instanceVariableNames: 'columnName'
@@ -30,7 +30,9 @@ executeStatement
 		nameLength3: SQL_NTS
 		columnName: self columnName
 		nameLength4: SQL_NTS! !
-!DBColumnsStatement categoriesFor: #columnName!accessing!public! !
-!DBColumnsStatement categoriesFor: #columnName:!accessing!public! !
-!DBColumnsStatement categoriesFor: #executeStatement!operations!private! !
+!DBColumnsStatement categoriesForMethods!
+columnName!accessing!public! !
+columnName:!accessing!public! !
+executeStatement!operations!private! !
+!
 

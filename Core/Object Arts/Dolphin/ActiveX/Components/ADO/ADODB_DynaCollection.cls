@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_Collection subclass: #ADODB_DynaCollection
 	instanceVariableNames: ''
@@ -56,9 +56,11 @@ Delete: index
 
 	<virtual stdcall: hresult 12 variant>
 	^self invalidCall: _failureCode! !
-!ADODB_DynaCollection categoriesFor: #Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
-!ADODB_DynaCollection categoriesFor: #delete:!**auto generated**!methods!public! !
-!ADODB_DynaCollection categoriesFor: #Delete:!**auto generated**!COM Interfaces-_DynaCollection!private! !
+!ADODB_DynaCollection categoriesForMethods!
+Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
+delete:!**auto generated**!methods!public! !
+Delete:!**auto generated**!COM Interfaces-_DynaCollection!private! !
+!
 
 !ADODB_DynaCollection class methodsFor!
 
@@ -72,5 +74,7 @@ defineFunctions
 		defineFunction: #Delete:
 			argumentTypes: 'variant'
 ! !
-!ADODB_DynaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB_DynaCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

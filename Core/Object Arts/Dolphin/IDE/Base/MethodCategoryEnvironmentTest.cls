@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentTest subclass: #MethodCategoryEnvironmentTest
 	instanceVariableNames: ''
@@ -32,5 +32,7 @@ testMethodCategoryEnvironment
 	self assert: selectors size equals: 1.
 	self assert: (env includesSelector: #newSortBlock: in: SortAlgorithm class).
 	self deny: (env includesSelector: #icon in: SortAlgorithm class)! !
-!MethodCategoryEnvironmentTest categoriesFor: #testMethodCategoryEnvironment!public! !
+!MethodCategoryEnvironmentTest categoriesForMethods!
+testMethodCategoryEnvironment!public! !
+!
 

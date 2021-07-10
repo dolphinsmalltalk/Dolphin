@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ICreateErrorInfo
 	instanceVariableNames: ''
@@ -72,12 +72,14 @@ SetSource: szSource
 
 	<virtual stdcall: hresult 5 lpwstr>
 	^self invalidCall: _failureCode! !
-!ICreateErrorInfo categoriesFor: #errorInfo!accessing-interfaces!public! !
-!ICreateErrorInfo categoriesFor: #SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetGuid:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetHelpContext:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetHelpFile:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
-!ICreateErrorInfo categoriesFor: #SetSource:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!ICreateErrorInfo categoriesForMethods!
+errorInfo!accessing-interfaces!public! !
+SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetGuid:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetHelpContext:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetHelpFile:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+SetSource:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
+!
 
 !ICreateErrorInfo class methodsFor!
 
@@ -120,7 +122,9 @@ new
 	answer := self newPointer.
 	OLEAutLibrary default createErrorInfo: answer.
 	^answer! !
-!ICreateErrorInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ICreateErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
-!ICreateErrorInfo class categoriesFor: #new!instance creation!public! !
+!ICreateErrorInfo class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+fromEXCEPINFO:guid:!instance creation!public! !
+new!instance creation!public! !
+!
 

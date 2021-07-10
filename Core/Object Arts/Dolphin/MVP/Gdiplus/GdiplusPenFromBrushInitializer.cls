@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
 	instanceVariableNames: 'brush width'
@@ -37,7 +37,9 @@ createHandle
 				pen: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusPenFromBrushInitializer categoriesFor: #brush!private!test accessing! !
-!GdiplusPenFromBrushInitializer categoriesFor: #brush:width:!initializing!private! !
-!GdiplusPenFromBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusPenFromBrushInitializer categoriesForMethods!
+brush!private!test accessing! !
+brush:width:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 

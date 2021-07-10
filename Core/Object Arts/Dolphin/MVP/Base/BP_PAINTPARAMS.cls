@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #BP_PAINTPARAMS
 	instanceVariableNames: 'blendFunction'
@@ -55,15 +55,17 @@ prcExclude: aRECT
 	"Set the receiver's 'prcExclude' field to the value of the argument, aRECT"
 
 	bytes uintPtrAtOffset: _OffsetOf_prcExclude put: aRECT yourAddress! !
-!BP_PAINTPARAMS categoriesFor: #blendFunction!accessing!public! !
-!BP_PAINTPARAMS categoriesFor: #blendFunction:!accessing!public! !
-!BP_PAINTPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!BP_PAINTPARAMS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!BP_PAINTPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!BP_PAINTPARAMS categoriesFor: #pBlendFunction!**compiled accessors**!public! !
-!BP_PAINTPARAMS categoriesFor: #pBlendFunction:!**compiled accessors**!public! !
-!BP_PAINTPARAMS categoriesFor: #prcExclude!**compiled accessors**!public! !
-!BP_PAINTPARAMS categoriesFor: #prcExclude:!**compiled accessors**!public! !
+!BP_PAINTPARAMS categoriesForMethods!
+blendFunction!accessing!public! !
+blendFunction:!accessing!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+pBlendFunction!**compiled accessors**!public! !
+pBlendFunction:!**compiled accessors**!public! !
+prcExclude!**compiled accessors**!public! !
+prcExclude:!**compiled accessors**!public! !
+!
 
 !BP_PAINTPARAMS class methodsFor!
 
@@ -89,6 +91,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #prcExclude #pBlendFunction)! !
-!BP_PAINTPARAMS class categoriesFor: #defineFields!public!template definition! !
-!BP_PAINTPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!BP_PAINTPARAMS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

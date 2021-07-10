@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualMethodCategory subclass: #AllMethodsCategory
 	instanceVariableNames: ''
@@ -21,7 +21,9 @@ includesMethod: aCompiledMethod
 	The 'All' methods category includes all methods!!"
 
 	^true! !
-!AllMethodsCategory categoriesFor: #includesMethod:!public!testing! !
+!AllMethodsCategory categoriesForMethods!
+includesMethod:!public!testing! !
+!
 
 !AllMethodsCategory class methodsFor!
 
@@ -47,8 +49,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!AllMethodsCategory class categoriesFor: #current!accessing!public! !
-!AllMethodsCategory class categoriesFor: #initialize!initializing!private! !
-!AllMethodsCategory class categoriesFor: #newNamed:!instance creation!private! !
-!AllMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!AllMethodsCategory class categoriesForMethods!
+current!accessing!public! !
+initialize!initializing!private! !
+newNamed:!instance creation!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

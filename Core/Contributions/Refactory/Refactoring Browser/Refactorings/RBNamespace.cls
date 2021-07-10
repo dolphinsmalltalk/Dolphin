@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RBNamespace
 	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache'
@@ -319,48 +319,50 @@ rootClasses
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
-!RBNamespace categoriesFor: #addChangeToClass:!changes!private! !
-!RBNamespace categoriesFor: #addClassVariable:to:!changes!private! !
-!RBNamespace categoriesFor: #addInstanceVariable:to:!changes!private! !
-!RBNamespace categoriesFor: #addPool:to:!changes!private! !
-!RBNamespace categoriesFor: #allClassesDo:!accessing!public! !
-!RBNamespace categoriesFor: #allImplementorsOf:!accessing!public! !
-!RBNamespace categoriesFor: #allReferencesTo:do:!accessing!public! !
-!RBNamespace categoriesFor: #allReferencesToClass:do:!accessing!public! !
-!RBNamespace categoriesFor: #changeClass:!changes!private! !
-!RBNamespace categoriesFor: #changes!accessing!public! !
-!RBNamespace categoriesFor: #changes:!accessing!public! !
-!RBNamespace categoriesFor: #classFor:!accessing/classes!public! !
-!RBNamespace categoriesFor: #classNamed:!accessing/classes!public! !
-!RBNamespace categoriesFor: #classNameFor:!helpers!private! !
-!RBNamespace categoriesFor: #compile:in:classified:!changes!private! !
-!RBNamespace categoriesFor: #createNewClassFor:!accessing/classes!public! !
-!RBNamespace categoriesFor: #defineClass:!changes!public! !
-!RBNamespace categoriesFor: #environment!accessing!public! !
-!RBNamespace categoriesFor: #environment:!accessing!public! !
-!RBNamespace categoriesFor: #flushCaches!changes!private! !
-!RBNamespace categoriesFor: #hasCreatedClassFor:!helpers!private! !
-!RBNamespace categoriesFor: #hasRemoved:!public!testing! !
-!RBNamespace categoriesFor: #includesClassNamed:!public!testing! !
-!RBNamespace categoriesFor: #includesGlobal:!public!testing! !
-!RBNamespace categoriesFor: #initialize!initialize/release!public! !
-!RBNamespace categoriesFor: #metaclassNamed:!accessing/classes!public! !
-!RBNamespace categoriesFor: #name!accessing!public! !
-!RBNamespace categoriesFor: #name:!accessing!public! !
-!RBNamespace categoriesFor: #performChange:around:!changes!private! !
-!RBNamespace categoriesFor: #privateImplementorsOf:!helpers!private! !
-!RBNamespace categoriesFor: #removeClass:!changes!public! !
-!RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
-!RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
-!RBNamespace categoriesFor: #removeInstanceVariable:from:!changes!private! !
-!RBNamespace categoriesFor: #removeMethod:from:!changes!private! !
-!RBNamespace categoriesFor: #renameClass:to:around:!changes!public! !
-!RBNamespace categoriesFor: #renameClassVariable:to:in:around:!changes!private! !
-!RBNamespace categoriesFor: #renameInstanceVariable:to:in:around:!changes!private! !
-!RBNamespace categoriesFor: #reparentClasses:to:!changes!public! !
-!RBNamespace categoriesFor: #replaceClassNameIn:to:!changes!private! !
-!RBNamespace categoriesFor: #rootClasses!accessing!public! !
-!RBNamespace categoriesFor: #whichCategoryIncludes:!accessing/classes!public! !
+!RBNamespace categoriesForMethods!
+addChangeToClass:!changes!private! !
+addClassVariable:to:!changes!private! !
+addInstanceVariable:to:!changes!private! !
+addPool:to:!changes!private! !
+allClassesDo:!accessing!public! !
+allImplementorsOf:!accessing!public! !
+allReferencesTo:do:!accessing!public! !
+allReferencesToClass:do:!accessing!public! !
+changeClass:!changes!private! !
+changes!accessing!public! !
+changes:!accessing!public! !
+classFor:!accessing/classes!public! !
+classNamed:!accessing/classes!public! !
+classNameFor:!helpers!private! !
+compile:in:classified:!changes!private! !
+createNewClassFor:!accessing/classes!public! !
+defineClass:!changes!public! !
+environment!accessing!public! !
+environment:!accessing!public! !
+flushCaches!changes!private! !
+hasCreatedClassFor:!helpers!private! !
+hasRemoved:!public!testing! !
+includesClassNamed:!public!testing! !
+includesGlobal:!public!testing! !
+initialize!initialize/release!public! !
+metaclassNamed:!accessing/classes!public! !
+name!accessing!public! !
+name:!accessing!public! !
+performChange:around:!changes!private! !
+privateImplementorsOf:!helpers!private! !
+removeClass:!changes!public! !
+removeClassNamed:!changes!public! !
+removeClassVariable:from:!changes!private! !
+removeInstanceVariable:from:!changes!private! !
+removeMethod:from:!changes!private! !
+renameClass:to:around:!changes!public! !
+renameClassVariable:to:in:around:!changes!private! !
+renameInstanceVariable:to:in:around:!changes!private! !
+reparentClasses:to:!changes!public! !
+replaceClassNameIn:to:!changes!private! !
+rootClasses!accessing!public! !
+whichCategoryIncludes:!accessing/classes!public! !
+!
 
 !RBNamespace class methodsFor!
 
@@ -373,6 +375,8 @@ onEnvironment: aBrowserEnvironment
 	^(self new)
 		environment: aBrowserEnvironment;
 		yourself! !
-!RBNamespace class categoriesFor: #new!instance creation!public! !
-!RBNamespace class categoriesFor: #onEnvironment:!instance creation!public! !
+!RBNamespace class categoriesForMethods!
+new!instance creation!public! !
+onEnvironment:!instance creation!public! !
+!
 

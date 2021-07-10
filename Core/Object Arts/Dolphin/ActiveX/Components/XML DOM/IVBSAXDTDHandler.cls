@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IVBSAXDTDHandler
 	instanceVariableNames: ''
@@ -110,12 +110,14 @@ UnparsedEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId st
 
 	<virtual stdcall: hresult 9 bstr* bstr* bstr* bstr*>
 	^self invalidCall: _failureCode! !
-!IVBSAXDTDHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXDTDHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXDTDHandler categoriesFor: #notationDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
-!IVBSAXDTDHandler categoriesFor: #NotationDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
-!IVBSAXDTDHandler categoriesFor: #unparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!methods!public! !
-!IVBSAXDTDHandler categoriesFor: #UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
+!IVBSAXDTDHandler categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+notationDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !
+NotationDecl:strPublicId:strSystemId:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
+unparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!methods!public! !
+UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:!**auto generated**!COM Interfaces-IVBSAXDTDHandler!private! !
+!
 
 !IVBSAXDTDHandler class methodsFor!
 
@@ -129,5 +131,7 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:strPublicId:strSystemId:strNotationName:
 			argumentTypes: 'bstr* bstr* bstr* bstr*'
 ! !
-!IVBSAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IVBSAXDTDHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

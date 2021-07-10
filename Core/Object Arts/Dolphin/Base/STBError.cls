@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #STBError
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
 	^'STBFiler - %1'! !
-!STBError categoriesFor: #_descriptionFormat!displaying!public! !
+!STBError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

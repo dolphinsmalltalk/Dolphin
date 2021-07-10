@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBConnectionTestResource subclass: #AccessNorthwindDB
 	instanceVariableNames: 'filename'
@@ -26,7 +26,9 @@ createDatabase
 dropDatabase
 	super dropDatabase.
 	File delete: filename! !
-!AccessNorthwindDB categoriesFor: #connectString!private! !
-!AccessNorthwindDB categoriesFor: #createDatabase!private! !
-!AccessNorthwindDB categoriesFor: #dropDatabase!private! !
+!AccessNorthwindDB categoriesForMethods!
+connectString!private! !
+createDatabase!private! !
+dropDatabase!private! !
+!
 

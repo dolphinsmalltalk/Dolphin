@@ -657,14 +657,16 @@ removeAnsiProtocolNamed: protocolName ifAbsent: notFoundBlock
 	tmpProtocolNames isEmpty ifTrue: [^notFoundBlock value].
 	tmpProtocolNames remove: protocolName ifAbsent: [^notFoundBlock value].
 	self ansiProtocolNames: tmpProtocolNames! !
-!ClassDescription categoriesFor: #addProtocolNamed:!public! !
-!ClassDescription categoriesFor: #ansiProtocolNames!protocols!public! !
-!ClassDescription categoriesFor: #ansiProtocolNames:!public! !
-!ClassDescription categoriesFor: #ansiProtocols!protocols!public! !
-!ClassDescription categoriesFor: #conformsToAnsiProtocolNamed:!public! !
-!ClassDescription categoriesFor: #definedAsProtocolNames!public! !
-!ClassDescription categoriesFor: #removeAnsiProtocolNamed:!public! !
-!ClassDescription categoriesFor: #removeAnsiProtocolNamed:ifAbsent:!public! !
+!ClassDescription categoriesForMethods!
+addProtocolNamed:!public! !
+ansiProtocolNames!protocols!public! !
+ansiProtocolNames:!public! !
+ansiProtocols!protocols!public! !
+conformsToAnsiProtocolNamed:!public! !
+definedAsProtocolNames!public! !
+removeAnsiProtocolNamed:!public! !
+removeAnsiProtocolNamed:ifAbsent:!public! !
+!
 
 "End of package definition"!
 

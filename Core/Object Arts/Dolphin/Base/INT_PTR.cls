@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UINT_PTR subclass: #INT_PTR
 	instanceVariableNames: ''
@@ -30,10 +30,12 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_value put: anInteger! !
-!INT_PTR categoriesFor: #isSigned!public!testing! !
-!INT_PTR categoriesFor: #unsignedValue:!accessing!public! !
-!INT_PTR categoriesFor: #value!**compiled accessors**!public! !
-!INT_PTR categoriesFor: #value:!**compiled accessors**!public! !
+!INT_PTR categoriesForMethods!
+isSigned!public!testing! !
+unsignedValue:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !INT_PTR class methodsFor!
 
@@ -42,5 +44,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: INT_PTRField new beOverride! !
-!INT_PTR class categoriesFor: #defineFields!public!template definition! !
+!INT_PTR class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

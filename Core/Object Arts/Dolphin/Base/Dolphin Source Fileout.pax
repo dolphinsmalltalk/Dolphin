@@ -1620,7 +1620,7 @@ emitFileOutHeaderOn: aSourceFiler
 	<puttableStream>, aWriteStream."
 
 	aSourceFiler
-		emitComment: 'Filed out from ' , VMLibrary default productName;
+		emitComment: 'Filed out from Dolphin Smallalk';
 		cr!
 
 fileOut: anObject

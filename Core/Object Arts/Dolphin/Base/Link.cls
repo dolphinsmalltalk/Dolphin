@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Link
 	instanceVariableNames: 'nextLink'
@@ -22,8 +22,10 @@ nextLink: aLink
 	"Set the next Link referred to by the receiver to a aLink."
 
 	^nextLink := aLink! !
-!Link categoriesFor: #nextLink!accessing!public! !
-!Link categoriesFor: #nextLink:!accessing!not an aspect!public! !
+!Link categoriesForMethods!
+nextLink!accessing!public! !
+nextLink:!accessing!not an aspect!public! !
+!
 
 !Link class methodsFor!
 
@@ -35,5 +37,7 @@ nextLink: aLink
 	^self new
 		nextLink: aLink;
 		yourself! !
-!Link class categoriesFor: #nextLink:!instance creation!public! !
+!Link class categoriesForMethods!
+nextLink:!instance creation!public! !
+!
 

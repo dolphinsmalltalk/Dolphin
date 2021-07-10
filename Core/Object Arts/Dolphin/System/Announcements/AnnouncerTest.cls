@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #AnnouncerTest
 	instanceVariableNames: 'announcer'
@@ -162,25 +162,29 @@ testUnsubscribeSet
 	announcement := nil.
 	announcer announce: AnnouncementMockB new.
 	self assertIsNil: announcement! !
-!AnnouncerTest categoriesFor: #newAnnouncer!private! !
-!AnnouncerTest categoriesFor: #setUp!private!running! !
-!AnnouncerTest categoriesFor: #testAnnounceClass!public!testing! !
-!AnnouncerTest categoriesFor: #testAnnounceInstance!public!testing! !
-!AnnouncerTest categoriesFor: #testAnnouncingReentrant!public!testing! !
-!AnnouncerTest categoriesFor: #testNoArgBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeSend!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeSet!public!testing! !
-!AnnouncerTest categoriesFor: #testSubscribeSubclass!public!testing! !
-!AnnouncerTest categoriesFor: #testSymbolIdentifier!public!testing! !
-!AnnouncerTest categoriesFor: #testTwoArgBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testUnsubscribeBlock!public!testing! !
-!AnnouncerTest categoriesFor: #testUnsubscribeSend!public!testing! !
-!AnnouncerTest categoriesFor: #testUnsubscribeSet!public!testing! !
+!AnnouncerTest categoriesForMethods!
+newAnnouncer!private! !
+setUp!private!running! !
+testAnnounceClass!public!testing! !
+testAnnounceInstance!public!testing! !
+testAnnouncingReentrant!public!testing! !
+testNoArgBlock!public!testing! !
+testSubscribeBlock!public!testing! !
+testSubscribeSend!public!testing! !
+testSubscribeSet!public!testing! !
+testSubscribeSubclass!public!testing! !
+testSymbolIdentifier!public!testing! !
+testTwoArgBlock!public!testing! !
+testUnsubscribeBlock!public!testing! !
+testUnsubscribeSend!public!testing! !
+testUnsubscribeSet!public!testing! !
+!
 
 !AnnouncerTest class methodsFor!
 
 shouldInheritSelectors
 	^ true! !
-!AnnouncerTest class categoriesFor: #shouldInheritSelectors!public!testing! !
+!AnnouncerTest class categoriesForMethods!
+shouldInheritSelectors!public!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RenameTemporaryTest
 	instanceVariableNames: ''
@@ -80,8 +80,10 @@ testRenameTemporary
 								asdf isEmpty ifTrue: [^self].
 								asdf size == 1 ifTrue: [^asdf first viewResults].
 								SmalllintResultEditor openOn: self label: name')! !
-!RenameTemporaryTest categoriesFor: #testBadInterval!failure tests!public! !
-!RenameTemporaryTest categoriesFor: #testBadName!failure tests!public! !
-!RenameTemporaryTest categoriesFor: #testModelBadName!failure tests!public! !
-!RenameTemporaryTest categoriesFor: #testRenameTemporary!public!tests! !
+!RenameTemporaryTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testBadName!failure tests!public! !
+testModelBadName!failure tests!public! !
+testRenameTemporary!public!tests! !
+!
 

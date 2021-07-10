@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #HistoryBrowser
 	instanceVariableNames: 'scanner'
@@ -51,11 +51,13 @@ scannerClass
 	"Answer the current scanner class"
 
 	^ChunkFileMethodScanner! !
-!HistoryBrowser categoriesFor: #about:!commands!public! !
-!HistoryBrowser categoriesFor: #initialize!initializing!public! !
-!HistoryBrowser categoriesFor: #scanner!accessing!public! !
-!HistoryBrowser categoriesFor: #scanner:!public! !
-!HistoryBrowser categoriesFor: #scannerClass!constants!public! !
+!HistoryBrowser categoriesForMethods!
+about:!commands!public! !
+initialize!initializing!public! !
+scanner!accessing!public! !
+scanner:!public! !
+scannerClass!constants!public! !
+!
 
 !HistoryBrowser class methodsFor!
 
@@ -76,8 +78,10 @@ publishedAspects
 uninitialize
 	#(#ClassBrowserAbstract #MethodBrowserShell #Debugger) 
 		do: [:each | (Smalltalk at: each) removeCommandQueryHandler: #queryMethodHistoryCommand:]! !
-!HistoryBrowser class categoriesFor: #icon!public! !
-!HistoryBrowser class categoriesFor: #initialize!initializing!private! !
-!HistoryBrowser class categoriesFor: #publishedAspects!operations!public! !
-!HistoryBrowser class categoriesFor: #uninitialize!initializing!private! !
+!HistoryBrowser class categoriesForMethods!
+icon!public! !
+initialize!initializing!private! !
+publishedAspects!operations!public! !
+uninitialize!initializing!private! !
+!
 

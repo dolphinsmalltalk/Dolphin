@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaStyler subclass: #SmalltalkStyler
 	instanceVariableNames: 'arrayDepth view last inTag stack'
@@ -392,45 +392,47 @@ visitSpecialCharacterToken: aStSpecialCharacterToken
 			^#specialCharacter].
 	(char == $] and: [self lastIsLiteralByte]) ifTrue: [^#literalBytes].
 	^#specialCharacter! !
-!SmalltalkStyler categoriesFor: #applyStyle:toNext:!helpers!private! !
-!SmalltalkStyler categoriesFor: #atStart!private!testing! !
-!SmalltalkStyler categoriesFor: #colorComments:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #colorText:in:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #colourBefore:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #colourTokens:startingAt:!operations!private! !
-!SmalltalkStyler categoriesFor: #initialBinaryStyle:!constants!private! !
-!SmalltalkStyler categoriesFor: #initialize!initializing!private! !
-!SmalltalkStyler categoriesFor: #initialKeywordStyle!constants!private! !
-!SmalltalkStyler categoriesFor: #initialLiteralStyle:!helpers!private! !
-!SmalltalkStyler categoriesFor: #initialUnaryStyle!constants!private! !
-!SmalltalkStyler categoriesFor: #isInArray!private!testing! !
-!SmalltalkStyler categoriesFor: #isLiteralArrayAt:in:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastCharacter!accessing!private! !
-!SmalltalkStyler categoriesFor: #lastIsLiteralByte!private!testing! !
-!SmalltalkStyler categoriesFor: #lastIsSpecial:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastIsStyle:char:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastIsStyle:chars:!helpers!private! !
-!SmalltalkStyler categoriesFor: #lastStyle!accessing!private! !
-!SmalltalkStyler categoriesFor: #lastToken!accessing!private! !
-!SmalltalkStyler categoriesFor: #literalArrayIndicatorId!constants!private! !
-!SmalltalkStyler categoriesFor: #prepareToStyleView:!initializing!public! !
-!SmalltalkStyler categoriesFor: #resetStylingIn:from:to:!helpers!private! !
-!SmalltalkStyler categoriesFor: #scannerClass!constants!private! !
-!SmalltalkStyler categoriesFor: #styleForBar!helpers!private! !
-!SmalltalkStyler categoriesFor: #styleForToken:!helpers!private! !
-!SmalltalkStyler categoriesFor: #stylingStartBefore:in:!helpers!private! !
-!SmalltalkStyler categoriesFor: #tokenBefore:!helpers!private! !
-!SmalltalkStyler categoriesFor: #visitAssignmentToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitBinarySelectorToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitErrorToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitIdentifierToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitIllegalCharacterToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitKeywordToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitLiteralArrayToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitLiteralToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitNumberLiteralToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitOptimizedToken:!public!visiting! !
-!SmalltalkStyler categoriesFor: #visitSpecialCharacterToken:!public!visiting! !
+!SmalltalkStyler categoriesForMethods!
+applyStyle:toNext:!helpers!private! !
+atStart!private!testing! !
+colorComments:startingAt:!operations!private! !
+colorText:in:startingAt:!operations!private! !
+colourBefore:startingAt:!operations!private! !
+colourTokens:startingAt:!operations!private! !
+initialBinaryStyle:!constants!private! !
+initialize!initializing!private! !
+initialKeywordStyle!constants!private! !
+initialLiteralStyle:!helpers!private! !
+initialUnaryStyle!constants!private! !
+isInArray!private!testing! !
+isLiteralArrayAt:in:!helpers!private! !
+lastCharacter!accessing!private! !
+lastIsLiteralByte!private!testing! !
+lastIsSpecial:!helpers!private! !
+lastIsStyle:char:!helpers!private! !
+lastIsStyle:chars:!helpers!private! !
+lastStyle!accessing!private! !
+lastToken!accessing!private! !
+literalArrayIndicatorId!constants!private! !
+prepareToStyleView:!initializing!public! !
+resetStylingIn:from:to:!helpers!private! !
+scannerClass!constants!private! !
+styleForBar!helpers!private! !
+styleForToken:!helpers!private! !
+stylingStartBefore:in:!helpers!private! !
+tokenBefore:!helpers!private! !
+visitAssignmentToken:!public!visiting! !
+visitBinarySelectorToken:!public!visiting! !
+visitErrorToken:!public!visiting! !
+visitIdentifierToken:!public!visiting! !
+visitIllegalCharacterToken:!public!visiting! !
+visitKeywordToken:!public!visiting! !
+visitLiteralArrayToken:!public!visiting! !
+visitLiteralToken:!public!visiting! !
+visitNumberLiteralToken:!public!visiting! !
+visitOptimizedToken:!public!visiting! !
+visitSpecialCharacterToken:!public!visiting! !
+!
 
 SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitSpecialCharacterToken:)!
 
@@ -438,5 +440,7 @@ SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selecto
 
 language
 	^'Smalltalk'! !
-!SmalltalkStyler class categoriesFor: #language!constants!public! !
+!SmalltalkStyler class categoriesForMethods!
+language!constants!public! !
+!
 

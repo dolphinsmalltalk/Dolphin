@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalInteger subclass: #HRESULT
 	instanceVariableNames: ''
@@ -141,23 +141,25 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
-!HRESULT categoriesFor: #asSignedInteger!converting!public! !
-!HRESULT categoriesFor: #asUnsignedInteger!converting!public! !
-!HRESULT categoriesFor: #displayOn:!displaying!public! !
-!HRESULT categoriesFor: #errorCode!accessing!public! !
-!HRESULT categoriesFor: #facility!accessing!public! !
-!HRESULT categoriesFor: #facilityCode!accessing!public! !
-!HRESULT categoriesFor: #failed!public!testing! !
-!HRESULT categoriesFor: #isNtStatus!public!testing! !
-!HRESULT categoriesFor: #isSeverityError!public!testing! !
-!HRESULT categoriesFor: #isSigned!public!testing! !
-!HRESULT categoriesFor: #printOn:!displaying!public! !
-!HRESULT categoriesFor: #severity!accessing!public! !
-!HRESULT categoriesFor: #statusCode!accessing!public! !
-!HRESULT categoriesFor: #succeeded!public!testing! !
-!HRESULT categoriesFor: #unsignedValue:!accessing!public! !
-!HRESULT categoriesFor: #value!**compiled accessors**!public! !
-!HRESULT categoriesFor: #value:!**compiled accessors**!public! !
+!HRESULT categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+displayOn:!displaying!public! !
+errorCode!accessing!public! !
+facility!accessing!public! !
+facilityCode!accessing!public! !
+failed!public!testing! !
+isNtStatus!public!testing! !
+isSeverityError!public!testing! !
+isSigned!public!testing! !
+printOn:!displaying!public! !
+severity!accessing!public! !
+statusCode!accessing!public! !
+succeeded!public!testing! !
+unsignedValue:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !HRESULT class methodsFor!
 
@@ -243,18 +245,20 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
-!HRESULT class categoriesFor: #decodePrimitiveFailureCode:!private!utilities! !
-!HRESULT class categoriesFor: #defineFields!public!template definition! !
-!HRESULT class categoriesFor: #fail!constants!instance creation!public! !
-!HRESULT class categoriesFor: #fromPrimitiveFailureCode:!instance creation!public! !
-!HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
-!HRESULT class categoriesFor: #initialize!development!initializing!private! !
-!HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !
-!HRESULT class categoriesFor: #ntStatusCode:!instance creation!public! !
-!HRESULT class categoriesFor: #ok!constants!instance creation!public! !
-!HRESULT class categoriesFor: #registerFacility:name:!public! !
-!HRESULT class categoriesFor: #severity:facility:code:!instance creation!private! !
-!HRESULT class categoriesFor: #status:facility:!instance creation!private! !
-!HRESULT class categoriesFor: #unregisterFacility:!public! !
-!HRESULT class categoriesFor: #win32Error:!instance creation!public! !
+!HRESULT class categoriesForMethods!
+decodePrimitiveFailureCode:!private!utilities! !
+defineFields!public!template definition! !
+fail!constants!instance creation!public! !
+fromPrimitiveFailureCode:!instance creation!public! !
+fromUnsignedInteger:!instance creation!public! !
+initialize!development!initializing!private! !
+notImplemented!constants!instance creation!public! !
+ntStatusCode:!instance creation!public! !
+ok!constants!instance creation!public! !
+registerFacility:name:!public! !
+severity:facility:code:!instance creation!private! !
+status:facility:!instance creation!private! !
+unregisterFacility:!public! !
+win32Error:!instance creation!public! !
+!
 

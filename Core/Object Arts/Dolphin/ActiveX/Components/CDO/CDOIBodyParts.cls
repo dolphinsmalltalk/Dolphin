@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOIBodyParts
 	instanceVariableNames: ''
@@ -143,19 +143,21 @@ item: index
 		ppBody: answer.
 	^answer asObject
 ! !
-!CDOIBodyParts categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!CDOIBodyParts categoriesFor: #add:!**auto generated**!methods!public! !
-!CDOIBodyParts categoriesFor: #Add:ppPart:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #count!**auto generated**!properties!public! !
-!CDOIBodyParts categoriesFor: #delete:!**auto generated**!methods!public! !
-!CDOIBodyParts categoriesFor: #Delete:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #DeleteAll!**auto generated**!COM Interfaces-IBodyParts!public! !
-!CDOIBodyParts categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #get_Item:ppBody:!**auto generated**!COM Interfaces-IBodyParts!private! !
-!CDOIBodyParts categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIBodyParts categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIBodyParts categoriesFor: #item:!**auto generated**!properties!public! !
+!CDOIBodyParts categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+add:!**auto generated**!methods!public! !
+Add:ppPart:!**auto generated**!COM Interfaces-IBodyParts!private! !
+count!**auto generated**!properties!public! !
+delete:!**auto generated**!methods!public! !
+Delete:!**auto generated**!COM Interfaces-IBodyParts!private! !
+DeleteAll!**auto generated**!COM Interfaces-IBodyParts!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IBodyParts!private! !
+get_Count:!**auto generated**!COM Interfaces-IBodyParts!private! !
+get_Item:ppBody:!**auto generated**!COM Interfaces-IBodyParts!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !CDOIBodyParts class methodsFor!
 
@@ -184,6 +186,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIBodyParts class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIBodyParts class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOIBodyParts class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

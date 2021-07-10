@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ExternalLibrary
 	instanceVariableNames: 'handle'
@@ -299,30 +299,32 @@ versionString
 	(typically N.N Build N, but see #versionFormatString)."
 
 	^self versionInfo formatVersionString: self versionFormatString! !
-!ExternalLibrary categoriesFor: #asParameter!converting!public! !
-!ExternalLibrary categoriesFor: #basicOpen:!private!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #fileName!accessing!public! !
-!ExternalLibrary categoriesFor: #formatMessage:with:!accessing!public! !
-!ExternalLibrary categoriesFor: #getProcAddress:!accessing!private! !
-!ExternalLibrary categoriesFor: #getProcAddress:ifAbsent:!accessing!private! !
-!ExternalLibrary categoriesFor: #handle!accessing!private! !
-!ExternalLibrary categoriesFor: #handle:!accessing!private! !
-!ExternalLibrary categoriesFor: #invalidArgErrorClass!constants!private! !
-!ExternalLibrary categoriesFor: #invalidCall:!exceptions!public! !
-!ExternalLibrary categoriesFor: #isOpen!public!testing! !
-!ExternalLibrary categoriesFor: #loadFlags!constants!private! !
-!ExternalLibrary categoriesFor: #loadString:!accessing!public! !
-!ExternalLibrary categoriesFor: #moduleFileName!accessing!private! !
-!ExternalLibrary categoriesFor: #open!private!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #open:!private!realizing/unrealizing! !
-!ExternalLibrary categoriesFor: #printOn:!printing!public! !
-!ExternalLibrary categoriesFor: #stbSaveOn:!binary filing!public! !
-!ExternalLibrary categoriesFor: #systemError!exceptions!public! !
-!ExternalLibrary categoriesFor: #systemError:!exceptions!public! !
-!ExternalLibrary categoriesFor: #versionFormatString!constants!private! !
-!ExternalLibrary categoriesFor: #versionInfo!accessing-version!public! !
-!ExternalLibrary categoriesFor: #versionString!accessing-version!public! !
+!ExternalLibrary categoriesForMethods!
+asParameter!converting!public! !
+basicOpen:!private!realizing/unrealizing! !
+close!public!realizing/unrealizing! !
+fileName!accessing!public! !
+formatMessage:with:!accessing!public! !
+getProcAddress:!accessing!private! !
+getProcAddress:ifAbsent:!accessing!private! !
+handle!accessing!private! !
+handle:!accessing!private! !
+invalidArgErrorClass!constants!private! !
+invalidCall:!exceptions!public! !
+isOpen!public!testing! !
+loadFlags!constants!private! !
+loadString:!accessing!public! !
+moduleFileName!accessing!private! !
+open!private!realizing/unrealizing! !
+open:!private!realizing/unrealizing! !
+printOn:!printing!public! !
+stbSaveOn:!binary filing!public! !
+systemError!exceptions!public! !
+systemError:!exceptions!public! !
+versionFormatString!constants!private! !
+versionInfo!accessing-version!public! !
+versionString!accessing-version!public! !
+!
 
 !ExternalLibrary class methodsFor!
 
@@ -477,25 +479,27 @@ versionInfo
 	"Answer a <VersionInfo> containing the version details from the receiver."
 
 	^VersionInfo forPath: self fileName! !
-!ExternalLibrary class categoriesFor: #clear!initializing!private! !
-!ExternalLibrary class categoriesFor: #closeAllDefaults!finalizing!private! !
-!ExternalLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!ExternalLibrary class categoriesFor: #default!accessing!instance creation!public! !
-!ExternalLibrary class categoriesFor: #default:!accessing!public! !
-!ExternalLibrary class categoriesFor: #fileName!constants!public! !
-!ExternalLibrary class categoriesFor: #fromHandle:!instance creation!public! !
-!ExternalLibrary class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
-!ExternalLibrary class categoriesFor: #load:flags:!private!realizing/unrealizing! !
-!ExternalLibrary class categoriesFor: #moduleFileName:!helpers!private! !
-!ExternalLibrary class categoriesFor: #onExit!finalizing!private! !
-!ExternalLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ExternalLibrary class categoriesFor: #onStartup!event handling!private! !
-!ExternalLibrary class categoriesFor: #onStartup2!event handling!private! !
-!ExternalLibrary class categoriesFor: #open!instance creation!public! !
-!ExternalLibrary class categoriesFor: #open:!instance creation!public! !
-!ExternalLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
-!ExternalLibrary class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ExternalLibrary class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ExternalLibrary class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!ExternalLibrary class categoriesFor: #versionInfo!accessing-version!public! !
+!ExternalLibrary class categoriesForMethods!
+clear!initializing!private! !
+closeAllDefaults!finalizing!private! !
+closeDefault!private!realizing/unrealizing! !
+default!accessing!instance creation!public! !
+default:!accessing!public! !
+fileName!constants!public! !
+fromHandle:!instance creation!public! !
+initializeAfterBinaryLoad!initializing!private! !
+load:flags:!private!realizing/unrealizing! !
+moduleFileName:!helpers!private! !
+onExit!finalizing!private! !
+onPreStripImage!class hierarchy-removing!private! !
+onStartup!event handling!private! !
+onStartup2!event handling!private! !
+open!instance creation!public! !
+open:!instance creation!public! !
+openDefault!instance creation!private!realizing/unrealizing! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+versionInfo!accessing-version!public! !
+!
 

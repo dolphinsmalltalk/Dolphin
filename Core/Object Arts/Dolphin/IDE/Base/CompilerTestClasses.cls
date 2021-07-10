@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTestClassResource subclass: #CompilerTestClasses
 	instanceVariableNames: 'testClass'
@@ -35,8 +35,10 @@ tearDown
 
 testClass
 	^testClass! !
-!CompilerTestClasses categoriesFor: #compileMethods!private!Running! !
-!CompilerTestClasses categoriesFor: #createClasses!private!Running! !
-!CompilerTestClasses categoriesFor: #tearDown!public!Running! !
-!CompilerTestClasses categoriesFor: #testClass!public!Running! !
+!CompilerTestClasses categoriesForMethods!
+compileMethods!private!Running! !
+createClasses!private!Running! !
+tearDown!public!Running! !
+testClass!public!Running! !
+!
 

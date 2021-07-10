@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SmalltalkScanner
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType comments line errorHandler environment'
@@ -754,68 +754,70 @@ unterminatedQualifiedRef
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
 	^self literalErrorToken: buffer contents stop: self previousStepPosition! !
-!SmalltalkScanner categoriesFor: #addComment:!private!scanning! !
-!SmalltalkScanner categoriesFor: #atEnd!public!testing! !
-!SmalltalkScanner categoriesFor: #classify:!private!scanning! !
-!SmalltalkScanner categoriesFor: #constantExpected!error handling!private! !
-!SmalltalkScanner categoriesFor: #contents!accessing!public! !
-!SmalltalkScanner categoriesFor: #do:!enumerating!public! !
-!SmalltalkScanner categoriesFor: #environment!accessing!public! !
-!SmalltalkScanner categoriesFor: #environment:!accessing!public! !
-!SmalltalkScanner categoriesFor: #errorHandler:!initializing!private! !
-!SmalltalkScanner categoriesFor: #errorPosition!accessing!error handling!public! !
-!SmalltalkScanner categoriesFor: #extendedLiteralExpected!error handling!private! !
-!SmalltalkScanner categoriesFor: #getComments!accessing!public! !
-!SmalltalkScanner categoriesFor: #identifierTokenClass!constants!private! !
-!SmalltalkScanner categoriesFor: #illegalCharacter!error handling!private! !
-!SmalltalkScanner categoriesFor: #illegalNumber!error handling!private! !
-!SmalltalkScanner categoriesFor: #invalidQualifier!private!scanning! !
-!SmalltalkScanner categoriesFor: #lexicalError:!error handling!private! !
-!SmalltalkScanner categoriesFor: #lexicalError:range:!error handling!private! !
-!SmalltalkScanner categoriesFor: #line!accessing!public! !
-!SmalltalkScanner categoriesFor: #literalCharacterTokenClass!public!scanning! !
-!SmalltalkScanner categoriesFor: #literalErrorToken:stop:!error handling!private! !
-!SmalltalkScanner categoriesFor: #literalTokenClass!constants!private! !
-!SmalltalkScanner categoriesFor: #metaVariableExpected!error handling!private! !
-!SmalltalkScanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
-!SmalltalkScanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
-!SmalltalkScanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
-!SmalltalkScanner categoriesFor: #next!accessing!public! !
-!SmalltalkScanner categoriesFor: #notificationClass!constants!error handling!private! !
-!SmalltalkScanner categoriesFor: #numberTokenClass!constants!private! !
-!SmalltalkScanner categoriesFor: #on:!initializing!private! !
-!SmalltalkScanner categoriesFor: #previousStepPosition!accessing!private! !
-!SmalltalkScanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
-!SmalltalkScanner categoriesFor: #recoverFromUnterminatedComment:!error handling!private! !
-!SmalltalkScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
-!SmalltalkScanner categoriesFor: #scanAnySymbol!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanBinary:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanExponentInteger:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanExtendedLiterals!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanIdentifierOrKeyword!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanKeyword!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteral!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteralArrayToken!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteralCharacter!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanLiteralString!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanName!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanNameSpaceName!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanNumber:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanOptimized!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanPatternVariable!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanQualifiedReference!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSign!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSmalltalkReal:sign:!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSpecialCharacter!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanStringSymbol!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanSymbol!private!scanning! !
-!SmalltalkScanner categoriesFor: #scanToken!accessing!public! !
-!SmalltalkScanner categoriesFor: #step!operations!private! !
-!SmalltalkScanner categoriesFor: #stepBackTo:!helpers!private! !
-!SmalltalkScanner categoriesFor: #stripSeparators!private!scanning! !
-!SmalltalkScanner categoriesFor: #unterminatedComment:!error handling!private! !
-!SmalltalkScanner categoriesFor: #unterminatedQualifiedRef!error handling!private! !
-!SmalltalkScanner categoriesFor: #unterminatedString!error handling!private! !
+!SmalltalkScanner categoriesForMethods!
+addComment:!private!scanning! !
+atEnd!public!testing! !
+classify:!private!scanning! !
+constantExpected!error handling!private! !
+contents!accessing!public! !
+do:!enumerating!public! !
+environment!accessing!public! !
+environment:!accessing!public! !
+errorHandler:!initializing!private! !
+errorPosition!accessing!error handling!public! !
+extendedLiteralExpected!error handling!private! !
+getComments!accessing!public! !
+identifierTokenClass!constants!private! !
+illegalCharacter!error handling!private! !
+illegalNumber!error handling!private! !
+invalidQualifier!private!scanning! !
+lexicalError:!error handling!private! !
+lexicalError:range:!error handling!private! !
+line!accessing!public! !
+literalCharacterTokenClass!public!scanning! !
+literalErrorToken:stop:!error handling!private! !
+literalTokenClass!constants!private! !
+metaVariableExpected!error handling!private! !
+newFloatToken:precision:exponent:!helpers!private! !
+newIntegerToken:exponent:!helpers!private! !
+newScaledDecimalToken:precision:scale:!helpers!private! !
+next!accessing!public! !
+notificationClass!constants!error handling!private! !
+numberTokenClass!constants!private! !
+on:!initializing!private! !
+previousStepPosition!accessing!private! !
+readIntegerOfRadix:!private!scanning! !
+recoverFromUnterminatedComment:!error handling!private! !
+reportError:at:line:range:extras:!error handling!private! !
+scanAnySymbol!private!scanning! !
+scanBinary:!private!scanning! !
+scanExponentInteger:!private!scanning! !
+scanExtendedLiterals!private!scanning! !
+scanIdentifierOrKeyword!private!scanning! !
+scanKeyword!private!scanning! !
+scanLiteral!private!scanning! !
+scanLiteralArrayToken!private!scanning! !
+scanLiteralCharacter!private!scanning! !
+scanLiteralString!private!scanning! !
+scanName!private!scanning! !
+scanNameSpaceName!private!scanning! !
+scanNumber:!private!scanning! !
+scanOptimized!private!scanning! !
+scanPatternVariable!private!scanning! !
+scanQualifiedReference!private!scanning! !
+scanSign!private!scanning! !
+scanSmalltalkReal:sign:!private!scanning! !
+scanSpecialCharacter!private!scanning! !
+scanStringSymbol!private!scanning! !
+scanSymbol!private!scanning! !
+scanToken!accessing!public! !
+step!operations!private! !
+stepBackTo:!helpers!private! !
+stripSeparators!private!scanning! !
+unterminatedComment:!error handling!private! !
+unterminatedQualifiedRef!error handling!private! !
+unterminatedString!error handling!private! !
+!
 
 SmalltalkScanner methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
 
@@ -894,12 +896,14 @@ on: aStream errorHandler: parseErrorHandler
 
 patternVariableCharacter
 	^PatternVariableCharacter! !
-!SmalltalkScanner class categoriesFor: #classify:!public!scanning! !
-!SmalltalkScanner class categoriesFor: #initialize!development!initializing!public! !
-!SmalltalkScanner class categoriesFor: #initializeClassificationTable!initializing!private! !
-!SmalltalkScanner class categoriesFor: #isSelector:!public!testing! !
-!SmalltalkScanner class categoriesFor: #isVariable:!public!testing! !
-!SmalltalkScanner class categoriesFor: #on:!instance creation!public! !
-!SmalltalkScanner class categoriesFor: #on:errorHandler:!instance creation!public! !
-!SmalltalkScanner class categoriesFor: #patternVariableCharacter!accessing!public! !
+!SmalltalkScanner class categoriesForMethods!
+classify:!public!scanning! !
+initialize!development!initializing!public! !
+initializeClassificationTable!initializing!private! !
+isSelector:!public!testing! !
+isVariable:!public!testing! !
+on:!instance creation!public! !
+on:errorHandler:!instance creation!public! !
+patternVariableCharacter!accessing!public! !
+!
 

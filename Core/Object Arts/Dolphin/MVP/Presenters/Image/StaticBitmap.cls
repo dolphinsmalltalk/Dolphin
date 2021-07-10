@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticImage subclass: #StaticBitmap
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ setImage: aBitmapOrNil
 
 	image := aBitmapOrNil notNil ifTrue: [aBitmapOrNil freeDC; yourself].
 	self sendMessage: STM_SETIMAGE wParam: IMAGE_BITMAP lParam: image asParameter! !
-!StaticBitmap categoriesFor: #defaultWindowStyle!constants!private! !
-!StaticBitmap categoriesFor: #setImage:!accessing!private! !
+!StaticBitmap categoriesForMethods!
+defaultWindowStyle!constants!private! !
+setImage:!accessing!private! !
+!
 

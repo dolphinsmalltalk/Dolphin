@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChooseClassDialog subclass: #ChoosePackagedClassDialog
 	instanceVariableNames: ''
@@ -25,9 +25,11 @@ packages: aCollection
 	"Set the packages selected in the receiver. Ignored at this level."
 
 	classesPresenter packages: aCollection! !
-!ChoosePackagedClassDialog categoriesFor: #classesPresenterClass!constants!private! !
-!ChoosePackagedClassDialog categoriesFor: #onViewOpened!event handling!public! !
-!ChoosePackagedClassDialog categoriesFor: #packages:!public!selection! !
+!ChoosePackagedClassDialog categoriesForMethods!
+classesPresenterClass!constants!private! !
+onViewOpened!event handling!public! !
+packages:!public!selection! !
+!
 
 !ChoosePackagedClassDialog class methodsFor!
 
@@ -54,7 +56,9 @@ resource_Default_view
 uninitialize
 	Smalltalk developmentSystem classChooserClass == self 
 		ifTrue: [Smalltalk developmentSystem classChooserClass: nil]! !
-!ChoosePackagedClassDialog class categoriesFor: #on:!instance creation!public! !
-!ChoosePackagedClassDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!ChoosePackagedClassDialog class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!ChoosePackagedClassDialog class categoriesForMethods!
+on:!instance creation!public! !
+resource_Default_view!public!resources-views! !
+uninitialize!class hierarchy-removing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #FloatCharacterizationANSITest
 	instanceVariableNames: ''
@@ -63,18 +63,20 @@ testXprecision
 testXradix
 	" <floatCharacterization>#radix "
 	#'Numeric'.! !
-!FloatCharacterizationANSITest categoriesFor: #canonicalObject!public! !
-!FloatCharacterizationANSITest categoriesFor: #protocol!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXdenormalized!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXe!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXemax!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXemin!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXepsilon!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXfmax!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXfmin!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXfminDenormalized!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXfminNormalized!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXpi!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXprecision!public! !
-!FloatCharacterizationANSITest categoriesFor: #testXradix!public! !
+!FloatCharacterizationANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXdenormalized!public! !
+testXe!public! !
+testXemax!public! !
+testXemin!public! !
+testXepsilon!public! !
+testXfmax!public! !
+testXfmin!public! !
+testXfminDenormalized!public! !
+testXfminNormalized!public! !
+testXpi!public! !
+testXprecision!public! !
+testXradix!public! !
+!
 

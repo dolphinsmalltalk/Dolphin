@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompiledCode variableSubclass: #CompiledExpression
 	instanceVariableNames: ''
@@ -79,13 +79,15 @@ value: anObject
 	as its receiver, answering the result."
 
 	^self value: anObject withArguments: #()! !
-!CompiledExpression categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
-!CompiledExpression categoriesFor: #evaluationPools!accessing!development!public! !
-!CompiledExpression categoriesFor: #getDebugInfo!development!private! !
-!CompiledExpression categoriesFor: #getSource!accessing!development!public! !
-!CompiledExpression categoriesFor: #isExpression!private!testing! !
-!CompiledExpression categoriesFor: #owningPackage!accessing!public! !
-!CompiledExpression categoriesFor: #storeSourceString:evaluationPools:!accessing!private! !
-!CompiledExpression categoriesFor: #value!evaluating!public! !
-!CompiledExpression categoriesFor: #value:!evaluating!public! !
+!CompiledExpression categoriesForMethods!
+evaluate:for:evaluationPools:!evaluating!public! !
+evaluationPools!accessing!development!public! !
+getDebugInfo!development!private! !
+getSource!accessing!development!public! !
+isExpression!private!testing! !
+owningPackage!accessing!public! !
+storeSourceString:evaluationPools:!accessing!private! !
+value!evaluating!public! !
+value:!evaluating!public! !
+!
 

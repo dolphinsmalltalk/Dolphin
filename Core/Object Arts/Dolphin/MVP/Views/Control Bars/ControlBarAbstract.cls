@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #ControlBarAbstract
 	instanceVariableNames: 'names'
@@ -268,37 +268,39 @@ viewNamed: aString ifNone: aBlock
 			found := each viewNamed: aString ifNone: [].
 			found notNil ifTrue: [^found]].
 	^aBlock value! !
-!ControlBarAbstract categoriesFor: #actualInsets:!accessing!private! !
-!ControlBarAbstract categoriesFor: #actualPreferredExtent:!private! !
-!ControlBarAbstract categoriesFor: #addSubView:name:!public!sub views! !
-!ControlBarAbstract categoriesFor: #arrangementOf:!accessing!public! !
-!ControlBarAbstract categoriesFor: #arrangementOf:put:!accessing!public! !
-!ControlBarAbstract categoriesFor: #canAcceptSubViews!hierarchy!public!sub views!testing! !
-!ControlBarAbstract categoriesFor: #defaultBackcolor!colors!constants!private! !
-!ControlBarAbstract categoriesFor: #defaultExtentOf:!public! !
-!ControlBarAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
-!ControlBarAbstract categoriesFor: #defaultWindowStyle!constants!private! !
-!ControlBarAbstract categoriesFor: #errorDuplicateName:!exceptions!public! !
-!ControlBarAbstract categoriesFor: #hasDivider!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #hasDivider:!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #indexFromPoint:!enquiries!private! !
-!ControlBarAbstract categoriesFor: #initialize!initializing!private! !
-!ControlBarAbstract categoriesFor: #insets!accessing!private! !
-!ControlBarAbstract categoriesFor: #isVertical!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #isVertical:!accessing-styles!public! !
-!ControlBarAbstract categoriesFor: #layout:!geometry!private! !
-!ControlBarAbstract categoriesFor: #layoutManager:!geometry!public! !
-!ControlBarAbstract categoriesFor: #name:as:!public!subpresenters! !
-!ControlBarAbstract categoriesFor: #nameOf:!public!subpresenters! !
-!ControlBarAbstract categoriesFor: #nmClick:!event handling-win32!public! !
-!ControlBarAbstract categoriesFor: #nmDblClk:!event handling-win32!public! !
-!ControlBarAbstract categoriesFor: #nmRClick:!event handling-win32!public! !
-!ControlBarAbstract categoriesFor: #onSubViewAdded:!event handling!public! !
-!ControlBarAbstract categoriesFor: #onZOrderChanged!event handling!public! !
-!ControlBarAbstract categoriesFor: #removeSubView:!hierarchy!public!sub views! !
-!ControlBarAbstract categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!ControlBarAbstract categoriesFor: #validateUserInterface!operations!public! !
-!ControlBarAbstract categoriesFor: #viewNamed:ifNone:!public!sub views! !
+!ControlBarAbstract categoriesForMethods!
+actualInsets:!accessing!private! !
+actualPreferredExtent:!private! !
+addSubView:name:!public!sub views! !
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+canAcceptSubViews!hierarchy!public!sub views!testing! !
+defaultBackcolor!colors!constants!private! !
+defaultExtentOf:!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+errorDuplicateName:!exceptions!public! !
+hasDivider!accessing-styles!public! !
+hasDivider:!accessing-styles!public! !
+indexFromPoint:!enquiries!private! !
+initialize!initializing!private! !
+insets!accessing!private! !
+isVertical!accessing-styles!public! !
+isVertical:!accessing-styles!public! !
+layout:!geometry!private! !
+layoutManager:!geometry!public! !
+name:as:!public!subpresenters! !
+nameOf:!public!subpresenters! !
+nmClick:!event handling-win32!public! !
+nmDblClk:!event handling-win32!public! !
+nmRClick:!event handling-win32!public! !
+onSubViewAdded:!event handling!public! !
+onZOrderChanged!event handling!public! !
+removeSubView:!hierarchy!public!sub views! !
+validateSubViewLayouts:!geometry!private! !
+validateUserInterface!operations!public! !
+viewNamed:ifNone:!public!sub views! !
+!
 
 ControlBarAbstract methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
 
@@ -316,6 +318,8 @@ stbConvertFromVersion12: anArray
 	creationStyle := anArray at: 3.
 	creationStyle at: 1 put: ((creationStyle at: 1) bitOr: CCS_NOPARENTALIGN).
 	^super stbConvertFromVersion12: anArray! !
-!ControlBarAbstract class categoriesFor: #icon!constants!public! !
-!ControlBarAbstract class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!ControlBarAbstract class categoriesForMethods!
+icon!constants!public! !
+stbConvertFromVersion12:!binary filing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DeferredValue
 	instanceVariableNames: 'valueAvailable value exception'
@@ -107,15 +107,17 @@ value
 	valueAvailable wait; signal.
 	exception == nil ifFalse: [exception copy signal].
 	^value! !
-!DeferredValue categoriesFor: #_evaluate:withArguments:!evaluating!private! !
-!DeferredValue categoriesFor: #deferredValue!evaluating!public! !
-!DeferredValue categoriesFor: #deferredValueAt:!evaluating!public! !
-!DeferredValue categoriesFor: #evaluate:withArguments:at:!evaluating!private! !
-!DeferredValue categoriesFor: #exception:!accessing!private! !
-!DeferredValue categoriesFor: #hasValue!public!testing! !
-!DeferredValue categoriesFor: #initialize!initializing!private! !
-!DeferredValue categoriesFor: #setValue:!accessing!private! !
-!DeferredValue categoriesFor: #value!evaluating!public! !
+!DeferredValue categoriesForMethods!
+_evaluate:withArguments:!evaluating!private! !
+deferredValue!evaluating!public! !
+deferredValueAt:!evaluating!public! !
+evaluate:withArguments:at:!evaluating!private! !
+exception:!accessing!private! !
+hasValue!public!testing! !
+initialize!initializing!private! !
+setValue:!accessing!private! !
+value!evaluating!public! !
+!
 
 !DeferredValue class methodsFor!
 
@@ -165,10 +167,12 @@ new
 	"Answer a instance of the receiver."
 
 	^self shouldNotImplement! !
-!DeferredValue class categoriesFor: #evaluate:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #evaluate:with:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #evaluate:with:with:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #evaluate:withArguments:at:!instance creation!public! !
-!DeferredValue class categoriesFor: #initialize!development!initializing!private! !
-!DeferredValue class categoriesFor: #new!instance creation!public! !
+!DeferredValue class categoriesForMethods!
+evaluate:at:!instance creation!public! !
+evaluate:with:at:!instance creation!public! !
+evaluate:with:with:at:!instance creation!public! !
+evaluate:withArguments:at:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Mutex
 	instanceVariableNames: 'owner semaphore'
@@ -120,12 +120,14 @@ signal
 
 	Processor activeProcess == owner ifTrue: [
 		owner := nil. semaphore signal]! !
-!Mutex categoriesFor: #critical:!debugger-step over!process synchronisation!public! !
-!Mutex categoriesFor: #critical:ifLocked:!process synchronisation!public! !
-!Mutex categoriesFor: #initialize!initializing!private! !
-!Mutex categoriesFor: #owner!accessing!private! !
-!Mutex categoriesFor: #printOn:!printing!public! !
-!Mutex categoriesFor: #signal!private!process synchronisation! !
+!Mutex categoriesForMethods!
+critical:!debugger-step over!process synchronisation!public! !
+critical:ifLocked:!process synchronisation!public! !
+initialize!initializing!private! !
+owner!accessing!private! !
+printOn:!printing!public! !
+signal!private!process synchronisation! !
+!
 
 Mutex methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #(#critical:)!
 
@@ -135,5 +137,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!Mutex class categoriesFor: #new!instance creation!public! !
+!Mutex class categoriesForMethods!
+new!instance creation!public! !
+!
 

@@ -48,7 +48,9 @@ package!
 asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
-!BSTR categoriesFor: #asUnicodeString!converting!public! !
+!BSTR categoriesForMethods!
+asUnicodeString!converting!public! !
+!
 
 !DATE methodsFor!
 
@@ -59,8 +61,10 @@ asDate
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
-!DATE categoriesFor: #asDate!converting!public! !
-!DATE categoriesFor: #asTimeStamp!accessing!public! !
+!DATE categoriesForMethods!
+asDate!converting!public! !
+asTimeStamp!accessing!public! !
+!
 
 !DATE class methodsFor!
 
@@ -71,15 +75,19 @@ max
 min
 	#deprecated.
 	^self minimum! !
-!DATE class categoriesFor: #max!instance creation!public! !
-!DATE class categoriesFor: #min!instance creation!public! !
+!DATE class categoriesForMethods!
+max!instance creation!public! !
+min!instance creation!public! !
+!
 
 !LPBSTR methodsFor!
 
 asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
-!LPBSTR categoriesFor: #asUnicodeString!converting!public! !
+!LPBSTR categoriesForMethods!
+asUnicodeString!converting!public! !
+!
 
 !TimeStamp methodsFor!
 
@@ -92,8 +100,10 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
 	^self asParameter asVariant! !
-!TimeStamp categoriesFor: #asFloat!converting!public! !
-!TimeStamp categoriesFor: #asVariant!converting!public! !
+!TimeStamp categoriesForMethods!
+asFloat!converting!public! !
+asVariant!converting!public! !
+!
 
 !TimeStamp class methodsFor!
 
@@ -105,7 +115,9 @@ fromDATE: date
 	systime := SYSTEMTIME new.
 	OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
 	^self fromSYSTEMTIME: systime! !
-!TimeStamp class categoriesFor: #fromDATE:!instance creation!private! !
+!TimeStamp class categoriesForMethods!
+fromDATE:!instance creation!private! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalScalar subclass: #FLOAT
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ value: aFloat
 	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_value put: aFloat! !
-!FLOAT categoriesFor: #asFloat!converting!public! !
-!FLOAT categoriesFor: #value!**compiled accessors**!public! !
-!FLOAT categoriesFor: #value:!**compiled accessors**!public! !
+!FLOAT categoriesForMethods!
+asFloat!converting!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !FLOAT class methodsFor!
 
@@ -64,10 +66,12 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!FLOAT class categoriesFor: #defineFields!public!template definition! !
-!FLOAT class categoriesFor: #fileOutStem!private!source filing! !
-!FLOAT class categoriesFor: #initialize!development!initializing!private! !
-!FLOAT class categoriesFor: #maximum!constants!public! !
-!FLOAT class categoriesFor: #minimum!constants!public! !
-!FLOAT class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!FLOAT class categoriesForMethods!
+defineFields!public!template definition! !
+fileOutStem!private!source filing! !
+initialize!development!initializing!private! !
+maximum!constants!public! !
+minimum!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -99,7 +99,9 @@ replaceSelectionIn: aTextEdit
 	and #selectionRtf: methods."
 
 	aTextEdit selectionPlainText: self! !
-!String categoriesFor: #replaceSelectionIn:!double dispatch!public! !
+!String categoriesForMethods!
+replaceSelectionIn:!double dispatch!public! !
+!
 
 "End of package definition"!
 

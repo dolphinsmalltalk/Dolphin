@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StructureArrayPointerField subclass: #PointerArrayPointerField
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ pointerClass
 	pointers of the receiver's type."
 
 	^PointerArray! !
-!PointerArrayPointerField categoriesFor: #pointerClass!accessing!private! !
+!PointerArrayPointerField categoriesForMethods!
+pointerClass!accessing!private! !
+!
 

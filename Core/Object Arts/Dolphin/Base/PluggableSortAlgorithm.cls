@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SortAlgorithm subclass: #PluggableSortAlgorithm
 	instanceVariableNames: 'sortBlock'
@@ -28,9 +28,11 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^sortBlock! !
-!PluggableSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!PluggableSortAlgorithm categoriesFor: #setSortBlock:!initializing!private! !
-!PluggableSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!PluggableSortAlgorithm categoriesForMethods!
+compare:with:!comparing!public! !
+setSortBlock:!initializing!private! !
+sortBlock!accessing!public! !
+!
 
 !PluggableSortAlgorithm class methodsFor!
 
@@ -46,6 +48,8 @@ newSortBlock: aDyadicValuable
 	^(self basicNew)
 		setSortBlock: aDyadicValuable;
 		yourself! !
-!PluggableSortAlgorithm class categoriesFor: #new!public! !
-!PluggableSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
+!PluggableSortAlgorithm class categoriesForMethods!
+new!public! !
+newSortBlock:!instance creation!public! !
+!
 

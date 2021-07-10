@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CommandQuery
 	instanceVariableNames: 'commandDescription receiver source text flags image'
@@ -193,35 +193,37 @@ text: aString
 	"Set the text state of the receiver to aString"
 
 	text := aString! !
-!CommandQuery categoriesFor: #applicationShell!accessing!public! !
-!CommandQuery categoriesFor: #beChecked!accessing!public! !
-!CommandQuery categoriesFor: #beDisabled!accessing!public! !
-!CommandQuery categoriesFor: #beEnabled!accessing!public! !
-!CommandQuery categoriesFor: #beUnchecked!accessing!public! !
-!CommandQuery categoriesFor: #canPerform!public!testing! !
-!CommandQuery categoriesFor: #canPerformAgainst:!accessing!public! !
-!CommandQuery categoriesFor: #command!accessing!public! !
-!CommandQuery categoriesFor: #commandDescription!accessing!public! !
-!CommandQuery categoriesFor: #commandDescription:source:!initializing!private! !
-!CommandQuery categoriesFor: #commandSymbol!accessing!public! !
-!CommandQuery categoriesFor: #description!accessing!public! !
-!CommandQuery categoriesFor: #image!accessing!public! !
-!CommandQuery categoriesFor: #image:!accessing!public! !
-!CommandQuery categoriesFor: #initialize!initializing!private! !
-!CommandQuery categoriesFor: #isChecked!public!testing! !
-!CommandQuery categoriesFor: #isChecked:!accessing!public! !
-!CommandQuery categoriesFor: #isDefault!accessing!public! !
-!CommandQuery categoriesFor: #isDefault:!accessing!public! !
-!CommandQuery categoriesFor: #isEnabled!public!testing! !
-!CommandQuery categoriesFor: #isEnabled:!accessing!public! !
-!CommandQuery categoriesFor: #perform!operations!public! !
-!CommandQuery categoriesFor: #printOn:!development!printing!public! !
-!CommandQuery categoriesFor: #receiver!accessing!public! !
-!CommandQuery categoriesFor: #receiver:!accessing!public! !
-!CommandQuery categoriesFor: #source!accessing!public! !
-!CommandQuery categoriesFor: #source:!accessing!private! !
-!CommandQuery categoriesFor: #text!accessing!public! !
-!CommandQuery categoriesFor: #text:!accessing!public! !
+!CommandQuery categoriesForMethods!
+applicationShell!accessing!public! !
+beChecked!accessing!public! !
+beDisabled!accessing!public! !
+beEnabled!accessing!public! !
+beUnchecked!accessing!public! !
+canPerform!public!testing! !
+canPerformAgainst:!accessing!public! !
+command!accessing!public! !
+commandDescription!accessing!public! !
+commandDescription:source:!initializing!private! !
+commandSymbol!accessing!public! !
+description!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+initialize!initializing!private! !
+isChecked!public!testing! !
+isChecked:!accessing!public! !
+isDefault!accessing!public! !
+isDefault:!accessing!public! !
+isEnabled!public!testing! !
+isEnabled:!accessing!public! !
+perform!operations!public! !
+printOn:!development!printing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+source!accessing!public! !
+source:!accessing!private! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 !CommandQuery class methodsFor!
 
@@ -245,7 +247,9 @@ new
 	"Answers an instance of the receiver on a nil message"
 
 	^self commandDescription: CommandDescription new source: nil! !
-!CommandQuery class categoriesFor: #commandDescription:source:!instance creation!public! !
-!CommandQuery class categoriesFor: #initialize!development!initializing!private! !
-!CommandQuery class categoriesFor: #new!instance creation!public! !
+!CommandQuery class categoriesForMethods!
+commandDescription:source:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+!
 

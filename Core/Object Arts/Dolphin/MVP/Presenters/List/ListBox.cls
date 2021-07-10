@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: 'approvedSelIndices'
@@ -617,67 +617,69 @@ state
 		add: (MessageSend receiver: self selector: #horizontalExtent: argument: self horizontalExtent);
 		yourself
 ! !
-!ListBox categoriesFor: #anchorIndex!public!selection! !
-!ListBox categoriesFor: #anchorIndex:!public!selection! !
-!ListBox categoriesFor: #basicAdd:!adding!private! !
-!ListBox categoriesFor: #basicAdd:atIndex:!adding!private! !
-!ListBox categoriesFor: #basicClear!private!removing! !
-!ListBox categoriesFor: #basicItemFromPoint:!enquiries!private! !
-!ListBox categoriesFor: #basicRemoveAtIndex:!private!removing! !
-!ListBox categoriesFor: #basicResetSelection!private!selection! !
-!ListBox categoriesFor: #canHScroll!public!testing! !
-!ListBox categoriesFor: #canHScroll:!accessing-styles!public! !
-!ListBox categoriesFor: #caretIndex!public!selection! !
-!ListBox categoriesFor: #caretIndex:!public!selection! !
-!ListBox categoriesFor: #clearSelectionsByIndex:!public!selection! !
-!ListBox categoriesFor: #command:id:!commands!private! !
-!ListBox categoriesFor: #defaultWindowStyle!constants!private! !
-!ListBox categoriesFor: #dragLeave:!event handling!public! !
-!ListBox categoriesFor: #dragOver:!event handling!public! !
-!ListBox categoriesFor: #drop:!event handling!public! !
-!ListBox categoriesFor: #dropHighlight!drag & drop!private! !
-!ListBox categoriesFor: #ensureSelectionVisible!public!selection! !
-!ListBox categoriesFor: #getMultipleSelections!private!selection! !
-!ListBox categoriesFor: #getSelectedCount!private!selection! !
-!ListBox categoriesFor: #getSelectionsByIndex!private!selection! !
-!ListBox categoriesFor: #getSingleSelection!helpers!private!selection! !
-!ListBox categoriesFor: #hasPermanentScrollbars!public!testing! !
-!ListBox categoriesFor: #hasPermanentScrollbars:!accessing-styles!public! !
-!ListBox categoriesFor: #hasToggleSelection!accessing-styles!public! !
-!ListBox categoriesFor: #hasToggleSelection:!accessing-styles!public! !
-!ListBox categoriesFor: #hideDropHighlight!drag & drop!private! !
-!ListBox categoriesFor: #horizontalExtent!accessing!public! !
-!ListBox categoriesFor: #horizontalExtent:!accessing!public! !
-!ListBox categoriesFor: #initStorageFor:!helpers!private! !
-!ListBox categoriesFor: #isDragSource:!accessing!public! !
-!ListBox categoriesFor: #isMultiSelect!public!selection!testing! !
-!ListBox categoriesFor: #isMultiSelect:!public!testing! !
-!ListBox categoriesFor: #itemCount!accessing!public! !
-!ListBox categoriesFor: #itemFromPoint:!enquiries!private! !
-!ListBox categoriesFor: #itemRect:!accessing!public! !
-!ListBox categoriesFor: #lbnBeginDrag:!event handling-win32!private! !
-!ListBox categoriesFor: #lbnDblClk!event handling-win32!private! !
-!ListBox categoriesFor: #lbnErrSpace!event handling-win32!private! !
-!ListBox categoriesFor: #lbnSelCancel!event handling-win32!private!selection! !
-!ListBox categoriesFor: #lbnSelChange!event handling-win32!private!selection! !
-!ListBox categoriesFor: #maybeSelChanging:!event handling!private! !
-!ListBox categoriesFor: #newMultiSelectionsFromEvent:!private!selection! !
-!ListBox categoriesFor: #newSelectionsFromEvent:!event handling!private! !
-!ListBox categoriesFor: #newSingleSelectionsFromEvent:!event handling!private! !
-!ListBox categoriesFor: #newToggleSelectionsFromEvent:!event handling!private! !
-!ListBox categoriesFor: #onLeftButtonPressed:!public! !
-!ListBox categoriesFor: #onRightButtonPressed:!event handling!public! !
-!ListBox categoriesFor: #onSelChanged:!event handling!private! !
-!ListBox categoriesFor: #onSelChanging:cause:!event handling!private! !
-!ListBox categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
-!ListBox categoriesFor: #selectAll!public!selection! !
-!ListBox categoriesFor: #selectedCount!public!selection! !
-!ListBox categoriesFor: #selectIndex:set:!private!selection! !
-!ListBox categoriesFor: #selectionMode!accessing-styles!public! !
-!ListBox categoriesFor: #selectionMode:!accessing-styles!public! !
-!ListBox categoriesFor: #setSingleSelection:!private!selection! !
-!ListBox categoriesFor: #showDropHighlight:!drag & drop!private! !
-!ListBox categoriesFor: #state!accessing!private! !
+!ListBox categoriesForMethods!
+anchorIndex!public!selection! !
+anchorIndex:!public!selection! !
+basicAdd:!adding!private! !
+basicAdd:atIndex:!adding!private! !
+basicClear!private!removing! !
+basicItemFromPoint:!enquiries!private! !
+basicRemoveAtIndex:!private!removing! !
+basicResetSelection!private!selection! !
+canHScroll!public!testing! !
+canHScroll:!accessing-styles!public! !
+caretIndex!public!selection! !
+caretIndex:!public!selection! !
+clearSelectionsByIndex:!public!selection! !
+command:id:!commands!private! !
+defaultWindowStyle!constants!private! !
+dragLeave:!event handling!public! !
+dragOver:!event handling!public! !
+drop:!event handling!public! !
+dropHighlight!drag & drop!private! !
+ensureSelectionVisible!public!selection! !
+getMultipleSelections!private!selection! !
+getSelectedCount!private!selection! !
+getSelectionsByIndex!private!selection! !
+getSingleSelection!helpers!private!selection! !
+hasPermanentScrollbars!public!testing! !
+hasPermanentScrollbars:!accessing-styles!public! !
+hasToggleSelection!accessing-styles!public! !
+hasToggleSelection:!accessing-styles!public! !
+hideDropHighlight!drag & drop!private! !
+horizontalExtent!accessing!public! !
+horizontalExtent:!accessing!public! !
+initStorageFor:!helpers!private! !
+isDragSource:!accessing!public! !
+isMultiSelect!public!selection!testing! !
+isMultiSelect:!public!testing! !
+itemCount!accessing!public! !
+itemFromPoint:!enquiries!private! !
+itemRect:!accessing!public! !
+lbnBeginDrag:!event handling-win32!private! !
+lbnDblClk!event handling-win32!private! !
+lbnErrSpace!event handling-win32!private! !
+lbnSelCancel!event handling-win32!private!selection! !
+lbnSelChange!event handling-win32!private!selection! !
+maybeSelChanging:!event handling!private! !
+newMultiSelectionsFromEvent:!private!selection! !
+newSelectionsFromEvent:!event handling!private! !
+newSingleSelectionsFromEvent:!event handling!private! !
+newToggleSelectionsFromEvent:!event handling!private! !
+onLeftButtonPressed:!public! !
+onRightButtonPressed:!event handling!public! !
+onSelChanged:!event handling!private! !
+onSelChanging:cause:!event handling!private! !
+positionForKeyboardContextMenu!enquiries!public! !
+selectAll!public!selection! !
+selectedCount!public!selection! !
+selectIndex:set:!private!selection! !
+selectionMode!accessing-styles!public! !
+selectionMode:!accessing-styles!public! !
+setSingleSelection:!private!selection! !
+showDropHighlight:!drag & drop!private! !
+state!accessing!private! !
+!
 
 ListBox methodProtocol: #multipleIndexSelectableItems attributes: #(#readOnly) selectors: #(#addSelectionsByIndex: #clearSelectionsByIndex: #selectionsByIndex #selectionsByIndex: #selectionsByIndex:ifAbsent:)!
 ListBox methodProtocol: #multipleSelectableItems attributes: #(#readOnly) selectors: #(#addSelections: #addSelections:ifAbsent: #hasSelection #selectAll #selections #selections: #selections:ifAbsent:)!
@@ -718,10 +720,12 @@ winClassName
 
 	^'LISTBOX'
 ! !
-!ListBox class categoriesFor: #initialize!development!initializing!private! !
-!ListBox class categoriesFor: #listboxMessageMappings!constants!must not strip!private! !
-!ListBox class categoriesFor: #selectionModes!constants!public! !
-!ListBox class categoriesFor: #themePartName!constants!private! !
-!ListBox class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ListBox class categoriesFor: #winClassName!constants!private! !
+!ListBox class categoriesForMethods!
+initialize!development!initializing!private! !
+listboxMessageMappings!constants!must not strip!private! !
+selectionModes!constants!public! !
+themePartName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+winClassName!constants!private! !
+!
 

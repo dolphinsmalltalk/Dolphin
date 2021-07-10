@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassRefactoring subclass: #RenameClassRefactoring
 	instanceVariableNames: 'newName class'
@@ -60,11 +60,13 @@ transform
 		renameClass: class
 		to: newName
 		around: [self renameReferences]! !
-!RenameClassRefactoring categoriesFor: #className:newName:!initialize/release!public! !
-!RenameClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameClassRefactoring categoriesFor: #renameReferences!public!transforming! !
-!RenameClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!RenameClassRefactoring categoriesFor: #transform!public!transforming! !
+!RenameClassRefactoring categoriesForMethods!
+className:newName:!initialize/release!public! !
+preconditions!preconditions!public! !
+renameReferences!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !RenameClassRefactoring class methodsFor!
 
@@ -76,6 +78,8 @@ model: aRBNamespace rename: aClass to: aNewName
 
 rename: aClass to: aNewName
 	^self new className: aClass name newName: aNewName! !
-!RenameClassRefactoring class categoriesFor: #model:rename:to:!instance creation!public! !
-!RenameClassRefactoring class categoriesFor: #rename:to:!instance creation!public! !
+!RenameClassRefactoring class categoriesForMethods!
+model:rename:to:!instance creation!public! !
+rename:to:!instance creation!public! !
+!
 

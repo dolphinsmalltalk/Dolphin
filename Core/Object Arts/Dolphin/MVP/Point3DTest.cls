@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #Point3DTest
 	instanceVariableNames: ''
@@ -35,7 +35,9 @@ testNew
 	self assert: new y identicalTo: 0.
 	self assert: new z identicalTo: 0.
 	self assert: new equals: Point3D zero! !
-!Point3DTest categoriesFor: #testAsPoint!public!unit tests! !
-!Point3DTest categoriesFor: #testEquals!public!unit tests! !
-!Point3DTest categoriesFor: #testNew!public!unit tests! !
+!Point3DTest categoriesForMethods!
+testAsPoint!public!unit tests! !
+testEquals!public!unit tests! !
+testNew!public!unit tests! !
+!
 

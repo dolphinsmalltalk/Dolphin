@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #PublishedAspectInspectorTest
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
@@ -667,33 +667,35 @@ testSetToNil
 	inspector setAspectValue: nil.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint! !
-!PublishedAspectInspectorTest categoriesFor: #aspectAccessorNamed:!helpers!private! !
-!PublishedAspectInspectorTest categoriesFor: #aspectPresenter!accessing!private! !
-!PublishedAspectInspectorTest categoriesFor: #createInspectorOn:!helpers!private! !
-!PublishedAspectInspectorTest categoriesFor: #getAccessorKeyText:!private!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #getAccessorValueText:!private!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #isUsingListTreeView!private! !
-!PublishedAspectInspectorTest categoriesFor: #repaint!helpers!private! !
-!PublishedAspectInspectorTest categoriesFor: #seqCollMoveDownTest:!helpers!private! !
-!PublishedAspectInspectorTest categoriesFor: #seqCollMoveFirstTest:!helpers!private! !
-!PublishedAspectInspectorTest categoriesFor: #seqCollMoveLastTest:!helpers!private! !
-!PublishedAspectInspectorTest categoriesFor: #seqCollMoveUpTest:!helpers!private! !
-!PublishedAspectInspectorTest categoriesFor: #tearDown!public!running! !
-!PublishedAspectInspectorTest categoriesFor: #testAddRemoveCollectionElement!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testAspectChanged!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testCommandMenuItemEditor!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testContextMenuEdit!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testCopyAndPasteMenu!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testImmutableAspect!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testImmutableAspect2!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testListViewColumnsEdit!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testMoveDown!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testMoveFirst!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testMoveLast!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testMoveUp!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testPublishedAspectsOfInstancesOnClassSide!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testRefresh!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testRemoveCollectionElements1!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testRootAspectVisible!public!unit tests! !
-!PublishedAspectInspectorTest categoriesFor: #testSetToNil!public!unit tests! !
+!PublishedAspectInspectorTest categoriesForMethods!
+aspectAccessorNamed:!helpers!private! !
+aspectPresenter!accessing!private! !
+createInspectorOn:!helpers!private! !
+getAccessorKeyText:!private!unit tests! !
+getAccessorValueText:!private!unit tests! !
+isUsingListTreeView!private! !
+repaint!helpers!private! !
+seqCollMoveDownTest:!helpers!private! !
+seqCollMoveFirstTest:!helpers!private! !
+seqCollMoveLastTest:!helpers!private! !
+seqCollMoveUpTest:!helpers!private! !
+tearDown!public!running! !
+testAddRemoveCollectionElement!public!unit tests! !
+testAspectChanged!public!unit tests! !
+testCommandMenuItemEditor!public!unit tests! !
+testContextMenuEdit!public!unit tests! !
+testCopyAndPasteMenu!public!unit tests! !
+testImmutableAspect!public!unit tests! !
+testImmutableAspect2!public!unit tests! !
+testListViewColumnsEdit!public!unit tests! !
+testMoveDown!public!unit tests! !
+testMoveFirst!public!unit tests! !
+testMoveLast!public!unit tests! !
+testMoveUp!public!unit tests! !
+testPublishedAspectsOfInstancesOnClassSide!public!unit tests! !
+testRefresh!public!unit tests! !
+testRemoveCollectionElements1!public!unit tests! !
+testRootAspectVisible!public!unit tests! !
+testSetToNil!public!unit tests! !
+!
 

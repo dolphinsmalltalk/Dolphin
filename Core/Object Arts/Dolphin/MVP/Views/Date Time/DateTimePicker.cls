@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DateTimeCommonControl subclass: #DateTimePicker
 	instanceVariableNames: 'displayFormat'
@@ -184,30 +184,32 @@ setSystemTime: aSYSTEMTIMEOrNil
 		ifTrue: 
 			[self canShowNone ifTrue: [gd := GDT_NONE] ifFalse: [st := DateAndTime now asSYSTEMTIME]].
 	self dtmSetSystemTime: gd lpSysTime: st! !
-!DateTimePicker categoriesFor: #canShowNone!accessing-styles!public! !
-!DateTimePicker categoriesFor: #canShowNone:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #defaultExtent!constants!private! !
-!DateTimePicker categoriesFor: #displayFormat!accessing!public! !
-!DateTimePicker categoriesFor: #displayFormat:!accessing!public! !
-!DateTimePicker categoriesFor: #dtmSetFormat:!accessing!public! !
-!DateTimePicker categoriesFor: #dtmSetSystemTime:lpSysTime:!accessing!public! !
-!DateTimePicker categoriesFor: #dtnDateTimeChange:!event handling-win32!public! !
-!DateTimePicker categoriesFor: #dtNotificationMap!private! !
-!DateTimePicker categoriesFor: #getRangeMessage!constants!private! !
-!DateTimePicker categoriesFor: #getSystemTime!accessing!private! !
-!DateTimePicker categoriesFor: #hasLongDateFormat!accessing-styles!public! !
-!DateTimePicker categoriesFor: #hasLongDateFormat:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #hasUpDown!accessing-styles!public! !
-!DateTimePicker categoriesFor: #hasUpDown:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isRightAligned!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isRightAligned:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isTimeMode!accessing-styles!public! !
-!DateTimePicker categoriesFor: #isTimeMode:!accessing-styles!public! !
-!DateTimePicker categoriesFor: #modelClass!accessing!private! !
-!DateTimePicker categoriesFor: #nmFirst!constants!private! !
-!DateTimePicker categoriesFor: #onViewCreated!event handling!public! !
-!DateTimePicker categoriesFor: #setRangeMessage!constants!private! !
-!DateTimePicker categoriesFor: #setSystemTime:!accessing!private! !
+!DateTimePicker categoriesForMethods!
+canShowNone!accessing-styles!public! !
+canShowNone:!accessing-styles!public! !
+defaultExtent!constants!private! !
+displayFormat!accessing!public! !
+displayFormat:!accessing!public! !
+dtmSetFormat:!accessing!public! !
+dtmSetSystemTime:lpSysTime:!accessing!public! !
+dtnDateTimeChange:!event handling-win32!public! !
+dtNotificationMap!private! !
+getRangeMessage!constants!private! !
+getSystemTime!accessing!private! !
+hasLongDateFormat!accessing-styles!public! !
+hasLongDateFormat:!accessing-styles!public! !
+hasUpDown!accessing-styles!public! !
+hasUpDown:!accessing-styles!public! !
+isRightAligned!accessing-styles!public! !
+isRightAligned:!accessing-styles!public! !
+isTimeMode!accessing-styles!public! !
+isTimeMode:!accessing-styles!public! !
+modelClass!accessing!private! !
+nmFirst!constants!private! !
+onViewCreated!event handling!public! !
+setRangeMessage!constants!private! !
+setSystemTime:!accessing!private! !
+!
 
 !DateTimePicker class methodsFor!
 
@@ -223,7 +225,9 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysDateTimePick32'! !
-!DateTimePicker class categoriesFor: #defaultModel!models!public! !
-!DateTimePicker class categoriesFor: #themePartName!constants!private!theming! !
-!DateTimePicker class categoriesFor: #winClassName!constants!private! !
+!DateTimePicker class categoriesForMethods!
+defaultModel!models!public! !
+themePartName!constants!private!theming! !
+winClassName!constants!private! !
+!
 

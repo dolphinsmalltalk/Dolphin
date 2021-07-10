@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaItem subclass: #ISchemaAttribute
 	instanceVariableNames: ''
@@ -154,18 +154,20 @@ use
 	self get_use: answer.
 	^answer asObject
 ! !
-!ISchemaAttribute categoriesFor: #defaultValue!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #fixedValue!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #get_use:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
-!ISchemaAttribute categoriesFor: #isReference!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #scope!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #type!**auto generated**!properties!public! !
-!ISchemaAttribute categoriesFor: #use!**auto generated**!properties!public! !
+!ISchemaAttribute categoriesForMethods!
+defaultValue!**auto generated**!properties!public! !
+fixedValue!**auto generated**!properties!public! !
+get_defaultValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_fixedValue:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_isReference:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_scope:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_type:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+get_use:!**auto generated**!COM Interfaces-ISchemaAttribute!private! !
+isReference!**auto generated**!properties!public! !
+scope!**auto generated**!properties!public! !
+type!**auto generated**!properties!public! !
+use!**auto generated**!properties!public! !
+!
 
 !ISchemaAttribute class methodsFor!
 
@@ -187,5 +189,7 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!ISchemaAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaAttribute class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ViewState
 	instanceVariableNames: 'view state placement subViewStates'
@@ -37,8 +37,10 @@ restore
 		placement: placement;
 		basicInvalidateLayout;
 		isStateRestoring: false! !
-!ViewState categoriesFor: #recordStateOf:forRecreate:!initializing!private! !
-!ViewState categoriesFor: #restore!operations!public! !
+!ViewState categoriesForMethods!
+recordStateOf:forRecreate:!initializing!private! !
+restore!operations!public! !
+!
 
 !ViewState class methodsFor!
 
@@ -54,6 +56,8 @@ recordStateOf: aView forRecreate: aBoolean
 
 	^super new 
 		recordStateOf: aView forRecreate: aBoolean! !
-!ViewState class categoriesFor: #new!instance creation!private! !
-!ViewState class categoriesFor: #recordStateOf:forRecreate:!instance creation!public! !
+!ViewState class categoriesForMethods!
+new!instance creation!private! !
+recordStateOf:forRecreate:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaLexerMetadata subclass: #ScintillaLexerProperty
 	instanceVariableNames: 'type'
@@ -32,9 +32,11 @@ value: anObject
 		value: (self type < ScintillaConstants.SC_TYPE_STRING
 				ifTrue: [anObject asParameter printString]
 				ifFalse: [anObject])! !
-!ScintillaLexerProperty categoriesFor: #getDescription!accessing!private! !
-!ScintillaLexerProperty categoriesFor: #name!accessing!public! !
-!ScintillaLexerProperty categoriesFor: #type!accessing!public! !
-!ScintillaLexerProperty categoriesFor: #value!accessing!public! !
-!ScintillaLexerProperty categoriesFor: #value:!accessing!public! !
+!ScintillaLexerProperty categoriesForMethods!
+getDescription!accessing!private! !
+name!accessing!public! !
+type!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 

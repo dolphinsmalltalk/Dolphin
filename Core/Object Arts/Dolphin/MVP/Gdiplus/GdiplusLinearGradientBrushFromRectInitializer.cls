@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromRectInitializer
 	instanceVariableNames: 'rect color1 color2 mode'
@@ -42,6 +42,8 @@ rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode
 	color1 := startColor.
 	color2 := endColor.
 	mode := aLinearGradientMode! !
-!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #rect:color1:color2:mode:!initializing!private! !
+!GdiplusLinearGradientBrushFromRectInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+rect:color1:color2:mode:!initializing!private! !
+!
 

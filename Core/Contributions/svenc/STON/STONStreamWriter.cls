@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONStreamWriter
 	instanceVariableNames: 'writer first'
@@ -17,8 +17,10 @@ initialize
 
 on: stonWriter
 	writer := stonWriter! !
-!STONStreamWriter categoriesFor: #initialize!initialize/release!public! !
-!STONStreamWriter categoriesFor: #on:!initialize/release!public! !
+!STONStreamWriter categoriesForMethods!
+initialize!initialize/release!public! !
+on:!initialize/release!public! !
+!
 
 !STONStreamWriter class methodsFor!
 
@@ -29,6 +31,8 @@ on: stonWriter
 	^ self new
 		on: stonWriter;
 		yourself! !
-!STONStreamWriter class categoriesFor: #new!public! !
-!STONStreamWriter class categoriesFor: #on:!instance creation!public! !
+!STONStreamWriter class categoriesForMethods!
+new!public! !
+on:!instance creation!public! !
+!
 

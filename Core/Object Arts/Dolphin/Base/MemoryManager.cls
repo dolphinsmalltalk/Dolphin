@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MemoryManager
 	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize events'
@@ -455,43 +455,45 @@ undertakerMain
 	[undertaker == Processor activeProcess] whileTrue: [
 	 	bereavements wait.
 		self directFunerals]! !
-!MemoryManager categoriesFor: #aboutToIdle!accessing!private! !
-!MemoryManager categoriesFor: #administerLastRites!finalizing!private! !
-!MemoryManager categoriesFor: #bereavedOverflow:!interrupts-handling!private! !
-!MemoryManager categoriesFor: #bytesUsedByObject:!helpers!private! !
-!MemoryManager categoriesFor: #collectGarbage!garbage collection!private! !
-!MemoryManager categoriesFor: #compact!garbage collection!private! !
-!MemoryManager categoriesFor: #dequeueBereavementInto:!finalizing!private! !
-!MemoryManager categoriesFor: #dequeueForFinalization!finalizing!private! !
-!MemoryManager categoriesFor: #directFunerals!finalizing!private! !
-!MemoryManager categoriesFor: #ensureProcessesRunning!finalizing!private! !
-!MemoryManager categoriesFor: #finalizer!accessing!private! !
-!MemoryManager categoriesFor: #finalizerMain!finalizing!private! !
-!MemoryManager categoriesFor: #finalizerPriority!finalizing!private! !
-!MemoryManager categoriesFor: #forkFinalizer!finalizing!private! !
-!MemoryManager categoriesFor: #forkUndertaker!finalizing!private! !
-!MemoryManager categoriesFor: #gcInterval!accessing!private! !
-!MemoryManager categoriesFor: #getEvents!events!private! !
-!MemoryManager categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
-!MemoryManager categoriesFor: #initialize!development!initializing!private! !
-!MemoryManager categoriesFor: #instanceStats:!enquiries!public! !
-!MemoryManager categoriesFor: #maxObjects!accessing!public! !
-!MemoryManager categoriesFor: #millisecondClock!enquiries!private! !
-!MemoryManager categoriesFor: #minGCInterval!accessing!private! !
-!MemoryManager categoriesFor: #objectCount!garbage collection!private! !
-!MemoryManager categoriesFor: #objectHeaderSize!accessing!private! !
-!MemoryManager categoriesFor: #onPreSaveImage!event handling!private! !
-!MemoryManager categoriesFor: #onStartup!event handling!private! !
-!MemoryManager categoriesFor: #otOverflow:!interrupts!interrupts-handling!private! !
-!MemoryManager categoriesFor: #primCollectGarbage:!garbage collection!private! !
-!MemoryManager categoriesFor: #primCompact!garbage collection!private! !
-!MemoryManager categoriesFor: #primInstanceStats:!enquiries!private! !
-!MemoryManager categoriesFor: #registerObjects!initializing!private! !
-!MemoryManager categoriesFor: #resetGCStats!initializing!private! !
-!MemoryManager categoriesFor: #setEvents:!events!private! !
-!MemoryManager categoriesFor: #undertaker!accessing!private! !
-!MemoryManager categoriesFor: #undertaker:!finalizing!private! !
-!MemoryManager categoriesFor: #undertakerMain!finalizing!private! !
+!MemoryManager categoriesForMethods!
+aboutToIdle!accessing!private! !
+administerLastRites!finalizing!private! !
+bereavedOverflow:!interrupts-handling!private! !
+bytesUsedByObject:!helpers!private! !
+collectGarbage!garbage collection!private! !
+compact!garbage collection!private! !
+dequeueBereavementInto:!finalizing!private! !
+dequeueForFinalization!finalizing!private! !
+directFunerals!finalizing!private! !
+ensureProcessesRunning!finalizing!private! !
+finalizer!accessing!private! !
+finalizerMain!finalizing!private! !
+finalizerPriority!finalizing!private! !
+forkFinalizer!finalizing!private! !
+forkUndertaker!finalizing!private! !
+gcInterval!accessing!private! !
+getEvents!events!private! !
+hospiceOverflow:!interrupts-handling!private! !
+initialize!development!initializing!private! !
+instanceStats:!enquiries!public! !
+maxObjects!accessing!public! !
+millisecondClock!enquiries!private! !
+minGCInterval!accessing!private! !
+objectCount!garbage collection!private! !
+objectHeaderSize!accessing!private! !
+onPreSaveImage!event handling!private! !
+onStartup!event handling!private! !
+otOverflow:!interrupts!interrupts-handling!private! !
+primCollectGarbage:!garbage collection!private! !
+primCompact!garbage collection!private! !
+primInstanceStats:!enquiries!private! !
+registerObjects!initializing!private! !
+resetGCStats!initializing!private! !
+setEvents:!events!private! !
+undertaker!accessing!private! !
+undertaker:!finalizing!private! !
+undertakerMain!finalizing!private! !
+!
 
 !MemoryManager class methodsFor!
 
@@ -528,9 +530,11 @@ removeFromSystem
 	and must not be deleted."
 
 	^self shouldNotImplement! !
-!MemoryManager class categoriesFor: #current!instance creation!public! !
-!MemoryManager class categoriesFor: #gcInterval:!accessing!public! !
-!MemoryManager class categoriesFor: #initialize!development!initializing!must strip!public! !
-!MemoryManager class categoriesFor: #new!development!instance creation!public! !
-!MemoryManager class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
+!MemoryManager class categoriesForMethods!
+current!instance creation!public! !
+gcInterval:!accessing!public! !
+initialize!development!initializing!must strip!public! !
+new!development!instance creation!public! !
+removeFromSystem!class hierarchy-removing!private! !
+!
 

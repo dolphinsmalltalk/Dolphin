@@ -67,7 +67,9 @@ documentsDirectory
 	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
 
 	^ShellLibrary default getSpecialFolderLocation: ShellConstants.CSIDL_PERSONAL! !
-!SessionManager categoriesFor: #documentsDirectory!accessing!public! !
+!SessionManager categoriesForMethods!
+documentsDirectory!accessing!public! !
+!
 
 !View methodsFor!
 
@@ -78,8 +80,10 @@ wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| files |
 	files := DroppedFilesList fromHandle: wParamInteger asExternalHandle.
 	self presenter trigger: #dropFiles: with: files! !
-!View categoriesFor: #acceptDroppedFiles:!public! !
-!View categoriesFor: #wmDropFiles:wParam:lParam:!public! !
+!View categoriesForMethods!
+acceptDroppedFiles:!public! !
+wmDropFiles:wParam:lParam:!public! !
+!
 
 !View class methodsFor!
 
@@ -91,9 +95,11 @@ shellMessageMappings
 
 unregisterShellMessages
 	self unregisterMessageMappings: {WM_DROPFILES}! !
-!View class categoriesFor: #registerShellMessages!development!initializing!public! !
-!View class categoriesFor: #shellMessageMappings!constants!must not strip!private! !
-!View class categoriesFor: #unregisterShellMessages!class hierarchy-removing!public! !
+!View class categoriesForMethods!
+registerShellMessages!development!initializing!public! !
+shellMessageMappings!constants!must not strip!private! !
+unregisterShellMessages!class hierarchy-removing!public! !
+!
 
 "End of package definition"!
 

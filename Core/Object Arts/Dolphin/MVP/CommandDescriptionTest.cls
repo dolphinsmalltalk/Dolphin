@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #CommandDescriptionTest
 	instanceVariableNames: 'savedKeyboardLayout'
@@ -39,8 +39,10 @@ testAcceleratorKeyString
 testRegistry
 	self assert: CommandDescription.CommandDescriptionRegistry hasWeakKeys.
 	self deny: CommandDescription.CommandDescriptionRegistry hasWeakValues! !
-!CommandDescriptionTest categoriesFor: #setCurrentKeyboardLayout:!helpers!private! !
-!CommandDescriptionTest categoriesFor: #tearDown!private!running! !
-!CommandDescriptionTest categoriesFor: #testAcceleratorKeyString!public!unit tests! !
-!CommandDescriptionTest categoriesFor: #testRegistry!public!unit tests! !
+!CommandDescriptionTest categoriesForMethods!
+setCurrentKeyboardLayout:!helpers!private! !
+tearDown!private!running! !
+testAcceleratorKeyString!public!unit tests! !
+testRegistry!public!unit tests! !
+!
 

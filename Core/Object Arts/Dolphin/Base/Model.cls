@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Model
 	instanceVariableNames: 'events'
@@ -49,10 +49,12 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!Model categoriesFor: #getEvents!events!private! !
-!Model categoriesFor: #postCopy!copying!public! !
-!Model categoriesFor: #setEvents:!events!private! !
-!Model categoriesFor: #stbSaveOn:!binary filing!public! !
+!Model categoriesForMethods!
+getEvents!events!private! !
+postCopy!copying!public! !
+setEvents:!events!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 Model methodProtocol: #model attributes: #(#readOnly) selectors: #()!
 
@@ -114,11 +116,13 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Model class categoriesFor: #new!instance creation!public! !
-!Model class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!Model class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!Model class categoriesFor: #stbVersion!binary filing!public! !
+!Model class categoriesForMethods!
+new!instance creation!public! !
+stbConvert:fromVersion:!binary filing!private! !
+stbConvertFrom:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

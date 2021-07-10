@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Category subclass: #ClassCategory
 	instanceVariableNames: ''
@@ -42,12 +42,14 @@ removeClass: aClass
 
 	aClass removeFromCategory: self.
 	^aClass! !
-!ClassCategory categoriesFor: #addClass:!adding!public! !
-!ClassCategory categoriesFor: #classes!public! !
-!ClassCategory categoriesFor: #contents!enumerating!public! !
-!ClassCategory categoriesFor: #includesClass:!public!testing! !
-!ClassCategory categoriesFor: #isEmpty!public!testing! !
-!ClassCategory categoriesFor: #removeClass:!public!removing! !
+!ClassCategory categoriesForMethods!
+addClass:!adding!public! !
+classes!public! !
+contents!enumerating!public! !
+includesClass:!public!testing! !
+isEmpty!public!testing! !
+removeClass:!public!removing! !
+!
 
 !ClassCategory class methodsFor!
 
@@ -111,11 +113,13 @@ uninitialize
 
 	Table := nil.
 	Unclassified := nil! !
-!ClassCategory class categoriesFor: #allClassCategories!accessing!public! !
-!ClassCategory class categoriesFor: #initialize!initializing!private! !
-!ClassCategory class categoriesFor: #name:!instance creation!public! !
-!ClassCategory class categoriesFor: #table!accessing!private! !
-!ClassCategory class categoriesFor: #unclassified!instance creation!public! !
-!ClassCategory class categoriesFor: #unclassifiedName!constants!private! !
-!ClassCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ClassCategory class categoriesForMethods!
+allClassCategories!accessing!public! !
+initialize!initializing!private! !
+name:!instance creation!public! !
+table!accessing!private! !
+unclassified!instance creation!public! !
+unclassifiedName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpImageCodecInfo
 	instanceVariableNames: ''
@@ -184,32 +184,34 @@ Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Version put: anInteger! !
-!GpImageCodecInfo categoriesFor: #Clsid!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Clsid:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #CodecName!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #CodecName:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #DllName!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #DllName:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FilenameExtension!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FilenameExtension:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Flags!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Flags:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatDescription!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatDescription:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatID!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #FormatID:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #MimeType!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #MimeType:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigCount!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigCount:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigMask!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigMask:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigPattern!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigPattern:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigSize!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #SigSize:!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Version!**compiled accessors**!public! !
-!GpImageCodecInfo categoriesFor: #Version:!**compiled accessors**!public! !
+!GpImageCodecInfo categoriesForMethods!
+Clsid!**compiled accessors**!public! !
+Clsid:!**compiled accessors**!public! !
+CodecName!**compiled accessors**!public! !
+CodecName:!**compiled accessors**!public! !
+DllName!**compiled accessors**!public! !
+DllName:!**compiled accessors**!public! !
+FilenameExtension!**compiled accessors**!public! !
+FilenameExtension:!**compiled accessors**!public! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+FormatDescription!**compiled accessors**!public! !
+FormatDescription:!**compiled accessors**!public! !
+FormatID!**compiled accessors**!public! !
+FormatID:!**compiled accessors**!public! !
+MimeType!**compiled accessors**!public! !
+MimeType:!**compiled accessors**!public! !
+SigCount!**compiled accessors**!public! !
+SigCount:!**compiled accessors**!public! !
+SigMask!**compiled accessors**!public! !
+SigMask:!**compiled accessors**!public! !
+SigPattern!**compiled accessors**!public! !
+SigPattern:!**compiled accessors**!public! !
+SigSize!**compiled accessors**!public! !
+SigSize:!**compiled accessors**!public! !
+Version!**compiled accessors**!public! !
+Version:!**compiled accessors**!public! !
+!
 
 !GpImageCodecInfo class methodsFor!
 
@@ -253,6 +255,8 @@ defineFields
 
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
-!GpImageCodecInfo class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpImageCodecInfo class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpImageCodecInfo class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueAdaptor subclass: #ValueKeyedAdaptor
 	instanceVariableNames: 'key putSelector getSelector'
@@ -94,18 +94,20 @@ value
 	sending a message to the receiver's subject with the key."
 	
 	^self subject perform: self getSelector with: self key! !
-!ValueKeyedAdaptor categoriesFor: #=!comparing!public! !
-!ValueKeyedAdaptor categoriesFor: #canGet!private!testing! !
-!ValueKeyedAdaptor categoriesFor: #canSet!private!testing! !
-!ValueKeyedAdaptor categoriesFor: #displayOn:!displaying!public! !
-!ValueKeyedAdaptor categoriesFor: #getSelector!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #hash!comparing!public! !
-!ValueKeyedAdaptor categoriesFor: #key!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #objectRefName!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #putSelector!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #setValue:!accessing!private! !
-!ValueKeyedAdaptor categoriesFor: #subject:key:!initializing!private! !
-!ValueKeyedAdaptor categoriesFor: #value!accessing!public! !
+!ValueKeyedAdaptor categoriesForMethods!
+=!comparing!public! !
+canGet!private!testing! !
+canSet!private!testing! !
+displayOn:!displaying!public! !
+getSelector!accessing!private! !
+hash!comparing!public! !
+key!accessing!private! !
+objectRefName!accessing!private! !
+putSelector!accessing!private! !
+setValue:!accessing!private! !
+subject:key:!initializing!private! !
+value!accessing!public! !
+!
 
 !ValueKeyedAdaptor class methodsFor!
 
@@ -119,6 +121,8 @@ subject: anObject key: aKey
 	an element of anObject identified by aKey"
 
 	^(super new) subject: anObject key: aKey; yourself! !
-!ValueKeyedAdaptor class categoriesFor: #new!instance creation!private! !
-!ValueKeyedAdaptor class categoriesFor: #subject:key:!instance creation!public! !
+!ValueKeyedAdaptor class categoriesForMethods!
+new!instance creation!private! !
+subject:key:!instance creation!public! !
+!
 

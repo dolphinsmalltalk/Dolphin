@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MSG
 	instanceVariableNames: ''
@@ -82,17 +82,19 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
-!MSG categoriesFor: #hwnd!**compiled accessors**!public! !
-!MSG categoriesFor: #isInput!public!testing! !
-!MSG categoriesFor: #isKeyboardInput!public!testing! !
-!MSG categoriesFor: #isMouseInput!public!testing! !
-!MSG categoriesFor: #lParam!**compiled accessors**!public! !
-!MSG categoriesFor: #message!**compiled accessors**!public! !
-!MSG categoriesFor: #swParam!accessing!public! !
-!MSG categoriesFor: #time!**compiled accessors**!public! !
-!MSG categoriesFor: #wParam!**compiled accessors**!public! !
-!MSG categoriesFor: #x!**compiled accessors**!public! !
-!MSG categoriesFor: #y!**compiled accessors**!public! !
+!MSG categoriesForMethods!
+hwnd!**compiled accessors**!public! !
+isInput!public!testing! !
+isKeyboardInput!public!testing! !
+isMouseInput!public!testing! !
+lParam!**compiled accessors**!public! !
+message!**compiled accessors**!public! !
+swParam!accessing!public! !
+time!**compiled accessors**!public! !
+wParam!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+!
 
 !MSG class methodsFor!
 
@@ -123,6 +125,8 @@ defineFields
 
 getFieldNames
 	^#(#hwnd #message #wParam #lParam #time #x #y)! !
-!MSG class categoriesFor: #defineFields!public!template definition! !
-!MSG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MSG class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

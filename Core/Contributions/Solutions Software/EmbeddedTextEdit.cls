@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TextEdit subclass: #EmbeddedTextEdit
 	instanceVariableNames: 'offset'
@@ -154,30 +154,32 @@ stbSaveOn: anSTBOutFiler
 	handle isNil 
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
-!EmbeddedTextEdit categoriesFor: #actualOffset!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #column!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #createEmbeddedIn:!initializing!public! !
-!EmbeddedTextEdit categoriesFor: #cueBanner!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #cueBanner:!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #defaultOffset!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
-!EmbeddedTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
-!EmbeddedTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
-!EmbeddedTextEdit categoriesFor: #editRectFor:!accessing!private! !
-!EmbeddedTextEdit categoriesFor: #expectsText!public!testing! !
-!EmbeddedTextEdit categoriesFor: #hasCueBanner!public!testing! !
-!EmbeddedTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedTextEdit categoriesFor: #offset!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #offset:!accessing!public! !
-!EmbeddedTextEdit categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedTextEdit categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedTextEdit categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedTextEdit categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedTextEdit categoriesFor: #show!operations!public! !
-!EmbeddedTextEdit categoriesFor: #showIn:!operations!public! !
-!EmbeddedTextEdit categoriesFor: #stbSaveOn:!binary filing!public! !
+!EmbeddedTextEdit categoriesForMethods!
+actualOffset!accessing!public! !
+column!accessing!public! !
+createEmbeddedIn:!initializing!public! !
+cueBanner!accessing!public! !
+cueBanner:!accessing!public! !
+defaultOffset!accessing!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
+displayOnFormats!binary filing!public! !
+editRectFor:!accessing!private! !
+expectsText!public!testing! !
+hasCueBanner!public!testing! !
+hasEmbeddedHotTracking!public!testing! !
+isDisplayOwnerDrawn!public!testing! !
+offset!accessing!public! !
+offset:!accessing!public! !
+onCursoredLeft!event handling!public! !
+onKillFocus!event handling!public! !
+onRequestDeactivate!event handling!public! !
+preTranslateKeyboardInput:!event handling!public! !
+show!operations!public! !
+showIn:!operations!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !EmbeddedTextEdit class methodsFor!
 
@@ -193,6 +195,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^20! !
-!EmbeddedTextEdit class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!EmbeddedTextEdit class categoriesFor: #stbVersion!binary filing!public! !
+!EmbeddedTextEdit class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

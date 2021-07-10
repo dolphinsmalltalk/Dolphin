@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 InstructionInterpreter subclass: #MessageSendCollector
 	instanceVariableNames: 'messageBlock superMessageBlock'
@@ -55,15 +55,17 @@ superMessagesDo: aBlockClosure
 
 supersendSelector: aSymbol 
 	superMessageBlock value: aSymbol! !
-!MessageSendCollector categoriesFor: #dispatchNext!interpreting!private! !
-!MessageSendCollector categoriesFor: #initialize!initializing!private! !
-!MessageSendCollector categoriesFor: #messagesDo:!enumerating!public! !
-!MessageSendCollector categoriesFor: #sendSelector:args:!interpreting!private! !
-!MessageSendCollector categoriesFor: #sendSelfSelector:args:!interpreting!private! !
-!MessageSendCollector categoriesFor: #shortSpecialSend:!instructions-sending!public! !
-!MessageSendCollector categoriesFor: #shortSpecialSendEx:!instructions-sending!public! !
-!MessageSendCollector categoriesFor: #superMessagesDo:!enumerating!public! !
-!MessageSendCollector categoriesFor: #supersendSelector:!interpreting!private! !
+!MessageSendCollector categoriesForMethods!
+dispatchNext!interpreting!private! !
+initialize!initializing!private! !
+messagesDo:!enumerating!public! !
+sendSelector:args:!interpreting!private! !
+sendSelfSelector:args:!interpreting!private! !
+shortSpecialSend:!instructions-sending!public! !
+shortSpecialSendEx:!instructions-sending!public! !
+superMessagesDo:!enumerating!public! !
+supersendSelector:!interpreting!private! !
+!
 
 !MessageSendCollector class methodsFor!
 
@@ -76,6 +78,8 @@ dispatcher: aByteCodeDispatcher
 initialize
 	self addClassConstant: 'SendInstructions'
 		value: (ByteCodeDispatcher instructions collect: [:each | ('*send*' match: each) ifTrue: [each]])! !
-!MessageSendCollector class categoriesFor: #dispatcher:!instance creation!public! !
-!MessageSendCollector class categoriesFor: #initialize!class initialization!development!public! !
+!MessageSendCollector class categoriesForMethods!
+dispatcher:!instance creation!public! !
+initialize!class initialization!development!public! !
+!
 

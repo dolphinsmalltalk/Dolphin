@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #TwinLevelInspector
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
@@ -48,15 +48,17 @@ selectionOrNil
 
 selectionOrNil: anObject
 	^contentsPresenter selectionOrNil: anObject! !
-!TwinLevelInspector categoriesFor: #aspectAccessor!public! !
-!TwinLevelInspector categoriesFor: #createComponents!private! !
-!TwinLevelInspector categoriesFor: #createSchematicWiring!initializing!private! !
-!TwinLevelInspector categoriesFor: #inspectorPresenter!public! !
-!TwinLevelInspector categoriesFor: #isRootAspectVisible:!accessing!public! !
-!TwinLevelInspector categoriesFor: #model:!public! !
-!TwinLevelInspector categoriesFor: #onContentsSelectionChanged!private! !
-!TwinLevelInspector categoriesFor: #selectionOrNil!public!selection! !
-!TwinLevelInspector categoriesFor: #selectionOrNil:!public!selection! !
+!TwinLevelInspector categoriesForMethods!
+aspectAccessor!public! !
+createComponents!private! !
+createSchematicWiring!initializing!private! !
+inspectorPresenter!public! !
+isRootAspectVisible:!accessing!public! !
+model:!public! !
+onContentsSelectionChanged!private! !
+selectionOrNil!public!selection! !
+selectionOrNil:!public!selection! !
+!
 
 !TwinLevelInspector class methodsFor!
 
@@ -90,8 +92,10 @@ shellOn: aListModelOfObjects caption: caption
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!TwinLevelInspector class categoriesFor: #defaultModel!public! !
-!TwinLevelInspector class categoriesFor: #icon!constants!public! !
-!TwinLevelInspector class categoriesFor: #resource_Default_view!public!resources-views! !
-!TwinLevelInspector class categoriesFor: #shellOn:caption:!instance creation!public! !
+!TwinLevelInspector class categoriesForMethods!
+defaultModel!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+shellOn:caption:!instance creation!public! !
+!
 

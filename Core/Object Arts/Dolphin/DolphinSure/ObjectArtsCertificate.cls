@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureCertificate subclass: #ObjectArtsCertificate
 	instanceVariableNames: ''
@@ -49,8 +49,10 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!ObjectArtsCertificate class categoriesFor: #generate!instance creation!private! !
-!ObjectArtsCertificate class categoriesFor: #new!instance creation!public! !
-!ObjectArtsCertificate class categoriesFor: #publicKey!constants!private! !
-!ObjectArtsCertificate class categoriesFor: #validYears!constants!private! !
+!ObjectArtsCertificate class categoriesForMethods!
+generate!instance creation!private! !
+new!instance creation!public! !
+publicKey!constants!private! !
+validYears!constants!private! !
+!
 

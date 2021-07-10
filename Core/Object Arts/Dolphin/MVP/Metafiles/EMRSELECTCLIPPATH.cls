@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSELECTCLIPPATH
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger! !
-!EMRSELECTCLIPPATH categoriesFor: #iMode!**compiled accessors**!public! !
-!EMRSELECTCLIPPATH categoriesFor: #iMode:!**compiled accessors**!public! !
+!EMRSELECTCLIPPATH categoriesForMethods!
+iMode!**compiled accessors**!public! !
+iMode:!**compiled accessors**!public! !
+!
 
 !EMRSELECTCLIPPATH class methodsFor!
 
@@ -73,7 +75,9 @@ iTypes
 					with: EMR_SETSTRETCHBLTMODE
 					with: EMR_SETICMMODE
 					with: EMR_SETTEXTALIGN)! !
-!EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !
+!EMRSELECTCLIPPATH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

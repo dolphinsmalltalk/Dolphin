@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IpHlpApiTableStruct subclass: #MIB_UDPTABLE
 	instanceVariableNames: ''
@@ -31,7 +31,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_UDPROW! !
-!MIB_UDPTABLE categoriesFor: #table!**compiled accessors**!public! !
+!MIB_UDPTABLE categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !MIB_UDPTABLE class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!MIB_UDPTABLE class categoriesFor: #defineFields!initializing!public! !
-!MIB_UDPTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_UDPTABLE class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

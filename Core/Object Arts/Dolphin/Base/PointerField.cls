@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalField subclass: #PointerField
 	instanceVariableNames: 'pointerClass'
@@ -50,12 +50,14 @@ writeInto: anExternalStructure value: anObject
 	the class instance variable 'template')."
 
 	^anExternalStructure bytes uintPtrAtOffset: offset put: anObject yourAddress! !
-!PointerField categoriesFor: #byteSize!accessing!private! !
-!PointerField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!PointerField categoriesFor: #pointerClass!accessing!private! !
-!PointerField categoriesFor: #pointerClass:!accessing!private! !
-!PointerField categoriesFor: #readFrom:!indirect accessing!private! !
-!PointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!PointerField categoriesForMethods!
+byteSize!accessing!private! !
+fieldClassName!automatic generation!constants!development!private! !
+pointerClass!accessing!private! !
+pointerClass:!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !PointerField class methodsFor!
 
@@ -64,5 +66,7 @@ type: aClass
 	pointers to objects of type aClass"
 
 	^super new pointerClass: aClass! !
-!PointerField class categoriesFor: #type:!instance creation!public! !
+!PointerField class categoriesForMethods!
+type:!instance creation!public! !
+!
 

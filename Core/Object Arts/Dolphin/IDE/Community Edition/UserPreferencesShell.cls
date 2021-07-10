@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #UserPreferencesShell
 	instanceVariableNames: 'preferencesPresenter'
@@ -22,9 +22,11 @@ model: aListModelOfObjects
 
 selectionOrNil: aClass 
 	^preferencesPresenter selectionOrNil: aClass! !
-!UserPreferencesShell categoriesFor: #createComponents!private! !
-!UserPreferencesShell categoriesFor: #model:!public! !
-!UserPreferencesShell categoriesFor: #selectionOrNil:!public! !
+!UserPreferencesShell categoriesForMethods!
+createComponents!private! !
+model:!public! !
+selectionOrNil:!public! !
+!
 
 !UserPreferencesShell class methodsFor!
 
@@ -71,11 +73,13 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10580! !
-!UserPreferencesShell class categoriesFor: #defaultModel!public! !
-!UserPreferencesShell class categoriesFor: #displayOn:!public! !
-!UserPreferencesShell class categoriesFor: #icon!constants!public! !
-!UserPreferencesShell class categoriesFor: #initialize!initializing!private! !
-!UserPreferencesShell class categoriesFor: #publishedAspects!public! !
-!UserPreferencesShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!UserPreferencesShell class categoriesFor: #toolsFolderHelpId!private! !
+!UserPreferencesShell class categoriesForMethods!
+defaultModel!public! !
+displayOn:!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!private! !
+!
 

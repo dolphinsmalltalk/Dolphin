@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #SmalltalkSystemShell
 	instanceVariableNames: 'systemFolderPresenter'
@@ -264,39 +264,41 @@ updateCaption
 
 whatsThis
 	systemFolderPresenter selection whatsThis ! !
-!SmalltalkSystemShell categoriesFor: #addToCommandRoute:!commands!public! !
-!SmalltalkSystemShell categoriesFor: #applyOptions!operations!options!private! !
-!SmalltalkSystemShell categoriesFor: #browseCompilationFailures!browsing!commands!public! !
-!SmalltalkSystemShell categoriesFor: #browseCompilationIssues!commands!public! !
-!SmalltalkSystemShell categoriesFor: #browseDeprecatedMethods!browsing!commands!public! !
-!SmalltalkSystemShell categoriesFor: #browseMessageDefinitions!browsing!commands!public! !
-!SmalltalkSystemShell categoriesFor: #browseMessageReferences!browsing!commands!public! !
-!SmalltalkSystemShell categoriesFor: #browseMethodCategory:!browsing!private! !
-!SmalltalkSystemShell categoriesFor: #browseNotYetImplemented!browsing!commands!public! !
-!SmalltalkSystemShell categoriesFor: #browseUnclassifiedMethods!browsing!commands!public! !
-!SmalltalkSystemShell categoriesFor: #createComponents!**auto generated**!initializing!public! !
-!SmalltalkSystemShell categoriesFor: #createSchematicWiring!initializing!public! !
-!SmalltalkSystemShell categoriesFor: #defaultHelpId!constants!public! !
-!SmalltalkSystemShell categoriesFor: #initialize!initializing!private! !
-!SmalltalkSystemShell categoriesFor: #inspectSystemOptions!commands!public! !
-!SmalltalkSystemShell categoriesFor: #model:!accessing!public! !
-!SmalltalkSystemShell categoriesFor: #onCloseRequested:!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #onHotKey:!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #onPositionChanged:!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #onViewCreated!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #onViewDestroyed!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #onViewModeChanged!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #onViewOpened!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #properties!commands!public! !
-!SmalltalkSystemShell categoriesFor: #queryCommand:!commands!private! !
-!SmalltalkSystemShell categoriesFor: #registerHotKey!helpers!private! !
-!SmalltalkSystemShell categoriesFor: #resetSelection!event handling!private! !
-!SmalltalkSystemShell categoriesFor: #resetWhenInvisible!options!public! !
-!SmalltalkSystemShell categoriesFor: #searchEnvironment!commands!public! !
-!SmalltalkSystemShell categoriesFor: #systemFolderPresenter!accessing!private! !
-!SmalltalkSystemShell categoriesFor: #unregisterHotKey!helpers!private! !
-!SmalltalkSystemShell categoriesFor: #updateCaption!public!updating! !
-!SmalltalkSystemShell categoriesFor: #whatsThis!commands!public! !
+!SmalltalkSystemShell categoriesForMethods!
+addToCommandRoute:!commands!public! !
+applyOptions!operations!options!private! !
+browseCompilationFailures!browsing!commands!public! !
+browseCompilationIssues!commands!public! !
+browseDeprecatedMethods!browsing!commands!public! !
+browseMessageDefinitions!browsing!commands!public! !
+browseMessageReferences!browsing!commands!public! !
+browseMethodCategory:!browsing!private! !
+browseNotYetImplemented!browsing!commands!public! !
+browseUnclassifiedMethods!browsing!commands!public! !
+createComponents!**auto generated**!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultHelpId!constants!public! !
+initialize!initializing!private! !
+inspectSystemOptions!commands!public! !
+model:!accessing!public! !
+onCloseRequested:!event handling!private! !
+onHotKey:!event handling!private! !
+onPositionChanged:!event handling!private! !
+onViewCreated!event handling!private! !
+onViewDestroyed!event handling!private! !
+onViewModeChanged!event handling!private! !
+onViewOpened!event handling!private! !
+properties!commands!public! !
+queryCommand:!commands!private! !
+registerHotKey!helpers!private! !
+resetSelection!event handling!private! !
+resetWhenInvisible!options!public! !
+searchEnvironment!commands!public! !
+systemFolderPresenter!accessing!private! !
+unregisterHotKey!helpers!private! !
+updateCaption!public!updating! !
+whatsThis!commands!public! !
+!
 
 !SmalltalkSystemShell class methodsFor!
 
@@ -566,39 +568,41 @@ viewMode: aSymbol
 
 	ViewMode := aSymbol.
 	self applyOptions! !
-!SmalltalkSystemShell class categoriesFor: #applyOptions!accessing!options!private! !
-!SmalltalkSystemShell class categoriesFor: #backcolor!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #backcolor:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #backImage!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #backImage:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #backImageAlphaPercent!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #backImageAlphaPercent:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #backImageIsTiled!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #backImageIsTiled:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #default!instance creation!public! !
-!SmalltalkSystemShell class categoriesFor: #defaultBackcolor!accessing!options!private! !
-!SmalltalkSystemShell class categoriesFor: #defaultBackImage!private! !
-!SmalltalkSystemShell class categoriesFor: #defaultTextcolor!private! !
-!SmalltalkSystemShell class categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkSystemShell class categoriesFor: #firstReset!private! !
-!SmalltalkSystemShell class categoriesFor: #free!public!realizing/unrealizing! !
-!SmalltalkSystemShell class categoriesFor: #getBackcolor!accessing!options!private! !
-!SmalltalkSystemShell class categoriesFor: #hotKey!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #hotKey:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #icon!constants!public! !
-!SmalltalkSystemShell class categoriesFor: #initialize!initializing!private! !
-!SmalltalkSystemShell class categoriesFor: #onNoVisibleWindows!public! !
-!SmalltalkSystemShell class categoriesFor: #onStartup!events-session!private! !
-!SmalltalkSystemShell class categoriesFor: #playSystemSounds!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #playSystemSounds:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #publishedAspects!constants!public! !
-!SmalltalkSystemShell class categoriesFor: #reset!operations!public! !
-!SmalltalkSystemShell class categoriesFor: #resetWhenInvisible!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #resetWhenInvisible:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!SmalltalkSystemShell class categoriesFor: #textcolor!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #textcolor:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SmalltalkSystemShell class categoriesFor: #viewMode!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #viewMode:!accessing!options!public! !
+!SmalltalkSystemShell class categoriesForMethods!
+applyOptions!accessing!options!private! !
+backcolor!accessing!options!public! !
+backcolor:!accessing!options!public! !
+backImage!accessing!options!public! !
+backImage:!accessing!options!public! !
+backImageAlphaPercent!accessing!options!public! !
+backImageAlphaPercent:!accessing!options!public! !
+backImageIsTiled!accessing!options!public! !
+backImageIsTiled:!accessing!options!public! !
+default!instance creation!public! !
+defaultBackcolor!accessing!options!private! !
+defaultBackImage!private! !
+defaultTextcolor!private! !
+displayOn:!displaying!public! !
+firstReset!private! !
+free!public!realizing/unrealizing! !
+getBackcolor!accessing!options!private! !
+hotKey!accessing!options!public! !
+hotKey:!accessing!options!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+onNoVisibleWindows!public! !
+onStartup!events-session!private! !
+playSystemSounds!accessing!options!public! !
+playSystemSounds:!accessing!options!public! !
+publishedAspects!constants!public! !
+reset!operations!public! !
+resetWhenInvisible!accessing!options!public! !
+resetWhenInvisible:!accessing!options!public! !
+resource_Default_view!public!resources-views! !
+textcolor!accessing!options!public! !
+textcolor:!accessing!options!public! !
+uninitialize!class hierarchy-removing!private! !
+viewMode!accessing!options!public! !
+viewMode:!accessing!options!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object variableSubclass: #Context
 	instanceVariableNames: 'outer block'
@@ -37,10 +37,12 @@ printOn: aStream
 				basicPrint: self;
 				nextPutAll: ' for ';
 				print: block]! !
-!Context categoriesFor: #block!accessing!private! !
-!Context categoriesFor: #frameClass!constants!public! !
-!Context categoriesFor: #home!accessing!public! !
-!Context categoriesFor: #outer!accessing!private! !
-!Context categoriesFor: #outer:!accessing!private! !
-!Context categoriesFor: #printOn:!printing!public! !
+!Context categoriesForMethods!
+block!accessing!private! !
+frameClass!constants!public! !
+home!accessing!public! !
+outer!accessing!private! !
+outer:!accessing!private! !
+printOn:!printing!public! !
+!
 

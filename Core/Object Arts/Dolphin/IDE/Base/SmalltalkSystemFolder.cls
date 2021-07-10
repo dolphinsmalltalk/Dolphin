@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
 	instanceVariableNames: ''
@@ -14,7 +14,9 @@ isFolder
 	"Answers true if the receiver can hold contents"
 
 	^true! !
-!SmalltalkSystemFolder categoriesFor: #isFolder!accessing!public! !
+!SmalltalkSystemFolder categoriesForMethods!
+isFolder!accessing!public! !
+!
 
 !SmalltalkSystemFolder class methodsFor!
 
@@ -57,9 +59,11 @@ icon: anIcon description: aStringDescription helpId: helpId
 		description: aStringDescription
 		openBlock: [:presenter :object | presenter expand: object]
 		helpId: helpId! !
-!SmalltalkSystemFolder class categoriesFor: #description:!instance creation!public! !
-!SmalltalkSystemFolder class categoriesFor: #description:helpId:!instance creation!public! !
-!SmalltalkSystemFolder class categoriesFor: #icon!constants!public! !
-!SmalltalkSystemFolder class categoriesFor: #icon:description:!instance creation!public! !
-!SmalltalkSystemFolder class categoriesFor: #icon:description:helpId:!instance creation!public! !
+!SmalltalkSystemFolder class categoriesForMethods!
+description:!instance creation!public! !
+description:helpId:!instance creation!public! !
+icon!constants!public! !
+icon:description:!instance creation!public! !
+icon:description:helpId:!instance creation!public! !
+!
 

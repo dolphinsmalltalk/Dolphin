@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #CompilerTest
 	instanceVariableNames: 'defaultCompileFlags'
@@ -1475,89 +1475,91 @@ verifyTextMapsOf: each
 				ifFalse: 
 					[byte := debugMethod byteCodes at: ip.
 					self deny: byte equals: 0]]! !
-!CompilerTest categoriesFor: #assertBlocksOptimized:!helpers!private! !
-!CompilerTest categoriesFor: #checkCompileError:range:code:line:source:!helpers!private! !
-!CompilerTest categoriesFor: #compilationErrorClass!constants!private! !
-!CompilerTest categoriesFor: #compilationWarningClass!constants!private! !
-!CompilerTest categoriesFor: #compileExpression:!helpers!private! !
-!CompilerTest categoriesFor: #compileExpression:in:!helpers!private! !
-!CompilerTest categoriesFor: #compileMethod:in:!helpers!private! !
-!CompilerTest categoriesFor: #defaultCompileFlags!helpers!private! !
-!CompilerTest categoriesFor: #evalTestMethod:!helpers!private! !
-!CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
-!CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
-!CompilerTest categoriesFor: #getTestMethod:!private! !
-!CompilerTest categoriesFor: #messageFromError:!helpers!private! !
-!CompilerTest categoriesFor: #scan:class:!helpers!private! !
-!CompilerTest categoriesFor: #scanNonNumericEnd:class:!helpers!private! !
-!CompilerTest categoriesFor: #scanScaledDecimal:!helpers!private! !
-!CompilerTest categoriesFor: #scanSmallIntegerNonNumericEnd:!helpers!private! !
-!CompilerTest categoriesFor: #setInteractiveCompile!helpers!private! !
-!CompilerTest categoriesFor: #setUp!helpers!private! !
-!CompilerTest categoriesFor: #shortPushOne!helpers!private! !
-!CompilerTest categoriesFor: #test1054!public!unit tests! !
-!CompilerTest categoriesFor: #testBlockTempsMap!public!unit tests! !
-!CompilerTest categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
-!CompilerTest categoriesFor: #testBraceArrays!public!unit tests! !
-!CompilerTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
-!CompilerTest categoriesFor: #testCharacterScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
-!CompilerTest categoriesFor: #testConstExpressionReferences!public!unit tests! !
-!CompilerTest categoriesFor: #testCopyingBlocks1!public!unit tests! !
-!CompilerTest categoriesFor: #testCopyingBlocks2!public!unit tests! !
-!CompilerTest categoriesFor: #testDecrementPushTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testDecrementTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testEmpty!public!unit tests! !
-!CompilerTest categoriesFor: #testEmptyIfInLoop!public!unit tests! !
-!CompilerTest categoriesFor: #testFarReturnFromBlock!public!unit tests! !
-!CompilerTest categoriesFor: #testFloatScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNilNoArg!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNilNoArgUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilifNotNilUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNilUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNil!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNilNoArg!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNilNoArgUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilifNilUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilNoArg!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilNoArgUnused!public!unit tests! !
-!CompilerTest categoriesFor: #testIfNotNilUnused!public! !
-!CompilerTest categoriesFor: #testImmutableLiterals!public!unit tests! !
-!CompilerTest categoriesFor: #testIncrementDecrementOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testIncrementPushTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testIncrementTempOptimisation!public!unit tests! !
-!CompilerTest categoriesFor: #testIntegerScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testIntegerScanningBoundaries!public!unit tests! !
-!CompilerTest categoriesFor: #testLiteralArray!public!unit tests! !
-!CompilerTest categoriesFor: #testLiteralStringEncoding!public!unit tests! !
-!CompilerTest categoriesFor: #testMutable!public!unit tests!unit tests-known failures! !
-!CompilerTest categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
-!CompilerTest categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
-!CompilerTest categoriesFor: #testRadixInteger!public!unit tests! !
-!CompilerTest categoriesFor: #testReturnFromOptimizedBlock!public!unit tests! !
-!CompilerTest categoriesFor: #testReturnImmediate!exceptions!public!unit tests! !
-!CompilerTest categoriesFor: #testReturnPseudoVar!public!unit tests! !
-!CompilerTest categoriesFor: #testScanningScaledDecimals!public!unit tests! !
-!CompilerTest categoriesFor: #testScope!public!unit tests! !
-!CompilerTest categoriesFor: #testSharedOuterTemps!public!unit tests! !
-!CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
-!CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
-!CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
-!CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
-!CompilerTest categoriesFor: #testTextMapOfEmptyBlock!public! !
-!CompilerTest categoriesFor: #testTextMapsOfCleanBlocks!public!unit tests! !
-!CompilerTest categoriesFor: #testTimesRepeat!public!unit tests! !
-!CompilerTest categoriesFor: #testTimesRepeatResult!public!unit tests! !
-!CompilerTest categoriesFor: #testToByDo!public!unit tests! !
-!CompilerTest categoriesFor: #testToByDoWithFloatSteps!public!unit tests! !
-!CompilerTest categoriesFor: #testWhileFalse!public!unit tests! !
-!CompilerTest categoriesFor: #testWhileTrue!public!unit tests! !
-!CompilerTest categoriesFor: #testWriteAccessor!public!unit tests!unit tests-known failures! !
-!CompilerTest categoriesFor: #verifyTempsMapOf:!helpers!private! !
-!CompilerTest categoriesFor: #verifyTextMapsOf:!helpers!private!unit tests-long running! !
+!CompilerTest categoriesForMethods!
+assertBlocksOptimized:!helpers!private! !
+checkCompileError:range:code:line:source:!helpers!private! !
+compilationErrorClass!constants!private! !
+compilationWarningClass!constants!private! !
+compileExpression:!helpers!private! !
+compileExpression:in:!helpers!private! !
+compileMethod:in:!helpers!private! !
+defaultCompileFlags!helpers!private! !
+evalTestMethod:!helpers!private! !
+evalTestMethod:withArgs:!helpers!private! !
+evaluateExpression:!helpers!private! !
+getTestMethod:!private! !
+messageFromError:!helpers!private! !
+scan:class:!helpers!private! !
+scanNonNumericEnd:class:!helpers!private! !
+scanScaledDecimal:!helpers!private! !
+scanSmallIntegerNonNumericEnd:!helpers!private! !
+setInteractiveCompile!helpers!private! !
+setUp!helpers!private! !
+shortPushOne!helpers!private! !
+test1054!public!unit tests! !
+testBlockTempsMap!public!unit tests! !
+testBlockWithAllTempTypes!public!unit tests! !
+testBraceArrays!public!unit tests! !
+testByteArraysInLiteralArrays!public!unit tests! !
+testCharacterScanning!public!unit tests! !
+testCompileTimeExpressions!public!unit tests! !
+testConstExpressionReferences!public!unit tests! !
+testCopyingBlocks1!public!unit tests! !
+testCopyingBlocks2!public!unit tests! !
+testDecrementPushTempOptimisation!public!unit tests! !
+testDecrementTempOptimisation!public!unit tests! !
+testEmpty!public!unit tests! !
+testEmptyIfInLoop!public!unit tests! !
+testFarReturnFromBlock!public!unit tests! !
+testFloatScanning!public!unit tests! !
+testIfNil!public!unit tests! !
+testIfNilifNotNil!public!unit tests! !
+testIfNilifNotNilNoArg!public!unit tests! !
+testIfNilifNotNilNoArgUnused!public!unit tests! !
+testIfNilifNotNilUnused!public!unit tests! !
+testIfNilUnused!public!unit tests! !
+testIfNotNil!public!unit tests! !
+testIfNotNilifNil!public!unit tests! !
+testIfNotNilifNilNoArg!public!unit tests! !
+testIfNotNilifNilNoArgUnused!public!unit tests! !
+testIfNotNilifNilUnused!public!unit tests! !
+testIfNotNilNoArg!public!unit tests! !
+testIfNotNilNoArgUnused!public!unit tests! !
+testIfNotNilUnused!public! !
+testImmutableLiterals!public!unit tests! !
+testIncrementDecrementOptimisation!public!unit tests! !
+testIncrementPushTempOptimisation!public!unit tests! !
+testIncrementTempOptimisation!public!unit tests! !
+testIntegerScanning!public!unit tests! !
+testIntegerScanningBoundaries!public!unit tests! !
+testLiteralArray!public!unit tests! !
+testLiteralStringEncoding!public!unit tests! !
+testMutable!public!unit tests!unit tests-known failures! !
+testNestedCopyingBlocks!public!unit tests! !
+testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
+testRadixInteger!public!unit tests! !
+testReturnFromOptimizedBlock!public!unit tests! !
+testReturnImmediate!exceptions!public!unit tests! !
+testReturnPseudoVar!public!unit tests! !
+testScanningScaledDecimals!public!unit tests! !
+testScope!public!unit tests! !
+testSharedOuterTemps!public!unit tests! !
+testSpecialLiteralsAsUnarySelectors!public! !
+testSymbolScanning!public!unit tests! !
+testTempMaps!public!unit tests! !
+testTempPairing!public!unit tests! !
+testTextMapOfEmptyBlock!public! !
+testTextMapsOfCleanBlocks!public!unit tests! !
+testTimesRepeat!public!unit tests! !
+testTimesRepeatResult!public!unit tests! !
+testToByDo!public!unit tests! !
+testToByDoWithFloatSteps!public!unit tests! !
+testWhileFalse!public!unit tests! !
+testWhileTrue!public!unit tests! !
+testWriteAccessor!public!unit tests!unit tests-known failures! !
+verifyTempsMapOf:!helpers!private! !
+verifyTextMapsOf:!helpers!private!unit tests-long running! !
+!
 
 !CompilerTest class methodsFor!
 
@@ -1600,7 +1602,9 @@ initialize
 
 resources
 	^Array with: CompilerTestClasses! !
-!CompilerTest class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
-!CompilerTest class categoriesFor: #initialize!public!unit tests-long running! !
-!CompilerTest class categoriesFor: #resources!Accessing!public! !
+!CompilerTest class categoriesForMethods!
+buildSuiteFromSelectors!Building Suites!public! !
+initialize!public!unit tests-long running! !
+resources!Accessing!public! !
+!
 

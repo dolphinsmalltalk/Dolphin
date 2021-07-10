@@ -94,7 +94,9 @@ withPositionsOf: aCollection inInterval: anInterval
 	anInterval 
 		do: [:index | (d at: (aCollection at: index) ifAbsentPut: [OrderedCollection new]) add: index].
 	^d! !
-!Dictionary class categoriesFor: #withPositionsOf:inInterval:!equivalence classes!public! !
+!Dictionary class categoriesForMethods!
+withPositionsOf:inInterval:!equivalence classes!public! !
+!
 
 !SequenceableCollection methodsFor!
 
@@ -166,8 +168,10 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 			link nextLink notNil]
 					whileTrue: [link := link nextLink]].
 	^matchVector! !
-!SequenceableCollection categoriesFor: #inverseMatchVector:!computing differences!public! !
-!SequenceableCollection categoriesFor: #longestCommonSubsequenceInInterval:withCollection:inInterval:!computing differences!public! !
+!SequenceableCollection categoriesForMethods!
+inverseMatchVector:!computing differences!public! !
+longestCommonSubsequenceInInterval:withCollection:inInterval:!computing differences!public! !
+!
 
 !SortedCollection methodsFor!
 
@@ -190,7 +194,9 @@ replaceNextLargerWith: aValue
 	(self basicAt: index) = aValue ifTrue: [^nil].
 	self basicAt: index put: aValue.
 	^index - firstIndex + 1! !
-!SortedCollection categoriesFor: #replaceNextLargerWith:!adding!public! !
+!SortedCollection categoriesForMethods!
+replaceNextLargerWith:!adding!public! !
+!
 
 "End of package definition"!
 

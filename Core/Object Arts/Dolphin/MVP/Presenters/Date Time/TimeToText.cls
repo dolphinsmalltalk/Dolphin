@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractToTextConverter subclass: #TimeToText
 	instanceVariableNames: 'format'
@@ -56,10 +56,12 @@ rightToLeft: aString
 
 	^Time fromString: aString
 ! !
-!TimeToText categoriesFor: #actualFormat!accessing!private! !
-!TimeToText categoriesFor: #format!accessing!public! !
-!TimeToText categoriesFor: #format:!accessing!public! !
-!TimeToText categoriesFor: #leftToRight:!operations!private! !
-!TimeToText categoriesFor: #locale!accessing!private! !
-!TimeToText categoriesFor: #rightToLeft:!operations!private! !
+!TimeToText categoriesForMethods!
+actualFormat!accessing!private! !
+format!accessing!public! !
+format:!accessing!public! !
+leftToRight:!operations!private! !
+locale!accessing!private! !
+rightToLeft:!operations!private! !
+!
 

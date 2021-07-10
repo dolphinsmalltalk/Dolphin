@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
@@ -122,23 +122,25 @@ view
 
 view: aScintillaView 
 	self subclassResponsibility! !
-!ScintillaAttribute categoriesFor: #=!comparing!public! !
-!ScintillaAttribute categoriesFor: #applyToView:initializing:!helpers!private! !
-!ScintillaAttribute categoriesFor: #asParameter!converting!public! !
-!ScintillaAttribute categoriesFor: #basicId!accessing!private! !
-!ScintillaAttribute categoriesFor: #basicId:!accessing!private! !
-!ScintillaAttribute categoriesFor: #hash!comparing!public! !
-!ScintillaAttribute categoriesFor: #id!accessing!public! !
-!ScintillaAttribute categoriesFor: #id:!accessing!public! !
-!ScintillaAttribute categoriesFor: #name!accessing!public! !
-!ScintillaAttribute categoriesFor: #printOn:!development!printing!public! !
-!ScintillaAttribute categoriesFor: #printPropertiesOn:!development!helpers!printing!private! !
-!ScintillaAttribute categoriesFor: #storeableProperties!development!printing!private! !
-!ScintillaAttribute categoriesFor: #storeOn:!development!printing!public! !
-!ScintillaAttribute categoriesFor: #updateView:property:!helpers!private! !
-!ScintillaAttribute categoriesFor: #updateViewProperty:!helpers!private! !
-!ScintillaAttribute categoriesFor: #view!accessing!private! !
-!ScintillaAttribute categoriesFor: #view:!accessing!private! !
+!ScintillaAttribute categoriesForMethods!
+=!comparing!public! !
+applyToView:initializing:!helpers!private! !
+asParameter!converting!public! !
+basicId!accessing!private! !
+basicId:!accessing!private! !
+hash!comparing!public! !
+id!accessing!public! !
+id:!accessing!public! !
+name!accessing!public! !
+printOn:!development!printing!public! !
+printPropertiesOn:!development!helpers!printing!private! !
+storeableProperties!development!printing!private! !
+storeOn:!development!printing!public! !
+updateView:property:!helpers!private! !
+updateViewProperty:!helpers!private! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !ScintillaAttribute class methodsFor!
 
@@ -150,7 +152,9 @@ propertyMap
 
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
-!ScintillaAttribute class categoriesFor: #icon!constants!development!public! !
-!ScintillaAttribute class categoriesFor: #propertyMap!constants!private! !
-!ScintillaAttribute class categoriesFor: #sortByIdBlock!constants!public! !
+!ScintillaAttribute class categoriesForMethods!
+icon!constants!development!public! !
+propertyMap!constants!private! !
+sortByIdBlock!constants!public! !
+!
 

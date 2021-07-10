@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MessageSendAbstract variableSubclass: #EventMessageSend
 	instanceVariableNames: 'expectedArgCount'
@@ -75,19 +75,23 @@ value
 	receiver's arguments, and answers the result."
 
 	^self forwardTo: self receiver withArguments: #()! !
-!EventMessageSend categoriesFor: #asMessageSend!public! !
-!EventMessageSend categoriesFor: #forwardTo:withArguments:!evaluating!private! !
-!EventMessageSend categoriesFor: #mergeArguments:!evaluating!private! !
-!EventMessageSend categoriesFor: #postCopy!copying!public! !
-!EventMessageSend categoriesFor: #receiver!accessing!debugger-step over!public! !
-!EventMessageSend categoriesFor: #receiver:!accessing!public! !
-!EventMessageSend categoriesFor: #selector:!accessing!public! !
-!EventMessageSend categoriesFor: #setSelector:arguments:!initializing!private! !
-!EventMessageSend categoriesFor: #value!evaluating!public! !
+!EventMessageSend categoriesForMethods!
+asMessageSend!public! !
+forwardTo:withArguments:!evaluating!private! !
+mergeArguments:!evaluating!private! !
+postCopy!copying!public! !
+receiver!accessing!debugger-step over!public! !
+receiver:!accessing!public! !
+selector:!accessing!public! !
+setSelector:arguments:!initializing!private! !
+value!evaluating!public! !
+!
 
 !EventMessageSend class methodsFor!
 
 new
 	^(self new: 1) beWeak; yourself! !
-!EventMessageSend class categoriesFor: #new!instance creation!public! !
+!EventMessageSend class categoriesForMethods!
+new!instance creation!public! !
+!
 

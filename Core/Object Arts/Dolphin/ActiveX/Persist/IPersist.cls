@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IPersist
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ IsDirty
 	"Private - Invoke the IsDirty() method of the COM object wrapped by the receiver."
 
 	^self subclassResponsibility! !
-!IPersist categoriesFor: #clsid!accessing!public! !
-!IPersist categoriesFor: #GetClassID:!**auto generated**!COM Interfaces-OBJIDL.IPersist!primitives!public! !
-!IPersist categoriesFor: #isDirty!public!testing! !
-!IPersist categoriesFor: #IsDirty!private!testing! !
+!IPersist categoriesForMethods!
+clsid!accessing!public! !
+GetClassID:!**auto generated**!COM Interfaces-OBJIDL.IPersist!primitives!public! !
+isDirty!public!testing! !
+IsDirty!private!testing! !
+!
 
 IPersist methodProtocol: #IPersist attributes: #(#readOnly) selectors: #(#GetClassID:)!
 
@@ -63,5 +65,7 @@ defineFunctions
 		defineFunction: #GetClassID:
 			argumentTypes: 'GUID*'
 ! !
-!IPersist class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IPersist class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

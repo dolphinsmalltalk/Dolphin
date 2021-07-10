@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #PlimbolePresenter
 	instanceVariableNames: 'palette'
@@ -254,37 +254,39 @@ slowerTempo
 
 	self plimbole tempo: self plimbole tempo // 1.05.
 	self showHintBubble: 'Tempo ' , self plimbole tempo displayString! !
-!PlimbolePresenter categoriesFor: #availableGridExtents!constants!public! !
-!PlimbolePresenter categoriesFor: #beChromaticScale!constants!public! !
-!PlimbolePresenter categoriesFor: #beHangScale!constants!public! !
-!PlimbolePresenter categoriesFor: #bePentatonicScale!constants!public! !
-!PlimbolePresenter categoriesFor: #clearAll!constants!public! !
-!PlimbolePresenter categoriesFor: #copyToClipboard!public! !
-!PlimbolePresenter categoriesFor: #fasterTempo!commands!public! !
-!PlimbolePresenter categoriesFor: #favourites!constants!public! !
-!PlimbolePresenter categoriesFor: #initialize!accessing!initializing!private! !
-!PlimbolePresenter categoriesFor: #isPlaying!public! !
-!PlimbolePresenter categoriesFor: #model:!event handling!private! !
-!PlimbolePresenter categoriesFor: #nextAltoVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #nextGridExtent!commands!public! !
-!PlimbolePresenter categoriesFor: #nextTenorVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #onLeftButtonDoubleClicked:!event handling!private! !
-!PlimbolePresenter categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!PlimbolePresenter categoriesFor: #onPaletteChanged!private! !
-!PlimbolePresenter categoriesFor: #onPlayStarted!private! !
-!PlimbolePresenter categoriesFor: #onViewClosed!event handling!private! !
-!PlimbolePresenter categoriesFor: #onViewOpened!event handling!private! !
-!PlimbolePresenter categoriesFor: #palette!public! !
-!PlimbolePresenter categoriesFor: #palette:!public! !
-!PlimbolePresenter categoriesFor: #pasteClipboard!public! !
-!PlimbolePresenter categoriesFor: #play!public! !
-!PlimbolePresenter categoriesFor: #plimbole!public! !
-!PlimbolePresenter categoriesFor: #previousAltoVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #previousTenorVoice!commands!public! !
-!PlimbolePresenter categoriesFor: #queryCommand:!private! !
-!PlimbolePresenter categoriesFor: #randomFavourite!commands!public! !
-!PlimbolePresenter categoriesFor: #showHintBubble:!private! !
-!PlimbolePresenter categoriesFor: #slowerTempo!commands!public! !
+!PlimbolePresenter categoriesForMethods!
+availableGridExtents!constants!public! !
+beChromaticScale!constants!public! !
+beHangScale!constants!public! !
+bePentatonicScale!constants!public! !
+clearAll!constants!public! !
+copyToClipboard!public! !
+fasterTempo!commands!public! !
+favourites!constants!public! !
+initialize!accessing!initializing!private! !
+isPlaying!public! !
+model:!event handling!private! !
+nextAltoVoice!commands!public! !
+nextGridExtent!commands!public! !
+nextTenorVoice!commands!public! !
+onLeftButtonDoubleClicked:!event handling!private! !
+onLeftButtonPressed:!event handling!private! !
+onPaletteChanged!private! !
+onPlayStarted!private! !
+onViewClosed!event handling!private! !
+onViewOpened!event handling!private! !
+palette!public! !
+palette:!public! !
+pasteClipboard!public! !
+play!public! !
+plimbole!public! !
+previousAltoVoice!commands!public! !
+previousTenorVoice!commands!public! !
+queryCommand:!private! !
+randomFavourite!commands!public! !
+showHintBubble:!private! !
+slowerTempo!commands!public! !
+!
 
 !PlimbolePresenter class methodsFor!
 
@@ -306,8 +308,10 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PlimboleView) 34 12 nil nil 34 2 8 1140850688 1 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 626 201 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 227 7 0 0 110 0 0 0] 8 #() 626 193 193 nil 27 )! !
-!PlimbolePresenter class categoriesFor: #defaultModel!public! !
-!PlimbolePresenter class categoriesFor: #defaultPalette!constants!private! !
-!PlimbolePresenter class categoriesFor: #icon!constants!public! !
-!PlimbolePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!PlimbolePresenter class categoriesForMethods!
+defaultModel!public! !
+defaultPalette!constants!private! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

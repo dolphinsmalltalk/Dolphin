@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	instanceVariableNames: ''
@@ -79,20 +79,24 @@ suggestedBinding
 	^(ExternalStructure classForGUID: id ifNone: []) 
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:structClass | structClass environment associationAt: structClass name]! !
-!AXStructureTypeAnalyzer categoriesFor: #baseClass!constants!private! !
-!AXStructureTypeAnalyzer categoriesFor: #byteSize!accessing!public! !
-!AXStructureTypeAnalyzer categoriesFor: #classDesc!constants!private! !
-!AXStructureTypeAnalyzer categoriesFor: #isAnonymous!public!testing! !
-!AXStructureTypeAnalyzer categoriesFor: #isStructure!public!testing! !
-!AXStructureTypeAnalyzer categoriesFor: #members!enumerating!public! !
-!AXStructureTypeAnalyzer categoriesFor: #name!accessing!public! !
-!AXStructureTypeAnalyzer categoriesFor: #recordInfoIfNone:!accessing!public! !
-!AXStructureTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
+!AXStructureTypeAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+byteSize!accessing!public! !
+classDesc!constants!private! !
+isAnonymous!public!testing! !
+isStructure!public!testing! !
+members!enumerating!public! !
+name!accessing!public! !
+recordInfoIfNone:!accessing!public! !
+suggestedBinding!accessing!private! !
+!
 
 !AXStructureTypeAnalyzer class methodsFor!
 
 initialize
 	BuiltIns := LookupTable new.
 	(Array with: ExternalHandle) do: [:each | BuiltIns at: each guid put: each]! !
-!AXStructureTypeAnalyzer class categoriesFor: #initialize!initializing!private! !
+!AXStructureTypeAnalyzer class categoriesForMethods!
+initialize!initializing!private! !
+!
 

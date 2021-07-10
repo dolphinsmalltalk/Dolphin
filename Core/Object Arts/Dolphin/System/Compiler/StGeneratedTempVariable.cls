@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLocalVariable subclass: #StGeneratedTempVariable
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ isConstant
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
-!StGeneratedTempVariable categoriesFor: #isConstant!public!testing! !
+!StGeneratedTempVariable categoriesForMethods!
+isConstant!public!testing! !
+!
 

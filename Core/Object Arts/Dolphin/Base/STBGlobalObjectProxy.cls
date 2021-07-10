@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBProxy subclass: #STBGlobalObjectProxy
 	instanceVariableNames: 'symbol object'
@@ -46,11 +46,13 @@ value
 	"Install object as a global in the Smalltalk System Dictionary and answer it."
 
 	^Smalltalk at: symbol put: object! !
-!STBGlobalObjectProxy categoriesFor: #object:!accessing!private! !
-!STBGlobalObjectProxy categoriesFor: #stbFixup:at:!accessing!public! !
-!STBGlobalObjectProxy categoriesFor: #stbSaveOn:!binary filing!public! !
-!STBGlobalObjectProxy categoriesFor: #symbol:!accessing!private! !
-!STBGlobalObjectProxy categoriesFor: #value!converting!public! !
+!STBGlobalObjectProxy categoriesForMethods!
+object:!accessing!private! !
+stbFixup:at:!accessing!public! !
+stbSaveOn:!binary filing!public! !
+symbol:!accessing!private! !
+value!converting!public! !
+!
 
 !STBGlobalObjectProxy class methodsFor!
 
@@ -62,5 +64,7 @@ for: anObject name: aSymbol
 		symbol: aSymbol;
 		object: anObject;
 		yourself! !
-!STBGlobalObjectProxy class categoriesFor: #for:name:!instance creation!public! !
+!STBGlobalObjectProxy class categoriesForMethods!
+for:name:!instance creation!public! !
+!
 

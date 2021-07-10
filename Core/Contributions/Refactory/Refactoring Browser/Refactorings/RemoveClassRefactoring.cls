@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Refactoring subclass: #RemoveClassRefactoring
 	instanceVariableNames: 'classNames'
@@ -81,15 +81,17 @@ transform
 	self
 		reparentSubclasses;
 		removeClasses! !
-!RemoveClassRefactoring categoriesFor: #checkMethodReferencesTo:!preconditions!private! !
-!RemoveClassRefactoring categoriesFor: #checkReferencesTo:!preconditions!public! !
-!RemoveClassRefactoring categoriesFor: #classNames:!initialize/release!public! !
-!RemoveClassRefactoring categoriesFor: #hasReferencesTo:!preconditions!public! !
-!RemoveClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RemoveClassRefactoring categoriesFor: #removeClasses!public!transforming! !
-!RemoveClassRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
-!RemoveClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!RemoveClassRefactoring categoriesFor: #transform!public!transforming! !
+!RemoveClassRefactoring categoriesForMethods!
+checkMethodReferencesTo:!preconditions!private! !
+checkReferencesTo:!preconditions!public! !
+classNames:!initialize/release!public! !
+hasReferencesTo:!preconditions!public! !
+preconditions!preconditions!public! !
+removeClasses!public!transforming! !
+reparentSubclasses!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !RemoveClassRefactoring class methodsFor!
 
@@ -101,6 +103,8 @@ model: aRBNamespace classNames: aClassNameCollection
 		model: aRBNamespace;
 		classNames: aClassNameCollection;
 		yourself! !
-!RemoveClassRefactoring class categoriesFor: #classNames:!instance creation!public! !
-!RemoveClassRefactoring class categoriesFor: #model:classNames:!instance creation!public! !
+!RemoveClassRefactoring class categoriesForMethods!
+classNames:!instance creation!public! !
+model:classNames:!instance creation!public! !
+!
 

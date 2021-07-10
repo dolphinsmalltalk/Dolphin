@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpEncoderParameter
 	instanceVariableNames: ''
@@ -72,14 +72,16 @@ Value: anExternalAddress
 	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_Value put: anExternalAddress! !
-!GpEncoderParameter categoriesFor: #Guid!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Guid:!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #NumberOfValues!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #NumberOfValues:!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Type!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Type:!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Value!**compiled accessors**!public! !
-!GpEncoderParameter categoriesFor: #Value:!**compiled accessors**!public! !
+!GpEncoderParameter categoriesForMethods!
+Guid!**compiled accessors**!public! !
+Guid:!**compiled accessors**!public! !
+NumberOfValues!**compiled accessors**!public! !
+NumberOfValues:!**compiled accessors**!public! !
+Type!**compiled accessors**!public! !
+Type:!**compiled accessors**!public! !
+Value!**compiled accessors**!public! !
+Value:!**compiled accessors**!public! !
+!
 
 !GpEncoderParameter class methodsFor!
 
@@ -105,6 +107,8 @@ defineFields
 
 getFieldNames
 	^#(#Guid #NumberOfValues #Type #Value)! !
-!GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpEncoderParameter class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpEncoderParameter class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

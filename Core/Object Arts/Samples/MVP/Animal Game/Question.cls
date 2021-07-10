@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Question
 	instanceVariableNames: 'text yes no'
@@ -63,13 +63,15 @@ yes
 	to the receiver's question."
 
 	^yes! !
-!Question categoriesFor: #ask!operations!public! !
-!Question categoriesFor: #displayOn:!displaying!public! !
-!Question categoriesFor: #no!accessing!public! !
-!Question categoriesFor: #printOn:!printing!public! !
-!Question categoriesFor: #text!accessing!public! !
-!Question categoriesFor: #text:yes:no:!accessing!private! !
-!Question categoriesFor: #yes!accessing!public! !
+!Question categoriesForMethods!
+ask!operations!public! !
+displayOn:!displaying!public! !
+no!accessing!public! !
+printOn:!printing!public! !
+text!accessing!public! !
+text:yes:no:!accessing!private! !
+yes!accessing!public! !
+!
 
 !Question class methodsFor!
 
@@ -101,7 +103,9 @@ text: aString yes: yesPath no: noPath
 
 	^self new text: aString yes: yesPath no: noPath
 ! !
-!Question class categoriesFor: #icon!constants!public! !
-!Question class categoriesFor: #promptToDistinguish:from:!instance creation!public! !
-!Question class categoriesFor: #text:yes:no:!instance creation!public! !
+!Question class categoriesForMethods!
+icon!constants!public! !
+promptToDistinguish:from:!instance creation!public! !
+text:yes:no:!instance creation!public! !
+!
 

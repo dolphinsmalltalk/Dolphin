@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ExternalResourceLibraryTest
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ ExternalResourceLibraryTest comment: ''!
 testLibrariesRegister
 	self deny: ExternalResourceLibrary.Libraries hasWeakKeys.
 	self assert: ExternalResourceLibrary.Libraries hasWeakValues.! !
-!ExternalResourceLibraryTest categoriesFor: #testLibrariesRegister!public! !
+!ExternalResourceLibraryTest categoriesForMethods!
+testLibrariesRegister!public! !
+!
 

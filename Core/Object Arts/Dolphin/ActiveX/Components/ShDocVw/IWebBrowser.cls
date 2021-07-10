@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IWebBrowser
 	instanceVariableNames: ''
@@ -469,53 +469,55 @@ width: pl
 
 	self put_Width: pl
 ! !
-!IWebBrowser categoriesFor: #application!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #busy!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #container!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #document!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #get_Application:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Busy:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Container:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Document:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Height:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Left:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_LocationName:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_LocationURL:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Parent:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Top:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_TopLevelContainer:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Type:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #get_Width:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #GoBack!**auto generated**!COM Interfaces-IWebBrowser!public! !
-!IWebBrowser categoriesFor: #GoForward!**auto generated**!COM Interfaces-IWebBrowser!public! !
-!IWebBrowser categoriesFor: #GoHome!**auto generated**!COM Interfaces-IWebBrowser!public! !
-!IWebBrowser categoriesFor: #GoSearch!**auto generated**!COM Interfaces-IWebBrowser!public! !
-!IWebBrowser categoriesFor: #height!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #height:!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #left!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #left:!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #locationName!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #locationURL!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #navigate:!operations!public! !
-!IWebBrowser categoriesFor: #navigate:flags:targetFrameName:postData:headers:!**auto generated**!methods!public! !
-!IWebBrowser categoriesFor: #Navigate:Flags:TargetFrameName:PostData:Headers:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #parent!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #put_Height:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #put_Left:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #put_Top:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #put_Width:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #Refresh!**auto generated**!COM Interfaces-IWebBrowser!public! !
-!IWebBrowser categoriesFor: #refresh2:!**auto generated**!methods!public! !
-!IWebBrowser categoriesFor: #Refresh2:!**auto generated**!COM Interfaces-IWebBrowser!private! !
-!IWebBrowser categoriesFor: #Stop!**auto generated**!COM Interfaces-IWebBrowser!public! !
-!IWebBrowser categoriesFor: #top!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #top:!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #topLevelContainer!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #type!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #value!accessing!public! !
-!IWebBrowser categoriesFor: #value:!accessing!public! !
-!IWebBrowser categoriesFor: #width!**auto generated**!properties!public! !
-!IWebBrowser categoriesFor: #width:!**auto generated**!properties!public! !
+!IWebBrowser categoriesForMethods!
+application!**auto generated**!properties!public! !
+busy!**auto generated**!properties!public! !
+container!**auto generated**!properties!public! !
+document!**auto generated**!properties!public! !
+get_Application:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Busy:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Container:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Document:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Height:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Left:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_LocationName:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_LocationURL:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Parent:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Top:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_TopLevelContainer:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Type:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+get_Width:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+GoBack!**auto generated**!COM Interfaces-IWebBrowser!public! !
+GoForward!**auto generated**!COM Interfaces-IWebBrowser!public! !
+GoHome!**auto generated**!COM Interfaces-IWebBrowser!public! !
+GoSearch!**auto generated**!COM Interfaces-IWebBrowser!public! !
+height!**auto generated**!properties!public! !
+height:!**auto generated**!properties!public! !
+left!**auto generated**!properties!public! !
+left:!**auto generated**!properties!public! !
+locationName!**auto generated**!properties!public! !
+locationURL!**auto generated**!properties!public! !
+navigate:!operations!public! !
+navigate:flags:targetFrameName:postData:headers:!**auto generated**!methods!public! !
+Navigate:Flags:TargetFrameName:PostData:Headers:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+parent!**auto generated**!properties!public! !
+put_Height:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+put_Left:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+put_Top:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+put_Width:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+Refresh!**auto generated**!COM Interfaces-IWebBrowser!public! !
+refresh2:!**auto generated**!methods!public! !
+Refresh2:!**auto generated**!COM Interfaces-IWebBrowser!private! !
+Stop!**auto generated**!COM Interfaces-IWebBrowser!public! !
+top!**auto generated**!properties!public! !
+top:!**auto generated**!properties!public! !
+topLevelContainer!**auto generated**!properties!public! !
+type!**auto generated**!properties!public! !
+value!accessing!public! !
+value:!accessing!public! !
+width!**auto generated**!properties!public! !
+width:!**auto generated**!properties!public! !
+!
 
 !IWebBrowser class methodsFor!
 
@@ -581,7 +583,9 @@ initializeTypeLib
 		IWebBrowser initializeTypeLib"
 
 	typeLib := SHDocVwLib! !
-!IWebBrowser class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IWebBrowser class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IWebBrowser class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!IWebBrowser class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

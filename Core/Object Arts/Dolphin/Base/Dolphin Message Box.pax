@@ -66,7 +66,9 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 
 	<stdcall: sdword SHMessageBoxCheckW handle lpwstr lpwstr dword sdword lpwstr>
 	^self invalidCall: _failureCode! !
-!ShlwapiLibrary categoriesFor: #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
+!ShlwapiLibrary categoriesForMethods!
+shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
+!
 
 "End of package definition"!
 

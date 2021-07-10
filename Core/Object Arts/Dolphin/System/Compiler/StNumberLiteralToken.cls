@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLiteralToken subclass: #StNumberLiteralToken
 	instanceVariableNames: 'source'
@@ -45,14 +45,16 @@ source
 
 source: aString 
 	source := aString! !
-!StNumberLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StNumberLiteralToken categoriesFor: #forgetNegative!helpers!private! !
-!StNumberLiteralToken categoriesFor: #formatOn:source:!printing!public! !
-!StNumberLiteralToken categoriesFor: #isNegative!public!testing! !
-!StNumberLiteralToken categoriesFor: #isNumberLiteralToken!public!testing! !
-!StNumberLiteralToken categoriesFor: #printOn:!public! !
-!StNumberLiteralToken categoriesFor: #source!accessing!public! !
-!StNumberLiteralToken categoriesFor: #source:!initializing!private! !
+!StNumberLiteralToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+forgetNegative!helpers!private! !
+formatOn:source:!printing!public! !
+isNegative!public!testing! !
+isNumberLiteralToken!public!testing! !
+printOn:!public! !
+source!accessing!public! !
+source:!initializing!private! !
+!
 
 !StNumberLiteralToken class methodsFor!
 
@@ -65,5 +67,7 @@ start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger 
 		stop: stopInteger;
 		source: sourceString;
 		yourself! !
-!StNumberLiteralToken class categoriesFor: #start:comments:value:stop:source:!public! !
+!StNumberLiteralToken class categoriesForMethods!
+start:comments:value:stop:source:!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLECountedArray subclass: #CALPOLESTR
 	instanceVariableNames: ''
@@ -30,8 +30,10 @@ getElements
 		fromAddress: self pElems
 		length: self cElems
 		elementClass: self elementClass! !
-!CALPOLESTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!CALPOLESTR categoriesFor: #getElements!accessing!private! !
+!CALPOLESTR categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+getElements!accessing!private! !
+!
 
 !CALPOLESTR class methodsFor!
 
@@ -54,6 +56,8 @@ elementClass
 
 	^LPWSTR
 ! !
-!CALPOLESTR class categoriesFor: #defineFields!public!template definition! !
-!CALPOLESTR class categoriesFor: #elementClass!constants!public! !
+!CALPOLESTR class categoriesForMethods!
+defineFields!public!template definition! !
+elementClass!constants!public! !
+!
 

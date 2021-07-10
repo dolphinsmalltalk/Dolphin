@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: 'index customAttributes documentation'
@@ -218,36 +218,38 @@ tdesc
 	retval argument, the return type of the function (usually HRESULT)."
 
 	^self elemDesc tdesc! !
-!AXMemberDesc categoriesFor: #=!comparing!public! !
-!AXMemberDesc categoriesFor: #argumentCount!accessing!public! !
-!AXMemberDesc categoriesFor: #arguments!accessing!public! !
-!AXMemberDesc categoriesFor: #argumentTypeNames!accessing!public! !
-!AXMemberDesc categoriesFor: #basicFree!private!realizing/unrealizing! !
-!AXMemberDesc categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!AXMemberDesc categoriesFor: #classDesc!accessing!private! !
-!AXMemberDesc categoriesFor: #cParams!accessing!private! !
-!AXMemberDesc categoriesFor: #customAttributes!accessing!public! !
-!AXMemberDesc categoriesFor: #documentation!accessing!public! !
-!AXMemberDesc categoriesFor: #elemDesc!accessing!private! !
-!AXMemberDesc categoriesFor: #flags!accessing!private! !
-!AXMemberDesc categoriesFor: #getAllCustData!accessing!private! !
-!AXMemberDesc categoriesFor: #hash!comparing!public! !
-!AXMemberDesc categoriesFor: #helpstring!accessing!public! !
-!AXMemberDesc categoriesFor: #idlId!printing-IDL!private! !
-!AXMemberDesc categoriesFor: #index!accessing!private! !
-!AXMemberDesc categoriesFor: #isBindable!public!testing! !
-!AXMemberDesc categoriesFor: #isDefaultBind!public!testing! !
-!AXMemberDesc categoriesFor: #isDisplayBind!public!testing! !
-!AXMemberDesc categoriesFor: #isHidden!public!testing! !
-!AXMemberDesc categoriesFor: #isNonBrowsable!public!testing! !
-!AXMemberDesc categoriesFor: #isReadOnly!public!testing! !
-!AXMemberDesc categoriesFor: #isRequestEdit!public!testing! !
-!AXMemberDesc categoriesFor: #isRestricted!public!testing! !
-!AXMemberDesc categoriesFor: #isSource!public!testing! !
-!AXMemberDesc categoriesFor: #isUIDefault!public!testing! !
-!AXMemberDesc categoriesFor: #isValueProperty!public!testing! !
-!AXMemberDesc categoriesFor: #memid!accessing!public! !
-!AXMemberDesc categoriesFor: #name!accessing!public! !
-!AXMemberDesc categoriesFor: #setAnalyzer:index:!accessing!initializing!private! !
-!AXMemberDesc categoriesFor: #tdesc!accessing!private! !
+!AXMemberDesc categoriesForMethods!
+=!comparing!public! !
+argumentCount!accessing!public! !
+arguments!accessing!public! !
+argumentTypeNames!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+basicIdlAttributes!printing-IDL!private! !
+classDesc!accessing!private! !
+cParams!accessing!private! !
+customAttributes!accessing!public! !
+documentation!accessing!public! !
+elemDesc!accessing!private! !
+flags!accessing!private! !
+getAllCustData!accessing!private! !
+hash!comparing!public! !
+helpstring!accessing!public! !
+idlId!printing-IDL!private! !
+index!accessing!private! !
+isBindable!public!testing! !
+isDefaultBind!public!testing! !
+isDisplayBind!public!testing! !
+isHidden!public!testing! !
+isNonBrowsable!public!testing! !
+isReadOnly!public!testing! !
+isRequestEdit!public!testing! !
+isRestricted!public!testing! !
+isSource!public!testing! !
+isUIDefault!public!testing! !
+isValueProperty!public!testing! !
+memid!accessing!public! !
+name!accessing!public! !
+setAnalyzer:index:!accessing!initializing!private! !
+tdesc!accessing!private! !
+!
 

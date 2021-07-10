@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #PushDownClassVariableTest
 	instanceVariableNames: ''
@@ -114,12 +114,14 @@ testPushDownClassVariable
 	self executeRefactoring: refactoring.
 	(refactoring model classNamed: #LintRuleTest) withAllSubclasses 
 		do: [:each | self deny: (each directlyDefinesClassVariable: #Foo1)]! !
-!PushDownClassVariableTest categoriesFor: #testModelNonExistantName!failure tests!public! !
-!PushDownClassVariableTest categoriesFor: #testModelPushDownToMultipleSubclassesFailure!failure tests!public! !
-!PushDownClassVariableTest categoriesFor: #testModelPushDownVariable!public!tests! !
-!PushDownClassVariableTest categoriesFor: #testModelPushDownVariableToClassDownTwoLevels!public!tests! !
-!PushDownClassVariableTest categoriesFor: #testModelPushDownVariableToMultipleClassesInSameHierarchy!public!tests! !
-!PushDownClassVariableTest categoriesFor: #testModelRemoveUnusedVariable!public!tests! !
-!PushDownClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!PushDownClassVariableTest categoriesFor: #testPushDownClassVariable!public!tests! !
+!PushDownClassVariableTest categoriesForMethods!
+testModelNonExistantName!failure tests!public! !
+testModelPushDownToMultipleSubclassesFailure!failure tests!public! !
+testModelPushDownVariable!public!tests! !
+testModelPushDownVariableToClassDownTwoLevels!public!tests! !
+testModelPushDownVariableToMultipleClassesInSameHierarchy!public!tests! !
+testModelRemoveUnusedVariable!public!tests! !
+testNonExistantName!failure tests!public! !
+testPushDownClassVariable!public!tests! !
+!
 

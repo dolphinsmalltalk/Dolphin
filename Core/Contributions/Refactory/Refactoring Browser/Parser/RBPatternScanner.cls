@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkScanner subclass: #RBPatternScanner
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ scanToken
 		ifTrue: [^self scanPatternVariable].
 	currentCharacter == $} ifTrue: [^self scanSpecialCharacter].
 	^super scanToken! !
-!RBPatternScanner categoriesFor: #scanToken!accessing!public! !
+!RBPatternScanner categoriesForMethods!
+scanToken!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #ExtractMethodToComponentRefactoring
 	instanceVariableNames: 'selector extractionInterval extractedMethodSelector'
@@ -77,13 +77,15 @@ transform
 		extractMethod;
 		moveMethod;
 		inlineForwarder! !
-!ExtractMethodToComponentRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
-!ExtractMethodToComponentRefactoring categoriesFor: #extractMethod!public!transforming! !
-!ExtractMethodToComponentRefactoring categoriesFor: #inlineForwarder!public!transforming! !
-!ExtractMethodToComponentRefactoring categoriesFor: #moveMethod!public!transforming! !
-!ExtractMethodToComponentRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExtractMethodToComponentRefactoring categoriesFor: #storeOn:!printing!public! !
-!ExtractMethodToComponentRefactoring categoriesFor: #transform!public!transforming! !
+!ExtractMethodToComponentRefactoring categoriesForMethods!
+extract:from:in:!initialize/release!public! !
+extractMethod!public!transforming! !
+inlineForwarder!public!transforming! !
+moveMethod!public!transforming! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !ExtractMethodToComponentRefactoring class methodsFor!
 
@@ -100,6 +102,8 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!ExtractMethodToComponentRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
-!ExtractMethodToComponentRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
+!ExtractMethodToComponentRefactoring class categoriesForMethods!
+extract:from:in:!instance creation!public! !
+model:extract:from:in:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #PropertyManager
 	instanceVariableNames: 'register'
@@ -70,15 +70,17 @@ removePropertyOf: anObject at: aSymbol ifAbsent: aBlock
 	propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
 	propertyDict isEmpty ifTrue: [register removeKey: anObject].
 	! !
-!PropertyManager categoriesFor: #initialize!initializing!private! !
-!PropertyManager categoriesFor: #propertyOf:at:!adding!public! !
-!PropertyManager categoriesFor: #propertyOf:at:ifAbsent:!adding!public! !
-!PropertyManager categoriesFor: #propertyOf:at:ifAbsentPut:!accessing!public! !
-!PropertyManager categoriesFor: #propertyOf:at:put:!adding!public! !
-!PropertyManager categoriesFor: #register!accessing!private! !
-!PropertyManager categoriesFor: #removeAllPropertiesOf:!public!removing! !
-!PropertyManager categoriesFor: #removePropertyOf:at:!public!removing! !
-!PropertyManager categoriesFor: #removePropertyOf:at:ifAbsent:!public!removing! !
+!PropertyManager categoriesForMethods!
+initialize!initializing!private! !
+propertyOf:at:!adding!public! !
+propertyOf:at:ifAbsent:!adding!public! !
+propertyOf:at:ifAbsentPut:!accessing!public! !
+propertyOf:at:put:!adding!public! !
+register!accessing!private! !
+removeAllPropertiesOf:!public!removing! !
+removePropertyOf:at:!public!removing! !
+removePropertyOf:at:ifAbsent:!public!removing! !
+!
 
 !PropertyManager class methodsFor!
 
@@ -86,5 +88,7 @@ new
 	"Answers an instance of the receiver; instances require initialization"
 
 	^super new initialize! !
-!PropertyManager class categoriesFor: #new!instance creation!public! !
+!PropertyManager class categoriesForMethods!
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #ProgressBar
 	instanceVariableNames: ''
@@ -130,22 +130,24 @@ state
 	^super state
 		add: (MessageSend receiver: self selector: #range: argument: self range);
 		yourself! !
-!ProgressBar categoriesFor: #backcolorChanged!helpers!private! !
-!ProgressBar categoriesFor: #barPosition!accessing!private! !
-!ProgressBar categoriesFor: #barPosition:!accessing!private! !
-!ProgressBar categoriesFor: #defaultWindowStyle!constants!private! !
-!ProgressBar categoriesFor: #deltaBarPosition:!positioning!private! !
-!ProgressBar categoriesFor: #displayValue!private!updating! !
-!ProgressBar categoriesFor: #displayValue:!private!updating! !
-!ProgressBar categoriesFor: #forecolor:!accessing!public! !
-!ProgressBar categoriesFor: #incrementBy:!positioning!public! !
-!ProgressBar categoriesFor: #isSmooth!accessing-styles!public!updating! !
-!ProgressBar categoriesFor: #isSmooth:!accessing-styles!public!updating! !
-!ProgressBar categoriesFor: #onViewCreated!accessing!public! !
-!ProgressBar categoriesFor: #range!accessing!public! !
-!ProgressBar categoriesFor: #range:!accessing!public! !
-!ProgressBar categoriesFor: #setControlBackcolor:!accessing!private! !
-!ProgressBar categoriesFor: #state!accessing!private! !
+!ProgressBar categoriesForMethods!
+backcolorChanged!helpers!private! !
+barPosition!accessing!private! !
+barPosition:!accessing!private! !
+defaultWindowStyle!constants!private! !
+deltaBarPosition:!positioning!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+forecolor:!accessing!public! !
+incrementBy:!positioning!public! !
+isSmooth!accessing-styles!public!updating! !
+isSmooth:!accessing-styles!public!updating! !
+onViewCreated!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+setControlBackcolor:!accessing!private! !
+state!accessing!private! !
+!
 
 !ProgressBar class methodsFor!
 
@@ -178,10 +180,12 @@ winClassName
 
 	^'msctls_progress32'
 ! !
-!ProgressBar class categoriesFor: #defaultModel!models!public! !
-!ProgressBar class categoriesFor: #icon!constants!public! !
-!ProgressBar class categoriesFor: #initialize!development!initializing!private! !
-!ProgressBar class categoriesFor: #themePartName!constants!private! !
-!ProgressBar class categoriesFor: #validRange!constants!private! !
-!ProgressBar class categoriesFor: #winClassName!constants!private! !
+!ProgressBar class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+themePartName!constants!private! !
+validRange!constants!private! !
+winClassName!constants!private! !
+!
 

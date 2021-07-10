@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #FLASHWINFO
 	instanceVariableNames: ''
@@ -49,12 +49,14 @@ uCount: anInteger
 	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uCount put: anInteger! !
-!FLASHWINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #dwTimeout:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #hwnd:!**compiled accessors**!public! !
-!FLASHWINFO categoriesFor: #uCount:!**compiled accessors**!public! !
+!FLASHWINFO categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dwTimeout:!**compiled accessors**!public! !
+hwnd:!**compiled accessors**!public! !
+uCount:!**compiled accessors**!public! !
+!
 
 !FLASHWINFO class methodsFor!
 
@@ -81,6 +83,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !
-!FLASHWINFO class categoriesFor: #defineFields!public!template definition! !
-!FLASHWINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!FLASHWINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

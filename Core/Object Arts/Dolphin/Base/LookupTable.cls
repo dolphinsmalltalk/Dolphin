@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dictionary variableSubclass: #LookupTable
 	instanceVariableNames: 'values'
@@ -285,33 +285,35 @@ valuesClass
 	the receiver)."
 
 	^Array! !
-!LookupTable categoriesFor: #add:!adding!public! !
-!LookupTable categoriesFor: #anySatisfy:!enumerating!public! !
-!LookupTable categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #associationsDo:!enumerating!public! !
-!LookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #at:put:!accessing!public! !
-!LookupTable categoriesFor: #basicValues!accessing!private! !
-!LookupTable categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!LookupTable categoriesFor: #copyElementsInto:!adding!private! !
-!LookupTable categoriesFor: #do:!debugger-step through!enumerating!public! !
-!LookupTable categoriesFor: #findElementOrNil:!private!searching! !
-!LookupTable categoriesFor: #findKeyOrNil:!private!searching! !
-!LookupTable categoriesFor: #identityIncludes:!public!searching! !
-!LookupTable categoriesFor: #includesAssociation:!public!searching! !
-!LookupTable categoriesFor: #initialize!initializing!private! !
-!LookupTable categoriesFor: #isImmutable:!initializing!public! !
-!LookupTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!LookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!LookupTable categoriesFor: #keysDo:!enumerating!public! !
-!LookupTable categoriesFor: #lookup:!accessing!public! !
-!LookupTable categoriesFor: #moveFrom:to:!private!removing! !
-!LookupTable categoriesFor: #postCopy!copying!public! !
-!LookupTable categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!LookupTable categoriesFor: #select:!enumerating!public! !
-!LookupTable categoriesFor: #stbSaveOn:!binary filing!public! !
-!LookupTable categoriesFor: #uncheckedAdd:!adding!private! !
-!LookupTable categoriesFor: #uncheckedAt:put:!accessing!private! !
-!LookupTable categoriesFor: #valuesClass!constants!public! !
+!LookupTable categoriesForMethods!
+add:!adding!public! !
+anySatisfy:!enumerating!public! !
+associationAt:ifAbsent:!accessing!public! !
+associationsDo:!enumerating!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+basicValues!accessing!private! !
+bestSlotFor:boundedBy:!development!private!statistics! !
+copyElementsInto:!adding!private! !
+do:!debugger-step through!enumerating!public! !
+findElementOrNil:!private!searching! !
+findKeyOrNil:!private!searching! !
+identityIncludes:!public!searching! !
+includesAssociation:!public!searching! !
+initialize!initializing!private! !
+isImmutable:!initializing!public! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+lookup:!accessing!public! !
+moveFrom:to:!private!removing! !
+postCopy!copying!public! !
+removeKey:ifAbsent:!public!removing! !
+select:!enumerating!public! !
+stbSaveOn:!binary filing!public! !
+uncheckedAdd:!adding!private! !
+uncheckedAt:put:!accessing!private! !
+valuesClass!constants!public! !
+!
 

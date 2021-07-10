@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #MultiEnvironment
 	instanceVariableNames: 'environmentDictionaries'
@@ -63,17 +63,19 @@ removeClass: aClass selector: aSelector into: aValue
 selectEnvironment: aValue 
 	environment := environmentDictionaries at: aValue
 				ifAbsent: [SelectorEnvironment new]! !
-!MultiEnvironment categoriesFor: #addClass:into:!adding!public! !
-!MultiEnvironment categoriesFor: #addClass:selector:into:!adding!public! !
-!MultiEnvironment categoriesFor: #definesClass:!public!testing! !
-!MultiEnvironment categoriesFor: #environmentNamed:!accessing!public! !
-!MultiEnvironment categoriesFor: #environments!accessing!public! !
-!MultiEnvironment categoriesFor: #includesClass:!public!testing! !
-!MultiEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!MultiEnvironment categoriesFor: #initialize!initialize/release!public! !
-!MultiEnvironment categoriesFor: #isEmpty!public!testing! !
-!MultiEnvironment categoriesFor: #problemCount!accessing!public! !
-!MultiEnvironment categoriesFor: #removeClass:into:!public!removing! !
-!MultiEnvironment categoriesFor: #removeClass:selector:into:!public!removing! !
-!MultiEnvironment categoriesFor: #selectEnvironment:!accessing!public! !
+!MultiEnvironment categoriesForMethods!
+addClass:into:!adding!public! !
+addClass:selector:into:!adding!public! !
+definesClass:!public!testing! !
+environmentNamed:!accessing!public! !
+environments!accessing!public! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+removeClass:into:!public!removing! !
+removeClass:selector:into:!public!removing! !
+selectEnvironment:!accessing!public! !
+!
 

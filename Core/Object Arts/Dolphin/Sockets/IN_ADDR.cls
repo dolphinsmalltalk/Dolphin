@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractIN_ADDR subclass: #IN_ADDR
 	instanceVariableNames: ''
@@ -61,10 +61,12 @@ s_addr: anInteger
 	"Set the receiver's 's_addr' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_s_addr put: anInteger! !
-!IN_ADDR categoriesFor: #address!accessing!public! !
-!IN_ADDR categoriesFor: #address:!accessing!public! !
-!IN_ADDR categoriesFor: #s_addr!**compiled accessors**!public! !
-!IN_ADDR categoriesFor: #s_addr:!**compiled accessors**!public! !
+!IN_ADDR categoriesForMethods!
+address!accessing!public! !
+address:!accessing!public! !
+s_addr!**compiled accessors**!public! !
+s_addr:!**compiled accessors**!public! !
+!
 
 !IN_ADDR class methodsFor!
 
@@ -111,8 +113,10 @@ defineFields
 
 getFieldNames
 	^#(#s_addr)! !
-!IN_ADDR class categoriesFor: #address:!instance creation!public! !
-!IN_ADDR class categoriesFor: #addressFamily!constants!public! !
-!IN_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!IN_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IN_ADDR class categoriesForMethods!
+address:!instance creation!public! !
+addressFamily!constants!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

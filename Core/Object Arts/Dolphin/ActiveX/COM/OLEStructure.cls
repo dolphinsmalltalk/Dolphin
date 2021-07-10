@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #OLEStructure
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ initialize: anInteger
 
 	super initialize: anInteger.
 	self dwSize: anInteger! !
-!OLEStructure categoriesFor: #dwSize:!initializing!public! !
-!OLEStructure categoriesFor: #initialize:!initializing!private! !
+!OLEStructure categoriesForMethods!
+dwSize:!initializing!public! !
+initialize:!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #LagoonTests
 	instanceVariableNames: ''
@@ -49,6 +49,8 @@ testExternalStructureAfterTemplateRemoval
 
 	"Ensure things are back to normal"
 	self assert: ExternalStructure template notNil! !
-!LagoonTests categoriesFor: #nopMethod!helpers!private! !
-!LagoonTests categoriesFor: #testExternalStructureAfterTemplateRemoval!public!unit tests! !
+!LagoonTests categoriesForMethods!
+nopMethod!helpers!private! !
+testExternalStructureAfterTemplateRemoval!public!unit tests! !
+!
 

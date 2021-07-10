@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
 	instanceVariableNames: ''
@@ -46,13 +46,15 @@ vt
 	type when represented in a <VARIANT>."
 
 	^self tdesc vartype! !
-!TKindAliasAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindAliasAnalyzer categoriesFor: #classDesc!accessing!constants!private! !
-!TKindAliasAnalyzer categoriesFor: #isAnonymous!public!testing! !
-!TKindAliasAnalyzer categoriesFor: #isStructure!public!testing! !
-!TKindAliasAnalyzer categoriesFor: #isUnion!public!testing! !
-!TKindAliasAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
-!TKindAliasAnalyzer categoriesFor: #vt!accessing!constants!public! !
+!TKindAliasAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+classDesc!accessing!constants!private! !
+isAnonymous!public!testing! !
+isStructure!public!testing! !
+isUnion!public!testing! !
+realTypeInfo!accessing!public! !
+vt!accessing!constants!public! !
+!
 
 !TKindAliasAnalyzer class methodsFor!
 
@@ -83,8 +85,10 @@ typekind
 
 wireHandleNames
 	^#('HACCEL' 'HWND' 'HINSTANCE' 'HDC' 'HFILE' 'HGDIOBJ' 'HICON' 'HCURSOR' 'HFONT' 'HDWP' 'HKEY' 'HPEN' 'HRGN' 'HMODULE' 'HTASK' 'HRSRC' 'HBITMAP' 'HGLOBAL' 'HPALETTE' 'HMETAFILE' 'HENHMETAFILE' 'HBRUSH' 'HMENU' 'HIMAGELIST')! !
-!TKindAliasAnalyzer class categoriesFor: #basicTypes!constants!must not strip!public! !
-!TKindAliasAnalyzer class categoriesFor: #initialize!class initialization!development!public! !
-!TKindAliasAnalyzer class categoriesFor: #typekind!constants!private! !
-!TKindAliasAnalyzer class categoriesFor: #wireHandleNames!constants!private! !
+!TKindAliasAnalyzer class categoriesForMethods!
+basicTypes!constants!must not strip!public! !
+initialize!class initialization!development!public! !
+typekind!constants!private! !
+wireHandleNames!constants!private! !
+!
 

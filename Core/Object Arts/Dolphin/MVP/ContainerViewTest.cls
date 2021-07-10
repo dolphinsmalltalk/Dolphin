@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractContainerViewTest subclass: #ContainerViewTest
 	instanceVariableNames: ''
@@ -39,6 +39,8 @@ test1PixBorderPrint
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: printBitmap
 		color: self backgroundColor! !
-!ContainerViewTest categoriesFor: #containerClass!private! !
-!ContainerViewTest categoriesFor: #test1PixBorderPrint!public! !
+!ContainerViewTest categoriesForMethods!
+containerClass!private! !
+test1PixBorderPrint!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RelativeFileLocator subclass: #FolderRelativeFileLocator
 	instanceVariableNames: 'basePath'
@@ -32,9 +32,11 @@ printOn: aStream
 		nextPutAll: #basePath:;
 		space;
 		print: self basePath! !
-!FolderRelativeFileLocator categoriesFor: #basePath!accessing!public! !
-!FolderRelativeFileLocator categoriesFor: #basePath:!accessing!public! !
-!FolderRelativeFileLocator categoriesFor: #printOn:!development!printing!public! !
+!FolderRelativeFileLocator categoriesForMethods!
+basePath!accessing!public! !
+basePath:!accessing!public! !
+printOn:!development!printing!public! !
+!
 
 !FolderRelativeFileLocator class methodsFor!
 
@@ -44,5 +46,7 @@ basePath: aString
 	^(self new)
 		basePath: aString;
 		yourself! !
-!FolderRelativeFileLocator class categoriesFor: #basePath:!accessing!public! !
+!FolderRelativeFileLocator class categoriesForMethods!
+basePath:!accessing!public! !
+!
 

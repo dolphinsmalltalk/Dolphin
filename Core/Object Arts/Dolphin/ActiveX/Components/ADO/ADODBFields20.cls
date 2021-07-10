@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODBFields15 subclass: #ADODBFields20
 	instanceVariableNames: ''
@@ -74,10 +74,12 @@ Delete: index
 
 	<virtual stdcall: hresult 13 variant>
 	^self invalidCall: _failureCode! !
-!ADODBFields20 categoriesFor: #_append:type:!**auto generated**!methods!public! !
-!ADODBFields20 categoriesFor: #_Append:Type:DefinedSize:Attrib:!**auto generated**!COM Interfaces-Fields20!public! !
-!ADODBFields20 categoriesFor: #delete:!**auto generated**!methods!public! !
-!ADODBFields20 categoriesFor: #Delete:!**auto generated**!COM Interfaces-Fields20!private! !
+!ADODBFields20 categoriesForMethods!
+_append:type:!**auto generated**!methods!public! !
+_Append:Type:DefinedSize:Attrib:!**auto generated**!COM Interfaces-Fields20!public! !
+delete:!**auto generated**!methods!public! !
+Delete:!**auto generated**!COM Interfaces-Fields20!private! !
+!
 
 !ADODBFields20 class methodsFor!
 
@@ -91,5 +93,7 @@ defineFunctions
 		defineFunction: #Delete:
 			argumentTypes: 'variant'
 ! !
-!ADODBFields20 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBFields20 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

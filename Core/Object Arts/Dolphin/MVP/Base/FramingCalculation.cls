@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #FramingCalculation
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
@@ -61,16 +61,18 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler writePreambleFor: self.
 	anSTBOutFiler nextPut: self name! !
-!FramingCalculation categoriesFor: #calculateEdge:context:!calculations!public! !
-!FramingCalculation categoriesFor: #calculateOffset:context:!calculations!public! !
-!FramingCalculation categoriesFor: #displayOn:!displaying!public! !
-!FramingCalculation categoriesFor: #isIndependent!public!testing! !
-!FramingCalculation categoriesFor: #isProportional!public!testing! !
-!FramingCalculation categoriesFor: #isVertical!public!testing! !
-!FramingCalculation categoriesFor: #name!accessing!public! !
-!FramingCalculation categoriesFor: #name:framingBlock:offsetBlock:flags:!initializing!private! !
-!FramingCalculation categoriesFor: #printOn:!public! !
-!FramingCalculation categoriesFor: #stbSaveOn:!binary filing!private! !
+!FramingCalculation categoriesForMethods!
+calculateEdge:context:!calculations!public! !
+calculateOffset:context:!calculations!public! !
+displayOn:!displaying!public! !
+isIndependent!public!testing! !
+isProportional!public!testing! !
+isVertical!public!testing! !
+name!accessing!public! !
+name:framingBlock:offsetBlock:flags:!initializing!private! !
+printOn:!public! !
+stbSaveOn:!binary filing!private! !
+!
 
 !FramingCalculation class methodsFor!
 
@@ -301,26 +303,28 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := self perform: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
-!FramingCalculation class categoriesFor: #centerRelativeParentHeight!instance creation!public! !
-!FramingCalculation class categoriesFor: #centerRelativeParentWidth!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentBottom!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentLeft!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentRight!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedParentTop!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousBottom!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousLeft!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousRight!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedPreviousTop!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewBottom!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewLeft!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewRight!instance creation!public! !
-!FramingCalculation class categoriesFor: #fixedViewTop!instance creation!public! !
-!FramingCalculation class categoriesFor: #initialize!initializing!public! !
-!FramingCalculation class categoriesFor: #lookupCalc:framingBlock:offsetBlock:flags:!accessing!private! !
-!FramingCalculation class categoriesFor: #newName:framingBlock:offsetBlock:flags:!instance creation!private! !
-!FramingCalculation class categoriesFor: #onPostStripImage!event handling!private! !
-!FramingCalculation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!FramingCalculation class categoriesFor: #relativeParentHeight!instance creation!public! !
-!FramingCalculation class categoriesFor: #relativeParentWidth!instance creation!public! !
-!FramingCalculation class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!FramingCalculation class categoriesForMethods!
+centerRelativeParentHeight!instance creation!public! !
+centerRelativeParentWidth!instance creation!public! !
+fixedParentBottom!instance creation!public! !
+fixedParentLeft!instance creation!public! !
+fixedParentRight!instance creation!public! !
+fixedParentTop!instance creation!public! !
+fixedPreviousBottom!instance creation!public! !
+fixedPreviousLeft!instance creation!public! !
+fixedPreviousRight!instance creation!public! !
+fixedPreviousTop!instance creation!public! !
+fixedViewBottom!instance creation!public! !
+fixedViewLeft!instance creation!public! !
+fixedViewRight!instance creation!public! !
+fixedViewTop!instance creation!public! !
+initialize!initializing!public! !
+lookupCalc:framingBlock:offsetBlock:flags:!accessing!private! !
+newName:framingBlock:offsetBlock:flags:!instance creation!private! !
+onPostStripImage!event handling!private! !
+onPreStripImage!class hierarchy-removing!private! !
+relativeParentHeight!instance creation!public! !
+relativeParentWidth!instance creation!public! !
+stbReadFrom:format:!binary filing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryVariableChange subclass: #AddPoolVariableChange
 	instanceVariableNames: ''
@@ -43,11 +43,13 @@ variable
 		ifTrue: [variable]
 		ifFalse: 
 			[Smalltalk keyAtValue: variable ifAbsent: [self error: 'Cannot find value']]! !
-!AddPoolVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!AddPoolVariableChange categoriesFor: #changeObject!private! !
-!AddPoolVariableChange categoriesFor: #changesFileTemplate!constants!private! !
-!AddPoolVariableChange categoriesFor: #changeString!printing!public! !
-!AddPoolVariableChange categoriesFor: #changeSymbol!private! !
-!AddPoolVariableChange categoriesFor: #printOn:!printing!public! !
-!AddPoolVariableChange categoriesFor: #variable!private! !
+!AddPoolVariableChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeObject!private! !
+changesFileTemplate!constants!private! !
+changeString!printing!public! !
+changeSymbol!private! !
+printOn:!printing!public! !
+variable!private! !
+!
 

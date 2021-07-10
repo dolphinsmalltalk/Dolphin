@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #FORMATRANGE
 	instanceVariableNames: ''
@@ -65,14 +65,16 @@ rcPage: aRECT
 		from: ##(_OffsetOf_rcPage + 1)
 		to: ##(_OffsetOf_rcPage + RECT basicByteSize)
 		startingAt: 1! !
-!FORMATRANGE categoriesFor: #cpMax:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #cpMin:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #hdc:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #hdcTarget:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rc!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rc:!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rcPage!**compiled accessors**!public! !
-!FORMATRANGE categoriesFor: #rcPage:!**compiled accessors**!public! !
+!FORMATRANGE categoriesForMethods!
+cpMax:!**compiled accessors**!public! !
+cpMin:!**compiled accessors**!public! !
+hdc:!**compiled accessors**!public! !
+hdcTarget:!**compiled accessors**!public! !
+rc!**compiled accessors**!public! !
+rc:!**compiled accessors**!public! !
+rcPage!**compiled accessors**!public! !
+rcPage:!**compiled accessors**!public! !
+!
 
 !FORMATRANGE class methodsFor!
 
@@ -95,6 +97,8 @@ defineFields
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !
-!FORMATRANGE class categoriesFor: #defineFields!public!template definition! !
-!FORMATRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!FORMATRANGE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

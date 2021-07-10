@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FindDetails subclass: #AdvancedFindDetails
 	instanceVariableNames: ''
@@ -45,11 +45,13 @@ regularExpression
 		multiline: true;
 		global: true."
 	^regexp! !
-!AdvancedFindDetails categoriesFor: #findIn:range:!public! !
-!AdvancedFindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
-!AdvancedFindDetails categoriesFor: #isRegularExpression!public!testing! !
-!AdvancedFindDetails categoriesFor: #isRegularExpression:!accessing!public! !
-!AdvancedFindDetails categoriesFor: #regularExpression!accessing!public! !
+!AdvancedFindDetails categoriesForMethods!
+findIn:range:!public! !
+hasValidRegularExpression!public!testing! !
+isRegularExpression!public!testing! !
+isRegularExpression:!accessing!public! !
+regularExpression!accessing!public! !
+!
 
 !AdvancedFindDetails class methodsFor!
 
@@ -58,6 +60,8 @@ regexpClass
 
 searchModes
 	^super searchModes copyWith: #regularExpression! !
-!AdvancedFindDetails class categoriesFor: #regexpClass!constants!public! !
-!AdvancedFindDetails class categoriesFor: #searchModes!constants!public! !
+!AdvancedFindDetails class categoriesForMethods!
+regexpClass!constants!public! !
+searchModes!constants!public! !
+!
 

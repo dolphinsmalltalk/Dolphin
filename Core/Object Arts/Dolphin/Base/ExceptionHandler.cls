@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExceptionHandlerAbstract subclass: #ExceptionHandler
 	instanceVariableNames: 'selector handler'
@@ -23,6 +23,8 @@ on: exceptionSelector do: monadicBlock
 	selector := exceptionSelector.
 	handler := monadicBlock
 ! !
-!ExceptionHandler categoriesFor: #actionFor:!debugger-step over!helpers!private! !
-!ExceptionHandler categoriesFor: #on:do:!debugger-step over!initializing!private! !
+!ExceptionHandler categoriesForMethods!
+actionFor:!debugger-step over!helpers!private! !
+on:do:!debugger-step over!initializing!private! !
+!
 

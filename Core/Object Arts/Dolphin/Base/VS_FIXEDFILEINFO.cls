@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #VS_FIXEDFILEINFO
 	instanceVariableNames: ''
@@ -92,17 +92,19 @@ versionAtOffset: anInteger put: anArray
 			(self bytes)
 				wordAtOffset: offset put: (anArray at: i + 1);
 				wordAtOffset: offset + 2 put: (anArray at: i)]! !
-!VS_FIXEDFILEINFO categoriesFor: #dwFileVersionLS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #dwFileVersionMS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #dwProductVersionLS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #dwProductVersionMS!**compiled accessors**!public! !
-!VS_FIXEDFILEINFO categoriesFor: #fileVersion!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #fileVersionComponents!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #fileVersionString!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #formatFileVersionString:!operations!public! !
-!VS_FIXEDFILEINFO categoriesFor: #formatProductVersionString:!operations!public! !
-!VS_FIXEDFILEINFO categoriesFor: #productVersionString!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #versionAtOffset:put:!accessing!private! !
+!VS_FIXEDFILEINFO categoriesForMethods!
+dwFileVersionLS!**compiled accessors**!public! !
+dwFileVersionMS!**compiled accessors**!public! !
+dwProductVersionLS!**compiled accessors**!public! !
+dwProductVersionMS!**compiled accessors**!public! !
+fileVersion!accessing!public! !
+fileVersionComponents!accessing!public! !
+fileVersionString!accessing!public! !
+formatFileVersionString:!operations!public! !
+formatProductVersionString:!operations!public! !
+productVersionString!accessing!public! !
+versionAtOffset:put:!accessing!private! !
+!
 
 !VS_FIXEDFILEINFO class methodsFor!
 
@@ -146,6 +148,8 @@ defineFields
 
 getFieldNames
 	^#(#dwStrucVersion #dwFileVersionMS #dwFileVersionLS #dwProductVersionMS #dwProductVersionLS #dwFileFlagsMask #dwFileFlags #dwFileOS #dwFileType #dwFileSubtype #dwFileDateMS #dwFileDateLS)! !
-!VS_FIXEDFILEINFO class categoriesFor: #defineFields!public!template definition! !
-!VS_FIXEDFILEINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!VS_FIXEDFILEINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

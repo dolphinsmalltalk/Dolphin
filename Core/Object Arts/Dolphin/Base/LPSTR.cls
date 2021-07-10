@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LPVOID subclass: #LPSTR
 	instanceVariableNames: ''
@@ -22,6 +22,8 @@ value
 	"Answer the String pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
 	^AnsiString fromAddress: super value! !
-!LPSTR categoriesFor: #asString!converting!public! !
-!LPSTR categoriesFor: #value!accessing!public! !
+!LPSTR categoriesForMethods!
+asString!converting!public! !
+value!accessing!public! !
+!
 

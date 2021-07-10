@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SharedLookupTable variableSubclass: #DeferredValueTable
 	instanceVariableNames: 'priority'
@@ -82,15 +82,17 @@ priority: anInteger
 	"Set the <Process> priority at which the deferred values will be calculated."
 
 	priority := anInteger! !
-!DeferredValueTable categoriesFor: #at:ifAbsent:!accessing!public! !
-!DeferredValueTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!DeferredValueTable categoriesFor: #at:put:!accessing!public! !
-!DeferredValueTable categoriesFor: #do:!enumerating!public! !
-!DeferredValueTable categoriesFor: #initialize!initializing!private! !
-!DeferredValueTable categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!DeferredValueTable categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!DeferredValueTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!DeferredValueTable categoriesFor: #lookup:!accessing!public! !
-!DeferredValueTable categoriesFor: #priority!accessing!public! !
-!DeferredValueTable categoriesFor: #priority:!accessing!public! !
+!DeferredValueTable categoriesForMethods!
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:put:!accessing!public! !
+do:!enumerating!public! !
+initialize!initializing!private! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+lookup:!accessing!public! !
+priority!accessing!public! !
+priority:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IPropertyBag2
 	instanceVariableNames: ''
@@ -162,16 +162,18 @@ Write: cProperties pPropBag: pPropBag pvarValue: pvarValue
 
 	<virtual stdcall: hresult 5 dword PROPBAG2* variant*>
 	^self invalidCall: _failureCode! !
-!IPropertyBag2 categoriesFor: #countProperties!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #CountProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #getPropertyInfo:cProperties:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #GetPropertyInfo:cProperties:pPropBag:pcProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #loadObject:dwHint:punkObject:pErrLog:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #LoadObject:dwHint:punkObject:pErrLog:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #read:pPropBag:pErrLog:phrError:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #Read:pPropBag:pErrLog:pvarValue:phrError:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
-!IPropertyBag2 categoriesFor: #write:pPropBag:pvarValue:!**auto generated**!methods!public! !
-!IPropertyBag2 categoriesFor: #Write:pPropBag:pvarValue:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+!IPropertyBag2 categoriesForMethods!
+countProperties!**auto generated**!methods!public! !
+CountProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+getPropertyInfo:cProperties:!**auto generated**!methods!public! !
+GetPropertyInfo:cProperties:pPropBag:pcProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+loadObject:dwHint:punkObject:pErrLog:!**auto generated**!methods!public! !
+LoadObject:dwHint:punkObject:pErrLog:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+read:pPropBag:pErrLog:phrError:!**auto generated**!methods!public! !
+Read:pPropBag:pErrLog:pvarValue:phrError:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+write:pPropBag:pvarValue:!**auto generated**!methods!public! !
+Write:pPropBag:pvarValue:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
+!
 
 IPropertyBag2 methodProtocol: #IPropertyBag2 attributes: #(#readOnly) selectors: #(#CountProperties: #GetPropertyInfo:cProperties:pPropBag:pcProperties: #LoadObject:dwHint:punkObject:pErrLog: #Read:pPropBag:pErrLog:pvarValue:phrError: #Write:pPropBag:pvarValue:)!
 
@@ -193,5 +195,7 @@ defineFunctions
 		defineFunction: #LoadObject:dwHint:punkObject:pErrLog:
 			argumentTypes: 'lpwstr dword IUnknown* IErrorLog*'
 ! !
-!IPropertyBag2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IPropertyBag2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

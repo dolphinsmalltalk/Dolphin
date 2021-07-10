@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #RGNDATA
 	instanceVariableNames: ''
@@ -63,15 +63,17 @@ rcBound: aRECT
 		from: ##(_OffsetOf_rcBound + 1)
 		to: ##(_OffsetOf_rcBound + RECT basicByteSize)
 		startingAt: 1! !
-!RGNDATA categoriesFor: #dwSize:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #iType!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #iType:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nCount!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nCount:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nRgnSize!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #nRgnSize:!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #rcBound!**compiled accessors**!public! !
-!RGNDATA categoriesFor: #rcBound:!**compiled accessors**!public! !
+!RGNDATA categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+iType!**compiled accessors**!public! !
+iType:!**compiled accessors**!public! !
+nCount!**compiled accessors**!public! !
+nCount:!**compiled accessors**!public! !
+nRgnSize!**compiled accessors**!public! !
+nRgnSize:!**compiled accessors**!public! !
+rcBound!**compiled accessors**!public! !
+rcBound:!**compiled accessors**!public! !
+!
 
 !RGNDATA class methodsFor!
 
@@ -108,6 +110,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
-!RGNDATA class categoriesFor: #defineFields!public!template definition! !
-!RGNDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!RGNDATA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

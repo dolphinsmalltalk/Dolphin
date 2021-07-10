@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #DateAndTimeANSITest
 	instanceVariableNames: 'd19970426t8 savedLocale'
@@ -375,41 +375,43 @@ testXyear
 	#'Date and Time'.
 	self value: [d19970426t8 year] should: [:r | r = 1997]
 		conformTo: #'DateAndTime' selector: #'year'.! !
-!DateAndTimeANSITest categoriesFor: #canonicalObject!public! !
-!DateAndTimeANSITest categoriesFor: #protocol!public! !
-!DateAndTimeANSITest categoriesFor: #setUp!private!running! !
-!DateAndTimeANSITest categoriesFor: #tearDown!private!running! !
-!DateAndTimeANSITest categoriesFor: #testXaddOp!public! !
-!DateAndTimeANSITest categoriesFor: #testXasLocal!public! !
-!DateAndTimeANSITest categoriesFor: #testXasUTC!public! !
-!DateAndTimeANSITest categoriesFor: #testXbetweenXandX!public! !
-!DateAndTimeANSITest categoriesFor: #testXdayOfMonth!public! !
-!DateAndTimeANSITest categoriesFor: #testXdayOfWeek!public! !
-!DateAndTimeANSITest categoriesFor: #testXdayOfWeekAbbreviation!public! !
-!DateAndTimeANSITest categoriesFor: #testXdayOfWeekName!public! !
-!DateAndTimeANSITest categoriesFor: #testXdayOfYear!public! !
-!DateAndTimeANSITest categoriesFor: #testXequalityOp!public! !
-!DateAndTimeANSITest categoriesFor: #testXgreaterThanOp!public! !
-!DateAndTimeANSITest categoriesFor: #testXgreaterThanOrEqualToOp!public! !
-!DateAndTimeANSITest categoriesFor: #testXhour!public! !
-!DateAndTimeANSITest categoriesFor: #testXhour12!public! !
-!DateAndTimeANSITest categoriesFor: #testXhour24!public! !
-!DateAndTimeANSITest categoriesFor: #testXisLeapYear!public! !
-!DateAndTimeANSITest categoriesFor: #testXlessThanOp!public! !
-!DateAndTimeANSITest categoriesFor: #testXlessThanOrEqualToOp!public! !
-!DateAndTimeANSITest categoriesFor: #testXmaxX!public! !
-!DateAndTimeANSITest categoriesFor: #testXmeridianAbbreviation!public! !
-!DateAndTimeANSITest categoriesFor: #testXminute!public! !
-!DateAndTimeANSITest categoriesFor: #testXminX!public! !
-!DateAndTimeANSITest categoriesFor: #testXmonth!public! !
-!DateAndTimeANSITest categoriesFor: #testXmonthAbbreviation!public! !
-!DateAndTimeANSITest categoriesFor: #testXmonthName!public! !
-!DateAndTimeANSITest categoriesFor: #testXoffset!public! !
-!DateAndTimeANSITest categoriesFor: #testXoffsetX!public! !
-!DateAndTimeANSITest categoriesFor: #testXprintString!public! !
-!DateAndTimeANSITest categoriesFor: #testXsecond!public! !
-!DateAndTimeANSITest categoriesFor: #testXsubtractOp!public! !
-!DateAndTimeANSITest categoriesFor: #testXtimeZoneAbbreviation!public! !
-!DateAndTimeANSITest categoriesFor: #testXtimeZoneName!public! !
-!DateAndTimeANSITest categoriesFor: #testXyear!public! !
+!DateAndTimeANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!private!running! !
+tearDown!private!running! !
+testXaddOp!public! !
+testXasLocal!public! !
+testXasUTC!public! !
+testXbetweenXandX!public! !
+testXdayOfMonth!public! !
+testXdayOfWeek!public! !
+testXdayOfWeekAbbreviation!public! !
+testXdayOfWeekName!public! !
+testXdayOfYear!public! !
+testXequalityOp!public! !
+testXgreaterThanOp!public! !
+testXgreaterThanOrEqualToOp!public! !
+testXhour!public! !
+testXhour12!public! !
+testXhour24!public! !
+testXisLeapYear!public! !
+testXlessThanOp!public! !
+testXlessThanOrEqualToOp!public! !
+testXmaxX!public! !
+testXmeridianAbbreviation!public! !
+testXminute!public! !
+testXminX!public! !
+testXmonth!public! !
+testXmonthAbbreviation!public! !
+testXmonthName!public! !
+testXoffset!public! !
+testXoffsetX!public! !
+testXprintString!public! !
+testXsecond!public! !
+testXsubtractOp!public! !
+testXtimeZoneAbbreviation!public! !
+testXtimeZoneName!public! !
+testXyear!public! !
+!
 

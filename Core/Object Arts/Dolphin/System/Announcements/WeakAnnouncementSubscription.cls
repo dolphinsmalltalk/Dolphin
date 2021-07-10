@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WeakArray variableSubclass: #WeakAnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass action'
@@ -80,23 +80,27 @@ valuable: aValuable
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
 	self subscriber: aValuable receiver.! !
-!WeakAnnouncementSubscription categoriesFor: #action!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #action:!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #announcementClass!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #announcementClass:!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #announcer!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #announcer:!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #deliver:!announcing!public! !
-!WeakAnnouncementSubscription categoriesFor: #handlesAnnouncement:!error handling!public! !
-!WeakAnnouncementSubscription categoriesFor: #makeStrong!converting!public! !
-!WeakAnnouncementSubscription categoriesFor: #makeWeak!converting!public! !
-!WeakAnnouncementSubscription categoriesFor: #subscriber!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #subscriber:!accessing!public! !
-!WeakAnnouncementSubscription categoriesFor: #valuable:!accessing!public! !
+!WeakAnnouncementSubscription categoriesForMethods!
+action!accessing!public! !
+action:!accessing!public! !
+announcementClass!accessing!public! !
+announcementClass:!accessing!public! !
+announcer!accessing!public! !
+announcer:!accessing!public! !
+deliver:!announcing!public! !
+handlesAnnouncement:!error handling!public! !
+makeStrong!converting!public! !
+makeWeak!converting!public! !
+subscriber!accessing!public! !
+subscriber:!accessing!public! !
+valuable:!accessing!public! !
+!
 
 !WeakAnnouncementSubscription class methodsFor!
 
 new
 	^super new: 1! !
-!WeakAnnouncementSubscription class categoriesFor: #new!public! !
+!WeakAnnouncementSubscription class categoriesForMethods!
+new!public! !
+!
 

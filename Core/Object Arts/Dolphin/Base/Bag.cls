@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Collection subclass: #Bag
 	instanceVariableNames: 'contents'
@@ -158,25 +158,27 @@ size
 
 valuesAndCountsDo: aBlock 
 	contents keysAndValuesDo: aBlock! !
-!Bag categoriesFor: #=!comparing!public! !
-!Bag categoriesFor: #add:!adding!public! !
-!Bag categoriesFor: #add:withOccurrences:!adding!public! !
-!Bag categoriesFor: #asBag!converting!public! !
-!Bag categoriesFor: #asSet!converting!public! !
-!Bag categoriesFor: #at:!accessing!public! !
-!Bag categoriesFor: #at:put:!accessing!public! !
-!Bag categoriesFor: #contents:!accessing!private! !
-!Bag categoriesFor: #do:!enumerating!public! !
-!Bag categoriesFor: #elements!accessing!private! !
-!Bag categoriesFor: #elements:!accessing!private! !
-!Bag categoriesFor: #includes:!public!searching! !
-!Bag categoriesFor: #occurrencesOf:!public!searching! !
-!Bag categoriesFor: #postCopy!copying!public! !
-!Bag categoriesFor: #remove:ifAbsent:!public!removing! !
-!Bag categoriesFor: #removeAll!public! !
-!Bag categoriesFor: #removeAllOccurrencesOf:ifAbsent:!public!removing! !
-!Bag categoriesFor: #size!accessing!public! !
-!Bag categoriesFor: #valuesAndCountsDo:!enumerating!public! !
+!Bag categoriesForMethods!
+=!comparing!public! !
+add:!adding!public! !
+add:withOccurrences:!adding!public! !
+asBag!converting!public! !
+asSet!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+contents:!accessing!private! !
+do:!enumerating!public! !
+elements!accessing!private! !
+elements:!accessing!private! !
+includes:!public!searching! !
+occurrencesOf:!public!searching! !
+postCopy!copying!public! !
+remove:ifAbsent:!public!removing! !
+removeAll!public! !
+removeAllOccurrencesOf:ifAbsent:!public!removing! !
+size!accessing!public! !
+valuesAndCountsDo:!enumerating!public! !
+!
 
 Bag methodProtocol: #Bag attributes: #(#ansi #readOnly) selectors: #(#add: #add:withOccurrences: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
 
@@ -209,10 +211,12 @@ new: count
 
 	^super new 
 		contents: (LookupTable new: count)! !
-!Bag class categoriesFor: #identityNew!instance creation!public! !
-!Bag class categoriesFor: #identityNew:!instance creation!public! !
-!Bag class categoriesFor: #new!instance creation!public! !
-!Bag class categoriesFor: #new:!instance creation!public! !
+!Bag class categoriesForMethods!
+identityNew!instance creation!public! !
+identityNew:!instance creation!public! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 
 Bag class methodProtocol: #'Bag factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

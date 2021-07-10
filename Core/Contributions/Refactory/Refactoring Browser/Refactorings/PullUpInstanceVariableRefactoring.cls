@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #PullUpInstanceVariableRefactoring
 	instanceVariableNames: ''
@@ -28,6 +28,8 @@ transform
 			(each directlyDefinesInstanceVariable: variableName) 
 				ifTrue: [each removeInstanceVariable: variableName]].
 	class addInstanceVariable: variableName! !
-!PullUpInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PullUpInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!PullUpInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

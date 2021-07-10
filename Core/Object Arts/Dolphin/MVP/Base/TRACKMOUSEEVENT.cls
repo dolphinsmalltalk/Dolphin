@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TRACKMOUSEEVENT
 	instanceVariableNames: ''
@@ -62,13 +62,15 @@ hwndTrack: anExternalHandle
 	"Set the receiver's 'hwndTrack' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: anExternalHandle! !
-!TRACKMOUSEEVENT categoriesFor: #dwFlags!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwHoverTime!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwHoverTime:!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #hwndTrack!**compiled accessors**!public! !
-!TRACKMOUSEEVENT categoriesFor: #hwndTrack:!**compiled accessors**!public! !
+!TRACKMOUSEEVENT categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwHoverTime!**compiled accessors**!public! !
+dwHoverTime:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+hwndTrack!**compiled accessors**!public! !
+hwndTrack:!**compiled accessors**!public! !
+!
 
 !TRACKMOUSEEVENT class methodsFor!
 
@@ -93,6 +95,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !
-!TRACKMOUSEEVENT class categoriesFor: #defineFields!public!template definition! !
-!TRACKMOUSEEVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TRACKMOUSEEVENT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

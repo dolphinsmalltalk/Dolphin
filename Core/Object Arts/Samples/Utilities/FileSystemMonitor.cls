@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #FileSystemMonitor
 	instanceVariableNames: 'directoryName notifyAttributes notifyDirectoryName notifyCreateTime notifyFileName notifyLastAccess notifyLastWrite notifySecurity notifySize filters includeSubDirs changeList'
@@ -134,19 +134,21 @@ queryCommand: aCommandQuery
 
 toggleMonitoring
 	self model isMonitoring: self model isMonitoring not! !
-!FileSystemMonitor categoriesFor: #about!enquiries!private! !
-!FileSystemMonitor categoriesFor: #addChange:!helpers!private! !
-!FileSystemMonitor categoriesFor: #chooseDirectory!commands!public! !
-!FileSystemMonitor categoriesFor: #clear!commands!public! !
-!FileSystemMonitor categoriesFor: #createComponents!initializing!public! !
-!FileSystemMonitor categoriesFor: #createSchematicWiring!initializing!public! !
-!FileSystemMonitor categoriesFor: #model:!accessing!public! !
-!FileSystemMonitor categoriesFor: #onFileAdded:!event handling!private! !
-!FileSystemMonitor categoriesFor: #onFileModified:!event handling!private! !
-!FileSystemMonitor categoriesFor: #onFileRemoved:!event handling!private! !
-!FileSystemMonitor categoriesFor: #onFileRenamedFrom:to:!event handling!private! !
-!FileSystemMonitor categoriesFor: #queryCommand:!public! !
-!FileSystemMonitor categoriesFor: #toggleMonitoring!public! !
+!FileSystemMonitor categoriesForMethods!
+about!enquiries!private! !
+addChange:!helpers!private! !
+chooseDirectory!commands!public! !
+clear!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+model:!accessing!public! !
+onFileAdded:!event handling!private! !
+onFileModified:!event handling!private! !
+onFileRemoved:!event handling!private! !
+onFileRenamedFrom:to:!event handling!private! !
+queryCommand:!public! !
+toggleMonitoring!public! !
+!
 
 !FileSystemMonitor class methodsFor!
 
@@ -178,9 +180,11 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!FileSystemMonitor class categoriesFor: #defaultModel!models!public! !
-!FileSystemMonitor class categoriesFor: #icon!public! !
-!FileSystemMonitor class categoriesFor: #initialize!development!initializing!private! !
-!FileSystemMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
-!FileSystemMonitor class categoriesFor: #shutdownOnExit!public!testing! !
+!FileSystemMonitor class categoriesForMethods!
+defaultModel!models!public! !
+icon!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 

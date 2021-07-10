@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #DateAndTime
 	instanceVariableNames: 'rataDie seconds offset'
@@ -395,56 +395,58 @@ year
 	"Answer an <integer> representing the year of the local time which includes the receiver."
 
 	^self dayMonthYearDo: [:d :m :y | y]! !
-!DateAndTime categoriesFor: #-!arithmetic!public! !
-!DateAndTime categoriesFor: #+!arithmetic!public! !
-!DateAndTime categoriesFor: #<!comparing!public! !
-!DateAndTime categoriesFor: #=!comparing!public! !
-!DateAndTime categoriesFor: #asLocal!comparing!public! !
-!DateAndTime categoriesFor: #asSeconds!converting!public! !
-!DateAndTime categoriesFor: #asSYSTEMTIME!converting!public! !
-!DateAndTime categoriesFor: #asUnixTime!converting!public! !
-!DateAndTime categoriesFor: #asUTC!converting!public! !
-!DateAndTime categoriesFor: #day!accessing!public! !
-!DateAndTime categoriesFor: #dayMonthYearDo:!accessing!public! !
-!DateAndTime categoriesFor: #dayOfMonth!accessing!public! !
-!DateAndTime categoriesFor: #dayOfWeek!accessing!public! !
-!DateAndTime categoriesFor: #dayOfWeekAbbreviation!accessing!public! !
-!DateAndTime categoriesFor: #dayOfWeekName!accessing!public! !
-!DateAndTime categoriesFor: #dayOfYear!accessing!public! !
-!DateAndTime categoriesFor: #displayOn:!printing!public! !
-!DateAndTime categoriesFor: #hash!comparing!public! !
-!DateAndTime categoriesFor: #hour!accessing!public! !
-!DateAndTime categoriesFor: #hour12!accessing!public! !
-!DateAndTime categoriesFor: #hour24!accessing!public! !
-!DateAndTime categoriesFor: #isLeapYear!public!testing! !
-!DateAndTime categoriesFor: #julianDate!accessing!public! !
-!DateAndTime categoriesFor: #julianDayNumber!accessing!public! !
-!DateAndTime categoriesFor: #lilianDayNumber!accessing!public! !
-!DateAndTime categoriesFor: #localSeconds!converting!public! !
-!DateAndTime categoriesFor: #meridianAbbreviation!accessing!public! !
-!DateAndTime categoriesFor: #midnight!accessing!public! !
-!DateAndTime categoriesFor: #minute!accessing!public! !
-!DateAndTime categoriesFor: #month!accessing!public! !
-!DateAndTime categoriesFor: #monthAbbreviation!accessing!public! !
-!DateAndTime categoriesFor: #monthName!accessing!public! !
-!DateAndTime categoriesFor: #nanosecond!accessing!public! !
-!DateAndTime categoriesFor: #offset!accessing!public! !
-!DateAndTime categoriesFor: #offset:!converting!public! !
-!DateAndTime categoriesFor: #offsetSeconds!accessing!private! !
-!DateAndTime categoriesFor: #offsetSeconds:!converting!private! !
-!DateAndTime categoriesFor: #printOn:!printing!public! !
-!DateAndTime categoriesFor: #printOn:format:!printing!public! !
-!DateAndTime categoriesFor: #printOn:withLeadingSpace:!printing!public! !
-!DateAndTime categoriesFor: #printStringFormat:!printing!public! !
-!DateAndTime categoriesFor: #rataDie!accessing!public! !
-!DateAndTime categoriesFor: #second!accessing!public! !
-!DateAndTime categoriesFor: #seconds!accessing!public! !
-!DateAndTime categoriesFor: #setRataDie:seconds:offset:!initializing!private! !
-!DateAndTime categoriesFor: #storeOn:!printing!public! !
-!DateAndTime categoriesFor: #subtractFromDateAndTime:!arithmetic!double dispatch!private! !
-!DateAndTime categoriesFor: #timeZoneAbbreviation!accessing!public! !
-!DateAndTime categoriesFor: #timeZoneName!accessing!public! !
-!DateAndTime categoriesFor: #year!accessing!public! !
+!DateAndTime categoriesForMethods!
+-!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+=!comparing!public! !
+asLocal!comparing!public! !
+asSeconds!converting!public! !
+asSYSTEMTIME!converting!public! !
+asUnixTime!converting!public! !
+asUTC!converting!public! !
+day!accessing!public! !
+dayMonthYearDo:!accessing!public! !
+dayOfMonth!accessing!public! !
+dayOfWeek!accessing!public! !
+dayOfWeekAbbreviation!accessing!public! !
+dayOfWeekName!accessing!public! !
+dayOfYear!accessing!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+isLeapYear!public!testing! !
+julianDate!accessing!public! !
+julianDayNumber!accessing!public! !
+lilianDayNumber!accessing!public! !
+localSeconds!converting!public! !
+meridianAbbreviation!accessing!public! !
+midnight!accessing!public! !
+minute!accessing!public! !
+month!accessing!public! !
+monthAbbreviation!accessing!public! !
+monthName!accessing!public! !
+nanosecond!accessing!public! !
+offset!accessing!public! !
+offset:!converting!public! !
+offsetSeconds!accessing!private! !
+offsetSeconds:!converting!private! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printOn:withLeadingSpace:!printing!public! !
+printStringFormat:!printing!public! !
+rataDie!accessing!public! !
+second!accessing!public! !
+seconds!accessing!public! !
+setRataDie:seconds:offset:!initializing!private! !
+storeOn:!printing!public! !
+subtractFromDateAndTime:!arithmetic!double dispatch!private! !
+timeZoneAbbreviation!accessing!public! !
+timeZoneName!accessing!public! !
+year!accessing!public! !
+!
 
 DateAndTime methodProtocol: #DateAndTime attributes: #(#ansi #readOnly) selectors: #(#- #~~ #~= #+ #< #<= #= #== #> #>= #asLocal #asUTC #between:and: #class #copy #dayOfMonth #dayOfWeek #dayOfWeekAbbreviation #dayOfWeekName #dayOfYear #doesNotUnderstand: #error: #hash #hour #hour12 #hour24 #identityHash #isKindOf: #isLeapYear #isMemberOf: #isNil #max: #meridianAbbreviation #min: #minute #month #monthAbbreviation #monthName #notNil #offset #offset: #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #second #timeZoneAbbreviation #timeZoneName #year #yourself)!
 
@@ -873,42 +875,44 @@ yesterday
 	"Answer a new <DateAndTime> representing midnight local time on the previous day."
 
 	^self today - 1 days! !
-!DateAndTime class categoriesFor: #clockPrecision!constants!public! !
-!DateAndTime class categoriesFor: #daysInMonth:forYear:!enquiries!public! !
-!DateAndTime class categoriesFor: #daysToMonth:forYear:!enquiries!public! !
-!DateAndTime class categoriesFor: #encodeRataDieYear:month:day:!helpers!private! !
-!DateAndTime class categoriesFor: #errorInvalidFormat!exceptions!public! !
-!DateAndTime class categoriesFor: #fromDate:time:!instance creation!public! !
-!DateAndTime class categoriesFor: #fromString:!instance creation!public! !
-!DateAndTime class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!DateAndTime class categoriesFor: #fromSYSTEMTIME:offset:!instance creation!public! !
-!DateAndTime class categoriesFor: #initialize!class initialization!public! !
-!DateAndTime class categoriesFor: #isLeapYear:!public!testing! !
-!DateAndTime class categoriesFor: #midnight!instance creation!public! !
-!DateAndTime class categoriesFor: #now!instance creation!public! !
-!DateAndTime class categoriesFor: #nowUTC!instance creation!public! !
-!DateAndTime class categoriesFor: #readFrom:!instance creation!public! !
-!DateAndTime class categoriesFor: #readOffsetFrom:sign:!helpers!private! !
-!DateAndTime class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!DateAndTime class categoriesFor: #stbVersion!binary filing!development!public! !
-!DateAndTime class categoriesFor: #today!instance creation!public! !
-!DateAndTime class categoriesFor: #tomorrow!instance creation!public! !
-!DateAndTime class categoriesFor: #utcSeconds:offset:!instance creation!private! !
-!DateAndTime class categoriesFor: #utcSecondsNow!helpers!private! !
-!DateAndTime class categoriesFor: #validateHour:minute:second:!instance creation!private! !
-!DateAndTime class categoriesFor: #validateOffset:!helpers!private! !
-!DateAndTime class categoriesFor: #year:day:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:day:hour:minute:second:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:day:hour:minute:second:offset:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:day:hour:minute:second:offsetSeconds:!instance creation!private! !
-!DateAndTime class categoriesFor: #year:day:offset:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:day:seconds:offset:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:month:day:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:month:day:hour:minute:second:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:month:day:hour:minute:second:offset:!instance creation!public! !
-!DateAndTime class categoriesFor: #year:month:day:hour:minute:second:offsetSeconds:!instance creation!private! !
-!DateAndTime class categoriesFor: #year:month:day:offset:!instance creation!public! !
-!DateAndTime class categoriesFor: #yesterday!instance creation!public! !
+!DateAndTime class categoriesForMethods!
+clockPrecision!constants!public! !
+daysInMonth:forYear:!enquiries!public! !
+daysToMonth:forYear:!enquiries!public! !
+encodeRataDieYear:month:day:!helpers!private! !
+errorInvalidFormat!exceptions!public! !
+fromDate:time:!instance creation!public! !
+fromString:!instance creation!public! !
+fromSYSTEMTIME:!instance creation!public! !
+fromSYSTEMTIME:offset:!instance creation!public! !
+initialize!class initialization!public! !
+isLeapYear:!public!testing! !
+midnight!instance creation!public! !
+now!instance creation!public! !
+nowUTC!instance creation!public! !
+readFrom:!instance creation!public! !
+readOffsetFrom:sign:!helpers!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!development!public! !
+today!instance creation!public! !
+tomorrow!instance creation!public! !
+utcSeconds:offset:!instance creation!private! !
+utcSecondsNow!helpers!private! !
+validateHour:minute:second:!instance creation!private! !
+validateOffset:!helpers!private! !
+year:day:!instance creation!public! !
+year:day:hour:minute:second:!instance creation!public! !
+year:day:hour:minute:second:offset:!instance creation!public! !
+year:day:hour:minute:second:offsetSeconds:!instance creation!private! !
+year:day:offset:!instance creation!public! !
+year:day:seconds:offset:!instance creation!public! !
+year:month:day:!instance creation!public! !
+year:month:day:hour:minute:second:!instance creation!public! !
+year:month:day:hour:minute:second:offset:!instance creation!public! !
+year:month:day:hour:minute:second:offsetSeconds:!instance creation!private! !
+year:month:day:offset:!instance creation!public! !
+yesterday!instance creation!public! !
+!
 
 DateAndTime class methodProtocol: #'DateAndTime factory' attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #clockPrecision #copy #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #now #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #year:day:hour:minute:second: #year:day:hour:minute:second:offset: #year:month:day:hour:minute:second: #year:month:day:hour:minute:second:offset: #yourself)!
 

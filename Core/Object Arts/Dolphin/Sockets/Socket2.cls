@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SocketAbstract2 subclass: #Socket2
 	instanceVariableNames: 'address readStream writeStream isText'
@@ -194,26 +194,28 @@ writeStream
 
 	writeStream isNil ifTrue: [writeStream := SocketWriteStream on: self text: self isText].
 	^writeStream! !
-!Socket2 categoriesFor: #address!accessing!public! !
-!Socket2 categoriesFor: #connect!operations!public! !
-!Socket2 categoriesFor: #hasInput!private!testing! !
-!Socket2 categoriesFor: #initialize!initializing!private! !
-!Socket2 categoriesFor: #isText!public! !
-!Socket2 categoriesFor: #isText:!accessing!public! !
-!Socket2 categoriesFor: #peerAddress!accessing!public! !
-!Socket2 categoriesFor: #port:address:!initializing!private! !
-!Socket2 categoriesFor: #readStream!accessing!public! !
-!Socket2 categoriesFor: #receive:!operations!public! !
-!Socket2 categoriesFor: #receive:count:!operations!public! !
-!Socket2 categoriesFor: #receive:count:startingAt:!operations!public! !
-!Socket2 categoriesFor: #receiveByte!operations!public! !
-!Socket2 categoriesFor: #receiveSome:count:startingAt:!operations!private! !
-!Socket2 categoriesFor: #send:!operations!public! !
-!Socket2 categoriesFor: #send:count:!operations!public! !
-!Socket2 categoriesFor: #send:count:startingAt:!operations!public! !
-!Socket2 categoriesFor: #sendByte:!operations!public! !
-!Socket2 categoriesFor: #sendSome:count:startingAt:!operations!private! !
-!Socket2 categoriesFor: #writeStream!accessing!public! !
+!Socket2 categoriesForMethods!
+address!accessing!public! !
+connect!operations!public! !
+hasInput!private!testing! !
+initialize!initializing!private! !
+isText!public! !
+isText:!accessing!public! !
+peerAddress!accessing!public! !
+port:address:!initializing!private! !
+readStream!accessing!public! !
+receive:!operations!public! !
+receive:count:!operations!public! !
+receive:count:startingAt:!operations!public! !
+receiveByte!operations!public! !
+receiveSome:count:startingAt:!operations!private! !
+send:!operations!public! !
+send:count:!operations!public! !
+send:count:startingAt:!operations!public! !
+sendByte:!operations!public! !
+sendSome:count:startingAt:!operations!private! !
+writeStream!accessing!public! !
+!
 
 !Socket2 class methodsFor!
 
@@ -251,9 +253,11 @@ port: anIntegerPort ipAddress: aByteArray
 	IP address in aByteArray"
 
 	^self port: anIntegerPort address: (InternetAddress ipAddress: aByteArray)! !
-!Socket2 class categoriesFor: #descriptor:port:address:!instance creation!public! !
-!Socket2 class categoriesFor: #new!instance creation!private! !
-!Socket2 class categoriesFor: #port:address:!instance creation!public! !
-!Socket2 class categoriesFor: #port:host:!instance creation!public! !
-!Socket2 class categoriesFor: #port:ipAddress:!instance creation!public! !
+!Socket2 class categoriesForMethods!
+descriptor:port:address:!instance creation!public! !
+new!instance creation!private! !
+port:address:!instance creation!public! !
+port:host:!instance creation!public! !
+port:ipAddress:!instance creation!public! !
+!
 

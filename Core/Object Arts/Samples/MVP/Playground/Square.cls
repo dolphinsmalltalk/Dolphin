@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RegularPolygon subclass: #Square
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ defaultPosition
 	by subclasses that wish to start off at another location"
 
 	^200 @ 100! !
-!Square categoriesFor: #defaultColor!constants!public! !
-!Square categoriesFor: #defaultPosition!constants!public! !
+!Square categoriesForMethods!
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXInterfaceTypeAnalyzer subclass: #TKindInterfaceAnalyzer
 	instanceVariableNames: ''
@@ -32,8 +32,10 @@ vt
 	the receiver."
 
 	^VT_UNKNOWN! !
-!TKindInterfaceAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindInterfaceAnalyzer categoriesFor: #vt!constants!public! !
+!TKindInterfaceAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+vt!constants!public! !
+!
 
 !TKindInterfaceAnalyzer class methodsFor!
 
@@ -41,5 +43,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_INTERFACE! !
-!TKindInterfaceAnalyzer class categoriesFor: #typekind!constants!private! !
+!TKindInterfaceAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

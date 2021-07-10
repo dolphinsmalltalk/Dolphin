@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOINNTPOnPostEarly
 	instanceVariableNames: ''
@@ -36,9 +36,11 @@ OnPostEarly: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
 	^self invalidCall: _failureCode! !
-!CDOINNTPOnPostEarly categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOINNTPOnPostEarly categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOINNTPOnPostEarly categoriesFor: #OnPostEarly:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostEarly!public! !
+!CDOINNTPOnPostEarly categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+OnPostEarly:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPostEarly!public! !
+!
 
 !CDOINNTPOnPostEarly class methodsFor!
 
@@ -58,6 +60,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOINNTPOnPostEarly class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOINNTPOnPostEarly class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOINNTPOnPostEarly class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

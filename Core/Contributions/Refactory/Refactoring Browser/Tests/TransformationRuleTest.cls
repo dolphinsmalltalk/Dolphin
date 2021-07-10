@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FooLintRuleTest subclass: #TransformationRuleTest
 	instanceVariableNames: 'rewriteRule builder class'
@@ -52,14 +52,16 @@ viewResults
 
 	builder inspect.
 	self resetResult! !
-!TransformationRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!TransformationRuleTest categoriesFor: #hasConflicts!public!testing! !
-!TransformationRuleTest categoriesFor: #isEmpty!public!testing! !
-!TransformationRuleTest categoriesFor: #problemCount!accessing!public! !
-!TransformationRuleTest categoriesFor: #resetResult!accessing!public! !
-!TransformationRuleTest categoriesFor: #rewriteUsing:!initialize/release!public! !
-!TransformationRuleTest categoriesFor: #superSends!public!rules! !
-!TransformationRuleTest categoriesFor: #viewResults!private! !
+!TransformationRuleTest categoriesForMethods!
+checkMethod:!accessing!public! !
+hasConflicts!public!testing! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+resetResult!accessing!public! !
+rewriteUsing:!initialize/release!public! !
+superSends!public!rules! !
+viewResults!private! !
+!
 
 !TransformationRuleTest class methodsFor!
 
@@ -286,18 +288,20 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] valueOnUnwindDo: ``@block'))
 		methods: false
 		name: 'Move assignment out of valueNowOrUnwindDo: blocks'! !
-!TransformationRuleTest class categoriesFor: #assignmentInIfTrue!public!transformations! !
-!TransformationRuleTest class categoriesFor: #atIfAbsent!public!transformations! !
-!TransformationRuleTest class categoriesFor: #betweenAnd!public!transformations! !
-!TransformationRuleTest class categoriesFor: #detectIfNone!public!transformations! !
-!TransformationRuleTest class categoriesFor: #equalNil!public!transformations! !
-!TransformationRuleTest class categoriesFor: #guardClause!public!transformations! !
-!TransformationRuleTest class categoriesFor: #initializeAfterLoad1!class initialization!public! !
-!TransformationRuleTest class categoriesFor: #minMax!public!transformations! !
-!TransformationRuleTest class categoriesFor: #notElimination!public!transformations! !
-!TransformationRuleTest class categoriesFor: #nuke!class initialization!public! !
-!TransformationRuleTest class categoriesFor: #rewrite:methods:name:!instance creation!public! !
-!TransformationRuleTest class categoriesFor: #showWhileBlocks!public!transformations! !
-!TransformationRuleTest class categoriesFor: #superSends!public!transformations! !
-!TransformationRuleTest class categoriesFor: #unwindBlocks!public!transformations! !
+!TransformationRuleTest class categoriesForMethods!
+assignmentInIfTrue!public!transformations! !
+atIfAbsent!public!transformations! !
+betweenAnd!public!transformations! !
+detectIfNone!public!transformations! !
+equalNil!public!transformations! !
+guardClause!public!transformations! !
+initializeAfterLoad1!class initialization!public! !
+minMax!public!transformations! !
+notElimination!public!transformations! !
+nuke!class initialization!public! !
+rewrite:methods:name:!instance creation!public! !
+showWhileBlocks!public!transformations! !
+superSends!public!transformations! !
+unwindBlocks!public!transformations! !
+!
 

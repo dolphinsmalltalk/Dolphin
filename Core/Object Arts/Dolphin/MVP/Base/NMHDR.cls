@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #NMHDR
 	instanceVariableNames: ''
@@ -30,10 +30,12 @@ idFrom
 
 itemHandle
 	^self idFrom! !
-!NMHDR categoriesFor: #code!**compiled accessors**!public! !
-!NMHDR categoriesFor: #hwndFrom!**compiled accessors**!public! !
-!NMHDR categoriesFor: #idFrom!**compiled accessors**!public! !
-!NMHDR categoriesFor: #itemHandle!accessing!public! !
+!NMHDR categoriesForMethods!
+code!**compiled accessors**!public! !
+hwndFrom!**compiled accessors**!public! !
+idFrom!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+!
 
 !NMHDR class methodsFor!
 
@@ -60,8 +62,10 @@ new
 
 	^self shouldNotImplement
 ! !
-!NMHDR class categoriesFor: #defineFields!public!template definition! !
-!NMHDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!NMHDR class categoriesFor: #itemFromNMHDR:!public! !
-!NMHDR class categoriesFor: #new!instance creation!public! !
+!NMHDR class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+itemFromNMHDR:!public! !
+new!instance creation!public! !
+!
 

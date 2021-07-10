@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageViewAbstractTest subclass: #ImageViewTest
 	instanceVariableNames: ''
@@ -15,6 +15,8 @@ classToTest
 
 image
 	^Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp' usingLocator: FileLocator installRelative! !
-!ImageViewTest categoriesFor: #classToTest!helpers!private! !
-!ImageViewTest categoriesFor: #image!private!Running! !
+!ImageViewTest categoriesForMethods!
+classToTest!helpers!private! !
+image!private!Running! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Boolean
 	instanceVariableNames: ''
@@ -172,25 +172,27 @@ xor: operand
 	This method was incorrectly defined in Dolphin versions pre-dating beta 2f."
 
 	^self ~~ operand! !
-!Boolean categoriesFor: #&!logical operations!public! !
-!Boolean categoriesFor: #|!logical operations!public! !
-!Boolean categoriesFor: #and:!control flow!public! !
-!Boolean categoriesFor: #asBoolean!converting!public! !
-!Boolean categoriesFor: #asDword!converting!public! !
-!Boolean categoriesFor: #asParameter!converting!public! !
-!Boolean categoriesFor: #asUIntPtr!converting!public! !
-!Boolean categoriesFor: #deepCopy!copying!public! !
-!Boolean categoriesFor: #eqv:!logical operations!public! !
-!Boolean categoriesFor: #ifFalse:!control flow!public! !
-!Boolean categoriesFor: #ifFalse:ifTrue:!control flow!public! !
-!Boolean categoriesFor: #ifTrue:!control flow!public! !
-!Boolean categoriesFor: #ifTrue:ifFalse:!control flow!public! !
-!Boolean categoriesFor: #isAtomic!public!testing! !
-!Boolean categoriesFor: #isLiteral!public!testing! !
-!Boolean categoriesFor: #not!logical operations!public! !
-!Boolean categoriesFor: #or:!control flow!public! !
-!Boolean categoriesFor: #shallowCopy!copying!public! !
-!Boolean categoriesFor: #xor:!logical operations!public! !
+!Boolean categoriesForMethods!
+&!logical operations!public! !
+|!logical operations!public! !
+and:!control flow!public! !
+asBoolean!converting!public! !
+asDword!converting!public! !
+asParameter!converting!public! !
+asUIntPtr!converting!public! !
+deepCopy!copying!public! !
+eqv:!logical operations!public! !
+ifFalse:!control flow!public! !
+ifFalse:ifTrue:!control flow!public! !
+ifTrue:!control flow!public! !
+ifTrue:ifFalse:!control flow!public! !
+isAtomic!public!testing! !
+isLiteral!public!testing! !
+not!logical operations!public! !
+or:!control flow!public! !
+shallowCopy!copying!public! !
+xor:!logical operations!public! !
+!
 
 Boolean methodProtocol: #boolean attributes: #(#ansi #readOnly) selectors: #(#& #| #and: #eqv: #ifFalse: #ifFalse:ifTrue: #ifTrue: #ifTrue:ifFalse: #not #or: #xor:)!
 
@@ -201,5 +203,7 @@ new
 	and 'false'."
 
 	^self shouldNotImplement! !
-!Boolean class categoriesFor: #new!instance creation!public! !
+!Boolean class categoriesForMethods!
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusInitializerTest
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ GdiplusInitializerTest comment: ''!
 setUp
 	super setUp.
 	model := GdiplusTestInitializer new! !
-!GdiplusInitializerTest categoriesFor: #setUp!public!setup! !
+!GdiplusInitializerTest categoriesForMethods!
+setUp!public!setup! !
+!
 

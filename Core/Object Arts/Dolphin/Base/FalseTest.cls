@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #FalseTest
 	instanceVariableNames: ''
@@ -53,15 +53,17 @@ testPrintOn
 	stream := String writeStream.
 	false printOn: stream.
 	self assert: stream contents equals: 'false'! !
-!FalseTest categoriesFor: #testAnd!public!testing! !
-!FalseTest categoriesFor: #testAND!public!testing! !
-!FalseTest categoriesFor: #testIfFalse!public!testing! !
-!FalseTest categoriesFor: #testIfFalseIfTrue!public!testing! !
-!FalseTest categoriesFor: #testIfTrue!public!testing! !
-!FalseTest categoriesFor: #testIfTrueIfFalse!public!testing! !
-!FalseTest categoriesFor: #testNew!public!testing! !
-!FalseTest categoriesFor: #testNot!public!testing! !
-!FalseTest categoriesFor: #testOr!public!testing! !
-!FalseTest categoriesFor: #testOR!public!testing! !
-!FalseTest categoriesFor: #testPrintOn!public!testing! !
+!FalseTest categoriesForMethods!
+testAnd!public!testing! !
+testAND!public!testing! !
+testIfFalse!public!testing! !
+testIfFalseIfTrue!public!testing! !
+testIfTrue!public!testing! !
+testIfTrueIfFalse!public!testing! !
+testNew!public!testing! !
+testNot!public!testing! !
+testOr!public!testing! !
+testOR!public!testing! !
+testPrintOn!public!testing! !
+!
 

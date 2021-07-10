@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ArrayFieldLength
 	instanceVariableNames: ''
@@ -37,10 +37,12 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	^self subclassResponsibility! !
-!ArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
-!ArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!ArrayFieldLength categoriesFor: #isFixedSize!private!testing! !
-!ArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!ArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!ArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!ArrayFieldLength categoriesForMethods!
+allocationLength!accessing!private! !
+getElementCountOf:in:!indirect accessing!private! !
+isFixedSize!private!testing! !
+printElementCountExpressionFor:on:!automatic generation!private! !
+printSetSizeFor:on:!automatic generation!development!private! !
+setElementCount:of:in:!indirect accessing!private! !
+!
 

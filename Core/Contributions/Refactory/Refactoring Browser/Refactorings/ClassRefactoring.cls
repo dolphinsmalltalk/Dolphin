@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Refactoring subclass: #ClassRefactoring
 	instanceVariableNames: 'className'
@@ -15,8 +15,10 @@ className
 
 className: aString 
 	className := aString asSymbol! !
-!ClassRefactoring categoriesFor: #className!accessing!public! !
-!ClassRefactoring categoriesFor: #className:!accessing!public! !
+!ClassRefactoring categoriesForMethods!
+className!accessing!public! !
+className:!accessing!public! !
+!
 
 !ClassRefactoring class methodsFor!
 
@@ -28,6 +30,8 @@ model: aRBNamespace className: aName
 		model: aRBNamespace;
 		className: aName;
 		yourself! !
-!ClassRefactoring class categoriesFor: #className:!instance creation!public! !
-!ClassRefactoring class categoriesFor: #model:className:!instance creation!public! !
+!ClassRefactoring class categoriesForMethods!
+className:!instance creation!public! !
+model:className:!instance creation!public! !
+!
 

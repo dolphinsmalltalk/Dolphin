@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalRectangle subclass: #RECTF
 	instanceVariableNames: ''
@@ -83,19 +83,21 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
-!RECTF categoriesFor: #asRectangle!converting!public! !
-!RECTF categoriesFor: #bottom!accessing!public! !
-!RECTF categoriesFor: #height!**compiled accessors**!public! !
-!RECTF categoriesFor: #height:!**compiled accessors**!public! !
-!RECTF categoriesFor: #left!public! !
-!RECTF categoriesFor: #right!accessing!public! !
-!RECTF categoriesFor: #top!public! !
-!RECTF categoriesFor: #width!**compiled accessors**!public! !
-!RECTF categoriesFor: #width:!**compiled accessors**!public! !
-!RECTF categoriesFor: #x!**compiled accessors**!public! !
-!RECTF categoriesFor: #x:!**compiled accessors**!public! !
-!RECTF categoriesFor: #y!**compiled accessors**!public! !
-!RECTF categoriesFor: #y:!**compiled accessors**!public! !
+!RECTF categoriesForMethods!
+asRectangle!converting!public! !
+bottom!accessing!public! !
+height!**compiled accessors**!public! !
+height:!**compiled accessors**!public! !
+left!public! !
+right!accessing!public! !
+top!public! !
+width!**compiled accessors**!public! !
+width:!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !RECTF class methodsFor!
 
@@ -151,10 +153,12 @@ left: left top: top width: width height: height
 
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: 16)! !
-!RECTF class categoriesFor: #defineFields!public!template definition! !
-!RECTF class categoriesFor: #fromRectangle:!instance creation!public! !
-!RECTF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!RECTF class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!RECTF class categoriesFor: #left:top:width:height:!instance creation!public! !
-!RECTF class categoriesFor: #newBuffer!instance creation!public! !
+!RECTF class categoriesForMethods!
+defineFields!public!template definition! !
+fromRectangle:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+left:top:right:bottom:!instance creation!public! !
+left:top:width:height:!instance creation!public! !
+newBuffer!instance creation!public! !
+!
 

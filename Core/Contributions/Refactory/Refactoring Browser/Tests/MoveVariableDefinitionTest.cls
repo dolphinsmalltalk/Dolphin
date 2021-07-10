@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #MoveVariableDefinitionTest
 	instanceVariableNames: ''
@@ -82,8 +82,10 @@ testNonExistantName
 				selector: #displayName.
 	self proceedThroughWarning: 
 			[self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal]! !
-!MoveVariableDefinitionTest categoriesFor: #testMoveDefinition!public!tests! !
-!MoveVariableDefinitionTest categoriesFor: #testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !
-!MoveVariableDefinitionTest categoriesFor: #testNoMoveDefinition!public!tests! !
-!MoveVariableDefinitionTest categoriesFor: #testNonExistantName!public!tests! !
+!MoveVariableDefinitionTest categoriesForMethods!
+testMoveDefinition!public!tests! !
+testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !
+testNoMoveDefinition!public!tests! !
+testNonExistantName!public!tests! !
+!
 

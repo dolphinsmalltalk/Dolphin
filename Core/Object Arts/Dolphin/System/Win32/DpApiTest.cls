@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DpApiTest
 	instanceVariableNames: ''
@@ -36,6 +36,8 @@ verifyRoundTrip: aByteObject
 		should: [Crypt32Library unprotectData: encryptedExtra additionalEntropy: #[4 5 6]]
 		raise: Win32Error
 		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA]! !
-!DpApiTest categoriesFor: #testProtectUnprotectData!public!unit tests! !
-!DpApiTest categoriesFor: #verifyRoundTrip:!helpers!private! !
+!DpApiTest categoriesForMethods!
+testProtectUnprotectData!public!unit tests! !
+verifyRoundTrip:!helpers!private! !
+!
 

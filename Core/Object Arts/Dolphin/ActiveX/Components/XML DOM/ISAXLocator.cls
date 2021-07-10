@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISAXLocator
 	instanceVariableNames: ''
@@ -111,14 +111,16 @@ GetSystemId: ppwchSystemId
 
 	<virtual stdcall: hresult 7 word**>
 	^self invalidCall: _failureCode! !
-!ISAXLocator categoriesFor: #getColumnNumber!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!ISAXLocator categoriesFor: #getLineNumber!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetLineNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!ISAXLocator categoriesFor: #getPublicId!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetPublicId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
-!ISAXLocator categoriesFor: #getSystemId!**auto generated**!methods!public! !
-!ISAXLocator categoriesFor: #GetSystemId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!ISAXLocator categoriesForMethods!
+getColumnNumber!**auto generated**!methods!public! !
+GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+getLineNumber!**auto generated**!methods!public! !
+GetLineNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+getPublicId!**auto generated**!methods!public! !
+GetPublicId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+getSystemId!**auto generated**!methods!public! !
+GetSystemId:!**auto generated**!COM Interfaces-ISAXLocator!private! !
+!
 
 !ISAXLocator class methodsFor!
 
@@ -136,5 +138,7 @@ defineFunctions
 		defineFunction: #GetSystemId:
 			argumentTypes: 'word**'
 ! !
-!ISAXLocator class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISAXLocator class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

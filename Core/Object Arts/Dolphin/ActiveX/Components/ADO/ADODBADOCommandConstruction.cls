@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ADODBADOCommandConstruction
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ put_OLEDBCommand: ppOLEDBCommand
 
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode! !
-!ADODBADOCommandConstruction categoriesFor: #get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
-!ADODBADOCommandConstruction categoriesFor: #oledbCommand!**auto generated**!properties!public! !
-!ADODBADOCommandConstruction categoriesFor: #oledbCommand:!**auto generated**!properties!public! !
-!ADODBADOCommandConstruction categoriesFor: #put_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+!ADODBADOCommandConstruction categoriesForMethods!
+get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+oledbCommand!**auto generated**!properties!public! !
+oledbCommand:!**auto generated**!properties!public! !
+put_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
+!
 
 !ADODBADOCommandConstruction class methodsFor!
 
@@ -62,5 +64,7 @@ defineFunctions
 		defineFunction: #put_OLEDBCommand:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODBADOCommandConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBADOCommandConstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

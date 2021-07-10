@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableItemsTest subclass: #SelectableTreeItemsTest
 	instanceVariableNames: ''
@@ -228,15 +228,17 @@ testSetTextBlockDoesNotAffectSelection
 
 treeModel
 	^presenter model! !
-!SelectableTreeItemsTest categoriesFor: #addAllObjects:!private!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #addAllTestObjects!private!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #addRoot:!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #objectsToTest!helpers!private! !
-!SelectableTreeItemsTest categoriesFor: #testAddRemove!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testHierarchyMove!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSelection!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSelectionChangeTriggeredOnRemove!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
-!SelectableTreeItemsTest categoriesFor: #treeModel!public!unit tests! !
+!SelectableTreeItemsTest categoriesForMethods!
+addAllObjects:!private!unit tests! !
+addAllTestObjects!private!unit tests! !
+addRoot:!public!unit tests! !
+objectsToTest!helpers!private! !
+testAddRemove!public!unit tests! !
+testHierarchyMove!public!unit tests! !
+testSelection!public!unit tests! !
+testSelectionChangeTriggeredOnRemove!public!unit tests! !
+testSetImageBlockDoesNotAffectSelection!public!unit tests! !
+testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+treeModel!public!unit tests! !
+!
 

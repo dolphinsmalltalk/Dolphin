@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONReference subclass: #DolphinSTONReference
 	instanceVariableNames: 'refCount'
@@ -19,7 +19,9 @@ index: integer
 
 refCount
 	^refCount! !
-!DolphinSTONReference categoriesFor: #addReference!public! !
-!DolphinSTONReference categoriesFor: #index:!initializing!private! !
-!DolphinSTONReference categoriesFor: #refCount!accessing!public! !
+!DolphinSTONReference categoriesForMethods!
+addReference!public! !
+index:!initializing!private! !
+refCount!accessing!public! !
+!
 

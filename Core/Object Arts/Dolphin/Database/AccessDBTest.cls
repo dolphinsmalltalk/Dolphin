@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBConnectionTest subclass: #AccessDBTest
 	instanceVariableNames: ''
@@ -97,19 +97,23 @@ testViewsQuery
 	views := connection views.
 	self assert: (views
 				noDifference: #('Alphabetical List of Products' 'Category Sales for 1997' 'Current Product List' 'Customers and Suppliers by City' 'Employee Sales by Country' 'Invoices' 'Invoices Filter' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Quarterly Orders by Product' 'Sales by Category' 'Sales by Year' 'Ten Most Expensive Products'))! !
-!AccessDBTest categoriesFor: #databaseResource!private! !
-!AccessDBTest categoriesFor: #dbmsFeaturesMap!private! !
-!AccessDBTest categoriesFor: #queryColumns!private! !
-!AccessDBTest categoriesFor: #testAccessConnectionAttributes!public!unit tests! !
-!AccessDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testTablesQuery!public!unit tests! !
-!AccessDBTest categoriesFor: #testViewsQuery!public!unit tests! !
+!AccessDBTest categoriesForMethods!
+databaseResource!private! !
+dbmsFeaturesMap!private! !
+queryColumns!private! !
+testAccessConnectionAttributes!public!unit tests! !
+testForeignKeysQuery!public!unit tests! !
+testPrimaryKeysQuery!public!unit tests! !
+testProceduresQuery!public!unit tests! !
+testTablesQuery!public!unit tests! !
+testViewsQuery!public!unit tests! !
+!
 
 !AccessDBTest class methodsFor!
 
 resources
 	^{AccessNorthwindDB}! !
-!AccessDBTest class categoriesFor: #resources!public! !
+!AccessDBTest class categoriesForMethods!
+resources!public! !
+!
 

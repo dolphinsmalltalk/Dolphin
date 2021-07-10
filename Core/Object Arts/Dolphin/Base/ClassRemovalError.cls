@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #ClassRemovalError
 	instanceVariableNames: 'originalError'
@@ -27,7 +27,9 @@ originalError: anError
 	in the receivers tag field."
 
 	originalError := anError! !
-!ClassRemovalError categoriesFor: #isResumable!public!testing! !
-!ClassRemovalError categoriesFor: #originalError!accessing!public! !
-!ClassRemovalError categoriesFor: #originalError:!accessing!public! !
+!ClassRemovalError categoriesForMethods!
+isResumable!public!testing! !
+originalError!accessing!public! !
+originalError:!accessing!public! !
+!
 

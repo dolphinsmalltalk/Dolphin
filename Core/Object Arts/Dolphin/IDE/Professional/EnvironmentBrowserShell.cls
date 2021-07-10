@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassBrowserAbstract subclass: #EnvironmentBrowserShell
 	instanceVariableNames: ''
@@ -172,24 +172,26 @@ toggleLocalHierarchy
 			classesPresenter model: self model classHierarchy.
 			actualClass notNil ifTrue: [self actualClass: actualClass]].
 	self validateUserInterface! !
-!EnvironmentBrowserShell categoriesFor: #browseExecutableManifest!commands!public! !
-!EnvironmentBrowserShell categoriesFor: #browseExecutableManifestFile:!commands!public! !
-!EnvironmentBrowserShell categoriesFor: #browserEnvironment:!accessing!public! !
-!EnvironmentBrowserShell categoriesFor: #browseUnimplemented!commands!public! !
-!EnvironmentBrowserShell categoriesFor: #createComponents!initializing!public! !
-!EnvironmentBrowserShell categoriesFor: #defaultHelpId!constants!public! !
-!EnvironmentBrowserShell categoriesFor: #displayLocalHierarchyOf:!private!updating! !
-!EnvironmentBrowserShell categoriesFor: #isLocalHierarchyMode!private!testing! !
-!EnvironmentBrowserShell categoriesFor: #isLocalHierarchyMode:!accessing!private! !
-!EnvironmentBrowserShell categoriesFor: #isMethodVisible:!private!testing! !
-!EnvironmentBrowserShell categoriesFor: #onTipTextRequired:!event handling!private! !
-!EnvironmentBrowserShell categoriesFor: #printCaptionForClass:on:!private!updating! !
-!EnvironmentBrowserShell categoriesFor: #printCaptionForMethod:on:!private!updating! !
-!EnvironmentBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!EnvironmentBrowserShell categoriesFor: #resetFor:!commands!public! !
-!EnvironmentBrowserShell categoriesFor: #saveStateOn:!private!saved state! !
-!EnvironmentBrowserShell categoriesFor: #searchEnvironment!commands!public! !
-!EnvironmentBrowserShell categoriesFor: #toggleLocalHierarchy!commands!public! !
+!EnvironmentBrowserShell categoriesForMethods!
+browseExecutableManifest!commands!public! !
+browseExecutableManifestFile:!commands!public! !
+browserEnvironment:!accessing!public! !
+browseUnimplemented!commands!public! !
+createComponents!initializing!public! !
+defaultHelpId!constants!public! !
+displayLocalHierarchyOf:!private!updating! !
+isLocalHierarchyMode!private!testing! !
+isLocalHierarchyMode:!accessing!private! !
+isMethodVisible:!private!testing! !
+onTipTextRequired:!event handling!private! !
+printCaptionForClass:on:!private!updating! !
+printCaptionForMethod:on:!private!updating! !
+queryCommand:!commands!private! !
+resetFor:!commands!public! !
+saveStateOn:!private!saved state! !
+searchEnvironment!commands!public! !
+toggleLocalHierarchy!commands!public! !
+!
 
 !EnvironmentBrowserShell class methodsFor!
 
@@ -260,13 +262,15 @@ toolsFolderIcon
 				caption: desc;
 				show]
 		helpId: self toolsFolderHelpId! !
-!EnvironmentBrowserShell class categoriesFor: #displayOn:!displaying!public! !
-!EnvironmentBrowserShell class categoriesFor: #icon!constants!public! !
-!EnvironmentBrowserShell class categoriesFor: #initialize!initializing!private! !
-!EnvironmentBrowserShell class categoriesFor: #initializeTool!initializing!private! !
-!EnvironmentBrowserShell class categoriesFor: #onEnvironment:!instance creation!public! !
-!EnvironmentBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!EnvironmentBrowserShell class categoriesFor: #toolDescription!constants!public! !
-!EnvironmentBrowserShell class categoriesFor: #toolsFolderHelpId!constants!public! !
-!EnvironmentBrowserShell class categoriesFor: #toolsFolderIcon!constants!public! !
+!EnvironmentBrowserShell class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+initializeTool!initializing!private! !
+onEnvironment:!instance creation!public! !
+resource_Default_view!public!resources-views! !
+toolDescription!constants!public! !
+toolsFolderHelpId!constants!public! !
+toolsFolderIcon!constants!public! !
+!
 

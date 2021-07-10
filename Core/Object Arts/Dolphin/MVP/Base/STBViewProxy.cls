@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
@@ -206,32 +206,34 @@ viewClass: aClass
 	"Set the class of <View> of which the receiver is representing an instance."
 
 	viewClass := aClass! !
-!STBViewProxy categoriesFor: #beTopView!accessing!public! !
-!STBViewProxy categoriesFor: #clearSubViews!accessing!public! !
-!STBViewProxy categoriesFor: #connectModel!models!public! !
-!STBViewProxy categoriesFor: #getEvents!events!private! !
-!STBViewProxy categoriesFor: #icon!accessing!private! !
-!STBViewProxy categoriesFor: #instVars!accessing!public! !
-!STBViewProxy categoriesFor: #instVars:!accessing!public! !
-!STBViewProxy categoriesFor: #isTopView!accessing!private! !
-!STBViewProxy categoriesFor: #nameOf:!accessing!public! !
-!STBViewProxy categoriesFor: #parentView:!accessing!private! !
-!STBViewProxy categoriesFor: #placement!accessing!public! !
-!STBViewProxy categoriesFor: #printOn:!development!printing!public! !
-!STBViewProxy categoriesFor: #resolution!accessing!private! !
-!STBViewProxy categoriesFor: #resolution:!accessing!private! !
-!STBViewProxy categoriesFor: #restoreFromProxy:!binary filing!private! !
-!STBViewProxy categoriesFor: #restoreTopView!converting!private! !
-!STBViewProxy categoriesFor: #restoreView!converting!private! !
-!STBViewProxy categoriesFor: #setEvents:!events!private! !
-!STBViewProxy categoriesFor: #setView:!accessing!public! !
-!STBViewProxy categoriesFor: #state!accessing!public! !
-!STBViewProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBViewProxy categoriesFor: #subViews!accessing!public! !
-!STBViewProxy categoriesFor: #version!accessing!public! !
-!STBViewProxy categoriesFor: #version:!accessing!public! !
-!STBViewProxy categoriesFor: #viewClass!accessing!public! !
-!STBViewProxy categoriesFor: #viewClass:!accessing!public! !
+!STBViewProxy categoriesForMethods!
+beTopView!accessing!public! !
+clearSubViews!accessing!public! !
+connectModel!models!public! !
+getEvents!events!private! !
+icon!accessing!private! !
+instVars!accessing!public! !
+instVars:!accessing!public! !
+isTopView!accessing!private! !
+nameOf:!accessing!public! !
+parentView:!accessing!private! !
+placement!accessing!public! !
+printOn:!development!printing!public! !
+resolution!accessing!private! !
+resolution:!accessing!private! !
+restoreFromProxy:!binary filing!private! !
+restoreTopView!converting!private! !
+restoreView!converting!private! !
+setEvents:!events!private! !
+setView:!accessing!public! !
+state!accessing!public! !
+stbFixup:at:!converting!public! !
+subViews!accessing!public! !
+version!accessing!public! !
+version:!accessing!public! !
+viewClass!accessing!public! !
+viewClass:!accessing!public! !
+!
 
 !STBViewProxy class methodsFor!
 
@@ -300,8 +302,10 @@ stbVersion
 	 so if you are changing this number, THINK AGAIN."
 
 	^10! !
-!STBViewProxy class categoriesFor: #forView:!instance creation!public! !
-!STBViewProxy class categoriesFor: #initialize!development!initializing!public! !
-!STBViewProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!STBViewProxy class categoriesFor: #stbVersion!binary filing!public! !
+!STBViewProxy class categoriesForMethods!
+forView:!instance creation!public! !
+initialize!development!initializing!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

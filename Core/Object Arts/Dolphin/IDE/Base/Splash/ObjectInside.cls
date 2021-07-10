@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ObjectInside
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
@@ -200,36 +200,38 @@ y
 
 y: aNumber
 	self position: self position x @ aNumber! !
-!ObjectInside categoriesFor: #alpha!accessing!public! !
-!ObjectInside categoriesFor: #alpha:!accessing!public! !
-!ObjectInside categoriesFor: #baseColor!accessing!public! !
-!ObjectInside categoriesFor: #baseColor:!accessing!public! !
-!ObjectInside categoriesFor: #center!accessing!public! !
-!ObjectInside categoriesFor: #color!accessing!public! !
-!ObjectInside categoriesFor: #color:!accessing!public! !
-!ObjectInside categoriesFor: #copy!copying!public! !
-!ObjectInside categoriesFor: #drawEdgePointsOn:!operations!public! !
-!ObjectInside categoriesFor: #drawOn:!operations!public! !
-!ObjectInside categoriesFor: #edgePoints!accessing!public! !
-!ObjectInside categoriesFor: #edgePoints:!accessing!public! !
-!ObjectInside categoriesFor: #extent!accessing!public! !
-!ObjectInside categoriesFor: #findEdgePoints!operations!private! !
-!ObjectInside categoriesFor: #image!private! !
-!ObjectInside categoriesFor: #initialize!private! !
-!ObjectInside categoriesFor: #matrix!accessing!operations!public! !
-!ObjectInside categoriesFor: #position!accessing!public! !
-!ObjectInside categoriesFor: #position:!accessing!public! !
-!ObjectInside categoriesFor: #resetMatrix!operations!public! !
-!ObjectInside categoriesFor: #rotation!accessing!public! !
-!ObjectInside categoriesFor: #rotation:!accessing!public! !
-!ObjectInside categoriesFor: #scale!accessing!public! !
-!ObjectInside categoriesFor: #scale:!accessing!public! !
-!ObjectInside categoriesFor: #setImage:!private! !
-!ObjectInside categoriesFor: #testCollisionIn:!accessing!public! !
-!ObjectInside categoriesFor: #x!accessing!public! !
-!ObjectInside categoriesFor: #x:!accessing!public! !
-!ObjectInside categoriesFor: #y!accessing!public! !
-!ObjectInside categoriesFor: #y:!accessing!public! !
+!ObjectInside categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+baseColor!accessing!public! !
+baseColor:!accessing!public! !
+center!accessing!public! !
+color!accessing!public! !
+color:!accessing!public! !
+copy!copying!public! !
+drawEdgePointsOn:!operations!public! !
+drawOn:!operations!public! !
+edgePoints!accessing!public! !
+edgePoints:!accessing!public! !
+extent!accessing!public! !
+findEdgePoints!operations!private! !
+image!private! !
+initialize!private! !
+matrix!accessing!operations!public! !
+position!accessing!public! !
+position:!accessing!public! !
+resetMatrix!operations!public! !
+rotation!accessing!public! !
+rotation:!accessing!public! !
+scale!accessing!public! !
+scale:!accessing!public! !
+setImage:!private! !
+testCollisionIn:!accessing!public! !
+x!accessing!public! !
+x:!accessing!public! !
+y!accessing!public! !
+y:!accessing!public! !
+!
 
 !ObjectInside class methodsFor!
 
@@ -252,8 +254,10 @@ fromImage: aGdiplusImage scaledBy: aFloatScale
 	aFloatScale = 1 ifTrue: [^self fromImage: aGdiplusImage].
 	scaledBitmap := GdiplusBitmap fromImage: aGdiplusImage scaledBy: aFloatScale.
 	^self fromImage: scaledBitmap! !
-!ObjectInside class categoriesFor: #chooseFile!public! !
-!ObjectInside class categoriesFor: #fromBytes:!public! !
-!ObjectInside class categoriesFor: #fromImage:!public! !
-!ObjectInside class categoriesFor: #fromImage:scaledBy:!public! !
+!ObjectInside class categoriesForMethods!
+chooseFile!public! !
+fromBytes:!public! !
+fromImage:!public! !
+fromImage:scaledBy:!public! !
+!
 

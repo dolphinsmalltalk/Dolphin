@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CapturingInteractor subclass: #ButtonInteractor
 	instanceVariableNames: 'buttonRect _unused5 commandDescription'
@@ -112,24 +112,26 @@ startCaptureOn: aMouseEvent
 		ifTrue: [self onMouseMoved: aMouseEvent]
 		ifFalse: [self onLeftButtonPressed: aMouseEvent].
 	self captureMouse! !
-!ButtonInteractor categoriesFor: #buttonRectangle!accessing!public! !
-!ButtonInteractor categoriesFor: #buttonRectangle:!accessing!public! !
-!ButtonInteractor categoriesFor: #buttonState!public! !
-!ButtonInteractor categoriesFor: #buttonState:!public! !
-!ButtonInteractor categoriesFor: #changeHotState:!helpers!private! !
-!ButtonInteractor categoriesFor: #commandDescription!accessing!public! !
-!ButtonInteractor categoriesFor: #commandDescription:!accessing!public! !
-!ButtonInteractor categoriesFor: #fireCommand!event handling!private! !
-!ButtonInteractor categoriesFor: #hitTest:!helpers!private! !
-!ButtonInteractor categoriesFor: #invalidateUIState!helpers!private! !
-!ButtonInteractor categoriesFor: #isHot:!public! !
-!ButtonInteractor categoriesFor: #isPressed!public! !
-!ButtonInteractor categoriesFor: #isPressed:!public! !
-!ButtonInteractor categoriesFor: #onLeftButtonPressed:!initializing!private! !
-!ButtonInteractor categoriesFor: #onLeftButtonReleased:!event handling!private! !
-!ButtonInteractor categoriesFor: #onMouseMoved:!event handling!private! !
-!ButtonInteractor categoriesFor: #setPresenter:!accessing!private! !
-!ButtonInteractor categoriesFor: #startCaptureOn:!initializing!public! !
+!ButtonInteractor categoriesForMethods!
+buttonRectangle!accessing!public! !
+buttonRectangle:!accessing!public! !
+buttonState!public! !
+buttonState:!public! !
+changeHotState:!helpers!private! !
+commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
+fireCommand!event handling!private! !
+hitTest:!helpers!private! !
+invalidateUIState!helpers!private! !
+isHot:!public! !
+isPressed!public! !
+isPressed:!public! !
+onLeftButtonPressed:!initializing!private! !
+onLeftButtonReleased:!event handling!private! !
+onMouseMoved:!event handling!private! !
+setPresenter:!accessing!private! !
+startCaptureOn:!initializing!public! !
+!
 
 !ButtonInteractor class methodsFor!
 
@@ -140,5 +142,7 @@ stbConvertToVersion1: anArray
 		at: 3 put: (anArray at: 4);
 		at: 5 put: nil;
 		yourself! !
-!ButtonInteractor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!ButtonInteractor class categoriesForMethods!
+stbConvertToVersion1:!binary filing!private! !
+!
 

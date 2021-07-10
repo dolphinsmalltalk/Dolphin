@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #ICONINFO
 	instanceVariableNames: ''
@@ -81,15 +81,17 @@ yHotspot
 	"Answer the <Integer> value of the receiver's 'yHotspot' field."
 
 	^bytes dwordAtOffset: _OffsetOf_yHotspot! !
-!ICONINFO categoriesFor: #extent!accessing!public! !
-!ICONINFO categoriesFor: #free!public!realizing/unrealizing! !
-!ICONINFO categoriesFor: #hbmColor!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #hbmColor:!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #hbmMask!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #hbmMask:!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #initialize!initializing!private! !
-!ICONINFO categoriesFor: #xHotspot!**compiled accessors**!public! !
-!ICONINFO categoriesFor: #yHotspot!**compiled accessors**!public! !
+!ICONINFO categoriesForMethods!
+extent!accessing!public! !
+free!public!realizing/unrealizing! !
+hbmColor!**compiled accessors**!public! !
+hbmColor:!**compiled accessors**!public! !
+hbmMask!**compiled accessors**!public! !
+hbmMask:!**compiled accessors**!public! !
+initialize!initializing!private! !
+xHotspot!**compiled accessors**!public! !
+yHotspot!**compiled accessors**!public! !
+!
 
 !ICONINFO class methodsFor!
 
@@ -117,6 +119,8 @@ defineFields
 
 getFieldNames
 	^#(#fIcon #xHotspot #yHotspot #hbmMask #hbmColor)! !
-!ICONINFO class categoriesFor: #defineFields!development!public!template definition! !
-!ICONINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ICONINFO class categoriesForMethods!
+defineFields!development!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

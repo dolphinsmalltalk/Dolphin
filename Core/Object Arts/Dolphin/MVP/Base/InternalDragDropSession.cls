@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DragDropSession subclass: #InternalDragDropSession
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
@@ -254,26 +254,28 @@ startTrackingAt: aPoint
 	self beginDragImage.
 	self giveFeedback.
 	^self dragPoint! !
-!InternalDragDropSession categoriesFor: #beginDragImage!public!tracking! !
-!InternalDragDropSession categoriesFor: #buildDragImageList!private!tracking! !
-!InternalDragDropSession categoriesFor: #cancelTrackingAt:!public!tracking! !
-!InternalDragDropSession categoriesFor: #continueTrackingAt:from:!public!tracking! !
-!InternalDragDropSession categoriesFor: #defaultDragColorDepth!accessing!private! !
-!InternalDragDropSession categoriesFor: #doDragDropAt:button:!operations!public! !
-!InternalDragDropSession categoriesFor: #dragObjectClass!constants!public! !
-!InternalDragDropSession categoriesFor: #dropTargetUnder:!helpers!private!tracking! !
-!InternalDragDropSession categoriesFor: #endTrackingAt:!public!tracking! !
-!InternalDragDropSession categoriesFor: #getExtendedOperation!operations!private! !
-!InternalDragDropSession categoriesFor: #giveCursorFeedback!operations!private!wine fix! !
-!InternalDragDropSession categoriesFor: #giveFeedback!operations!private!wine fix! !
-!InternalDragDropSession categoriesFor: #hideDragImage!operations!public! !
-!InternalDragDropSession categoriesFor: #isExtendedDrag!public!testing! !
-!InternalDragDropSession categoriesFor: #operationDescriptions!accessing!public! !
-!InternalDragDropSession categoriesFor: #operationDescriptions:!accessing!public! !
-!InternalDragDropSession categoriesFor: #promptForDropOperation!operations!private! !
-!InternalDragDropSession categoriesFor: #showDragImage!operations!public! !
-!InternalDragDropSession categoriesFor: #solidifyOperation!operations!private! !
-!InternalDragDropSession categoriesFor: #startTrackingAt:!public!tracking! !
+!InternalDragDropSession categoriesForMethods!
+beginDragImage!public!tracking! !
+buildDragImageList!private!tracking! !
+cancelTrackingAt:!public!tracking! !
+continueTrackingAt:from:!public!tracking! !
+defaultDragColorDepth!accessing!private! !
+doDragDropAt:button:!operations!public! !
+dragObjectClass!constants!public! !
+dropTargetUnder:!helpers!private!tracking! !
+endTrackingAt:!public!tracking! !
+getExtendedOperation!operations!private! !
+giveCursorFeedback!operations!private!wine fix! !
+giveFeedback!operations!private!wine fix! !
+hideDragImage!operations!public! !
+isExtendedDrag!public!testing! !
+operationDescriptions!accessing!public! !
+operationDescriptions:!accessing!public! !
+promptForDropOperation!operations!private! !
+showDragImage!operations!public! !
+solidifyOperation!operations!private! !
+startTrackingAt:!public!tracking! !
+!
 
 InternalDragDropSession methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 

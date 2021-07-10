@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #InternalBitmap
 	instanceVariableNames: 'gdiplusBitmap'
@@ -152,30 +152,32 @@ printOn: aStream
 
 setBitmap: aGdiplusBitmap 
 	gdiplusBitmap := aGdiplusBitmap! !
-!InternalBitmap categoriesFor: #=!comparing!comparison!public! !
-!InternalBitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!InternalBitmap categoriesFor: #asBitmap!public! !
-!InternalBitmap categoriesFor: #asByteArray!converting!public! !
-!InternalBitmap categoriesFor: #asIcon!public! !
-!InternalBitmap categoriesFor: #asSharedCopy!converting!public! !
-!InternalBitmap categoriesFor: #bitmap!accessing!public! !
-!InternalBitmap categoriesFor: #bounds!accessing!public! !
-!InternalBitmap categoriesFor: #doDrawWithCanvas:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!InternalBitmap categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!InternalBitmap categoriesFor: #extent!accessing!public! !
-!InternalBitmap categoriesFor: #fullIdentifier!public! !
-!InternalBitmap categoriesFor: #gdiplusBitmap!initializing!private! !
-!InternalBitmap categoriesFor: #graphics!accessing!drawing-gdiplus!public! !
-!InternalBitmap categoriesFor: #handle!public! !
-!InternalBitmap categoriesFor: #hash!comparing!comparison!public! !
-!InternalBitmap categoriesFor: #imageType!public! !
-!InternalBitmap categoriesFor: #internalize!public! !
-!InternalBitmap categoriesFor: #isShared:!public! !
-!InternalBitmap categoriesFor: #printOn:!printing!public! !
-!InternalBitmap categoriesFor: #setBitmap:!initializing!private! !
+!InternalBitmap categoriesForMethods!
+=!comparing!comparison!public! !
+addToImageList:mask:!double dispatch!private! !
+asBitmap!public! !
+asByteArray!converting!public! !
+asIcon!public! !
+asSharedCopy!converting!public! !
+bitmap!accessing!public! !
+bounds!accessing!public! !
+doDrawWithCanvas:!drawing-bitmaps!public! !
+drawOn:!drawing-bitmaps!public! !
+drawOn:at:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+extent!accessing!public! !
+fullIdentifier!public! !
+gdiplusBitmap!initializing!private! !
+graphics!accessing!drawing-gdiplus!public! !
+handle!public! !
+hash!comparing!comparison!public! !
+imageType!public! !
+internalize!public! !
+isShared:!public! !
+printOn:!printing!public! !
+setBitmap:!initializing!private! !
+!
 
 !InternalBitmap class methodsFor!
 
@@ -221,12 +223,14 @@ new
 
 withExtent: aPointExtent 
 	^self fromGdiplusBitmap: (GdiplusBitmap extent: aPointExtent) internalize! !
-!InternalBitmap class categoriesFor: #chooseFile!public! !
-!InternalBitmap class categoriesFor: #fromBytes:!instance creation!public! !
-!InternalBitmap class categoriesFor: #fromFile:!instance creation!public! !
-!InternalBitmap class categoriesFor: #fromGdiplusBitmap:!instance creation!public! !
-!InternalBitmap class categoriesFor: #icon!public! !
-!InternalBitmap class categoriesFor: #imageManager!accessing!private! !
-!InternalBitmap class categoriesFor: #new!private! !
-!InternalBitmap class categoriesFor: #withExtent:!instance creation!public! !
+!InternalBitmap class categoriesForMethods!
+chooseFile!public! !
+fromBytes:!instance creation!public! !
+fromFile:!instance creation!public! !
+fromGdiplusBitmap:!instance creation!public! !
+icon!public! !
+imageManager!accessing!private! !
+new!private! !
+withExtent:!instance creation!public! !
+!
 

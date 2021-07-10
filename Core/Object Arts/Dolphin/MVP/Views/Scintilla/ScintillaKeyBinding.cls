@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaKeyBinding
 	instanceVariableNames: 'acceleratorKey message'
@@ -92,21 +92,23 @@ translateVirtualKey: vkInteger
 	key code (SCK_xxx)"
 
 	^VirtualKeyMap at: (vkInteger bitAnd: 16rFF) + 1! !
-!ScintillaKeyBinding categoriesFor: #=!comparing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKey!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKey:!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKeyString!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #acceleratorKeyString:!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #commandSymbol!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #commandSymbol:!accessing!public! !
-!ScintillaKeyBinding categoriesFor: #displayOn:!printing!public! !
-!ScintillaKeyBinding categoriesFor: #hash!comparing!public! !
-!ScintillaKeyBinding categoriesFor: #message!accessing!private! !
-!ScintillaKeyBinding categoriesFor: #message:!accessing!private! !
-!ScintillaKeyBinding categoriesFor: #printOn:!printing!public! !
-!ScintillaKeyBinding categoriesFor: #scintillaKeyCode!accessing!private! !
-!ScintillaKeyBinding categoriesFor: #translateVirtualKey:!helpers!private! !
+!ScintillaKeyBinding categoriesForMethods!
+=!comparing!public! !
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!public! !
+acceleratorKeyDisplayString!accessing!public! !
+acceleratorKeyString!accessing!public! !
+acceleratorKeyString:!accessing!public! !
+commandSymbol!accessing!public! !
+commandSymbol:!accessing!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+message!accessing!private! !
+message:!accessing!private! !
+printOn:!printing!public! !
+scintillaKeyCode!accessing!private! !
+translateVirtualKey:!helpers!private! !
+!
 
 !ScintillaKeyBinding class methodsFor!
 
@@ -277,11 +279,13 @@ newAcceleratorKey: keyInteger message: sciInteger
 
 newChord: aString message: sciInteger
 	^self newAcceleratorKey: (AcceleratorTable keyCodeFromInvariantString: aString) message: sciInteger! !
-!ScintillaKeyBinding class categoriesFor: #icon!constants!development!public! !
-!ScintillaKeyBinding class categoriesFor: #initialize!development!initializing!private! !
-!ScintillaKeyBinding class categoriesFor: #initializeCommands!**auto generated**!development!private!scintilla interface! !
-!ScintillaKeyBinding class categoriesFor: #initializeVirtualKeyMap!development!initializing!private! !
-!ScintillaKeyBinding class categoriesFor: #new!instance creation!public! !
-!ScintillaKeyBinding class categoriesFor: #newAcceleratorKey:message:!instance creation!public! !
-!ScintillaKeyBinding class categoriesFor: #newChord:message:!instance creation!public! !
+!ScintillaKeyBinding class categoriesForMethods!
+icon!constants!development!public! !
+initialize!development!initializing!private! !
+initializeCommands!**auto generated**!development!private!scintilla interface! !
+initializeVirtualKeyMap!development!initializing!private! !
+new!instance creation!public! !
+newAcceleratorKey:message:!instance creation!public! !
+newChord:message:!instance creation!public! !
+!
 

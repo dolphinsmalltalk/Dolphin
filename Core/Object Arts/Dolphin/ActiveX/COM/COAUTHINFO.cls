@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #COAUTHINFO
 	instanceVariableNames: ''
@@ -88,20 +88,22 @@ pwszServerPrincName: anUtf16String
 	"Set the receiver's 'pwszServerPrincName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszServerPrincName put: anUtf16String yourAddress! !
-!COAUTHINFO categoriesFor: #dwAuthnLevel!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthnLevel:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthnSvc!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthnSvc:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthzSvc!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwAuthzSvc:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwCapabilities!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwCapabilities:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwImpersonationLevel!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #dwImpersonationLevel:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pAuthIdentityData!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pAuthIdentityData:!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pwszServerPrincName!**compiled accessors**!public! !
-!COAUTHINFO categoriesFor: #pwszServerPrincName:!**compiled accessors**!public! !
+!COAUTHINFO categoriesForMethods!
+dwAuthnLevel!**compiled accessors**!public! !
+dwAuthnLevel:!**compiled accessors**!public! !
+dwAuthnSvc!**compiled accessors**!public! !
+dwAuthnSvc:!**compiled accessors**!public! !
+dwAuthzSvc!**compiled accessors**!public! !
+dwAuthzSvc:!**compiled accessors**!public! !
+dwCapabilities!**compiled accessors**!public! !
+dwCapabilities:!**compiled accessors**!public! !
+dwImpersonationLevel!**compiled accessors**!public! !
+dwImpersonationLevel:!**compiled accessors**!public! !
+pAuthIdentityData!**compiled accessors**!public! !
+pAuthIdentityData:!**compiled accessors**!public! !
+pwszServerPrincName!**compiled accessors**!public! !
+pwszServerPrincName:!**compiled accessors**!public! !
+!
 
 !COAUTHINFO class methodsFor!
 
@@ -132,6 +134,8 @@ defineFields
 
 getFieldNames
 	^#(#dwAuthnSvc #dwAuthzSvc #pwszServerPrincName #dwAuthnLevel #dwImpersonationLevel #pAuthIdentityData #dwCapabilities)! !
-!COAUTHINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!COAUTHINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!COAUTHINFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

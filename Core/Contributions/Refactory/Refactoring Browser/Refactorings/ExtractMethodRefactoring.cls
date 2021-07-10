@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #ExtractMethodRefactoring
 	instanceVariableNames: 'selector extractionInterval extractedParseTree modifiedParseTree parameters needsReturn'
@@ -298,28 +298,30 @@ transform
 					(c compiledMethodAt: selector ifAbsent: []) 
 						ifNotNil: [:m | change package: m owningPackage]]].
 	class compileTree: modifiedParseTree! !
-!ExtractMethodRefactoring categoriesFor: #checkAssignments:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkReturn!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkSelfReturns!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkSingleAssignment:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkSpecialExtractions!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #checkTemporaries!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #createTemporariesInExtractedMethodFor:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #existingSelector!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #extract:from:in:!initialize/release!public! !
-!ExtractMethodRefactoring categoriesFor: #extractMethod!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #getExtractedSource!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #isMethodEquivalentTo:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #isParseTreeEquivalentTo:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #methodDelimiter!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #nameNewMethod:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #placeholderNode!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExtractMethodRefactoring categoriesFor: #remainingTemporaries!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #reorderParametersToMatch:!public!transforming! !
-!ExtractMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!ExtractMethodRefactoring categoriesFor: #transform!public!transforming! !
+!ExtractMethodRefactoring categoriesForMethods!
+checkAssignments:!public!transforming! !
+checkReturn!public!transforming! !
+checkSelfReturns!public!transforming! !
+checkSingleAssignment:!public!transforming! !
+checkSpecialExtractions!public!transforming! !
+checkTemporaries!public!transforming! !
+createTemporariesInExtractedMethodFor:!public!transforming! !
+existingSelector!public!transforming! !
+extract:from:in:!initialize/release!public! !
+extractMethod!public!transforming! !
+getExtractedSource!public!transforming! !
+getNewMethodName!public!transforming! !
+isMethodEquivalentTo:!public!transforming! !
+isParseTreeEquivalentTo:!public!transforming! !
+methodDelimiter!public!transforming! !
+nameNewMethod:!public!transforming! !
+placeholderNode!public!transforming! !
+preconditions!preconditions!public! !
+remainingTemporaries!public!transforming! !
+reorderParametersToMatch:!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !ExtractMethodRefactoring class methodsFor!
 
@@ -336,6 +338,8 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!ExtractMethodRefactoring class categoriesFor: #extract:from:in:!instance creation!public! !
-!ExtractMethodRefactoring class categoriesFor: #model:extract:from:in:!instance creation!public! !
+!ExtractMethodRefactoring class categoriesForMethods!
+extract:from:in:!instance creation!public! !
+model:extract:from:in:!instance creation!public! !
+!
 

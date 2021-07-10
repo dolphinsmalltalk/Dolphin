@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #ComDlgLibrary
 	instanceVariableNames: ''
@@ -102,15 +102,17 @@ systemError
 	"Generate an error based on the last recorded host system error."
 
 	^self systemError: self commDlgExtendedError! !
-!ComDlgLibrary categoriesFor: #chooseColor:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #chooseFont:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #findText:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
-!ComDlgLibrary categoriesFor: #getOpenFileName:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #getSaveFileName:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #replaceText:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #systemError!exceptions!public! !
+!ComDlgLibrary categoriesForMethods!
+chooseColor:!primitives!private!win32 functions-common dialog box! !
+chooseFont:!primitives!private!win32 functions-common dialog box! !
+commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
+findText:!primitives!private!win32 functions-common dialog box! !
+getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
+getOpenFileName:!primitives!private!win32 functions-common dialog box! !
+getSaveFileName:!primitives!private!win32 functions-common dialog box! !
+replaceText:!primitives!private!win32 functions-common dialog box! !
+systemError!exceptions!public! !
+!
 
 !ComDlgLibrary class methodsFor!
 
@@ -118,5 +120,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^'COMDLG32'! !
-!ComDlgLibrary class categoriesFor: #fileName!constants!public! !
+!ComDlgLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

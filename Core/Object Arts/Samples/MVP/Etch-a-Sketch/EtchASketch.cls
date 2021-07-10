@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #EtchASketch
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
@@ -84,11 +84,13 @@ onKnobChanged
 
 	"Remember the current location as the last"
 	lastLocation := newLocation.! !
-!EtchASketch categoriesFor: #createComponents!initializing!public! !
-!EtchASketch categoriesFor: #createSchematicWiring!initializing!public! !
-!EtchASketch categoriesFor: #initialize!initializing!private! !
-!EtchASketch categoriesFor: #model:!accessing!public! !
-!EtchASketch categoriesFor: #onKnobChanged!event handling!private! !
+!EtchASketch categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+initialize!initializing!private! !
+model:!accessing!public! !
+onKnobChanged!event handling!private! !
+!
 
 !EtchASketch class methodsFor!
 
@@ -129,9 +131,11 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Etch-a-Sketch'! !
-!EtchASketch class categoriesFor: #defaultModel!models!public! !
-!EtchASketch class categoriesFor: #icon!constants!public! !
-!EtchASketch class categoriesFor: #initialize!class initialization!private! !
-!EtchASketch class categoriesFor: #resource_Default_view!public!resources-views! !
-!EtchASketch class categoriesFor: #sampleDescription!constants!development!private! !
+!EtchASketch class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!class initialization!private! !
+resource_Default_view!public!resources-views! !
+sampleDescription!constants!development!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 	instanceVariableNames: ''
@@ -332,58 +332,60 @@ nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_nVersion put: anInteger! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #bReserved!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #bReserved:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumAlphaBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumAlphaBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBlueBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumBlueBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumGreenBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumGreenBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumRedBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAccumRedBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAlphaShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAuxBuffers!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cAuxBuffers:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cBlueShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cColorBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cColorBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cDepthBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cDepthBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cGreenShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedShift!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cRedShift:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cStencilBits!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #cStencilBits:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwDamageMask!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwDamageMask:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwFlags!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwLayerMask!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwLayerMask:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwVisibleMask!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #dwVisibleMask:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iLayerType!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iLayerType:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iPixelType!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #iPixelType:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nSize!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nSize:!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nVersion!**compiled accessors**!public! !
-!PIXELFORMATDESCRIPTOR categoriesFor: #nVersion:!**compiled accessors**!public! !
+!PIXELFORMATDESCRIPTOR categoriesForMethods!
+bReserved!**compiled accessors**!public! !
+bReserved:!**compiled accessors**!public! !
+cAccumAlphaBits!**compiled accessors**!public! !
+cAccumAlphaBits:!**compiled accessors**!public! !
+cAccumBits!**compiled accessors**!public! !
+cAccumBits:!**compiled accessors**!public! !
+cAccumBlueBits!**compiled accessors**!public! !
+cAccumBlueBits:!**compiled accessors**!public! !
+cAccumGreenBits!**compiled accessors**!public! !
+cAccumGreenBits:!**compiled accessors**!public! !
+cAccumRedBits!**compiled accessors**!public! !
+cAccumRedBits:!**compiled accessors**!public! !
+cAlphaBits!**compiled accessors**!public! !
+cAlphaBits:!**compiled accessors**!public! !
+cAlphaShift!**compiled accessors**!public! !
+cAlphaShift:!**compiled accessors**!public! !
+cAuxBuffers!**compiled accessors**!public! !
+cAuxBuffers:!**compiled accessors**!public! !
+cBlueBits!**compiled accessors**!public! !
+cBlueBits:!**compiled accessors**!public! !
+cBlueShift!**compiled accessors**!public! !
+cBlueShift:!**compiled accessors**!public! !
+cColorBits!**compiled accessors**!public! !
+cColorBits:!**compiled accessors**!public! !
+cDepthBits!**compiled accessors**!public! !
+cDepthBits:!**compiled accessors**!public! !
+cGreenBits!**compiled accessors**!public! !
+cGreenBits:!**compiled accessors**!public! !
+cGreenShift!**compiled accessors**!public! !
+cGreenShift:!**compiled accessors**!public! !
+cRedBits!**compiled accessors**!public! !
+cRedBits:!**compiled accessors**!public! !
+cRedShift!**compiled accessors**!public! !
+cRedShift:!**compiled accessors**!public! !
+cStencilBits!**compiled accessors**!public! !
+cStencilBits:!**compiled accessors**!public! !
+dwDamageMask!**compiled accessors**!public! !
+dwDamageMask:!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwLayerMask!**compiled accessors**!public! !
+dwLayerMask:!**compiled accessors**!public! !
+dwVisibleMask!**compiled accessors**!public! !
+dwVisibleMask:!**compiled accessors**!public! !
+iLayerType!**compiled accessors**!public! !
+iLayerType:!**compiled accessors**!public! !
+iPixelType!**compiled accessors**!public! !
+iPixelType:!**compiled accessors**!public! !
+nSize!**compiled accessors**!public! !
+nSize:!**compiled accessors**!public! !
+nVersion!**compiled accessors**!public! !
+nVersion:!**compiled accessors**!public! !
+!
 
 !PIXELFORMATDESCRIPTOR class methodsFor!
 
@@ -454,6 +456,8 @@ defineFields
 
 getFieldNames
 	^#(#nSize #nVersion #dwFlags #iPixelType #cColorBits #cRedBits #cRedShift #cGreenBits #cGreenShift #cBlueBits #cBlueShift #cAlphaBits #cAlphaShift #cAccumBits #cAccumRedBits #cAccumGreenBits #cAccumBlueBits #cAccumAlphaBits #cDepthBits #cStencilBits #cAuxBuffers #iLayerType #bReserved #dwLayerMask #dwVisibleMask #dwDamageMask)! !
-!PIXELFORMATDESCRIPTOR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PIXELFORMATDESCRIPTOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PIXELFORMATDESCRIPTOR class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

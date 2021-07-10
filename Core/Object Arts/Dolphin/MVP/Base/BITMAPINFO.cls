@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #BITMAPINFO
 	instanceVariableNames: ''
@@ -69,14 +69,16 @@ numQuads
 	"Private - Answer the number of <RGBQUAD>s in the receiver's colour table."
 
 	^self bmiHeader numQuads! !
-!BITMAPINFO categoriesFor: #bmiColors!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #bmiColors:!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #bmiHeader!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #bmiHeader:!**compiled accessors**!public! !
-!BITMAPINFO categoriesFor: #byteSize!accessing!public! !
-!BITMAPINFO categoriesFor: #colors!accessing!public! !
-!BITMAPINFO categoriesFor: #initialize:!initializing!private! !
-!BITMAPINFO categoriesFor: #numQuads!accessing!private! !
+!BITMAPINFO categoriesForMethods!
+bmiColors!**compiled accessors**!public! !
+bmiColors:!**compiled accessors**!public! !
+bmiHeader!**compiled accessors**!public! !
+bmiHeader:!**compiled accessors**!public! !
+byteSize!accessing!public! !
+colors!accessing!public! !
+initialize:!initializing!private! !
+numQuads!accessing!private! !
+!
 
 !BITMAPINFO class methodsFor!
 
@@ -106,7 +108,9 @@ defineFields
 
 getFieldNames
 	^#(#bmiHeader #bmiColors)! !
-!BITMAPINFO class categoriesFor: #colorDepth:!instance creation!public! !
-!BITMAPINFO class categoriesFor: #defineFields!public!template definition! !
-!BITMAPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!BITMAPINFO class categoriesForMethods!
+colorDepth:!instance creation!public! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

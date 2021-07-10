@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ComparisonPolicy
 	instanceVariableNames: ''
@@ -49,11 +49,13 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!ComparisonPolicy class categoriesFor: #always!instance creation!public! !
-!ComparisonPolicy class categoriesFor: #equality!instance creation!public! !
-!ComparisonPolicy class categoriesFor: #identity!instance creation!public! !
-!ComparisonPolicy class categoriesFor: #never!instance creation!public! !
-!ComparisonPolicy class categoriesFor: #new!instance creation!public! !
-!ComparisonPolicy class categoriesFor: #stbConvertFrom:!instance creation!public! !
-!ComparisonPolicy class categoriesFor: #stbVersion!instance creation!public! !
+!ComparisonPolicy class categoriesForMethods!
+always!instance creation!public! !
+equality!instance creation!public! !
+identity!instance creation!public! !
+never!instance creation!public! !
+new!instance creation!public! !
+stbConvertFrom:!instance creation!public! !
+stbVersion!instance creation!public! !
+!
 

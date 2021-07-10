@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PluggableSortAlgorithm subclass: #MergesortAlgorithm
 	instanceVariableNames: ''
@@ -82,7 +82,9 @@ sort: anObject from: startInteger to: stopInteger aux: anArray
 		from: startInteger
 		to: stopInteger
 		pivot: mid! !
-!MergesortAlgorithm categoriesFor: #merge:aux:from:to:pivot:!operations!private! !
-!MergesortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
-!MergesortAlgorithm categoriesFor: #sort:from:to:aux:!operations!private! !
+!MergesortAlgorithm categoriesForMethods!
+merge:aux:from:to:pivot:!operations!private! !
+sort:from:to:!operations!public! !
+sort:from:to:aux:!operations!private! !
+!
 

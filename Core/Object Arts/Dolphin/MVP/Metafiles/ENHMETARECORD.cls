@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
@@ -41,11 +41,13 @@ nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger! !
-!ENHMETARECORD categoriesFor: #getField:!accessing!private! !
-!ENHMETARECORD categoriesFor: #iType!**compiled accessors**!public! !
-!ENHMETARECORD categoriesFor: #iType:!**compiled accessors**!public! !
-!ENHMETARECORD categoriesFor: #nSize!**compiled accessors**!public! !
-!ENHMETARECORD categoriesFor: #nSize:!**compiled accessors**!public! !
+!ENHMETARECORD categoriesForMethods!
+getField:!accessing!private! !
+iType!**compiled accessors**!public! !
+iType:!**compiled accessors**!public! !
+nSize!**compiled accessors**!public! !
+nSize:!**compiled accessors**!public! !
+!
 
 !ENHMETARECORD class methodsFor!
 
@@ -106,12 +108,14 @@ uninitializeBeforeRemove
 
 unregisterRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: nil]! !
-!ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!ENHMETARECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ENHMETARECORD class categoriesFor: #initialize!public! !
-!ENHMETARECORD class categoriesFor: #initializeAfterLoad!initializing!public! !
-!ENHMETARECORD class categoriesFor: #iTypes!constants!public! !
-!ENHMETARECORD class categoriesFor: #registerRecordTypes!initializing!private! !
-!ENHMETARECORD class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!ENHMETARECORD class categoriesFor: #unregisterRecordTypes!accessing!private! !
+!ENHMETARECORD class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!public! !
+initializeAfterLoad!initializing!public! !
+iTypes!constants!public! !
+registerRecordTypes!initializing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!public! !
+unregisterRecordTypes!accessing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaAttribute subclass: #ScintillaTextStyle
 	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
@@ -342,63 +342,65 @@ weight
 
 weight: anInteger 
 	weight := anInteger! !
-!ScintillaTextStyle categoriesFor: #=!comparing!public! !
-!ScintillaTextStyle categoriesFor: #backcolor!accessing!public! !
-!ScintillaTextStyle categoriesFor: #backcolor:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #basicId!accessing!private! !
-!ScintillaTextStyle categoriesFor: #case!accessing!public! !
-!ScintillaTextStyle categoriesFor: #case:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #caseName!accessing!public! !
-!ScintillaTextStyle categoriesFor: #caseName:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #centiPointSize!accessing!public! !
-!ScintillaTextStyle categoriesFor: #centiPointSize:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #characterSet!accessing!public! !
-!ScintillaTextStyle categoriesFor: #characterSet:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #clearFont!accessing!public! !
-!ScintillaTextStyle categoriesFor: #description!accessing!public! !
-!ScintillaTextStyle categoriesFor: #description:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #displayOn:!displaying!public! !
-!ScintillaTextStyle categoriesFor: #flags!accessing!public! !
-!ScintillaTextStyle categoriesFor: #font!accessing!public! !
-!ScintillaTextStyle categoriesFor: #font:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #fontName!accessing!public! !
-!ScintillaTextStyle categoriesFor: #fontName:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #forecolor!accessing!public! !
-!ScintillaTextStyle categoriesFor: #forecolor:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #getThreeStateFlag:!helpers!private! !
-!ScintillaTextStyle categoriesFor: #initialize!initializing!private! !
-!ScintillaTextStyle categoriesFor: #isBackcolorExtendedToEndOfLine!public!testing! !
-!ScintillaTextStyle categoriesFor: #isBackcolorExtendedToEndOfLine:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isBold!public!testing! !
-!ScintillaTextStyle categoriesFor: #isBold:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isChangeable!private!testing! !
-!ScintillaTextStyle categoriesFor: #isHotspot!public!testing! !
-!ScintillaTextStyle categoriesFor: #isHotspot:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isInvisible!public!testing! !
-!ScintillaTextStyle categoriesFor: #isInvisible:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isItalic!public!testing! !
-!ScintillaTextStyle categoriesFor: #isItalic:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isPredefined!public!testing! !
-!ScintillaTextStyle categoriesFor: #isReadOnly!public!testing! !
-!ScintillaTextStyle categoriesFor: #isReadOnly:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isUnderlined!public!testing! !
-!ScintillaTextStyle categoriesFor: #isUnderlined:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #isVisible!private!testing! !
-!ScintillaTextStyle categoriesFor: #key!accessing!public! !
-!ScintillaTextStyle categoriesFor: #mergeFont:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #name!accessing!public! !
-!ScintillaTextStyle categoriesFor: #name:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #pointSize!accessing!public! !
-!ScintillaTextStyle categoriesFor: #pointSize:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #restyleFont:!accessing!public! !
-!ScintillaTextStyle categoriesFor: #setPredefinedId!accessing!private! !
-!ScintillaTextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
-!ScintillaTextStyle categoriesFor: #storeableProperties!development!printing!private! !
-!ScintillaTextStyle categoriesFor: #value!accessing!public! !
-!ScintillaTextStyle categoriesFor: #view!accessing!private! !
-!ScintillaTextStyle categoriesFor: #view:!accessing!private! !
-!ScintillaTextStyle categoriesFor: #weight!accessing!public! !
-!ScintillaTextStyle categoriesFor: #weight:!accessing!public! !
+!ScintillaTextStyle categoriesForMethods!
+=!comparing!public! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicId!accessing!private! !
+case!accessing!public! !
+case:!accessing!public! !
+caseName!accessing!public! !
+caseName:!accessing!public! !
+centiPointSize!accessing!public! !
+centiPointSize:!accessing!public! !
+characterSet!accessing!public! !
+characterSet:!accessing!public! !
+clearFont!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+flags!accessing!public! !
+font!accessing!public! !
+font:!accessing!public! !
+fontName!accessing!public! !
+fontName:!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+getThreeStateFlag:!helpers!private! !
+initialize!initializing!private! !
+isBackcolorExtendedToEndOfLine!public!testing! !
+isBackcolorExtendedToEndOfLine:!accessing!public! !
+isBold!public!testing! !
+isBold:!accessing!public! !
+isChangeable!private!testing! !
+isHotspot!public!testing! !
+isHotspot:!accessing!public! !
+isInvisible!public!testing! !
+isInvisible:!accessing!public! !
+isItalic!public!testing! !
+isItalic:!accessing!public! !
+isPredefined!public!testing! !
+isReadOnly!public!testing! !
+isReadOnly:!accessing!public! !
+isUnderlined!public!testing! !
+isUnderlined:!accessing!public! !
+isVisible!private!testing! !
+key!accessing!public! !
+mergeFont:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+pointSize!accessing!public! !
+pointSize:!accessing!public! !
+restyleFont:!accessing!public! !
+setPredefinedId!accessing!private! !
+setThreeStateFlag:value:!helpers!private! !
+storeableProperties!development!printing!private! !
+value!accessing!public! !
+view!accessing!private! !
+view:!accessing!private! !
+weight!accessing!public! !
+weight:!accessing!public! !
+!
 
 !ScintillaTextStyle class methodsFor!
 
@@ -552,13 +554,15 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!ScintillaTextStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaTextStyle class categoriesFor: #caseNames!constants!public! !
-!ScintillaTextStyle class categoriesFor: #icon!constants!public! !
-!ScintillaTextStyle class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaTextStyle class categoriesFor: #name:!instance creation!public! !
-!ScintillaTextStyle class categoriesFor: #new!instance creation!public! !
-!ScintillaTextStyle class categoriesFor: #normal!instance creation!public! !
-!ScintillaTextStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaTextStyle class categoriesFor: #stbVersion!binary filing!public! !
+!ScintillaTextStyle class categoriesForMethods!
+buildPropertyMap!constants!must not strip!private! !
+caseNames!constants!public! !
+icon!constants!public! !
+initialize!development!initializing!public! !
+name:!instance creation!public! !
+new!instance creation!public! !
+normal!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

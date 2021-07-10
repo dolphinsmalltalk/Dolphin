@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #ArithmeticError
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ isResumable
 	"Answer whether the receiver represents a resumable error. Most arithmetic errors are resumable."
 
 	^true! !
-!ArithmeticError categoriesFor: #isResumable!public!testing! !
+!ArithmeticError categoriesForMethods!
+isResumable!public!testing! !
+!
 

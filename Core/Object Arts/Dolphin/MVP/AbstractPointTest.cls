@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #AbstractPointTest
 	instanceVariableNames: ''
@@ -36,7 +36,9 @@ testMakePoint
 	point2 := testMethod value: self subjectClass withArguments: #(101 202).
 	self assert: point2 x equals: 101.
 	self assert: point2 y equals: 202! !
-!AbstractPointTest categoriesFor: #subjectClass!constants!private! !
-!AbstractPointTest categoriesFor: #testAsPoint!public!unit tests! !
-!AbstractPointTest categoriesFor: #testMakePoint!public!unit tests! !
+!AbstractPointTest categoriesForMethods!
+subjectClass!constants!private! !
+testAsPoint!public!unit tests! !
+testMakePoint!public!unit tests! !
+!
 

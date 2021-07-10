@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
@@ -49,11 +49,13 @@ tag
 	example, to provide bubble help explaining the indicator."
 
 	^tag! !
-!ScintillaIndicator categoriesFor: #printOn:!printing!public! !
-!ScintillaIndicator categoriesFor: #range!accessing!public! !
-!ScintillaIndicator categoriesFor: #setStyleName:range:tag:!initializing!private! !
-!ScintillaIndicator categoriesFor: #styleName!public! !
-!ScintillaIndicator categoriesFor: #tag!accessing!public! !
+!ScintillaIndicator categoriesForMethods!
+printOn:!printing!public! !
+range!accessing!public! !
+setStyleName:range:tag:!initializing!private! !
+styleName!public! !
+tag!accessing!public! !
+!
 
 !ScintillaIndicator class methodsFor!
 
@@ -73,7 +75,9 @@ styleName: aSymbolOrInteger range: anInterval tag: anObject
 			range: anInterval
 			tag: anObject;
 		yourself! !
-!ScintillaIndicator class categoriesFor: #icon!constants!development!public! !
-!ScintillaIndicator class categoriesFor: #styleName:range:!instance creation!public! !
-!ScintillaIndicator class categoriesFor: #styleName:range:tag:!instance creation!public! !
+!ScintillaIndicator class categoriesForMethods!
+icon!constants!development!public! !
+styleName:range:!instance creation!public! !
+styleName:range:tag:!instance creation!public! !
+!
 

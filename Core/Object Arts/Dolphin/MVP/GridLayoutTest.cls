@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManagerTest subclass: #GridLayoutTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ GridLayoutTest comment: ''!
 
 layoutManagerClass
 	^GridLayout! !
-!GridLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
+!GridLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+!
 

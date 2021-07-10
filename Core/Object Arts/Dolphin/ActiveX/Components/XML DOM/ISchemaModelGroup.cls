@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaParticle subclass: #ISchemaModelGroup
 	instanceVariableNames: ''
@@ -49,8 +49,10 @@ particles
 	self get_particles: answer.
 	^answer asObject
 ! !
-!ISchemaModelGroup categoriesFor: #get_particles:!**auto generated**!COM Interfaces-ISchemaModelGroup!private! !
-!ISchemaModelGroup categoriesFor: #particles!**auto generated**!properties!public! !
+!ISchemaModelGroup categoriesForMethods!
+get_particles:!**auto generated**!COM Interfaces-ISchemaModelGroup!private! !
+particles!**auto generated**!properties!public! !
+!
 
 !ISchemaModelGroup class methodsFor!
 
@@ -62,5 +64,7 @@ defineFunctions
 		defineFunction: #get_particles:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
-!ISchemaModelGroup class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaModelGroup class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

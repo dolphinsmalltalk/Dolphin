@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalIntegerBytes variableByteSubclass: #DWORDBytes
 	instanceVariableNames: ''
@@ -30,10 +30,12 @@ value: anObject
 	"Set the 32-bit unsigned <integer> value stored in the receiver."
 
 	self dwordAtOffset: 0 put: anObject! !
-!DWORDBytes categoriesFor: #asDword!converting!public! !
-!DWORDBytes categoriesFor: #asInteger!converting!public! !
-!DWORDBytes categoriesFor: #asSignedInteger!converting!public! !
-!DWORDBytes categoriesFor: #value:!accessing!public! !
+!DWORDBytes categoriesForMethods!
+asDword!converting!public! !
+asInteger!converting!public! !
+asSignedInteger!converting!public! !
+value:!accessing!public! !
+!
 
 !DWORDBytes class methodsFor!
 
@@ -45,6 +47,8 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress dwordAtOffset: 0! !
-!DWORDBytes class categoriesFor: #elementSize!constants!private! !
-!DWORDBytes class categoriesFor: #valueAtAddress:!helpers!private! !
+!DWORDBytes class categoriesForMethods!
+elementSize!constants!private! !
+valueAtAddress:!helpers!private! !
+!
 

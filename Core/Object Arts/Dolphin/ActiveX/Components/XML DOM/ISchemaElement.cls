@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaParticle subclass: #ISchemaElement
 	instanceVariableNames: ''
@@ -259,28 +259,30 @@ type
 	self get_type: answer.
 	^answer asObject
 ! !
-!ISchemaElement categoriesFor: #defaultValue!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #disallowedSubstitutions!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #fixedValue!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #get_defaultValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_disallowedSubstitutions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_fixedValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_identityConstraints:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_isAbstract:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_isNillable:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_isReference:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_scope:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_substitutionGroup:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_substitutionGroupExclusions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #get_type:!**auto generated**!COM Interfaces-ISchemaElement!private! !
-!ISchemaElement categoriesFor: #identityConstraints!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #isAbstract!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #isNillable!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #isReference!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #scope!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #substitutionGroup!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #substitutionGroupExclusions!**auto generated**!properties!public! !
-!ISchemaElement categoriesFor: #type!**auto generated**!properties!public! !
+!ISchemaElement categoriesForMethods!
+defaultValue!**auto generated**!properties!public! !
+disallowedSubstitutions!**auto generated**!properties!public! !
+fixedValue!**auto generated**!properties!public! !
+get_defaultValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_disallowedSubstitutions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_fixedValue:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_identityConstraints:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_isAbstract:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_isNillable:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_isReference:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_scope:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_substitutionGroup:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_substitutionGroupExclusions:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+get_type:!**auto generated**!COM Interfaces-ISchemaElement!private! !
+identityConstraints!**auto generated**!properties!public! !
+isAbstract!**auto generated**!properties!public! !
+isNillable!**auto generated**!properties!public! !
+isReference!**auto generated**!properties!public! !
+scope!**auto generated**!properties!public! !
+substitutionGroup!**auto generated**!properties!public! !
+substitutionGroupExclusions!**auto generated**!properties!public! !
+type!**auto generated**!properties!public! !
+!
 
 !ISchemaElement class methodsFor!
 
@@ -312,5 +314,7 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
-!ISchemaElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaElement class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

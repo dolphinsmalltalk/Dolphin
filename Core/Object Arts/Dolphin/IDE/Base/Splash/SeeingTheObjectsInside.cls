@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
@@ -388,47 +388,49 @@ stopStepProcess
 
 sunPosition
 	^(612 @ 98) * self baseScale! !
-!SeeingTheObjectsInside categoriesFor: #addInsideObject:minScale:maxScale:!private! !
-!SeeingTheObjectsInside categoriesFor: #background!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #baseScale!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #defaultExtent!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #dismiss!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideBaseColor!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityColor!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityPeriod!constants!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityTime!constants!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinMaxScale!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinMinScale!public! !
-!SeeingTheObjectsInside categoriesFor: #dolphinOutline!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #drawInfoTextOn:!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #elapsedTime!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #fill!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #frameRate!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #hasHintBubble!event handling!private!testing! !
-!SeeingTheObjectsInside categoriesFor: #initialize!initializing!private! !
-!SeeingTheObjectsInside categoriesFor: #insideObjectMaxScale!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #insideObjectMinScale!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #insideObjectScaleInPeriod!constants!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #isActionPoint:!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #isPointInDolphin:!event handling!private!testing! !
-!SeeingTheObjectsInside categoriesFor: #loadTextureMap:!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #onDestroyed!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #onGetCursor:!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #onViewCreated!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #originalBitmapExtent!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #pointResolution!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #points!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #random!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #randomFrom:!private! !
-!SeeingTheObjectsInside categoriesFor: #render!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #showHintBubble!private! !
-!SeeingTheObjectsInside categoriesFor: #startStepProcess!initializing!private! !
-!SeeingTheObjectsInside categoriesFor: #step!operations!public! !
-!SeeingTheObjectsInside categoriesFor: #stepDolphinInsideIntensity!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #stepInsideObjectsScale!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #stopStepProcess!initializing!private! !
-!SeeingTheObjectsInside categoriesFor: #sunPosition!constants!public! !
+!SeeingTheObjectsInside categoriesForMethods!
+addInsideObject:minScale:maxScale:!private! !
+background!accessing!private! !
+baseScale!constants!public! !
+defaultExtent!accessing!private! !
+dismiss!event handling!private! !
+dolphinInsideBaseColor!constants!public! !
+dolphinInsideIntensityColor!constants!public! !
+dolphinInsideIntensityPeriod!constants!operations!public! !
+dolphinInsideIntensityTime!constants!operations!public! !
+dolphinMaxScale!public! !
+dolphinMinScale!public! !
+dolphinOutline!accessing!private! !
+drawInfoTextOn:!operations!private! !
+elapsedTime!operations!public! !
+fill!event handling!private! !
+frameRate!constants!public! !
+hasHintBubble!event handling!private!testing! !
+initialize!initializing!private! !
+insideObjectMaxScale!constants!public! !
+insideObjectMinScale!constants!public! !
+insideObjectScaleInPeriod!constants!operations!public! !
+isActionPoint:!event handling!private! !
+isPointInDolphin:!event handling!private!testing! !
+loadTextureMap:!accessing!private! !
+onDestroyed!event handling!private! !
+onGetCursor:!event handling!private! !
+onLeftButtonPressed:!event handling!private! !
+onViewCreated!event handling!private! !
+originalBitmapExtent!constants!public! !
+pointResolution!constants!public! !
+points!accessing!private! !
+random!operations!private! !
+randomFrom:!private! !
+render!operations!private! !
+showHintBubble!private! !
+startStepProcess!initializing!private! !
+step!operations!public! !
+stepDolphinInsideIntensity!operations!private! !
+stepInsideObjectsScale!operations!private! !
+stopStepProcess!initializing!private! !
+sunPosition!constants!public! !
+!
 
 !SeeingTheObjectsInside class methodsFor!
 
@@ -448,7 +450,9 @@ splashPlayTheGame
 
 splashPlayTheGame: aBoolean 
 	splashPlayTheGame := aBoolean! !
-!SeeingTheObjectsInside class categoriesFor: #canDisplay!accessing!public! !
-!SeeingTheObjectsInside class categoriesFor: #splashPlayTheGame!public! !
-!SeeingTheObjectsInside class categoriesFor: #splashPlayTheGame:!public! !
+!SeeingTheObjectsInside class categoriesForMethods!
+canDisplay!accessing!public! !
+splashPlayTheGame!public! !
+splashPlayTheGame:!public! !
+!
 

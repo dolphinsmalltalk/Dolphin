@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #BehaviorTest
 	instanceVariableNames: ''
@@ -62,15 +62,19 @@ testWhichMethodsOnlySelfSend
 		equals: #(#returnSendSelfSpecial).
 	self assert: ((subject whichMethodsOnlySelfSend: #value) collect: [:each | each selector]) asArray
 		equals: #(#sendSelfSpecial)! !
-!BehaviorTest categoriesFor: #testHasAbstractMethods!public! !
-!BehaviorTest categoriesFor: #testIsAbstract!public! !
-!BehaviorTest categoriesFor: #testIsNonInstantiable!public! !
-!BehaviorTest categoriesFor: #testUnderstoodSelectors!public! !
-!BehaviorTest categoriesFor: #testWhichMethodsOnlySelfSend!public! !
+!BehaviorTest categoriesForMethods!
+testHasAbstractMethods!public! !
+testIsAbstract!public! !
+testIsNonInstantiable!public! !
+testUnderstoodSelectors!public! !
+testWhichMethodsOnlySelfSend!public! !
+!
 
 !BehaviorTest class methodsFor!
 
 resources
 	^{BehaviorTestClasses}! !
-!BehaviorTest class categoriesFor: #resources!Accessing!public! !
+!BehaviorTest class categoriesForMethods!
+resources!Accessing!public! !
+!
 

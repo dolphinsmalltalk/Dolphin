@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArray subclass: #WORDArray
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes wordAtOffset: indexInteger + indexInteger - 2 put: valueInteger! !
-!WORDArray categoriesFor: #uncheckedAt:!accessing!private! !
-!WORDArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!WORDArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !WORDArray class methodsFor!
 
@@ -30,5 +32,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^WORD! !
-!WORDArray class categoriesFor: #elementClass!constants!public! !
+!WORDArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

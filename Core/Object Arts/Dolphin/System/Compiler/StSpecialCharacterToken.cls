@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueToken subclass: #StSpecialCharacterToken
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ isSpecial: aCharacter
 
 length
 	^1! !
-!StSpecialCharacterToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StSpecialCharacterToken categoriesFor: #isSpecial!public!testing! !
-!StSpecialCharacterToken categoriesFor: #isSpecial:!public!testing! !
-!StSpecialCharacterToken categoriesFor: #length!accessing!private! !
+!StSpecialCharacterToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isSpecial!public!testing! !
+isSpecial:!public!testing! !
+length!accessing!private! !
+!
 

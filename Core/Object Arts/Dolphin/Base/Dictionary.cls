@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Set variableSubclass: #Dictionary
 	instanceVariableNames: ''
@@ -535,63 +535,65 @@ values
 	answer := OrderedCollection new: self size.
 	self do: [:value | answer addLast: value].
 	^answer! !
-!Dictionary categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
-!Dictionary categoriesFor: #=!comparing!public! !
-!Dictionary categoriesFor: #add:!adding!public! !
-!Dictionary categoriesFor: #asSet!converting!public! !
-!Dictionary categoriesFor: #associationAt:!accessing!public! !
-!Dictionary categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #associationAt:ifPresent:!accessing!public! !
-!Dictionary categoriesFor: #associationClass!constants!private! !
-!Dictionary categoriesFor: #associations!accessing!public! !
-!Dictionary categoriesFor: #associationsDo:!enumerating!public! !
-!Dictionary categoriesFor: #associationsDo:separatedBy:!enumerating!public! !
-!Dictionary categoriesFor: #at:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
-!Dictionary categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
-!Dictionary categoriesFor: #at:ifPresent:!accessing!public! !
-!Dictionary categoriesFor: #at:put:!accessing!public! !
-!Dictionary categoriesFor: #atAll:put:!accessing!public! !
-!Dictionary categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Dictionary categoriesFor: #bindingFor:!binding!public! !
-!Dictionary categoriesFor: #changeKey:to:!accessing!private! !
-!Dictionary categoriesFor: #collect:!enumerating!public! !
-!Dictionary categoriesFor: #copyElementsInto:!adding!private! !
-!Dictionary categoriesFor: #do:!enumerating!public! !
-!Dictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
-!Dictionary categoriesFor: #errorModify:value:!exceptions!private! !
-!Dictionary categoriesFor: #errorValueNotFound:!exceptions!private! !
-!Dictionary categoriesFor: #findElementOrNil:!private!searching! !
-!Dictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!Dictionary categoriesFor: #identityIncludes:!public!searching! !
-!Dictionary categoriesFor: #includes:!public!searching! !
-!Dictionary categoriesFor: #includesAssociation:!public!searching! !
-!Dictionary categoriesFor: #includesKey:!public!searching! !
-!Dictionary categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #keyAtValue:!accessing!public! !
-!Dictionary categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!Dictionary categoriesFor: #keys!accessing!public! !
-!Dictionary categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!Dictionary categoriesFor: #keysClass!constants!private! !
-!Dictionary categoriesFor: #keysDo:!enumerating!public! !
-!Dictionary categoriesFor: #lookup:!accessing!public! !
-!Dictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!Dictionary categoriesFor: #occurrencesOf:!public!searching! !
-!Dictionary categoriesFor: #postCopy!copying!public! !
-!Dictionary categoriesFor: #printOn:!printing!public! !
-!Dictionary categoriesFor: #remove:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #removeAllKeys:!public!removing! !
-!Dictionary categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #removeAssociation:!public!removing! !
-!Dictionary categoriesFor: #removeAssociation:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #removeKey:!public!removing! !
-!Dictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!Dictionary categoriesFor: #searchPolicy!constants!public! !
-!Dictionary categoriesFor: #select:!enumerating!public! !
-!Dictionary categoriesFor: #stbSaveOn:!binary filing!public! !
-!Dictionary categoriesFor: #storeOn:!printing!public! !
-!Dictionary categoriesFor: #values!accessing!public! !
+!Dictionary categoriesForMethods!
+_deepCopyElementsInto:trail:!copying!private! !
+=!comparing!public! !
+add:!adding!public! !
+asSet!converting!public! !
+associationAt:!accessing!public! !
+associationAt:ifAbsent:!accessing!public! !
+associationAt:ifPresent:!accessing!public! !
+associationClass!constants!private! !
+associations!accessing!public! !
+associationsDo:!enumerating!public! !
+associationsDo:separatedBy:!enumerating!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:ifAbsentPut:!accessing!public! !
+at:ifAbsentPutValue:!accessing!public! !
+at:ifPresent:!accessing!public! !
+at:put:!accessing!public! !
+atAll:put:!accessing!public! !
+bestSlotFor:boundedBy:!development!private!statistics! !
+bindingFor:!binding!public! !
+changeKey:to:!accessing!private! !
+collect:!enumerating!public! !
+copyElementsInto:!adding!private! !
+do:!enumerating!public! !
+errorKeyNotFound:!exceptions!private! !
+errorModify:value:!exceptions!private! !
+errorValueNotFound:!exceptions!private! !
+findElementOrNil:!private!searching! !
+findKeyOrNil:!private!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+includesAssociation:!public!searching! !
+includesKey:!public!searching! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keys!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysClass!constants!private! !
+keysDo:!enumerating!public! !
+lookup:!accessing!public! !
+newAssociation:value:!helpers!private! !
+occurrencesOf:!public!searching! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+remove:ifAbsent:!public!removing! !
+removeAllKeys:!public!removing! !
+removeAllKeys:ifAbsent:!public!removing! !
+removeAssociation:!public!removing! !
+removeAssociation:ifAbsent:!public!removing! !
+removeKey:!public!removing! !
+removeKey:ifAbsent:!public!removing! !
+searchPolicy!constants!public! !
+select:!enumerating!public! !
+stbSaveOn:!binary filing!public! !
+storeOn:!printing!public! !
+values!accessing!public! !
+!
 
 Dictionary methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
 Dictionary methodProtocol: #Dictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!

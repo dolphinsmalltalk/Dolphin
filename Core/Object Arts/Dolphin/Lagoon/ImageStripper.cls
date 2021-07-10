@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
@@ -2021,173 +2021,175 @@ writeLogFile
 	its stripping process"
 
 	^flags allMask: WriteLogMask! !
-!ImageStripper categoriesFor: #actualRequiredPackages!accessing!private! !
-!ImageStripper categoriesFor: #addClassesReferencedByClass:to:!helpers!private! !
-!ImageStripper categoriesFor: #addClassesReferencedByMethod:to:!helpers!private! !
-!ImageStripper categoriesFor: #addReferencedViews:to:!helpers!private! !
-!ImageStripper categoriesFor: #allReferencedClasses!operations!private! !
-!ImageStripper categoriesFor: #allResourcesStripped!operations!private! !
-!ImageStripper categoriesFor: #appendManifestContent:!helpers!private! !
-!ImageStripper categoriesFor: #behaviorsWithIgnoredAspectSetters!configuration!public! !
-!ImageStripper categoriesFor: #binaryStoreOn:!binary filing!public! !
-!ImageStripper categoriesFor: #buildApplication!must not strip!operations!private! !
-!ImageStripper categoriesFor: #buildManifest:description:version:!helpers!private! !
-!ImageStripper categoriesFor: #buildMessageMap!helpers!private! !
-!ImageStripper categoriesFor: #buildPreservedMessages!helpers!private! !
-!ImageStripper categoriesFor: #buildRootClasses!helpers!private! !
-!ImageStripper categoriesFor: #buildSupersentMessageMap!helpers!private! !
-!ImageStripper categoriesFor: #checkedStubFilePath!accessing!private! !
-!ImageStripper categoriesFor: #class:overrides:!private!testing! !
-!ImageStripper categoriesFor: #classBuildingMethods!accessing!private! !
-!ImageStripper categoriesFor: #classCategoriesToIgnoreAspectSetters!configuration!public! !
-!ImageStripper categoriesFor: #classesReferencedByMethod:!helpers!private! !
-!ImageStripper categoriesFor: #classReferencesToIgnore!configuration!private! !
-!ImageStripper categoriesFor: #classRemovingMethods!accessing!private! !
-!ImageStripper categoriesFor: #clearChangedProperties!operations!private! !
-!ImageStripper categoriesFor: #closeAllDevelopmentTools!operations!private! !
-!ImageStripper categoriesFor: #closeChangeLog!helpers!private! !
-!ImageStripper categoriesFor: #closeExternalLibraries!operations!private! !
-!ImageStripper categoriesFor: #closeLog!operations!private! !
-!ImageStripper categoriesFor: #compileExternalStructures!accessing!public! !
-!ImageStripper categoriesFor: #copyAndUpdateStub:to:!operations!private! !
-!ImageStripper categoriesFor: #defaultStubFilePath!constants!private! !
-!ImageStripper categoriesFor: #destroyNotifier!operations!private! !
-!ImageStripper categoriesFor: #developmentClasses!configuration!public! !
-!ImageStripper categoriesFor: #developmentMethods!accessing!public! !
-!ImageStripper categoriesFor: #developmentResources!configuration!public! !
-!ImageStripper categoriesFor: #disableClassChangeFlagging!operations!private! !
-!ImageStripper categoriesFor: #disableDevelopmentSystem!operations!private! !
-!ImageStripper categoriesFor: #emptyMethodDictionariesOfStubbornClasses!public!testing! !
-!ImageStripper categoriesFor: #endElement:!helpers!private! !
-!ImageStripper categoriesFor: #endTag!helpers!private! !
-!ImageStripper categoriesFor: #executableName!accessing!public! !
-!ImageStripper categoriesFor: #executablePath!accessing!public! !
-!ImageStripper categoriesFor: #exeFileExtension!constants!public! !
-!ImageStripper categoriesFor: #externalStructureClasses!accessing!private! !
-!ImageStripper categoriesFor: #finalActions!helpers!private! !
-!ImageStripper categoriesFor: #findPotentialAspectAccessors:!helpers!private! !
-!ImageStripper categoriesFor: #findPotentialAspectAccessorsIn:excluding:!helpers!private! !
-!ImageStripper categoriesFor: #finishedStrippingResources!helpers!private! !
-!ImageStripper categoriesFor: #finishedWithStripping!operations!private! !
-!ImageStripper categoriesFor: #foldDuplicatesConstants!operations!private! !
-!ImageStripper categoriesFor: #getClassInstanceStats!helpers!private! !
-!ImageStripper categoriesFor: #ignoreViewReferences!accessing!public! !
-!ImageStripper categoriesFor: #includeManifestResource!accessing!public!testing! !
-!ImageStripper categoriesFor: #initialTidy!helpers!private! !
-!ImageStripper categoriesFor: #installRuntimeSessionManager!operations!private! !
-!ImageStripper categoriesFor: #isConsoleApplication!public!testing! !
-!ImageStripper categoriesFor: #isResourceUpdatingRequired!private!testing! !
-!ImageStripper categoriesFor: #isToGo!accessing!public!testing! !
-!ImageStripper categoriesFor: #isUnattended!public!testing! !
-!ImageStripper categoriesFor: #keepImageFile!public!testing! !
-!ImageStripper categoriesFor: #logComment:!event handling!private! !
-!ImageStripper categoriesFor: #logConfiguration:!operations!private! !
-!ImageStripper categoriesFor: #logDevelopmentCategories!operations!private! !
-!ImageStripper categoriesFor: #logFileExtension!constants!public! !
-!ImageStripper categoriesFor: #logFileName!accessing!public! !
-!ImageStripper categoriesFor: #logImageStats!helpers!private! !
-!ImageStripper categoriesFor: #logLiveClasses!public!testing! !
-!ImageStripper categoriesFor: #logManifest!operations!private! !
-!ImageStripper categoriesFor: #logPackagePrerequisites!public!testing! !
-!ImageStripper categoriesFor: #logPreservedClasses!operations!private! !
-!ImageStripper categoriesFor: #logPreservedMessages!operations!private! !
-!ImageStripper categoriesFor: #logReference:!helpers!private! !
-!ImageStripper categoriesFor: #logReferencesToClass:!operations!private! !
-!ImageStripper categoriesFor: #logReferencesToClasses!public!testing! !
-!ImageStripper categoriesFor: #logRemainingClasses!operations!private! !
-!ImageStripper categoriesFor: #logRemainingPackages!operations!private! !
-!ImageStripper categoriesFor: #logRemainingResources!operations!private! !
-!ImageStripper categoriesFor: #logSentMessages:!helpers!private! !
-!ImageStripper categoriesFor: #logStrippingError:!operations-logging!private! !
-!ImageStripper categoriesFor: #logValue:!helpers!private! !
-!ImageStripper categoriesFor: #manifestResourceId!constants!private! !
-!ImageStripper categoriesFor: #messagesSentByClasses:!helpers!private! !
-!ImageStripper categoriesFor: #nonAspectSetterCategories!configuration!public! !
-!ImageStripper categoriesFor: #notify:!operations!private! !
-!ImageStripper categoriesFor: #notifyClassesOfCompletedStrip!operations!private! !
-!ImageStripper categoriesFor: #notifyClassesOfImminentStrip!operations!private! !
-!ImageStripper categoriesFor: #notRequiredMethodCategories!configuration!public! !
-!ImageStripper categoriesFor: #onError:!event handling!private! !
-!ImageStripper categoriesFor: #onNotification:!event handling!private! !
-!ImageStripper categoriesFor: #openLogFile!operations!private! !
-!ImageStripper categoriesFor: #packagedClasses!accessing!private! !
-!ImageStripper categoriesFor: #packageDrivenStage!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareCycle1:!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareCycle2:!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareCycle3!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareCycle4!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareCycle5!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareCycle6:!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareToDeployWith:to:!must not strip!operations!private! !
-!ImageStripper categoriesFor: #prepareToStrip!operations!public! !
-!ImageStripper categoriesFor: #preserveAspectSetters!accessing!public! !
-!ImageStripper categoriesFor: #preStripCheck!operations!private! !
-!ImageStripper categoriesFor: #preStripScript!accessing!public! !
-!ImageStripper categoriesFor: #preStripTidy!operations!private! !
-!ImageStripper categoriesFor: #progressDialogClass!constants!public! !
-!ImageStripper categoriesFor: #purgeIcons!helpers!private! !
-!ImageStripper categoriesFor: #purgeStubbornClass:!operations!private! !
-!ImageStripper categoriesFor: #referencesFromObjectsInClasses:!helpers!private! !
-!ImageStripper categoriesFor: #removeClass:!helpers!private! !
-!ImageStripper categoriesFor: #removeClassBuilder:!operations!private! !
-!ImageStripper categoriesFor: #removeClassGuids!operations!private! !
-!ImageStripper categoriesFor: #removeDevelopmentObjects:!operations!private! !
-!ImageStripper categoriesFor: #removeMethod:!private!removing! !
-!ImageStripper categoriesFor: #removeMyClass!operations!private! !
-!ImageStripper categoriesFor: #removeRedundantMethods!operations!private! !
-!ImageStripper categoriesFor: #removeRedundantMethodsOnceFrom:!operations!private! !
-!ImageStripper categoriesFor: #removeRedundantPackages!must not strip!operations!private! !
-!ImageStripper categoriesFor: #removeRedundantResources:!operations!private! !
-!ImageStripper categoriesFor: #requiredClasses!configuration!public! !
-!ImageStripper categoriesFor: #requiredMethodCategories!configuration!public! !
-!ImageStripper categoriesFor: #requiredPackageNames!accessing!public! !
-!ImageStripper categoriesFor: #resourcesForClasses:!helpers!private! !
-!ImageStripper categoriesFor: #retainInstVarNames!public!testing! !
-!ImageStripper categoriesFor: #rootClasses!accessing!private! !
-!ImageStripper categoriesFor: #rootPackage!accessing!public! !
-!ImageStripper categoriesFor: #runPreStripScript!operations!public! !
-!ImageStripper categoriesFor: #runtimeSessionManagerClass!accessing!public! !
-!ImageStripper categoriesFor: #saveBlock:!accessing!private! !
-!ImageStripper categoriesFor: #saveExecutable:keepImage:!operations!private! !
-!ImageStripper categoriesFor: #scanResourcesForViewReferences:!helpers!private! !
-!ImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
-!ImageStripper categoriesFor: #shouldRemoveResources!private!removing! !
-!ImageStripper categoriesFor: #shrinkHashedCollections!operations!private! !
-!ImageStripper categoriesFor: #shrinkSymbolTable!operations!private! !
-!ImageStripper categoriesFor: #snapshotDevelopmentClasses!configuration!private! !
-!ImageStripper categoriesFor: #snapshotImage:!operations!private! !
-!ImageStripper categoriesFor: #snapshotType!accessing!public! !
-!ImageStripper categoriesFor: #startElement:attributes:!helpers!private! !
-!ImageStripper categoriesFor: #startTag:attributes:!helpers!private! !
-!ImageStripper categoriesFor: #stripAndSave!operations!public! !
-!ImageStripper categoriesFor: #stripAndSaveWithProgress!operations!public! !
-!ImageStripper categoriesFor: #stripClassBuilder!public!testing! !
-!ImageStripper categoriesFor: #stripClassGuids!accessing!public! !
-!ImageStripper categoriesFor: #stripClassInfo!public!testing! !
-!ImageStripper categoriesFor: #stripDeprecatedMethods!public!testing! !
-!ImageStripper categoriesFor: #stripDevelopmentClasses!accessing!public!testing! !
-!ImageStripper categoriesFor: #stripDevelopmentMethods!accessing!public!testing! !
-!ImageStripper categoriesFor: #stripDuplicateBytecodes!public!testing! !
-!ImageStripper categoriesFor: #stripDuplicateStrings!public!testing! !
-!ImageStripper categoriesFor: #stripRedundantClasses!public!testing! !
-!ImageStripper categoriesFor: #stripRedundantMethods!public!testing! !
-!ImageStripper categoriesFor: #stripRedundantPackages!public!testing! !
-!ImageStripper categoriesFor: #stripRedundantResources!public!testing! !
-!ImageStripper categoriesFor: #stripShouldNotImplement!accessing!public!testing! !
-!ImageStripper categoriesFor: #stripSubclassResponsibility!public!testing! !
-!ImageStripper categoriesFor: #stubFile!public!testing! !
-!ImageStripper categoriesFor: #stubFilePath!accessing!public! !
-!ImageStripper categoriesFor: #unreachableMethodsOfNonInstantiablesIn:!operations!private! !
-!ImageStripper categoriesFor: #updateIconResource:!operations!public! !
-!ImageStripper categoriesFor: #updateStringTableResource:!operations!public! !
-!ImageStripper categoriesFor: #updateStubResources:!operations!private! !
-!ImageStripper categoriesFor: #updateVersionResource:!operations!public! !
-!ImageStripper categoriesFor: #updateXPManifestResource:!operations!private! !
-!ImageStripper categoriesFor: #verifyRequiredPackages!accessing!private! !
-!ImageStripper categoriesFor: #versionResource!accessing!private! !
-!ImageStripper categoriesFor: #viewsToClose!helpers!private! !
-!ImageStripper categoriesFor: #vmReferencedClasses!constants!public! !
-!ImageStripper categoriesFor: #writeLogFile!accessing!public!testing! !
+!ImageStripper categoriesForMethods!
+actualRequiredPackages!accessing!private! !
+addClassesReferencedByClass:to:!helpers!private! !
+addClassesReferencedByMethod:to:!helpers!private! !
+addReferencedViews:to:!helpers!private! !
+allReferencedClasses!operations!private! !
+allResourcesStripped!operations!private! !
+appendManifestContent:!helpers!private! !
+behaviorsWithIgnoredAspectSetters!configuration!public! !
+binaryStoreOn:!binary filing!public! !
+buildApplication!must not strip!operations!private! !
+buildManifest:description:version:!helpers!private! !
+buildMessageMap!helpers!private! !
+buildPreservedMessages!helpers!private! !
+buildRootClasses!helpers!private! !
+buildSupersentMessageMap!helpers!private! !
+checkedStubFilePath!accessing!private! !
+class:overrides:!private!testing! !
+classBuildingMethods!accessing!private! !
+classCategoriesToIgnoreAspectSetters!configuration!public! !
+classesReferencedByMethod:!helpers!private! !
+classReferencesToIgnore!configuration!private! !
+classRemovingMethods!accessing!private! !
+clearChangedProperties!operations!private! !
+closeAllDevelopmentTools!operations!private! !
+closeChangeLog!helpers!private! !
+closeExternalLibraries!operations!private! !
+closeLog!operations!private! !
+compileExternalStructures!accessing!public! !
+copyAndUpdateStub:to:!operations!private! !
+defaultStubFilePath!constants!private! !
+destroyNotifier!operations!private! !
+developmentClasses!configuration!public! !
+developmentMethods!accessing!public! !
+developmentResources!configuration!public! !
+disableClassChangeFlagging!operations!private! !
+disableDevelopmentSystem!operations!private! !
+emptyMethodDictionariesOfStubbornClasses!public!testing! !
+endElement:!helpers!private! !
+endTag!helpers!private! !
+executableName!accessing!public! !
+executablePath!accessing!public! !
+exeFileExtension!constants!public! !
+externalStructureClasses!accessing!private! !
+finalActions!helpers!private! !
+findPotentialAspectAccessors:!helpers!private! !
+findPotentialAspectAccessorsIn:excluding:!helpers!private! !
+finishedStrippingResources!helpers!private! !
+finishedWithStripping!operations!private! !
+foldDuplicatesConstants!operations!private! !
+getClassInstanceStats!helpers!private! !
+ignoreViewReferences!accessing!public! !
+includeManifestResource!accessing!public!testing! !
+initialTidy!helpers!private! !
+installRuntimeSessionManager!operations!private! !
+isConsoleApplication!public!testing! !
+isResourceUpdatingRequired!private!testing! !
+isToGo!accessing!public!testing! !
+isUnattended!public!testing! !
+keepImageFile!public!testing! !
+logComment:!event handling!private! !
+logConfiguration:!operations!private! !
+logDevelopmentCategories!operations!private! !
+logFileExtension!constants!public! !
+logFileName!accessing!public! !
+logImageStats!helpers!private! !
+logLiveClasses!public!testing! !
+logManifest!operations!private! !
+logPackagePrerequisites!public!testing! !
+logPreservedClasses!operations!private! !
+logPreservedMessages!operations!private! !
+logReference:!helpers!private! !
+logReferencesToClass:!operations!private! !
+logReferencesToClasses!public!testing! !
+logRemainingClasses!operations!private! !
+logRemainingPackages!operations!private! !
+logRemainingResources!operations!private! !
+logSentMessages:!helpers!private! !
+logStrippingError:!operations-logging!private! !
+logValue:!helpers!private! !
+manifestResourceId!constants!private! !
+messagesSentByClasses:!helpers!private! !
+nonAspectSetterCategories!configuration!public! !
+notify:!operations!private! !
+notifyClassesOfCompletedStrip!operations!private! !
+notifyClassesOfImminentStrip!operations!private! !
+notRequiredMethodCategories!configuration!public! !
+onError:!event handling!private! !
+onNotification:!event handling!private! !
+openLogFile!operations!private! !
+packagedClasses!accessing!private! !
+packageDrivenStage!must not strip!operations!private! !
+prepareCycle1:!must not strip!operations!private! !
+prepareCycle2:!must not strip!operations!private! !
+prepareCycle3!must not strip!operations!private! !
+prepareCycle4!must not strip!operations!private! !
+prepareCycle5!must not strip!operations!private! !
+prepareCycle6:!must not strip!operations!private! !
+prepareToDeployWith:to:!must not strip!operations!private! !
+prepareToStrip!operations!public! !
+preserveAspectSetters!accessing!public! !
+preStripCheck!operations!private! !
+preStripScript!accessing!public! !
+preStripTidy!operations!private! !
+progressDialogClass!constants!public! !
+purgeIcons!helpers!private! !
+purgeStubbornClass:!operations!private! !
+referencesFromObjectsInClasses:!helpers!private! !
+removeClass:!helpers!private! !
+removeClassBuilder:!operations!private! !
+removeClassGuids!operations!private! !
+removeDevelopmentObjects:!operations!private! !
+removeMethod:!private!removing! !
+removeMyClass!operations!private! !
+removeRedundantMethods!operations!private! !
+removeRedundantMethodsOnceFrom:!operations!private! !
+removeRedundantPackages!must not strip!operations!private! !
+removeRedundantResources:!operations!private! !
+requiredClasses!configuration!public! !
+requiredMethodCategories!configuration!public! !
+requiredPackageNames!accessing!public! !
+resourcesForClasses:!helpers!private! !
+retainInstVarNames!public!testing! !
+rootClasses!accessing!private! !
+rootPackage!accessing!public! !
+runPreStripScript!operations!public! !
+runtimeSessionManagerClass!accessing!public! !
+saveBlock:!accessing!private! !
+saveExecutable:keepImage:!operations!private! !
+scanResourcesForViewReferences:!helpers!private! !
+shouldPreserveMethod:!private!removing! !
+shouldRemoveResources!private!removing! !
+shrinkHashedCollections!operations!private! !
+shrinkSymbolTable!operations!private! !
+snapshotDevelopmentClasses!configuration!private! !
+snapshotImage:!operations!private! !
+snapshotType!accessing!public! !
+startElement:attributes:!helpers!private! !
+startTag:attributes:!helpers!private! !
+stripAndSave!operations!public! !
+stripAndSaveWithProgress!operations!public! !
+stripClassBuilder!public!testing! !
+stripClassGuids!accessing!public! !
+stripClassInfo!public!testing! !
+stripDeprecatedMethods!public!testing! !
+stripDevelopmentClasses!accessing!public!testing! !
+stripDevelopmentMethods!accessing!public!testing! !
+stripDuplicateBytecodes!public!testing! !
+stripDuplicateStrings!public!testing! !
+stripRedundantClasses!public!testing! !
+stripRedundantMethods!public!testing! !
+stripRedundantPackages!public!testing! !
+stripRedundantResources!public!testing! !
+stripShouldNotImplement!accessing!public!testing! !
+stripSubclassResponsibility!public!testing! !
+stubFile!public!testing! !
+stubFilePath!accessing!public! !
+unreachableMethodsOfNonInstantiablesIn:!operations!private! !
+updateIconResource:!operations!public! !
+updateStringTableResource:!operations!public! !
+updateStubResources:!operations!private! !
+updateVersionResource:!operations!public! !
+updateXPManifestResource:!operations!private! !
+verifyRequiredPackages!accessing!private! !
+versionResource!accessing!private! !
+viewsToClose!helpers!private! !
+vmReferencedClasses!constants!public! !
+writeLogFile!accessing!public!testing! !
+!
 
 !ImageStripper class methodsFor!
 
@@ -2225,9 +2227,11 @@ isSafeToEncryptWithProductProtection
 	the deployment of a Protected Product application"
 
 	^false! !
-!ImageStripper class categoriesFor: #classBuildingMethodCategoryNames!constants!public! !
-!ImageStripper class categoriesFor: #classRemovingMethodCategoryNames!constants!public! !
-!ImageStripper class categoriesFor: #defaultOptions!constants!private! !
-!ImageStripper class categoriesFor: #developmentMethodCategoryNames!constants!public! !
-!ImageStripper class categoriesFor: #isSafeToEncryptWithProductProtection!development!public! !
+!ImageStripper class categoriesForMethods!
+classBuildingMethodCategoryNames!constants!public! !
+classRemovingMethodCategoryNames!constants!public! !
+defaultOptions!constants!private! !
+developmentMethodCategoryNames!constants!public! !
+isSafeToEncryptWithProductProtection!development!public! !
+!
 

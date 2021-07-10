@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
@@ -4614,555 +4614,557 @@ zOrderTop
 
 	UserLibrary default bringWindowToTop: handle.
 	self parentView onZOrderChanged! !
-!View categoriesFor: #actualBackcolor!accessing!private! !
-!View categoriesFor: #actualFont!accessing!font!private! !
-!View categoriesFor: #actualPreferredExtent:!geometry!private! !
-!View categoriesFor: #addSubView:!hierarchy!public!sub views! !
-!View categoriesFor: #addToCommandRoute:!commands!public! !
-!View categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!View categoriesFor: #adjustRectangle:!geometry!public! !
-!View categoriesFor: #allParents!hierarchy!public! !
-!View categoriesFor: #allParentsDo:!hierarchy!public! !
-!View categoriesFor: #allSubViews!hierarchy!public! !
-!View categoriesFor: #allSubViewsDo:!hierarchy!public! !
-!View categoriesFor: #ambientBackcolor!accessing!private! !
-!View categoriesFor: #ambientFontChanged!font!private!updating! !
-!View categoriesFor: #applyFont!font!private!updating! !
-!View categoriesFor: #arrangement!accessing!public! !
-!View categoriesFor: #arrangement:!accessing!public! !
-!View categoriesFor: #asParameter!converting!public! !
-!View categoriesFor: #attachHandle:!private!realizing/unrealizing! !
-!View categoriesFor: #backcolor!accessing!public! !
-!View categoriesFor: #backcolor:!accessing!public! !
-!View categoriesFor: #backcolorChanged!helpers!private! !
-!View categoriesFor: #baseCreationStyle!private!realizing/unrealizing! !
-!View categoriesFor: #baseStyle!accessing-styles!private! !
-!View categoriesFor: #baseStyle:!accessing-styles!private! !
-!View categoriesFor: #baseStyle:maskedBy:!accessing-styles!private! !
-!View categoriesFor: #baseStyle:maskedBy:recreateIfChanged:!accessing-styles!private! !
-!View categoriesFor: #baseStyleAllMask:!accessing-styles!private! !
-!View categoriesFor: #baseStyleMask:set:!accessing-styles!private! !
-!View categoriesFor: #baseStyleMask:set:recreateIfChanged:!accessing-styles!private! !
-!View categoriesFor: #basicActualBackcolor!accessing!private! !
-!View categoriesFor: #basicAddSubView:!hierarchy!private!sub views! !
-!View categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
-!View categoriesFor: #basicDestroy!private!realizing/unrealizing! !
-!View categoriesFor: #basicFont:!accessing!private! !
-!View categoriesFor: #basicInvalidateLayout!geometry!private! !
-!View categoriesFor: #basicPaint:wParam:lParam:!drawing!private! !
-!View categoriesFor: #beActive!operations!public! !
-!View categoriesFor: #beCentered!operations!public! !
-!View categoriesFor: #beDefaultThemed!modes!public! !
-!View categoriesFor: #beForeground!operations!public! !
-!View categoriesFor: #beNotThemed!modes!public!wine fix! !
-!View categoriesFor: #beNotTopMost!operations!public! !
-!View categoriesFor: #bePopupFor:!operations!public! !
-!View categoriesFor: #beTopMost!operations!public! !
-!View categoriesFor: #binaryStoreOn:!binary filing!public! !
-!View categoriesFor: #bmSetStyle:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #calcClientRectangleFromRectangle:!geometry!private! !
-!View categoriesFor: #calcExtentFromClientExtent:!geometry!private! !
-!View categoriesFor: #calcRectangleFromClientRectangle:!geometry!private! !
-!View categoriesFor: #calculateExtent!geometry!private! !
-!View categoriesFor: #calculateExtent:!geometry!private! !
-!View categoriesFor: #canAcceptSubViews!hierarchy!public!sub views!testing! !
-!View categoriesFor: #canvas!drawing!public! !
-!View categoriesFor: #centerExtent:within:!geometry!private! !
-!View categoriesFor: #clearHandle!private!realizing/unrealizing! !
-!View categoriesFor: #clearStateRestoring!helpers!private! !
-!View categoriesFor: #clientExtent!geometry!public! !
-!View categoriesFor: #clientHeight!geometry!public! !
-!View categoriesFor: #clientRectangle!geometry!public! !
-!View categoriesFor: #clientWidth!geometry!public! !
-!View categoriesFor: #clipChildren!accessing-styles!public! !
-!View categoriesFor: #clipChildren:!accessing-styles!public! !
-!View categoriesFor: #close!public!realizing/unrealizing! !
-!View categoriesFor: #command:id:!commands!private! !
-!View categoriesFor: #commandPolicy!commands!public! !
-!View categoriesFor: #commandSource!accessing!public! !
-!View categoriesFor: #connectModel!models!public! !
-!View categoriesFor: #contextMenu!menus!public! !
-!View categoriesFor: #contextMenu:!menus!public! !
-!View categoriesFor: #create!private!realizing/unrealizing! !
-!View categoriesFor: #createAt:extent:!private!realizing/unrealizing! !
-!View categoriesFor: #creationParentView!accessing!private! !
-!View categoriesFor: #cursor!constants!public! !
-!View categoriesFor: #cursorPosition!accessing!public! !
-!View categoriesFor: #ddCut:!drag & drop!private! !
-!View categoriesFor: #ddDrop:!drag & drop!private! !
-!View categoriesFor: #ddEnter:!drag & drop!private! !
-!View categoriesFor: #ddGetImages:!drag & drop!private! !
-!View categoriesFor: #ddGetObjects:!drag & drop!private! !
-!View categoriesFor: #ddLeave:!drag & drop!private! !
-!View categoriesFor: #ddOperations:!drag & drop!private! !
-!View categoriesFor: #ddOver:!drag & drop!private! !
-!View categoriesFor: #ddScroll:!drag & drop!private! !
-!View categoriesFor: #defaultBackcolor!colors!constants!private! !
-!View categoriesFor: #defaultExtent!constants!private! !
-!View categoriesFor: #defaultId!accessing!private! !
-!View categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
-!View categoriesFor: #defaultProportion!constants!private! !
-!View categoriesFor: #defaultShowStyle!constants!private! !
-!View categoriesFor: #defaultStyle!constants!private! !
-!View categoriesFor: #defaultWindowExStyle!constants!private! !
-!View categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!View categoriesFor: #defaultWindowStyle!constants!private! !
-!View categoriesFor: #deferLayout:!constants!private! !
-!View categoriesFor: #destroy!public!realizing/unrealizing! !
-!View categoriesFor: #disable!operations!public! !
-!View categoriesFor: #disableRedraw!drawing!public! !
-!View categoriesFor: #disconnectFromModel!operations!private! !
-!View categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
-!View categoriesFor: #dispatchRegistered:wParam:lParam:!dispatching!private! !
-!View categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
-!View categoriesFor: #dispatchUser:wParam:lParam:map:!dispatching!private! !
-!View categoriesFor: #displayMonitor!accessing!public! !
-!View categoriesFor: #displayOn:!displaying!public! !
-!View categoriesFor: #displayOnFormats!displaying!private! !
-!View categoriesFor: #displayOnMaxCharacters!constants!displaying!private! !
-!View categoriesFor: #dragCut:!drag & drop!public! !
-!View categoriesFor: #dragDropSessionClass!constants!public! !
-!View categoriesFor: #dragEnter:!drag & drop!public! !
-!View categoriesFor: #dragLeave:!drag & drop!public! !
-!View categoriesFor: #dragOver:!drag & drop!public! !
-!View categoriesFor: #drawFocusRect:!drawing!public! !
-!View categoriesFor: #drop:!drag & drop!public! !
-!View categoriesFor: #enable!operations!public! !
-!View categoriesFor: #enableRedraw!drawing!public! !
-!View categoriesFor: #ensureLayoutValid!geometry!public! !
-!View categoriesFor: #ensureRectangleVisible:!public!updating! !
-!View categoriesFor: #ensureSubView:rectangleVisible:!private!updating! !
-!View categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!View categoriesFor: #ensureVisible!accessing!public! !
-!View categoriesFor: #enterIdle!event handling-win32!private! !
-!View categoriesFor: #eraseParentBackground:!event handling!private! !
-!View categoriesFor: #exStyle:maskedBy:!accessing-styles!private! !
-!View categoriesFor: #exStyle:maskedBy:recreateIfChanged:!accessing-styles!private! !
-!View categoriesFor: #exStyleAllMask:!accessing-styles!private! !
-!View categoriesFor: #exStyleMask:set:!accessing-styles!private! !
-!View categoriesFor: #exStyleMask:set:recreateIfChanged:!accessing-styles!private! !
-!View categoriesFor: #extendedStyle!accessing-styles!private! !
-!View categoriesFor: #extendedStyle:!accessing-styles!private! !
-!View categoriesFor: #extent!geometry!public! !
-!View categoriesFor: #extent:!geometry!public! !
-!View categoriesFor: #filerProxy!binary filing!private! !
-!View categoriesFor: #findItemHandle:ifAbsent:!hierarchy!private! !
-!View categoriesFor: #findMatch:inRange:!private!searching & replacing! !
-!View categoriesFor: #firstSubView!hierarchy!public!sub views! !
-!View categoriesFor: #flash:!operations!public! !
-!View categoriesFor: #font!accessing!font!public! !
-!View categoriesFor: #font:!accessing!font!public! !
-!View categoriesFor: #fontChanged!font!private!updating! !
-!View categoriesFor: #forecolor!accessing!public! !
-!View categoriesFor: #forecolor:!accessing!public! !
-!View categoriesFor: #forecolorChanged!private!updating! !
-!View categoriesFor: #frameChanged!helpers!private! !
-!View categoriesFor: #frameWidths!accessing!public! !
-!View categoriesFor: #freeTheme!private!theming! !
-!View categoriesFor: #getDC!accessing!public! !
-!View categoriesFor: #getEvents!events!private! !
-!View categoriesFor: #getFileLocator!accessing!private! !
-!View categoriesFor: #getFirstChild!hierarchy!private!sub views! !
-!View categoriesFor: #getItem:!hierarchy!private! !
-!View categoriesFor: #getItem:ifAbsent:!hierarchy!private! !
-!View categoriesFor: #getItemHandle:ifAbsent:!hierarchy!private! !
-!View categoriesFor: #getNoRedrawCount!private! !
-!View categoriesFor: #getOwner!hierarchy!private! !
-!View categoriesFor: #getParent!hierarchy!private! !
-!View categoriesFor: #getPreviousSibling!hierarchy!private! !
-!View categoriesFor: #getScrollInfo:bar:!accessing!private! !
-!View categoriesFor: #getWindow:!hierarchy!private! !
-!View categoriesFor: #getWindowDC!drawing!private! !
-!View categoriesFor: #getWindowExStyle!accessing-styles!private! !
-!View categoriesFor: #getWindowLong:!accessing!private! !
-!View categoriesFor: #getWindowLongPtr:!accessing!private! !
-!View categoriesFor: #getWindowRect!geometry!private! !
-!View categoriesFor: #getWindowStyle!accessing-styles!private! !
-!View categoriesFor: #getWindowText!accessing!private! !
-!View categoriesFor: #getWndProc!accessing!private! !
-!View categoriesFor: #handle!accessing!private! !
-!View categoriesFor: #handle:!accessing!private! !
-!View categoriesFor: #hasBorder!accessing-styles!public! !
-!View categoriesFor: #hasBorder:!accessing-styles!public! !
-!View categoriesFor: #hasCapture!public!testing! !
-!View categoriesFor: #hasClientEdge!accessing-styles!public! !
-!View categoriesFor: #hasClientEdge:!accessing-styles!public! !
-!View categoriesFor: #hasFixedHeight!public!testing! !
-!View categoriesFor: #hasFixedWidth!public!testing! !
-!View categoriesFor: #hasFocus!public!testing! !
-!View categoriesFor: #hasFocusDeeply!public!testing! !
-!View categoriesFor: #hasLayoutManager!public!testing! !
-!View categoriesFor: #hasMenu!private!testing! !
-!View categoriesFor: #hasStaticEdge!accessing-styles!public! !
-!View categoriesFor: #hasStaticEdge:!accessing-styles!public! !
-!View categoriesFor: #hasTransparentBackground!private!testing! !
-!View categoriesFor: #hasView!presenter!private! !
-!View categoriesFor: #hasVisibleStyle!public!testing! !
-!View categoriesFor: #hasVisibleStyle:!public!testing! !
-!View categoriesFor: #height!geometry!public! !
-!View categoriesFor: #height:!geometry!public! !
-!View categoriesFor: #helpId!accessing!public! !
-!View categoriesFor: #hide!operations!public! !
-!View categoriesFor: #hookWindowCreate!operations!private! !
-!View categoriesFor: #id!accessing!public! !
-!View categoriesFor: #id:!accessing!public! !
-!View categoriesFor: #inheritContextMenu!public!testing! !
-!View categoriesFor: #inheritContextMenu:!accessing!public! !
-!View categoriesFor: #initialize!initializing!private! !
-!View categoriesFor: #initializeModel!accessing!private! !
-!View categoriesFor: #interactor!accessing!public! !
-!View categoriesFor: #interactor:!accessing!public! !
-!View categoriesFor: #invalidate!drawing!public! !
-!View categoriesFor: #invalidateCalculatedExtent!geometry!public! !
-!View categoriesFor: #invalidateLayout!geometry!public! !
-!View categoriesFor: #invalidateLayoutDeeply!public!updating! !
-!View categoriesFor: #invalidateRect:!drawing!public! !
-!View categoriesFor: #invalidateRect:erase:!drawing!public! !
-!View categoriesFor: #invalidateRgn:!drawing!public! !
-!View categoriesFor: #invalidateRgn:erase:!drawing!public! !
-!View categoriesFor: #invalidateUserInterface!accessing!public! !
-!View categoriesFor: #isActive!public!testing! !
-!View categoriesFor: #isDesktop!public!testing! !
-!View categoriesFor: #isDialogMessage:!dispatching!private! !
-!View categoriesFor: #isDolphinWindow!private!testing! !
-!View categoriesFor: #isDragSource!private!testing! !
-!View categoriesFor: #isDragSource:!accessing!public! !
-!View categoriesFor: #isDropTarget!private!testing! !
-!View categoriesFor: #isDropTarget:!accessing!public! !
-!View categoriesFor: #isEnabled!public!testing! !
-!View categoriesFor: #isEnabled:!accessing!public! !
-!View categoriesFor: #isEnabledDeeply:!accessing!public! !
-!View categoriesFor: #isForeground!public!testing! !
-!View categoriesFor: #isGroupStop!accessing-styles!public! !
-!View categoriesFor: #isGroupStop:!accessing-styles!public! !
-!View categoriesFor: #isLayoutValid!geometry!public!testing! !
-!View categoriesFor: #isManaged!accessing!public! !
-!View categoriesFor: #isManaged:!accessing!public! !
-!View categoriesFor: #isOpen!public!testing! !
-!View categoriesFor: #isPersistentlyDisabled!private!testing! !
-!View categoriesFor: #isPersistentView!public!testing! !
-!View categoriesFor: #isPopup!accessing-styles!public!testing! !
-!View categoriesFor: #isPopup:!accessing-styles!public! !
-!View categoriesFor: #isReadOnly!public!testing! !
-!View categoriesFor: #isReadOnly:!public!testing! !
-!View categoriesFor: #isResizable!accessing-styles!public! !
-!View categoriesFor: #isResizable:!accessing-styles!public! !
-!View categoriesFor: #isStateRestoring!private!testing! !
-!View categoriesFor: #isStateRestoring:!accessing!private! !
-!View categoriesFor: #isTabStop!accessing-styles!public! !
-!View categoriesFor: #isTabStop:!accessing-styles!public! !
-!View categoriesFor: #isThemed!private!testing! !
-!View categoriesFor: #isTopView!public!testing! !
-!View categoriesFor: #isTransparent!accessing-styles!public! !
-!View categoriesFor: #isTransparent:!accessing-styles!public! !
-!View categoriesFor: #isView!accessing!public!testing! !
-!View categoriesFor: #isWindowUnicode!public!testing! !
-!View categoriesFor: #isWindowVisible!public!testing! !
-!View categoriesFor: #isWindowVisible:!accessing!public!testing! !
-!View categoriesFor: #keyboardCommands!accessing!public! !
-!View categoriesFor: #killTimer:!public!timers! !
-!View categoriesFor: #layout!geometry!public! !
-!View categoriesFor: #layout:!geometry!private! !
-!View categoriesFor: #layoutExtent:!geometry!public! !
-!View categoriesFor: #layoutManager!geometry!public! !
-!View categoriesFor: #literalStoreOn:!literal filing!public! !
-!View categoriesFor: #loadViewResource:forEdit:!binary filing!public! !
-!View categoriesFor: #managedSubViews!hierarchy!public!sub views! !
-!View categoriesFor: #managedSubViewsDo:!hierarchy!public!sub views! !
-!View categoriesFor: #mapPoint:to:!geometry!public! !
-!View categoriesFor: #mapPointToScreen:!geometry!public! !
-!View categoriesFor: #mapRectangle:to:!geometry!public! !
-!View categoriesFor: #mapScreenToClient:!geometry!public! !
-!View categoriesFor: #maxExtent!accessing!public! !
-!View categoriesFor: #minExtent!accessing!public! !
-!View categoriesFor: #model!accessing!public! !
-!View categoriesFor: #model:!accessing!public! !
-!View categoriesFor: #name!accessing!public! !
-!View categoriesFor: #name:!accessing!public! !
-!View categoriesFor: #nameOf:!hierarchy!public!sub views! !
-!View categoriesFor: #needsValidateLayout!geometry!public!testing! !
-!View categoriesFor: #nextSiblingView!hierarchy!public!sub views! !
-!View categoriesFor: #nmNotify:!event handling-win32!private! !
-!View categoriesFor: #nonClientCanvas!drawing!public! !
-!View categoriesFor: #nonReferenceAncestor!accessing!public! !
-!View categoriesFor: #noRedrawDo:!operations!public! !
-!View categoriesFor: #oldWndProc:!accessing!private! !
-!View categoriesFor: #onAboutToCreate!event handling!public! !
-!View categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!View categoriesFor: #onActionPerformed!event handling!public! !
-!View categoriesFor: #onBegin:drag:!event handling!public! !
-!View categoriesFor: #onCaptureChanged:!event handling!public! !
-!View categoriesFor: #onCloseRequested!event handling!public! !
-!View categoriesFor: #onColorRequired:!event handling!public! !
-!View categoriesFor: #onCommand:!event handling!public! !
-!View categoriesFor: #onCreated:!event handling!public! !
-!View categoriesFor: #onDestroyed!event handling!private! !
-!View categoriesFor: #onDrawItem:!event handling-win32!public! !
-!View categoriesFor: #onDrawMenuItem:!event handling-win32!public! !
-!View categoriesFor: #onEraseRequired:!event handling!public! !
-!View categoriesFor: #onGetCursor:!event handling!public! !
-!View categoriesFor: #onHotKey:!event handling!public! !
-!View categoriesFor: #onHScroll:!event handling!public! !
-!View categoriesFor: #onIdleEntered!event handling!public! !
-!View categoriesFor: #onInputLanguageChanged:!event handling-win32!public! !
-!View categoriesFor: #onInputMaskRequired:!event handling!public! !
-!View categoriesFor: #onKeyPressed:!event handling!public! !
-!View categoriesFor: #onKeyReleased:!event handling!public! !
-!View categoriesFor: #onKeyTyped:!event handling!public! !
-!View categoriesFor: #onKillFocus!event handling!public! !
-!View categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!View categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!View categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!View categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
-!View categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!View categoriesFor: #onMiddleButtonReleased:!event handling!public! !
-!View categoriesFor: #onModelChanged!event handling!public! !
-!View categoriesFor: #onMouseHovering:!event handling!public! !
-!View categoriesFor: #onMouseLeave:!event handling!public! !
-!View categoriesFor: #onMouseMoved:!event handling!public! !
-!View categoriesFor: #onMouseWheeled:!event handling!public! !
-!View categoriesFor: #onPaintRequired:!event handling!public! !
-!View categoriesFor: #onPositionChanged:!event handling!public! !
-!View categoriesFor: #onPositionChanging:!event handling!public! !
-!View categoriesFor: #onRestoredFromProxy!binary filing!public! !
-!View categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
-!View categoriesFor: #onRightButtonPressed:!event handling!public! !
-!View categoriesFor: #onRightButtonReleased:!event handling!public! !
-!View categoriesFor: #onSetFocus!event handling!public! !
-!View categoriesFor: #onStartup!event handling!public! !
-!View categoriesFor: #onStateRestored!event handling!public! !
-!View categoriesFor: #onSubViewAdded:!event handling!public! !
-!View categoriesFor: #onSubViewRemoved:!event handling!public! !
-!View categoriesFor: #onSysKeyPressed:!event handling!public! !
-!View categoriesFor: #onSysKeyReleased:!event handling!public! !
-!View categoriesFor: #onSysKeyTyped:!event handling!public! !
-!View categoriesFor: #onTipDetailsRequired:!event handling!public! !
-!View categoriesFor: #onTipTextRequired:!event handling!public! !
-!View categoriesFor: #onViewClosed!event handling!public! !
-!View categoriesFor: #onViewCreated!event handling!public! !
-!View categoriesFor: #onViewDestroyed!event handling!public! !
-!View categoriesFor: #onViewOpened!event handling!public! !
-!View categoriesFor: #onVScroll:!event handling!public! !
-!View categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
-!View categoriesFor: #onXButtonPressed:!event handling!public! !
-!View categoriesFor: #onXButtonReleased:!event handling!public! !
-!View categoriesFor: #onZOrderChanged!event handling!public! !
-!View categoriesFor: #openTheme!private!theming! !
-!View categoriesFor: #parentPresenter!presenter!public! !
-!View categoriesFor: #parentView!hierarchy!public! !
-!View categoriesFor: #parentView:!hierarchy!private! !
-!View categoriesFor: #performAction!operations!public! !
-!View categoriesFor: #placement!geometry!public! !
-!View categoriesFor: #placement:!geometry!public! !
-!View categoriesFor: #plainText!accessing!public! !
-!View categoriesFor: #plainText:!private!updating! !
-!View categoriesFor: #plainTextFrom:to:!accessing!public! !
-!View categoriesFor: #plainTextRange:!accessing!public! !
-!View categoriesFor: #position!geometry!public! !
-!View categoriesFor: #position:!geometry!public! !
-!View categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
-!View categoriesFor: #postMessage:wParam:lParam:!operations!private! !
-!View categoriesFor: #preferredExtent!geometry!public! !
-!View categoriesFor: #preferredExtent:!geometry!public! !
-!View categoriesFor: #presenter!accessing!public! !
-!View categoriesFor: #presenter:!initializing!public! !
-!View categoriesFor: #presenterConnectionPoint!accessing!public! !
-!View categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!View categoriesFor: #preTranslateMessage:!dispatching!public! !
-!View categoriesFor: #preTranslateMouseInput:!dispatching!public! !
-!View categoriesFor: #previousSiblingView!hierarchy!public!sub views! !
-!View categoriesFor: #primHookWindowCreate:!helpers!private! !
-!View categoriesFor: #printOn:!development!printing!public! !
-!View categoriesFor: #propagateSettingsChange:!event handling!private! !
-!View categoriesFor: #queryCommand:!commands!private! !
-!View categoriesFor: #queryCommandRouteFor:!commands!private! !
-!View categoriesFor: #queryContextMenu!menus!public! !
-!View categoriesFor: #queryMouseTracking!enquiries!private! !
-!View categoriesFor: #recreate!public!realizing/unrealizing! !
-!View categoriesFor: #recreateAround:!private!realizing/unrealizing! !
-!View categoriesFor: #rectangle!geometry!public! !
-!View categoriesFor: #rectangle:!geometry!public! !
-!View categoriesFor: #refreshContents!public!updating! !
-!View categoriesFor: #registerHotKeyId:modifiers:vkey:!helpers!public! !
-!View categoriesFor: #releaseDC:!operations!public! !
-!View categoriesFor: #removeSubView:!hierarchy!public!sub views! !
-!View categoriesFor: #repositionShell:!helpers!private! !
-!View categoriesFor: #requestDragImages:!drag & drop!public! !
-!View categoriesFor: #requestDragObjects:!drag & drop!public! !
-!View categoriesFor: #requestDropOperations:!drag & drop!public! !
-!View categoriesFor: #requestLayoutExtent:!geometry!public! !
-!View categoriesFor: #requestLayoutRectangle:!geometry!public! !
-!View categoriesFor: #resolution!accessing!public! !
-!View categoriesFor: #resolutionScaledBy:!geometry!private! !
-!View categoriesFor: #restoreFromProxy:!binary filing!private! !
-!View categoriesFor: #restorePlacement:resolution:!geometry!private! !
-!View categoriesFor: #richText:!accessing!private! !
-!View categoriesFor: #screenRectangle!geometry!public! !
-!View categoriesFor: #screenRectangle:!geometry!public! !
-!View categoriesFor: #scrollBy:clip:!public!scrolling! !
-!View categoriesFor: #scrollBy:scroll:clip:!public!scrolling! !
-!View categoriesFor: #sendMessage:!operations!private! !
-!View categoriesFor: #sendMessage:wParam:!operations!private! !
-!View categoriesFor: #sendMessage:wParam:lParam:!operations!private! !
-!View categoriesFor: #sendMessage:wParam:lpParam:!operations!private! !
-!View categoriesFor: #sendMessage:wParam:szParam:!operations!private! !
-!View categoriesFor: #setCapture!operations!public! !
-!View categoriesFor: #setEvents:!events!private! !
-!View categoriesFor: #setExtent:!geometry!public! !
-!View categoriesFor: #setFocus!operations!public! !
-!View categoriesFor: #setModel:!accessing!private! !
-!View categoriesFor: #setNoRedrawCount:!private! !
-!View categoriesFor: #setParent:!accessing!private! !
-!View categoriesFor: #setRedraw:!operations!private! !
-!View categoriesFor: #setScrollInfo:bar:!accessing!private! !
-!View categoriesFor: #setStateRestoring!accessing!private! !
-!View categoriesFor: #setTimer:interval:!public!timers! !
-!View categoriesFor: #settingChanged:!event handling!private!updating! !
-!View categoriesFor: #setWindowExStyle:!accessing-styles!private! !
-!View categoriesFor: #setWindowLong:to:!accessing!private! !
-!View categoriesFor: #setWindowPosAfter:x:y:width:height:flags:!geometry!private! !
-!View categoriesFor: #setWindowStyle:!accessing-styles!private! !
-!View categoriesFor: #setWindowText:!accessing!private! !
-!View categoriesFor: #setWndProc:!accessing!private! !
-!View categoriesFor: #show!operations!public! !
-!View categoriesFor: #showShell!operations!private! !
-!View categoriesFor: #showWithStyle:!operations!private! !
-!View categoriesFor: #state!accessing!private! !
-!View categoriesFor: #state:!accessing!private! !
-!View categoriesFor: #stbSaveOn:!binary filing!public! !
-!View categoriesFor: #styles!accessing-styles!public! !
-!View categoriesFor: #styles:!accessing-styles!private! !
-!View categoriesFor: #subclassWindow!operations!private! !
-!View categoriesFor: #subclassWindow:!operations!private! !
-!View categoriesFor: #subViewFromPoint:!hierarchy!public! !
-!View categoriesFor: #subViewFromPoint:flags:!hierarchy!private! !
-!View categoriesFor: #subViews!hierarchy!public!sub views! !
-!View categoriesFor: #subViewsDo:!hierarchy!public!sub views! !
-!View categoriesFor: #tabFirst!public!tabbing! !
-!View categoriesFor: #tabFocus!private!tabbing! !
-!View categoriesFor: #tabNext!commands!public! !
-!View categoriesFor: #tabNextSiblingFrom:forward:!private!tabbing! !
-!View categoriesFor: #text!accessing!public! !
-!View categoriesFor: #text:!accessing!public! !
-!View categoriesFor: #textLength!accessing!private! !
-!View categoriesFor: #theme!public!theming! !
-!View categoriesFor: #themeSubAppName!constants!private! !
-!View categoriesFor: #toolTipWindow!accessing!private! !
-!View categoriesFor: #toolTipWindow:!accessing!not an aspect!private! !
-!View categoriesFor: #topShell!hierarchy!public! !
-!View categoriesFor: #topView!hierarchy!public! !
-!View categoriesFor: #trackContextMenu:!menus!private! !
-!View categoriesFor: #trackMouseHover:!operations!public! !
-!View categoriesFor: #trackMouseLeave!operations!public! !
-!View categoriesFor: #unhookWindowCreate:!operations!private! !
-!View categoriesFor: #unregisterHotKeyId:!helpers!public! !
-!View categoriesFor: #update!drawing!public! !
-!View categoriesFor: #updateModel!public!updating! !
-!View categoriesFor: #updateSetting:!event handling!private!updating! !
-!View categoriesFor: #usePreferredExtent!accessing!public! !
-!View categoriesFor: #usePreferredExtent:!accessing!public! !
-!View categoriesFor: #validate!drawing!public! !
-!View categoriesFor: #validateLayout!geometry!public! !
-!View categoriesFor: #validateLayout:!geometry!private! !
-!View categoriesFor: #validateRect:!drawing!public! !
-!View categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!View categoriesFor: #validateUserInterface!operations!public! !
-!View categoriesFor: #view!presenter!public! !
-!View categoriesFor: #viewNamed:!hierarchy!public!sub views! !
-!View categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
-!View categoriesFor: #whileInvisibleDo:!operations!public! !
-!View categoriesFor: #width!geometry!public! !
-!View categoriesFor: #width:!geometry!public! !
-!View categoriesFor: #windowName!private!realizing/unrealizing! !
-!View categoriesFor: #winFinalize!finalizing!private! !
-!View categoriesFor: #withAllParents!hierarchy!public! !
-!View categoriesFor: #withAllParentsDo:!hierarchy!public! !
-!View categoriesFor: #withAllSubViews!hierarchy!public! !
-!View categoriesFor: #withAllSubViewsDo:!hierarchy!public! !
-!View categoriesFor: #wmActivate:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmActivateApp:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmCancelMode:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmCaptureChanged:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmChar:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmClose:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmCommand:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmContextMenu:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmCreate:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmCtlColor:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmDestroy:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmDrawItem:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmEnterIdle:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmEnterMenuLoop:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmEraseBkGnd:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmExitMenuLoop:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmGetDlgCode:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmHotKey:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmHScroll:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmInputLangChange:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmKeyDown:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmLButtonDblClk:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmLButtonDown:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmLButtonUp:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMButtonDblClk:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMButtonDown:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMButtonUp:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMeasureItem:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMenuCommand:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMouseHover:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMouseHWheel:wParam:lParam:!private! !
-!View categoriesFor: #wmMouseLeave:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMouseMove:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmMouseWheel:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmNcActivate:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmNcCreate:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmNcDestroy:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmNcPaint:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmParentNotify:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmPrint:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmQueryEndSession:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmRButtonDblClk:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmRButtonDown:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmRButtonUp:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSetCursor:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSettingChange:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmShowWindow:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSysChar:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSysColorChange:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSysCommand:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSysDeadChar:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSysKeyDown:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmThemeChanged:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmTimeChange:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmTimer:wParam:lParam:!event handling-win32!private!timers! !
-!View categoriesFor: #wmVScroll:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmWindowPosChanging:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmXButtonDblClk:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmXButtonDown:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wmXButtonUp:wParam:lParam:!event handling-win32!private! !
-!View categoriesFor: #wndClassAtom!accessing!public! !
-!View categoriesFor: #wndClassName!accessing!public! !
-!View categoriesFor: #x!geometry!public! !
-!View categoriesFor: #x:!geometry!public! !
-!View categoriesFor: #y!geometry!public! !
-!View categoriesFor: #y:!geometry!public! !
-!View categoriesFor: #zOrderAfter:!operations!public! !
-!View categoriesFor: #zOrderAfter:withFlags:!operations!public! !
-!View categoriesFor: #zOrderBottom!operations!public! !
-!View categoriesFor: #zOrderTop!operations!public! !
+!View categoriesForMethods!
+actualBackcolor!accessing!private! !
+actualFont!accessing!font!private! !
+actualPreferredExtent:!geometry!private! !
+addSubView:!hierarchy!public!sub views! !
+addToCommandRoute:!commands!public! !
+addToImageList:mask:!double dispatch!private! !
+adjustRectangle:!geometry!public! !
+allParents!hierarchy!public! !
+allParentsDo:!hierarchy!public! !
+allSubViews!hierarchy!public! !
+allSubViewsDo:!hierarchy!public! !
+ambientBackcolor!accessing!private! !
+ambientFontChanged!font!private!updating! !
+applyFont!font!private!updating! !
+arrangement!accessing!public! !
+arrangement:!accessing!public! !
+asParameter!converting!public! !
+attachHandle:!private!realizing/unrealizing! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+backcolorChanged!helpers!private! !
+baseCreationStyle!private!realizing/unrealizing! !
+baseStyle!accessing-styles!private! !
+baseStyle:!accessing-styles!private! !
+baseStyle:maskedBy:!accessing-styles!private! !
+baseStyle:maskedBy:recreateIfChanged:!accessing-styles!private! !
+baseStyleAllMask:!accessing-styles!private! !
+baseStyleMask:set:!accessing-styles!private! !
+baseStyleMask:set:recreateIfChanged:!accessing-styles!private! !
+basicActualBackcolor!accessing!private! !
+basicAddSubView:!hierarchy!private!sub views! !
+basicCreateAt:extent:!private!realizing/unrealizing! !
+basicDestroy!private!realizing/unrealizing! !
+basicFont:!accessing!private! !
+basicInvalidateLayout!geometry!private! !
+basicPaint:wParam:lParam:!drawing!private! !
+beActive!operations!public! !
+beCentered!operations!public! !
+beDefaultThemed!modes!public! !
+beForeground!operations!public! !
+beNotThemed!modes!public!wine fix! !
+beNotTopMost!operations!public! !
+bePopupFor:!operations!public! !
+beTopMost!operations!public! !
+binaryStoreOn:!binary filing!public! !
+bmSetStyle:wParam:lParam:!event handling-win32!private! !
+calcClientRectangleFromRectangle:!geometry!private! !
+calcExtentFromClientExtent:!geometry!private! !
+calcRectangleFromClientRectangle:!geometry!private! !
+calculateExtent!geometry!private! !
+calculateExtent:!geometry!private! !
+canAcceptSubViews!hierarchy!public!sub views!testing! !
+canvas!drawing!public! !
+centerExtent:within:!geometry!private! !
+clearHandle!private!realizing/unrealizing! !
+clearStateRestoring!helpers!private! !
+clientExtent!geometry!public! !
+clientHeight!geometry!public! !
+clientRectangle!geometry!public! !
+clientWidth!geometry!public! !
+clipChildren!accessing-styles!public! !
+clipChildren:!accessing-styles!public! !
+close!public!realizing/unrealizing! !
+command:id:!commands!private! !
+commandPolicy!commands!public! !
+commandSource!accessing!public! !
+connectModel!models!public! !
+contextMenu!menus!public! !
+contextMenu:!menus!public! !
+create!private!realizing/unrealizing! !
+createAt:extent:!private!realizing/unrealizing! !
+creationParentView!accessing!private! !
+cursor!constants!public! !
+cursorPosition!accessing!public! !
+ddCut:!drag & drop!private! !
+ddDrop:!drag & drop!private! !
+ddEnter:!drag & drop!private! !
+ddGetImages:!drag & drop!private! !
+ddGetObjects:!drag & drop!private! !
+ddLeave:!drag & drop!private! !
+ddOperations:!drag & drop!private! !
+ddOver:!drag & drop!private! !
+ddScroll:!drag & drop!private! !
+defaultBackcolor!colors!constants!private! !
+defaultExtent!constants!private! !
+defaultId!accessing!private! !
+defaultPositionWithin:forExtent:!geometry!private! !
+defaultProportion!constants!private! !
+defaultShowStyle!constants!private! !
+defaultStyle!constants!private! !
+defaultWindowExStyle!constants!private! !
+defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+defaultWindowStyle!constants!private! !
+deferLayout:!constants!private! !
+destroy!public!realizing/unrealizing! !
+disable!operations!public! !
+disableRedraw!drawing!public! !
+disconnectFromModel!operations!private! !
+dispatchMessage:wParam:lParam:!dispatching!private! !
+dispatchRegistered:wParam:lParam:!dispatching!private! !
+dispatchUser:wParam:lParam:!dispatching!private! !
+dispatchUser:wParam:lParam:map:!dispatching!private! !
+displayMonitor!accessing!public! !
+displayOn:!displaying!public! !
+displayOnFormats!displaying!private! !
+displayOnMaxCharacters!constants!displaying!private! !
+dragCut:!drag & drop!public! !
+dragDropSessionClass!constants!public! !
+dragEnter:!drag & drop!public! !
+dragLeave:!drag & drop!public! !
+dragOver:!drag & drop!public! !
+drawFocusRect:!drawing!public! !
+drop:!drag & drop!public! !
+enable!operations!public! !
+enableRedraw!drawing!public! !
+ensureLayoutValid!geometry!public! !
+ensureRectangleVisible:!public!updating! !
+ensureSubView:rectangleVisible:!private!updating! !
+ensureSubViewVisible:!public!sub views! !
+ensureVisible!accessing!public! !
+enterIdle!event handling-win32!private! !
+eraseParentBackground:!event handling!private! !
+exStyle:maskedBy:!accessing-styles!private! !
+exStyle:maskedBy:recreateIfChanged:!accessing-styles!private! !
+exStyleAllMask:!accessing-styles!private! !
+exStyleMask:set:!accessing-styles!private! !
+exStyleMask:set:recreateIfChanged:!accessing-styles!private! !
+extendedStyle!accessing-styles!private! !
+extendedStyle:!accessing-styles!private! !
+extent!geometry!public! !
+extent:!geometry!public! !
+filerProxy!binary filing!private! !
+findItemHandle:ifAbsent:!hierarchy!private! !
+findMatch:inRange:!private!searching & replacing! !
+firstSubView!hierarchy!public!sub views! !
+flash:!operations!public! !
+font!accessing!font!public! !
+font:!accessing!font!public! !
+fontChanged!font!private!updating! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+forecolorChanged!private!updating! !
+frameChanged!helpers!private! !
+frameWidths!accessing!public! !
+freeTheme!private!theming! !
+getDC!accessing!public! !
+getEvents!events!private! !
+getFileLocator!accessing!private! !
+getFirstChild!hierarchy!private!sub views! !
+getItem:!hierarchy!private! !
+getItem:ifAbsent:!hierarchy!private! !
+getItemHandle:ifAbsent:!hierarchy!private! !
+getNoRedrawCount!private! !
+getOwner!hierarchy!private! !
+getParent!hierarchy!private! !
+getPreviousSibling!hierarchy!private! !
+getScrollInfo:bar:!accessing!private! !
+getWindow:!hierarchy!private! !
+getWindowDC!drawing!private! !
+getWindowExStyle!accessing-styles!private! !
+getWindowLong:!accessing!private! !
+getWindowLongPtr:!accessing!private! !
+getWindowRect!geometry!private! !
+getWindowStyle!accessing-styles!private! !
+getWindowText!accessing!private! !
+getWndProc!accessing!private! !
+handle!accessing!private! !
+handle:!accessing!private! !
+hasBorder!accessing-styles!public! !
+hasBorder:!accessing-styles!public! !
+hasCapture!public!testing! !
+hasClientEdge!accessing-styles!public! !
+hasClientEdge:!accessing-styles!public! !
+hasFixedHeight!public!testing! !
+hasFixedWidth!public!testing! !
+hasFocus!public!testing! !
+hasFocusDeeply!public!testing! !
+hasLayoutManager!public!testing! !
+hasMenu!private!testing! !
+hasStaticEdge!accessing-styles!public! !
+hasStaticEdge:!accessing-styles!public! !
+hasTransparentBackground!private!testing! !
+hasView!presenter!private! !
+hasVisibleStyle!public!testing! !
+hasVisibleStyle:!public!testing! !
+height!geometry!public! !
+height:!geometry!public! !
+helpId!accessing!public! !
+hide!operations!public! !
+hookWindowCreate!operations!private! !
+id!accessing!public! !
+id:!accessing!public! !
+inheritContextMenu!public!testing! !
+inheritContextMenu:!accessing!public! !
+initialize!initializing!private! !
+initializeModel!accessing!private! !
+interactor!accessing!public! !
+interactor:!accessing!public! !
+invalidate!drawing!public! !
+invalidateCalculatedExtent!geometry!public! !
+invalidateLayout!geometry!public! !
+invalidateLayoutDeeply!public!updating! !
+invalidateRect:!drawing!public! !
+invalidateRect:erase:!drawing!public! !
+invalidateRgn:!drawing!public! !
+invalidateRgn:erase:!drawing!public! !
+invalidateUserInterface!accessing!public! !
+isActive!public!testing! !
+isDesktop!public!testing! !
+isDialogMessage:!dispatching!private! !
+isDolphinWindow!private!testing! !
+isDragSource!private!testing! !
+isDragSource:!accessing!public! !
+isDropTarget!private!testing! !
+isDropTarget:!accessing!public! !
+isEnabled!public!testing! !
+isEnabled:!accessing!public! !
+isEnabledDeeply:!accessing!public! !
+isForeground!public!testing! !
+isGroupStop!accessing-styles!public! !
+isGroupStop:!accessing-styles!public! !
+isLayoutValid!geometry!public!testing! !
+isManaged!accessing!public! !
+isManaged:!accessing!public! !
+isOpen!public!testing! !
+isPersistentlyDisabled!private!testing! !
+isPersistentView!public!testing! !
+isPopup!accessing-styles!public!testing! !
+isPopup:!accessing-styles!public! !
+isReadOnly!public!testing! !
+isReadOnly:!public!testing! !
+isResizable!accessing-styles!public! !
+isResizable:!accessing-styles!public! !
+isStateRestoring!private!testing! !
+isStateRestoring:!accessing!private! !
+isTabStop!accessing-styles!public! !
+isTabStop:!accessing-styles!public! !
+isThemed!private!testing! !
+isTopView!public!testing! !
+isTransparent!accessing-styles!public! !
+isTransparent:!accessing-styles!public! !
+isView!accessing!public!testing! !
+isWindowUnicode!public!testing! !
+isWindowVisible!public!testing! !
+isWindowVisible:!accessing!public!testing! !
+keyboardCommands!accessing!public! !
+killTimer:!public!timers! !
+layout!geometry!public! !
+layout:!geometry!private! !
+layoutExtent:!geometry!public! !
+layoutManager!geometry!public! !
+literalStoreOn:!literal filing!public! !
+loadViewResource:forEdit:!binary filing!public! !
+managedSubViews!hierarchy!public!sub views! !
+managedSubViewsDo:!hierarchy!public!sub views! !
+mapPoint:to:!geometry!public! !
+mapPointToScreen:!geometry!public! !
+mapRectangle:to:!geometry!public! !
+mapScreenToClient:!geometry!public! !
+maxExtent!accessing!public! !
+minExtent!accessing!public! !
+model!accessing!public! !
+model:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+nameOf:!hierarchy!public!sub views! !
+needsValidateLayout!geometry!public!testing! !
+nextSiblingView!hierarchy!public!sub views! !
+nmNotify:!event handling-win32!private! !
+nonClientCanvas!drawing!public! !
+nonReferenceAncestor!accessing!public! !
+noRedrawDo:!operations!public! !
+oldWndProc:!accessing!private! !
+onAboutToCreate!event handling!public! !
+onAboutToDisplayMenu:!event handling!public! !
+onActionPerformed!event handling!public! !
+onBegin:drag:!event handling!public! !
+onCaptureChanged:!event handling!public! !
+onCloseRequested!event handling!public! !
+onColorRequired:!event handling!public! !
+onCommand:!event handling!public! !
+onCreated:!event handling!public! !
+onDestroyed!event handling!private! !
+onDrawItem:!event handling-win32!public! !
+onDrawMenuItem:!event handling-win32!public! !
+onEraseRequired:!event handling!public! !
+onGetCursor:!event handling!public! !
+onHotKey:!event handling!public! !
+onHScroll:!event handling!public! !
+onIdleEntered!event handling!public! !
+onInputLanguageChanged:!event handling-win32!public! !
+onInputMaskRequired:!event handling!public! !
+onKeyPressed:!event handling!public! !
+onKeyReleased:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onKillFocus!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onLeftButtonReleased:!event handling!public! !
+onMiddleButtonDoubleClicked:!event handling!public! !
+onMiddleButtonPressed:!event handling!public! !
+onMiddleButtonReleased:!event handling!public! !
+onModelChanged!event handling!public! !
+onMouseHovering:!event handling!public! !
+onMouseLeave:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onPaintRequired:!event handling!public! !
+onPositionChanged:!event handling!public! !
+onPositionChanging:!event handling!public! !
+onRestoredFromProxy!binary filing!public! !
+onRightButtonDoubleClicked:!event handling!public! !
+onRightButtonPressed:!event handling!public! !
+onRightButtonReleased:!event handling!public! !
+onSetFocus!event handling!public! !
+onStartup!event handling!public! !
+onStateRestored!event handling!public! !
+onSubViewAdded:!event handling!public! !
+onSubViewRemoved:!event handling!public! !
+onSysKeyPressed:!event handling!public! !
+onSysKeyReleased:!event handling!public! !
+onSysKeyTyped:!event handling!public! !
+onTipDetailsRequired:!event handling!public! !
+onTipTextRequired:!event handling!public! !
+onViewClosed!event handling!public! !
+onViewCreated!event handling!public! !
+onViewDestroyed!event handling!public! !
+onViewOpened!event handling!public! !
+onVScroll:!event handling!public! !
+onXButtonDoubleClicked:!event handling!public! !
+onXButtonPressed:!event handling!public! !
+onXButtonReleased:!event handling!public! !
+onZOrderChanged!event handling!public! !
+openTheme!private!theming! !
+parentPresenter!presenter!public! !
+parentView!hierarchy!public! !
+parentView:!hierarchy!private! !
+performAction!operations!public! !
+placement!geometry!public! !
+placement:!geometry!public! !
+plainText!accessing!public! !
+plainText:!private!updating! !
+plainTextFrom:to:!accessing!public! !
+plainTextRange:!accessing!public! !
+position!geometry!public! !
+position:!geometry!public! !
+positionForKeyboardContextMenu!enquiries!public! !
+postMessage:wParam:lParam:!operations!private! !
+preferredExtent!geometry!public! !
+preferredExtent:!geometry!public! !
+presenter!accessing!public! !
+presenter:!initializing!public! !
+presenterConnectionPoint!accessing!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+preTranslateMessage:!dispatching!public! !
+preTranslateMouseInput:!dispatching!public! !
+previousSiblingView!hierarchy!public!sub views! !
+primHookWindowCreate:!helpers!private! !
+printOn:!development!printing!public! !
+propagateSettingsChange:!event handling!private! !
+queryCommand:!commands!private! !
+queryCommandRouteFor:!commands!private! !
+queryContextMenu!menus!public! !
+queryMouseTracking!enquiries!private! !
+recreate!public!realizing/unrealizing! !
+recreateAround:!private!realizing/unrealizing! !
+rectangle!geometry!public! !
+rectangle:!geometry!public! !
+refreshContents!public!updating! !
+registerHotKeyId:modifiers:vkey:!helpers!public! !
+releaseDC:!operations!public! !
+removeSubView:!hierarchy!public!sub views! !
+repositionShell:!helpers!private! !
+requestDragImages:!drag & drop!public! !
+requestDragObjects:!drag & drop!public! !
+requestDropOperations:!drag & drop!public! !
+requestLayoutExtent:!geometry!public! !
+requestLayoutRectangle:!geometry!public! !
+resolution!accessing!public! !
+resolutionScaledBy:!geometry!private! !
+restoreFromProxy:!binary filing!private! !
+restorePlacement:resolution:!geometry!private! !
+richText:!accessing!private! !
+screenRectangle!geometry!public! !
+screenRectangle:!geometry!public! !
+scrollBy:clip:!public!scrolling! !
+scrollBy:scroll:clip:!public!scrolling! !
+sendMessage:!operations!private! !
+sendMessage:wParam:!operations!private! !
+sendMessage:wParam:lParam:!operations!private! !
+sendMessage:wParam:lpParam:!operations!private! !
+sendMessage:wParam:szParam:!operations!private! !
+setCapture!operations!public! !
+setEvents:!events!private! !
+setExtent:!geometry!public! !
+setFocus!operations!public! !
+setModel:!accessing!private! !
+setNoRedrawCount:!private! !
+setParent:!accessing!private! !
+setRedraw:!operations!private! !
+setScrollInfo:bar:!accessing!private! !
+setStateRestoring!accessing!private! !
+setTimer:interval:!public!timers! !
+settingChanged:!event handling!private!updating! !
+setWindowExStyle:!accessing-styles!private! !
+setWindowLong:to:!accessing!private! !
+setWindowPosAfter:x:y:width:height:flags:!geometry!private! !
+setWindowStyle:!accessing-styles!private! !
+setWindowText:!accessing!private! !
+setWndProc:!accessing!private! !
+show!operations!public! !
+showShell!operations!private! !
+showWithStyle:!operations!private! !
+state!accessing!private! !
+state:!accessing!private! !
+stbSaveOn:!binary filing!public! !
+styles!accessing-styles!public! !
+styles:!accessing-styles!private! !
+subclassWindow!operations!private! !
+subclassWindow:!operations!private! !
+subViewFromPoint:!hierarchy!public! !
+subViewFromPoint:flags:!hierarchy!private! !
+subViews!hierarchy!public!sub views! !
+subViewsDo:!hierarchy!public!sub views! !
+tabFirst!public!tabbing! !
+tabFocus!private!tabbing! !
+tabNext!commands!public! !
+tabNextSiblingFrom:forward:!private!tabbing! !
+text!accessing!public! !
+text:!accessing!public! !
+textLength!accessing!private! !
+theme!public!theming! !
+themeSubAppName!constants!private! !
+toolTipWindow!accessing!private! !
+toolTipWindow:!accessing!not an aspect!private! !
+topShell!hierarchy!public! !
+topView!hierarchy!public! !
+trackContextMenu:!menus!private! !
+trackMouseHover:!operations!public! !
+trackMouseLeave!operations!public! !
+unhookWindowCreate:!operations!private! !
+unregisterHotKeyId:!helpers!public! !
+update!drawing!public! !
+updateModel!public!updating! !
+updateSetting:!event handling!private!updating! !
+usePreferredExtent!accessing!public! !
+usePreferredExtent:!accessing!public! !
+validate!drawing!public! !
+validateLayout!geometry!public! !
+validateLayout:!geometry!private! !
+validateRect:!drawing!public! !
+validateSubViewLayouts:!geometry!private! !
+validateUserInterface!operations!public! !
+view!presenter!public! !
+viewNamed:!hierarchy!public!sub views! !
+viewNamed:ifNone:!hierarchy!public!sub views! !
+whileInvisibleDo:!operations!public! !
+width!geometry!public! !
+width:!geometry!public! !
+windowName!private!realizing/unrealizing! !
+winFinalize!finalizing!private! !
+withAllParents!hierarchy!public! !
+withAllParentsDo:!hierarchy!public! !
+withAllSubViews!hierarchy!public! !
+withAllSubViewsDo:!hierarchy!public! !
+wmActivate:wParam:lParam:!event handling-win32!private! !
+wmActivateApp:wParam:lParam:!event handling-win32!private! !
+wmCancelMode:wParam:lParam:!event handling-win32!private! !
+wmCaptureChanged:wParam:lParam:!event handling-win32!private! !
+wmChar:wParam:lParam:!event handling-win32!private! !
+wmClose:wParam:lParam:!event handling-win32!private! !
+wmCommand:wParam:lParam:!event handling-win32!private! !
+wmContextMenu:wParam:lParam:!event handling-win32!private! !
+wmCreate:wParam:lParam:!event handling-win32!private! !
+wmCtlColor:wParam:lParam:!event handling-win32!private! !
+wmDestroy:wParam:lParam:!event handling-win32!private! !
+wmDrawItem:wParam:lParam:!event handling-win32!private! !
+wmEnterIdle:wParam:lParam:!event handling-win32!private! !
+wmEnterMenuLoop:wParam:lParam:!event handling-win32!private! !
+wmEraseBkGnd:wParam:lParam:!event handling-win32!private! !
+wmExitMenuLoop:wParam:lParam:!event handling-win32!private! !
+wmGetDlgCode:wParam:lParam:!event handling-win32!private! !
+wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
+wmHotKey:wParam:lParam:!event handling-win32!private! !
+wmHScroll:wParam:lParam:!event handling-win32!private! !
+wmInitMenu:wParam:lParam:!event handling-win32!private! !
+wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
+wmInputLangChange:wParam:lParam:!event handling-win32!private! !
+wmKeyDown:wParam:lParam:!event handling-win32!private! !
+wmKeyUp:wParam:lParam:!event handling-win32!private! !
+wmKillFocus:wParam:lParam:!event handling-win32!private! !
+wmLButtonDblClk:wParam:lParam:!event handling-win32!private! !
+wmLButtonDown:wParam:lParam:!event handling-win32!private! !
+wmLButtonUp:wParam:lParam:!event handling-win32!private! !
+wmMButtonDblClk:wParam:lParam:!event handling-win32!private! !
+wmMButtonDown:wParam:lParam:!event handling-win32!private! !
+wmMButtonUp:wParam:lParam:!event handling-win32!private! !
+wmMeasureItem:wParam:lParam:!event handling-win32!private! !
+wmMenuCommand:wParam:lParam:!event handling-win32!private! !
+wmMouseHover:wParam:lParam:!event handling-win32!private! !
+wmMouseHWheel:wParam:lParam:!private! !
+wmMouseLeave:wParam:lParam:!event handling-win32!private! !
+wmMouseMove:wParam:lParam:!event handling-win32!private! !
+wmMouseWheel:wParam:lParam:!event handling-win32!private! !
+wmNcActivate:wParam:lParam:!event handling-win32!private! !
+wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
+wmNcCreate:wParam:lParam:!event handling-win32!private! !
+wmNcDestroy:wParam:lParam:!event handling-win32!private! !
+wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+wmNcPaint:wParam:lParam:!event handling-win32!private! !
+wmNotify:wParam:lParam:!event handling-win32!private! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmParentNotify:wParam:lParam:!event handling-win32!private! !
+wmPrint:wParam:lParam:!event handling-win32!private! !
+wmPrintClient:wParam:lParam:!event handling-win32!private! !
+wmQueryEndSession:wParam:lParam:!event handling-win32!private! !
+wmRButtonDblClk:wParam:lParam:!event handling-win32!private! !
+wmRButtonDown:wParam:lParam:!event handling-win32!private! !
+wmRButtonUp:wParam:lParam:!event handling-win32!private! !
+wmSetCursor:wParam:lParam:!event handling-win32!private! !
+wmSetFocus:wParam:lParam:!event handling-win32!private! !
+wmSettingChange:wParam:lParam:!event handling-win32!private! !
+wmShowWindow:wParam:lParam:!event handling-win32!private! !
+wmSize:wParam:lParam:!event handling-win32!private! !
+wmSysChar:wParam:lParam:!event handling-win32!private! !
+wmSysColorChange:wParam:lParam:!event handling-win32!private! !
+wmSysCommand:wParam:lParam:!event handling-win32!private! !
+wmSysDeadChar:wParam:lParam:!event handling-win32!private! !
+wmSysKeyDown:wParam:lParam:!event handling-win32!private! !
+wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
+wmThemeChanged:wParam:lParam:!event handling-win32!private! !
+wmTimeChange:wParam:lParam:!event handling-win32!private! !
+wmTimer:wParam:lParam:!event handling-win32!private!timers! !
+wmVScroll:wParam:lParam:!event handling-win32!private! !
+wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
+wmWindowPosChanging:wParam:lParam:!event handling-win32!private! !
+wmXButtonDblClk:wParam:lParam:!event handling-win32!private! !
+wmXButtonDown:wParam:lParam:!event handling-win32!private! !
+wmXButtonUp:wParam:lParam:!event handling-win32!private! !
+wndClassAtom!accessing!public! !
+wndClassName!accessing!public! !
+x!geometry!public! !
+x:!geometry!public! !
+y!geometry!public! !
+y:!geometry!public! !
+zOrderAfter:!operations!public! !
+zOrderAfter:withFlags:!operations!public! !
+zOrderBottom!operations!public! !
+zOrderTop!operations!public! !
+!
 
 View methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 View methodProtocol: #dcSource attributes: #(#readOnly) selectors: #(#getDC #releaseDC:)!
@@ -5785,71 +5787,73 @@ wndClassName
 	defaults."
 
 	^'DolphinWindow'! !
-!View class categoriesFor: #active!enquiries!public! !
-!View class categoriesFor: #activeHandle!enquiries!private! !
-!View class categoriesFor: #activeOrDesktop!enquiries!public! !
-!View class categoriesFor: #buildMessageMap!constants!must not strip!private! !
-!View class categoriesFor: #capture!accessing!public! !
-!View class categoriesFor: #closeAll!operations!private! !
-!View class categoriesFor: #cursor!accessing!public! !
-!View class categoriesFor: #defaultId!accessing!private! !
-!View class categoriesFor: #defaultModel!models!public! !
-!View class categoriesFor: #defaultView!constants!public! !
-!View class categoriesFor: #desktop!accessing!public! !
-!View class categoriesFor: #desktopHandle!enquiries!private! !
-!View class categoriesFor: #destroyAll!operations!private! !
-!View class categoriesFor: #focus!accessing!public! !
-!View class categoriesFor: #focusHandle!accessing!private! !
-!View class categoriesFor: #foreground!enquiries!public! !
-!View class categoriesFor: #foregroundHandle!accessing!private! !
-!View class categoriesFor: #frameWidths:!constants!public! !
-!View class categoriesFor: #freeTheme!private!theming! !
-!View class categoriesFor: #fromHandle:!instance creation!public! !
-!View class categoriesFor: #fromPoint:!instance creation!private! !
-!View class categoriesFor: #icon!constants!public! !
-!View class categoriesFor: #initialize!development!initializing!private! !
-!View class categoriesFor: #mapRectangle:from:to:!geometry!public! !
-!View class categoriesFor: #new!instance creation!public! !
-!View class categoriesFor: #onExit!event handling!public! !
-!View class categoriesFor: #onStartup!event handling!public! !
-!View class categoriesFor: #openTheme!private!theming! !
-!View class categoriesFor: #registerClass!operations!private! !
-!View class categoriesFor: #registerMessage:!dispatching!public! !
-!View class categoriesFor: #registerMessageMappings:!class initialization!public! !
-!View class categoriesFor: #releaseCapture!operations!public! !
-!View class categoriesFor: #reregisterClass!operations!private! !
-!View class categoriesFor: #resetTheme!private!theming! !
-!View class categoriesFor: #resource_Default_view!public!resources-views! !
-!View class categoriesFor: #selectorForMessage:!dispatching!private! !
-!View class categoriesFor: #show!instance creation!public! !
-!View class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
-!View class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion6:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion7:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion8:!binary filing!private! !
-!View class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!View class categoriesFor: #stbConvertProxy:!binary filing!public! !
-!View class categoriesFor: #stbVersion!binary filing!public! !
-!View class categoriesFor: #theme!public!theming! !
-!View class categoriesFor: #themePartName!constants!public!theming! !
-!View class categoriesFor: #topLevelViews!accessing!public! !
-!View class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!View class categoriesFor: #unregisterClass!operations!private! !
-!View class categoriesFor: #unregisterMessageMappings:!class hierarchy-removing!public! !
-!View class categoriesFor: #viewClosedError!accessing!public! !
-!View class categoriesFor: #winClassBrush!constants!private! !
-!View class categoriesFor: #winClassCursor!constants!private! !
-!View class categoriesFor: #winClassIcon!constants!private! !
-!View class categoriesFor: #winClassName!constants!private! !
-!View class categoriesFor: #winClassStyle!constants!private! !
-!View class categoriesFor: #withHandle:!accessing!private! !
-!View class categoriesFor: #wndClassName!constants!private! !
+!View class categoriesForMethods!
+active!enquiries!public! !
+activeHandle!enquiries!private! !
+activeOrDesktop!enquiries!public! !
+buildMessageMap!constants!must not strip!private! !
+capture!accessing!public! !
+closeAll!operations!private! !
+cursor!accessing!public! !
+defaultId!accessing!private! !
+defaultModel!models!public! !
+defaultView!constants!public! !
+desktop!accessing!public! !
+desktopHandle!enquiries!private! !
+destroyAll!operations!private! !
+focus!accessing!public! !
+focusHandle!accessing!private! !
+foreground!enquiries!public! !
+foregroundHandle!accessing!private! !
+frameWidths:!constants!public! !
+freeTheme!private!theming! !
+fromHandle:!instance creation!public! !
+fromPoint:!instance creation!private! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+mapRectangle:from:to:!geometry!public! !
+new!instance creation!public! !
+onExit!event handling!public! !
+onStartup!event handling!public! !
+openTheme!private!theming! !
+registerClass!operations!private! !
+registerMessage:!dispatching!public! !
+registerMessageMappings:!class initialization!public! !
+releaseCapture!operations!public! !
+reregisterClass!operations!private! !
+resetTheme!private!theming! !
+resource_Default_view!public!resources-views! !
+selectorForMessage:!dispatching!private! !
+show!instance creation!public! !
+stbConvert:fromVersion:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion10:!binary filing!private! !
+stbConvertFromVersion11:!binary filing!private! !
+stbConvertFromVersion12:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbConvertFromVersion3:!binary filing!private! !
+stbConvertFromVersion4:!binary filing!private! !
+stbConvertFromVersion5:!binary filing!private! !
+stbConvertFromVersion6:!binary filing!private! !
+stbConvertFromVersion7:!binary filing!private! !
+stbConvertFromVersion8:!binary filing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+stbConvertProxy:!binary filing!public! !
+stbVersion!binary filing!public! !
+theme!public!theming! !
+themePartName!constants!public!theming! !
+topLevelViews!accessing!public! !
+uninitialize!class hierarchy-removing!private! !
+unregisterClass!operations!private! !
+unregisterMessageMappings:!class hierarchy-removing!public! !
+viewClosedError!accessing!public! !
+winClassBrush!constants!private! !
+winClassCursor!constants!private! !
+winClassIcon!constants!private! !
+winClassName!constants!private! !
+winClassStyle!constants!private! !
+withHandle:!accessing!private! !
+wndClassName!constants!private! !
+!
 

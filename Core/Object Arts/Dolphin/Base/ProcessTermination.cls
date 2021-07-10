@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Exception subclass: #ProcessTermination
 	instanceVariableNames: ''
@@ -28,6 +28,8 @@ defaultAction
 	incompletely terminated. The defaultAction here is to do nothing, and
 	if the process is still running, it will shut itself down."
 ! !
-!ProcessTermination categoriesFor: #_descriptionFormat!displaying!public! !
-!ProcessTermination categoriesFor: #defaultAction!handling!public! !
+!ProcessTermination categoriesForMethods!
+_descriptionFormat!displaying!public! !
+defaultAction!handling!public! !
+!
 

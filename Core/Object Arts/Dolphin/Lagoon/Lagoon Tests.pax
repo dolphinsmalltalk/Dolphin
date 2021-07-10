@@ -67,14 +67,18 @@ initializeForTests
 	logStream := WriteStream on: (String new: 256).
 	elementStack := OrderedCollection new.
 	potentialAspectGetters := IdentitySet new! !
-!ImageStripper categoriesFor: #initializeForTests!initializing!public! !
+!ImageStripper categoriesForMethods!
+initializeForTests!initializing!public! !
+!
 
 !ImageStripper class methodsFor!
 
 newForTests
 
 	^self new initializeForTests! !
-!ImageStripper class categoriesFor: #newForTests!instance creation!public! !
+!ImageStripper class categoriesForMethods!
+newForTests!instance creation!public! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #LOGCOLORSPACE
 	instanceVariableNames: ''
@@ -150,26 +150,28 @@ lcsVersion: anInteger
 	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_lcsVersion put: anInteger! !
-!LOGCOLORSPACE categoriesFor: #lcsCSType!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsCSType:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsEndpoints!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsEndpoints:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsFilename!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsFilename:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsGammaBlue!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsGammaBlue:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsGammaGreen!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsGammaGreen:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsGammaRed!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsGammaRed:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsIntent!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsIntent:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsSignature!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsSignature:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsSize!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsSize:!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsVersion!**compiled accessors**!public! !
-!LOGCOLORSPACE categoriesFor: #lcsVersion:!**compiled accessors**!public! !
+!LOGCOLORSPACE categoriesForMethods!
+lcsCSType!**compiled accessors**!public! !
+lcsCSType:!**compiled accessors**!public! !
+lcsEndpoints!**compiled accessors**!public! !
+lcsEndpoints:!**compiled accessors**!public! !
+lcsFilename!**compiled accessors**!public! !
+lcsFilename:!**compiled accessors**!public! !
+lcsGammaBlue!**compiled accessors**!public! !
+lcsGammaBlue:!**compiled accessors**!public! !
+lcsGammaGreen!**compiled accessors**!public! !
+lcsGammaGreen:!**compiled accessors**!public! !
+lcsGammaRed!**compiled accessors**!public! !
+lcsGammaRed:!**compiled accessors**!public! !
+lcsIntent!**compiled accessors**!public! !
+lcsIntent:!**compiled accessors**!public! !
+lcsSignature!**compiled accessors**!public! !
+lcsSignature:!**compiled accessors**!public! !
+lcsSize!**compiled accessors**!public! !
+lcsSize:!**compiled accessors**!public! !
+lcsVersion!**compiled accessors**!public! !
+lcsVersion:!**compiled accessors**!public! !
+!
 
 !LOGCOLORSPACE class methodsFor!
 
@@ -208,6 +210,8 @@ defineFields
 
 getFieldNames
 	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
-!LOGCOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!LOGCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LOGCOLORSPACE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

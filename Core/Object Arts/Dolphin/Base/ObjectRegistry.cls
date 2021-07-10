@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ObjectRegistry
 	instanceVariableNames: 'registry'
@@ -68,14 +68,16 @@ removeAtIndex: anInteger
 	Raise an error if there is no element indexed by anInteger."
 
 	^self subclassResponsibility! !
-!ObjectRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!ObjectRegistry categoriesFor: #at:!accessing!debugger-step through!public! !
-!ObjectRegistry categoriesFor: #at:ifAbsent:!accessing!public! !
-!ObjectRegistry categoriesFor: #indexOf:ifAbsent:!accessing!public! !
-!ObjectRegistry categoriesFor: #initialize:!initializing!private! !
-!ObjectRegistry categoriesFor: #lookup:!public! !
-!ObjectRegistry categoriesFor: #remove:ifAbsent:!public!removing! !
-!ObjectRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!ObjectRegistry categoriesForMethods!
+addAnsweringIndex:!adding!public! !
+at:!accessing!debugger-step through!public! !
+at:ifAbsent:!accessing!public! !
+indexOf:ifAbsent:!accessing!public! !
+initialize:!initializing!private! !
+lookup:!public! !
+remove:ifAbsent:!public!removing! !
+removeAtIndex:!public!removing! !
+!
 
 !ObjectRegistry class methodsFor!
 
@@ -94,7 +96,9 @@ new: anInteger
 	for anInteger elements."
 
 	^self basicNew initialize: anInteger! !
-!ObjectRegistry class categoriesFor: #defaultCapacity!constants!private! !
-!ObjectRegistry class categoriesFor: #new!instance creation!public! !
-!ObjectRegistry class categoriesFor: #new:!instance creation!public! !
+!ObjectRegistry class categoriesForMethods!
+defaultCapacity!constants!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

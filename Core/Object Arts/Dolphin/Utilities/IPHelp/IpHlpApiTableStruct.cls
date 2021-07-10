@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #IpHlpApiTableStruct
 	instanceVariableNames: ''
@@ -18,8 +18,10 @@ dwNumEntries
 
 table
 	^self subclassResponsibility! !
-!IpHlpApiTableStruct categoriesFor: #dwNumEntries!**compiled accessors**!public! !
-!IpHlpApiTableStruct categoriesFor: #table!accessing!public! !
+!IpHlpApiTableStruct categoriesForMethods!
+dwNumEntries!**compiled accessors**!public! !
+table!accessing!public! !
+!
 
 !IpHlpApiTableStruct class methodsFor!
 
@@ -32,6 +34,8 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries)! !
-!IpHlpApiTableStruct class categoriesFor: #defineFields!initializing!public! !
-!IpHlpApiTableStruct class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IpHlpApiTableStruct class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

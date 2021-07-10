@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBFiler subclass: #STBInFiler
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
@@ -237,32 +237,34 @@ resetAndValidateStream
 
 setRefOffset: anInteger
 	readMap setSize: anInteger! !
-!STBInFiler categoriesFor: #basicNext!accessing!private! !
-!STBInFiler categoriesFor: #classAt:!accessing!private! !
-!STBInFiler categoriesFor: #classLocator!accessing!public! !
-!STBInFiler categoriesFor: #classLocator:!accessing!public! !
-!STBInFiler categoriesFor: #contents!enumerating!public! !
-!STBInFiler categoriesFor: #defaultClassLocatorClass!constants!private! !
-!STBInFiler categoriesFor: #deferAction:!deferred actions!public! !
-!STBInFiler categoriesFor: #evaluateDeferredActions!deferred actions!private! !
-!STBInFiler categoriesFor: #fixup:to:!operations!public! !
-!STBInFiler categoriesFor: #initialize!initializing!private! !
-!STBInFiler categoriesFor: #isUpgrading!public!testing! !
-!STBInFiler categoriesFor: #isUpgrading:!accessing!public! !
-!STBInFiler categoriesFor: #next!operations!public! !
-!STBInFiler categoriesFor: #objectAt:!accessing!private! !
-!STBInFiler categoriesFor: #readClassData:!helpers!private! !
-!STBInFiler categoriesFor: #readClassLocator:!helpers!private! !
-!STBInFiler categoriesFor: #readInteger!helpers!private! !
-!STBInFiler categoriesFor: #readMap!accessing!private! !
-!STBInFiler categoriesFor: #readObjectOfClass:!accessing!private! !
-!STBInFiler categoriesFor: #readObjectOfClass:format:!operations!private! !
-!STBInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
-!STBInFiler categoriesFor: #readVersion!initializing!private! !
-!STBInFiler categoriesFor: #register:!helpers!private! !
-!STBInFiler categoriesFor: #reset!initializing!private! !
-!STBInFiler categoriesFor: #resetAndValidateStream!initializing!private! !
-!STBInFiler categoriesFor: #setRefOffset:!accessing!private! !
+!STBInFiler categoriesForMethods!
+basicNext!accessing!private! !
+classAt:!accessing!private! !
+classLocator!accessing!public! !
+classLocator:!accessing!public! !
+contents!enumerating!public! !
+defaultClassLocatorClass!constants!private! !
+deferAction:!deferred actions!public! !
+evaluateDeferredActions!deferred actions!private! !
+fixup:to:!operations!public! !
+initialize!initializing!private! !
+isUpgrading!public!testing! !
+isUpgrading:!accessing!public! !
+next!operations!public! !
+objectAt:!accessing!private! !
+readClassData:!helpers!private! !
+readClassLocator:!helpers!private! !
+readInteger!helpers!private! !
+readMap!accessing!private! !
+readObjectOfClass:!accessing!private! !
+readObjectOfClass:format:!operations!private! !
+readObjectWithPrefix:!accessing!private! !
+readVersion!initializing!private! !
+register:!helpers!private! !
+reset!initializing!private! !
+resetAndValidateStream!initializing!private! !
+setRefOffset:!accessing!private! !
+!
 
 !STBInFiler class methodsFor!
 
@@ -279,6 +281,8 @@ peekForSignatureIn: aReadStream
 	position := aReadStream position.
 	^(aReadStream nextAvailable: self signature size) asByteArray = self signature
 		or: [aReadStream position: position. false]! !
-!STBInFiler class categoriesFor: #initialize!development!initializing!public! !
-!STBInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
+!STBInFiler class categoriesForMethods!
+initialize!development!initializing!public! !
+peekForSignatureIn:!public!testing! !
+!
 

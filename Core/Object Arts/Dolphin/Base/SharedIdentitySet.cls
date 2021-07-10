@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SharedSet variableSubclass: #SharedIdentitySet
 	instanceVariableNames: ''
@@ -23,6 +23,8 @@ findElementOrNil: anObject
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1! !
-!SharedIdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!SharedIdentitySet categoriesFor: #hash:max:!private!searching! !
+!SharedIdentitySet categoriesForMethods!
+findElementOrNil:!private!searching! !
+hash:max:!private!searching! !
+!
 

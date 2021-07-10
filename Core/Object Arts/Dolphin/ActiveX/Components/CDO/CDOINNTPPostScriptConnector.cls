@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOINNTPPostScriptConnector
 	instanceVariableNames: ''
@@ -24,8 +24,10 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!CDOINNTPPostScriptConnector categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOINNTPPostScriptConnector categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!CDOINNTPPostScriptConnector categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !CDOINNTPPostScriptConnector class methodsFor!
 
@@ -42,6 +44,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOINNTPPostScriptConnector class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDOINNTPPostScriptConnector class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOINNTPPostScriptConnector class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

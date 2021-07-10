@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Signal
 	instanceVariableNames: 'description resumable'
@@ -130,24 +130,26 @@ signalWith: signalerTag
 	This method will not normally return to its sender."
 	
 	^self newException signalWith: signalerTag! !
-!Signal categoriesFor: #,!filtering!public! !
-!Signal categoriesFor: #defaultAction:!handling!private! !
-!Signal categoriesFor: #defaultResumption!constants!private! !
-!Signal categoriesFor: #description!accessing!private! !
-!Signal categoriesFor: #description:!accessing!public! !
-!Signal categoriesFor: #exceptionClass!constants!private! !
-!Signal categoriesFor: #handles:!filtering!public! !
-!Signal categoriesFor: #initialize!initializing!private! !
-!Signal categoriesFor: #isResumable!public!testing! !
-!Signal categoriesFor: #makeNonResumable!accessing!public! !
-!Signal categoriesFor: #makeResumable!accessing!public! !
-!Signal categoriesFor: #newException!public!raising! !
-!Signal categoriesFor: #printOn:!printing!public! !
-!Signal categoriesFor: #resumable:!accessing!public! !
-!Signal categoriesFor: #signal!public!raising! !
-!Signal categoriesFor: #signal:!public!raising! !
-!Signal categoriesFor: #signal:with:!public!raising! !
-!Signal categoriesFor: #signalWith:!public!raising! !
+!Signal categoriesForMethods!
+,!filtering!public! !
+defaultAction:!handling!private! !
+defaultResumption!constants!private! !
+description!accessing!private! !
+description:!accessing!public! !
+exceptionClass!constants!private! !
+handles:!filtering!public! !
+initialize!initializing!private! !
+isResumable!public!testing! !
+makeNonResumable!accessing!public! !
+makeResumable!accessing!public! !
+newException!public!raising! !
+printOn:!printing!public! !
+resumable:!accessing!public! !
+signal!public!raising! !
+signal:!public!raising! !
+signal:with:!public!raising! !
+signalWith:!public!raising! !
+!
 
 Signal methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 Signal methodProtocol: #exceptionSignaler attributes: #(#ansi #readOnly) selectors: #(#signal #signal:)!
@@ -170,7 +172,9 @@ resumableDescription: anObject
 	^self new 
 		description: anObject;
 		makeResumable! !
-!Signal class categoriesFor: #description:!instance creation!public! !
-!Signal class categoriesFor: #new!instance creation!public! !
-!Signal class categoriesFor: #resumableDescription:!instance creation!public! !
+!Signal class categoriesForMethods!
+description:!instance creation!public! !
+new!instance creation!public! !
+resumableDescription:!instance creation!public! !
+!
 

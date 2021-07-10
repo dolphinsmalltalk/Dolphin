@@ -1347,7 +1347,9 @@ copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
 	Clipboard current setRegisteredFormat: #AnsiString data: self! !
-!AnsiString categoriesFor: #copyToClipboard!copying!public! !
+!AnsiString categoriesForMethods!
+copyToClipboard!copying!public! !
+!
 
 !ClassDescription methodsFor!
 
@@ -1359,7 +1361,9 @@ defaultIcon
 	^(self environment at: #Icon) fromId: self defaultIconName.
 
 	! !
-!ClassDescription categoriesFor: #defaultIcon!constants!public! !
+!ClassDescription categoriesForMethods!
+defaultIcon!constants!public! !
+!
 
 !ConsoleSessionManager class methodsFor!
 
@@ -1367,7 +1371,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ConsoleSessionManager class categoriesFor: #icon!constants!development!public! !
+!ConsoleSessionManager class categoriesForMethods!
+icon!constants!development!public! !
+!
 
 !KernelLibrary methodsFor!
 
@@ -1379,7 +1385,9 @@ getConsoleWindow
 
 	<stdcall: handle GetConsoleWindow>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #getConsoleWindow!**auto generated**!public!win32 functions-console! !
+!KernelLibrary categoriesForMethods!
+getConsoleWindow!**auto generated**!public!win32 functions-console! !
+!
 
 !MessageSend methodsFor!
 
@@ -1391,7 +1399,9 @@ queryCommand: query
 
 	query isEnabled: true; receiver: self receiver.
 	^true! !
-!MessageSend categoriesFor: #queryCommand:!commands!private! !
+!MessageSend categoriesForMethods!
+queryCommand:!commands!private! !
+!
 
 !Object methodsFor!
 
@@ -1407,9 +1417,11 @@ icon
 
 iconImageIndex
 	^self icon imageIndex! !
-!Object categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Object categoriesFor: #icon!constants!public! !
-!Object categoriesFor: #iconImageIndex!accessing!public! !
+!Object categoriesForMethods!
+addToImageList:mask:!double dispatch!private! !
+icon!constants!public! !
+iconImageIndex!accessing!public! !
+!
 
 !Object class methodsFor!
 
@@ -1422,7 +1434,9 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
-!Object class categoriesFor: #icon!constants!public! !
+!Object class categoriesForMethods!
+icon!constants!public! !
+!
 
 !ResourceIdentifier methodsFor!
 
@@ -1462,12 +1476,14 @@ show
 
 	^self owningClass show: self name.
 ! !
-!ResourceIdentifier categoriesFor: #canShow!public!testing! !
-!ResourceIdentifier categoriesFor: #fixupIcon!helpers!private! !
-!ResourceIdentifier categoriesFor: #icon!accessing!development!public! !
-!ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
-!ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
-!ResourceIdentifier categoriesFor: #show!operations!public! !
+!ResourceIdentifier categoriesForMethods!
+canShow!public!testing! !
+fixupIcon!helpers!private! !
+icon!accessing!development!public! !
+loadWithContext:!operations!public! !
+loadWithContext:forEdit:!operations!private! !
+show!operations!public! !
+!
 
 !String methodsFor!
 
@@ -1482,8 +1498,10 @@ setTextInto: aView
 	message back to aView."
 
 	aView plainText: self! !
-!String categoriesFor: #copyToClipboard!copying!public! !
-!String categoriesFor: #setTextInto:!double dispatch!private! !
+!String categoriesForMethods!
+copyToClipboard!copying!public! !
+setTextInto:!double dispatch!private! !
+!
 
 !Symbol methodsFor!
 
@@ -1491,13 +1509,17 @@ copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
 	Clipboard current setRegisteredFormat: #String data: self! !
-!Symbol categoriesFor: #copyToClipboard!copying!public! !
+!Symbol categoriesForMethods!
+copyToClipboard!copying!public! !
+!
 
 !UndefinedObject methodsFor!
 
 asResourceId
 	^self! !
-!UndefinedObject categoriesFor: #asResourceId!converting!public! !
+!UndefinedObject categoriesForMethods!
+asResourceId!converting!public! !
+!
 
 !UserLibrary methodsFor!
 
@@ -3133,156 +3155,158 @@ windowFromPoint: aPOINTL
 
 	<stdcall: handle WindowFromPoint POINTL>
 	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #animateWindow:dwTime:dwFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #beginDeferWindowPos:!**auto generated**!public! !
-!UserLibrary categoriesFor: #beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #bringWindowToTop:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
-!UserLibrary categoriesFor: #childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #closeClipboard!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #countClipboardFormats!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #createAcceleratorTable:cEntries:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #createMenu!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #createPopupMenu!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #destroyIcon:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #destroyMenu:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #drawMenuBar:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:!public!win32 functions-font and text! !
-!UserLibrary categoriesFor: #emptyClipboard!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #endDeferWindowPos:!**auto generated**!public! !
-!UserLibrary categoriesFor: #endDialog:nResult:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #endPaint:lpPaint:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #enumClipboardFormats:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #enumDisplayDevices:iDevNum:lpDisplayDevice:dwFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #enumDisplayMonitors:lprcClip:lpfnEnum:dwData:!**auto generated**!public!win32 functions-multiple display monitors! !
-!UserLibrary categoriesFor: #enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #enumWindows:lParam:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #fillRect:lprc:hbr:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #findWindow:lpWindowName:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #flashWindow:bInvert:!public!win32 functions-error handling! !
-!UserLibrary categoriesFor: #flashWindowEx:!public!win32 functions-error handling! !
-!UserLibrary categoriesFor: #frameRect:lprc:hbr:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #getAncestor:gaFlags:!**auto generated**!public! !
-!UserLibrary categoriesFor: #getCapture!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #getClassLongPtr:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getClientRect:lpRect:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getClipboardData:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #getCursor!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #getDC!operations!public! !
-!UserLibrary categoriesFor: #getDC:!not an aspect!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #getFocus!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #getIconInfo:piconinfo:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
-!UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #getMonitorInfo:lpmi:!**auto generated**!public!win32 functions-multiple display monitors! !
-!UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getProp:lpString:!public!win32 functions-window property! !
-!UserLibrary categoriesFor: #getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
-!UserLibrary categoriesFor: #getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
-!UserLibrary categoriesFor: #getTopWindow:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #getWindow:uCmd:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowDC:!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #getWindowLong:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getWindowLongPtr:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getWindowPlacement:lpwndpl:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowRect:lpRect:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowText:lpString:nMaxCount:!public! !
-!UserLibrary categoriesFor: #getWindowTextLength:!public! !
-!UserLibrary categoriesFor: #getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowULong:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #getWindowULongPtr:nIndex:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #invertRect:lprc:!public!win32 functions-filled shape! !
-!UserLibrary categoriesFor: #isChild:hWnd:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #isClipboardFormatAvailable:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #isIconic:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
-!UserLibrary categoriesFor: #isZoomed:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #loadCursorFromFile:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #loadIcon:lpIconName:!public!win32 functions-icon! !
-!UserLibrary categoriesFor: #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:!public!win32 functions-resources! !
-!UserLibrary categoriesFor: #loadMenu:lpMenuName:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #lockWindowUpdate:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #makeDragList:!public!win32 functions-list box! !
-!UserLibrary categoriesFor: #mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #monitorFromPoint:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
-!UserLibrary categoriesFor: #monitorFromRect:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
-!UserLibrary categoriesFor: #monitorFromWindow:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
-!UserLibrary categoriesFor: #openClipboard:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #printWindow:hdcBlt:nFlags:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #registerClass:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #registerClipboardFormat:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #registerHotKey:id:fsModifiers:vk:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #registerWindowMessage:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #releaseCapture!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #releaseDC:!operations!public! !
-!UserLibrary categoriesFor: #releaseDC:hDC:!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #removeProp:lpString:!public!win32 functions-window property! !
-!UserLibrary categoriesFor: #screenToClient:lpPoint:!public!win32 functions-coordinate space and transformation! !
-!UserLibrary categoriesFor: #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessageU:msg:wParam:lParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessageU:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #setCapture:!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setClipboardData:hMem:!public!win32 functions-clipboard! !
-!UserLibrary categoriesFor: #setCursorPosX:y:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #setDlgItemInt:nIDDlgItem:uValue:bSigned:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #setFocus:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #setForegroundWindow:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setMenu:hMenu:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setMenuDefaultItem:uItem:fByPos:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setMenuInfo:lpcmi:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #setParent:hWndNewParent:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setProp:lpString:hData:!public!win32 functions-window property! !
-!UserLibrary categoriesFor: #setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
-!UserLibrary categoriesFor: #setSysColors:lpaElements:lpaRgbValues:!public! !
-!UserLibrary categoriesFor: #setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowLongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowPlacement:lpwndpl:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
-!UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
-!UserLibrary categoriesFor: #translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
-!UserLibrary categoriesFor: #unregisterClass:hInstance:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
-!UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
+!UserLibrary categoriesForMethods!
+adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
+animateWindow:dwTime:dwFlags:!**auto generated**!public! !
+attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
+beginDeferWindowPos:!**auto generated**!public! !
+beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
+bringWindowToTop:!public!win32 functions-window! !
+callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
+childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
+clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
+closeClipboard!public!win32 functions-clipboard! !
+countClipboardFormats!public!win32 functions-clipboard! !
+createAcceleratorTable:cEntries:!public!win32 functions-keyboard accelerator! !
+createMenu!public!win32 functions-menu! !
+createPopupMenu!public!win32 functions-menu! !
+createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
+deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
+deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
+destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
+destroyIcon:!public!win32 functions-icon! !
+destroyMenu:!public!win32 functions-menu! !
+drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
+drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
+drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-painting and drawing! !
+drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:!public!win32 functions-icon! !
+drawMenuBar:!public!win32 functions-menu! !
+drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:!**auto generated**!public! !
+drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:!public!win32 functions-font and text! !
+emptyClipboard!public!win32 functions-clipboard! !
+endDeferWindowPos:!**auto generated**!public! !
+endDialog:nResult:!public!win32 functions-dialog box! !
+endPaint:lpPaint:!public!win32 functions-painting and drawing! !
+enumClipboardFormats:!public!win32 functions-clipboard! !
+enumDisplayDevices:iDevNum:lpDisplayDevice:dwFlags:!**auto generated**!public! !
+enumDisplayMonitors:lprcClip:lpfnEnum:dwData:!**auto generated**!public!win32 functions-multiple display monitors! !
+enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
+enumWindows:lParam:!public!win32 functions-window! !
+fillRect:lprc:hbr:!public!win32 functions-filled shape! !
+findWindow:lpWindowName:!public!win32 functions-filled shape! !
+flashWindow:bInvert:!public!win32 functions-error handling! !
+flashWindowEx:!public!win32 functions-error handling! !
+frameRect:lprc:hbr:!public!win32 functions-filled shape! !
+getAncestor:gaFlags:!**auto generated**!public! !
+getCapture!public!win32 functions-mouse input! !
+getClassLongPtr:nIndex:!public!win32 functions-window class! !
+getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
+getClientRect:lpRect:!public!win32 functions-window! !
+getClipboardData:!public!win32 functions-clipboard! !
+getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
+getCursor!public!win32 functions-cursor! !
+getCursorPos:!public!win32 functions-cursor! !
+getDC!operations!public! !
+getDC:!not an aspect!public!win32 functions-device context! !
+getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
+getFocus!public!win32 functions-keyboard input! !
+getForegroundWindow!public!win32 functions-keyboard input! !
+getIconInfo:piconinfo:!public!win32 functions-icon! !
+getLastActivePopup:!public!win32 functions-window! !
+getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
+getMenuInfo:lpcmi:!public!win32 functions-menu! !
+getMonitorInfo:lpmi:!**auto generated**!public!win32 functions-multiple display monitors! !
+getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
+getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
+getProp:lpString:!public!win32 functions-window property! !
+getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
+getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
+getTopWindow:!public!win32 functions-window! !
+getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
+getWindow:uCmd:!public!win32 functions-window! !
+getWindowDC:!public!win32 functions-device context! !
+getWindowLong:nIndex:!public!win32 functions-window class! !
+getWindowLongPtr:nIndex:!public!win32 functions-window class! !
+getWindowPlacement:lpwndpl:!public!win32 functions-window! !
+getWindowRect:lpRect:!public!win32 functions-window! !
+getWindowText:lpString:nMaxCount:!public! !
+getWindowTextLength:!public! !
+getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
+getWindowULong:nIndex:!public!win32 functions-window class! !
+getWindowULongPtr:nIndex:!public!win32 functions-window class! !
+insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
+invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
+invertRect:lprc:!public!win32 functions-filled shape! !
+isChild:hWnd:!public!win32 functions-window! !
+isClipboardFormatAvailable:!public!win32 functions-clipboard! !
+isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
+isIconic:!public!win32 functions-icon! !
+isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
+isZoomed:!public!win32 functions-window! !
+loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
+loadCursorFromFile:!public!win32 functions-cursor! !
+loadIcon:lpIconName:!public!win32 functions-icon! !
+loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:!public!win32 functions-resources! !
+loadMenu:lpMenuName:!public!win32 functions-menu! !
+lockWindowUpdate:!public!win32 functions-painting and drawing! !
+makeDragList:!public!win32 functions-list box! !
+mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
+modifyMenu:uPosition:uFlags:uIDNewItem:lpNewItem:!public!win32 functions-menu! !
+monitorFromPoint:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
+monitorFromRect:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
+monitorFromWindow:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
+openClipboard:!public!win32 functions-clipboard! !
+printWindow:hdcBlt:nFlags:!public!win32 functions-painting and drawing! !
+redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !
+registerClass:!public!win32 functions-window class! !
+registerClipboardFormat:!public!win32 functions-clipboard! !
+registerHotKey:id:fsModifiers:vk:!public!win32 functions-keyboard input! !
+registerWindowMessage:!public!win32 functions-message and message queue! !
+releaseCapture!public!win32 functions-mouse input! !
+releaseDC:!operations!public! !
+releaseDC:hDC:!public!win32 functions-device context! !
+removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
+removeProp:lpString:!public!win32 functions-window property! !
+screenToClient:lpPoint:!public!win32 functions-coordinate space and transformation! !
+scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
+sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
+sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
+sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
+sendMessageU:msg:wParam:lParam:!public!win32 functions-message and message queue! !
+sendMessageU:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
+setCapture:!public!win32 functions-mouse input! !
+setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+setClipboardData:hMem:!public!win32 functions-clipboard! !
+setCursorPosX:y:!public!win32 functions-cursor! !
+setDlgItemInt:nIDDlgItem:uValue:bSigned:!public!win32 functions-dialog box! !
+setFocus:!public!win32 functions-keyboard input! !
+setForegroundWindow:!public!win32 functions-keyboard input! !
+setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:!public!win32 functions-window! !
+setMenu:hMenu:!public!win32 functions-menu! !
+setMenuDefaultItem:uItem:fByPos:!public!win32 functions-menu! !
+setMenuInfo:lpcmi:!public!win32 functions-menu! !
+setMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
+setParent:hWndNewParent:!public!win32 functions-window! !
+setProp:lpString:hData:!public!win32 functions-window property! !
+setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
+setSysColors:lpaElements:lpaRgbValues:!public! !
+setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+setWindowLongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
+setWindowPlacement:lpwndpl:!public!win32 functions-window! !
+setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
+setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
+setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
+showCursor:!public!win32 functions-cursor! !
+systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
+trackMouseEvent:!public!win32 functions-mouse input! !
+trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
+translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
+unregisterClass:hInstance:!public!win32 functions-window class! !
+unregisterHotKey:id:!public!win32 functions-keyboard input! !
+validate:lpRect:!public!win32 functions-painting and drawing! !
+windowFromPoint:!public!win32 functions-window! !
+!
 
 "End of package definition"!
 

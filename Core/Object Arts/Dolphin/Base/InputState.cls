@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #InputState
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
@@ -615,58 +615,60 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 					wParam: wParam
 					lParam: lParam) asUIntPtr]
 					ifCurtailed: [Processor unwindCallback: cookie])! !
-!InputState categoriesFor: #aboutToForkUI!idling!private! !
-!InputState categoriesFor: #aboutToIdle!idling!public! !
-!InputState categoriesFor: #consoleStartup!operations-startup!private! !
-!InputState categoriesFor: #createAndRegisterInputSemaphore!initializing!private! !
-!InputState categoriesFor: #createAndRegisterWakeupEvent!initializing!private! !
-!InputState categoriesFor: #createPostedActionWindow!initializing!private! !
-!InputState categoriesFor: #deferredActions!accessing!private! !
-!InputState categoriesFor: #ensureIdlerRunning!idling!private! !
-!InputState categoriesFor: #ensureMainRunning!idling!private! !
-!InputState categoriesFor: #enterIdle!idling!private! !
-!InputState categoriesFor: #forkIdler!idling!private! !
-!InputState categoriesFor: #forkMain!message dispatching!private! !
-!InputState categoriesFor: #hasVisibleWindows!private!testing! !
-!InputState categoriesFor: #idle!idling!private! !
-!InputState categoriesFor: #idleLoop!idling!private! !
-!InputState categoriesFor: #idlePanic!idling!private! !
-!InputState categoriesFor: #idler!idling!private! !
-!InputState categoriesFor: #initializeFrom:!initializing!private! !
-!InputState categoriesFor: #inputSemaphore!accessing!private! !
-!InputState categoriesFor: #isInputAvailable!idling!private! !
-!InputState categoriesFor: #isInputReady:!message dispatching!private! !
-!InputState categoriesFor: #keepAlive!idling!private! !
-!InputState categoriesFor: #loopWhile:!message dispatching!public! !
-!InputState categoriesFor: #main!accessing!private! !
-!InputState categoriesFor: #main:!initializing!private! !
-!InputState categoriesFor: #mainLoop!message dispatching!private! !
-!InputState categoriesFor: #millisecondClockValue!enquiries!private! !
-!InputState categoriesFor: #msgWindow!accessing!private! !
-!InputState categoriesFor: #onExit!event handling!private! !
-!InputState categoriesFor: #postAction:!message dispatching!public! !
-!InputState categoriesFor: #postQuit:!operations-shutdown!private! !
-!InputState categoriesFor: #preTranslateMessage:!message dispatching!private! !
-!InputState categoriesFor: #primSampleInterval:!message dispatching!private! !
-!InputState categoriesFor: #processDeferredActions!operations!public! !
-!InputState categoriesFor: #prod!message dispatching!public! !
-!InputState categoriesFor: #pumpMessage:!message dispatching!private! !
-!InputState categoriesFor: #pumpMessages!message dispatching!public! !
-!InputState categoriesFor: #purgeDeadWindows!public!removing! !
-!InputState categoriesFor: #queueDeferredAction:!message dispatching!public! !
-!InputState categoriesFor: #registerAsDispatcher!initializing!private! !
-!InputState categoriesFor: #removeWindowAt:!accessing!private! !
-!InputState categoriesFor: #setSamplingInterval:!initializing!private! !
-!InputState categoriesFor: #startIdleTimer:!idling!private! !
-!InputState categoriesFor: #stopIdleTimer:!idling!private! !
-!InputState categoriesFor: #topLevelWindows!enumerating!public! !
-!InputState categoriesFor: #uiIdle!idling!private! !
-!InputState categoriesFor: #userInterruptSignal!constants!public! !
-!InputState categoriesFor: #waitForInput:!idling!private! !
-!InputState categoriesFor: #windowAt:ifAbsent:!accessing!public! !
-!InputState categoriesFor: #windowAt:put:!accessing!public! !
-!InputState categoriesFor: #windows!accessing!private! !
-!InputState categoriesFor: #wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
+!InputState categoriesForMethods!
+aboutToForkUI!idling!private! !
+aboutToIdle!idling!public! !
+consoleStartup!operations-startup!private! !
+createAndRegisterInputSemaphore!initializing!private! !
+createAndRegisterWakeupEvent!initializing!private! !
+createPostedActionWindow!initializing!private! !
+deferredActions!accessing!private! !
+ensureIdlerRunning!idling!private! !
+ensureMainRunning!idling!private! !
+enterIdle!idling!private! !
+forkIdler!idling!private! !
+forkMain!message dispatching!private! !
+hasVisibleWindows!private!testing! !
+idle!idling!private! !
+idleLoop!idling!private! !
+idlePanic!idling!private! !
+idler!idling!private! !
+initializeFrom:!initializing!private! !
+inputSemaphore!accessing!private! !
+isInputAvailable!idling!private! !
+isInputReady:!message dispatching!private! !
+keepAlive!idling!private! !
+loopWhile:!message dispatching!public! !
+main!accessing!private! !
+main:!initializing!private! !
+mainLoop!message dispatching!private! !
+millisecondClockValue!enquiries!private! !
+msgWindow!accessing!private! !
+onExit!event handling!private! !
+postAction:!message dispatching!public! !
+postQuit:!operations-shutdown!private! !
+preTranslateMessage:!message dispatching!private! !
+primSampleInterval:!message dispatching!private! !
+processDeferredActions!operations!public! !
+prod!message dispatching!public! !
+pumpMessage:!message dispatching!private! !
+pumpMessages!message dispatching!public! !
+purgeDeadWindows!public!removing! !
+queueDeferredAction:!message dispatching!public! !
+registerAsDispatcher!initializing!private! !
+removeWindowAt:!accessing!private! !
+setSamplingInterval:!initializing!private! !
+startIdleTimer:!idling!private! !
+stopIdleTimer:!idling!private! !
+topLevelWindows!enumerating!public! !
+uiIdle!idling!private! !
+userInterruptSignal!constants!public! !
+waitForInput:!idling!private! !
+windowAt:ifAbsent:!accessing!public! !
+windowAt:put:!accessing!public! !
+windows!accessing!private! !
+wndProc:message:wParam:lParam:cookie:!message dispatching!not restartable!private!vm entry points! !
+!
 
 !InputState class methodsFor!
 
@@ -685,8 +687,10 @@ newFromOld: anInputState
 	^(self new)
 		initializeFrom: anInputState;
 		yourself! !
-!InputState class categoriesFor: #initialize!development!initializing!public! !
-!InputState class categoriesFor: #maxIdleSleep!accessing!public! !
-!InputState class categoriesFor: #maxIdleSleep:!accessing!public! !
-!InputState class categoriesFor: #newFromOld:!instance creation!private! !
+!InputState class categoriesForMethods!
+initialize!development!initializing!public! !
+maxIdleSleep!accessing!public! !
+maxIdleSleep:!accessing!public! !
+newFromOld:!instance creation!private! !
+!
 

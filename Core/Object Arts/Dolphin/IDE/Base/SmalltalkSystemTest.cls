@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SmalltalkSystemTest
 	instanceVariableNames: 'devsys'
@@ -200,11 +200,13 @@ wxy'.
 	jkl
 	mn op
 	q'! !
-!SmalltalkSystemTest categoriesFor: #setUp!public!Running! !
-!SmalltalkSystemTest categoriesFor: #testAllSelectorsImplementedIn!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testBuildSimpleSignature!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testDefaultInspectorClass!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testNameForArgument!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testSystemOptions!public!unit tests! !
-!SmalltalkSystemTest categoriesFor: #testWrapText!public!unit tests! !
+!SmalltalkSystemTest categoriesForMethods!
+setUp!public!Running! !
+testAllSelectorsImplementedIn!public!unit tests! !
+testBuildSimpleSignature!public!unit tests! !
+testDefaultInspectorClass!public!unit tests! !
+testNameForArgument!public!unit tests! !
+testSystemOptions!public!unit tests! !
+testWrapText!public!unit tests! !
+!
 

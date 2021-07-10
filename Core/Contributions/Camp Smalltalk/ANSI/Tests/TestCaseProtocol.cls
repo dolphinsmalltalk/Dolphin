@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #TestCaseProtocol
 	instanceVariableNames: ''
@@ -180,25 +180,27 @@ value: aBlockContext shouldRaise: anException
 	#'ACSUEnh'. 
 	ok := [ aBlockContext value. false ] on: anException do: [:ex | ex return: true ].
 	self assert: ok! !
-!TestCaseProtocol categoriesFor: #asANSITestArray:!public! !
-!TestCaseProtocol categoriesFor: #assertSend:!public! !
-!TestCaseProtocol categoriesFor: #assertSend:inProtocol:!public! !
-!TestCaseProtocol categoriesFor: #assertSend:toObject:inProtocol:!public! !
-!TestCaseProtocol categoriesFor: #canonicalObject!public! !
-!TestCaseProtocol categoriesFor: #endOfLineSequence!private! !
-!TestCaseProtocol categoriesFor: #isStrict!public! !
-!TestCaseProtocol categoriesFor: #msgSpecFor:inProtocol:!public! !
-!TestCaseProtocol categoriesFor: #notDone!public! !
-!TestCaseProtocol categoriesFor: #selector:inProtocol:behavesLike:!public! !
-!TestCaseProtocol categoriesFor: #value:should:conformTo:selector:!public! !
-!TestCaseProtocol categoriesFor: #value:should:conformTo:selector:opRECEIVER:!public! !
-!TestCaseProtocol categoriesFor: #value:should:conformTo:selector:ruleReceiver:!public! !
-!TestCaseProtocol categoriesFor: #value:should:conformTo:selector:ruleReceiver:operand:!public! !
-!TestCaseProtocol categoriesFor: #value:shouldnt:conformTo:selector:!public! !
-!TestCaseProtocol categoriesFor: #value:shouldnt:conformTo:selector:opRECEIVER:!public! !
-!TestCaseProtocol categoriesFor: #value:shouldnt:conformTo:selector:ruleReceiver:!public! !
-!TestCaseProtocol categoriesFor: #value:shouldnt:conformTo:selector:ruleReceiver:operand:!public! !
-!TestCaseProtocol categoriesFor: #value:shouldRaise:!public! !
+!TestCaseProtocol categoriesForMethods!
+asANSITestArray:!public! !
+assertSend:!public! !
+assertSend:inProtocol:!public! !
+assertSend:toObject:inProtocol:!public! !
+canonicalObject!public! !
+endOfLineSequence!private! !
+isStrict!public! !
+msgSpecFor:inProtocol:!public! !
+notDone!public! !
+selector:inProtocol:behavesLike:!public! !
+value:should:conformTo:selector:!public! !
+value:should:conformTo:selector:opRECEIVER:!public! !
+value:should:conformTo:selector:ruleReceiver:!public! !
+value:should:conformTo:selector:ruleReceiver:operand:!public! !
+value:shouldnt:conformTo:selector:!public! !
+value:shouldnt:conformTo:selector:opRECEIVER:!public! !
+value:shouldnt:conformTo:selector:ruleReceiver:!public! !
+value:shouldnt:conformTo:selector:ruleReceiver:operand:!public! !
+value:shouldRaise:!public! !
+!
 
 !TestCaseProtocol class methodsFor!
 
@@ -209,6 +211,8 @@ initialize
 
 testMethods
 ^self selectors select: [:each | 'test*' match: each].! !
-!TestCaseProtocol class categoriesFor: #initialize!public! !
-!TestCaseProtocol class categoriesFor: #testMethods!public! !
+!TestCaseProtocol class categoriesForMethods!
+initialize!public! !
+testMethods!public! !
+!
 

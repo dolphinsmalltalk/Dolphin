@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ DnsServerList
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'DnsServerList' field."
 
 	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_DnsServerList! !
-!IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigActive!**compiled accessors**!public! !
-!IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigEnabled!**compiled accessors**!public! !
-!IP_PER_ADAPTER_INFO categoriesFor: #CurrentDnsServer!**compiled accessors**!public! !
-!IP_PER_ADAPTER_INFO categoriesFor: #DnsServerList!**compiled accessors**!public! !
+!IP_PER_ADAPTER_INFO categoriesForMethods!
+AutoconfigActive!**compiled accessors**!public! !
+AutoconfigEnabled!**compiled accessors**!public! !
+CurrentDnsServer!**compiled accessors**!public! !
+DnsServerList!**compiled accessors**!public! !
+!
 
 !IP_PER_ADAPTER_INFO class methodsFor!
 
@@ -89,6 +91,8 @@ defineFields
 
 getFieldNames
 	^#(#AutoconfigEnabled #AutoconfigActive #CurrentDnsServer #DnsServerList)! !
-!IP_PER_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
-!IP_PER_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IP_PER_ADAPTER_INFO class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

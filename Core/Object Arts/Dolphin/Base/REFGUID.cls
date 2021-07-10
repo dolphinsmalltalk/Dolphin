@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalAddress variableByteSubclass: #REFGUID
 	instanceVariableNames: ''
@@ -72,15 +72,17 @@ value: guid
 	"Set the 16-byte GUID pointed at by the receiver to the <GUID>, guid."
 
 	self replaceFrom: 1 to: 16 with: guid startingAt: 1! !
-!REFGUID categoriesFor: #<=>!comparing!public! !
-!REFGUID categoriesFor: #=!comparing!public! !
-!REFGUID categoriesFor: #asString!converting!public! !
-!REFGUID categoriesFor: #displayOn:!printing!public! !
-!REFGUID categoriesFor: #hash!comparing!public! !
-!REFGUID categoriesFor: #printOn:!printing!public! !
-!REFGUID categoriesFor: #species!accessing!public! !
-!REFGUID categoriesFor: #value!accessing!public! !
-!REFGUID categoriesFor: #value:!accessing!public! !
+!REFGUID categoriesForMethods!
+<=>!comparing!public! !
+=!comparing!public! !
+asString!converting!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+printOn:!printing!public! !
+species!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !REFGUID class methodsFor!
 
@@ -90,5 +92,7 @@ fromInteger: anInteger
 	^self new 
 		basicDwordAtOffset: 0 put: anInteger;
 		yourself! !
-!REFGUID class categoriesFor: #fromInteger:!instance creation!public! !
+!REFGUID class categoriesForMethods!
+fromInteger:!instance creation!public! !
+!
 

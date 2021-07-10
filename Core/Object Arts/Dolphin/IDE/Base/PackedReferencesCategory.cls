@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ReferencesCategory subclass: #PackedReferencesCategory
 	instanceVariableNames: ''
@@ -18,5 +18,7 @@ includesMethod: aCompiledMethod
 	the object which that category is interested in, and is a packed method."
 
 	^(super includesMethod: aCompiledMethod) and: [aCompiledMethod isPacked]! !
-!PackedReferencesCategory categoriesFor: #includesMethod:!public!testing! !
+!PackedReferencesCategory categoriesForMethods!
+includesMethod:!public!testing! !
+!
 

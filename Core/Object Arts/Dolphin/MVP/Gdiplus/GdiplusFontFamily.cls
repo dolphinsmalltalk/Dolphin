@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusFontFamily
 	instanceVariableNames: ''
@@ -51,10 +51,12 @@ name
 				language: 0) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
 	^name asString trimNulls! !
-!GdiplusFontFamily categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusFontFamily categoriesFor: #clone!copying!public! !
-!GdiplusFontFamily categoriesFor: #lineSpacing!accessing!public! !
-!GdiplusFontFamily categoriesFor: #name!accessing!public! !
+!GdiplusFontFamily categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+clone!copying!public! !
+lineSpacing!accessing!public! !
+name!accessing!public! !
+!
 
 !GdiplusFontFamily class methodsFor!
 
@@ -95,10 +97,12 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Font icon! !
-!GdiplusFontFamily class categoriesFor: #exampleGdipFFClone!examples!public!sunit! !
-!GdiplusFontFamily class categoriesFor: #fromName:!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #fromName:fontCollection:!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #genericSansSerif!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #genericSerif!instance creation!public! !
-!GdiplusFontFamily class categoriesFor: #icon!constants!development!public! !
+!GdiplusFontFamily class categoriesForMethods!
+exampleGdipFFClone!examples!public!sunit! !
+fromName:!instance creation!public! !
+fromName:fontCollection:!instance creation!public! !
+genericSansSerif!instance creation!public! !
+genericSerif!instance creation!public! !
+icon!constants!development!public! !
+!
 

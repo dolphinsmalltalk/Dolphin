@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Event subclass: #WindowsEvent
 	instanceVariableNames: 'message wParam lParam lResult'
@@ -104,20 +104,22 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 
 wParam
 	^wParam! !
-!WindowsEvent categoriesFor: #defaultWindowProcessing!event handling!public! !
-!WindowsEvent categoriesFor: #isHandled!public!testing! !
-!WindowsEvent categoriesFor: #lParam!accessing!public! !
-!WindowsEvent categoriesFor: #lParam:!accessing!public! !
-!WindowsEvent categoriesFor: #lParamX!accessing!public! !
-!WindowsEvent categoriesFor: #lParamY!accessing!public! !
-!WindowsEvent categoriesFor: #lResult!accessing!public! !
-!WindowsEvent categoriesFor: #lResult:!accessing!not an aspect!public! !
-!WindowsEvent categoriesFor: #message!accessing!private! !
-!WindowsEvent categoriesFor: #printLParamOn:!development!printing!private! !
-!WindowsEvent categoriesFor: #printOn:!development!printing!public! !
-!WindowsEvent categoriesFor: #printWParamOn:!development!printing!private! !
-!WindowsEvent categoriesFor: #window:message:wParam:lParam:!initializing!private! !
-!WindowsEvent categoriesFor: #wParam!accessing!public! !
+!WindowsEvent categoriesForMethods!
+defaultWindowProcessing!event handling!public! !
+isHandled!public!testing! !
+lParam!accessing!public! !
+lParam:!accessing!public! !
+lParamX!accessing!public! !
+lParamY!accessing!public! !
+lResult!accessing!public! !
+lResult:!accessing!not an aspect!public! !
+message!accessing!private! !
+printLParamOn:!development!printing!private! !
+printOn:!development!printing!public! !
+printWParamOn:!development!printing!private! !
+window:message:wParam:lParam:!initializing!private! !
+wParam!accessing!public! !
+!
 
 !WindowsEvent class methodsFor!
 
@@ -135,5 +137,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
-!WindowsEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
+!WindowsEvent class categoriesForMethods!
+window:message:wParam:lParam:!instance creation!public! !
+!
 

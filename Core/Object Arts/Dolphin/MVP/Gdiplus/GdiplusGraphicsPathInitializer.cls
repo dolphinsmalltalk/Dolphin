@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
 	instanceVariableNames: 'fillMode'
@@ -25,14 +25,18 @@ gdiplusConstructorErrorDescription
 
 isPersistent
 	^false! !
-!GdiplusGraphicsPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsPathInitializer categoriesFor: #fillMode:!initializing!private! !
-!GdiplusGraphicsPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusGraphicsPathInitializer categoriesFor: #isPersistent!public!testing! !
+!GdiplusGraphicsPathInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+fillMode:!initializing!private! !
+gdiplusConstructorErrorDescription!constants!private! !
+isPersistent!public!testing! !
+!
 
 !GdiplusGraphicsPathInitializer class methodsFor!
 
 fillMode: aNumber
 	^self new fillMode: aNumber! !
-!GdiplusGraphicsPathInitializer class categoriesFor: #fillMode:!instance creation!public! !
+!GdiplusGraphicsPathInitializer class categoriesForMethods!
+fillMode:!instance creation!public! !
+!
 

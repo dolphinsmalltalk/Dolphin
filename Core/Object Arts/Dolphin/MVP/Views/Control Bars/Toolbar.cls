@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
@@ -1053,126 +1053,128 @@ wmNotify: message wParam: wParam lParam: lParam
 	code := pnmhdr sdwordAtOffset: 8.
 	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
 	^super wmNotify: message wParam: wParam lParam: lParam! !
-!Toolbar categoriesFor: #actualBitmapSize!geometry!public! !
-!Toolbar categoriesFor: #addBitmap:index:!helpers!private! !
-!Toolbar categoriesFor: #addEditTools!adding!private! !
-!Toolbar categoriesFor: #addFileTools!adding!private! !
-!Toolbar categoriesFor: #addFindTools!adding!private! !
-!Toolbar categoriesFor: #addItem:!adding!public! !
-!Toolbar categoriesFor: #addItems:!adding!public! !
-!Toolbar categoriesFor: #addSeparator!adding!public! !
-!Toolbar categoriesFor: #addString:!helpers!private! !
-!Toolbar categoriesFor: #addSystemBitmap:index:!helpers!private! !
-!Toolbar categoriesFor: #applyFont!font!private!updating! !
-!Toolbar categoriesFor: #basicActualForecolor!accessing!private! !
-!Toolbar categoriesFor: #basicAddItems:!adding!private! !
-!Toolbar categoriesFor: #bitmapSize!geometry!public! !
-!Toolbar categoriesFor: #bitmapSize:!geometry!public! !
-!Toolbar categoriesFor: #buttonSize!geometry!public! !
-!Toolbar categoriesFor: #buttonSize:!geometry!public! !
-!Toolbar categoriesFor: #calculateExtent:!geometry!private! !
-!Toolbar categoriesFor: #canCustomize!accessing-styles!public! !
-!Toolbar categoriesFor: #canCustomize:!accessing-styles!public! !
-!Toolbar categoriesFor: #changeButtonSize:!helpers!private! !
-!Toolbar categoriesFor: #clearIdMap!initializing!private! !
-!Toolbar categoriesFor: #command:id:!commands!private! !
-!Toolbar categoriesFor: #commandSource!commands!public! !
-!Toolbar categoriesFor: #defaultBitmapSize!constants!private! !
-!Toolbar categoriesFor: #defaultButtonSize!constants!private! !
-!Toolbar categoriesFor: #defaultExtent!constants!private! !
-!Toolbar categoriesFor: #defaultGradientBackcolor!colors!constants!private! !
-!Toolbar categoriesFor: #defaultGradientForecolor!colors!constants!private! !
-!Toolbar categoriesFor: #defaultWindowStyle!constants!private! !
-!Toolbar categoriesFor: #filerProxy!binary filing!private! !
-!Toolbar categoriesFor: #hasFlatAppearance!accessing-styles!public! !
-!Toolbar categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasLabels!accessing-styles!public! !
-!Toolbar categoriesFor: #hasLabels:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasListAppearance!accessing-styles!public! !
-!Toolbar categoriesFor: #hasListAppearance:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasTransparentAppearance:!accessing-styles!public! !
-!Toolbar categoriesFor: #hasTransparentBackground!accessing-styles!private! !
-!Toolbar categoriesFor: #indent!accessing!public! !
-!Toolbar categoriesFor: #indent:!accessing!public! !
-!Toolbar categoriesFor: #indexOfItem:!accessing!private! !
-!Toolbar categoriesFor: #initialize!initializing!private! !
-!Toolbar categoriesFor: #insets!accessing!public! !
-!Toolbar categoriesFor: #insets:!accessing!public! !
-!Toolbar categoriesFor: #itemAtIndex:!accessing!public! !
-!Toolbar categoriesFor: #itemClass!constants!public! !
-!Toolbar categoriesFor: #itemFromId:!accessing!private! !
-!Toolbar categoriesFor: #itemRect:!geometry!public! !
-!Toolbar categoriesFor: #items!accessing!private! !
-!Toolbar categoriesFor: #items:!accessing!private! !
-!Toolbar categoriesFor: #layoutManager!geometry!public! !
-!Toolbar categoriesFor: #layoutManager:!geometry!public! !
-!Toolbar categoriesFor: #nmNotify:!event handling-win32!private! !
-!Toolbar categoriesFor: #onDropDown:!event handling!private! !
-!Toolbar categoriesFor: #onEraseRequired:!event handling!private! !
-!Toolbar categoriesFor: #onPositionChanged:!event handling!public! !
-!Toolbar categoriesFor: #onStateRestored!binary filing!private! !
-!Toolbar categoriesFor: #onTipTextRequired:!event handling!public! !
-!Toolbar categoriesFor: #onViewCreated!event handling!public! !
-!Toolbar categoriesFor: #removeAllItems!public!removing! !
-!Toolbar categoriesFor: #removeItem:!public!removing! !
-!Toolbar categoriesFor: #size!geometry!public! !
-!Toolbar categoriesFor: #tbAddBitmap:size:!helpers!private! !
-!Toolbar categoriesFor: #tbAddButtons:!helpers!private! !
-!Toolbar categoriesFor: #tbAddString:!adding!private! !
-!Toolbar categoriesFor: #tbAutoSize!operations!private! !
-!Toolbar categoriesFor: #tbButtonCount!geometry!private! !
-!Toolbar categoriesFor: #tbButtonStructSize:!helpers!private! !
-!Toolbar categoriesFor: #tbCheckButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbCustomize!operations!private! !
-!Toolbar categoriesFor: #tbDeleteButton:!helpers!private! !
-!Toolbar categoriesFor: #tbEnableButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbGetButton:!accessing!private! !
-!Toolbar categoriesFor: #tbGetButtonInfo:tbbi:!accessing!private! !
-!Toolbar categoriesFor: #tbGetButtonSize!geometry!private! !
-!Toolbar categoriesFor: #tbGetIdealHeight!geometry!private! !
-!Toolbar categoriesFor: #tbGetIdealWidth!geometry!private! !
-!Toolbar categoriesFor: #tbGetItemRect:!geometry!private! !
-!Toolbar categoriesFor: #tbGetMaxSize!geometry!private! !
-!Toolbar categoriesFor: #tbGetPadding!geometry!private! !
-!Toolbar categoriesFor: #tbGetRect:!geometry!private! !
-!Toolbar categoriesFor: #tbGetRows!geometry!private! !
-!Toolbar categoriesFor: #tbGetState:!accessing!private! !
-!Toolbar categoriesFor: #tbGetToolTips!accessing!private! !
-!Toolbar categoriesFor: #tbHideButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbIndeterminate:state:!operations!private! !
-!Toolbar categoriesFor: #tbIsButtonChecked:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonEnabled:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonHidden:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonIndeterminate:!private!testing! !
-!Toolbar categoriesFor: #tbIsButtonPressed:!private!testing! !
-!Toolbar categoriesFor: #tbnBeginAdjust:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnBeginDrag:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnCloseUp:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnCustHelp:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnDropDown:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnEndAdjust:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnEndDrag:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnGetButtonInfo:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnQueryDelete:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnQueryInsert:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnReset:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbnToolbarChange:!event handling-win32!private! !
-!Toolbar categoriesFor: #tbPressButton:state:!operations!private! !
-!Toolbar categoriesFor: #tbSetBitmapSize:!geometry!private! !
-!Toolbar categoriesFor: #tbSetButtonSize:!geometry!private! !
-!Toolbar categoriesFor: #tbSetCmdID:id:!commands!private! !
-!Toolbar categoriesFor: #tbSetExtendedStyle:!helpers!private! !
-!Toolbar categoriesFor: #tbSetIndent:!operations!private! !
-!Toolbar categoriesFor: #tbSetRows:large:!geometry!private! !
-!Toolbar categoriesFor: #tbSetState:state:!helpers!private! !
-!Toolbar categoriesFor: #tbSetToolTips:!accessing!private! !
-!Toolbar categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
-!Toolbar categoriesFor: #updateAllItems!operations!private! !
-!Toolbar categoriesFor: #updateSize!operations!private! !
-!Toolbar categoriesFor: #updateSizePosted!operations!private! !
-!Toolbar categoriesFor: #validateUserInterface!operations!public! !
-!Toolbar categoriesFor: #wmCreate:wParam:lParam:!event handling-win32!private! !
-!Toolbar categoriesFor: #wmNotify:wParam:lParam:!event handling-win32!private! !
+!Toolbar categoriesForMethods!
+actualBitmapSize!geometry!public! !
+addBitmap:index:!helpers!private! !
+addEditTools!adding!private! !
+addFileTools!adding!private! !
+addFindTools!adding!private! !
+addItem:!adding!public! !
+addItems:!adding!public! !
+addSeparator!adding!public! !
+addString:!helpers!private! !
+addSystemBitmap:index:!helpers!private! !
+applyFont!font!private!updating! !
+basicActualForecolor!accessing!private! !
+basicAddItems:!adding!private! !
+bitmapSize!geometry!public! !
+bitmapSize:!geometry!public! !
+buttonSize!geometry!public! !
+buttonSize:!geometry!public! !
+calculateExtent:!geometry!private! !
+canCustomize!accessing-styles!public! !
+canCustomize:!accessing-styles!public! !
+changeButtonSize:!helpers!private! !
+clearIdMap!initializing!private! !
+command:id:!commands!private! !
+commandSource!commands!public! !
+defaultBitmapSize!constants!private! !
+defaultButtonSize!constants!private! !
+defaultExtent!constants!private! !
+defaultGradientBackcolor!colors!constants!private! !
+defaultGradientForecolor!colors!constants!private! !
+defaultWindowStyle!constants!private! !
+filerProxy!binary filing!private! !
+hasFlatAppearance!accessing-styles!public! !
+hasFlatAppearance:!accessing-styles!public! !
+hasLabels!accessing-styles!public! !
+hasLabels:!accessing-styles!public! !
+hasListAppearance!accessing-styles!public! !
+hasListAppearance:!accessing-styles!public! !
+hasTransparentAppearance:!accessing-styles!public! !
+hasTransparentBackground!accessing-styles!private! !
+indent!accessing!public! !
+indent:!accessing!public! !
+indexOfItem:!accessing!private! !
+initialize!initializing!private! !
+insets!accessing!public! !
+insets:!accessing!public! !
+itemAtIndex:!accessing!public! !
+itemClass!constants!public! !
+itemFromId:!accessing!private! !
+itemRect:!geometry!public! !
+items!accessing!private! !
+items:!accessing!private! !
+layoutManager!geometry!public! !
+layoutManager:!geometry!public! !
+nmNotify:!event handling-win32!private! !
+onDropDown:!event handling!private! !
+onEraseRequired:!event handling!private! !
+onPositionChanged:!event handling!public! !
+onStateRestored!binary filing!private! !
+onTipTextRequired:!event handling!public! !
+onViewCreated!event handling!public! !
+removeAllItems!public!removing! !
+removeItem:!public!removing! !
+size!geometry!public! !
+tbAddBitmap:size:!helpers!private! !
+tbAddButtons:!helpers!private! !
+tbAddString:!adding!private! !
+tbAutoSize!operations!private! !
+tbButtonCount!geometry!private! !
+tbButtonStructSize:!helpers!private! !
+tbCheckButton:state:!operations!private! !
+tbCustomize!operations!private! !
+tbDeleteButton:!helpers!private! !
+tbEnableButton:state:!operations!private! !
+tbGetButton:!accessing!private! !
+tbGetButtonInfo:tbbi:!accessing!private! !
+tbGetButtonSize!geometry!private! !
+tbGetIdealHeight!geometry!private! !
+tbGetIdealWidth!geometry!private! !
+tbGetItemRect:!geometry!private! !
+tbGetMaxSize!geometry!private! !
+tbGetPadding!geometry!private! !
+tbGetRect:!geometry!private! !
+tbGetRows!geometry!private! !
+tbGetState:!accessing!private! !
+tbGetToolTips!accessing!private! !
+tbHideButton:state:!operations!private! !
+tbIndeterminate:state:!operations!private! !
+tbIsButtonChecked:!private!testing! !
+tbIsButtonEnabled:!private!testing! !
+tbIsButtonHidden:!private!testing! !
+tbIsButtonIndeterminate:!private!testing! !
+tbIsButtonPressed:!private!testing! !
+tbnBeginAdjust:!event handling-win32!private! !
+tbnBeginDrag:!event handling-win32!private! !
+tbnCloseUp:!event handling-win32!private! !
+tbnCustHelp:!event handling-win32!private! !
+tbnDropDown:!event handling-win32!private! !
+tbnEndAdjust:!event handling-win32!private! !
+tbnEndDrag:!event handling-win32!private! !
+tbnGetButtonInfo:!event handling-win32!private! !
+tbnQueryDelete:!event handling-win32!private! !
+tbnQueryInsert:!event handling-win32!private! !
+tbnReset:!event handling-win32!private! !
+tbnToolbarChange:!event handling-win32!private! !
+tbPressButton:state:!operations!private! !
+tbSetBitmapSize:!geometry!private! !
+tbSetButtonSize:!geometry!private! !
+tbSetCmdID:id:!commands!private! !
+tbSetExtendedStyle:!helpers!private! !
+tbSetIndent:!operations!private! !
+tbSetRows:large:!geometry!private! !
+tbSetState:state:!helpers!private! !
+tbSetToolTips:!accessing!private! !
+ttnGetDispInfo:!event handling-win32!private! !
+updateAllItems!operations!private! !
+updateSize!operations!private! !
+updateSizePosted!operations!private! !
+validateUserInterface!operations!public! !
+wmCreate:wParam:lParam:!event handling-win32!private! !
+wmNotify:wParam:lParam:!event handling-win32!private! !
+!
 
 !Toolbar class methodsFor!
 
@@ -1266,14 +1268,16 @@ winClassName
 
 	^'ToolbarWindow32'
 ! !
-!Toolbar class categoriesFor: #initialize!development!initializing!private! !
-!Toolbar class categoriesFor: #resource_Default_view!public!resources-views! !
-!Toolbar class categoriesFor: #resource_Edit_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_File_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_Find_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_History_tools!public!resources-views! !
-!Toolbar class categoriesFor: #resource_Tool_bar!public!resources-views! !
-!Toolbar class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!Toolbar class categoriesFor: #themePartName!constants!private! !
-!Toolbar class categoriesFor: #winClassName!constants!private! !
+!Toolbar class categoriesForMethods!
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+resource_Edit_tools!public!resources-views! !
+resource_File_tools!public!resources-views! !
+resource_Find_tools!public!resources-views! !
+resource_History_tools!public!resources-views! !
+resource_Tool_bar!public!resources-views! !
+stbConvertFromVersion12:!binary filing!private! !
+themePartName!constants!private! !
+winClassName!constants!private! !
+!
 

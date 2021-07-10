@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #UDACCEL
 	instanceVariableNames: ''
@@ -31,10 +31,12 @@ nSec: anInteger
 	"Set the receiver's 'nSec' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nSec put: anInteger! !
-!UDACCEL categoriesFor: #nInc!**compiled accessors**!public! !
-!UDACCEL categoriesFor: #nInc:!**compiled accessors**!public! !
-!UDACCEL categoriesFor: #nSec!**compiled accessors**!public! !
-!UDACCEL categoriesFor: #nSec:!**compiled accessors**!public! !
+!UDACCEL categoriesForMethods!
+nInc!**compiled accessors**!public! !
+nInc:!**compiled accessors**!public! !
+nSec!**compiled accessors**!public! !
+nSec:!**compiled accessors**!public! !
+!
 
 !UDACCEL class methodsFor!
 
@@ -54,6 +56,8 @@ defineFields
 
 getFieldNames
 	^#(#nSec #nInc)! !
-!UDACCEL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!UDACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!UDACCEL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

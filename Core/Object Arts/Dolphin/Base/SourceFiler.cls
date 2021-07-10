@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SourceFiler
 	instanceVariableNames: 'stream evaluationContext flags'
@@ -108,25 +108,27 @@ stream
 	"Private - Answer the value of the receiver's ''stream'' instance variable."
 
 	^stream! !
-!SourceFiler categoriesFor: #atEnd!public!testing! !
-!SourceFiler categoriesFor: #close!operations!public! !
-!SourceFiler categoriesFor: #cr!accessing!public! !
-!SourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
-!SourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
-!SourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !
-!SourceFiler categoriesFor: #evaluationContext!accessing!public! !
-!SourceFiler categoriesFor: #evaluationContext:!accessing!public! !
-!SourceFiler categoriesFor: #fileIn!public!source filing! !
-!SourceFiler categoriesFor: #flush!operations!public! !
-!SourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing! !
-!SourceFiler categoriesFor: #isSourceOnly!accessing!public! !
-!SourceFiler categoriesFor: #isSourceOnly:!accessing!public! !
-!SourceFiler categoriesFor: #setStream:!initializing!private! !
-!SourceFiler categoriesFor: #setToEnd!positioning!public! !
-!SourceFiler categoriesFor: #sourcePositionFromDescriptor:!private!source filing! !
-!SourceFiler categoriesFor: #storeSource:for:!private!source filing! !
-!SourceFiler categoriesFor: #storeSourceString:forMethod:!public!source filing! !
-!SourceFiler categoriesFor: #stream!accessing!private! !
+!SourceFiler categoriesForMethods!
+atEnd!public!testing! !
+close!operations!public! !
+cr!accessing!public! !
+emitFooterForMethodsOf:!private!source filing! !
+emitGUIDOfClass:!private!source filing! !
+emitHeaderForMethodsOf:!private!source filing! !
+evaluationContext!accessing!public! !
+evaluationContext:!accessing!public! !
+fileIn!public!source filing! !
+flush!operations!public! !
+getSourceFromDescriptor:!public!source filing! !
+isSourceOnly!accessing!public! !
+isSourceOnly:!accessing!public! !
+setStream:!initializing!private! !
+setToEnd!positioning!public! !
+sourcePositionFromDescriptor:!private!source filing! !
+storeSource:for:!private!source filing! !
+storeSourceString:forMethod:!public!source filing! !
+stream!accessing!private! !
+!
 
 !SourceFiler class methodsFor!
 
@@ -140,6 +142,8 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
-!SourceFiler class categoriesFor: #initialize!class initialization!development!public! !
-!SourceFiler class categoriesFor: #on:!instance creation!public! !
+!SourceFiler class categoriesForMethods!
+initialize!class initialization!development!public! !
+on:!instance creation!public! !
+!
 

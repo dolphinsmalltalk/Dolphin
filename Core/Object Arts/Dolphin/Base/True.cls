@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Boolean subclass: #True
 	instanceVariableNames: ''
@@ -116,16 +116,18 @@ xor: operand
 	Since the receiver is true, the answer is true only if the argument is false."
 
 	^operand not! !
-!True categoriesFor: #and:!control flow!public! !
-!True categoriesFor: #asDword!converting!public! !
-!True categoriesFor: #asParameter!converting!public! !
-!True categoriesFor: #asUIntPtr!converting!public! !
-!True categoriesFor: #ifFalse:!control flow!public! !
-!True categoriesFor: #ifFalse:ifTrue:!control flow!public! !
-!True categoriesFor: #ifTrue:!control flow!public! !
-!True categoriesFor: #ifTrue:ifFalse:!control flow!public! !
-!True categoriesFor: #not!logical operations!public! !
-!True categoriesFor: #or:!control flow!public! !
-!True categoriesFor: #printOn:!printing!public! !
-!True categoriesFor: #xor:!logical operations!public! !
+!True categoriesForMethods!
+and:!control flow!public! !
+asDword!converting!public! !
+asParameter!converting!public! !
+asUIntPtr!converting!public! !
+ifFalse:!control flow!public! !
+ifFalse:ifTrue:!control flow!public! !
+ifTrue:!control flow!public! !
+ifTrue:ifFalse:!control flow!public! !
+not!logical operations!public! !
+or:!control flow!public! !
+printOn:!printing!public! !
+xor:!logical operations!public! !
+!
 

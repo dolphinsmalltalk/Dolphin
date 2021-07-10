@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TypeConverter
 	instanceVariableNames: 'leftNullValue rightNullValue'
@@ -93,17 +93,19 @@ rightToLeft: anObject
 	Must be overridden by subclasses to perform specific conversions"
 
 	^self subclassResponsibility! !
-!TypeConverter categoriesFor: #convertFromLeftToRight:!converting!public! !
-!TypeConverter categoriesFor: #convertFromRightToLeft:!converting!public! !
-!TypeConverter categoriesFor: #inverted!operations!public! !
-!TypeConverter categoriesFor: #isLeftNullValue:!private!testing! !
-!TypeConverter categoriesFor: #isRightNullValue:!private!testing! !
-!TypeConverter categoriesFor: #leftNullValue!accessing!public! !
-!TypeConverter categoriesFor: #leftNullValue:!accessing!public! !
-!TypeConverter categoriesFor: #leftToRight:!operations!private! !
-!TypeConverter categoriesFor: #rightNullValue!accessing!public! !
-!TypeConverter categoriesFor: #rightNullValue:!accessing!public! !
-!TypeConverter categoriesFor: #rightToLeft:!operations!private! !
+!TypeConverter categoriesForMethods!
+convertFromLeftToRight:!converting!public! !
+convertFromRightToLeft:!converting!public! !
+inverted!operations!public! !
+isLeftNullValue:!private!testing! !
+isRightNullValue:!private!testing! !
+leftNullValue!accessing!public! !
+leftNullValue:!accessing!public! !
+leftToRight:!operations!private! !
+rightNullValue!accessing!public! !
+rightNullValue:!accessing!public! !
+rightToLeft:!operations!private! !
+!
 
 TypeConverter methodProtocol: #typeConverter attributes: #(#readOnly) selectors: #(#convertFromLeftToRight: #convertFromRightToLeft: #inverted #leftNullValue #leftNullValue: #rightNullValue #rightNullValue:)!
 
@@ -118,6 +120,8 @@ new
 	"Answer a new instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
-!TypeConverter class categoriesFor: #icon!constants!public! !
-!TypeConverter class categoriesFor: #new!instance creation!public! !
+!TypeConverter class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
 

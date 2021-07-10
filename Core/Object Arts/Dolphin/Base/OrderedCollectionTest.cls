@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedGrowableCollectionTest subclass: #OrderedCollectionTest
 	instanceVariableNames: ''
@@ -340,13 +340,15 @@ testStrongTalkTests
 				addLast: 1;
 				addLast: 3;
 				yourself)! !
-!OrderedCollectionTest categoriesFor: #collectionClass!constants!private! !
-!OrderedCollectionTest categoriesFor: #newCollection:!helpers!private! !
-!OrderedCollectionTest categoriesFor: #testFindFirst2!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testLast2!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testResize!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testSetSize!public!unit tests! !
-!OrderedCollectionTest categoriesFor: #testStrongTalkTests!public!testing! !
+!OrderedCollectionTest categoriesForMethods!
+collectionClass!constants!private! !
+newCollection:!helpers!private! !
+testFindFirst2!public!unit tests! !
+testFirst2!public!unit tests! !
+testFromToKeysAndValuesDo3!public!unit tests! !
+testLast2!public!unit tests! !
+testResize!public!unit tests! !
+testSetSize!public!unit tests! !
+testStrongTalkTests!public!testing! !
+!
 

@@ -53,7 +53,9 @@ icon
 	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
 		textcolor: Color lightSeaGreen;
 		yourself)! !
-!TestCase class categoriesFor: #icon!constants!public! !
+!TestCase class categoriesForMethods!
+icon!constants!public! !
+!
 
 "End of package definition"!
 

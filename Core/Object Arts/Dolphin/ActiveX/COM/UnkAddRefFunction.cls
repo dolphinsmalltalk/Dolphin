@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMFunctionAbstract subclass: #UnkAddRefFunction
 	instanceVariableNames: ''
@@ -31,9 +31,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#AddRef! !
-!UnkAddRefFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!UnkAddRefFunction categoriesFor: #descriptor!accessing!private! !
-!UnkAddRefFunction categoriesFor: #selector!accessing!private! !
+!UnkAddRefFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+descriptor!accessing!private! !
+selector!accessing!private! !
+!
 
 !UnkAddRefFunction class methodsFor!
 
@@ -51,6 +53,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!UnkAddRefFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkAddRefFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UnkAddRefFunction class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

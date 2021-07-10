@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassDescriptionTest subclass: #ClassTest
 	instanceVariableNames: ''
@@ -36,8 +36,10 @@ testLessOrEqual
 	self assert: ArithmeticError <= ArithmeticValue class.
 	self deny: ArithmeticValue <= ArithmeticError.
 	self deny: ArithmeticValue <= ArithmeticError class.! !
-!ClassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!ClassTest categoriesFor: #testAllRoots!public!unit tests! !
-!ClassTest categoriesFor: #testClassPoolsWellFormed!public!unit tests! !
-!ClassTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!ClassTest categoriesForMethods!
+allClassHierarchyInstancesDo:!helpers!private! !
+testAllRoots!public!unit tests! !
+testClassPoolsWellFormed!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+!
 

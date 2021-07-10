@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArithmeticValue subclass: #Point3D
 	instanceVariableNames: 'x y z'
@@ -244,45 +244,47 @@ z: aNumber
 	"Set the z coordinate of the receiver"
 
 	z := aNumber! !
-!Point3D categoriesFor: #-!arithmetic!public! !
-!Point3D categoriesFor: #*!arithmetic!public! !
-!Point3D categoriesFor: #/!arithmetic!public! !
-!Point3D categoriesFor: #+!arithmetic!public! !
-!Point3D categoriesFor: #<!comparing!public! !
-!Point3D categoriesFor: #<=!comparing!public! !
-!Point3D categoriesFor: #=!comparing!public! !
-!Point3D categoriesFor: #>!comparing!public! !
-!Point3D categoriesFor: #>=!comparing!public! !
-!Point3D categoriesFor: #abs!arithmetic!public! !
-!Point3D categoriesFor: #addToPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #asPoint!converting!public! !
-!Point3D categoriesFor: #asPoint3D!converting!public! !
-!Point3D categoriesFor: #ceiling!public!truncation and round off! !
-!Point3D categoriesFor: #coerce:!coercing!private! !
-!Point3D categoriesFor: #dist:!operations!public! !
-!Point3D categoriesFor: #divideIntoPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #dotProduct:!operations!public! !
-!Point3D categoriesFor: #floor!public!truncation and round off! !
-!Point3D categoriesFor: #generality!coercing!private! !
-!Point3D categoriesFor: #hash!comparing!public! !
-!Point3D categoriesFor: #max:!comparing!public! !
-!Point3D categoriesFor: #min:!comparing!public! !
-!Point3D categoriesFor: #multiplyByPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #normalize!public! !
-!Point3D categoriesFor: #printOn:!printing!public! !
-!Point3D categoriesFor: #r!accessing!public! !
-!Point3D categoriesFor: #raisedTo:!mathematical!public! !
-!Point3D categoriesFor: #rounded!public!truncation and round off! !
-!Point3D categoriesFor: #roundTo:!public!truncation and round off! !
-!Point3D categoriesFor: #subtractFromPoint3D:!double dispatch!private! !
-!Point3D categoriesFor: #truncated!public!truncation and round off! !
-!Point3D categoriesFor: #x!accessing!public! !
-!Point3D categoriesFor: #x:!accessing!public! !
-!Point3D categoriesFor: #x:y:z:!accessing!public! !
-!Point3D categoriesFor: #y!accessing!public! !
-!Point3D categoriesFor: #y:!accessing!public! !
-!Point3D categoriesFor: #z!accessing!public! !
-!Point3D categoriesFor: #z:!accessing!public! !
+!Point3D categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+abs!arithmetic!public! !
+addToPoint3D:!double dispatch!private! !
+asPoint!converting!public! !
+asPoint3D!converting!public! !
+ceiling!public!truncation and round off! !
+coerce:!coercing!private! !
+dist:!operations!public! !
+divideIntoPoint3D:!double dispatch!private! !
+dotProduct:!operations!public! !
+floor!public!truncation and round off! !
+generality!coercing!private! !
+hash!comparing!public! !
+max:!comparing!public! !
+min:!comparing!public! !
+multiplyByPoint3D:!double dispatch!private! !
+normalize!public! !
+printOn:!printing!public! !
+r!accessing!public! !
+raisedTo:!mathematical!public! !
+rounded!public!truncation and round off! !
+roundTo:!public!truncation and round off! !
+subtractFromPoint3D:!double dispatch!private! !
+truncated!public!truncation and round off! !
+x!accessing!public! !
+x:!accessing!public! !
+x:y:z:!accessing!public! !
+y!accessing!public! !
+y:!accessing!public! !
+z!accessing!public! !
+z:!accessing!public! !
+!
 
 !Point3D class methodsFor!
 
@@ -337,14 +339,16 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^0 @ 0 @ 0! !
-!Point3D class categoriesFor: #fromFLOATArray:!public! !
-!Point3D class categoriesFor: #icon!constants!public! !
-!Point3D class categoriesFor: #new!instance creation!public! !
-!Point3D class categoriesFor: #one!instance creation!public! !
-!Point3D class categoriesFor: #origin!instance creation!public! !
-!Point3D class categoriesFor: #x:y:z:!instance creation!public! !
-!Point3D class categoriesFor: #xAxis!instance creation!public! !
-!Point3D class categoriesFor: #yAxis!instance creation!public! !
-!Point3D class categoriesFor: #zAxis!instance creation!public! !
-!Point3D class categoriesFor: #zero!instance creation!public! !
+!Point3D class categoriesForMethods!
+fromFLOATArray:!public! !
+icon!constants!public! !
+new!instance creation!public! !
+one!instance creation!public! !
+origin!instance creation!public! !
+x:y:z:!instance creation!public! !
+xAxis!instance creation!public! !
+yAxis!instance creation!public! !
+zAxis!instance creation!public! !
+zero!instance creation!public! !
+!
 

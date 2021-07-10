@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BasicInspector subclass: #SequenceableCollectionInspector
 	instanceVariableNames: ''
@@ -37,7 +37,9 @@ setField: anInteger to: anObject
 	anInteger > instSize 
 		ifTrue: [self selfField at: anInteger - instSize put: anObject]
 		ifFalse: [self selfField instVarAt: anInteger put: anObject]! !
-!SequenceableCollectionInspector categoriesFor: #getField:!accessing!private! !
-!SequenceableCollectionInspector categoriesFor: #getFieldList!accessing!private! !
-!SequenceableCollectionInspector categoriesFor: #setField:to:!accessing!private! !
+!SequenceableCollectionInspector categoriesForMethods!
+getField:!accessing!private! !
+getFieldList!accessing!private! !
+setField:to:!accessing!private! !
+!
 

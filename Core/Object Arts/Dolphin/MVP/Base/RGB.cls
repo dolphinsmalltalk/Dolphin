@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ColorRef subclass: #RGB
 	instanceVariableNames: ''
@@ -42,10 +42,12 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls to represent the color)."
 
 	code := anInteger bitAnd: 16rFFFFFF! !
-!RGB categoriesFor: #alpha:!accessing!public! !
-!RGB categoriesFor: #asRGB!converting!public! !
-!RGB categoriesFor: #rgbCode!accessing!public! !
-!RGB categoriesFor: #setCode:!accessing!private! !
+!RGB categoriesForMethods!
+alpha:!accessing!public! !
+asRGB!converting!public! !
+rgbCode!accessing!public! !
+setCode:!accessing!private! !
+!
 
 !RGB class methodsFor!
 
@@ -105,11 +107,13 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!RGB class categoriesFor: #fromInteger:!instance creation!private! !
-!RGB class categoriesFor: #fromRgbCode:!instance creation!public! !
-!RGB class categoriesFor: #r:g:b:!instance creation!public! !
-!RGB class categoriesFor: #red:green:blue:!instance creation!public! !
-!RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!RGB class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!RGB class categoriesFor: #stbVersion!binary filing!public! !
+!RGB class categoriesForMethods!
+fromInteger:!instance creation!private! !
+fromRgbCode:!instance creation!public! !
+r:g:b:!instance creation!public! !
+red:green:blue:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbReadFrom:format:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

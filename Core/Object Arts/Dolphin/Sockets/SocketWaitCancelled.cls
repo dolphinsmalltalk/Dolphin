@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SocketError subclass: #SocketWaitCancelled
 	instanceVariableNames: ''
@@ -14,7 +14,9 @@ description
 	"Answer a String describing the error which the receiver represents."
 
 	^'Socket wait cancelled'! !
-!SocketWaitCancelled categoriesFor: #description!displaying!public! !
+!SocketWaitCancelled categoriesForMethods!
+description!displaying!public! !
+!
 
 !SocketWaitCancelled class methodsFor!
 
@@ -26,7 +28,9 @@ initialize
 
 uninitialize
 	ErrorClasses removeKey: self errorCode ifAbsent: []! !
-!SocketWaitCancelled class categoriesFor: #errorCode!constants!private! !
-!SocketWaitCancelled class categoriesFor: #initialize!initializing!public! !
-!SocketWaitCancelled class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!SocketWaitCancelled class categoriesForMethods!
+errorCode!constants!private! !
+initialize!initializing!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

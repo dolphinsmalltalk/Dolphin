@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
 	instanceVariableNames: ''
@@ -33,7 +33,9 @@ subject: anObject
 				to: self
 				with: #valueChanged].
 	subject := anObject! !
-!ValueModelAspectAdaptor categoriesFor: #notifyChanged!private! !
-!ValueModelAspectAdaptor categoriesFor: #subject!private! !
-!ValueModelAspectAdaptor categoriesFor: #subject:!private! !
+!ValueModelAspectAdaptor categoriesForMethods!
+notifyChanged!private! !
+subject!private! !
+subject:!private! !
+!
 

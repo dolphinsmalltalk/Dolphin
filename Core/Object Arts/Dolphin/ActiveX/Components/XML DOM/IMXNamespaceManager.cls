@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IMXNamespaceManager
 	instanceVariableNames: ''
@@ -217,20 +217,22 @@ Reset
 
 	<virtual stdcall: hresult 6>
 	^self invalidCall: _failureCode! !
-!IMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #getAllowOverride!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #getDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #getPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #getURI:pContextNode:pwchUri:pcchUri:!**auto generated**!methods!public! !
-!IMXNamespaceManager categoriesFor: #GetURI:pContextNode:pwchUri:pcchUri:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
-!IMXNamespaceManager categoriesFor: #PopContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #PushContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #PutAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
-!IMXNamespaceManager categoriesFor: #Reset!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!IMXNamespaceManager categoriesForMethods!
+DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+getAllowOverride!**auto generated**!methods!public! !
+GetAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+getDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
+GetDeclaredPrefix:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+getPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!methods!public! !
+GetPrefix:nIndex:pwchPrefix:pcchPrefix:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+getURI:pContextNode:pwchUri:pcchUri:!**auto generated**!methods!public! !
+GetURI:pContextNode:pwchUri:pcchUri:!**auto generated**!COM Interfaces-IMXNamespaceManager!private! !
+PopContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+PushContext!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+PushNodeContext:fDeep:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+PutAllowOverride:!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+Reset!**auto generated**!COM Interfaces-IMXNamespaceManager!public! !
+!
 
 !IMXNamespaceManager class methodsFor!
 
@@ -257,5 +259,7 @@ defineFunctions
 		defineFunction: #GetURI:pContextNode:pwchUri:pcchUri:
 			argumentTypes: 'word* IXMLDOMNode* word* sdword*'
 ! !
-!IMXNamespaceManager class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IMXNamespaceManager class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

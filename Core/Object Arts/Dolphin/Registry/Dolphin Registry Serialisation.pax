@@ -57,7 +57,9 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: aString
 		put: self
 		type: #binary! !
-!ByteArray categoriesFor: #storeUnderRegKey:as:!public! !
+!ByteArray categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
 
 !ClassDescription methodsFor!
 
@@ -89,13 +91,17 @@ readFromRegKey: aRegKey
 				ifTrue: [inst instVarAt: (instVars at: instVar) put: value]
 				ifFalse: [inst basicAt: i put: value]].
 	^inst! !
-!ClassDescription categoriesFor: #readFromRegKey:!public! !
+!ClassDescription categoriesForMethods!
+readFromRegKey:!public! !
+!
 
 !DWORDBytes methodsFor!
 
 regKeyType
 	^#dword! !
-!DWORDBytes categoriesFor: #regKeyType!constants!public! !
+!DWORDBytes categoriesForMethods!
+regKeyType!constants!public! !
+!
 
 !ExternalIntegerBytes methodsFor!
 
@@ -113,8 +119,10 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: #value
 			put: self
 			type: self regKeyType! !
-!ExternalIntegerBytes categoriesFor: #regKeyType!constants!public! !
-!ExternalIntegerBytes categoriesFor: #storeUnderRegKey:as:!public! !
+!ExternalIntegerBytes categoriesForMethods!
+regKeyType!constants!public! !
+storeUnderRegKey:as:!public! !
+!
 
 !LargeInteger methodsFor!
 
@@ -148,7 +156,9 @@ storeUnderRegKey: aRegKey as: aString
 						to: size
 						with: self
 						startingAt: 1) storeUnderRegKey: key as: 'value']]! !
-!LargeInteger categoriesFor: #storeUnderRegKey:as:!public! !
+!LargeInteger categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
 
 !LargeInteger class methodsFor!
 
@@ -162,7 +172,9 @@ readFromRegKey: aRegKey
 	answer := self basicNew: size.
 	1 to: size do: [:i | answer basicAt: i put: (bytes basicAt: i)].
 	^answer! !
-!LargeInteger class categoriesFor: #readFromRegKey:!public! !
+!LargeInteger class categoriesForMethods!
+readFromRegKey:!public! !
+!
 
 !Object methodsFor!
 
@@ -189,7 +201,9 @@ storeUnderRegKey: aRegKey as: aString
 	instVars 
 		keysAndValuesDo: [:i :name | name first = $_ ifFalse: [(self instVarAt: i) storeUnderRegKey: key as: name]].
 	1 to: self basicSize do: [:i | (self basicAt: i) storeUnderRegKey: key as: i displayString]! !
-!Object categoriesFor: #storeUnderRegKey:as:!public! !
+!Object categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
 
 !Object class methodsFor!
 
@@ -199,7 +213,9 @@ fromRegKey: aRegKey
 	| params |
 	params := aRegKey value.
 	^(self environment at: params first asSymbol) readFromRegKey: aRegKey! !
-!Object class categoriesFor: #fromRegKey:!public! !
+!Object class categoriesForMethods!
+fromRegKey:!public! !
+!
 
 !SmallInteger methodsFor!
 
@@ -218,7 +234,9 @@ storeUnderRegKey: aRegKey as: aString
 				valueAt: aString
 				put: (ULARGE_INTEGER fromInteger: self)
 				type: #qword]! !
-!SmallInteger categoriesFor: #storeUnderRegKey:as:!public! !
+!SmallInteger categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
 
 !String methodsFor!
 
@@ -230,7 +248,9 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: aString
 		put: self asString
 		type: #string! !
-!String categoriesFor: #storeUnderRegKey:as:!public! !
+!String categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
 
 !Symbol methodsFor!
 
@@ -242,7 +262,9 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: nil
 		put: (String writeStream display: self class; nextPut: Character null; display: self; contents)
 		type: #stringArray! !
-!Symbol categoriesFor: #storeUnderRegKey:as:!public! !
+!Symbol categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
 
 !Symbol class methodsFor!
 
@@ -253,7 +275,9 @@ readFromRegKey: aRegKey
 	params := aRegKey value.
 	self assert: [params first = self name].
 	^self intern: params second! !
-!Symbol class categoriesFor: #readFromRegKey:!public! !
+!Symbol class categoriesForMethods!
+readFromRegKey:!public! !
+!
 
 !UIntPtrBytes methodsFor!
 
@@ -261,7 +285,9 @@ regKeyType
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [#qword] ifFalse: [#dword]! !
-!UIntPtrBytes categoriesFor: #regKeyType!public! !
+!UIntPtrBytes categoriesForMethods!
+regKeyType!public! !
+!
 
 !UndefinedObject methodsFor!
 
@@ -270,7 +296,9 @@ storeUnderRegKey: aRegKey as: aString
 	aRegKey, with the <readableString> name, aString."
 
 	"Implementation Note: We don't need to store anything for nil's when performing serialisation to the registry."! !
-!UndefinedObject categoriesFor: #storeUnderRegKey:as:!public! !
+!UndefinedObject categoriesForMethods!
+storeUnderRegKey:as:!public! !
+!
 
 "End of package definition"!
 

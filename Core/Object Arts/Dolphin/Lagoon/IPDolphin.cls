@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #IPDolphin
 	instanceVariableNames: 'plugHole coclasses'
@@ -181,18 +181,20 @@ UnregisterServer
 
 	^hr
 ! !
-!IPDolphin categoriesFor: #canUnloadNow!COM Interfaces-IInProcDolphin!public! !
-!IPDolphin categoriesFor: #CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #coclasses!enumerating!private! !
-!IPDolphin categoriesFor: #GetClassObject:riid:ppv:!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #initialize!initializing!private! !
-!IPDolphin categoriesFor: #OnInitialize!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #OnShutdown!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #onStartup!events-session!private! !
-!IPDolphin categoriesFor: #pullPlug!operations!private! !
-!IPDolphin categoriesFor: #RegisterServer!COM Interfaces-IInProcDolphin!private! !
-!IPDolphin categoriesFor: #supportedInterfaces!constants!public! !
-!IPDolphin categoriesFor: #UnregisterServer!COM Interfaces-IInProcDolphin!private! !
+!IPDolphin categoriesForMethods!
+canUnloadNow!COM Interfaces-IInProcDolphin!public! !
+CanUnloadNow!COM Interfaces-IInProcDolphin!private! !
+coclasses!enumerating!private! !
+GetClassObject:riid:ppv:!COM Interfaces-IInProcDolphin!private! !
+initialize!initializing!private! !
+OnInitialize!COM Interfaces-IInProcDolphin!private! !
+OnShutdown!COM Interfaces-IInProcDolphin!private! !
+onStartup!events-session!private! !
+pullPlug!operations!private! !
+RegisterServer!COM Interfaces-IInProcDolphin!private! !
+supportedInterfaces!constants!public! !
+UnregisterServer!COM Interfaces-IInProcDolphin!private! !
+!
 
 IPDolphin methodProtocol: #'IPDolphin.IInProcDolphin' attributes: #(#readOnly) selectors: #(#CanUnloadNow #GetClassObject:riid:ppv: #OnInitialize #OnShutdown #RegisterServer #UnregisterServer)!
 
@@ -227,9 +229,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset.! !
-!IPDolphin class categoriesFor: #current!instance creation!public! !
-!IPDolphin class categoriesFor: #initialize!initializing!private! !
-!IPDolphin class categoriesFor: #new!object creation!private! !
-!IPDolphin class categoriesFor: #reset!instance creation!private! !
-!IPDolphin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!IPDolphin class categoriesForMethods!
+current!instance creation!public! !
+initialize!initializing!private! !
+new!object creation!private! !
+reset!instance creation!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

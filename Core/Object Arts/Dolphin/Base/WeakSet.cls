@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SharedSet variableSubclass: #WeakSet
 	instanceVariableNames: ''
@@ -109,12 +109,14 @@ species
 	which is less than useful, so we answer <Set>."
 
 	^Set! !
-!WeakSet categoriesFor: #copyEmpty:!copying!private! !
-!WeakSet categoriesFor: #do:!enumerating!public! !
-!WeakSet categoriesFor: #elementsExpired:!finalizing!private! !
-!WeakSet categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
-!WeakSet categoriesFor: #initialize!initializing!private! !
-!WeakSet categoriesFor: #species!accessing!public! !
+!WeakSet categoriesForMethods!
+copyEmpty:!copying!private! !
+do:!enumerating!public! !
+elementsExpired:!finalizing!private! !
+fixCollisionsIgnoringCorpsesFrom:!private!removing! !
+initialize!initializing!private! !
+species!accessing!public! !
+!
 
 !WeakSet class methodsFor!
 
@@ -124,5 +126,7 @@ initialize
 	effect repairs."
 
 	self makeMourner! !
-!WeakSet class categoriesFor: #initialize!development!initializing!public! !
+!WeakSet class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

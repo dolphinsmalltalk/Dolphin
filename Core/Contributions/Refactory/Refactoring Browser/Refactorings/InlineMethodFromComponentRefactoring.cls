@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 InlineMethodRefactoring subclass: #InlineMethodFromComponentRefactoring
 	instanceVariableNames: ''
@@ -121,16 +121,18 @@ transform
 	self abstractVariableReferences.
 	self renameSelfReferences.
 	super transform! !
-!InlineMethodFromComponentRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #addArgumentToSelector:!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToInlineParseTree!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #addSelfReferenceToSourceMessage!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #inlineClass!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #isOverridden!public! !
-!InlineMethodFromComponentRefactoring categoriesFor: #newNameForSelf!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #renameSelfReferences!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #safeVariableNameBasedOn:!public!transforming! !
-!InlineMethodFromComponentRefactoring categoriesFor: #transform!public!transforming! !
+!InlineMethodFromComponentRefactoring categoriesForMethods!
+abstractVariableReferences!public!transforming! !
+addArgumentToSelector:!public!transforming! !
+addSelfReferenceToInlineParseTree!public!transforming! !
+addSelfReferenceToSourceMessage!public!transforming! !
+checkSuperMessages!public!transforming! !
+findSelectedMessage!public!transforming! !
+inlineClass!public!transforming! !
+isOverridden!public! !
+newNameForSelf!public!transforming! !
+renameSelfReferences!public!transforming! !
+safeVariableNameBasedOn:!public!transforming! !
+transform!public!transforming! !
+!
 

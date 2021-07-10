@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DOMNamedNodeMap variableSubclass: #DOMEntitiesMap
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ createNamedNode: aString
 	"Private - Instantiate and answer a new named node of the type contained in the receiver."
 
 	^self shouldNotImplement! !
-!DOMEntitiesMap categoriesFor: #associationClass!constants!private! !
-!DOMEntitiesMap categoriesFor: #createNamedNode:!helpers!private! !
+!DOMEntitiesMap categoriesForMethods!
+associationClass!constants!private! !
+createNamedNode:!helpers!private! !
+!
 

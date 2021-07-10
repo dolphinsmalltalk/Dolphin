@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusSolidBrushFromColorInitializerTest
 	instanceVariableNames: ''
@@ -24,7 +24,9 @@ testCreateHandle
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first identicalTo: 1.
 	self assertLastArgIsHandle! !
-!GdiplusSolidBrushFromColorInitializerTest categoriesFor: #gdipCreateSolidFill:brush:!accessing!public! !
-!GdiplusSolidBrushFromColorInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusSolidBrushFromColorInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!GdiplusSolidBrushFromColorInitializerTest categoriesForMethods!
+gdipCreateSolidFill:brush:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Exception subclass: #Error
 	instanceVariableNames: ''
@@ -48,12 +48,14 @@ warningClass
 	"Private - Answer the class of Warning to which the receiver is converted by #asWarning."
 	
 	^Warning! !
-!Error categoriesFor: #asWarning!converting!private! !
-!Error categoriesFor: #defaultAction!handling!public! !
-!Error categoriesFor: #isUserResumable!public!testing! !
-!Error categoriesFor: #notify!converting!public! !
-!Error categoriesFor: #resignalAsWarning!handler responses!private! !
-!Error categoriesFor: #warningClass!constants!private! !
+!Error categoriesForMethods!
+asWarning!converting!private! !
+defaultAction!handling!public! !
+isUserResumable!public!testing! !
+notify!converting!public! !
+resignalAsWarning!handler responses!private! !
+warningClass!constants!private! !
+!
 
 Error methodProtocol: #Error attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -104,13 +106,15 @@ subclassResponsibility: selector
 	"Private - Raise an error that some message was sent to an abstract class."
 
 	^SubclassResponsibilityError signal: selector printString, ' is the responsibility of the subclass'! !
-!Error class categoriesFor: #mbIconId!parping!public! !
-!Error class categoriesFor: #nonIntegerIndex:!instance creation!private! !
-!Error class categoriesFor: #notIndexable:!instance creation!private! !
-!Error class categoriesFor: #notYetImplemented!instance creation!private! !
-!Error class categoriesFor: #performFailed:of:for:withArgs:!instance creation!private! !
-!Error class categoriesFor: #severityClass!constants!public! !
-!Error class categoriesFor: #subclassResponsibility:!instance creation!private! !
+!Error class categoriesForMethods!
+mbIconId!parping!public! !
+nonIntegerIndex:!instance creation!private! !
+notIndexable:!instance creation!private! !
+notYetImplemented!instance creation!private! !
+performFailed:of:for:withArgs:!instance creation!private! !
+severityClass!constants!public! !
+subclassResponsibility:!instance creation!private! !
+!
 
 Error class methodProtocol: #'Error class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
 

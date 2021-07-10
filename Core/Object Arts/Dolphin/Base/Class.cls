@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassDescription subclass: #Class
 	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
@@ -670,73 +670,75 @@ variableSubclass: aClassSymbol
 	^subclass
 
 ! !
-!Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
-!Class categoriesFor: #addClassVariable:value:!class hierarchy-mutating!class variables!public! !
-!Class categoriesFor: #addClassVarNamed:!class hierarchy-mutating!class variables!public! !
-!Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
-!Class categoriesFor: #basicClassPool!class variables!private! !
-!Class categoriesFor: #basicClassPool:!class variables!private! !
-!Class categoriesFor: #basicSharedPools:!accessing!private! !
-!Class categoriesFor: #bindingFor:!binding!public! !
-!Class categoriesFor: #categories!categories-accessing!public! !
-!Class categoriesFor: #categories:!categories-accessing!public! !
-!Class categoriesFor: #categoriesForClass!private!source filing-class definition! !
-!Class categoriesFor: #category!categories-accessing!public! !
-!Class categoriesFor: #category:!categories-accessing!public! !
-!Class categoriesFor: #classBinding!binding!public! !
-!Class categoriesFor: #classCategories!categories-accessing!private!source filing! !
-!Class categoriesFor: #classCategories:!categories-accessing!private! !
-!Class categoriesFor: #classPool!accessing!class variables!public! !
-!Class categoriesFor: #classVarNames!accessing!class variables!public! !
-!Class categoriesFor: #clearGuid!accessing!private! !
-!Class categoriesFor: #comment!accessing!development!public! !
-!Class categoriesFor: #comment:!accessing!development!public! !
-!Class categoriesFor: #fileIn!development!public!source filing! !
-!Class categoriesFor: #fileOutName!development!private!source filing! !
-!Class categoriesFor: #fileOutStem!development!private!source filing! !
-!Class categoriesFor: #guid!constants!public! !
-!Class categoriesFor: #guid:!class hierarchy-adding!private! !
-!Class categoriesFor: #includeInCategory:!categories-adding!public! !
-!Class categoriesFor: #initializeAfterLoad!class initialization!public! !
-!Class categoriesFor: #instanceClass!accessing!public! !
-!Class categoriesFor: #isAbstract:!instance specification-accessing!public! !
-!Class categoriesFor: #isAtomic!public!testing! !
-!Class categoriesFor: #isLiteral!public!testing! !
-!Class categoriesFor: #name!accessing!public! !
-!Class categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!private! !
-!Class categoriesFor: #owningPackage!development!public!source filing! !
-!Class categoriesFor: #owningPackage:!accessing!development!public! !
-!Class categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
-!Class categoriesFor: #removeClassVarName:!class hierarchy-mutating!class variables!public! !
-!Class categoriesFor: #removeFromCategory:!categories-removing!public! !
-!Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
-!Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
-!Class categoriesFor: #rename:!class hierarchy-mutating!private! !
-!Class categoriesFor: #rename:in:!class hierarchy-mutating!private! !
-!Class categoriesFor: #requiresInstallation!public!testing! !
-!Class categoriesFor: #setClassVarNames:!class variables!private! !
-!Class categoriesFor: #setGuid:!accessing!private! !
-!Class categoriesFor: #setName:!accessing!private! !
-!Class categoriesFor: #setSharedPoolNames:!pool variables!private! !
-!Class categoriesFor: #sharedPoolNames!pool variables!public! !
-!Class categoriesFor: #sourceDescriptor!accessing!public!source filing! !
-!Class categoriesFor: #sourceDescriptor:!accessing!private!source filing! !
-!Class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!Class categoriesFor: #stbModifyExportProxy:!binary filing!private! !
-!Class categoriesFor: #stbSaveOn:!binary filing!public! !
-!Class categoriesFor: #stbVersion!binary filing!public! !
-!Class categoriesFor: #storeGUID!private!source filing-class definition! !
-!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
-!Class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Class categoriesForMethods!
+addClassConstant:value:!class variables!development!public! !
+addClassVariable:value:!class hierarchy-mutating!class variables!public! !
+addClassVarNamed:!class hierarchy-mutating!class variables!public! !
+addToSuper!class hierarchy-adding!private! !
+basicClassPool!class variables!private! !
+basicClassPool:!class variables!private! !
+basicSharedPools:!accessing!private! !
+bindingFor:!binding!public! !
+categories!categories-accessing!public! !
+categories:!categories-accessing!public! !
+categoriesForClass!private!source filing-class definition! !
+category!categories-accessing!public! !
+category:!categories-accessing!public! !
+classBinding!binding!public! !
+classCategories!categories-accessing!private!source filing! !
+classCategories:!categories-accessing!private! !
+classPool!accessing!class variables!public! !
+classVarNames!accessing!class variables!public! !
+clearGuid!accessing!private! !
+comment!accessing!development!public! !
+comment:!accessing!development!public! !
+fileIn!development!public!source filing! !
+fileOutName!development!private!source filing! !
+fileOutStem!development!private!source filing! !
+guid!constants!public! !
+guid:!class hierarchy-adding!private! !
+includeInCategory:!categories-adding!public! !
+initializeAfterLoad!class initialization!public! !
+instanceClass!accessing!public! !
+isAbstract:!instance specification-accessing!public! !
+isAtomic!public!testing! !
+isLiteral!public!testing! !
+name!accessing!public! !
+newClassBuilder:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!private! !
+owningPackage!development!public!source filing! !
+owningPackage:!accessing!development!public! !
+printDefinitionOn:!private!source filing-class definition! !
+removeClassVarName:!class hierarchy-mutating!class variables!public! !
+removeFromCategory:!categories-removing!public! !
+removeFromSuper!class hierarchy-removing!private! !
+removeFromSystem!class hierarchy-removing!private! !
+rename:!class hierarchy-mutating!private! !
+rename:in:!class hierarchy-mutating!private! !
+requiresInstallation!public!testing! !
+setClassVarNames:!class variables!private! !
+setGuid:!accessing!private! !
+setName:!accessing!private! !
+setSharedPoolNames:!pool variables!private! !
+sharedPoolNames!pool variables!public! !
+sourceDescriptor!accessing!public!source filing! !
+sourceDescriptor:!accessing!private!source filing! !
+stbConvertFrom:!binary filing!private! !
+stbModifyExportProxy:!binary filing!private! !
+stbSaveOn:!binary filing!public! !
+stbVersion!binary filing!public! !
+storeGUID!private!source filing-class definition! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+uninitialize!class hierarchy-removing!development!private! !
+uninitializeBeforeRemove!class hierarchy-removing!public! !
+variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!
 
 !Class class methodsFor!
 
@@ -828,12 +830,14 @@ foldLiteralStrings
 									each literalAt: i put: (literalStrings find: literal)]]]].
 	after := literalStrings size.
 	^{total. after}! !
-!Class class categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
-!Class class categoriesFor: #allBehaviorsDo:!enumerating!private! !
-!Class class categoriesFor: #allClasses!class hierarchy-accessing!private! !
-!Class class categoriesFor: #allClassesDo:!enumerating!private! !
-!Class class categoriesFor: #allMethodsDo:!enumerating!private! !
-!Class class categoriesFor: #allRoots!class hierarchy-accessing!private! !
-!Class class categoriesFor: #basicAllRoots!class hierarchy-accessing!private! !
-!Class class categoriesFor: #foldLiteralStrings!operations!public! !
+!Class class categoriesForMethods!
+allBehaviors!class hierarchy-accessing!private! !
+allBehaviorsDo:!enumerating!private! !
+allClasses!class hierarchy-accessing!private! !
+allClassesDo:!enumerating!private! !
+allMethodsDo:!enumerating!private! !
+allRoots!class hierarchy-accessing!private! !
+basicAllRoots!class hierarchy-accessing!private! !
+foldLiteralStrings!operations!public! !
+!
 

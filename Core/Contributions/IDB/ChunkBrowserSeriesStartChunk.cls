@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserChunk subclass: #ChunkBrowserSeriesStartChunk
 	instanceVariableNames: ''
@@ -37,17 +37,21 @@ seriesInstanceFor: aString
 	^(self seriesClass newFor: aString)
 		initializeFromSeriesStart: self;
 		yourself! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #isMatch!public!testing! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #isSeriesStart!public!testing! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #restore!operations!public! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #seriesClass!constants!public! !
-!ChunkBrowserSeriesStartChunk categoriesFor: #seriesInstanceFor:!initializing!public! !
+!ChunkBrowserSeriesStartChunk categoriesForMethods!
+browseTarget!operations!public! !
+initialize:!initializing!public! !
+isMatch!public!testing! !
+isSeriesStart!public!testing! !
+restore!operations!public! !
+seriesClass!constants!public! !
+seriesInstanceFor:!initializing!public! !
+!
 
 !ChunkBrowserSeriesStartChunk class methodsFor!
 
 chunkType
 	self shouldNotImplement! !
-!ChunkBrowserSeriesStartChunk class categoriesFor: #chunkType!constants!public! !
+!ChunkBrowserSeriesStartChunk class categoriesForMethods!
+chunkType!constants!public! !
+!
 

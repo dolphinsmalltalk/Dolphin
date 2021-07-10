@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTestClassResource subclass: #BehaviorTestClasses
 	instanceVariableNames: 'classWithAbstractMethod1 classWithAbstractMethod2'
@@ -43,9 +43,11 @@ isAvailable
 tearDown
 	super tearDown.
 	classWithAbstractMethod1 := classWithAbstractMethod2 := nil! !
-!BehaviorTestClasses categoriesFor: #classWithAbstractMethod1!accessing!public! !
-!BehaviorTestClasses categoriesFor: #classWithAbstractMethod2!accessing!public! !
-!BehaviorTestClasses categoriesFor: #createClasses!public!unit tests! !
-!BehaviorTestClasses categoriesFor: #isAvailable!public!Testing! !
-!BehaviorTestClasses categoriesFor: #tearDown!public!Running! !
+!BehaviorTestClasses categoriesForMethods!
+classWithAbstractMethod1!accessing!public! !
+classWithAbstractMethod2!accessing!public! !
+createClasses!public!unit tests! !
+isAvailable!public!Testing! !
+tearDown!public!Running! !
+!
 

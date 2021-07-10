@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODBFields20 subclass: #ADODBFields
 	instanceVariableNames: ''
@@ -108,13 +108,15 @@ Update
 
 	<virtual stdcall: hresult 15>
 	^self invalidCall: _failureCode! !
-!ADODBFields categoriesFor: #append:type:!**auto generated**!methods!public! !
-!ADODBFields categoriesFor: #append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
-!ADODBFields categoriesFor: #Append:Type:DefinedSize:Attrib:FieldValue:!**auto generated**!COM Interfaces-Fields!private! !
-!ADODBFields categoriesFor: #CancelUpdate!**auto generated**!COM Interfaces-Fields!public! !
-!ADODBFields categoriesFor: #resync!**auto generated**!methods!public! !
-!ADODBFields categoriesFor: #Resync:!**auto generated**!COM Interfaces-Fields!public! !
-!ADODBFields categoriesFor: #Update!**auto generated**!COM Interfaces-Fields!public! !
+!ADODBFields categoriesForMethods!
+append:type:!**auto generated**!methods!public! !
+append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
+Append:Type:DefinedSize:Attrib:FieldValue:!**auto generated**!COM Interfaces-Fields!private! !
+CancelUpdate!**auto generated**!COM Interfaces-Fields!public! !
+resync!**auto generated**!methods!public! !
+Resync:!**auto generated**!COM Interfaces-Fields!public! !
+Update!**auto generated**!COM Interfaces-Fields!public! !
+!
 
 !ADODBFields class methodsFor!
 
@@ -130,5 +132,7 @@ defineFunctions
 			argumentTypes: 'sdword';
 		defineFunction: #CancelUpdate
 ! !
-!ADODBFields class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBFields class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

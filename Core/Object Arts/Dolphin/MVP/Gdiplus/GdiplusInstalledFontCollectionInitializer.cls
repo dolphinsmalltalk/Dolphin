@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
 	instanceVariableNames: ''
@@ -19,8 +19,10 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating InstalledFontCollection'! !
-!GdiplusInstalledFontCollectionInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusInstalledFontCollectionInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusInstalledFontCollectionInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusInstalledFontCollectionInitializer class methodsFor!
 
@@ -35,7 +37,9 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!GdiplusInstalledFontCollectionInitializer class categoriesFor: #default!instance creation!private! !
-!GdiplusInstalledFontCollectionInitializer class categoriesFor: #new!development!instance creation!public! !
-!GdiplusInstalledFontCollectionInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!GdiplusInstalledFontCollectionInitializer class categoriesForMethods!
+default!instance creation!private! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

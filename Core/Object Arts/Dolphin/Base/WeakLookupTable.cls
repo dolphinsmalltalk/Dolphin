@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SharedLookupTable variableSubclass: #WeakLookupTable
 	instanceVariableNames: ''
@@ -208,23 +208,25 @@ valuesClass
 	is configured to inform the receiver when it suffers losses."
 
 	^MourningWeakArray! !
-!WeakLookupTable categoriesFor: #copyEmpty:!copying!private! !
-!WeakLookupTable categoriesFor: #do:!enumerating!public! !
-!WeakLookupTable categoriesFor: #elementsExpired:!finalizing!private! !
-!WeakLookupTable categoriesFor: #elementsExpired:of:!finalizing!private! !
-!WeakLookupTable categoriesFor: #fixCollisionsIgnoringCorpsesFrom:!private!removing! !
-!WeakLookupTable categoriesFor: #hasWeakKeys!public!testing! !
-!WeakLookupTable categoriesFor: #hasWeakValues!public!testing! !
-!WeakLookupTable categoriesFor: #haveStrongKeys!accessing!public! !
-!WeakLookupTable categoriesFor: #haveStrongValues!accessing!public! !
-!WeakLookupTable categoriesFor: #haveWeakKeys!accessing!public! !
-!WeakLookupTable categoriesFor: #haveWeakValues!accessing!public! !
-!WeakLookupTable categoriesFor: #initialize!initializing!private! !
-!WeakLookupTable categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!WeakLookupTable categoriesFor: #keysDo:!enumerating!public! !
-!WeakLookupTable categoriesFor: #postResize:!adding!private! !
-!WeakLookupTable categoriesFor: #species!accessing!public! !
-!WeakLookupTable categoriesFor: #valuesClass!constants!public! !
+!WeakLookupTable categoriesForMethods!
+copyEmpty:!copying!private! !
+do:!enumerating!public! !
+elementsExpired:!finalizing!private! !
+elementsExpired:of:!finalizing!private! !
+fixCollisionsIgnoringCorpsesFrom:!private!removing! !
+hasWeakKeys!public!testing! !
+hasWeakValues!public!testing! !
+haveStrongKeys!accessing!public! !
+haveStrongValues!accessing!public! !
+haveWeakKeys!accessing!public! !
+haveWeakValues!accessing!public! !
+initialize!initializing!private! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+postResize:!adding!private! !
+species!accessing!public! !
+valuesClass!constants!public! !
+!
 
 !WeakLookupTable class methodsFor!
 
@@ -258,8 +260,10 @@ newWithWeakValues: anInteger
 
 	^super new: anInteger
 ! !
-!WeakLookupTable class categoriesFor: #initialize!development!initializing!public! !
-!WeakLookupTable class categoriesFor: #new:!instance creation!public! !
-!WeakLookupTable class categoriesFor: #newWithWeakKeys:!instance creation!public! !
-!WeakLookupTable class categoriesFor: #newWithWeakValues:!instance creation!public! !
+!WeakLookupTable class categoriesForMethods!
+initialize!development!initializing!public! !
+new:!instance creation!public! !
+newWithWeakKeys:!instance creation!public! !
+newWithWeakValues:!instance creation!public! !
+!
 

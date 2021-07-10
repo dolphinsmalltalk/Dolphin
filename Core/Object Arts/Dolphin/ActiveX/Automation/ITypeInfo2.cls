@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ITypeInfo subclass: #ITypeInfo2
 	instanceVariableNames: ''
@@ -324,36 +324,38 @@ typekind
 	answer := DWORDBytes new.
 	self GetTypeKind: answer.
 	^answer asSignedInteger! !
-!ITypeInfo2 categoriesFor: #getAllCustData!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetAllCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getAllFuncCustData:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetAllFuncCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getAllImplTypeCustData:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetAllImplTypeCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getAllParamCustData:indexParam:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetAllParamCustData:indexParam:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getAllVarCustData:!**auto generated**!accessing!public! !
-!ITypeInfo2 categoriesFor: #GetAllVarCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getCustData:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetCustData:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getDocumentation2:lcid:!accessing!public! !
-!ITypeInfo2 categoriesFor: #GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getFuncCustData:guid:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetFuncCustData:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getFuncIndexOfMemId:invkind:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetFuncIndexOfMemId:invkind:pFuncIndex:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getImplTypeCustData:guid:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetImplTypeCustData:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getParamCustData:indexParam:guid:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetParamCustData:indexParam:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #GetTypeFlags:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #GetTypeKind:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getVarCustData:guid:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetVarCustData:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #getVarIndexOfMemId:!**auto generated**!public! !
-!ITypeInfo2 categoriesFor: #GetVarIndexOfMemId:pVarIndex:!COM Interfaces-OAIDL.ITypeInfo2!private! !
-!ITypeInfo2 categoriesFor: #typeFlags!accessing!public! !
-!ITypeInfo2 categoriesFor: #typekind!accessing!public! !
+!ITypeInfo2 categoriesForMethods!
+getAllCustData!**auto generated**!public! !
+GetAllCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getAllFuncCustData:!**auto generated**!public! !
+GetAllFuncCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getAllImplTypeCustData:!**auto generated**!public! !
+GetAllImplTypeCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getAllParamCustData:indexParam:!**auto generated**!public! !
+GetAllParamCustData:indexParam:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getAllVarCustData:!**auto generated**!accessing!public! !
+GetAllVarCustData:pCustData:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getCustData:!**auto generated**!public! !
+GetCustData:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getDocumentation2:lcid:!accessing!public! !
+GetDocumentation2:lcid:pbstrHelpString:pdwHelpStringContext:pbstrHelpStringDll:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getFuncCustData:guid:!**auto generated**!public! !
+GetFuncCustData:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getFuncIndexOfMemId:invkind:!**auto generated**!public! !
+GetFuncIndexOfMemId:invkind:pFuncIndex:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getImplTypeCustData:guid:!**auto generated**!public! !
+GetImplTypeCustData:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getParamCustData:indexParam:guid:!**auto generated**!public! !
+GetParamCustData:indexParam:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+GetTypeFlags:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+GetTypeKind:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getVarCustData:guid:!**auto generated**!public! !
+GetVarCustData:guid:pVarVal:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+getVarIndexOfMemId:!**auto generated**!public! !
+GetVarIndexOfMemId:pVarIndex:!COM Interfaces-OAIDL.ITypeInfo2!private! !
+typeFlags!accessing!public! !
+typekind!accessing!public! !
+!
 
 !ITypeInfo2 class methodsFor!
 
@@ -394,5 +396,7 @@ defineFunctions
 		defineFunction: #GetAllImplTypeCustData:pCustData:
 			argumentTypes: 'dword CUSTDATA*'
 ! !
-!ITypeInfo2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ITypeInfo2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

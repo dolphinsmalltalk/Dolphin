@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #ClassToRename
 	instanceVariableNames: 'rewriteRule builder class'
@@ -15,12 +15,16 @@ method1
 
 method2
 	^self method1! !
-!ClassToRename categoriesFor: #method1!performing!public! !
-!ClassToRename categoriesFor: #method2!performing!public! !
+!ClassToRename categoriesForMethods!
+method1!performing!public! !
+method2!performing!public! !
+!
 
 !ClassToRename class methodsFor!
 
 new
 	^super new initialize! !
-!ClassToRename class categoriesFor: #new!performing!public! !
+!ClassToRename class categoriesForMethods!
+new!performing!public! !
+!
 

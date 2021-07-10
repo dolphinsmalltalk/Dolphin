@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ExceptionSet
 	instanceVariableNames: 'selectors'
@@ -41,11 +41,13 @@ selectors: anObject
 	This method was automatically generated, but may be modified."
 
 	selectors := anObject! !
-!ExceptionSet categoriesFor: #,!adding!public! !
-!ExceptionSet categoriesFor: #handles:!accessing!public! !
-!ExceptionSet categoriesFor: #initialize!initializing!public! !
-!ExceptionSet categoriesFor: #selectors!accessing!public! !
-!ExceptionSet categoriesFor: #selectors:!accessing!public! !
+!ExceptionSet categoriesForMethods!
+,!adding!public! !
+handles:!accessing!public! !
+initialize!initializing!public! !
+selectors!accessing!public! !
+selectors:!accessing!public! !
+!
 
 ExceptionSet methodProtocol: #exceptionSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 ExceptionSet methodProtocol: #exceptionSet attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
@@ -61,6 +63,8 @@ selectors: anArray
 	"Private - Answer a new instance of the receiver containing representing a set of the <exceptionSelector>s in the <Array> argument."
 
 	^super new selectors: anArray! !
-!ExceptionSet class categoriesFor: #new!instance creation!public! !
-!ExceptionSet class categoriesFor: #selectors:!instance creation!private! !
+!ExceptionSet class categoriesForMethods!
+new!instance creation!public! !
+selectors:!instance creation!private! !
+!
 

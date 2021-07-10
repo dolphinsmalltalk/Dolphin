@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETMAPPERFLAGS
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!EMRSETMAPPERFLAGS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRSETMAPPERFLAGS categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!EMRSETMAPPERFLAGS categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+!
 
 !EMRSETMAPPERFLAGS class methodsFor!
 
@@ -64,7 +66,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETMAPPERFLAGS! !
-!EMRSETMAPPERFLAGS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETMAPPERFLAGS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETMAPPERFLAGS class categoriesFor: #iTypes!constants!public! !
+!EMRSETMAPPERFLAGS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

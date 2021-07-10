@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #ImagePresenter
 	instanceVariableNames: ''
@@ -54,9 +54,11 @@ resource_Static_icon
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticIcon) 34 17 nil nil 34 2 8 1149239555 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #== 8 #() 546 #hash 8 #() nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil false nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 786 241 221 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 125 0 0 0 115 0 0 0] 8 #() 786 193 193 nil 27 )! !
-!ImagePresenter class categoriesFor: #icon!constants!public! !
-!ImagePresenter class categoriesFor: #resource_Animated_view!public!resources-views! !
-!ImagePresenter class categoriesFor: #resource_Basic_image!public!resources-views! !
-!ImagePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ImagePresenter class categoriesFor: #resource_Static_icon!public!resources-views! !
+!ImagePresenter class categoriesForMethods!
+icon!constants!public! !
+resource_Animated_view!public!resources-views! !
+resource_Basic_image!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_Static_icon!public!resources-views! !
+!
 

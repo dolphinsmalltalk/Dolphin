@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #AddClassTest
 	instanceVariableNames: ''
@@ -95,12 +95,14 @@ testModelInvalidSubclass
 				subclasses: (Array with: (model classNamed: #Bar))
 				category: #'Refactory-Tesing'.
 	self shouldFail: refactoring! !
-!AddClassTest categoriesFor: #setUp!public!set up! !
-!AddClassTest categoriesFor: #testAddClass!public!tests! !
-!AddClassTest categoriesFor: #testExistingName!failure tests!public! !
-!AddClassTest categoriesFor: #testInvalidSubclass!failure tests!public! !
-!AddClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!AddClassTest categoriesFor: #testModelAddClass!public!tests! !
-!AddClassTest categoriesFor: #testModelExistingName!failure tests!public! !
-!AddClassTest categoriesFor: #testModelInvalidSubclass!failure tests!public! !
+!AddClassTest categoriesForMethods!
+setUp!public!set up! !
+testAddClass!public!tests! !
+testExistingName!failure tests!public! !
+testInvalidSubclass!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelAddClass!public!tests! !
+testModelExistingName!failure tests!public! !
+testModelInvalidSubclass!failure tests!public! !
+!
 

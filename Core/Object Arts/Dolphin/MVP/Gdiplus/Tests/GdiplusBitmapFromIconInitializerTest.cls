@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromIconInitializerTest
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ testCreateHandleRealizesIcon
 	self assertIsNil: icon basicHandle.
 	model createHandle.
 	self denyIsNil: icon basicHandle! !
-!GdiplusBitmapFromIconInitializerTest categoriesFor: #gdipCreateBitmapFromHICON:bitmap:!accessing!public! !
-!GdiplusBitmapFromIconInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapFromIconInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusBitmapFromIconInitializerTest categoriesFor: #testCreateHandleRealizesIcon!public!unit tests! !
+!GdiplusBitmapFromIconInitializerTest categoriesForMethods!
+gdipCreateBitmapFromHICON:bitmap:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+testCreateHandleRealizesIcon!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SOCKADDR subclass: #SOCKADDR_IN
 	instanceVariableNames: ''
@@ -73,14 +73,16 @@ sin_port: anInteger
 	"Set the receiver's 'sin_port' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_sin_port put: anInteger! !
-!SOCKADDR_IN categoriesFor: #port!accessing!public! !
-!SOCKADDR_IN categoriesFor: #port:!accessing!public! !
-!SOCKADDR_IN categoriesFor: #sin_addr!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_addr:!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_family!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_family:!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_port!**compiled accessors**!public! !
-!SOCKADDR_IN categoriesFor: #sin_port:!**compiled accessors**!public! !
+!SOCKADDR_IN categoriesForMethods!
+port!accessing!public! !
+port:!accessing!public! !
+sin_addr!**compiled accessors**!public! !
+sin_addr:!**compiled accessors**!public! !
+sin_family!**compiled accessors**!public! !
+sin_family:!**compiled accessors**!public! !
+sin_port!**compiled accessors**!public! !
+sin_port:!**compiled accessors**!public! !
+!
 
 !SOCKADDR_IN class methodsFor!
 
@@ -107,6 +109,8 @@ defineFields
 
 getFieldNames
 	^#(#sin_family #sin_port #sin_addr)! !
-!SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SOCKADDR_IN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SOCKADDR_IN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

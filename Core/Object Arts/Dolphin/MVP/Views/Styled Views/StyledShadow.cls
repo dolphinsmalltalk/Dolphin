@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #StyledShadow
 	instanceVariableNames: 'color density offset'
@@ -52,14 +52,16 @@ paintShadowOf: path on: graphics
 
 shadowColor
 	^self color alpha: (self density * 255 min: 255)! !
-!StyledShadow categoriesFor: #color!accessing!public! !
-!StyledShadow categoriesFor: #color:!accessing!public! !
-!StyledShadow categoriesFor: #density!accessing!public! !
-!StyledShadow categoriesFor: #density:!accessing!public! !
-!StyledShadow categoriesFor: #offset!accessing!public! !
-!StyledShadow categoriesFor: #offset:!accessing!public! !
-!StyledShadow categoriesFor: #paintShadowOf:on:!event handling!public! !
-!StyledShadow categoriesFor: #shadowColor!event handling!public! !
+!StyledShadow categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+density!accessing!public! !
+density:!accessing!public! !
+offset!accessing!public! !
+offset:!accessing!public! !
+paintShadowOf:on:!event handling!public! !
+shadowColor!event handling!public! !
+!
 
 !StyledShadow class methodsFor!
 
@@ -77,8 +79,10 @@ new
 		color: self defaultShadowColor;
 		offset: self defaultShadowOffset;
 		density: self defaultShadowDensity! !
-!StyledShadow class categoriesFor: #defaultShadowColor!public! !
-!StyledShadow class categoriesFor: #defaultShadowDensity!public! !
-!StyledShadow class categoriesFor: #defaultShadowOffset!public! !
-!StyledShadow class categoriesFor: #new!instance creation!public! !
+!StyledShadow class categoriesForMethods!
+defaultShadowColor!public! !
+defaultShadowDensity!public! !
+defaultShadowOffset!public! !
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCREATECOLORSPACE
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ lcs: aLOGCOLORSPACE
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACE basicByteSize)
 		startingAt: 1! !
-!EMRCREATECOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
-!EMRCREATECOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACE categoriesFor: #lcs!**compiled accessors**!public! !
-!EMRCREATECOLORSPACE categoriesFor: #lcs:!**compiled accessors**!public! !
+!EMRCREATECOLORSPACE categoriesForMethods!
+ihCS!**compiled accessors**!public! !
+ihCS:!**compiled accessors**!public! !
+lcs!**compiled accessors**!public! !
+lcs:!**compiled accessors**!public! !
+!
 
 !EMRCREATECOLORSPACE class methodsFor!
 
@@ -82,7 +84,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATECOLORSPACE! !
-!EMRCREATECOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATECOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATECOLORSPACE class categoriesFor: #iTypes!constants!public! !
+!EMRCREATECOLORSPACE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

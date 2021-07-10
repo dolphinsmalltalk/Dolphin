@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MARGINS
 	instanceVariableNames: ''
@@ -69,14 +69,16 @@ cyTopHeight: anInteger
 	"Set the receiver's 'cyTopHeight' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_cyTopHeight put: anInteger! !
-!MARGINS categoriesFor: #cxLeftWidth!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cxLeftWidth:!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cxRightWidth!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cxRightWidth:!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyBottomHeight!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyBottomHeight:!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyTopHeight!**compiled accessors**!public! !
-!MARGINS categoriesFor: #cyTopHeight:!**compiled accessors**!public! !
+!MARGINS categoriesForMethods!
+cxLeftWidth!**compiled accessors**!public! !
+cxLeftWidth:!**compiled accessors**!public! !
+cxRightWidth!**compiled accessors**!public! !
+cxRightWidth:!**compiled accessors**!public! !
+cyBottomHeight!**compiled accessors**!public! !
+cyBottomHeight:!**compiled accessors**!public! !
+cyTopHeight!**compiled accessors**!public! !
+cyTopHeight:!**compiled accessors**!public! !
+!
 
 !MARGINS class methodsFor!
 
@@ -101,6 +103,8 @@ defineFields
 
 getFieldNames
 	^#(#cxLeftWidth #cxRightWidth #cyTopHeight #cyBottomHeight)! !
-!MARGINS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!MARGINS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MARGINS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

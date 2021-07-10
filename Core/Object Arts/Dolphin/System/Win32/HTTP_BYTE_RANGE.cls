@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ StartingOffset: anInteger
 	"Set the receiver's 'StartingOffset' field to the value of the argument, anInteger"
 
 	bytes qwordAtOffset: _OffsetOf_StartingOffset put: anInteger! !
-!HTTP_BYTE_RANGE categoriesFor: #Length!**compiled accessors**!public! !
-!HTTP_BYTE_RANGE categoriesFor: #Length:!**compiled accessors**!public! !
-!HTTP_BYTE_RANGE categoriesFor: #StartingOffset!**compiled accessors**!public! !
-!HTTP_BYTE_RANGE categoriesFor: #StartingOffset:!**compiled accessors**!public! !
+!HTTP_BYTE_RANGE categoriesForMethods!
+Length!**compiled accessors**!public! !
+Length:!**compiled accessors**!public! !
+StartingOffset!**compiled accessors**!public! !
+StartingOffset:!**compiled accessors**!public! !
+!
 
 !HTTP_BYTE_RANGE class methodsFor!
 
@@ -71,6 +73,8 @@ defineFields
 
 getFieldNames
 	^#(#StartingOffset #Length)! !
-!HTTP_BYTE_RANGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_BYTE_RANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_BYTE_RANGE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

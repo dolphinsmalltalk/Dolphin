@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLiteralNode subclass: #StLiteralArrayNode
 	instanceVariableNames: 'isByteArray stop contents start'
@@ -65,20 +65,22 @@ value
 
 valueClass
 	^isByteArray ifTrue: [ByteArray] ifFalse: [Array]! !
-!StLiteralArrayNode categoriesFor: #=!comparing!public! !
-!StLiteralArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralArrayNode categoriesFor: #children!accessing!public! !
-!StLiteralArrayNode categoriesFor: #childrenDo:!accessing!public! !
-!StLiteralArrayNode categoriesFor: #contents!accessing!public! !
-!StLiteralArrayNode categoriesFor: #contents:!accessing!public! !
-!StLiteralArrayNode categoriesFor: #isForByteArray!public!testing! !
-!StLiteralArrayNode categoriesFor: #isLiteralArray!public!testing! !
-!StLiteralArrayNode categoriesFor: #postCopy!copying!public! !
-!StLiteralArrayNode categoriesFor: #startPosition:contents:stopPosition:isByteArray:!initializing!public! !
-!StLiteralArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StLiteralArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StLiteralArrayNode categoriesFor: #value!accessing!public! !
-!StLiteralArrayNode categoriesFor: #valueClass!accessing!public! !
+!StLiteralArrayNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+children!accessing!public! !
+childrenDo:!accessing!public! !
+contents!accessing!public! !
+contents:!accessing!public! !
+isForByteArray!public!testing! !
+isLiteralArray!public!testing! !
+postCopy!copying!public! !
+startPosition:contents:stopPosition:isByteArray:!initializing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+value!accessing!public! !
+valueClass!accessing!public! !
+!
 
 !StLiteralArrayNode class methodsFor!
 
@@ -96,6 +98,8 @@ value: aValue
 		contents: (aValue asArray collect: [:each | StLiteralNode value: each])
 		stopPosition: nil
 		isByteArray: aValue class ~~ Array! !
-!StLiteralArrayNode class categoriesFor: #startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
-!StLiteralArrayNode class categoriesFor: #value:!instance creation!public! !
+!StLiteralArrayNode class categoriesForMethods!
+startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
+value:!instance creation!public! !
+!
 

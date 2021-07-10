@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IShellFolder
 	instanceVariableNames: ''
@@ -108,18 +108,20 @@ SetNameOf: setNameOf pidl: pidl lpszName: lpszName uFlags: uFlags ppidlOut: ppid
 
 	<virtual stdcall: hresult 13 handle lpvoid lpwstr dword lppvoid>
 	^self invalidCall: _failureCode! !
-!IShellFolder categoriesFor: #BindToObject:pbc:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #BindToStorage:pbc:riid:ppv:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #CompareIDs:pidl1:pidl2:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #CreateViewObject:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #EnumObjects:grfFlags:ppenumIDList:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #GetAttributesOf:apidl:rgfInOut:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #GetDisplayNameOf:uFlags:lpName:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #GetUIObjectOf:cidl:apidl:riid:prgfInOut:ppvOut:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #idlFromPath:!public! !
-!IShellFolder categoriesFor: #ParseDisplayName:pbc:lpwszDisplayName:pchEaten:ppidl:pdwAttributes:!COM Interfaces-IShellFolder!public! !
-!IShellFolder categoriesFor: #pidlFromPath:!operations!public! !
-!IShellFolder categoriesFor: #SetNameOf:pidl:lpszName:uFlags:ppidlOut:!COM Interfaces-IShellFolder!public! !
+!IShellFolder categoriesForMethods!
+BindToObject:pbc:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
+BindToStorage:pbc:riid:ppv:!COM Interfaces-IShellFolder!public! !
+CompareIDs:pidl1:pidl2:!COM Interfaces-IShellFolder!public! !
+CreateViewObject:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
+EnumObjects:grfFlags:ppenumIDList:!COM Interfaces-IShellFolder!public! !
+GetAttributesOf:apidl:rgfInOut:!COM Interfaces-IShellFolder!public! !
+GetDisplayNameOf:uFlags:lpName:!COM Interfaces-IShellFolder!public! !
+GetUIObjectOf:cidl:apidl:riid:prgfInOut:ppvOut:!COM Interfaces-IShellFolder!public! !
+idlFromPath:!public! !
+ParseDisplayName:pbc:lpwszDisplayName:pchEaten:ppidl:pdwAttributes:!COM Interfaces-IShellFolder!public! !
+pidlFromPath:!operations!public! !
+SetNameOf:pidl:lpszName:uFlags:ppidlOut:!COM Interfaces-IShellFolder!public! !
+!
 
 !IShellFolder class methodsFor!
 
@@ -150,5 +152,7 @@ defineFunctions
 		defineFunction: #SetNameOf:pidl:lpszName:uFlags:ppidlOut:
 			argumentTypes: 'handle lpvoid lpwstr dword lppvoid'
 ! !
-!IShellFolder class categoriesFor: #defineFunctions!initializing!public! !
+!IShellFolder class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

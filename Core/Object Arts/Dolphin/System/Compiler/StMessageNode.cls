@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StMessageNode
 	instanceVariableNames: 'receiver selector selectorParts arguments'
@@ -197,40 +197,42 @@ stopWithoutParentheses
 
 value
 	^self selector! !
-!StMessageNode categoriesFor: #=!comparing!public! !
-!StMessageNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StMessageNode categoriesFor: #argument!accessing!public! !
-!StMessageNode categoriesFor: #argumentCount!accessing!public! !
-!StMessageNode categoriesFor: #arguments!accessing!public! !
-!StMessageNode categoriesFor: #arguments:!accessing!public! !
-!StMessageNode categoriesFor: #bestNodeFor:!public!querying! !
-!StMessageNode categoriesFor: #buildSelector!helpers!private! !
-!StMessageNode categoriesFor: #childrenDo:!accessing!public! !
-!StMessageNode categoriesFor: #hash!comparing!public! !
-!StMessageNode categoriesFor: #isBinary!public!testing! !
-!StMessageNode categoriesFor: #isCascaded!public!testing! !
-!StMessageNode categoriesFor: #isFirstCascaded!public!testing! !
-!StMessageNode categoriesFor: #isInlineable!public! !
-!StMessageNode categoriesFor: #isKeyword!public!testing! !
-!StMessageNode categoriesFor: #isMessage!public!testing! !
-!StMessageNode categoriesFor: #isUnary!public!testing! !
-!StMessageNode categoriesFor: #lastIsReturn!public!testing! !
-!StMessageNode categoriesFor: #needsParenthesis!public!testing! !
-!StMessageNode categoriesFor: #numArgs!accessing!public! !
-!StMessageNode categoriesFor: #postCopy!copying!public! !
-!StMessageNode categoriesFor: #precedence!accessing!public! !
-!StMessageNode categoriesFor: #receiver!accessing!public! !
-!StMessageNode categoriesFor: #receiver:!accessing!public! !
-!StMessageNode categoriesFor: #receiver:selectorParts:arguments:!initializing!public! !
-!StMessageNode categoriesFor: #renameSelector:andArguments:!accessing!public! !
-!StMessageNode categoriesFor: #selector!accessing!public! !
-!StMessageNode categoriesFor: #selector:!accessing!public! !
-!StMessageNode categoriesFor: #selectorParts!accessing!private! !
-!StMessageNode categoriesFor: #selectorParts:!accessing!private! !
-!StMessageNode categoriesFor: #sentMessages!accessing!public! !
-!StMessageNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StMessageNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StMessageNode categoriesFor: #value!accessing!public! !
+!StMessageNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+argument!accessing!public! !
+argumentCount!accessing!public! !
+arguments!accessing!public! !
+arguments:!accessing!public! !
+bestNodeFor:!public!querying! !
+buildSelector!helpers!private! !
+childrenDo:!accessing!public! !
+hash!comparing!public! !
+isBinary!public!testing! !
+isCascaded!public!testing! !
+isFirstCascaded!public!testing! !
+isInlineable!public! !
+isKeyword!public!testing! !
+isMessage!public!testing! !
+isUnary!public!testing! !
+lastIsReturn!public!testing! !
+needsParenthesis!public!testing! !
+numArgs!accessing!public! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+receiver:selectorParts:arguments:!initializing!public! !
+renameSelector:andArguments:!accessing!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+selectorParts!accessing!private! !
+selectorParts:!accessing!private! !
+sentMessages!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+value!accessing!public! !
+!
 
 !StMessageNode class methodsFor!
 
@@ -253,7 +255,9 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 			selectorParts: keywordTokens
 			arguments: valueNodes;
 		yourself! !
-!StMessageNode class categoriesFor: #receiver:selector:!instance creation!public! !
-!StMessageNode class categoriesFor: #receiver:selector:arguments:!instance creation!public! !
-!StMessageNode class categoriesFor: #receiver:selectorParts:arguments:!instance creation!public! !
+!StMessageNode class categoriesForMethods!
+receiver:selector:!instance creation!public! !
+receiver:selector:arguments:!instance creation!public! !
+receiver:selectorParts:arguments:!instance creation!public! !
+!
 

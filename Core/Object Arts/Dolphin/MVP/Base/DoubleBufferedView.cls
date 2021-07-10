@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #DoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
@@ -118,18 +118,20 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
-!DoubleBufferedView categoriesFor: #canvas!accessing!public! !
-!DoubleBufferedView categoriesFor: #filerProxy!binary filing!private! !
-!DoubleBufferedView categoriesFor: #flip!operations!public! !
-!DoubleBufferedView categoriesFor: #initialize!initializing!private! !
-!DoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !
-!DoubleBufferedView categoriesFor: #invalidate!operations!public! !
-!DoubleBufferedView categoriesFor: #onCreated:!event handling!private! !
-!DoubleBufferedView categoriesFor: #onEraseRequired:!event handling!private! !
-!DoubleBufferedView categoriesFor: #onPaintRequired:!event handling!private! !
-!DoubleBufferedView categoriesFor: #onPositionChanged:!event handling!private! !
-!DoubleBufferedView categoriesFor: #refreshContents!public!updating! !
-!DoubleBufferedView categoriesFor: #render!operations!private! !
-!DoubleBufferedView categoriesFor: #repaint!operations!public! !
-!DoubleBufferedView categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!DoubleBufferedView categoriesForMethods!
+canvas!accessing!public! !
+filerProxy!binary filing!private! !
+flip!operations!public! !
+initialize!initializing!private! !
+initializeSurfacesFor:!initializing!private! !
+invalidate!operations!public! !
+onCreated:!event handling!private! !
+onEraseRequired:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onPositionChanged:!event handling!private! !
+refreshContents!public!updating! !
+render!operations!private! !
+repaint!operations!public! !
+wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+!
 

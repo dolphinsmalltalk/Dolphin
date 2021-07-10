@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #ExtractMethodTest
 	instanceVariableNames: ''
@@ -179,13 +179,15 @@ testNonExistantSelector
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTest)! !
-!ExtractMethodTest categoriesFor: #testBadInterval!failure tests!public! !
-!ExtractMethodTest categoriesFor: #testExtractFailure!failure tests!public! !
-!ExtractMethodTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
-!ExtractMethodTest categoriesFor: #testExtractMethodThatMovesTemporaryVariable!public!tests! !
-!ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsArgument!public!tests! !
-!ExtractMethodTest categoriesFor: #testExtractMethodThatNeedsTemporaryVariable!public!tests! !
-!ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporariesSelected!public!tests! !
-!ExtractMethodTest categoriesFor: #testModelExtractMethodWithTemporaryAssigned!public!tests! !
-!ExtractMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!ExtractMethodTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testExtractFailure!failure tests!public! !
+testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+testExtractMethodThatMovesTemporaryVariable!public!tests! !
+testExtractMethodThatNeedsArgument!public!tests! !
+testExtractMethodThatNeedsTemporaryVariable!public!tests! !
+testModelExtractMethodWithTemporariesSelected!public!tests! !
+testModelExtractMethodWithTemporaryAssigned!public!tests! !
+testNonExistantSelector!failure tests!public! !
+!
 

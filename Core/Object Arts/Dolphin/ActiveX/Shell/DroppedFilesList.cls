@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollection subclass: #DroppedFilesList
 	instanceVariableNames: 'handle size'
@@ -71,18 +71,22 @@ size
 						lpszFile: nil
 						cch: 0].
 	^size! !
-!DroppedFilesList categoriesFor: #add:!adding!public! !
-!DroppedFilesList categoriesFor: #at:!accessing!public! !
-!DroppedFilesList categoriesFor: #at:put:!accessing!public! !
-!DroppedFilesList categoriesFor: #basicFree!finalizing!private! !
-!DroppedFilesList categoriesFor: #free!finalizing!public! !
-!DroppedFilesList categoriesFor: #position!public! !
-!DroppedFilesList categoriesFor: #setHandle:!initializing!private! !
-!DroppedFilesList categoriesFor: #size!accessing!public! !
+!DroppedFilesList categoriesForMethods!
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!finalizing!private! !
+free!finalizing!public! !
+position!public! !
+setHandle:!initializing!private! !
+size!accessing!public! !
+!
 
 !DroppedFilesList class methodsFor!
 
 fromHandle: anExternalHandle 
 	^self new setHandle: anExternalHandle! !
-!DroppedFilesList class categoriesFor: #fromHandle:!public! !
+!DroppedFilesList class categoriesForMethods!
+fromHandle:!public! !
+!
 

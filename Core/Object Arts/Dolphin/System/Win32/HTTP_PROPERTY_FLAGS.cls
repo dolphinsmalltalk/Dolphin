@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 	instanceVariableNames: ''
@@ -61,10 +61,12 @@ printFields: aCollection on: aStream limit: anInteger
 
 propertyId
 	^self class propertyId! !
-!HTTP_PROPERTY_FLAGS categoriesFor: #Present!**compiled accessors**!private! !
-!HTTP_PROPERTY_FLAGS categoriesFor: #Present:!**compiled accessors**!private! !
-!HTTP_PROPERTY_FLAGS categoriesFor: #printFields:on:limit:!development!printing!private! !
-!HTTP_PROPERTY_FLAGS categoriesFor: #propertyId!constants!public! !
+!HTTP_PROPERTY_FLAGS categoriesForMethods!
+Present!**compiled accessors**!private! !
+Present:!**compiled accessors**!private! !
+printFields:on:limit:!development!printing!private! !
+propertyId!constants!public! !
+!
 
 !HTTP_PROPERTY_FLAGS class methodsFor!
 
@@ -85,6 +87,8 @@ defineFields
 
 propertyId
 	^self subclassResponsibility! !
-!HTTP_PROPERTY_FLAGS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_PROPERTY_FLAGS class categoriesFor: #propertyId!constants!public! !
+!HTTP_PROPERTY_FLAGS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+propertyId!constants!public! !
+!
 

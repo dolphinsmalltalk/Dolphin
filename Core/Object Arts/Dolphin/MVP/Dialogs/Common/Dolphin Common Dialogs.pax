@@ -146,7 +146,9 @@ choose
 	"Answer a new instance of the receiver chosen from the common color dialog."
 
 	^ColorDialog showModal! !
-!Color class categoriesFor: #choose!instance creation!public! !
+!Color class categoriesForMethods!
+choose!instance creation!public! !
+!
 
 !File methodsFor!
 
@@ -154,7 +156,9 @@ title
 	"Answer the receiver's 'title' (i.e. the display name)."
 
 	^self class titleOf: self name! !
-!File categoriesFor: #title!accessing!public! !
+!File categoriesForMethods!
+title!accessing!public! !
+!
 
 !File class methodsFor!
 
@@ -176,7 +180,9 @@ titleOf: aString
 		lpszTitle: buf
 		cbBuf: len) < 0 ifTrue: [lib systemError: 123].
 	^buf! !
-!File class categoriesFor: #titleOf:!filename manipulation!public! !
+!File class categoriesForMethods!
+titleOf:!filename manipulation!public! !
+!
 
 !Font class methodsFor!
 
@@ -185,7 +191,9 @@ choose
 	font dialog."
 
 	^FontDialog showModal! !
-!Font class categoriesFor: #choose!instance creation!public! !
+!Font class categoriesForMethods!
+choose!instance creation!public! !
+!
 
 "End of package definition"!
 

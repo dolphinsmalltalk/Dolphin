@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ClassBrowserAbstractTest
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
@@ -351,19 +351,21 @@ testSwitchFilterPane
 	self assert: (browser instVarNamed: 'methodBrowserPresenter') source equals: testMethod getSource!
 
 visibilityTestPlaceHolder! !
-!ClassBrowserAbstractTest categoriesFor: #assertIsOnlyMethodVisible:!helpers!public! !
-!ClassBrowserAbstractTest categoriesFor: #browser!accessing!private! !
-!ClassBrowserAbstractTest categoriesFor: #browserClass!public!Running! !
-!ClassBrowserAbstractTest categoriesFor: #deleteTestMethods:!helpers!private! !
-!ClassBrowserAbstractTest categoriesFor: #inheritedMethodAddRemoveTests!helpers!private! !
-!ClassBrowserAbstractTest categoriesFor: #setUp!private!Running! !
-!ClassBrowserAbstractTest categoriesFor: #tearDown!private!Running! !
-!ClassBrowserAbstractTest categoriesFor: #testAddRemoveOfInheritedMethods!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testEvaluationContext!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testIsMethodVisible!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleClassSide!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleInObject!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #testSwitchFilterPane!public!unit tests! !
-!ClassBrowserAbstractTest categoriesFor: #visibilityTestPlaceHolder!helpers!private! !
+!ClassBrowserAbstractTest categoriesForMethods!
+assertIsOnlyMethodVisible:!helpers!public! !
+browser!accessing!private! !
+browserClass!public!Running! !
+deleteTestMethods:!helpers!private! !
+inheritedMethodAddRemoveTests!helpers!private! !
+setUp!private!Running! !
+tearDown!private!Running! !
+testAddRemoveOfInheritedMethods!public!unit tests! !
+testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
+testEvaluationContext!public!unit tests! !
+testIsMethodVisible!public!unit tests! !
+testIsMethodVisibleClassSide!public!unit tests! !
+testIsMethodVisibleInObject!public!unit tests! !
+testSwitchFilterPane!public!unit tests! !
+visibilityTestPlaceHolder!helpers!private! !
+!
 

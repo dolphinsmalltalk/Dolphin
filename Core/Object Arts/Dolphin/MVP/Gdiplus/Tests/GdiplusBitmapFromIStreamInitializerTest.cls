@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromIStreamInitializerTest
 	instanceVariableNames: ''
@@ -31,8 +31,10 @@ testIsPersistent
 	"Cant persist an <IStream>"
 
 	self deny: model isPersistent! !
-!GdiplusBitmapFromIStreamInitializerTest categoriesFor: #gdipCreateBitmapFromStream:bitmap:!accessing!public! !
-!GdiplusBitmapFromIStreamInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapFromIStreamInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusBitmapFromIStreamInitializerTest categoriesFor: #testIsPersistent!public!unit tests! !
+!GdiplusBitmapFromIStreamInitializerTest categoriesForMethods!
+gdipCreateBitmapFromStream:bitmap:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+testIsPersistent!public!unit tests! !
+!
 

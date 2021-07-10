@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UIntPtrBytes variableByteSubclass: #ExternalHandle
 	instanceVariableNames: ''
@@ -25,7 +25,9 @@ stbSaveOn: anSTBOutFiler
 	Output nil in place of the receiver as the future validity of an external handle is uncertain."
 
 	anSTBOutFiler saveObject: self as: nil! !
-!ExternalHandle categoriesFor: #asExternalHandle!converting!public! !
-!ExternalHandle categoriesFor: #handle!accessing!private! !
-!ExternalHandle categoriesFor: #stbSaveOn:!binary filing!public! !
+!ExternalHandle categoriesForMethods!
+asExternalHandle!converting!public! !
+handle!accessing!private! !
+stbSaveOn:!binary filing!public! !
+!
 

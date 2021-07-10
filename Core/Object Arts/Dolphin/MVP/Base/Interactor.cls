@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Interactor
 	instanceVariableNames: 'presenter'
@@ -142,32 +142,34 @@ setPresenter: aPresenter
 
 view
 	^self presenter view! !
-!Interactor categoriesFor: #onCaptureChanged:!event handling!public! !
-!Interactor categoriesFor: #onGetCursor:!event handling!public! !
-!Interactor categoriesFor: #onKeyPressed:!event handling!public! !
-!Interactor categoriesFor: #onKeyReleased:!event handling!public! !
-!Interactor categoriesFor: #onKeyTyped:!event handling!public! !
-!Interactor categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onMiddleButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #onMouseLeave:!event handling!public! !
-!Interactor categoriesFor: #onMouseMoved:!event handling!public! !
-!Interactor categoriesFor: #onMouseWheeled:!event handling!public! !
-!Interactor categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onRightButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onRightButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #onSysKeyPressed:!event handling!public! !
-!Interactor categoriesFor: #onSysKeyReleased:!event handling!public! !
-!Interactor categoriesFor: #onSysKeyTyped:!event handling!public! !
-!Interactor categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
-!Interactor categoriesFor: #onXButtonPressed:!event handling!public! !
-!Interactor categoriesFor: #onXButtonReleased:!event handling!public! !
-!Interactor categoriesFor: #presenter!accessing!public! !
-!Interactor categoriesFor: #setPresenter:!accessing!private! !
-!Interactor categoriesFor: #view!public!testing! !
+!Interactor categoriesForMethods!
+onCaptureChanged:!event handling!public! !
+onGetCursor:!event handling!public! !
+onKeyPressed:!event handling!public! !
+onKeyReleased:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onLeftButtonReleased:!event handling!public! !
+onMiddleButtonDoubleClicked:!event handling!public! !
+onMiddleButtonPressed:!event handling!public! !
+onMiddleButtonReleased:!event handling!public! !
+onMouseLeave:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onRightButtonDoubleClicked:!event handling!public! !
+onRightButtonPressed:!event handling!public! !
+onRightButtonReleased:!event handling!public! !
+onSysKeyPressed:!event handling!public! !
+onSysKeyReleased:!event handling!public! !
+onSysKeyTyped:!event handling!public! !
+onXButtonDoubleClicked:!event handling!public! !
+onXButtonPressed:!event handling!public! !
+onXButtonReleased:!event handling!public! !
+presenter!accessing!public! !
+setPresenter:!accessing!private! !
+view!public!testing! !
+!
 
 Interactor methodProtocol: #interactor attributes: #(#readOnly) selectors: #(#onGetCursor: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonDoubleClicked: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseLeave: #onMouseMoved: #onMouseWheeled: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSysKeyPressed: #onSysKeyReleased: #onSysKeyTyped: #onXButtonDoubleClicked: #onXButtonPressed: #onXButtonReleased:)!
 
@@ -214,11 +216,13 @@ stbConvertToVersion1: anArray
 
 stbVersion
 	^1! !
-!Interactor class categoriesFor: #forPresenter:!instance creation!public! !
-!Interactor class categoriesFor: #icon!constants!public! !
-!Interactor class categoriesFor: #new!instance creation!public! !
-!Interactor class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!Interactor class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Interactor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
-!Interactor class categoriesFor: #stbVersion!binary filing!public! !
+!Interactor class categoriesForMethods!
+forPresenter:!instance creation!public! !
+icon!constants!public! !
+new!instance creation!public! !
+stbConvert:fromVersion:!binary filing!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

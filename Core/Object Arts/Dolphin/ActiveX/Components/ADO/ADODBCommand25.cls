@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODBCommand15 subclass: #ADODBCommand25
 	instanceVariableNames: ''
@@ -59,9 +59,11 @@ state
 	answer := SDWORD new.
 	self get_State: answer.
 	^answer asObject! !
-!ADODBCommand25 categoriesFor: #Cancel!**auto generated**!COM Interfaces-Command25!public! !
-!ADODBCommand25 categoriesFor: #get_State:!**auto generated**!COM Interfaces-Command25!private! !
-!ADODBCommand25 categoriesFor: #state!**auto generated**!properties!public! !
+!ADODBCommand25 categoriesForMethods!
+Cancel!**auto generated**!COM Interfaces-Command25!public! !
+get_State:!**auto generated**!COM Interfaces-Command25!private! !
+state!**auto generated**!properties!public! !
+!
 
 !ADODBCommand25 class methodsFor!
 
@@ -74,5 +76,7 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #Cancel
 ! !
-!ADODBCommand25 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBCommand25 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

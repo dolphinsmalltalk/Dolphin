@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IMatch subclass: #IMatch2
 	instanceVariableNames: ''
@@ -59,8 +59,10 @@ subMatches
 	answer := subMatches asArray.
 	subMatches free.
 	^answer! !
-!IMatch2 categoriesFor: #get_SubMatches:!**auto generated**!COM Interfaces-IMatch2!private! !
-!IMatch2 categoriesFor: #subMatches!properties!public! !
+!IMatch2 categoriesForMethods!
+get_SubMatches:!**auto generated**!COM Interfaces-IMatch2!private! !
+subMatches!properties!public! !
+!
 
 !IMatch2 class methodsFor!
 
@@ -72,5 +74,7 @@ defineFunctions
 		defineFunction: #get_SubMatches:
 			argumentTypes: 'IDispatch**'
 ! !
-!IMatch2 class categoriesFor: #defineFunctions!initializing!public! !
+!IMatch2 class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

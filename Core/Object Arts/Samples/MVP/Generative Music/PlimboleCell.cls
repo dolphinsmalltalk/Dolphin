@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #PlimboleCell
 	instanceVariableNames: 'location velocity plimbole palette'
@@ -98,24 +98,26 @@ x
 
 y
 	^self location y! !
-!PlimboleCell categoriesFor: #arrowImage!private! !
-!PlimboleCell categoriesFor: #color!accessing!public! !
-!PlimboleCell categoriesFor: #direction!accessing!public! !
-!PlimboleCell categoriesFor: #directionIndex!accessing!private! !
-!PlimboleCell categoriesFor: #directions!constants!private! !
-!PlimboleCell categoriesFor: #drawOn:inView:!drawing!private! !
-!PlimboleCell categoriesFor: #location!accessing!public! !
-!PlimboleCell categoriesFor: #location:!accessing!public! !
-!PlimboleCell categoriesFor: #palette!accessing!private! !
-!PlimboleCell categoriesFor: #palette:!accessing!private! !
-!PlimboleCell categoriesFor: #printOn:!printing!public! !
-!PlimboleCell categoriesFor: #reverse!operations!public! !
-!PlimboleCell categoriesFor: #rotate!operations!public! !
-!PlimboleCell categoriesFor: #setLocation:direction:!initializing!private! !
-!PlimboleCell categoriesFor: #velocity!accessing!public! !
-!PlimboleCell categoriesFor: #velocity:!accessing!public! !
-!PlimboleCell categoriesFor: #x!accessing!public! !
-!PlimboleCell categoriesFor: #y!accessing!public! !
+!PlimboleCell categoriesForMethods!
+arrowImage!private! !
+color!accessing!public! !
+direction!accessing!public! !
+directionIndex!accessing!private! !
+directions!constants!private! !
+drawOn:inView:!drawing!private! !
+location!accessing!public! !
+location:!accessing!public! !
+palette!accessing!private! !
+palette:!accessing!private! !
+printOn:!printing!public! !
+reverse!operations!public! !
+rotate!operations!public! !
+setLocation:direction:!initializing!private! !
+velocity!accessing!public! !
+velocity:!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 
 !PlimboleCell class methodsFor!
 
@@ -130,7 +132,9 @@ location: aLocationPoint direction: directionIndex
 	^(super new)
 		setLocation: aLocationPoint direction: directionIndex;
 		yourself! !
-!PlimboleCell class categoriesFor: #arrowIcon!public! !
-!PlimboleCell class categoriesFor: #icon!constants!public! !
-!PlimboleCell class categoriesFor: #location:direction:!instance creation!public! !
+!PlimboleCell class categoriesForMethods!
+arrowIcon!public! !
+icon!constants!public! !
+location:direction:!instance creation!public! !
+!
 

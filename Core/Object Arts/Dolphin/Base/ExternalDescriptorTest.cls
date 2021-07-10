@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ExternalDescriptorTest
 	instanceVariableNames: ''
@@ -158,14 +158,16 @@ testStructs
 		parseStructArg: _FPIEEE_VALUE
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgLP! !
-!ExternalDescriptorTest categoriesFor: #externalTypes!accessing!private! !
-!ExternalDescriptorTest categoriesFor: #newDescriptor:!private!unit tests! !
-!ExternalDescriptorTest categoriesFor: #parseStructArg:valueType:refType:!private!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testBuiltins!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testIndirections!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testSharedRegister!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testSmokeTest!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testStruct4!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testStruct8!public!unit tests! !
-!ExternalDescriptorTest categoriesFor: #testStructs!public!unit tests! !
+!ExternalDescriptorTest categoriesForMethods!
+externalTypes!accessing!private! !
+newDescriptor:!private!unit tests! !
+parseStructArg:valueType:refType:!private!unit tests! !
+testBuiltins!public!unit tests! !
+testIndirections!public!unit tests! !
+testSharedRegister!public!unit tests! !
+testSmokeTest!public!unit tests! !
+testStruct4!public!unit tests! !
+testStruct8!public!unit tests! !
+testStructs!public!unit tests! !
+!
 

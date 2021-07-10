@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
@@ -599,80 +599,82 @@ viewMode
 viewModeChanged
 	super viewModeChanged.
 	self invalidateLayout! !
-!TabView categoriesFor: #applyFont!font!private!updating! !
-!TabView categoriesFor: #applyImageLists!image management!private! !
-!TabView categoriesFor: #basicAdd:atIndex:!adding!private! !
-!TabView categoriesFor: #basicClear!public!removing! !
-!TabView categoriesFor: #basicItemFromPoint:!accessing!private! !
-!TabView categoriesFor: #basicRefreshContents!private!updating! !
-!TabView categoriesFor: #basicRemoveAtIndex:!public!removing! !
-!TabView categoriesFor: #beNoIcons!modes!public! !
-!TabView categoriesFor: #calcClientRectangleFromRectangle:!private! !
-!TabView categoriesFor: #calcRectangleFromClientRectangle:!geometry!private! !
-!TabView categoriesFor: #canEditLabels!accessing-styles!public!testing! !
-!TabView categoriesFor: #defaultBackcolor!private! !
-!TabView categoriesFor: #defaultExtent!constants!private! !
-!TabView categoriesFor: #defaultWindowExStyle!constants!private! !
-!TabView categoriesFor: #defaultWindowStyle!constants!public! !
-!TabView categoriesFor: #dragOver:!drag & drop!public! !
-!TabView categoriesFor: #ensureVisible:!public! !
-!TabView categoriesFor: #getItem:!helpers!private! !
-!TabView categoriesFor: #getSelectionsByIndex!private!selection! !
-!TabView categoriesFor: #getSingleSelection!public!selection! !
-!TabView categoriesFor: #hasButtons!accessing-styles!public! !
-!TabView categoriesFor: #hasButtons:!accessing-styles!public! !
-!TabView categoriesFor: #hasFlatSeparators!accessing-styles!public! !
-!TabView categoriesFor: #hasFlatSeparators:!accessing-styles!public! !
-!TabView categoriesFor: #hasHotTracking!accessing-styles!public! !
-!TabView categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!TabView categoriesFor: #hasIcons!public!testing! !
-!TabView categoriesFor: #hasToolTips!accessing-styles!public! !
-!TabView categoriesFor: #hasToolTips:!accessing-styles!public! !
-!TabView categoriesFor: #initialize!initializing!private! !
-!TabView categoriesFor: #isInverted!accessing-styles!public! !
-!TabView categoriesFor: #isInverted:!accessing-styles!public! !
-!TabView categoriesFor: #isMultiline!accessing!public! !
-!TabView categoriesFor: #isMultiline:!accessing!public! !
-!TabView categoriesFor: #isVertical!accessing-styles!public! !
-!TabView categoriesFor: #isVertical:!accessing-styles!public! !
-!TabView categoriesFor: #itemCount!accessing!public! !
-!TabView categoriesFor: #itemFromNMHDRA:!helpers!private! !
-!TabView categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
-!TabView categoriesFor: #itemRect:textOnly:!public! !
-!TabView categoriesFor: #makeTcItemStruct:!adding!private! !
-!TabView categoriesFor: #nmNotify:!event handling-win32!private! !
-!TabView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!TabView categoriesFor: #onMouseHovering:!constants!public! !
-!TabView categoriesFor: #onMouseMoved:!event handling!public! !
-!TabView categoriesFor: #onViewCreated!event handling!public! !
-!TabView categoriesFor: #preTranslateKeyboardInput:!public! !
-!TabView categoriesFor: #queryCommand:!private! !
-!TabView categoriesFor: #refreshContents!public!updating! !
-!TabView categoriesFor: #rows!geometry!public! !
-!TabView categoriesFor: #selectionByIndex!public!selection! !
-!TabView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!TabView categoriesFor: #selectionState!accessing!private! !
-!TabView categoriesFor: #setSingleSelection:!public!selection! !
-!TabView categoriesFor: #setViewMode:!accessing!private! !
-!TabView categoriesFor: #state!accessing!private! !
-!TabView categoriesFor: #supportsThemedVertical!constants!private! !
-!TabView categoriesFor: #tabOrientation!event handling!public! !
-!TabView categoriesFor: #tabOrientation:!event handling!public! !
-!TabView categoriesFor: #tabViewStyleAllMask:!accessing-styles!private! !
-!TabView categoriesFor: #tabViewStyleMask:set:!accessing-styles!private! !
-!TabView categoriesFor: #tcmAdjustRect:for:!geometry!private! !
-!TabView categoriesFor: #tcmGetCurFocus!private!selection! !
-!TabView categoriesFor: #tcmGetExtendedStyle!accessing-styles!private! !
-!TabView categoriesFor: #tcmGetItemRect:!private! !
-!TabView categoriesFor: #tcmInsertItem:atOffset:!adding!private! !
-!TabView categoriesFor: #tcmSetExtendedStyle:dwExStyle:!accessing-styles!private! !
-!TabView categoriesFor: #tcmSetImageList:!image management!private! !
-!TabView categoriesFor: #tcnSelChanging:!event handling-win32!private! !
-!TabView categoriesFor: #updateAllNonVirtual!private!updating! !
-!TabView categoriesFor: #updateItem:atIndex:!event handling!public! !
-!TabView categoriesFor: #updateSelectionCache!event handling!private! !
-!TabView categoriesFor: #viewMode!accessing!public! !
-!TabView categoriesFor: #viewModeChanged!helpers!private! !
+!TabView categoriesForMethods!
+applyFont!font!private!updating! !
+applyImageLists!image management!private! !
+basicAdd:atIndex:!adding!private! !
+basicClear!public!removing! !
+basicItemFromPoint:!accessing!private! !
+basicRefreshContents!private!updating! !
+basicRemoveAtIndex:!public!removing! !
+beNoIcons!modes!public! !
+calcClientRectangleFromRectangle:!private! !
+calcRectangleFromClientRectangle:!geometry!private! !
+canEditLabels!accessing-styles!public!testing! !
+defaultBackcolor!private! !
+defaultExtent!constants!private! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!public! !
+dragOver:!drag & drop!public! !
+ensureVisible:!public! !
+getItem:!helpers!private! !
+getSelectionsByIndex!private!selection! !
+getSingleSelection!public!selection! !
+hasButtons!accessing-styles!public! !
+hasButtons:!accessing-styles!public! !
+hasFlatSeparators!accessing-styles!public! !
+hasFlatSeparators:!accessing-styles!public! !
+hasHotTracking!accessing-styles!public! !
+hasHotTracking:!accessing-styles!public! !
+hasIcons!public!testing! !
+hasToolTips!accessing-styles!public! !
+hasToolTips:!accessing-styles!public! !
+initialize!initializing!private! !
+isInverted!accessing-styles!public! !
+isInverted:!accessing-styles!public! !
+isMultiline!accessing!public! !
+isMultiline:!accessing!public! !
+isVertical!accessing-styles!public! !
+isVertical:!accessing-styles!public! !
+itemCount!accessing!public! !
+itemFromNMHDRA:!helpers!private! !
+itemFromNMHDRW:!event handling-win32!private! !
+itemRect:textOnly:!public! !
+makeTcItemStruct:!adding!private! !
+nmNotify:!event handling-win32!private! !
+onItem:removedAtIndex:!event handling!public! !
+onMouseHovering:!constants!public! !
+onMouseMoved:!event handling!public! !
+onViewCreated!event handling!public! !
+preTranslateKeyboardInput:!public! !
+queryCommand:!private! !
+refreshContents!public!updating! !
+rows!geometry!public! !
+selectionByIndex!public!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionState!accessing!private! !
+setSingleSelection:!public!selection! !
+setViewMode:!accessing!private! !
+state!accessing!private! !
+supportsThemedVertical!constants!private! !
+tabOrientation!event handling!public! !
+tabOrientation:!event handling!public! !
+tabViewStyleAllMask:!accessing-styles!private! !
+tabViewStyleMask:set:!accessing-styles!private! !
+tcmAdjustRect:for:!geometry!private! !
+tcmGetCurFocus!private!selection! !
+tcmGetExtendedStyle!accessing-styles!private! !
+tcmGetItemRect:!private! !
+tcmInsertItem:atOffset:!adding!private! !
+tcmSetExtendedStyle:dwExStyle:!accessing-styles!private! !
+tcmSetImageList:!image management!private! !
+tcnSelChanging:!event handling-win32!private! !
+updateAllNonVirtual!private!updating! !
+updateItem:atIndex:!event handling!public! !
+updateSelectionCache!event handling!private! !
+viewMode!accessing!public! !
+viewModeChanged!helpers!private! !
+!
 
 !TabView class methodsFor!
 
@@ -721,9 +723,11 @@ winClassName
 
 	^'SysTabControl32'
 ! !
-!TabView class categoriesFor: #icon!constants!public! !
-!TabView class categoriesFor: #initialize!development!initializing!private! !
-!TabView class categoriesFor: #tabOrientations!accessing!constants!public! !
-!TabView class categoriesFor: #viewModes!accessing!public! !
-!TabView class categoriesFor: #winClassName!constants!private! !
+!TabView class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+tabOrientations!accessing!constants!public! !
+viewModes!accessing!public! !
+winClassName!constants!private! !
+!
 

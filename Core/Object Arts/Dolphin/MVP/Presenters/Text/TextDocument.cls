@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
@@ -109,20 +109,22 @@ saveUserSettings
 validateUserInterface
 	modifiedModel value: self isModified.
 	^super validateUserInterface! !
-!TextDocument categoriesFor: #createComponents!initializing!public! !
-!TextDocument categoriesFor: #documentPresenterClass!constants!public! !
-!TextDocument categoriesFor: #fileNew!commands!public! !
-!TextDocument categoriesFor: #getDocumentData!accessing!private! !
-!TextDocument categoriesFor: #isModified!public!testing! !
-!TextDocument categoriesFor: #isModified:!modes!public! !
-!TextDocument categoriesFor: #isText!public!testing! !
-!TextDocument categoriesFor: #model:!accessing!public! !
-!TextDocument categoriesFor: #onViewClosed!event handling!public! !
-!TextDocument categoriesFor: #onViewOpened!event handling!public! !
-!TextDocument categoriesFor: #openFile:!operations!public! !
-!TextDocument categoriesFor: #restoreUserSettings!operations!options!private! !
-!TextDocument categoriesFor: #saveUserSettings!helpers!private! !
-!TextDocument categoriesFor: #validateUserInterface!operations!public! !
+!TextDocument categoriesForMethods!
+createComponents!initializing!public! !
+documentPresenterClass!constants!public! !
+fileNew!commands!public! !
+getDocumentData!accessing!private! !
+isModified!public!testing! !
+isModified:!modes!public! !
+isText!public!testing! !
+model:!accessing!public! !
+onViewClosed!event handling!public! !
+onViewOpened!event handling!public! !
+openFile:!operations!public! !
+restoreUserSettings!operations!options!private! !
+saveUserSettings!helpers!private! !
+validateUserInterface!operations!public! !
+!
 
 !TextDocument class methodsFor!
 
@@ -153,9 +155,11 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!TextDocument class categoriesFor: #defaultFileExtension!constants!public! !
-!TextDocument class categoriesFor: #defaultModel!models!public! !
-!TextDocument class categoriesFor: #fileTypes!constants!public! !
-!TextDocument class categoriesFor: #icon!constants!public! !
-!TextDocument class categoriesFor: #shutdownOnExit!public!testing! !
+!TextDocument class categoriesForMethods!
+defaultFileExtension!constants!public! !
+defaultModel!models!public! !
+fileTypes!constants!public! !
+icon!constants!public! !
+shutdownOnExit!public!testing! !
+!
 

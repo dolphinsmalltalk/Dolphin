@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Resource
 	instanceVariableNames: 'accessor icon'
@@ -138,28 +138,30 @@ show: aResourceIdentifier
 	"Display the receiver in a suitable manner with the given identity."
 
 	^self subclassResponsibility! !
-!Resource categoriesFor: #accessor!accessing!private! !
-!Resource categoriesFor: #accessor:!accessing!private! !
-!Resource categoriesFor: #asInternalResource!converting!public! !
-!Resource categoriesFor: #assignToResourceIdentifier:!private! !
-!Resource categoriesFor: #canSave!public!testing! !
-!Resource categoriesFor: #copy!operations!private! !
-!Resource categoriesFor: #defaultContext!constants!private! !
-!Resource categoriesFor: #edit:!operations!public! !
-!Resource categoriesFor: #icon!accessing!public! !
-!Resource categoriesFor: #icon:!accessing!public! !
-!Resource categoriesFor: #isChanged!public!testing! !
-!Resource categoriesFor: #isChanged:!accessing!public! !
-!Resource categoriesFor: #isInternalResource!public!testing! !
-!Resource categoriesFor: #load!operations!public! !
-!Resource categoriesFor: #loadWithContext:!operations!public! !
-!Resource categoriesFor: #loadWithContext:forEdit:!operations!public! !
-!Resource categoriesFor: #makeByteArray!mutating!public! !
-!Resource categoriesFor: #makeFile:!development!mutating!public! !
-!Resource categoriesFor: #makeFilename:!mutating!public! !
-!Resource categoriesFor: #resave!operations!public! !
-!Resource categoriesFor: #save:!operations!public! !
-!Resource categoriesFor: #show:!operations!public! !
+!Resource categoriesForMethods!
+accessor!accessing!private! !
+accessor:!accessing!private! !
+asInternalResource!converting!public! !
+assignToResourceIdentifier:!private! !
+canSave!public!testing! !
+copy!operations!private! !
+defaultContext!constants!private! !
+edit:!operations!public! !
+icon!accessing!public! !
+icon:!accessing!public! !
+isChanged!public!testing! !
+isChanged:!accessing!public! !
+isInternalResource!public!testing! !
+load!operations!public! !
+loadWithContext:!operations!public! !
+loadWithContext:forEdit:!operations!public! !
+makeByteArray!mutating!public! !
+makeFile:!development!mutating!public! !
+makeFilename:!mutating!public! !
+resave!operations!public! !
+save:!operations!public! !
+show:!operations!public! !
+!
 
 !Resource class methodsFor!
 
@@ -277,19 +279,21 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Resource class categoriesFor: #copyAllToClipboard:!copying!public! !
-!Resource class categoriesFor: #copyToClipboard:!binary filing!public! !
-!Resource class categoriesFor: #createdFromClass:selector:!instance creation!public! !
-!Resource class categoriesFor: #defaultWritable!instance creation!public! !
-!Resource class categoriesFor: #dummy!instance creation!public! !
-!Resource class categoriesFor: #fileExtension!constants!private! !
-!Resource class categoriesFor: #generateFileNameFrom:!development!filename manipulation!private! !
-!Resource class categoriesFor: #generateFilenameFrom:inPackage:!development!filename manipulation!private! !
-!Resource class categoriesFor: #icon!constants!public! !
-!Resource class categoriesFor: #inSTBByteArray!instance creation!public! !
-!Resource class categoriesFor: #inSTBFileWithName:!instance creation!public! !
-!Resource class categoriesFor: #inSTBFileWithNameBasedOn:!development!instance creation!public! !
-!Resource class categoriesFor: #save:toFiler:!binary filing!private! !
-!Resource class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Resource class categoriesFor: #stbVersion!binary filing!public! !
+!Resource class categoriesForMethods!
+copyAllToClipboard:!copying!public! !
+copyToClipboard:!binary filing!public! !
+createdFromClass:selector:!instance creation!public! !
+defaultWritable!instance creation!public! !
+dummy!instance creation!public! !
+fileExtension!constants!private! !
+generateFileNameFrom:!development!filename manipulation!private! !
+generateFilenameFrom:inPackage:!development!filename manipulation!private! !
+icon!constants!public! !
+inSTBByteArray!instance creation!public! !
+inSTBFileWithName:!instance creation!public! !
+inSTBFileWithNameBasedOn:!development!instance creation!public! !
+save:toFiler:!binary filing!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

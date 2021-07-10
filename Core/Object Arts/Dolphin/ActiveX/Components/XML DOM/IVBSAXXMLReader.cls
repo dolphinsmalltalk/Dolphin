@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IVBSAXXMLReader
 	instanceVariableNames: ''
@@ -422,43 +422,45 @@ setErrorHandler: oHandler
 
 	self putref_errorHandler: oHandler
 ! !
-!IVBSAXXMLReader categoriesFor: #baseURL!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #baseURL:!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #contentHandler!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #dtdHandler!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #entityResolver!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #errorHandler!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #get_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #get_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #get_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #get_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #get_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #get_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #getFeature:!**auto generated**!methods!public! !
-!IVBSAXXMLReader categoriesFor: #GetFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #GetProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!IVBSAXXMLReader categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXXMLReader categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXXMLReader categoriesFor: #parse!**auto generated**!methods!public! !
-!IVBSAXXMLReader categoriesFor: #parse:!**auto generated**!methods!public! !
-!IVBSAXXMLReader categoriesFor: #Parse:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #ParseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
-!IVBSAXXMLReader categoriesFor: #put_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #put_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #PutFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
-!IVBSAXXMLReader categoriesFor: #putProperty:varValue:!**auto generated**!methods!public! !
-!IVBSAXXMLReader categoriesFor: #PutProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #putref_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #putref_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #putref_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #putref_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
-!IVBSAXXMLReader categoriesFor: #secureBaseURL!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #secureBaseURL:!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #setContentHandler:!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #setDtdHandler:!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #setEntityResolver:!**auto generated**!properties!public! !
-!IVBSAXXMLReader categoriesFor: #setErrorHandler:!**auto generated**!properties!public! !
+!IVBSAXXMLReader categoriesForMethods!
+baseURL!**auto generated**!properties!public! !
+baseURL:!**auto generated**!properties!public! !
+contentHandler!**auto generated**!properties!public! !
+dtdHandler!**auto generated**!properties!public! !
+entityResolver!**auto generated**!properties!public! !
+errorHandler!**auto generated**!properties!public! !
+get_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+get_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+getFeature:!**auto generated**!methods!public! !
+GetFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+GetProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+getProperty_:!**auto generated**!methods!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+parse!**auto generated**!methods!public! !
+parse:!**auto generated**!methods!public! !
+Parse:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+ParseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
+put_baseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+put_secureBaseURL:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+PutFeature:fValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!public! !
+putProperty:varValue:!**auto generated**!methods!public! !
+PutProperty:varValue:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_contentHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_dtdHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_entityResolver:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+putref_errorHandler:!**auto generated**!COM Interfaces-IVBSAXXMLReader!private! !
+secureBaseURL!**auto generated**!properties!public! !
+secureBaseURL:!**auto generated**!properties!public! !
+setContentHandler:!**auto generated**!properties!public! !
+setDtdHandler:!**auto generated**!properties!public! !
+setEntityResolver:!**auto generated**!properties!public! !
+setErrorHandler:!**auto generated**!properties!public! !
+!
 
 !IVBSAXXMLReader class methodsFor!
 
@@ -528,9 +530,11 @@ newSAXXMLReader60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0C-F192-11D4-A65F-0040963251E5}')
 ! !
-!IVBSAXXMLReader class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IVBSAXXMLReader class categoriesFor: #newSAXXMLReader!**auto generated**!instance creation!public! !
-!IVBSAXXMLReader class categoriesFor: #newSAXXMLReader30!**auto generated**!instance creation!public! !
-!IVBSAXXMLReader class categoriesFor: #newSAXXMLReader40!**auto generated**!instance creation!public! !
-!IVBSAXXMLReader class categoriesFor: #newSAXXMLReader60!**auto generated**!instance creation!public! !
+!IVBSAXXMLReader class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newSAXXMLReader!**auto generated**!instance creation!public! !
+newSAXXMLReader30!**auto generated**!instance creation!public! !
+newSAXXMLReader40!**auto generated**!instance creation!public! !
+newSAXXMLReader60!**auto generated**!instance creation!public! !
+!
 

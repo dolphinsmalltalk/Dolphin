@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterface subclass: #IUnknown
 	instanceVariableNames: ''
@@ -83,12 +83,14 @@ Release
 
 	<virtual stdcall: dword 3>
 	^self invalidCall: _failureCode! !
-!IUnknown categoriesFor: #addRef!methods!public! !
-!IUnknown categoriesFor: #AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
-!IUnknown categoriesFor: #asObject!converting!public! !
-!IUnknown categoriesFor: #displayOn:!printing!public! !
-!IUnknown categoriesFor: #QueryInterface:ppvObject:!methods!public! !
-!IUnknown categoriesFor: #Release!**auto generated**!COM Interfaces-IUnknown!private! !
+!IUnknown categoriesForMethods!
+addRef!methods!public! !
+AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
+asObject!converting!public! !
+displayOn:!printing!public! !
+QueryInterface:ppvObject:!methods!public! !
+Release!**auto generated**!COM Interfaces-IUnknown!private! !
+!
 
 !IUnknown class methodsFor!
 
@@ -123,7 +125,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!IUnknown class categoriesFor: #defineFunctions!initializing!public! !
-!IUnknown class categoriesFor: #on:outerUnknown:!instance creation!private! !
-!IUnknown class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!IUnknown class categoriesForMethods!
+defineFunctions!initializing!public! !
+on:outerUnknown:!instance creation!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

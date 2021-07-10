@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StParseNodeVisitor subclass: #RBReadBeforeWrittenTester
 	instanceVariableNames: 'read checkNewTemps scopeStack'
@@ -128,24 +128,26 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	self variableRead: aVariableNode! !
-!RBReadBeforeWrittenTester categoriesFor: #checkNewTemps:!initializing!public! !
-!RBReadBeforeWrittenTester categoriesFor: #copyDictionary:!helpers!private! !
-!RBReadBeforeWrittenTester categoriesFor: #createScope!helpers!private! !
-!RBReadBeforeWrittenTester categoriesFor: #currentScope!accessing!private! !
-!RBReadBeforeWrittenTester categoriesFor: #executeTree:!accessing!public! !
-!RBReadBeforeWrittenTester categoriesFor: #initialize!initializing!public! !
-!RBReadBeforeWrittenTester categoriesFor: #initializeVars:!initializing!public! !
-!RBReadBeforeWrittenTester categoriesFor: #processBlock:!operations!private! !
-!RBReadBeforeWrittenTester categoriesFor: #processIfTrueIfFalse:!operations!private! !
-!RBReadBeforeWrittenTester categoriesFor: #processStatementNode:!operations!private! !
-!RBReadBeforeWrittenTester categoriesFor: #read!accessing!public! !
-!RBReadBeforeWrittenTester categoriesFor: #removeScope!private!removing! !
-!RBReadBeforeWrittenTester categoriesFor: #variableRead:!helpers!private! !
-!RBReadBeforeWrittenTester categoriesFor: #variableWritten:!helpers!private! !
-!RBReadBeforeWrittenTester categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!RBReadBeforeWrittenTester categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!RBReadBeforeWrittenTester categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!RBReadBeforeWrittenTester categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!RBReadBeforeWrittenTester categoriesForMethods!
+checkNewTemps:!initializing!public! !
+copyDictionary:!helpers!private! !
+createScope!helpers!private! !
+currentScope!accessing!private! !
+executeTree:!accessing!public! !
+initialize!initializing!public! !
+initializeVars:!initializing!public! !
+processBlock:!operations!private! !
+processIfTrueIfFalse:!operations!private! !
+processStatementNode:!operations!private! !
+read!accessing!public! !
+removeScope!private!removing! !
+variableRead:!helpers!private! !
+variableWritten:!helpers!private! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+visitVariableNode:!public!visitor/double dispatching! !
+!
 
 !RBReadBeforeWrittenTester class methodsFor!
 
@@ -167,8 +169,10 @@ variablesReadBeforeWrittenIn: aParseTree
 	^(self new)
 		executeTree: aParseTree;
 		read! !
-!RBReadBeforeWrittenTester class categoriesFor: #isVariable:readBeforeWrittenIn:!accessing!public! !
-!RBReadBeforeWrittenTester class categoriesFor: #isVariable:writtenBeforeReadIn:!accessing!public! !
-!RBReadBeforeWrittenTester class categoriesFor: #readBeforeWritten:in:!accessing!public! !
-!RBReadBeforeWrittenTester class categoriesFor: #variablesReadBeforeWrittenIn:!accessing!public! !
+!RBReadBeforeWrittenTester class categoriesForMethods!
+isVariable:readBeforeWrittenIn:!accessing!public! !
+isVariable:writtenBeforeReadIn:!accessing!public! !
+readBeforeWritten:in:!accessing!public! !
+variablesReadBeforeWrittenIn:!accessing!public! !
+!
 

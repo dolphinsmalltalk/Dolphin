@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProtocolANYSpec
 	instanceVariableNames: ''
@@ -167,30 +167,32 @@ wrkAllConformsToMessageSelectorsTo: aDict visited: visitedProtocols
 				ifFalse: 
 					[(ProtocolSpec protocolNamed: aProtoName) wrkAllConformsToMessageSelectorsTo: aDict
 						visited: visitedProtocols]]! !
-!ProtocolANYSpec categoriesFor: #<=!public! !
-!ProtocolANYSpec categoriesFor: #=!public! !
-!ProtocolANYSpec categoriesFor: #addUndefinedProtocolNames!public! !
-!ProtocolANYSpec categoriesFor: #allConformsToProtocolNames!public! !
-!ProtocolANYSpec categoriesFor: #allMessageSelectors!public! !
-!ProtocolANYSpec categoriesFor: #conformingBehaviors!public! !
-!ProtocolANYSpec categoriesFor: #conformsToMessageSelectors!public! !
-!ProtocolANYSpec categoriesFor: #conformsToProtocolNames!public! !
-!ProtocolANYSpec categoriesFor: #displayOn:!public! !
-!ProtocolANYSpec categoriesFor: #fileOutOnSIFFiler:!public! !
-!ProtocolANYSpec categoriesFor: #hash!public! !
-!ProtocolANYSpec categoriesFor: #includesSelector:!public! !
-!ProtocolANYSpec categoriesFor: #messageOrNilAtSelector:!public! !
-!ProtocolANYSpec categoriesFor: #messages!public! !
-!ProtocolANYSpec categoriesFor: #messageSelectors!public! !
-!ProtocolANYSpec categoriesFor: #printOn:!public! !
-!ProtocolANYSpec categoriesFor: #protocolDescription!public! !
-!ProtocolANYSpec categoriesFor: #protocolName!public! !
-!ProtocolANYSpec categoriesFor: #removeAllSelectors:!public! !
-!ProtocolANYSpec categoriesFor: #removeSelector:!public! !
-!ProtocolANYSpec categoriesFor: #removeSelector:ifAbsent:!public! !
-!ProtocolANYSpec categoriesFor: #renameToProtocolName:!public! !
-!ProtocolANYSpec categoriesFor: #selectorsInBehavior:!public! !
-!ProtocolANYSpec categoriesFor: #wrkAllConformsToMessageSelectorsTo:visited:!public! !
+!ProtocolANYSpec categoriesForMethods!
+<=!public! !
+=!public! !
+addUndefinedProtocolNames!public! !
+allConformsToProtocolNames!public! !
+allMessageSelectors!public! !
+conformingBehaviors!public! !
+conformsToMessageSelectors!public! !
+conformsToProtocolNames!public! !
+displayOn:!public! !
+fileOutOnSIFFiler:!public! !
+hash!public! !
+includesSelector:!public! !
+messageOrNilAtSelector:!public! !
+messages!public! !
+messageSelectors!public! !
+printOn:!public! !
+protocolDescription!public! !
+protocolName!public! !
+removeAllSelectors:!public! !
+removeSelector:!public! !
+removeSelector:ifAbsent:!public! !
+renameToProtocolName:!public! !
+selectorsInBehavior:!public! !
+wrkAllConformsToMessageSelectorsTo:visited:!public! !
+!
 
 !ProtocolANYSpec class methodsFor!
 
@@ -204,6 +206,8 @@ privateNewProtocolANY
 	| newProtocol |
 	newProtocol := self basicNew.
 	^ newProtocol! !
-!ProtocolANYSpec class categoriesFor: #new!public! !
-!ProtocolANYSpec class categoriesFor: #privateNewProtocolANY!public! !
+!ProtocolANYSpec class categoriesForMethods!
+new!public! !
+privateNewProtocolANY!public! !
+!
 

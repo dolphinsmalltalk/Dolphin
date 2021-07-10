@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
@@ -73,12 +73,14 @@ lfFaceName: anUtf16String
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_lfFaceName + size put: 0! !
-!LOGFONTW categoriesFor: #createFont!private!realizing/unrealizing! !
-!LOGFONTW categoriesFor: #faceName!accessing!public! !
-!LOGFONTW categoriesFor: #faceName:!accessing!public! !
-!LOGFONTW categoriesFor: #getData:!helpers!private! !
-!LOGFONTW categoriesFor: #lfFaceName!**compiled accessors**!public! !
-!LOGFONTW categoriesFor: #lfFaceName:!**compiled accessors**!public! !
+!LOGFONTW categoriesForMethods!
+createFont!private!realizing/unrealizing! !
+faceName!accessing!public! !
+faceName:!accessing!public! !
+getData:!helpers!private! !
+lfFaceName!**compiled accessors**!public! !
+lfFaceName:!**compiled accessors**!public! !
+!
 
 !LOGFONTW class methodsFor!
 
@@ -89,5 +91,7 @@ defineFields
 
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: Utf16String length: LF_FACESIZE)! !
-!LOGFONTW class categoriesFor: #defineFields!public!template definition! !
+!LOGFONTW class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

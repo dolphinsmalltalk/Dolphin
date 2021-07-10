@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBField
 	instanceVariableNames: 'column buffer lengthBuf'
@@ -386,51 +386,53 @@ value: anObject
 	^anObject
 		ifNil: [self beNull]
 		ifNotNil: [self perform: (SetSelectors at: column type + TypeOffset) with: anObject]! !
-!DBField categoriesFor: #=!comparing!public! !
-!DBField categoriesFor: #beNull!accessing!public! !
-!DBField categoriesFor: #column!accessing!private! !
-!DBField categoriesFor: #fieldBuf!accessing!private! !
-!DBField categoriesFor: #fieldSize!accessing!private! !
-!DBField categoriesFor: #getAnsiString!converting!private! !
-!DBField categoriesFor: #getBoolean!converting!private! !
-!DBField categoriesFor: #getByte!converting!private! !
-!DBField categoriesFor: #getByteArray!converting!private! !
-!DBField categoriesFor: #getData:!accessing!private! !
-!DBField categoriesFor: #getDate!converting!private! !
-!DBField categoriesFor: #getDateAndTime!converting!private! !
-!DBField categoriesFor: #getDouble!converting!private! !
-!DBField categoriesFor: #getFloat!converting!private! !
-!DBField categoriesFor: #getGuid!converting!private! !
-!DBField categoriesFor: #getInt64!converting!private! !
-!DBField categoriesFor: #getLong!converting!private! !
-!DBField categoriesFor: #getShort!converting!private! !
-!DBField categoriesFor: #getTime!converting!private! !
-!DBField categoriesFor: #getUtf16String!converting!private! !
-!DBField categoriesFor: #hash!comparing!public! !
-!DBField categoriesFor: #initializeForColumn:!accessing!private! !
-!DBField categoriesFor: #isNull!public!testing! !
-!DBField categoriesFor: #lengthBuf!accessing!private! !
-!DBField categoriesFor: #numberFromNumeric!converting!private! !
-!DBField categoriesFor: #numberToNumeric:!converting!private! !
-!DBField categoriesFor: #printOn:!printing!public! !
-!DBField categoriesFor: #setAnsiString:!converting!private! !
-!DBField categoriesFor: #setBoolean:!converting!private! !
-!DBField categoriesFor: #setByte:!converting!private! !
-!DBField categoriesFor: #setByteArray:!converting!private! !
-!DBField categoriesFor: #setDate:!converting!private! !
-!DBField categoriesFor: #setDateAndTime:!converting!private! !
-!DBField categoriesFor: #setDouble:!converting!private! !
-!DBField categoriesFor: #setFloat:!converting!private! !
-!DBField categoriesFor: #setGuid:!converting!private! !
-!DBField categoriesFor: #setInt64:!converting!private! !
-!DBField categoriesFor: #setLong:!converting!private! !
-!DBField categoriesFor: #setShort:!converting!private! !
-!DBField categoriesFor: #setTime:!converting!private! !
-!DBField categoriesFor: #setUtf16String:!converting!private! !
-!DBField categoriesFor: #shouldTranslate:class:!accessing!private! !
-!DBField categoriesFor: #size!accessing!private! !
-!DBField categoriesFor: #value!accessing!public! !
-!DBField categoriesFor: #value:!accessing!public! !
+!DBField categoriesForMethods!
+=!comparing!public! !
+beNull!accessing!public! !
+column!accessing!private! !
+fieldBuf!accessing!private! !
+fieldSize!accessing!private! !
+getAnsiString!converting!private! !
+getBoolean!converting!private! !
+getByte!converting!private! !
+getByteArray!converting!private! !
+getData:!accessing!private! !
+getDate!converting!private! !
+getDateAndTime!converting!private! !
+getDouble!converting!private! !
+getFloat!converting!private! !
+getGuid!converting!private! !
+getInt64!converting!private! !
+getLong!converting!private! !
+getShort!converting!private! !
+getTime!converting!private! !
+getUtf16String!converting!private! !
+hash!comparing!public! !
+initializeForColumn:!accessing!private! !
+isNull!public!testing! !
+lengthBuf!accessing!private! !
+numberFromNumeric!converting!private! !
+numberToNumeric:!converting!private! !
+printOn:!printing!public! !
+setAnsiString:!converting!private! !
+setBoolean:!converting!private! !
+setByte:!converting!private! !
+setByteArray:!converting!private! !
+setDate:!converting!private! !
+setDateAndTime:!converting!private! !
+setDouble:!converting!private! !
+setFloat:!converting!private! !
+setGuid:!converting!private! !
+setInt64:!converting!private! !
+setLong:!converting!private! !
+setShort:!converting!private! !
+setTime:!converting!private! !
+setUtf16String:!converting!private! !
+shouldTranslate:class:!accessing!private! !
+size!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !DBField class methodsFor!
 
@@ -509,7 +511,9 @@ newForCol: aDBColAttr
 	"Answer a new instance of the receiver for the column described by aColAttr."
 
 	^super new initializeForColumn: aDBColAttr! !
-!DBField class categoriesFor: #initialize!initializing!public! !
-!DBField class categoriesFor: #new!instance creation!public! !
-!DBField class categoriesFor: #newForCol:!instance creation!public! !
+!DBField class categoriesForMethods!
+initialize!initializing!public! !
+new!instance creation!public! !
+newForCol:!instance creation!public! !
+!
 

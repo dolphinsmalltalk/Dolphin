@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AnonymousKeyedAspect subclass: #BasicKeyedAspect
 	instanceVariableNames: ''
@@ -27,8 +27,10 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject basicAt: self key put: valueObject! !
-!BasicKeyedAspect categoriesFor: #getSelector!accessing!private! !
-!BasicKeyedAspect categoriesFor: #putSelector!accessing!private! !
-!BasicKeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!BasicKeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!BasicKeyedAspect categoriesForMethods!
+getSelector!accessing!private! !
+putSelector!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

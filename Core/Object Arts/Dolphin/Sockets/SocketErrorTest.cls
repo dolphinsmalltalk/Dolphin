@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SocketErrorTest
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ testSocketWaitCancelled
 
 testSocketWouldBlock
 	self should: [SocketError signalWith: WSAEWOULDBLOCK] raise: SocketWouldBlock! !
-!SocketErrorTest categoriesFor: #testSocketClosed!public!unit tests! !
-!SocketErrorTest categoriesFor: #testSocketWaitCancelled!public!unit tests! !
-!SocketErrorTest categoriesFor: #testSocketWouldBlock!public!unit tests! !
+!SocketErrorTest categoriesForMethods!
+testSocketClosed!public!unit tests! !
+testSocketWaitCancelled!public!unit tests! !
+testSocketWouldBlock!public!unit tests! !
+!
 

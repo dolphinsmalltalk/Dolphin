@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArrayTest subclass: #DOUBLEArrayTest
 	instanceVariableNames: ''
@@ -15,6 +15,8 @@ arrayClass
 
 elementFromValue: anObject 
 	^anObject asFloat! !
-!DOUBLEArrayTest categoriesFor: #arrayClass!constants!private! !
-!DOUBLEArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
+!DOUBLEArrayTest categoriesForMethods!
+arrayClass!constants!private! !
+elementFromValue:!private!unit tests! !
+!
 

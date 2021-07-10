@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	instanceVariableNames: 'analyzer'
@@ -75,16 +75,18 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^self tdesc vtName! !
-!AXTypeInfoStructure categoriesFor: #analyzer!accessing!private! !
-!AXTypeInfoStructure categoriesFor: #analyzer:!accessing!private! !
-!AXTypeInfoStructure categoriesFor: #free!public!realizing/unrealizing! !
-!AXTypeInfoStructure categoriesFor: #fullName!accessing!public! !
-!AXTypeInfoStructure categoriesFor: #initializePointer!initializing!private! !
-!AXTypeInfoStructure categoriesFor: #name!accessing!public! !
-!AXTypeInfoStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!AXTypeInfoStructure categoriesFor: #tdesc!accessing!private! !
-!AXTypeInfoStructure categoriesFor: #typeName!accessing!public! !
-!AXTypeInfoStructure categoriesFor: #vtName!accessing!private! !
+!AXTypeInfoStructure categoriesForMethods!
+analyzer!accessing!private! !
+analyzer:!accessing!private! !
+free!public!realizing/unrealizing! !
+fullName!accessing!public! !
+initializePointer!initializing!private! !
+name!accessing!public! !
+needsFree!private!realizing/unrealizing! !
+tdesc!accessing!private! !
+typeName!accessing!public! !
+vtName!accessing!private! !
+!
 
 !AXTypeInfoStructure class methodsFor!
 
@@ -94,5 +96,7 @@ clear: addressOrBytes
 	as values in a <StructureArray>."
 
 	^self shouldNotImplement! !
-!AXTypeInfoStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
+!AXTypeInfoStructure class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+!
 

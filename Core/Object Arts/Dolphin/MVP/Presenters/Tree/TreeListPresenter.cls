@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TreePresenter subclass: #TreeListPresenter
 	instanceVariableNames: 'listModel updating visibleNodes'
@@ -279,33 +279,35 @@ viewModel
 	connected to the receiver's tree model - not the receiver's list model"
 
 	^self treeModel! !
-!TreeListPresenter categoriesFor: #addNewNode:!helpers!private! !
-!TreeListPresenter categoriesFor: #addNode:!helpers!private! !
-!TreeListPresenter categoriesFor: #connectModel!initializing!private! !
-!TreeListPresenter categoriesFor: #connectTreeModel!initializing!private! !
-!TreeListPresenter categoriesFor: #doModelUpdate:!helpers!private!updating! !
-!TreeListPresenter categoriesFor: #initialize!initializing!private! !
-!TreeListPresenter categoriesFor: #isInTree:!helpers!private! !
-!TreeListPresenter categoriesFor: #list!accessing!public! !
-!TreeListPresenter categoriesFor: #list:!accessing!public! !
-!TreeListPresenter categoriesFor: #model!accessing!private! !
-!TreeListPresenter categoriesFor: #model:!accessing!public! !
-!TreeListPresenter categoriesFor: #onListChanged!event handling!private! !
-!TreeListPresenter categoriesFor: #onListItem:addedAtIndex:!event handling!private! !
-!TreeListPresenter categoriesFor: #onListItem:removedAtIndex:!event handling!private! !
-!TreeListPresenter categoriesFor: #onListItem:updatedAtIndex:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeChanged:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeItem:addedInParent:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeItem:movedToParent:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeItemUpdated:!event handling!private! !
-!TreeListPresenter categoriesFor: #onTreeRemovingItem:!event handling!private! !
-!TreeListPresenter categoriesFor: #rebuildFilter!private!updating! !
-!TreeListPresenter categoriesFor: #refresh!private!updating! !
-!TreeListPresenter categoriesFor: #removeNode:!helpers!private! !
-!TreeListPresenter categoriesFor: #treeModel!accessing!private! !
-!TreeListPresenter categoriesFor: #treeModel:!accessing!public! !
-!TreeListPresenter categoriesFor: #updateTree!private!updating! !
-!TreeListPresenter categoriesFor: #viewModel!accessing!private! !
+!TreeListPresenter categoriesForMethods!
+addNewNode:!helpers!private! !
+addNode:!helpers!private! !
+connectModel!initializing!private! !
+connectTreeModel!initializing!private! !
+doModelUpdate:!helpers!private!updating! !
+initialize!initializing!private! !
+isInTree:!helpers!private! !
+list!accessing!public! !
+list:!accessing!public! !
+model!accessing!private! !
+model:!accessing!public! !
+onListChanged!event handling!private! !
+onListItem:addedAtIndex:!event handling!private! !
+onListItem:removedAtIndex:!event handling!private! !
+onListItem:updatedAtIndex:!event handling!private! !
+onTreeChanged:!event handling!private! !
+onTreeItem:addedInParent:!event handling!private! !
+onTreeItem:movedToParent:!event handling!private! !
+onTreeItemUpdated:!event handling!private! !
+onTreeRemovingItem:!event handling!private! !
+rebuildFilter!private!updating! !
+refresh!private!updating! !
+removeNode:!helpers!private! !
+treeModel!accessing!private! !
+treeModel:!accessing!public! !
+updateTree!private!updating! !
+viewModel!accessing!private! !
+!
 
 !TreeListPresenter class methodsFor!
 
@@ -326,6 +328,8 @@ resource_Default_view
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 13 nil nil nil 416 nil 8 1903706176 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 9 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 (ctx view presenter list includes: ctx item) 
 	ifFalse: [ctx forecolor: ctx forecolor faded]]' 8 #[37 105 17 158 159 160 17 161 180 220 6 233 0 163 164 183 106 60 106] #view #presenter #list #item #includes: #forecolor #faded #forecolor: 752 7 257 nil nil nil 170 176 592 33 #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 592 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 994 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 8 #() 994 193 193 nil 27 )! !
-!TreeListPresenter class categoriesFor: #defaultModel!models!public! !
-!TreeListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!TreeListPresenter class categoriesForMethods!
+defaultModel!models!public! !
+resource_Default_view!public!resources-views! !
+!
 

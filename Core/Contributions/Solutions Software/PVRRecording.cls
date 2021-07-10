@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
@@ -47,16 +47,18 @@ rating: anObject
 titleAndEpisode
 
 	^'Title: <1s><N>Episode: <2s>'expandMacrosWith: (self title ifNil: ['-']) with: (self episodeTitle ifNil: ['-'])! !
-!PVRRecording categoriesFor: #channel!accessing!private! !
-!PVRRecording categoriesFor: #channel:!accessing!private! !
-!PVRRecording categoriesFor: #description!accessing!private! !
-!PVRRecording categoriesFor: #description:!accessing!private! !
-!PVRRecording categoriesFor: #episodeTitle!accessing!private! !
-!PVRRecording categoriesFor: #episodeTitle:!accessing!private! !
-!PVRRecording categoriesFor: #initialize!initializing!private! !
-!PVRRecording categoriesFor: #isViewed!accessing!private! !
-!PVRRecording categoriesFor: #isViewed:!accessing!private! !
-!PVRRecording categoriesFor: #rating!accessing!private! !
-!PVRRecording categoriesFor: #rating:!accessing!private! !
-!PVRRecording categoriesFor: #titleAndEpisode!accessing!public! !
+!PVRRecording categoriesForMethods!
+channel!accessing!private! !
+channel:!accessing!private! !
+description!accessing!private! !
+description:!accessing!private! !
+episodeTitle!accessing!private! !
+episodeTitle:!accessing!private! !
+initialize!initializing!private! !
+isViewed!accessing!private! !
+isViewed:!accessing!private! !
+rating!accessing!private! !
+rating:!accessing!private! !
+titleAndEpisode!accessing!public! !
+!
 

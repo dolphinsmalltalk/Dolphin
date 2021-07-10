@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #XMLTokenizer
 	instanceVariableNames: 'stream nestedStreams entities externalEntities parameterEntities parsingMarkup peekChar validating buffer contentBuffer'
@@ -811,85 +811,87 @@ validating
 
 validating: aBoolean
 	validating := aBoolean! !
-!XMLTokenizer categoriesFor: #atEnd!public!streaming! !
-!XMLTokenizer categoriesFor: #checkAndExpandReference:!public!tokenizing! !
-!XMLTokenizer categoriesFor: #checkNestedStream!public!streaming! !
-!XMLTokenizer categoriesFor: #conditionalInclude:!public!tokenizing! !
-!XMLTokenizer categoriesFor: #endDocTypeDecl!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #endParsingMarkup!modes!private! !
-!XMLTokenizer categoriesFor: #entities!entities!public! !
-!XMLTokenizer categoriesFor: #entity:!entities!public! !
-!XMLTokenizer categoriesFor: #entity:put:!entities!public! !
-!XMLTokenizer categoriesFor: #errorExpected:!errors!public! !
-!XMLTokenizer categoriesFor: #externalEntities!entities!public! !
-!XMLTokenizer categoriesFor: #externalEntity:!entities!public! !
-!XMLTokenizer categoriesFor: #handleCData:!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handleComment:!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handleEndDocument!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handleEndTag:!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handleEntity:in:!entities!public! !
-!XMLTokenizer categoriesFor: #handlePCData:!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handlePI:data:!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handleStartDocument!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handleStartTag:attributes:!handling tokens!public! !
-!XMLTokenizer categoriesFor: #handleXMLDecl:!handling tokens!public! !
-!XMLTokenizer categoriesFor: #hasNestedStreams!public!streaming! !
-!XMLTokenizer categoriesFor: #initEntities!entities!public! !
-!XMLTokenizer categoriesFor: #initialize!initialize!public! !
-!XMLTokenizer categoriesFor: #log:!accessing!private! !
-!XMLTokenizer categoriesFor: #malformedError:!errors!public! !
-!XMLTokenizer categoriesFor: #nestedStreams!accessing!private! !
-!XMLTokenizer categoriesFor: #next!public!streaming! !
-!XMLTokenizer categoriesFor: #nextAttributeInto:!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextAttributeListDeclaration!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextAttributeValue!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextCDataContent!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextCDataOrConditional!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextCharReference!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextComment!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextDocType!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextDocTypeDecl!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextElementDeclaration!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextEndTag!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextEntity!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextEntityDeclaration!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextEntityValue!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextExternalId!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextIncludeSection:!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextLiteral!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextMarkupDeclaration!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextName!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextNode!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextNotationDeclaration!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #nextPCData!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextPI!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextPubidLiteral!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextSystemLiteral!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextTag!public!tokenizing! !
-!XMLTokenizer categoriesFor: #nextUpTo:!public!streaming! !
-!XMLTokenizer categoriesFor: #nextUpToAll:!public!streaming! !
-!XMLTokenizer categoriesFor: #nextXMLDecl!public!tokenizing! !
-!XMLTokenizer categoriesFor: #parameterEntities!entities!public! !
-!XMLTokenizer categoriesFor: #parameterEntity:!entities!public! !
-!XMLTokenizer categoriesFor: #parameterEntity:put:!entities!public! !
-!XMLTokenizer categoriesFor: #parseStream:!accessing!public! !
-!XMLTokenizer categoriesFor: #parsingMarkup!private!testing! !
-!XMLTokenizer categoriesFor: #peek!public!streaming! !
-!XMLTokenizer categoriesFor: #popNestingLevel!public!streaming! !
-!XMLTokenizer categoriesFor: #pushBack:!public!streaming! !
-!XMLTokenizer categoriesFor: #pushSeparators!public!streaming! !
-!XMLTokenizer categoriesFor: #pushStream:!public!streaming! !
-!XMLTokenizer categoriesFor: #skipMarkupDeclaration!public!tokenizing dtd! !
-!XMLTokenizer categoriesFor: #skipRequiredSeparators!public!streaming! !
-!XMLTokenizer categoriesFor: #skipSeparators!public!streaming! !
-!XMLTokenizer categoriesFor: #skipUpTo:!public!streaming! !
-!XMLTokenizer categoriesFor: #startParsingMarkup!modes!private! !
-!XMLTokenizer categoriesFor: #stream!accessing!private! !
-!XMLTokenizer categoriesFor: #stream:!accessing!private! !
-!XMLTokenizer categoriesFor: #topStream!public!streaming! !
-!XMLTokenizer categoriesFor: #unpeek!public!streaming! !
-!XMLTokenizer categoriesFor: #validating!public!testing! !
-!XMLTokenizer categoriesFor: #validating:!accessing!public! !
+!XMLTokenizer categoriesForMethods!
+atEnd!public!streaming! !
+checkAndExpandReference:!public!tokenizing! !
+checkNestedStream!public!streaming! !
+conditionalInclude:!public!tokenizing! !
+endDocTypeDecl!public!tokenizing dtd! !
+endParsingMarkup!modes!private! !
+entities!entities!public! !
+entity:!entities!public! !
+entity:put:!entities!public! !
+errorExpected:!errors!public! !
+externalEntities!entities!public! !
+externalEntity:!entities!public! !
+handleCData:!handling tokens!public! !
+handleComment:!handling tokens!public! !
+handleEndDocument!handling tokens!public! !
+handleEndTag:!handling tokens!public! !
+handleEntity:in:!entities!public! !
+handlePCData:!handling tokens!public! !
+handlePI:data:!handling tokens!public! !
+handleStartDocument!handling tokens!public! !
+handleStartTag:attributes:!handling tokens!public! !
+handleXMLDecl:!handling tokens!public! !
+hasNestedStreams!public!streaming! !
+initEntities!entities!public! !
+initialize!initialize!public! !
+log:!accessing!private! !
+malformedError:!errors!public! !
+nestedStreams!accessing!private! !
+next!public!streaming! !
+nextAttributeInto:!public!tokenizing! !
+nextAttributeListDeclaration!public!tokenizing dtd! !
+nextAttributeValue!public!tokenizing! !
+nextCDataContent!public!tokenizing! !
+nextCDataOrConditional!public!tokenizing! !
+nextCharReference!public!tokenizing! !
+nextComment!public!tokenizing! !
+nextDocType!public!tokenizing dtd! !
+nextDocTypeDecl!public!tokenizing dtd! !
+nextElementDeclaration!public!tokenizing dtd! !
+nextEndTag!public!tokenizing! !
+nextEntity!public!tokenizing! !
+nextEntityDeclaration!public!tokenizing dtd! !
+nextEntityValue!public!tokenizing! !
+nextExternalId!public!tokenizing dtd! !
+nextIncludeSection:!public!tokenizing! !
+nextLiteral!public!tokenizing! !
+nextMarkupDeclaration!public!tokenizing dtd! !
+nextName!public!tokenizing! !
+nextNode!public!tokenizing! !
+nextNotationDeclaration!public!tokenizing dtd! !
+nextPCData!public!tokenizing! !
+nextPI!public!tokenizing! !
+nextPubidLiteral!public!tokenizing! !
+nextSystemLiteral!public!tokenizing! !
+nextTag!public!tokenizing! !
+nextUpTo:!public!streaming! !
+nextUpToAll:!public!streaming! !
+nextXMLDecl!public!tokenizing! !
+parameterEntities!entities!public! !
+parameterEntity:!entities!public! !
+parameterEntity:put:!entities!public! !
+parseStream:!accessing!public! !
+parsingMarkup!private!testing! !
+peek!public!streaming! !
+popNestingLevel!public!streaming! !
+pushBack:!public!streaming! !
+pushSeparators!public!streaming! !
+pushStream:!public!streaming! !
+skipMarkupDeclaration!public!tokenizing dtd! !
+skipRequiredSeparators!public!streaming! !
+skipSeparators!public!streaming! !
+skipUpTo:!public!streaming! !
+startParsingMarkup!modes!private! !
+stream!accessing!private! !
+stream:!accessing!private! !
+topStream!public!streaming! !
+unpeek!public!streaming! !
+validating!public!testing! !
+validating:!accessing!public! !
+!
 
 !XMLTokenizer class methodsFor!
 
@@ -1030,12 +1032,14 @@ new
 
 on: aStream
 	^self new parseStream: aStream! !
-!XMLTokenizer class categoriesFor: #addressBookXML!examples!public! !
-!XMLTokenizer class categoriesFor: #addressBookXMLWithDTD!examples!public! !
-!XMLTokenizer class categoriesFor: #exampleAddressBook!examples!public! !
-!XMLTokenizer class categoriesFor: #exampleAddressBookWithDTD!examples!public! !
-!XMLTokenizer class categoriesFor: #initialize!class initialization!public! !
-!XMLTokenizer class categoriesFor: #isCharEscape:!accessing!public! !
-!XMLTokenizer class categoriesFor: #new!instance creation!public! !
-!XMLTokenizer class categoriesFor: #on:!instance creation!public! !
+!XMLTokenizer class categoriesForMethods!
+addressBookXML!examples!public! !
+addressBookXMLWithDTD!examples!public! !
+exampleAddressBook!examples!public! !
+exampleAddressBookWithDTD!examples!public! !
+initialize!class initialization!public! !
+isCharEscape:!accessing!public! !
+new!instance creation!public! !
+on:!instance creation!public! !
+!
 

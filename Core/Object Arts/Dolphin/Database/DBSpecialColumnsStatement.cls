@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBSchemaStatement subclass: #DBSpecialColumnsStatement
 	instanceVariableNames: 'columnType scope nullable'
@@ -43,11 +43,13 @@ scope
 
 scope: anInteger
 	scope := anInteger! !
-!DBSpecialColumnsStatement categoriesFor: #columnType!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #columnType:!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #executeStatement!operations!private! !
-!DBSpecialColumnsStatement categoriesFor: #nullable!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #nullable:!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #scope!accessing!public! !
-!DBSpecialColumnsStatement categoriesFor: #scope:!accessing!public! !
+!DBSpecialColumnsStatement categoriesForMethods!
+columnType!accessing!public! !
+columnType:!accessing!public! !
+executeStatement!operations!private! !
+nullable!accessing!public! !
+nullable:!accessing!public! !
+scope!accessing!public! !
+scope:!accessing!public! !
+!
 

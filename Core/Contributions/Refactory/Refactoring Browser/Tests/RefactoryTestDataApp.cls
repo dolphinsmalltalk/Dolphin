@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RefactoryTestDataApp
 	instanceVariableNames: 'temporaryVariable'
@@ -404,91 +404,95 @@ yourselfNotUsed
 		printString;
 		printString;
 		yourself! !
-!RefactoryTestDataApp categoriesFor: #==!comparing!public! !
-!RefactoryTestDataApp categoriesFor: #anySatisfy!lint!public! !
-!RefactoryTestDataApp categoriesFor: #asOrderedCollectionNotNeeded!lint!public! !
-!RefactoryTestDataApp categoriesFor: #assignmentInBlock!lint!public! !
-!RefactoryTestDataApp categoriesFor: #assignmentInIfTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #atIfAbsent!lint!public! !
-!RefactoryTestDataApp categoriesFor: #badMessage!lint!public! !
-!RefactoryTestDataApp categoriesFor: #booleanPrecedence!lint!public! !
-!RefactoryTestDataApp categoriesFor: #called:on:!inline!public! !
-!RefactoryTestDataApp categoriesFor: #called:on1:!inline!public! !
-!RefactoryTestDataApp categoriesFor: #caller!inline!public! !
-!RefactoryTestDataApp categoriesFor: #caller1!inline!public! !
-!RefactoryTestDataApp categoriesFor: #caller2!inline!public! !
-!RefactoryTestDataApp categoriesFor: #callFoo!public!test! !
-!RefactoryTestDataApp categoriesFor: #callMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #collectionMessagesToExternalObject!lint!public! !
-!RefactoryTestDataApp categoriesFor: #collectionProtocol!lint!public! !
-!RefactoryTestDataApp categoriesFor: #collectSelectNotUsed!lint!public! !
-!RefactoryTestDataApp categoriesFor: #consistencyCheck!lint!public! !
-!RefactoryTestDataApp categoriesFor: #detectAnySatisfy!lint!public! !
-!RefactoryTestDataApp categoriesFor: #endTrueFalse!lint!public! !
-!RefactoryTestDataApp categoriesFor: #equalNotUsed!lint!public! !
-!RefactoryTestDataApp categoriesFor: #equalsTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #exampleCall!public!test! !
-!RefactoryTestDataApp categoriesFor: #extraBlock!lint!public! !
-!RefactoryTestDataApp categoriesFor: #fileBlocks!lint!public! !
-!RefactoryTestDataApp categoriesFor: #foo:!inline!public! !
-!RefactoryTestDataApp categoriesFor: #fullBlocks!lint!public! !
-!RefactoryTestDataApp categoriesFor: #guardingClause!lint!public! !
-!RefactoryTestDataApp categoriesFor: #ifTrueBlocks!lint!public! !
-!RefactoryTestDataApp categoriesFor: #ifTrueReturns!lint!public! !
-!RefactoryTestDataApp categoriesFor: #inlineComponent!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineFailed!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineFoo:!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineJunk!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineLast!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineMax!inline!public! !
-!RefactoryTestDataApp categoriesFor: #inlineMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineParameterMethod:!public!test! !
-!RefactoryTestDataApp categoriesFor: #inlineTemporary!inline!public! !
-!RefactoryTestDataApp categoriesFor: #isLiteral!lint!public! !
-!RefactoryTestDataApp categoriesFor: #justSendsSuper!lint!public! !
-!RefactoryTestDataApp categoriesFor: #literalArrayCharacters!lint!public! !
-!RefactoryTestDataApp categoriesFor: #literalArrayStringsAndSymbols!lint!public! !
-!RefactoryTestDataApp categoriesFor: #longMethods!lint!public! !
-!RefactoryTestDataApp categoriesFor: #minMax!lint!public! !
-!RefactoryTestDataApp categoriesFor: #missingYourself!lint!public! !
-!RefactoryTestDataApp categoriesFor: #modifiesCollection!lint!public! !
-!RefactoryTestDataApp categoriesFor: #moveDefinition!public!test! !
-!RefactoryTestDataApp categoriesFor: #multipleCalls!inline!public! !
-!RefactoryTestDataApp categoriesFor: #noMoveDefinition!public!test! !
-!RefactoryTestDataApp categoriesFor: #precedence!lint!public! !
-!RefactoryTestDataApp categoriesFor: #referencesConditionFor:!accessing!public! !
-!RefactoryTestDataApp categoriesFor: #refersToClass!lint!public! !
-!RefactoryTestDataApp categoriesFor: #release!lint!public! !
-!RefactoryTestDataApp categoriesFor: #rename:two:!public!test! !
-!RefactoryTestDataApp categoriesFor: #renameThisMethod:!public!test! !
-!RefactoryTestDataApp categoriesFor: #returnInEnsure!lint!public! !
-!RefactoryTestDataApp categoriesFor: #returnsBooleanAndOther!lint!public! !
-!RefactoryTestDataApp categoriesFor: #returnsIfTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #searchingLiteral!lint!public! !
-!RefactoryTestDataApp categoriesFor: #selectorNotReferenced!public!test! !
-!RefactoryTestDataApp categoriesFor: #sendInlineParameterMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #sendsDifferentSuper!lint!public! !
-!RefactoryTestDataApp categoriesFor: #sizeCheck!lint!public! !
-!RefactoryTestDataApp categoriesFor: #stringConcatenation!lint!public! !
-!RefactoryTestDataApp categoriesFor: #symbolReference!public!test! !
-!RefactoryTestDataApp categoriesFor: #tempsReadBeforeWritten!lint!public! !
-!RefactoryTestDataApp categoriesFor: #tempVarOverridesInstVar!lint!public! !
-!RefactoryTestDataApp categoriesFor: #testFoo:!public!test! !
-!RefactoryTestDataApp categoriesFor: #testMethod!public!test! !
-!RefactoryTestDataApp categoriesFor: #testMethod1!public!test! !
-!RefactoryTestDataApp categoriesFor: #threeElementPoint!lint!public! !
-!RefactoryTestDataApp categoriesFor: #toDo!lint!public! !
-!RefactoryTestDataApp categoriesFor: #toDoCollect!lint!public! !
-!RefactoryTestDataApp categoriesFor: #toDoWithIncrement!lint!public! !
-!RefactoryTestDataApp categoriesFor: #usesAdd!lint!public! !
-!RefactoryTestDataApp categoriesFor: #variableAssignedLiteral!lint!public! !
-!RefactoryTestDataApp categoriesFor: #whileTrue!lint!public! !
-!RefactoryTestDataApp categoriesFor: #yourselfNotUsed!lint!public! !
+!RefactoryTestDataApp categoriesForMethods!
+==!comparing!public! !
+anySatisfy!lint!public! !
+asOrderedCollectionNotNeeded!lint!public! !
+assignmentInBlock!lint!public! !
+assignmentInIfTrue!lint!public! !
+atIfAbsent!lint!public! !
+badMessage!lint!public! !
+booleanPrecedence!lint!public! !
+called:on:!inline!public! !
+called:on1:!inline!public! !
+caller!inline!public! !
+caller1!inline!public! !
+caller2!inline!public! !
+callFoo!public!test! !
+callMethod!public!test! !
+collectionMessagesToExternalObject!lint!public! !
+collectionProtocol!lint!public! !
+collectSelectNotUsed!lint!public! !
+consistencyCheck!lint!public! !
+detectAnySatisfy!lint!public! !
+endTrueFalse!lint!public! !
+equalNotUsed!lint!public! !
+equalsTrue!lint!public! !
+exampleCall!public!test! !
+extraBlock!lint!public! !
+fileBlocks!lint!public! !
+foo:!inline!public! !
+fullBlocks!lint!public! !
+guardingClause!lint!public! !
+ifTrueBlocks!lint!public! !
+ifTrueReturns!lint!public! !
+inlineComponent!inline!public! !
+inlineFailed!inline!public! !
+inlineFoo:!public!test! !
+inlineJunk!public!test! !
+inlineLast!inline!public! !
+inlineMax!inline!public! !
+inlineMethod!public!test! !
+inlineParameterMethod:!public!test! !
+inlineTemporary!inline!public! !
+isLiteral!lint!public! !
+justSendsSuper!lint!public! !
+literalArrayCharacters!lint!public! !
+literalArrayStringsAndSymbols!lint!public! !
+longMethods!lint!public! !
+minMax!lint!public! !
+missingYourself!lint!public! !
+modifiesCollection!lint!public! !
+moveDefinition!public!test! !
+multipleCalls!inline!public! !
+noMoveDefinition!public!test! !
+precedence!lint!public! !
+referencesConditionFor:!accessing!public! !
+refersToClass!lint!public! !
+release!lint!public! !
+rename:two:!public!test! !
+renameThisMethod:!public!test! !
+returnInEnsure!lint!public! !
+returnsBooleanAndOther!lint!public! !
+returnsIfTrue!lint!public! !
+searchingLiteral!lint!public! !
+selectorNotReferenced!public!test! !
+sendInlineParameterMethod!public!test! !
+sendsDifferentSuper!lint!public! !
+sizeCheck!lint!public! !
+stringConcatenation!lint!public! !
+symbolReference!public!test! !
+tempsReadBeforeWritten!lint!public! !
+tempVarOverridesInstVar!lint!public! !
+testFoo:!public!test! !
+testMethod!public!test! !
+testMethod1!public!test! !
+threeElementPoint!lint!public! !
+toDo!lint!public! !
+toDoCollect!lint!public! !
+toDoWithIncrement!lint!public! !
+usesAdd!lint!public! !
+variableAssignedLiteral!lint!public! !
+whileTrue!lint!public! !
+yourselfNotUsed!lint!public! !
+!
 
 !RefactoryTestDataApp class methodsFor!
 
 comment
 	#rbFix.	"Added to test #overridesSpecialMessage"
 	^'Test class for Smalllint. Contains lots of smelly code'! !
-!RefactoryTestDataApp class categoriesFor: #comment!accessing!public! !
+!RefactoryTestDataApp class categoriesForMethods!
+comment!accessing!public! !
+!
 

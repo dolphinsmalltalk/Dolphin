@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #HRESULTError
 	instanceVariableNames: 'errorInfo osErrorMessage'
@@ -71,17 +71,19 @@ statusCode
 	"Answer the error status code from the receiver's details."
 
 	^self hresult statusCode! !
-!HRESULTError categoriesFor: #_descriptionArguments!displaying!public! !
-!HRESULTError categoriesFor: #_descriptionFormat!displaying!public! !
-!HRESULTError categoriesFor: #errorInfo!accessing!private! !
-!HRESULTError categoriesFor: #errorInfo:!accessing!private! !
-!HRESULTError categoriesFor: #hasMessageText!private!testing! !
-!HRESULTError categoriesFor: #hresult!accessing!public! !
-!HRESULTError categoriesFor: #hresult:!accessing!public! !
-!HRESULTError categoriesFor: #messageText!accessing!public! !
-!HRESULTError categoriesFor: #osErrorMessage!displaying!public! !
-!HRESULTError categoriesFor: #source!accessing!public! !
-!HRESULTError categoriesFor: #statusCode!accessing!public! !
+!HRESULTError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+errorInfo!accessing!private! !
+errorInfo:!accessing!private! !
+hasMessageText!private!testing! !
+hresult!accessing!public! !
+hresult:!accessing!public! !
+messageText!accessing!public! !
+osErrorMessage!displaying!public! !
+source!accessing!public! !
+statusCode!accessing!public! !
+!
 
 !HRESULTError class methodsFor!
 
@@ -144,14 +146,16 @@ unregisterFacilityClass: anExceptionClass
 
 	FacilityClasses removeKey: (FacilityClasses keyAtValue: anExceptionClass ifAbsent: [^self])
 ! !
-!HRESULTError class categoriesFor: #fromHRESULT:!instance creation!public! !
-!HRESULTError class categoriesFor: #fromInteger:!instance creation!public! !
-!HRESULTError class categoriesFor: #initialize!development!initializing!private! !
-!HRESULTError class categoriesFor: #registerFacility:class:!initializing!public! !
-!HRESULTError class categoriesFor: #signal:with:!instance creation!public! !
-!HRESULTError class categoriesFor: #signal:withFailureCode:!instance creation!public! !
-!HRESULTError class categoriesFor: #signalCode:facility:!instance creation!public! !
-!HRESULTError class categoriesFor: #signalFailureCode:!instance creation!private! !
-!HRESULTError class categoriesFor: #signalHRESULT:!instance creation!public! !
-!HRESULTError class categoriesFor: #unregisterFacilityClass:!initializing!public! !
+!HRESULTError class categoriesForMethods!
+fromHRESULT:!instance creation!public! !
+fromInteger:!instance creation!public! !
+initialize!development!initializing!private! !
+registerFacility:class:!initializing!public! !
+signal:with:!instance creation!public! !
+signal:withFailureCode:!instance creation!public! !
+signalCode:facility:!instance creation!public! !
+signalFailureCode:!instance creation!private! !
+signalHRESULT:!instance creation!public! !
+unregisterFacilityClass:!initializing!public! !
+!
 

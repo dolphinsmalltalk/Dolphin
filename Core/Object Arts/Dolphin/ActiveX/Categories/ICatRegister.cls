@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ICatRegister
 	instanceVariableNames: ''
@@ -211,24 +211,26 @@ UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 
 	<virtual stdcall: hresult 9 guid* dword guid*>
 	^self invalidCall: _failureCode! !
-!ICatRegister categoriesFor: #buildCatIdArray:!helpers!private! !
-!ICatRegister categoriesFor: #registerCategories:!operations!public! !
-!ICatRegister categoriesFor: #RegisterCategories:rgCategoryInfo:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #registerCategory:description:!operations!public! !
-!ICatRegister categoriesFor: #registerCategory:description:locale:!operations!public! !
-!ICatRegister categoriesFor: #RegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #RegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #registerCoClass:categories:!operations!public! !
-!ICatRegister categoriesFor: #registerCoClass:category:!operations!public! !
-!ICatRegister categoriesFor: #registerCoClass:requiredCategories:!operations!public! !
-!ICatRegister categoriesFor: #revokeCategories:!operations!public! !
-!ICatRegister categoriesFor: #revokeCategory:!operations!public! !
-!ICatRegister categoriesFor: #revokeCoClass:categories:!operations!public! !
-!ICatRegister categoriesFor: #revokeCoClass:category:!operations!public! !
-!ICatRegister categoriesFor: #revokeCoClass:requiredCategories:!operations!public! !
-!ICatRegister categoriesFor: #UnRegisterCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #UnRegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
-!ICatRegister categoriesFor: #UnRegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!ICatRegister categoriesForMethods!
+buildCatIdArray:!helpers!private! !
+registerCategories:!operations!public! !
+RegisterCategories:rgCategoryInfo:!**auto generated**!COM Interfaces-ICatRegister!private! !
+registerCategory:description:!operations!public! !
+registerCategory:description:locale:!operations!public! !
+RegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+RegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+registerCoClass:categories:!operations!public! !
+registerCoClass:category:!operations!public! !
+registerCoClass:requiredCategories:!operations!public! !
+revokeCategories:!operations!public! !
+revokeCategory:!operations!public! !
+revokeCoClass:categories:!operations!public! !
+revokeCoClass:category:!operations!public! !
+revokeCoClass:requiredCategories:!operations!public! !
+UnRegisterCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+UnRegisterClassImplCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+UnRegisterClassReqCategories:cCategories:rgcatid:!**auto generated**!COM Interfaces-ICatRegister!private! !
+!
 
 ICatRegister methodProtocol: #ICatRegister attributes: #(#readOnly) selectors: #(#RegisterCategories:rgCategoryInfo: #RegisterClassImplCategories:cCategories:rgcatid: #RegisterClassReqCategories:cCategories:rgcatid: #UnRegisterCategories:rgcatid: #UnRegisterClassImplCategories:cCategories:rgcatid: #UnRegisterClassReqCategories:cCategories:rgcatid:)!
 
@@ -284,8 +286,10 @@ new
 	"The receiver is a singleton."
 
 	^self shouldNotImplement! !
-!ICatRegister class categoriesFor: #current!instance creation!public! !
-!ICatRegister class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ICatRegister class categoriesFor: #example1!examples!must strip!public! !
-!ICatRegister class categoriesFor: #new!instance creation!public! !
+!ICatRegister class categoriesForMethods!
+current!instance creation!public! !
+defineFunctions!**auto generated**!initializing!public! !
+example1!examples!must strip!public! !
+new!instance creation!public! !
+!
 

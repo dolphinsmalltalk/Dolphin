@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableItemsTest subclass: #SelectableListItemsTest
 	instanceVariableNames: ''
@@ -345,17 +345,19 @@ testUpdateSelectedObject
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
-!SelectableListItemsTest categoriesFor: #autoSelectsFirst!private!testing! !
-!SelectableListItemsTest categoriesFor: #objectsToTest!helpers!private! !
-!SelectableListItemsTest categoriesFor: #removingResetsSelection!private!testing! !
-!SelectableListItemsTest categoriesFor: #testAddDoesNotChangeSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testAddRemove!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testRemoveAllSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testRemoveDoesNotAffectSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testRemoveSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testResetSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testSelectionByIndex!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
-!SelectableListItemsTest categoriesFor: #testUpdateSelectedObject!public!unit tests! !
+!SelectableListItemsTest categoriesForMethods!
+autoSelectsFirst!private!testing! !
+objectsToTest!helpers!private! !
+removingResetsSelection!private!testing! !
+testAddDoesNotChangeSelection!public!unit tests! !
+testAddRemove!public!unit tests! !
+testRemoveAllSelection!public!unit tests! !
+testRemoveDoesNotAffectSelection!public!unit tests! !
+testRemoveSelection!public!unit tests! !
+testResetSelection!public!unit tests! !
+testSelection!public!unit tests! !
+testSelectionByIndex!public!unit tests! !
+testSetTextBlockDoesNotAffectSelection!public!unit tests! !
+testUpdateSelectedObject!public!unit tests! !
+!
 

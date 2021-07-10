@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ResourceBrowserTest
 	instanceVariableNames: 'resourceBrowser testClass'
@@ -62,13 +62,15 @@ testBasicContents
 	self assert: self resourceList size > 100.
 	self assert: (self resourceList includes: (ResourceIdentifier class: Shell)).
 	self assert: (self resourceList includes: (ResourceIdentifier class: SystemBrowserShell))! !
-!ResourceBrowserTest categoriesFor: #getShellResource!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceBrowser!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceDisplayList!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceList!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #resourceToolboxPresenter!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #setUp!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #tearDown!private!unit tests! !
-!ResourceBrowserTest categoriesFor: #testAddRemoveResource!public!unit tests! !
-!ResourceBrowserTest categoriesFor: #testBasicContents!public!unit tests! !
+!ResourceBrowserTest categoriesForMethods!
+getShellResource!private!unit tests! !
+resourceBrowser!private!unit tests! !
+resourceDisplayList!private!unit tests! !
+resourceList!private!unit tests! !
+resourceToolboxPresenter!private!unit tests! !
+setUp!private!unit tests! !
+tearDown!private!unit tests! !
+testAddRemoveResource!public!unit tests! !
+testBasicContents!public!unit tests! !
+!
 

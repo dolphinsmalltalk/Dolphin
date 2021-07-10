@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #FormatterTest
 	instanceVariableNames: 'settings'
@@ -283,31 +283,33 @@ testSmokeTest
 
 testUnaryMessage
 	self runTestForPairs: #(#('self halt') #('self halt halt'))! !
-!FormatterTest categoriesFor: #runMethodTestFor:!private! !
-!FormatterTest categoriesFor: #runTestForPairs:!private! !
-!FormatterTest categoriesFor: #setUp!public!running! !
-!FormatterTest categoriesFor: #smokeTestAllMethodsOfHierarchy:!public!tests! !
-!FormatterTest categoriesFor: #smokeTestForMethodsOfClasses:!helpers!private! !
-!FormatterTest categoriesFor: #tearDown!public!running! !
-!FormatterTest categoriesFor: #testAllSettingsInitialized!public!unit tests! !
-!FormatterTest categoriesFor: #testAssignments!public!tests! !
-!FormatterTest categoriesFor: #testBeginningNewLines!public!tests! !
-!FormatterTest categoriesFor: #testBinaryMessage!public!tests! !
-!FormatterTest categoriesFor: #testBlock!public!tests! !
-!FormatterTest categoriesFor: #testBlockArguments!public!tests! !
-!FormatterTest categoriesFor: #testCascadeKeywordMessages!public!tests! !
-!FormatterTest categoriesFor: #testCascadeMessages!public!tests! !
-!FormatterTest categoriesFor: #testFormatVariable!public!tests! !
-!FormatterTest categoriesFor: #testIndent!public!tests! !
-!FormatterTest categoriesFor: #testKeywordMessage!public!tests! !
-!FormatterTest categoriesFor: #testLiterals!public!tests! !
-!FormatterTest categoriesFor: #testLongSelectors!public!tests! !
-!FormatterTest categoriesFor: #testMethod!public!tests! !
-!FormatterTest categoriesFor: #testMethodComment!public!tests! !
-!FormatterTest categoriesFor: #testNoNewlineCascadeMessages!public!tests! !
-!FormatterTest categoriesFor: #testPeriodTerminators!public! !
-!FormatterTest categoriesFor: #testReturn!public!tests! !
-!FormatterTest categoriesFor: #testSequence!public!tests! !
-!FormatterTest categoriesFor: #testSmokeTest!public!tests! !
-!FormatterTest categoriesFor: #testUnaryMessage!public!tests! !
+!FormatterTest categoriesForMethods!
+runMethodTestFor:!private! !
+runTestForPairs:!private! !
+setUp!public!running! !
+smokeTestAllMethodsOfHierarchy:!public!tests! !
+smokeTestForMethodsOfClasses:!helpers!private! !
+tearDown!public!running! !
+testAllSettingsInitialized!public!unit tests! !
+testAssignments!public!tests! !
+testBeginningNewLines!public!tests! !
+testBinaryMessage!public!tests! !
+testBlock!public!tests! !
+testBlockArguments!public!tests! !
+testCascadeKeywordMessages!public!tests! !
+testCascadeMessages!public!tests! !
+testFormatVariable!public!tests! !
+testIndent!public!tests! !
+testKeywordMessage!public!tests! !
+testLiterals!public!tests! !
+testLongSelectors!public!tests! !
+testMethod!public!tests! !
+testMethodComment!public!tests! !
+testNoNewlineCascadeMessages!public!tests! !
+testPeriodTerminators!public! !
+testReturn!public!tests! !
+testSequence!public!tests! !
+testSmokeTest!public!tests! !
+testUnaryMessage!public!tests! !
+!
 

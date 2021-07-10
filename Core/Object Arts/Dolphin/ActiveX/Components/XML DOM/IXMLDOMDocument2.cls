@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMDocument subclass: #IXMLDOMDocument2
 	instanceVariableNames: ''
@@ -160,18 +160,20 @@ Validate: errorObj
 
 	<virtual stdcall: hresult 80 IXMLDOMParseError**>
 	^self invalidCall: _failureCode! !
-!IXMLDOMDocument2 categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!IXMLDOMDocument2 categoriesFor: #get_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!IXMLDOMDocument2 categoriesFor: #GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!IXMLDOMDocument2 categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!IXMLDOMDocument2 categoriesFor: #namespaces!**auto generated**!properties!public! !
-!IXMLDOMDocument2 categoriesFor: #putref_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!IXMLDOMDocument2 categoriesFor: #schemas!**auto generated**!properties!public! !
-!IXMLDOMDocument2 categoriesFor: #SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
-!IXMLDOMDocument2 categoriesFor: #setProperty_:value:!**auto generated**!methods!public! !
-!IXMLDOMDocument2 categoriesFor: #setSchemas:!**auto generated**!properties!public! !
-!IXMLDOMDocument2 categoriesFor: #validate!**auto generated**!methods!public! !
-!IXMLDOMDocument2 categoriesFor: #Validate:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+!IXMLDOMDocument2 categoriesForMethods!
+get_namespaces:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+get_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+getProperty_:!**auto generated**!methods!public! !
+namespaces!**auto generated**!properties!public! !
+putref_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+schemas!**auto generated**!properties!public! !
+SetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+setProperty_:value:!**auto generated**!methods!public! !
+setSchemas:!**auto generated**!properties!public! !
+validate!**auto generated**!methods!public! !
+Validate:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
+!
 
 !IXMLDOMDocument2 class methodsFor!
 
@@ -241,13 +243,15 @@ newFreeThreadedDOMDocument40
 
 	^self onCLSID: (CLSID fromString: '{88D969C1-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXMLDOMDocument2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMDocument2 class categoriesFor: #newDOMDocument!**auto generated**!instance creation!public! !
-!IXMLDOMDocument2 class categoriesFor: #newDOMDocument26!**auto generated**!instance creation!public! !
-!IXMLDOMDocument2 class categoriesFor: #newDOMDocument30!**auto generated**!instance creation!public! !
-!IXMLDOMDocument2 class categoriesFor: #newDOMDocument40!**auto generated**!instance creation!public! !
-!IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument!**auto generated**!instance creation!public! !
-!IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument26!**auto generated**!instance creation!public! !
-!IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument30!**auto generated**!instance creation!public! !
-!IXMLDOMDocument2 class categoriesFor: #newFreeThreadedDOMDocument40!**auto generated**!instance creation!public! !
+!IXMLDOMDocument2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newDOMDocument!**auto generated**!instance creation!public! !
+newDOMDocument26!**auto generated**!instance creation!public! !
+newDOMDocument30!**auto generated**!instance creation!public! !
+newDOMDocument40!**auto generated**!instance creation!public! !
+newFreeThreadedDOMDocument!**auto generated**!instance creation!public! !
+newFreeThreadedDOMDocument26!**auto generated**!instance creation!public! !
+newFreeThreadedDOMDocument30!**auto generated**!instance creation!public! !
+newFreeThreadedDOMDocument40!**auto generated**!instance creation!public! !
+!
 

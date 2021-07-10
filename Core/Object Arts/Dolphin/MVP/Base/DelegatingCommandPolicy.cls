@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommandPolicy subclass: #DelegatingCommandPolicy
 	instanceVariableNames: ''
@@ -17,5 +17,7 @@ visitPresenter: presenter
 	to the parent presenter."
 
 	^presenter addToCommandRoute: self! !
-!DelegatingCommandPolicy categoriesFor: #visitPresenter:!operations!private! !
+!DelegatingCommandPolicy categoriesForMethods!
+visitPresenter:!operations!private! !
+!
 

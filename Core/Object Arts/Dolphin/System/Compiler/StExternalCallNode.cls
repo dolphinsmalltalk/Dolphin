@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StTagNode subclass: #StExternalCallNode
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
@@ -64,23 +64,25 @@ returnType
 
 returnType: anAssociation 
 	returnType := anAssociation! !
-!StExternalCallNode categoriesFor: #=!comparing!public! !
-!StExternalCallNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StExternalCallNode categoriesFor: #argumentTypes!accessing!public! !
-!StExternalCallNode categoriesFor: #argumentTypes:!accessing!public! !
-!StExternalCallNode categoriesFor: #callingConvention!accessing!public! !
-!StExternalCallNode categoriesFor: #callingConvention:!accessing!public! !
-!StExternalCallNode categoriesFor: #initialize!initializing!public! !
-!StExternalCallNode categoriesFor: #isExternalCall!public!testing! !
-!StExternalCallNode categoriesFor: #isOverlapped!public!testing! !
-!StExternalCallNode categoriesFor: #isOverlapped:!accessing!public! !
-!StExternalCallNode categoriesFor: #isVirtual!public!testing! !
-!StExternalCallNode categoriesFor: #isVirtual:!accessing!public! !
-!StExternalCallNode categoriesFor: #nameOrOrdinal!accessing!public! !
-!StExternalCallNode categoriesFor: #nameOrOrdinal:!accessing!public! !
-!StExternalCallNode categoriesFor: #primitiveIndex!accessing!public! !
-!StExternalCallNode categoriesFor: #returnType!accessing!public! !
-!StExternalCallNode categoriesFor: #returnType:!accessing!public! !
+!StExternalCallNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+argumentTypes!accessing!public! !
+argumentTypes:!accessing!public! !
+callingConvention!accessing!public! !
+callingConvention:!accessing!public! !
+initialize!initializing!public! !
+isExternalCall!public!testing! !
+isOverlapped!public!testing! !
+isOverlapped:!accessing!public! !
+isVirtual!public!testing! !
+isVirtual:!accessing!public! !
+nameOrOrdinal!accessing!public! !
+nameOrOrdinal:!accessing!public! !
+primitiveIndex!accessing!public! !
+returnType!accessing!public! !
+returnType:!accessing!public! !
+!
 
 !StExternalCallNode class methodsFor!
 
@@ -94,6 +96,8 @@ initialize
 
 new
 	^super new initialize! !
-!StExternalCallNode class categoriesFor: #initialize!initializing!public! !
-!StExternalCallNode class categoriesFor: #new!instance creation!public! !
+!StExternalCallNode class categoriesForMethods!
+initialize!initializing!public! !
+new!instance creation!public! !
+!
 

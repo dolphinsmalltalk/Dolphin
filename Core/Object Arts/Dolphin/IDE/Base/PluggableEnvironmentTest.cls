@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	instanceVariableNames: ''
@@ -24,5 +24,7 @@ testReferencesTo
 	self universalTestFor: printString.
 	self assert: printString numberSelectors equals: (env referencesTo: #printString) numberSelectors.
 	self assert: printString numberClasses equals: (env referencesTo: #printString) numberClasses! !
-!PluggableEnvironmentTest categoriesFor: #testReferencesTo!public!unit tests! !
+!PluggableEnvironmentTest categoriesForMethods!
+testReferencesTo!public!unit tests! !
+!
 

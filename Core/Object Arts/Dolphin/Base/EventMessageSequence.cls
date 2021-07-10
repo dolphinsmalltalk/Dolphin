@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MessageSequenceAbstract subclass: #EventMessageSequence
 	instanceVariableNames: 'receivers messages tally'
@@ -84,10 +84,12 @@ size
 	"Answers the number of messages in the receiver"
 
 	^tally! !
-!EventMessageSequence categoriesFor: #add:!adding!public! !
-!EventMessageSequence categoriesFor: #elementsExpired:of:!finalizing!private! !
-!EventMessageSequence categoriesFor: #initialize!initializing!private! !
-!EventMessageSequence categoriesFor: #messagesDo:!debugger-step through!enumerating!private! !
-!EventMessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
-!EventMessageSequence categoriesFor: #size!accessing!public! !
+!EventMessageSequence categoriesForMethods!
+add:!adding!public! !
+elementsExpired:of:!finalizing!private! !
+initialize!initializing!private! !
+messagesDo:!debugger-step through!enumerating!private! !
+removeMessagesFor:!public!removing! !
+size!accessing!public! !
+!
 

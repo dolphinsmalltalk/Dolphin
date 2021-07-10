@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: 'fpeMask'
@@ -1466,93 +1466,95 @@ testUnderflow
 
 zeroes
 	^#(-0.0 0.0)! !
-!FloatTest categoriesFor: #assertFloat:equals:!helpers!private! !
-!FloatTest categoriesFor: #assertNegativeZero:!helpers!private! !
-!FloatTest categoriesFor: #continuationValues!constants!private! !
-!FloatTest categoriesFor: #finiteSignificand:!helpers!private! !
-!FloatTest categoriesFor: #infinities!constants!private! !
-!FloatTest categoriesFor: #normals!constants!private! !
-!FloatTest categoriesFor: #predecessor:!helpers!private! !
-!FloatTest categoriesFor: #printString:decimalPlaces:!helpers!private! !
-!FloatTest categoriesFor: #printString:significantFigures:!helpers!private! !
-!FloatTest categoriesFor: #setUp!private!Running! !
-!FloatTest categoriesFor: #shouldRaiseInvalidOperation:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseOverflow:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseOverflow:withContinuation:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseUnderflow:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:status:withContinuations:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuation:!helpers!private! !
-!FloatTest categoriesFor: #shouldRaiseZeroDivide:withContinuations:!helpers!private! !
-!FloatTest categoriesFor: #successor:!helpers!private! !
-!FloatTest categoriesFor: #tearDown!private!Running! !
-!FloatTest categoriesFor: #testAbs!public!unit tests! !
-!FloatTest categoriesFor: #testAdd!public!unit tests! !
-!FloatTest categoriesFor: #testArcCos!public!unit tests! !
-!FloatTest categoriesFor: #testArcSin!public!unit tests! !
-!FloatTest categoriesFor: #testArcTan!public!unit tests! !
-!FloatTest categoriesFor: #testArcTan2!public!unit tests! !
-!FloatTest categoriesFor: #testAsInteger!public!unit tests! !
-!FloatTest categoriesFor: #testAsTrueFraction!public!unit tests! !
-!FloatTest categoriesFor: #testCeiling!public!unit tests! !
-!FloatTest categoriesFor: #testCopy!public!unit tests! !
-!FloatTest categoriesFor: #testCos!public!unit tests! !
-!FloatTest categoriesFor: #testDenormalsAsTrueFraction!public!unit tests! !
-!FloatTest categoriesFor: #testDivideByZero!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testEqualsColon!public!unit tests! !
-!FloatTest categoriesFor: #testEqualsZero!public!unit tests! !
-!FloatTest categoriesFor: #testExp!public!unit tests! !
-!FloatTest categoriesFor: #testExponent!public!unit tests! !
-!FloatTest categoriesFor: #testFloatCharacterization!public!unit tests! !
-!FloatTest categoriesFor: #testFloor!public!unit tests! !
-!FloatTest categoriesFor: #testFloorLog2!public!unit tests! !
-!FloatTest categoriesFor: #testFractionAsFloat!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testFractionComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testFractionPart!public!unit tests! !
-!FloatTest categoriesFor: #testGreaterThanInteger!public!unit tests! !
-!FloatTest categoriesFor: #testHash!public!unit tests! !
-!FloatTest categoriesFor: #testInfinityComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testIntegerAsFloat!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testIntegerComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testIntegerComparisonsImprecise!public!unit tests! !
-!FloatTest categoriesFor: #testIntegerPart!public!unit tests! !
-!FloatTest categoriesFor: #testIsFinite!public!unit tests! !
-!FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
-!FloatTest categoriesFor: #testIsLiteral!public!unit tests! !
-!FloatTest categoriesFor: #testIsNan!public!unit tests! !
-!FloatTest categoriesFor: #testIsZero!public!unit tests! !
-!FloatTest categoriesFor: #testLessThanFraction!public!unit tests! !
-!FloatTest categoriesFor: #testLessThanInteger!public!unit tests! !
-!FloatTest categoriesFor: #testLn!public!unit tests! !
-!FloatTest categoriesFor: #testLog!public!unit tests! !
-!FloatTest categoriesFor: #testNaNComparisons!public!unit tests! !
-!FloatTest categoriesFor: #testNegated!public!unit tests! !
-!FloatTest categoriesFor: #testNegative!public!unit tests! !
-!FloatTest categoriesFor: #testOverflow!public!unit tests! !
-!FloatTest categoriesFor: #testPredecessorSuccessor!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlaces!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesFmax!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesFmin!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesInfinities!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesNans!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnDecimalPlacesZeroes!public!unit tests! !
-!FloatTest categoriesFor: #testPrintOnSignificantFigures!public!unit tests! !
-!FloatTest categoriesFor: #testPrintString!public!unit tests! !
-!FloatTest categoriesFor: #testPrintStringAndReadBack!public!unit tests! !
-!FloatTest categoriesFor: #testRaisedTo!public!unit tests! !
-!FloatTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!FloatTest categoriesFor: #testReadFrom!public!unit tests! !
-!FloatTest categoriesFor: #testReciprocal!public!unit tests! !
-!FloatTest categoriesFor: #testRounded!public!unit tests! !
-!FloatTest categoriesFor: #testSign!public!unit tests! !
-!FloatTest categoriesFor: #testSignificandAsInteger!public!unit tests! !
-!FloatTest categoriesFor: #testSin!public!unit tests! !
-!FloatTest categoriesFor: #testSqrt!public!unit tests! !
-!FloatTest categoriesFor: #testStoreOn!public!unit tests! !
-!FloatTest categoriesFor: #testTimesTwoPower!public!Testing!unit tests! !
-!FloatTest categoriesFor: #testTruncated!public!unit tests! !
-!FloatTest categoriesFor: #testUnderflow!public!unit tests! !
-!FloatTest categoriesFor: #zeroes!constants!private! !
+!FloatTest categoriesForMethods!
+assertFloat:equals:!helpers!private! !
+assertNegativeZero:!helpers!private! !
+continuationValues!constants!private! !
+finiteSignificand:!helpers!private! !
+infinities!constants!private! !
+normals!constants!private! !
+predecessor:!helpers!private! !
+printString:decimalPlaces:!helpers!private! !
+printString:significantFigures:!helpers!private! !
+setUp!private!Running! !
+shouldRaiseInvalidOperation:!helpers!private! !
+shouldRaiseOverflow:!helpers!private! !
+shouldRaiseOverflow:withContinuation:!helpers!private! !
+shouldRaiseUnderflow:!helpers!private! !
+shouldRaiseZeroDivide:!helpers!private! !
+shouldRaiseZeroDivide:status:withContinuations:!helpers!private! !
+shouldRaiseZeroDivide:withContinuation:!helpers!private! !
+shouldRaiseZeroDivide:withContinuations:!helpers!private! !
+successor:!helpers!private! !
+tearDown!private!Running! !
+testAbs!public!unit tests! !
+testAdd!public!unit tests! !
+testArcCos!public!unit tests! !
+testArcSin!public!unit tests! !
+testArcTan!public!unit tests! !
+testArcTan2!public!unit tests! !
+testAsInteger!public!unit tests! !
+testAsTrueFraction!public!unit tests! !
+testCeiling!public!unit tests! !
+testCopy!public!unit tests! !
+testCos!public!unit tests! !
+testDenormalsAsTrueFraction!public!unit tests! !
+testDivideByZero!public!Testing!unit tests! !
+testEqualsColon!public!unit tests! !
+testEqualsZero!public!unit tests! !
+testExp!public!unit tests! !
+testExponent!public!unit tests! !
+testFloatCharacterization!public!unit tests! !
+testFloor!public!unit tests! !
+testFloorLog2!public!unit tests! !
+testFractionAsFloat!public!Testing!unit tests! !
+testFractionComparisons!public!unit tests! !
+testFractionPart!public!unit tests! !
+testGreaterThanInteger!public!unit tests! !
+testHash!public!unit tests! !
+testInfinityComparisons!public!unit tests! !
+testIntegerAsFloat!public!Testing!unit tests! !
+testIntegerComparisons!public!unit tests! !
+testIntegerComparisonsImprecise!public!unit tests! !
+testIntegerPart!public!unit tests! !
+testIsFinite!public!unit tests! !
+testIsInfinite!public!unit tests! !
+testIsLiteral!public!unit tests! !
+testIsNan!public!unit tests! !
+testIsZero!public!unit tests! !
+testLessThanFraction!public!unit tests! !
+testLessThanInteger!public!unit tests! !
+testLn!public!unit tests! !
+testLog!public!unit tests! !
+testNaNComparisons!public!unit tests! !
+testNegated!public!unit tests! !
+testNegative!public!unit tests! !
+testOverflow!public!unit tests! !
+testPredecessorSuccessor!public!unit tests! !
+testPrintOnDecimalPlaces!public!unit tests! !
+testPrintOnDecimalPlacesFmax!public!unit tests! !
+testPrintOnDecimalPlacesFmin!public!unit tests! !
+testPrintOnDecimalPlacesInfinities!public!unit tests! !
+testPrintOnDecimalPlacesNans!public!unit tests! !
+testPrintOnDecimalPlacesZeroes!public!unit tests! !
+testPrintOnSignificantFigures!public!unit tests! !
+testPrintString!public!unit tests! !
+testPrintStringAndReadBack!public!unit tests! !
+testRaisedTo!public!unit tests! !
+testRaisedToInteger!public!unit tests! !
+testReadFrom!public!unit tests! !
+testReciprocal!public!unit tests! !
+testRounded!public!unit tests! !
+testSign!public!unit tests! !
+testSignificandAsInteger!public!unit tests! !
+testSin!public!unit tests! !
+testSqrt!public!unit tests! !
+testStoreOn!public!unit tests! !
+testTimesTwoPower!public!Testing!unit tests! !
+testTruncated!public!unit tests! !
+testUnderflow!public!unit tests! !
+zeroes!constants!private! !
+!
 
 !FloatTest class methodsFor!
 
@@ -1586,7 +1588,9 @@ ulp: aFloat
 	^exponent < Float emin
 		ifTrue: [Float fminDenormalized]
 		ifFalse: [Float epsilon timesTwoPower: exponent]! !
-!FloatTest class categoriesFor: #predecessor:!helpers!private! !
-!FloatTest class categoriesFor: #successor:!helpers!private! !
-!FloatTest class categoriesFor: #ulp:!helpers!private! !
+!FloatTest class categoriesForMethods!
+predecessor:!helpers!private! !
+successor:!helpers!private! !
+ulp:!helpers!private! !
+!
 

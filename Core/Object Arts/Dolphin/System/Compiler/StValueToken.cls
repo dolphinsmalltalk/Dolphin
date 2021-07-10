@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StToken subclass: #StValueToken
 	instanceVariableNames: 'value'
@@ -25,10 +25,12 @@ value
 
 value: anObject
 	value := anObject! !
-!StValueToken categoriesFor: #length!accessing!private! !
-!StValueToken categoriesFor: #printOn:!printing!public! !
-!StValueToken categoriesFor: #value!accessing!public! !
-!StValueToken categoriesFor: #value:!initializing!private! !
+!StValueToken categoriesForMethods!
+length!accessing!private! !
+printOn:!printing!public! !
+value!accessing!public! !
+value:!initializing!private! !
+!
 
 !StValueToken class methodsFor!
 
@@ -39,5 +41,7 @@ start: anInteger comments: aCollectionOrNil value: aString
 		comments: aCollectionOrNil;
 		value: aString;
 		yourself! !
-!StValueToken class categoriesFor: #start:comments:value:!instance creation!public! !
+!StValueToken class categoriesForMethods!
+start:comments:value:!instance creation!public! !
+!
 

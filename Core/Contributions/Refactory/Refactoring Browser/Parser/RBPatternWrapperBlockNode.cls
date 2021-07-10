@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
 	instanceVariableNames: 'wrappedNode'
@@ -36,11 +36,13 @@ wrappedNode
 wrappedNode: aRBProgramNode 
 	wrappedNode := aRBProgramNode.
 	aRBProgramNode parent: self! !
-!RBPatternWrapperBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!RBPatternWrapperBlockNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternWrapperBlockNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternWrapperBlockNode categoriesFor: #postCopy!copying!public! !
-!RBPatternWrapperBlockNode categoriesFor: #precedence!accessing!public! !
-!RBPatternWrapperBlockNode categoriesFor: #wrappedNode!accessing!public! !
-!RBPatternWrapperBlockNode categoriesFor: #wrappedNode:!accessing!public! !
+!RBPatternWrapperBlockNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+copyInContext:!matching!public! !
+match:inContext:!matching!public! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+wrappedNode!accessing!public! !
+wrappedNode:!accessing!public! !
+!
 

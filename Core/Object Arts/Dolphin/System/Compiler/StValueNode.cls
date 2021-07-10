@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StProgramNode subclass: #StValueNode
 	instanceVariableNames: 'parentheses'
@@ -51,14 +51,16 @@ stop
 
 stopWithoutParentheses
 	^self subclassResponsibility! !
-!StValueNode categoriesFor: #addParenthesis:!accessing!public! !
-!StValueNode categoriesFor: #containedBy:!public!testing! !
-!StValueNode categoriesFor: #hasParentheses!public!testing! !
-!StValueNode categoriesFor: #isValue!public!testing! !
-!StValueNode categoriesFor: #needsParenthesis!public!testing! !
-!StValueNode categoriesFor: #parentheses!accessing!public! !
-!StValueNode categoriesFor: #start!accessing!public! !
-!StValueNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StValueNode categoriesFor: #stop!accessing!public! !
-!StValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !
+!StValueNode categoriesForMethods!
+addParenthesis:!accessing!public! !
+containedBy:!public!testing! !
+hasParentheses!public!testing! !
+isValue!public!testing! !
+needsParenthesis!public!testing! !
+parentheses!accessing!public! !
+start!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stop!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IErrorInfo
 	instanceVariableNames: ''
@@ -145,19 +145,21 @@ sourceInterface
 	answer := IID new.
 	self GetGUID: answer.
 	^answer! !
-!IErrorInfo categoriesFor: #description!accessing!public! !
-!IErrorInfo categoriesFor: #excepInfo!accessing!public! !
-!IErrorInfo categoriesFor: #GetDescription:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetGUID:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetHelpContext:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetHelpFile:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #GetSource:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
-!IErrorInfo categoriesFor: #guid!accessing!public! !
-!IErrorInfo categoriesFor: #helpContext!accessing!public! !
-!IErrorInfo categoriesFor: #helpFile!accessing!public! !
-!IErrorInfo categoriesFor: #printOn:!printing!public! !
-!IErrorInfo categoriesFor: #source!accessing!public! !
-!IErrorInfo categoriesFor: #sourceInterface!accessing!public! !
+!IErrorInfo categoriesForMethods!
+description!accessing!public! !
+excepInfo!accessing!public! !
+GetDescription:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetGUID:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetHelpContext:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetHelpFile:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+GetSource:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+guid!accessing!public! !
+helpContext!accessing!public! !
+helpFile!accessing!public! !
+printOn:!printing!public! !
+source!accessing!public! !
+sourceInterface!accessing!public! !
+!
 
 !IErrorInfo class methodsFor!
 
@@ -178,5 +180,7 @@ defineFunctions
 		defineFunction: #GetHelpContext:
 			argumentTypes: 'dword*'
 ! !
-!IErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
+!IErrorInfo class categoriesForMethods!
+defineFunctions!**auto generated**!public! !
+!
 

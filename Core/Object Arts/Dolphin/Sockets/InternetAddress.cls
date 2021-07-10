@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #InternetAddress
 	instanceVariableNames: 'host ipAddress'
@@ -82,15 +82,17 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
-!InternetAddress categoriesFor: #asParameter!accessing!public! !
-!InternetAddress categoriesFor: #displayIPOn:!displaying!public! !
-!InternetAddress categoriesFor: #displayOn:!displaying!public! !
-!InternetAddress categoriesFor: #host!accessing!public! !
-!InternetAddress categoriesFor: #host:!accessing!private! !
-!InternetAddress categoriesFor: #ipAddress!accessing!public! !
-!InternetAddress categoriesFor: #ipAddress:!accessing!private! !
-!InternetAddress categoriesFor: #ipString!accessing!public! !
-!InternetAddress categoriesFor: #printOn:!printing!public! !
+!InternetAddress categoriesForMethods!
+asParameter!accessing!public! !
+displayIPOn:!displaying!public! !
+displayOn:!displaying!public! !
+host!accessing!public! !
+host:!accessing!private! !
+ipAddress!accessing!public! !
+ipAddress:!accessing!private! !
+ipString!accessing!public! !
+printOn:!printing!public! !
+!
 
 !InternetAddress class methodsFor!
 
@@ -156,11 +158,13 @@ localHost
 	result := WS2_32Library default gethostname: hostName namelen: hostName size.
 	result = SOCKET_ERROR ifTrue: [^SocketError signal].
 	^self host: hostName trimNulls! !
-!InternetAddress class categoriesFor: #allForHost:!accessing!public! !
-!InternetAddress class categoriesFor: #fromIPString:!instance creation!public! !
-!InternetAddress class categoriesFor: #fromString:!instance creation!public! !
-!InternetAddress class categoriesFor: #host:!instance creation!public! !
-!InternetAddress class categoriesFor: #ipAddress:!instance creation!public! !
-!InternetAddress class categoriesFor: #isIPString:!public!testing! !
-!InternetAddress class categoriesFor: #localHost!instance creation!public! !
+!InternetAddress class categoriesForMethods!
+allForHost:!accessing!public! !
+fromIPString:!instance creation!public! !
+fromString:!instance creation!public! !
+host:!instance creation!public! !
+ipAddress:!instance creation!public! !
+isIPString:!public!testing! !
+localHost!instance creation!public! !
+!
 

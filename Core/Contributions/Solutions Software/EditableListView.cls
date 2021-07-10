@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListView subclass: #EditableListView
 	instanceVariableNames: 'activeEditorCoords originalColumns _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
@@ -909,112 +909,114 @@ wmVScroll: message wParam: wParam lParam: lParam
 	self hideActiveEditor.
 
 	^super wmVScroll: message wParam: wParam lParam: lParam ! !
-!EditableListView categoriesFor: #activateEditorAt:cause:tabbed:!operations!private! !
-!EditableListView categoriesFor: #activateEditorForColumn:!operations!public! !
-!EditableListView categoriesFor: #activateEditorForColumnIndex:!operations!public! !
-!EditableListView categoriesFor: #activateFirstEditor!operations!public! !
-!EditableListView categoriesFor: #activateLastEditor!operations!public! !
-!EditableListView categoriesFor: #activeColumn!accessing!public! !
-!EditableListView categoriesFor: #activeColumnIndex!accessing!public! !
-!EditableListView categoriesFor: #activeEditor!accessing!public! !
-!EditableListView categoriesFor: #activeEditorCellRect!accessing!public! !
-!EditableListView categoriesFor: #activeEditorCoords!accessing!private! !
-!EditableListView categoriesFor: #activeEditorCoords:!accessing!private! !
-!EditableListView categoriesFor: #activeEditorHighlightColor!accessing!public! !
-!EditableListView categoriesFor: #activeEditorModel!accessing!public! !
-!EditableListView categoriesFor: #activeEditorModelIndex!accessing!public! !
-!EditableListView categoriesFor: #activeEditorModelIndex:!accessing!public! !
-!EditableListView categoriesFor: #activeEditorNeedsHighlight!public!testing! !
-!EditableListView categoriesFor: #applyImageLists!image management!private! !
-!EditableListView categoriesFor: #canMoveActiveEditor!public!testing! !
-!EditableListView categoriesFor: #columnImagePadding!accessing!public! !
-!EditableListView categoriesFor: #columnImageSpacing!accessing!public! !
-!EditableListView categoriesFor: #columnNamed:!accessing!public! !
-!EditableListView categoriesFor: #columnNamed:ifNone:!accessing!public! !
-!EditableListView categoriesFor: #columnUnderPoint:!accessing!public! !
-!EditableListView categoriesFor: #defaultOffsetForEditor:!accessing!public! !
-!EditableListView categoriesFor: #disconnectFromModel!operations!private! !
-!EditableListView categoriesFor: #drawHorizontalGridlinesOn:from:to:by:!drawing!private! !
-!EditableListView categoriesFor: #drawSubItem:!drawing!public! !
-!EditableListView categoriesFor: #ensureIndexSelected:cause:!private!selection! !
-!EditableListView categoriesFor: #fieldExitDown!operations!public! !
-!EditableListView categoriesFor: #fieldExitNextTabbed:!operations!public! !
-!EditableListView categoriesFor: #fieldExitPrevTabbed:!operations!public! !
-!EditableListView categoriesFor: #fieldExitUp!operations!public! !
-!EditableListView categoriesFor: #filerProxy!binary filing!private! !
-!EditableListView categoriesFor: #firstEditableCoordsOnOrAfter:!helpers!private! !
-!EditableListView categoriesFor: #hasActiveEditor!public!testing! !
-!EditableListView categoriesFor: #hasEditableColumn!public!testing! !
-!EditableListView categoriesFor: #hasImageBlock!public!testing! !
-!EditableListView categoriesFor: #hasMultipleSelections!public!testing! !
-!EditableListView categoriesFor: #hasRowImage!public!testing! !
-!EditableListView categoriesFor: #headerControl!accessing!public! !
-!EditableListView categoriesFor: #hideActiveEditor!operations!public! !
-!EditableListView categoriesFor: #hideEditor:!operations!private! !
-!EditableListView categoriesFor: #hotItemAndColumn!accessing!private! !
-!EditableListView categoriesFor: #hotItemAndColumn:!accessing!private! !
-!EditableListView categoriesFor: #hotItemTipText!accessing!public! !
-!EditableListView categoriesFor: #imageFromRow:!accessing!public! !
-!EditableListView categoriesFor: #isDisplayContextSelectedOrHot:!public!testing! !
-!EditableListView categoriesFor: #isDisplayIndexSelectedOrHot:!public!testing! !
-!EditableListView categoriesFor: #isHotIndex:!public!testing! !
-!EditableListView categoriesFor: #isMultiline!public!testing! !
-!EditableListView categoriesFor: #itemAndColumnAt:!accessing!private! !
-!EditableListView categoriesFor: #lastEditableCoordsOnOrBefore:!helpers!private! !
-!EditableListView categoriesFor: #lvmSetColumn:at:!columns!private! !
-!EditableListView categoriesFor: #moveEditorVerticallyBy:!operations!private! !
-!EditableListView categoriesFor: #nextEditableCoordsAfter:!helpers!private! !
-!EditableListView categoriesFor: #nextEditableCoordsBefore:!helpers!private! !
-!EditableListView categoriesFor: #nmCustomDraw:!event handling!private! !
-!EditableListView categoriesFor: #noSelection!accessing!public! !
-!EditableListView categoriesFor: #onDisplayDetailsRequired:!event handling!private! !
-!EditableListView categoriesFor: #onEditorLostFocus:!event handling!public! !
-!EditableListView categoriesFor: #onHeaderBeginDrag!event handling!public! !
-!EditableListView categoriesFor: #onHeaderBeginTrack!event handling!public! !
-!EditableListView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!EditableListView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!EditableListView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!EditableListView categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!EditableListView categoriesFor: #onMouseLeave:!event handling!public! !
-!EditableListView categoriesFor: #onMouseMoved:!event handling!public! !
-!EditableListView categoriesFor: #onMouseWheeled:!event handling!public! !
-!EditableListView categoriesFor: #onPositionChanging:!event handling!public! !
-!EditableListView categoriesFor: #onSelChanged:!event handling!public! !
-!EditableListView categoriesFor: #onSetFocus!event handling!public! !
-!EditableListView categoriesFor: #onValueChangedIn:!event handling!public! !
-!EditableListView categoriesFor: #onViewOpened!event handling!public! !
-!EditableListView categoriesFor: #originalColumns!accessing!public! !
-!EditableListView categoriesFor: #originalColumns:!accessing!public! !
-!EditableListView categoriesFor: #postDraw:columnIndex:!drawing!private! !
-!EditableListView categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EditableListView categoriesFor: #removeColumn:!columns!private! !
-!EditableListView categoriesFor: #requestDeactivateEditor!operations!private! !
-!EditableListView categoriesFor: #rowBackcolor!accessing!private! !
-!EditableListView categoriesFor: #rowBackcolor:!accessing!private! !
-!EditableListView categoriesFor: #rowForecolor!accessing!private! !
-!EditableListView categoriesFor: #rowForecolor:!accessing!private! !
-!EditableListView categoriesFor: #rowHeight!accessing!public! !
-!EditableListView categoriesFor: #rowHeight:!accessing!public! !
-!EditableListView categoriesFor: #rowPixelHeight!accessing!public! !
-!EditableListView categoriesFor: #selectionOrCaretIndex!private!selection! !
-!EditableListView categoriesFor: #setColumnIcon:atIndex:!helpers!public! !
-!EditableListView categoriesFor: #shouldOwnerDrawSelectionHighlight!public!testing! !
-!EditableListView categoriesFor: #showColumn:!columns!private! !
-!EditableListView categoriesFor: #showColumn:after:!columns!private! !
-!EditableListView categoriesFor: #singleSelect:!private!selection! !
-!EditableListView categoriesFor: #smallImageExtent!accessing!public! !
-!EditableListView categoriesFor: #smallImageExtent:!accessing!public! !
-!EditableListView categoriesFor: #sortColumn!public!sorting! !
-!EditableListView categoriesFor: #sortColumnIndex!public!sorting! !
-!EditableListView categoriesFor: #sortColumnIndex:!private!sorting! !
-!EditableListView categoriesFor: #sortOnColumn:!public!sorting! !
-!EditableListView categoriesFor: #stbSaveOn:!binary filing!public! !
-!EditableListView categoriesFor: #ttnGetDispInfo:!event handling!public! !
-!EditableListView categoriesFor: #updateHotItem:!helpers!public! !
-!EditableListView categoriesFor: #visibleColumns!accessing!public! !
-!EditableListView categoriesFor: #wmHScroll:wParam:lParam:!event handling!private! !
-!EditableListView categoriesFor: #wmNotify:wParam:lParam:!event handling!public! !
-!EditableListView categoriesFor: #wmVScroll:wParam:lParam:!event handling!private! !
+!EditableListView categoriesForMethods!
+activateEditorAt:cause:tabbed:!operations!private! !
+activateEditorForColumn:!operations!public! !
+activateEditorForColumnIndex:!operations!public! !
+activateFirstEditor!operations!public! !
+activateLastEditor!operations!public! !
+activeColumn!accessing!public! !
+activeColumnIndex!accessing!public! !
+activeEditor!accessing!public! !
+activeEditorCellRect!accessing!public! !
+activeEditorCoords!accessing!private! !
+activeEditorCoords:!accessing!private! !
+activeEditorHighlightColor!accessing!public! !
+activeEditorModel!accessing!public! !
+activeEditorModelIndex!accessing!public! !
+activeEditorModelIndex:!accessing!public! !
+activeEditorNeedsHighlight!public!testing! !
+applyImageLists!image management!private! !
+canMoveActiveEditor!public!testing! !
+columnImagePadding!accessing!public! !
+columnImageSpacing!accessing!public! !
+columnNamed:!accessing!public! !
+columnNamed:ifNone:!accessing!public! !
+columnUnderPoint:!accessing!public! !
+defaultOffsetForEditor:!accessing!public! !
+disconnectFromModel!operations!private! !
+drawHorizontalGridlinesOn:from:to:by:!drawing!private! !
+drawSubItem:!drawing!public! !
+ensureIndexSelected:cause:!private!selection! !
+fieldExitDown!operations!public! !
+fieldExitNextTabbed:!operations!public! !
+fieldExitPrevTabbed:!operations!public! !
+fieldExitUp!operations!public! !
+filerProxy!binary filing!private! !
+firstEditableCoordsOnOrAfter:!helpers!private! !
+hasActiveEditor!public!testing! !
+hasEditableColumn!public!testing! !
+hasImageBlock!public!testing! !
+hasMultipleSelections!public!testing! !
+hasRowImage!public!testing! !
+headerControl!accessing!public! !
+hideActiveEditor!operations!public! !
+hideEditor:!operations!private! !
+hotItemAndColumn!accessing!private! !
+hotItemAndColumn:!accessing!private! !
+hotItemTipText!accessing!public! !
+imageFromRow:!accessing!public! !
+isDisplayContextSelectedOrHot:!public!testing! !
+isDisplayIndexSelectedOrHot:!public!testing! !
+isHotIndex:!public!testing! !
+isMultiline!public!testing! !
+itemAndColumnAt:!accessing!private! !
+lastEditableCoordsOnOrBefore:!helpers!private! !
+lvmSetColumn:at:!columns!private! !
+moveEditorVerticallyBy:!operations!private! !
+nextEditableCoordsAfter:!helpers!private! !
+nextEditableCoordsBefore:!helpers!private! !
+nmCustomDraw:!event handling!private! !
+noSelection!accessing!public! !
+onDisplayDetailsRequired:!event handling!private! !
+onEditorLostFocus:!event handling!public! !
+onHeaderBeginDrag!event handling!public! !
+onHeaderBeginTrack!event handling!public! !
+onItem:addedAtIndex:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onMouseLeave:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onPositionChanging:!event handling!public! !
+onSelChanged:!event handling!public! !
+onSetFocus!event handling!public! !
+onValueChangedIn:!event handling!public! !
+onViewOpened!event handling!public! !
+originalColumns!accessing!public! !
+originalColumns:!accessing!public! !
+postDraw:columnIndex:!drawing!private! !
+preTranslateKeyboardInput:!event handling!public! !
+removeColumn:!columns!private! !
+requestDeactivateEditor!operations!private! !
+rowBackcolor!accessing!private! !
+rowBackcolor:!accessing!private! !
+rowForecolor!accessing!private! !
+rowForecolor:!accessing!private! !
+rowHeight!accessing!public! !
+rowHeight:!accessing!public! !
+rowPixelHeight!accessing!public! !
+selectionOrCaretIndex!private!selection! !
+setColumnIcon:atIndex:!helpers!public! !
+shouldOwnerDrawSelectionHighlight!public!testing! !
+showColumn:!columns!private! !
+showColumn:after:!columns!private! !
+singleSelect:!private!selection! !
+smallImageExtent!accessing!public! !
+smallImageExtent:!accessing!public! !
+sortColumn!public!sorting! !
+sortColumnIndex!public!sorting! !
+sortColumnIndex:!private!sorting! !
+sortOnColumn:!public!sorting! !
+stbSaveOn:!binary filing!public! !
+ttnGetDispInfo:!event handling!public! !
+updateHotItem:!helpers!public! !
+visibleColumns!accessing!public! !
+wmHScroll:wParam:lParam:!event handling!private! !
+wmNotify:wParam:lParam:!event handling!public! !
+wmVScroll:wParam:lParam:!event handling!private! !
+!
 
 !EditableListView class methodsFor!
 
@@ -1086,7 +1088,9 @@ stbVersion
 	16 - renamed/reused inst vars"
 
 	^16! !
-!EditableListView class categoriesFor: #columnClass!constants!private! !
-!EditableListView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
-!EditableListView class categoriesFor: #stbVersion!constants!private! !
+!EditableListView class categoriesForMethods!
+columnClass!constants!private! !
+stbConvert:fromVersion:!binary filing!public! !
+stbVersion!constants!private! !
+!
 

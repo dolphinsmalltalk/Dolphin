@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 File subclass: #InheritableFile
 	instanceVariableNames: ''
@@ -34,5 +34,7 @@ open
 
 	self beFinalizable.	
 ! !
-!InheritableFile categoriesFor: #open!operations!public! !
+!InheritableFile categoriesForMethods!
+open!operations!public! !
+!
 

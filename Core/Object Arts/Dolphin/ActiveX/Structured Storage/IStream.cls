@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISequentialStream subclass: #IStream
 	instanceVariableNames: 'name mode'
@@ -430,55 +430,57 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	<virtual stdcall: hresult 12 qword qword dword>
 	^self invalidCall: _failureCode! !
-!IStream categoriesFor: #at:!accessing!public! !
-!IStream categoriesFor: #at:put:!accessing!public! !
-!IStream categoriesFor: #atEnd!public!testing! !
-!IStream categoriesFor: #cacheStats!helpers!private! !
-!IStream categoriesFor: #Clone:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #Commit:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #contents!accessing!public! !
-!IStream categoriesFor: #copy!copying!public! !
-!IStream categoriesFor: #copyFrom:to:!copying!public! !
-!IStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #copyTo:count:!copying!public! !
-!IStream categoriesFor: #cr!accessing!public! !
-!IStream categoriesFor: #do:!public! !
-!IStream categoriesFor: #fastFlush!operations!public! !
-!IStream categoriesFor: #flush!operations!public! !
-!IStream categoriesFor: #grow!accessing!private! !
-!IStream categoriesFor: #handle!accessing!public! !
-!IStream categoriesFor: #isEmpty!public!testing! !
-!IStream categoriesFor: #isReadable!public!testing! !
-!IStream categoriesFor: #isWriteable!public!testing! !
-!IStream categoriesFor: #lockFrom:to:!operations!public! !
-!IStream categoriesFor: #lockFrom:to:type:!operations!public! !
-!IStream categoriesFor: #LockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #mode!accessing!public! !
-!IStream categoriesFor: #name!accessing!public! !
-!IStream categoriesFor: #nextCLSID!accessing!public! !
-!IStream categoriesFor: #nextLine!accessing!public! !
-!IStream categoriesFor: #nextPutCLSID:!accessing!public! !
-!IStream categoriesFor: #notEmpty!public!testing! !
-!IStream categoriesFor: #peek!accessing!public! !
-!IStream categoriesFor: #peekFor:!accessing!public! !
-!IStream categoriesFor: #position!accessing!public! !
-!IStream categoriesFor: #position:!accessing!public! !
-!IStream categoriesFor: #reset!accessing!public! !
-!IStream categoriesFor: #resize:!accessing!public! !
-!IStream categoriesFor: #Revert!**auto generated**!primitives!public! !
-!IStream categoriesFor: #rollback!operations!public! !
-!IStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #SetSize:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #setToEnd!positioning!public! !
-!IStream categoriesFor: #size!accessing!public! !
-!IStream categoriesFor: #skip:!positioning!public! !
-!IStream categoriesFor: #space!accessing!public! !
-!IStream categoriesFor: #stat!accessing!public! !
-!IStream categoriesFor: #Stat:grfStatFlag:!**auto generated**!primitives!public! !
-!IStream categoriesFor: #tab!accessing!public! !
-!IStream categoriesFor: #unlockFrom:to:!operations!public! !
-!IStream categoriesFor: #unlockFrom:to:type:!operations!public! !
-!IStream categoriesFor: #UnlockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+!IStream categoriesForMethods!
+at:!accessing!public! !
+at:put:!accessing!public! !
+atEnd!public!testing! !
+cacheStats!helpers!private! !
+Clone:!**auto generated**!primitives!public! !
+Commit:!**auto generated**!primitives!public! !
+contents!accessing!public! !
+copy!copying!public! !
+copyFrom:to:!copying!public! !
+CopyTo:cb:pcbRead:pcbWritten:!**auto generated**!primitives!public! !
+copyTo:count:!copying!public! !
+cr!accessing!public! !
+do:!public! !
+fastFlush!operations!public! !
+flush!operations!public! !
+grow!accessing!private! !
+handle!accessing!public! !
+isEmpty!public!testing! !
+isReadable!public!testing! !
+isWriteable!public!testing! !
+lockFrom:to:!operations!public! !
+lockFrom:to:type:!operations!public! !
+LockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+mode!accessing!public! !
+name!accessing!public! !
+nextCLSID!accessing!public! !
+nextLine!accessing!public! !
+nextPutCLSID:!accessing!public! !
+notEmpty!public!testing! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+position!accessing!public! !
+position:!accessing!public! !
+reset!accessing!public! !
+resize:!accessing!public! !
+Revert!**auto generated**!primitives!public! !
+rollback!operations!public! !
+Seek:dwOrigin:plibNewPosition:!**auto generated**!primitives!public! !
+SetSize:!**auto generated**!primitives!public! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+skip:!positioning!public! !
+space!accessing!public! !
+stat!accessing!public! !
+Stat:grfStatFlag:!**auto generated**!primitives!public! !
+tab!accessing!public! !
+unlockFrom:to:!operations!public! !
+unlockFrom:to:type:!operations!public! !
+UnlockRegion:cb:dwLockType:!**auto generated**!primitives!public! !
+!
 
 IStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
 IStream methodProtocol: #IStream attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:cb:pcbRead:pcbWritten: #LockRegion:cb:dwLockType: #Read:cb:pcbRead: #Revert #Seek:dwOrigin:plibNewPosition: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #Write:cb:pcbWritten:)!
@@ -545,9 +547,11 @@ onURL: urlString
 		dwReserved: 0
 		lpfnCB: nil.
 	^answer! !
-!IStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IStream class categoriesFor: #fromBytes:!instance creation!public! !
-!IStream class categoriesFor: #onHGLOBAL!instance creation!public! !
-!IStream class categoriesFor: #onHGLOBAL:!instance creation!public! !
-!IStream class categoriesFor: #onURL:!instance creation!public! !
+!IStream class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+fromBytes:!instance creation!public! !
+onHGLOBAL!instance creation!public! !
+onHGLOBAL:!instance creation!public! !
+onURL:!instance creation!public! !
+!
 

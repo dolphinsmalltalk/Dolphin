@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SessionManager subclass: #BootSessionManager
 	instanceVariableNames: 'productDetails startTime'
@@ -314,34 +314,36 @@ updateBootImage
 	"The only thing done currently is to reload the BCL."
 
 	self reloadBootPackages! !
-!BootSessionManager categoriesFor: #allocConsole!operations!private! !
-!BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!BootSessionManager categoriesFor: #bootFinished!event handling!public! !
-!BootSessionManager categoriesFor: #bootStarted!event handling!public! !
-!BootSessionManager categoriesFor: #fileInClass:!private! !
-!BootSessionManager categoriesFor: #initializeBootPackages!initializing!public! !
-!BootSessionManager categoriesFor: #keepAlive!idling!public! !
-!BootSessionManager categoriesFor: #logError:!operations-logging!public! !
-!BootSessionManager categoriesFor: #main!operations-startup!public! !
-!BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
-!BootSessionManager categoriesFor: #openConsole!operations!public! !
-!BootSessionManager categoriesFor: #openSources!operations-source files!private! !
-!BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
-!BootSessionManager categoriesFor: #productDetails!accessing!private!product! !
-!BootSessionManager categoriesFor: #productDetails:!accessing!private!product! !
-!BootSessionManager categoriesFor: #productVersion!accessing!product!public! !
-!BootSessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!BootSessionManager categoriesFor: #reloadBootPackages!operations-startup!public! !
-!BootSessionManager categoriesFor: #reloadPackage:!operations-startup!public! !
-!BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
-!BootSessionManager categoriesFor: #shellClosed:!operations-startup!private! !
-!BootSessionManager categoriesFor: #shellOpened:!operations-startup!private! !
-!BootSessionManager categoriesFor: #shutdown!operations-shutdown!public! !
-!BootSessionManager categoriesFor: #snapshot!operations-saving!private! !
-!BootSessionManager categoriesFor: #startUI!operations-startup!public! !
-!BootSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
-!BootSessionManager categoriesFor: #unhandledException:!exceptions!private! !
-!BootSessionManager categoriesFor: #updateBootImage!operations-startup!public! !
+!BootSessionManager categoriesForMethods!
+allocConsole!operations!private! !
+basicTertiaryStartup!operations-startup!public! !
+bootFinished!event handling!public! !
+bootStarted!event handling!public! !
+fileInClass:!private! !
+initializeBootPackages!initializing!public! !
+keepAlive!idling!public! !
+logError:!operations-logging!public! !
+main!operations-startup!public! !
+onPreSaveImage!event handling!public! !
+openConsole!operations!public! !
+openSources!operations-source files!private! !
+primaryStartup!operations-startup!private! !
+productDetails!accessing!private!product! !
+productDetails:!accessing!private!product! !
+productVersion!accessing!product!public! !
+quit:!operations-shutdown!private! !
+reloadBootPackages!operations-startup!public! !
+reloadPackage:!operations-startup!public! !
+saveImageDefault!operations-saving!public! !
+shellClosed:!operations-startup!private! !
+shellOpened:!operations-startup!private! !
+shutdown!operations-shutdown!public! !
+snapshot!operations-saving!private! !
+startUI!operations-startup!public! !
+traceStream!accessing!operations-logging!public! !
+unhandledException:!exceptions!private! !
+updateBootImage!operations-startup!public! !
+!
 
 !BootSessionManager class methodsFor!
 
@@ -349,5 +351,7 @@ imageExtension
 	"Answer the suffix for an executable image file"
 
 	^'img7'.! !
-!BootSessionManager class categoriesFor: #imageExtension!constants!public! !
+!BootSessionManager class categoriesForMethods!
+imageExtension!constants!public! !
+!
 

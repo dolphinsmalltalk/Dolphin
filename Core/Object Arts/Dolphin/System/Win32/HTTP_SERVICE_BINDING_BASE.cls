@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
-!HTTP_SERVICE_BINDING_BASE categoriesFor: #Type!**compiled accessors**!public! !
-!HTTP_SERVICE_BINDING_BASE categoriesFor: #Type:!**compiled accessors**!public! !
+!HTTP_SERVICE_BINDING_BASE categoriesForMethods!
+Type!**compiled accessors**!public! !
+Type:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_BINDING_BASE class methodsFor!
 
@@ -65,7 +67,9 @@ fromAddress: anAddress
 
 getFieldNames
 	^#(#Type)! !
-!HTTP_SERVICE_BINDING_BASE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_BINDING_BASE class categoriesFor: #fromAddress:!instance creation!public! !
-!HTTP_SERVICE_BINDING_BASE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_BINDING_BASE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+fromAddress:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

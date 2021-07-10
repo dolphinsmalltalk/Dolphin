@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SingletonSearchPolicy subclass: #AlwaysSearchPolicy
 	instanceVariableNames: ''
@@ -27,7 +27,9 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^#always! !
-!AlwaysSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!AlwaysSearchPolicy categoriesFor: #hash:!comparing!public! !
-!AlwaysSearchPolicy categoriesFor: #name!accessing!public! !
+!AlwaysSearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:!comparing!public! !
+name!accessing!public! !
+!
 

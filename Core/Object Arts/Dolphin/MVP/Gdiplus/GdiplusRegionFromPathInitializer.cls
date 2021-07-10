@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusRegionFromPathInitializer
 	instanceVariableNames: 'path'
@@ -25,14 +25,18 @@ isPersistent
 
 path: aPath
 	path := aPath! !
-!GdiplusRegionFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusRegionFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!initializing!private! !
-!GdiplusRegionFromPathInitializer categoriesFor: #isPersistent!public! !
-!GdiplusRegionFromPathInitializer categoriesFor: #path:!initializing!private! !
+!GdiplusRegionFromPathInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!initializing!private! !
+isPersistent!public! !
+path:!initializing!private! !
+!
 
 !GdiplusRegionFromPathInitializer class methodsFor!
 
 fromPath: aPath
 	^self new path: aPath! !
-!GdiplusRegionFromPathInitializer class categoriesFor: #fromPath:!instance creation!public! !
+!GdiplusRegionFromPathInitializer class categoriesForMethods!
+fromPath:!instance creation!public! !
+!
 

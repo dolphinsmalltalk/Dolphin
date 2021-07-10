@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractTextEditTest subclass: #MultilineTextEditTest
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ margins
 
 text
 	^Object comment copyWithout: Character tab! !
-!MultilineTextEditTest categoriesFor: #classToTest!helpers!private! !
-!MultilineTextEditTest categoriesFor: #margins!private!unit tests! !
-!MultilineTextEditTest categoriesFor: #text!constants!private! !
+!MultilineTextEditTest categoriesForMethods!
+classToTest!helpers!private! !
+margins!private!unit tests! !
+text!constants!private! !
+!
 

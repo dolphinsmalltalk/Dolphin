@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXSLProcessor
 	instanceVariableNames: ''
@@ -340,35 +340,37 @@ Transform: pDone
 
 	<virtual stdcall: hresult 16 varbool*>
 	^self invalidCall: _failureCode! !
-!IXSLProcessor categoriesFor: #AddObject:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
-!IXSLProcessor categoriesFor: #addParameter:parameter:!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #addParameter:parameter:namespaceURI:!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #AddParameter:parameter:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_ownerTemplate:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_startMode:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_startModeURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #get_stylesheet:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #input!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #input:!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXSLProcessor categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXSLProcessor categoriesFor: #output!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #output:!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #ownerTemplate!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #put_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #put_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
-!IXSLProcessor categoriesFor: #readyState!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #Reset!**auto generated**!COM Interfaces-IXSLProcessor!public! !
-!IXSLProcessor categoriesFor: #setStartMode:!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #SetStartMode:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
-!IXSLProcessor categoriesFor: #startMode!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #startModeURI!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #stylesheet!**auto generated**!properties!public! !
-!IXSLProcessor categoriesFor: #transform!**auto generated**!methods!public! !
-!IXSLProcessor categoriesFor: #Transform:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!IXSLProcessor categoriesForMethods!
+AddObject:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
+addParameter:parameter:!**auto generated**!methods!public! !
+addParameter:parameter:namespaceURI:!**auto generated**!methods!public! !
+AddParameter:parameter:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+get_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+get_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+get_ownerTemplate:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+get_readyState:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+get_startMode:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+get_startModeURI:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+get_stylesheet:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+input!**auto generated**!properties!public! !
+input:!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+output!**auto generated**!properties!public! !
+output:!**auto generated**!properties!public! !
+ownerTemplate!**auto generated**!properties!public! !
+put_input:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+put_output:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+readyState!**auto generated**!properties!public! !
+Reset!**auto generated**!COM Interfaces-IXSLProcessor!public! !
+setStartMode:!**auto generated**!methods!public! !
+SetStartMode:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
+startMode!**auto generated**!properties!public! !
+startModeURI!**auto generated**!properties!public! !
+stylesheet!**auto generated**!properties!public! !
+transform!**auto generated**!methods!public! !
+Transform:!**auto generated**!COM Interfaces-IXSLProcessor!private! !
+!
 
 !IXSLProcessor class methodsFor!
 
@@ -405,5 +407,7 @@ defineFunctions
 		defineFunction: #get_stylesheet:
 			argumentTypes: 'IXMLDOMNode**'
 ! !
-!IXSLProcessor class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXSLProcessor class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

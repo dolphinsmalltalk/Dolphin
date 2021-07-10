@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Refactoring subclass: #AbstractVariablesRefactoring
 	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters classVarReaders classVarWriters toClasses ignore'
@@ -156,21 +156,23 @@ transform
 						expandMacros].
 	self abstractInstanceVariables.
 	self abstractClassVariables! !
-!AbstractVariablesRefactoring categoriesFor: #abstractClassVariable:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractClassVariables!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariable:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractInstanceVariables!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
-!AbstractVariablesRefactoring categoriesFor: #classVariableNames!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #computeVariablesToAbstract!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #hasVariablesToAbstract!public!testing! !
-!AbstractVariablesRefactoring categoriesFor: #instanceVariableNames!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #parseTree!accessing!public! !
-!AbstractVariablesRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AbstractVariablesRefactoring categoriesFor: #processAssignmentNode:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #processReferenceNode:!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #removeDefinedClassVariables!public!transforming! !
-!AbstractVariablesRefactoring categoriesFor: #transform!public!transforming! !
+!AbstractVariablesRefactoring categoriesForMethods!
+abstractClassVariable:!public!transforming! !
+abstractClassVariables!public!transforming! !
+abstractInstanceVariable:!public!transforming! !
+abstractInstanceVariables!public!transforming! !
+abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
+classVariableNames!public!transforming! !
+computeVariablesToAbstract!public!transforming! !
+hasVariablesToAbstract!public!testing! !
+instanceVariableNames!public!transforming! !
+parseTree!accessing!public! !
+preconditions!preconditions!public! !
+processAssignmentNode:!public!transforming! !
+processReferenceNode:!public!transforming! !
+removeDefinedClassVariables!public!transforming! !
+transform!public!transforming! !
+!
 
 !AbstractVariablesRefactoring class methodsFor!
 
@@ -190,6 +192,8 @@ model: aRBNamespace abstractVariablesIn: aBRProgramNode from: fromBehavior toAll
 			toAll: behaviorCollection
 			ignoring: aVariableName;
 		yourself! !
-!AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:!instance creation!public! !
-!AbstractVariablesRefactoring class categoriesFor: #model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !
+!AbstractVariablesRefactoring class categoriesForMethods!
+model:abstractVariablesIn:from:toAll:!instance creation!public! !
+model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !
+!
 

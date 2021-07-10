@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
@@ -501,68 +501,70 @@ to: aCharacter
 	"Answer a <sequencedReadableCollection> of <Character>s for each of the Unicode code points between the receiver's code point and that of the <Character> argument, aCharacter."
 
 	^(self codePoint to: aCharacter codePoint) collect: [:each | Character codePoint: each]! !
-!Character categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Character categoriesFor: #_separateSubStringsIn:!private!tokenizing! !
-!Character categoriesFor: #<!comparing!public! !
-!Character categoriesFor: #=!comparing!public! !
-!Character categoriesFor: #>!comparing!public! !
-!Character categoriesFor: #ansiValue!accessing!public! !
-!Character categoriesFor: #asAnsiString!converting!public! !
-!Character categoriesFor: #asciiValue!accessing!public! !
-!Character categoriesFor: #asInteger!converting!public! !
-!Character categoriesFor: #asLowercase!converting!public! !
-!Character categoriesFor: #asString!converting!public! !
-!Character categoriesFor: #asSymbol!converting!public! !
-!Character categoriesFor: #asUppercase!converting!public! !
-!Character categoriesFor: #asUtf16String!converting!public! !
-!Character categoriesFor: #asUtf8String!converting!public! !
-!Character categoriesFor: #basicEncoding!accessing!private! !
-!Character categoriesFor: #basicShallowCopy!copying!public! !
-!Character categoriesFor: #code!accessing!private! !
-!Character categoriesFor: #codePoint!accessing!public! !
-!Character categoriesFor: #codeUnit!accessing!public! !
-!Character categoriesFor: #deepCopy!copying!public! !
-!Character categoriesFor: #digitValue!accessing!public! !
-!Character categoriesFor: #displayOn:!printing!public! !
-!Character categoriesFor: #encoding!accessing!public! !
-!Character categoriesFor: #hash!comparing!public! !
-!Character categoriesFor: #isAlphaNumeric!public!testing! !
-!Character categoriesFor: #isAscii!public!testing! !
-!Character categoriesFor: #isAtomic!public!testing! !
-!Character categoriesFor: #isCharacter!public!testing! !
-!Character categoriesFor: #isControl!public!testing! !
-!Character categoriesFor: #isDigit!public!testing! !
-!Character categoriesFor: #isEnglishLetter!public!testing! !
-!Character categoriesFor: #isGraph!public!testing! !
-!Character categoriesFor: #isHexDigit!public!testing! !
-!Character categoriesFor: #isLetter!public!testing! !
-!Character categoriesFor: #isLinefeed!public!testing! !
-!Character categoriesFor: #isLiteral!public!testing! !
-!Character categoriesFor: #isLowercase!public!testing! !
-!Character categoriesFor: #isLowerCase!public!testing! !
-!Character categoriesFor: #isPrintable!public!testing! !
-!Character categoriesFor: #isPunctuation!public!testing! !
-!Character categoriesFor: #isSeparator!public!testing! !
-!Character categoriesFor: #isSurrogate!public!testing! !
-!Character categoriesFor: #isUppercase!public!testing! !
-!Character categoriesFor: #isUpperCase!public!testing! !
-!Character categoriesFor: #isUtf16Lead!public!testing! !
-!Character categoriesFor: #isUtf16Surrogate!public!testing! !
-!Character categoriesFor: #isUtf16Trail!public!testing! !
-!Character categoriesFor: #isUtf8!public!testing! !
-!Character categoriesFor: #isUtf8Lead!public!testing! !
-!Character categoriesFor: #isUtf8Surrogate!public!testing! !
-!Character categoriesFor: #isUtf8Trail!public!testing! !
-!Character categoriesFor: #isVowel!public!testing! !
-!Character categoriesFor: #isWhitespace!public!testing! !
-!Character categoriesFor: #join:!public!tokenizing! !
-!Character categoriesFor: #printEscapedOn:!printing!public! !
-!Character categoriesFor: #printOn:!printing!public! !
-!Character categoriesFor: #setCode:!accessing!initializing!private! !
-!Character categoriesFor: #shallowCopy!copying!public! !
-!Character categoriesFor: #split:!public!tokenizing! !
-!Character categoriesFor: #split:do:!public!tokenizing! !
-!Character categoriesFor: #to:!converting!public! !
+!Character categoriesForMethods!
+_beginsString:!comparing!double dispatch!private! !
+_separateSubStringsIn:!private!tokenizing! !
+<!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+ansiValue!accessing!public! !
+asAnsiString!converting!public! !
+asciiValue!accessing!public! !
+asInteger!converting!public! !
+asLowercase!converting!public! !
+asString!converting!public! !
+asSymbol!converting!public! !
+asUppercase!converting!public! !
+asUtf16String!converting!public! !
+asUtf8String!converting!public! !
+basicEncoding!accessing!private! !
+basicShallowCopy!copying!public! !
+code!accessing!private! !
+codePoint!accessing!public! !
+codeUnit!accessing!public! !
+deepCopy!copying!public! !
+digitValue!accessing!public! !
+displayOn:!printing!public! !
+encoding!accessing!public! !
+hash!comparing!public! !
+isAlphaNumeric!public!testing! !
+isAscii!public!testing! !
+isAtomic!public!testing! !
+isCharacter!public!testing! !
+isControl!public!testing! !
+isDigit!public!testing! !
+isEnglishLetter!public!testing! !
+isGraph!public!testing! !
+isHexDigit!public!testing! !
+isLetter!public!testing! !
+isLinefeed!public!testing! !
+isLiteral!public!testing! !
+isLowercase!public!testing! !
+isLowerCase!public!testing! !
+isPrintable!public!testing! !
+isPunctuation!public!testing! !
+isSeparator!public!testing! !
+isSurrogate!public!testing! !
+isUppercase!public!testing! !
+isUpperCase!public!testing! !
+isUtf16Lead!public!testing! !
+isUtf16Surrogate!public!testing! !
+isUtf16Trail!public!testing! !
+isUtf8!public!testing! !
+isUtf8Lead!public!testing! !
+isUtf8Surrogate!public!testing! !
+isUtf8Trail!public!testing! !
+isVowel!public!testing! !
+isWhitespace!public!testing! !
+join:!public!tokenizing! !
+printEscapedOn:!printing!public! !
+printOn:!printing!public! !
+setCode:!accessing!initializing!private! !
+shallowCopy!copying!public! !
+split:!public!tokenizing! !
+split:do:!public!tokenizing! !
+to:!converting!public! !
+!
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
 
@@ -805,35 +807,37 @@ value: anInteger
 	Raise an error if the argument is not a valid Unicode character code point."
 
 	^self codePoint: anInteger! !
-!Character class categoriesFor: #ansiValue:!instance creation!public! !
-!Character class categoriesFor: #asciiValue:!instance creation!public! !
-!Character class categoriesFor: #backspace!constants!public! !
-!Character class categoriesFor: #byteCharacterSet!constants!public! !
-!Character class categoriesFor: #codePoint:!instance creation!public! !
-!Character class categoriesFor: #codePoint:ifInvalid:!instance creation!public! !
-!Character class categoriesFor: #cr!constants!public! !
-!Character class categoriesFor: #digitValue:!instance creation!public! !
-!Character class categoriesFor: #dolphin!constants!public! !
-!Character class categoriesFor: #eof!constants!public! !
-!Character class categoriesFor: #esc!constants!public! !
-!Character class categoriesFor: #euro!constants!public! !
-!Character class categoriesFor: #initialize!development!initializing!public! !
-!Character class categoriesFor: #isValidCodePoint:!enquiries!public! !
-!Character class categoriesFor: #isValidUtf16CodeUnit:!enquiries!public! !
-!Character class categoriesFor: #lf!constants!public! !
-!Character class categoriesFor: #new!instance creation!public! !
-!Character class categoriesFor: #newCode:!instance creation!private! !
-!Character class categoriesFor: #newPage!constants!public! !
-!Character class categoriesFor: #nl!constants!public! !
-!Character class categoriesFor: #null!constants!public! !
-!Character class categoriesFor: #onStartup!event handling!public! !
-!Character class categoriesFor: #replacement!constants!public! !
-!Character class categoriesFor: #space!constants!public! !
-!Character class categoriesFor: #tab!constants!public! !
-!Character class categoriesFor: #utf16Value:!instance creation!public! !
-!Character class categoriesFor: #utf16Value:ifInvalid:!instance creation!public! !
-!Character class categoriesFor: #utf8Value:!instance creation!public! !
-!Character class categoriesFor: #value:!instance creation!public! !
+!Character class categoriesForMethods!
+ansiValue:!instance creation!public! !
+asciiValue:!instance creation!public! !
+backspace!constants!public! !
+byteCharacterSet!constants!public! !
+codePoint:!instance creation!public! !
+codePoint:ifInvalid:!instance creation!public! !
+cr!constants!public! !
+digitValue:!instance creation!public! !
+dolphin!constants!public! !
+eof!constants!public! !
+esc!constants!public! !
+euro!constants!public! !
+initialize!development!initializing!public! !
+isValidCodePoint:!enquiries!public! !
+isValidUtf16CodeUnit:!enquiries!public! !
+lf!constants!public! !
+new!instance creation!public! !
+newCode:!instance creation!private! !
+newPage!constants!public! !
+nl!constants!public! !
+null!constants!public! !
+onStartup!event handling!public! !
+replacement!constants!public! !
+space!constants!public! !
+tab!constants!public! !
+utf16Value:!instance creation!public! !
+utf16Value:ifInvalid:!instance creation!public! !
+utf8Value:!instance creation!public! !
+value:!instance creation!public! !
+!
 
 Character class methodProtocol: #'Character factory' attributes: #(#ansi #readOnly) selectors: #(#codePoint: #cr #lf #space #tab)!
 

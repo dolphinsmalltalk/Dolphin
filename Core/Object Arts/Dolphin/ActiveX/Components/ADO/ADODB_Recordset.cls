@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODBRecordset21 subclass: #ADODB_Recordset
 	instanceVariableNames: ''
@@ -54,9 +54,11 @@ Save: destination PersistFormat: persistFormat
 
 	<virtual stdcall: hresult 85 variant sdword>
 	^self invalidCall: _failureCode! !
-!ADODB_Recordset categoriesFor: #save!**auto generated**!methods!public! !
-!ADODB_Recordset categoriesFor: #save:persistFormat:!**auto generated**!methods!public! !
-!ADODB_Recordset categoriesFor: #Save:PersistFormat:!**auto generated**!COM Interfaces-_Recordset!private! !
+!ADODB_Recordset categoriesForMethods!
+save!**auto generated**!methods!public! !
+save:persistFormat:!**auto generated**!methods!public! !
+Save:PersistFormat:!**auto generated**!COM Interfaces-_Recordset!private! !
+!
 
 !ADODB_Recordset class methodsFor!
 
@@ -82,7 +84,9 @@ example1
 	rs open: 'Employees' activeConnection: 'DSN=Northwind'.
 	"Get the employees names"
 	rs collect: [:each | (each item: 'LastName') value].! !
-!ADODB_Recordset class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB_Recordset class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!ADODB_Recordset class categoriesFor: #example1!examples!public! !
+!ADODB_Recordset class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+example1!examples!public! !
+!
 

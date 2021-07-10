@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserCategoryChunk subclass: #ChunkBrowserMethodCategoryChunk
 	instanceVariableNames: ''
@@ -34,13 +34,17 @@ restore
 			[:arg | 
 			rawText asMethodCategory addMethod: arg.
 			nil]! !
-!ChunkBrowserMethodCategoryChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserMethodCategoryChunk categoriesFor: #isMatch!public!testing! !
-!ChunkBrowserMethodCategoryChunk categoriesFor: #restore!operations!public! !
+!ChunkBrowserMethodCategoryChunk categoriesForMethods!
+browseTarget!operations!public! !
+isMatch!public!testing! !
+restore!operations!public! !
+!
 
 !ChunkBrowserMethodCategoryChunk class methodsFor!
 
 chunkType
 	^#'Method Category'! !
-!ChunkBrowserMethodCategoryChunk class categoriesFor: #chunkType!constants!public! !
+!ChunkBrowserMethodCategoryChunk class categoriesForMethods!
+chunkType!constants!public! !
+!
 

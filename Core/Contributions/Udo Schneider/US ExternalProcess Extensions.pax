@@ -85,7 +85,9 @@ convertWinStdHandle: stdHandle toCRTFileMode: modeString
 	fd2 < 0 ifTrue: [CRTError signal].
 	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
 	^hFile! !
-!CRTLibrary categoriesFor: #convertWinStdHandle:toCRTFileMode:!private! !
+!CRTLibrary categoriesForMethods!
+convertWinStdHandle:toCRTFileMode:!private! !
+!
 
 !ExternalProcess methodsFor!
 
@@ -145,32 +147,38 @@ stdoutStream
 
 waitForInputIdle: milliseconds 
 	^UserLibrary default waitForInputIdle: pi hProcess milliseconds: milliseconds! !
-!ExternalProcess categoriesFor: #showWindow!public! !
-!ExternalProcess categoriesFor: #showWindow:!public! !
-!ExternalProcess categoriesFor: #startupFlags:!initialize/release!public! !
-!ExternalProcess categoriesFor: #stderrPipe!public! !
-!ExternalProcess categoriesFor: #stderrPipe:!private! !
-!ExternalProcess categoriesFor: #stderrStream!public! !
-!ExternalProcess categoriesFor: #stdinPipe!public! !
-!ExternalProcess categoriesFor: #stdinPipe:!private! !
-!ExternalProcess categoriesFor: #stdinStream!public! !
-!ExternalProcess categoriesFor: #stdoutPipe!public! !
-!ExternalProcess categoriesFor: #stdoutPipe:!private! !
-!ExternalProcess categoriesFor: #stdoutStream!public! !
-!ExternalProcess categoriesFor: #waitForInputIdle:!public! !
+!ExternalProcess categoriesForMethods!
+showWindow!public! !
+showWindow:!public! !
+startupFlags:!initialize/release!public! !
+stderrPipe!public! !
+stderrPipe:!private! !
+stderrStream!public! !
+stdinPipe!public! !
+stdinPipe:!private! !
+stdinStream!public! !
+stdoutPipe!public! !
+stdoutPipe:!private! !
+stdoutStream!public! !
+waitForInputIdle:!public! !
+!
 
 !InheritableFile methodsFor!
 
 handle: aHandle
 handle := aHandle! !
-!InheritableFile categoriesFor: #handle:!public! !
+!InheritableFile categoriesForMethods!
+handle:!public! !
+!
 
 !KernelLibrary methodsFor!
 
 createPipe: hReadPipe hWritePipe: hWritePipe lpPipeAttributes: lpPipeAttributes nSize: nSize
 	<stdcall: bool CreatePipe handle* handle* lpvoid dword>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #createPipe:hWritePipe:lpPipeAttributes:nSize:!public! !
+!KernelLibrary categoriesForMethods!
+createPipe:hWritePipe:lpPipeAttributes:nSize:!public! !
+!
 
 !UserLibrary methodsFor!
 
@@ -184,7 +192,9 @@ waitForInputIdle: hProcess milliseconds: dwMilliseconds
 
 	<stdcall: dword WaitForInputIdle handle dword>
 	^self invalidCall: _failureCode! !
-!UserLibrary categoriesFor: #waitForInputIdle:milliseconds:!public! !
+!UserLibrary categoriesForMethods!
+waitForInputIdle:milliseconds:!public! !
+!
 
 "End of package definition"!
 

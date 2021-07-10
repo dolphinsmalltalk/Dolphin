@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
@@ -571,63 +571,65 @@ vtblInterfaces
 	described by the receiver. This will include dual interfaces."
 
 	^self selectTypes: [:t | t typekind == TKIND_INTERFACE]! !
-!AXTypeLibraryAnalyzer categoriesFor: #=!comparing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #aliasMap!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #at:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #at:ifAbsent:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #attributes!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #basicName!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #basicTypeInfoAt:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #buildTypeAnalyzers!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #clearCachedAnalyzers!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #coclasses!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #customInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #defaultGenerationFlags!constants!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #dispatchableInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #dispinterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #displayOn:!displaying!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #documentation!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #documentationAt:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #documentationAt:ifAbsent:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #dualInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #enums!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #find:count:!public!searching! !
-!AXTypeLibraryAnalyzer categoriesFor: #getLibAttr!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #globalNameFrom:!accessing!helpers!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #hash!comparing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #initializeAfterLoad!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #initializeAliasMap!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #interfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #isInstalled!public!testing! !
-!AXTypeLibraryAnalyzer categoriesFor: #isName:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #isRegistered!public!testing! !
-!AXTypeLibraryAnalyzer categoriesFor: #libid!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #loadTypeLib!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #modules!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #namedStructs!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #namedUnions!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #names!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #path!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
-!AXTypeLibraryAnalyzer categoriesFor: #registration!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #reset!initializing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #selectTypeKind:!enumerating!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #selectTypes:!enumerating!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #setTypeLib:attributes:!initializing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #sourceInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #stbSaveOn:!binary filing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #structs!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #suggestBindingForType:!constants!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeAnalyzerAt:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeAnalyzers!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #typedefs!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeInfoAt:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeInfoCount!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #typeInfoForGuid:ifNone:!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #uninitialize!initializing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #unions!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #versionString!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #vtblInterfaces!enumerating!public! !
+!AXTypeLibraryAnalyzer categoriesForMethods!
+=!comparing!public! !
+aliasMap!accessing!private! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+attributes!accessing!public! !
+basicName!accessing!public! !
+basicTypeInfoAt:!accessing!private! !
+buildTypeAnalyzers!accessing!private! !
+clearCachedAnalyzers!initializing!public! !
+coclasses!enumerating!public! !
+customInterfaces!enumerating!public! !
+defaultGenerationFlags!constants!public! !
+dispatchableInterfaces!enumerating!public! !
+dispinterfaces!enumerating!public! !
+displayOn:!displaying!public! !
+documentation!accessing!public! !
+documentationAt:!accessing!private! !
+documentationAt:ifAbsent:!accessing!private! !
+dualInterfaces!enumerating!public! !
+enums!enumerating!public! !
+find:count:!public!searching! !
+getLibAttr!accessing!private! !
+globalNameFrom:!accessing!helpers!private! !
+hash!comparing!public! !
+initializeAfterLoad!initializing!public! !
+initializeAliasMap!initializing!public! !
+interfaces!enumerating!public! !
+isInstalled!public!testing! !
+isName:!accessing!public! !
+isRegistered!public!testing! !
+libid!accessing!public! !
+loadTypeLib!accessing!private! !
+modules!enumerating!public! !
+namedStructs!enumerating!public! !
+namedUnions!enumerating!public! !
+names!enumerating!public! !
+path!accessing!public! !
+realize!private!realizing/unrealizing! !
+registration!accessing!public! !
+reset!initializing!public! !
+selectTypeKind:!enumerating!private! !
+selectTypes:!enumerating!private! !
+setTypeLib:attributes:!initializing!private! !
+sourceInterfaces!enumerating!public! !
+stbSaveOn:!binary filing!public! !
+structs!enumerating!public! !
+suggestBindingForType:!constants!private! !
+typeAnalyzerAt:!accessing!public! !
+typeAnalyzers!accessing!private! !
+typedefs!enumerating!public! !
+typeInfoAt:!accessing!private! !
+typeInfoCount!accessing!public! !
+typeInfoForGuid:ifNone:!accessing!private! !
+uninitialize!initializing!private! !
+unions!enumerating!public! !
+versionString!accessing!public! !
+vtblInterfaces!enumerating!public! !
+!
 
 !AXTypeLibraryAnalyzer class methodsFor!
 
@@ -760,19 +762,21 @@ uninitialize
 
 	TypeLibs := WeakLookupTable new.
 	SessionManager current removeEventsTriggeredFor: self! !
-!AXTypeLibraryAnalyzer class categoriesFor: #allOpenableTypeLibs!accessing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #allTypeLibs!accessing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #fromRegistration:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #initialize!development!initializing!private! !
-!AXTypeLibraryAnalyzer class categoriesFor: #load:major:minor:locale:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #new!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!AXTypeLibraryAnalyzer class categoriesFor: #onStartup!event handling!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #onTypeLib:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #open:!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion1:!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbConvertToVersion2:!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #stbVersion!binary filing!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!AXTypeLibraryAnalyzer class categoriesForMethods!
+allOpenableTypeLibs!accessing!public! !
+allTypeLibs!accessing!public! !
+fromRegistration:!instance creation!public! !
+initialize!development!initializing!private! !
+load:major:minor:locale:!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+onStartup!event handling!public! !
+onTypeLib:!instance creation!public! !
+open:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!public! !
+stbConvertToVersion2:!binary filing!public! !
+stbVersion!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

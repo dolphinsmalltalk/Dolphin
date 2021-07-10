@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #NotTrustedError
 	instanceVariableNames: ''
@@ -17,5 +17,7 @@ _descriptionFormat
 
 	^'The use of the untrusted content (%1) has been prevented.'
 ! !
-!NotTrustedError categoriesFor: #_descriptionFormat!displaying!public! !
+!NotTrustedError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXDualImp subclass: #COMRandomStream
 	instanceVariableNames: 'lowerBound upperBound stream'
@@ -72,15 +72,17 @@ put_UpperBound: value
 
 	upperBound := value.
 	^S_OK! !
-!COMRandomStream categoriesFor: #get_LowerBound:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #get_Seed:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #get_UpperBound:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #initialize!initializing!private! !
-!COMRandomStream categoriesFor: #interfaceClass!constants!public! !
-!COMRandomStream categoriesFor: #Next:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #put_LowerBound:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #put_Seed:!COM Interfaces-IRandomStream!private! !
-!COMRandomStream categoriesFor: #put_UpperBound:!COM Interfaces-IRandomStream!private! !
+!COMRandomStream categoriesForMethods!
+get_LowerBound:!COM Interfaces-IRandomStream!private! !
+get_Seed:!COM Interfaces-IRandomStream!private! !
+get_UpperBound:!COM Interfaces-IRandomStream!private! !
+initialize!initializing!private! !
+interfaceClass!constants!public! !
+Next:!COM Interfaces-IRandomStream!private! !
+put_LowerBound:!COM Interfaces-IRandomStream!private! !
+put_Seed:!COM Interfaces-IRandomStream!private! !
+put_UpperBound:!COM Interfaces-IRandomStream!private! !
+!
 
 !COMRandomStream class methodsFor!
 
@@ -94,6 +96,8 @@ progID
 	create instances of the receiver, e.g. 'Dolphin.Object.1'"
 
 	^'Dolphin.RandomStream.1'! !
-!COMRandomStream class categoriesFor: #clsid!constants!private! !
-!COMRandomStream class categoriesFor: #progID!constants!public! !
+!COMRandomStream class categoriesForMethods!
+clsid!constants!private! !
+progID!constants!public! !
+!
 

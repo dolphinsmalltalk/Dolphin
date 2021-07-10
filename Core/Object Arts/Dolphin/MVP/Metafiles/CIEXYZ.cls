@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #CIEXYZ
 	instanceVariableNames: ''
@@ -56,12 +56,14 @@ ciexyzZ: anInteger
 	"Set the receiver's 'ciexyzZ' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ciexyzZ put: anInteger! !
-!CIEXYZ categoriesFor: #ciexyzX!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzX:!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzY!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzY:!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzZ!**compiled accessors**!public! !
-!CIEXYZ categoriesFor: #ciexyzZ:!**compiled accessors**!public! !
+!CIEXYZ categoriesForMethods!
+ciexyzX!**compiled accessors**!public! !
+ciexyzX:!**compiled accessors**!public! !
+ciexyzY!**compiled accessors**!public! !
+ciexyzY:!**compiled accessors**!public! !
+ciexyzZ!**compiled accessors**!public! !
+ciexyzZ:!**compiled accessors**!public! !
+!
 
 !CIEXYZ class methodsFor!
 
@@ -86,6 +88,8 @@ defineFields
 
 getFieldNames
 	^#(#ciexyzX #ciexyzY #ciexyzZ)! !
-!CIEXYZ class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CIEXYZ class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CIEXYZ class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProfilerSample
 	instanceVariableNames: 'root leaf elapsedTime'
@@ -58,13 +58,15 @@ setRoot: rootNode leaf: leafNode elapsedTime: anInteger
 	leaf := leafNode.
 	elapsedTime := anInteger.
 	^self! !
-!ProfilerSample categoriesFor: #classInformation!accessing!public! !
-!ProfilerSample categoriesFor: #duration!accessing!public! !
-!ProfilerSample categoriesFor: #elapsedTime!accessing!public! !
-!ProfilerSample categoriesFor: #frames!accessing!public! !
-!ProfilerSample categoriesFor: #isChildOfFrameFor:!public!testing! !
-!ProfilerSample categoriesFor: #selectorInformation!accessing!public! !
-!ProfilerSample categoriesFor: #setRoot:leaf:elapsedTime:!initializing!public! !
+!ProfilerSample categoriesForMethods!
+classInformation!accessing!public! !
+duration!accessing!public! !
+elapsedTime!accessing!public! !
+frames!accessing!public! !
+isChildOfFrameFor:!public!testing! !
+selectorInformation!accessing!public! !
+setRoot:leaf:elapsedTime:!initializing!public! !
+!
 
 !ProfilerSample class methodsFor!
 
@@ -80,6 +82,8 @@ root: rootNode leaf: leafNode elapsedTime: anInteger
 		setRoot: rootNode
 		leaf: leafNode
 		elapsedTime: anInteger! !
-!ProfilerSample class categoriesFor: #icon!constants!public! !
-!ProfilerSample class categoriesFor: #root:leaf:elapsedTime:!instance creation!public! !
+!ProfilerSample class categoriesForMethods!
+icon!constants!public! !
+root:leaf:elapsedTime:!instance creation!public! !
+!
 

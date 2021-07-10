@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SerialNumberProtector subclass: #PC1SerialNumberProtector
 	instanceVariableNames: ''
@@ -131,11 +131,13 @@ stringFromData: anInteger
 	"Private - Answer a human-readable String representing the given raw encrypted data."
 	
 	^ self class readableStringFromInteger: anInteger.! !
-!PC1SerialNumberProtector categoriesFor: #checksumBits!constants!public! !
-!PC1SerialNumberProtector categoriesFor: #checksumFor:!helpers!private! !
-!PC1SerialNumberProtector categoriesFor: #cipher!helpers!private! !
-!PC1SerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
-!PC1SerialNumberProtector categoriesFor: #decrypt:!operations!public! !
-!PC1SerialNumberProtector categoriesFor: #encrypt:!operations!public! !
-!PC1SerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
+!PC1SerialNumberProtector categoriesForMethods!
+checksumBits!constants!public! !
+checksumFor:!helpers!private! !
+cipher!helpers!private! !
+dataFromString:!helpers!private! !
+decrypt:!operations!public! !
+encrypt:!operations!public! !
+stringFromData:!helpers!public! !
+!
 

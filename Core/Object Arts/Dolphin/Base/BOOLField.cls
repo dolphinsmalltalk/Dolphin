@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScalarField subclass: #BOOLField
 	instanceVariableNames: ''
@@ -41,9 +41,11 @@ writeInto: anExternalStructure value: anObject
 	<Boolean> argument, anObject."
 
 	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
-!BOOLField categoriesFor: #accessorMessage!automatic generation!private! !
-!BOOLField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!BOOLField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
-!BOOLField categoriesFor: #readFrom:!indirect accessing!private! !
-!BOOLField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!BOOLField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+fieldClassName!automatic generation!constants!development!private! !
+printMutatorValueOn:parameter:!automatic generation!development!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

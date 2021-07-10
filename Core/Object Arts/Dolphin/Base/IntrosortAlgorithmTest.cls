@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SortAlgorithmTest subclass: #IntrosortAlgorithmTest
 	instanceVariableNames: ''
@@ -26,6 +26,8 @@ testNewSortBlock
 	"Invoke the method directly so we don't need to install it."
 	algo2 := testMethod value: self algorithmToTest withArguments: {block}.
 	self assert: algo2 sortBlock identicalTo: block! !
-!IntrosortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!IntrosortAlgorithmTest categoriesFor: #testNewSortBlock!public!unit tests! !
+!IntrosortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+testNewSortBlock!public!unit tests! !
+!
 

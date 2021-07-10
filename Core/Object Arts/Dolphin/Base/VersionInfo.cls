@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #VersionInfo
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
@@ -137,24 +137,26 @@ specialBuild
 	"Answer the <readableString> product name from the receiver."
 
 	^self at: 'SpecialBuild'! !
-!VersionInfo categoriesFor: #at:!accessing!public! !
-!VersionInfo categoriesFor: #comments!accessing!public! !
-!VersionInfo categoriesFor: #fileDescription!accessing!public! !
-!VersionInfo categoriesFor: #fileInfo:!accessing!private! !
-!VersionInfo categoriesFor: #fileVersion!public! !
-!VersionInfo categoriesFor: #fileVersionString!accessing!public! !
-!VersionInfo categoriesFor: #fixedInfo!accessing!public! !
-!VersionInfo categoriesFor: #formatVersionString:!operations!public! !
-!VersionInfo categoriesFor: #getFixedInfo!accessing!private! !
-!VersionInfo categoriesFor: #getTranslationInfo!accessing!private! !
-!VersionInfo categoriesFor: #legalCopyright!accessing!public! !
-!VersionInfo categoriesFor: #prefix!accessing!private! !
-!VersionInfo categoriesFor: #productMajor!accessing!public! !
-!VersionInfo categoriesFor: #productMinor!accessing!public! !
-!VersionInfo categoriesFor: #productName!accessing!public! !
-!VersionInfo categoriesFor: #productVersionString!accessing!public! !
-!VersionInfo categoriesFor: #queryValue:into:!accessing!private! !
-!VersionInfo categoriesFor: #specialBuild!accessing!public! !
+!VersionInfo categoriesForMethods!
+at:!accessing!public! !
+comments!accessing!public! !
+fileDescription!accessing!public! !
+fileInfo:!accessing!private! !
+fileVersion!public! !
+fileVersionString!accessing!public! !
+fixedInfo!accessing!public! !
+formatVersionString:!operations!public! !
+getFixedInfo!accessing!private! !
+getTranslationInfo!accessing!private! !
+legalCopyright!accessing!public! !
+prefix!accessing!private! !
+productMajor!accessing!public! !
+productMinor!accessing!public! !
+productName!accessing!public! !
+productVersionString!accessing!public! !
+queryValue:into:!accessing!private! !
+specialBuild!accessing!public! !
+!
 
 !VersionInfo class methodsFor!
 
@@ -170,6 +172,8 @@ uninitialize
 	"Assist the version library in departing this world"
 
 	Smalltalk at: #VersionLibrary ifPresent: [:lib | lib closeDefault]! !
-!VersionInfo class categoriesFor: #forPath:!instance creation!public! !
-!VersionInfo class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!VersionInfo class categoriesForMethods!
+forPath:!instance creation!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

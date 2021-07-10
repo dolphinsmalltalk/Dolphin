@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #LayoutManagerTest
 	instanceVariableNames: 'shell'
@@ -25,7 +25,9 @@ setUp
 
 tearDown
 	shell notNil ifTrue: [shell destroy]! !
-!LayoutManagerTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!LayoutManagerTest categoriesFor: #setUp!public!unit tests! !
-!LayoutManagerTest categoriesFor: #tearDown!public!unit tests! !
+!LayoutManagerTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+!
 

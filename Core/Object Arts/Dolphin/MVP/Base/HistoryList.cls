@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #HistoryList
 	instanceVariableNames: 'history position maxAge searchPolicy'
@@ -259,40 +259,42 @@ visit: item
 	(self isEmpty or: [(self searchPolicy compare: self current with: item) not]) 
 		ifTrue: [self addLast: item]
 		ifFalse: [self current: item]! !
-!HistoryList categoriesFor: #addLast:!adding!public! !
-!HistoryList categoriesFor: #clear!operations!public! !
-!HistoryList categoriesFor: #clearFuture!operations!public! !
-!HistoryList categoriesFor: #clearPast!operations!public! !
-!HistoryList categoriesFor: #close!operations!public! !
-!HistoryList categoriesFor: #contents!accessing!public! !
-!HistoryList categoriesFor: #current!accessing!public! !
-!HistoryList categoriesFor: #current:!accessing!public! !
-!HistoryList categoriesFor: #futureSize!accessing!public! !
-!HistoryList categoriesFor: #goBack:!operations!public! !
-!HistoryList categoriesFor: #goForward:!operations!public! !
-!HistoryList categoriesFor: #hasFuture!public!testing! !
-!HistoryList categoriesFor: #hasPast!accessing!public! !
-!HistoryList categoriesFor: #initialize:!initializing!private! !
-!HistoryList categoriesFor: #isEmpty!public!testing! !
-!HistoryList categoriesFor: #next!accessing!public! !
-!HistoryList categoriesFor: #next:!accessing!public! !
-!HistoryList categoriesFor: #notEmpty!public!testing! !
-!HistoryList categoriesFor: #past!accessing!public! !
-!HistoryList categoriesFor: #pastSize!accessing!public! !
-!HistoryList categoriesFor: #position!positioning!public! !
-!HistoryList categoriesFor: #position:!positioning!public! !
-!HistoryList categoriesFor: #previous!accessing!public! !
-!HistoryList categoriesFor: #previous:!accessing!public! !
-!HistoryList categoriesFor: #remove:!public!removing! !
-!HistoryList categoriesFor: #removeMatching:!public!removing! !
-!HistoryList categoriesFor: #reset!positioning!public! !
-!HistoryList categoriesFor: #searchPolicy!accessing!public! !
-!HistoryList categoriesFor: #searchPolicy:!accessing!public! !
-!HistoryList categoriesFor: #setToEnd!positioning!public! !
-!HistoryList categoriesFor: #shrink!operations!public! !
-!HistoryList categoriesFor: #skip:!operations!public! !
-!HistoryList categoriesFor: #upToEnd!accessing!public! !
-!HistoryList categoriesFor: #visit:!operations!public! !
+!HistoryList categoriesForMethods!
+addLast:!adding!public! !
+clear!operations!public! !
+clearFuture!operations!public! !
+clearPast!operations!public! !
+close!operations!public! !
+contents!accessing!public! !
+current!accessing!public! !
+current:!accessing!public! !
+futureSize!accessing!public! !
+goBack:!operations!public! !
+goForward:!operations!public! !
+hasFuture!public!testing! !
+hasPast!accessing!public! !
+initialize:!initializing!private! !
+isEmpty!public!testing! !
+next!accessing!public! !
+next:!accessing!public! !
+notEmpty!public!testing! !
+past!accessing!public! !
+pastSize!accessing!public! !
+position!positioning!public! !
+position:!positioning!public! !
+previous!accessing!public! !
+previous:!accessing!public! !
+remove:!public!removing! !
+removeMatching:!public!removing! !
+reset!positioning!public! !
+searchPolicy!accessing!public! !
+searchPolicy:!accessing!public! !
+setToEnd!positioning!public! !
+shrink!operations!public! !
+skip:!operations!public! !
+upToEnd!accessing!public! !
+visit:!operations!public! !
+!
 
 HistoryList methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
@@ -315,7 +317,9 @@ new: maxAge
 	with capacity for the specified maximum number of items."
 
 	^super new initialize: maxAge! !
-!HistoryList class categoriesFor: #icon!constants!public! !
-!HistoryList class categoriesFor: #new!instance creation!public! !
-!HistoryList class categoriesFor: #new:!instance creation!public! !
+!HistoryList class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+new:!instance creation!public! !
+!
 

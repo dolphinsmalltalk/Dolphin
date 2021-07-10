@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
@@ -1648,150 +1648,152 @@ writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWr
 zeroMemory: pvDest length: cBytes
 	<stdcall: void RtlZeroMemory void* dword>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #addAtom:!public!win32 functions-atom! !
-!KernelLibrary categoriesFor: #allocConsole!**auto generated**!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #attachConsole:!**auto generated**!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #beep:dwDuration:!public!win32 functions-error! !
-!KernelLibrary categoriesFor: #beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!KernelLibrary categoriesFor: #closeHandle:!public!win32 functions-handles and objects! !
-!KernelLibrary categoriesFor: #compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #copyMemory:source:length:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #debugBreak!**auto generated**!public!win32 functions-debugging! !
-!KernelLibrary categoriesFor: #deleteFile:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
-!KernelLibrary categoriesFor: #duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
-!KernelLibrary categoriesFor: #endUpdateResource:fDiscard:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #enumDateFormats:locale:dwFlags:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #enumSystemCodePages:dwFlags:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #enumSystemLocales:dwFlags:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #enumTimeFormats:locale:dwFlags:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #expandEnvironmentStrings:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #fileTimeToSystemTime:lpSystemTime:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #findClose:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #findFirstFile:lpFindFileData:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #findNextFile:lpFindFileData:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #findResource:lpName:lpType:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #flushFileBuffers:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #formatMessage:lpSource:dwMessageId:dwLanguageId:lpBuffer:nSize:arguments:!public!win32 functions-error! !
-!KernelLibrary categoriesFor: #formatMessage:source:flags:withArguments:!helpers!public! !
-!KernelLibrary categoriesFor: #freeConsole!**auto generated**!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #freeLibrary:!public!win32 functions-dynamic link library! !
-!KernelLibrary categoriesFor: #getACP!**auto generated**!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
-!KernelLibrary categoriesFor: #getCalendarInfo:calendar:calType:lpCalData:cchData:lpValue:!**auto generated**!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
-!KernelLibrary categoriesFor: #getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getFileType:!public!win32 functions-file system! !
-!KernelLibrary categoriesFor: #getFinalPathNameByHandle:lpszFilePath:cchFilePath:dwFlags:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getLastError!public!win32 functions-error! !
-!KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getLocalTime:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
-!KernelLibrary categoriesFor: #getModuleHandle:!public!win32 functions-dynamic link library! !
-!KernelLibrary categoriesFor: #getNumberFormat:dwFlags:lpValue:lpFormat:lpNumberStr:cchNumber:!**auto generated**!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
-!KernelLibrary categoriesFor: #getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
-!KernelLibrary categoriesFor: #getProcessHeap!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getStdHandle:!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getSystemDirectory:uSize:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getSystemTime:!**auto generated**!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #getSystemTimeAsFileTime:!**auto generated**!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #getSystemTimePreciseAsFileTime:!**auto generated**!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getTickCount!public!win32 functions-date and time!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public!win32 functions-file system! !
-!KernelLibrary categoriesFor: #getWindowsDirectory:uSize:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #globalAlloc:dwBytes:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #globalFree:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #globalLock:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #globalUnlock:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #heapAlloc:dwFlags:dwBytes:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #heapCompact:dwFlags:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #heapFree:dwFlags:lpMem:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #isWow64!enquiries!public! !
-!KernelLibrary categoriesFor: #isWow64Process:wow64Process:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
-!KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #localFree:!**auto generated**!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #lstrlenW:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #moveFile:lpNewFileName:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #outputDebugString:!public!win32 functions-debugging! !
-!KernelLibrary categoriesFor: #pulseEvent:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #queryPerformanceCounter:!public!win32 functions-performance monitoring! !
-!KernelLibrary categoriesFor: #queryPerformanceFrequency:!public!win32 functions-performance monitoring! !
-!KernelLibrary categoriesFor: #raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #releaseMutex:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #resetEvent:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #setConsoleCP:!**auto generated**!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #setConsoleOutputCP:!**auto generated**!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #setConsoleTitle:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #setEvent:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:!**auto generated**!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #setLastError:!public!win32 functions-error! !
-!KernelLibrary categoriesFor: #setStdHandle:hHandle:!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #setVolumeLabel:lpVolumeName:!public!win32 functions-file system! !
-!KernelLibrary categoriesFor: #sizeOfResource:hResInfo:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #sleep:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #sleepEx:bAlertable:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #systemTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #terminateProcess:exitCode:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #terminateProcessId:!helpers!public! !
-!KernelLibrary categoriesFor: #threadGetLastError!public!win32 functions-error! !
-!KernelLibrary categoriesFor: #threadSetLastError:!public!win32 functions-error! !
-!KernelLibrary categoriesFor: #updateResource:lpType:lpName:wLanguage:lpData:cbData:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #updateResourcesOf:do:!operations!public! !
-!KernelLibrary categoriesFor: #verifyVersionInfo:dwTypeMask:dwlConditionMask:!**auto generated**!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #verSetConditionMask:typeMask:condition:!**auto generated**!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #virtualAlloc:dwSize:flAllocationType:flProtect:!**auto generated**!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #virtualFree:dwSize:dwFreeType:!**auto generated**!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #virtualQuery:lpBuffer:dwLength:!**auto generated**!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #winExec:uCmdShow:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #zeroMemory:length:!public!win32 functions-memory management! !
+!KernelLibrary categoriesForMethods!
+addAtom:!public!win32 functions-atom! !
+allocConsole!**auto generated**!public!win32 functions-console! !
+attachConsole:!**auto generated**!public!win32 functions-console! !
+beep:dwDuration:!public!win32 functions-error! !
+beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
+close!public!realizing/unrealizing! !
+closeHandle:!public!win32 functions-handles and objects! !
+compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
+copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file management! !
+copyMemory:source:length:!public!win32 functions-memory management! !
+createDirectory:lpSecurityAttributes:!public!win32 functions-file management! !
+createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
+createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file management! !
+createMutex:bInitialOwner:lpName:!**auto generated**!public!win32 functions-synchronization! !
+debugBreak!**auto generated**!public!win32 functions-debugging! !
+deleteFile:!public!win32 functions-file management! !
+deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
+duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
+endUpdateResource:fDiscard:!public!win32 functions-resource! !
+enumDateFormats:locale:dwFlags:!public!win32 functions-national language support! !
+enumSystemCodePages:dwFlags:!public!win32 functions-national language support! !
+enumSystemLocales:dwFlags:!public!win32 functions-national language support! !
+enumTimeFormats:locale:dwFlags:!public!win32 functions-national language support! !
+expandEnvironmentStrings:!public!win32 functions-process and thread! !
+expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
+fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
+fileTimeToSystemTime:lpSystemTime:!public!win32 functions-date and time! !
+findClose:!public!win32 functions-file management! !
+findFirstFile:lpFindFileData:!public!win32 functions-file management! !
+findNextFile:lpFindFileData:!public!win32 functions-file management! !
+findResource:lpName:lpType:!public!win32 functions-resource! !
+flushFileBuffers:!public!win32 functions-file management! !
+formatMessage:lpSource:dwMessageId:dwLanguageId:lpBuffer:nSize:arguments:!public!win32 functions-error! !
+formatMessage:source:flags:withArguments:!helpers!public! !
+freeConsole!**auto generated**!public!win32 functions-console! !
+freeLibrary:!public!win32 functions-dynamic link library! !
+getACP!**auto generated**!public!win32 functions-national language support! !
+getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
+getCalendarInfo:calendar:calType:lpCalData:cchData:lpValue:!**auto generated**!public!win32 functions-national language support! !
+getCommandLine!public!win32 functions-process and thread! !
+getComputerName:nSize:!public!win32 functions-system information! !
+getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
+getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public!win32 functions-national language support! !
+getCurrentProcess!public!win32 functions-process and thread! !
+getCurrentThread!public!win32 functions-process and thread! !
+getCurrentThreadId!public!win32 functions-process and thread! !
+getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file management! !
+getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
+getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
+getFileAttributes:!public!win32 functions-file management! !
+getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file management! !
+getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file management! !
+getFileType:!public!win32 functions-file system! !
+getFinalPathNameByHandle:lpszFilePath:cchFilePath:dwFlags:!public!win32 functions-file management! !
+getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
+getLastError!public!win32 functions-error! !
+getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
+getLocalTime:!public!win32 functions-date and time! !
+getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
+getModuleHandle:!public!win32 functions-dynamic link library! !
+getNumberFormat:dwFlags:lpValue:lpFormat:lpNumberStr:cchNumber:!**auto generated**!public!win32 functions-national language support! !
+getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
+getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
+getProcessHeap!public!win32 functions-memory management! !
+getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !
+getStdHandle:!public!win32 functions-console! !
+getSystemDefaultLCID!public!win32 functions-national language support! !
+getSystemDirectory:uSize:!public!win32 functions-system information! !
+getSystemTime:!**auto generated**!public!win32 functions-date and time! !
+getSystemTimeAsFileTime:!**auto generated**!public!win32 functions-date and time! !
+getSystemTimePreciseAsFileTime:!**auto generated**!public!win32 functions-date and time! !
+getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
+getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file management! !
+getTempPath:lpBuffer:!public!win32 functions-file management! !
+getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
+getTickCount!public!win32 functions-date and time!win32 functions-system information! !
+getTimeZoneInformation:!public!win32 functions-date and time! !
+getUserDefaultLCID!public!win32 functions-national language support! !
+getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public!win32 functions-file system! !
+getWindowsDirectory:uSize:!public!win32 functions-system information! !
+globalAlloc:dwBytes:!public!win32 functions-memory management! !
+globalFree:!public!win32 functions-memory management! !
+globalLock:!public!win32 functions-memory management! !
+globalUnlock:!public!win32 functions-memory management! !
+heapAlloc:dwFlags:dwBytes:!public!win32 functions-memory management! !
+heapCompact:dwFlags:!public!win32 functions-memory management! !
+heapFree:dwFlags:lpMem:!public!win32 functions-memory management! !
+heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
+heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
+heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
+isWow64!enquiries!public! !
+isWow64Process:wow64Process:!public!win32 functions-system information! !
+lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
+loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
+loadResource:hResInfo:!public!win32 functions-resource! !
+localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
+localFree:!**auto generated**!public!win32 functions-memory management! !
+lockResource:!public!win32 functions-resource! !
+lstrlenW:!public!win32 functions-string manipulation! !
+moveFile:lpNewFileName:!public!win32 functions-file management! !
+moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file management! !
+multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
+openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
+outputDebugString:!public!win32 functions-debugging! !
+pulseEvent:!**auto generated**!public!win32 functions-synchronization! !
+queryPerformanceCounter:!public!win32 functions-performance monitoring! !
+queryPerformanceFrequency:!public!win32 functions-performance monitoring! !
+raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated**!public! !
+readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file management! !
+releaseMutex:!**auto generated**!public!win32 functions-synchronization! !
+removeDirectory:!public!win32 functions-file management! !
+resetEvent:!**auto generated**!public!win32 functions-synchronization! !
+setConsoleCP:!**auto generated**!public!win32 functions-console! !
+setConsoleCtrlHandler:add:!public!win32 functions-console! !
+setConsoleOutputCP:!**auto generated**!public!win32 functions-console! !
+setConsoleTitle:!**auto generated**!public! !
+setEndOfFile:!public!win32 functions-file management! !
+setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
+setEvent:!**auto generated**!public!win32 functions-synchronization! !
+setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:!**auto generated**!public!win32 functions-file management! !
+setLastError:!public!win32 functions-error! !
+setStdHandle:hHandle:!public!win32 functions-console! !
+setVolumeLabel:lpVolumeName:!public!win32 functions-file system! !
+sizeOfResource:hResInfo:!public!win32 functions-resource! !
+sleep:!public!win32 functions-process and thread! !
+sleepEx:bAlertable:!public!win32 functions-process and thread! !
+systemTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
+terminateProcess:exitCode:!public!win32 functions-process and thread! !
+terminateProcessId:!helpers!public! !
+threadGetLastError!public!win32 functions-error! !
+threadSetLastError:!public!win32 functions-error! !
+updateResource:lpType:lpName:wLanguage:lpData:cbData:!public!win32 functions-resource! !
+updateResourcesOf:do:!operations!public! !
+verifyVersionInfo:dwTypeMask:dwlConditionMask:!**auto generated**!public!win32 functions-system information! !
+verSetConditionMask:typeMask:condition:!**auto generated**!public!win32 functions-system information! !
+virtualAlloc:dwSize:flAllocationType:flProtect:!**auto generated**!public!win32 functions-memory management! !
+virtualFree:dwSize:dwFreeType:!**auto generated**!public!win32 functions-memory management! !
+virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public!win32 functions-memory management! !
+virtualQuery:lpBuffer:dwLength:!**auto generated**!public!win32 functions-memory management! !
+waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
+wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
+winExec:uCmdShow:!public!win32 functions-process and thread! !
+writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file management! !
+zeroMemory:length:!public!win32 functions-memory management! !
+!
 
 !KernelLibrary class methodsFor!
 
@@ -1808,6 +1810,8 @@ open
 	VM object registry on startup."
 
 	^self fromHandle: VMLibrary default kernelHandle! !
-!KernelLibrary class categoriesFor: #fileName!constants!public! !
-!KernelLibrary class categoriesFor: #open!instance creation!public! !
+!KernelLibrary class categoriesForMethods!
+fileName!constants!public! !
+open!instance creation!public! !
+!
 

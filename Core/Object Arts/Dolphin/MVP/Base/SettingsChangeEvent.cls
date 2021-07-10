@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #SettingsChangeEvent
 	instanceVariableNames: 'area'
@@ -24,9 +24,11 @@ printLParamOn: aStream
 
 uiAction
 	^wParam! !
-!SettingsChangeEvent categoriesFor: #area!accessing!public! !
-!SettingsChangeEvent categoriesFor: #isColorSetChange!public!testing! !
-!SettingsChangeEvent categoriesFor: #isFontChange!public!testing! !
-!SettingsChangeEvent categoriesFor: #printLParamOn:!printing!public! !
-!SettingsChangeEvent categoriesFor: #uiAction!accessing!public! !
+!SettingsChangeEvent categoriesForMethods!
+area!accessing!public! !
+isColorSetChange!public!testing! !
+isFontChange!public!testing! !
+printLParamOn:!printing!public! !
+uiAction!accessing!public! !
+!
 

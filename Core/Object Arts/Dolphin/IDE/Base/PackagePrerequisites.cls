@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PackageDependencyPresenter subclass: #PackagePrerequisites
 	instanceVariableNames: ''
@@ -22,9 +22,11 @@ dependentPackage
 
 prerequisitePackage
 	^self selectedPair ifNotNil: [:association | association key]! !
-!PackagePrerequisites categoriesFor: #childrenFor:!helpers!private! !
-!PackagePrerequisites categoriesFor: #dependentPackage!accessing!private! !
-!PackagePrerequisites categoriesFor: #prerequisitePackage!accessing!private! !
+!PackagePrerequisites categoriesForMethods!
+childrenFor:!helpers!private! !
+dependentPackage!accessing!private! !
+prerequisitePackage!accessing!private! !
+!
 
 !PackagePrerequisites class methodsFor!
 
@@ -34,5 +36,7 @@ displayOn: aStream
 
 	aStream nextPutAll: 'Package Prerequisites'
 ! !
-!PackagePrerequisites class categoriesFor: #displayOn:!displaying!public! !
+!PackagePrerequisites class categoriesForMethods!
+displayOn:!displaying!public! !
+!
 

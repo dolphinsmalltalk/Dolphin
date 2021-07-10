@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollection subclass: #Interval
 	instanceVariableNames: 'start stop step'
@@ -227,32 +227,34 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	enumerators."
 
 	startInteger to: stopInteger do: [:i | aDyadicValuable value: i value: start + (step * (i - 1))]! !
-!Interval categoriesFor: #-!arithmetic!public! !
-!Interval categoriesFor: #+!arithmetic!public! !
-!Interval categoriesFor: #=!comparing!public! !
-!Interval categoriesFor: #add:!adding!public! !
-!Interval categoriesFor: #at:!accessing!public! !
-!Interval categoriesFor: #at:put:!accessing!public! !
-!Interval categoriesFor: #collect:!enumerating!public! !
-!Interval categoriesFor: #displayOn:!printing!public! !
-!Interval categoriesFor: #first!accessing!public! !
-!Interval categoriesFor: #hash!comparing!public! !
-!Interval categoriesFor: #includes:!public!testing! !
-!Interval categoriesFor: #inject:into:!enumerating!public! !
-!Interval categoriesFor: #isEmpty!public!testing! !
-!Interval categoriesFor: #last!accessing!public! !
-!Interval categoriesFor: #printOn:!printing!public! !
-!Interval categoriesFor: #setFrom:to:by:!accessing!private! !
-!Interval categoriesFor: #size!accessing!public! !
-!Interval categoriesFor: #species!accessing!public! !
-!Interval categoriesFor: #start!accessing!public! !
-!Interval categoriesFor: #start:!accessing!public! !
-!Interval categoriesFor: #step!accessing!public! !
-!Interval categoriesFor: #step:!accessing!public! !
-!Interval categoriesFor: #stop!accessing!public! !
-!Interval categoriesFor: #stop:!accessing!public! !
-!Interval categoriesFor: #storeOn:!printing!public! !
-!Interval categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+!Interval categoriesForMethods!
+-!arithmetic!public! !
++!arithmetic!public! !
+=!comparing!public! !
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+collect:!enumerating!public! !
+displayOn:!printing!public! !
+first!accessing!public! !
+hash!comparing!public! !
+includes:!public!testing! !
+inject:into:!enumerating!public! !
+isEmpty!public!testing! !
+last!accessing!public! !
+printOn:!printing!public! !
+setFrom:to:by:!accessing!private! !
+size!accessing!public! !
+species!accessing!public! !
+start!accessing!public! !
+start:!accessing!public! !
+step!accessing!public! !
+step:!accessing!public! !
+stop!accessing!public! !
+stop:!accessing!public! !
+storeOn:!printing!public! !
+uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+!
 
 Interval methodProtocol: #Interval attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
 
@@ -282,9 +284,11 @@ new
 	"Use #from:to:[by:]"
 
 	^self shouldNotImplement! !
-!Interval class categoriesFor: #from:to:!instance creation!public! !
-!Interval class categoriesFor: #from:to:by:!instance creation!public! !
-!Interval class categoriesFor: #new!instance creation!private! !
+!Interval class categoriesForMethods!
+from:to:!instance creation!public! !
+from:to:by:!instance creation!public! !
+new!instance creation!private! !
+!
 
 Interval class methodProtocol: #'Interval factory' attributes: #(#ansi #readOnly) selectors: #(#from:to: #from:to:by:)!
 

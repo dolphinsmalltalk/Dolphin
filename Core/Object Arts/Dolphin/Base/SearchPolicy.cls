@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SearchPolicy
 	instanceVariableNames: ''
@@ -88,15 +88,17 @@ printOn: aPuttableStream
 				space;
 				display: symbol]
 		ifNil: [super printOn: aPuttableStream]! !
-!SearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!SearchPolicy categoriesFor: #hash:!comparing!public! !
-!SearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
-!SearchPolicy categoriesFor: #name!accessing!public! !
-!SearchPolicy categoriesFor: #newLookupTable!operations!public! !
-!SearchPolicy categoriesFor: #newSet!operations!public! !
-!SearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
-!SearchPolicy categoriesFor: #printOn:!public! !
+!SearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+hash:!comparing!public! !
+hash:max:!comparing!public! !
+keyAtValue:in:ifAbsent:!public!searching! !
+name!accessing!public! !
+newLookupTable!operations!public! !
+newSet!operations!public! !
+nextIndexOf:in:from:to:!public!searching! !
+printOn:!public! !
+!
 
 SearchPolicy methodProtocol: #comparisonPolicy attributes: #(#readOnly) selectors: #(#compare:with:)!
 SearchPolicy methodProtocol: #searchPolicy attributes: #(#readOnly) selectors: #(#compare:with: #hash: #hash:max: #keyAtValue:in:ifAbsent: #nextIndexOf:in:from:to:)!
@@ -140,10 +142,12 @@ never
 	are never considered equal)."
 
 	^NeverSearchPolicy current! !
-!SearchPolicy class categoriesFor: #always!instance creation!public! !
-!SearchPolicy class categoriesFor: #association!instance creation!public! !
-!SearchPolicy class categoriesFor: #caseInsensitive!instance creation!public! !
-!SearchPolicy class categoriesFor: #equality!instance creation!public! !
-!SearchPolicy class categoriesFor: #identity!instance creation!public! !
-!SearchPolicy class categoriesFor: #never!instance creation!public! !
+!SearchPolicy class categoriesForMethods!
+always!instance creation!public! !
+association!instance creation!public! !
+caseInsensitive!instance creation!public! !
+equality!instance creation!public! !
+identity!instance creation!public! !
+never!instance creation!public! !
+!
 

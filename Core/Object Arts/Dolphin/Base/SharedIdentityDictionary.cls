@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SharedLookupTable variableSubclass: #SharedIdentityDictionary
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ searchPolicy
 	"Answer the receiver's <searchPolicy>."
 
 	^SearchPolicy identity! !
-!SharedIdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!SharedIdentityDictionary categoriesFor: #hash:max:!private!searching! !
-!SharedIdentityDictionary categoriesFor: #keysClass!constants!public! !
-!SharedIdentityDictionary categoriesFor: #searchPolicy!constants!public! !
+!SharedIdentityDictionary categoriesForMethods!
+findKeyOrNil:!private!searching! !
+hash:max:!private!searching! !
+keysClass!constants!public! !
+searchPolicy!constants!public! !
+!
 

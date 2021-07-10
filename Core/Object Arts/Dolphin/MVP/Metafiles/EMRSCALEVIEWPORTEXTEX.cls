@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 	instanceVariableNames: ''
@@ -69,14 +69,16 @@ yNum: anInteger
 	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yNum put: anInteger! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom:!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum:!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yDenom:!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum!**compiled accessors**!public! !
-!EMRSCALEVIEWPORTEXTEX categoriesFor: #yNum:!**compiled accessors**!public! !
+!EMRSCALEVIEWPORTEXTEX categoriesForMethods!
+xDenom!**compiled accessors**!public! !
+xDenom:!**compiled accessors**!public! !
+xNum!**compiled accessors**!public! !
+xNum:!**compiled accessors**!public! !
+yDenom!**compiled accessors**!public! !
+yDenom:!**compiled accessors**!public! !
+yNum!**compiled accessors**!public! !
+yNum:!**compiled accessors**!public! !
+!
 
 !EMRSCALEVIEWPORTEXTEX class methodsFor!
 
@@ -118,7 +120,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SCALEVIEWPORTEXTEX with: EMR_SCALEWINDOWEXTEX! !
-!EMRSCALEVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSCALEVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSCALEVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
+!EMRSCALEVIEWPORTEXTEX class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

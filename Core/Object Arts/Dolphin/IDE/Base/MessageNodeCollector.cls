@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StParseNodeVisitor subclass: #MessageNodeCollector
 	instanceVariableNames: 'messages'
@@ -19,9 +19,11 @@ messages
 visitMessageNode: aMessageNode
 	messages addLast: aMessageNode.
 	super visitMessageNode: aMessageNode! !
-!MessageNodeCollector categoriesFor: #initialize!initializing!private! !
-!MessageNodeCollector categoriesFor: #messages!accessing!public! !
-!MessageNodeCollector categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
+!MessageNodeCollector categoriesForMethods!
+initialize!initializing!private! !
+messages!accessing!public! !
+visitMessageNode:!public!visitor/double dispatching! !
+!
 
 !MessageNodeCollector class methodsFor!
 
@@ -29,5 +31,7 @@ messagesSentBy: anStProgramNode
 	^(self new)
 		visitNode: anStProgramNode;
 		messages! !
-!MessageNodeCollector class categoriesFor: #messagesSentBy:!enquiries!public! !
+!MessageNodeCollector class categoriesForMethods!
+messagesSentBy:!enquiries!public! !
+!
 

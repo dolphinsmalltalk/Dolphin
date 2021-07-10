@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IFont
 	instanceVariableNames: ''
@@ -453,51 +453,53 @@ weight: pweight
 	"Set the 'Weight' property of the receiver to the <sword> value of the argument."
 
 	self put_Weight: pweight! !
-!IFont categoriesFor: #=!methods!public! !
-!IFont categoriesFor: #addRefHfont:!methods!public! !
-!IFont categoriesFor: #AddRefHfont:!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #bold!**auto generated**!properties!public! !
-!IFont categoriesFor: #bold:!**auto generated**!properties!public! !
-!IFont categoriesFor: #charset!**auto generated**!properties!public! !
-!IFont categoriesFor: #charset:!**auto generated**!properties!public! !
-!IFont categoriesFor: #clone!**auto generated**!methods!public! !
-!IFont categoriesFor: #Clone:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Bold:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Charset:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_hFont:!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Italic:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Size:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Underline:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #get_Weight:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #hFont!properties!public! !
-!IFont categoriesFor: #isEqual:!methods!public! !
-!IFont categoriesFor: #IsEqual:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #italic!**auto generated**!properties!public! !
-!IFont categoriesFor: #italic:!**auto generated**!properties!public! !
-!IFont categoriesFor: #name!**auto generated**!properties!public! !
-!IFont categoriesFor: #name:!**auto generated**!properties!public! !
-!IFont categoriesFor: #put_Bold:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Charset:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Italic:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Name:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Size:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Underline:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #put_Weight:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #releaseHfont:!methods!public! !
-!IFont categoriesFor: #ReleaseHfont:!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #setRatio:cyHimetric:!**auto generated**!methods!public! !
-!IFont categoriesFor: #SetRatio:cyHimetric:!**auto generated**!COM Interfaces-IFont!private! !
-!IFont categoriesFor: #size!**auto generated**!properties!public! !
-!IFont categoriesFor: #size:!properties!public! !
-!IFont categoriesFor: #strikethrough!**auto generated**!properties!public! !
-!IFont categoriesFor: #strikethrough:!**auto generated**!properties!public! !
-!IFont categoriesFor: #underline!**auto generated**!properties!public! !
-!IFont categoriesFor: #underline:!**auto generated**!properties!public! !
-!IFont categoriesFor: #weight!**auto generated**!properties!public! !
-!IFont categoriesFor: #weight:!**auto generated**!properties!public! !
+!IFont categoriesForMethods!
+=!methods!public! !
+addRefHfont:!methods!public! !
+AddRefHfont:!COM Interfaces-IFont!private! !
+bold!**auto generated**!properties!public! !
+bold:!**auto generated**!properties!public! !
+charset!**auto generated**!properties!public! !
+charset:!**auto generated**!properties!public! !
+clone!**auto generated**!methods!public! !
+Clone:!**auto generated**!COM Interfaces-IFont!private! !
+get_Bold:!**auto generated**!COM Interfaces-IFont!private! !
+get_Charset:!**auto generated**!COM Interfaces-IFont!private! !
+get_hFont:!COM Interfaces-IFont!private! !
+get_Italic:!**auto generated**!COM Interfaces-IFont!private! !
+get_Name:!**auto generated**!COM Interfaces-IFont!private! !
+get_Size:!**auto generated**!COM Interfaces-IFont!private! !
+get_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
+get_Underline:!**auto generated**!COM Interfaces-IFont!private! !
+get_Weight:!**auto generated**!COM Interfaces-IFont!private! !
+hFont!properties!public! !
+isEqual:!methods!public! !
+IsEqual:!**auto generated**!COM Interfaces-IFont!private! !
+italic!**auto generated**!properties!public! !
+italic:!**auto generated**!properties!public! !
+name!**auto generated**!properties!public! !
+name:!**auto generated**!properties!public! !
+put_Bold:!**auto generated**!COM Interfaces-IFont!private! !
+put_Charset:!**auto generated**!COM Interfaces-IFont!private! !
+put_Italic:!**auto generated**!COM Interfaces-IFont!private! !
+put_Name:!**auto generated**!COM Interfaces-IFont!private! !
+put_Size:!**auto generated**!COM Interfaces-IFont!private! !
+put_Strikethrough:!**auto generated**!COM Interfaces-IFont!private! !
+put_Underline:!**auto generated**!COM Interfaces-IFont!private! !
+put_Weight:!**auto generated**!COM Interfaces-IFont!private! !
+releaseHfont:!methods!public! !
+ReleaseHfont:!COM Interfaces-IFont!private! !
+setRatio:cyHimetric:!**auto generated**!methods!public! !
+SetRatio:cyHimetric:!**auto generated**!COM Interfaces-IFont!private! !
+size!**auto generated**!properties!public! !
+size:!properties!public! !
+strikethrough!**auto generated**!properties!public! !
+strikethrough:!**auto generated**!properties!public! !
+underline!**auto generated**!properties!public! !
+underline:!**auto generated**!properties!public! !
+weight!**auto generated**!properties!public! !
+weight:!**auto generated**!properties!public! !
+!
 
 !IFont class methodsFor!
 
@@ -559,6 +561,8 @@ defineFunctions
 		defineFunction: #ReleaseHfont:
 			argumentTypes: 'handle'
 ! !
-!IFont class categoriesFor: #clsid!constants!private! !
-!IFont class categoriesFor: #defineFunctions!initializing!public! !
+!IFont class categoriesForMethods!
+clsid!constants!private! !
+defineFunctions!initializing!public! !
+!
 

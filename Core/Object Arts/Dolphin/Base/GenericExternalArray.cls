@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArray subclass: #GenericExternalArray
 	instanceVariableNames: 'elementClass owner'
@@ -81,15 +81,17 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 			[:i | 
 			operation value: i value: (self newElementAt: address).
 			address := address + spacing]! !
-!GenericExternalArray categoriesFor: #asArray!converting!public! !
-!GenericExternalArray categoriesFor: #base!accessing!private! !
-!GenericExternalArray categoriesFor: #elementClass!accessing!public! !
-!GenericExternalArray categoriesFor: #elementClass:!accessing!private! !
-!GenericExternalArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
-!GenericExternalArray categoriesFor: #newElementAt:!helpers!private! !
-!GenericExternalArray categoriesFor: #owner:!accessing!private! !
-!GenericExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
-!GenericExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!GenericExternalArray categoriesForMethods!
+asArray!converting!public! !
+base!accessing!private! !
+elementClass!accessing!public! !
+elementClass:!accessing!private! !
+needsFree!initializing!private!realizing/unrealizing! !
+newElementAt:!helpers!private! !
+owner:!accessing!private! !
+uncheckedAt:!accessing!private! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!
 
 !GenericExternalArray class methodsFor!
 
@@ -112,6 +114,8 @@ withAll: aCollection elementClass: structClass
 			answer at: i put: elem.
 			i + 1].
 	^answer! !
-!GenericExternalArray class categoriesFor: #length:elementClass:!instance creation!public! !
-!GenericExternalArray class categoriesFor: #withAll:elementClass:!instance creation!public! !
+!GenericExternalArray class categoriesForMethods!
+length:elementClass:!instance creation!public! !
+withAll:elementClass:!instance creation!public! !
+!
 

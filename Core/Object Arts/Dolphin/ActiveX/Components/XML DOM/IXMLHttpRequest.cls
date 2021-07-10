@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXMLHttpRequest
 	instanceVariableNames: ''
@@ -287,34 +287,36 @@ statusText
 	self get_statusText: answer.
 	^answer asObject
 ! !
-!IXMLHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
-!IXMLHttpRequest categoriesFor: #get_readyState:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseBody:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_responseXML:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_status:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #get_statusText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #getAllResponseHeaders!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #GetAllResponseHeaders:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #getResponseHeader:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #GetResponseHeader:pbstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #onreadystatechange:!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #open:bstrUrl:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #Open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #put_onreadystatechange:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #readyState!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseBody!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseStream!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseText!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #responseXML!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #send!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #send:!**auto generated**!methods!public! !
-!IXMLHttpRequest categoriesFor: #Send:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
-!IXMLHttpRequest categoriesFor: #SetRequestHeader:bstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
-!IXMLHttpRequest categoriesFor: #status!**auto generated**!properties!public! !
-!IXMLHttpRequest categoriesFor: #statusText!**auto generated**!properties!public! !
+!IXMLHttpRequest categoriesForMethods!
+Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
+get_readyState:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+get_responseBody:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+get_responseStream:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+get_responseText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+get_responseXML:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+get_status:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+get_statusText:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+getAllResponseHeaders!**auto generated**!methods!public! !
+GetAllResponseHeaders:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+getResponseHeader:!**auto generated**!methods!public! !
+GetResponseHeader:pbstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+onreadystatechange:!**auto generated**!properties!public! !
+open:bstrUrl:!**auto generated**!methods!public! !
+open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!methods!public! !
+Open:bstrUrl:varAsync:bstrUser:bstrPassword:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+put_onreadystatechange:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+readyState!**auto generated**!properties!public! !
+responseBody!**auto generated**!properties!public! !
+responseStream!**auto generated**!properties!public! !
+responseText!**auto generated**!properties!public! !
+responseXML!**auto generated**!properties!public! !
+send!**auto generated**!methods!public! !
+send:!**auto generated**!methods!public! !
+Send:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
+SetRequestHeader:bstrValue:!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
+status!**auto generated**!properties!public! !
+statusText!**auto generated**!properties!public! !
+!
 
 !IXMLHttpRequest class methodsFor!
 
@@ -381,10 +383,12 @@ newXMLHTTP60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0A-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXMLHttpRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP26!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP30!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP40!**auto generated**!instance creation!public! !
-!IXMLHttpRequest class categoriesFor: #newXMLHTTP60!**auto generated**!instance creation!public! !
+!IXMLHttpRequest class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newXMLHTTP!**auto generated**!instance creation!public! !
+newXMLHTTP26!**auto generated**!instance creation!public! !
+newXMLHTTP30!**auto generated**!instance creation!public! !
+newXMLHTTP40!**auto generated**!instance creation!public! !
+newXMLHTTP60!**auto generated**!instance creation!public! !
+!
 

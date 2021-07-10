@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MenuItem subclass: #DividerMenuItem
 	instanceVariableNames: ''
@@ -81,18 +81,20 @@ text
 	"Private - Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^''! !
-!DividerMenuItem categoriesFor: #acceleratorKey!accessing!private! !
-!DividerMenuItem categoriesFor: #acceleratorKey:!accessing!private! !
-!DividerMenuItem categoriesFor: #command!accessing!private! !
-!DividerMenuItem categoriesFor: #commandDescription!accessing!private! !
-!DividerMenuItem categoriesFor: #displayOn:!displaying!public! !
-!DividerMenuItem categoriesFor: #id!accessing!public! !
-!DividerMenuItem categoriesFor: #isDivider!public!testing! !
-!DividerMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!DividerMenuItem categoriesFor: #queryAlong:!operations!public! !
-!DividerMenuItem categoriesFor: #styleName!accessing!public! !
-!DividerMenuItem categoriesFor: #styleName:!accessing!private! !
-!DividerMenuItem categoriesFor: #text!accessing!private! !
+!DividerMenuItem categoriesForMethods!
+acceleratorKey!accessing!private! !
+acceleratorKey:!accessing!private! !
+command!accessing!private! !
+commandDescription!accessing!private! !
+displayOn:!displaying!public! !
+id!accessing!public! !
+isDivider!public!testing! !
+populateItemInfo:!private!realizing/unrealizing! !
+queryAlong:!operations!public! !
+styleName!accessing!public! !
+styleName:!accessing!private! !
+text!accessing!private! !
+!
 
 !DividerMenuItem class methodsFor!
 
@@ -161,13 +163,15 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	BarBreak := Break := Separator := nil! !
-!DividerMenuItem class categoriesFor: #barBreak!instance creation!public! !
-!DividerMenuItem class categoriesFor: #break!instance creation!public! !
-!DividerMenuItem class categoriesFor: #initialize!development!initializing!private! !
-!DividerMenuItem class categoriesFor: #new!instance creation!public! !
-!DividerMenuItem class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!DividerMenuItem class categoriesFor: #separator!instance creation!public! !
-!DividerMenuItem class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!DividerMenuItem class categoriesFor: #styleNameChoices!constants!public! !
-!DividerMenuItem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!DividerMenuItem class categoriesForMethods!
+barBreak!instance creation!public! !
+break!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+separator!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+styleNameChoices!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

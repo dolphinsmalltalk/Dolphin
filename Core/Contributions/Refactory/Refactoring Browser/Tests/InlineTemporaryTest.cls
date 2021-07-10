@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #InlineTemporaryTest
 	instanceVariableNames: ''
@@ -45,8 +45,10 @@ testInlineTemporaryReadBeforeWritten
 						for: (RefactoryTestDataApp sourceCodeAt: #inlineTemporary))
 				from: #inlineTemporary
 				in: RefactoryTestDataApp)! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporary!public!tests! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporaryBadInterval!public!tests! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporaryMutlipleAssignment!public!tests! !
-!InlineTemporaryTest categoriesFor: #testInlineTemporaryReadBeforeWritten!public!tests! !
+!InlineTemporaryTest categoriesForMethods!
+testInlineTemporary!public!tests! !
+testInlineTemporaryBadInterval!public!tests! !
+testInlineTemporaryMutlipleAssignment!public!tests! !
+testInlineTemporaryReadBeforeWritten!public!tests! !
+!
 

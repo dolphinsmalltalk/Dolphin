@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassBrowserAbstractTest subclass: #SystemBrowserTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ SystemBrowserTest comment: ''!
 
 browserClass
 	^SystemBrowserShell! !
-!SystemBrowserTest categoriesFor: #browserClass!public!Running! !
+!SystemBrowserTest categoriesForMethods!
+browserClass!public!Running! !
+!
 

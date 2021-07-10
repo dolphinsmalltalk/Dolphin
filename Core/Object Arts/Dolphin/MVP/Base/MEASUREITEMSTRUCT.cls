@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MEASUREITEMSTRUCT
 	instanceVariableNames: ''
@@ -52,13 +52,15 @@ itemWidth: anInteger
 	"Set the receiver's 'itemWidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_itemWidth put: anInteger! !
-!MEASUREITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemHeight!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemHeight:!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemID!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemWidth!**compiled accessors**!public! !
-!MEASUREITEMSTRUCT categoriesFor: #itemWidth:!**compiled accessors**!public! !
+!MEASUREITEMSTRUCT categoriesForMethods!
+CtlID!**compiled accessors**!public! !
+CtlType!**compiled accessors**!public! !
+itemHeight!**compiled accessors**!public! !
+itemHeight:!**compiled accessors**!public! !
+itemID!**compiled accessors**!public! !
+itemWidth!**compiled accessors**!public! !
+itemWidth:!**compiled accessors**!public! !
+!
 
 !MEASUREITEMSTRUCT class methodsFor!
 
@@ -87,6 +89,8 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemWidth #itemHeight)! !
-!MEASUREITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!MEASUREITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MEASUREITEMSTRUCT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

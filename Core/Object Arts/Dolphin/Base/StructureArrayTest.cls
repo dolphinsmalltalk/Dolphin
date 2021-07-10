@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GenericExternalArrayTest subclass: #StructureArrayTest
 	instanceVariableNames: ''
@@ -16,6 +16,8 @@ arrayClass
 newArrayOfIntegers: anArray
 	^self arrayClass withAll: (anArray collect: [:each | self elementFromValue: each])
 		elementClass: self numericElementClass! !
-!StructureArrayTest categoriesFor: #arrayClass!constants!private! !
-!StructureArrayTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
+!StructureArrayTest categoriesForMethods!
+arrayClass!constants!private! !
+newArrayOfIntegers:!helpers!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaLexerMetadataTest subclass: #ScintillaLexerPropertyTest
 	instanceVariableNames: ''
@@ -25,5 +25,7 @@ testViewId
 	prop2 := testMethod value: ScintillaLexerProperty withArguments: {view. 1}.
 	self assert: prop2 view identicalTo: view.
 	self assert: prop2 id equals: 1! !
-!ScintillaLexerPropertyTest categoriesFor: #testViewId!public!unit tests! !
+!ScintillaLexerPropertyTest categoriesForMethods!
+testViewId!public!unit tests! !
+!
 

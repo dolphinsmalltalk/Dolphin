@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ExternalProcess
 	instanceVariableNames: 'commandLine directory millisecondsToWait stdinFilename stdoutFilename stderrFilename si pi stdin stdout stderr processExitCode threadExitCode'
@@ -269,36 +269,38 @@ waitForCompletion
 		ifTrue: [ self kill;
 			  	  close.
 			  ^ExternalProcessWaitTimeout signal: 'Process execution timed out' with: self ]! !
-!ExternalProcess categoriesFor: #close!execution control!public! !
-!ExternalProcess categoriesFor: #closeFiles!operations!private! !
-!ExternalProcess categoriesFor: #closeProcessHandles!operations!private! !
-!ExternalProcess categoriesFor: #commandLine!accessing!public! !
-!ExternalProcess categoriesFor: #commandLine:!accessing!public! !
-!ExternalProcess categoriesFor: #directory!accessing!public! !
-!ExternalProcess categoriesFor: #directory:!accessing!public! !
-!ExternalProcess categoriesFor: #executeAsync!execution control!public! !
-!ExternalProcess categoriesFor: #executeCommand:inDirectory:waitForSeconds:stdin:stdout:stderr:!operations!public! !
-!ExternalProcess categoriesFor: #executeSync!execution control!public! !
-!ExternalProcess categoriesFor: #getExitCodes!public! !
-!ExternalProcess categoriesFor: #initialize!initialize/release!public! !
-!ExternalProcess categoriesFor: #initializeFileHandles!initialize/release!private! !
-!ExternalProcess categoriesFor: #isAlive!accessing!public! !
-!ExternalProcess categoriesFor: #isTerminated!accessing!public! !
-!ExternalProcess categoriesFor: #kill!execution control!public! !
-!ExternalProcess categoriesFor: #kill:!execution control!public! !
-!ExternalProcess categoriesFor: #millisecondsToWait!accessing!public! !
-!ExternalProcess categoriesFor: #millisecondsToWait:!accessing!public! !
-!ExternalProcess categoriesFor: #processExitCode!public! !
-!ExternalProcess categoriesFor: #secondsToWait!accessing!public! !
-!ExternalProcess categoriesFor: #secondsToWait:!accessing!public! !
-!ExternalProcess categoriesFor: #stderrFilename!accessing!public! !
-!ExternalProcess categoriesFor: #stderrFilename:!accessing!public! !
-!ExternalProcess categoriesFor: #stdinFilename!accessing!public! !
-!ExternalProcess categoriesFor: #stdinFilename:!accessing!public! !
-!ExternalProcess categoriesFor: #stdoutFilename!accessing!public! !
-!ExternalProcess categoriesFor: #stdoutFilename:!accessing!public! !
-!ExternalProcess categoriesFor: #threadExitCode!public! !
-!ExternalProcess categoriesFor: #waitForCompletion!execution control!public! !
+!ExternalProcess categoriesForMethods!
+close!execution control!public! !
+closeFiles!operations!private! !
+closeProcessHandles!operations!private! !
+commandLine!accessing!public! !
+commandLine:!accessing!public! !
+directory!accessing!public! !
+directory:!accessing!public! !
+executeAsync!execution control!public! !
+executeCommand:inDirectory:waitForSeconds:stdin:stdout:stderr:!operations!public! !
+executeSync!execution control!public! !
+getExitCodes!public! !
+initialize!initialize/release!public! !
+initializeFileHandles!initialize/release!private! !
+isAlive!accessing!public! !
+isTerminated!accessing!public! !
+kill!execution control!public! !
+kill:!execution control!public! !
+millisecondsToWait!accessing!public! !
+millisecondsToWait:!accessing!public! !
+processExitCode!public! !
+secondsToWait!accessing!public! !
+secondsToWait:!accessing!public! !
+stderrFilename!accessing!public! !
+stderrFilename:!accessing!public! !
+stdinFilename!accessing!public! !
+stdinFilename:!accessing!public! !
+stdoutFilename!accessing!public! !
+stdoutFilename:!accessing!public! !
+threadExitCode!public! !
+waitForCompletion!execution control!public! !
+!
 
 !ExternalProcess class methodsFor!
 
@@ -311,7 +313,9 @@ new
 referencesToOtherPackages
 	"Private - Force references to other packages."
 	KernelLibraryExtension		"Global defined in the KernelLibraryExtension package"! !
-!ExternalProcess class categoriesFor: #infiniteTimeoutDelay!public! !
-!ExternalProcess class categoriesFor: #new!object creation!public! !
-!ExternalProcess class categoriesFor: #referencesToOtherPackages!Dependencies!private! !
+!ExternalProcess class categoriesForMethods!
+infiniteTimeoutDelay!public! !
+new!object creation!public! !
+referencesToOtherPackages!Dependencies!private! !
+!
 

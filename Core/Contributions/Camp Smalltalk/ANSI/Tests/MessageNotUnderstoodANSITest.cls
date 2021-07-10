@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #MessageNotUnderstoodANSITest
 	instanceVariableNames: ''
@@ -116,26 +116,28 @@ testXsignalX
 testXtag
 	" <exceptionDescription>#tag "
 	#'Exception'.! !
-!MessageNotUnderstoodANSITest categoriesFor: #canonicalObject!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #protocol!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXdefaultAction!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXdescription!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXisNested!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXisResumable!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXmessage!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXmessageText!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXmessageTextX!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXouter!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXpass!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXreceiver!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXresignalAsX!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXresume!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXresumeX!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXretry!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXretryUsingX!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXreturn!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXreturnX!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXsignal!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXsignalX!public! !
-!MessageNotUnderstoodANSITest categoriesFor: #testXtag!public! !
+!MessageNotUnderstoodANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXdefaultAction!public! !
+testXdescription!public! !
+testXisNested!public! !
+testXisResumable!public! !
+testXmessage!public! !
+testXmessageText!public! !
+testXmessageTextX!public! !
+testXouter!public! !
+testXpass!public! !
+testXreceiver!public! !
+testXresignalAsX!public! !
+testXresume!public! !
+testXresumeX!public! !
+testXretry!public! !
+testXretryUsingX!public! !
+testXreturn!public! !
+testXreturnX!public! !
+testXsignal!public! !
+testXsignalX!public! !
+testXtag!public! !
+!
 

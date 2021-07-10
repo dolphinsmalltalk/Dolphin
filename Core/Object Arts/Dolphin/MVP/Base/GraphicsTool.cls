@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #GraphicsTool
 	instanceVariableNames: 'handle ownsHandle'
@@ -200,32 +200,34 @@ stbSaveOn: anSTBOutFiler
 	self isPersistent ifFalse: [self error: 'Cannot #stbSaveOn: ' , self printString].
 	anSTBOutFiler override: handle with: nil.
 	[super stbSaveOn: anSTBOutFiler] ensure: [anSTBOutFiler removeOverrideFor: handle]! !
-!GraphicsTool categoriesFor: #asParameter!converting!public! !
-!GraphicsTool categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #basicHandle!accessing!public! !
-!GraphicsTool categoriesFor: #basicRealize!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #clearCached!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #detachHandle!accessing!public! !
-!GraphicsTool categoriesFor: #equals:!comparing!public! !
-!GraphicsTool categoriesFor: #free!public!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #getData:!accessing!private! !
-!GraphicsTool categoriesFor: #getDataW:!accessing!private! !
-!GraphicsTool categoriesFor: #getStockObject:!accessing!private! !
-!GraphicsTool categoriesFor: #handle!accessing!public! !
-!GraphicsTool categoriesFor: #handle:!accessing!private! !
-!GraphicsTool categoriesFor: #initialize!initializing!public! !
-!GraphicsTool categoriesFor: #isPersistent!private!testing! !
-!GraphicsTool categoriesFor: #isRealized!public!testing! !
-!GraphicsTool categoriesFor: #onExit!event handling!private! !
-!GraphicsTool categoriesFor: #onStartup!event handling!private! !
-!GraphicsTool categoriesFor: #ownedHandle:!accessing!private! !
-!GraphicsTool categoriesFor: #ownsHandle!public!testing! !
-!GraphicsTool categoriesFor: #ownsHandle:!initializing!private! !
-!GraphicsTool categoriesFor: #postCopy!copying!public! !
-!GraphicsTool categoriesFor: #realize!public!realizing/unrealizing! !
-!GraphicsTool categoriesFor: #stbFixup:at:!binary filing!public! !
-!GraphicsTool categoriesFor: #stbSaveOn:!binary filing!public! !
+!GraphicsTool categoriesForMethods!
+asParameter!converting!public! !
+basicFree!private!realizing/unrealizing! !
+basicHandle!accessing!public! !
+basicRealize!private!realizing/unrealizing! !
+clearCached!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+detachHandle!accessing!public! !
+equals:!comparing!public! !
+free!public!realizing/unrealizing! !
+getData:!accessing!private! !
+getDataW:!accessing!private! !
+getStockObject:!accessing!private! !
+handle!accessing!public! !
+handle:!accessing!private! !
+initialize!initializing!public! !
+isPersistent!private!testing! !
+isRealized!public!testing! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+ownedHandle:!accessing!private! !
+ownsHandle!public!testing! !
+ownsHandle:!initializing!private! !
+postCopy!copying!public! !
+realize!public!realizing/unrealizing! !
+stbFixup:at:!binary filing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !GraphicsTool class methodsFor!
 
@@ -273,11 +275,13 @@ onStartup2
 	"Private - Perform system startup processing for all subclasses."
 
 	self subclasses do: [:c | c onStartup2]! !
-!GraphicsTool class categoriesFor: #fromHandle:!instance creation!public! !
-!GraphicsTool class categoriesFor: #fromOwnedHandle:!instance creation!public! !
-!GraphicsTool class categoriesFor: #icon!constants!public! !
-!GraphicsTool class categoriesFor: #new!instance creation!public! !
-!GraphicsTool class categoriesFor: #onExit!event handling!public! !
-!GraphicsTool class categoriesFor: #onStartup!event handling!public! !
-!GraphicsTool class categoriesFor: #onStartup2!event handling!private! !
+!GraphicsTool class categoriesForMethods!
+fromHandle:!instance creation!public! !
+fromOwnedHandle:!instance creation!public! !
+icon!constants!public! !
+new!instance creation!public! !
+onExit!event handling!public! !
+onStartup!event handling!public! !
+onStartup2!event handling!private! !
+!
 

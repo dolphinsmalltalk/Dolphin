@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WORD subclass: #SWORD
 	instanceVariableNames: ''
@@ -29,9 +29,11 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_value put: anInteger! !
-!SWORD categoriesFor: #isSigned!public!testing! !
-!SWORD categoriesFor: #value!**compiled accessors**!public! !
-!SWORD categoriesFor: #value:!**compiled accessors**!public! !
+!SWORD categoriesForMethods!
+isSigned!public!testing! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !SWORD class methodsFor!
 
@@ -52,7 +54,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SWORD class categoriesFor: #defineFields!public!template definition! !
-!SWORD class categoriesFor: #initialize!development!initializing!private! !
-!SWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!SWORD class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

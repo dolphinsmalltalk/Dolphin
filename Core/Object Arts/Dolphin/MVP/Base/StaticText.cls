@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticView subclass: #StaticText
 	instanceVariableNames: ''
@@ -144,23 +144,25 @@ value: anObject
 	receiver's window directly via #displayValue:."
 
 	self displayValue: (self typeconverter convertFromLeftToRight: anObject)! !
-!StaticText categoriesFor: #alignment!accessing!public! !
-!StaticText categoriesFor: #alignment:!accessing!public! !
-!StaticText categoriesFor: #beCenterAligned!accessing!public! !
-!StaticText categoriesFor: #beLeftAligned!accessing!public! !
-!StaticText categoriesFor: #beNoWordWrap!accessing!public! !
-!StaticText categoriesFor: #beRightAligned!accessing!public! !
-!StaticText categoriesFor: #calculateExtent:!geometry!private! !
-!StaticText categoriesFor: #clear!operations!public! !
-!StaticText categoriesFor: #displayValue!private!updating! !
-!StaticText categoriesFor: #displayValue:!private!updating! !
-!StaticText categoriesFor: #getAlignment!accessing!private! !
-!StaticText categoriesFor: #initialize!initializing!private! !
-!StaticText categoriesFor: #isSingleLine!private!testing! !
-!StaticText categoriesFor: #refreshContents!public!updating! !
-!StaticText categoriesFor: #setAlignment:!accessing!private! !
-!StaticText categoriesFor: #value!accessing!public! !
-!StaticText categoriesFor: #value:!accessing!public! !
+!StaticText categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+beCenterAligned!accessing!public! !
+beLeftAligned!accessing!public! !
+beNoWordWrap!accessing!public! !
+beRightAligned!accessing!public! !
+calculateExtent:!geometry!private! !
+clear!operations!public! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+getAlignment!accessing!private! !
+initialize!initializing!private! !
+isSingleLine!private!testing! !
+refreshContents!public!updating! !
+setAlignment:!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !StaticText class methodsFor!
 
@@ -184,6 +186,8 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself)! !
-!StaticText class categoriesFor: #icon!constants!public! !
-!StaticText class categoriesFor: #initialize!development!initializing!private! !
+!StaticText class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BYTE subclass: #BOOLEAN
 	instanceVariableNames: ''
@@ -19,8 +19,10 @@ value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
-!BOOLEAN categoriesFor: #value!**compiled accessors**!public! !
-!BOOLEAN categoriesFor: #value:!**compiled accessors**!public! !
+!BOOLEAN categoriesForMethods!
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !BOOLEAN class methodsFor!
 
@@ -32,6 +34,8 @@ defineFields
 
 fileOutStem
 	^super fileOutStem , '_struct'! !
-!BOOLEAN class categoriesFor: #defineFields!public!template definition! !
-!BOOLEAN class categoriesFor: #fileOutStem!development!private!source filing! !
+!BOOLEAN class categoriesForMethods!
+defineFields!public!template definition! !
+fileOutStem!development!private!source filing! !
+!
 

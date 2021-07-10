@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #SYSTEMTIME
 	instanceVariableNames: ''
@@ -144,35 +144,37 @@ wYear: anInteger
 
 year
 	^self wYear! !
-!SYSTEMTIME categoriesFor: #asDateAndTime!converting!public! !
-!SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
-!SYSTEMTIME categoriesFor: #asSYSTEMTIME!public! !
-!SYSTEMTIME categoriesFor: #dayOfMonth!accessing!public! !
-!SYSTEMTIME categoriesFor: #dayOfWeek!accessing!public! !
-!SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !
-!SYSTEMTIME categoriesFor: #hour!accessing!public! !
-!SYSTEMTIME categoriesFor: #hour12!accessing!public! !
-!SYSTEMTIME categoriesFor: #hour24!accessing!public! !
-!SYSTEMTIME categoriesFor: #minute!accessing!public! !
-!SYSTEMTIME categoriesFor: #month!accessing!public! !
-!SYSTEMTIME categoriesFor: #second!accessing!public! !
-!SYSTEMTIME categoriesFor: #wDay!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wDay:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wDayOfWeek!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wDayOfWeek:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wHour!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wHour:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMilliseconds!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMilliseconds:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMinute!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMinute:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMonth!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wMonth:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wSecond!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wSecond:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wYear!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #wYear:!**compiled accessors**!public! !
-!SYSTEMTIME categoriesFor: #year!accessing!public! !
+!SYSTEMTIME categoriesForMethods!
+asDateAndTime!converting!public! !
+asFILETIME!converting!public! !
+asSYSTEMTIME!public! !
+dayOfMonth!accessing!public! !
+dayOfWeek!accessing!public! !
+displayOn:!displaying!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+minute!accessing!public! !
+month!accessing!public! !
+second!accessing!public! !
+wDay!**compiled accessors**!public! !
+wDay:!**compiled accessors**!public! !
+wDayOfWeek!**compiled accessors**!public! !
+wDayOfWeek:!**compiled accessors**!public! !
+wHour!**compiled accessors**!public! !
+wHour:!**compiled accessors**!public! !
+wMilliseconds!**compiled accessors**!public! !
+wMilliseconds:!**compiled accessors**!public! !
+wMinute!**compiled accessors**!public! !
+wMinute:!**compiled accessors**!public! !
+wMonth!**compiled accessors**!public! !
+wMonth:!**compiled accessors**!public! !
+wSecond!**compiled accessors**!public! !
+wSecond:!**compiled accessors**!public! !
+wYear!**compiled accessors**!public! !
+wYear:!**compiled accessors**!public! !
+year!accessing!public! !
+!
 
 !SYSTEMTIME class methodsFor!
 
@@ -222,10 +224,12 @@ nowUTC
 	answer := self new.
 	KernelLibrary default getSystemTime: answer.
 	^answer! !
-!SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
-!SYSTEMTIME class categoriesFor: #defineFields!public!template definition! !
-!SYSTEMTIME class categoriesFor: #fromFILETIME:!instance creation!public! !
-!SYSTEMTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!SYSTEMTIME class categoriesFor: #now!instance creation!private! !
-!SYSTEMTIME class categoriesFor: #nowUTC!instance creation!public! !
+!SYSTEMTIME class categoriesForMethods!
+day:month:year:!instance creation!private! !
+defineFields!public!template definition! !
+fromFILETIME:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+now!instance creation!private! !
+nowUTC!instance creation!public! !
+!
 

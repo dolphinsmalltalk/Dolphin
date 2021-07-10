@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Signal subclass: #NotificationSignal
 	instanceVariableNames: ''
@@ -27,7 +27,9 @@ exceptionClass
 	is signalled."
 
 	^RaisedNotificationSignal! !
-!NotificationSignal categoriesFor: #defaultAction:!handling!private! !
-!NotificationSignal categoriesFor: #defaultResumption!constants!private! !
-!NotificationSignal categoriesFor: #exceptionClass!constants!private! !
+!NotificationSignal categoriesForMethods!
+defaultAction:!handling!private! !
+defaultResumption!constants!private! !
+exceptionClass!constants!private! !
+!
 

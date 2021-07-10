@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #ExternalResourceLibrary
 	instanceVariableNames: 'fileName loadFlags'
@@ -68,12 +68,14 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler
 		saveObject: self
 		as: (STBExternalResourceLibraryProxy forLibrary: self)! !
-!ExternalResourceLibrary categoriesFor: #attemptToOpen:!helpers!instance creation!private! !
-!ExternalResourceLibrary categoriesFor: #fileName!accessing!public! !
-!ExternalResourceLibrary categoriesFor: #loadFlags!constants!private! !
-!ExternalResourceLibrary categoriesFor: #loadFlags:!accessing!private! !
-!ExternalResourceLibrary categoriesFor: #open:!helpers!private! !
-!ExternalResourceLibrary categoriesFor: #stbSaveOn:!binary filing!instance creation!public! !
+!ExternalResourceLibrary categoriesForMethods!
+attemptToOpen:!helpers!instance creation!private! !
+fileName!accessing!public! !
+loadFlags!constants!private! !
+loadFlags:!accessing!private! !
+open:!helpers!private! !
+stbSaveOn:!binary filing!instance creation!public! !
+!
 
 !ExternalResourceLibrary class methodsFor!
 
@@ -173,14 +175,16 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!ExternalResourceLibrary class categoriesFor: #aliasFor:!enquiries!public! !
-!ExternalResourceLibrary class categoriesFor: #defaultLoadFlags!constants!private! !
-!ExternalResourceLibrary class categoriesFor: #initialize!development!private! !
-!ExternalResourceLibrary class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ExternalResourceLibrary class categoriesFor: #open:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #open:withAlias:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #open:withAliases:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #open:withAliases:flags:!instance creation!public! !
-!ExternalResourceLibrary class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ExternalResourceLibrary class categoriesFor: #stbVersion!binary filing!public! !
+!ExternalResourceLibrary class categoriesForMethods!
+aliasFor:!enquiries!public! !
+defaultLoadFlags!constants!private! !
+initialize!development!private! !
+onPreStripImage!class hierarchy-removing!private! !
+open:!instance creation!public! !
+open:withAlias:!instance creation!public! !
+open:withAliases:!instance creation!public! !
+open:withAliases:flags:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

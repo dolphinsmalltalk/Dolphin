@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitAbsBrowser subclass: #SUnitBrowser
 	instanceVariableNames: 'testCaseListModel showAllTextPresenter testCaseListPresenter'
@@ -399,60 +399,62 @@ wrapTest: aTest
 	^SUnitTestCaseWrapper
 		newOn: aTest
 		model: self model! !
-!SUnitBrowser categoriesFor: #browseHierarchy!commands!private! !
-!SUnitBrowser categoriesFor: #browserName!commands!private! !
-!SUnitBrowser categoriesFor: #callbackResetResults:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackResetRunningStatus!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackSetRunningStatus:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackToggledShowAll!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackToggledShowBackgroundColors!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackToggledShowIcons!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackToggledShowStatusBackgroundColors!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackToggledShowToolbar!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackToggledUseDisplayNames!model callbacks!private! !
-!SUnitBrowser categoriesFor: #callbackUpdateTestCaseStatus:withResult:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #createComponents!initializing!public! !
-!SUnitBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!SUnitBrowser categoriesFor: #debug!commands!private! !
-!SUnitBrowser categoriesFor: #inspectSelected!commands!private! !
-!SUnitBrowser categoriesFor: #model:!accessing!public! !
-!SUnitBrowser categoriesFor: #queryCommand:!commands!private! !
-!SUnitBrowser categoriesFor: #refreshTestCaseItemAtIndex:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #refreshTestCaseList!model callbacks!private! !
-!SUnitBrowser categoriesFor: #refreshTestCaseList:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #refreshTestCaseListFromTests:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #remove!commands!private! !
-!SUnitBrowser categoriesFor: #resetListFromModel!model callbacks!private! !
-!SUnitBrowser categoriesFor: #resetTestCaseListFromModel!model callbacks!private! !
-!SUnitBrowser categoriesFor: #runAll!commands!private! !
-!SUnitBrowser categoriesFor: #runSelected!commands!private! !
-!SUnitBrowser categoriesFor: #sbBrowseHierarchy!commands!private! !
-!SUnitBrowser categoriesFor: #setLabelState!model callbacks!private! !
-!SUnitBrowser categoriesFor: #setModelWithSelectedItems!event handling!private! !
-!SUnitBrowser categoriesFor: #setModelWithSelectedTestCases!event handling!private! !
-!SUnitBrowser categoriesFor: #setRunningLabel:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #setShowAllLabel!model callbacks!private! !
-!SUnitBrowser categoriesFor: #setToolbarState!model callbacks!private! !
-!SUnitBrowser categoriesFor: #shouldInitializeResources!commands!private! !
-!SUnitBrowser categoriesFor: #showAll!commands!private! !
-!SUnitBrowser categoriesFor: #showAllTextPresenter!accessing!private! !
-!SUnitBrowser categoriesFor: #showAllTextPresenter:!accessing!private! !
-!SUnitBrowser categoriesFor: #showBackgroundColors!commands!private! !
-!SUnitBrowser categoriesFor: #showIcons!commands!private! !
-!SUnitBrowser categoriesFor: #showRunningStatusInList!commands!private! !
-!SUnitBrowser categoriesFor: #showStatusPaneBackgroundColors!commands!private! !
-!SUnitBrowser categoriesFor: #showToolBar!commands!private! !
-!SUnitBrowser categoriesFor: #step!commands!private! !
-!SUnitBrowser categoriesFor: #testCaseIndexOf:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #testCaseListModel!accessing!private! !
-!SUnitBrowser categoriesFor: #testCaseListModel:!accessing!private! !
-!SUnitBrowser categoriesFor: #testCaseListPresenter!accessing!private! !
-!SUnitBrowser categoriesFor: #testCaseListPresenter:!accessing!private! !
-!SUnitBrowser categoriesFor: #updateListStateFor:with:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #wrapAllSelectedTestsFromModel!model callbacks!private! !
-!SUnitBrowser categoriesFor: #wrapAllTests:!model callbacks!private! !
-!SUnitBrowser categoriesFor: #wrapAllTestsFromModel!model callbacks!private! !
-!SUnitBrowser categoriesFor: #wrapTest:!model callbacks!private! !
+!SUnitBrowser categoriesForMethods!
+browseHierarchy!commands!private! !
+browserName!commands!private! !
+callbackResetResults:!model callbacks!private! !
+callbackResetRunningStatus!model callbacks!private! !
+callbackSetRunningStatus:!model callbacks!private! !
+callbackToggledShowAll!model callbacks!private! !
+callbackToggledShowBackgroundColors!model callbacks!private! !
+callbackToggledShowIcons!model callbacks!private! !
+callbackToggledShowStatusBackgroundColors!model callbacks!private! !
+callbackToggledShowToolbar!model callbacks!private! !
+callbackToggledUseDisplayNames!model callbacks!private! !
+callbackUpdateTestCaseStatus:withResult:!model callbacks!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+debug!commands!private! !
+inspectSelected!commands!private! !
+model:!accessing!public! !
+queryCommand:!commands!private! !
+refreshTestCaseItemAtIndex:!model callbacks!private! !
+refreshTestCaseList!model callbacks!private! !
+refreshTestCaseList:!model callbacks!private! !
+refreshTestCaseListFromTests:!model callbacks!private! !
+remove!commands!private! !
+resetListFromModel!model callbacks!private! !
+resetTestCaseListFromModel!model callbacks!private! !
+runAll!commands!private! !
+runSelected!commands!private! !
+sbBrowseHierarchy!commands!private! !
+setLabelState!model callbacks!private! !
+setModelWithSelectedItems!event handling!private! !
+setModelWithSelectedTestCases!event handling!private! !
+setRunningLabel:!model callbacks!private! !
+setShowAllLabel!model callbacks!private! !
+setToolbarState!model callbacks!private! !
+shouldInitializeResources!commands!private! !
+showAll!commands!private! !
+showAllTextPresenter!accessing!private! !
+showAllTextPresenter:!accessing!private! !
+showBackgroundColors!commands!private! !
+showIcons!commands!private! !
+showRunningStatusInList!commands!private! !
+showStatusPaneBackgroundColors!commands!private! !
+showToolBar!commands!private! !
+step!commands!private! !
+testCaseIndexOf:!model callbacks!private! !
+testCaseListModel!accessing!private! !
+testCaseListModel:!accessing!private! !
+testCaseListPresenter!accessing!private! !
+testCaseListPresenter:!accessing!private! !
+updateListStateFor:with:!model callbacks!private! !
+wrapAllSelectedTestsFromModel!model callbacks!private! !
+wrapAllTests:!model callbacks!private! !
+wrapAllTestsFromModel!model callbacks!private! !
+wrapTest:!model callbacks!private! !
+!
 
 !SUnitBrowser class methodsFor!
 
@@ -556,23 +558,25 @@ uninitialize
 	of the development system have already been removed."
 
 	self uninitializeToolClass: self! !
-!SUnitBrowser class categoriesFor: #defaultModel!accessing!private! !
-!SUnitBrowser class categoriesFor: #defaultModelClass!accessing!private! !
-!SUnitBrowser class categoriesFor: #displayOn:!displaying!public! !
-!SUnitBrowser class categoriesFor: #initialize!initializing!must strip!private! !
-!SUnitBrowser class categoriesFor: #openOnTestCase:!instance creation!public! !
-!SUnitBrowser class categoriesFor: #publishedAspects!development!public! !
-!SUnitBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!SUnitBrowser class categoriesFor: #shouldInitializeResources!configuring!public! !
-!SUnitBrowser class categoriesFor: #shouldInitializeResources:!configuring!public! !
-!SUnitBrowser class categoriesFor: #showAll!configuring!public! !
-!SUnitBrowser class categoriesFor: #showAll:!configuring!public! !
-!SUnitBrowser class categoriesFor: #showRunningStatusInList!configuring!public! !
-!SUnitBrowser class categoriesFor: #showRunningStatusInList:!configuring!public! !
-!SUnitBrowser class categoriesFor: #showStatusBackgroundColors!configuring!public! !
-!SUnitBrowser class categoriesFor: #showStatusBackgroundColors:!configuring!public! !
-!SUnitBrowser class categoriesFor: #sunitbShow:!instance creation!public! !
-!SUnitBrowser class categoriesFor: #sunitbShowAndRun:!instance creation!public! !
-!SUnitBrowser class categoriesFor: #toolsFolderHelpId!public! !
-!SUnitBrowser class categoriesFor: #uninitialize!initializing!must strip!private! !
+!SUnitBrowser class categoriesForMethods!
+defaultModel!accessing!private! !
+defaultModelClass!accessing!private! !
+displayOn:!displaying!public! !
+initialize!initializing!must strip!private! !
+openOnTestCase:!instance creation!public! !
+publishedAspects!development!public! !
+resource_Default_view!public!resources-views! !
+shouldInitializeResources!configuring!public! !
+shouldInitializeResources:!configuring!public! !
+showAll!configuring!public! !
+showAll:!configuring!public! !
+showRunningStatusInList!configuring!public! !
+showRunningStatusInList:!configuring!public! !
+showStatusBackgroundColors!configuring!public! !
+showStatusBackgroundColors:!configuring!public! !
+sunitbShow:!instance creation!public! !
+sunitbShowAndRun:!instance creation!public! !
+toolsFolderHelpId!public! !
+uninitialize!initializing!must strip!private! !
+!
 

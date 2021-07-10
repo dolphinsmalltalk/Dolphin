@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_HEADERS
 	instanceVariableNames: ''
@@ -97,14 +97,16 @@ UnknownHeaderCount: anInteger
 	"Set the receiver's 'UnknownHeaderCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_UnknownHeaderCount put: anInteger! !
-!HTTP_HEADERS categoriesFor: #knownHeaderIndex:!constants!public! !
-!HTTP_HEADERS categoriesFor: #knownHeaderName:!constants!public! !
-!HTTP_HEADERS categoriesFor: #KnownHeaders!accessing!public! !
-!HTTP_HEADERS categoriesFor: #printFieldsOn:limit:!development!printing!private! !
-!HTTP_HEADERS categoriesFor: #pUnknownHeaders!**compiled accessors**!public! !
-!HTTP_HEADERS categoriesFor: #pUnknownHeaders:!**compiled accessors**!public! !
-!HTTP_HEADERS categoriesFor: #UnknownHeaderCount!**compiled accessors**!private! !
-!HTTP_HEADERS categoriesFor: #UnknownHeaderCount:!**compiled accessors**!private! !
+!HTTP_HEADERS categoriesForMethods!
+knownHeaderIndex:!constants!public! !
+knownHeaderName:!constants!public! !
+KnownHeaders!accessing!public! !
+printFieldsOn:limit:!development!printing!private! !
+pUnknownHeaders!**compiled accessors**!public! !
+pUnknownHeaders:!**compiled accessors**!public! !
+UnknownHeaderCount!**compiled accessors**!private! !
+UnknownHeaderCount:!**compiled accessors**!private! !
+!
 
 !HTTP_HEADERS class methodsFor!
 
@@ -150,9 +152,11 @@ knownHeaderIndex: headerName
 
 knownHeaderName: anInteger
 	^self indexToHeaderMap at: anInteger! !
-!HTTP_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_HEADERS class categoriesFor: #headerToIndexMap!public! !
-!HTTP_HEADERS class categoriesFor: #indexToHeaderMap!public! !
-!HTTP_HEADERS class categoriesFor: #knownHeaderIndex:!public! !
-!HTTP_HEADERS class categoriesFor: #knownHeaderName:!public! !
+!HTTP_HEADERS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+headerToIndexMap!public! !
+indexToHeaderMap!public! !
+knownHeaderIndex:!public! !
+knownHeaderName:!public! !
+!
 

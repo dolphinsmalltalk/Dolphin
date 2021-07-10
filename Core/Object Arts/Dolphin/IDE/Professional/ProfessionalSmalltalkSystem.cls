@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
 	instanceVariableNames: 'systemBrowserClass ideaSpaceClass packagedResourceIdentifierDialogClass'
@@ -126,27 +126,29 @@ systemBrowserClass: toolClass
 	to be used by default in the development environment."
 
 	systemBrowserClass := toolClass! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseDeployedPackage:!helpers!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseDeploymentLog:!helpers!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeploymentLog:!helpers!private! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseSources!commands!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browseSystemPackages:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #classBrowserClasses!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #classChooserClass!options!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #disassembleMethod:!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #ideaSpaceClass!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #ideaSpaceClass:!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #newIdeaSpace!commands!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #openDeploymentLog:!helpers!private! !
-!ProfessionalSmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass!options!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass:!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #publishedAspects!constants!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
-!ProfessionalSmalltalkSystem categoriesFor: #recompileDiffs:!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass!accessing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass:!accessing!public! !
+!ProfessionalSmalltalkSystem categoriesForMethods!
+browseDeployedPackage:!helpers!public! !
+browseDeploymentLog:!helpers!public! !
+browseEnvironment:!browsing!public! !
+browserEnvFromDeploymentLog:!helpers!private! !
+browseSources!commands!public! !
+browseSystemOnMethod:!browsing!public! !
+browseSystemPackages:!browsing!public! !
+classBrowserClasses!accessing!public! !
+classChooserClass!options!public! !
+disassembleMethod:!public! !
+ideaSpaceClass!accessing!public! !
+ideaSpaceClass:!accessing!public! !
+newIdeaSpace!commands!public! !
+openDeploymentLog:!helpers!private! !
+packagedResourceIdentifierDialogClass!options!public! !
+packagedResourceIdentifierDialogClass:!accessing!public! !
+publishedAspects!constants!public! !
+queryCommand:!commands!private! !
+recompileDiffs:!public! !
+systemBrowserClass!accessing!public! !
+systemBrowserClass:!accessing!public! !
+!
 
 !ProfessionalSmalltalkSystem class methodsFor!
 
@@ -180,9 +182,11 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
-!ProfessionalSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!public! !
-!ProfessionalSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
+!ProfessionalSmalltalkSystem class categoriesForMethods!
+initialize!initializing!private! !
+installCurrent!initializing!private! !
+publishedAspectsOfInstances!public! !
+uninitialize!class hierarchy-removing!private! !
+uninstallCurrent!class hierarchy-removing!private! !
+!
 

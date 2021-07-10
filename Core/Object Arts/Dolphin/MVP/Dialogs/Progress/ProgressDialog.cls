@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dialog subclass: #ProgressDialog
 	instanceVariableNames: 'progressPresenter operation process textPresenter flags priority'
@@ -198,27 +198,29 @@ value: progressValue
 	progressValue."
 
 	progressPresenter value: progressValue! !
-!ProgressDialog categoriesFor: #allowCancel!accessing!public! !
-!ProgressDialog categoriesFor: #allowCancel:!accessing!public! !
-!ProgressDialog categoriesFor: #answer!accessing!public! !
-!ProgressDialog categoriesFor: #cancel!commands!public! !
-!ProgressDialog categoriesFor: #createComponents!initializing!public! !
-!ProgressDialog categoriesFor: #defaultOperation!operations!private! !
-!ProgressDialog categoriesFor: #deferredClose!operations!private! !
-!ProgressDialog categoriesFor: #forkOperation!operations!public! !
-!ProgressDialog categoriesFor: #initialize!initializing!private! !
-!ProgressDialog categoriesFor: #isReusable!accessing!public! !
-!ProgressDialog categoriesFor: #isReusable:!accessing!public! !
-!ProgressDialog categoriesFor: #operation!accessing!public! !
-!ProgressDialog categoriesFor: #operation:!accessing!public! !
-!ProgressDialog categoriesFor: #priority!accessing!public! !
-!ProgressDialog categoriesFor: #priority:!accessing!public! !
-!ProgressDialog categoriesFor: #progress!accessing!public! !
-!ProgressDialog categoriesFor: #queryCommand:!commands!private! !
-!ProgressDialog categoriesFor: #show!operations!public! !
-!ProgressDialog categoriesFor: #showModal!operations!public! !
-!ProgressDialog categoriesFor: #text:!accessing!public! !
-!ProgressDialog categoriesFor: #value:!accessing!public! !
+!ProgressDialog categoriesForMethods!
+allowCancel!accessing!public! !
+allowCancel:!accessing!public! !
+answer!accessing!public! !
+cancel!commands!public! !
+createComponents!initializing!public! !
+defaultOperation!operations!private! !
+deferredClose!operations!private! !
+forkOperation!operations!public! !
+initialize!initializing!private! !
+isReusable!accessing!public! !
+isReusable:!accessing!public! !
+operation!accessing!public! !
+operation:!accessing!public! !
+priority!accessing!public! !
+priority:!accessing!public! !
+progress!accessing!public! !
+queryCommand:!commands!private! !
+show!operations!public! !
+showModal!operations!public! !
+text:!accessing!public! !
+value:!accessing!public! !
+!
 
 !ProgressDialog class methodsFor!
 
@@ -371,18 +373,20 @@ showModalWhile: operation
 	runs to completion, then the answer is result of the evaluation."
 
 	^self showModal: self defaultView while: operation! !
-!ProgressDialog class categoriesFor: #create:operation:!instance creation!public! !
-!ProgressDialog class categoriesFor: #defaultModel!models!public! !
-!ProgressDialog class categoriesFor: #example1!examples!public! !
-!ProgressDialog class categoriesFor: #example2!examples!public! !
-!ProgressDialog class categoriesFor: #example3!examples!public! !
-!ProgressDialog class categoriesFor: #icon!constants!public! !
-!ProgressDialog class categoriesFor: #initialize!public! !
-!ProgressDialog class categoriesFor: #operation:!instance creation!public! !
-!ProgressDialog class categoriesFor: #resource_Compact_view!public!resources-views! !
-!ProgressDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!ProgressDialog class categoriesFor: #resource_No_cancel_view!public!resources-views! !
-!ProgressDialog class categoriesFor: #resource_Numeric_progress_dialog!public!resources-views! !
-!ProgressDialog class categoriesFor: #showModal:while:!instance creation!public! !
-!ProgressDialog class categoriesFor: #showModalWhile:!instance creation!public! !
+!ProgressDialog class categoriesForMethods!
+create:operation:!instance creation!public! !
+defaultModel!models!public! !
+example1!examples!public! !
+example2!examples!public! !
+example3!examples!public! !
+icon!constants!public! !
+initialize!public! !
+operation:!instance creation!public! !
+resource_Compact_view!public!resources-views! !
+resource_Default_view!public!resources-views! !
+resource_No_cancel_view!public!resources-views! !
+resource_Numeric_progress_dialog!public!resources-views! !
+showModal:while:!instance creation!public! !
+showModalWhile:!instance creation!public! !
+!
 

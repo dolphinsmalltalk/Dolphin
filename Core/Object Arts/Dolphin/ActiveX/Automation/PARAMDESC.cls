@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
@@ -70,15 +70,17 @@ wParamFlags
 	"Answer the <Integer> value of the receiver's 'wParamFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wParamFlags! !
-!PARAMDESC categoriesFor: #defaultValue!accessing!public! !
-!PARAMDESC categoriesFor: #directionFlags!public!testing! !
-!PARAMDESC categoriesFor: #hasDefaultValue!public!testing! !
-!PARAMDESC categoriesFor: #isIn!public!testing! !
-!PARAMDESC categoriesFor: #isOptional!public!testing! !
-!PARAMDESC categoriesFor: #isOut!public!testing! !
-!PARAMDESC categoriesFor: #isRetVal!public!testing! !
-!PARAMDESC categoriesFor: #pparamdescex!**compiled accessors**!public! !
-!PARAMDESC categoriesFor: #wParamFlags!**compiled accessors**!public! !
+!PARAMDESC categoriesForMethods!
+defaultValue!accessing!public! !
+directionFlags!public!testing! !
+hasDefaultValue!public!testing! !
+isIn!public!testing! !
+isOptional!public!testing! !
+isOut!public!testing! !
+isRetVal!public!testing! !
+pparamdescex!**compiled accessors**!public! !
+wParamFlags!**compiled accessors**!public! !
+!
 
 !PARAMDESC class methodsFor!
 
@@ -101,6 +103,8 @@ defineFields
 
 getFieldNames
 	^#(#pparamdescex #wParamFlags)! !
-!PARAMDESC class categoriesFor: #defineFields!public!template definition! !
-!PARAMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PARAMDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

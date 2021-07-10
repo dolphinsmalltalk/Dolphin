@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_Collection subclass: #ADODBFields15
 	instanceVariableNames: ''
@@ -51,8 +51,10 @@ item: index
 	answer := ADODBField newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBFields15 categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Fields15!private! !
-!ADODBFields15 categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODBFields15 categoriesForMethods!
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Fields15!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODBFields15 class methodsFor!
 
@@ -64,5 +66,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant ADODBField**'
 ! !
-!ADODBFields15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBFields15 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

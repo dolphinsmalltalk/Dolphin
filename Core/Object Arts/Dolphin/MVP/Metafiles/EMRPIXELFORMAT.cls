@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRPIXELFORMAT
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ pfd: aPIXELFORMATDESCRIPTOR
 		from: ##(_OffsetOf_pfd + 1)
 		to: ##(_OffsetOf_pfd + PIXELFORMATDESCRIPTOR basicByteSize)
 		startingAt: 1! !
-!EMRPIXELFORMAT categoriesFor: #pfd!**compiled accessors**!public! !
-!EMRPIXELFORMAT categoriesFor: #pfd:!**compiled accessors**!public! !
+!EMRPIXELFORMAT categoriesForMethods!
+pfd!**compiled accessors**!public! !
+pfd:!**compiled accessors**!public! !
+!
 
 !EMRPIXELFORMAT class methodsFor!
 
@@ -68,7 +70,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_PIXELFORMAT! !
-!EMRPIXELFORMAT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRPIXELFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPIXELFORMAT class categoriesFor: #iTypes!constants!public! !
+!EMRPIXELFORMAT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

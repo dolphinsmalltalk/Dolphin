@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ExternalLibraryTest
 	instanceVariableNames: ''
@@ -90,9 +90,11 @@ verifyInvalidCallArguments: aBoolean
 		should: [apiCall value: GDILibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
 		raise: HRESULTError
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
-!ExternalLibraryTest categoriesFor: #makeTestMethodFrom:overlapped:!helpers!private! !
-!ExternalLibraryTest categoriesFor: #testInvalidCallArguments!public!unit tests! !
-!ExternalLibraryTest categoriesFor: #testInvalidOverlappedCallArguments!public!unit tests! !
-!ExternalLibraryTest categoriesFor: #testSingletonSerialisation!public!unit tests! !
-!ExternalLibraryTest categoriesFor: #verifyInvalidCallArguments:!helpers!private! !
+!ExternalLibraryTest categoriesForMethods!
+makeTestMethodFrom:overlapped:!helpers!private! !
+testInvalidCallArguments!public!unit tests! !
+testInvalidOverlappedCallArguments!public!unit tests! !
+testSingletonSerialisation!public!unit tests! !
+verifyInvalidCallArguments:!helpers!private! !
+!
 

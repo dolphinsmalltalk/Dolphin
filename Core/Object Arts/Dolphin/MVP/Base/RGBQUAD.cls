@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #RGBQUAD
 	instanceVariableNames: ''
@@ -63,13 +63,15 @@ rgbRed: anInteger
 	"Set the receiver's 'rgbRed' field to the value of the argument, anInteger"
 
 	bytes byteAtOffset: _OffsetOf_rgbRed put: anInteger! !
-!RGBQUAD categoriesFor: #asColor!converting!public! !
-!RGBQUAD categoriesFor: #rgbBlue!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbBlue:!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbGreen!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbGreen:!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbRed!**compiled accessors**!public! !
-!RGBQUAD categoriesFor: #rgbRed:!**compiled accessors**!public! !
+!RGBQUAD categoriesForMethods!
+asColor!converting!public! !
+rgbBlue!**compiled accessors**!public! !
+rgbBlue:!**compiled accessors**!public! !
+rgbGreen!**compiled accessors**!public! !
+rgbGreen:!**compiled accessors**!public! !
+rgbRed!**compiled accessors**!public! !
+rgbRed:!**compiled accessors**!public! !
+!
 
 !RGBQUAD class methodsFor!
 
@@ -101,7 +103,9 @@ fromColor: aColor
 
 getFieldNames
 	^#(#rgbBlue #rgbGreen #rgbRed)! !
-!RGBQUAD class categoriesFor: #defineFields!public!template definition! !
-!RGBQUAD class categoriesFor: #fromColor:!instance creation!public! !
-!RGBQUAD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!RGBQUAD class categoriesForMethods!
+defineFields!public!template definition! !
+fromColor:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

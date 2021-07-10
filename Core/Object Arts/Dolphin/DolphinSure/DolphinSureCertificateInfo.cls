@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DolphinSureCertificateInfo
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
@@ -103,18 +103,20 @@ validityString
 				stream nextPutAll: ' (EXPIRED)' ]]
 		ifFalse: [ stream display: 'indefinitely'].
 	^stream contents! !
-!DolphinSureCertificateInfo categoriesFor: #details!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #details:!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #expiry!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #expiry:!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #hasExpired!public!testing! !
-!DolphinSureCertificateInfo categoriesFor: #issued!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #owner!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #printOn:!printing!public! !
-!DolphinSureCertificateInfo categoriesFor: #publicKey!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #serial!accessing!public! !
-!DolphinSureCertificateInfo categoriesFor: #serial:owner:publicKey:!initializing!private! !
-!DolphinSureCertificateInfo categoriesFor: #validityString!accessing!public! !
+!DolphinSureCertificateInfo categoriesForMethods!
+details!accessing!public! !
+details:!accessing!public! !
+expiry!accessing!public! !
+expiry:!accessing!public! !
+hasExpired!public!testing! !
+issued!accessing!public! !
+owner!accessing!public! !
+printOn:!printing!public! !
+publicKey!accessing!public! !
+serial!accessing!public! !
+serial:owner:publicKey:!initializing!private! !
+validityString!accessing!public! !
+!
 
 !DolphinSureCertificateInfo class methodsFor!
 
@@ -147,7 +149,9 @@ serial: aStringSerialNo owner: aStringOwner publicKey: pkey
 	and a public key of pkey"
 
 	^super new serial: aStringSerialNo owner: aStringOwner publicKey: pkey! !
-!DolphinSureCertificateInfo class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
-!DolphinSureCertificateInfo class categoriesFor: #new!instance creation!private! !
-!DolphinSureCertificateInfo class categoriesFor: #serial:owner:publicKey:!instance creation!public! !
+!DolphinSureCertificateInfo class categoriesForMethods!
+binaryReadFrom:context:!binary filing!public! !
+new!instance creation!private! !
+serial:owner:publicKey:!instance creation!public! !
+!
 

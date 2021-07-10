@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #StaticView
 	instanceVariableNames: 'unused'
@@ -82,16 +82,18 @@ onPositionChanged: aPositionEvent
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
-!StaticView categoriesFor: #defaultBackcolor!colors!constants!private! !
-!StaticView categoriesFor: #defaultExtent!constants!private! !
-!StaticView categoriesFor: #defaultWindowStyle!constants!private! !
-!StaticView categoriesFor: #invalidateOnResize!private!testing! !
-!StaticView categoriesFor: #invalidateRect:erase:!drawing!public! !
-!StaticView categoriesFor: #isSunken!accessing-styles!public!testing! !
-!StaticView categoriesFor: #isSunken:!accessing-styles!public! !
-!StaticView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!StaticView categoriesFor: #onPositionChanged:!event handling-win32!public! !
-!StaticView categoriesFor: #updateModel!public!updating! !
+!StaticView categoriesForMethods!
+defaultBackcolor!colors!constants!private! !
+defaultExtent!constants!private! !
+defaultWindowStyle!constants!private! !
+invalidateOnResize!private!testing! !
+invalidateRect:erase:!drawing!public! !
+isSunken!accessing-styles!public!testing! !
+isSunken:!accessing-styles!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onPositionChanged:!event handling-win32!public! !
+updateModel!public!updating! !
+!
 
 !StaticView class methodsFor!
 
@@ -106,6 +108,8 @@ winClassName
 
 	^'STATIC'
 ! !
-!StaticView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!StaticView class categoriesFor: #winClassName!constants!private! !
+!StaticView class categoriesForMethods!
+stbConvertFromVersion12:!binary filing!private! !
+winClassName!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 QueryableScintillaAttribute subclass: #ScintillaMargin
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
@@ -174,29 +174,31 @@ width: anInteger
 
 	self basicWidth: (anInteger ifNotNil: [anInteger]).
 	self updateViewProperty: #width! !
-!ScintillaMargin categoriesFor: #backcolor!accessing!public! !
-!ScintillaMargin categoriesFor: #backcolor:!accessing!public! !
-!ScintillaMargin categoriesFor: #basicBackcolor:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicCursorType!accessing!private! !
-!ScintillaMargin categoriesFor: #basicCursorType:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicIsSensitive!accessing!private! !
-!ScintillaMargin categoriesFor: #basicIsSensitive:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicType!accessing!private! !
-!ScintillaMargin categoriesFor: #basicType:!accessing!private! !
-!ScintillaMargin categoriesFor: #basicWidth!accessing!private! !
-!ScintillaMargin categoriesFor: #basicWidth:!accessing!private! !
-!ScintillaMargin categoriesFor: #cursorType!accessing!public! !
-!ScintillaMargin categoriesFor: #cursorType:!accessing!public! !
-!ScintillaMargin categoriesFor: #isFolders!accessing!public! !
-!ScintillaMargin categoriesFor: #isFolders:!accessing!public! !
-!ScintillaMargin categoriesFor: #isSensitive!public!testing! !
-!ScintillaMargin categoriesFor: #isSensitive:!accessing!public! !
-!ScintillaMargin categoriesFor: #mask!accessing!public! !
-!ScintillaMargin categoriesFor: #mask:!accessing!public! !
-!ScintillaMargin categoriesFor: #type!accessing!public! !
-!ScintillaMargin categoriesFor: #type:!accessing!public! !
-!ScintillaMargin categoriesFor: #width!accessing!public! !
-!ScintillaMargin categoriesFor: #width:!accessing!public! !
+!ScintillaMargin categoriesForMethods!
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicBackcolor:!accessing!private! !
+basicCursorType!accessing!private! !
+basicCursorType:!accessing!private! !
+basicIsSensitive!accessing!private! !
+basicIsSensitive:!accessing!private! !
+basicType!accessing!private! !
+basicType:!accessing!private! !
+basicWidth!accessing!private! !
+basicWidth:!accessing!private! !
+cursorType!accessing!public! !
+cursorType:!accessing!public! !
+isFolders!accessing!public! !
+isFolders:!accessing!public! !
+isSensitive!public!testing! !
+isSensitive:!accessing!public! !
+mask!accessing!public! !
+mask:!accessing!public! !
+type!accessing!public! !
+type:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !ScintillaMargin class methodsFor!
 
@@ -279,8 +281,10 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^3! !
-!ScintillaMargin class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaMargin class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaMargin class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaMargin class categoriesFor: #stbVersion!binary filing!public! !
+!ScintillaMargin class categoriesForMethods!
+buildPropertyMap!constants!must not strip!private! !
+initialize!development!initializing!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

@@ -642,7 +642,9 @@ printFieldsOn: aStream limit: anInteger
 				print: self tdesc;
 				space].
 	^super printFieldsOn: aStream limit: anInteger! !
-!AbstractELEMDESC categoriesFor: #printFieldsOn:limit:!printing!private! !
+!AbstractELEMDESC categoriesForMethods!
+printFieldsOn:limit:!printing!private! !
+!
 
 !ArrayField class methodsFor!
 
@@ -658,7 +660,9 @@ printVariable: aVARDESC type: arrayClass indirections: anInteger on: aPuttableSt
 		printArrayField: aVARDESC
 		type: arrayClass
 		on: aPuttableStream! !
-!ArrayField class categoriesFor: #printVariable:type:indirections:on:!private! !
+!ArrayField class categoriesForMethods!
+printVariable:type:indirections:on:!private! !
+!
 
 !ArrayPointerField class methodsFor!
 
@@ -674,7 +678,9 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 		printArrayField: aVARDESC
 		type: extClass arrayType
 		on: aPuttableStream! !
-!ArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
+!ArrayPointerField class categoriesForMethods!
+printVariable:type:indirections:on:!private! !
+!
 
 !AXAPIInfoAnalyzer methodsFor!
 
@@ -978,36 +984,38 @@ sharedPoolNames
 	defining a wrapper class for the receiver."
 
 	^self typeLib sharedPoolNames! !
-!AXAPIInfoAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
-!AXAPIInfoAnalyzer categoriesFor: #compileMethodWrapper:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #functionHasReturnValue:!helpers!private! !
-!AXAPIInfoAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #generateMethod:wrapping:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #generateMethodWrappers!private! !
-!AXAPIInfoAnalyzer categoriesFor: #generateMethodWrappers:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #generateRawMethod:categories:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #idlAttributesOfFunc:!printing-IDL!private! !
-!AXAPIInfoAnalyzer categoriesFor: #instanceMethodCategories:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #isDefaultedWrapperRequiredFor:!private!testing! !
-!AXAPIInfoAnalyzer categoriesFor: #isMethodWrapperRequiredFor:!private!testing! !
-!AXAPIInfoAnalyzer categoriesFor: #methodCommentDescription!private! !
-!AXAPIInfoAnalyzer categoriesFor: #mungeSelectorKeywords:forMember:!helpers!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printCommentPrefixOn:isPrivate:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printFunctionPrototype:on:indent:!printing!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printFunctionPrototypeComment:on:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printIDLForFunction:on:indent:!printing-IDL!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printMethod:wrapping:on:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printMethodCommentPostamble:on:!printing!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printMethodCommentPreamble:on:isPrivate:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printRawMethodBody:name:on:!printing!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printRawMethodComment:on:isPrivate:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printRawMethodCommentHelp:on:!printing!private! !
-!AXAPIInfoAnalyzer categoriesFor: #printRawMethodCommentPreamble:on:isPrivate:!private! !
-!AXAPIInfoAnalyzer categoriesFor: #proputrefWrapperPrefix!constants!private! !
-!AXAPIInfoAnalyzer categoriesFor: #rawMethodNameForFunction:!helpers!private! !
-!AXAPIInfoAnalyzer categoriesFor: #reinventBadSelector:member:!helpers!private! !
-!AXAPIInfoAnalyzer categoriesFor: #selectorForFunction:!helpers!private! !
-!AXAPIInfoAnalyzer categoriesFor: #sharedPoolNames!constants!private! !
+!AXAPIInfoAnalyzer categoriesForMethods!
+areWrappersRequired!private!testing! !
+compileMethodWrapper:!private! !
+functionHasReturnValue:!helpers!private! !
+generateGlobalDefinition:!private! !
+generateMethod:wrapping:!private! !
+generateMethodWrappers!private! !
+generateMethodWrappers:!private! !
+generateRawMethod:categories:!private! !
+idlAttributesOfFunc:!printing-IDL!private! !
+instanceMethodCategories:!private! !
+isDefaultedWrapperRequiredFor:!private!testing! !
+isMethodWrapperRequiredFor:!private!testing! !
+methodCommentDescription!private! !
+mungeSelectorKeywords:forMember:!helpers!private! !
+printCommentPrefixOn:isPrivate:!private! !
+printFunctionPrototype:on:indent:!printing!private! !
+printFunctionPrototypeComment:on:!private! !
+printIDLForFunction:on:indent:!printing-IDL!private! !
+printMethod:wrapping:on:!private! !
+printMethodCommentPostamble:on:!printing!private! !
+printMethodCommentPreamble:on:isPrivate:!private! !
+printRawMethodBody:name:on:!printing!private! !
+printRawMethodComment:on:isPrivate:!private! !
+printRawMethodCommentHelp:on:!printing!private! !
+printRawMethodCommentPreamble:on:isPrivate:!private! !
+proputrefWrapperPrefix!constants!private! !
+rawMethodNameForFunction:!helpers!private! !
+reinventBadSelector:member:!helpers!private! !
+selectorForFunction:!helpers!private! !
+sharedPoolNames!constants!private! !
+!
 
 !AXDispatchImpAbstract class methodsFor!
 
@@ -1015,7 +1023,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^IDispatch icon! !
-!AXDispatchImpAbstract class categoriesFor: #icon!constants!public! !
+!AXDispatchImpAbstract class categoriesForMethods!
+icon!constants!public! !
+!
 
 !AXInterfaceTypeAnalyzer methodsFor!
 
@@ -1790,68 +1800,70 @@ wrapMethodComment: aString
 		wrapText: aString
 		indent: tab
 		tabWidth: tab! !
-!AXInterfaceTypeAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #autoGenPropertiesCategories!constants!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #buildMethodName:defaultOptionals:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #buildPublishedAspects:forObject:!helpers!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #classCategories!constants!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #compilePropertyAccessor:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #compileRawMethod:categories:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateClassCLSIDForCoclass:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateClassInitialize!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateClassInstanceCreation!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateClassSide:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateCollectionTest!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateDefaultMethod:wrapping:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateInitializeTypeLib!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateInstanceSide:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateMethodWrappers!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateMethodWrappers:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateNewForCoclass:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generatePropertyAccessors!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generatePropGet:wrapping:defaultOptionals:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generatePropGetWrappers:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generatePropPut:wrapping:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generatePropPutRefWrappers:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generatePropPutWrappers:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateRawPropGet:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateRawPropPut:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateRuntimeExtensibilityTest!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateTests!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateValueAccessor:wrapping:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateValueMutator:wrapping:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #generateValuePropertyWrappers!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #inspectableProperties!enumerating!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #instanceMethodCategories:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #interfaceCategoryName!constants!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isAutomationCompatible!public!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isInspectablePropGet:!enumerating!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isProtocolRequired!private!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #methodCommentDescription!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #newAspectForMember:ppb:!helpers!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printArgument:named:on:!helpers!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printDefaultMethod:wrapping:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printDefaultMethodBody:wrapping:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printMethod:wrapping:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printMethodBody:wrapping:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printMethodComment:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printMultiOutMethodBody:wrapping:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printPropertyCommentDecl:on:!printing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printPropertyCommentPostamble:on:!printing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printPropGet:wrapping:on:defaultOptionals:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printPropGetComment:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printPropGetCommentPreamble:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printPropPut:wrapping:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printPropPutComment:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printRawPropGetBody:name:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printRawPropPutBody:name:on:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #printValuePropCommentPostambleOn:!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #rawPropCategories!constants!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #reservedSelectors!accessing!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #wrapMethodComment:!private! !
+!AXInterfaceTypeAnalyzer categoriesForMethods!
+areWrappersRequired!private!testing! !
+autoGenPropertiesCategories!constants!private! !
+buildMethodName:defaultOptionals:!private! !
+buildPublishedAspects:forObject:!helpers!private! !
+classCategories!constants!private! !
+compilePropertyAccessor:!private! !
+compileRawMethod:categories:!private! !
+determineNewBase:forExistingWrapper:!private! !
+generateClassCLSIDForCoclass:!private! !
+generateClassInitialize!private! !
+generateClassInstanceCreation!private! !
+generateClassSide:!private! !
+generateCollectionTest!private! !
+generateDefaultMethod:wrapping:!private! !
+generateGlobalDefinition:!private! !
+generateInitializeTypeLib!private! !
+generateInstanceSide:!private! !
+generateMethodWrappers!private! !
+generateMethodWrappers:!private! !
+generateNewForCoclass:!private! !
+generatePropertyAccessors!private! !
+generatePropGet:wrapping:defaultOptionals:!private! !
+generatePropGetWrappers:!private! !
+generatePropPut:wrapping:!private! !
+generatePropPutRefWrappers:!private! !
+generatePropPutWrappers:!private! !
+generateRawPropGet:!private! !
+generateRawPropPut:!private! !
+generateRuntimeExtensibilityTest!private! !
+generateTests!private! !
+generateValueAccessor:wrapping:!private! !
+generateValueMutator:wrapping:!private! !
+generateValuePropertyWrappers!private! !
+idlAttributes!printing-IDL!private! !
+inspectableProperties!enumerating!public! !
+instanceMethodCategories:!private! !
+interfaceCategoryName!constants!private! !
+isAutomationCompatible!public!testing! !
+isInspectablePropGet:!enumerating!private! !
+isProtocolRequired!private!testing! !
+methodCommentDescription!private! !
+newAspectForMember:ppb:!helpers!private! !
+printArgument:named:on:!helpers!private! !
+printDefaultMethod:wrapping:on:!private! !
+printDefaultMethodBody:wrapping:on:!private! !
+printMethod:wrapping:on:!private! !
+printMethodBody:wrapping:on:!private! !
+printMethodComment:on:!private! !
+printMultiOutMethodBody:wrapping:on:!private! !
+printPropertyCommentDecl:on:!printing!private! !
+printPropertyCommentPostamble:on:!printing!private! !
+printPropGet:wrapping:on:defaultOptionals:!private! !
+printPropGetComment:on:!private! !
+printPropGetCommentPreamble:on:!private! !
+printPropPut:wrapping:on:!private! !
+printPropPutComment:on:!private! !
+printRawPropGetBody:name:on:!private! !
+printRawPropPutBody:name:on:!private! !
+printValuePropCommentPostambleOn:!private! !
+rawPropCategories!constants!private! !
+reservedSelectors!accessing!public! !
+wrapMethodComment:!private! !
+!
 
 !AXInterfaceTypeAnalyzer class methodsFor!
 
@@ -1895,13 +1907,15 @@ reservedUnkSelectors
 						addAll: self optimizedSelectors;
 						yourself].
 	^ReservedUnkSelectors! !
-!AXInterfaceTypeAnalyzer class categoriesFor: #icon!constants!public! !
-!AXInterfaceTypeAnalyzer class categoriesFor: #optimizedSelectors!constants!public! !
-!AXInterfaceTypeAnalyzer class categoriesFor: #overridableIDispatchSelectors!constants!public! !
-!AXInterfaceTypeAnalyzer class categoriesFor: #overridableIUnknownSelectors!constants!public! !
-!AXInterfaceTypeAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-!AXInterfaceTypeAnalyzer class categoriesFor: #reservedDispSelectors!accessing!public! !
-!AXInterfaceTypeAnalyzer class categoriesFor: #reservedUnkSelectors!accessing!public! !
+!AXInterfaceTypeAnalyzer class categoriesForMethods!
+icon!constants!public! !
+optimizedSelectors!constants!public! !
+overridableIDispatchSelectors!constants!public! !
+overridableIUnknownSelectors!constants!public! !
+publishedAspectsOfInstances!constants!public! !
+reservedDispSelectors!accessing!public! !
+reservedUnkSelectors!accessing!public! !
+!
 
 !AXMemberDesc methodsFor!
 
@@ -1968,13 +1982,15 @@ printIDLOn: target indent: tabs
 	"Print the IDL description of the receiver on the <puttableStream>, target."
 
 	^self subclassResponsibility! !
-!AXMemberDesc categoriesFor: #idlAttributes!printing-IDL!private! !
-!AXMemberDesc categoriesFor: #idlAttributesAndId!accessing!private! !
-!AXMemberDesc categoriesFor: #idlCustomAttributes!accessing!public! !
-!AXMemberDesc categoriesFor: #isInspectable!public!testing! !
-!AXMemberDesc categoriesFor: #printIDL!printing-IDL!public! !
-!AXMemberDesc categoriesFor: #printIDLOn:!printing-IDL!public! !
-!AXMemberDesc categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
+!AXMemberDesc categoriesForMethods!
+idlAttributes!printing-IDL!private! !
+idlAttributesAndId!accessing!private! !
+idlCustomAttributes!accessing!public! !
+isInspectable!public!testing! !
+printIDL!printing-IDL!public! !
+printIDLOn:!printing-IDL!public! !
+printIDLOn:indent:!printing-IDL!public! !
+!
 
 !AXMemberDesc class methodsFor!
 
@@ -1984,7 +2000,9 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect multilineString: #printIDL);
 		yourself! !
-!AXMemberDesc class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!AXMemberDesc class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
 
 !AXRecord methodsFor!
 
@@ -1998,7 +2016,9 @@ publishedAspects
 			[self getValidFields
 				do: [:each | aspects add: ((self getField: each) newAspect: each class: AXRecordAspect)]].
 	^aspects! !
-!AXRecord categoriesFor: #publishedAspects!accessing!public! !
+!AXRecord categoriesForMethods!
+publishedAspects!accessing!public! !
+!
 
 !AXStructureTypeAnalyzer methodsFor!
 
@@ -2256,22 +2276,24 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 	aPuttableStream
 		nextPutAll: ' offset: ';
 		print: anInteger + aVARDESC oInst! !
-!AXStructureTypeAnalyzer categoriesFor: #conformsToRequiredProtocols:!private!testing! !
-!AXStructureTypeAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!private! !
-!AXStructureTypeAnalyzer categoriesFor: #generateClassSide:!private! !
-!AXStructureTypeAnalyzer categoriesFor: #generateDefineFields!private! !
-!AXStructureTypeAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
-!AXStructureTypeAnalyzer categoriesFor: #generateInstanceSide:!private! !
-!AXStructureTypeAnalyzer categoriesFor: #generateTypeLibAccessor!automatic generation!private! !
-!AXStructureTypeAnalyzer categoriesFor: #generateWrapper!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printAnonymousStruct:offset:prefix:hidden:on:!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printClassCommentPreambleOn:!printing!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinition:offset:prefix:hidden:on:!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printFieldDefinitionsOn:offset:prefix:hidden:!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printIDLForVariablesOn:indent:!printing-IDL!private! !
-!AXStructureTypeAnalyzer categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
-!AXStructureTypeAnalyzer categoriesFor: #printNamedFieldDefinition:offset:prefix:hidden:on:!private! !
+!AXStructureTypeAnalyzer categoriesForMethods!
+conformsToRequiredProtocols:!private!testing! !
+determineNewBase:forExistingWrapper:!private! !
+generateClassSide:!private! !
+generateDefineFields!private! !
+generateGlobalDefinition:!private! !
+generateInstanceSide:!private! !
+generateTypeLibAccessor!automatic generation!private! !
+generateWrapper!private! !
+printAnonymousStruct:offset:prefix:hidden:on:!private! !
+printClassCommentPreambleOn:!printing!private! !
+printFieldDefinition:offset:prefix:hidden:on:!private! !
+printFieldDefinitionsOn:offset:prefix:hidden:!private! !
+printIDLBodyOn:indent:!printing-IDL!private! !
+printIDLForVariablesOn:indent:!printing-IDL!private! !
+printIDLOn:indent:!printing-IDL!public! !
+printNamedFieldDefinition:offset:prefix:hidden:on:!private! !
+!
 
 !AXStructureTypeAnalyzer class methodsFor!
 
@@ -2286,8 +2308,10 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect sequenceableCollection: #members) beReadOnly;
 		yourself! !
-!AXStructureTypeAnalyzer class categoriesFor: #icon!constants!public! !
-!AXStructureTypeAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!AXStructureTypeAnalyzer class categoriesForMethods!
+icon!constants!public! !
+publishedAspectsOfInstances!constants!public! !
+!
 
 !AXTypeInfoAnalyzer methodsFor!
 
@@ -2991,57 +3015,59 @@ You can Ignore this warning, but it is suggested that you check the location of 
 	mb buttonStyle: #abortRetryIgnore.
 	mb defaultButton: 2.
 	^mb open! !
-!AXTypeInfoAnalyzer categoriesFor: #autoGenCategoryName!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #autoGenClassCommentMarker!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #autoGenMethodComment!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #baseClassCheck:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #basicGenerate!public! !
-!AXTypeInfoAnalyzer categoriesFor: #canGenerateClassMessage:!private!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #canGenerateMessage:!private!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #canGenerateMessage:into:!private!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #canGenerateMethodNamed:!private!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #checkConformanceOfExistingClass:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #classCategories!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #classConstantsCategories!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #classInitializerCategories!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #compileClassMethod:categories:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #compileMethod:categories:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #compileRawMethod:categories:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #compileTestingMethod:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #conformsToRequiredProtocols:!private!testing! !
-!AXTypeInfoAnalyzer categoriesFor: #constantsPool!public! !
-!AXTypeInfoAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #emitComment:on:!helpers!printing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generate!public! !
-!AXTypeInfoAnalyzer categoriesFor: #generateAs:flags:!public! !
-!AXTypeInfoAnalyzer categoriesFor: #generateClassComment!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generateClassDefinition:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generateClassSide:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generateConstants!public! !
-!AXTypeInfoAnalyzer categoriesFor: #generateConstantsIntoPool:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generateGlobalDefinition!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generateInstanceSide:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generateWrapper!private! !
-!AXTypeInfoAnalyzer categoriesFor: #generationFlags!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #guidCheck:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #guidClashPrompt:!helpers!private! !
-!AXTypeInfoAnalyzer categoriesFor: #handleClash:response:!helpers!private! !
-!AXTypeInfoAnalyzer categoriesFor: #identifierFrom:!helpers!private! !
-!AXTypeInfoAnalyzer categoriesFor: #idlTypeOfVT:!helpers!private! !
-!AXTypeInfoAnalyzer categoriesFor: #isClassCheck:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #packageCheck:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #printAutoGenMethodPostambleOn:!printing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #printClassCommentPreambleOn:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #printHelpstringComment:on:!printing!private! !
-!AXTypeInfoAnalyzer categoriesFor: #printIDLDecl:type:on:!printing-IDL!private! !
-!AXTypeInfoAnalyzer categoriesFor: #printIDLForVariable:on:indent:!printing-IDL!private! !
-!AXTypeInfoAnalyzer categoriesFor: #removeAutoGeneratedMethods:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #removeOldWrappers:!private! !
-!AXTypeInfoAnalyzer categoriesFor: #reservedSelectors!accessing!public! !
-!AXTypeInfoAnalyzer categoriesFor: #resolveExistingClass:!helpers!private! !
-!AXTypeInfoAnalyzer categoriesFor: #shouldOverwriteClassComment!private! !
-!AXTypeInfoAnalyzer categoriesFor: #superclassClashPrompt:!helpers!private! !
+!AXTypeInfoAnalyzer categoriesForMethods!
+autoGenCategoryName!constants!private! !
+autoGenClassCommentMarker!constants!private! !
+autoGenMethodComment!constants!private! !
+baseClassCheck:!private! !
+basicGenerate!public! !
+canGenerateClassMessage:!private!testing! !
+canGenerateMessage:!private!testing! !
+canGenerateMessage:into:!private!testing! !
+canGenerateMethodNamed:!private!testing! !
+checkConformanceOfExistingClass:!private! !
+classCategories!constants!private! !
+classConstantsCategories!constants!private! !
+classInitializerCategories!constants!private! !
+compileClassMethod:categories:!private! !
+compileMethod:categories:!private! !
+compileRawMethod:categories:!private! !
+compileTestingMethod:!private! !
+conformsToRequiredProtocols:!private!testing! !
+constantsPool!public! !
+determineNewBase:forExistingWrapper:!private! !
+emitComment:on:!helpers!printing!private! !
+generate!public! !
+generateAs:flags:!public! !
+generateClassComment!private! !
+generateClassDefinition:!private! !
+generateClassSide:!private! !
+generateConstants!public! !
+generateConstantsIntoPool:!private! !
+generateGlobalDefinition!private! !
+generateGlobalDefinition:!private! !
+generateInstanceSide:!private! !
+generateWrapper!private! !
+generationFlags!accessing!public! !
+guidCheck:!private! !
+guidClashPrompt:!helpers!private! !
+handleClash:response:!helpers!private! !
+identifierFrom:!helpers!private! !
+idlTypeOfVT:!helpers!private! !
+isClassCheck:!private! !
+packageCheck:!private! !
+printAutoGenMethodPostambleOn:!printing!private! !
+printClassCommentPreambleOn:!private! !
+printHelpstringComment:on:!printing!private! !
+printIDLDecl:type:on:!printing-IDL!private! !
+printIDLForVariable:on:indent:!printing-IDL!private! !
+removeAutoGeneratedMethods:!private! !
+removeOldWrappers:!private! !
+reservedSelectors!accessing!public! !
+resolveExistingClass:!helpers!private! !
+shouldOverwriteClassComment!private! !
+superclassClashPrompt:!helpers!private! !
+!
 
 !AXTypeInfoAnalyzer class methodsFor!
 
@@ -3051,7 +3077,9 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect multilineString: #printIDL) beReadOnly;
 		yourself! !
-!AXTypeInfoAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!AXTypeInfoAnalyzer class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
 
 !AXTypeInfoObject methodsFor!
 
@@ -3321,42 +3349,44 @@ tracing: aSymbol
 	flags := self generationFlags maskClear: TraceOnly.
 	self generationFlags: (flags 
 				maskSet: (self class tracingStyleMap at: aSymbol ifAbsent: [0]))! !
-!AXTypeInfoObject categoriesFor: #abortGeneration!private! !
-!AXTypeInfoObject categoriesFor: #basicIdlAttributes!printing-IDL!private! !
-!AXTypeInfoObject categoriesFor: #classComments!accessing!public! !
-!AXTypeInfoObject categoriesFor: #classComments:!accessing!public! !
-!AXTypeInfoObject categoriesFor: #customAttributes!printing-IDL!private! !
-!AXTypeInfoObject categoriesFor: #defineFunctionTables!accessing!public! !
-!AXTypeInfoObject categoriesFor: #defineFunctionTables:!accessing!public! !
-!AXTypeInfoObject categoriesFor: #defineMethodProtocols!accessing!public! !
-!AXTypeInfoObject categoriesFor: #defineMethodProtocols:!accessing!public! !
-!AXTypeInfoObject categoriesFor: #forceLowercaseIdentifiers!private!testing! !
-!AXTypeInfoObject categoriesFor: #forceLowercaseIdentifiers:!private!testing! !
-!AXTypeInfoObject categoriesFor: #generateSourceInterfaces!public!testing! !
-!AXTypeInfoObject categoriesFor: #generationFlags!accessing!converting!public! !
-!AXTypeInfoObject categoriesFor: #generationFlags:!accessing!public! !
-!AXTypeInfoObject categoriesFor: #getCustData!accessing!private! !
-!AXTypeInfoObject categoriesFor: #guidClashSignal!constants!public! !
-!AXTypeInfoObject categoriesFor: #highLevelWrappers!accessing!public! !
-!AXTypeInfoObject categoriesFor: #highLevelWrappers:!accessing!public! !
-!AXTypeInfoObject categoriesFor: #idlAttributes!printing-IDL!private! !
-!AXTypeInfoObject categoriesFor: #idlKeyword!constants!private! !
-!AXTypeInfoObject categoriesFor: #isTraceOnly!private!testing! !
-!AXTypeInfoObject categoriesFor: #isTracing!private!testing! !
-!AXTypeInfoObject categoriesFor: #isTracingVerbose!accessing!public! !
-!AXTypeInfoObject categoriesFor: #isTracingVerbose:!accessing!public! !
-!AXTypeInfoObject categoriesFor: #packageCheck:!helpers!private! !
-!AXTypeInfoObject categoriesFor: #printAttributeList:on:!printing-IDL!private! !
-!AXTypeInfoObject categoriesFor: #printIDL!printing!public! !
-!AXTypeInfoObject categoriesFor: #printIDLAttributes:on:indent:!printing!private! !
-!AXTypeInfoObject categoriesFor: #printIDLAttributesOn:indent:!printing-IDL!private! !
-!AXTypeInfoObject categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
-!AXTypeInfoObject categoriesFor: #printIDLOn:!printing-IDL!public! !
-!AXTypeInfoObject categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
-!AXTypeInfoObject categoriesFor: #printOn:!printing!public! !
-!AXTypeInfoObject categoriesFor: #sharedPoolNames!constants!private! !
-!AXTypeInfoObject categoriesFor: #tracing!accessing!public! !
-!AXTypeInfoObject categoriesFor: #tracing:!accessing!public! !
+!AXTypeInfoObject categoriesForMethods!
+abortGeneration!private! !
+basicIdlAttributes!printing-IDL!private! !
+classComments!accessing!public! !
+classComments:!accessing!public! !
+customAttributes!printing-IDL!private! !
+defineFunctionTables!accessing!public! !
+defineFunctionTables:!accessing!public! !
+defineMethodProtocols!accessing!public! !
+defineMethodProtocols:!accessing!public! !
+forceLowercaseIdentifiers!private!testing! !
+forceLowercaseIdentifiers:!private!testing! !
+generateSourceInterfaces!public!testing! !
+generationFlags!accessing!converting!public! !
+generationFlags:!accessing!public! !
+getCustData!accessing!private! !
+guidClashSignal!constants!public! !
+highLevelWrappers!accessing!public! !
+highLevelWrappers:!accessing!public! !
+idlAttributes!printing-IDL!private! !
+idlKeyword!constants!private! !
+isTraceOnly!private!testing! !
+isTracing!private!testing! !
+isTracingVerbose!accessing!public! !
+isTracingVerbose:!accessing!public! !
+packageCheck:!helpers!private! !
+printAttributeList:on:!printing-IDL!private! !
+printIDL!printing!public! !
+printIDLAttributes:on:indent:!printing!private! !
+printIDLAttributesOn:indent:!printing-IDL!private! !
+printIDLBodyOn:indent:!printing-IDL!private! !
+printIDLOn:!printing-IDL!public! !
+printIDLOn:indent:!printing-IDL!public! !
+printOn:!printing!public! !
+sharedPoolNames!constants!private! !
+tracing!accessing!public! !
+tracing:!accessing!public! !
+!
 
 !AXTypeInfoObject class methodsFor!
 
@@ -3425,14 +3455,16 @@ tracingStyles
 	debugging problems with generation."
 
 	^self tracingStyleMap keys asSortedCollection! !
-!AXTypeInfoObject class categoriesFor: #classCommentStyleMap!constants!private! !
-!AXTypeInfoObject class categoriesFor: #classCommentStyles!initializing!private! !
-!AXTypeInfoObject class categoriesFor: #guidClashSignal!constants!examples!public! !
-!AXTypeInfoObject class categoriesFor: #highLevelWrapperStyleMap!accessing!private! !
-!AXTypeInfoObject class categoriesFor: #highLevelWrapperStyles!initializing!private! !
-!AXTypeInfoObject class categoriesFor: #icon!constants!public! !
-!AXTypeInfoObject class categoriesFor: #tracingStyleMap!accessing!private! !
-!AXTypeInfoObject class categoriesFor: #tracingStyles!initializing!private! !
+!AXTypeInfoObject class categoriesForMethods!
+classCommentStyleMap!constants!private! !
+classCommentStyles!initializing!private! !
+guidClashSignal!constants!examples!public! !
+highLevelWrapperStyleMap!accessing!private! !
+highLevelWrapperStyles!initializing!private! !
+icon!constants!public! !
+tracingStyleMap!accessing!private! !
+tracingStyles!initializing!private! !
+!
 
 !AXTypeLibDocumentation methodsFor!
 
@@ -3444,7 +3476,9 @@ idlAttributes
 	helpcontext isZero 
 		ifFalse: [attrs addLast: ('helpcontext(%#010x)' sprintfWith: helpcontext)].
 	^attrs! !
-!AXTypeLibDocumentation categoriesFor: #idlAttributes!printing-IDL!private! !
+!AXTypeLibDocumentation categoriesForMethods!
+idlAttributes!printing-IDL!private! !
+!
 
 !AXTypeLibDocumentation class methodsFor!
 
@@ -3452,7 +3486,9 @@ icon
 	"Answers an <Icon> that can be used to represent this class"
 
 	^AXTypeLibraryAnalyzer icon! !
-!AXTypeLibDocumentation class categoriesFor: #icon!constants!public! !
+!AXTypeLibDocumentation class categoriesForMethods!
+icon!constants!public! !
+!
 
 !AXTypeLibraryAnalyzer methodsFor!
 
@@ -3943,50 +3979,52 @@ superclassClashSignal
 	when an inheritance mismatch is detected."
 
 	^self class superclassClashSignal! !
-!AXTypeLibraryAnalyzer categoriesFor: #addAlias:forType:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #addClassToPackage:!helpers!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #addGlobalToPackage:!must strip!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #checkConformanceOfExistingPool:!helpers!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #constantsPool!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #constantsPoolBinding!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #constantsPoolName!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #constantsPoolName:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #defaultPackageFolder!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #definesSymbolicConstants!private!updating! !
-!AXTypeLibraryAnalyzer categoriesFor: #generatableInterfaces!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generatableModules!enumerating!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateConstantsIntoPool:!operations!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateConstantsPool!operations!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateDispatchWrapper:!operations!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateDispatchWrapper:name:flags:!operations!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateInterfaceWrapper:!operations!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateInterfaceWrapper:name:flags:!operations!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateInterfaceWrappers!operations!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateTypelibGlobal!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateTypelibGlobal:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #generateWrapper:name:flags:!operations!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #globalBinding!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #globalName!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #idlHelpAttributes:!printing-IDL!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #isPoolCheck:!private!testing! !
-!AXTypeLibraryAnalyzer categoriesFor: #moveClassToPackage:!helpers!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #package!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #package:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #packageCheck:!helpers!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #packageName!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #packageName:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #prefix!constants!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #prefix:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #prefixGlobalNames!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #prefixGlobalNames:!accessing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #printIDLForwardRefsOn:indent:!printing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #printIDLOn:indent:!printing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #printOn:!printing!public! !
-!AXTypeLibraryAnalyzer categoriesFor: #resolveExistingPool:!helpers!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #sharedPoolNames!accessing!private! !
-!AXTypeLibraryAnalyzer categoriesFor: #superclassClashSignal!constants!public! !
+!AXTypeLibraryAnalyzer categoriesForMethods!
+addAlias:forType:!accessing!public! !
+addClassToPackage:!helpers!private! !
+addGlobalToPackage:!must strip!private! !
+checkConformanceOfExistingPool:!helpers!private! !
+constantsPool!accessing!private! !
+constantsPoolBinding!accessing!private! !
+constantsPoolName!accessing!public! !
+constantsPoolName:!accessing!public! !
+defaultPackageFolder!accessing!public! !
+definesSymbolicConstants!private!updating! !
+generatableInterfaces!enumerating!public! !
+generatableModules!enumerating!public! !
+generateConstantsIntoPool:!operations!private! !
+generateConstantsPool!operations!public! !
+generateDispatchWrapper:!operations!public! !
+generateDispatchWrapper:name:flags:!operations!public! !
+generateInterfaceWrapper:!operations!public! !
+generateInterfaceWrapper:name:flags:!operations!public! !
+generateInterfaceWrappers!operations!public! !
+generateTypelibGlobal!accessing!public! !
+generateTypelibGlobal:!accessing!public! !
+generateWrapper:name:flags:!operations!public! !
+globalBinding!accessing!private! !
+globalName!accessing!private! !
+idlAttributes!printing-IDL!private! !
+idlHelpAttributes:!printing-IDL!private! !
+idlKeyword!constants!private! !
+isPoolCheck:!private!testing! !
+moveClassToPackage:!helpers!private! !
+package!accessing!public! !
+package:!accessing!public! !
+packageCheck:!helpers!private! !
+packageName!accessing!public! !
+packageName:!accessing!public! !
+prefix!constants!public! !
+prefix:!accessing!public! !
+prefixGlobalNames!accessing!public! !
+prefixGlobalNames:!accessing!public! !
+printIDLForwardRefsOn:indent:!printing!public! !
+printIDLOn:indent:!printing!public! !
+printOn:!printing!public! !
+resolveExistingPool:!helpers!private! !
+sharedPoolNames!accessing!private! !
+superclassClashSignal!constants!public! !
+!
 
 !AXTypeLibraryAnalyzer class methodsFor!
 
@@ -4227,16 +4265,18 @@ typeLibRegistrations
 			(description notNil and: [ description notEmpty]) ifTrue: [
 				list add: (AXTypeLibRegistration description: description guidString: g versionString: v)]]].
 	^list asSortedCollection! !
-!AXTypeLibraryAnalyzer class categoriesFor: #example1!examples!must strip!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #example2!examples!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #example3!examples!must strip!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #fileTypes!constants!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #icon!constants!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #open!instance creation!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #registerTypeLib!helpers!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #superclassClashSignal!constants!examples!public! !
-!AXTypeLibraryAnalyzer class categoriesFor: #typeLibRegistrations!enquiries!private! !
+!AXTypeLibraryAnalyzer class categoriesForMethods!
+example1!examples!must strip!public! !
+example2!examples!public! !
+example3!examples!must strip!public! !
+fileTypes!constants!public! !
+icon!constants!public! !
+open!instance creation!public! !
+publishedAspectsOfInstances!constants!public! !
+registerTypeLib!helpers!public! !
+superclassClashSignal!constants!examples!public! !
+typeLibRegistrations!enquiries!private! !
+!
 
 !BOOL class methodsFor!
 
@@ -4245,7 +4285,9 @@ fieldType
 	other structures."
 
 	^BOOLField! !
-!BOOL class categoriesFor: #fieldType!constants!private! !
+!BOOL class categoriesForMethods!
+fieldType!constants!private! !
+!
 
 !BOOLEAN class methodsFor!
 
@@ -4254,7 +4296,9 @@ fieldType
 	structures."
 
 	^BOOLEANField! !
-!BOOLEAN class categoriesFor: #fieldType!constants!private! !
+!BOOLEAN class categoriesForMethods!
+fieldType!constants!private! !
+!
 
 !BSTR class methodsFor!
 
@@ -4305,11 +4349,13 @@ unspecifiedParameterValue
 	^(VARIANT new)
 		vt: self vt;
 		yourself! !
-!BSTR class categoriesFor: #newInstanceAspect:class:!adapters!private! !
-!BSTR class categoriesFor: #printDefaultValue:on:!helpers!private! !
-!BSTR class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!BSTR class categoriesFor: #printOptionalParameter:on:!helpers!private! !
-!BSTR class categoriesFor: #unspecifiedParameterValue!helpers!private! !
+!BSTR class categoriesForMethods!
+newInstanceAspect:class:!adapters!private! !
+printDefaultValue:on:!helpers!private! !
+printMethodArgument:elemdesc:indirections:on:!private! !
+printOptionalParameter:on:!helpers!private! !
+unspecifiedParameterValue!helpers!private! !
+!
 
 !BYTE class methodsFor!
 
@@ -4324,8 +4370,10 @@ fieldType
 	structures."
 
 	^BYTEField! !
-!BYTE class categoriesFor: #arrayType!constants!private! !
-!BYTE class categoriesFor: #fieldType!constants!private! !
+!BYTE class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !ByteArray class methodsFor!
 
@@ -4355,10 +4403,12 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		type: self
 		indirections: anInteger
 		on: aPuttableStream! !
-!ByteArray class categoriesFor: #fieldType!constants!private! !
-!ByteArray class categoriesFor: #fieldType:indirections:!constants!private! !
-!ByteArray class categoriesFor: #pointerFieldType!constants!private! !
-!ByteArray class categoriesFor: #printStructField:indirections:on:!private! !
+!ByteArray class categoriesForMethods!
+fieldType!constants!private! !
+fieldType:indirections:!constants!private! !
+pointerFieldType!constants!private! !
+printStructField:indirections:on:!private! !
+!
 
 !COMInterface class methodsFor!
 
@@ -4385,8 +4435,10 @@ printOptionalParameter: anELEMDESC on: aPuttableStream
 		print: self;
 		space;
 		display: #newPointer! !
-!COMInterface class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!COMInterface class categoriesFor: #printOptionalParameter:on:!helpers!private! !
+!COMInterface class categoriesForMethods!
+printMethodArgument:elemdesc:indirections:on:!private! !
+printOptionalParameter:on:!helpers!private! !
+!
 
 !CURRENCY methodsFor!
 
@@ -4398,7 +4450,9 @@ printOn: aStream
 		nextPut: $(;
 		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
 		nextPut: $)! !
-!CURRENCY categoriesFor: #printOn:!printing!public! !
+!CURRENCY categoriesForMethods!
+printOn:!printing!public! !
+!
 
 !CURRENCY class methodsFor!
 
@@ -4410,8 +4464,10 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass number: aSymbol! !
-!CURRENCY class categoriesFor: #mustWrapOptionalArgument:!private!testing! !
-!CURRENCY class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+!CURRENCY class categoriesForMethods!
+mustWrapOptionalArgument:!private!testing! !
+newInstanceAspect:class:!adapters!private! !
+!
 
 !CUSTDATAITEM methodsFor!
 
@@ -4426,7 +4482,9 @@ printIDLOn: target
 	self varValue printIDLOn: target.
 	target nextPut: $).
 ! !
-!CUSTDATAITEM categoriesFor: #printIDLOn:!printing-IDL!private! !
+!CUSTDATAITEM categoriesForMethods!
+printIDLOn:!printing-IDL!private! !
+!
 
 !DATE class methodsFor!
 
@@ -4439,8 +4497,10 @@ newInstanceAspect: aSymbol class: aspectClass
 printDefaultValue: aVARIANT on: aPuttableStream 
 	self assert: [aVARIANT vt == VT_DATE or: [aVARIANT vt == VT_R8]].
 	aVARIANT dblVal displayOn: aPuttableStream! !
-!DATE class categoriesFor: #newInstanceAspect:class:!adapters!private! !
-!DATE class categoriesFor: #printDefaultValue:on:!helpers!private! !
+!DATE class categoriesForMethods!
+newInstanceAspect:class:!adapters!private! !
+printDefaultValue:on:!helpers!private! !
+!
 
 !DECIMAL methodsFor!
 
@@ -4452,7 +4512,9 @@ printOn: aStream
 		nextPut: $(;
 		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
 		nextPut: $)! !
-!DECIMAL categoriesFor: #printOn:!printing!public! !
+!DECIMAL categoriesForMethods!
+printOn:!printing!public! !
+!
 
 !DOUBLE class methodsFor!
 
@@ -4468,8 +4530,10 @@ fieldType
 	other structures."
 
 	^DOUBLEField! !
-!DOUBLE class categoriesFor: #arrayType!constants!private! !
-!DOUBLE class categoriesFor: #fieldType!constants!private! !
+!DOUBLE class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !DWORD class methodsFor!
 
@@ -4485,8 +4549,10 @@ fieldType
 	other structures."
 
 	^DWORDField! !
-!DWORD class categoriesFor: #arrayType!constants!private! !
-!DWORD class categoriesFor: #fieldType!constants!private! !
+!DWORD class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !DWORDBytes class methodsFor!
 
@@ -4495,7 +4561,9 @@ fieldType
 	other structures."
 
 	^DWORDField! !
-!DWORDBytes class categoriesFor: #fieldType!constants!development!private! !
+!DWORDBytes class categoriesForMethods!
+fieldType!constants!development!private! !
+!
 
 !ELEMDESC methodsFor!
 
@@ -4504,7 +4572,9 @@ idlAttributes
 	from the receiver."
 
 	^self paramdesc idlAttributes! !
-!ELEMDESC categoriesFor: #idlAttributes!printing-IDL!private! !
+!ELEMDESC categoriesForMethods!
+idlAttributes!printing-IDL!private! !
+!
 
 !ExternalAddress class methodsFor!
 
@@ -4513,7 +4583,9 @@ fieldType
 	other structures."
 
 	^LPVOIDField! !
-!ExternalAddress class categoriesFor: #fieldType!constants!development!private! !
+!ExternalAddress class categoriesForMethods!
+fieldType!constants!development!private! !
+!
 
 !ExternalArray class methodsFor!
 
@@ -4547,11 +4619,13 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		type: self
 		indirections: anInteger
 		on: aPuttableStream! !
-!ExternalArray class categoriesFor: #arrayType!constants!private! !
-!ExternalArray class categoriesFor: #fieldType!constants!private! !
-!ExternalArray class categoriesFor: #fieldType:indirections:!private! !
-!ExternalArray class categoriesFor: #pointerFieldType!constants!private! !
-!ExternalArray class categoriesFor: #printStructField:indirections:on:!private! !
+!ExternalArray class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+fieldType:indirections:!private! !
+pointerFieldType!constants!private! !
+printStructField:indirections:on:!private! !
+!
 
 !ExternalField class methodsFor!
 
@@ -4631,13 +4705,15 @@ printVariable: vardesc type: extClass indirections: indirs on: target
 warningMultiDimensionArray: aVARDESC
 	Warning
 		signal: 'Multi-dimensioned byte array treated as single-dimensioned: ' , aVARDESC printString! !
-!ExternalField class categoriesFor: #printArrayField:length:on:!private! !
-!ExternalField class categoriesFor: #printArrayField:type:on:!private! !
-!ExternalField class categoriesFor: #printConformantArrayLength:on:!private! !
-!ExternalField class categoriesFor: #printFixedArrayLength:on:!private! !
-!ExternalField class categoriesFor: #printTypedField:on:!private! !
-!ExternalField class categoriesFor: #printVariable:type:indirections:on:!private! !
-!ExternalField class categoriesFor: #warningMultiDimensionArray:!private! !
+!ExternalField class categoriesForMethods!
+printArrayField:length:on:!private! !
+printArrayField:type:on:!private! !
+printConformantArrayLength:on:!private! !
+printFixedArrayLength:on:!private! !
+printTypedField:on:!private! !
+printVariable:type:indirections:on:!private! !
+warningMultiDimensionArray:!private! !
+!
 
 !ExternalHandle class methodsFor!
 
@@ -4674,9 +4750,11 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 				print: self;
 				space;
 				display: #new]! !
-!ExternalHandle class categoriesFor: #arrayType:!constants!private! !
-!ExternalHandle class categoriesFor: #fieldType!constants!development!private! !
-!ExternalHandle class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
+!ExternalHandle class categoriesForMethods!
+arrayType:!constants!private! !
+fieldType!constants!development!private! !
+printMethodArgument:elemdesc:indirections:on:!private! !
+!
 
 !ExternalIntegerBytes class methodsFor!
 
@@ -4698,16 +4776,20 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		type: self
 		indirections: anInteger
 		on: aPuttableStream! !
-!ExternalIntegerBytes class categoriesFor: #fieldType!constants!development!private! !
-!ExternalIntegerBytes class categoriesFor: #pointerFieldType!constants!private! !
-!ExternalIntegerBytes class categoriesFor: #printStructField:indirections:on:!private! !
+!ExternalIntegerBytes class categoriesForMethods!
+fieldType!constants!development!private! !
+pointerFieldType!constants!private! !
+printStructField:indirections:on:!private! !
+!
 
 !ExternalLibrary methodsFor!
 
 DllRegisterServer
 	<stdcall: hresult DllRegisterServer>
 	^self invalidCall: _failureCode! !
-!ExternalLibrary categoriesFor: #DllRegisterServer!operations!private! !
+!ExternalLibrary categoriesForMethods!
+DllRegisterServer!operations!private! !
+!
 
 !ExternalPoint methodsFor!
 
@@ -4717,7 +4799,9 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(; print: self asPoint; nextPut: $)! !
-!ExternalPoint categoriesFor: #printOn:!printing!public! !
+!ExternalPoint categoriesForMethods!
+printOn:!printing!public! !
+!
 
 !ExternalStructure class methodsFor!
 
@@ -4868,18 +4952,20 @@ unspecifiedParameterValue
 	^(VARIANT new)
 		vt: self vt;
 		yourself! !
-!ExternalStructure class categoriesFor: #arrayType!constants!private! !
-!ExternalStructure class categoriesFor: #arrayType:!constants!private! !
-!ExternalStructure class categoriesFor: #elementType:!constants!private! !
-!ExternalStructure class categoriesFor: #fieldType!constants!private! !
-!ExternalStructure class categoriesFor: #fieldType:indirections:!private! !
-!ExternalStructure class categoriesFor: #mustWrapOptionalArgument:!helpers!private! !
-!ExternalStructure class categoriesFor: #printDefaultValue:on:!helpers!private! !
-!ExternalStructure class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!ExternalStructure class categoriesFor: #printOptionalParameter:on:!helpers!private! !
-!ExternalStructure class categoriesFor: #printStructField:indirections:on:!private! !
-!ExternalStructure class categoriesFor: #printWrappedValue:on:!helpers!private! !
-!ExternalStructure class categoriesFor: #unspecifiedParameterValue!helpers!private! !
+!ExternalStructure class categoriesForMethods!
+arrayType!constants!private! !
+arrayType:!constants!private! !
+elementType:!constants!private! !
+fieldType!constants!private! !
+fieldType:indirections:!private! !
+mustWrapOptionalArgument:!helpers!private! !
+printDefaultValue:on:!helpers!private! !
+printMethodArgument:elemdesc:indirections:on:!private! !
+printOptionalParameter:on:!helpers!private! !
+printStructField:indirections:on:!private! !
+printWrappedValue:on:!helpers!private! !
+unspecifiedParameterValue!helpers!private! !
+!
 
 !FLOAT class methodsFor!
 
@@ -4899,9 +4985,11 @@ fieldType
 printDefaultValue: aVARIANT on: aPuttableStream 
 	self assert: [aVARIANT vt == self vt].
 	aVARIANT value printOn: aPuttableStream significantFigures: 8! !
-!FLOAT class categoriesFor: #arrayType!constants!private! !
-!FLOAT class categoriesFor: #fieldType!constants!private! !
-!FLOAT class categoriesFor: #printDefaultValue:on:!helpers!private! !
+!FLOAT class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+printDefaultValue:on:!helpers!private! !
+!
 
 !FUNCDESC methodsFor!
 
@@ -5034,19 +5122,21 @@ reinventBadVarNames: anOrderedCollection
 			"We obviously can't use a duplicate argument name"
 			badNames add: arg].
 	^anOrderedCollection! !
-!FUNCDESC categoriesFor: #buildMethodName!private! !
-!FUNCDESC categoriesFor: #displayOn:!printing!public! !
-!FUNCDESC categoriesFor: #generate!private! !
-!FUNCDESC categoriesFor: #hasAnswer!private! !
-!FUNCDESC categoriesFor: #hasMultipleOutputs!private!testing! !
-!FUNCDESC categoriesFor: #hasOptionalInputs!accessing!private! !
-!FUNCDESC categoriesFor: #hasReturnValue!public!testing! !
-!FUNCDESC categoriesFor: #isInspectable!public!testing! !
-!FUNCDESC categoriesFor: #isValueSetter!private! !
-!FUNCDESC categoriesFor: #methodName!accessing!private! !
-!FUNCDESC categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
-!FUNCDESC categoriesFor: #printOn:!printing!public! !
-!FUNCDESC categoriesFor: #reinventBadVarNames:!helpers!private! !
+!FUNCDESC categoriesForMethods!
+buildMethodName!private! !
+displayOn:!printing!public! !
+generate!private! !
+hasAnswer!private! !
+hasMultipleOutputs!private!testing! !
+hasOptionalInputs!accessing!private! !
+hasReturnValue!public!testing! !
+isInspectable!public!testing! !
+isValueSetter!private! !
+methodName!accessing!private! !
+printIDLOn:indent:!printing-IDL!public! !
+printOn:!printing!public! !
+reinventBadVarNames:!helpers!private! !
+!
 
 !GUID class methodsFor!
 
@@ -5128,11 +5218,13 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		type: self
 		indirections: anInteger
 		on: aPuttableStream! !
-!GUID class categoriesFor: #arrayType:!constants!private! !
-!GUID class categoriesFor: #elementType:!constants!private! !
-!GUID class categoriesFor: #newToClipboard!public! !
-!GUID class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!GUID class categoriesFor: #printStructField:indirections:on:!private! !
+!GUID class categoriesForMethods!
+arrayType:!constants!private! !
+elementType:!constants!private! !
+newToClipboard!public! !
+printMethodArgument:elemdesc:indirections:on:!private! !
+printStructField:indirections:on:!private! !
+!
 
 !HRESULT class methodsFor!
 
@@ -5141,7 +5233,9 @@ fieldType
 	other structures."
 
 	^SDWORDField! !
-!HRESULT class categoriesFor: #fieldType!constants!private! !
+!HRESULT class categoriesForMethods!
+fieldType!constants!private! !
+!
 
 !IDispatch methodsFor!
 
@@ -5194,11 +5288,13 @@ publishedAspects
 		ifFalse: 
 			[(self typeInfoIfNone: []) ifNotNil: [:ti | ti buildPublishedAspects: aspects forObject: self]].
 	^aspects! !
-!IDispatch categoriesFor: #alternateInspectorClass!constants!public! !
-!IDispatch categoriesFor: #aspectDisplayOn:!private! !
-!IDispatch categoriesFor: #debugPrintString!printing!public! !
-!IDispatch categoriesFor: #printOn:!printing!public! !
-!IDispatch categoriesFor: #publishedAspects!constants!public! !
+!IDispatch categoriesForMethods!
+alternateInspectorClass!constants!public! !
+aspectDisplayOn:!private! !
+debugPrintString!printing!public! !
+printOn:!printing!public! !
+publishedAspects!constants!public! !
+!
 
 !IDispatch class methodsFor!
 
@@ -5368,10 +5464,12 @@ example4
 
 	"Quit without prompt"
 	word invoke: 'Quit' with: 0! !
-!IDispatch class categoriesFor: #example1!examples!public! !
-!IDispatch class categoriesFor: #example2!examples!public! !
-!IDispatch class categoriesFor: #example3!examples!public! !
-!IDispatch class categoriesFor: #example4!examples!public! !
+!IDispatch class categoriesForMethods!
+example1!examples!public! !
+example2!examples!public! !
+example3!examples!public! !
+example4!examples!public! !
+!
 
 !INT_PTR class methodsFor!
 
@@ -5386,8 +5484,10 @@ fieldType
 	other structures."
 
 	^INT_PTRField! !
-!INT_PTR class categoriesFor: #arrayType!constants!private! !
-!INT_PTR class categoriesFor: #fieldType!constants!private! !
+!INT_PTR class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !ITypeInfo methodsFor!
 
@@ -5401,7 +5501,9 @@ printOn: aStream
 		ifTrue: [aStream display: 'NULL']
 		ifFalse: [aStream print: (self nameOfID: MEMBERID_NIL)].
 	aStream nextPut: $)! !
-!ITypeInfo categoriesFor: #printOn:!printing!public! !
+!ITypeInfo categoriesForMethods!
+printOn:!printing!public! !
+!
 
 !ITypeLib methodsFor!
 
@@ -5415,7 +5517,9 @@ printOn: aStream
 		ifTrue: [aStream display: 'NULL']
 		ifFalse: [aStream print: (self nameAt: 0 ifAbsent: ['<anon>'])].
 	aStream nextPut: $)! !
-!ITypeLib categoriesFor: #printOn:!printing!public! !
+!ITypeLib categoriesForMethods!
+printOn:!printing!public! !
+!
 
 !LARGE_INTEGER class methodsFor!
 
@@ -5424,7 +5528,9 @@ fieldType
 	other structures."
 
 	^SQWORDField! !
-!LARGE_INTEGER class categoriesFor: #fieldType!constants!private! !
+!LARGE_INTEGER class categoriesForMethods!
+fieldType!constants!private! !
+!
 
 !OLECountedArray class methodsFor!
 
@@ -5433,8 +5539,10 @@ fieldType
 
 pointerFieldType
 	^PointerField! !
-!OLECountedArray class categoriesFor: #fieldType!constants!private! !
-!OLECountedArray class categoriesFor: #pointerFieldType!constants!private! !
+!OLECountedArray class categoriesForMethods!
+fieldType!constants!private! !
+pointerFieldType!constants!private! !
+!
 
 !PARAMDESC methodsFor!
 
@@ -5459,7 +5567,9 @@ idlAttributes
 			answer addLast: stm contents]
 		ifFalse: [(flags anyMask: PARAMFLAG_FOPT) ifTrue: [answer addLast: 'optional']].
 	^answer! !
-!PARAMDESC categoriesFor: #idlAttributes!accessing!private! !
+!PARAMDESC categoriesForMethods!
+idlAttributes!accessing!private! !
+!
 
 !PointerArray class methodsFor!
 
@@ -5468,8 +5578,10 @@ fieldType
 
 pointerFieldType
 	^PointerArrayPointerField! !
-!PointerArray class categoriesFor: #fieldType!private! !
-!PointerArray class categoriesFor: #pointerFieldType!private! !
+!PointerArray class categoriesForMethods!
+fieldType!private! !
+pointerFieldType!private! !
+!
 
 !PointerArrayField class methodsFor!
 
@@ -5500,7 +5612,9 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aWriteStream
 				ifFalse: [elemType])
 		length: arrayDesc elementCount
 		on: aWriteStream! !
-!PointerArrayField class categoriesFor: #printVariable:type:indirections:on:!public! !
+!PointerArrayField class categoriesForMethods!
+printVariable:type:indirections:on:!public! !
+!
 
 !PointerField class methodsFor!
 
@@ -5510,7 +5624,9 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 	indirections."
 
 	self printTypedField: extClass on: aPuttableStream! !
-!PointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
+!PointerField class categoriesForMethods!
+printVariable:type:indirections:on:!private! !
+!
 
 !QWORD class methodsFor!
 
@@ -5519,7 +5635,9 @@ fieldType
 	other structures."
 
 	^QWORDField! !
-!QWORD class categoriesFor: #fieldType!constants!private! !
+!QWORD class categoriesForMethods!
+fieldType!constants!private! !
+!
 
 !SAFEARRAY methodsFor!
 
@@ -5541,7 +5659,9 @@ printOn: aStream
 						nextPutAll: '..';
 						print: (self upperBound: d);
 						nextPut: $]]]! !
-!SAFEARRAY categoriesFor: #printOn:!printing!private! !
+!SAFEARRAY categoriesForMethods!
+printOn:!printing!private! !
+!
 
 !SAFEARRAY class methodsFor!
 
@@ -5569,9 +5689,11 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 				print: self;
 				space;
 				display: #newPointer]! !
-!SAFEARRAY class categoriesFor: #fieldType!constants!private! !
-!SAFEARRAY class categoriesFor: #pointerFieldType!constants!private! !
-!SAFEARRAY class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
+!SAFEARRAY class categoriesForMethods!
+fieldType!constants!private! !
+pointerFieldType!constants!private! !
+printMethodArgument:elemdesc:indirections:on:!private! !
+!
 
 !SBYTE class methodsFor!
 
@@ -5586,8 +5708,10 @@ fieldType
 	other structures."
 
 	^SBYTEField! !
-!SBYTE class categoriesFor: #arrayType!constants!private! !
-!SBYTE class categoriesFor: #fieldType!constants!private! !
+!SBYTE class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !SDWORD class methodsFor!
 
@@ -5603,8 +5727,10 @@ fieldType
 	other structures."
 
 	^SDWORDField! !
-!SDWORD class categoriesFor: #arrayType!constants!private! !
-!SDWORD class categoriesFor: #fieldType!constants!private! !
+!SDWORD class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !String class methodsFor!
 
@@ -5709,11 +5835,13 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 				printArrayField: aVARDESC
 				type: self
 				on: aPuttableStream]! !
-!String class categoriesFor: #arrayType!constants!private! !
-!String class categoriesFor: #arrayType:!constants!private! !
-!String class categoriesFor: #elementType:!constants!private! !
-!String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!String class categoriesFor: #printStructField:indirections:on:!private! !
+!String class categoriesForMethods!
+arrayType!constants!private! !
+arrayType:!constants!private! !
+elementType:!constants!private! !
+printMethodArgument:elemdesc:indirections:on:!private! !
+printStructField:indirections:on:!private! !
+!
 
 !StructureArray class methodsFor!
 
@@ -5722,8 +5850,10 @@ fieldType
 
 pointerFieldType
 	^StructureArrayPointerField! !
-!StructureArray class categoriesFor: #fieldType!private! !
-!StructureArray class categoriesFor: #pointerFieldType!private! !
+!StructureArray class categoriesForMethods!
+fieldType!private! !
+pointerFieldType!private! !
+!
 
 !StructureArrayField class methodsFor!
 
@@ -5746,7 +5876,9 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 		printArrayField: aVARDESC
 		type: elemclassdesc key
 		on: aPuttableStream! !
-!StructureArrayField class categoriesFor: #printVariable:type:indirections:on:!private! !
+!StructureArrayField class categoriesForMethods!
+printVariable:type:indirections:on:!private! !
+!
 
 !StructureArrayPointerField class methodsFor!
 
@@ -5762,7 +5894,9 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 		printArrayField: aVARDESC
 		type: extClass
 		on: aPuttableStream! !
-!StructureArrayPointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
+!StructureArrayPointerField class categoriesForMethods!
+printVariable:type:indirections:on:!private! !
+!
 
 !StructureField class methodsFor!
 
@@ -5772,7 +5906,9 @@ printVariable: aVARDESC type: extClass indirections: anIntegre on: aPuttableStre
 	specified number of <integer> indirections."
 
 	self printTypedField: extClass on: aPuttableStream! !
-!StructureField class categoriesFor: #printVariable:type:indirections:on:!private! !
+!StructureField class categoriesForMethods!
+printVariable:type:indirections:on:!private! !
+!
 
 !SWORD class methodsFor!
 
@@ -5788,8 +5924,10 @@ fieldType
 	other structures."
 
 	^SWORDField! !
-!SWORD class categoriesFor: #arrayType!constants!private! !
-!SWORD class categoriesFor: #fieldType!constants!private! !
+!SWORD class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !TKindAliasAnalyzer methodsFor!
 
@@ -5847,13 +5985,15 @@ printIDLOn: target indent: tabs
 	(self printIDLAttributesOn: target indent: -1)
 		ifTrue: [tabs > 0 ifTrue: [target crtab: tabs] ifFalse: [target space]].
 	self printIDLBodyOn: target indent: tabs! !
-!TKindAliasAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
-!TKindAliasAnalyzer categoriesFor: #generateWrapper!private! !
-!TKindAliasAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
-!TKindAliasAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!TKindAliasAnalyzer categoriesFor: #printClassCommentPreambleOn:!private! !
-!TKindAliasAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing!private! !
-!TKindAliasAnalyzer categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
+!TKindAliasAnalyzer categoriesForMethods!
+generateGlobalDefinition:!private! !
+generateWrapper!private! !
+idlAttributes!printing-IDL!private! !
+idlKeyword!constants!private! !
+printClassCommentPreambleOn:!private! !
+printIDLBodyOn:indent:!printing!private! !
+printIDLOn:indent:!printing-IDL!public! !
+!
 
 !TKindCoclassAnalyzer methodsFor!
 
@@ -5910,10 +6050,12 @@ printIDLBodyOn: target indent: tabs
 		tab: tabs;
 		nextPutAll: '};';
 		cr! !
-!TKindCoclassAnalyzer categoriesFor: #generateWrapper!private! !
-!TKindCoclassAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
-!TKindCoclassAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!TKindCoclassAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
+!TKindCoclassAnalyzer categoriesForMethods!
+generateWrapper!private! !
+idlAttributes!printing-IDL!private! !
+idlKeyword!constants!private! !
+printIDLBodyOn:indent:!printing-IDL!private! !
+!
 
 !TKindCoclassAnalyzer class methodsFor!
 
@@ -5923,7 +6065,9 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect sequenceableCollection: #interfaces) beReadOnly;
 		yourself! !
-!TKindCoclassAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!TKindCoclassAnalyzer class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
 
 !TKindDispatchAnalyzer methodsFor!
 
@@ -6408,28 +6552,30 @@ printRawPropPutBody: anAXMemberDesc name: anAXMethodName on: aPuttableStream
 		nextPutAll: 'value: ';
 		nextPutAll: argumentNames last;
 		cr! !
-!TKindDispatchAnalyzer categoriesFor: #buildPropertyAccessorName:!private! !
-!TKindDispatchAnalyzer categoriesFor: #buildPropertyMutatorName:!private! !
-!TKindDispatchAnalyzer categoriesFor: #generatePropertyAccessor:!private! !
-!TKindDispatchAnalyzer categoriesFor: #generatePropertyAccessors!private! !
-!TKindDispatchAnalyzer categoriesFor: #generatePropertyMutator:!private! !
-!TKindDispatchAnalyzer categoriesFor: #generateRawMethod:categories:!private! !
-!TKindDispatchAnalyzer categoriesFor: #generateValuePropertyWrappers!private! !
-!TKindDispatchAnalyzer categoriesFor: #generateWrapper!private! !
-!TKindDispatchAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!TKindDispatchAnalyzer categoriesFor: #isInspectablePropGet:!helpers!private! !
-!TKindDispatchAnalyzer categoriesFor: #isProtocolRequired!private!testing! !
-!TKindDispatchAnalyzer categoriesFor: #printClassCommentPreambleOn:!printing!private! !
-!TKindDispatchAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing!private! !
-!TKindDispatchAnalyzer categoriesFor: #printIDLOfPropertiesOn:indent:!printing!private! !
-!TKindDispatchAnalyzer categoriesFor: #printMethodBody:wrapping:on:!private! !
-!TKindDispatchAnalyzer categoriesFor: #printMultiOutMethodBody:wrapping:on:!private! !
-!TKindDispatchAnalyzer categoriesFor: #printPropertyCommentDecl:on:!printing!private! !
-!TKindDispatchAnalyzer categoriesFor: #printPropGet:wrapping:on:defaultOptionals:!private! !
-!TKindDispatchAnalyzer categoriesFor: #printPropPut:wrapping:on:!private! !
-!TKindDispatchAnalyzer categoriesFor: #printRawMethodBody:name:on:!printing!private! !
-!TKindDispatchAnalyzer categoriesFor: #printRawPropGetBody:name:on:!printing!private! !
-!TKindDispatchAnalyzer categoriesFor: #printRawPropPutBody:name:on:!printing!private! !
+!TKindDispatchAnalyzer categoriesForMethods!
+buildPropertyAccessorName:!private! !
+buildPropertyMutatorName:!private! !
+generatePropertyAccessor:!private! !
+generatePropertyAccessors!private! !
+generatePropertyMutator:!private! !
+generateRawMethod:categories:!private! !
+generateValuePropertyWrappers!private! !
+generateWrapper!private! !
+idlKeyword!constants!private! !
+isInspectablePropGet:!helpers!private! !
+isProtocolRequired!private!testing! !
+printClassCommentPreambleOn:!printing!private! !
+printIDLBodyOn:indent:!printing!private! !
+printIDLOfPropertiesOn:indent:!printing!private! !
+printMethodBody:wrapping:on:!private! !
+printMultiOutMethodBody:wrapping:on:!private! !
+printPropertyCommentDecl:on:!printing!private! !
+printPropGet:wrapping:on:defaultOptionals:!private! !
+printPropPut:wrapping:on:!private! !
+printRawMethodBody:name:on:!printing!private! !
+printRawPropGetBody:name:on:!printing!private! !
+printRawPropPutBody:name:on:!printing!private! !
+!
 
 !TKindDispatchAnalyzer class methodsFor!
 
@@ -6444,8 +6590,10 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect sequenceableCollection: #properties) beReadOnly;
 		yourself! !
-!TKindDispatchAnalyzer class categoriesFor: #icon!constants!public! !
-!TKindDispatchAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!TKindDispatchAnalyzer class categoriesForMethods!
+icon!constants!public! !
+publishedAspectsOfInstances!constants!public! !
+!
 
 !TKindEnumAnalyzer methodsFor!
 
@@ -6522,14 +6670,16 @@ printIDLOn: target indent: tabs
 
 removeOldWrappers: aClass
 	"Nothing to remove in this case"! !
-!TKindEnumAnalyzer categoriesFor: #constantsPool!public! !
-!TKindEnumAnalyzer categoriesFor: #generateGlobalDefinition:!private! !
-!TKindEnumAnalyzer categoriesFor: #generateInstanceSide:!private! !
-!TKindEnumAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
-!TKindEnumAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!TKindEnumAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
-!TKindEnumAnalyzer categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
-!TKindEnumAnalyzer categoriesFor: #removeOldWrappers:!private! !
+!TKindEnumAnalyzer categoriesForMethods!
+constantsPool!public! !
+generateGlobalDefinition:!private! !
+generateInstanceSide:!private! !
+idlAttributes!printing-IDL!private! !
+idlKeyword!constants!private! !
+printIDLBodyOn:indent:!printing-IDL!private! !
+printIDLOn:indent:!printing-IDL!public! !
+removeOldWrappers:!private! !
+!
 
 !TKindEnumAnalyzer class methodsFor!
 
@@ -6539,7 +6689,9 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect sequenceableCollection: #constants) beReadOnly;
 		yourself! !
-!TKindEnumAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!TKindEnumAnalyzer class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
 
 !TKindInterfaceAnalyzer methodsFor!
 
@@ -6992,28 +7144,30 @@ rawMethodNameForFunction: aFUNCDESC
 		keywords: (self reinventBadSelector: keywords member: aFUNCDESC)
 		argumentNames: name argumentNames
 		indices: name indices! !
-!TKindInterfaceAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
-!TKindInterfaceAnalyzer categoriesFor: #functionHasReturnValue:!helpers!private! !
-!TKindInterfaceAnalyzer categoriesFor: #generateClassInitialize!private! !
-!TKindInterfaceAnalyzer categoriesFor: #generateDefineFunctions!private! !
-!TKindInterfaceAnalyzer categoriesFor: #generatePropertyAccessors!private! !
-!TKindInterfaceAnalyzer categoriesFor: #generateRawPropGet:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #generateRawPropPut:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
-!TKindInterfaceAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!TKindInterfaceAnalyzer categoriesFor: #isInspectablePropGet:!enumerating!helpers!private! !
-!TKindInterfaceAnalyzer categoriesFor: #isMethodWrapperRequiredFor:!private!testing! !
-!TKindInterfaceAnalyzer categoriesFor: #printClassCommentPreambleOn:!printing!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printMethodBody:wrapping:on:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printMultiOutMethodBody:wrapping:on:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printPropertyCommentDecl:on:!printing!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printPropGet:wrapping:on:defaultOptionals:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printPropPut:wrapping:on:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printRawMethodBody:name:on:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printRawPropGetComment:on:isPrivate:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #printRawPropPutComment:name:on:isPrivate:!private! !
-!TKindInterfaceAnalyzer categoriesFor: #rawMethodNameForFunction:!helpers!private! !
+!TKindInterfaceAnalyzer categoriesForMethods!
+areWrappersRequired!private!testing! !
+functionHasReturnValue:!helpers!private! !
+generateClassInitialize!private! !
+generateDefineFunctions!private! !
+generatePropertyAccessors!private! !
+generateRawPropGet:!private! !
+generateRawPropPut:!private! !
+idlAttributes!printing-IDL!private! !
+idlKeyword!constants!private! !
+isInspectablePropGet:!enumerating!helpers!private! !
+isMethodWrapperRequiredFor:!private!testing! !
+printClassCommentPreambleOn:!printing!private! !
+printIDLBodyOn:indent:!printing-IDL!private! !
+printMethodBody:wrapping:on:!private! !
+printMultiOutMethodBody:wrapping:on:!private! !
+printPropertyCommentDecl:on:!printing!private! !
+printPropGet:wrapping:on:defaultOptionals:!private! !
+printPropPut:wrapping:on:!private! !
+printRawMethodBody:name:on:!private! !
+printRawPropGetComment:on:isPrivate:!private! !
+printRawPropPutComment:name:on:isPrivate:!private! !
+rawMethodNameForFunction:!helpers!private! !
+!
 
 !TKindModuleAnalyzer methodsFor!
 
@@ -7177,22 +7331,24 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 		nextPut: $>;
 		crtab;
 		nextPutAll: '^self invalidCall: _failureCode'! !
-!TKindModuleAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
-!TKindModuleAnalyzer categoriesFor: #generateClassFilename!private! !
-!TKindModuleAnalyzer categoriesFor: #generateClassSide:!private! !
-!TKindModuleAnalyzer categoriesFor: #generateInstanceSide:!private! !
-!TKindModuleAnalyzer categoriesFor: #generateMethodWrappers!private! !
-!TKindModuleAnalyzer categoriesFor: #generateWrapper!private! !
-!TKindModuleAnalyzer categoriesFor: #idlAttributes!printing-IDL!private! !
-!TKindModuleAnalyzer categoriesFor: #idlAttributesOfFunc:!printing-IDL!private! !
-!TKindModuleAnalyzer categoriesFor: #idlKeyword!constants!private! !
-!TKindModuleAnalyzer categoriesFor: #instanceMethodCategories:!private! !
-!TKindModuleAnalyzer categoriesFor: #methodCommentDescription!private! !
-!TKindModuleAnalyzer categoriesFor: #mungeSelectorKeywords:forMember:!helpers!private! !
-!TKindModuleAnalyzer categoriesFor: #printClassCommentPreambleOn:!printing!private! !
-!TKindModuleAnalyzer categoriesFor: #printIDLBodyOn:indent:!printing-IDL!private! !
-!TKindModuleAnalyzer categoriesFor: #printMethod:wrapping:on:!private! !
-!TKindModuleAnalyzer categoriesFor: #printRawMethodBody:name:on:!public! !
+!TKindModuleAnalyzer categoriesForMethods!
+areWrappersRequired!private!testing! !
+generateClassFilename!private! !
+generateClassSide:!private! !
+generateInstanceSide:!private! !
+generateMethodWrappers!private! !
+generateWrapper!private! !
+idlAttributes!printing-IDL!private! !
+idlAttributesOfFunc:!printing-IDL!private! !
+idlKeyword!constants!private! !
+instanceMethodCategories:!private! !
+methodCommentDescription!private! !
+mungeSelectorKeywords:forMember:!helpers!private! !
+printClassCommentPreambleOn:!printing!private! !
+printIDLBodyOn:indent:!printing-IDL!private! !
+printMethod:wrapping:on:!private! !
+printRawMethodBody:name:on:!public! !
+!
 
 !TKindModuleAnalyzer class methodsFor!
 
@@ -7207,8 +7363,10 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect dictionary: #functionsByName) beReadOnly;
 		yourself! !
-!TKindModuleAnalyzer class categoriesFor: #icon!constants!public! !
-!TKindModuleAnalyzer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!TKindModuleAnalyzer class categoriesForMethods!
+icon!constants!public! !
+publishedAspectsOfInstances!constants!public! !
+!
 
 !TKindRecordAnalyzer methodsFor!
 
@@ -7217,7 +7375,9 @@ idlKeyword
 	described by the receiver, e.g. dispinterface."
 
 	^'struct'! !
-!TKindRecordAnalyzer categoriesFor: #idlKeyword!constants!private! !
+!TKindRecordAnalyzer categoriesForMethods!
+idlKeyword!constants!private! !
+!
 
 !TKindUnionAnalyzer methodsFor!
 
@@ -7226,7 +7386,9 @@ idlKeyword
 	described by the receiver, e.g. dispinterface."
 
 	^'union'! !
-!TKindUnionAnalyzer categoriesFor: #idlKeyword!constants!private! !
+!TKindUnionAnalyzer categoriesForMethods!
+idlKeyword!constants!private! !
+!
 
 !TYPEDESC methodsFor!
 
@@ -7243,7 +7405,9 @@ printOn: aStream
 				print: self typeInfo name]
 		ifFalse: [aStream print: self typeName].
 	aStream nextPut: $)! !
-!TYPEDESC categoriesFor: #printOn:!development!printing!public! !
+!TYPEDESC categoriesForMethods!
+printOn:!development!printing!public! !
+!
 
 !UINT_PTR class methodsFor!
 
@@ -7258,8 +7422,10 @@ fieldType
 	other structures."
 
 	^UINT_PTRField! !
-!UINT_PTR class categoriesFor: #arrayType!constants!private! !
-!UINT_PTR class categoriesFor: #fieldType!constants!private! !
+!UINT_PTR class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 !UIntPtrBytes class methodsFor!
 
@@ -7268,7 +7434,9 @@ fieldType
 	other structures."
 
 	^UINT_PTRField! !
-!UIntPtrBytes class categoriesFor: #fieldType!constants!development!private! !
+!UIntPtrBytes class categoriesForMethods!
+fieldType!constants!development!private! !
+!
 
 !Utf16String class methodsFor!
 
@@ -7288,7 +7456,9 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 				nextPutAll: argName;
 				space;
 				nextPutAll: #asUtf16String]! !
-!Utf16String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
+!Utf16String class categoriesForMethods!
+printMethodArgument:elemdesc:indirections:on:!private! !
+!
 
 !VARDESC methodsFor!
 
@@ -7305,8 +7475,10 @@ printOn: aStream
 		nextPut: $(.
 	self printIDLOn: aStream indent: -1.
 	aStream nextPut: $)! !
-!VARDESC categoriesFor: #printIDLOn:indent:!printing-IDL!public! !
-!VARDESC categoriesFor: #printOn:!printing!public! !
+!VARDESC categoriesForMethods!
+printIDLOn:indent:!printing-IDL!public! !
+printOn:!printing!public! !
+!
 
 !VARIANT methodsFor!
 
@@ -7347,8 +7519,10 @@ printOn: aPuttableStream
 				nextPutAll: ': ';
 				print: self value].
 	aPuttableStream nextPut: $)! !
-!VARIANT categoriesFor: #printIDLOn:!printing-IDL!public! !
-!VARIANT categoriesFor: #printOn:!development!printing!public! !
+!VARIANT categoriesForMethods!
+printIDLOn:!printing-IDL!public! !
+printOn:!development!printing!public! !
+!
 
 !VARIANT class methodsFor!
 
@@ -7415,9 +7589,11 @@ printOptionalParameter: anELEMDESC on: aPuttableStream
 				print: VARIANT;
 				space;
 				display: #unspecified]! !
-!VARIANT class categoriesFor: #example1!examples!public! !
-!VARIANT class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
-!VARIANT class categoriesFor: #printOptionalParameter:on:!helpers!private! !
+!VARIANT class categoriesForMethods!
+example1!examples!public! !
+printMethodArgument:elemdesc:indirections:on:!private! !
+printOptionalParameter:on:!helpers!private! !
+!
 
 !VARIANT_BOOL methodsFor!
 
@@ -7430,7 +7606,9 @@ printOn: aStream
 			aStream nextPutAll: (self value	
 								ifTrue: ['VARIANT_TRUE']
 								ifFalse: ['VARIANT_FALSE'])]! !
-!VARIANT_BOOL categoriesFor: #printOn:!printing!public! !
+!VARIANT_BOOL categoriesForMethods!
+printOn:!printing!public! !
+!
 
 !VARIANT_BOOL class methodsFor!
 
@@ -7439,7 +7617,9 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass boolean: aSymbol! !
-!VARIANT_BOOL class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+!VARIANT_BOOL class categoriesForMethods!
+newInstanceAspect:class:!adapters!private! !
+!
 
 !VOID class methodsFor!
 
@@ -7463,9 +7643,11 @@ pointerFieldType
 	one indirection."
 
 	^LPVOIDField! !
-!VOID class categoriesFor: #arrayType!constants!private! !
-!VOID class categoriesFor: #fieldType!constants!private! !
-!VOID class categoriesFor: #pointerFieldType!constants!private! !
+!VOID class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+pointerFieldType!constants!private! !
+!
 
 !WORD class methodsFor!
 
@@ -7481,8 +7663,10 @@ fieldType
 	other structures."
 
 	^WORDField! !
-!WORD class categoriesFor: #arrayType!constants!private! !
-!WORD class categoriesFor: #fieldType!constants!private! !
+!WORD class categoriesForMethods!
+arrayType!constants!private! !
+fieldType!constants!private! !
+!
 
 "End of package definition"!
 

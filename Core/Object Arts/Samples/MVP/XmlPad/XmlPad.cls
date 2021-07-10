@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TextDocument subclass: #XmlPad
 	instanceVariableNames: 'viewOptions'
@@ -257,56 +257,58 @@ viewToolbar
 	| toolbar |
 	toolbar := self toolbar.
 	toolbar isWindowVisible ifTrue: [toolbar hide] ifFalse: [toolbar show]! !
-!XmlPad categoriesFor: #about!commands!public! !
-!XmlPad categoriesFor: #basicValidateXml!helpers!private! !
-!XmlPad categoriesFor: #booleanOptions!helpers!private! !
-!XmlPad categoriesFor: #booleanViewOptions!helpers!private! !
-!XmlPad categoriesFor: #canSave!public!testing! !
-!XmlPad categoriesFor: #hasFormattingMarks!public!testing! !
-!XmlPad categoriesFor: #hasFormattingMarks:!accessing!public! !
-!XmlPad categoriesFor: #hasIndentationGuides!public!testing! !
-!XmlPad categoriesFor: #hasIndentationGuides:!accessing!public! !
-!XmlPad categoriesFor: #hasLineNumbers!public!testing! !
-!XmlPad categoriesFor: #hasLineNumbers:!accessing!public! !
-!XmlPad categoriesFor: #hasWordWrap!public!testing! !
-!XmlPad categoriesFor: #hasWordWrap:!accessing!public! !
-!XmlPad categoriesFor: #initialize!initializing!public! !
-!XmlPad categoriesFor: #isAutoCompleteEnabled!public! !
-!XmlPad categoriesFor: #isAutoCompleteEnabled:!public! !
-!XmlPad categoriesFor: #isAutoCompletionSingleMatchChosen!public!testing! !
-!XmlPad categoriesFor: #isAutoCompletionSingleMatchChosen:!public! !
-!XmlPad categoriesFor: #isAutoCompletionTruncating!public!testing! !
-!XmlPad categoriesFor: #isAutoCompletionTruncating:!public! !
-!XmlPad categoriesFor: #isFoldingEnabled!public!testing! !
-!XmlPad categoriesFor: #isFoldingEnabled:!accessing!public! !
-!XmlPad categoriesFor: #isRememberingPlacement!commands!public! !
-!XmlPad categoriesFor: #isRememberingPlacement:!public!testing! !
-!XmlPad categoriesFor: #parseXml!helpers!private! !
-!XmlPad categoriesFor: #parseXml:validate:!helpers!private! !
-!XmlPad categoriesFor: #queryCommand:!commands!private! !
-!XmlPad categoriesFor: #reformatXml!commands!public! !
-!XmlPad categoriesFor: #restoreBooleanOptions:!operations!private! !
-!XmlPad categoriesFor: #restoreTabWidth!operations!private! !
-!XmlPad categoriesFor: #restoreTextStyles!helpers!private! !
-!XmlPad categoriesFor: #restoreUserSettings!helpers!private! !
-!XmlPad categoriesFor: #restoreViewOptions!operations!private! !
-!XmlPad categoriesFor: #saveBooleanOptions:!helpers!private! !
-!XmlPad categoriesFor: #saveFontSetting!helpers!private! !
-!XmlPad categoriesFor: #saveOptions!helpers!private! !
-!XmlPad categoriesFor: #saveTabWidth!helpers!private! !
-!XmlPad categoriesFor: #saveTextStyles!helpers!private! !
-!XmlPad categoriesFor: #saveUserSettings!helpers!private! !
-!XmlPad categoriesFor: #saveViewOptions!helpers!private! !
-!XmlPad categoriesFor: #saveWindowPlacement!helpers!private! !
-!XmlPad categoriesFor: #scintilla!accessing!private! !
-!XmlPad categoriesFor: #statusBar!accessing!private! !
-!XmlPad categoriesFor: #tabWidth!accessing!private! !
-!XmlPad categoriesFor: #tabWidth:!accessing!private! !
-!XmlPad categoriesFor: #toolbar!accessing!private! !
-!XmlPad categoriesFor: #userSettingsKey!accessing!private! !
-!XmlPad categoriesFor: #validateXml!commands!public! !
-!XmlPad categoriesFor: #viewStatusBar!commands!private! !
-!XmlPad categoriesFor: #viewToolbar!commands!private! !
+!XmlPad categoriesForMethods!
+about!commands!public! !
+basicValidateXml!helpers!private! !
+booleanOptions!helpers!private! !
+booleanViewOptions!helpers!private! !
+canSave!public!testing! !
+hasFormattingMarks!public!testing! !
+hasFormattingMarks:!accessing!public! !
+hasIndentationGuides!public!testing! !
+hasIndentationGuides:!accessing!public! !
+hasLineNumbers!public!testing! !
+hasLineNumbers:!accessing!public! !
+hasWordWrap!public!testing! !
+hasWordWrap:!accessing!public! !
+initialize!initializing!public! !
+isAutoCompleteEnabled!public! !
+isAutoCompleteEnabled:!public! !
+isAutoCompletionSingleMatchChosen!public!testing! !
+isAutoCompletionSingleMatchChosen:!public! !
+isAutoCompletionTruncating!public!testing! !
+isAutoCompletionTruncating:!public! !
+isFoldingEnabled!public!testing! !
+isFoldingEnabled:!accessing!public! !
+isRememberingPlacement!commands!public! !
+isRememberingPlacement:!public!testing! !
+parseXml!helpers!private! !
+parseXml:validate:!helpers!private! !
+queryCommand:!commands!private! !
+reformatXml!commands!public! !
+restoreBooleanOptions:!operations!private! !
+restoreTabWidth!operations!private! !
+restoreTextStyles!helpers!private! !
+restoreUserSettings!helpers!private! !
+restoreViewOptions!operations!private! !
+saveBooleanOptions:!helpers!private! !
+saveFontSetting!helpers!private! !
+saveOptions!helpers!private! !
+saveTabWidth!helpers!private! !
+saveTextStyles!helpers!private! !
+saveUserSettings!helpers!private! !
+saveViewOptions!helpers!private! !
+saveWindowPlacement!helpers!private! !
+scintilla!accessing!private! !
+statusBar!accessing!private! !
+tabWidth!accessing!private! !
+tabWidth:!accessing!private! !
+toolbar!accessing!private! !
+userSettingsKey!accessing!private! !
+validateXml!commands!public! !
+viewStatusBar!commands!private! !
+viewToolbar!commands!private! !
+!
 
 !XmlPad class methodsFor!
 
@@ -383,16 +385,18 @@ userSettingsKey
 
 userSettingsRootKey
 	^RegKey userRoot createKey: self installKeyName! !
-!XmlPad class categoriesFor: #about!enquiries!private! !
-!XmlPad class categoriesFor: #aboutTemplate!enquiries!private! !
-!XmlPad class categoriesFor: #defaultFileExtension!constants!public! !
-!XmlPad class categoriesFor: #explicitDependencies!must not strip!private! !
-!XmlPad class categoriesFor: #fileTypes!constants!public! !
-!XmlPad class categoriesFor: #icon!constants!public! !
-!XmlPad class categoriesFor: #initialize!development!initializing!public! !
-!XmlPad class categoriesFor: #installKeyName!accessing!public! !
-!XmlPad class categoriesFor: #resource_Default_view!public!resources-views! !
-!XmlPad class categoriesFor: #toolName!accessing!public! !
-!XmlPad class categoriesFor: #userSettingsKey!accessing!public! !
-!XmlPad class categoriesFor: #userSettingsRootKey!accessing!public! !
+!XmlPad class categoriesForMethods!
+about!enquiries!private! !
+aboutTemplate!enquiries!private! !
+defaultFileExtension!constants!public! !
+explicitDependencies!must not strip!private! !
+fileTypes!constants!public! !
+icon!constants!public! !
+initialize!development!initializing!public! !
+installKeyName!accessing!public! !
+resource_Default_view!public!resources-views! !
+toolName!accessing!public! !
+userSettingsKey!accessing!public! !
+userSettingsRootKey!accessing!public! !
+!
 

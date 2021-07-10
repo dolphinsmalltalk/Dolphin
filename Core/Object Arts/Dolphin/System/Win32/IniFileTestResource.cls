@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestResource subclass: #IniFileTestResource
 	instanceVariableNames: ''
@@ -44,9 +44,11 @@ S3Key1=123
 tearDown
 	super tearDown.
 	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]! !
-!IniFileTestResource categoriesFor: #emptyFile!public! !
-!IniFileTestResource categoriesFor: #fileLocator!accessing!public! !
-!IniFileTestResource categoriesFor: #iniFile1!accessing!public! !
-!IniFileTestResource categoriesFor: #setUp!public!setup! !
-!IniFileTestResource categoriesFor: #tearDown!public!setup! !
+!IniFileTestResource categoriesForMethods!
+emptyFile!public! !
+fileLocator!accessing!public! !
+iniFile1!accessing!public! !
+setUp!public!setup! !
+tearDown!public!setup! !
+!
 

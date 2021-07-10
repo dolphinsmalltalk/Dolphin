@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
@@ -588,72 +588,74 @@ versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
 
 	^'%3!!d!!.%4!!d!!%5!!d!!'! !
-!VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:!helpers!private! !
-!VMLibrary categoriesFor: #_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
-!VMLibrary categoriesFor: #addressFromInteger:!helpers!private! !
-!VMLibrary categoriesFor: #applicationHandle!accessing-handles!public! !
-!VMLibrary categoriesFor: #argc!accessing!private! !
-!VMLibrary categoriesFor: #argv!accessing!private! !
-!VMLibrary categoriesFor: #basePatchLevel!constants!patching!private! !
-!VMLibrary categoriesFor: #bytecodeVersion!accessing-version!public! !
-!VMLibrary categoriesFor: #compilerFileName!accessing!private! !
-!VMLibrary categoriesFor: #crashDump:!exceptions!private! !
-!VMLibrary categoriesFor: #crtHandle!accessing-handles!private! !
-!VMLibrary categoriesFor: #debugDump:!exceptions!private! !
-!VMLibrary categoriesFor: #defaultProductDetails!accessing!private! !
-!VMLibrary categoriesFor: #dump:path:stackDepth:walkbackDepth:!exceptions!private! !
-!VMLibrary categoriesFor: #emptyBlock!accessing-handles!private! !
-!VMLibrary categoriesFor: #errorIntegerMoreThan32Bits:!exceptions!private! !
-!VMLibrary categoriesFor: #fullVersion!accessing-version!public! !
-!VMLibrary categoriesFor: #getDlgProc!accessing-callbacks!private! !
-!VMLibrary categoriesFor: #getGenericCallback!accessing-callbacks!private! !
-!VMLibrary categoriesFor: #getVTable!accessing-callbacks!private! !
-!VMLibrary categoriesFor: #getWndProc!accessing-callbacks!public! !
-!VMLibrary categoriesFor: #handleFromInteger:!helpers!private! !
-!VMLibrary categoriesFor: #hashBytes:count:!hash algorithms!helpers!private! !
-!VMLibrary categoriesFor: #highBit:!arithmetic!public! !
-!VMLibrary categoriesFor: #indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
-!VMLibrary categoriesFor: #inputQueueMask!constants!private! !
-!VMLibrary categoriesFor: #isSlowMachine!environment!public! !
-!VMLibrary categoriesFor: #isUserBreakRequested!accessing!helpers!private! !
-!VMLibrary categoriesFor: #isWindows10OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows7OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows7SP1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows8OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindows8Point1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsServer!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaOrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #isWindowsXPOrGreater!public!win32 functions-version helpers! !
-!VMLibrary categoriesFor: #kernelHandle!accessing-handles!private! !
-!VMLibrary categoriesFor: #largeSignedFromUnsigned:!helpers!private! !
-!VMLibrary categoriesFor: #largeUnsignedFromSigned:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeSigned:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeSigned:highPart:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeUnsigned:!helpers!private! !
-!VMLibrary categoriesFor: #makeLargeUnsigned:highPart:!helpers!private! !
-!VMLibrary categoriesFor: #onStartup!event handling!public! !
-!VMLibrary categoriesFor: #productName!accessing!public! !
-!VMLibrary categoriesFor: #registerEventSource:!arithmetic!public! !
-!VMLibrary categoriesFor: #registry!accessing!private! !
-!VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
-!VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
-!VMLibrary categoriesFor: #registryAtIndex:put:!accessing-registry!private! !
-!VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
-!VMLibrary categoriesFor: #selectorOfSpecialSendEx:!enquiries!private! !
-!VMLibrary categoriesFor: #shortName!accessing!public! !
-!VMLibrary categoriesFor: #signedFromUnsigned:!helpers!private! !
-!VMLibrary categoriesFor: #specialSelectors!accessing-registry!private! !
-!VMLibrary categoriesFor: #stderr!accessing-handles!private! !
-!VMLibrary categoriesFor: #stdin!accessing-handles!private! !
-!VMLibrary categoriesFor: #stdout!accessing-handles!private! !
-!VMLibrary categoriesFor: #stringFromAddress:!helpers!private! !
-!VMLibrary categoriesFor: #unregisterObject:!accessing-registry!private! !
-!VMLibrary categoriesFor: #unsignedFromSigned:!helpers!private! !
-!VMLibrary categoriesFor: #utf16StringFromAddress:!helpers!private! !
-!VMLibrary categoriesFor: #versionFormatString!constants!private! !
+!VMLibrary categoriesForMethods!
+_snprintf_s:bufferSize:count:format:with:!helpers!private! !
+_snprintf_s:bufferSize:count:format:with:with:!helpers!private! !
+addressFromInteger:!helpers!private! !
+applicationHandle!accessing-handles!public! !
+argc!accessing!private! !
+argv!accessing!private! !
+basePatchLevel!constants!patching!private! !
+bytecodeVersion!accessing-version!public! !
+compilerFileName!accessing!private! !
+crashDump:!exceptions!private! !
+crtHandle!accessing-handles!private! !
+debugDump:!exceptions!private! !
+defaultProductDetails!accessing!private! !
+dump:path:stackDepth:walkbackDepth:!exceptions!private! !
+emptyBlock!accessing-handles!private! !
+errorIntegerMoreThan32Bits:!exceptions!private! !
+fullVersion!accessing-version!public! !
+getDlgProc!accessing-callbacks!private! !
+getGenericCallback!accessing-callbacks!private! !
+getVTable!accessing-callbacks!private! !
+getWndProc!accessing-callbacks!public! !
+handleFromInteger:!helpers!private! !
+hashBytes:count:!hash algorithms!helpers!private! !
+highBit:!arithmetic!public! !
+indexOfSpecialSelector:ifAbsent:!accessing-registry!private! !
+inputQueueMask!constants!private! !
+isSlowMachine!environment!public! !
+isUserBreakRequested!accessing!helpers!private! !
+isWindows10OrGreater!public!win32 functions-version helpers! !
+isWindows7OrGreater!public!win32 functions-version helpers! !
+isWindows7SP1OrGreater!public!win32 functions-version helpers! !
+isWindows8OrGreater!public!win32 functions-version helpers! !
+isWindows8Point1OrGreater!public!win32 functions-version helpers! !
+isWindowsServer!public!win32 functions-version helpers! !
+isWindowsVersionOrGreater:wMinorVersion:wServicePackMajor:!public!win32 functions-version helpers! !
+isWindowsVistaOrGreater!public!win32 functions-version helpers! !
+isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
+isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
+isWindowsXPOrGreater!public!win32 functions-version helpers! !
+kernelHandle!accessing-handles!private! !
+largeSignedFromUnsigned:!helpers!private! !
+largeUnsignedFromSigned:!helpers!private! !
+makeLargeSigned:!helpers!private! !
+makeLargeSigned:highPart:!helpers!private! !
+makeLargeUnsigned:!helpers!private! !
+makeLargeUnsigned:highPart:!helpers!private! !
+onStartup!event handling!public! !
+productName!accessing!public! !
+registerEventSource:!arithmetic!public! !
+registry!accessing!private! !
+registryAt:!accessing-registry!private! !
+registryAt:put:!accessing-registry!private! !
+registryAtIndex:put:!accessing-registry!private! !
+selectorOfSpecialSend:!enquiries!private! !
+selectorOfSpecialSendEx:!enquiries!private! !
+shortName!accessing!public! !
+signedFromUnsigned:!helpers!private! !
+specialSelectors!accessing-registry!private! !
+stderr!accessing-handles!private! !
+stdin!accessing-handles!private! !
+stdout!accessing-handles!private! !
+stringFromAddress:!helpers!private! !
+unregisterObject:!accessing-registry!private! !
+unsignedFromSigned:!helpers!private! !
+utf16StringFromAddress:!helpers!private! !
+versionFormatString!constants!private! !
+!
 
 !VMLibrary class methodsFor!
 
@@ -772,13 +774,15 @@ registryKeys
 	"Private - Answer the map between symbolic names and VM registry indices."
 
 	^RegistryKeys! !
-!VMLibrary class categoriesFor: #fileName!constants!public! !
-!VMLibrary class categoriesFor: #hasBytecodeRepresentation:!helpers!private! !
-!VMLibrary class categoriesFor: #initialize!development!initializing!private! !
-!VMLibrary class categoriesFor: #maxBlockNesting!limits!public! !
-!VMLibrary class categoriesFor: #maxLiterals!limits!public! !
-!VMLibrary class categoriesFor: #maxMessageArguments!limits!public! !
-!VMLibrary class categoriesFor: #maxTemps!limits!public! !
-!VMLibrary class categoriesFor: #open!instance creation!public! !
-!VMLibrary class categoriesFor: #registryKeys!constants!private! !
+!VMLibrary class categoriesForMethods!
+fileName!constants!public! !
+hasBytecodeRepresentation:!helpers!private! !
+initialize!development!initializing!private! !
+maxBlockNesting!limits!public! !
+maxLiterals!limits!public! !
+maxMessageArguments!limits!public! !
+maxTemps!limits!public! !
+open!instance creation!public! !
+registryKeys!constants!private! !
+!
 

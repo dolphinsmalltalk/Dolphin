@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IDolphinAxHost
 	instanceVariableNames: ''
@@ -130,14 +130,16 @@ SetExternalUIHandler: pDisp
 
 	<virtual stdcall: hresult 5 IDocHostUIHandlerDispatch*>
 	^self invalidCall: _failureCode! !
-!IDolphinAxHost categoriesFor: #createControlLicEx:hWnd:pStream:piAdvise:bstrLic:!**auto generated**!methods!public! !
-!IDolphinAxHost categoriesFor: #CreateControlLicEx:hWnd:pStream:ppUnk:piAdvise:bstrLic:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
-!IDolphinAxHost categoriesFor: #get_IsWindowless:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
-!IDolphinAxHost categoriesFor: #isWindowless!**auto generated**!properties!public! !
-!IDolphinAxHost categoriesFor: #queryControl:!**auto generated**!methods!public! !
-!IDolphinAxHost categoriesFor: #QueryControl:ppiObject:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
-!IDolphinAxHost categoriesFor: #SetExternalDispatch:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
-!IDolphinAxHost categoriesFor: #SetExternalUIHandler:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
+!IDolphinAxHost categoriesForMethods!
+createControlLicEx:hWnd:pStream:piAdvise:bstrLic:!**auto generated**!methods!public! !
+CreateControlLicEx:hWnd:pStream:ppUnk:piAdvise:bstrLic:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
+get_IsWindowless:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
+isWindowless!**auto generated**!properties!public! !
+queryControl:!**auto generated**!methods!public! !
+QueryControl:ppiObject:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
+SetExternalDispatch:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
+SetExternalUIHandler:!**auto generated**!COM Interfaces-IDolphinAxHost!public! !
+!
 
 !IDolphinAxHost class methodsFor!
 
@@ -157,5 +159,7 @@ defineFunctions
 		defineFunction: #get_IsWindowless:
 			argumentTypes: 'varbool*'
 ! !
-!IDolphinAxHost class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IDolphinAxHost class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

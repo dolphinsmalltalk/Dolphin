@@ -353,7 +353,9 @@ copyToCOMTaskMemory
 	size := self byteSize.
 	^(COMTaskMemory new: size)
 		replaceFrom: 1 to: size with: self startingAt: 1! !
-!ByteArray categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!ByteArray categoriesForMethods!
+copyToCOMTaskMemory!copying!public! !
+!
 
 !ExternalMemory class methodsFor!
 
@@ -368,7 +370,9 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	^interfaceClass == IMalloc
 		ifTrue: [interfaceClass on: self]
 		ifFalse: [exceptionHandler value]! !
-!ExternalMemory class categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
+!ExternalMemory class categoriesForMethods!
+queryInterface:ifNone:!accessing-interfaces!public! !
+!
 
 !ExternalStructure methodsFor!
 
@@ -377,7 +381,9 @@ copyToCOMTaskMemory
 	receiver have been copied."
 
 	^self copy: COMTaskMemory from: 1 to: self byteSize! !
-!ExternalStructure categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!ExternalStructure categoriesForMethods!
+copyToCOMTaskMemory!copying!public! !
+!
 
 !ProcessorScheduler methodsFor!
 
@@ -408,9 +414,11 @@ unregisterCOMStub: cookie
 
 	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
 	comStubs removeAtIndex: cookie! !
-!ProcessorScheduler categoriesFor: #comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #registerCOMStub:!accessing!private! !
-!ProcessorScheduler categoriesFor: #unregisterCOMStub:!callbacks!private! !
+!ProcessorScheduler categoriesForMethods!
+comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
+registerCOMStub:!accessing!private! !
+unregisterCOMStub:!callbacks!private! !
+!
 
 !SessionManager methodsFor!
 
@@ -424,7 +432,9 @@ comStartup
 	IUnknown onStartup.
 	"Attach the outer unknown passed by the stub, if any"
 	self outer notNull ifTrue: [startupArgs at: 2 put: (IUnknown attach: self outer)]! !
-!SessionManager categoriesFor: #comStartup!operations-startup!private! !
+!SessionManager categoriesForMethods!
+comStartup!operations-startup!private! !
+!
 
 !String methodsFor!
 
@@ -439,8 +449,10 @@ copyToCOMTaskMemory
 	characters."
 
 	^COMTaskMemory fromString: self! !
-!String categoriesFor: #asBSTR!converting!public! !
-!String categoriesFor: #copyToCOMTaskMemory!copying!public! !
+!String categoriesForMethods!
+asBSTR!converting!public! !
+copyToCOMTaskMemory!copying!public! !
+!
 
 "End of package definition"!
 

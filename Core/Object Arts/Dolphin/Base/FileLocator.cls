@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #FileLocator
 	instanceVariableNames: ''
@@ -73,12 +73,14 @@ relativePathTo: aString
 
 relativeToBase: aFilename 
 	^File relativePathOf: aFilename to: self basePath! !
-!FileLocator categoriesFor: #basePath!accessing!public! !
-!FileLocator categoriesFor: #findOrImportForeignClass!operations!private! !
-!FileLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!FileLocator categoriesFor: #relativePathIfSubPath:!accessing!private! !
-!FileLocator categoriesFor: #relativePathTo:!accessing!public! !
-!FileLocator categoriesFor: #relativeToBase:!accessing!private! !
+!FileLocator categoriesForMethods!
+basePath!accessing!public! !
+findOrImportForeignClass!operations!private! !
+localFileSpecFor:!accessing!public! !
+relativePathIfSubPath:!accessing!private! !
+relativePathTo:!accessing!public! !
+relativeToBase:!accessing!private! !
+!
 
 FileLocator methodProtocol: #fileLocator attributes: #(#readOnly) selectors: #(#localFileSpecFor: #relativePathTo:)!
 
@@ -118,10 +120,12 @@ installRelative
 installRelative: aFilenameString
 	^self installRelative localFileSpecFor: aFilenameString
 ! !
-!FileLocator class categoriesFor: #absolute!accessing!public! !
-!FileLocator class categoriesFor: #default!accessing!public! !
-!FileLocator class categoriesFor: #imageRelative!accessing!public! !
-!FileLocator class categoriesFor: #imageRelative:!accessing!public! !
-!FileLocator class categoriesFor: #installRelative!accessing!public! !
-!FileLocator class categoriesFor: #installRelative:!accessing!public! !
+!FileLocator class categoriesForMethods!
+absolute!accessing!public! !
+default!accessing!public! !
+imageRelative!accessing!public! !
+imageRelative:!accessing!public! !
+installRelative!accessing!public! !
+installRelative:!accessing!public! !
+!
 

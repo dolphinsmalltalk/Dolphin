@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #ByteArrayFactoryANSITest
 	instanceVariableNames: ''
@@ -43,13 +43,15 @@ testXwithXwithXwithX
 testXwithXwithXwithXwithX
 	" <ByteArray factory>#with:with:with:with: "
 	#'Collection'.! !
-!ByteArrayFactoryANSITest categoriesFor: #canonicalObject!public! !
-!ByteArrayFactoryANSITest categoriesFor: #protocol!public! !
-!ByteArrayFactoryANSITest categoriesFor: #testXnew!public! !
-!ByteArrayFactoryANSITest categoriesFor: #testXnewX!public! !
-!ByteArrayFactoryANSITest categoriesFor: #testXwithAllX!public! !
-!ByteArrayFactoryANSITest categoriesFor: #testXwithX!public! !
-!ByteArrayFactoryANSITest categoriesFor: #testXwithXwithX!public! !
-!ByteArrayFactoryANSITest categoriesFor: #testXwithXwithXwithX!public! !
-!ByteArrayFactoryANSITest categoriesFor: #testXwithXwithXwithXwithX!public! !
+!ByteArrayFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXnew!public! !
+testXnewX!public! !
+testXwithAllX!public! !
+testXwithX!public! !
+testXwithXwithX!public! !
+testXwithXwithXwithX!public! !
+testXwithXwithXwithXwithX!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MENUITEMINFOW
 	instanceVariableNames: 'text bitmap'
@@ -190,30 +190,32 @@ wID: anInteger
 	"Set the receiver's 'wID' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_wID put: anInteger! !
-!MENUITEMINFOW categoriesFor: #basicText:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #cch:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #commandMenuItem:!initializing!private! !
-!MENUITEMINFOW categoriesFor: #dwItemData:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #dwTypeData!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #dwTypeData:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fMask!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fMask:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fState!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fState:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fType!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #fType:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hbmpChecked:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hbmpItem:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hbmpUnchecked:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #hSubMenu:!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #maskOut:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #menuItem:text:state:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #setImage:!helpers!private! !
-!MENUITEMINFOW categoriesFor: #subMenu:text:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #type:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #wID!**compiled accessors**!public! !
-!MENUITEMINFOW categoriesFor: #wID:!**compiled accessors**!public! !
+!MENUITEMINFOW categoriesForMethods!
+basicText:!accessing!private! !
+cch:!**compiled accessors**!public! !
+commandMenuItem:!initializing!private! !
+dwItemData:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dwTypeData!**compiled accessors**!public! !
+dwTypeData:!**compiled accessors**!public! !
+fMask!**compiled accessors**!public! !
+fMask:!**compiled accessors**!public! !
+fState!**compiled accessors**!public! !
+fState:!**compiled accessors**!public! !
+fType!**compiled accessors**!public! !
+fType:!**compiled accessors**!public! !
+hbmpChecked:!**compiled accessors**!public! !
+hbmpItem:!**compiled accessors**!public! !
+hbmpUnchecked:!**compiled accessors**!public! !
+hSubMenu:!**compiled accessors**!public! !
+maskOut:!accessing!private! !
+menuItem:text:state:!accessing!private! !
+setImage:!helpers!private! !
+subMenu:text:!accessing!private! !
+type:!accessing!private! !
+wID!**compiled accessors**!public! !
+wID:!**compiled accessors**!public! !
+!
 
 !MENUITEMINFOW class methodsFor!
 
@@ -252,6 +254,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #fType #fState #wID #hSubMenu #hbmpChecked #hbmpUnchecked #dwItemData #dwTypeData #cch #hbmpItem)! !
-!MENUITEMINFOW class categoriesFor: #defineFields!public!template definition! !
-!MENUITEMINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MENUITEMINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

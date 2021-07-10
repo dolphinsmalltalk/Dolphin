@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpColorMatrix
 	instanceVariableNames: ''
@@ -53,12 +53,14 @@ row: rowInteger col: colInteger
 
 row: rowInteger col: colInteger put: aNumber
 	self m at: (rowInteger - 1) * 5 + colInteger put: aNumber! !
-!GpColorMatrix categoriesFor: #atPoint:!accessing!public! !
-!GpColorMatrix categoriesFor: #atPoint:put:!accessing!public! !
-!GpColorMatrix categoriesFor: #m!**compiled accessors**!public! !
-!GpColorMatrix categoriesFor: #m:!**compiled accessors**!public! !
-!GpColorMatrix categoriesFor: #row:col:!accessing!public! !
-!GpColorMatrix categoriesFor: #row:col:put:!accessing!public! !
+!GpColorMatrix categoriesForMethods!
+atPoint:!accessing!public! !
+atPoint:put:!accessing!public! !
+m!**compiled accessors**!public! !
+m:!**compiled accessors**!public! !
+row:col:!accessing!public! !
+row:col:put:!accessing!public! !
+!
 
 !GpColorMatrix class methodsFor!
 
@@ -95,9 +97,11 @@ withAll: anArray
 	anArray should have 25 <Magnitude> elements"
 
 	^self new m: (FLOATArray withAll: anArray)! !
-!GpColorMatrix class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpColorMatrix class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!GpColorMatrix class categoriesFor: #identity!instance creation!public! !
-!GpColorMatrix class categoriesFor: #identityArray!constants!public! !
-!GpColorMatrix class categoriesFor: #withAll:!instance creation!public! !
+!GpColorMatrix class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+identity!instance creation!public! !
+identityArray!constants!public! !
+withAll:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TreeModel subclass: #CategoryTreeModel
 	instanceVariableNames: 'title'
@@ -61,14 +61,18 @@ title: category
 	"Set the topmost node of the tree to be the specified <Category>"
 
 	title := category! !
-!CategoryTreeModel categoriesFor: #addCategory:!adding!private! !
-!CategoryTreeModel categoriesFor: #list:!accessing!public! !
-!CategoryTreeModel categoriesFor: #title!accessing!public! !
-!CategoryTreeModel categoriesFor: #title:!accessing!public! !
+!CategoryTreeModel categoriesForMethods!
+addCategory:!adding!private! !
+list:!accessing!public! !
+title!accessing!public! !
+title:!accessing!public! !
+!
 
 !CategoryTreeModel class methodsFor!
 
 defaultSearchPolicy
 	^SearchPolicy equality! !
-!CategoryTreeModel class categoriesFor: #defaultSearchPolicy!constants!public! !
+!CategoryTreeModel class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+!
 

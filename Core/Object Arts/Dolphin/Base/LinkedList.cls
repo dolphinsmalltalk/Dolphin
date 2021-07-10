@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedGrowableCollection subclass: #LinkedList
 	instanceVariableNames: 'firstLink lastLink'
@@ -179,17 +179,19 @@ removeLastIfAbsent: exceptionHandler
 			temp nextLink: nil.
 			lastLink := temp].
 	^aLink! !
-!LinkedList categoriesFor: #addFirst:!adding!public! !
-!LinkedList categoriesFor: #addLast:!adding!public! !
-!LinkedList categoriesFor: #approxSize!accessing!private! !
-!LinkedList categoriesFor: #at:!accessing!public! !
-!LinkedList categoriesFor: #at:put:!accessing!public! !
-!LinkedList categoriesFor: #do:!enumerating!public! !
-!LinkedList categoriesFor: #isEmpty!public!testing! !
-!LinkedList categoriesFor: #remove:ifAbsent:!public!removing! !
-!LinkedList categoriesFor: #removeAll!public!removing! !
-!LinkedList categoriesFor: #removeAllSuchThat:!public!removing! !
-!LinkedList categoriesFor: #removeAtIndex:!public!removing! !
-!LinkedList categoriesFor: #removeFirstIfAbsent:!public!removing! !
-!LinkedList categoriesFor: #removeLastIfAbsent:!public!removing! !
+!LinkedList categoriesForMethods!
+addFirst:!adding!public! !
+addLast:!adding!public! !
+approxSize!accessing!private! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+do:!enumerating!public! !
+isEmpty!public!testing! !
+remove:ifAbsent:!public!removing! !
+removeAll!public!removing! !
+removeAllSuchThat:!public!removing! !
+removeAtIndex:!public!removing! !
+removeFirstIfAbsent:!public!removing! !
+removeLastIfAbsent:!public!removing! !
+!
 

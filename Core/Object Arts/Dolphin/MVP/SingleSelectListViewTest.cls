@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListViewTest subclass: #SingleSelectListViewTest
 	instanceVariableNames: ''
@@ -35,6 +35,8 @@ testSelectionModeChange
 	self assert: presenter selectionByIndex equals: caret.
 	presenter view selectionsByIndex: #(1 2).
 	self assert: presenter selectionsByIndex equals: #(1)! !
-!SingleSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
-!SingleSelectListViewTest categoriesFor: #testSelectionModeChange!public!unit tests! !
+!SingleSelectListViewTest categoriesForMethods!
+sortSelections!private!unit tests! !
+testSelectionModeChange!public!unit tests! !
+!
 

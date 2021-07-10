@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #PersonalAccountTransaction
 	instanceVariableNames: 'date description amount isDebit'
@@ -95,16 +95,18 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
-!PersonalAccountTransaction categoriesFor: #actualAmount!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #amount!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #amount:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #date!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #date:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #description!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #description:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #displayOn:!displaying!public! !
-!PersonalAccountTransaction categoriesFor: #initialize!initializing!private! !
-!PersonalAccountTransaction categoriesFor: #isDebit!accessing!public!testing! !
-!PersonalAccountTransaction categoriesFor: #isDebit:!accessing!public! !
-!PersonalAccountTransaction categoriesFor: #printOn:!printing!public! !
+!PersonalAccountTransaction categoriesForMethods!
+actualAmount!accessing!public! !
+amount!accessing!public! !
+amount:!accessing!public! !
+date!accessing!public! !
+date:!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+initialize!initializing!private! !
+isDebit!accessing!public!testing! !
+isDebit:!accessing!public! !
+printOn:!printing!public! !
+!
 

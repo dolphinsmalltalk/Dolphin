@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Collection variableSubclass: #Set
 	instanceVariableNames: 'tally'
@@ -388,50 +388,52 @@ uncheckedAdd: newObject
 
 	tally := tally + 1.
 	^self basicAt: (self findElementOrNil: newObject) put: newObject! !
-!Set categoriesFor: #-!public!removing! !
-!Set categoriesFor: #_deepCopy:!copying!private! !
-!Set categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
-!Set categoriesFor: #=!comparing!public! !
-!Set categoriesFor: #add:!adding!public! !
-!Set categoriesFor: #addNewElement:!adding!public! !
-!Set categoriesFor: #approxSize!accessing!private! !
-!Set categoriesFor: #asSet!converting!public! !
-!Set categoriesFor: #at:!accessing!public! !
-!Set categoriesFor: #at:put:!accessing!public! !
-!Set categoriesFor: #averageProbesPerElement!development!public!statistics! !
-!Set categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Set categoriesFor: #collisions!development!public!statistics! !
-!Set categoriesFor: #copyElementsInto:!mutating!private! !
-!Set categoriesFor: #copyWithoutDuplicates!copying!public! !
-!Set categoriesFor: #distinct!public!set operations! !
-!Set categoriesFor: #do:!enumerating!public! !
-!Set categoriesFor: #elements!accessing!private! !
-!Set categoriesFor: #elements:!initializing!private! !
-!Set categoriesFor: #equals:!comparing!public! !
-!Set categoriesFor: #find:!public!searching! !
-!Set categoriesFor: #find:ifAbsent:!public!searching! !
-!Set categoriesFor: #findElementOrNil:!private!searching! !
-!Set categoriesFor: #fixCollisionsFrom:!private!removing! !
-!Set categoriesFor: #grow!helpers!private! !
-!Set categoriesFor: #hash:max:!private!searching! !
-!Set categoriesFor: #identityIncludes:!public!searching! !
-!Set categoriesFor: #includes:!public!searching! !
-!Set categoriesFor: #initialize!initializing!private! !
-!Set categoriesFor: #isHealthy!public! !
-!Set categoriesFor: #moveFrom:to:!private!removing! !
-!Set categoriesFor: #occurrencesOf:!public!searching! !
-!Set categoriesFor: #postResize:!adding!private! !
-!Set categoriesFor: #preResize:!adding!private! !
-!Set categoriesFor: #privateAt:put:!accessing!private! !
-!Set categoriesFor: #rehash!operations!public! !
-!Set categoriesFor: #remove:ifAbsent:!public!removing! !
-!Set categoriesFor: #removeAll!public! !
-!Set categoriesFor: #removeIndex:!private!removing! !
-!Set categoriesFor: #resize:!mutating!private! !
-!Set categoriesFor: #shrink!mutating!public! !
-!Set categoriesFor: #size!accessing!public! !
-!Set categoriesFor: #stbSaveOn:!binary filing!public! !
-!Set categoriesFor: #uncheckedAdd:!adding!private! !
+!Set categoriesForMethods!
+-!public!removing! !
+_deepCopy:!copying!private! !
+_deepCopyElementsInto:trail:!copying!private! !
+=!comparing!public! !
+add:!adding!public! !
+addNewElement:!adding!public! !
+approxSize!accessing!private! !
+asSet!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+averageProbesPerElement!development!public!statistics! !
+bestSlotFor:boundedBy:!development!private!statistics! !
+collisions!development!public!statistics! !
+copyElementsInto:!mutating!private! !
+copyWithoutDuplicates!copying!public! !
+distinct!public!set operations! !
+do:!enumerating!public! !
+elements!accessing!private! !
+elements:!initializing!private! !
+equals:!comparing!public! !
+find:!public!searching! !
+find:ifAbsent:!public!searching! !
+findElementOrNil:!private!searching! !
+fixCollisionsFrom:!private!removing! !
+grow!helpers!private! !
+hash:max:!private!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+initialize!initializing!private! !
+isHealthy!public! !
+moveFrom:to:!private!removing! !
+occurrencesOf:!public!searching! !
+postResize:!adding!private! !
+preResize:!adding!private! !
+privateAt:put:!accessing!private! !
+rehash!operations!public! !
+remove:ifAbsent:!public!removing! !
+removeAll!public! !
+removeIndex:!private!removing! !
+resize:!mutating!private! !
+shrink!mutating!public! !
+size!accessing!public! !
+stbSaveOn:!binary filing!public! !
+uncheckedAdd:!adding!private! !
+!
 
 Set methodProtocol: #Set attributes: #(#ansi #readOnly) selectors: #(#add: #addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #select: #size)!
 
@@ -529,12 +531,14 @@ sizeFor: anInteger
 	low > high]
 			whileFalse: [(PrimeSizes at: index) < n ifTrue: [low := index + 1] ifFalse: [high := index - 1]].
 	^PrimeSizes at: low! !
-!Set class categoriesFor: #defaultCapacity!constants!private! !
-!Set class categoriesFor: #initialize!development!initializing!private! !
-!Set class categoriesFor: #new!instance creation!public! !
-!Set class categoriesFor: #new:!instance creation!public! !
-!Set class categoriesFor: #preferredSizesFrom:!development!initializing!private! !
-!Set class categoriesFor: #sizeFor:!instance creation!private! !
+!Set class categoriesForMethods!
+defaultCapacity!constants!private! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+new:!instance creation!public! !
+preferredSizesFrom:!development!initializing!private! !
+sizeFor:!instance creation!private! !
+!
 
 Set class methodProtocol: #'Set factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

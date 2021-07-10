@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Stream subclass: #Random
 	instanceVariableNames: 'seed'
@@ -76,14 +76,16 @@ skip: anInteger
 
 	anInteger < 0 ifTrue: [self error: 'Cannot move backwards in Random number stream'].
 	anInteger timesRepeat: [self next]! !
-!Random categoriesFor: #atEnd!public!testing! !
-!Random categoriesFor: #chiSquareTest:max:!examples!private! !
-!Random categoriesFor: #isReadable!public!testing! !
-!Random categoriesFor: #next!accessing!public! !
-!Random categoriesFor: #peek!accessing!public! !
-!Random categoriesFor: #seed!accessing!public! !
-!Random categoriesFor: #seed:!accessing!public! !
-!Random categoriesFor: #skip:!positioning!public! !
+!Random categoriesForMethods!
+atEnd!public!testing! !
+chiSquareTest:max:!examples!private! !
+isReadable!public!testing! !
+next!accessing!public! !
+peek!accessing!public! !
+seed!accessing!public! !
+seed:!accessing!public! !
+skip:!positioning!public! !
+!
 
 !Random class methodsFor!
 
@@ -126,13 +128,15 @@ systemClockSeed
 	seed := Delay microsecondClockValue // 1000 bitAnd: 16r3FFFFFFF.
 	seed = 0 ifTrue: [seed := 1].
 	^seed! !
-!Random class categoriesFor: #default!instance creation!public! !
-!Random class categoriesFor: #defaultGeneratorClass!accessing!public! !
-!Random class categoriesFor: #defaultGeneratorClass:!accessing!public! !
-!Random class categoriesFor: #initialize!initializing!public! !
-!Random class categoriesFor: #new!instance creation!public! !
-!Random class categoriesFor: #newConcrete!instance creation!private! !
-!Random class categoriesFor: #newDefault!instance creation!private! !
-!Random class categoriesFor: #seed:!instance creation!public! !
-!Random class categoriesFor: #systemClockSeed!enquiries!public! !
+!Random class categoriesForMethods!
+default!instance creation!public! !
+defaultGeneratorClass!accessing!public! !
+defaultGeneratorClass:!accessing!public! !
+initialize!initializing!public! !
+new!instance creation!public! !
+newConcrete!instance creation!private! !
+newDefault!instance creation!private! !
+seed:!instance creation!public! !
+systemClockSeed!enquiries!public! !
+!
 

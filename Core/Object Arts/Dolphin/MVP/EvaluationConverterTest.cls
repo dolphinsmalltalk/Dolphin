@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #EvaluationConverterTest
 	instanceVariableNames: ''
@@ -30,9 +30,11 @@ testWithDates
 
 testWithTimes
 	self checkWith: 'Time fromString: ''11:55:56'''! !
-!EvaluationConverterTest categoriesFor: #checkWith:!private! !
-!EvaluationConverterTest categoriesFor: #converter!private! !
-!EvaluationConverterTest categoriesFor: #testWithArrays!public! !
-!EvaluationConverterTest categoriesFor: #testWithDates!public! !
-!EvaluationConverterTest categoriesFor: #testWithTimes!public! !
+!EvaluationConverterTest categoriesForMethods!
+checkWith:!private! !
+converter!private! !
+testWithArrays!public! !
+testWithDates!public! !
+testWithTimes!public! !
+!
 

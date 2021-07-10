@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 KeyedAspectBatchAccessor subclass: #AnonymousKeyedAspectBatchAccessor
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ AnonymousKeyedAspectBatchAccessor comment: 'Part of the PublishedAspectorInspect
 
 aspectClass
 	^AnonymousKeyedAspect! !
-!AnonymousKeyedAspectBatchAccessor categoriesFor: #aspectClass!public! !
+!AnonymousKeyedAspectBatchAccessor categoriesForMethods!
+aspectClass!public! !
+!
 

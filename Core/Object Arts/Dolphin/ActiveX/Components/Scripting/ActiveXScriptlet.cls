@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ActiveXScriptlet
 	instanceVariableNames: 'language expression procedures description globalBindings'
@@ -118,23 +118,25 @@ value
 	result := engine eval: self expression.
 	engine free.
 	^result! !
-!ActiveXScriptlet categoriesFor: #=!comparing!public! !
-!ActiveXScriptlet categoriesFor: #addGlobalBinding:!accessing!public! !
-!ActiveXScriptlet categoriesFor: #description!accessing!public! !
-!ActiveXScriptlet categoriesFor: #description:!accessing!public! !
-!ActiveXScriptlet categoriesFor: #displayOn:!displaying!public! !
-!ActiveXScriptlet categoriesFor: #expression!accessing!public! !
-!ActiveXScriptlet categoriesFor: #expression:!accessing!private! !
-!ActiveXScriptlet categoriesFor: #globalBindings!accessing!public! !
-!ActiveXScriptlet categoriesFor: #globalBindings:!accessing!public! !
-!ActiveXScriptlet categoriesFor: #initialize!initializing!private! !
-!ActiveXScriptlet categoriesFor: #language!accessing!public! !
-!ActiveXScriptlet categoriesFor: #language:!accessing!private! !
-!ActiveXScriptlet categoriesFor: #procedures!accessing!public! !
-!ActiveXScriptlet categoriesFor: #procedures:!accessing!private! !
-!ActiveXScriptlet categoriesFor: #removeGlobalBindings!initializing!public! !
-!ActiveXScriptlet categoriesFor: #setLanguage:expression:procedures:description:!initializing!private! !
-!ActiveXScriptlet categoriesFor: #value!evaluating!public! !
+!ActiveXScriptlet categoriesForMethods!
+=!comparing!public! !
+addGlobalBinding:!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+expression!accessing!public! !
+expression:!accessing!private! !
+globalBindings!accessing!public! !
+globalBindings:!accessing!public! !
+initialize!initializing!private! !
+language!accessing!public! !
+language:!accessing!private! !
+procedures!accessing!public! !
+procedures:!accessing!private! !
+removeGlobalBindings!initializing!public! !
+setLanguage:expression:procedures:description:!initializing!private! !
+value!evaluating!public! !
+!
 
 !ActiveXScriptlet class methodsFor!
 
@@ -164,7 +166,9 @@ new
 	which can be both read from and written to."
 
 	^super new initialize! !
-!ActiveXScriptlet class categoriesFor: #language:expression:procedures:!instance creation!public! !
-!ActiveXScriptlet class categoriesFor: #language:expression:procedures:description:!instance creation!public! !
-!ActiveXScriptlet class categoriesFor: #new!instance creation!public! !
+!ActiveXScriptlet class categoriesForMethods!
+language:expression:procedures:!instance creation!public! !
+language:expression:procedures:description:!instance creation!public! !
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #InlineMethodFromComponentTest
 	instanceVariableNames: ''
@@ -155,11 +155,13 @@ testModelInlineMethodWithSameVariableNames2
 	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo)
 		equals: (RBParser
 				parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')! !
-!InlineMethodFromComponentTest categoriesFor: #testInlineComponentIntoCascadedMessage!public!tests! !
-!InlineMethodFromComponentTest categoriesFor: #testInlineComponentMethodMax!public!tests! !
-!InlineMethodFromComponentTest categoriesFor: #testInlineEmptyComponentMethod!public!tests! !
-!InlineMethodFromComponentTest categoriesFor: #testInlineMethodFromComponentFailure!failure tests!public! !
-!InlineMethodFromComponentTest categoriesFor: #testModelInlineMethodWithSameVariableNames!public!tests! !
-!InlineMethodFromComponentTest categoriesFor: #testModelInlineMethodWithSameVariableNames1!public!tests! !
-!InlineMethodFromComponentTest categoriesFor: #testModelInlineMethodWithSameVariableNames2!public!tests! !
+!InlineMethodFromComponentTest categoriesForMethods!
+testInlineComponentIntoCascadedMessage!public!tests! !
+testInlineComponentMethodMax!public!tests! !
+testInlineEmptyComponentMethod!public!tests! !
+testInlineMethodFromComponentFailure!failure tests!public! !
+testModelInlineMethodWithSameVariableNames!public!tests! !
+testModelInlineMethodWithSameVariableNames1!public!tests! !
+testModelInlineMethodWithSameVariableNames2!public!tests! !
+!
 

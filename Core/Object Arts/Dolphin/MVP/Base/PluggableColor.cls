@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualColor subclass: #PluggableColor
 	instanceVariableNames: 'valuable'
@@ -28,10 +28,12 @@ stbSaveOn: anSTBOutFiler
 	"Override back to default implementation"
 
 	anSTBOutFiler saveObject: self! !
-!PluggableColor categoriesFor: #actualColor!private!testing! !
-!PluggableColor categoriesFor: #printOn:!printing!public! !
-!PluggableColor categoriesFor: #setValuable:!initializing!private! !
-!PluggableColor categoriesFor: #stbSaveOn:!binary filing!public! !
+!PluggableColor categoriesForMethods!
+actualColor!private!testing! !
+printOn:!printing!public! !
+setValuable:!initializing!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 !PluggableColor class methodsFor!
 
@@ -43,6 +45,8 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 with: aNiladicValuable 
 	<primitive: 157>
 	^self basicNew setValuable: aNiladicValuable! !
-!PluggableColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!PluggableColor class categoriesFor: #with:!instance creation!public! !
+!PluggableColor class categoriesForMethods!
+stbReadFrom:format:!binary filing!public! !
+with:!instance creation!public! !
+!
 

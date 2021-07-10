@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #LayoutManager
 	instanceVariableNames: ''
@@ -84,16 +84,18 @@ resolutionScaledBy: scale
 
 visibleSubViewsOf: aCompositeView context: aLayoutContext 
 	^aCompositeView managedSubViews select: [:each | aLayoutContext isViewVisible: each]! !
-!LayoutManager categoriesFor: #arrangementOf:!accessing!public! !
-!LayoutManager categoriesFor: #arrangementOf:put:!accessing!public! !
-!LayoutManager categoriesFor: #layoutContainer:!geometry!public! !
-!LayoutManager categoriesFor: #layoutContainer:context:!geometry!private! !
-!LayoutManager categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!LayoutManager categoriesFor: #removeSubView:!public!removing! !
-!LayoutManager categoriesFor: #reposition:to:!geometry!private! !
-!LayoutManager categoriesFor: #resize:to:!geometry!public! !
-!LayoutManager categoriesFor: #resolutionScaledBy:!geometry!private! !
-!LayoutManager categoriesFor: #visibleSubViewsOf:context:!helpers!private! !
+!LayoutManager categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+layoutContainer:!geometry!public! !
+layoutContainer:context:!geometry!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+removeSubView:!public!removing! !
+reposition:to:!geometry!private! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+visibleSubViewsOf:context:!helpers!private! !
+!
 
 LayoutManager methodProtocol: #layoutManager attributes: #(#readOnly) selectors: #(#arrangementOf: #arrangementOf:put: #layoutContainer: #preferredLayoutExtentOf:context: #removeSubView:)!
 
@@ -103,5 +105,7 @@ new
 	"Answer an instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
-!LayoutManager class categoriesFor: #new!instance creation!public! !
+!LayoutManager class categoriesForMethods!
+new!instance creation!public! !
+!
 

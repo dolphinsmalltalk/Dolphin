@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #WINDOWPLACEMENT
 	instanceVariableNames: ''
@@ -44,11 +44,13 @@ showCmd: anInteger
 	"Set the receiver's 'showCmd' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_showCmd put: anInteger! !
-!WINDOWPLACEMENT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #rcNormalPosition!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #rcNormalPosition:!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #showCmd!**compiled accessors**!public! !
-!WINDOWPLACEMENT categoriesFor: #showCmd:!**compiled accessors**!public! !
+!WINDOWPLACEMENT categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+rcNormalPosition!**compiled accessors**!public! !
+rcNormalPosition:!**compiled accessors**!public! !
+showCmd!**compiled accessors**!public! !
+showCmd:!**compiled accessors**!public! !
+!
 
 !WINDOWPLACEMENT class methodsFor!
 
@@ -79,6 +81,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #showCmd #rcNormalPosition)! !
-!WINDOWPLACEMENT class categoriesFor: #defineFields!public!template definition! !
-!WINDOWPLACEMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WINDOWPLACEMENT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

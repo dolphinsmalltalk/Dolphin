@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitAbsWrapper subclass: #SUnitStatusTextWrapper
 	instanceVariableNames: ''
@@ -34,9 +34,11 @@ text: anObject
 	"Private - Set the value of the receiver's ''text'' instance variable to the argument, anObject."
 
 	self subject: anObject! !
-!SUnitStatusTextWrapper categoriesFor: #icon!accessing!public! !
-!SUnitStatusTextWrapper categoriesFor: #text!accessing!public! !
-!SUnitStatusTextWrapper categoriesFor: #text:!accessing!private! !
+!SUnitStatusTextWrapper categoriesForMethods!
+icon!accessing!public! !
+text!accessing!public! !
+text:!accessing!private! !
+!
 
 !SUnitStatusTextWrapper class methodsFor!
 
@@ -45,5 +47,7 @@ newOn: aString model: anSUnitBrowserModel
 	^(self newOn: anSUnitBrowserModel)
 		text: aString;
 		yourself! !
-!SUnitStatusTextWrapper class categoriesFor: #newOn:model:!instantiating!public! !
+!SUnitStatusTextWrapper class categoriesForMethods!
+newOn:model:!instantiating!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #CATEGORYINFO
 	instanceVariableNames: ''
@@ -72,15 +72,17 @@ szDescription: anUtf16String
 		to: _OffsetOf_szDescription + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_szDescription + size put: 0! !
-!CATEGORYINFO categoriesFor: #catid!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #catid:!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #description!accessing!public! !
-!CATEGORYINFO categoriesFor: #description:!accessing!public! !
-!CATEGORYINFO categoriesFor: #lcid!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #lcid:!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #locale:!accessing!public! !
-!CATEGORYINFO categoriesFor: #szDescription!**compiled accessors**!public! !
-!CATEGORYINFO categoriesFor: #szDescription:!**compiled accessors**!public! !
+!CATEGORYINFO categoriesForMethods!
+catid!**compiled accessors**!public! !
+catid:!**compiled accessors**!public! !
+description!accessing!public! !
+description:!accessing!public! !
+lcid!**compiled accessors**!public! !
+lcid:!**compiled accessors**!public! !
+locale:!accessing!public! !
+szDescription!**compiled accessors**!public! !
+szDescription:!**compiled accessors**!public! !
+!
 
 !CATEGORYINFO class methodsFor!
 
@@ -106,6 +108,8 @@ defineFields
 
 getFieldNames
 	^#(#catid #lcid #szDescription)! !
-!CATEGORYINFO class categoriesFor: #defineFields!public!template definition! !
-!CATEGORYINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CATEGORYINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

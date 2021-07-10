@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayedCollectionTest subclass: #ByteArrayTest
 	instanceVariableNames: ''
@@ -160,17 +160,19 @@ testWordAtOffsetPut
 
 wordValues
 	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16rFFFE 16rFFFF)! !
-!ByteArrayTest categoriesFor: #assimilate:!public!unit tests! !
-!ByteArrayTest categoriesFor: #collectionClass!helpers!private! !
-!ByteArrayTest categoriesFor: #dwordValues!constants!private! !
-!ByteArrayTest categoriesFor: #sdwordValues!constants!private! !
-!ByteArrayTest categoriesFor: #testBasicDwordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testFromHexString!public! !
-!ByteArrayTest categoriesFor: #testMixedConcatenation!public! !
-!ByteArrayTest categoriesFor: #testSbyteAtOffset!public!unit tests! !
-!ByteArrayTest categoriesFor: #testSbyteAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testSDwordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #testWordAtOffsetPut!public!unit tests! !
-!ByteArrayTest categoriesFor: #wordValues!constants!private! !
+!ByteArrayTest categoriesForMethods!
+assimilate:!public!unit tests! !
+collectionClass!helpers!private! !
+dwordValues!constants!private! !
+sdwordValues!constants!private! !
+testBasicDwordAtOffsetPut!public!unit tests! !
+testDwordAtOffsetPut!public!unit tests! !
+testFromHexString!public! !
+testMixedConcatenation!public! !
+testSbyteAtOffset!public!unit tests! !
+testSbyteAtOffsetPut!public!unit tests! !
+testSDwordAtOffsetPut!public!unit tests! !
+testWordAtOffsetPut!public!unit tests! !
+wordValues!constants!private! !
+!
 

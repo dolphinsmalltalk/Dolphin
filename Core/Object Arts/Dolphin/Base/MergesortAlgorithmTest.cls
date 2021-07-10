@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StableSortAlgorithmTest subclass: #MergesortAlgorithmTest
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ testTempArrayLargeEnough
 	60 timesRepeat: [sorted removeFirst].
 	sorted addAll: (130 to: 200).
 	self assertSorted: sorted! !
-!MergesortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!MergesortAlgorithmTest categoriesFor: #testTempArrayLargeEnough!public!unit tests! !
+!MergesortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+testTempArrayLargeEnough!public!unit tests! !
+!
 

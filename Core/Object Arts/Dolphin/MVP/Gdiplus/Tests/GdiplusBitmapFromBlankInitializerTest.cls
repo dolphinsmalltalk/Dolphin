@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromBlankInitializerTest
 	instanceVariableNames: ''
@@ -30,7 +30,9 @@ testCreateHandle
 	self assert: constructorArgs third equals: 0.
 	"self assert: constructorArgs fourth = PixelFormat32bppARGB."
 	self assertLastArgIsHandle! !
-!GdiplusBitmapFromBlankInitializerTest categoriesFor: #gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!public!setup! !
-!GdiplusBitmapFromBlankInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusBitmapFromBlankInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!GdiplusBitmapFromBlankInitializerTest categoriesForMethods!
+gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!public!setup! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+!
 

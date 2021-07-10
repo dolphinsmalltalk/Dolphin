@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRMODIFYWORLDTRANSFORM
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ XFORM: aXFORM
 		from: ##(_OffsetOf_XFORM + 1)
 		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode!**compiled accessors**!public! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode:!**compiled accessors**!public! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
-!EMRMODIFYWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
+!EMRMODIFYWORLDTRANSFORM categoriesForMethods!
+iMode!**compiled accessors**!public! !
+iMode:!**compiled accessors**!public! !
+XFORM!**compiled accessors**!public! !
+XFORM:!**compiled accessors**!public! !
+!
 
 !EMRMODIFYWORLDTRANSFORM class methodsFor!
 
@@ -86,7 +88,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_MODIFYWORLDTRANSFORM! !
-!EMRMODIFYWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRMODIFYWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRMODIFYWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
+!EMRMODIFYWORLDTRANSFORM class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

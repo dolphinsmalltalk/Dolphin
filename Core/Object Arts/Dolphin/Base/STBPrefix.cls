@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STBPrefix
 	instanceVariableNames: 'dword'
@@ -206,23 +206,25 @@ smallInteger
 	"Answer the receiver decoded into a SmallInteger."
 
 	^dword bitShift: -1! !
-!STBPrefix categoriesFor: #character!accessing!public! !
-!STBPrefix categoriesFor: #dword!accessing!public! !
-!STBPrefix categoriesFor: #dword:!accessing!public! !
-!STBPrefix categoriesFor: #encodeClass:locator:!accessing!public! !
-!STBPrefix categoriesFor: #encodeClassRef:!accessing!public! !
-!STBPrefix categoriesFor: #instSize!accessing!public! !
-!STBPrefix categoriesFor: #isBytes!public!testing! !
-!STBPrefix categoriesFor: #isCharacter!public!testing! !
-!STBPrefix categoriesFor: #isClassPrefix!public!testing! !
-!STBPrefix categoriesFor: #isDataPrefix!public!testing! !
-!STBPrefix categoriesFor: #isNonZeroVersion!public!testing! !
-!STBPrefix categoriesFor: #isProxy!public!testing! !
-!STBPrefix categoriesFor: #isSmallInteger!public!testing! !
-!STBPrefix categoriesFor: #isVariable!public!testing! !
-!STBPrefix categoriesFor: #printOn:!development!printing!public! !
-!STBPrefix categoriesFor: #refIndex!accessing!public! !
-!STBPrefix categoriesFor: #smallInteger!accessing!public! !
+!STBPrefix categoriesForMethods!
+character!accessing!public! !
+dword!accessing!public! !
+dword:!accessing!public! !
+encodeClass:locator:!accessing!public! !
+encodeClassRef:!accessing!public! !
+instSize!accessing!public! !
+isBytes!public!testing! !
+isCharacter!public!testing! !
+isClassPrefix!public!testing! !
+isDataPrefix!public!testing! !
+isNonZeroVersion!public!testing! !
+isProxy!public!testing! !
+isSmallInteger!public!testing! !
+isVariable!public!testing! !
+printOn:!development!printing!public! !
+refIndex!accessing!public! !
+smallInteger!accessing!public! !
+!
 
 !STBPrefix class methodsFor!
 
@@ -261,12 +263,14 @@ initialize
 
 uninitialize
 	DataPrefix := ProxyPrefix := nil! !
-!STBPrefix class categoriesFor: #encodeCharacter:!operations!public! !
-!STBPrefix class categoriesFor: #encodeObjectRef:!operations!public! !
-!STBPrefix class categoriesFor: #encodeSmallInteger:!operations!public! !
-!STBPrefix class categoriesFor: #forData!instance creation!public! !
-!STBPrefix class categoriesFor: #forProxy!instance creation!public! !
-!STBPrefix class categoriesFor: #fromInteger:!instance creation!public! !
-!STBPrefix class categoriesFor: #initialize!development!initializing!public! !
-!STBPrefix class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!STBPrefix class categoriesForMethods!
+encodeCharacter:!operations!public! !
+encodeObjectRef:!operations!public! !
+encodeSmallInteger:!operations!public! !
+forData!instance creation!public! !
+forProxy!instance creation!public! !
+fromInteger:!instance creation!public! !
+initialize!development!initializing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -63,7 +63,9 @@ millisecondsToRepeat: anInteger
 	"Answer the time taken to execute the receiver anInteger times"
 
 	^Time millisecondsToRun: [ anInteger timesRepeat: [self value]]! !
-!BlockClosure categoriesFor: #millisecondsToRepeat:!development!public! !
+!BlockClosure categoriesForMethods!
+millisecondsToRepeat:!development!public! !
+!
 
 !DateAndTime methodsFor!
 
@@ -92,9 +94,11 @@ asTimeStamp
 		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
 
 	^TimeStamp date: self asDate time: self asTime! !
-!DateAndTime categoriesFor: #asDate!converting!public! !
-!DateAndTime categoriesFor: #asTime!converting!public! !
-!DateAndTime categoriesFor: #asTimeStamp!converting!public! !
+!DateAndTime categoriesForMethods!
+asDate!converting!public! !
+asTime!converting!public! !
+asTimeStamp!converting!public! !
+!
 
 !SYSTEMTIME methodsFor!
 
@@ -107,8 +111,10 @@ asTimeStamp
 	"Answer a <TimeStamp> corresponding to the receiver's point in time."
 
 	^self asDateAndTime asTimeStamp! !
-!SYSTEMTIME categoriesFor: #asDate!converting!public! !
-!SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
+!SYSTEMTIME categoriesForMethods!
+asDate!converting!public! !
+asTimeStamp!converting!public! !
+!
 
 "End of package definition"!
 

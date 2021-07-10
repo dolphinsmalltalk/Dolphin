@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #CPINFOEXW
 	instanceVariableNames: ''
@@ -83,14 +83,16 @@ UnicodeDefaultChar
 	"Answer the <Integer> value of the receiver's 'UnicodeDefaultChar' field."
 
 	^bytes wordAtOffset: _OffsetOf_UnicodeDefaultChar! !
-!CPINFOEXW categoriesFor: #codepage!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #CodePageName!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #DefaultChar!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #defaultCharacter!accessing!public! !
-!CPINFOEXW categoriesFor: #LeadByte!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #MaxCharSize!**compiled accessors**!public! !
-!CPINFOEXW categoriesFor: #unicodeDefaultChar!accessing!public! !
-!CPINFOEXW categoriesFor: #UnicodeDefaultChar!**compiled accessors**!public! !
+!CPINFOEXW categoriesForMethods!
+codepage!**compiled accessors**!public! !
+CodePageName!**compiled accessors**!public! !
+DefaultChar!**compiled accessors**!public! !
+defaultCharacter!accessing!public! !
+LeadByte!**compiled accessors**!public! !
+MaxCharSize!**compiled accessors**!public! !
+unicodeDefaultChar!accessing!public! !
+UnicodeDefaultChar!**compiled accessors**!public! !
+!
 
 !CPINFOEXW class methodsFor!
 
@@ -130,7 +132,9 @@ defineFields
 
 getFieldNames
 	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
-!CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
-!CPINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CPINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CPINFOEXW class categoriesForMethods!
+codePage:!instance creation!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

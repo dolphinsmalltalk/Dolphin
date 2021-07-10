@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMREXTCREATEPEN
 	instanceVariableNames: ''
@@ -97,18 +97,20 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
-!EMREXTCREATEPEN categoriesFor: #cbBits!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #cbBits:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #cbBmi!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #cbBmi:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #elp!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #elp:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #ihPen!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #ihPen:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBits!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBits:!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBmi!**compiled accessors**!public! !
-!EMREXTCREATEPEN categoriesFor: #offBmi:!**compiled accessors**!public! !
+!EMREXTCREATEPEN categoriesForMethods!
+cbBits!**compiled accessors**!public! !
+cbBits:!**compiled accessors**!public! !
+cbBmi!**compiled accessors**!public! !
+cbBmi:!**compiled accessors**!public! !
+elp!**compiled accessors**!public! !
+elp:!**compiled accessors**!public! !
+ihPen!**compiled accessors**!public! !
+ihPen:!**compiled accessors**!public! !
+offBits!**compiled accessors**!public! !
+offBits:!**compiled accessors**!public! !
+offBmi!**compiled accessors**!public! !
+offBmi:!**compiled accessors**!public! !
+!
 
 !EMREXTCREATEPEN class methodsFor!
 
@@ -146,7 +148,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTCREATEPEN! !
-!EMREXTCREATEPEN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXTCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTCREATEPEN class categoriesFor: #iTypes!constants!public! !
+!EMREXTCREATEPEN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #InlineAllSendersRefactoring
 	instanceVariableNames: 'selector numberReplaced numberNotReplaced'
@@ -97,18 +97,20 @@ transform
 		inlineSelfSends;
 		removeMethod;
 		checkInlinedMethods! !
-!InlineAllSendersRefactoring categoriesFor: #checkInlinedMethods!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #inlineMessagesInClass:andSelector:!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #inlineSelfSends!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #messagePattern!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #messagesNotReplaced!accessing!public! !
-!InlineAllSendersRefactoring categoriesFor: #numberOfSelfSendsIn:!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #preconditions!preconditions!public! !
-!InlineAllSendersRefactoring categoriesFor: #removeMethod!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #selfSendIn:!public!transforming! !
-!InlineAllSendersRefactoring categoriesFor: #sendersOf:in:!initialize/release!public! !
-!InlineAllSendersRefactoring categoriesFor: #storeOn:!printing!public! !
-!InlineAllSendersRefactoring categoriesFor: #transform!public!transforming! !
+!InlineAllSendersRefactoring categoriesForMethods!
+checkInlinedMethods!public!transforming! !
+inlineMessagesInClass:andSelector:!public!transforming! !
+inlineSelfSends!public!transforming! !
+messagePattern!public!transforming! !
+messagesNotReplaced!accessing!public! !
+numberOfSelfSendsIn:!public!transforming! !
+preconditions!preconditions!public! !
+removeMethod!public!transforming! !
+selfSendIn:!public!transforming! !
+sendersOf:in:!initialize/release!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !InlineAllSendersRefactoring class methodsFor!
 
@@ -120,6 +122,8 @@ model: aRBNamespace sendersOf: aSelector in: aClass
 
 sendersOf: aSelector in: aClass 
 	^self new sendersOf: aSelector in: aClass! !
-!InlineAllSendersRefactoring class categoriesFor: #model:sendersOf:in:!instance creation!public! !
-!InlineAllSendersRefactoring class categoriesFor: #sendersOf:in:!instance creation!public! !
+!InlineAllSendersRefactoring class categoriesForMethods!
+model:sendersOf:in:!instance creation!public! !
+sendersOf:in:!instance creation!public! !
+!
 

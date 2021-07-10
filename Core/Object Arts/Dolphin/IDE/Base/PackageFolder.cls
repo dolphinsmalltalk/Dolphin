@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Folder subclass: #PackageFolder
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ rootName
 	"Private - Answer the name to use for the folder at the root of the current image hierarchy"
 
 	^'$'! !
-!PackageFolder categoriesFor: #icon!constants!public! !
-!PackageFolder categoriesFor: #isDolphinFolder!private!testing! !
-!PackageFolder categoriesFor: #rootName!constants!private! !
+!PackageFolder categoriesForMethods!
+icon!constants!public! !
+isDolphinFolder!private!testing! !
+rootName!constants!private! !
+!
 
 !PackageFolder class methodsFor!
 
@@ -44,7 +46,9 @@ forPackage: aPackage
 	"Answer an instance of the receiver for the folder of aPackage"
 
 	^self pathname: aPackage packageFolder! !
-!PackageFolder class categoriesFor: #dolphinRoot!instance creation!public! !
-!PackageFolder class categoriesFor: #dolphinRootPathname!constants!instance creation!public! !
-!PackageFolder class categoriesFor: #forPackage:!instance creation!public! !
+!PackageFolder class categoriesForMethods!
+dolphinRoot!instance creation!public! !
+dolphinRootPathname!constants!instance creation!public! !
+forPackage:!instance creation!public! !
+!
 

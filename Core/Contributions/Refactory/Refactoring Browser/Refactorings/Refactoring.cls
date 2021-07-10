@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Refactoring
 	instanceVariableNames: 'model options'
@@ -319,59 +319,61 @@ whichVariableNode: aParseTree inInterval: anInterval name: aName
 		matches: aName do: block;
 		matchesArgument: aName do: block.
 	^matcher executeTree: aParseTree initialAnswer: nil! !
-!Refactoring categoriesFor: #associationForClassVariable:in:ifAbsent:!public!utilities! !
-!Refactoring categoriesFor: #canReferenceVariable:in:!public!testing! !
-!Refactoring categoriesFor: #changes!accessing!public! !
-!Refactoring categoriesFor: #checkClass:selector:using:!public!support! !
-!Refactoring categoriesFor: #checkInstanceVariableName:in:!public!utilities! !
-!Refactoring categoriesFor: #checkMethodName:in:!public!utilities! !
-!Refactoring categoriesFor: #checkPreconditions!preconditions!public! !
-!Refactoring categoriesFor: #checkPreconditions:!preconditions!public! !
-!Refactoring categoriesFor: #classObjectFor:!accessing!private! !
-!Refactoring categoriesFor: #convertAllReferencesTo:using:!public!support! !
-!Refactoring categoriesFor: #convertAllReferencesToClass:using:!public!support! !
-!Refactoring categoriesFor: #convertClasses:select:using:!public!support! !
-!Refactoring categoriesFor: #convertMethod:for:using:!public!support! !
-!Refactoring categoriesFor: #copyOptionsFrom:!accessing!public! !
-!Refactoring categoriesFor: #defaultEnvironment!public!transforming! !
-!Refactoring categoriesFor: #execute!public!transforming! !
-!Refactoring categoriesFor: #getOptionAlreadyDefined:selector:!options!public! !
-!Refactoring categoriesFor: #getOptionExtractAssignment:!options!public! !
-!Refactoring categoriesFor: #getOptionInlineExpression:!options!public! !
-!Refactoring categoriesFor: #getOptionMethodName:!options!public! !
-!Refactoring categoriesFor: #getOptionOpenBrowser:!options!public! !
-!Refactoring categoriesFor: #getOptionSelfArgumentName!options!public! !
-!Refactoring categoriesFor: #getOptionUseExistingMethod:!options!public! !
-!Refactoring categoriesFor: #getOptionVariableToMoveToOf:in:!options!public! !
-!Refactoring categoriesFor: #getOptionVariableTypes:selected:!options!public! !
-!Refactoring categoriesFor: #model!public!transforming! !
-!Refactoring categoriesFor: #model:!initialize/release!public! !
-!Refactoring categoriesFor: #onError:do:!exceptions!private! !
-!Refactoring categoriesFor: #openBrowserOn:!public!requests! !
-!Refactoring categoriesFor: #options!accessing!public! !
-!Refactoring categoriesFor: #options:!accessing!public! !
-!Refactoring categoriesFor: #performComponentRefactoring:!public!transforming! !
-!Refactoring categoriesFor: #poolVariableNamesFor:!public!utilities! !
-!Refactoring categoriesFor: #preconditions!preconditions!public! !
-!Refactoring categoriesFor: #primitiveExecute!operations!private! !
-!Refactoring categoriesFor: #refactoringAborted:!exceptions!private! !
-!Refactoring categoriesFor: #refactoringError:!exceptions!private! !
-!Refactoring categoriesFor: #refactoringError:with:!exceptions!private! !
-!Refactoring categoriesFor: #refactoringWarning:!exceptions!private! !
-!Refactoring categoriesFor: #requestImplementorToInline:!public!requests! !
-!Refactoring categoriesFor: #requestMethodNameFor:!public!requests! !
-!Refactoring categoriesFor: #requestSelfArgumentName!public!requests! !
-!Refactoring categoriesFor: #safeMethodNameFor:basedOn:!public!utilities! !
-!Refactoring categoriesFor: #selectVariableToMoveMethodTo:class:!public!requests! !
-!Refactoring categoriesFor: #selectVariableTypesFrom:selected:!public!requests! !
-!Refactoring categoriesFor: #setOption:toUse:!accessing!public! !
-!Refactoring categoriesFor: #shouldExtractAssignmentTo:!public!requests! !
-!Refactoring categoriesFor: #shouldInlineExpression:!public!requests! !
-!Refactoring categoriesFor: #shouldOverride:in:!public!requests! !
-!Refactoring categoriesFor: #shouldUseExistingMethod:!public!requests! !
-!Refactoring categoriesFor: #transform!public!transforming! !
-!Refactoring categoriesFor: #uniqueMethodNameFor:!helpers!private! !
-!Refactoring categoriesFor: #whichVariableNode:inInterval:name:!public!utilities! !
+!Refactoring categoriesForMethods!
+associationForClassVariable:in:ifAbsent:!public!utilities! !
+canReferenceVariable:in:!public!testing! !
+changes!accessing!public! !
+checkClass:selector:using:!public!support! !
+checkInstanceVariableName:in:!public!utilities! !
+checkMethodName:in:!public!utilities! !
+checkPreconditions!preconditions!public! !
+checkPreconditions:!preconditions!public! !
+classObjectFor:!accessing!private! !
+convertAllReferencesTo:using:!public!support! !
+convertAllReferencesToClass:using:!public!support! !
+convertClasses:select:using:!public!support! !
+convertMethod:for:using:!public!support! !
+copyOptionsFrom:!accessing!public! !
+defaultEnvironment!public!transforming! !
+execute!public!transforming! !
+getOptionAlreadyDefined:selector:!options!public! !
+getOptionExtractAssignment:!options!public! !
+getOptionInlineExpression:!options!public! !
+getOptionMethodName:!options!public! !
+getOptionOpenBrowser:!options!public! !
+getOptionSelfArgumentName!options!public! !
+getOptionUseExistingMethod:!options!public! !
+getOptionVariableToMoveToOf:in:!options!public! !
+getOptionVariableTypes:selected:!options!public! !
+model!public!transforming! !
+model:!initialize/release!public! !
+onError:do:!exceptions!private! !
+openBrowserOn:!public!requests! !
+options!accessing!public! !
+options:!accessing!public! !
+performComponentRefactoring:!public!transforming! !
+poolVariableNamesFor:!public!utilities! !
+preconditions!preconditions!public! !
+primitiveExecute!operations!private! !
+refactoringAborted:!exceptions!private! !
+refactoringError:!exceptions!private! !
+refactoringError:with:!exceptions!private! !
+refactoringWarning:!exceptions!private! !
+requestImplementorToInline:!public!requests! !
+requestMethodNameFor:!public!requests! !
+requestSelfArgumentName!public!requests! !
+safeMethodNameFor:basedOn:!public!utilities! !
+selectVariableToMoveMethodTo:class:!public!requests! !
+selectVariableTypesFrom:selected:!public!requests! !
+setOption:toUse:!accessing!public! !
+shouldExtractAssignmentTo:!public!requests! !
+shouldInlineExpression:!public!requests! !
+shouldOverride:in:!public!requests! !
+shouldUseExistingMethod:!public!requests! !
+transform!public!transforming! !
+uniqueMethodNameFor:!helpers!private! !
+whichVariableNode:inInterval:name:!public!utilities! !
+!
 
 !Refactoring class methodsFor!
 
@@ -425,14 +427,16 @@ setDefaultOption: aSymbol toMessage: aSelector
 uninitialize
 	#rbFix. "Assist uninstallation of Dolphin package."
 	RefactoringOptions := nil! !
-!Refactoring class categoriesFor: #abortSignal!accessing!public! !
-!Refactoring class categoriesFor: #initialize!public! !
-!Refactoring class categoriesFor: #initializeRefactoringOptions!accessing!public! !
-!Refactoring class categoriesFor: #new!instance creation!public! !
-!Refactoring class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
-!Refactoring class categoriesFor: #preconditionSignal!accessing signal!public! !
-!Refactoring class categoriesFor: #refactoringOptions!accessing!public! !
-!Refactoring class categoriesFor: #setDefaultOption:to:!accessing!public! !
-!Refactoring class categoriesFor: #setDefaultOption:toMessage:!accessing!public! !
-!Refactoring class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!Refactoring class categoriesForMethods!
+abortSignal!accessing!public! !
+initialize!public! !
+initializeRefactoringOptions!accessing!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!public! !
+preconditionSignal!accessing signal!public! !
+refactoringOptions!accessing!public! !
+setDefaultOption:to:!accessing!public! !
+setDefaultOption:toMessage:!accessing!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

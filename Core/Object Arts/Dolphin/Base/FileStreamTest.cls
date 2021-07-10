@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractFileStreamTest subclass: #FileStreamTest
 	instanceVariableNames: ''
@@ -182,19 +182,21 @@ testWritePastEnd
 	actual := filestream upToEnd.
 	expected := expected contents.
 	self assert: actual equals: expected! !
-!FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!private!unit tests! !
-!FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
-!FileStreamTest categoriesFor: #bufferSize!constants!private! !
-!FileStreamTest categoriesFor: #maxPosition!constants!private! !
-!FileStreamTest categoriesFor: #maxSize!constants!private! !
-!FileStreamTest categoriesFor: #streamClass!helpers!private! !
-!FileStreamTest categoriesFor: #streamOn:!helpers!private! !
-!FileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
-!FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
-!FileStreamTest categoriesFor: #testNextAvailableColonWithPaging!public!unit tests! !
-!FileStreamTest categoriesFor: #testOwnsFile!public! !
-!FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !
-!FileStreamTest categoriesFor: #testVeryLargeSparseFile!public!unit tests! !
-!FileStreamTest categoriesFor: #testWritePastEnd!public!unit tests! !
+!FileStreamTest categoriesForMethods!
+assertBufferEmptyOrDirty:!private!unit tests! !
+assertBufferEmptyOrDirty:size:!helpers!private! !
+bufferSize!constants!private! !
+maxPosition!constants!private! !
+maxSize!constants!private! !
+streamClass!helpers!private! !
+streamOn:!helpers!private! !
+streamOnFile:type:!helpers!private! !
+tearDownTempStream!helpers!private! !
+testFileTimes!public!unit tests! !
+testNextAvailableColonWithPaging!public!unit tests! !
+testOwnsFile!public! !
+testSingleByteOverflow!public!unit tests! !
+testVeryLargeSparseFile!public!unit tests! !
+testWritePastEnd!public!unit tests! !
+!
 

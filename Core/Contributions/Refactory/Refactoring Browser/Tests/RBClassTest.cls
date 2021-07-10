@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #RBClassTest
 	instanceVariableNames: 'objectClass newClass messageNodeClass'
@@ -56,10 +56,12 @@ testHierarchy
 	meta := objectClass metaclass.
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)! !
-!RBClassTest categoriesFor: #setUp!public!set up! !
-!RBClassTest categoriesFor: #testDefinesClassVariable!method tests!public! !
-!RBClassTest categoriesFor: #testDefinesInstanceVariable!method tests!public! !
-!RBClassTest categoriesFor: #testDefinesMethod!method tests!public! !
-!RBClassTest categoriesFor: #testDefinesPoolDictionary!method tests!public! !
-!RBClassTest categoriesFor: #testHierarchy!method tests!public! !
+!RBClassTest categoriesForMethods!
+setUp!public!set up! !
+testDefinesClassVariable!method tests!public! !
+testDefinesInstanceVariable!method tests!public! !
+testDefinesMethod!method tests!public! !
+testDefinesPoolDictionary!method tests!public! !
+testHierarchy!method tests!public! !
+!
 

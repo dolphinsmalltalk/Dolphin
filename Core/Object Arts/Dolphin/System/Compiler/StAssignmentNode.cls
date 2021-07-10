@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StAssignmentNode
 	instanceVariableNames: 'variable assignment value'
@@ -97,26 +97,28 @@ variable: aVariableNode value: aValueNode position: anInteger
 	self variable: aVariableNode.
 	self value: aValueNode.
 	assignment := anInteger! !
-!StAssignmentNode categoriesFor: #=!comparing!public! !
-!StAssignmentNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StAssignmentNode categoriesFor: #assignmentPosition!accessing!public! !
-!StAssignmentNode categoriesFor: #assigns:!public!testing! !
-!StAssignmentNode categoriesFor: #bestNodeFor:!public!querying! !
-!StAssignmentNode categoriesFor: #childrenDo:!accessing!public! !
-!StAssignmentNode categoriesFor: #directlyUses:!public!testing! !
-!StAssignmentNode categoriesFor: #hash!comparing!public! !
-!StAssignmentNode categoriesFor: #isAssignment!public!testing! !
-!StAssignmentNode categoriesFor: #needsParenthesis!public!testing! !
-!StAssignmentNode categoriesFor: #postCopy!copying!public! !
-!StAssignmentNode categoriesFor: #precedence!accessing!public! !
-!StAssignmentNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StAssignmentNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StAssignmentNode categoriesFor: #uses:!public!testing! !
-!StAssignmentNode categoriesFor: #value!accessing!public! !
-!StAssignmentNode categoriesFor: #value:!accessing!public! !
-!StAssignmentNode categoriesFor: #variable!accessing!public! !
-!StAssignmentNode categoriesFor: #variable:!accessing!public! !
-!StAssignmentNode categoriesFor: #variable:value:position:!initializing!private! !
+!StAssignmentNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+assignmentPosition!accessing!public! !
+assigns:!public!testing! !
+bestNodeFor:!public!querying! !
+childrenDo:!accessing!public! !
+directlyUses:!public!testing! !
+hash!comparing!public! !
+isAssignment!public!testing! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+value!accessing!public! !
+value:!accessing!public! !
+variable!accessing!public! !
+variable:!accessing!public! !
+variable:value:position:!initializing!private! !
+!
 
 !StAssignmentNode class methodsFor!
 
@@ -132,6 +134,8 @@ variable: aVariableNode value: aValueNode position: anInteger
 			value: aValueNode
 			position: anInteger;
 		yourself! !
-!StAssignmentNode class categoriesFor: #variable:value:!instance creation!public! !
-!StAssignmentNode class categoriesFor: #variable:value:position:!instance creation!public! !
+!StAssignmentNode class categoriesForMethods!
+variable:value:!instance creation!public! !
+variable:value:position:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #ReadStreamFactoryANSITest
 	instanceVariableNames: ''
@@ -22,7 +22,9 @@ testXonX
 		should: [:r | r position = 0 & (r contents = 'this is a string')]
 		conformTo: self protocol
 		selector: #on:! !
-!ReadStreamFactoryANSITest categoriesFor: #canonicalObject!public! !
-!ReadStreamFactoryANSITest categoriesFor: #protocol!public! !
-!ReadStreamFactoryANSITest categoriesFor: #testXonX!public! !
+!ReadStreamFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXonX!public! !
+!
 

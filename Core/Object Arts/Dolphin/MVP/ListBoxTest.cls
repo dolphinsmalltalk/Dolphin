@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListControlTest subclass: #ListBoxTest
 	instanceVariableNames: 'lbnSelChange'
@@ -49,9 +49,11 @@ testNewSelectionsClickOutsideListWithModifiers
 
 verifyClicks: anArray
 	self assert: clicks size equals: anArray size! !
-!ListBoxTest categoriesFor: #classToTest!helpers!private! !
-!ListBoxTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!helpers!private! !
-!ListBoxTest categoriesFor: #setupClickIntercept!private! !
-!ListBoxTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
-!ListBoxTest categoriesFor: #verifyClicks:!helpers!private! !
+!ListBoxTest categoriesForMethods!
+classToTest!helpers!private! !
+newSelectionAfterLeftClickOutsideList:!helpers!private! !
+setupClickIntercept!private! !
+testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
+verifyClicks:!helpers!private! !
+!
 

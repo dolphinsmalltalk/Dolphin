@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RenameClassTest
 	instanceVariableNames: ''
@@ -60,9 +60,11 @@ testRenameClass
 	self assert: (class parseTreeFor: #reference)
 		equals: (RBParser parseMethod: 'reference
 								^NewClassName new')! !
-!RenameClassTest categoriesFor: #testBadName!failure tests!public! !
-!RenameClassTest categoriesFor: #testExistingName!failure tests!public! !
-!RenameClassTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!RenameClassTest categoriesFor: #testModelRenameClass!public!tests! !
-!RenameClassTest categoriesFor: #testRenameClass!public!tests! !
+!RenameClassTest categoriesForMethods!
+testBadName!failure tests!public! !
+testExistingName!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelRenameClass!public!tests! !
+testRenameClass!public!tests! !
+!
 

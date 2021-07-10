@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 		from: ##(_OffsetOf_ParamDesc + 1)
 		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
 		startingAt: 1! !
-!HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_SSL_SET categoriesForMethods!
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+ParamDesc!**compiled accessors**!public! !
+ParamDesc:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_CONFIG_SSL_SET class methodsFor!
 
@@ -75,6 +77,8 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
-!HTTP_SERVICE_CONFIG_SSL_SET class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_SSL_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_SSL_SET class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Aspect subclass: #KeyedAspect
 	instanceVariableNames: ''
@@ -49,15 +49,17 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject at: self key put: valueObject! !
-!KeyedAspect categoriesFor: #=!comparing!public! !
-!KeyedAspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!KeyedAspect categoriesFor: #displayAspectText:on:!displaying!private! !
-!KeyedAspect categoriesFor: #getSelector!accessing!private! !
-!KeyedAspect categoriesFor: #hash!comparing!public! !
-!KeyedAspect categoriesFor: #objectRefName:!helpers!private! !
-!KeyedAspect categoriesFor: #putSelector!accessing!private! !
-!KeyedAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!KeyedAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!KeyedAspect categoriesForMethods!
+=!comparing!public! !
+displayAspectNameOf:on:!displaying!private! !
+displayAspectText:on:!displaying!private! !
+getSelector!accessing!private! !
+hash!comparing!public! !
+objectRefName:!helpers!private! !
+putSelector!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !KeyedAspect class methodsFor!
 
@@ -65,5 +67,7 @@ key: aKey
 	"Answer an instance of the receiver created with aKey"
 
 	^self name: aKey! !
-!KeyedAspect class categoriesFor: #key:!instance creation!public! !
+!KeyedAspect class categoriesForMethods!
+key:!instance creation!public! !
+!
 

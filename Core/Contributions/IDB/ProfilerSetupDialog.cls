@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dialog subclass: #ProfilerSetupDialog
 	instanceVariableNames: ''
@@ -99,13 +99,15 @@ setFields
 	(self presenterNamed: 'interval') value: ProfilingInterval.
 	(self presenterNamed: 'source') text: ProfiledText.
 	(self presenterNamed: 'set') view text: SampleSetName! !
-!ProfilerSetupDialog categoriesFor: #apply!commands!public! !
-!ProfilerSetupDialog categoriesFor: #createComponents!initializing!public! !
-!ProfilerSetupDialog categoriesFor: #isAcceptable!public!testing! !
-!ProfilerSetupDialog categoriesFor: #ok!commands!public! !
-!ProfilerSetupDialog categoriesFor: #onViewOpened!event handling!public! !
-!ProfilerSetupDialog categoriesFor: #reset!commands!public! !
-!ProfilerSetupDialog categoriesFor: #setFields!initializing!public! !
+!ProfilerSetupDialog categoriesForMethods!
+apply!commands!public! !
+createComponents!initializing!public! !
+isAcceptable!public!testing! !
+ok!commands!public! !
+onViewOpened!event handling!public! !
+reset!commands!public! !
+setFields!initializing!public! !
+!
 
 !ProfilerSetupDialog class methodsFor!
 
@@ -149,11 +151,13 @@ sampleSetName
 	"Accessor for the SampleSetName class variable"
 
 	^SampleSetName! !
-!ProfilerSetupDialog class categoriesFor: #defaultModel!models!public! !
-!ProfilerSetupDialog class categoriesFor: #interval!accessing!public! !
-!ProfilerSetupDialog class categoriesFor: #isCollect!accessing!public! !
-!ProfilerSetupDialog class categoriesFor: #isOn!accessing!public! !
-!ProfilerSetupDialog class categoriesFor: #profiledBlock!accessing!public! !
-!ProfilerSetupDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!ProfilerSetupDialog class categoriesFor: #sampleSetName!accessing!public! !
+!ProfilerSetupDialog class categoriesForMethods!
+defaultModel!models!public! !
+interval!accessing!public! !
+isCollect!accessing!public! !
+isOn!accessing!public! !
+profiledBlock!accessing!public! !
+resource_Default_view!public!resources-views! !
+sampleSetName!accessing!public! !
+!
 

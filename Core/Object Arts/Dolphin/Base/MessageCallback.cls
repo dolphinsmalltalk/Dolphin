@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalCallback subclass: #MessageCallback
 	instanceVariableNames: 'receiver selector closure'
@@ -50,10 +50,12 @@ valueWithArgumentsAt: anAddress
 	"Private - Evaluate the receiver with arguments instantiated from the raw data at anAddress."
 
 	^receiver perform: selector withArgumentsAt: anAddress descriptor: descriptor! !
-!MessageCallback categoriesFor: #closure!accessing!public! !
-!MessageCallback categoriesFor: #closure:!accessing!public! !
-!MessageCallback categoriesFor: #printOn:!development!printing!public! !
-!MessageCallback categoriesFor: #receiver:!initializing!private! !
-!MessageCallback categoriesFor: #selector:!initializing!private! !
-!MessageCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
+!MessageCallback categoriesForMethods!
+closure!accessing!public! !
+closure:!accessing!public! !
+printOn:!development!printing!public! !
+receiver:!initializing!private! !
+selector:!initializing!private! !
+valueWithArgumentsAt:!evaluating!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #VOID
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ new
 	thus a reference is always required."
 
 	^self newPointer! !
-!VOID class categoriesFor: #getFieldNames!constants!private! !
-!VOID class categoriesFor: #new!instance creation!public! !
+!VOID class categoriesForMethods!
+getFieldNames!constants!private! !
+new!instance creation!public! !
+!
 

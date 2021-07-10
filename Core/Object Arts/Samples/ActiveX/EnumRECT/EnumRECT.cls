@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #EnumRECT
 	instanceVariableNames: 'm_iCur m_rgrc'
@@ -94,12 +94,14 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^Array with: IEnumRECT! !
-!EnumRECT categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #initialize!initializing!public! !
-!EnumRECT categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
-!EnumRECT categoriesFor: #supportedInterfaces!constants!public! !
+!EnumRECT categoriesForMethods!
+Clone:!COM Interfaces-IEnumXXXX!public! !
+initialize!initializing!public! !
+Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
+Reset!COM Interfaces-IEnumXXXX!public! !
+Skip:!COM Interfaces-IEnumXXXX!public! !
+supportedInterfaces!constants!public! !
+!
 
 !EnumRECT class methodsFor!
 
@@ -112,6 +114,8 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!EnumRECT class categoriesFor: #initialize!initializing!private! !
-!EnumRECT class categoriesFor: #new!instance creation!public! !
+!EnumRECT class categoriesForMethods!
+initialize!initializing!private! !
+new!instance creation!public! !
+!
 

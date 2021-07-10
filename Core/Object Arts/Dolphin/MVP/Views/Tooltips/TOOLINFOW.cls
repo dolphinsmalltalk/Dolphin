@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
@@ -126,21 +126,23 @@ uId: anInteger
 	"Set the receiver's 'uId' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_uId put: anInteger! !
-!TOOLINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #hinst!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #hwnd!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #hwnd:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #lParam!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #printOn:!development!printing!public! !
-!TOOLINFOW categoriesFor: #rect!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #rect:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #text:!accessing!public! !
-!TOOLINFOW categoriesFor: #textCallback!accessing!public! !
-!TOOLINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #uFlags:!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #uId!**compiled accessors**!public! !
-!TOOLINFOW categoriesFor: #uId:!**compiled accessors**!public! !
+!TOOLINFOW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+hinst!**compiled accessors**!public! !
+hwnd!**compiled accessors**!public! !
+hwnd:!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+lpszText:!**compiled accessors**!public! !
+printOn:!development!printing!public! !
+rect!**compiled accessors**!public! !
+rect:!**compiled accessors**!public! !
+text:!accessing!public! !
+textCallback!accessing!public! !
+uFlags!**compiled accessors**!public! !
+uFlags:!**compiled accessors**!public! !
+uId!**compiled accessors**!public! !
+uId:!**compiled accessors**!public! !
+!
 
 !TOOLINFOW class methodsFor!
 
@@ -174,6 +176,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
-!TOOLINFOW class categoriesFor: #defineFields!public!template definition! !
-!TOOLINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TOOLINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

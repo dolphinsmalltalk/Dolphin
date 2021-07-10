@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UtfEncodedString variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
@@ -469,26 +469,28 @@ urlEncoded
 						base: 16
 						nDigits: 2]].
 	^encodedStream grabContents! !
-!Utf8String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
-!Utf8String categoriesFor: #asLowercase!converting!public! !
-!Utf8String categoriesFor: #asUppercase!converting!public! !
-!Utf8String categoriesFor: #asUtf8String!converting!public! !
-!Utf8String categoriesFor: #before:ifAbsent:!public!searching! !
-!Utf8String categoriesFor: #bom!constants!encode/decode!private! !
-!Utf8String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Utf8String categoriesFor: #countElements!accessing!public! !
-!Utf8String categoriesFor: #decodeAt:!encode/decode!private! !
-!Utf8String categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Utf8String categoriesFor: #encodedSizeAt:!encode/decode!private! !
-!Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Utf8String categoriesFor: #isLeadCodeUnit:!encode/decode!public!testing! !
-!Utf8String categoriesFor: #maxEncoding!constants!private! !
-!Utf8String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
-!Utf8String categoriesFor: #reversedFrom:to:!copying!public! !
-!Utf8String categoriesFor: #strlen!accessing!private! !
-!Utf8String categoriesFor: #urlEncoded!public! !
+!Utf8String categoriesForMethods!
+_beginsString:!comparing!double dispatch!private! !
+asLowercase!converting!public! !
+asUppercase!converting!public! !
+asUtf8String!converting!public! !
+before:ifAbsent:!public!searching! !
+bom!constants!encode/decode!private! !
+copyToBuffer:ofSize:!copying!private! !
+countElements!accessing!public! !
+decodeAt:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+encodedAt:put:!accessing!encode/decode!private! !
+encodedSizeAt:!encode/decode!private! !
+encodedSizeOf:!encode/decode!private! !
+encodeOn:put:!encode/decode!private! !
+isLeadCodeUnit:!encode/decode!public!testing! !
+maxEncoding!constants!private! !
+nextIndexOfCharacter:from:to:!private!searching! !
+reversedFrom:to:!copying!public! !
+strlen!accessing!private! !
+urlEncoded!public! !
+!
 
 !Utf8String class methodsFor!
 
@@ -517,8 +519,10 @@ initialize
 	self addClassConstant: 'LeadByteMask4' value: 16rF0.
 	self addClassConstant: 'TrailByteMask' value: 16r80.
 	self addClassConstant: 'Bom' value: #[16rEF 16rBB 16rBF]! !
-!Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
-!Utf8String class categoriesFor: #codePage!instance creation!public! !
-!Utf8String class categoriesFor: #fromAddress:!instance creation!public! !
-!Utf8String class categoriesFor: #initialize!development!initializing!public! !
+!Utf8String class categoriesForMethods!
+characterForCodeUnit:!enquiries!public! !
+codePage!instance creation!public! !
+fromAddress:!instance creation!public! !
+initialize!development!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Utf8String variableByteSubclass: #Symbol
 	instanceVariableNames: ''
@@ -191,26 +191,28 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
-!Symbol categoriesFor: #argumentCount!accessing!public! !
-!Symbol categoriesFor: #asString!converting!public! !
-!Symbol categoriesFor: #asSymbol!converting!public! !
-!Symbol categoriesFor: #copyFrom:to:!copying!public! !
-!Symbol categoriesFor: #deepCopy!copying!public! !
-!Symbol categoriesFor: #displayString!printing!public! !
-!Symbol categoriesFor: #forwardTo:!operations!public! !
-!Symbol categoriesFor: #isAtomic!public!testing! !
-!Symbol categoriesFor: #isInfix!public!testing! !
-!Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
-!Symbol categoriesFor: #keywords!accessing!public! !
-!Symbol categoriesFor: #mutableCopy!copying!public! !
-!Symbol categoriesFor: #numArgs!accessing!public! !
-!Symbol categoriesFor: #printArgumentTypeOn:!printing!private! !
-!Symbol categoriesFor: #printOn:!printing!public! !
-!Symbol categoriesFor: #refersToLiteral:!private!testing! !
-!Symbol categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Symbol categoriesFor: #shallowCopy!copying!public! !
-!Symbol categoriesFor: #species!accessing!public! !
-!Symbol categoriesFor: #stbSaveOn:!binary filing!public! !
+!Symbol categoriesForMethods!
+argumentCount!accessing!public! !
+asString!converting!public! !
+asSymbol!converting!public! !
+copyFrom:to:!copying!public! !
+deepCopy!copying!public! !
+displayString!printing!public! !
+forwardTo:!operations!public! !
+isAtomic!public!testing! !
+isInfix!public!testing! !
+isSymbol!public!RefactoringBrowser! !
+keywords!accessing!public! !
+mutableCopy!copying!public! !
+numArgs!accessing!public! !
+printArgumentTypeOn:!printing!private! !
+printOn:!printing!public! !
+refersToLiteral:!private!testing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+shallowCopy!copying!public! !
+species!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
 Symbol methodProtocol: #selector attributes: #(#ansi #readOnly) selectors: #()!
@@ -439,23 +441,25 @@ with: aCharacter
 
 withAll: anArrayOfCharacter
 	^self intern: (String withAll: anArrayOfCharacter)! !
-!Symbol class categoriesFor: #addUnique:!accessing!private! !
-!Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
-!Symbol class categoriesFor: #coerceString:!instance creation!public! !
-!Symbol class categoriesFor: #findInterned:!accessing!public! !
-!Symbol class categoriesFor: #fromAddress:length:!instance creation!public! !
-!Symbol class categoriesFor: #initialize!development!initializing!public! !
-!Symbol class categoriesFor: #intern:!instance creation!public! !
-!Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
-!Symbol class categoriesFor: #internCharacter:!instance creation!public! !
-!Symbol class categoriesFor: #isLiteralSymbol:!parsing!private! !
-!Symbol class categoriesFor: #new:!instance creation!public! !
-!Symbol class categoriesFor: #readFrom:!instance creation!public! !
-!Symbol class categoriesFor: #resizeTable!initializing!private! !
-!Symbol class categoriesFor: #resizeTable:!initializing!private! !
-!Symbol class categoriesFor: #stats!development!private! !
-!Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
-!Symbol class categoriesFor: #with:!instance creation!public! !
-!Symbol class categoriesFor: #withAll:!instance creation!public! !
+!Symbol class categoriesForMethods!
+addUnique:!accessing!private! !
+allInstancesDo:!enumerating!public! !
+coerceString:!instance creation!public! !
+findInterned:!accessing!public! !
+fromAddress:length:!instance creation!public! !
+initialize!development!initializing!public! !
+intern:!instance creation!public! !
+intern:cookie:!not restartable!private!vm entry points! !
+internCharacter:!instance creation!public! !
+isLiteralSymbol:!parsing!private! !
+new:!instance creation!public! !
+readFrom:!instance creation!public! !
+resizeTable!initializing!private! !
+resizeTable:!initializing!private! !
+stats!development!private! !
+stbReadFrom:format:!binary filing!public! !
+stbReadFromProxy:!binary filing!private! !
+with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 

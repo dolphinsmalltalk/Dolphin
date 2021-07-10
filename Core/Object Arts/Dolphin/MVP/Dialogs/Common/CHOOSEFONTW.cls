@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
@@ -105,23 +105,25 @@ rgbColors: anInteger
 	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_rgbColors put: anInteger! !
-!CHOOSEFONTW categoriesFor: #color!public! !
-!CHOOSEFONTW categoriesFor: #color:!public! !
-!CHOOSEFONTW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #flags!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #flags:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #hDC:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #hookFlag!accessing!public! !
-!CHOOSEFONTW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #iPointSize!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #logFont!private! !
-!CHOOSEFONTW categoriesFor: #logFont:!private! !
-!CHOOSEFONTW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #lpLogFont!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #lpLogFont:!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #ownerView:!accessing!public! !
-!CHOOSEFONTW categoriesFor: #rgbColors!**compiled accessors**!public! !
-!CHOOSEFONTW categoriesFor: #rgbColors:!**compiled accessors**!public! !
+!CHOOSEFONTW categoriesForMethods!
+color!public! !
+color:!public! !
+dwSize:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hDC:!**compiled accessors**!public! !
+hookFlag!accessing!public! !
+hwndOwner:!**compiled accessors**!public! !
+iPointSize!**compiled accessors**!public! !
+logFont!private! !
+logFont:!private! !
+lpfnHook:!**compiled accessors**!public! !
+lpLogFont!**compiled accessors**!public! !
+lpLogFont:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+rgbColors!**compiled accessors**!public! !
+rgbColors:!**compiled accessors**!public! !
+!
 
 !CHOOSEFONTW class methodsFor!
 
@@ -167,6 +169,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
-!CHOOSEFONTW class categoriesFor: #defineFields!public!template definition! !
-!CHOOSEFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CHOOSEFONTW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

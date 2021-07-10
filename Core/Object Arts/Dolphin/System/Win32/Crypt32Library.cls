@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #Crypt32Library
 	instanceVariableNames: ''
@@ -67,10 +67,12 @@ cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 
 	<stdcall: bool CryptUnprotectMemory void* dword dword>
 	^self invalidCall: _failureCode! !
-!Crypt32Library categoriesFor: #cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
-!Crypt32Library categoriesFor: #cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
-!Crypt32Library categoriesFor: #cryptUnprotectData:ppszDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
-!Crypt32Library categoriesFor: #cryptUnprotectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
+!Crypt32Library categoriesForMethods!
+cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
+cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
+cryptUnprotectData:ppszDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
+cryptUnprotectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
+!
 
 !Crypt32Library class methodsFor!
 
@@ -185,12 +187,14 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 				to: size.
 	unencrypted free.
 	^answer! !
-!Crypt32Library class categoriesFor: #example1!examples!must strip!public! !
-!Crypt32Library class categoriesFor: #fileName!**auto generated**!constants!public! !
-!Crypt32Library class categoriesFor: #protectData:!operations!public! !
-!Crypt32Library class categoriesFor: #protectData:additionalEntropy:!operations!public! !
-!Crypt32Library class categoriesFor: #protectData:additionalEntropy:machineWide:!operations!public! !
-!Crypt32Library class categoriesFor: #unprotectData:!operations!public! !
-!Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:!operations!public! !
-!Crypt32Library class categoriesFor: #unprotectData:additionalEntropy:machineWide:!operations!public! !
+!Crypt32Library class categoriesForMethods!
+example1!examples!must strip!public! !
+fileName!**auto generated**!constants!public! !
+protectData:!operations!public! !
+protectData:additionalEntropy:!operations!public! !
+protectData:additionalEntropy:machineWide:!operations!public! !
+unprotectData:!operations!public! !
+unprotectData:additionalEntropy:!operations!public! !
+unprotectData:additionalEntropy:machineWide:!operations!public! !
+!
 

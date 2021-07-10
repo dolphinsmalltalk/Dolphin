@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusTests subclass: #GdiplusGraphicsTest
 	instanceVariableNames: 'bitmap graphics canvas'
@@ -134,17 +134,19 @@ testInterpolationMode
 				[:each |
 				graphics interpolationMode: each.
 				self assert: graphics interpolationMode equals: InterpolationModeBilinear]! !
-!GdiplusGraphicsTest categoriesFor: #setUp!public!setup! !
-!GdiplusGraphicsTest categoriesFor: #tearDown!public!setup! !
-!GdiplusGraphicsTest categoriesFor: #testCompositingMode!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testCompositingQuality!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testDrawImageRectRect!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testDrawLine1!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillEllipse1!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillEllipse2!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillRectangle1!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFillRectangle2!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFromCanvas!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testFromImage!public!unit tests! !
-!GdiplusGraphicsTest categoriesFor: #testInterpolationMode!public!unit tests! !
+!GdiplusGraphicsTest categoriesForMethods!
+setUp!public!setup! !
+tearDown!public!setup! !
+testCompositingMode!public!unit tests! !
+testCompositingQuality!public!unit tests! !
+testDrawImageRectRect!public!unit tests! !
+testDrawLine1!public!unit tests! !
+testFillEllipse1!public!unit tests! !
+testFillEllipse2!public!unit tests! !
+testFillRectangle1!public!unit tests! !
+testFillRectangle2!public!unit tests! !
+testFromCanvas!public!unit tests! !
+testFromImage!public!unit tests! !
+testInterpolationMode!public!unit tests! !
+!
 

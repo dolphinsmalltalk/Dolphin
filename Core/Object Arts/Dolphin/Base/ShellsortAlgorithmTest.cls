@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SortAlgorithmTest subclass: #ShellsortAlgorithmTest
 	instanceVariableNames: ''
@@ -17,6 +17,8 @@ integerSortSize
 	"Shell sort is slow, so be a bit less ambitious"
 
 	^1000! !
-!ShellsortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!ShellsortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
+!ShellsortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+integerSortSize!constants!private! !
+!
 

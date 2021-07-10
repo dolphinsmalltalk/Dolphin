@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #HOSTENT
 	instanceVariableNames: ''
@@ -98,18 +98,20 @@ reifyNullTerminatedArray: list
 				[addresses add: (addressClass fromAddress: each) address.
 				i := i + VMConstants.IntPtrSize].
 	^addresses asArray! !
-!HOSTENT categoriesFor: #address!accessing!public! !
-!HOSTENT categoriesFor: #addressClass!helpers!private! !
-!HOSTENT categoriesFor: #allAddresses!accessing!public! !
-!HOSTENT categoriesFor: #allAliases!accessing!public! !
-!HOSTENT categoriesFor: #h_addr!accessing!public! !
-!HOSTENT categoriesFor: #h_addr_list!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_addrtype!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_aliases!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_length!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #h_name!**compiled accessors**!public! !
-!HOSTENT categoriesFor: #host!accessing!public! !
-!HOSTENT categoriesFor: #reifyNullTerminatedArray:!helpers!private! !
+!HOSTENT categoriesForMethods!
+address!accessing!public! !
+addressClass!helpers!private! !
+allAddresses!accessing!public! !
+allAliases!accessing!public! !
+h_addr!accessing!public! !
+h_addr_list!**compiled accessors**!public! !
+h_addrtype!**compiled accessors**!public! !
+h_aliases!**compiled accessors**!public! !
+h_length!**compiled accessors**!public! !
+h_name!**compiled accessors**!public! !
+host!accessing!public! !
+reifyNullTerminatedArray:!helpers!private! !
+!
 
 !HOSTENT class methodsFor!
 
@@ -148,7 +150,9 @@ host: aStringHostName
 	| answer |
 	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
 	^answer isNull ifTrue: [SocketError signalWith: Processor activeProcess lastError] ifFalse: [answer]! !
-!HOSTENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HOSTENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HOSTENT class categoriesFor: #host:!instance creation!public! !
+!HOSTENT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+host:!instance creation!public! !
+!
 

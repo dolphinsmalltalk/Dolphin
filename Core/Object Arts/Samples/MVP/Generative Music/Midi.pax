@@ -99,10 +99,12 @@ midiOutShortMsgHmo: hmo dwMsg: dwMsg
 
 	<stdcall: dword midiOutShortMsg dword dword>
 	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesFor: #midiOutCloseHmo:!public! !
-!WinMMLibrary categoriesFor: #midiOutGetNumDevs!public! !
-!WinMMLibrary categoriesFor: #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:!public! !
-!WinMMLibrary categoriesFor: #midiOutShortMsgHmo:dwMsg:!public! !
+!WinMMLibrary categoriesForMethods!
+midiOutCloseHmo:!public! !
+midiOutGetNumDevs!public! !
+midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:!public! !
+midiOutShortMsgHmo:dwMsg:!public! !
+!
 
 "End of package definition"!
 

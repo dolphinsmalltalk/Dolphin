@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETARCDIRECTION
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ iArcDirection: anInteger
 	"Set the receiver's 'iArcDirection' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iArcDirection put: anInteger! !
-!EMRSETARCDIRECTION categoriesFor: #iArcDirection!**compiled accessors**!public! !
-!EMRSETARCDIRECTION categoriesFor: #iArcDirection:!**compiled accessors**!public! !
+!EMRSETARCDIRECTION categoriesForMethods!
+iArcDirection!**compiled accessors**!public! !
+iArcDirection:!**compiled accessors**!public! !
+!
 
 !EMRSETARCDIRECTION class methodsFor!
 
@@ -64,7 +66,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETARCDIRECTION! !
-!EMRSETARCDIRECTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETARCDIRECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETARCDIRECTION class categoriesFor: #iTypes!constants!public! !
+!EMRSETARCDIRECTION class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #IDLDESC
 	instanceVariableNames: ''
@@ -39,10 +39,12 @@ wIDLFlags
 	"Answer the <Integer> value of the receiver's 'wIDLFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wIDLFlags! !
-!IDLDESC categoriesFor: #isIn!public!testing! !
-!IDLDESC categoriesFor: #isOut!public!testing! !
-!IDLDESC categoriesFor: #isRetVal!public!testing! !
-!IDLDESC categoriesFor: #wIDLFlags!**compiled accessors**!public! !
+!IDLDESC categoriesForMethods!
+isIn!public!testing! !
+isOut!public!testing! !
+isRetVal!public!testing! !
+wIDLFlags!**compiled accessors**!public! !
+!
 
 !IDLDESC class methodsFor!
 
@@ -65,6 +67,8 @@ defineFields
 
 getFieldNames
 	^#(#wIDLFlags)! !
-!IDLDESC class categoriesFor: #defineFields!public!template definition! !
-!IDLDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IDLDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

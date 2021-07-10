@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dialog subclass: #AdvancedFindDialog
 	instanceVariableNames: 'patternPresenter wholeWordPresenter matchCasePresenter modePresenter directionPresenter actionButton closeButton flags validationBlock wrapPresenter'
@@ -158,26 +158,28 @@ validationBlock: aBlock
 	it is valid. The OK button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
-!AdvancedFindDialog categoriesFor: #createComponents!initializing!public! !
-!AdvancedFindDialog categoriesFor: #findNext!commands!public! !
-!AdvancedFindDialog categoriesFor: #initialize!initializing!public! !
-!AdvancedFindDialog categoriesFor: #isRegExpEnabled!public!testing! !
-!AdvancedFindDialog categoriesFor: #isRegExpEnabled:!accessing!public! !
-!AdvancedFindDialog categoriesFor: #isValid!private!testing! !
-!AdvancedFindDialog categoriesFor: #isValidRegularExpression:!private!testing! !
-!AdvancedFindDialog categoriesFor: #isValidSearch:!private!testing! !
-!AdvancedFindDialog categoriesFor: #isWildCardEnabled!public!testing! !
-!AdvancedFindDialog categoriesFor: #isWildCardEnabled:!accessing!public! !
-!AdvancedFindDialog categoriesFor: #model:!accessing!public! !
-!AdvancedFindDialog categoriesFor: #onViewOpened!event handling!public! !
-!AdvancedFindDialog categoriesFor: #prompt:!accessing!public! !
-!AdvancedFindDialog categoriesFor: #queryCommand:!commands!private! !
-!AdvancedFindDialog categoriesFor: #searchMode!accessing!public! !
-!AdvancedFindDialog categoriesFor: #show!operations!public! !
-!AdvancedFindDialog categoriesFor: #showModal!public!realizing/unrealizing! !
-!AdvancedFindDialog categoriesFor: #validateUserInterface!operations!public! !
-!AdvancedFindDialog categoriesFor: #validationBlock!accessing!public! !
-!AdvancedFindDialog categoriesFor: #validationBlock:!accessing!public! !
+!AdvancedFindDialog categoriesForMethods!
+createComponents!initializing!public! !
+findNext!commands!public! !
+initialize!initializing!public! !
+isRegExpEnabled!public!testing! !
+isRegExpEnabled:!accessing!public! !
+isValid!private!testing! !
+isValidRegularExpression:!private!testing! !
+isValidSearch:!private!testing! !
+isWildCardEnabled!public!testing! !
+isWildCardEnabled:!accessing!public! !
+model:!accessing!public! !
+onViewOpened!event handling!public! !
+prompt:!accessing!public! !
+queryCommand:!commands!private! !
+searchMode!accessing!public! !
+show!operations!public! !
+showModal!public!realizing/unrealizing! !
+validateUserInterface!operations!public! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 
 !AdvancedFindDialog class methodsFor!
 
@@ -236,12 +238,14 @@ showModeless: aView on: aFindDetails
 	(self createOn: aFindDetails)
 		ownerView: aView;
 		show! !
-!AdvancedFindDialog class categoriesFor: #createOn:prompt:caption:!instance creation!public! !
-!AdvancedFindDialog class categoriesFor: #defaultModel!models!public! !
-!AdvancedFindDialog class categoriesFor: #icon!constants!public! !
-!AdvancedFindDialog class categoriesFor: #initialize!initializing!public! !
-!AdvancedFindDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!AdvancedFindDialog class categoriesFor: #resource_Directionless_view!public!resources-views! !
-!AdvancedFindDialog class categoriesFor: #resource_Selector_view!public!resources-views! !
-!AdvancedFindDialog class categoriesFor: #showModeless:on:!instance creation!public! !
+!AdvancedFindDialog class categoriesForMethods!
+createOn:prompt:caption:!instance creation!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+resource_Default_view!public!resources-views! !
+resource_Directionless_view!public!resources-views! !
+resource_Selector_view!public!resources-views! !
+showModeless:on:!instance creation!public! !
+!
 

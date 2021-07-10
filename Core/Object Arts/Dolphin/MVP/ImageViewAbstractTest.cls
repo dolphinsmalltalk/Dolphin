@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PresenterTest subclass: #ImageViewAbstractTest
 	instanceVariableNames: ''
@@ -50,7 +50,9 @@ testInvalidateOnResize
 				lpRect: rect
 				bErase: false).
 	self assert: rect extent equals: extent * 2 - (50 @ 100)! !
-!ImageViewAbstractTest categoriesFor: #image!private!Running! !
-!ImageViewAbstractTest categoriesFor: #setUp!private!Running! !
-!ImageViewAbstractTest categoriesFor: #testInvalidateOnResize!public! !
+!ImageViewAbstractTest categoriesForMethods!
+image!private!Running! !
+setUp!private!Running! !
+testInvalidateOnResize!public! !
+!
 

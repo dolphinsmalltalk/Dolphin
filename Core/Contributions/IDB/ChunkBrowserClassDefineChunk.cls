@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassDefineChunk
 	instanceVariableNames: ''
@@ -47,12 +47,14 @@ restore
 
 sourceFromImage
 	^self identity1AsClass instanceClass definition! !
-!ChunkBrowserClassDefineChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserClassDefineChunk categoriesFor: #canShowDifferences!public!testing! !
-!ChunkBrowserClassDefineChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserClassDefineChunk categoriesFor: #isMatch!public!testing! !
-!ChunkBrowserClassDefineChunk categoriesFor: #restore!operations!public! !
-!ChunkBrowserClassDefineChunk categoriesFor: #sourceFromImage!accessing!public! !
+!ChunkBrowserClassDefineChunk categoriesForMethods!
+browseTarget!operations!public! !
+canShowDifferences!public!testing! !
+initialize:!initializing!public! !
+isMatch!public!testing! !
+restore!operations!public! !
+sourceFromImage!accessing!public! !
+!
 
 !ChunkBrowserClassDefineChunk class methodsFor!
 
@@ -72,6 +74,8 @@ isChunkClassFor: aString
 				and:
 					[#('instanceVariableNames: ' 'classVariableNames: ' 'poolDictionaries: ' 'classInstanceVariableNames: ')
 						allSatisfy: [:each | (aString indexOfSubCollection: each) ~= 0]]]! !
-!ChunkBrowserClassDefineChunk class categoriesFor: #chunkType!constants!public! !
-!ChunkBrowserClassDefineChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserClassDefineChunk class categoriesForMethods!
+chunkType!constants!public! !
+isChunkClassFor:!public!testing! !
+!
 

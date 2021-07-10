@@ -266,7 +266,9 @@ hdc
 	"Private - Unit test helper"
 
 	^hdc! !
-!Bitmap categoriesFor: #hdc!private!test accessing! !
+!Bitmap categoriesForMethods!
+hdc!private!test accessing! !
+!
 
 !Bitmap class methodsFor!
 
@@ -298,8 +300,10 @@ gdipCopyOfImageIndex: anIndex extent: extent backcolor: aColor
 		flags: 0.
 	bmp freeDC.
 	^bmp! !
-!Bitmap class categoriesFor: #gdipCopyOfIcon:extent:backcolor:!instance creation!public! !
-!Bitmap class categoriesFor: #gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
+!Bitmap class categoriesForMethods!
+gdipCopyOfIcon:extent:backcolor:!instance creation!public! !
+gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
+!
 
 "End of package definition"!
 

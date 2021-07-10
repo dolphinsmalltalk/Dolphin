@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #AXComponentWizard
 	instanceVariableNames: 'typeLibs types description guid globalName prefix packageName forcePackage cards libraryName libraryPath prefixClasses buffer typelibGlobal constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing'
@@ -401,35 +401,37 @@ updateTypesList: typelib
 		nextPutAll: typelib generatableModules;
 		nextPutAll: typelib namedUnions.
 	types list: (list contents asSortedCollection: [:a :b | a name <= b name])! !
-!AXComponentWizard categoriesFor: #apply!operations!private! !
-!AXComponentWizard categoriesFor: #browseIDL!commands!public! !
-!AXComponentWizard categoriesFor: #browseTypeClass!commands!public! !
-!AXComponentWizard categoriesFor: #browseTypesIDL!commands!public! !
-!AXComponentWizard categoriesFor: #cancel!commands!public! !
-!AXComponentWizard categoriesFor: #choosePackage!commands!public! !
-!AXComponentWizard categoriesFor: #createComponents!initializing!public! !
-!AXComponentWizard categoriesFor: #createSchematicWiring!initializing!public! !
-!AXComponentWizard categoriesFor: #displayInstalledTypeLib:!private!updating! !
-!AXComponentWizard categoriesFor: #finish!commands!public! !
-!AXComponentWizard categoriesFor: #generate!commands!public! !
-!AXComponentWizard categoriesFor: #inspectIt!commands!public! !
-!AXComponentWizard categoriesFor: #inspectItCommand!public! !
-!AXComponentWizard categoriesFor: #inspectLibrary!commands!public! !
-!AXComponentWizard categoriesFor: #inspectType!public! !
-!AXComponentWizard categoriesFor: #libraryListNextCard!commands!public! !
-!AXComponentWizard categoriesFor: #loadTypeLib!commands!public! !
-!AXComponentWizard categoriesFor: #onTypeLibrarySelected!event handling!private! !
-!AXComponentWizard categoriesFor: #onViewOpened!event handling!public! !
-!AXComponentWizard categoriesFor: #queryCommand:!commands!private! !
-!AXComponentWizard categoriesFor: #refresh!commands!public! !
-!AXComponentWizard categoriesFor: #selectInstalled!commands!public! !
-!AXComponentWizard categoriesFor: #selectUninstalled!commands!public! !
-!AXComponentWizard categoriesFor: #typeLib!accessing!public! !
-!AXComponentWizard categoriesFor: #typeLib:!accessing!public! !
-!AXComponentWizard categoriesFor: #typeLibHelp!commands!public! !
-!AXComponentWizard categoriesFor: #updateClassPrefix!private!updating! !
-!AXComponentWizard categoriesFor: #updateTypelibGlobal!private!updating! !
-!AXComponentWizard categoriesFor: #updateTypesList:!private!updating! !
+!AXComponentWizard categoriesForMethods!
+apply!operations!private! !
+browseIDL!commands!public! !
+browseTypeClass!commands!public! !
+browseTypesIDL!commands!public! !
+cancel!commands!public! !
+choosePackage!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+displayInstalledTypeLib:!private!updating! !
+finish!commands!public! !
+generate!commands!public! !
+inspectIt!commands!public! !
+inspectItCommand!public! !
+inspectLibrary!commands!public! !
+inspectType!public! !
+libraryListNextCard!commands!public! !
+loadTypeLib!commands!public! !
+onTypeLibrarySelected!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+refresh!commands!public! !
+selectInstalled!commands!public! !
+selectUninstalled!commands!public! !
+typeLib!accessing!public! !
+typeLib:!accessing!public! !
+typeLibHelp!commands!public! !
+updateClassPrefix!private!updating! !
+updateTypelibGlobal!private!updating! !
+updateTypesList:!private!updating! !
+!
 
 !AXComponentWizard class methodsFor!
 
@@ -506,11 +508,13 @@ on two lines if necessary.' 3344 1410 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 2
 
 toolsFolderHelpId
 	^10604! !
-!AXComponentWizard class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!AXComponentWizard class categoriesFor: #displayOn:!displaying!public! !
-!AXComponentWizard class categoriesFor: #icon!constants!public! !
-!AXComponentWizard class categoriesFor: #initialize!initializing!private! !
-!AXComponentWizard class categoriesFor: #registerServer!operations!public! !
-!AXComponentWizard class categoriesFor: #resource_Default_view!public!resources-views! !
-!AXComponentWizard class categoriesFor: #toolsFolderHelpId!public! !
+!AXComponentWizard class categoriesForMethods!
+defaultAdditionalAccelerators!constants!private! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+registerServer!operations!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #MethodHistoryTest
 	instanceVariableNames: ''
@@ -240,14 +240,16 @@ testMethodVersionStartStradlingReadBufferBoundary
 
 	self assert: methodVersions size equals: 8.
 	self assert: (methodVersions select: [ :each | each selector = #installedVersionHistoryTestMethod]) third getSource last equals: $3! !
-!MethodHistoryTest categoriesFor: #changes!constants!private! !
-!MethodHistoryTest categoriesFor: #chunkHeader!constants!private! !
-!MethodHistoryTest categoriesFor: #installedMethodChunkWith:!constants!private! !
-!MethodHistoryTest categoriesFor: #installedVersionHistoryTestMethod!constants!private! !
-!MethodHistoryTest categoriesFor: #scanForMethodVersions:inClass:!helpers!public! !
-!MethodHistoryTest categoriesFor: #testMethodHistoryBrowserVersionFoldingOnRead!public!unit tests! !
-!MethodHistoryTest categoriesFor: #testMethodHistoryBrowserVersionFoldingOnUpdate!public!unit tests! !
-!MethodHistoryTest categoriesFor: #testMethodVersionEndStradlingReadBufferBoundary!public!unit tests! !
-!MethodHistoryTest categoriesFor: #testMethodVersionOnReadBufferBoundary!public!unit tests! !
-!MethodHistoryTest categoriesFor: #testMethodVersionStartStradlingReadBufferBoundary!public!unit tests! !
+!MethodHistoryTest categoriesForMethods!
+changes!constants!private! !
+chunkHeader!constants!private! !
+installedMethodChunkWith:!constants!private! !
+installedVersionHistoryTestMethod!constants!private! !
+scanForMethodVersions:inClass:!helpers!public! !
+testMethodHistoryBrowserVersionFoldingOnRead!public!unit tests! !
+testMethodHistoryBrowserVersionFoldingOnUpdate!public!unit tests! !
+testMethodVersionEndStradlingReadBufferBoundary!public!unit tests! !
+testMethodVersionOnReadBufferBoundary!public!unit tests! !
+testMethodVersionStartStradlingReadBufferBoundary!public!unit tests! !
+!
 

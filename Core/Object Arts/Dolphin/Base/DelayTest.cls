@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DelayTest
 	instanceVariableNames: 'delay startTime'
@@ -116,16 +116,18 @@ testSimultaneousWaitAndSignalWithOtherLongerDelay
 testSimultaneousWaitAndSignalWithOtherShorterDelay
 	[(Delay forMilliseconds: 15) wait] forkAt: Processor userInterruptPriority.
 	self testSimultaneousWaitAndSignal! !
-!DelayTest categoriesFor: #expectDelay:for:!helpers!private! !
-!DelayTest categoriesFor: #setUp!private!running! !
-!DelayTest categoriesFor: #tearDown!private!running! !
-!DelayTest categoriesFor: #testBasicWait!public!unit tests! !
-!DelayTest categoriesFor: #testCancel!public!unit tests! !
-!DelayTest categoriesFor: #testCancelWithOtherShorterDelay!public!unit tests! !
-!DelayTest categoriesFor: #testSchedulingMultipleDelays!public!unit tests! !
-!DelayTest categoriesFor: #testSchedulingMultipleDelaysLongerFirst!public!unit tests! !
-!DelayTest categoriesFor: #testSignal!public!unit tests! !
-!DelayTest categoriesFor: #testSimultaneousWaitAndSignal!public!unit tests! !
-!DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherLongerDelay!public!unit tests! !
-!DelayTest categoriesFor: #testSimultaneousWaitAndSignalWithOtherShorterDelay!public!unit tests! !
+!DelayTest categoriesForMethods!
+expectDelay:for:!helpers!private! !
+setUp!private!running! !
+tearDown!private!running! !
+testBasicWait!public!unit tests! !
+testCancel!public!unit tests! !
+testCancelWithOtherShorterDelay!public!unit tests! !
+testSchedulingMultipleDelays!public!unit tests! !
+testSchedulingMultipleDelaysLongerFirst!public!unit tests! !
+testSignal!public!unit tests! !
+testSimultaneousWaitAndSignal!public!unit tests! !
+testSimultaneousWaitAndSignalWithOtherLongerDelay!public!unit tests! !
+testSimultaneousWaitAndSignalWithOtherShorterDelay!public!unit tests! !
+!
 

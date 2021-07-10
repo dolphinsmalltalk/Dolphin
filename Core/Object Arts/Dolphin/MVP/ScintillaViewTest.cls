@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
@@ -162,14 +162,16 @@ testStateRestoral
 	indicStyle2 := ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
 	self assert: indicStyle2 style equals: #hidden.
 ! !
-!ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
-!ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
-!ScintillaViewTest categoriesFor: #margins!private!unit tests! !
-!ScintillaViewTest categoriesFor: #testCallTipColors!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testImmersiveColorSetChange!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
-!ScintillaViewTest categoriesFor: #testStateRestoral!public!unit tests! !
+!ScintillaViewTest categoriesForMethods!
+classToTest!helpers!private! !
+initializePresenter!public!Running! !
+margins!private!unit tests! !
+testCallTipColors!public!unit tests! !
+testFindStringStartingAt!public!unit tests! !
+testImmersiveColorSetChange!public!unit tests! !
+testLanguages!public!unit tests! !
+testOverrideDefaultKeyBindings!public!unit tests! !
+testSetGetAnnotations!public!unit tests! !
+testStateRestoral!public!unit tests! !
+!
 

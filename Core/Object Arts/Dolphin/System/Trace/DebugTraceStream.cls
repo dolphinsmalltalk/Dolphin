@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Stream subclass: #DebugTraceStream
 	instanceVariableNames: 'buffer bufferProtect'
@@ -131,26 +131,28 @@ tab: tabCount
 
 	self next: tabCount put: $\t
 ! !
-!DebugTraceStream categoriesFor: #<<!accessing!public! !
-!DebugTraceStream categoriesFor: #atEnd!public!testing! !
-!DebugTraceStream categoriesFor: #basicPrint:!printing!private! !
-!DebugTraceStream categoriesFor: #close!operations!public! !
-!DebugTraceStream categoriesFor: #cr!adding!public! !
-!DebugTraceStream categoriesFor: #crtab!adding!public! !
-!DebugTraceStream categoriesFor: #crtab:!adding!public! !
-!DebugTraceStream categoriesFor: #display:!printing!public! !
-!DebugTraceStream categoriesFor: #flush!accessing!public! !
-!DebugTraceStream categoriesFor: #initialize!initializing!private! !
-!DebugTraceStream categoriesFor: #isEmpty!public! !
-!DebugTraceStream categoriesFor: #isWriteable!public!testing! !
-!DebugTraceStream categoriesFor: #next:put:!operations!public! !
-!DebugTraceStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!DebugTraceStream categoriesFor: #nextPut:!adding!public! !
-!DebugTraceStream categoriesFor: #nextPutAll:!adding!public! !
-!DebugTraceStream categoriesFor: #print:!printing!public! !
-!DebugTraceStream categoriesFor: #space!adding!public! !
-!DebugTraceStream categoriesFor: #tab!accessing!public! !
-!DebugTraceStream categoriesFor: #tab:!accessing!public! !
+!DebugTraceStream categoriesForMethods!
+<<!accessing!public! !
+atEnd!public!testing! !
+basicPrint:!printing!private! !
+close!operations!public! !
+cr!adding!public! !
+crtab!adding!public! !
+crtab:!adding!public! !
+display:!printing!public! !
+flush!accessing!public! !
+initialize!initializing!private! !
+isEmpty!public! !
+isWriteable!public!testing! !
+next:put:!operations!public! !
+next:putAll:startingAt:!accessing!public! !
+nextPut:!adding!public! !
+nextPutAll:!adding!public! !
+print:!printing!public! !
+space!adding!public! !
+tab!accessing!public! !
+tab:!accessing!public! !
+!
 
 DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 
@@ -162,6 +164,8 @@ current
 initialize
 	Current := self basicNew initialize.
 	Trace := Current! !
-!DebugTraceStream class categoriesFor: #current!instance creation!public! !
-!DebugTraceStream class categoriesFor: #initialize!initializing!public! !
+!DebugTraceStream class categoriesForMethods!
+current!instance creation!public! !
+initialize!initializing!public! !
+!
 

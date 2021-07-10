@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ ConformantStructureArrayPointerField comment: 'ConformantStructureArrayPointerFi
 type: aClass length: aSymbol
 	^StructureArrayPointerField type: aClass
 		arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ConformantStructureArrayPointerField class categoriesFor: #type:length:!instance creation!public! !
+!ConformantStructureArrayPointerField class categoriesForMethods!
+type:length:!instance creation!public! !
+!
 

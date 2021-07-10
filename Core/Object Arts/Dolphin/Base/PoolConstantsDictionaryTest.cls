@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDictionaryTest subclass: #PoolConstantsDictionaryTest
 	instanceVariableNames: ''
@@ -55,13 +55,15 @@ testRemoveKeyString
 	dictionary := self newDictionary.
 	self assert: (dictionary removeKey: 'key') identicalTo: 1.
 	self should: [dictionary removeKey: 'key'] raise: NotFoundError! !
-!PoolConstantsDictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!PoolConstantsDictionaryTest categoriesFor: #key3Value!private! !
-!PoolConstantsDictionaryTest categoriesFor: #makeKey:!helpers!private! !
-!PoolConstantsDictionaryTest categoriesFor: #testAddExisting!public!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testAtIfAbsentString!public!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testAtPutExisting!public!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testChangeConstant!public!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
-!PoolConstantsDictionaryTest categoriesFor: #testRemoveKeyString!public!unit tests! !
+!PoolConstantsDictionaryTest categoriesForMethods!
+collectionClass!helpers!private! !
+key3Value!private! !
+makeKey:!helpers!private! !
+testAddExisting!public!unit tests! !
+testAtIfAbsentString!public!unit tests! !
+testAtPutExisting!public!unit tests! !
+testChangeConstant!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testRemoveKeyString!public!unit tests! !
+!
 

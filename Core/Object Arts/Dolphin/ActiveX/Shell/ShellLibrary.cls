@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #ShellLibrary
 	instanceVariableNames: ''
@@ -189,22 +189,24 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 
 	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
 	^self invalidCall: _failureCode! !
-!ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #dragFinish:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #dragQueryPoint:lppt:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #findExecutable:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #findExecutable:directory:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #getSpecialFolderLocation:!**auto generated**!public! !
-!ShellLibrary categoriesFor: #isUserAnAdmin!**auto generated**!public! !
-!ShellLibrary categoriesFor: #SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellOpen:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellOpen:directory:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shellOpen:directory:parameters:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
+!ShellLibrary categoriesForMethods!
+dragAcceptFiles:fAccept:!**auto generated**!public! !
+dragFinish:!**auto generated**!public! !
+dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public! !
+dragQueryPoint:lppt:!**auto generated**!public! !
+extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public! !
+findExecutable:!public!win32 functions-shell library! !
+findExecutable:directory:!public!win32 functions-shell library! !
+findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
+getSpecialFolderLocation:!**auto generated**!public! !
+isUserAnAdmin!**auto generated**!public! !
+SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
+shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
+shellOpen:!public!win32 functions-shell library! !
+shellOpen:directory:!public!win32 functions-shell library! !
+shellOpen:directory:parameters:!public!win32 functions-shell library! !
+shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
+!
 
 !ShellLibrary class methodsFor!
 
@@ -212,5 +214,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'Shell32'! !
-!ShellLibrary class categoriesFor: #fileName!constants!public! !
+!ShellLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TabView subclass: #TabViewXP
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
@@ -394,28 +394,32 @@ wmPrintClient: message wParam: wParam lParam: lParam
 						wParam: 0
 						hdc: wParam
 						paintStruct: nil)]! !
-!TabViewXP categoriesFor: #calcClientRectangleFromRectangle:!geometry!private! !
-!TabViewXP categoriesFor: #createVerticalFont!event handling!private! !
-!TabViewXP categoriesFor: #imageTextGap!constants!private! !
-!TabViewXP categoriesFor: #onEraseRequired:!event handling!private! !
-!TabViewXP categoriesFor: #onPaintRequired:!event handling!private! !
-!TabViewXP categoriesFor: #onSelChanged:!event handling!private! !
-!TabViewXP categoriesFor: #onSelectionChanging:!event handling!private! !
-!TabViewXP categoriesFor: #onViewDestroyed!event handling!private! !
-!TabViewXP categoriesFor: #paintLabel:on:in:!painting!private! !
-!TabViewXP categoriesFor: #paintTabLabelsOn:!event handling!private! !
-!TabViewXP categoriesFor: #paintThemedBackgroundOn:in:!painting!private! !
-!TabViewXP categoriesFor: #paintThemedTabsOn:offset:!painting!private! !
-!TabViewXP categoriesFor: #paintVerticalLabel:on:in:!painting!private! !
-!TabViewXP categoriesFor: #paintVerticalTabLabelsOn:!event handling!private! !
-!TabViewXP categoriesFor: #selExtra!constants!private! !
-!TabViewXP categoriesFor: #supportsThemedVertical!constants!private! !
-!TabViewXP categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!TabViewXP categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!TabViewXP categoriesForMethods!
+calcClientRectangleFromRectangle:!geometry!private! !
+createVerticalFont!event handling!private! !
+imageTextGap!constants!private! !
+onEraseRequired:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onSelChanged:!event handling!private! !
+onSelectionChanging:!event handling!private! !
+onViewDestroyed!event handling!private! !
+paintLabel:on:in:!painting!private! !
+paintTabLabelsOn:!event handling!private! !
+paintThemedBackgroundOn:in:!painting!private! !
+paintThemedTabsOn:offset:!painting!private! !
+paintVerticalLabel:on:in:!painting!private! !
+paintVerticalTabLabelsOn:!event handling!private! !
+selExtra!constants!private! !
+supportsThemedVertical!constants!private! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmPrintClient:wParam:lParam:!event handling-win32!private! !
+!
 
 !TabViewXP class methodsFor!
 
 themePartName
 	^'TAB'! !
-!TabViewXP class categoriesFor: #themePartName!public! !
+!TabViewXP class categoriesForMethods!
+themePartName!public! !
+!
 

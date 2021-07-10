@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Brush subclass: #StockBrush
 	instanceVariableNames: 'id'
@@ -50,11 +50,13 @@ printOn: aPuttableStream
 		print: Brush;
 		space;
 		display: self name! !
-!StockBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!StockBrush categoriesFor: #id:!private!realizing/unrealizing! !
-!StockBrush categoriesFor: #name!accessing!public! !
-!StockBrush categoriesFor: #ownedHandle:!accessing!private! !
-!StockBrush categoriesFor: #printOn:!printing!public! !
+!StockBrush categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+id:!private!realizing/unrealizing! !
+name!accessing!public! !
+ownedHandle:!accessing!private! !
+printOn:!printing!public! !
+!
 
 !StockBrush class methodsFor!
 
@@ -69,6 +71,8 @@ new
 	"StockBrushes should only be instantiated with #fromID:"
 
 	^self shouldNotImplement! !
-!StockBrush class categoriesFor: #fromId:!instance creation!public! !
-!StockBrush class categoriesFor: #new!instance creation!public! !
+!StockBrush class categoriesForMethods!
+fromId:!instance creation!public! !
+new!instance creation!public! !
+!
 

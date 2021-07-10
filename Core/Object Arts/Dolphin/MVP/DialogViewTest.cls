@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DialogViewTest
 	instanceVariableNames: 'owner shell2 fakeUser32 cursorPos'
@@ -229,19 +229,21 @@ testRemainsOnScreen
 
 workAreaNearest: aPoint
 	^(DisplayMonitor nearestPoint: aPoint) workArea! !
-!DialogViewTest categoriesFor: #createShell:text:!helpers!private! !
-!DialogViewTest categoriesFor: #createSubjectDialog:!helpers!private! !
-!DialogViewTest categoriesFor: #createTestShells:!helpers!private! !
-!DialogViewTest categoriesFor: #dialogExtent!constants!private! !
-!DialogViewTest categoriesFor: #evaluateInModalDialog:owner:centered:!helpers!private! !
-!DialogViewTest categoriesFor: #getSecondaryMonitorIfAvailable!helpers!private! !
-!DialogViewTest categoriesFor: #setUpFakeUserLibrary!helpers!private! !
-!DialogViewTest categoriesFor: #tearDown!public!running! !
-!DialogViewTest categoriesFor: #testCenteringInOwner!public!unit tests! !
-!DialogViewTest categoriesFor: #testCenteringInOwnerModeless!public!unit tests! !
-!DialogViewTest categoriesFor: #testInplaceNotRepositioned!public!unit tests! !
-!DialogViewTest categoriesFor: #testNearOwnerModal!public!unit tests! !
-!DialogViewTest categoriesFor: #testNearOwnerModeless!public!unit tests! !
-!DialogViewTest categoriesFor: #testRemainsOnScreen!public!unit tests! !
-!DialogViewTest categoriesFor: #workAreaNearest:!helpers!private! !
+!DialogViewTest categoriesForMethods!
+createShell:text:!helpers!private! !
+createSubjectDialog:!helpers!private! !
+createTestShells:!helpers!private! !
+dialogExtent!constants!private! !
+evaluateInModalDialog:owner:centered:!helpers!private! !
+getSecondaryMonitorIfAvailable!helpers!private! !
+setUpFakeUserLibrary!helpers!private! !
+tearDown!public!running! !
+testCenteringInOwner!public!unit tests! !
+testCenteringInOwnerModeless!public!unit tests! !
+testInplaceNotRepositioned!public!unit tests! !
+testNearOwnerModal!public!unit tests! !
+testNearOwnerModeless!public!unit tests! !
+testRemainsOnScreen!public!unit tests! !
+workAreaNearest:!helpers!private! !
+!
 

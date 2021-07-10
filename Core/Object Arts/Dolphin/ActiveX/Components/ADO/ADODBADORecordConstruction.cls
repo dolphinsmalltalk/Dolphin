@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ADODBADORecordConstruction
 	instanceVariableNames: ''
@@ -82,12 +82,14 @@ row: ppRow
 	"Set the 'Row' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Row: ppRow! !
-!ADODBADORecordConstruction categoriesFor: #get_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
-!ADODBADORecordConstruction categoriesFor: #parentRow:!**auto generated**!properties!public! !
-!ADODBADORecordConstruction categoriesFor: #put_ParentRow:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
-!ADODBADORecordConstruction categoriesFor: #put_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
-!ADODBADORecordConstruction categoriesFor: #row!**auto generated**!properties!public! !
-!ADODBADORecordConstruction categoriesFor: #row:!**auto generated**!properties!public! !
+!ADODBADORecordConstruction categoriesForMethods!
+get_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
+parentRow:!**auto generated**!properties!public! !
+put_ParentRow:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
+put_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
+row!**auto generated**!properties!public! !
+row:!**auto generated**!properties!public! !
+!
 
 !ADODBADORecordConstruction class methodsFor!
 
@@ -103,5 +105,7 @@ defineFunctions
 		defineFunction: #put_ParentRow:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODBADORecordConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBADORecordConstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

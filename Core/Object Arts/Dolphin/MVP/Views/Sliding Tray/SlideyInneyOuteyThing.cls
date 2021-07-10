@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ContainerView subclass: #SlideyInneyOuteyThing
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
@@ -520,68 +520,70 @@ wmPrint: message wParam: wParam lParam: lParam
 		lParam: lParam.
 	canvas windowOrigin: prev.
 	^result! !
-!SlideyInneyOuteyThing categoriesFor: #actualPreferredExtent:!geometry!private! !
-!SlideyInneyOuteyThing categoriesFor: #addSubView:!hierarchy!public!sub views! !
-!SlideyInneyOuteyThing categoriesFor: #animateNegativeFlag!constants!private! !
-!SlideyInneyOuteyThing categoriesFor: #animatePositiveFlag!constants!private! !
-!SlideyInneyOuteyThing categoriesFor: #animateTray:!helpers!private! !
-!SlideyInneyOuteyThing categoriesFor: #animation!accessing!public! !
-!SlideyInneyOuteyThing categoriesFor: #animation:!accessing!public! !
-!SlideyInneyOuteyThing categoriesFor: #animationDuration!constants!public! !
-!SlideyInneyOuteyThing categoriesFor: #autoHideTimerInterval!constants!public! !
-!SlideyInneyOuteyThing categoriesFor: #backcolor:!accessing!public! !
-!SlideyInneyOuteyThing categoriesFor: #calculateExtent:!geometry!private! !
-!SlideyInneyOuteyThing categoriesFor: #canAcceptSubViews!hierarchy!public!sub views! !
-!SlideyInneyOuteyThing categoriesFor: #cardLayout!accessing!private! !
-!SlideyInneyOuteyThing categoriesFor: #cards!public!updating! !
-!SlideyInneyOuteyThing categoriesFor: #createTabs!helpers!private! !
-!SlideyInneyOuteyThing categoriesFor: #createTray!helpers!private! !
-!SlideyInneyOuteyThing categoriesFor: #defaultBackcolor!colors!constants!private! !
-!SlideyInneyOuteyThing categoriesFor: #defaultLayoutManager!initializing!private! !
-!SlideyInneyOuteyThing categoriesFor: #hasFixedHeight!public! !
-!SlideyInneyOuteyThing categoriesFor: #hasFixedWidth!public! !
-!SlideyInneyOuteyThing categoriesFor: #hideTray!commands!public! !
-!SlideyInneyOuteyThing categoriesFor: #implicitInsets:!accessing!private! !
-!SlideyInneyOuteyThing categoriesFor: #initialize!initializing!private! !
-!SlideyInneyOuteyThing categoriesFor: #isCardChangeAnimated!public!testing! !
-!SlideyInneyOuteyThing categoriesFor: #isCardChangeAnimated:!accessing!public! !
-!SlideyInneyOuteyThing categoriesFor: #isHiddenOnUnpin!public!testing! !
-!SlideyInneyOuteyThing categoriesFor: #isHiddenOnUnpin:!accessing!public! !
-!SlideyInneyOuteyThing categoriesFor: #isInverted!accessing-styles!public! !
-!SlideyInneyOuteyThing categoriesFor: #isInverted:!accessing-styles!public! !
-!SlideyInneyOuteyThing categoriesFor: #isPinned!public!testing! !
-!SlideyInneyOuteyThing categoriesFor: #isPinned:!commands!public! !
-!SlideyInneyOuteyThing categoriesFor: #isTrayResizable!public!testing! !
-!SlideyInneyOuteyThing categoriesFor: #isTrayResizable:!public!testing! !
-!SlideyInneyOuteyThing categoriesFor: #isTrayVisible!public!testing! !
-!SlideyInneyOuteyThing categoriesFor: #isUnpinAnimated!public!testing! !
-!SlideyInneyOuteyThing categoriesFor: #isUnpinAnimated:!accessing!public! !
-!SlideyInneyOuteyThing categoriesFor: #isVertical!accessing!public! !
-!SlideyInneyOuteyThing categoriesFor: #isVertical:!accessing-styles!public! !
-!SlideyInneyOuteyThing categoriesFor: #killAutoHideTimer!private! !
-!SlideyInneyOuteyThing categoriesFor: #layout:!geometry!private! !
-!SlideyInneyOuteyThing categoriesFor: #layoutManager:!development!geometry!private! !
-!SlideyInneyOuteyThing categoriesFor: #newTabs!helpers!private! !
-!SlideyInneyOuteyThing categoriesFor: #observeTabs!event handling!private! !
-!SlideyInneyOuteyThing categoriesFor: #onMouseHovering:!constants!private! !
-!SlideyInneyOuteyThing categoriesFor: #onMouseMoved:!event handling!private! !
-!SlideyInneyOuteyThing categoriesFor: #onTabChanged!event handling!private! !
-!SlideyInneyOuteyThing categoriesFor: #onTabChanging:!private! !
-!SlideyInneyOuteyThing categoriesFor: #onTabClicked!event handling!private! !
-!SlideyInneyOuteyThing categoriesFor: #onTimerTick:!event handling!private! !
-!SlideyInneyOuteyThing categoriesFor: #onViewCreated!event handling!private! !
-!SlideyInneyOuteyThing categoriesFor: #onViewDestroyed!event handling!private! !
-!SlideyInneyOuteyThing categoriesFor: #pin!commands!public! !
-!SlideyInneyOuteyThing categoriesFor: #positionTray:!geometry!private! !
-!SlideyInneyOuteyThing categoriesFor: #showShell!operations!private! !
-!SlideyInneyOuteyThing categoriesFor: #showTray!commands!public! !
-!SlideyInneyOuteyThing categoriesFor: #startAutoHideTimer!private! !
-!SlideyInneyOuteyThing categoriesFor: #tabs!public! !
-!SlideyInneyOuteyThing categoriesFor: #tray!public! !
-!SlideyInneyOuteyThing categoriesFor: #trayAnimationType!constants!private! !
-!SlideyInneyOuteyThing categoriesFor: #unpin!commands!public! !
-!SlideyInneyOuteyThing categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!SlideyInneyOuteyThing categoriesFor: #wmPrint:wParam:lParam:!private! !
+!SlideyInneyOuteyThing categoriesForMethods!
+actualPreferredExtent:!geometry!private! !
+addSubView:!hierarchy!public!sub views! !
+animateNegativeFlag!constants!private! !
+animatePositiveFlag!constants!private! !
+animateTray:!helpers!private! !
+animation!accessing!public! !
+animation:!accessing!public! !
+animationDuration!constants!public! !
+autoHideTimerInterval!constants!public! !
+backcolor:!accessing!public! !
+calculateExtent:!geometry!private! !
+canAcceptSubViews!hierarchy!public!sub views! !
+cardLayout!accessing!private! !
+cards!public!updating! !
+createTabs!helpers!private! !
+createTray!helpers!private! !
+defaultBackcolor!colors!constants!private! !
+defaultLayoutManager!initializing!private! !
+hasFixedHeight!public! !
+hasFixedWidth!public! !
+hideTray!commands!public! !
+implicitInsets:!accessing!private! !
+initialize!initializing!private! !
+isCardChangeAnimated!public!testing! !
+isCardChangeAnimated:!accessing!public! !
+isHiddenOnUnpin!public!testing! !
+isHiddenOnUnpin:!accessing!public! !
+isInverted!accessing-styles!public! !
+isInverted:!accessing-styles!public! !
+isPinned!public!testing! !
+isPinned:!commands!public! !
+isTrayResizable!public!testing! !
+isTrayResizable:!public!testing! !
+isTrayVisible!public!testing! !
+isUnpinAnimated!public!testing! !
+isUnpinAnimated:!accessing!public! !
+isVertical!accessing!public! !
+isVertical:!accessing-styles!public! !
+killAutoHideTimer!private! !
+layout:!geometry!private! !
+layoutManager:!development!geometry!private! !
+newTabs!helpers!private! !
+observeTabs!event handling!private! !
+onMouseHovering:!constants!private! !
+onMouseMoved:!event handling!private! !
+onTabChanged!event handling!private! !
+onTabChanging:!private! !
+onTabClicked!event handling!private! !
+onTimerTick:!event handling!private! !
+onViewCreated!event handling!private! !
+onViewDestroyed!event handling!private! !
+pin!commands!public! !
+positionTray:!geometry!private! !
+showShell!operations!private! !
+showTray!commands!public! !
+startAutoHideTimer!private! !
+tabs!public! !
+tray!public! !
+trayAnimationType!constants!private! !
+unpin!commands!public! !
+validateSubViewLayouts:!geometry!private! !
+wmPrint:wParam:lParam:!private! !
+!
 
 !SlideyInneyOuteyThing class methodsFor!
 
@@ -617,7 +619,9 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SlideyInneyOuteyThing) 34 23 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 416 34 2 8 1140916864 1 592 590662 2 ##(Smalltalk.ListModel) 138 144 560 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 496 nil 1 nil nil nil 592 nil 8 1921705120 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 898 701 501 592 850 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 898 193 193 nil 27 410 ##(Smalltalk.SlidingCardTray) 34 22 nil 416 34 2 8 1140850688 131073 1056 nil 496 nil 5 nil nil nil 1056 528 170 192 560 nil 592 nil 416 898 33 33 1050182 1 ##(Smalltalk.ButtonInteractor) 1056 nil 1 590342 ##(Smalltalk.Rectangle) 898 649 3 898 681 35 nil 1180998 4 ##(Smalltalk.CommandDescription) #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 786 138 144 34 1 850 #createAt:extent: 34 2 898 9 9 898 685 485 1056 978 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 4 0 0 0 90 1 0 0 246 0 0 0] 8 #() 1040 nil 27 898 201 201 401 nil 31 nil nil 786 138 144 34 1 850 #createAt:extent: 34 2 898 3839 21 898 701 501 416 978 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 34 2 1056 592 1040 nil 27 )! !
-!SlideyInneyOuteyThing class categoriesFor: #icon!constants!public! !
-!SlideyInneyOuteyThing class categoriesFor: #initialize!class initialization!development!private! !
-!SlideyInneyOuteyThing class categoriesFor: #resource_Default_view!public!resources-views! !
+!SlideyInneyOuteyThing class categoriesForMethods!
+icon!constants!public! !
+initialize!class initialization!development!private! !
+resource_Default_view!public!resources-views! !
+!
 

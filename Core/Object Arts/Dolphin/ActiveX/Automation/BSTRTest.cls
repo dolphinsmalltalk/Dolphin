@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #BSTRTest
 	instanceVariableNames: ''
@@ -34,7 +34,9 @@ testAsUtf8String
 			ptr := LPBSTR fromAddress: subject basicYourAddress.
 			self assert: ptr asUtf8String isKindOf: Utf8String.
 			self assert: ptr asUtf8String equals: each]! !
-!BSTRTest categoriesFor: #stringConversionCases!constants!private! !
-!BSTRTest categoriesFor: #testAsString!public!unit tests! !
-!BSTRTest categoriesFor: #testAsUtf8String!public!unit tests! !
+!BSTRTest categoriesForMethods!
+stringConversionCases!constants!private! !
+testAsString!public!unit tests! !
+testAsUtf8String!public!unit tests! !
+!
 

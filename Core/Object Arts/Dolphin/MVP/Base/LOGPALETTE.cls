@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LOGPALETTE
 	instanceVariableNames: ''
@@ -55,11 +55,13 @@ palVersion: anInteger
 	"Set the receiver's 'palVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_palVersion put: anInteger! !
-!LOGPALETTE categoriesFor: #palNumEntries!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palNumEntries:!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palPalEntry!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palVersion!**compiled accessors**!public! !
-!LOGPALETTE categoriesFor: #palVersion:!**compiled accessors**!public! !
+!LOGPALETTE categoriesForMethods!
+palNumEntries!**compiled accessors**!public! !
+palNumEntries:!**compiled accessors**!public! !
+palPalEntry!**compiled accessors**!public! !
+palVersion!**compiled accessors**!public! !
+palVersion:!**compiled accessors**!public! !
+!
 
 !LOGPALETTE class methodsFor!
 
@@ -98,7 +100,9 @@ new
 	^(super new)
 		palNumEntries: 256;
 		yourself! !
-!LOGPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!LOGPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!LOGPALETTE class categoriesFor: #new!instance creation!public! !
+!LOGPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+new!instance creation!public! !
+!
 

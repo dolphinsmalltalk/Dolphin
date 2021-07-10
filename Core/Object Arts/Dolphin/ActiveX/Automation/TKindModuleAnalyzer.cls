@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''
@@ -53,11 +53,13 @@ suggestedGlobalName
 	generated to represent the receiver's type."
 
 	^self name, 'Library'! !
-!TKindModuleAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindModuleAnalyzer categoriesFor: #dllNameIfNone:!accessing!public! !
-!TKindModuleAnalyzer categoriesFor: #getDllEntry:!accessing!private! !
-!TKindModuleAnalyzer categoriesFor: #includeIDLInClassComment!constants!private! !
-!TKindModuleAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
+!TKindModuleAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+dllNameIfNone:!accessing!public! !
+getDllEntry:!accessing!private! !
+includeIDLInClassComment!constants!private! !
+suggestedGlobalName!accessing!private! !
+!
 
 !TKindModuleAnalyzer class methodsFor!
 
@@ -65,5 +67,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_MODULE! !
-!TKindModuleAnalyzer class categoriesFor: #typekind!constants!private! !
+!TKindModuleAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

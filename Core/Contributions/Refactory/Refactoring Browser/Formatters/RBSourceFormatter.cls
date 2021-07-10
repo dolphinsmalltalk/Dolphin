@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StParseNodeVisitor subclass: #RBSourceFormatter
 	instanceVariableNames: 'codeStream lineStart indent'
@@ -132,29 +132,31 @@ visitPrimitiveNode: anStPrimitiveNode
 
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
-!RBSourceFormatter categoriesFor: #bracketWith:around:!helpers!private! !
-!RBSourceFormatter categoriesFor: #currentLineLength!accessing!private! !
-!RBSourceFormatter categoriesFor: #format:!operations!public! !
-!RBSourceFormatter categoriesFor: #formatArray:!private! !
-!RBSourceFormatter categoriesFor: #formatExternalCallName:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #formatTagFor:!formatting!private! !
-!RBSourceFormatter categoriesFor: #indent:!formatting!private! !
-!RBSourceFormatter categoriesFor: #indent:around:!formatting!private! !
-!RBSourceFormatter categoriesFor: #initialize!initializing!private! !
-!RBSourceFormatter categoriesFor: #isLineTooLong:!helpers!private! !
-!RBSourceFormatter categoriesFor: #maxLineLength!constants!private! !
-!RBSourceFormatter categoriesFor: #newLine!formatting!private! !
-!RBSourceFormatter categoriesFor: #space!formatting!private! !
-!RBSourceFormatter categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitArrayNode:!public!visiting! !
-!RBSourceFormatter categoriesFor: #visitExternalArgTypeNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
-!RBSourceFormatter categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!RBSourceFormatter categoriesForMethods!
+bracketWith:around:!helpers!private! !
+currentLineLength!accessing!private! !
+format:!operations!public! !
+formatArray:!private! !
+formatExternalCallName:!formatting!private! !
+formatMethodBodyFor:!formatting!private! !
+formatMethodPatternFor:!formatting!private! !
+formatStatementCommentsFor:!formatting!private! !
+formatTagFor:!formatting!private! !
+indent:!formatting!private! !
+indent:around:!formatting!private! !
+initialize!initializing!private! !
+isLineTooLong:!helpers!private! !
+maxLineLength!constants!private! !
+newLine!formatting!private! !
+space!formatting!private! !
+visitAnnotationNode:!public!visitor/double dispatching! !
+visitArrayNode:!public!visiting! !
+visitExternalArgTypeNode:!public!visitor/double dispatching! !
+visitExternalCallNode:!public!visitor/double dispatching! !
+visitMethodNode:!public!visitor/double dispatching! !
+visitPrimitiveNode:!public!visitor/double dispatching! !
+visitVariableNode:!public!visitor/double dispatching! !
+!
 
 !RBSourceFormatter class methodsFor!
 
@@ -189,11 +191,13 @@ periodsAtEndOfMethod
 
 periodsAtEndOfMethod: aBoolean 
 	PeriodsAtEndOfMethod := aBoolean! !
-!RBSourceFormatter class categoriesFor: #format:!public!public interface! !
-!RBSourceFormatter class categoriesFor: #format:withIndents:!public!public interface! !
-!RBSourceFormatter class categoriesFor: #initialize!initializing!public! !
-!RBSourceFormatter class categoriesFor: #maxLineLength!public!settings! !
-!RBSourceFormatter class categoriesFor: #maxLineLength:!public!settings! !
-!RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod!public! !
-!RBSourceFormatter class categoriesFor: #periodsAtEndOfMethod:!public! !
+!RBSourceFormatter class categoriesForMethods!
+format:!public!public interface! !
+format:withIndents:!public!public interface! !
+initialize!initializing!public! !
+maxLineLength!public!settings! !
+maxLineLength:!public!settings! !
+periodsAtEndOfMethod!public! !
+periodsAtEndOfMethod:!public! !
+!
 

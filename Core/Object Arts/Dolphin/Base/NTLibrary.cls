@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PermanentLibrary subclass: #NTLibrary
 	instanceVariableNames: ''
@@ -41,10 +41,12 @@ wineGetVersion
 
 	<stdcall: lpstr wine_get_version>
 	^nil	"instead of reporting an error"! !
-!NTLibrary categoriesFor: #ntQueryTimerResolution:maximum:actual:!public! !
-!NTLibrary categoriesFor: #rtlNtStatusToDosError:!public!win32 functions-error handling! !
-!NTLibrary categoriesFor: #setTimerResolution:set:actualResolution:!accessing!public! !
-!NTLibrary categoriesFor: #wineGetVersion!public! !
+!NTLibrary categoriesForMethods!
+ntQueryTimerResolution:maximum:actual:!public! !
+rtlNtStatusToDosError:!public!win32 functions-error handling! !
+setTimerResolution:set:actualResolution:!accessing!public! !
+wineGetVersion!public! !
+!
 
 !NTLibrary class methodsFor!
 
@@ -66,7 +68,9 @@ openDefault
 	lib := super openDefault.
 	IsWine := lib wineGetVersion notNil.
 	^lib! !
-!NTLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!NTLibrary class categoriesFor: #isWine!public!testing! !
-!NTLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
+!NTLibrary class categoriesForMethods!
+fileName!**auto generated**!constants!public! !
+isWine!public!testing! !
+openDefault!instance creation!private!realizing/unrealizing! !
+!
 

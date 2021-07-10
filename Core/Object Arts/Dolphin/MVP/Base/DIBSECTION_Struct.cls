@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #DIBSECTION
 	instanceVariableNames: ''
@@ -83,15 +83,17 @@ dsOffset: anInteger
 	"Set the receiver's 'dsOffset' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dsOffset put: anInteger! !
-!DIBSECTION categoriesFor: #dsBitfields!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBm!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBm:!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBmih!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsBmih:!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dshSection!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dshSection:!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsOffset!**compiled accessors**!public! !
-!DIBSECTION categoriesFor: #dsOffset:!**compiled accessors**!public! !
+!DIBSECTION categoriesForMethods!
+dsBitfields!**compiled accessors**!public! !
+dsBm!**compiled accessors**!public! !
+dsBm:!**compiled accessors**!public! !
+dsBmih!**compiled accessors**!public! !
+dsBmih:!**compiled accessors**!public! !
+dshSection!**compiled accessors**!public! !
+dshSection:!**compiled accessors**!public! !
+dsOffset!**compiled accessors**!public! !
+dsOffset:!**compiled accessors**!public! !
+!
 
 !DIBSECTION class methodsFor!
 
@@ -123,7 +125,9 @@ fileOutStem
 
 getFieldNames
 	^#(#dsBm #dsBmih #dsBitfields #dshSection #dsOffset)! !
-!DIBSECTION class categoriesFor: #defineFields!public!template definition! !
-!DIBSECTION class categoriesFor: #fileOutStem!private!source filing! !
-!DIBSECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!DIBSECTION class categoriesForMethods!
+defineFields!public!template definition! !
+fileOutStem!private!source filing! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

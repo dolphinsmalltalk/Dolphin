@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UtfEncodedStringTest subclass: #Utf8StringTest
 	instanceVariableNames: ''
@@ -102,16 +102,18 @@ testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self assert: subject keys equals: #(1 2 4 7 11 12)! !
-!Utf8StringTest categoriesFor: #assimilateString:!helpers!private! !
-!Utf8StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf8StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
-!Utf8StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
-!Utf8StringTest categoriesFor: #decodeTestCases!constants!private! !
-!Utf8StringTest categoriesFor: #testAssociations!public!unit tests! !
-!Utf8StringTest categoriesFor: #testCopyWith!public!unit tests! !
-!Utf8StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!Utf8StringTest categoriesFor: #testDecodeNextFrom5and6Byte!public! !
-!Utf8StringTest categoriesFor: #testDecodeNextFromOverlong!public! !
-!Utf8StringTest categoriesFor: #testEncodedSizeOf!public! !
-!Utf8StringTest categoriesFor: #testKeys!public!unit tests! !
+!Utf8StringTest categoriesForMethods!
+assimilateString:!helpers!private! !
+collectionClass!helpers!private! !
+decodeIncompleteContinuations!constants!private! !
+decodeInvalidContinuations!constants!private! !
+decodeTestCases!constants!private! !
+testAssociations!public!unit tests! !
+testCopyWith!public!unit tests! !
+testCopyWithAtIndex!public!unit tests! !
+testDecodeNextFrom5and6Byte!public! !
+testDecodeNextFromOverlong!public! !
+testEncodedSizeOf!public! !
+testKeys!public!unit tests! !
+!
 

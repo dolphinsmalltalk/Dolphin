@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedGrowableCollection variableSubclass: #OrderedCollection
 	instanceVariableNames: 'firstIndex lastIndex'
@@ -525,52 +525,54 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 
 	startInteger to: stopInteger
 		do: [:i | aDyadicValuable value: i value: (self basicAt: i + firstIndex - 1)]! !
-!OrderedCollection categoriesFor: #add:afterIndex:!adding!public! !
-!OrderedCollection categoriesFor: #addAllFirst:!adding!public! !
-!OrderedCollection categoriesFor: #addAllLast:!adding!public! !
-!OrderedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
-!OrderedCollection categoriesFor: #addFirst:!adding!public! !
-!OrderedCollection categoriesFor: #addLast:!adding!public! !
-!OrderedCollection categoriesFor: #allSatisfy:!enumerating!public! !
-!OrderedCollection categoriesFor: #anySatisfy:!enumerating!public! !
-!OrderedCollection categoriesFor: #asOrderedCollection!converting!public! !
-!OrderedCollection categoriesFor: #at:!accessing!public! !
-!OrderedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
-!OrderedCollection categoriesFor: #at:put:!accessing!public! !
-!OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
-!OrderedCollection categoriesFor: #copyWith:!copying!public! !
-!OrderedCollection categoriesFor: #copyWithout:!copying!public! !
-!OrderedCollection categoriesFor: #copyWithoutIndex:!copying!public! !
-!OrderedCollection categoriesFor: #detect:ifNone:!public!searching! !
-!OrderedCollection categoriesFor: #do:!enumerating!public! !
-!OrderedCollection categoriesFor: #findFirst:!public!searching! !
-!OrderedCollection categoriesFor: #first!accessing!public! !
-!OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
-!OrderedCollection categoriesFor: #includes:!public!searching! !
-!OrderedCollection categoriesFor: #initialize!initializing!public! !
-!OrderedCollection categoriesFor: #inject:into:!enumerating!public! !
-!OrderedCollection categoriesFor: #insert:before:!adding!private! !
-!OrderedCollection categoriesFor: #isEmpty!public!testing! !
-!OrderedCollection categoriesFor: #last!accessing!public! !
-!OrderedCollection categoriesFor: #lookup:!accessing!public! !
-!OrderedCollection categoriesFor: #makeRoomAtEndFor:!adding!private! !
-!OrderedCollection categoriesFor: #makeRoomAtFirstFor:!adding!private! !
-!OrderedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!OrderedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!OrderedCollection categoriesFor: #removeAll!public!removing! !
-!OrderedCollection categoriesFor: #removeAllSuchThat:!accessing!public! !
-!OrderedCollection categoriesFor: #removeAtIndex:!public!removing! !
-!OrderedCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!OrderedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!OrderedCollection categoriesFor: #resize:!mutating!private! !
-!OrderedCollection categoriesFor: #reversedFrom:to:!copying!public! !
-!OrderedCollection categoriesFor: #reverseDo:!enumerating!public! !
-!OrderedCollection categoriesFor: #select:!enumerating!public! !
-!OrderedCollection categoriesFor: #setSize:!accessing!public! !
-!OrderedCollection categoriesFor: #size!accessing!public! !
-!OrderedCollection categoriesFor: #sortUsing:!public!sorting! !
-!OrderedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
-!OrderedCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!OrderedCollection categoriesForMethods!
+add:afterIndex:!adding!public! !
+addAllFirst:!adding!public! !
+addAllLast:!adding!public! !
+addAnsweringIndex:!adding!public! !
+addFirst:!adding!public! !
+addLast:!adding!public! !
+allSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
+asOrderedCollection!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
+copyWith:!copying!public! !
+copyWithout:!copying!public! !
+copyWithoutIndex:!copying!public! !
+detect:ifNone:!public!searching! !
+do:!enumerating!public! !
+findFirst:!public!searching! !
+first!accessing!public! !
+firstIndex:lastIndex:!accessing!private! !
+includes:!public!searching! !
+initialize!initializing!public! !
+inject:into:!enumerating!public! !
+insert:before:!adding!private! !
+isEmpty!public!testing! !
+last!accessing!public! !
+lookup:!accessing!public! !
+makeRoomAtEndFor:!adding!private! !
+makeRoomAtFirstFor:!adding!private! !
+nextIdentityIndexOf:from:to:!public!searching! !
+nextIndexOf:from:to:!public!searching! !
+removeAll!public!removing! !
+removeAllSuchThat:!accessing!public! !
+removeAtIndex:!public!removing! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+resize:!mutating!private! !
+reversedFrom:to:!copying!public! !
+reverseDo:!enumerating!public! !
+select:!enumerating!public! !
+setSize:!accessing!public! !
+size!accessing!public! !
+sortUsing:!public!sorting! !
+stbSaveOn:!binary filing!public! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!
 
 !OrderedCollection class methodsFor!
 
@@ -599,7 +601,9 @@ ofSize: count
 	^(self basicNew: count)
 		firstIndex: 1
 		lastIndex: count! !
-!OrderedCollection class categoriesFor: #new!instance creation!public! !
-!OrderedCollection class categoriesFor: #new:!instance creation!public! !
-!OrderedCollection class categoriesFor: #ofSize:!instance creation!private! !
+!OrderedCollection class categoriesForMethods!
+new!instance creation!public! !
+new:!instance creation!public! !
+ofSize:!instance creation!private! !
+!
 

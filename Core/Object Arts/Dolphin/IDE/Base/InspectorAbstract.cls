@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #InspectorAbstract
 	instanceVariableNames: ''
@@ -54,15 +54,17 @@ object: anObject
 
 systemModel
 	^SmalltalkSystem current! !
-!InspectorAbstract categoriesFor: #browseClass!commands!private! !
-!InspectorAbstract categoriesFor: #browseHierarchy!commands!private! !
-!InspectorAbstract categoriesFor: #browseIt!commands!public! !
-!InspectorAbstract categoriesFor: #browseObject!accessing!private! !
-!InspectorAbstract categoriesFor: #browseSystem!commands!public! !
-!InspectorAbstract categoriesFor: #inspecteeSelection!accessing!private! !
-!InspectorAbstract categoriesFor: #inspectIt!commands!public! !
-!InspectorAbstract categoriesFor: #object:!accessing!public! !
-!InspectorAbstract categoriesFor: #systemModel!accessing!private! !
+!InspectorAbstract categoriesForMethods!
+browseClass!commands!private! !
+browseHierarchy!commands!private! !
+browseIt!commands!public! !
+browseObject!accessing!private! !
+browseSystem!commands!public! !
+inspecteeSelection!accessing!private! !
+inspectIt!commands!public! !
+object:!accessing!public! !
+systemModel!accessing!private! !
+!
 
 !InspectorAbstract class methodsFor!
 
@@ -70,5 +72,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^BasicInspector icon! !
-!InspectorAbstract class categoriesFor: #icon!constants!public! !
+!InspectorAbstract class categoriesForMethods!
+icon!constants!public! !
+!
 

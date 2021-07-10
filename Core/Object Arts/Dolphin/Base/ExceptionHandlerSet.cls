@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExceptionHandlerAbstract subclass: #ExceptionHandlerSet
 	instanceVariableNames: 'handlers'
@@ -21,12 +21,16 @@ actionFor: exception
 
 setHandlers: aSequenceableCollection
 	handlers := aSequenceableCollection! !
-!ExceptionHandlerSet categoriesFor: #actionFor:!debugger-step over!helpers!private! !
-!ExceptionHandlerSet categoriesFor: #setHandlers:!initializing!private! !
+!ExceptionHandlerSet categoriesForMethods!
+actionFor:!debugger-step over!helpers!private! !
+setHandlers:!initializing!private! !
+!
 
 !ExceptionHandlerSet class methodsFor!
 
 handlers: aSequencedReadableCollectionOfAssociations
 	^self basicNew setHandlers: aSequencedReadableCollectionOfAssociations! !
-!ExceptionHandlerSet class categoriesFor: #handlers:!debugger-step over!instance creation!private! !
+!ExceptionHandlerSet class categoriesForMethods!
+handlers:!debugger-step over!instance creation!private! !
+!
 

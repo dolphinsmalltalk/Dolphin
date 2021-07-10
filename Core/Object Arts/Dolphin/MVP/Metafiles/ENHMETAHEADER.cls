@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #ENHMETAHEADER
 	instanceVariableNames: ''
@@ -236,38 +236,40 @@ szlMillimeters: aSIZE
 		from: ##(_OffsetOf_szlMillimeters + 1)
 		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
 		startingAt: 1! !
-!ENHMETAHEADER categoriesFor: #bOpenGL!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #bOpenGL:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #cbPixelFormat!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #cbPixelFormat:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #dSignature!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #dSignature:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nBytes!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nBytes:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nDescription!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nHandles!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nHandles:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nRecords!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nRecords:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nVersion!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #nVersion:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offDescription!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offPixelFormat!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #offPixelFormat:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclBounds!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclFrame!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #rclFrame:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlDevice!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlDevice:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMicrometers!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMicrometers:!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMillimeters!**compiled accessors**!public! !
-!ENHMETAHEADER categoriesFor: #szlMillimeters:!**compiled accessors**!public! !
+!ENHMETAHEADER categoriesForMethods!
+bOpenGL!**compiled accessors**!public! !
+bOpenGL:!**compiled accessors**!public! !
+cbPixelFormat!**compiled accessors**!public! !
+cbPixelFormat:!**compiled accessors**!public! !
+dSignature!**compiled accessors**!public! !
+dSignature:!**compiled accessors**!public! !
+nBytes!**compiled accessors**!public! !
+nBytes:!**compiled accessors**!public! !
+nDescription!**compiled accessors**!public! !
+nDescription:!**compiled accessors**!public! !
+nHandles!**compiled accessors**!public! !
+nHandles:!**compiled accessors**!public! !
+nPalEntries!**compiled accessors**!public! !
+nPalEntries:!**compiled accessors**!public! !
+nRecords!**compiled accessors**!public! !
+nRecords:!**compiled accessors**!public! !
+nVersion!**compiled accessors**!public! !
+nVersion:!**compiled accessors**!public! !
+offDescription!**compiled accessors**!public! !
+offDescription:!**compiled accessors**!public! !
+offPixelFormat!**compiled accessors**!public! !
+offPixelFormat:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+rclFrame!**compiled accessors**!public! !
+rclFrame:!**compiled accessors**!public! !
+szlDevice!**compiled accessors**!public! !
+szlDevice:!**compiled accessors**!public! !
+szlMicrometers!**compiled accessors**!public! !
+szlMicrometers:!**compiled accessors**!public! !
+szlMillimeters!**compiled accessors**!public! !
+szlMillimeters:!**compiled accessors**!public! !
+!
 
 !ENHMETAHEADER class methodsFor!
 
@@ -328,7 +330,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_HEADER! !
-!ENHMETAHEADER class categoriesFor: #defineFields!public!template definition! !
-!ENHMETAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ENHMETAHEADER class categoriesFor: #iTypes!constants!public! !
+!ENHMETAHEADER class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

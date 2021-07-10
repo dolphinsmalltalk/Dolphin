@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Image subclass: #Bitmap
 	instanceVariableNames: 'hdc flags extent'
@@ -529,52 +529,54 @@ stbFixup: anSTBInFiler at: newObjectIndex
 			[answer := self asSharedCopy.
 			anSTBInFiler fixup: newObjectIndex to: answer].
 	^answer! !
-!Bitmap categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!Bitmap categoriesFor: #alphaBlendOn:at:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:from:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #alphaBlendOn:at:extent:from:extent:blend:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #asBitmap!public! !
-!Bitmap categoriesFor: #asByteArray!converting!public! !
-!Bitmap categoriesFor: #asSharedCopy!converting!public! !
-!Bitmap categoriesFor: #baseLoadFlags!constants!public! !
-!Bitmap categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #cacheInfo!helpers!private! !
-!Bitmap categoriesFor: #canvas!accessing!public! !
-!Bitmap categoriesFor: #clearCached!initializing!private! !
-!Bitmap categoriesFor: #copy!copying!public! !
-!Bitmap categoriesFor: #copyBits!copying!private! !
-!Bitmap categoriesFor: #copyToClipboard!copying!public! !
-!Bitmap categoriesFor: #createPalette!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #createWatermarkAlphaPercent:backcolor:!helpers!public! !
-!Bitmap categoriesFor: #depth!accessing!public! !
-!Bitmap categoriesFor: #detachHandle!accessing!public! !
-!Bitmap categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:extent:from:extent:rop:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:from:extent:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #drawOn:at:from:extent:rop:!drawing-bitmaps!public! !
-!Bitmap categoriesFor: #extent!accessing!public! !
-!Bitmap categoriesFor: #freeDC!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #getColorTable!accessing!public! !
-!Bitmap categoriesFor: #getInfo!accessing!public! !
-!Bitmap categoriesFor: #getMap3DColors!accessing!public! !
-!Bitmap categoriesFor: #getPaletteEntries!accessing!public! !
-!Bitmap categoriesFor: #hasAlpha!public!testing! !
-!Bitmap categoriesFor: #imageType!constants!private! !
-!Bitmap categoriesFor: #initialize!initializing!private! !
-!Bitmap categoriesFor: #isShared!private!testing! !
-!Bitmap categoriesFor: #isShared:!accessing!private! !
-!Bitmap categoriesFor: #isTransparent!accessing!public! !
-!Bitmap categoriesFor: #isTransparent:!accessing!public! !
-!Bitmap categoriesFor: #loadFlags!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Bitmap categoriesFor: #pixelData!accessing!public! !
-!Bitmap categoriesFor: #setMap3DColors:!accessing!public! !
-!Bitmap categoriesFor: #stbFixup:at:!binary filing!public! !
+!Bitmap categoriesForMethods!
+addToImageList:mask:!double dispatch!private! !
+alphaBlendOn:at:!drawing-bitmaps!public! !
+alphaBlendOn:at:extent:!drawing-bitmaps!public! !
+alphaBlendOn:at:extent:from:!drawing-bitmaps!public! !
+alphaBlendOn:at:extent:from:extent:!drawing-bitmaps!public! !
+alphaBlendOn:at:extent:from:extent:blend:!drawing-bitmaps!public! !
+asBitmap!public! !
+asByteArray!converting!public! !
+asSharedCopy!converting!public! !
+baseLoadFlags!constants!public! !
+basicFree!private!realizing/unrealizing! !
+cacheInfo!helpers!private! !
+canvas!accessing!public! !
+clearCached!initializing!private! !
+copy!copying!public! !
+copyBits!copying!private! !
+copyToClipboard!copying!public! !
+createPalette!private!realizing/unrealizing! !
+createWatermarkAlphaPercent:backcolor:!helpers!public! !
+depth!accessing!public! !
+detachHandle!accessing!public! !
+drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
+drawOn:at:extent:from:extent:rop:!drawing-bitmaps!public! !
+drawOn:at:from:extent:!drawing-bitmaps!public! !
+drawOn:at:from:extent:rop:!drawing-bitmaps!public! !
+extent!accessing!public! !
+freeDC!private!realizing/unrealizing! !
+getColorTable!accessing!public! !
+getInfo!accessing!public! !
+getMap3DColors!accessing!public! !
+getPaletteEntries!accessing!public! !
+hasAlpha!public!testing! !
+imageType!constants!private! !
+initialize!initializing!private! !
+isShared!private!testing! !
+isShared:!accessing!private! !
+isTransparent!accessing!public! !
+isTransparent:!accessing!public! !
+loadFlags!private!realizing/unrealizing! !
+loadFromFile:extent:!private!realizing/unrealizing! !
+loadFromInstance:!private!realizing/unrealizing! !
+pixelData!accessing!public! !
+setMap3DColors:!accessing!public! !
+stbFixup:at:!binary filing!public! !
+!
 
 !Bitmap class methodsFor!
 
@@ -724,17 +726,19 @@ width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bp
 				cPlanes: planesInteger
 				cBitsPerPel: bpsInteger
 				lpvBits: anExternalAddressOrNil)! !
-!Bitmap class categoriesFor: #compatible:extent:!instance creation!public! !
-!Bitmap class categoriesFor: #compatible:width:height:!instance creation!public! !
-!Bitmap class categoriesFor: #displayCompatibleWithExtent:!instance creation!public! !
-!Bitmap class categoriesFor: #filesType!constants!private! !
-!Bitmap class categoriesFor: #fromId:inFile:!instance creation!public! !
-!Bitmap class categoriesFor: #fromId:inFile:flags:!instance creation!public! !
-!Bitmap class categoriesFor: #fromView:!instance creation!public! !
-!Bitmap class categoriesFor: #fromView:background:!instance creation!public! !
-!Bitmap class categoriesFor: #initialize!development!initializing!private! !
-!Bitmap class categoriesFor: #sharedCopyOf:!instance creation!public! !
-!Bitmap class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Bitmap class categoriesFor: #width:height:depth:!instance creation!public! !
-!Bitmap class categoriesFor: #width:height:planes:bitsPerPixel:bits:!instance creation!public! !
+!Bitmap class categoriesForMethods!
+compatible:extent:!instance creation!public! !
+compatible:width:height:!instance creation!public! !
+displayCompatibleWithExtent:!instance creation!public! !
+filesType!constants!private! !
+fromId:inFile:!instance creation!public! !
+fromId:inFile:flags:!instance creation!public! !
+fromView:!instance creation!public! !
+fromView:background:!instance creation!public! !
+initialize!development!initializing!private! !
+sharedCopyOf:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+width:height:depth:!instance creation!public! !
+width:height:planes:bitsPerPixel:bits:!instance creation!public! !
+!
 

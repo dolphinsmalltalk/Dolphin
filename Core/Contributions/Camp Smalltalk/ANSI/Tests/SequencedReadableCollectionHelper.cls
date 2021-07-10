@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCaseHelper subclass: #SequencedReadableCollectionHelper
 	instanceVariableNames: ''
@@ -378,33 +378,35 @@ testXwithXdoX
 	    should: [:r | col = #(false false false) asOrderedCollection]
 		conformTo: #sequencedReadableCollection
 		selector: #with:do:.! !
-!SequencedReadableCollectionHelper categoriesFor: #canonicalObject!public! !
-!SequencedReadableCollectionHelper categoriesFor: #canonicalObjects!public! !
-!SequencedReadableCollectionHelper categoriesFor: #object:!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXafterX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXatX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXatXifAbsentX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXbeforeX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXconcatenateOp!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXcopyFromXtoX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXcopyReplaceAllXwithX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXcopyReplaceFromXtoXwithObjectX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXcopyReplaceFromXtoXwithX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXcopyReplacingXwithObjectX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXcopyWithoutX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXcopyWithX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXequalityOp!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXfindFirstX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXfindLastX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXfirst!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXfromXtoXdoX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXfromXtoXkeysAndValuesDoX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXindexOfSubCollectionXstartingAtX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXindexOfSubCollectionXstartingAtXifAbsentX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXindexOfX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXindexOfXifAbsentX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXlast!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXreverse!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXreverseDoX!public! !
-!SequencedReadableCollectionHelper categoriesFor: #testXwithXdoX!public! !
+!SequencedReadableCollectionHelper categoriesForMethods!
+canonicalObject!public! !
+canonicalObjects!public! !
+object:!public! !
+testXafterX!public! !
+testXatX!public! !
+testXatXifAbsentX!public! !
+testXbeforeX!public! !
+testXconcatenateOp!public! !
+testXcopyFromXtoX!public! !
+testXcopyReplaceAllXwithX!public! !
+testXcopyReplaceFromXtoXwithObjectX!public! !
+testXcopyReplaceFromXtoXwithX!public! !
+testXcopyReplacingXwithObjectX!public! !
+testXcopyWithoutX!public! !
+testXcopyWithX!public! !
+testXequalityOp!public! !
+testXfindFirstX!public! !
+testXfindLastX!public! !
+testXfirst!public! !
+testXfromXtoXdoX!public! !
+testXfromXtoXkeysAndValuesDoX!public! !
+testXindexOfSubCollectionXstartingAtX!public! !
+testXindexOfSubCollectionXstartingAtXifAbsentX!public! !
+testXindexOfX!public! !
+testXindexOfXifAbsentX!public! !
+testXlast!public! !
+testXreverse!public! !
+testXreverseDoX!public! !
+testXwithXdoX!public! !
+!
 

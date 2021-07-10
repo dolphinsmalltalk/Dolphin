@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueToken subclass: #StBinarySelectorToken
 	instanceVariableNames: ''
@@ -20,7 +20,9 @@ isBinary: aSymbol
 	"Answer whether the receiver is a binary token with the specified value."
 
 	^self value == aSymbol! !
-!StBinarySelectorToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StBinarySelectorToken categoriesFor: #isBinary!public!testing! !
-!StBinarySelectorToken categoriesFor: #isBinary:!public!testing! !
+!StBinarySelectorToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isBinary!public!testing! !
+isBinary:!public!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
@@ -204,37 +204,39 @@ wstrSource
 	"Answer the receiver's bstrSource field as a <Utf16String>."
 
 	^Utf16String fromAddress: self pwszSource! !
-!EXCEPINFO categoriesFor: #_deepCopy:!copying!private! !
-!EXCEPINFO categoriesFor: #bstrDescription!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrDescription:!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrHelpFile!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrHelpFile:!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrSource!accessing!public! !
-!EXCEPINFO categoriesFor: #bstrSource:!accessing!public! !
-!EXCEPINFO categoriesFor: #copy!copying!public! !
-!EXCEPINFO categoriesFor: #description!accessing!public! !
-!EXCEPINFO categoriesFor: #description:!accessing!public! !
-!EXCEPINFO categoriesFor: #dwHelpContext!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #dwHelpContext:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #helpFile!accessing!public! !
-!EXCEPINFO categoriesFor: #helpFile:!accessing!public! !
-!EXCEPINFO categoriesFor: #hresult!accessing!public! !
-!EXCEPINFO categoriesFor: #pfnDeferredFillIn!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszDescription!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszDescription:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszHelpFile!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszHelpFile:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszSource!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #pwszSource:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #scode!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #scode:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #source!accessing!public! !
-!EXCEPINFO categoriesFor: #source:!accessing!public! !
-!EXCEPINFO categoriesFor: #wCode!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #wCode:!**compiled accessors**!public! !
-!EXCEPINFO categoriesFor: #wstrDescription!accessing!public! !
-!EXCEPINFO categoriesFor: #wstrHelpFile!accessing!public! !
-!EXCEPINFO categoriesFor: #wstrSource!accessing!public! !
+!EXCEPINFO categoriesForMethods!
+_deepCopy:!copying!private! !
+bstrDescription!accessing!public! !
+bstrDescription:!accessing!public! !
+bstrHelpFile!accessing!public! !
+bstrHelpFile:!accessing!public! !
+bstrSource!accessing!public! !
+bstrSource:!accessing!public! !
+copy!copying!public! !
+description!accessing!public! !
+description:!accessing!public! !
+dwHelpContext!**compiled accessors**!public! !
+dwHelpContext:!**compiled accessors**!public! !
+helpFile!accessing!public! !
+helpFile:!accessing!public! !
+hresult!accessing!public! !
+pfnDeferredFillIn!**compiled accessors**!public! !
+pwszDescription!**compiled accessors**!public! !
+pwszDescription:!**compiled accessors**!public! !
+pwszHelpFile!**compiled accessors**!public! !
+pwszHelpFile:!**compiled accessors**!public! !
+pwszSource!**compiled accessors**!public! !
+pwszSource:!**compiled accessors**!public! !
+scode!**compiled accessors**!public! !
+scode:!**compiled accessors**!public! !
+source!accessing!public! !
+source:!accessing!public! !
+wCode!**compiled accessors**!public! !
+wCode:!**compiled accessors**!public! !
+wstrDescription!accessing!public! !
+wstrHelpFile!accessing!public! !
+wstrSource!accessing!public! !
+!
 
 !EXCEPINFO class methodsFor!
 
@@ -279,7 +281,9 @@ defineFields
 
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
-!EXCEPINFO class categoriesFor: #clear:!public!realizing/unrealizing! !
-!EXCEPINFO class categoriesFor: #defineFields!public!template definition! !
-!EXCEPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!EXCEPINFO class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

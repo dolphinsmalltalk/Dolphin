@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Number subclass: #Fraction
 	instanceVariableNames: 'numerator denominator'
@@ -369,49 +369,51 @@ truncated
 	"Answer the receiver as a kind of Integer truncating the fraction part."
 
 	^numerator quo: denominator! !
-!Fraction categoriesFor: #-!arithmetic!public! !
-!Fraction categoriesFor: #*!arithmetic!public! !
-!Fraction categoriesFor: #/!arithmetic!public! !
-!Fraction categoriesFor: #//!arithmetic!public! !
-!Fraction categoriesFor: #+!arithmetic!public! !
-!Fraction categoriesFor: #<!comparing!public! !
-!Fraction categoriesFor: #=!comparing!public! !
-!Fraction categoriesFor: #addToFloat:!double dispatch!private! !
-!Fraction categoriesFor: #addToFraction:!double dispatch!private! !
-!Fraction categoriesFor: #addToInteger:!double dispatch!private! !
-!Fraction categoriesFor: #asFloat!converting!public! !
-!Fraction categoriesFor: #asFraction!converting!public! !
-!Fraction categoriesFor: #coerce:!coercing!private! !
-!Fraction categoriesFor: #denominator!accessing!public! !
-!Fraction categoriesFor: #displayOn:!printing!public! !
-!Fraction categoriesFor: #divideIntoFloat:!double dispatch!private! !
-!Fraction categoriesFor: #divideIntoFraction:!double dispatch!private! !
-!Fraction categoriesFor: #divideIntoInteger:!double dispatch!private! !
-!Fraction categoriesFor: #equalToFloat:!double dispatch!private! !
-!Fraction categoriesFor: #equalToFraction:!double dispatch!private! !
-!Fraction categoriesFor: #equalToInteger:!double dispatch!private! !
-!Fraction categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
-!Fraction categoriesFor: #generality!coercing!private! !
-!Fraction categoriesFor: #greaterThanFloat:!double dispatch!private! !
-!Fraction categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!Fraction categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!Fraction categoriesFor: #hash!comparing!public! !
-!Fraction categoriesFor: #isFraction!public!testing! !
-!Fraction categoriesFor: #isLiteral!public!testing! !
-!Fraction categoriesFor: #isZero!public!testing! !
-!Fraction categoriesFor: #multiplyByFloat:!double dispatch!private! !
-!Fraction categoriesFor: #multiplyByFraction:!double dispatch!private! !
-!Fraction categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!Fraction categoriesFor: #negated!arithmetic!public! !
-!Fraction categoriesFor: #numerator!accessing!public! !
-!Fraction categoriesFor: #numerator:denominator:!accessing!private! !
-!Fraction categoriesFor: #printOn:!printing!public! !
-!Fraction categoriesFor: #reciprocal!arithmetic!public! !
-!Fraction categoriesFor: #squared!mathematical!public! !
-!Fraction categoriesFor: #subtractFromFloat:!double dispatch!private! !
-!Fraction categoriesFor: #subtractFromFraction:!double dispatch!private! !
-!Fraction categoriesFor: #subtractFromInteger:!double dispatch!private! !
-!Fraction categoriesFor: #truncated!public!truncation and round off! !
+!Fraction categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+=!comparing!public! !
+addToFloat:!double dispatch!private! !
+addToFraction:!double dispatch!private! !
+addToInteger:!double dispatch!private! !
+asFloat!converting!public! !
+asFraction!converting!public! !
+coerce:!coercing!private! !
+denominator!accessing!public! !
+displayOn:!printing!public! !
+divideIntoFloat:!double dispatch!private! !
+divideIntoFraction:!double dispatch!private! !
+divideIntoInteger:!double dispatch!private! !
+equalToFloat:!double dispatch!private! !
+equalToFraction:!double dispatch!private! !
+equalToInteger:!double dispatch!private! !
+equalToScaledDecimal:!double dispatch!private! !
+generality!coercing!private! !
+greaterThanFloat:!double dispatch!private! !
+greaterThanFraction:!double dispatch!private! !
+greaterThanInteger:!double dispatch!private! !
+hash!comparing!public! !
+isFraction!public!testing! !
+isLiteral!public!testing! !
+isZero!public!testing! !
+multiplyByFloat:!double dispatch!private! !
+multiplyByFraction:!double dispatch!private! !
+multiplyByInteger:!double dispatch!private! !
+negated!arithmetic!public! !
+numerator!accessing!public! !
+numerator:denominator:!accessing!private! !
+printOn:!printing!public! !
+reciprocal!arithmetic!public! !
+squared!mathematical!public! !
+subtractFromFloat:!double dispatch!private! !
+subtractFromFraction:!double dispatch!private! !
+subtractFromInteger:!double dispatch!private! !
+truncated!public!truncation and round off! !
+!
 
 !Fraction class methodsFor!
 
@@ -446,9 +448,11 @@ readFrom: aStream
 	Does not handle NLS characters (e.g. thousand separators)"
 
 	^(super readFrom: aStream) asFraction! !
-!Fraction class categoriesFor: #numerator:denominator:!instance creation!public! !
-!Fraction class categoriesFor: #rationalisedNumerator:denominator:!instance creation!public! !
-!Fraction class categoriesFor: #readFrom:!instance creation!public! !
+!Fraction class categoriesForMethods!
+numerator:denominator:!instance creation!public! !
+rationalisedNumerator:denominator:!instance creation!public! !
+readFrom:!instance creation!public! !
+!
 
 Fraction class methodProtocol: #'Fraction factory' attributes: #(#ansi #readOnly) selectors: #(#numerator:denominator:)!
 

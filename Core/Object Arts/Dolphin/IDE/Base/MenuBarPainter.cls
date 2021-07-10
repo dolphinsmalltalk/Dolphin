@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MenuPainter subclass: #MenuBarPainter
 	instanceVariableNames: ''
@@ -92,15 +92,17 @@ paintSeparatorOn: aCanvas in: aRectangle
 		pen: Color highlight3d pen;
 		lineFrom: position + (1 @ 0) to: position + (1 @ cy)] 
 			ensure: [aCanvas pen: oldPen]! !
-!MenuBarPainter categoriesFor: #borderInset!constants!private! !
-!MenuBarPainter categoriesFor: #calculateGeometry:!public!updating! !
-!MenuBarPainter categoriesFor: #drawTextFlags!painting!private! !
-!MenuBarPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!MenuBarPainter categoriesFor: #itemHeight!constants!private! !
-!MenuBarPainter categoriesFor: #itemRect:using:!helpers!public! !
-!MenuBarPainter categoriesFor: #menuColor!private!tracking! !
-!MenuBarPainter categoriesFor: #offsetForSubmenu:canvas:!helpers!public! !
-!MenuBarPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
-!MenuBarPainter categoriesFor: #paintItem:on:in:!painting!private! !
-!MenuBarPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
+!MenuBarPainter categoriesForMethods!
+borderInset!constants!private! !
+calculateGeometry:!public!updating! !
+drawTextFlags!painting!private! !
+insertBefore:position:canvas:!public!testing! !
+itemHeight!constants!private! !
+itemRect:using:!helpers!public! !
+menuColor!private!tracking! !
+offsetForSubmenu:canvas:!helpers!public! !
+paintEdgeOn:in:!painting!private! !
+paintItem:on:in:!painting!private! !
+paintSeparatorOn:in:!painting!private! !
+!
 

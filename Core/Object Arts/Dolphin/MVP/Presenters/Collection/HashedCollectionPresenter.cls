@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CollectionPresenter subclass: #HashedCollectionPresenter
 	instanceVariableNames: ''
@@ -55,12 +55,14 @@ removeItem
 	item := listPresenter selection.
 	self removeElement: item.
 	self onValueChanged! !
-!HashedCollectionPresenter categoriesFor: #addElement:!adding!private! !
-!HashedCollectionPresenter categoriesFor: #addItem:!operations!public! !
-!HashedCollectionPresenter categoriesFor: #canGrow!private!testing! !
-!HashedCollectionPresenter categoriesFor: #elements!accessing!public! !
-!HashedCollectionPresenter categoriesFor: #onListChanged!event handling!public! !
-!HashedCollectionPresenter categoriesFor: #onValueChanged!event handling!public! !
-!HashedCollectionPresenter categoriesFor: #removeElement:!private!removing! !
-!HashedCollectionPresenter categoriesFor: #removeItem!commands!public!removing! !
+!HashedCollectionPresenter categoriesForMethods!
+addElement:!adding!private! !
+addItem:!operations!public! !
+canGrow!private!testing! !
+elements!accessing!public! !
+onListChanged!event handling!public! !
+onValueChanged!event handling!public! !
+removeElement:!private!removing! !
+removeItem!commands!public!removing! !
+!
 

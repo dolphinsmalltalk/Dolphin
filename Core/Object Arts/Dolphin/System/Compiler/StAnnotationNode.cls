@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StTagNode subclass: #StAnnotationNode
 	instanceVariableNames: 'selector'
@@ -23,10 +23,12 @@ selector
 
 selector: aString
 	selector := aString asSymbol! !
-!StAnnotationNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StAnnotationNode categoriesFor: #arguments!public! !
-!StAnnotationNode categoriesFor: #selector!accessing!public! !
-!StAnnotationNode categoriesFor: #selector:!accessing!public! !
+!StAnnotationNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+arguments!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+!
 
 !StAnnotationNode class methodsFor!
 
@@ -34,5 +36,7 @@ selector: aString
 	^self new
 		selector: aString;
 		yourself! !
-!StAnnotationNode class categoriesFor: #selector:!accessing!public! !
+!StAnnotationNode class categoriesForMethods!
+selector:!accessing!public! !
+!
 

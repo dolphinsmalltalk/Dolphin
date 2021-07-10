@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TabViewTest subclass: #TabViewXPTest
 	instanceVariableNames: ''
@@ -47,6 +47,8 @@ testLabelWithAmpersand
 	self assert: actual equals: expected.
 	actual := (anon classPool at: 'Rect') extent.
 	self assert: actual equals: extent! !
-!TabViewXPTest categoriesFor: #classToTest!helpers!private! !
-!TabViewXPTest categoriesFor: #testLabelWithAmpersand!public! !
+!TabViewXPTest categoriesForMethods!
+classToTest!helpers!private! !
+testLabelWithAmpersand!public! !
+!
 

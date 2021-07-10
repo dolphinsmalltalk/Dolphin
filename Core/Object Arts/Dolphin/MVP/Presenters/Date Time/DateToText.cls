@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractToTextConverter subclass: #DateToText
 	instanceVariableNames: 'locale format'
@@ -74,14 +74,16 @@ rightToLeft: aString
 	"Answers the result of converting aString to a Date"
 	
 	^Date fromString: aString format: self actualFormat! !
-!DateToText categoriesFor: #actualFormat!accessing!private! !
-!DateToText categoriesFor: #actualLocale!accessing!private! !
-!DateToText categoriesFor: #format!accessing!public! !
-!DateToText categoriesFor: #format:!accessing!public! !
-!DateToText categoriesFor: #leftToRight:!operations!public! !
-!DateToText categoriesFor: #locale!accessing!public! !
-!DateToText categoriesFor: #locale:!accessing!public! !
-!DateToText categoriesFor: #rightToLeft:!operations!public! !
+!DateToText categoriesForMethods!
+actualFormat!accessing!private! !
+actualLocale!accessing!private! !
+format!accessing!public! !
+format:!accessing!public! !
+leftToRight:!operations!public! !
+locale!accessing!public! !
+locale:!accessing!public! !
+rightToLeft:!operations!public! !
+!
 
 !DateToText class methodsFor!
 
@@ -113,8 +115,10 @@ yearPivot: anInteger
 	Years less than the pivot will be assumed to be in the next century"
 
 	Date yearPivot: anInteger! !
-!DateToText class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!DateToText class categoriesFor: #stbVersion!binary filing!public! !
-!DateToText class categoriesFor: #yearPivot!accessing!public! !
-!DateToText class categoriesFor: #yearPivot:!accessing!public! !
+!DateToText class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+yearPivot!accessing!public! !
+yearPivot:!accessing!public! !
+!
 

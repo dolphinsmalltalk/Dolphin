@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TBADDBITMAP
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ nID: anInteger
 	"Set the receiver's 'nID' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_nID put: anInteger! !
-!TBADDBITMAP categoriesFor: #hInst:!**compiled accessors**!public! !
-!TBADDBITMAP categoriesFor: #nID:!**compiled accessors**!public! !
+!TBADDBITMAP categoriesForMethods!
+hInst:!**compiled accessors**!public! !
+nID:!**compiled accessors**!public! !
+!
 
 !TBADDBITMAP class methodsFor!
 
@@ -42,6 +44,8 @@ defineFields
 
 getFieldNames
 	^#(#hInst #nID)! !
-!TBADDBITMAP class categoriesFor: #defineFields!public!template definition! !
-!TBADDBITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TBADDBITMAP class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

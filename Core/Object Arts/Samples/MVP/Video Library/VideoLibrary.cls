@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #VideoLibrary
 	instanceVariableNames: 'owner tapes'
@@ -77,13 +77,15 @@ tapes
 	"
 
 	^tapes! !
-!VideoLibrary categoriesFor: #defaultOwner!constants!private! !
-!VideoLibrary categoriesFor: #displayOn:!printing!public! !
-!VideoLibrary categoriesFor: #initialize!initializing!private! !
-!VideoLibrary categoriesFor: #owner!accessing!public! !
-!VideoLibrary categoriesFor: #owner:!initializing!public! !
-!VideoLibrary categoriesFor: #printOn:!printing!public! !
-!VideoLibrary categoriesFor: #tapes!accessing!public! !
+!VideoLibrary categoriesForMethods!
+defaultOwner!constants!private! !
+displayOn:!printing!public! !
+initialize!initializing!private! !
+owner!accessing!public! !
+owner:!initializing!public! !
+printOn:!printing!public! !
+tapes!accessing!public! !
+!
 
 !VideoLibrary class methodsFor!
 
@@ -115,8 +117,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	DefaultInstance := nil! !
-!VideoLibrary class categoriesFor: #default!accessing!public! !
-!VideoLibrary class categoriesFor: #icon!constants!public! !
-!VideoLibrary class categoriesFor: #new!instance creation!public! !
-!VideoLibrary class categoriesFor: #uninitialize!class hierarchy!class hierarchy-removing!private! !
+!VideoLibrary class categoriesForMethods!
+default!accessing!public! !
+icon!constants!public! !
+new!instance creation!public! !
+uninitialize!class hierarchy!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ILImport
 	instanceVariableNames: ''
@@ -95,15 +95,17 @@ getBitmapFrom: aByteArray
 
 images
 	^OrderedCollection new! !
-!ILImport categoriesFor: #color1atColumn:startingFrom:in:!operations!public! !
-!ILImport categoriesFor: #color24atColumn:startingFrom:in:!operations!public! !
-!ILImport categoriesFor: #color4atColumn:startingFrom:in:!operations!public! !
-!ILImport categoriesFor: #color8atColumn:startingFrom:in:!operations!public! !
-!ILImport categoriesFor: #colorAtColumn:startingFrom:in:!helpers!public! !
-!ILImport categoriesFor: #colorAtPoint:in:!helpers!public! !
-!ILImport categoriesFor: #columnAddressMethodFor:!constants!public! !
-!ILImport categoriesFor: #getBitmapFrom:!operations!public! !
-!ILImport categoriesFor: #images!operations!public! !
+!ILImport categoriesForMethods!
+color1atColumn:startingFrom:in:!operations!public! !
+color24atColumn:startingFrom:in:!operations!public! !
+color4atColumn:startingFrom:in:!operations!public! !
+color8atColumn:startingFrom:in:!operations!public! !
+colorAtColumn:startingFrom:in:!helpers!public! !
+colorAtPoint:in:!helpers!public! !
+columnAddressMethodFor:!constants!public! !
+getBitmapFrom:!operations!public! !
+images!operations!public! !
+!
 
 !ILImport class methodsFor!
 
@@ -123,7 +125,9 @@ importableClasses
 
 importFrom: aStream
 	^(self new initializeFrom: aStream) images! !
-!ILImport class categoriesFor: #identifyImportFileClass:!helpers!public! !
-!ILImport class categoriesFor: #importableClasses!helpers!public! !
-!ILImport class categoriesFor: #importFrom:!instance creation!public! !
+!ILImport class categoriesForMethods!
+identifyImportFileClass:!helpers!public! !
+importableClasses!helpers!public! !
+importFrom:!instance creation!public! !
+!
 

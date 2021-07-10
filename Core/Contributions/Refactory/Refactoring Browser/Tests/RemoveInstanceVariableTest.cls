@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RemoveInstanceVariableTest
 	instanceVariableNames: ''
@@ -38,8 +38,10 @@ testRemoveInstVar
 	self assert: (class definesInstanceVariable: 'foo1').
 	self executeRefactoring: refactoring.
 	self deny: (class definesInstanceVariable: 'foo1')! !
-!RemoveInstanceVariableTest categoriesFor: #testModelRemoveInstanceVariable!public!tests! !
-!RemoveInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!RemoveInstanceVariableTest categoriesFor: #testReferencedVariable!failure tests!public! !
-!RemoveInstanceVariableTest categoriesFor: #testRemoveInstVar!public!tests! !
+!RemoveInstanceVariableTest categoriesForMethods!
+testModelRemoveInstanceVariable!public!tests! !
+testNonExistantName!failure tests!public! !
+testReferencedVariable!failure tests!public! !
+testRemoveInstVar!public!tests! !
+!
 

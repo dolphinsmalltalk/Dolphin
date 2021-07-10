@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
 	instanceVariableNames: ''
@@ -34,9 +34,11 @@ testMiddleInset
 testWidth
 	model width: 17.
 	self assert: model width equals: 17! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #setUp!public!setup! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testHeight!public!unit tests! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testIsFilled!public!unit tests! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testMiddleInset!public!unit tests! !
-!GdiplusAdjustableArrowCapTest categoriesFor: #testWidth!public!unit tests! !
+!GdiplusAdjustableArrowCapTest categoriesForMethods!
+setUp!public!setup! !
+testHeight!public!unit tests! !
+testIsFilled!public!unit tests! !
+testMiddleInset!public!unit tests! !
+testWidth!public!unit tests! !
+!
 

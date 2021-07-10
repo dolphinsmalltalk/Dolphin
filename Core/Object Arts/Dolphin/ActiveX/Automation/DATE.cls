@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DOUBLE subclass: #DATE
 	instanceVariableNames: ''
@@ -20,8 +20,10 @@ value
 	Automation date (an 8-byte floating point day number and fraction of a day)."
 
 	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: super value)! !
-!DATE categoriesFor: #asDateAndTime!accessing!public! !
-!DATE categoriesFor: #value!accessing!public! !
+!DATE categoriesForMethods!
+asDateAndTime!accessing!public! !
+value!accessing!public! !
+!
 
 !DATE class methodsFor!
 
@@ -85,14 +87,16 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DATE! !
-!DATE class categoriesFor: #fromString:!instance creation!public! !
-!DATE class categoriesFor: #fromString:locale:!instance creation!public! !
-!DATE class categoriesFor: #icon!constants!public! !
-!DATE class categoriesFor: #initialize!development!initializing!private! !
-!DATE class categoriesFor: #maximum!constants!public! !
-!DATE class categoriesFor: #minimum!constants!public! !
-!DATE class categoriesFor: #now!instance creation!public! !
-!DATE class categoriesFor: #typeName!constants!private! !
-!DATE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!DATE class categoriesFor: #vt!constants!public! !
+!DATE class categoriesForMethods!
+fromString:!instance creation!public! !
+fromString:locale:!instance creation!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+maximum!constants!public! !
+minimum!constants!public! !
+now!instance creation!public! !
+typeName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

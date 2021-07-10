@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #IntegerTest
 	instanceVariableNames: ''
@@ -102,14 +102,16 @@ testTwoComplementRightShift
 	self should: 
 			[(small bitShift: -1) ~= (small + 1 bitShift: -1) 
 				== ((large bitShift: -1) ~= (large + 1 bitShift: -1))]! !
-!IntegerTest categoriesFor: #canonicalInstance!constants!private! !
-!IntegerTest categoriesFor: #testClassReadFromRadix!public!unit tests! !
-!IntegerTest categoriesFor: #testFactorial!public!unit tests! !
-!IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
-!IntegerTest categoriesFor: #testIsInteger!public!unit tests! !
-!IntegerTest categoriesFor: #testIsPowerOfTwo!public!unit tests! !
-!IntegerTest categoriesFor: #testNew!public!unit tests! !
-!IntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
-!IntegerTest categoriesFor: #testSetBit!public!unit tests! !
-!IntegerTest categoriesFor: #testTwoComplementRightShift!public!unit tests! !
+!IntegerTest categoriesForMethods!
+canonicalInstance!constants!private! !
+testClassReadFromRadix!public!unit tests! !
+testFactorial!public!unit tests! !
+testIndexedAccess!public!unit tests! !
+testIsInteger!public!unit tests! !
+testIsPowerOfTwo!public!unit tests! !
+testNew!public!unit tests! !
+testPrimesUpTo!public!unit tests! !
+testSetBit!public!unit tests! !
+testTwoComplementRightShift!public!unit tests! !
+!
 

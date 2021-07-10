@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRGLSRECORD
 	instanceVariableNames: ''
@@ -52,10 +52,12 @@ Data: anExternalArray
 		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
-!EMRGLSRECORD categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRGLSRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRGLSRECORD categoriesFor: #Data!**compiled accessors**!public! !
-!EMRGLSRECORD categoriesFor: #Data:!**compiled accessors**!public! !
+!EMRGLSRECORD categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+!
 
 !EMRGLSRECORD class methodsFor!
 
@@ -89,7 +91,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GLSRECORD! !
-!EMRGLSRECORD class categoriesFor: #defineFields!public!template definition! !
-!EMRGLSRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRGLSRECORD class categoriesFor: #iTypes!constants!public! !
+!EMRGLSRECORD class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TestResource
 	instanceVariableNames: 'name description'
@@ -49,17 +49,19 @@ setUp
 tearDown
 	"Does nothing. Subclasses should override this
 	to tear down their resource"! !
-!TestResource categoriesFor: #description!Accessing!public! !
-!TestResource categoriesFor: #description:!Accessing!public! !
-!TestResource categoriesFor: #initialize!Init / Release!public! !
-!TestResource categoriesFor: #isAvailable!public!Testing! !
-!TestResource categoriesFor: #isUnavailable!public!Testing! !
-!TestResource categoriesFor: #name!Accessing!public! !
-!TestResource categoriesFor: #name:!Accessing!public! !
-!TestResource categoriesFor: #printOn:!Printing!public! !
-!TestResource categoriesFor: #resources!public! !
-!TestResource categoriesFor: #setUp!public!Running! !
-!TestResource categoriesFor: #tearDown!public!Running! !
+!TestResource categoriesForMethods!
+description!Accessing!public! !
+description:!Accessing!public! !
+initialize!Init / Release!public! !
+isAvailable!public!Testing! !
+isUnavailable!public!Testing! !
+name!Accessing!public! !
+name:!Accessing!public! !
+printOn:!Printing!public! !
+resources!public! !
+setUp!public!Running! !
+tearDown!public!Running! !
+!
 
 !TestResource class methodsFor!
 
@@ -90,12 +92,14 @@ resources
 
 signalInitializationError
 	^TestResult signalErrorWith: 'Resource ' , self name , ' could not be initialized'! !
-!TestResource class categoriesFor: #current!Accessing!public! !
-!TestResource class categoriesFor: #current:!Accessing!public! !
-!TestResource class categoriesFor: #isAvailable!public!Testing! !
-!TestResource class categoriesFor: #isUnavailable!public!Testing! !
-!TestResource class categoriesFor: #new!Creation!public! !
-!TestResource class categoriesFor: #reset!Creation!public! !
-!TestResource class categoriesFor: #resources!public! !
-!TestResource class categoriesFor: #signalInitializationError!public!Running! !
+!TestResource class categoriesForMethods!
+current!Accessing!public! !
+current:!Accessing!public! !
+isAvailable!public!Testing! !
+isUnavailable!public!Testing! !
+new!Creation!public! !
+reset!Creation!public! !
+resources!public! !
+signalInitializationError!public!Running! !
+!
 

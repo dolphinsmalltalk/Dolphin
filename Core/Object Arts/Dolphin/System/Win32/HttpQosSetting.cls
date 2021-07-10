@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HttpQosSetting
 	instanceVariableNames: ''
@@ -19,9 +19,11 @@ value
 
 value: anInteger
 	^self subclassResponsibility! !
-!HttpQosSetting categoriesFor: #qosType!constants!public! !
-!HttpQosSetting categoriesFor: #value!public! !
-!HttpQosSetting categoriesFor: #value:!public! !
+!HttpQosSetting categoriesForMethods!
+qosType!constants!public! !
+value!public! !
+value:!public! !
+!
 
 !HttpQosSetting class methodsFor!
 
@@ -30,6 +32,8 @@ propertyId
 
 qosType
 	^self subclassResponsibility! !
-!HttpQosSetting class categoriesFor: #propertyId!constants!public! !
-!HttpQosSetting class categoriesFor: #qosType!constants!public! !
+!HttpQosSetting class categoriesForMethods!
+propertyId!constants!public! !
+qosType!constants!public! !
+!
 

@@ -151,11 +151,13 @@ to convert to PNG format first?'.
 	^'.
 	internalIcon printOn: methodSourceStream.
 	self class compile: methodSourceStream contents categories: {'public'. 'constants'}! !
-!ClassDescription categoriesFor: #createBadgeMethod!development!public! !
-!ClassDescription categoriesFor: #createIconMethod!development!public! !
-!ClassDescription categoriesFor: #createIconMethod:fromIcon:!development!public! !
-!ClassDescription categoriesFor: #createIconMethod:OfSize:!development!public! !
-!ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!development!public! !
+!ClassDescription categoriesForMethods!
+createBadgeMethod!development!public! !
+createIconMethod!development!public! !
+createIconMethod:fromIcon:!development!public! !
+createIconMethod:OfSize:!development!public! !
+createIconMethod:ofSize:fromFile:!development!public! !
+!
 
 !Collection methodsFor!
 
@@ -190,8 +192,10 @@ printStringUpTo: maxPrintCharacters
 	stream := String writeStream: 32.
 	self printOn: stream upTo: maxPrintCharacters.
 	^stream contents! !
-!Collection categoriesFor: #printOn:upTo:!printing!public! !
-!Collection categoriesFor: #printStringUpTo:!printing!public! !
+!Collection categoriesForMethods!
+printOn:upTo:!printing!public! !
+printStringUpTo:!printing!public! !
+!
 
 !GdiplusImage methodsFor!
 
@@ -218,8 +222,10 @@ internalize
 	removes the need for an external file reference"
 
 	^self class fromByteArray: (self asByteArray: 'image/png')! !
-!GdiplusImage categoriesFor: #addToImageList:mask:!private! !
-!GdiplusImage categoriesFor: #internalize!public! !
+!GdiplusImage categoriesForMethods!
+addToImageList:mask:!private! !
+internalize!public! !
+!
 
 "End of package definition"!
 

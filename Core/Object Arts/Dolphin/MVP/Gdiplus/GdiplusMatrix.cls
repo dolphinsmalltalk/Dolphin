@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusMatrix
 	instanceVariableNames: ''
@@ -91,18 +91,20 @@ translateTransform: aPoint order: aMatrixOrderConstant
 				offsetY: aPoint y
 				order: aMatrixOrderConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipTranslateMatrix failed' with: status]! !
-!GdiplusMatrix categoriesFor: #asArray!converting!public! !
-!GdiplusMatrix categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusMatrix categoriesFor: #printOn:!printing!public! !
-!GdiplusMatrix categoriesFor: #rotateTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #rotateTransform:order:!operations!public! !
-!GdiplusMatrix categoriesFor: #scaleTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #scaleTransform:order:!operations!public! !
-!GdiplusMatrix categoriesFor: #shearTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #shearTransform:order:!operations!public! !
-!GdiplusMatrix categoriesFor: #transformPoints:!operations!public! !
-!GdiplusMatrix categoriesFor: #translateTransform:!operations!public! !
-!GdiplusMatrix categoriesFor: #translateTransform:order:!operations!public! !
+!GdiplusMatrix categoriesForMethods!
+asArray!converting!public! !
+basicFree!private!realizing/unrealizing! !
+printOn:!printing!public! !
+rotateTransform:!operations!public! !
+rotateTransform:order:!operations!public! !
+scaleTransform:!operations!public! !
+scaleTransform:order:!operations!public! !
+shearTransform:!operations!public! !
+shearTransform:order:!operations!public! !
+transformPoints:!operations!public! !
+translateTransform:!operations!public! !
+translateTransform:order:!operations!public! !
+!
 
 !GdiplusMatrix class methodsFor!
 
@@ -224,11 +226,13 @@ rectangle: aRectangle point: aPoint
 		m22: aRectangle height
 		m31: aPoint x
 		m32: aPoint y! !
-!GdiplusMatrix class categoriesFor: #exampleGdipMShadows!examples!public!sunit! !
-!GdiplusMatrix class categoriesFor: #exampleGdipMShear!examples!public!sunit! !
-!GdiplusMatrix class categoriesFor: #exampleGdipMTranslate!examples!public!sunit! !
-!GdiplusMatrix class categoriesFor: #fromArray:!instance creation!public! !
-!GdiplusMatrix class categoriesFor: #m11:m12:m21:m22:m31:m32:!instance creation!public! !
-!GdiplusMatrix class categoriesFor: #new!instance creation!public! !
-!GdiplusMatrix class categoriesFor: #rectangle:point:!instance creation!public! !
+!GdiplusMatrix class categoriesForMethods!
+exampleGdipMShadows!examples!public!sunit! !
+exampleGdipMShear!examples!public!sunit! !
+exampleGdipMTranslate!examples!public!sunit! !
+fromArray:!instance creation!public! !
+m11:m12:m21:m22:m31:m32:!instance creation!public! !
+new!instance creation!public! !
+rectangle:point:!instance creation!public! !
+!
 

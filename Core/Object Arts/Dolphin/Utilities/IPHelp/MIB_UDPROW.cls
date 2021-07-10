@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIB_UDPROW
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ dwLocalPort
 	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwLocalPort! !
-!MIB_UDPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
-!MIB_UDPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
+!MIB_UDPROW categoriesForMethods!
+dwLocalAddr!**compiled accessors**!public! !
+dwLocalPort!**compiled accessors**!public! !
+!
 
 !MIB_UDPROW class methodsFor!
 
@@ -61,6 +63,8 @@ defineFields
 
 getFieldNames
 	^#(#dwLocalAddr #dwLocalPort)! !
-!MIB_UDPROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_UDPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_UDPROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

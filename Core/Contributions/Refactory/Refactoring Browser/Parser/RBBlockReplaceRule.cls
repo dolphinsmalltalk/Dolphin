@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBReplaceRule subclass: #RBBlockReplaceRule
 	instanceVariableNames: 'replaceBlock'
@@ -43,14 +43,16 @@ searchForTree: aBRProgramNode replaceWith: aBlock
 searchForTree: aBRProgramNode replaceWith: replBlock when: verifyBlock 
 	self searchForTree: aBRProgramNode replaceWith: replBlock.
 	verificationBlock := verifyBlock! !
-!RBBlockReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
-!RBBlockReplaceRule categoriesFor: #initialize!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchFor:replaceWith:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchFor:replaceWith:when:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForMethod:replaceWith:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForMethod:replaceWith:when:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForTree:replaceWith:!initialize/release!public! !
-!RBBlockReplaceRule categoriesFor: #searchForTree:replaceWith:when:!initialize/release!public! !
+!RBBlockReplaceRule categoriesForMethods!
+foundMatchFor:!matching!public! !
+initialize!initialize/release!public! !
+searchFor:replaceWith:!initialize/release!public! !
+searchFor:replaceWith:when:!initialize/release!public! !
+searchForMethod:replaceWith:!initialize/release!public! !
+searchForMethod:replaceWith:when:!initialize/release!public! !
+searchForTree:replaceWith:!initialize/release!public! !
+searchForTree:replaceWith:when:!initialize/release!public! !
+!
 
 !RBBlockReplaceRule class methodsFor!
 
@@ -80,10 +82,12 @@ searchForTree: aRBProgramNode replaceWith: replaceBlock when: aBlock
 		searchForTree: aRBProgramNode
 		replaceWith: replaceBlock
 		when: aBlock! !
-!RBBlockReplaceRule class categoriesFor: #searchFor:replaceWith:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchFor:replaceWith:when:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForMethod:replaceWith:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForMethod:replaceWith:when:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForTree:replaceWith:!instance creation!public! !
-!RBBlockReplaceRule class categoriesFor: #searchForTree:replaceWith:when:!instance creation!public! !
+!RBBlockReplaceRule class categoriesForMethods!
+searchFor:replaceWith:!instance creation!public! !
+searchFor:replaceWith:when:!instance creation!public! !
+searchForMethod:replaceWith:!instance creation!public! !
+searchForMethod:replaceWith:when:!instance creation!public! !
+searchForTree:replaceWith:!instance creation!public! !
+searchForTree:replaceWith:when:!instance creation!public! !
+!
 

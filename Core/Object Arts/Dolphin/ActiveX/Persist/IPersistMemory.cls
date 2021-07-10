@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IPersist subclass: #IPersistMemory
 	instanceVariableNames: ''
@@ -108,16 +108,18 @@ Save: pMem fClearDirty: fClearDirty cbSize: cbSize
 
 	<virtual stdcall: hresult 7 byte* sdword dword>
 	^self invalidCall: _failureCode! !
-!IPersistMemory categoriesFor: #getSizeMax!**auto generated**!methods!public! !
-!IPersistMemory categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #initNew!**auto generated**!methods!public! !
-!IPersistMemory categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #IsDirty!**auto generated**!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #load:!methods!public! !
-!IPersistMemory categoriesFor: #Load:cbSize:!COM Interfaces-IPersistMemory!private! !
-!IPersistMemory categoriesFor: #save:!methods!public! !
-!IPersistMemory categoriesFor: #save:cbSize:!methods!public! !
-!IPersistMemory categoriesFor: #Save:fClearDirty:cbSize:!COM Interfaces-IPersistMemory!private! !
+!IPersistMemory categoriesForMethods!
+getSizeMax!**auto generated**!methods!public! !
+GetSizeMax:!**auto generated**!COM Interfaces-IPersistMemory!private! !
+initNew!**auto generated**!methods!public! !
+InitNew!**auto generated**!COM Interfaces-IPersistMemory!private! !
+IsDirty!**auto generated**!COM Interfaces-IPersistMemory!private! !
+load:!methods!public! !
+Load:cbSize:!COM Interfaces-IPersistMemory!private! !
+save:!methods!public! !
+save:cbSize:!methods!public! !
+Save:fClearDirty:cbSize:!COM Interfaces-IPersistMemory!private! !
+!
 
 IPersistMemory methodProtocol: #IPersistMemory attributes: #(#readOnly) selectors: #(#GetSizeMax: #InitNew #IsDirty #Load:cbSize: #Save:fClearDirty:cbSize:)!
 
@@ -138,5 +140,7 @@ defineFunctions
 			argumentTypes: 'dword*';
 		defineFunction: #InitNew
 ! !
-!IPersistMemory class categoriesFor: #defineFunctions!initializing!public! !
+!IPersistMemory class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

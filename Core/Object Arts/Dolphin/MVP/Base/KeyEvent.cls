@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #KeyEvent
 	instanceVariableNames: ''
@@ -54,13 +54,15 @@ scanCode
 	"Answer the scan code."
 
 	^self data highWord bitAnd: 16rFF! !
-!KeyEvent categoriesFor: #code!accessing!public! !
-!KeyEvent categoriesFor: #data!accessing!public! !
-!KeyEvent categoriesFor: #isAlreadyDown!public!testing! !
-!KeyEvent categoriesFor: #isAltKeyDown!public!testing! !
-!KeyEvent categoriesFor: #isBeingReleased!public!testing! !
-!KeyEvent categoriesFor: #isExtended!public!testing! !
-!KeyEvent categoriesFor: #printLParamOn:!printing!public! !
-!KeyEvent categoriesFor: #repeatCount!accessing!public! !
-!KeyEvent categoriesFor: #scanCode!accessing!public! !
+!KeyEvent categoriesForMethods!
+code!accessing!public! !
+data!accessing!public! !
+isAlreadyDown!public!testing! !
+isAltKeyDown!public!testing! !
+isBeingReleased!public!testing! !
+isExtended!public!testing! !
+printLParamOn:!printing!public! !
+repeatCount!accessing!public! !
+scanCode!accessing!public! !
+!
 

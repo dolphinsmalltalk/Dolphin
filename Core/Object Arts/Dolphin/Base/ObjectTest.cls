@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ObjectTest
 	instanceVariableNames: ''
@@ -328,20 +328,22 @@ verifyWeakRegistry: aWeakIdentitDictionary
 	self assert: aWeakIdentitDictionary countElements equals: aWeakIdentitDictionary size.
 	self assert: aWeakIdentitDictionary hasWeakKeys.
 	self deny: aWeakIdentitDictionary hasWeakValues! !
-!ObjectTest categoriesFor: #newEventSource!helpers!private! !
-!ObjectTest categoriesFor: #testAssert!public!testing / error handling! !
-!ObjectTest categoriesFor: #testBecome!public!unit tests! !
-!ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
-!ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
-!ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
-!ObjectTest categoriesFor: #testNilCoalesce!public!unit tests! !
-!ObjectTest categoriesFor: #testObjectDependentsRegistry!public!unit tests! !
-!ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
-!ObjectTest categoriesFor: #testObjectPropertyManager!public!unit tests! !
-!ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
-!ObjectTest categoriesFor: #testThreeArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #testTwoArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #testZeroArgEvent!public!unit tests! !
-!ObjectTest categoriesFor: #verifyWeakRegistry:!public!unit tests! !
+!ObjectTest categoriesForMethods!
+newEventSource!helpers!private! !
+testAssert!public!testing / error handling! !
+testBecome!public!unit tests! !
+testDeepCopy!public!unit tests! !
+testEventCollectionWeakness!public!unit tests! !
+testIfNilAndIfNotNil!public!unit tests! !
+testNilCoalesce!public!unit tests! !
+testObjectDependentsRegistry!public!unit tests! !
+testObjectEventRegistry!public!unit tests! !
+testObjectPropertyManager!public!unit tests! !
+testOneArgEvent!public!unit tests! !
+testRemoveEventsTriggeredFor!public!unit tests! !
+testThreeArgEvent!public!unit tests! !
+testTwoArgEvent!public!unit tests! !
+testZeroArgEvent!public!unit tests! !
+verifyWeakRegistry:!public!unit tests! !
+!
 

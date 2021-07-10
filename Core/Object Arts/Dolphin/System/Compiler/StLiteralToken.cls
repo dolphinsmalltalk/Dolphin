@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueToken subclass: #StLiteralToken
 	instanceVariableNames: 'stopPosition'
@@ -54,17 +54,19 @@ stop: anInteger
 
 valueClass
 	^self value basicClass! !
-!StLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralToken categoriesFor: #formatOn:source:!printing!public! !
-!StLiteralToken categoriesFor: #formattedFrom:!printing!public! !
-!StLiteralToken categoriesFor: #isLiteralToken!public!testing! !
-!StLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
-!StLiteralToken categoriesFor: #length!accessing!private! !
-!StLiteralToken categoriesFor: #realValue!accessing!public! !
-!StLiteralToken categoriesFor: #sourceInterval!accessing!public! !
-!StLiteralToken categoriesFor: #stop!accessing!public! !
-!StLiteralToken categoriesFor: #stop:!initializing!private! !
-!StLiteralToken categoriesFor: #valueClass!accessing!public! !
+!StLiteralToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+formatOn:source:!printing!public! !
+formattedFrom:!printing!public! !
+isLiteralToken!public!testing! !
+isMultiKeyword!public!testing! !
+length!accessing!private! !
+realValue!accessing!public! !
+sourceInterval!accessing!public! !
+stop!accessing!public! !
+stop:!initializing!private! !
+valueClass!accessing!public! !
+!
 
 !StLiteralToken class methodsFor!
 
@@ -88,6 +90,8 @@ value: anObject
 		comments: nil
 		value: literal
 		stop: nil! !
-!StLiteralToken class categoriesFor: #start:comments:value:stop:!instance creation!public! !
-!StLiteralToken class categoriesFor: #value:!instance creation!public! !
+!StLiteralToken class categoriesForMethods!
+start:comments:value:stop:!instance creation!public! !
+value:!instance creation!public! !
+!
 

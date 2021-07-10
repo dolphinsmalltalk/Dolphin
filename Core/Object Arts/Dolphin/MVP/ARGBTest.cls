@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ARGBTest
 	instanceVariableNames: ''
@@ -104,10 +104,12 @@ testStbRoundTrip
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated class identicalTo: ARGB.
 	self assert: rehydrated equals: subject! !
-!ARGBTest categoriesFor: #assertComponents:isCode:!asserting!private! !
-!ARGBTest categoriesFor: #testConstructionValues!public!unit tests! !
-!ARGBTest categoriesFor: #testEquality!public!unit tests! !
-!ARGBTest categoriesFor: #testFromArgbCode!public!unit tests! !
-!ARGBTest categoriesFor: #testPrintString!public!unit tests! !
-!ARGBTest categoriesFor: #testStbRoundTrip!public!unit tests! !
+!ARGBTest categoriesForMethods!
+assertComponents:isCode:!asserting!private! !
+testConstructionValues!public!unit tests! !
+testEquality!public!unit tests! !
+testFromArgbCode!public!unit tests! !
+testPrintString!public!unit tests! !
+testStbRoundTrip!public!unit tests! !
+!
 

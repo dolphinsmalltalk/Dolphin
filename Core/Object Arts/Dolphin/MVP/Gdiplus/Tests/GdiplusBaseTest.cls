@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusTests subclass: #GdiplusBaseTest
 	instanceVariableNames: ''
@@ -34,7 +34,9 @@ testComparisonIdentity
 				fromInitializer: (initializer := GdiplusTestInitializer new arg1: 123).
 	self assert: model equals: (self concreteGdiplusBaseSubclass fromInitializer: initializer).
 	model hash! !
-!GdiplusBaseTest categoriesFor: #concreteGdiplusBaseSubclass!private! !
-!GdiplusBaseTest categoriesFor: #testComparisonEquality!public!unit tests! !
-!GdiplusBaseTest categoriesFor: #testComparisonIdentity!public!unit tests! !
+!GdiplusBaseTest categoriesForMethods!
+concreteGdiplusBaseSubclass!private! !
+testComparisonEquality!public!unit tests! !
+testComparisonIdentity!public!unit tests! !
+!
 

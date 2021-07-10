@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMEnumerator subclass: #COMVariantEnumerator
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ nextElement
 	we get a true copy for an output argument."
 
 	^contents next copy detach! !
-!COMVariantEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
+!COMVariantEnumerator categoriesForMethods!
+nextElement!COM Interfaces-IEnumXXXX!private! !
+!
 

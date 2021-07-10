@@ -146,8 +146,10 @@ stonOn: stonWriter
 			BlockClosure instVarNames
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			dictionary at: #copiedValues put: self copiedValues]! !
-!BlockClosure categoriesFor: #fromSton:!public! !
-!BlockClosure categoriesFor: #stonOn:!public!ston! !
+!BlockClosure categoriesForMethods!
+fromSton:!public! !
+stonOn:!public!ston! !
+!
 
 !ByteArray methodsFor!
 
@@ -159,13 +161,17 @@ hex
 	hexStream := string writeStream.
 	self printHexOn: hexStream.
 	^string! !
-!ByteArray categoriesFor: #hex!public! !
+!ByteArray categoriesForMethods!
+hex!public! !
+!
 
 !ByteArray class methodsFor!
 
 readHexFrom: aString
 	^self fromHexString: aString! !
-!ByteArray class categoriesFor: #readHexFrom:!public!ston! !
+!ByteArray class categoriesForMethods!
+readHexFrom:!public!ston! !
+!
 
 !CardLayout class methodsFor!
 
@@ -174,7 +180,9 @@ stonAllInstVarNames
 
 	^superclass stonAllInstVarNames
 		, ##(self instVarNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
-!CardLayout class categoriesFor: #stonAllInstVarNames!public! !
+!CardLayout class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !Color methodsFor!
 
@@ -192,7 +200,9 @@ stonOn: stonWriter
 						at: #blue put: (self normalizedBlue roundTo: 0.001);
 						at: #alpha put: (self normalizedAlpha roundTo: 0.001)]]
 		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
-!Color categoriesFor: #stonOn:!public!ston! !
+!Color categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Color class methodsFor!
 
@@ -212,8 +222,10 @@ fromSton: stonReader
 
 stonName
 	^#Color! !
-!Color class categoriesFor: #fromSton:!public!ston! !
-!Color class categoriesFor: #stonName!public!ston! !
+!Color class categoriesForMethods!
+fromSton:!public!ston! !
+stonName!public!ston! !
+!
 
 !CompiledCode methodsFor!
 
@@ -243,8 +255,10 @@ stonOn: stonWriter
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			"Store the indexable fields as a literals list"
 			dictionary at: #literals put: self literals]! !
-!CompiledCode categoriesFor: #fromSton:!public! !
-!CompiledCode categoriesFor: #stonOn:!public!ston! !
+!CompiledCode categoriesForMethods!
+fromSton:!public! !
+stonOn:!public!ston! !
+!
 
 !ControlView class methodsFor!
 
@@ -252,7 +266,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithout: 'oldWndProc'! !
-!ControlView class categoriesFor: #stonAllInstVarNames!public!ston! !
+!ControlView class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
 
 !Date methodsFor!
 
@@ -277,7 +293,9 @@ stonOn: stonWriter
 				on: stream
 				format: '+hh:mm'].
 	stonWriter writeObject: self listSingleton: stream grabContents! !
-!Date categoriesFor: #stonOn:!public!ston! !
+!Date categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Date class methodsFor!
 
@@ -298,20 +316,26 @@ fromSton: stonReader
 			dt := DateAndTime year: date year day: date dayOfYear offset: offset.
 			date := dt asLocal asDate].
 	^date! !
-!Date class categoriesFor: #fromSton:!instance creation!public! !
+!Date class categoriesForMethods!
+fromSton:!instance creation!public! !
+!
 
 !FramingCalculation methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: name! !
-!FramingCalculation categoriesFor: #stonOn:!public!ston! !
+!FramingCalculation categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !FramingCalculation class methodsFor!
 
 fromSton: stonReader
 	#todo. "Perform is a security risk - provide a lookup table."
 	^self perform: stonReader parseListSingleton! !
-!FramingCalculation class categoriesFor: #fromSton:!public!ston! !
+!FramingCalculation class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !GraphicsTool class methodsFor!
 
@@ -319,7 +343,9 @@ stonAllInstVarNames
 	"Override to exclude the handle and ownsHandle instance variable as we never want to serialize these."
 
 	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!GraphicsTool class categoriesFor: #stonAllInstVarNames!public!ston! !
+!GraphicsTool class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
 
 !GUID methodsFor!
 
@@ -327,13 +353,17 @@ stonOn: stonWriter
 	"Use a hex representation"
 	
 	stonWriter writeObject: self listSingleton: self idlString! !
-!GUID categoriesFor: #stonOn:!public!ston! !
+!GUID categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !GUID class methodsFor!
 
 fromSton: stonReader
 	^ self fromIdlString: stonReader parseListSingleton! !
-!GUID class categoriesFor: #fromSton:!public!ston! !
+!GUID class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !IconImageManager methodsFor!
 
@@ -341,19 +371,25 @@ stonOn: stonWriter
 	stonWriter 
 		writeObject: self 
 		do: []! !
-!IconImageManager categoriesFor: #stonOn:!public!ston! !
+!IconImageManager categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !IconImageManager class methodsFor!
 
 fromSton: stonReader
 	^self current! !
-!IconImageManager class categoriesFor: #fromSton:!public! !
+!IconImageManager class categoriesForMethods!
+fromSton:!public! !
+!
 
 !MessageSequence methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeObject: self do: [stonWriter encodeList: list]! !
-!MessageSequence categoriesFor: #stonOn:!public!ston! !
+!MessageSequence categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !MessageSequence class methodsFor!
 
@@ -364,7 +400,9 @@ fromSton: stonReader
 	collection := self new.
 	stonReader parseListDo: [:each | collection add: each].
 	^collection! !
-!MessageSequence class categoriesFor: #fromSton:!public!ston! !
+!MessageSequence class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Model class methodsFor!
 
@@ -372,7 +410,9 @@ stonAllInstVarNames
 	"Override to exclude the events instance variable as we never want to serialize these."
 
 	^superclass == Object ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!Model class categoriesFor: #stonAllInstVarNames!public!ston! !
+!Model class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
 
 !Object class methodsFor!
 
@@ -388,7 +428,9 @@ fromSton: stonReader
 	^instance
 		fromSton: stonReader;
 		yourself! !
-!Object class categoriesFor: #fromSton:!public!ston! !
+!Object class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !ProcessorScheduler methodsFor!
 
@@ -396,19 +438,25 @@ stonOn: aSTONWriter
 	aSTONWriter 
 		writeObject: self 
 		do: []! !
-!ProcessorScheduler categoriesFor: #stonOn:!public!ston! !
+!ProcessorScheduler categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !ProcessorScheduler class methodsFor!
 
 fromSton: stonReader
 	^Processor! !
-!ProcessorScheduler class categoriesFor: #fromSton:!public!ston! !
+!ProcessorScheduler class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !ReferenceView methodsFor!
 
 stonExtras
 	^{#state -> self state}! !
-!ReferenceView categoriesFor: #stonExtras!public!ston! !
+!ReferenceView categoriesForMethods!
+stonExtras!public!ston! !
+!
 
 !ReferenceView class methodsFor!
 
@@ -416,7 +464,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithout: 'referee'! !
-!ReferenceView class categoriesFor: #stonAllInstVarNames!public! !
+!ReferenceView class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !ScintillaView class methodsFor!
 
@@ -424,7 +474,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithout: 'styleIdMap'! !
-!ScintillaView class categoriesFor: #stonAllInstVarNames!public! !
+!ScintillaView class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !SearchPolicy class methodsFor!
 
@@ -432,7 +484,9 @@ fromSton: stonReader
 	^stonReader isList
 		ifTrue: [self perform: stonReader parseListSingleton]
 		ifFalse: [super fromSton: stonReader]! !
-!SearchPolicy class categoriesFor: #fromSton:!public!ston! !
+!SearchPolicy class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !SingletonSearchPolicy methodsFor!
 
@@ -440,19 +494,25 @@ stonOn: stonWriter
 	self name
 		ifNil: [stonWriter writeObject: self]
 		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
-!SingletonSearchPolicy categoriesFor: #stonOn:!public!ston! !
+!SingletonSearchPolicy categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !SingletonSearchPolicy class methodsFor!
 
 stonName
 	^#SearchPolicy! !
-!SingletonSearchPolicy class categoriesFor: #stonName!public!ston! !
+!SingletonSearchPolicy class categoriesForMethods!
+stonName!public!ston! !
+!
 
 !SmalltalkSystem methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: #current! !
-!SmalltalkSystem categoriesFor: #stonOn:!public!ston! !
+!SmalltalkSystem categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !STON class methodsFor!
 
@@ -460,13 +520,17 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^self defaultIcon! !
-!STON class categoriesFor: #icon!constants!public! !
+!STON class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STONCStyleCommentsSkipStream methodsFor!
 
 skipSeparators
 	^stream skipSeparators! !
-!STONCStyleCommentsSkipStream categoriesFor: #skipSeparators!public! !
+!STONCStyleCommentsSkipStream categoriesForMethods!
+skipSeparators!public! !
+!
 
 !STONCStyleCommentsSkipStream class methodsFor!
 
@@ -477,8 +541,10 @@ icon
 
 new
 	^DolphinSTONCStyleCommentsSkipStream basicNew! !
-!STONCStyleCommentsSkipStream class categoriesFor: #icon!constants!public! !
-!STONCStyleCommentsSkipStream class categoriesFor: #new!instance creation!public! !
+!STONCStyleCommentsSkipStream class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
 
 !STONJSON class methodsFor!
 
@@ -486,7 +552,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STON icon! !
-!STONJSON class categoriesFor: #icon!constants!public! !
+!STONJSON class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STONReader class methodsFor!
 
@@ -497,8 +565,10 @@ icon
 
 new
 	^DolphinSTONReader basicNew initialize! !
-!STONReader class categoriesFor: #icon!constants!public! !
-!STONReader class categoriesFor: #new!instance creation!private! !
+!STONReader class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!private! !
+!
 
 !STONReference class methodsFor!
 
@@ -506,7 +576,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STON icon! !
-!STONReference class categoriesFor: #icon!constants!public! !
+!STONReference class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STONStreamWriter class methodsFor!
 
@@ -514,7 +586,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STON icon! !
-!STONStreamWriter class categoriesFor: #icon!constants!public! !
+!STONStreamWriter class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STONWriter class methodsFor!
 
@@ -525,8 +599,10 @@ icon
 
 new
 	^DolphinSTONWriter basicNew initialize! !
-!STONWriter class categoriesFor: #icon!constants!public! !
-!STONWriter class categoriesFor: #new!public! !
+!STONWriter class categoriesForMethods!
+icon!constants!public! !
+new!public! !
+!
 
 !SystemDictionary methodsFor!
 
@@ -534,7 +610,9 @@ stonOn: aSTONWriter
 	aSTONWriter 
 		writeObject: self 
 		listSingleton: #Smalltalk! !
-!SystemDictionary categoriesFor: #stonOn:!public! !
+!SystemDictionary categoriesForMethods!
+stonOn:!public! !
+!
 
 !SystemDictionary class methodsFor!
 
@@ -543,7 +621,9 @@ fromSton: stonReader
 	globalName := stonReader parseListSingleton.
 	theClass := self environment at: globalName.
 	^theClass! !
-!SystemDictionary class categoriesFor: #fromSton:!public! !
+!SystemDictionary class categoriesForMethods!
+fromSton:!public! !
+!
 
 !Toolbar class methodsFor!
 
@@ -551,7 +631,9 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^super stonAllInstVarNames copyWithoutAll: #('idMap' 'bitmapsStart')! !
-!Toolbar class categoriesFor: #stonAllInstVarNames!public! !
+!Toolbar class categoriesForMethods!
+stonAllInstVarNames!public! !
+!
 
 !View methodsFor!
 
@@ -569,8 +651,10 @@ stonOn: stonWriter
 	"
 
 	stonWriter writeObject: self extra: self stonExtras! !
-!View categoriesFor: #stonExtras!public!ston! !
-!View categoriesFor: #stonOn:!public!ston! !
+!View categoriesForMethods!
+stonExtras!public!ston! !
+stonOn:!public!ston! !
+!
 
 !View class methodsFor!
 
@@ -581,7 +665,9 @@ stonAllInstVarNames
 		ifTrue: 
 			[#('creationStyle' 'model' 'backcolor' 'preferredExtent' 'flags' 'contextMenu' 'font' 'interactor')	"'presenter'"]
 		ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
-!View class categoriesFor: #stonAllInstVarNames!public!ston! !
+!View class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+!
 
 "End of package definition"!
 

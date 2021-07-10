@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompositeRefactoryChange subclass: #RenameClassChange
 	instanceVariableNames: 'oldName newName'
@@ -57,14 +57,16 @@ renameChangesForClass: aClassName to: newClassName
 	oldName asSymbol == aClassName 
 		ifTrue: [change rename: newClassName to: newName].
 	^change! !
-!RenameClassChange categoriesFor: #=!comparing!public! !
-!RenameClassChange categoriesFor: #changeClass!accessing!public! !
-!RenameClassChange categoriesFor: #executeNotifying:!private! !
-!RenameClassChange categoriesFor: #flattenOnto:!private! !
-!RenameClassChange categoriesFor: #newName!private! !
-!RenameClassChange categoriesFor: #oldName!private! !
-!RenameClassChange categoriesFor: #rename:to:!initialize/release!public! !
-!RenameClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!RenameClassChange categoriesForMethods!
+=!comparing!public! !
+changeClass!accessing!public! !
+executeNotifying:!private! !
+flattenOnto:!private! !
+newName!private! !
+oldName!private! !
+rename:to:!initialize/release!public! !
+renameChangesForClass:to:!accessing!public! !
+!
 
 !RenameClassChange class methodsFor!
 
@@ -72,5 +74,7 @@ rename: oldString to: newString
 	^(self new)
 		rename: oldString to: newString;
 		yourself! !
-!RenameClassChange class categoriesFor: #rename:to:!instance creation!public! !
+!RenameClassChange class categoriesForMethods!
+rename:to:!instance creation!public! !
+!
 

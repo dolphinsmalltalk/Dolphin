@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
 	instanceVariableNames: ''
@@ -19,8 +19,10 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
-!MyOwnCertificationAuthorityCertificate categoriesFor: #publicKey!accessing!public! !
-!MyOwnCertificationAuthorityCertificate categoriesFor: #publisherPublicKey!accessing!private! !
+!MyOwnCertificationAuthorityCertificate categoriesForMethods!
+publicKey!accessing!public! !
+publisherPublicKey!accessing!private! !
+!
 
 !MyOwnCertificationAuthorityCertificate class methodsFor!
 
@@ -75,9 +77,11 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #generate!instance creation!private! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #new!instance creation!public! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #privateKey!constants!private! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #publicKey!constants!public! !
-!MyOwnCertificationAuthorityCertificate class categoriesFor: #validYears!constants!private! !
+!MyOwnCertificationAuthorityCertificate class categoriesForMethods!
+generate!instance creation!private! !
+new!instance creation!public! !
+privateKey!constants!private! !
+publicKey!constants!public! !
+validYears!constants!private! !
+!
 

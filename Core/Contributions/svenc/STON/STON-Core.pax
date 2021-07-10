@@ -212,7 +212,9 @@ stonOn: stonWriter
 	self class == STON associationClass
 		ifTrue: [ stonWriter writeAssociation: self ]
 		ifFalse: [ super stonOn: stonWriter ]! !
-!Association categoriesFor: #stonOn:!public!ston! !
+!Association categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Bag methodsFor!
 
@@ -222,7 +224,9 @@ stonOn: stonWriter
 	stonWriter 
 		writeObject: self 
 		do: [ stonWriter encodeMap: contents ]! !
-!Bag categoriesFor: #stonOn:!public!ston! !
+!Bag categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Bag class methodsFor!
 
@@ -234,7 +238,9 @@ fromSton: stonReader
 	stonReader parseMapDo: [ :key :value |
 		bag add: key withOccurrences: value ].
 	^ bag! !
-!Bag class categoriesFor: #fromSton:!public!ston! !
+!Bag class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Boolean methodsFor!
 
@@ -243,8 +249,10 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeBoolean: self! !
-!Boolean categoriesFor: #stonContainSubObjects!public!ston! !
-!Boolean categoriesFor: #stonOn:!public!ston! !
+!Boolean categoriesForMethods!
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 !ByteArray methodsFor!
 
@@ -255,8 +263,10 @@ stonOn: stonWriter
 	"Use a hex representation"
 	
 	stonWriter writeObject: self listSingleton: self hex! !
-!ByteArray categoriesFor: #stonContainSubObjects!public!ston! !
-!ByteArray categoriesFor: #stonOn:!public!ston! !
+!ByteArray categoriesForMethods!
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 !ByteArray class methodsFor!
 
@@ -264,13 +274,17 @@ fromSton: stonReader
 	"Use a hex representation"
 	
 	^ self readHexFrom: stonReader parseListSingleton! !
-!ByteArray class categoriesFor: #fromSton:!public!ston! !
+!ByteArray class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Character methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: self asString! !
-!Character categoriesFor: #stonOn:!public!ston! !
+!Character categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Character class methodsFor!
 
@@ -279,7 +293,9 @@ fromSton: stonReader
 	To get the full Character we need to read from a stream."
 
 	^ stonReader parseListSingleton readStream next! !
-!Character class categoriesFor: #fromSton:!public!ston! !
+!Character class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Class methodsFor!
 
@@ -287,7 +303,9 @@ stonOn: stonWriter
 	stonWriter 
 		writeObject: self 
 		listSingleton: self name asSymbol! !
-!Class categoriesFor: #stonOn:!public!ston! !
+!Class categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Class class methodsFor!
 
@@ -296,13 +314,17 @@ fromSton: stonReader
 	theClassName := stonReader parseListSingleton.
 	theClass := self environment at: theClassName.
 	^ theClass! !
-!Class class categoriesFor: #fromSton:!public!ston! !
+!Class class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !ClassDescription methodsFor!
 
 stonContainSubObjects
 	^ false! !
-!ClassDescription categoriesFor: #stonContainSubObjects!public!ston! !
+!ClassDescription categoriesForMethods!
+stonContainSubObjects!public!ston! !
+!
 
 !Collection methodsFor!
 
@@ -314,7 +336,9 @@ stonOn: stonWriter
 	stonWriter writeObject: self do: [
 		stonWriter encodeList: self ]
 ! !
-!Collection categoriesFor: #stonOn:!public!ston! !
+!Collection categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Collection class methodsFor!
 
@@ -328,19 +352,25 @@ fromSton: stonReader
 	stonReader parseListDo: [ :each |
 		collection add: each ].
 	^ collection! !
-!Collection class categoriesFor: #fromSton:!public!ston! !
+!Collection class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Color methodsFor!
 
 stonContainSubObjects
 	^ false! !
-!Color categoriesFor: #stonContainSubObjects!public!ston! !
+!Color categoriesForMethods!
+stonContainSubObjects!public!ston! !
+!
 
 !Date methodsFor!
 
 stonContainSubObjects 
 	^ false! !
-!Date categoriesFor: #stonContainSubObjects!accessing!public!ston! !
+!Date categoriesForMethods!
+stonContainSubObjects!accessing!public!ston! !
+!
 
 !DateAndTime methodsFor!
 
@@ -353,14 +383,18 @@ stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: 
 		(String streamContents: [ :stream |
 			self printOn: stream withLeadingSpace: false ])! !
-!DateAndTime categoriesFor: #stonContainSubObjects!public!ston! !
-!DateAndTime categoriesFor: #stonOn:!public!ston! !
+!DateAndTime categoriesForMethods!
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 !DateAndTime class methodsFor!
 
 fromSton: stonReader
 	^ self readFrom: stonReader parseListSingleton readStream! !
-!DateAndTime class categoriesFor: #fromSton:!public!ston! !
+!DateAndTime class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Dictionary methodsFor!
 
@@ -375,7 +409,9 @@ stonOn: stonWriter
 			stonWriter 
 				writeObject: self 
 				do: [ stonWriter encodeMap: self ] ]! !
-!Dictionary categoriesFor: #stonOn:!public! !
+!Dictionary categoriesForMethods!
+stonOn:!public! !
+!
 
 !Dictionary class methodsFor!
 
@@ -388,19 +424,25 @@ fromSton: stonReader
 	stonReader parseMapDo: [ :key :value |
 		dictionary at: key put: value ].
 	^ dictionary! !
-!Dictionary class categoriesFor: #fromSton:!public!ston! !
+!Dictionary class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Fraction methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeFraction: self! !
-!Fraction categoriesFor: #stonOn:!public!ston! !
+!Fraction categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Integer methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeInteger: self! !
-!Integer categoriesFor: #stonOn:!public!ston! !
+!Integer categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Interval methodsFor!
 
@@ -413,8 +455,10 @@ stonOn: stonWriter
 	"Overwritten to get back the standard object behavior"
 
 	stonWriter writeObject: self! !
-!Interval categoriesFor: #fromSton:!public!ston! !
-!Interval categoriesFor: #stonOn:!public!ston! !
+!Interval categoriesForMethods!
+fromSton:!public!ston! !
+stonOn:!public!ston! !
+!
 
 !Interval class methodsFor!
 
@@ -424,7 +468,9 @@ fromSton: stonReader
 	^ self basicNew
 		fromSton: stonReader;
 		yourself! !
-!Interval class categoriesFor: #fromSton:!public!ston! !
+!Interval class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Metaclass methodsFor!
 
@@ -440,9 +486,11 @@ stonOn: stonWriter
 	stonWriter
 		writeObject: self 
 		listSingleton: self instanceSide name asSymbol! !
-!Metaclass categoriesFor: #instanceSide!private! !
-!Metaclass categoriesFor: #stonName!public!ston! !
-!Metaclass categoriesFor: #stonOn:!public!ston! !
+!Metaclass categoriesForMethods!
+instanceSide!private! !
+stonName!public!ston! !
+stonOn:!public!ston! !
+!
 
 !Metaclass class methodsFor!
 
@@ -452,7 +500,9 @@ fromSton: stonReader
 	theClass := self environment at: theClassName.
 	theMetaclass := theClass class.
 	^ theMetaclass! !
-!Metaclass class categoriesFor: #fromSton:!public!ston! !
+!Metaclass class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Number methodsFor!
 
@@ -461,8 +511,10 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeFloat: self asFloat! !
-!Number categoriesFor: #stonContainSubObjects!public!ston! !
-!Number categoriesFor: #stonOn:!public!ston! !
+!Number categoriesForMethods!
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 !Object methodsFor!
 
@@ -518,13 +570,15 @@ stonShouldWriteNilInstVars
 	false otherwise. Overwrite when necessary. By default, return false."
 	
 	^ false! !
-!Object categoriesFor: #fromSton:!public!ston! !
-!Object categoriesFor: #isStonReference!public!ston! !
-!Object categoriesFor: #stonContainSubObjects!public!ston! !
-!Object categoriesFor: #stonOn:!public!ston! !
-!Object categoriesFor: #stonPostReferenceResolution!public!ston! !
-!Object categoriesFor: #stonProcessSubObjects:!public!ston! !
-!Object categoriesFor: #stonShouldWriteNilInstVars!public!ston!testing! !
+!Object categoriesForMethods!
+fromSton:!public!ston! !
+isStonReference!public!ston! !
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+stonPostReferenceResolution!public!ston! !
+stonProcessSubObjects:!public!ston! !
+stonShouldWriteNilInstVars!public!ston!testing! !
+!
 
 !Object class methodsFor!
 
@@ -538,15 +592,19 @@ stonName
 	Use symbols as class name/tag."
 	
 	^ self name! !
-!Object class categoriesFor: #stonAllInstVarNames!public!ston! !
-!Object class categoriesFor: #stonName!public!ston! !
+!Object class categoriesForMethods!
+stonAllInstVarNames!public!ston! !
+stonName!public!ston! !
+!
 
 !Point methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeObject: self streamShortList: [ :array |
 		array add: x; add: y ]! !
-!Point categoriesFor: #stonOn:!public!ston! !
+!Point categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Point class methodsFor!
 
@@ -560,13 +618,17 @@ fromSton: stonReader
 			index == 1 ifTrue: [answer x: each].
 			index == 2 ifTrue: [answer y: each]].
 	^answer! !
-!Point class categoriesFor: #fromSton:!public! !
+!Point class categoriesForMethods!
+fromSton:!public! !
+!
 
 !ScaledDecimal methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeScaledDecimal: self! !
-!ScaledDecimal categoriesFor: #stonOn:!public!ston! !
+!ScaledDecimal categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !SequenceableCollection methodsFor!
 
@@ -577,7 +639,9 @@ stonOn: stonWriter
 	self class == STON listClass
 		ifTrue: [ stonWriter writeList: self ]
 		ifFalse: [ super stonOn: stonWriter ]! !
-!SequenceableCollection categoriesFor: #stonOn:!public!ston! !
+!SequenceableCollection categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !SequenceableCollection class methodsFor!
 
@@ -587,7 +651,9 @@ fromSton: stonReader
 	^ self streamContents: [ :stream |
 		stonReader parseListDo: [ :each |
 			stream nextPut: each ] ]! !
-!SequenceableCollection class categoriesFor: #fromSton:!public!ston! !
+!SequenceableCollection class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !Set methodsFor!
 
@@ -596,7 +662,9 @@ stonPostReferenceResolution
 	Check if I am still healthy and rehash me if not."
 	
 	self isHealthy ifFalse: [ self rehash ]! !
-!Set categoriesFor: #stonPostReferenceResolution!public!ston! !
+!Set categoriesForMethods!
+stonPostReferenceResolution!public!ston! !
+!
 
 !String methodsFor!
 
@@ -605,20 +673,26 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeString: self! !
-!String categoriesFor: #stonContainSubObjects!public!ston! !
-!String categoriesFor: #stonOn:!public!ston! !
+!String categoriesForMethods!
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 !String class methodsFor!
 
 findFirstInString: aSymbol inSet: aByteArray startingAt: anInteger 
 	^Error notYetImplemented! !
-!String class categoriesFor: #findFirstInString:inSet:startingAt:!public! !
+!String class categoriesForMethods!
+findFirstInString:inSet:startingAt:!public! !
+!
 
 !Symbol methodsFor!
 
 stonOn: stonWriter
 	stonWriter writeSymbol: self! !
-!Symbol categoriesFor: #stonOn:!public!ston! !
+!Symbol categoriesForMethods!
+stonOn:!public!ston! !
+!
 
 !Time methodsFor!
 
@@ -640,15 +714,19 @@ stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: 
 		(String streamContents: [ :stream |
 			self print24: true showSeconds: true on: stream ])! !
-!Time categoriesFor: #print24:showSeconds:on:!public!ston! !
-!Time categoriesFor: #stonContainSubObjects!public!ston! !
-!Time categoriesFor: #stonOn:!public!ston! !
+!Time categoriesForMethods!
+print24:showSeconds:on:!public!ston! !
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 !Time class methodsFor!
 
 fromSton: stonReader
 	^ self readFrom: stonReader parseListSingleton readStream! !
-!Time class categoriesFor: #fromSton:!public!ston! !
+!Time class categoriesForMethods!
+fromSton:!public!ston! !
+!
 
 !UndefinedObject methodsFor!
 
@@ -657,8 +735,10 @@ stonContainSubObjects
 
 stonOn: stonWriter
 	stonWriter writeNull! !
-!UndefinedObject categoriesFor: #stonContainSubObjects!public!ston! !
-!UndefinedObject categoriesFor: #stonOn:!public!ston! !
+!UndefinedObject categoriesForMethods!
+stonContainSubObjects!public!ston! !
+stonOn:!public!ston! !
+!
 
 "End of package definition"!
 

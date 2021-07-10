@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DateTimeCommonControl subclass: #MonthCalendarView
 	instanceVariableNames: ''
@@ -169,33 +169,35 @@ state
 
 today
 	^self mcmGetToday asDate! !
-!MonthCalendarView categoriesFor: #calculateExtent:!geometry!private! !
-!MonthCalendarView categoriesFor: #defaultExtent!constants!private! !
-!MonthCalendarView categoriesFor: #dtNotificationMap!private! !
-!MonthCalendarView categoriesFor: #firstDayOfWeek!accessing!public! !
-!MonthCalendarView categoriesFor: #firstDayOfWeek:!accessing!public! !
-!MonthCalendarView categoriesFor: #getRangeMessage!constants!private! !
-!MonthCalendarView categoriesFor: #getSystemTime!accessing!private! !
-!MonthCalendarView categoriesFor: #hasToday!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasToday:!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasTodayCircle!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasTodayCircle:!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasWeekNumbers!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #hasWeekNumbers:!accessing-styles!public! !
-!MonthCalendarView categoriesFor: #mcmGetFirstDayOfWeek!accessing!private! !
-!MonthCalendarView categoriesFor: #mcmGetMinReqRect!accessing!private! !
-!MonthCalendarView categoriesFor: #mcmGetToday!accessing!private! !
-!MonthCalendarView categoriesFor: #mcmSetFirstDayOfWeek:!accessing!private! !
-!MonthCalendarView categoriesFor: #mcnSelChange:!event handling-win32!private! !
-!MonthCalendarView categoriesFor: #mcnSelect:!event handling-win32!private! !
-!MonthCalendarView categoriesFor: #modelClass!accessing!private! !
-!MonthCalendarView categoriesFor: #nmFirst!constants!private! !
-!MonthCalendarView categoriesFor: #onViewCreated!event handling!public! !
-!MonthCalendarView categoriesFor: #setControlBackcolor:!accessing!private! !
-!MonthCalendarView categoriesFor: #setRangeMessage!constants!private! !
-!MonthCalendarView categoriesFor: #setSystemTime:!accessing!private! !
-!MonthCalendarView categoriesFor: #state!accessing!private! !
-!MonthCalendarView categoriesFor: #today!accessing!public! !
+!MonthCalendarView categoriesForMethods!
+calculateExtent:!geometry!private! !
+defaultExtent!constants!private! !
+dtNotificationMap!private! !
+firstDayOfWeek!accessing!public! !
+firstDayOfWeek:!accessing!public! !
+getRangeMessage!constants!private! !
+getSystemTime!accessing!private! !
+hasToday!accessing-styles!public! !
+hasToday:!accessing-styles!public! !
+hasTodayCircle!accessing-styles!public! !
+hasTodayCircle:!accessing-styles!public! !
+hasWeekNumbers!accessing-styles!public! !
+hasWeekNumbers:!accessing-styles!public! !
+mcmGetFirstDayOfWeek!accessing!private! !
+mcmGetMinReqRect!accessing!private! !
+mcmGetToday!accessing!private! !
+mcmSetFirstDayOfWeek:!accessing!private! !
+mcnSelChange:!event handling-win32!private! !
+mcnSelect:!event handling-win32!private! !
+modelClass!accessing!private! !
+nmFirst!constants!private! !
+onViewCreated!event handling!public! !
+setControlBackcolor:!accessing!private! !
+setRangeMessage!constants!private! !
+setSystemTime:!accessing!private! !
+state!accessing!private! !
+today!accessing!public! !
+!
 
 !MonthCalendarView class methodsFor!
 
@@ -208,6 +210,8 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysMonthCal32'! !
-!MonthCalendarView class categoriesFor: #defaultModel!models!public! !
-!MonthCalendarView class categoriesFor: #winClassName!constants!private! !
+!MonthCalendarView class categoriesForMethods!
+defaultModel!models!public! !
+winClassName!constants!private! !
+!
 

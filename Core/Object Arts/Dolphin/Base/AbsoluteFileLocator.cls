@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FileLocator subclass: #AbsoluteFileLocator
 	instanceVariableNames: ''
@@ -35,9 +35,11 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!AbsoluteFileLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!AbsoluteFileLocator categoriesFor: #relativePathTo:!accessing!public! !
-!AbsoluteFileLocator categoriesFor: #stbSaveOn:!binary filing!public! !
+!AbsoluteFileLocator categoriesForMethods!
+localFileSpecFor:!accessing!public! !
+relativePathTo:!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !AbsoluteFileLocator class methodsFor!
 
@@ -65,8 +67,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!AbsoluteFileLocator class categoriesFor: #current!accessing!public! !
-!AbsoluteFileLocator class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!AbsoluteFileLocator class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!AbsoluteFileLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!AbsoluteFileLocator class categoriesForMethods!
+current!accessing!public! !
+onPreStripImage!class hierarchy-removing!private! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

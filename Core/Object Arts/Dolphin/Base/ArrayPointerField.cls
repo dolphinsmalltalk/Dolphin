@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PointerField subclass: #ArrayPointerField
 	instanceVariableNames: 'arrayLength'
@@ -47,9 +47,11 @@ writeInto: anExternalStructure value: anObject
 		of: self
 		in: anExternalStructure.
 	^answer! !
-!ArrayPointerField categoriesFor: #arrayLength:!accessing!private! !
-!ArrayPointerField categoriesFor: #readFrom:!accessing!private! !
-!ArrayPointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!ArrayPointerField categoriesForMethods!
+arrayLength:!accessing!private! !
+readFrom:!accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !ArrayPointerField class methodsFor!
 
@@ -67,6 +69,8 @@ type: aClass length: anInteger
 	pointers to arrays objects of type aClass, of the specified fixed <integer> length."
 
 	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
-!ArrayPointerField class categoriesFor: #type:arrayLength:!instance creation!public! !
-!ArrayPointerField class categoriesFor: #type:length:!instance creation!public! !
+!ArrayPointerField class categoriesForMethods!
+type:arrayLength:!instance creation!public! !
+type:length:!instance creation!public! !
+!
 

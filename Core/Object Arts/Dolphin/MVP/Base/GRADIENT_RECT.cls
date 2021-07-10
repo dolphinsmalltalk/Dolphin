@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #GRADIENT_RECT
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ upperLeft: anInteger
 	"Set the receiver's 'upperLeft' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_upperLeft put: anInteger! !
-!GRADIENT_RECT categoriesFor: #lowerRight!**compiled accessors**!public! !
-!GRADIENT_RECT categoriesFor: #lowerRight:!**compiled accessors**!public! !
-!GRADIENT_RECT categoriesFor: #upperLeft!**compiled accessors**!public! !
-!GRADIENT_RECT categoriesFor: #upperLeft:!**compiled accessors**!public! !
+!GRADIENT_RECT categoriesForMethods!
+lowerRight!**compiled accessors**!public! !
+lowerRight:!**compiled accessors**!public! !
+upperLeft!**compiled accessors**!public! !
+upperLeft:!**compiled accessors**!public! !
+!
 
 !GRADIENT_RECT class methodsFor!
 
@@ -70,6 +72,8 @@ defineFields
 
 getFieldNames
 	^#(#upperLeft #lowerRight)! !
-!GRADIENT_RECT class categoriesFor: #defineFields!public!template definition! !
-!GRADIENT_RECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GRADIENT_RECT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

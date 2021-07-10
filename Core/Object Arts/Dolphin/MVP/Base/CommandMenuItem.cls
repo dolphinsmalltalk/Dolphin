@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MenuItem subclass: #CommandMenuItem
 	instanceVariableNames: 'commandDescription image _reserved'
@@ -179,35 +179,37 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self commandDescription menuText! !
-!CommandMenuItem categoriesFor: #acceleratorKey!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKey:!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKeyString!accessing!public! !
-!CommandMenuItem categoriesFor: #acceleratorKeyString:!accessing!public! !
-!CommandMenuItem categoriesFor: #command:!accessing!public! !
-!CommandMenuItem categoriesFor: #commandDescription!accessing!private! !
-!CommandMenuItem categoriesFor: #commandDescription:!accessing!private! !
-!CommandMenuItem categoriesFor: #commandString!accessing!public! !
-!CommandMenuItem categoriesFor: #commandString:!accessing!public! !
-!CommandMenuItem categoriesFor: #description!accessing!public! !
-!CommandMenuItem categoriesFor: #description:!accessing!public! !
-!CommandMenuItem categoriesFor: #displayOn:!displaying!public! !
-!CommandMenuItem categoriesFor: #id!accessing!public! !
-!CommandMenuItem categoriesFor: #image!accessing!public! !
-!CommandMenuItem categoriesFor: #image:!accessing!public! !
-!CommandMenuItem categoriesFor: #isDefault!accessing!public! !
-!CommandMenuItem categoriesFor: #isDefault:!accessing!public! !
-!CommandMenuItem categoriesFor: #isModalCommand!public!testing! !
-!CommandMenuItem categoriesFor: #isModalCommand:!accessing!public! !
-!CommandMenuItem categoriesFor: #isRadioButtonStyle!accessing!public! !
-!CommandMenuItem categoriesFor: #isRadioButtonStyle:!accessing!public! !
-!CommandMenuItem categoriesFor: #itemWithId:!accessing!public! !
-!CommandMenuItem categoriesFor: #populateItemInfo:!private!realizing/unrealizing! !
-!CommandMenuItem categoriesFor: #postCopy!copying!public! !
-!CommandMenuItem categoriesFor: #queryAlong:!operations!public! !
-!CommandMenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
-!CommandMenuItem categoriesFor: #stbSaveOn:!binary filing!public! !
-!CommandMenuItem categoriesFor: #text!accessing!public! !
+!CommandMenuItem categoriesForMethods!
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!public! !
+acceleratorKeyDisplayString!accessing!public! !
+acceleratorKeyString!accessing!public! !
+acceleratorKeyString:!accessing!public! !
+command:!accessing!public! !
+commandDescription!accessing!private! !
+commandDescription:!accessing!private! !
+commandString!accessing!public! !
+commandString:!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!displaying!public! !
+id!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+isDefault!accessing!public! !
+isDefault:!accessing!public! !
+isModalCommand!public!testing! !
+isModalCommand:!accessing!public! !
+isRadioButtonStyle!accessing!public! !
+isRadioButtonStyle:!accessing!public! !
+itemWithId:!accessing!public! !
+populateItemInfo:!private!realizing/unrealizing! !
+postCopy!copying!public! !
+queryAlong:!operations!public! !
+registerAcceleratorKeyIn:!menus!public! !
+stbSaveOn:!binary filing!public! !
+text!accessing!public! !
+!
 
 CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
@@ -249,10 +251,12 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!CommandMenuItem class categoriesFor: #command:description:!instance creation!public! !
-!CommandMenuItem class categoriesFor: #command:description:image:!instance creation!public! !
-!CommandMenuItem class categoriesFor: #commandDescription:!instance creation!public! !
-!CommandMenuItem class categoriesFor: #initialize!development!initializing!private! !
-!CommandMenuItem class categoriesFor: #new!instance creation!public! !
-!CommandMenuItem class categoriesFor: #stbVersion!binary filing!public! !
+!CommandMenuItem class categoriesForMethods!
+command:description:!instance creation!public! !
+command:description:image:!instance creation!public! !
+commandDescription:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+stbVersion!binary filing!public! !
+!
 

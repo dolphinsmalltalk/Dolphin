@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpColorPalette
 	instanceVariableNames: ''
@@ -68,12 +68,14 @@ Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger! !
-!GpColorPalette categoriesFor: #Count!**compiled accessors**!public! !
-!GpColorPalette categoriesFor: #Count:!**compiled accessors**!public! !
-!GpColorPalette categoriesFor: #Entries!accessing!public! !
-!GpColorPalette categoriesFor: #Entries:!accessing!public! !
-!GpColorPalette categoriesFor: #Flags!**compiled accessors**!public! !
-!GpColorPalette categoriesFor: #Flags:!**compiled accessors**!public! !
+!GpColorPalette categoriesForMethods!
+Count!**compiled accessors**!public! !
+Count:!**compiled accessors**!public! !
+Entries!accessing!public! !
+Entries:!accessing!public! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+!
 
 !GpColorPalette class methodsFor!
 
@@ -103,6 +105,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Count #Entries)! !
-!GpColorPalette class categoriesFor: #defineFields!public!template definition! !
-!GpColorPalette class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpColorPalette class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

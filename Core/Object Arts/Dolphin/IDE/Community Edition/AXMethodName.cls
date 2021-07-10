@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #AXMethodName
 	instanceVariableNames: 'keywords argumentNames indices'
@@ -68,16 +68,18 @@ setKeywords: keywordsCollection argumentNames: argsCollection indices: indexColl
 	argumentNames := argsCollection.
 	indices := indexCollection.
 	^self! !
-!AXMethodName categoriesFor: #argumentCount!accessing!public! !
-!AXMethodName categoriesFor: #argumentNames!accessing!public! !
-!AXMethodName categoriesFor: #indices!accessing!public! !
-!AXMethodName categoriesFor: #keywords!accessing!public! !
-!AXMethodName categoriesFor: #primary!accessing!public! !
-!AXMethodName categoriesFor: #printOn:!printing!public! !
-!AXMethodName categoriesFor: #printSelectorOn:!printing!public! !
-!AXMethodName categoriesFor: #printSignatureOn:!printing!public! !
-!AXMethodName categoriesFor: #selector!accessing!public! !
-!AXMethodName categoriesFor: #setKeywords:argumentNames:indices:!initializing!private! !
+!AXMethodName categoriesForMethods!
+argumentCount!accessing!public! !
+argumentNames!accessing!public! !
+indices!accessing!public! !
+keywords!accessing!public! !
+primary!accessing!public! !
+printOn:!printing!public! !
+printSelectorOn:!printing!public! !
+printSignatureOn:!printing!public! !
+selector!accessing!public! !
+setKeywords:argumentNames:indices:!initializing!private! !
+!
 
 !AXMethodName class methodsFor!
 
@@ -91,6 +93,8 @@ keywords: keywordsCollection argumentNames: argumentsCollection indices: indexCo
 		setKeywords: keywordsCollection
 		argumentNames: argumentsCollection
 		indices: indexCollection! !
-!AXMethodName class categoriesFor: #icon!constants!public! !
-!AXMethodName class categoriesFor: #keywords:argumentNames:indices:!instance creation!public! !
+!AXMethodName class categoriesForMethods!
+icon!constants!public! !
+keywords:argumentNames:indices:!instance creation!public! !
+!
 

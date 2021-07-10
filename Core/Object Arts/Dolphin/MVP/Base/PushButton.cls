@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommandButton subclass: #PushButton
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
@@ -246,32 +246,34 @@ text: aString
 
 	super text: aString.
 	commandDescription description: aString! !
-!PushButton categoriesFor: #baseCreationStyle!private!realizing/unrealizing! !
-!PushButton categoriesFor: #bmSetStyle:wParam:lParam:!event handling-win32!private! !
-!PushButton categoriesFor: #command:id:!commands!private! !
-!PushButton categoriesFor: #defaultWindowStyle!constants!private! !
-!PushButton categoriesFor: #getNote!helpers!private! !
-!PushButton categoriesFor: #hasFlatAppearance!accessing-styles!public! !
-!PushButton categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
-!PushButton categoriesFor: #id:!accessing!public! !
-!PushButton categoriesFor: #image!accessing!public! !
-!PushButton categoriesFor: #image:!accessing!public! !
-!PushButton categoriesFor: #initialize!initializing!private! !
-!PushButton categoriesFor: #isChecked!accessing!public! !
-!PushButton categoriesFor: #isChecked:!accessing!public! !
-!PushButton categoriesFor: #isDefault!public!testing! !
-!PushButton categoriesFor: #isDefault:!accessing-styles!public! !
-!PushButton categoriesFor: #isMultiline!accessing-styles!public! !
-!PushButton categoriesFor: #isMultiline:!accessing-styles!public! !
-!PushButton categoriesFor: #note!accessing!public! !
-!PushButton categoriesFor: #note:!accessing!public! !
-!PushButton categoriesFor: #onDestroyed!event handling!private! !
-!PushButton categoriesFor: #onViewCreated!event handling!public! !
-!PushButton categoriesFor: #setDefault:!accessing-styles!private! !
-!PushButton categoriesFor: #setNote!helpers!private! !
-!PushButton categoriesFor: #style!accessing!public! !
-!PushButton categoriesFor: #style:!accessing!public! !
-!PushButton categoriesFor: #text:!accessing!public! !
+!PushButton categoriesForMethods!
+baseCreationStyle!private!realizing/unrealizing! !
+bmSetStyle:wParam:lParam:!event handling-win32!private! !
+command:id:!commands!private! !
+defaultWindowStyle!constants!private! !
+getNote!helpers!private! !
+hasFlatAppearance!accessing-styles!public! !
+hasFlatAppearance:!accessing-styles!public! !
+id:!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+initialize!initializing!private! !
+isChecked!accessing!public! !
+isChecked:!accessing!public! !
+isDefault!public!testing! !
+isDefault:!accessing-styles!public! !
+isMultiline!accessing-styles!public! !
+isMultiline:!accessing-styles!public! !
+note!accessing!public! !
+note:!accessing!public! !
+onDestroyed!event handling!private! !
+onViewCreated!event handling!public! !
+setDefault:!accessing-styles!private! !
+setNote!helpers!private! !
+style!accessing!public! !
+style:!accessing!public! !
+text:!accessing!public! !
+!
 
 PushButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 
@@ -392,18 +394,20 @@ winClassName
 
 	^'BUTTON'
 ! !
-!PushButton class categoriesFor: #buttonMessageMappings!constants!must not strip!private! !
-!PushButton class categoriesFor: #icon!constants!public! !
-!PushButton class categoriesFor: #initialize!development!initializing!private! !
-!PushButton class categoriesFor: #resource_Cancel_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_No_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_OK_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_Push_and_check!public!resources-views! !
-!PushButton class categoriesFor: #resource_Push_button!public!resources-views! !
-!PushButton class categoriesFor: #resource_Yes_button!public!resources-views! !
-!PushButton class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!PushButton class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!PushButton class categoriesFor: #stbVersion!public! !
-!PushButton class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!PushButton class categoriesFor: #winClassName!constants!private! !
+!PushButton class categoriesForMethods!
+buttonMessageMappings!constants!must not strip!private! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Cancel_button!public!resources-views! !
+resource_No_button!public!resources-views! !
+resource_OK_button!public!resources-views! !
+resource_Push_and_check!public!resources-views! !
+resource_Push_button!public!resources-views! !
+resource_Yes_button!public!resources-views! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+stbVersion!public! !
+uninitialize!class hierarchy-removing!private! !
+winClassName!constants!private! !
+!
 

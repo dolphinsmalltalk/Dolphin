@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBCollectionProxy subclass: #STBIdentityDictionaryProxy
 	instanceVariableNames: ''
@@ -20,7 +20,9 @@ value
 		by: 2
 		do: [:i | inst at: (array at: i) put: (array at: i + 1)].
 	^inst! !
-!STBIdentityDictionaryProxy categoriesFor: #value!converting!public! !
+!STBIdentityDictionaryProxy categoriesForMethods!
+value!converting!public! !
+!
 
 !STBIdentityDictionaryProxy class methodsFor!
 
@@ -39,5 +41,7 @@ forCollection: anIdentityDictionary
 		class: anIdentityDictionary class
 		array: tempStream grabContents
 ! !
-!STBIdentityDictionaryProxy class categoriesFor: #forCollection:!instance creation!public! !
+!STBIdentityDictionaryProxy class categoriesForMethods!
+forCollection:!instance creation!public! !
+!
 

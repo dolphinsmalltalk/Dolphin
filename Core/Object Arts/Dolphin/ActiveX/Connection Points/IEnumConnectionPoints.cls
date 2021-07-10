@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IEnumUnknown subclass: #IEnumConnectionPoints
 	instanceVariableNames: ''
@@ -23,6 +23,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IConnectionPoint! !
-!IEnumConnectionPoints class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumConnectionPoints class categoriesFor: #elementClass!constants!public! !
+!IEnumConnectionPoints class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

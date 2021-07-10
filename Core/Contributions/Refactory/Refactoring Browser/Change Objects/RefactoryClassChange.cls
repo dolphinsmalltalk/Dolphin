@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryChange subclass: #RefactoryClassChange
 	instanceVariableNames: 'className isMeta'
@@ -76,19 +76,21 @@ renameChangesForClass: aClassName to: newClassName
 				changeClassName: newClassName;
 				yourself].
 	^self! !
-!RefactoryClassChange categoriesFor: #=!comparing!public! !
-!RefactoryClassChange categoriesFor: #asUndoOperation!converting!public! !
-!RefactoryClassChange categoriesFor: #changeClass!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeClass:!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeClassName!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeClassName:!accessing!public! !
-!RefactoryClassChange categoriesFor: #changeString!printing!public! !
-!RefactoryClassChange categoriesFor: #displayClassName!printing!public! !
-!RefactoryClassChange categoriesFor: #executeNotifying:!private! !
-!RefactoryClassChange categoriesFor: #hash!comparing!public! !
-!RefactoryClassChange categoriesFor: #isMeta!private! !
-!RefactoryClassChange categoriesFor: #methodSourceFor:!accessing!public! !
-!RefactoryClassChange categoriesFor: #primitiveExecute!private! !
-!RefactoryClassChange categoriesFor: #printOn:!printing!public! !
-!RefactoryClassChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!RefactoryClassChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+changeClass!accessing!public! !
+changeClass:!accessing!public! !
+changeClassName!accessing!public! !
+changeClassName:!accessing!public! !
+changeString!printing!public! !
+displayClassName!printing!public! !
+executeNotifying:!private! !
+hash!comparing!public! !
+isMeta!private! !
+methodSourceFor:!accessing!public! !
+primitiveExecute!private! !
+printOn:!printing!public! !
+renameChangesForClass:to:!accessing!public! !
+!
 

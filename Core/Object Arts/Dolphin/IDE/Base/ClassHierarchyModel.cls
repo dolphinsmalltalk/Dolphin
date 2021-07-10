@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualTreeModel subclass: #ClassHierarchyModel
 	instanceVariableNames: ''
@@ -54,14 +54,16 @@ setRoots: aCollection
 
 	super setRoots: aCollection.
 	self observeEnvironment! !
-!ClassHierarchyModel categoriesFor: #approxSize!accessing!private! !
-!ClassHierarchyModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!ClassHierarchyModel categoriesFor: #defaultGetParentBlock!initializing!private! !
-!ClassHierarchyModel categoriesFor: #observeEnvironment!initializing!private! !
-!ClassHierarchyModel categoriesFor: #onClassAdded:!event handling!public! !
-!ClassHierarchyModel categoriesFor: #onClassRemoved:!event handling!public! !
-!ClassHierarchyModel categoriesFor: #onClassUpdated:!event handling!public! !
-!ClassHierarchyModel categoriesFor: #setRoots:!initializing!private! !
+!ClassHierarchyModel categoriesForMethods!
+approxSize!accessing!private! !
+defaultGetChildrenBlock!initializing!private! !
+defaultGetParentBlock!initializing!private! !
+observeEnvironment!initializing!private! !
+onClassAdded:!event handling!public! !
+onClassRemoved:!event handling!public! !
+onClassUpdated:!event handling!public! !
+setRoots:!initializing!private! !
+!
 
 !ClassHierarchyModel class methodsFor!
 
@@ -70,5 +72,7 @@ withAllClasses
 
 	^self withRoots: Smalltalk allRoots
 ! !
-!ClassHierarchyModel class categoriesFor: #withAllClasses!instance creation!public! !
+!ClassHierarchyModel class categoriesForMethods!
+withAllClasses!instance creation!public! !
+!
 

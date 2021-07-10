@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestResource subclass: #DBConnectionTestResource
 	instanceVariableNames: 'connection isAvailable'
@@ -42,12 +42,14 @@ setUp
 
 tearDown
 	self dropDatabase! !
-!DBConnectionTestResource categoriesFor: #connect!private! !
-!DBConnectionTestResource categoriesFor: #connection!private! !
-!DBConnectionTestResource categoriesFor: #connectString!private! !
-!DBConnectionTestResource categoriesFor: #createDatabase!private! !
-!DBConnectionTestResource categoriesFor: #dropDatabase!private! !
-!DBConnectionTestResource categoriesFor: #newConnection!public! !
-!DBConnectionTestResource categoriesFor: #setUp!public! !
-!DBConnectionTestResource categoriesFor: #tearDown!public! !
+!DBConnectionTestResource categoriesForMethods!
+connect!private! !
+connection!private! !
+connectString!private! !
+createDatabase!private! !
+dropDatabase!private! !
+newConnection!public! !
+setUp!public! !
+tearDown!public! !
+!
 

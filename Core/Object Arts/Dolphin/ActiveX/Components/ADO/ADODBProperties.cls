@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_Collection subclass: #ADODBProperties
 	instanceVariableNames: ''
@@ -50,8 +50,10 @@ item: index
 	answer := ADODBProperty newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBProperties categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Properties!private! !
-!ADODBProperties categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODBProperties categoriesForMethods!
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Properties!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODBProperties class methodsFor!
 
@@ -63,5 +65,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant ADODBProperty**'
 ! !
-!ADODBProperties class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBProperties class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

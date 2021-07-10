@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 nil subclass: #ProtoObject
 	instanceVariableNames: ''
@@ -157,20 +157,22 @@ primitiveFailed: anInteger
 	"Generate an error to the effect that a primitive has failed, including the failure code specified by the primitive."
 
 	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger! !
-!ProtoObject categoriesFor: #~~!comparing!public! !
-!ProtoObject categoriesFor: #==!comparing!public! !
-!ProtoObject categoriesFor: #allReferences!enumerating!public! !
-!ProtoObject categoriesFor: #basicClass!accessing!public! !
-!ProtoObject categoriesFor: #basicIdentityHash!comparing!public! !
-!ProtoObject categoriesFor: #basicPrintOn:!printing!public! !
-!ProtoObject categoriesFor: #basicPrintString!printing!public! !
-!ProtoObject categoriesFor: #basicSize!accessing!private! !
-!ProtoObject categoriesFor: #become:!mutating!public! !
-!ProtoObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!ProtoObject categoriesFor: #error:!exceptions!public! !
-!ProtoObject categoriesFor: #identityHash!comparing!public! !
-!ProtoObject categoriesFor: #instVarAt:!accessing!private! !
-!ProtoObject categoriesFor: #isKindOf:!public!testing! !
-!ProtoObject categoriesFor: #oneWayBecome:!mutating!public! !
-!ProtoObject categoriesFor: #primitiveFailed:!exceptions!public! !
+!ProtoObject categoriesForMethods!
+~~!comparing!public! !
+==!comparing!public! !
+allReferences!enumerating!public! !
+basicClass!accessing!public! !
+basicIdentityHash!comparing!public! !
+basicPrintOn:!printing!public! !
+basicPrintString!printing!public! !
+basicSize!accessing!private! !
+become:!mutating!public! !
+doesNotUnderstand:!exceptions!public! !
+error:!exceptions!public! !
+identityHash!comparing!public! !
+instVarAt:!accessing!private! !
+isKindOf:!public!testing! !
+oneWayBecome:!mutating!public! !
+primitiveFailed:!exceptions!public! !
+!
 

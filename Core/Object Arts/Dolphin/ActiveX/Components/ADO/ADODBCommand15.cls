@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_ADO subclass: #ADODBCommand15
 	instanceVariableNames: ''
@@ -386,41 +386,43 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self parameters! !
-!ADODBCommand15 categoriesFor: #activeConnection!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #activeConnection:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandText!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandText:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandTimeout!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandTimeout:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandType!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #commandType:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #createParameter!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #createParameter:type:direction:size:value:!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #CreateParameter:Type:Direction:Size:Value:ppiprm:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #execute!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #execute:options:!**auto generated**!methods!public! !
-!ADODBCommand15 categoriesFor: #Execute:Parameters:Options:ppiRs:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_Parameters:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #get_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #name!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #name:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #parameters!properties!public! !
-!ADODBCommand15 categoriesFor: #prepared!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #prepared:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #put_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_Name:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #put_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #putref_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
-!ADODBCommand15 categoriesFor: #setActiveConnection:!**auto generated**!properties!public! !
-!ADODBCommand15 categoriesFor: #value!**auto generated**!properties!public! !
+!ADODBCommand15 categoriesForMethods!
+activeConnection!**auto generated**!properties!public! !
+activeConnection:!**auto generated**!properties!public! !
+commandText!**auto generated**!properties!public! !
+commandText:!**auto generated**!properties!public! !
+commandTimeout!**auto generated**!properties!public! !
+commandTimeout:!**auto generated**!properties!public! !
+commandType!**auto generated**!properties!public! !
+commandType:!**auto generated**!properties!public! !
+createParameter!**auto generated**!methods!public! !
+createParameter:type:direction:size:value:!**auto generated**!methods!public! !
+CreateParameter:Type:Direction:Size:Value:ppiprm:!**auto generated**!COM Interfaces-Command15!private! !
+execute!**auto generated**!methods!public! !
+execute:options:!**auto generated**!methods!public! !
+Execute:Parameters:Options:ppiRs:!**auto generated**!COM Interfaces-Command15!private! !
+get_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
+get_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
+get_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
+get_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
+get_Name:!**auto generated**!COM Interfaces-Command15!private! !
+get_Parameters:!**auto generated**!COM Interfaces-Command15!private! !
+get_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
+name!**auto generated**!properties!public! !
+name:!**auto generated**!properties!public! !
+parameters!properties!public! !
+prepared!**auto generated**!properties!public! !
+prepared:!**auto generated**!properties!public! !
+put_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
+put_CommandText:!**auto generated**!COM Interfaces-Command15!private! !
+put_CommandTimeout:!**auto generated**!COM Interfaces-Command15!private! !
+put_CommandType:!**auto generated**!COM Interfaces-Command15!private! !
+put_Name:!**auto generated**!COM Interfaces-Command15!private! !
+put_Prepared:!**auto generated**!COM Interfaces-Command15!private! !
+putref_ActiveConnection:!**auto generated**!COM Interfaces-Command15!private! !
+setActiveConnection:!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+!
 
 !ADODBCommand15 class methodsFor!
 
@@ -462,5 +464,7 @@ defineFunctions
 		defineFunction: #put_Name:
 			argumentTypes: 'bstr'
 ! !
-!ADODBCommand15 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBCommand15 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

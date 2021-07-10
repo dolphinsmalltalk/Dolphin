@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HistoryBrowser subclass: #ClassHistoryBrowser
 	instanceVariableNames: 'class list'
@@ -149,20 +149,22 @@ updateHistory
 						at: 4 put: (selectorChunks select: [:each | each isFromChanges]) size;
 						yourself)].
 	list list: methodHistory! !
-!ClassHistoryBrowser categoriesFor: #about!commands!public! !
-!ClassHistoryBrowser categoriesFor: #browseHistory!commands!public! !
-!ClassHistoryBrowser categoriesFor: #browseMethod!commands!public! !
-!ClassHistoryBrowser categoriesFor: #createComponents!initializing!public! !
-!ClassHistoryBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!ClassHistoryBrowser categoriesFor: #historyStatusFor:in:!helpers!public! !
-!ClassHistoryBrowser categoriesFor: #onImageChanged:!event handling!public! !
-!ClassHistoryBrowser categoriesFor: #onMethodAdded:!event handling!public! !
-!ClassHistoryBrowser categoriesFor: #onMethodRemoved:!event handling!public! !
-!ClassHistoryBrowser categoriesFor: #onMethodUpdated:!event handling!public! !
-!ClassHistoryBrowser categoriesFor: #onViewClosed!event handling!public! !
-!ClassHistoryBrowser categoriesFor: #queryCommand:!commands!public! !
-!ClassHistoryBrowser categoriesFor: #setClass:!initializing!public! !
-!ClassHistoryBrowser categoriesFor: #updateHistory!initializing!public! !
+!ClassHistoryBrowser categoriesForMethods!
+about!commands!public! !
+browseHistory!commands!public! !
+browseMethod!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+historyStatusFor:in:!helpers!public! !
+onImageChanged:!event handling!public! !
+onMethodAdded:!event handling!public! !
+onMethodRemoved:!event handling!public! !
+onMethodUpdated:!event handling!public! !
+onViewClosed!event handling!public! !
+queryCommand:!commands!public! !
+setClass:!initializing!public! !
+updateHistory!initializing!public! !
+!
 
 !ClassHistoryBrowser class methodsFor!
 
@@ -178,6 +180,8 @@ resource_Default_view
 
 showOnClass: aClass
 	^self show setClass: aClass! !
-!ClassHistoryBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!ClassHistoryBrowser class categoriesFor: #showOnClass:!instance creation!public! !
+!ClassHistoryBrowser class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+showOnClass:!instance creation!public! !
+!
 

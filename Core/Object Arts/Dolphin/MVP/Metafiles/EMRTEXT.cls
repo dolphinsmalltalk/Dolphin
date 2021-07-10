@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #EMRTEXT
 	instanceVariableNames: ''
@@ -100,18 +100,20 @@ rcl: aRECT
 		from: ##(_OffsetOf_rcl + 1)
 		to: ##(_OffsetOf_rcl + RECT basicByteSize)
 		startingAt: 1! !
-!EMRTEXT categoriesFor: #fOptions!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #fOptions:!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #nChars!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #nChars:!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #offDx!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #offDx:!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #offString!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #offString:!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #ptlReference!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #ptlReference:!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #rcl!**compiled accessors**!public! !
-!EMRTEXT categoriesFor: #rcl:!**compiled accessors**!public! !
+!EMRTEXT categoriesForMethods!
+fOptions!**compiled accessors**!public! !
+fOptions:!**compiled accessors**!public! !
+nChars!**compiled accessors**!public! !
+nChars:!**compiled accessors**!public! !
+offDx!**compiled accessors**!public! !
+offDx:!**compiled accessors**!public! !
+offString!**compiled accessors**!public! !
+offString:!**compiled accessors**!public! !
+ptlReference!**compiled accessors**!public! !
+ptlReference:!**compiled accessors**!public! !
+rcl!**compiled accessors**!public! !
+rcl:!**compiled accessors**!public! !
+!
 
 !EMRTEXT class methodsFor!
 
@@ -142,6 +144,8 @@ defineFields
 
 getFieldNames
 	^#(#ptlReference #nChars #offString #fOptions #rcl #offDx)! !
-!EMRTEXT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRTEXT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!EMRTEXT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #WriteFileStreamANSITest
 	instanceVariableNames: 'writeFileStream'
@@ -89,24 +89,26 @@ testXspace
 testXtab
 	" <puttableStream>#tab "
 	#'File Stream'.! !
-!WriteFileStreamANSITest categoriesFor: #canonicalObject!public! !
-!WriteFileStreamANSITest categoriesFor: #protocol!public! !
-!WriteFileStreamANSITest categoriesFor: #setUp!public! !
-!WriteFileStreamANSITest categoriesFor: #tearDown!public! !
-!WriteFileStreamANSITest categoriesFor: #testXclose!public! !
-!WriteFileStreamANSITest categoriesFor: #testXcontents!public! !
-!WriteFileStreamANSITest categoriesFor: #testXcr!public! !
-!WriteFileStreamANSITest categoriesFor: #testXexternalType!public! !
-!WriteFileStreamANSITest categoriesFor: #testXflush!public! !
-!WriteFileStreamANSITest categoriesFor: #testXisBinary!public! !
-!WriteFileStreamANSITest categoriesFor: #testXisEmpty!public! !
-!WriteFileStreamANSITest categoriesFor: #testXisText!public! !
-!WriteFileStreamANSITest categoriesFor: #testXnextPutAllX!public! !
-!WriteFileStreamANSITest categoriesFor: #testXnextPutX!public! !
-!WriteFileStreamANSITest categoriesFor: #testXposition!public! !
-!WriteFileStreamANSITest categoriesFor: #testXpositionX!public! !
-!WriteFileStreamANSITest categoriesFor: #testXreset!public! !
-!WriteFileStreamANSITest categoriesFor: #testXsetToEnd!public! !
-!WriteFileStreamANSITest categoriesFor: #testXspace!public! !
-!WriteFileStreamANSITest categoriesFor: #testXtab!public! !
+!WriteFileStreamANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+tearDown!public! !
+testXclose!public! !
+testXcontents!public! !
+testXcr!public! !
+testXexternalType!public! !
+testXflush!public! !
+testXisBinary!public! !
+testXisEmpty!public! !
+testXisText!public! !
+testXnextPutAllX!public! !
+testXnextPutX!public! !
+testXposition!public! !
+testXpositionX!public! !
+testXreset!public! !
+testXsetToEnd!public! !
+testXspace!public! !
+testXtab!public! !
+!
 

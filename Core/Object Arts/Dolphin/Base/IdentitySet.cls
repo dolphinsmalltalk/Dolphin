@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Set variableSubclass: #IdentitySet
 	instanceVariableNames: ''
@@ -36,7 +36,9 @@ identityIncludes: anObject
 	identical."
 
 	^(self basicAt: (self findElementOrNil: anObject)) notNil! !
-!IdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!IdentitySet categoriesFor: #hash:max:!private!searching! !
-!IdentitySet categoriesFor: #identityIncludes:!public!searching! !
+!IdentitySet categoriesForMethods!
+findElementOrNil:!private!searching! !
+hash:max:!private!searching! !
+identityIncludes:!public!searching! !
+!
 

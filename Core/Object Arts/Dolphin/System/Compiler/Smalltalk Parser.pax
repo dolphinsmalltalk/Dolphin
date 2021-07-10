@@ -328,7 +328,9 @@ parseTreeFor: aSymbol
 	^SmalltalkParser parseMethod: (self sourceCodeAt: aSymbol)
 		in: self
 		onError: [:aString :pos | ^nil]! !
-!Behavior categoriesFor: #parseTreeFor:!public!RefactoringBrowser! !
+!Behavior categoriesForMethods!
+parseTreeFor:!public!RefactoringBrowser! !
+!
 
 !CompiledCode methodsFor!
 
@@ -340,9 +342,11 @@ parseTreeNoError
 
 parseTreeOnError: aBlock 
 	^self subclassResponsibility! !
-!CompiledCode categoriesFor: #parseTree!parsing!public! !
-!CompiledCode categoriesFor: #parseTreeNoError!parsing!public! !
-!CompiledCode categoriesFor: #parseTreeOnError:!parsing!public! !
+!CompiledCode categoriesForMethods!
+parseTree!parsing!public! !
+parseTreeNoError!parsing!public! !
+parseTreeOnError:!parsing!public! !
+!
 
 !CompiledExpression methodsFor!
 
@@ -351,7 +355,9 @@ parseTreeOnError: aBlock
 		parseExpression: self getSource
 		in: self methodClass
 		onError: aBlock! !
-!CompiledExpression categoriesFor: #parseTreeOnError:!parsing!public! !
+!CompiledExpression categoriesForMethods!
+parseTreeOnError:!parsing!public! !
+!
 
 !CompiledMethod methodsFor!
 
@@ -360,7 +366,9 @@ parseTreeOnError: aBlock
 		parseMethod: self getSource
 		in: self methodClass
 		onError: aBlock! !
-!CompiledMethod categoriesFor: #parseTreeOnError:!parsing!public! !
+!CompiledMethod categoriesForMethods!
+parseTreeOnError:!parsing!public! !
+!
 
 !CompileFailedMethod methodsFor!
 
@@ -369,7 +377,9 @@ accessesInstVar: aString at: anInteger
 	is the instance variable of its method class with the specified <integer> index."
 
 	^self refersToVariable: aString! !
-!CompileFailedMethod categoriesFor: #accessesInstVar:at:!development!public!testing! !
+!CompileFailedMethod categoriesForMethods!
+accessesInstVar:at:!development!public!testing! !
+!
 
 "End of package definition"!
 

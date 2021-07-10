@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Error subclass: #FileException
 	instanceVariableNames: 'file resumable'
@@ -34,11 +34,13 @@ isResumable
 setFile: aFile resumable: aBoolean 
 	file := aFile.
 	resumable := aBoolean! !
-!FileException categoriesFor: #_descriptionArguments!displaying!public! !
-!FileException categoriesFor: #_descriptionFormat!displaying!public! !
-!FileException categoriesFor: #file!accessing!public! !
-!FileException categoriesFor: #isResumable!public!testing! !
-!FileException categoriesFor: #setFile:resumable:!accessing!private! !
+!FileException categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+file!accessing!public! !
+isResumable!public!testing! !
+setFile:resumable:!accessing!private! !
+!
 
 !FileException class methodsFor!
 
@@ -61,8 +63,10 @@ signalOn: aFile
 
 signalOn: aFile resumable: aBoolean 
 	^(self on: aFile resumable: aBoolean) signal! !
-!FileException class categoriesFor: #on:!instance creation!public! !
-!FileException class categoriesFor: #on:resumable:!instance creation!public! !
-!FileException class categoriesFor: #signalOn:!instance creation!public! !
-!FileException class categoriesFor: #signalOn:resumable:!instance creation!public! !
+!FileException class categoriesForMethods!
+on:!instance creation!public! !
+on:resumable:!instance creation!public! !
+signalOn:!instance creation!public! !
+signalOn:resumable:!instance creation!public! !
+!
 

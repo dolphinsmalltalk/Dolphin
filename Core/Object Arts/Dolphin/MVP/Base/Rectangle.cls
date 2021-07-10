@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Rectangle
 	instanceVariableNames: 'origin corner'
@@ -521,89 +521,91 @@ width: aNumber
 	negative, the result is undefined)"
 
 	corner := (origin x + aNumber) @ corner y! !
-!Rectangle categoriesFor: #_expandRectangle:!double dispatch!private! !
-!Rectangle categoriesFor: #_insetRectangle:!double dispatch!private! !
-!Rectangle categoriesFor: #_offsetRectangle:!double dispatch!private! !
-!Rectangle categoriesFor: #=!comparing!public! !
-!Rectangle categoriesFor: #area!accessing!public! !
-!Rectangle categoriesFor: #areasOutside:!accessing!public! !
-!Rectangle categoriesFor: #asParameter!converting!public! !
-!Rectangle categoriesFor: #bottom!accessing!public! !
-!Rectangle categoriesFor: #bottom:!accessing!public! !
-!Rectangle categoriesFor: #bottomAlign!accessing!public! !
-!Rectangle categoriesFor: #bottomAlign:!accessing!public! !
-!Rectangle categoriesFor: #bottomCenter!accessing!public! !
-!Rectangle categoriesFor: #bottomCenter:!accessing!public! !
-!Rectangle categoriesFor: #bottomLeft!accessing!public! !
-!Rectangle categoriesFor: #bottomLeft:!accessing!public! !
-!Rectangle categoriesFor: #bottomRight!accessing!public! !
-!Rectangle categoriesFor: #bottomRight:!accessing!public! !
-!Rectangle categoriesFor: #center!accessing!public! !
-!Rectangle categoriesFor: #center:!accessing!public! !
-!Rectangle categoriesFor: #centerX!accessing!public! !
-!Rectangle categoriesFor: #centerX:!accessing!public! !
-!Rectangle categoriesFor: #centerY!accessing!public! !
-!Rectangle categoriesFor: #centerY:!accessing!public! !
-!Rectangle categoriesFor: #constrain:!public!rectangle functions! !
-!Rectangle categoriesFor: #contains:!public!testing! !
-!Rectangle categoriesFor: #containsPoint:!public!testing! !
-!Rectangle categoriesFor: #copy!copying!public! !
-!Rectangle categoriesFor: #corner!accessing!public! !
-!Rectangle categoriesFor: #corner:!accessing!public! !
-!Rectangle categoriesFor: #expandBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #expandedBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #extent!accessing!public! !
-!Rectangle categoriesFor: #extent:!accessing!public! !
-!Rectangle categoriesFor: #hash!comparing!public! !
-!Rectangle categoriesFor: #height!accessing!public! !
-!Rectangle categoriesFor: #height:!accessing!public! !
-!Rectangle categoriesFor: #insetBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #insetCornerBy:!operations!public! !
-!Rectangle categoriesFor: #insetOriginBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #insetOriginBy:cornerBy:!public!rectangle functions! !
-!Rectangle categoriesFor: #intersect:!public!rectangle functions! !
-!Rectangle categoriesFor: #intersects:!public!testing! !
-!Rectangle categoriesFor: #left!accessing!public! !
-!Rectangle categoriesFor: #left:!accessing!public! !
-!Rectangle categoriesFor: #leftAlign!accessing!public! !
-!Rectangle categoriesFor: #leftAlign:!accessing!public! !
-!Rectangle categoriesFor: #leftCenter!accessing!public! !
-!Rectangle categoriesFor: #leftCenter:!accessing!public! !
-!Rectangle categoriesFor: #merge:!public!rectangle functions! !
-!Rectangle categoriesFor: #moveBy:!public!transforming! !
-!Rectangle categoriesFor: #moveTo:!public!transforming! !
-!Rectangle categoriesFor: #normalize!public!rectangle functions! !
-!Rectangle categoriesFor: #origin!accessing!public! !
-!Rectangle categoriesFor: #origin:!accessing!public! !
-!Rectangle categoriesFor: #origin:corner:!accessing!public! !
-!Rectangle categoriesFor: #origin:extent:!accessing!public! !
-!Rectangle categoriesFor: #position!accessing!public! !
-!Rectangle categoriesFor: #position:!accessing!public! !
-!Rectangle categoriesFor: #printOn:!printing!public! !
-!Rectangle categoriesFor: #right!accessing!public! !
-!Rectangle categoriesFor: #right:!accessing!public! !
-!Rectangle categoriesFor: #rightAlign!accessing!public! !
-!Rectangle categoriesFor: #rightAlign:!accessing!public! !
-!Rectangle categoriesFor: #rightCenter!accessing!public! !
-!Rectangle categoriesFor: #rightCenter:!accessing!public! !
-!Rectangle categoriesFor: #rounded!public!truncation and round off! !
-!Rectangle categoriesFor: #scaleBy:!public!transforming! !
-!Rectangle categoriesFor: #subtract:!public!rectangle functions! !
-!Rectangle categoriesFor: #top!accessing!public! !
-!Rectangle categoriesFor: #top:!accessing!public! !
-!Rectangle categoriesFor: #topAlign!accessing!public! !
-!Rectangle categoriesFor: #topAlign:!accessing!public! !
-!Rectangle categoriesFor: #topCenter!accessing!public! !
-!Rectangle categoriesFor: #topCenter:!accessing!public! !
-!Rectangle categoriesFor: #topLeft!accessing!public! !
-!Rectangle categoriesFor: #topLeft:!accessing!public! !
-!Rectangle categoriesFor: #topRight!accessing!public! !
-!Rectangle categoriesFor: #topRight:!accessing!public! !
-!Rectangle categoriesFor: #translateBy:!public!transforming! !
-!Rectangle categoriesFor: #translatedBy:!public!transforming! !
-!Rectangle categoriesFor: #truncated!converting!public! !
-!Rectangle categoriesFor: #width!accessing!public! !
-!Rectangle categoriesFor: #width:!accessing!public! !
+!Rectangle categoriesForMethods!
+_expandRectangle:!double dispatch!private! !
+_insetRectangle:!double dispatch!private! !
+_offsetRectangle:!double dispatch!private! !
+=!comparing!public! !
+area!accessing!public! !
+areasOutside:!accessing!public! !
+asParameter!converting!public! !
+bottom!accessing!public! !
+bottom:!accessing!public! !
+bottomAlign!accessing!public! !
+bottomAlign:!accessing!public! !
+bottomCenter!accessing!public! !
+bottomCenter:!accessing!public! !
+bottomLeft!accessing!public! !
+bottomLeft:!accessing!public! !
+bottomRight!accessing!public! !
+bottomRight:!accessing!public! !
+center!accessing!public! !
+center:!accessing!public! !
+centerX!accessing!public! !
+centerX:!accessing!public! !
+centerY!accessing!public! !
+centerY:!accessing!public! !
+constrain:!public!rectangle functions! !
+contains:!public!testing! !
+containsPoint:!public!testing! !
+copy!copying!public! !
+corner!accessing!public! !
+corner:!accessing!public! !
+expandBy:!public!rectangle functions! !
+expandedBy:!public!rectangle functions! !
+extent!accessing!public! !
+extent:!accessing!public! !
+hash!comparing!public! !
+height!accessing!public! !
+height:!accessing!public! !
+insetBy:!public!rectangle functions! !
+insetCornerBy:!operations!public! !
+insetOriginBy:!public!rectangle functions! !
+insetOriginBy:cornerBy:!public!rectangle functions! !
+intersect:!public!rectangle functions! !
+intersects:!public!testing! !
+left!accessing!public! !
+left:!accessing!public! !
+leftAlign!accessing!public! !
+leftAlign:!accessing!public! !
+leftCenter!accessing!public! !
+leftCenter:!accessing!public! !
+merge:!public!rectangle functions! !
+moveBy:!public!transforming! !
+moveTo:!public!transforming! !
+normalize!public!rectangle functions! !
+origin!accessing!public! !
+origin:!accessing!public! !
+origin:corner:!accessing!public! !
+origin:extent:!accessing!public! !
+position!accessing!public! !
+position:!accessing!public! !
+printOn:!printing!public! !
+right!accessing!public! !
+right:!accessing!public! !
+rightAlign!accessing!public! !
+rightAlign:!accessing!public! !
+rightCenter!accessing!public! !
+rightCenter:!accessing!public! !
+rounded!public!truncation and round off! !
+scaleBy:!public!transforming! !
+subtract:!public!rectangle functions! !
+top!accessing!public! !
+top:!accessing!public! !
+topAlign!accessing!public! !
+topAlign:!accessing!public! !
+topCenter!accessing!public! !
+topCenter:!accessing!public! !
+topLeft!accessing!public! !
+topLeft:!accessing!public! !
+topRight!accessing!public! !
+topRight:!accessing!public! !
+translateBy:!public!transforming! !
+translatedBy:!public!transforming! !
+truncated!converting!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 Rectangle methodProtocol: #rectangle attributes: #(#readOnly) selectors: #(#area #areasOutside: #bottom #bottom: #bottomCenter #bottomCenter: #bottomLeft #bottomLeft: #bottomRight #bottomRight: #contains: #containsPoint: #corner #corner: #expandBy: #extent #extent: #height #height: #insetBy: #intersect: #intersects: #left #left: #leftCenter #merge: #moveBy: #moveTo: #origin #origin: #origin:corner: #origin:extent: #right #right: #rightCenter #scaleBy: #top #top: #topCenter #topLeft #topLeft: #topRight #topRight: #translateBy: #truncated #width #width:)!
 
@@ -653,12 +655,14 @@ vertex: aPoint1 vertex: aPoint2
 	vertices."
 
 	^self origin: (aPoint1 min: aPoint2) corner: (aPoint1 max: aPoint2)! !
-!Rectangle class categoriesFor: #center:extent:!instance creation!public! !
-!Rectangle class categoriesFor: #initialize!class initialization!development!public! !
-!Rectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!Rectangle class categoriesFor: #new!instance creation!public! !
-!Rectangle class categoriesFor: #origin:corner:!instance creation!public! !
-!Rectangle class categoriesFor: #origin:extent:!instance creation!public! !
-!Rectangle class categoriesFor: #unitialize!class hierarchy-removing!public! !
-!Rectangle class categoriesFor: #vertex:vertex:!instance creation!public! !
+!Rectangle class categoriesForMethods!
+center:extent:!instance creation!public! !
+initialize!class initialization!development!public! !
+left:top:right:bottom:!instance creation!public! !
+new!instance creation!public! !
+origin:corner:!instance creation!public! !
+origin:extent:!instance creation!public! !
+unitialize!class hierarchy-removing!public! !
+vertex:vertex:!instance creation!public! !
+!
 

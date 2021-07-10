@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpWmfPlaceableFileHeader
 	instanceVariableNames: ''
@@ -96,18 +96,20 @@ Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Reserved put: anInteger! !
-!GpWmfPlaceableFileHeader categoriesFor: #BoundingBox!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #BoundingBox:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Checksum!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Checksum:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Hmf!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Hmf:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Inch!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Inch:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Key!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Key:!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Reserved!**compiled accessors**!public! !
-!GpWmfPlaceableFileHeader categoriesFor: #Reserved:!**compiled accessors**!public! !
+!GpWmfPlaceableFileHeader categoriesForMethods!
+BoundingBox!**compiled accessors**!public! !
+BoundingBox:!**compiled accessors**!public! !
+Checksum!**compiled accessors**!public! !
+Checksum:!**compiled accessors**!public! !
+Hmf!**compiled accessors**!public! !
+Hmf:!**compiled accessors**!public! !
+Inch!**compiled accessors**!public! !
+Inch:!**compiled accessors**!public! !
+Key!**compiled accessors**!public! !
+Key:!**compiled accessors**!public! !
+Reserved!**compiled accessors**!public! !
+Reserved:!**compiled accessors**!public! !
+!
 
 !GpWmfPlaceableFileHeader class methodsFor!
 
@@ -137,6 +139,8 @@ defineFields
 
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
-!GpWmfPlaceableFileHeader class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpWmfPlaceableFileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpWmfPlaceableFileHeader class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

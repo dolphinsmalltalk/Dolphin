@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ClassDescriptionTest
 	instanceVariableNames: ''
@@ -26,7 +26,9 @@ testSubclasses
 			It does impose a cost when building classes, but I'm loathe to change it now for fear of what it will break."
 			self assert: each subclasses
 				equals: (each subclasses asSortedCollection: [:a :b | a name <= b name]) asArray]! !
-!ClassDescriptionTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!ClassDescriptionTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!ClassDescriptionTest categoriesFor: #testSubclasses!public!unit tests! !
+!ClassDescriptionTest categoriesForMethods!
+allClassHierarchyInstancesDo:!helpers!private! !
+testLessOrEqual!public!unit tests! !
+testSubclasses!public!unit tests! !
+!
 

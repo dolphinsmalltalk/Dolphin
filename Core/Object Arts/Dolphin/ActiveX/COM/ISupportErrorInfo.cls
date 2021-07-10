@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISupportErrorInfo
 	instanceVariableNames: ''
@@ -30,8 +30,10 @@ supportsErrorInfo: interface
 	or interface class."
 
 	^(self InterfaceSupportsErrorInfo: interface iid) = S_OK! !
-!ISupportErrorInfo categoriesFor: #InterfaceSupportsErrorInfo:!**auto generated**!COM Interfaces-OAIDL.ISupportErrorInfo!private! !
-!ISupportErrorInfo categoriesFor: #supportsErrorInfo:!public!testing! !
+!ISupportErrorInfo categoriesForMethods!
+InterfaceSupportsErrorInfo:!**auto generated**!COM Interfaces-OAIDL.ISupportErrorInfo!private! !
+supportsErrorInfo:!public!testing! !
+!
 
 ISupportErrorInfo methodProtocol: #ISupportErrorInfo attributes: #(#readOnly) selectors: #(#InterfaceSupportsErrorInfo:)!
 
@@ -46,5 +48,7 @@ defineFunctions
 		defineFunction: #InterfaceSupportsErrorInfo:
 			argumentTypes: 'GUID*'
 ! !
-!ISupportErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
+!ISupportErrorInfo class categoriesForMethods!
+defineFunctions!**auto generated**!public! !
+!
 

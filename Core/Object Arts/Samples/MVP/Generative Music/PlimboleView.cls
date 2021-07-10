@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #PlimboleView
 	instanceVariableNames: ''
@@ -37,14 +37,18 @@ onPositionChanged: aPositionEvent
 
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent! !
-!PlimboleView categoriesFor: #cellExtent!private! !
-!PlimboleView categoriesFor: #connectModel!models!private! !
-!PlimboleView categoriesFor: #onPaintRequired:!event handling!private! !
-!PlimboleView categoriesFor: #onPositionChanged:!event handling!private! !
+!PlimboleView categoriesForMethods!
+cellExtent!private! !
+connectModel!models!private! !
+onPaintRequired:!event handling!private! !
+onPositionChanged:!event handling!private! !
+!
 
 !PlimboleView class methodsFor!
 
 icon
 	^PlimbolePresenter icon! !
-!PlimboleView class categoriesFor: #icon!public! !
+!PlimboleView class categoriesForMethods!
+icon!public! !
+!
 

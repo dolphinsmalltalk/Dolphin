@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #ProfilerPresenter
 	instanceVariableNames: 'percentageFilter dolphinFilter selectorFilter'
@@ -57,14 +57,16 @@ model: aProfilerSampleSet
 
 parseContext
 	^self selectedMethod ifNotNil: [:method | method methodClass]! !
-!ProfilerPresenter categoriesFor: #filter:!filtering!public! !
-!ProfilerPresenter categoriesFor: #filterChanged!filtering!public! !
-!ProfilerPresenter categoriesFor: #filterDolphin:!filtering!public! !
-!ProfilerPresenter categoriesFor: #filterPercentage:!filtering!public! !
-!ProfilerPresenter categoriesFor: #filterSelector:!filtering!public! !
-!ProfilerPresenter categoriesFor: #initialize!initializing!public! !
-!ProfilerPresenter categoriesFor: #model:!accessing!public! !
-!ProfilerPresenter categoriesFor: #parseContext!public! !
+!ProfilerPresenter categoriesForMethods!
+filter:!filtering!public! !
+filterChanged!filtering!public! !
+filterDolphin:!filtering!public! !
+filterPercentage:!filtering!public! !
+filterSelector:!filtering!public! !
+initialize!initializing!public! !
+model:!accessing!public! !
+parseContext!public! !
+!
 
 !ProfilerPresenter class methodsFor!
 
@@ -72,5 +74,7 @@ defaultModel
 	"Answer a default model to be used when the presenter is initialized"
 
 	^ProfilerSampleSet name: 'None'! !
-!ProfilerPresenter class categoriesFor: #defaultModel!models!public! !
+!ProfilerPresenter class categoriesForMethods!
+defaultModel!models!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureCertificate subclass: #NotSignedCertificate
 	instanceVariableNames: ''
@@ -44,10 +44,12 @@ purpose
 It is therefore not possible to guarantee the identity of the publisher or ensure that the content has not been modified since it was originally published. 
 
 You must decide if you are willing to accept this content as safe.'! !
-!NotSignedCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!NotSignedCertificate categoriesFor: #canBePermanentlyTrusted!public!testing!trust! !
-!NotSignedCertificate categoriesFor: #imageAttributes!accessing!private! !
-!NotSignedCertificate categoriesFor: #purpose!accessing!public! !
+!NotSignedCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+canBePermanentlyTrusted!public!testing!trust! !
+imageAttributes!accessing!private! !
+purpose!accessing!public! !
+!
 
 !NotSignedCertificate class methodsFor!
 
@@ -74,7 +76,9 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!NotSignedCertificate class categoriesFor: #new!instance creation!public! !
-!NotSignedCertificate class categoriesFor: #publicKey!constants!private! !
-!NotSignedCertificate class categoriesFor: #validYears!constants!private! !
+!NotSignedCertificate class categoriesForMethods!
+new!instance creation!public! !
+publicKey!constants!private! !
+validYears!constants!private! !
+!
 

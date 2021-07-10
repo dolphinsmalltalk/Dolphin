@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticImage subclass: #StaticIcon
 	instanceVariableNames: ''
@@ -26,7 +26,9 @@ setImage: anIconOrNil
 
 	image := anIconOrNil.
 	self sendMessage: STM_SETIMAGE wParam: IMAGE_ICON lParam: anIconOrNil asParameter! !
-!StaticIcon categoriesFor: #defaultExtent!constants!private! !
-!StaticIcon categoriesFor: #defaultWindowStyle!constants!private! !
-!StaticIcon categoriesFor: #setImage:!accessing!private! !
+!StaticIcon categoriesForMethods!
+defaultExtent!constants!private! !
+defaultWindowStyle!constants!private! !
+setImage:!accessing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassBrowserAbstract subclass: #ClassBrowserShell
 	instanceVariableNames: ''
@@ -108,15 +108,17 @@ toggleLocalHierarchy
 			classesPresenter model: self model classHierarchy.
 			actualClass notNil ifTrue: [self actualClass: actualClass]].
 	self validateUserInterface! !
-!ClassBrowserShell categoriesFor: #createComponents!initializing!public! !
-!ClassBrowserShell categoriesFor: #defaultHelpId!public! !
-!ClassBrowserShell categoriesFor: #displayLocalHierarchyOf:!private!updating! !
-!ClassBrowserShell categoriesFor: #isLocalHierarchyMode!private!testing! !
-!ClassBrowserShell categoriesFor: #isLocalHierarchyMode:!accessing!private! !
-!ClassBrowserShell categoriesFor: #onTipTextRequired:!event handling!private! !
-!ClassBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!ClassBrowserShell categoriesFor: #resetFor:!commands!public! !
-!ClassBrowserShell categoriesFor: #toggleLocalHierarchy!commands!public! !
+!ClassBrowserShell categoriesForMethods!
+createComponents!initializing!public! !
+defaultHelpId!public! !
+displayLocalHierarchyOf:!private!updating! !
+isLocalHierarchyMode!private!testing! !
+isLocalHierarchyMode:!accessing!private! !
+onTipTextRequired:!event handling!private! !
+queryCommand:!commands!private! !
+resetFor:!commands!public! !
+toggleLocalHierarchy!commands!public! !
+!
 
 !ClassBrowserShell class methodsFor!
 
@@ -156,9 +158,11 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10520! !
-!ClassBrowserShell class categoriesFor: #displayOn:!displaying!public! !
-!ClassBrowserShell class categoriesFor: #icon!constants!public! !
-!ClassBrowserShell class categoriesFor: #initialize!initializing!private! !
-!ClassBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!ClassBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
+!ClassBrowserShell class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

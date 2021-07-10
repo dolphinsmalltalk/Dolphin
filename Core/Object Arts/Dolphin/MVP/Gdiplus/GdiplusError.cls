@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #GdiplusError
 	instanceVariableNames: 'win32Error'
@@ -42,10 +42,12 @@ win32ErrorDescription
 	error messages of the form: 'The error is: the operation was successful;"
 
 	^win32Error statusCode = 0 ifTrue: [''] ifFalse: [win32Error description]! !
-!GdiplusError categoriesFor: #_descriptionArguments!displaying!public! !
-!GdiplusError categoriesFor: #_descriptionFormat!displaying!public! !
-!GdiplusError categoriesFor: #initialize!initializing!public! !
-!GdiplusError categoriesFor: #win32ErrorDescription!accessing!private! !
+!GdiplusError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+initialize!initializing!public! !
+win32ErrorDescription!accessing!private! !
+!
 
 !GdiplusError class methodsFor!
 
@@ -62,5 +64,7 @@ initialize
 		failure."
 
 	ErrorDescriptions := #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')! !
-!GdiplusError class categoriesFor: #initialize!development!initializing!public! !
+!GdiplusError class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

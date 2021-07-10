@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommandDescription subclass: #ClosedCommandDescription
 	instanceVariableNames: 'queryBlock receiver'
@@ -50,10 +50,12 @@ receiver
 
 receiver: anObject
 	receiver := anObject! !
-!ClosedCommandDescription categoriesFor: #queryBlock:!accessing!public! !
-!ClosedCommandDescription categoriesFor: #queryCommand:!commands!public! !
-!ClosedCommandDescription categoriesFor: #receiver!accessing!public! !
-!ClosedCommandDescription categoriesFor: #receiver:!accessing!public! !
+!ClosedCommandDescription categoriesForMethods!
+queryBlock:!accessing!public! !
+queryCommand:!commands!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+!
 
 !ClosedCommandDescription class methodsFor!
 
@@ -85,7 +87,9 @@ command: commandMessage description: aString receiver: anObject
 	always be sent to anObject."
 
 	^self command: commandMessage description: aString queryBlock: nil receiver: anObject! !
-!ClosedCommandDescription class categoriesFor: #command:description:queryBlock:!instance creation!public! !
-!ClosedCommandDescription class categoriesFor: #command:description:queryBlock:receiver:!instance creation!public! !
-!ClosedCommandDescription class categoriesFor: #command:description:receiver:!instance creation!public! !
+!ClosedCommandDescription class categoriesForMethods!
+command:description:queryBlock:!instance creation!public! !
+command:description:queryBlock:receiver:!instance creation!public! !
+command:description:receiver:!instance creation!public! !
+!
 

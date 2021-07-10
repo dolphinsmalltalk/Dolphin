@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
@@ -92,18 +92,20 @@ eM22: aFloat
 	"Set the receiver's 'eM22' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eM22 put: aFloat! !
-!XFORM categoriesFor: #eDx!**compiled accessors**!public! !
-!XFORM categoriesFor: #eDx:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eDy!**compiled accessors**!public! !
-!XFORM categoriesFor: #eDy:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM11!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM11:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM12!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM12:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM21!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM21:!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM22!**compiled accessors**!public! !
-!XFORM categoriesFor: #eM22:!**compiled accessors**!public! !
+!XFORM categoriesForMethods!
+eDx!**compiled accessors**!public! !
+eDx:!**compiled accessors**!public! !
+eDy!**compiled accessors**!public! !
+eDy:!**compiled accessors**!public! !
+eM11!**compiled accessors**!public! !
+eM11:!**compiled accessors**!public! !
+eM12!**compiled accessors**!public! !
+eM12:!**compiled accessors**!public! !
+eM21!**compiled accessors**!public! !
+eM21:!**compiled accessors**!public! !
+eM22!**compiled accessors**!public! !
+eM22:!**compiled accessors**!public! !
+!
 
 !XFORM class methodsFor!
 
@@ -133,6 +135,8 @@ defineFields
 
 getFieldNames
 	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
-!XFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!XFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!XFORM class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

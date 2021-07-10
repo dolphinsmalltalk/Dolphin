@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ExternalArray
 	instanceVariableNames: 'length'
@@ -413,53 +413,55 @@ with: aCollection do: aDyadicValuable
 			elem initializeAtAddress: addr.
 			aDyadicValuable value: elem value: each.
 			addr + spacing]! !
-!ExternalArray categoriesFor: #=!public! !
-!ExternalArray categoriesFor: #anySatisfy:!enumerating!public! !
-!ExternalArray categoriesFor: #appendToStream:!double dispatch!private! !
-!ExternalArray categoriesFor: #asArray!converting!public! !
-!ExternalArray categoriesFor: #asOrderedCollection!converting!public! !
-!ExternalArray categoriesFor: #at:!accessing!public! !
-!ExternalArray categoriesFor: #at:ifAbsent:!accessing!public! !
-!ExternalArray categoriesFor: #at:put:!accessing!public! !
-!ExternalArray categoriesFor: #basicLength:!accessing!private! !
-!ExternalArray categoriesFor: #binarySearchFor:using:!public!searching! !
-!ExternalArray categoriesFor: #byteSize!accessing!public! !
-!ExternalArray categoriesFor: #collect:!enumerating!public! !
-!ExternalArray categoriesFor: #copyFrom:to:!copying!public! !
-!ExternalArray categoriesFor: #detect:!public!searching! !
-!ExternalArray categoriesFor: #detect:ifNone:!public!searching! !
-!ExternalArray categoriesFor: #displayOn:!printing!private! !
-!ExternalArray categoriesFor: #do:!enumerating!public! !
-!ExternalArray categoriesFor: #do:separatedBy:!enumerating!public! !
-!ExternalArray categoriesFor: #elementClass!constants!public! !
-!ExternalArray categoriesFor: #elementSize!instance creation!private! !
-!ExternalArray categoriesFor: #first!accessing!public! !
-!ExternalArray categoriesFor: #from:do:!enumerating!public! !
-!ExternalArray categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!ExternalArray categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!ExternalArray categoriesFor: #includes:!public!searching! !
-!ExternalArray categoriesFor: #includesKey:!public!testing! !
-!ExternalArray categoriesFor: #initializePointer!public! !
-!ExternalArray categoriesFor: #inject:into:!enumerating!public! !
-!ExternalArray categoriesFor: #isEmpty!public!testing! !
-!ExternalArray categoriesFor: #keys!accessing!public! !
-!ExternalArray categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!ExternalArray categoriesFor: #last!accessing!public! !
-!ExternalArray categoriesFor: #length!accessing!public! !
-!ExternalArray categoriesFor: #length:!accessing!public! !
-!ExternalArray categoriesFor: #lookup:!accessing!public! !
-!ExternalArray categoriesFor: #notEmpty!public!testing! !
-!ExternalArray categoriesFor: #packing!constants!private! !
-!ExternalArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
-!ExternalArray categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!ExternalArray categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!ExternalArray categoriesFor: #select:!enumerating!public! !
-!ExternalArray categoriesFor: #size!accessing!public! !
-!ExternalArray categoriesFor: #species!constants!public! !
-!ExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
-!ExternalArray categoriesFor: #uncheckedAt:put:!accessing!private! !
-!ExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
-!ExternalArray categoriesFor: #with:do:!enumerating!public! !
+!ExternalArray categoriesForMethods!
+=!public! !
+anySatisfy:!enumerating!public! !
+appendToStream:!double dispatch!private! !
+asArray!converting!public! !
+asOrderedCollection!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+basicLength:!accessing!private! !
+binarySearchFor:using:!public!searching! !
+byteSize!accessing!public! !
+collect:!enumerating!public! !
+copyFrom:to:!copying!public! !
+detect:!public!searching! !
+detect:ifNone:!public!searching! !
+displayOn:!printing!private! !
+do:!enumerating!public! !
+do:separatedBy:!enumerating!public! !
+elementClass!constants!public! !
+elementSize!instance creation!private! !
+first!accessing!public! !
+from:do:!enumerating!public! !
+from:keysAndValuesDo:!enumerating!public! !
+from:to:keysAndValuesDo:!enumerating!public! !
+includes:!public!searching! !
+includesKey:!public!testing! !
+initializePointer!public! !
+inject:into:!enumerating!public! !
+isEmpty!public!testing! !
+keys!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+last!accessing!public! !
+length!accessing!public! !
+length:!accessing!public! !
+lookup:!accessing!public! !
+notEmpty!public!testing! !
+packing!constants!private! !
+replaceBytesOf:from:to:startingAt:!double dispatch!private! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+select:!enumerating!public! !
+size!accessing!public! !
+species!constants!public! !
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+with:do:!enumerating!public! !
+!
 
 !ExternalArray class methodsFor!
 
@@ -531,14 +533,16 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
-!ExternalArray class categoriesFor: #alignment!constants!public! !
-!ExternalArray class categoriesFor: #elementClass!constants!public! !
-!ExternalArray class categoriesFor: #elementSize!instance creation!private! !
-!ExternalArray class categoriesFor: #fromAddress:!instance creation!public! !
-!ExternalArray class categoriesFor: #fromAddress:length:!instance creation!public! !
-!ExternalArray class categoriesFor: #getFieldNames!constants!private! !
-!ExternalArray class categoriesFor: #length:elementSize:!instance creation!private! !
-!ExternalArray class categoriesFor: #new:!instance creation!public! !
-!ExternalArray class categoriesFor: #with:!instance creation!public! !
-!ExternalArray class categoriesFor: #withAll:!instance creation!public! !
+!ExternalArray class categoriesForMethods!
+alignment!constants!public! !
+elementClass!constants!public! !
+elementSize!instance creation!private! !
+fromAddress:!instance creation!public! !
+fromAddress:length:!instance creation!public! !
+getFieldNames!constants!private! !
+length:elementSize:!instance creation!private! !
+new:!instance creation!public! !
+with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 

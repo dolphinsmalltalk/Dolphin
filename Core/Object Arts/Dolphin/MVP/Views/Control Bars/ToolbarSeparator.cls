@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ToolbarItem subclass: #ToolbarSeparator
 	instanceVariableNames: 'width'
@@ -53,13 +53,15 @@ width: pixelWidth
 	"Set the width of the receiever to pixelWidth. 0 indicates default width."
 
 	width := pixelWidth! !
-!ToolbarSeparator categoriesFor: #imageIndexIn:!operations!private! !
-!ToolbarSeparator categoriesFor: #isDivider!public!testing! !
-!ToolbarSeparator categoriesFor: #setWidth:!accessing!initializing!private! !
-!ToolbarSeparator categoriesFor: #style!private!style! !
-!ToolbarSeparator categoriesFor: #textIndexIn:!operations!private! !
-!ToolbarSeparator categoriesFor: #width!accessing!public! !
-!ToolbarSeparator categoriesFor: #width:!accessing!public! !
+!ToolbarSeparator categoriesForMethods!
+imageIndexIn:!operations!private! !
+isDivider!public!testing! !
+setWidth:!accessing!initializing!private! !
+style!private!style! !
+textIndexIn:!operations!private! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !ToolbarSeparator class methodsFor!
 
@@ -95,7 +97,9 @@ width: pixelWidth
 	"Answer a new instance of the receiver whose width is set to pixelWidth."
 
 	^self basicNew setWidth: pixelWidth! !
-!ToolbarSeparator class categoriesFor: #new!instance creation!public! !
-!ToolbarSeparator class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ToolbarSeparator class categoriesFor: #width:!instance creation!public! !
+!ToolbarSeparator class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+width:!instance creation!public! !
+!
 

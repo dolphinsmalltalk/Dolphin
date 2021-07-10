@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #TypeConverterTest
 	instanceVariableNames: 'edit savedLocale'
@@ -103,12 +103,14 @@ testLeftNullValue
 		updateModel.
 	self assertIsNil: edit model value.
 	self assert: edit text isEmpty	"#1257"! !
-!TypeConverterTest categoriesFor: #setUp!public!unit tests! !
-!TypeConverterTest categoriesFor: #tearDown!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidBooleanFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidDateFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidDurationFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidNumberFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testInvalidTimeFormat!public!unit tests! !
-!TypeConverterTest categoriesFor: #testLeftNullValue!public!unit tests! !
+!TypeConverterTest categoriesForMethods!
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testInvalidBooleanFormat!public!unit tests! !
+testInvalidDateFormat!public!unit tests! !
+testInvalidDurationFormat!public!unit tests! !
+testInvalidNumberFormat!public!unit tests! !
+testInvalidTimeFormat!public!unit tests! !
+testLeftNullValue!public!unit tests! !
+!
 

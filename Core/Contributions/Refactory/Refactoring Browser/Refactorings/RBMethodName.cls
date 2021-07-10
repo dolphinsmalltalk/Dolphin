@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RBMethodName
 	instanceVariableNames: 'selector arguments'
@@ -54,17 +54,19 @@ selectorSymbol
 setSelector: aSymbol arguments: anArray 
 	selector := aSymbol.
 	arguments := anArray! !
-!RBMethodName categoriesFor: #arguments!accessing!public! !
-!RBMethodName categoriesFor: #arguments:!accessing!public! !
-!RBMethodName categoriesFor: #isValid!public!testing! !
-!RBMethodName categoriesFor: #methodClass!accessing!public! !
-!RBMethodName categoriesFor: #moveArgument:before:!accessing!public! !
-!RBMethodName categoriesFor: #postCopy!copying!public! !
-!RBMethodName categoriesFor: #scope!public! !
-!RBMethodName categoriesFor: #selector!accessing!public! !
-!RBMethodName categoriesFor: #selector:!accessing!public! !
-!RBMethodName categoriesFor: #selectorSymbol!public!refactoring! !
-!RBMethodName categoriesFor: #setSelector:arguments:!public! !
+!RBMethodName categoriesForMethods!
+arguments!accessing!public! !
+arguments:!accessing!public! !
+isValid!public!testing! !
+methodClass!accessing!public! !
+moveArgument:before:!accessing!public! !
+postCopy!copying!public! !
+scope!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+selectorSymbol!public!refactoring! !
+setSelector:arguments:!public! !
+!
 
 !RBMethodName class methodsFor!
 
@@ -75,6 +77,8 @@ selector: aSymbol arguments: stringCollection
 	^(self basicNew)
 		setSelector: aSymbol arguments: stringCollection;
 		yourself! !
-!RBMethodName class categoriesFor: #new!instance creation!public! !
-!RBMethodName class categoriesFor: #selector:arguments:!instance creation!public! !
+!RBMethodName class categoriesForMethods!
+new!instance creation!public! !
+selector:arguments:!instance creation!public! !
+!
 

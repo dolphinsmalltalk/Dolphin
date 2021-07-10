@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #_FPIEEE_VALUE
 	instanceVariableNames: ''
@@ -54,11 +54,13 @@ value
 			dwordAtOffset: "string?")
 				at: (self format + 1))
 		with: 0]! !
-!_FPIEEE_VALUE categoriesFor: #flags!**compiled accessors**!public! !
-!_FPIEEE_VALUE categoriesFor: #format!accessing!public! !
-!_FPIEEE_VALUE categoriesFor: #formatName!accessing!public! !
-!_FPIEEE_VALUE categoriesFor: #isValid!public!testing! !
-!_FPIEEE_VALUE categoriesFor: #value!accessing!public! !
+!_FPIEEE_VALUE categoriesForMethods!
+flags!**compiled accessors**!public! !
+format!accessing!public! !
+formatName!accessing!public! !
+isValid!public!testing! !
+value!accessing!public! !
+!
 
 !_FPIEEE_VALUE class methodsFor!
 
@@ -78,7 +80,9 @@ formatCodes
 
 getFieldNames
 	^#(#flags)! !
-!_FPIEEE_VALUE class categoriesFor: #defineFields!public!template definition! !
-!_FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
-!_FPIEEE_VALUE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!_FPIEEE_VALUE class categoriesForMethods!
+defineFields!public!template definition! !
+formatCodes!constants!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

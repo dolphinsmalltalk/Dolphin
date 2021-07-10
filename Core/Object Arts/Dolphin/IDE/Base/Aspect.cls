@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
@@ -254,50 +254,52 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject perform: self putSelector with: valueObject! !
-!Aspect categoriesFor: #<=!comparing!public! !
-!Aspect categoriesFor: #=!comparing!public! !
-!Aspect categoriesFor: #accessorClass!constants!private! !
-!Aspect categoriesFor: #accessorFor:!accessing!public! !
-!Aspect categoriesFor: #beEditedInPlace!public! !
-!Aspect categoriesFor: #beImmediateActionIsEdit!accessing!public! !
-!Aspect categoriesFor: #beMultilineValue!public!testing! !
-!Aspect categoriesFor: #bePresenterBlockReadOnly!accessing!public! !
-!Aspect categoriesFor: #beValueWorkspacePresenter!public!testing! !
-!Aspect categoriesFor: #canEdit!public!testing! !
-!Aspect categoriesFor: #canGenerateAccessors!private!testing! !
-!Aspect categoriesFor: #canImmediateAction!public!testing! !
-!Aspect categoriesFor: #canReadFrom:!private!testing! !
-!Aspect categoriesFor: #canWriteInto:!private!testing! !
-!Aspect categoriesFor: #category!public! !
-!Aspect categoriesFor: #category:!public! !
-!Aspect categoriesFor: #defaultFlags!initializing!private! !
-!Aspect categoriesFor: #displayAspectInfoOf:on:!displaying!private! !
-!Aspect categoriesFor: #displayAspectNameOf:on:!displaying!private! !
-!Aspect categoriesFor: #displayAspectText:on:!displaying!private! !
-!Aspect categoriesFor: #displayAspectValueOf:on:!displaying!private! !
-!Aspect categoriesFor: #displayOn:!displaying!public! !
-!Aspect categoriesFor: #editablePresenterBlock!enquiries!public! !
-!Aspect categoriesFor: #editablePresenterFor:in:!enquiries!public! !
-!Aspect categoriesFor: #editBlock!accessing!private! !
-!Aspect categoriesFor: #getSelector!accessing!private! !
-!Aspect categoriesFor: #hash!comparing!public! !
-!Aspect categoriesFor: #immediateActionBlock!accessing!private! !
-!Aspect categoriesFor: #isEditedInPlace!public!testing! !
-!Aspect categoriesFor: #isEditedWithValueWorkspace!public!testing! !
-!Aspect categoriesFor: #isMultilineValue!public!testing! !
-!Aspect categoriesFor: #isPresenterBlockReadOnly!accessing!public! !
-!Aspect categoriesFor: #key!accessing!private! !
-!Aspect categoriesFor: #name!accessing!public! !
-!Aspect categoriesFor: #name:presenterBlock:editBlock:!initializing!private! !
-!Aspect categoriesFor: #nameIn:!accessing!private! !
-!Aspect categoriesFor: #objectRefName:!helpers!private! !
-!Aspect categoriesFor: #presenterBlock!accessing!public! !
-!Aspect categoriesFor: #presenterFor:in:!enquiries!public! !
-!Aspect categoriesFor: #printOn:!printing!public! !
-!Aspect categoriesFor: #putSelector!accessing!private! !
-!Aspect categoriesFor: #readFrom:!indirect accessing!private! !
-!Aspect categoriesFor: #value!accessing!private! !
-!Aspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!Aspect categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+accessorClass!constants!private! !
+accessorFor:!accessing!public! !
+beEditedInPlace!public! !
+beImmediateActionIsEdit!accessing!public! !
+beMultilineValue!public!testing! !
+bePresenterBlockReadOnly!accessing!public! !
+beValueWorkspacePresenter!public!testing! !
+canEdit!public!testing! !
+canGenerateAccessors!private!testing! !
+canImmediateAction!public!testing! !
+canReadFrom:!private!testing! !
+canWriteInto:!private!testing! !
+category!public! !
+category:!public! !
+defaultFlags!initializing!private! !
+displayAspectInfoOf:on:!displaying!private! !
+displayAspectNameOf:on:!displaying!private! !
+displayAspectText:on:!displaying!private! !
+displayAspectValueOf:on:!displaying!private! !
+displayOn:!displaying!public! !
+editablePresenterBlock!enquiries!public! !
+editablePresenterFor:in:!enquiries!public! !
+editBlock!accessing!private! !
+getSelector!accessing!private! !
+hash!comparing!public! !
+immediateActionBlock!accessing!private! !
+isEditedInPlace!public!testing! !
+isEditedWithValueWorkspace!public!testing! !
+isMultilineValue!public!testing! !
+isPresenterBlockReadOnly!accessing!public! !
+key!accessing!private! !
+name!accessing!public! !
+name:presenterBlock:editBlock:!initializing!private! !
+nameIn:!accessing!private! !
+objectRefName:!helpers!private! !
+presenterBlock!accessing!public! !
+presenterFor:in:!enquiries!public! !
+printOn:!printing!public! !
+putSelector!accessing!private! !
+readFrom:!indirect accessing!private! !
+value!accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !Aspect class methodsFor!
 
@@ -876,60 +878,62 @@ time: aSymbol
 	The aspect is viewable and editable using a TimePresenter."
 
 	^self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m]! !
-!Aspect class categoriesFor: #autostring:!instance creation!public! !
-!Aspect class categoriesFor: #bitmap:!instance creation!public! !
-!Aspect class categoriesFor: #block:!instance creation!public! !
-!Aspect class categoriesFor: #boolean:!instance creation!public! !
-!Aspect class categoriesFor: #choice:choiceBlock:!instance creation!public! !
-!Aspect class categoriesFor: #choice:evaluationFrom:!instance creation!public! !
-!Aspect class categoriesFor: #choice:from:!instance creation!public! !
-!Aspect class categoriesFor: #choice:from:andNil:!instance creation!public! !
-!Aspect class categoriesFor: #choice:fromMap:nullValue:!instance creation!public! !
-!Aspect class categoriesFor: #collection:!instance creation!public! !
-!Aspect class categoriesFor: #collection:addEvaluationFrom:!instance creation!public! !
-!Aspect class categoriesFor: #collection:addFrom:!instance creation!public! !
-!Aspect class categoriesFor: #collection:presenterClass:!instance creation!private! !
-!Aspect class categoriesFor: #collection:presenterClass:addEvaluationFrom:!instance creation!private! !
-!Aspect class categoriesFor: #collection:presenterClass:addFrom:!instance creation!private! !
-!Aspect class categoriesFor: #color:!instance creation!public! !
-!Aspect class categoriesFor: #date:!instance creation!public! !
-!Aspect class categoriesFor: #defaultCollectionEditBlock!constants!private! !
-!Aspect class categoriesFor: #defaultPresenterBlock!constants!private! !
-!Aspect class categoriesFor: #dictionary:!instance creation!public! !
-!Aspect class categoriesFor: #extent:!instance creation!public! !
-!Aspect class categoriesFor: #fileOpen:!instance creation!public! !
-!Aspect class categoriesFor: #fileSave:!instance creation!public! !
-!Aspect class categoriesFor: #float:!instance creation!public! !
-!Aspect class categoriesFor: #folder:!instance creation!public! !
-!Aspect class categoriesFor: #font:!instance creation!public! !
-!Aspect class categoriesFor: #hotkey:!instance creation!public! !
-!Aspect class categoriesFor: #icon:!instance creation!public! !
-!Aspect class categoriesFor: #imageList:!instance creation!public! !
-!Aspect class categoriesFor: #inspector:!instance creation!public! !
-!Aspect class categoriesFor: #integer:!instance creation!public! !
-!Aspect class categoriesFor: #key:!instance creation!public! !
-!Aspect class categoriesFor: #list:!instance creation!public! !
-!Aspect class categoriesFor: #list:addEvaluationFrom:!instance creation!public! !
-!Aspect class categoriesFor: #list:addFrom:!instance creation!public! !
-!Aspect class categoriesFor: #maxDisplayCharacters!constants!public! !
-!Aspect class categoriesFor: #menu:!instance creation!must strip!public! !
-!Aspect class categoriesFor: #menuBar:!instance creation!must strip!public! !
-!Aspect class categoriesFor: #multilineString:!instance creation!public! !
-!Aspect class categoriesFor: #name:!instance creation!public! !
-!Aspect class categoriesFor: #name:chooseFrom:!instance creation!public! !
-!Aspect class categoriesFor: #name:editBlock:!instance creation!public! !
-!Aspect class categoriesFor: #name:presenterBlock:!instance creation!public! !
-!Aspect class categoriesFor: #name:presenterBlock:editBlock:!instance creation!public! !
-!Aspect class categoriesFor: #new!instance creation!private! !
-!Aspect class categoriesFor: #number:!instance creation!public! !
-!Aspect class categoriesFor: #point:!instance creation!public! !
-!Aspect class categoriesFor: #position:!instance creation!public! !
-!Aspect class categoriesFor: #rectangle:!instance creation!public! !
-!Aspect class categoriesFor: #richText:!instance creation!public! !
-!Aspect class categoriesFor: #sequenceableCollection:!instance creation!public! !
-!Aspect class categoriesFor: #sequenceableCollection:addEvaluationFrom:!instance creation!public! !
-!Aspect class categoriesFor: #sequenceableCollection:addFrom:!instance creation!public! !
-!Aspect class categoriesFor: #set:!instance creation!public! !
-!Aspect class categoriesFor: #string:!instance creation!public! !
-!Aspect class categoriesFor: #time:!instance creation!public! !
+!Aspect class categoriesForMethods!
+autostring:!instance creation!public! !
+bitmap:!instance creation!public! !
+block:!instance creation!public! !
+boolean:!instance creation!public! !
+choice:choiceBlock:!instance creation!public! !
+choice:evaluationFrom:!instance creation!public! !
+choice:from:!instance creation!public! !
+choice:from:andNil:!instance creation!public! !
+choice:fromMap:nullValue:!instance creation!public! !
+collection:!instance creation!public! !
+collection:addEvaluationFrom:!instance creation!public! !
+collection:addFrom:!instance creation!public! !
+collection:presenterClass:!instance creation!private! !
+collection:presenterClass:addEvaluationFrom:!instance creation!private! !
+collection:presenterClass:addFrom:!instance creation!private! !
+color:!instance creation!public! !
+date:!instance creation!public! !
+defaultCollectionEditBlock!constants!private! !
+defaultPresenterBlock!constants!private! !
+dictionary:!instance creation!public! !
+extent:!instance creation!public! !
+fileOpen:!instance creation!public! !
+fileSave:!instance creation!public! !
+float:!instance creation!public! !
+folder:!instance creation!public! !
+font:!instance creation!public! !
+hotkey:!instance creation!public! !
+icon:!instance creation!public! !
+imageList:!instance creation!public! !
+inspector:!instance creation!public! !
+integer:!instance creation!public! !
+key:!instance creation!public! !
+list:!instance creation!public! !
+list:addEvaluationFrom:!instance creation!public! !
+list:addFrom:!instance creation!public! !
+maxDisplayCharacters!constants!public! !
+menu:!instance creation!must strip!public! !
+menuBar:!instance creation!must strip!public! !
+multilineString:!instance creation!public! !
+name:!instance creation!public! !
+name:chooseFrom:!instance creation!public! !
+name:editBlock:!instance creation!public! !
+name:presenterBlock:!instance creation!public! !
+name:presenterBlock:editBlock:!instance creation!public! !
+new!instance creation!private! !
+number:!instance creation!public! !
+point:!instance creation!public! !
+position:!instance creation!public! !
+rectangle:!instance creation!public! !
+richText:!instance creation!public! !
+sequenceableCollection:!instance creation!public! !
+sequenceableCollection:addEvaluationFrom:!instance creation!public! !
+sequenceableCollection:addFrom:!instance creation!public! !
+set:!instance creation!public! !
+string:!instance creation!public! !
+time:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CommandLineOption
 	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
@@ -85,21 +85,23 @@ value: anObject
 		ifTrue: [block value: anObject]
 		ifFalse: [block value].
 ! !
-!CommandLineOption categoriesFor: #initializeFromStream:!private! !
-!CommandLineOption categoriesFor: #initializeOption:!private! !
-!CommandLineOption categoriesFor: #initializeOption:block:!private! !
-!CommandLineOption categoriesFor: #initializeOptionAllowingArgument:!private! !
-!CommandLineOption categoriesFor: #initializeOptionAllowingArgument:block:!private! !
-!CommandLineOption categoriesFor: #initializeOptionRequiringArgument:!private! !
-!CommandLineOption categoriesFor: #initializeOptionRequiringArgument:block:!private! !
-!CommandLineOption categoriesFor: #isArgumentAllowed!accessing!public! !
-!CommandLineOption categoriesFor: #isArgumentAllowed:!accessing!public! !
-!CommandLineOption categoriesFor: #isArgumentRequired!accessing!public! !
-!CommandLineOption categoriesFor: #isArgumentRequired:!accessing!public! !
-!CommandLineOption categoriesFor: #isLongOption!public! !
-!CommandLineOption categoriesFor: #name!accessing!public! !
-!CommandLineOption categoriesFor: #name:!accessing!public! !
-!CommandLineOption categoriesFor: #value:!public! !
+!CommandLineOption categoriesForMethods!
+initializeFromStream:!private! !
+initializeOption:!private! !
+initializeOption:block:!private! !
+initializeOptionAllowingArgument:!private! !
+initializeOptionAllowingArgument:block:!private! !
+initializeOptionRequiringArgument:!private! !
+initializeOptionRequiringArgument:block:!private! !
+isArgumentAllowed!accessing!public! !
+isArgumentAllowed:!accessing!public! !
+isArgumentRequired!accessing!public! !
+isArgumentRequired:!accessing!public! !
+isLongOption!public! !
+name!accessing!public! !
+name:!accessing!public! !
+value:!public! !
+!
 
 !CommandLineOption class methodsFor!
 
@@ -138,11 +140,13 @@ requiringArgument: aString block: aBlock
 	^(self new)
 		initializeOptionRequiringArgument: aString block: aBlock;
 		yourself! !
-!CommandLineOption class categoriesFor: #allowingArgument:!public! !
-!CommandLineOption class categoriesFor: #allowingArgument:block:!public! !
-!CommandLineOption class categoriesFor: #fromStream:!public! !
-!CommandLineOption class categoriesFor: #named:!public! !
-!CommandLineOption class categoriesFor: #named:block:!public! !
-!CommandLineOption class categoriesFor: #requiringArgument:!public! !
-!CommandLineOption class categoriesFor: #requiringArgument:block:!public! !
+!CommandLineOption class categoriesForMethods!
+allowingArgument:!public! !
+allowingArgument:block:!public! !
+fromStream:!public! !
+named:!public! !
+named:block:!public! !
+requiringArgument:!public! !
+requiringArgument:block:!public! !
+!
 

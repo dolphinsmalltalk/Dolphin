@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
 	instanceVariableNames: 'canvas'
@@ -31,9 +31,11 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Graphics'! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #canvas:!initializing!private! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusGraphicsFromHDCInitializer categoriesForMethods!
+canvas:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusGraphicsFromHDCInitializer class methodsFor!
 
@@ -41,5 +43,7 @@ canvas: aCanvas
 	"Creates a Graphics object that is associated with a specified device context."
 
 	^self new canvas: aCanvas! !
-!GdiplusGraphicsFromHDCInitializer class categoriesFor: #canvas:!instance creation!public! !
+!GdiplusGraphicsFromHDCInitializer class categoriesForMethods!
+canvas:!instance creation!public! !
+!
 

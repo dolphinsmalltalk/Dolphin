@@ -245,22 +245,24 @@ versionLookup
 		at: 5 put: #loadVersion5:filer:;
 		shrink;
 		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"! !
-!Package categoriesFor: #basicLoadVersion4:filer:!binary filing!private! !
-!Package categoriesFor: #errorUnknownFileVersion:!binary filing!exceptions!private! !
-!Package categoriesFor: #fileInClassDefinitions:!development!private!source filing! !
-!Package categoriesFor: #loadGlobalsFromFiler:!binary filing!private! !
-!Package categoriesFor: #loadLegacyPAC:!binary filing!private! !
-!Package categoriesFor: #loadLegacyResources!binary filing!private! !
-!Package categoriesFor: #loadResourcesFromFiler:!binary filing!private! !
-!Package categoriesFor: #loadVersion1:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion2:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion3:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion4:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion5:filer:!binary filing!private! !
-!Package categoriesFor: #resourceNames!accessing!public! !
-!Package categoriesFor: #script:!operations!public! !
-!Package categoriesFor: #script:put:!operations!public! !
-!Package categoriesFor: #versionLookup!binary filing!constants!private! !
+!Package categoriesForMethods!
+basicLoadVersion4:filer:!binary filing!private! !
+errorUnknownFileVersion:!binary filing!exceptions!private! !
+fileInClassDefinitions:!development!private!source filing! !
+loadGlobalsFromFiler:!binary filing!private! !
+loadLegacyPAC:!binary filing!private! !
+loadLegacyResources!binary filing!private! !
+loadResourcesFromFiler:!binary filing!private! !
+loadVersion1:filer:!binary filing!private! !
+loadVersion2:filer:!binary filing!private! !
+loadVersion3:filer:!binary filing!private! !
+loadVersion4:filer:!binary filing!private! !
+loadVersion5:filer:!binary filing!private! !
+resourceNames!accessing!public! !
+script:!operations!public! !
+script:put:!operations!public! !
+versionLookup!binary filing!constants!private! !
+!
 
 !Package class methodsFor!
 
@@ -269,7 +271,9 @@ name: nameString comment: commentString
 	^(self name: nameString)
 		basicComment: commentString;
 		yourself! !
-!Package class categoriesFor: #name:comment:!instance creation!public! !
+!Package class categoriesForMethods!
+name:comment:!instance creation!public! !
+!
 
 "End of package definition"!
 

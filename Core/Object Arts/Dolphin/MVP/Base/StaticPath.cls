@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticText subclass: #StaticPath
 	instanceVariableNames: 'text'
@@ -48,11 +48,13 @@ setWindowText: pathString
 		id: self id
 		pszPath: pathString.
 	^true! !
-!StaticPath categoriesFor: #isSingleLine!private!testing! !
-!StaticPath categoriesFor: #layout:!geometry!private! !
-!StaticPath categoriesFor: #plainText!accessing!public! !
-!StaticPath categoriesFor: #plainText:!private!updating! !
-!StaticPath categoriesFor: #setWindowText:!accessing!private! !
+!StaticPath categoriesForMethods!
+isSingleLine!private!testing! !
+layout:!geometry!private! !
+plainText!accessing!public! !
+plainText:!private!updating! !
+setWindowText:!accessing!private! !
+!
 
 !StaticPath class methodsFor!
 
@@ -60,5 +62,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!StaticPath class categoriesFor: #icon!constants!public! !
+!StaticPath class categoriesForMethods!
+icon!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticView subclass: #StaticImage
 	instanceVariableNames: 'image'
@@ -45,11 +45,13 @@ image: anImage
 
 setImage: anImage
 	^self subclassResponsibility! !
-!StaticImage categoriesFor: #displayValue!private!updating! !
-!StaticImage categoriesFor: #displayValue:!private!updating! !
-!StaticImage categoriesFor: #image!accessing!private! !
-!StaticImage categoriesFor: #image:!accessing!public! !
-!StaticImage categoriesFor: #setImage:!accessing!private! !
+!StaticImage categoriesForMethods!
+displayValue!private!updating! !
+displayValue:!private!updating! !
+image!accessing!private! !
+image:!accessing!public! !
+setImage:!accessing!private! !
+!
 
 !StaticImage class methodsFor!
 
@@ -57,5 +59,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!StaticImage class categoriesFor: #icon!constants!public! !
+!StaticImage class categoriesForMethods!
+icon!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #DifferencesPresenter
 	instanceVariableNames: 'beforePresenter afterPresenter beforeTitlePresenter afterTitlePresenter comparisonMode wordSeparators'
@@ -257,36 +257,38 @@ wordSeparators
 
 wordSeparators: aString 
 	wordSeparators := aString! !
-!DifferencesPresenter categoriesFor: #afterText:!accessing!public! !
-!DifferencesPresenter categoriesFor: #afterTitle:!accessing!public! !
-!DifferencesPresenter categoriesFor: #beforeText:!accessing!public! !
-!DifferencesPresenter categoriesFor: #beforeTitle:!accessing!public! !
-!DifferencesPresenter categoriesFor: #clear!operations!public! !
-!DifferencesPresenter categoriesFor: #clearDiffs!operations!public! !
-!DifferencesPresenter categoriesFor: #compare:with:!operations!public! !
-!DifferencesPresenter categoriesFor: #comparisonMode!accessing!public! !
-!DifferencesPresenter categoriesFor: #comparisonMode:!accessing!public! !
-!DifferencesPresenter categoriesFor: #createComponents!initializing!private! !
-!DifferencesPresenter categoriesFor: #diff:and:!private!updating! !
-!DifferencesPresenter categoriesFor: #display:items:presenter:!private!updating! !
-!DifferencesPresenter categoriesFor: #initialize!initializing!private! !
-!DifferencesPresenter categoriesFor: #itemsFrom:!helpers!private! !
-!DifferencesPresenter categoriesFor: #parse:!helpers!private! !
-!DifferencesPresenter categoriesFor: #parseWordsFrom:!helpers!private! !
-!DifferencesPresenter categoriesFor: #queryCommand:!commands!private! !
-!DifferencesPresenter categoriesFor: #reduce:!helpers!private! !
-!DifferencesPresenter categoriesFor: #refresh!public!updating! !
-!DifferencesPresenter categoriesFor: #styler:!accessing!public! !
-!DifferencesPresenter categoriesFor: #textFont:!accessing!public! !
-!DifferencesPresenter categoriesFor: #textStyles:!accessing!public! !
-!DifferencesPresenter categoriesFor: #toggleIndentGuides!commands!public! !
-!DifferencesPresenter categoriesFor: #toggleLineNumberMargins!commands!public! !
-!DifferencesPresenter categoriesFor: #toggleSyntaxColoring!commands!public! !
-!DifferencesPresenter categoriesFor: #toggleVisibleLineEndings!commands!public! !
-!DifferencesPresenter categoriesFor: #toggleVisibleWhitespace!commands!public! !
-!DifferencesPresenter categoriesFor: #toggleWrapping!commands!public! !
-!DifferencesPresenter categoriesFor: #wordSeparators!accessing!public! !
-!DifferencesPresenter categoriesFor: #wordSeparators:!accessing!public! !
+!DifferencesPresenter categoriesForMethods!
+afterText:!accessing!public! !
+afterTitle:!accessing!public! !
+beforeText:!accessing!public! !
+beforeTitle:!accessing!public! !
+clear!operations!public! !
+clearDiffs!operations!public! !
+compare:with:!operations!public! !
+comparisonMode!accessing!public! !
+comparisonMode:!accessing!public! !
+createComponents!initializing!private! !
+diff:and:!private!updating! !
+display:items:presenter:!private!updating! !
+initialize!initializing!private! !
+itemsFrom:!helpers!private! !
+parse:!helpers!private! !
+parseWordsFrom:!helpers!private! !
+queryCommand:!commands!private! !
+reduce:!helpers!private! !
+refresh!public!updating! !
+styler:!accessing!public! !
+textFont:!accessing!public! !
+textStyles:!accessing!public! !
+toggleIndentGuides!commands!public! !
+toggleLineNumberMargins!commands!public! !
+toggleSyntaxColoring!commands!public! !
+toggleVisibleLineEndings!commands!public! !
+toggleVisibleWhitespace!commands!public! !
+toggleWrapping!commands!public! !
+wordSeparators!accessing!public! !
+wordSeparators:!accessing!public! !
+!
 
 !DifferencesPresenter class methodsFor!
 
@@ -308,8 +310,10 @@ wordSeparators
 
 wordSeparators: aString 
 	WordSeparators := aString! !
-!DifferencesPresenter class categoriesFor: #initialize!initializing!public! !
-!DifferencesPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!DifferencesPresenter class categoriesFor: #wordSeparators!accessing!public! !
-!DifferencesPresenter class categoriesFor: #wordSeparators:!accessing!public! !
+!DifferencesPresenter class categoriesForMethods!
+initialize!initializing!public! !
+resource_Default_view!public!resources-views! !
+wordSeparators!accessing!public! !
+wordSeparators:!accessing!public! !
+!
 

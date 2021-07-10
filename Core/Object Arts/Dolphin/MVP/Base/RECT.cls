@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalRectangle subclass: #RECT
 	instanceVariableNames: ''
@@ -72,16 +72,18 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_top put: anInteger! !
-!RECT categoriesFor: #asRectangle!converting!public! !
-!RECT categoriesFor: #bottom!**compiled accessors**!public! !
-!RECT categoriesFor: #bottom:!**compiled accessors**!public! !
-!RECT categoriesFor: #extent!accessing!public! !
-!RECT categoriesFor: #left!**compiled accessors**!public! !
-!RECT categoriesFor: #left:!**compiled accessors**!public! !
-!RECT categoriesFor: #right!**compiled accessors**!public! !
-!RECT categoriesFor: #right:!**compiled accessors**!public! !
-!RECT categoriesFor: #top!**compiled accessors**!public! !
-!RECT categoriesFor: #top:!**compiled accessors**!public! !
+!RECT categoriesForMethods!
+asRectangle!converting!public! !
+bottom!**compiled accessors**!public! !
+bottom:!**compiled accessors**!public! !
+extent!accessing!public! !
+left!**compiled accessors**!public! !
+left:!**compiled accessors**!public! !
+right!**compiled accessors**!public! !
+right:!**compiled accessors**!public! !
+top!**compiled accessors**!public! !
+top:!**compiled accessors**!public! !
+!
 
 !RECT class methodsFor!
 
@@ -134,9 +136,11 @@ uninitialize
 	Make sure our alias disappears with us."
 
 	self environment removeKey: #RECTL ifAbsent: []! !
-!RECT class categoriesFor: #defineFields!public!template definition! !
-!RECT class categoriesFor: #extent:!instance creation!public! !
-!RECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!RECT class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!RECT class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!RECT class categoriesForMethods!
+defineFields!public!template definition! !
+extent:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+left:top:right:bottom:!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

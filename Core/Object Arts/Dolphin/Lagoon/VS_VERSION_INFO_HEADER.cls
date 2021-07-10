@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
@@ -76,16 +76,18 @@ wValueLength
 	"Answer the <Integer> value of the receiver's 'wValueLength' field."
 
 	^bytes wordAtOffset: _OffsetOf_wValueLength! !
-!VS_VERSION_INFO_HEADER categoriesFor: #childrenOffset!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #key!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #szKey!accessing!private! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueBytes!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueDWORDs!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueOffset!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #valueString!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #wLength!**compiled accessors**!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #wType!**compiled accessors**!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #wValueLength!**compiled accessors**!public! !
+!VS_VERSION_INFO_HEADER categoriesForMethods!
+childrenOffset!accessing!public! !
+key!accessing!public! !
+szKey!accessing!private! !
+valueBytes!accessing!public! !
+valueDWORDs!accessing!public! !
+valueOffset!accessing!public! !
+valueString!accessing!public! !
+wLength!**compiled accessors**!public! !
+wType!**compiled accessors**!public! !
+wValueLength!**compiled accessors**!public! !
+!
 
 !VS_VERSION_INFO_HEADER class methodsFor!
 
@@ -103,6 +105,8 @@ defineFields
 
 getFieldNames
 	^#(#wLength #wValueLength #wType)! !
-!VS_VERSION_INFO_HEADER class categoriesFor: #defineFields!private!template definition! !
-!VS_VERSION_INFO_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!VS_VERSION_INFO_HEADER class categoriesForMethods!
+defineFields!private!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

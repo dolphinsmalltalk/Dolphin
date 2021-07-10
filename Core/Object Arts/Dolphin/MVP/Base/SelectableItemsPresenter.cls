@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #SelectableItemsPresenter
 	instanceVariableNames: ''
@@ -129,24 +129,26 @@ selections: aCollection ifAbsent: exceptionHandler
 		ifAbsent: 
 			[self resetForItems: aCollection.
 			self selectableItems selections: aCollection ifAbsent: exceptionHandler]! !
-!SelectableItemsPresenter categoriesFor: #ensureSelectionVisible!public!selection! !
-!SelectableItemsPresenter categoriesFor: #hasSelection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #hasSingleSelection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #onSelectionChanged!event handling!public! !
-!SelectableItemsPresenter categoriesFor: #onSelectionChanging:!event handling!public! !
-!SelectableItemsPresenter categoriesFor: #resetForItem:!event handling!private! !
-!SelectableItemsPresenter categoriesFor: #resetForItems:!event handling!private! !
-!SelectableItemsPresenter categoriesFor: #resetSelection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectableItems!private!selection! !
-!SelectableItemsPresenter categoriesFor: #selection!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selection:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selection:ifAbsent:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectionIfNone:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectionOrNil!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selectionOrNil:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selections!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selections:!public!selection! !
-!SelectableItemsPresenter categoriesFor: #selections:ifAbsent:!public!selection! !
+!SelectableItemsPresenter categoriesForMethods!
+ensureSelectionVisible!public!selection! !
+hasSelection!public!selection! !
+hasSingleSelection!public!selection! !
+onSelectionChanged!event handling!public! !
+onSelectionChanging:!event handling!public! !
+resetForItem:!event handling!private! !
+resetForItems:!event handling!private! !
+resetSelection!public!selection! !
+selectableItems!private!selection! !
+selection!public!selection! !
+selection:!public!selection! !
+selection:ifAbsent:!public!selection! !
+selectionIfNone:!public!selection! !
+selectionOrNil!public!selection! !
+selectionOrNil:!public!selection! !
+selections!public!selection! !
+selections:!public!selection! !
+selections:ifAbsent:!public!selection! !
+!
 
 SelectableItemsPresenter methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!
 

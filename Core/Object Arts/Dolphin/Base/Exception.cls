@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Exception
 	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
@@ -525,56 +525,58 @@ toTrace: anInteger
 		cr.
 	self raisingFrame printStackOn: traceStream depth: anInteger.
 	traceStream flush! !
-!Exception categoriesFor: #_descriptionArguments!displaying!public! !
-!Exception categoriesFor: #_descriptionFormat!displaying!public! !
-!Exception categoriesFor: #_evaluateHandler:in:!debugger-step through!handling!private! !
-!Exception categoriesFor: #_propagate!debugger-step through!handling!private! !
-!Exception categoriesFor: #_propagateFrom:!debugger-step through!handling!private! !
-!Exception categoriesFor: #abort!handler responses!public! !
-!Exception categoriesFor: #abortRetryIgnore!handler responses!public! !
-!Exception categoriesFor: #abortRetryOrIgnore!handling!public! !
-!Exception categoriesFor: #beep!parping!public! !
-!Exception categoriesFor: #defaultAction!handling!public! !
-!Exception categoriesFor: #description!displaying!public! !
-!Exception categoriesFor: #displayOn:!printing!public! !
-!Exception categoriesFor: #exit:!handler responses!public! !
-!Exception categoriesFor: #hasTag!public!testing! !
-!Exception categoriesFor: #hresult!accessing!public! !
-!Exception categoriesFor: #ignore!handler responses!public! !
-!Exception categoriesFor: #isNested!public!testing! !
-!Exception categoriesFor: #isResumable!public!testing! !
-!Exception categoriesFor: #isUserResumable!public!testing! !
-!Exception categoriesFor: #messageText!accessing!public! !
-!Exception categoriesFor: #messageText:!accessing!debugger-step over!public! !
-!Exception categoriesFor: #okCancel!handler responses!public! !
-!Exception categoriesFor: #okToContinue!public!testing! !
-!Exception categoriesFor: #outer!handler responses!public! !
-!Exception categoriesFor: #pass!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #postCopy!copying!public! !
-!Exception categoriesFor: #printOn:!printing!public! !
-!Exception categoriesFor: #printTraceOn:!printing!public! !
-!Exception categoriesFor: #printTraceOn:depth:!printing!public! !
-!Exception categoriesFor: #raisingFrame!accessing!private! !
-!Exception categoriesFor: #resignalAs:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #resume!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #resume:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #retry!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #retryUsing:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #return!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #return:!debugger-step through!handler responses!public! !
-!Exception categoriesFor: #severityClass!constants!public! !
-!Exception categoriesFor: #showMessage:style:!helpers!private! !
-!Exception categoriesFor: #signal!debugger-step through!public!signalling! !
-!Exception categoriesFor: #signal:!debugger-step through!public!signalling! !
-!Exception categoriesFor: #signal:with:!public!signalling! !
-!Exception categoriesFor: #signalFrame!accessing!private! !
-!Exception categoriesFor: #signalType!accessing!private! !
-!Exception categoriesFor: #signalWith:!public!signalling! !
-!Exception categoriesFor: #stackTrace:!accessing!private! !
-!Exception categoriesFor: #tag!accessing!public! !
-!Exception categoriesFor: #tag:!accessing!private! !
-!Exception categoriesFor: #toTrace!accessing!public! !
-!Exception categoriesFor: #toTrace:!accessing!public! !
+!Exception categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+_evaluateHandler:in:!debugger-step through!handling!private! !
+_propagate!debugger-step through!handling!private! !
+_propagateFrom:!debugger-step through!handling!private! !
+abort!handler responses!public! !
+abortRetryIgnore!handler responses!public! !
+abortRetryOrIgnore!handling!public! !
+beep!parping!public! !
+defaultAction!handling!public! !
+description!displaying!public! !
+displayOn:!printing!public! !
+exit:!handler responses!public! !
+hasTag!public!testing! !
+hresult!accessing!public! !
+ignore!handler responses!public! !
+isNested!public!testing! !
+isResumable!public!testing! !
+isUserResumable!public!testing! !
+messageText!accessing!public! !
+messageText:!accessing!debugger-step over!public! !
+okCancel!handler responses!public! !
+okToContinue!public!testing! !
+outer!handler responses!public! !
+pass!debugger-step through!handler responses!public! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+printTraceOn:!printing!public! !
+printTraceOn:depth:!printing!public! !
+raisingFrame!accessing!private! !
+resignalAs:!debugger-step through!handler responses!public! !
+resume!debugger-step through!handler responses!public! !
+resume:!debugger-step through!handler responses!public! !
+retry!debugger-step through!handler responses!public! !
+retryUsing:!debugger-step through!handler responses!public! !
+return!debugger-step through!handler responses!public! !
+return:!debugger-step through!handler responses!public! !
+severityClass!constants!public! !
+showMessage:style:!helpers!private! !
+signal!debugger-step through!public!signalling! !
+signal:!debugger-step through!public!signalling! !
+signal:with:!public!signalling! !
+signalFrame!accessing!private! !
+signalType!accessing!private! !
+signalWith:!public!signalling! !
+stackTrace:!accessing!private! !
+tag!accessing!public! !
+tag:!accessing!private! !
+toTrace!accessing!public! !
+toTrace:!accessing!public! !
+!
 
 Exception methodProtocol: #Exception attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 Exception methodProtocol: #exceptionBuilder attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isResumable #messageText #messageText: #signal #signal: #tag)!
@@ -652,15 +654,17 @@ signalWith: signallerTag
 	resumable, and the handler which catches it directs that it should be resumed."
 
 	^self signal: nil with: signallerTag! !
-!Exception class categoriesFor: #,!filtering!public! !
-!Exception class categoriesFor: #beep!parping!public! !
-!Exception class categoriesFor: #handles:!filtering!public! !
-!Exception class categoriesFor: #mbIconId!constants!private! !
-!Exception class categoriesFor: #new!debugger-step through!instance creation!public! !
-!Exception class categoriesFor: #signal!instance creation!public! !
-!Exception class categoriesFor: #signal:!debugger-step through!instance creation!public! !
-!Exception class categoriesFor: #signal:with:!instance creation!public! !
-!Exception class categoriesFor: #signalWith:!instance creation!public! !
+!Exception class categoriesForMethods!
+,!filtering!public! !
+beep!parping!public! !
+handles:!filtering!public! !
+mbIconId!constants!private! !
+new!debugger-step through!instance creation!public! !
+signal!instance creation!public! !
+signal:!debugger-step through!instance creation!public! !
+signal:with:!instance creation!public! !
+signalWith:!instance creation!public! !
+!
 
 Exception class methodProtocol: #'Exception class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
 Exception class methodProtocol: #exceptionInstantiator attributes: #(#ansi #readOnly) selectors: #(#, #handles: #new #signal #signal:)!

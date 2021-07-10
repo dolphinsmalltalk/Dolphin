@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentTest subclass: #VariableEnvironmentTest
 	instanceVariableNames: ''
@@ -41,6 +41,8 @@ testInstVars
 	self universalTestFor: writers.
 	self universalTestFor: readers.
 	self assert: refs numberSelectors equals: (writers | readers) numberSelectors! !
-!VariableEnvironmentTest categoriesFor: #testAddRemove!public!tests! !
-!VariableEnvironmentTest categoriesFor: #testInstVars!public!tests! !
+!VariableEnvironmentTest categoriesForMethods!
+testAddRemove!public!tests! !
+testInstVars!public!tests! !
+!
 

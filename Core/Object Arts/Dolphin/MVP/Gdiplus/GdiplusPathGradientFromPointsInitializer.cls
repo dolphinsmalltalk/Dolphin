@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
 	instanceVariableNames: 'pathPoints wrapMode'
@@ -32,13 +32,17 @@ gdiplusConstructorErrorDescription
 points: points wrapMode: aWrapModeConstant
 	pathPoints := points.
 	wrapMode := aWrapModeConstant! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!initializing!private! !
+!GdiplusPathGradientFromPointsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+points:wrapMode:!initializing!private! !
+!
 
 !GdiplusPathGradientFromPointsInitializer class methodsFor!
 
 points: points wrapMode: aWrapModeConstant
 	^self new points: points wrapMode: aWrapModeConstant! !
-!GdiplusPathGradientFromPointsInitializer class categoriesFor: #points:wrapMode:!instance creation!public! !
+!GdiplusPathGradientFromPointsInitializer class categoriesForMethods!
+points:wrapMode:!instance creation!public! !
+!
 

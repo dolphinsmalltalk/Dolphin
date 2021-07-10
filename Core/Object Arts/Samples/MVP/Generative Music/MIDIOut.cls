@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MIDIOut
 	instanceVariableNames: 'handle'
@@ -67,13 +67,15 @@ voice: voiceID channel: channel
 		msg: MidiProgramChange
 		with: voiceID
 		with: channel! !
-!MIDIOut categoriesFor: #channel:msg:with:with:!public! !
-!MIDIOut categoriesFor: #close!public! !
-!MIDIOut categoriesFor: #controller:value:!public! !
-!MIDIOut categoriesFor: #keyDown:velocity:!public! !
-!MIDIOut categoriesFor: #keyDown:velocity:channel:!public! !
-!MIDIOut categoriesFor: #keyUp:!public! !
-!MIDIOut categoriesFor: #keyUp:channel:!public! !
-!MIDIOut categoriesFor: #openDeviceID:!public! !
-!MIDIOut categoriesFor: #voice:channel:!public! !
+!MIDIOut categoriesForMethods!
+channel:msg:with:with:!public! !
+close!public! !
+controller:value:!public! !
+keyDown:velocity:!public! !
+keyDown:velocity:channel:!public! !
+keyUp:!public! !
+keyUp:channel:!public! !
+openDeviceID:!public! !
+voice:channel:!public! !
+!
 

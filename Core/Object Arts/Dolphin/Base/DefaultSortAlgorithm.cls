@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SortAlgorithm subclass: #DefaultSortAlgorithm
 	instanceVariableNames: ''
@@ -164,12 +164,14 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^[:a :b | a <= b]! !
-!DefaultSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
-!DefaultSortAlgorithm categoriesFor: #insertionSort:from:to:!private!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sift:from:between:and:!private!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sort:from:to:!public!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sort:from:to:limit:!private!sorting! !
-!DefaultSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
+!DefaultSortAlgorithm categoriesForMethods!
+compare:with:!comparing!public! !
+insertionSort:from:to:!private!sorting! !
+sift:from:between:and:!private!sorting! !
+sort:from:to:!public!sorting! !
+sort:from:to:limit:!private!sorting! !
+sortBlock!accessing!public! !
+!
 
 !DefaultSortAlgorithm class methodsFor!
 
@@ -184,8 +186,10 @@ newSortBlock: aDyadicValuable
 
 pluggableEquivalentClass
 	^IntrosortAlgorithm! !
-!DefaultSortAlgorithm class categoriesFor: #current!instance creation!public! !
-!DefaultSortAlgorithm class categoriesFor: #initialize!development!initializing!public! !
-!DefaultSortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
-!DefaultSortAlgorithm class categoriesFor: #pluggableEquivalentClass!constants!public! !
+!DefaultSortAlgorithm class categoriesForMethods!
+current!instance creation!public! !
+initialize!development!initializing!public! !
+newSortBlock:!instance creation!public! !
+pluggableEquivalentClass!constants!public! !
+!
 

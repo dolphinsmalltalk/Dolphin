@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #Plimbole
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
@@ -372,66 +372,68 @@ voiceChannelForNoteIndex: n
 	"Private - Decode whether note index n is a tenor or alto voice. Tenor is channel 1 and alto is channel 2"
 
 	^(n+1) < (self gridExtent x / 2) ifTrue: [tenorChannel ] ifFalse: [altoChannel ]! !
-!Plimbole categoriesFor: #addCell:!operations!public! !
-!Plimbole categoriesFor: #altoChannel!public! !
-!Plimbole categoriesFor: #altoVoice!accessing!public! !
-!Plimbole categoriesFor: #altoVoice:!accessing!public! !
-!Plimbole categoriesFor: #altoVoiceIndex!accessing!public! !
-!Plimbole categoriesFor: #altoVoiceIndex:!accessing!public! !
-!Plimbole categoriesFor: #altoVoices!constants!public!voices! !
-!Plimbole categoriesFor: #assignAvailableChannels!private! !
-!Plimbole categoriesFor: #beatTime!accessing!constants!public! !
-!Plimbole categoriesFor: #cellAtLocation:!helpers!private! !
-!Plimbole categoriesFor: #cellExtent!helpers!public! !
-!Plimbole categoriesFor: #cells!accessing!public! !
-!Plimbole categoriesFor: #cells:!accessing!private! !
-!Plimbole categoriesFor: #checkCell:!private! !
-!Plimbole categoriesFor: #checkCellCollisions:!helpers!private! !
-!Plimbole categoriesFor: #chromaticScale!constants!public!scales! !
-!Plimbole categoriesFor: #clearCells!public! !
-!Plimbole categoriesFor: #defaultVoice!constants!private! !
-!Plimbole categoriesFor: #gridExtent!accessing!public! !
-!Plimbole categoriesFor: #gridExtent:!public! !
-!Plimbole categoriesFor: #hangScale!constants!public!scales! !
-!Plimbole categoriesFor: #initialize!accessing!initializing!private! !
-!Plimbole categoriesFor: #isPlaying!public!testing! !
-!Plimbole categoriesFor: #midiOutChannel!private! !
-!Plimbole categoriesFor: #noteDuration!accessing!helpers!public! !
-!Plimbole categoriesFor: #noteDuration:!public! !
-!Plimbole categoriesFor: #otomataSignature!public! !
-!Plimbole categoriesFor: #pentatonicScale!constants!public!scales! !
-!Plimbole categoriesFor: #play!commands!public! !
-!Plimbole categoriesFor: #playCellNote:!operations!private! !
-!Plimbole categoriesFor: #playNoteAtX:!helpers!operations!private! !
-!Plimbole categoriesFor: #playNoteAtY:!helpers!operations!private! !
-!Plimbole categoriesFor: #register!public! !
-!Plimbole categoriesFor: #removeCell:!public! !
-!Plimbole categoriesFor: #reset!operations!private! !
-!Plimbole categoriesFor: #scale!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleIndex!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleIndex:!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleName!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleName:!accessing!public!scales! !
-!Plimbole categoriesFor: #scaleNames!public!scales! !
-!Plimbole categoriesFor: #setVoices!private! !
-!Plimbole categoriesFor: #signature!accessing!public! !
-!Plimbole categoriesFor: #signature:!public! !
-!Plimbole categoriesFor: #signatureVersion!private! !
-!Plimbole categoriesFor: #step!operations!public! !
-!Plimbole categoriesFor: #stepCell:!operations!private! !
-!Plimbole categoriesFor: #stop!commands!public! !
-!Plimbole categoriesFor: #tempo!public! !
-!Plimbole categoriesFor: #tempo:!public! !
-!Plimbole categoriesFor: #tenorChannel!public! !
-!Plimbole categoriesFor: #tenorVoice!accessing!public! !
-!Plimbole categoriesFor: #tenorVoice:!accessing!public! !
-!Plimbole categoriesFor: #tenorVoiceIndex!accessing!public! !
-!Plimbole categoriesFor: #tenorVoiceIndex:!accessing!public! !
-!Plimbole categoriesFor: #tenorVoices!constants!public!voices! !
-!Plimbole categoriesFor: #unregister!public! !
-!Plimbole categoriesFor: #update!private! !
-!Plimbole categoriesFor: #voice:!accessing!public! !
-!Plimbole categoriesFor: #voiceChannelForNoteIndex:!accessing!private! !
+!Plimbole categoriesForMethods!
+addCell:!operations!public! !
+altoChannel!public! !
+altoVoice!accessing!public! !
+altoVoice:!accessing!public! !
+altoVoiceIndex!accessing!public! !
+altoVoiceIndex:!accessing!public! !
+altoVoices!constants!public!voices! !
+assignAvailableChannels!private! !
+beatTime!accessing!constants!public! !
+cellAtLocation:!helpers!private! !
+cellExtent!helpers!public! !
+cells!accessing!public! !
+cells:!accessing!private! !
+checkCell:!private! !
+checkCellCollisions:!helpers!private! !
+chromaticScale!constants!public!scales! !
+clearCells!public! !
+defaultVoice!constants!private! !
+gridExtent!accessing!public! !
+gridExtent:!public! !
+hangScale!constants!public!scales! !
+initialize!accessing!initializing!private! !
+isPlaying!public!testing! !
+midiOutChannel!private! !
+noteDuration!accessing!helpers!public! !
+noteDuration:!public! !
+otomataSignature!public! !
+pentatonicScale!constants!public!scales! !
+play!commands!public! !
+playCellNote:!operations!private! !
+playNoteAtX:!helpers!operations!private! !
+playNoteAtY:!helpers!operations!private! !
+register!public! !
+removeCell:!public! !
+reset!operations!private! !
+scale!accessing!public!scales! !
+scaleIndex!accessing!public!scales! !
+scaleIndex:!accessing!public!scales! !
+scaleName!accessing!public!scales! !
+scaleName:!accessing!public!scales! !
+scaleNames!public!scales! !
+setVoices!private! !
+signature!accessing!public! !
+signature:!public! !
+signatureVersion!private! !
+step!operations!public! !
+stepCell:!operations!private! !
+stop!commands!public! !
+tempo!public! !
+tempo:!public! !
+tenorChannel!public! !
+tenorVoice!accessing!public! !
+tenorVoice:!accessing!public! !
+tenorVoiceIndex!accessing!public! !
+tenorVoiceIndex:!accessing!public! !
+tenorVoices!constants!public!voices! !
+unregister!public! !
+update!private! !
+voice:!accessing!public! !
+voiceChannelForNoteIndex:!accessing!private! !
+!
 
 !Plimbole class methodsFor!
 
@@ -503,18 +505,20 @@ unregister: aPlimbole
 		self stop.
 		self midiOutChannel free ].
 ! !
-!Plimbole class categoriesFor: #beatTime!accessing!constants!public! !
-!Plimbole class categoriesFor: #icon!constants!public! !
-!Plimbole class categoriesFor: #initialize!initialization!private! !
-!Plimbole class categoriesFor: #isPlaying!public!testing! !
-!Plimbole class categoriesFor: #midiOutChannel!private! !
-!Plimbole class categoriesFor: #onStartup!initialization!private! !
-!Plimbole class categoriesFor: #play!commands!public! !
-!Plimbole class categoriesFor: #register:!operations!public! !
-!Plimbole class categoriesFor: #registry!accessing!public! !
-!Plimbole class categoriesFor: #step!commands!public! !
-!Plimbole class categoriesFor: #stop!commands!public! !
-!Plimbole class categoriesFor: #tempo!public! !
-!Plimbole class categoriesFor: #tempo:!public! !
-!Plimbole class categoriesFor: #unregister:!operations!public! !
+!Plimbole class categoriesForMethods!
+beatTime!accessing!constants!public! !
+icon!constants!public! !
+initialize!initialization!private! !
+isPlaying!public!testing! !
+midiOutChannel!private! !
+onStartup!initialization!private! !
+play!commands!public! !
+register:!operations!public! !
+registry!accessing!public! !
+step!commands!public! !
+stop!commands!public! !
+tempo!public! !
+tempo:!public! !
+unregister:!operations!public! !
+!
 

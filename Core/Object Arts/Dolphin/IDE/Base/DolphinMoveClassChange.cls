@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryClassChange subclass: #DolphinMoveClassChange
 	instanceVariableNames: 'superclassName'
@@ -47,14 +47,16 @@ superclassName
 
 superclassName: aString 
 	superclassName := aString asSymbol! !
-!DolphinMoveClassChange categoriesFor: #=!comparing!public! !
-!DolphinMoveClassChange categoriesFor: #asUndoOperation!converting!public! !
-!DolphinMoveClassChange categoriesFor: #changeString!printing!public! !
-!DolphinMoveClassChange categoriesFor: #expression!private! !
-!DolphinMoveClassChange categoriesFor: #initialize!initialize/release!private! !
-!DolphinMoveClassChange categoriesFor: #primitiveExecute!public! !
-!DolphinMoveClassChange categoriesFor: #superclassName!accessing!public! !
-!DolphinMoveClassChange categoriesFor: #superclassName:!accessing!public! !
+!DolphinMoveClassChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+expression!private! !
+initialize!initialize/release!private! !
+primitiveExecute!public! !
+superclassName!accessing!public! !
+superclassName:!accessing!public! !
+!
 
 !DolphinMoveClassChange class methodsFor!
 
@@ -67,6 +69,8 @@ moveClassNamed: aSymbol toSuperClassNamed: superSymbol
 	^(self new changeClassName: aSymbol)
 		superclassName: superSymbol;
 		yourself! !
-!DolphinMoveClassChange class categoriesFor: #move:toSuperclass:!instance creation!public! !
-!DolphinMoveClassChange class categoriesFor: #moveClassNamed:toSuperClassNamed:!instance creation!public! !
+!DolphinMoveClassChange class categoriesForMethods!
+move:toSuperclass:!instance creation!public! !
+moveClassNamed:toSuperClassNamed:!instance creation!public! !
+!
 

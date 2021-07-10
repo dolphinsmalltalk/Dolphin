@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMSchemaCollection subclass: #IXMLDOMSchemaCollection2
 	instanceVariableNames: ''
@@ -128,15 +128,17 @@ validateOnLoad: validateOnLoad
 
 	self put_validateOnLoad: validateOnLoad
 ! !
-!IXMLDOMSchemaCollection2 categoriesFor: #get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #getDeclaration:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #GetDeclaration:item:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #getSchema:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #GetSchema:schema:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #put_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
-!IXMLDOMSchemaCollection2 categoriesFor: #Validate!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection2 categoriesFor: #validateOnLoad:!**auto generated**!properties!public! !
+!IXMLDOMSchemaCollection2 categoriesForMethods!
+get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+getDeclaration:!**auto generated**!methods!public! !
+GetDeclaration:item:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+getSchema:!**auto generated**!methods!public! !
+GetSchema:schema:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+put_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
+Validate!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!public! !
+validateOnLoad!**auto generated**!properties!public! !
+validateOnLoad:!**auto generated**!properties!public! !
+!
 
 !IXMLDOMSchemaCollection2 class methodsFor!
 
@@ -167,7 +169,9 @@ newXMLSchemaCache60
 
 	^self onCLSID: (CLSID fromString: '{88D96A07-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXMLDOMSchemaCollection2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache40!**auto generated**!instance creation!public! !
-!IXMLDOMSchemaCollection2 class categoriesFor: #newXMLSchemaCache60!**auto generated**!instance creation!public! !
+!IXMLDOMSchemaCollection2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newXMLSchemaCache40!**auto generated**!instance creation!public! !
+newXMLSchemaCache60!**auto generated**!instance creation!public! !
+!
 

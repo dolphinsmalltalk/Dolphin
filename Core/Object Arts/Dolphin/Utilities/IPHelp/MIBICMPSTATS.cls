@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIBICMPSTATS
 	instanceVariableNames: ''
@@ -111,19 +111,21 @@ dwTimestamps
 	"Answer the <Integer> value of the receiver's 'dwTimestamps' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwTimestamps! !
-!MIBICMPSTATS categoriesFor: #dwAddrMaskReps!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwAddrMasks!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwDestUnreachs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwEchoReps!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwEchos!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwErrors!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwMsgs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwParmProbs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwRedirects!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwSrcQuenchs!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwTimeExcds!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwTimestampReps!**compiled accessors**!public! !
-!MIBICMPSTATS categoriesFor: #dwTimestamps!**compiled accessors**!public! !
+!MIBICMPSTATS categoriesForMethods!
+dwAddrMaskReps!**compiled accessors**!public! !
+dwAddrMasks!**compiled accessors**!public! !
+dwDestUnreachs!**compiled accessors**!public! !
+dwEchoReps!**compiled accessors**!public! !
+dwEchos!**compiled accessors**!public! !
+dwErrors!**compiled accessors**!public! !
+dwMsgs!**compiled accessors**!public! !
+dwParmProbs!**compiled accessors**!public! !
+dwRedirects!**compiled accessors**!public! !
+dwSrcQuenchs!**compiled accessors**!public! !
+dwTimeExcds!**compiled accessors**!public! !
+dwTimestampReps!**compiled accessors**!public! !
+dwTimestamps!**compiled accessors**!public! !
+!
 
 !MIBICMPSTATS class methodsFor!
 
@@ -193,6 +195,8 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #dwDestUnreachs #dwTimeExcds #dwParmProbs #dwSrcQuenchs #dwRedirects #dwEchos #dwEchoReps #dwTimestamps #dwTimestampReps #dwAddrMasks #dwAddrMaskReps)! !
-!MIBICMPSTATS class categoriesFor: #defineFields!initializing!public! !
-!MIBICMPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIBICMPSTATS class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

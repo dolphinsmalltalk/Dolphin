@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
 	instanceVariableNames: ''
@@ -30,7 +30,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_UDPEXROW! !
-!MIB_UDPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
+!MIB_UDPEXTABLE categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !MIB_UDPEXTABLE class methodsFor!
 
@@ -56,5 +58,7 @@ defineFields
 					yourself)
 			offset: 4.
 	self byteSize: 16! !
-!MIB_UDPEXTABLE class categoriesFor: #defineFields!initializing!public! !
+!MIB_UDPEXTABLE class categoriesForMethods!
+defineFields!initializing!public! !
+!
 

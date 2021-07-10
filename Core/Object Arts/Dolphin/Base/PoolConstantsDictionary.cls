@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PoolDictionary variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
@@ -99,18 +99,20 @@ removeIndex: anInteger
 
 	super removeIndex: anInteger.
 	self isChanged: true! !
-!PoolConstantsDictionary categoriesFor: #add:!adding!public! !
-!PoolConstantsDictionary categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
-!PoolConstantsDictionary categoriesFor: #at:put:!adding!development!public! !
-!PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
-!PoolConstantsDictionary categoriesFor: #isValidKey:!adding!development!private! !
-!PoolConstantsDictionary categoriesFor: #keyString:!adding!development!private! !
-!PoolConstantsDictionary categoriesFor: #name!accessing!public! !
-!PoolConstantsDictionary categoriesFor: #name:!accessing!private! !
-!PoolConstantsDictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!PoolConstantsDictionary categoriesFor: #preResize:!adding!private! !
-!PoolConstantsDictionary categoriesFor: #recompileReferencesToVarNamed:!development!private! !
-!PoolConstantsDictionary categoriesFor: #removeIndex:!development!private!removing! !
+!PoolConstantsDictionary categoriesForMethods!
+add:!adding!public! !
+at:ifAbsentPut:!accessing!development!public! !
+at:put:!adding!development!public! !
+classesReferencing!development!private! !
+isValidKey:!adding!development!private! !
+keyString:!adding!development!private! !
+name!accessing!public! !
+name:!accessing!private! !
+newAssociation:value:!helpers!private! !
+preResize:!adding!private! !
+recompileReferencesToVarNamed:!development!private! !
+removeIndex:!development!private!removing! !
+!
 
 !PoolConstantsDictionary class methodsFor!
 
@@ -118,5 +120,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
-!PoolConstantsDictionary class categoriesFor: #named:!instance creation!public! !
+!PoolConstantsDictionary class categoriesForMethods!
+named:!instance creation!public! !
+!
 

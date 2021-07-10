@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #BytecodeRewriter
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
@@ -493,59 +493,61 @@ updateJumps
 			[:each | 
 			each jumpTarget notNil 
 				ifTrue: [each jumpOffset: (ipMap at: each jumpTarget) ip - (each ip + 1 + each args size)]]! !
-!BytecodeRewriter categoriesFor: #assemble!operations!public! !
-!BytecodeRewriter categoriesFor: #atEnd!private!testing! !
-!BytecodeRewriter categoriesFor: #blockCopy!interpreting!private! !
-!BytecodeRewriter categoriesFor: #blockDepth!accessing!private! !
-!BytecodeRewriter categoriesFor: #blockMap!accessing!public! !
-!BytecodeRewriter categoriesFor: #convertHeader:!helpers!private! !
-!BytecodeRewriter categoriesFor: #copyMethodArgs:!helpers!private! !
-!BytecodeRewriter categoriesFor: #doubleByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #emitInstruction:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitJumpOnNil:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitNearJump:asLongJump:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitNearJumpAsLongJump:!helpers!private! !
-!BytecodeRewriter categoriesFor: #emitShortJump:asNearJump:!helpers!private! !
-!BytecodeRewriter categoriesFor: #exLongSend!interpreting!private! !
-!BytecodeRewriter categoriesFor: #exLongSupersend!interpreting!private! !
-!BytecodeRewriter categoriesFor: #fetch!helpers!interpreting!private! !
-!BytecodeRewriter categoriesFor: #fetchNearJumpOffset!helpers!private! !
-!BytecodeRewriter categoriesFor: #isInBlock!private!testing! !
-!BytecodeRewriter categoriesFor: #longJump!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJump!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfFalse!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfNil!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfNotNil!interpreting!private! !
-!BytecodeRewriter categoriesFor: #nearJumpIfTrue!interpreting!private! !
-!BytecodeRewriter categoriesFor: #popStoreTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushActiveFrame!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushBlockArgs:!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushSelfAndTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #pushTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #quadByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #returnFromBlock!interpreting!private! !
-!BytecodeRewriter categoriesFor: #returnFromMessage!interpreting!private! !
-!BytecodeRewriter categoriesFor: #returnPseudo!interpreting!private! !
-!BytecodeRewriter categoriesFor: #rewriteBytecodesOf:!initializing!private! !
-!BytecodeRewriter categoriesFor: #rewriteMethod:!initializing!private! !
-!BytecodeRewriter categoriesFor: #shortJump!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortJumpIfFalse!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortPopStoreTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortPushTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortSendNoArgs!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortSendOneArg!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortSendTwoArgs!interpreting!private! !
-!BytecodeRewriter categoriesFor: #shortTempInstr:outerInstr:!helpers!private! !
-!BytecodeRewriter categoriesFor: #singleByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #storeTemp!interpreting!private! !
-!BytecodeRewriter categoriesFor: #tempInstr:outerInstr:ip:!helpers!private! !
-!BytecodeRewriter categoriesFor: #testIsZero!interpreting!private! !
-!BytecodeRewriter categoriesFor: #trebleByte!interpreting!private! !
-!BytecodeRewriter categoriesFor: #unusedDoubleByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #unusedQuadByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #unusedSingleByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #unusedTrebleByte!exceptions!private! !
-!BytecodeRewriter categoriesFor: #updateJumps!helpers!private! !
+!BytecodeRewriter categoriesForMethods!
+assemble!operations!public! !
+atEnd!private!testing! !
+blockCopy!interpreting!private! !
+blockDepth!accessing!private! !
+blockMap!accessing!public! !
+convertHeader:!helpers!private! !
+copyMethodArgs:!helpers!private! !
+doubleByte!interpreting!private! !
+emitInstruction:!helpers!private! !
+emitJumpOnNil:!helpers!private! !
+emitNearJump:asLongJump:!helpers!private! !
+emitNearJumpAsLongJump:!helpers!private! !
+emitShortJump:asNearJump:!helpers!private! !
+exLongSend!interpreting!private! !
+exLongSupersend!interpreting!private! !
+fetch!helpers!interpreting!private! !
+fetchNearJumpOffset!helpers!private! !
+isInBlock!private!testing! !
+longJump!interpreting!private! !
+nearJump!interpreting!private! !
+nearJumpIfFalse!interpreting!private! !
+nearJumpIfNil!interpreting!private! !
+nearJumpIfNotNil!interpreting!private! !
+nearJumpIfTrue!interpreting!private! !
+popStoreTemp!interpreting!private! !
+pushActiveFrame!interpreting!private! !
+pushBlockArgs:!interpreting!private! !
+pushSelfAndTemp!interpreting!private! !
+pushTemp!interpreting!private! !
+quadByte!interpreting!private! !
+returnFromBlock!interpreting!private! !
+returnFromMessage!interpreting!private! !
+returnPseudo!interpreting!private! !
+rewriteBytecodesOf:!initializing!private! !
+rewriteMethod:!initializing!private! !
+shortJump!interpreting!private! !
+shortJumpIfFalse!interpreting!private! !
+shortPopStoreTemp!interpreting!private! !
+shortPushTemp!interpreting!private! !
+shortSendNoArgs!interpreting!private! !
+shortSendOneArg!interpreting!private! !
+shortSendTwoArgs!interpreting!private! !
+shortTempInstr:outerInstr:!helpers!private! !
+singleByte!interpreting!private! !
+storeTemp!interpreting!private! !
+tempInstr:outerInstr:ip:!helpers!private! !
+testIsZero!interpreting!private! !
+trebleByte!interpreting!private! !
+unusedDoubleByte!exceptions!private! !
+unusedQuadByte!exceptions!private! !
+unusedSingleByte!exceptions!private! !
+unusedTrebleByte!exceptions!private! !
+updateJumps!helpers!private! !
+!
 
 !BytecodeRewriter class methodsFor!
 
@@ -623,6 +625,8 @@ initialize
 
 rewriteMethod: aCompiledMethod 
 	^self new rewriteMethod: aCompiledMethod! !
-!BytecodeRewriter class categoriesFor: #initialize!initializing!public! !
-!BytecodeRewriter class categoriesFor: #rewriteMethod:!operations!public! !
+!BytecodeRewriter class categoriesForMethods!
+initialize!initializing!public! !
+rewriteMethod:!operations!public! !
+!
 

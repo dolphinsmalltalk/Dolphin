@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IMatchCollection subclass: #IMatchCollection2
 	instanceVariableNames: ''
@@ -41,7 +41,9 @@ interface IMatchCollection2 : IDispatch
 
 matchClass
 	^IMatch2! !
-!IMatchCollection2 categoriesFor: #matchClass!constants!private! !
+!IMatchCollection2 categoriesForMethods!
+matchClass!constants!private! !
+!
 
 !IMatchCollection2 class methodsFor!
 
@@ -49,5 +51,7 @@ defineFunctions
 	"Declare the virtual function table for the COM interface 'VBScript_RegExp_55.IMatchCollection'
 		IMatchCollection2 defineTemplate"
 ! !
-!IMatchCollection2 class categoriesFor: #defineFunctions!initializing!public! !
+!IMatchCollection2 class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ADODB_ADO
 	instanceVariableNames: ''
@@ -57,10 +57,12 @@ properties
 	answer := ADODBProperties newPointer.
 	self get_Properties: answer.
 	^answer asObject! !
-!ADODB_ADO categoriesFor: #get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
-!ADODB_ADO categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB_ADO categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB_ADO categoriesFor: #properties!**auto generated**!properties!public! !
+!ADODB_ADO categoriesForMethods!
+get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+properties!**auto generated**!properties!public! !
+!
 
 !ADODB_ADO class methodsFor!
 
@@ -72,5 +74,7 @@ defineFunctions
 		defineFunction: #get_Properties:
 			argumentTypes: 'ADODBProperties**'
 ! !
-!ADODB_ADO class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB_ADO class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

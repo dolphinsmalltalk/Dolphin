@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #AddInstanceVariableRefactoring
 	instanceVariableNames: ''
@@ -17,6 +17,8 @@ preconditions
 
 transform
 	class addInstanceVariable: variableName! !
-!AddInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AddInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!AddInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #VideoLibraryShell
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
@@ -140,23 +140,25 @@ tape: aVideoTapeOrNil
 	"Sets the current selected tape in the receiver to aVideoTapeOrNil"
 
 	^tapesPresenter selectionOrNil: aVideoTapeOrNil! !
-!VideoLibraryShell categoriesFor: #addTape!commands!public! !
-!VideoLibraryShell categoriesFor: #createComponents!initializing!public! !
-!VideoLibraryShell categoriesFor: #createSchematicWiring!initializing!public! !
-!VideoLibraryShell categoriesFor: #editRecording!commands!public! !
-!VideoLibraryShell categoriesFor: #erase!commands!public! !
-!VideoLibraryShell categoriesFor: #hasSelectedRecording!accessing!public! !
-!VideoLibraryShell categoriesFor: #hasSelectedTape!accessing!public! !
-!VideoLibraryShell categoriesFor: #model:!accessing!public! !
-!VideoLibraryShell categoriesFor: #onTapeSelected!event handling!private! !
-!VideoLibraryShell categoriesFor: #onViewOpened!event handling!public! !
-!VideoLibraryShell categoriesFor: #queryCommand:!commands!private! !
-!VideoLibraryShell categoriesFor: #record!commands!public! !
-!VideoLibraryShell categoriesFor: #recording!accessing!public! !
-!VideoLibraryShell categoriesFor: #recording:!accessing!public! !
-!VideoLibraryShell categoriesFor: #removeTape!commands!public! !
-!VideoLibraryShell categoriesFor: #tape!accessing!public! !
-!VideoLibraryShell categoriesFor: #tape:!accessing!public! !
+!VideoLibraryShell categoriesForMethods!
+addTape!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+editRecording!commands!public! !
+erase!commands!public! !
+hasSelectedRecording!accessing!public! !
+hasSelectedTape!accessing!public! !
+model:!accessing!public! !
+onTapeSelected!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+record!commands!public! !
+recording!accessing!public! !
+recording:!accessing!public! !
+removeTape!commands!public! !
+tape!accessing!public! !
+tape:!accessing!public! !
+!
 
 !VideoLibraryShell class methodsFor!
 
@@ -205,10 +207,12 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!VideoLibraryShell class categoriesFor: #defaultModel!models!public! !
-!VideoLibraryShell class categoriesFor: #displayOn:!displaying!public! !
-!VideoLibraryShell class categoriesFor: #icon!constants!public! !
-!VideoLibraryShell class categoriesFor: #initialize!development!initializing!private! !
-!VideoLibraryShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!VideoLibraryShell class categoriesFor: #shutdownOnExit!public!testing! !
+!VideoLibraryShell class categoriesForMethods!
+defaultModel!models!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 

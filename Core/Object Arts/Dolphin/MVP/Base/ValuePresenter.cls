@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #ValuePresenter
 	instanceVariableNames: ''
@@ -63,12 +63,14 @@ value: anObject
 
 	self model value: anObject.
 ! !
-!ValuePresenter categoriesFor: #findDetails!accessing!public! !
-!ValuePresenter categoriesFor: #model:!accessing!public! !
-!ValuePresenter categoriesFor: #onValueChanged!event handling!public! !
-!ValuePresenter categoriesFor: #setValue:!accessing!private! !
-!ValuePresenter categoriesFor: #value!accessing!public! !
-!ValuePresenter categoriesFor: #value:!accessing!public! !
+!ValuePresenter categoriesForMethods!
+findDetails!accessing!public! !
+model:!accessing!public! !
+onValueChanged!event handling!public! !
+setValue:!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 ValuePresenter methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 ValuePresenter methodProtocol: #valuePresenter attributes: #(#readOnly) selectors: #(#value #value:)!
@@ -86,6 +88,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ValuePresenter class categoriesFor: #defaultModel!models!public! !
-!ValuePresenter class categoriesFor: #icon!constants!public! !
+!ValuePresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

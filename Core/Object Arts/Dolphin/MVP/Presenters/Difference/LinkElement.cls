@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Link subclass: #LinkElement
 	instanceVariableNames: 'value'
@@ -15,6 +15,8 @@ value
 
 value: aValue
 	value := aValue! !
-!LinkElement categoriesFor: #value!accessing!public! !
-!LinkElement categoriesFor: #value:!accessing!public! !
+!LinkElement categoriesForMethods!
+value!accessing!public! !
+value:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXDispatchImpAbstract subclass: #AXDualImp
 	instanceVariableNames: 'interface piTypeInfo locale'
@@ -95,14 +95,16 @@ typeInfo: lcid ifNone: exceptionHandler
 			(lcid isNull or: [lcid asParameter = locale asParameter])
 				ifFalse: [^exceptionHandler value]].
 	^piTypeInfo! !
-!AXDualImp categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
-!AXDualImp categoriesFor: #GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
-!AXDualImp categoriesFor: #interface!accessing!public! !
-!AXDualImp categoriesFor: #interface:!accessing!private! !
-!AXDualImp categoriesFor: #interfaceClass!accessing!public! !
-!AXDualImp categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
-!AXDualImp categoriesFor: #piTypeInfo:!accessing!private! !
-!AXDualImp categoriesFor: #supportedInterfaces!constants!public! !
-!AXDualImp categoriesFor: #typeInfo!accessing!private! !
-!AXDualImp categoriesFor: #typeInfo:ifNone:!accessing!private! !
+!AXDualImp categoriesForMethods!
+GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
+GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
+interface!accessing!public! !
+interface:!accessing!private! !
+interfaceClass!accessing!public! !
+Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
+piTypeInfo:!accessing!private! !
+supportedInterfaces!constants!public! !
+typeInfo!accessing!private! !
+typeInfo:ifNone:!accessing!private! !
+!
 

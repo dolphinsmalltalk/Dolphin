@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LintRuleTest subclass: #CompositeLintRuleTest
 	instanceVariableNames: 'rules'
@@ -48,17 +48,19 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
-!CompositeLintRuleTest categoriesFor: #checkClass:!accessing!public! !
-!CompositeLintRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!CompositeLintRuleTest categoriesFor: #failedRules!accessing!public! !
-!CompositeLintRuleTest categoriesFor: #hasConflicts!public!testing! !
-!CompositeLintRuleTest categoriesFor: #isComposite!public!testing! !
-!CompositeLintRuleTest categoriesFor: #isEmpty!public!testing! !
-!CompositeLintRuleTest categoriesFor: #problemCount!accessing!public! !
-!CompositeLintRuleTest categoriesFor: #resetResult!initialize/release!public! !
-!CompositeLintRuleTest categoriesFor: #rules!accessing!public! !
-!CompositeLintRuleTest categoriesFor: #rules:!initialize/release!public! !
-!CompositeLintRuleTest categoriesFor: #viewResults!private! !
+!CompositeLintRuleTest categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+failedRules!accessing!public! !
+hasConflicts!public!testing! !
+isComposite!public!testing! !
+isEmpty!public!testing! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+rules!accessing!public! !
+rules:!initialize/release!public! !
+viewResults!private! !
+!
 
 !CompositeLintRuleTest class methodsFor!
 
@@ -88,10 +90,12 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRuleTest protocol: 'transformations'! !
-!CompositeLintRuleTest class categoriesFor: #allRules!instance creation!public! !
-!CompositeLintRuleTest class categoriesFor: #lintChecks!all checks!public! !
-!CompositeLintRuleTest class categoriesFor: #ruleFor:protocol:!instance creation!public! !
-!CompositeLintRuleTest class categoriesFor: #rules:!instance creation!public! !
-!CompositeLintRuleTest class categoriesFor: #rules:name:!instance creation!public! !
-!CompositeLintRuleTest class categoriesFor: #transformations!all checks!public! !
+!CompositeLintRuleTest class categoriesForMethods!
+allRules!instance creation!public! !
+lintChecks!all checks!public! !
+ruleFor:protocol:!instance creation!public! !
+rules:!instance creation!public! !
+rules:name:!instance creation!public! !
+transformations!all checks!public! !
+!
 

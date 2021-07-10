@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalScalar subclass: #ExternalInteger
 	instanceVariableNames: ''
@@ -70,14 +70,16 @@ isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
 
 	^false! !
-!ExternalInteger categoriesFor: #asInteger!converting!public! !
-!ExternalInteger categoriesFor: #asSignedInteger!converting!public! !
-!ExternalInteger categoriesFor: #asString!converting!public! !
-!ExternalInteger categoriesFor: #asUIntPtr!converting!public! !
-!ExternalInteger categoriesFor: #asUnsignedInteger!converting!public! !
-!ExternalInteger categoriesFor: #hash!comparing!public! !
-!ExternalInteger categoriesFor: #isNull!public!testing! !
-!ExternalInteger categoriesFor: #isSigned!public!testing! !
+!ExternalInteger categoriesForMethods!
+asInteger!converting!public! !
+asSignedInteger!converting!public! !
+asString!converting!public! !
+asUIntPtr!converting!public! !
+asUnsignedInteger!converting!public! !
+hash!comparing!public! !
+isNull!public!testing! !
+isSigned!public!testing! !
+!
 
 !ExternalInteger class methodsFor!
 
@@ -91,6 +93,8 @@ fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
 	^self new value: anInteger! !
-!ExternalInteger class categoriesFor: #defineTemplate!public!template definition! !
-!ExternalInteger class categoriesFor: #fromInteger:!instance creation!public! !
+!ExternalInteger class categoriesForMethods!
+defineTemplate!public!template definition! !
+fromInteger:!instance creation!public! !
+!
 

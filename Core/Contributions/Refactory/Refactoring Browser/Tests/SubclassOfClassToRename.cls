@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassToRename subclass: #SubclassOfClassToRename
 	instanceVariableNames: 'rewriteRule1'
@@ -30,11 +30,13 @@ rewriteRule1: anObject
 
 symbolReference
 	^#ClassToRename! !
-!SubclassOfClassToRename categoriesFor: #calls!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #calls1!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #name!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #reference!performing!public! !
-!SubclassOfClassToRename categoriesFor: #rewriteRule1!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #rewriteRule1:!accessing!public! !
-!SubclassOfClassToRename categoriesFor: #symbolReference!performing!public! !
+!SubclassOfClassToRename categoriesForMethods!
+calls!accessing!public! !
+calls1!accessing!public! !
+name!accessing!public! !
+reference!performing!public! !
+rewriteRule1!accessing!public! !
+rewriteRule1:!accessing!public! !
+symbolReference!performing!public! !
+!
 

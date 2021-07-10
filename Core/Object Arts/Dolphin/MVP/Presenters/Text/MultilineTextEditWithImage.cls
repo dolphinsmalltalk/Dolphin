@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MultilineTextEdit subclass: #MultilineTextEditWithImage
 	instanceVariableNames: 'backBitmap backMode backBrush'
@@ -260,25 +260,27 @@ wmSize: message wParam: wParam lParam: lParam
 		wmSize: message
 		wParam: wParam
 		lParam: lParam! !
-!MultilineTextEditWithImage categoriesFor: #backBitmap!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backBitmap:!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backBrush!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backMode!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #backMode:!accessing!public! !
-!MultilineTextEditWithImage categoriesFor: #createBackBrush!helpers!private! !
-!MultilineTextEditWithImage categoriesFor: #defaultBackgroundImage!helpers!private! !
-!MultilineTextEditWithImage categoriesFor: #enUpdate!event handling-win32!private! !
-!MultilineTextEditWithImage categoriesFor: #freeBackBrush!private!realizing/unrealizing! !
-!MultilineTextEditWithImage categoriesFor: #initialize!initializing!private! !
-!MultilineTextEditWithImage categoriesFor: #onColorRequired:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onEraseRequired:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onHScroll:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onMouseWheeled:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onPaintRequired:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #onVScroll:!event handling!public! !
-!MultilineTextEditWithImage categoriesFor: #repaintWindow!helpers!private! !
-!MultilineTextEditWithImage categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!MultilineTextEditWithImage categoriesFor: #wmSize:wParam:lParam:!event handling-win32!private! !
+!MultilineTextEditWithImage categoriesForMethods!
+backBitmap!accessing!public! !
+backBitmap:!accessing!public! !
+backBrush!accessing!public! !
+backMode!accessing!public! !
+backMode:!accessing!public! !
+createBackBrush!helpers!private! !
+defaultBackgroundImage!helpers!private! !
+enUpdate!event handling-win32!private! !
+freeBackBrush!private!realizing/unrealizing! !
+initialize!initializing!private! !
+onColorRequired:!event handling!public! !
+onEraseRequired:!event handling!public! !
+onHScroll:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onPaintRequired:!event handling!public! !
+onVScroll:!event handling!public! !
+repaintWindow!helpers!private! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmSize:wParam:lParam:!event handling-win32!private! !
+!
 
 !MultilineTextEditWithImage class methodsFor!
 
@@ -304,6 +306,8 @@ example1
 initialize
 	self addClassConstant: 'BackModes'
 		value: #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)! !
-!MultilineTextEditWithImage class categoriesFor: #example1!examples!public! !
-!MultilineTextEditWithImage class categoriesFor: #initialize!development!initializing!private! !
+!MultilineTextEditWithImage class categoriesForMethods!
+example1!examples!public! !
+initialize!development!initializing!private! !
+!
 

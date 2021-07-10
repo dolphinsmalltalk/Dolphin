@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IdentityDictionary variableSubclass: #MethodDictionary
 	instanceVariableNames: ''
@@ -64,10 +64,12 @@ removeKey: key ifAbsent: exceptionHandler
 			newMe removeIndex: index.
 			self become: newMe.
 			value]! !
-!MethodDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!MethodDictionary categoriesFor: #hash:max:!private!searching! !
-!MethodDictionary categoriesFor: #privateAt:put:!accessing!private! !
-!MethodDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!MethodDictionary categoriesForMethods!
+findKeyOrNil:!private!searching! !
+hash:max:!private!searching! !
+privateAt:put:!accessing!private! !
+removeKey:ifAbsent:!public!removing! !
+!
 
 !MethodDictionary class methodsFor!
 
@@ -82,6 +84,8 @@ sizeFor: anInteger
 	by the VM, and avoid any dependency on the superclass sizing scheme."
 
 	^anInteger < 2 ifTrue: [2] ifFalse: [1 bitShift: ((anInteger - 1) * 100 // 75 + 1) highBit]! !
-!MethodDictionary class categoriesFor: #defaultCapacity!constants!private! !
-!MethodDictionary class categoriesFor: #sizeFor:!instance creation!private! !
+!MethodDictionary class categoriesForMethods!
+defaultCapacity!constants!private! !
+sizeFor:!instance creation!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusGraphicsFromImageInitializer
 	instanceVariableNames: 'image'
@@ -32,13 +32,17 @@ gdiplusConstructorErrorDescription
 
 image: aGdiplusImage
 	image := aGdiplusImage! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #image:!initializing!private! !
+!GdiplusGraphicsFromImageInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+image:!initializing!private! !
+!
 
 !GdiplusGraphicsFromImageInitializer class methodsFor!
 
 image: aGdiplusImage
 	^self new image: aGdiplusImage! !
-!GdiplusGraphicsFromImageInitializer class categoriesFor: #image:!instance creation!public! !
+!GdiplusGraphicsFromImageInitializer class categoriesForMethods!
+image:!instance creation!public! !
+!
 

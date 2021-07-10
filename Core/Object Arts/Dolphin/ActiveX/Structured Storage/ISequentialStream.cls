@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISequentialStream
 	instanceVariableNames: ''
@@ -189,25 +189,27 @@ write: buffer count: anInteger
 		cb: anInteger
 		pcbWritten: written.
 	^written asInteger! !
-!ISequentialStream categoriesFor: #close!operations!public! !
-!ISequentialStream categoriesFor: #contentsSpecies!accessing!private! !
-!ISequentialStream categoriesFor: #errorEndOfStream!exceptions!public! !
-!ISequentialStream categoriesFor: #flush!operations!public! !
-!ISequentialStream categoriesFor: #next!accessing!public! !
-!ISequentialStream categoriesFor: #next:!accessing!public! !
-!ISequentialStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!ISequentialStream categoriesFor: #nextAvailable:!accessing!public! !
-!ISequentialStream categoriesFor: #nextMatchFor:!accessing!public! !
-!ISequentialStream categoriesFor: #nextPut:!accessing!public! !
-!ISequentialStream categoriesFor: #nextPutAll:!accessing!public! !
-!ISequentialStream categoriesFor: #nextSDWORD!binary filing!public! !
-!ISequentialStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
-!ISequentialStream categoriesFor: #Read:cb:pcbRead:!**auto generated**!primitives!public! !
-!ISequentialStream categoriesFor: #read:count:!accessing!public! !
-!ISequentialStream categoriesFor: #skipTo:!positioning!public! !
-!ISequentialStream categoriesFor: #upTo:!accessing!public! !
-!ISequentialStream categoriesFor: #Write:cb:pcbWritten:!**auto generated**!primitives!public! !
-!ISequentialStream categoriesFor: #write:count:!accessing!public! !
+!ISequentialStream categoriesForMethods!
+close!operations!public! !
+contentsSpecies!accessing!private! !
+errorEndOfStream!exceptions!public! !
+flush!operations!public! !
+next!accessing!public! !
+next:!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextAvailable:!accessing!public! !
+nextMatchFor:!accessing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+nextSDWORD!binary filing!public! !
+nextSDWORDPut:!binary filing!public! !
+Read:cb:pcbRead:!**auto generated**!primitives!public! !
+read:count:!accessing!public! !
+skipTo:!positioning!public! !
+upTo:!accessing!public! !
+Write:cb:pcbWritten:!**auto generated**!primitives!public! !
+write:count:!accessing!public! !
+!
 
 ISequentialStream methodProtocol: #ISequentialStream attributes: #(#readOnly) selectors: #(#Read:cb:pcbRead: #Write:cb:pcbWritten:)!
 
@@ -221,5 +223,7 @@ defineFunctions
 	self
 		defineFunction: #Read:cb:pcbRead: argumentTypes: 'sbyte* dword dword*';
 		defineFunction: #Write:cb:pcbWritten: argumentTypes: 'sbyte* dword dword*'! !
-!ISequentialStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISequentialStream class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

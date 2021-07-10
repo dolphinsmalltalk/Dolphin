@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualMethodCategory subclass: #ReferencesCategory
 	instanceVariableNames: 'literal'
@@ -29,8 +29,10 @@ literal: anObject
 	"Set the literal, references to which define membership of this category."
 
 	literal := anObject! !
-!ReferencesCategory categoriesFor: #includesMethod:!public!testing! !
-!ReferencesCategory categoriesFor: #literal:!accessing!public! !
+!ReferencesCategory categoriesForMethods!
+includesMethod:!public!testing! !
+literal:!accessing!public! !
+!
 
 !ReferencesCategory class methodsFor!
 
@@ -75,9 +77,11 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self referenceSymbols do: [:each | self removePseud: self pseudPrefix , each asPhrase asLowercase]! !
-!ReferencesCategory class categoriesFor: #createDefaultInstances!initializing!private! !
-!ReferencesCategory class categoriesFor: #initialize!initializing!private! !
-!ReferencesCategory class categoriesFor: #newNamed:literal:!public! !
-!ReferencesCategory class categoriesFor: #referenceSymbols!constants!private! !
-!ReferencesCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ReferencesCategory class categoriesForMethods!
+createDefaultInstances!initializing!private! !
+initialize!initializing!private! !
+newNamed:literal:!public! !
+referenceSymbols!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

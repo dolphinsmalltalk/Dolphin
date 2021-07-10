@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScalarField subclass: #DOUBLEField
 	instanceVariableNames: ''
@@ -29,10 +29,12 @@ writeInto: anExternalStructure value: aFloat
 	into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes doubleAtOffset: offset put: aFloat! !
-!DOUBLEField categoriesFor: #accessorMessage!initializing!private! !
-!DOUBLEField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!DOUBLEField categoriesFor: #readFrom:!indirect accessing!private! !
-!DOUBLEField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!DOUBLEField categoriesForMethods!
+accessorMessage!initializing!private! !
+fieldClassName!automatic generation!constants!development!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !DOUBLEField class methodsFor!
 
@@ -40,5 +42,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^VMConstants.DoubleSize! !
-!DOUBLEField class categoriesFor: #byteSize!constants!private! !
+!DOUBLEField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

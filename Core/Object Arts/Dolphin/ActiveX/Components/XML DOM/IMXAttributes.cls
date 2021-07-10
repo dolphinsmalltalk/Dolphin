@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IMXAttributes
 	instanceVariableNames: ''
@@ -225,21 +225,23 @@ SetValue: nIndex strValue: strValue
 
 	<virtual stdcall: hresult 18 sdword bstr>
 	^self invalidCall: _failureCode! !
-!IMXAttributes categoriesFor: #AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
-!IMXAttributes categoriesFor: #AddAttributeFromIndex:nIndex:!**auto generated**!COM Interfaces-IMXAttributes!private! !
-!IMXAttributes categoriesFor: #Clear!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXAttributes categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetAttribute:strURI:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #setAttributes:!**auto generated**!methods!public! !
-!IMXAttributes categoriesFor: #SetAttributes:!**auto generated**!COM Interfaces-IMXAttributes!private! !
-!IMXAttributes categoriesFor: #SetLocalName:strLocalName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetQName:strQName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetType:strType:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetURI:strURI:!**auto generated**!COM Interfaces-IMXAttributes!public! !
-!IMXAttributes categoriesFor: #SetValue:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!IMXAttributes categoriesForMethods!
+AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
+AddAttributeFromIndex:nIndex:!**auto generated**!COM Interfaces-IMXAttributes!private! !
+Clear!**auto generated**!COM Interfaces-IMXAttributes!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+RemoveAttribute:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetAttribute:strURI:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+setAttributes:!**auto generated**!methods!public! !
+SetAttributes:!**auto generated**!COM Interfaces-IMXAttributes!private! !
+SetLocalName:strLocalName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetQName:strQName:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetType:strType:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetURI:strURI:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+SetValue:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
+!
 
 !IMXAttributes class methodsFor!
 
@@ -294,9 +296,11 @@ newSAXAttributes60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0E-F192-11D4-A65F-0040963251E5}')
 ! !
-!IMXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes!**auto generated**!instance creation!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes30!**auto generated**!instance creation!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes40!**auto generated**!instance creation!public! !
-!IMXAttributes class categoriesFor: #newSAXAttributes60!**auto generated**!instance creation!public! !
+!IMXAttributes class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newSAXAttributes!**auto generated**!instance creation!public! !
+newSAXAttributes30!**auto generated**!instance creation!public! !
+newSAXAttributes40!**auto generated**!instance creation!public! !
+newSAXAttributes60!**auto generated**!instance creation!public! !
+!
 

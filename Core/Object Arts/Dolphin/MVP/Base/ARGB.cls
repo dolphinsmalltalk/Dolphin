@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractRGB subclass: #ARGB
 	instanceVariableNames: ''
@@ -64,16 +64,18 @@ red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
 	^(code bitShift: -16) bitAnd: 255! !
-!ARGB categoriesFor: #alpha!accessing!public! !
-!ARGB categoriesFor: #alpha:!accessing!public! !
-!ARGB categoriesFor: #alphaMask!accessing!private! !
-!ARGB categoriesFor: #argb!converting!public! !
-!ARGB categoriesFor: #argbCode!accessing!public! !
-!ARGB categoriesFor: #asRGB!converting!public! !
-!ARGB categoriesFor: #blue!accessing!public! !
-!ARGB categoriesFor: #isNone!public!testing! !
-!ARGB categoriesFor: #normalizedAlpha!accessing!public! !
-!ARGB categoriesFor: #red!accessing!public! !
+!ARGB categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+alphaMask!accessing!private! !
+argb!converting!public! !
+argbCode!accessing!public! !
+asRGB!converting!public! !
+blue!accessing!public! !
+isNone!public!testing! !
+normalizedAlpha!accessing!public! !
+red!accessing!public! !
+!
 
 !ARGB class methodsFor!
 
@@ -141,13 +143,15 @@ red: redValue green: greenValue blue: blueValue
 
 transparent
 	^self none! !
-!ARGB class categoriesFor: #a:r:g:b:!instance creation!public! !
-!ARGB class categoriesFor: #alpha:red:green:blue:!instance creation!public! !
-!ARGB class categoriesFor: #default!instance creation!public! !
-!ARGB class categoriesFor: #fromArgbCode:!instance creation!public! !
-!ARGB class categoriesFor: #fromInteger:!instance creation!private! !
-!ARGB class categoriesFor: #none!instance creation!public! !
-!ARGB class categoriesFor: #r:g:b:!instance creation!public! !
-!ARGB class categoriesFor: #red:green:blue:!instance creation!public! !
-!ARGB class categoriesFor: #transparent!instance creation!public! !
+!ARGB class categoriesForMethods!
+a:r:g:b:!instance creation!public! !
+alpha:red:green:blue:!instance creation!public! !
+default!instance creation!public! !
+fromArgbCode:!instance creation!public! !
+fromInteger:!instance creation!private! !
+none!instance creation!public! !
+r:g:b:!instance creation!public! !
+red:green:blue:!instance creation!public! !
+transparent!instance creation!public! !
+!
 

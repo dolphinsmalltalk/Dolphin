@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusFontFamilyInitializer
 	instanceVariableNames: ''
@@ -13,7 +13,9 @@ GdiplusFontFamilyInitializer comment: ''!
 
 gdiplusConstructorErrorDescription
 	^'Error creating FontFamily'! !
-!GdiplusFontFamilyInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusFontFamilyInitializer categoriesForMethods!
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusFontFamilyInitializer class methodsFor!
 
@@ -34,9 +36,11 @@ onPreStripImage
 	which hold sub-instance of the receiver."
 
 	GenericSansSerif := GenericSerif := nil! !
-!GdiplusFontFamilyInitializer class categoriesFor: #genericSansSerif!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #genericSerif!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #name:fontCollection:!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #new!instance creation!public! !
-!GdiplusFontFamilyInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!GdiplusFontFamilyInitializer class categoriesForMethods!
+genericSansSerif!instance creation!public! !
+genericSerif!instance creation!public! !
+name:fontCollection:!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

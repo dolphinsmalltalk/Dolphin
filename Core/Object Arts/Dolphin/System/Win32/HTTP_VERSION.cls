@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_VERSION
 	instanceVariableNames: ''
@@ -41,9 +41,11 @@ printFields: aCollection on: aStream limit: anInteger
 		print: self MajorVersion;
 		nextPut: $.;
 		print: self MinorVersion! !
-!HTTP_VERSION categoriesFor: #MajorVersion!**compiled accessors**!public! !
-!HTTP_VERSION categoriesFor: #MinorVersion!**compiled accessors**!public! !
-!HTTP_VERSION categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_VERSION categoriesForMethods!
+MajorVersion!**compiled accessors**!public! !
+MinorVersion!**compiled accessors**!public! !
+printFields:on:limit:!development!printing!private! !
+!
 
 !HTTP_VERSION class methodsFor!
 
@@ -66,6 +68,8 @@ defineFields
 
 getFieldNames
 	^#(#MajorVersion #MinorVersion)! !
-!HTTP_VERSION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_VERSION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_VERSION class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

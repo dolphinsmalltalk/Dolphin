@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ParseTreeSearcher subclass: #ParseTreeRewriter
 	instanceVariableNames: 'tree'
@@ -162,35 +162,37 @@ visitReturnNode: aReturnNode
 visitSequenceNode: aSequenceNode
 	aSequenceNode temporaries: (self visitArgumentNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [:each | self visitNode: each])! !
-!ParseTreeRewriter categoriesFor: #executeTree:!accessing!public! !
-!ParseTreeRewriter categoriesFor: #foundMatch!helpers!private! !
-!ParseTreeRewriter categoriesFor: #lookForMoreMatchesInContext:!operations!private! !
-!ParseTreeRewriter categoriesFor: #replace:with:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replace:with:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replace:withValueFrom:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replace:withValueFrom:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:with:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:with:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceArgument:withValueFrom:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:with:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:with:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceMethod:withValueFrom:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceTree:withTree:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #replaceTree:withTree:when:!public!replacing! !
-!ParseTreeRewriter categoriesFor: #tree!accessing!public! !
-!ParseTreeRewriter categoriesFor: #visitArgumentNodes:!public!visiting! !
-!ParseTreeRewriter categoriesFor: #visitArrayNode:!public!visiting! !
-!ParseTreeRewriter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!ParseTreeRewriter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
+!ParseTreeRewriter categoriesForMethods!
+executeTree:!accessing!public! !
+foundMatch!helpers!private! !
+lookForMoreMatchesInContext:!operations!private! !
+replace:with:!public!replacing! !
+replace:with:when:!public!replacing! !
+replace:withValueFrom:!public!replacing! !
+replace:withValueFrom:when:!public!replacing! !
+replaceArgument:with:!public!replacing! !
+replaceArgument:with:when:!public!replacing! !
+replaceArgument:withValueFrom:!public!replacing! !
+replaceArgument:withValueFrom:when:!public!replacing! !
+replaceMethod:with:!public!replacing! !
+replaceMethod:with:when:!public!replacing! !
+replaceMethod:withValueFrom:!public!replacing! !
+replaceMethod:withValueFrom:when:!public!replacing! !
+replaceTree:withTree:!public!replacing! !
+replaceTree:withTree:when:!public!replacing! !
+tree!accessing!public! !
+visitArgumentNodes:!public!visiting! !
+visitArrayNode:!public!visiting! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitMethodNode:!public!visitor/double dispatching! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+!
 
 !ParseTreeRewriter class methodsFor!
 
@@ -297,15 +299,17 @@ variable: aVarName getter: getMethod setter: setMethod receiver: aString
 		replace: aVarName , ' := ``@object' with: aString , ' ' , setMethod , ' ``@object';
 		replace: aVarName with: aString , ' ' , getMethod.
 	^rewriteRule! !
-!ParseTreeRewriter class categoriesFor: #classVariable:getter:setter:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #removeTemporaryNamed:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #rename:to:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #rename:to:handler:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #replace:with:in:!accessing!public! !
-!ParseTreeRewriter class categoriesFor: #replace:with:in:onInterval:!accessing!public! !
-!ParseTreeRewriter class categoriesFor: #replace:with:method:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #replaceLiteral:with:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #replaceStatements:with:in:onInterval:!accessing!public! !
-!ParseTreeRewriter class categoriesFor: #variable:getter:setter:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #variable:getter:setter:receiver:!instance creation!public! !
+!ParseTreeRewriter class categoriesForMethods!
+classVariable:getter:setter:!instance creation!public! !
+removeTemporaryNamed:!instance creation!public! !
+rename:to:!instance creation!public! !
+rename:to:handler:!instance creation!public! !
+replace:with:in:!accessing!public! !
+replace:with:in:onInterval:!accessing!public! !
+replace:with:method:!instance creation!public! !
+replaceLiteral:with:!instance creation!public! !
+replaceStatements:with:in:onInterval:!accessing!public! !
+variable:getter:setter:!instance creation!public! !
+variable:getter:setter:receiver:!instance creation!public! !
+!
 

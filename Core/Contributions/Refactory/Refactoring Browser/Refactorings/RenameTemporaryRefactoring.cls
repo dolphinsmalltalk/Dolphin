@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #RenameTemporaryRefactoring
 	instanceVariableNames: 'selector interval oldName newName parseTree'
@@ -75,12 +75,14 @@ transform
 		ifTrue: [self refactoringError: oldName , ' isn''t defined by the method'].
 	self renameNode: definingNode.
 	class compileTree: parseTree! !
-!RenameTemporaryRefactoring categoriesFor: #class:selector:interval:newName:!initialize/release!public! !
-!RenameTemporaryRefactoring categoriesFor: #oldName:!accessing!private! !
-!RenameTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameTemporaryRefactoring categoriesFor: #renameNode:!public!transforming! !
-!RenameTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!RenameTemporaryRefactoring categoriesFor: #transform!public!transforming! !
+!RenameTemporaryRefactoring categoriesForMethods!
+class:selector:interval:newName:!initialize/release!public! !
+oldName:!accessing!private! !
+preconditions!preconditions!public! !
+renameNode:!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !RenameTemporaryRefactoring class methodsFor!
 
@@ -99,6 +101,8 @@ renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector
 		selector: aSelector
 		interval: anInterval
 		newName: newName! !
-!RenameTemporaryRefactoring class categoriesFor: #model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
-!RenameTemporaryRefactoring class categoriesFor: #renameTemporaryFrom:to:in:selector:!instance creation!public! !
+!RenameTemporaryRefactoring class categoriesForMethods!
+model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
+renameTemporaryFrom:to:in:selector:!instance creation!public! !
+!
 

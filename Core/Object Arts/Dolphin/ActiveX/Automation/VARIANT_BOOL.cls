@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SWORD subclass: #VARIANT_BOOL
 	instanceVariableNames: ''
@@ -27,9 +27,11 @@ value: anObject
 	(-1 for true, 0 for false)."
 
 	super value: (anObject asBoolean ifTrue: [-1] ifFalse: [0])! !
-!VARIANT_BOOL categoriesFor: #asBoolean!converting!public! !
-!VARIANT_BOOL categoriesFor: #value!accessing!public! !
-!VARIANT_BOOL categoriesFor: #value:!accessing!public! !
+!VARIANT_BOOL categoriesForMethods!
+asBoolean!converting!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !VARIANT_BOOL class methodsFor!
 
@@ -60,9 +62,11 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^AXAutomationConstants.VT_BOOL! !
-!VARIANT_BOOL class categoriesFor: #icon!constants!public! !
-!VARIANT_BOOL class categoriesFor: #initialize!development!initializing!private! !
-!VARIANT_BOOL class categoriesFor: #typeName!constants!private! !
-!VARIANT_BOOL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!VARIANT_BOOL class categoriesFor: #vt!constants!private! !
+!VARIANT_BOOL class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+typeName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETCOLORSPACE
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger! !
-!EMRSETCOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
-!EMRSETCOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
+!EMRSETCOLORSPACE categoriesForMethods!
+ihCS!**compiled accessors**!public! !
+ihCS:!**compiled accessors**!public! !
+!
 
 !EMRSETCOLORSPACE class methodsFor!
 
@@ -64,7 +66,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETCOLORSPACE with: EMR_DELETECOLORSPACE! !
-!EMRSETCOLORSPACE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETCOLORSPACE class categoriesFor: #iTypes!constants!public! !
+!EMRSETCOLORSPACE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalllintPlugin subclass: #CodeMentorPlugin
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
@@ -667,74 +667,76 @@ stopCheckerProcess
 	self isBusy ifFalse: [^self].
 	checkerProcess terminate.
 	checkerProcess := nil! !
-!CodeMentorPlugin categoriesFor: #addFailedRule:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #allRules!operations!private! !
-!CodeMentorPlugin categoriesFor: #applyTransform:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #autoRefresh!operations!private! !
-!CodeMentorPlugin categoriesFor: #browseAllFailedMethods!commands!private! !
-!CodeMentorPlugin categoriesFor: #browseFailedClass:!commands!private! !
-!CodeMentorPlugin categoriesFor: #browseFailedMethodName:!commands!private! !
-!CodeMentorPlugin categoriesFor: #browseFailedMethods:!commands!private! !
-!CodeMentorPlugin categoriesFor: #clearFailures!operations!private! !
-!CodeMentorPlugin categoriesFor: #clearIgnoredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #createComponents!initializing!public! !
-!CodeMentorPlugin categoriesFor: #createSchematicWiring!initializing!public! !
-!CodeMentorPlugin categoriesFor: #defaultHelpId!constants!public! !
-!CodeMentorPlugin categoriesFor: #displayOn:!displaying!public! !
-!CodeMentorPlugin categoriesFor: #exportIgnoredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #failedClassesFor:!accessing!private! !
-!CodeMentorPlugin categoriesFor: #failedRule!commands!private! !
-!CodeMentorPlugin categoriesFor: #filteredRuleNames!accessing!private! !
-!CodeMentorPlugin categoriesFor: #filteredRules!accessing!public! !
-!CodeMentorPlugin categoriesFor: #filterInRules:!commands!private! !
-!CodeMentorPlugin categoriesFor: #filterOutRule!commands!public! !
-!CodeMentorPlugin categoriesFor: #filterOutRules:!commands!private! !
-!CodeMentorPlugin categoriesFor: #getRuleInfo:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #htmlDescriptionFor:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #htmlStyle!helpers!private! !
-!CodeMentorPlugin categoriesFor: #icon!accessing!public! !
-!CodeMentorPlugin categoriesFor: #importIgnoredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #indicateFailures:!operations!private! !
-!CodeMentorPlugin categoriesFor: #indicateStatus!operations!private! !
-!CodeMentorPlugin categoriesFor: #indicateSuccess!operations!private! !
-!CodeMentorPlugin categoriesFor: #infoBrowser!accessing!private! !
-!CodeMentorPlugin categoriesFor: #infoBrowserPresenter!accessing!private! !
-!CodeMentorPlugin categoriesFor: #initialize!initializing!private! !
-!CodeMentorPlugin categoriesFor: #isBusy!accessing!public! !
-!CodeMentorPlugin categoriesFor: #isFilterActive!commands!private! !
-!CodeMentorPlugin categoriesFor: #lintRuleFailuresBrowserClass!constants!private! !
-!CodeMentorPlugin categoriesFor: #lintRules!accessing!private! !
-!CodeMentorPlugin categoriesFor: #onBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onBrowserEnvironmentSelected!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onClassUpdated:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onFailureSelected!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onGetCursor:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onLintRuleFilterChanged:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onMethodUpdated:!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onShownInBrowser!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onStartup!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onStartup2!event handling!private! !
-!CodeMentorPlugin categoriesFor: #onViewClosed!event handling!public! !
-!CodeMentorPlugin categoriesFor: #onViewDestroyed!event handling!public! !
-!CodeMentorPlugin categoriesFor: #parentRuleOf:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #printClassFailuresHtmlFor:on:!helpers!printing!private! !
-!CodeMentorPlugin categoriesFor: #printMethodFailuresHtmlFor:on:!helpers!printing!private! !
-!CodeMentorPlugin categoriesFor: #printTransformationRuleHtmlFor:on:!helpers!printing!private! !
-!CodeMentorPlugin categoriesFor: #queryCommand:!commands!private! !
-!CodeMentorPlugin categoriesFor: #refresh!commands!public! !
-!CodeMentorPlugin categoriesFor: #refreshIcon!operations!private! !
-!CodeMentorPlugin categoriesFor: #refreshMode!accessing!public! !
-!CodeMentorPlugin categoriesFor: #refreshMode:!accessing!public! !
-!CodeMentorPlugin categoriesFor: #refreshResults!commands!public! !
-!CodeMentorPlugin categoriesFor: #resetProgressBar!operations!private! !
-!CodeMentorPlugin categoriesFor: #rulesTreeModel!accessing!private! !
-!CodeMentorPlugin categoriesFor: #runLintChecks!operations!public! !
-!CodeMentorPlugin categoriesFor: #selectFilteredRules!commands!public! !
-!CodeMentorPlugin categoriesFor: #showDescriptionFor:!operations!private! !
-!CodeMentorPlugin categoriesFor: #smalltalkUrlTag!constants!private! !
-!CodeMentorPlugin categoriesFor: #splitName:!helpers!private! !
-!CodeMentorPlugin categoriesFor: #startCheckerProcess!operations!private! !
-!CodeMentorPlugin categoriesFor: #stopCheckerProcess!operations!private! !
+!CodeMentorPlugin categoriesForMethods!
+addFailedRule:!helpers!private! !
+allRules!operations!private! !
+applyTransform:!helpers!private! !
+autoRefresh!operations!private! !
+browseAllFailedMethods!commands!private! !
+browseFailedClass:!commands!private! !
+browseFailedMethodName:!commands!private! !
+browseFailedMethods:!commands!private! !
+clearFailures!operations!private! !
+clearIgnoredRules!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultHelpId!constants!public! !
+displayOn:!displaying!public! !
+exportIgnoredRules!commands!public! !
+failedClassesFor:!accessing!private! !
+failedRule!commands!private! !
+filteredRuleNames!accessing!private! !
+filteredRules!accessing!public! !
+filterInRules:!commands!private! !
+filterOutRule!commands!public! !
+filterOutRules:!commands!private! !
+getRuleInfo:!helpers!private! !
+htmlDescriptionFor:!helpers!private! !
+htmlStyle!helpers!private! !
+icon!accessing!public! !
+importIgnoredRules!commands!public! !
+indicateFailures:!operations!private! !
+indicateStatus!operations!private! !
+indicateSuccess!operations!private! !
+infoBrowser!accessing!private! !
+infoBrowserPresenter!accessing!private! !
+initialize!initializing!private! !
+isBusy!accessing!public! !
+isFilterActive!commands!private! !
+lintRuleFailuresBrowserClass!constants!private! !
+lintRules!accessing!private! !
+onBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!private! !
+onBrowserEnvironmentSelected!event handling!private! !
+onClassUpdated:!event handling!public! !
+onFailureSelected!event handling!private! !
+onGetCursor:!event handling!public! !
+onLintRuleFilterChanged:!event handling!public! !
+onMethodUpdated:!event handling!public! !
+onShownInBrowser!event handling!public! !
+onStartup!event handling!private! !
+onStartup2!event handling!private! !
+onViewClosed!event handling!public! !
+onViewDestroyed!event handling!public! !
+parentRuleOf:!helpers!private! !
+printClassFailuresHtmlFor:on:!helpers!printing!private! !
+printMethodFailuresHtmlFor:on:!helpers!printing!private! !
+printTransformationRuleHtmlFor:on:!helpers!printing!private! !
+queryCommand:!commands!private! !
+refresh!commands!public! !
+refreshIcon!operations!private! !
+refreshMode!accessing!public! !
+refreshMode:!accessing!public! !
+refreshResults!commands!public! !
+resetProgressBar!operations!private! !
+rulesTreeModel!accessing!private! !
+runLintChecks!operations!public! !
+selectFilteredRules!commands!public! !
+showDescriptionFor:!operations!private! !
+smalltalkUrlTag!constants!private! !
+splitName:!helpers!private! !
+startCheckerProcess!operations!private! !
+stopCheckerProcess!operations!private! !
+!
 
 !CodeMentorPlugin class methodsFor!
 
@@ -902,30 +904,32 @@ resource_Default_view
 
 sleepIcon
 	^Icon fromId: 'LintSleep.ico'! !
-!CodeMentorPlugin class categoriesFor: #busyIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #defaultFilterFilename!accessing!private! !
-!CodeMentorPlugin class categoriesFor: #defaultFilterFileType!constants!private! !
-!CodeMentorPlugin class categoriesFor: #defaultRefreshMode!accessing!public! !
-!CodeMentorPlugin class categoriesFor: #defaultRefreshMode:!accessing!public! !
-!CodeMentorPlugin class categoriesFor: #exportFilters!operations!public! !
-!CodeMentorPlugin class categoriesFor: #filterFileTypes!constants!private! !
-!CodeMentorPlugin class categoriesFor: #icon!constants!public! !
-!CodeMentorPlugin class categoriesFor: #importFilters!operations!private! !
-!CodeMentorPlugin class categoriesFor: #initialize!initializing!private! !
-!CodeMentorPlugin class categoriesFor: #lintErrorIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintIconMap!helpers!private! !
-!CodeMentorPlugin class categoriesFor: #lintIconOfRule:!helpers!private! !
-!CodeMentorPlugin class categoriesFor: #lintInfoIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintPassIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintPassRule!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintRules!accessing!private! !
-!CodeMentorPlugin class categoriesFor: #lintRulesDoc!accessing!private! !
-!CodeMentorPlugin class categoriesFor: #lintRulesDocURL!constants!private! !
-!CodeMentorPlugin class categoriesFor: #lintWarningIcon!constants!private! !
-!CodeMentorPlugin class categoriesFor: #publishedAspects!development!public! !
-!CodeMentorPlugin class categoriesFor: #refreshModes!constants!private! !
-!CodeMentorPlugin class categoriesFor: #report:for:!operations!private! !
-!CodeMentorPlugin class categoriesFor: #resetFilters!operations!private! !
-!CodeMentorPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!CodeMentorPlugin class categoriesFor: #sleepIcon!constants!private! !
+!CodeMentorPlugin class categoriesForMethods!
+busyIcon!constants!private! !
+defaultFilterFilename!accessing!private! !
+defaultFilterFileType!constants!private! !
+defaultRefreshMode!accessing!public! !
+defaultRefreshMode:!accessing!public! !
+exportFilters!operations!public! !
+filterFileTypes!constants!private! !
+icon!constants!public! !
+importFilters!operations!private! !
+initialize!initializing!private! !
+lintErrorIcon!constants!private! !
+lintIconMap!helpers!private! !
+lintIconOfRule:!helpers!private! !
+lintInfoIcon!constants!private! !
+lintPassIcon!constants!private! !
+lintPassRule!constants!private! !
+lintRules!accessing!private! !
+lintRulesDoc!accessing!private! !
+lintRulesDocURL!constants!private! !
+lintWarningIcon!constants!private! !
+publishedAspects!development!public! !
+refreshModes!constants!private! !
+report:for:!operations!private! !
+resetFilters!operations!private! !
+resource_Default_view!public!resources-views! !
+sleepIcon!constants!private! !
+!
 

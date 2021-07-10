@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #DateAndTimeFactoryANSITest
 	instanceVariableNames: ''
@@ -80,12 +80,14 @@ testXyearXmonthXdayXhourXminuteXsecondXoffsetX
 					& (r hour = 1) & (r minute = 2) & (r second = 3)]
 		conformTo: #'DateAndTime factory'
 		selector: #'year:month:day:hour:minute:second:offset:'.! !
-!DateAndTimeFactoryANSITest categoriesFor: #canonicalObject!public! !
-!DateAndTimeFactoryANSITest categoriesFor: #protocol!public! !
-!DateAndTimeFactoryANSITest categoriesFor: #testXclockPrecision!public! !
-!DateAndTimeFactoryANSITest categoriesFor: #testXnow!public! !
-!DateAndTimeFactoryANSITest categoriesFor: #testXyearXdayXhourXminuteXsecondX!public! !
-!DateAndTimeFactoryANSITest categoriesFor: #testXyearXdayXhourXminuteXsecondXoffsetX!public! !
-!DateAndTimeFactoryANSITest categoriesFor: #testXyearXmonthXdayXhourXminuteXsecondX!public! !
-!DateAndTimeFactoryANSITest categoriesFor: #testXyearXmonthXdayXhourXminuteXsecondXoffsetX!public! !
+!DateAndTimeFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXclockPrecision!public! !
+testXnow!public! !
+testXyearXdayXhourXminuteXsecondX!public! !
+testXyearXdayXhourXminuteXsecondXoffsetX!public! !
+testXyearXmonthXdayXhourXminuteXsecondX!public! !
+testXyearXmonthXdayXhourXminuteXsecondXoffsetX!public! !
+!
 

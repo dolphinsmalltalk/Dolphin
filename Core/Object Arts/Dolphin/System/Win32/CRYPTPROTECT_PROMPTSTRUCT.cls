@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
 	instanceVariableNames: ''
@@ -59,13 +59,15 @@ szPrompt: anUtf16String
 	"Set the receiver's 'szPrompt' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_szPrompt put: anUtf16String yourAddress! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags:!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #hwndApp:!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt!**compiled accessors**!public! !
-!CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #szPrompt:!**compiled accessors**!public! !
+!CRYPTPROTECT_PROMPTSTRUCT categoriesForMethods!
+dwPromptFlags!**compiled accessors**!public! !
+dwPromptFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+hwndApp!**compiled accessors**!public! !
+hwndApp:!**compiled accessors**!public! !
+szPrompt!**compiled accessors**!public! !
+szPrompt:!**compiled accessors**!public! !
+!
 
 !CRYPTPROTECT_PROMPTSTRUCT class methodsFor!
 
@@ -92,6 +94,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
-!CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CRYPTPROTECT_PROMPTSTRUCT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

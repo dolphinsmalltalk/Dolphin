@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBrush subclass: #GdiplusTextureBrush
 	instanceVariableNames: ''
@@ -33,9 +33,11 @@ transform: aGdiplusMatrix
 	(status := GdiplusLibrary default gdipSetTextureTransform: self asParameter
 				matrix: aGdiplusMatrix asParameter) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetTextureTransform failed' with: status]! !
-!GdiplusTextureBrush categoriesFor: #rotateTransform:!operations!public! !
-!GdiplusTextureBrush categoriesFor: #rotateTransform:order:!operations!public! !
-!GdiplusTextureBrush categoriesFor: #transform:!accessing!public! !
+!GdiplusTextureBrush categoriesForMethods!
+rotateTransform:!operations!public! !
+rotateTransform:order:!operations!public! !
+transform:!accessing!public! !
+!
 
 !GdiplusTextureBrush class methodsFor!
 
@@ -106,9 +108,11 @@ image: anImage wrapMode: aWrapModeConstant rectangle: aRectangle
 				image: anImage
 				wrapMode: aWrapModeConstant
 				rectangle: aRectangle)! !
-!GdiplusTextureBrush class categoriesFor: #exampleGdipTBFillAShape!examples!public!sunit! !
-!GdiplusTextureBrush class categoriesFor: #exampleGdipTBTilingAShape!examples!public!sunit! !
-!GdiplusTextureBrush class categoriesFor: #image:!instance creation!public! !
-!GdiplusTextureBrush class categoriesFor: #image:wrapMode:!instance creation!public! !
-!GdiplusTextureBrush class categoriesFor: #image:wrapMode:rectangle:!instance creation!public! !
+!GdiplusTextureBrush class categoriesForMethods!
+exampleGdipTBFillAShape!examples!public!sunit! !
+exampleGdipTBTilingAShape!examples!public!sunit! !
+image:!instance creation!public! !
+image:wrapMode:!instance creation!public! !
+image:wrapMode:rectangle:!instance creation!public! !
+!
 

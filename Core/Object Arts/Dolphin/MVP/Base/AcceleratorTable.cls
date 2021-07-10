@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #AcceleratorTable
 	instanceVariableNames: 'commands'
@@ -86,16 +86,18 @@ postCopy
 	super postCopy.
 	commands := commands copy.
 	^self! !
-!AcceleratorTable categoriesFor: #addCommand:!adding!public! !
-!AcceleratorTable categoriesFor: #basicFree!private!realizing/unrealizing! !
-!AcceleratorTable categoriesFor: #commands!accessing!public! !
-!AcceleratorTable categoriesFor: #commands:!initializing!private! !
-!AcceleratorTable categoriesFor: #createHandle!private!realizing/unrealizing! !
-!AcceleratorTable categoriesFor: #includes:!public!searching! !
-!AcceleratorTable categoriesFor: #initialize!initializing!private! !
-!AcceleratorTable categoriesFor: #isEmpty!public!testing! !
-!AcceleratorTable categoriesFor: #notEmpty!public!testing! !
-!AcceleratorTable categoriesFor: #postCopy!copying!public! !
+!AcceleratorTable categoriesForMethods!
+addCommand:!adding!public! !
+basicFree!private!realizing/unrealizing! !
+commands!accessing!public! !
+commands:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+includes:!public!searching! !
+initialize!initializing!private! !
+isEmpty!public!testing! !
+notEmpty!public!testing! !
+postCopy!copying!public! !
+!
 
 !AcceleratorTable class methodsFor!
 
@@ -224,21 +226,23 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!AcceleratorTable class categoriesFor: #icon!constants!public! !
-!AcceleratorTable class categoriesFor: #invariantKeyStringFromCode:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyCode:modifiers:!helpers!public! !
-!AcceleratorTable class categoriesFor: #keyCodeFromInvariantString:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyCodeFromString:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyCodeFromString:keyboard:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:!enquiries!private! !
-!AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:do:!enquiries!private! !
-!AcceleratorTable class categoriesFor: #keySeparator!constants!private! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:keyboard:!enquiries!public! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:modifiers:!enquiries!helpers!private! !
-!AcceleratorTable class categoriesFor: #keyStringFromCode:modifiers:keyboard:!enquiries!helpers!private! !
-!AcceleratorTable class categoriesFor: #splitKeyCode:!helpers!public! !
-!AcceleratorTable class categoriesFor: #splitKeyString:!helpers!public! !
-!AcceleratorTable class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!AcceleratorTable class categoriesFor: #stbVersion!binary filing!public! !
+!AcceleratorTable class categoriesForMethods!
+icon!constants!public! !
+invariantKeyStringFromCode:!enquiries!public! !
+keyCode:modifiers:!helpers!public! !
+keyCodeFromInvariantString:!enquiries!public! !
+keyCodeFromString:!enquiries!public! !
+keyCodeFromString:keyboard:!enquiries!public! !
+keyModifierNames:keyboard:!enquiries!private! !
+keyModifierNames:keyboard:do:!enquiries!private! !
+keySeparator!constants!private! !
+keyStringFromCode:!enquiries!public! !
+keyStringFromCode:keyboard:!enquiries!public! !
+keyStringFromCode:modifiers:!enquiries!helpers!private! !
+keyStringFromCode:modifiers:keyboard:!enquiries!helpers!private! !
+splitKeyCode:!helpers!public! !
+splitKeyString:!helpers!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

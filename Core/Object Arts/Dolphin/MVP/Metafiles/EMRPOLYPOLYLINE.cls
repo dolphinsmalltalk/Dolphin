@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRPOLYPOLYLINE
 	instanceVariableNames: ''
@@ -109,17 +109,19 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
-!EMRPOLYPOLYLINE categoriesFor: #aPolyCounts!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aPolyCounts:!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aptl!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aptl:!public! !
-!EMRPOLYPOLYLINE categoriesFor: #aptlOffset!private! !
-!EMRPOLYPOLYLINE categoriesFor: #cptl!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #cptl:!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #nPolys!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #nPolys:!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYPOLYLINE categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!EMRPOLYPOLYLINE categoriesForMethods!
+aPolyCounts!**compiled accessors**!public! !
+aPolyCounts:!**compiled accessors**!public! !
+aptl!public! !
+aptl:!public! !
+aptlOffset!private! !
+cptl!**compiled accessors**!public! !
+cptl:!**compiled accessors**!public! !
+nPolys!**compiled accessors**!public! !
+nPolys:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !EMRPOLYPOLYLINE class methodsFor!
 
@@ -163,7 +165,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYPOLYLINE with: EMR_POLYPOLYGON! !
-!EMRPOLYPOLYLINE class categoriesFor: #defineFields!public!template definition! !
-!EMRPOLYPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYPOLYLINE class categoriesFor: #iTypes!constants!public! !
+!EMRPOLYPOLYLINE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

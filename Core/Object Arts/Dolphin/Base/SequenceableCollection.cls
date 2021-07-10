@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Collection subclass: #SequenceableCollection
 	instanceVariableNames: ''
@@ -1283,133 +1283,135 @@ writeStream
 	"Answer a WriteStream on the receiver."
 
 	^WriteStream on: self! !
-!SequenceableCollection categoriesFor: #,!copying!public! !
-!SequenceableCollection categoriesFor: #_sameAsString:!comparing!private! !
-!SequenceableCollection categoriesFor: #=!comparing!public! !
-!SequenceableCollection categoriesFor: #after:!public!searching! !
-!SequenceableCollection categoriesFor: #after:ifAbsent:!public!searching! !
-!SequenceableCollection categoriesFor: #allButFirst!copying!public! !
-!SequenceableCollection categoriesFor: #allButFirst:!copying!public! !
-!SequenceableCollection categoriesFor: #allButLast!copying!public! !
-!SequenceableCollection categoriesFor: #allButLast:!copying!public! !
-!SequenceableCollection categoriesFor: #anyOne!accessing!public! !
-!SequenceableCollection categoriesFor: #appendToStream:!double dispatch!private! !
-!SequenceableCollection categoriesFor: #approxSize!accessing!private! !
-!SequenceableCollection categoriesFor: #asArray!converting!public! !
-!SequenceableCollection categoriesFor: #asRunArray!converting!public! !
-!SequenceableCollection categoriesFor: #associations!accessing!public! !
-!SequenceableCollection categoriesFor: #asString!public! !
-!SequenceableCollection categoriesFor: #at:!accessing!public!testing! !
-!SequenceableCollection categoriesFor: #at:ifAbsent:!accessing!public! !
-!SequenceableCollection categoriesFor: #at:ifPresent:!accessing!public! !
-!SequenceableCollection categoriesFor: #at:put:!accessing!public! !
-!SequenceableCollection categoriesFor: #atAll:put:!accessing!public! !
-!SequenceableCollection categoriesFor: #atAllPut:!accessing!public! !
-!SequenceableCollection categoriesFor: #basicBeginsWith:!comparing!public! !
-!SequenceableCollection categoriesFor: #basicIndexOfSubCollection:startingAt:!private!searching! !
-!SequenceableCollection categoriesFor: #before:!public!searching! !
-!SequenceableCollection categoriesFor: #before:ifAbsent:!public!searching! !
-!SequenceableCollection categoriesFor: #beginsWith:!comparing!public! !
-!SequenceableCollection categoriesFor: #binarySearchFor:using:!public!searching! !
-!SequenceableCollection categoriesFor: #collect:!enumerating!public! !
-!SequenceableCollection categoriesFor: #copyFrom:!copying!public! !
-!SequenceableCollection categoriesFor: #copyFrom:to:!copying!public! !
-!SequenceableCollection categoriesFor: #copyLikeOfSize:!copying!private! !
-!SequenceableCollection categoriesFor: #copyReplaceAll:with:!copying!public! !
-!SequenceableCollection categoriesFor: #copyReplaceFrom:to:with:!copying!public! !
-!SequenceableCollection categoriesFor: #copyReplaceFrom:to:withObject:!copying!public! !
-!SequenceableCollection categoriesFor: #copyReplacing:withObject:!copying!public! !
-!SequenceableCollection categoriesFor: #copyWith:!copying!public! !
-!SequenceableCollection categoriesFor: #copyWith:atIndex:!copying!public! !
-!SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
-!SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
-!SequenceableCollection categoriesFor: #copyWithoutIndex:!copying!public! !
-!SequenceableCollection categoriesFor: #decodeAt:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
-!SequenceableCollection categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encodedSizeOf:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encodeOn:nextPutAll:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encodeOn:put:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encoding!constants!public! !
-!SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
-!SequenceableCollection categoriesFor: #errorCollectionsOfDifferentSizes!enumerating!public! !
-!SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
-!SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
-!SequenceableCollection categoriesFor: #errorValueNotFound:!exceptions!private! !
-!SequenceableCollection categoriesFor: #expandMacrosIn:!double dispatch!private! !
-!SequenceableCollection categoriesFor: #fifth!accessing!public! !
-!SequenceableCollection categoriesFor: #findFirst:!public!searching! !
-!SequenceableCollection categoriesFor: #findLast:!public!searching! !
-!SequenceableCollection categoriesFor: #first!accessing!public! !
-!SequenceableCollection categoriesFor: #first:!copying!public! !
-!SequenceableCollection categoriesFor: #fourth!accessing!public! !
-!SequenceableCollection categoriesFor: #from:do:!enumerating!public! !
-!SequenceableCollection categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!SequenceableCollection categoriesFor: #from:to:do:!enumerating!public! !
-!SequenceableCollection categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!SequenceableCollection categoriesFor: #from:to:put:!accessing!public! !
-!SequenceableCollection categoriesFor: #grow!mutating!private! !
-!SequenceableCollection categoriesFor: #hash!comparing!public! !
-!SequenceableCollection categoriesFor: #identityIndexOf:!public!searching! !
-!SequenceableCollection categoriesFor: #identityIndexOf:ifAbsent:!public!searching! !
-!SequenceableCollection categoriesFor: #includesAnyOf:!public!searching! !
-!SequenceableCollection categoriesFor: #includesKey:!public!testing! !
-!SequenceableCollection categoriesFor: #indexOf:!public!searching! !
-!SequenceableCollection categoriesFor: #indexOf:ifAbsent:!public!searching! !
-!SequenceableCollection categoriesFor: #indexOf:startingAt:!public!searching! !
-!SequenceableCollection categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
-!SequenceableCollection categoriesFor: #indexOfSubCollection:!public!searching! !
-!SequenceableCollection categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
-!SequenceableCollection categoriesFor: #indexOfSubCollection:startingAt:ifAbsent:!public!searching! !
-!SequenceableCollection categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!public! !
-!SequenceableCollection categoriesFor: #keyAtValue:!accessing!public! !
-!SequenceableCollection categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
-!SequenceableCollection categoriesFor: #keys!accessing!public! !
-!SequenceableCollection categoriesFor: #keysAndValuesDo:!debugger-step through!enumerating!public! !
-!SequenceableCollection categoriesFor: #last!accessing!public! !
-!SequenceableCollection categoriesFor: #last:!copying!public! !
-!SequenceableCollection categoriesFor: #lastIndexOf:!public!searching! !
-!SequenceableCollection categoriesFor: #lastIndexOf:ifAbsent:!public!searching! !
-!SequenceableCollection categoriesFor: #lookup:!accessing!public! !
-!SequenceableCollection categoriesFor: #maxEncoding!constants!private! !
-!SequenceableCollection categoriesFor: #mutableCopy!copying!public! !
-!SequenceableCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!SequenceableCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!SequenceableCollection categoriesFor: #occurrencesOfSubCollection:!private!searching! !
-!SequenceableCollection categoriesFor: #pairsDo:!enumerating!public! !
-!SequenceableCollection categoriesFor: #prevIndexOf:from:to:!public!searching! !
-!SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:!public!searching! !
-!SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:ifAbsent:!public!searching! !
-!SequenceableCollection categoriesFor: #randomizeUsing:!operations!public! !
-!SequenceableCollection categoriesFor: #readStream!public!streaming! !
-!SequenceableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
-!SequenceableCollection categoriesFor: #replaceAll:with:!public! !
-!SequenceableCollection categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!SequenceableCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!SequenceableCollection categoriesFor: #replaceFrom:to:with:!public!replacing! !
-!SequenceableCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!SequenceableCollection categoriesFor: #replaceFrom:to:withObject:!public!replacing! !
-!SequenceableCollection categoriesFor: #resize:!mutating!private! !
-!SequenceableCollection categoriesFor: #reverse!copying!public! !
-!SequenceableCollection categoriesFor: #reversedFrom:to:!copying!public! !
-!SequenceableCollection categoriesFor: #reverseDo:!enumerating!public! !
-!SequenceableCollection categoriesFor: #runsAndValuesDo:!enumerating!public! !
-!SequenceableCollection categoriesFor: #second!accessing!public! !
-!SequenceableCollection categoriesFor: #select:!enumerating!public! !
-!SequenceableCollection categoriesFor: #sixth!accessing!public! !
-!SequenceableCollection categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #skipOver:!private!searching! !
-!SequenceableCollection categoriesFor: #swap:with:!operations!public! !
-!SequenceableCollection categoriesFor: #third!accessing!public! !
-!SequenceableCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
-!SequenceableCollection categoriesFor: #upTo:!copying!public!searching! !
-!SequenceableCollection categoriesFor: #with:do:!enumerating!public! !
-!SequenceableCollection categoriesFor: #writeStream!public!streaming! !
+!SequenceableCollection categoriesForMethods!
+,!copying!public! !
+_sameAsString:!comparing!private! !
+=!comparing!public! !
+after:!public!searching! !
+after:ifAbsent:!public!searching! !
+allButFirst!copying!public! !
+allButFirst:!copying!public! !
+allButLast!copying!public! !
+allButLast:!copying!public! !
+anyOne!accessing!public! !
+appendToStream:!double dispatch!private! !
+approxSize!accessing!private! !
+asArray!converting!public! !
+asRunArray!converting!public! !
+associations!accessing!public! !
+asString!public! !
+at:!accessing!public!testing! !
+at:ifAbsent:!accessing!public! !
+at:ifPresent:!accessing!public! !
+at:put:!accessing!public! !
+atAll:put:!accessing!public! !
+atAllPut:!accessing!public! !
+basicBeginsWith:!comparing!public! !
+basicIndexOfSubCollection:startingAt:!private!searching! !
+before:!public!searching! !
+before:ifAbsent:!public!searching! !
+beginsWith:!comparing!public! !
+binarySearchFor:using:!public!searching! !
+collect:!enumerating!public! !
+copyFrom:!copying!public! !
+copyFrom:to:!copying!public! !
+copyLikeOfSize:!copying!private! !
+copyReplaceAll:with:!copying!public! !
+copyReplaceFrom:to:with:!copying!public! !
+copyReplaceFrom:to:withObject:!copying!public! !
+copyReplacing:withObject:!copying!public! !
+copyWith:!copying!public! !
+copyWith:atIndex:!copying!public! !
+copyWithout:!copying!public! !
+copyWithoutAll:!copying!public! !
+copyWithoutIndex:!copying!public! !
+decodeAt:!encode/decode!private! !
+decodeFrom:upTo:!encode/decode!private! !
+decodeNextAvailable:from:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+do:!debugger-step through!enumerating!public! !
+emitEncodingMarkerOn:!encode/decode!private! !
+encodedAt:put:!accessing!encode/decode!private! !
+encodedSizeOf:!encode/decode!private! !
+encodeOn:next:putAll:startingAt:!encode/decode!private! !
+encodeOn:nextPutAll:!encode/decode!private! !
+encodeOn:put:!encode/decode!private! !
+encoding!constants!public! !
+endsWith:!comparing!public! !
+errorCollectionsOfDifferentSizes!enumerating!public! !
+errorFirstObject:!exceptions!private! !
+errorLastObject:!exceptions!private! !
+errorValueNotFound:!exceptions!private! !
+expandMacrosIn:!double dispatch!private! !
+fifth!accessing!public! !
+findFirst:!public!searching! !
+findLast:!public!searching! !
+first!accessing!public! !
+first:!copying!public! !
+fourth!accessing!public! !
+from:do:!enumerating!public! !
+from:keysAndValuesDo:!enumerating!public! !
+from:to:do:!enumerating!public! !
+from:to:keysAndValuesDo:!enumerating!public! !
+from:to:put:!accessing!public! !
+grow!mutating!private! !
+hash!comparing!public! !
+identityIndexOf:!public!searching! !
+identityIndexOf:ifAbsent:!public!searching! !
+includesAnyOf:!public!searching! !
+includesKey:!public!testing! !
+indexOf:!public!searching! !
+indexOf:ifAbsent:!public!searching! !
+indexOf:startingAt:!public!searching! !
+indexOfAnyOf:startingAt:!public!searching! !
+indexOfSubCollection:!public!searching! !
+indexOfSubCollection:startingAt:!public!searching! !
+indexOfSubCollection:startingAt:ifAbsent:!public!searching! !
+keyAtEqualValue:ifAbsent:!accessing!public! !
+keyAtValue:!accessing!public! !
+keyAtValue:ifAbsent:!accessing!public! !
+keys!accessing!public! !
+keysAndValuesDo:!debugger-step through!enumerating!public! !
+last!accessing!public! !
+last:!copying!public! !
+lastIndexOf:!public!searching! !
+lastIndexOf:ifAbsent:!public!searching! !
+lookup:!accessing!public! !
+maxEncoding!constants!private! !
+mutableCopy!copying!public! !
+nextIdentityIndexOf:from:to:!public!searching! !
+nextIndexOf:from:to:!public!searching! !
+occurrencesOfSubCollection:!private!searching! !
+pairsDo:!enumerating!public! !
+prevIndexOf:from:to:!public!searching! !
+prevIndexOfSubCollection:startingAt:!public!searching! !
+prevIndexOfSubCollection:startingAt:ifAbsent:!public!searching! !
+randomizeUsing:!operations!public! !
+readStream!public!streaming! !
+remove:ifAbsent:!public!removing! !
+replaceAll:with:!public! !
+replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+replaceFrom:to:with:!public!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+replaceFrom:to:withObject:!public!replacing! !
+resize:!mutating!private! !
+reverse!copying!public! !
+reversedFrom:to:!copying!public! !
+reverseDo:!enumerating!public! !
+runsAndValuesDo:!enumerating!public! !
+second!accessing!public! !
+select:!enumerating!public! !
+sixth!accessing!public! !
+skipEncodingMarkerFrom:!encode/decode!private! !
+skipOver:!private!searching! !
+swap:with:!operations!public! !
+third!accessing!public! !
+uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
+upTo:!copying!public!searching! !
+with:do:!enumerating!public! !
+writeStream!public!streaming! !
+!
 
 SequenceableCollection methodProtocol: #sequencedCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
 SequenceableCollection methodProtocol: #sequencedReadableCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
@@ -1478,13 +1480,15 @@ writeStream: anInteger
 	initialize size, anInteger."
 
 	^WriteStream on: (self new: anInteger)! !
-!SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
-!SequenceableCollection class categoriesFor: #defaultSortAlgorithm!instance creation!public! !
-!SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
-!SequenceableCollection class categoriesFor: #encoding!constants!public! !
-!SequenceableCollection class categoriesFor: #new:streamContents:!public!stream creation! !
-!SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
-!SequenceableCollection class categoriesFor: #streamContents:!public!stream creation! !
-!SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
-!SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !
+!SequenceableCollection class categoriesForMethods!
+binarySearch:for:using:!public!searching! !
+defaultSortAlgorithm!instance creation!public! !
+emitEncodingMarkerOn:!encode/decode!private! !
+encoding!constants!public! !
+new:streamContents:!public!stream creation! !
+ofSize:!instance creation!private! !
+streamContents:!public!stream creation! !
+writeStream!instance creation!public!streaming! !
+writeStream:!instance creation!public!streaming! !
+!
 

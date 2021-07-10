@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #TextEdit
 	instanceVariableNames: 'teFlags'
@@ -1277,150 +1277,152 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	Handled by #enSetFocus notification."
 
 	^nil! !
-!TextEdit categoriesFor: #alignment!accessing!public! !
-!TextEdit categoriesFor: #alignment:!accessing!public! !
-!TextEdit categoriesFor: #apply!commands!public! !
-!TextEdit categoriesFor: #basicClearSelection!helpers!private! !
-!TextEdit categoriesFor: #basicFindNext!private!searching & replacing! !
-!TextEdit categoriesFor: #basicLineFromPosition:!accessing!private! !
-!TextEdit categoriesFor: #basicPositionAtLine:!accessing!private! !
-!TextEdit categoriesFor: #basicSelectAll!private!selection! !
-!TextEdit categoriesFor: #basicSelectionRange!accessing!private! !
-!TextEdit categoriesFor: #basicSelectionStart:end:!accessing!private! !
-!TextEdit categoriesFor: #calcRectangleFromClientRectangle:!geometry!private! !
-!TextEdit categoriesFor: #calculateExtent:!geometry!private! !
-!TextEdit categoriesFor: #canHScroll!accessing-styles!public! !
-!TextEdit categoriesFor: #canHScroll:!accessing-styles!public! !
-!TextEdit categoriesFor: #canPaste!clipboard operations!public!testing! !
-!TextEdit categoriesFor: #canRedo!public!testing!undo & redo! !
-!TextEdit categoriesFor: #canUndo!public!testing!undo & redo! !
-!TextEdit categoriesFor: #caretPosition!caret!public! !
-!TextEdit categoriesFor: #caretPosition:!accessing!caret!public! !
-!TextEdit categoriesFor: #charNearestPosition:!accessing!public! !
-!TextEdit categoriesFor: #clear!operations!public! !
-!TextEdit categoriesFor: #clearSelection!clipboard operations!commands!public! !
-!TextEdit categoriesFor: #command:id:!commands!private! !
-!TextEdit categoriesFor: #copySelection!clipboard operations!commands!public! !
-!TextEdit categoriesFor: #cueBanner!accessing!public! !
-!TextEdit categoriesFor: #cueBanner:!accessing!public! !
-!TextEdit categoriesFor: #cutSelection!clipboard operations!commands!public! !
-!TextEdit categoriesFor: #defaultSelectionRange!constants!private! !
-!TextEdit categoriesFor: #defaultTextLimit!constants!private! !
-!TextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
-!TextEdit categoriesFor: #dispatchRegistered:wParam:lParam:!dispatching!private! !
-!TextEdit categoriesFor: #displayValue!private!updating! !
-!TextEdit categoriesFor: #displayValue:!private!updating! !
-!TextEdit categoriesFor: #dlgCode!constants!private! !
-!TextEdit categoriesFor: #dragOver:!drag & drop!public! !
-!TextEdit categoriesFor: #editFind!commands!public!searching & replacing! !
-!TextEdit categoriesFor: #emptyUndoBuffer!commands!public!undo & redo! !
-!TextEdit categoriesFor: #enChange!event handling-win32!private! !
-!TextEdit categoriesFor: #enKillFocus!event handling-win32!private! !
-!TextEdit categoriesFor: #enMaxText!event handling-win32!private! !
-!TextEdit categoriesFor: #enSetFocus!event handling-win32!private! !
-!TextEdit categoriesFor: #ensureCaretVisible!caret!operations!public! !
-!TextEdit categoriesFor: #enUpdate!event handling-win32!private! !
-!TextEdit categoriesFor: #find!public!searching & replacing! !
-!TextEdit categoriesFor: #find:range:!private!searching & replacing! !
-!TextEdit categoriesFor: #findDetails!private!searching & replacing! !
-!TextEdit categoriesFor: #findDetails:!private!searching & replacing! !
-!TextEdit categoriesFor: #findDialogClass!constants!private! !
-!TextEdit categoriesFor: #findNext!commands!public!searching & replacing! !
-!TextEdit categoriesFor: #findNext:!helpers!private!searching & replacing! !
-!TextEdit categoriesFor: #findNextWrapped:!public!searching & replacing! !
-!TextEdit categoriesFor: #findPrompt:!private!searching & replacing! !
-!TextEdit categoriesFor: #findReplace!commands!public!searching & replacing! !
-!TextEdit categoriesFor: #findReplacePrompt:!public!searching & replacing! !
-!TextEdit categoriesFor: #format!public!testing! !
-!TextEdit categoriesFor: #format:!accessing!public! !
-!TextEdit categoriesFor: #formatRectangle!accessing!public! !
-!TextEdit categoriesFor: #hasSelection!public!selection! !
-!TextEdit categoriesFor: #highlightFindMatch:!private!searching & replacing! !
-!TextEdit categoriesFor: #initialize!initializing!private! !
-!TextEdit categoriesFor: #initializeNewTypeConverter:!accessing!private! !
-!TextEdit categoriesFor: #isFindEnabled!public!testing! !
-!TextEdit categoriesFor: #isFindEnabled:!accessing!public! !
-!TextEdit categoriesFor: #isModified!public!testing! !
-!TextEdit categoriesFor: #isModified:!modes!public! !
-!TextEdit categoriesFor: #isPassword!public!testing! !
-!TextEdit categoriesFor: #isPassword:!accessing!public! !
-!TextEdit categoriesFor: #isReadOnly!public!testing! !
-!TextEdit categoriesFor: #isReadOnly:!accessing-styles!public! !
-!TextEdit categoriesFor: #isSelectionKept!public!testing! !
-!TextEdit categoriesFor: #isSelectionKept:!accessing!public! !
-!TextEdit categoriesFor: #isStatic!public!testing! !
-!TextEdit categoriesFor: #isStatic:!accessing!public! !
-!TextEdit categoriesFor: #isTextModified!private!testing! !
-!TextEdit categoriesFor: #isTextModified:!modes!private! !
-!TextEdit categoriesFor: #isUpdatePerChar!public!testing! !
-!TextEdit categoriesFor: #isUpdatePerChar:!accessing!public! !
-!TextEdit categoriesFor: #lineCount!accessing!public! !
-!TextEdit categoriesFor: #lineFromPosition:!accessing!public! !
-!TextEdit categoriesFor: #lineLengthFromPosition:!accessing!private! !
-!TextEdit categoriesFor: #lineRange:!accessing!public! !
-!TextEdit categoriesFor: #lineScroll!public!scrolling! !
-!TextEdit categoriesFor: #lineScroll:!public!scrolling! !
-!TextEdit categoriesFor: #lineScrollBy:!public!scrolling! !
-!TextEdit categoriesFor: #marginWidths!constants!private! !
-!TextEdit categoriesFor: #maxTextLimit!constants!private! !
-!TextEdit categoriesFor: #onFind:!event handling!public! !
-!TextEdit categoriesFor: #onFind:wParam:lParam:!dispatching!private! !
-!TextEdit categoriesFor: #onInputMaskRequired:!event handling!private! !
-!TextEdit categoriesFor: #onKeyTyped:!event handling!public! !
-!TextEdit categoriesFor: #onTextChanged!event handling-win32!private! !
-!TextEdit categoriesFor: #onTextOverflow!event handling!private! !
-!TextEdit categoriesFor: #onTipTextRequired:!event handling!public! !
-!TextEdit categoriesFor: #onViewCreated!event handling!operations!public! !
-!TextEdit categoriesFor: #passwordCharacter!accessing!public! !
-!TextEdit categoriesFor: #passwordCharacter:!accessing!public! !
-!TextEdit categoriesFor: #pasteClipboard!clipboard operations!commands!public! !
-!TextEdit categoriesFor: #pastePlainText!clipboard operations!commands!public! !
-!TextEdit categoriesFor: #plainTextAtLine:!public! !
-!TextEdit categoriesFor: #positionAtLine:!accessing!public! !
-!TextEdit categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
-!TextEdit categoriesFor: #positionOfChar:!accessing!public! !
-!TextEdit categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!TextEdit categoriesFor: #queryCommand:!commands!private! !
-!TextEdit categoriesFor: #redo!operations!public!undo & redo! !
-!TextEdit categoriesFor: #refreshContents!operations!public! !
-!TextEdit categoriesFor: #replace:!private!searching & replacing! !
-!TextEdit categoriesFor: #replaceAll:!event handling!public! !
-!TextEdit categoriesFor: #replaceSelection:!public!selection! !
-!TextEdit categoriesFor: #scrollDown!commands!public! !
-!TextEdit categoriesFor: #scrollToEnd!public!scrolling! !
-!TextEdit categoriesFor: #scrollUp!commands!public! !
-!TextEdit categoriesFor: #selectAll!commands!public!selection! !
-!TextEdit categoriesFor: #selectAllIfSingleLine!commands!public!selection! !
-!TextEdit categoriesFor: #selection!public!selection! !
-!TextEdit categoriesFor: #selectionPlainText:!private!selection! !
-!TextEdit categoriesFor: #selectionRange!public!selection! !
-!TextEdit categoriesFor: #selectionRange:!public!selection! !
-!TextEdit categoriesFor: #selectionStart:end:!public!selection! !
-!TextEdit categoriesFor: #selectionStart:length:!public!selection! !
-!TextEdit categoriesFor: #selectLine:!public!selection! !
-!TextEdit categoriesFor: #setAlignment:!modes!private! !
-!TextEdit categoriesFor: #setMarginWidths:!accessing!private!wine fix! !
-!TextEdit categoriesFor: #setReadOnly:!modes!private! !
-!TextEdit categoriesFor: #state!accessing!private! !
-!TextEdit categoriesFor: #suggestedFindText!helpers!private! !
-!TextEdit categoriesFor: #tabFocus!private!tabbing! !
-!TextEdit categoriesFor: #textLimit!accessing!public! !
-!TextEdit categoriesFor: #textLimit:!accessing!public! !
-!TextEdit categoriesFor: #textRange!accessing!public! !
-!TextEdit categoriesFor: #undo!operations!public! !
-!TextEdit categoriesFor: #updateModel!private!updating! !
-!TextEdit categoriesFor: #updatePerChar!public!testing! !
-!TextEdit categoriesFor: #updatePerChar:!accessing!public! !
-!TextEdit categoriesFor: #value!accessing!public! !
-!TextEdit categoriesFor: #value:!accessing!public! !
-!TextEdit categoriesFor: #wantReturn!public!testing! !
-!TextEdit categoriesFor: #wantReturn:!accessing!public! !
-!TextEdit categoriesFor: #wantTab!public!testing! !
-!TextEdit categoriesFor: #wantTab:!accessing!public! !
-!TextEdit categoriesFor: #wmKeyDown:wParam:lParam:!event handling-win32!operations!private! !
-!TextEdit categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
-!TextEdit categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
-!TextEdit categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!private! !
+!TextEdit categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+apply!commands!public! !
+basicClearSelection!helpers!private! !
+basicFindNext!private!searching & replacing! !
+basicLineFromPosition:!accessing!private! !
+basicPositionAtLine:!accessing!private! !
+basicSelectAll!private!selection! !
+basicSelectionRange!accessing!private! !
+basicSelectionStart:end:!accessing!private! !
+calcRectangleFromClientRectangle:!geometry!private! !
+calculateExtent:!geometry!private! !
+canHScroll!accessing-styles!public! !
+canHScroll:!accessing-styles!public! !
+canPaste!clipboard operations!public!testing! !
+canRedo!public!testing!undo & redo! !
+canUndo!public!testing!undo & redo! !
+caretPosition!caret!public! !
+caretPosition:!accessing!caret!public! !
+charNearestPosition:!accessing!public! !
+clear!operations!public! !
+clearSelection!clipboard operations!commands!public! !
+command:id:!commands!private! !
+copySelection!clipboard operations!commands!public! !
+cueBanner!accessing!public! !
+cueBanner:!accessing!public! !
+cutSelection!clipboard operations!commands!public! !
+defaultSelectionRange!constants!private! !
+defaultTextLimit!constants!private! !
+defaultWindowExStyle!constants!private! !
+dispatchRegistered:wParam:lParam:!dispatching!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+dlgCode!constants!private! !
+dragOver:!drag & drop!public! !
+editFind!commands!public!searching & replacing! !
+emptyUndoBuffer!commands!public!undo & redo! !
+enChange!event handling-win32!private! !
+enKillFocus!event handling-win32!private! !
+enMaxText!event handling-win32!private! !
+enSetFocus!event handling-win32!private! !
+ensureCaretVisible!caret!operations!public! !
+enUpdate!event handling-win32!private! !
+find!public!searching & replacing! !
+find:range:!private!searching & replacing! !
+findDetails!private!searching & replacing! !
+findDetails:!private!searching & replacing! !
+findDialogClass!constants!private! !
+findNext!commands!public!searching & replacing! !
+findNext:!helpers!private!searching & replacing! !
+findNextWrapped:!public!searching & replacing! !
+findPrompt:!private!searching & replacing! !
+findReplace!commands!public!searching & replacing! !
+findReplacePrompt:!public!searching & replacing! !
+format!public!testing! !
+format:!accessing!public! !
+formatRectangle!accessing!public! !
+hasSelection!public!selection! !
+highlightFindMatch:!private!searching & replacing! !
+initialize!initializing!private! !
+initializeNewTypeConverter:!accessing!private! !
+isFindEnabled!public!testing! !
+isFindEnabled:!accessing!public! !
+isModified!public!testing! !
+isModified:!modes!public! !
+isPassword!public!testing! !
+isPassword:!accessing!public! !
+isReadOnly!public!testing! !
+isReadOnly:!accessing-styles!public! !
+isSelectionKept!public!testing! !
+isSelectionKept:!accessing!public! !
+isStatic!public!testing! !
+isStatic:!accessing!public! !
+isTextModified!private!testing! !
+isTextModified:!modes!private! !
+isUpdatePerChar!public!testing! !
+isUpdatePerChar:!accessing!public! !
+lineCount!accessing!public! !
+lineFromPosition:!accessing!public! !
+lineLengthFromPosition:!accessing!private! !
+lineRange:!accessing!public! !
+lineScroll!public!scrolling! !
+lineScroll:!public!scrolling! !
+lineScrollBy:!public!scrolling! !
+marginWidths!constants!private! !
+maxTextLimit!constants!private! !
+onFind:!event handling!public! !
+onFind:wParam:lParam:!dispatching!private! !
+onInputMaskRequired:!event handling!private! !
+onKeyTyped:!event handling!public! !
+onTextChanged!event handling-win32!private! !
+onTextOverflow!event handling!private! !
+onTipTextRequired:!event handling!public! !
+onViewCreated!event handling!operations!public! !
+passwordCharacter!accessing!public! !
+passwordCharacter:!accessing!public! !
+pasteClipboard!clipboard operations!commands!public! !
+pastePlainText!clipboard operations!commands!public! !
+plainTextAtLine:!public! !
+positionAtLine:!accessing!public! !
+positionForKeyboardContextMenu!enquiries!public! !
+positionOfChar:!accessing!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+queryCommand:!commands!private! !
+redo!operations!public!undo & redo! !
+refreshContents!operations!public! !
+replace:!private!searching & replacing! !
+replaceAll:!event handling!public! !
+replaceSelection:!public!selection! !
+scrollDown!commands!public! !
+scrollToEnd!public!scrolling! !
+scrollUp!commands!public! !
+selectAll!commands!public!selection! !
+selectAllIfSingleLine!commands!public!selection! !
+selection!public!selection! !
+selectionPlainText:!private!selection! !
+selectionRange!public!selection! !
+selectionRange:!public!selection! !
+selectionStart:end:!public!selection! !
+selectionStart:length:!public!selection! !
+selectLine:!public!selection! !
+setAlignment:!modes!private! !
+setMarginWidths:!accessing!private!wine fix! !
+setReadOnly:!modes!private! !
+state!accessing!private! !
+suggestedFindText!helpers!private! !
+tabFocus!private!tabbing! !
+textLimit!accessing!public! !
+textLimit:!accessing!public! !
+textRange!accessing!public! !
+undo!operations!public! !
+updateModel!private!updating! !
+updatePerChar!public!testing! !
+updatePerChar:!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+wantReturn!public!testing! !
+wantReturn:!accessing!public! !
+wantTab!public!testing! !
+wantTab:!accessing!public! !
+wmKeyDown:wParam:lParam:!event handling-win32!operations!private! !
+wmKillFocus:wParam:lParam:!event handling-win32!private! !
+wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+wmSetFocus:wParam:lParam:!event handling-win32!private! !
+!
 
 TextEdit methodProtocol: #textFinder attributes: #(#readOnly) selectors: #(#onFind:)!
 
@@ -1477,9 +1479,11 @@ winClassName
 
 	^'EDIT'
 ! !
-!TextEdit class categoriesFor: #icon!constants!public! !
-!TextEdit class categoriesFor: #initialize!development!initializing!private! !
-!TextEdit class categoriesFor: #onStartup!event handling!public! !
-!TextEdit class categoriesFor: #themePartName!constants!private!theming! !
-!TextEdit class categoriesFor: #winClassName!constants!private! !
+!TextEdit class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+onStartup!event handling!public! !
+themePartName!constants!private!theming! !
+winClassName!constants!private! !
+!
 

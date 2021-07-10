@@ -92,8 +92,10 @@ announcementSubscriber
 asWeakMessageSend
 	self receiver notNil ifTrue: [self error: 'Only clean blocks can be weak'].
 	^self! !
-!BlockClosure categoriesFor: #announcementSubscriber!public! !
-!BlockClosure categoriesFor: #asWeakMessageSend!public! !
+!BlockClosure categoriesForMethods!
+announcementSubscriber!public! !
+asWeakMessageSend!public! !
+!
 
 !MessageSend methodsFor!
 
@@ -103,13 +105,17 @@ asWeakMessageSend
 		receiver: receiver
 		selector: selector
 		arguments: args copy! !
-!MessageSend categoriesFor: #asWeakMessageSend!commands!public! !
+!MessageSend categoriesForMethods!
+asWeakMessageSend!commands!public! !
+!
 
 !MessageSendAbstract methodsFor!
 
 announcementSubscriber
 	^self receiver! !
-!MessageSendAbstract categoriesFor: #announcementSubscriber!public! !
+!MessageSendAbstract categoriesForMethods!
+announcementSubscriber!public! !
+!
 
 !Symbol methodsFor!
 
@@ -125,8 +131,10 @@ handlesAnnouncement: anAnnouncement
 		announce: #FOO should raise DNU bar"
 
 	^anAnnouncement == self! !
-!Symbol categoriesFor: #asAnnouncement!converting!public! !
-!Symbol categoriesFor: #handlesAnnouncement:!converting!public! !
+!Symbol categoriesForMethods!
+asAnnouncement!converting!public! !
+handlesAnnouncement:!converting!public! !
+!
 
 "End of package definition"!
 

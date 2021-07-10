@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #WinImageList
 	instanceVariableNames: 'extent initialSize growBy createFlags'
@@ -264,35 +264,37 @@ setExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growByInteg
 	initialSize := sizeInteger.
 	growBy := growByInteger.
 	createFlags := (aBoolean ifTrue: [ILC_MASK] ifFalse: [0]) bitOr: bppInteger! !
-!WinImageList categoriesFor: #addBitmap:!adding!public! !
-!WinImageList categoriesFor: #addBitmap:mask:!adding!public! !
-!WinImageList categoriesFor: #addIcon:!adding!public! !
-!WinImageList categoriesFor: #addImage:!adding!public! !
-!WinImageList categoriesFor: #addTransparentBitmap:!adding!public! !
-!WinImageList categoriesFor: #backcolor!accessing!public! !
-!WinImageList categoriesFor: #backcolor:!accessing!public! !
-!WinImageList categoriesFor: #basicFree!private!realizing/unrealizing! !
-!WinImageList categoriesFor: #beginDragImage:hotSpotX:hotSpotY:!modes!public! !
-!WinImageList categoriesFor: #copy!copying!public! !
-!WinImageList categoriesFor: #copyHandle!private!realizing/unrealizing! !
-!WinImageList categoriesFor: #createHandle!private!realizing/unrealizing! !
-!WinImageList categoriesFor: #depth!accessing!public! !
-!WinImageList categoriesFor: #dragEnter:at:!drag & drop!public! !
-!WinImageList categoriesFor: #dragLeave:!drag & drop!public! !
-!WinImageList categoriesFor: #dragMoveTo:!drag & drop!public! !
-!WinImageList categoriesFor: #dragShow:!drag & drop!public! !
-!WinImageList categoriesFor: #draw:on:at:!drawing!public! !
-!WinImageList categoriesFor: #draw:on:at:backcolor:forecolor:flags:!drawing-bitmaps!public! !
-!WinImageList categoriesFor: #draw:on:at:flags:!drawing-bitmaps!public! !
-!WinImageList categoriesFor: #endDrag!drag & drop!public! !
-!WinImageList categoriesFor: #extent!accessing!public! !
-!WinImageList categoriesFor: #getIcon:style:!accessing!public! !
-!WinImageList categoriesFor: #getImageCount!accessing!public! !
-!WinImageList categoriesFor: #hasMask!private!testing! !
-!WinImageList categoriesFor: #initialize!initializing!public! !
-!WinImageList categoriesFor: #isPersistent!private!testing! !
-!WinImageList categoriesFor: #setDragCursorImage:hotSpotX:hotSpotY:!modes!public! !
-!WinImageList categoriesFor: #setExtent:depth:initialSize:growBy:masked:!accessing!private! !
+!WinImageList categoriesForMethods!
+addBitmap:!adding!public! !
+addBitmap:mask:!adding!public! !
+addIcon:!adding!public! !
+addImage:!adding!public! !
+addTransparentBitmap:!adding!public! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+beginDragImage:hotSpotX:hotSpotY:!modes!public! !
+copy!copying!public! !
+copyHandle!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+depth!accessing!public! !
+dragEnter:at:!drag & drop!public! !
+dragLeave:!drag & drop!public! !
+dragMoveTo:!drag & drop!public! !
+dragShow:!drag & drop!public! !
+draw:on:at:!drawing!public! !
+draw:on:at:backcolor:forecolor:flags:!drawing-bitmaps!public! !
+draw:on:at:flags:!drawing-bitmaps!public! !
+endDrag!drag & drop!public! !
+extent!accessing!public! !
+getIcon:style:!accessing!public! !
+getImageCount!accessing!public! !
+hasMask!private!testing! !
+initialize!initializing!public! !
+isPersistent!private!testing! !
+setDragCursorImage:hotSpotX:hotSpotY:!modes!public! !
+setExtent:depth:initialSize:growBy:masked:!accessing!private! !
+!
 
 !WinImageList class methodsFor!
 
@@ -376,15 +378,17 @@ newExtent: aPoint masked: aBoolean
 		newExtent: aPoint
 		initialSize: self defaultInitialSize
 		masked: aBoolean! !
-!WinImageList class categoriesFor: #defaultColorDepth!constants!public! !
-!WinImageList class categoriesFor: #defaultGrowthGranularity!constants!public! !
-!WinImageList class categoriesFor: #defaultIconFlags!constants!public! !
-!WinImageList class categoriesFor: #defaultImageFlags!constants!public! !
-!WinImageList class categoriesFor: #defaultInitialSize!constants!public! !
-!WinImageList class categoriesFor: #icon!constants!public! !
-!WinImageList class categoriesFor: #newExtent:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:depth:initialSize:growBy:masked:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:depth:masked:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:initialSize:masked:!instance creation!public! !
-!WinImageList class categoriesFor: #newExtent:masked:!instance creation!public! !
+!WinImageList class categoriesForMethods!
+defaultColorDepth!constants!public! !
+defaultGrowthGranularity!constants!public! !
+defaultIconFlags!constants!public! !
+defaultImageFlags!constants!public! !
+defaultInitialSize!constants!public! !
+icon!constants!public! !
+newExtent:!instance creation!public! !
+newExtent:depth:initialSize:growBy:masked:!instance creation!public! !
+newExtent:depth:masked:!instance creation!public! !
+newExtent:initialSize:masked:!instance creation!public! !
+newExtent:masked:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
@@ -85,16 +85,18 @@ value: val
 	intVal := intVal asInteger.
 	self hi32: (intVal bitShift: -64).
 	self lo64: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
-!DECIMAL categoriesFor: #hi32!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #hi32:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #lo64!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #lo64:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #scale!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #scale:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #sign!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #sign:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #value!accessing!public! !
-!DECIMAL categoriesFor: #value:!accessing!public! !
+!DECIMAL categoriesForMethods!
+hi32!**compiled accessors**!public! !
+hi32:!**compiled accessors**!public! !
+lo64!**compiled accessors**!public! !
+lo64:!**compiled accessors**!public! !
+scale!**compiled accessors**!public! !
+scale:!**compiled accessors**!public! !
+sign!**compiled accessors**!public! !
+sign:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !DECIMAL class methodsFor!
 
@@ -131,9 +133,11 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DECIMAL! !
-!DECIMAL class categoriesFor: #defineFields!public!template definition! !
-!DECIMAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!DECIMAL class categoriesFor: #initialize!development!initializing!private! !
-!DECIMAL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!DECIMAL class categoriesFor: #vt!constants!public! !
+!DECIMAL class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

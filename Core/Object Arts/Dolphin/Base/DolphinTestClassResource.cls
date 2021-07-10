@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTestResource subclass: #DolphinTestClassResource
 	instanceVariableNames: 'package'
@@ -70,16 +70,18 @@ setUp
 tearDown
 	super tearDown.
 	self destroyPackage! !
-!DolphinTestClassResource categoriesFor: #compileAccessorsFor:!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #compileMethods!accessing!public! !
-!DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:pools:!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createClasses!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createPackage!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createPool:!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #createPools!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #destroyPackage!Init / Release!private! !
-!DolphinTestClassResource categoriesFor: #package!public! !
-!DolphinTestClassResource categoriesFor: #packageName!private!unit tests! !
-!DolphinTestClassResource categoriesFor: #setUp!Init / Release!public! !
-!DolphinTestClassResource categoriesFor: #tearDown!public!Running! !
+!DolphinTestClassResource categoriesForMethods!
+compileAccessorsFor:!Init / Release!private! !
+compileMethods!accessing!public! !
+createClass:superclass:instVars:pools:!Init / Release!private! !
+createClasses!Init / Release!private! !
+createPackage!Init / Release!private! !
+createPool:!Init / Release!private! !
+createPools!Init / Release!private! !
+destroyPackage!Init / Release!private! !
+package!public! !
+packageName!private!unit tests! !
+setUp!Init / Release!public! !
+tearDown!public!Running! !
+!
 

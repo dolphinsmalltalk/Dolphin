@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #COAUTHIDENTITY
 	instanceVariableNames: ''
@@ -88,20 +88,22 @@ UserLength: anInteger
 	"Set the receiver's 'UserLength' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_UserLength put: anInteger! !
-!COAUTHIDENTITY categoriesFor: #Domain!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Domain:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #DomainLength!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #DomainLength:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Flags!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Flags:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Password!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Password:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #PasswordLength!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #PasswordLength:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #User!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #User:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #UserLength!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #UserLength:!**compiled accessors**!public! !
+!COAUTHIDENTITY categoriesForMethods!
+Domain!**compiled accessors**!public! !
+Domain:!**compiled accessors**!public! !
+DomainLength!**compiled accessors**!public! !
+DomainLength:!**compiled accessors**!public! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+Password!**compiled accessors**!public! !
+Password:!**compiled accessors**!public! !
+PasswordLength!**compiled accessors**!public! !
+PasswordLength:!**compiled accessors**!public! !
+User!**compiled accessors**!public! !
+User:!**compiled accessors**!public! !
+UserLength!**compiled accessors**!public! !
+UserLength:!**compiled accessors**!public! !
+!
 
 !COAUTHIDENTITY class methodsFor!
 
@@ -132,6 +134,8 @@ defineFields
 
 getFieldNames
 	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !
-!COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!COAUTHIDENTITY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!COAUTHIDENTITY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

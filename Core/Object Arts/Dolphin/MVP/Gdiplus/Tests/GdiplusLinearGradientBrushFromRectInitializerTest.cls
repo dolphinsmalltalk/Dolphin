@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromRectInitializerTest
 	instanceVariableNames: ''
@@ -34,7 +34,9 @@ testCreateHandle
 	self assert: constructorArgs fourth equals: LinearGradientModeBackwardDiagonal.
 	self assert: (constructorArgs at: 5) equals: WrapModeTile.
 	self assertLastArgIsHandle! !
-!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
-!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
+!GdiplusLinearGradientBrushFromRectInitializerTest categoriesForMethods!
+gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+!
 

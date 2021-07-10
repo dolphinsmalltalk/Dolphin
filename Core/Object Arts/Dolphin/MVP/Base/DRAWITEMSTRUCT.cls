@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #DRAWITEMSTRUCT
 	instanceVariableNames: ''
@@ -71,16 +71,18 @@ rcItem
 	"Answer the <RECT> value of the receiver's 'rcItem' field."
 
 	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcItem! !
-!DRAWITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #hDC!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #hwndItem!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #isGrayed!public!testing! !
-!DRAWITEMSTRUCT categoriesFor: #isSelected!public!testing! !
-!DRAWITEMSTRUCT categoriesFor: #itemAction!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #itemID!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #itemState!**compiled accessors**!public! !
-!DRAWITEMSTRUCT categoriesFor: #rcItem!**compiled accessors**!public! !
+!DRAWITEMSTRUCT categoriesForMethods!
+CtlID!**compiled accessors**!public! !
+CtlType!**compiled accessors**!public! !
+hDC!**compiled accessors**!public! !
+hwndItem!**compiled accessors**!public! !
+isGrayed!public!testing! !
+isSelected!public!testing! !
+itemAction!**compiled accessors**!public! !
+itemID!**compiled accessors**!public! !
+itemState!**compiled accessors**!public! !
+rcItem!**compiled accessors**!public! !
+!
 
 !DRAWITEMSTRUCT class methodsFor!
 
@@ -115,6 +117,8 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemAction #itemState #hwndItem #hDC #rcItem)! !
-!DRAWITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!DRAWITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!DRAWITEMSTRUCT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -118,7 +118,9 @@ asHexText
 								ifFalse: [stream nextPut: $.]]].
 			stream cr].
 	^stream contents! !
-!String categoriesFor: #asHexText!converting!idb goodies!public! !
+!String categoriesForMethods!
+asHexText!converting!idb goodies!public! !
+!
 
 "End of package definition"!
 

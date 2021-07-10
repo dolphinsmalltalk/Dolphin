@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #SpinButton
 	instanceVariableNames: ''
@@ -323,43 +323,45 @@ wantArrowKeys: aBoolean
 		baseStyleMask: UDS_ARROWKEYS
 		set: aBoolean
 		recreateIfChanged: false! !
-!SpinButton categoriesFor: #alignment!accessing!public! !
-!SpinButton categoriesFor: #alignment:!accessing!public! !
-!SpinButton categoriesFor: #buddy!accessing!public! !
-!SpinButton categoriesFor: #buddy:!accessing!public! !
-!SpinButton categoriesFor: #displayValue!private!updating! !
-!SpinButton categoriesFor: #displayValue:!private!updating! !
-!SpinButton categoriesFor: #getRange!accessing!private! !
-!SpinButton categoriesFor: #getStep!accessing!private! !
-!SpinButton categoriesFor: #hasHotTracking!accessing-styles!public! !
-!SpinButton categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!SpinButton categoriesFor: #hasThousandsSeparators!accessing-styles!public! !
-!SpinButton categoriesFor: #hasThousandsSeparators:!accessing-styles!public! !
-!SpinButton categoriesFor: #initialize!initializing!public! !
-!SpinButton categoriesFor: #isAutoBuddy!accessing-styles!public! !
-!SpinButton categoriesFor: #isAutoBuddy:!accessing-styles!public! !
-!SpinButton categoriesFor: #isAutoSync!accessing-styles!public! !
-!SpinButton categoriesFor: #isAutoSync:!accessing-styles!public! !
-!SpinButton categoriesFor: #isVertical!accessing-styles!public! !
-!SpinButton categoriesFor: #isVertical:!accessing-styles!public! !
-!SpinButton categoriesFor: #isWraparound!accessing-styles!public! !
-!SpinButton categoriesFor: #isWraparound:!accessing-styles!public! !
-!SpinButton categoriesFor: #nmNotify:!event handling-win32!private! !
-!SpinButton categoriesFor: #onHScroll:!event handling!private! !
-!SpinButton categoriesFor: #onPositionChanged:!event handling!public! !
-!SpinButton categoriesFor: #onVScroll:!event handling!private! !
-!SpinButton categoriesFor: #radix!accessing!public! !
-!SpinButton categoriesFor: #radix:!accessing!public! !
-!SpinButton categoriesFor: #range!accessing!public! !
-!SpinButton categoriesFor: #range:!accessing!public! !
-!SpinButton categoriesFor: #setRange:!accessing!private! !
-!SpinButton categoriesFor: #setStep:!accessing!private! !
-!SpinButton categoriesFor: #state!accessing!private! !
-!SpinButton categoriesFor: #udmGetAccel!accessing!private! !
-!SpinButton categoriesFor: #udmSetAccel:!accessing!private! !
-!SpinButton categoriesFor: #udnDeltaPos:!event handling-win32!private! !
-!SpinButton categoriesFor: #wantArrowKeys!accessing-styles!public! !
-!SpinButton categoriesFor: #wantArrowKeys:!accessing-styles!public! !
+!SpinButton categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+buddy!accessing!public! !
+buddy:!accessing!public! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+getRange!accessing!private! !
+getStep!accessing!private! !
+hasHotTracking!accessing-styles!public! !
+hasHotTracking:!accessing-styles!public! !
+hasThousandsSeparators!accessing-styles!public! !
+hasThousandsSeparators:!accessing-styles!public! !
+initialize!initializing!public! !
+isAutoBuddy!accessing-styles!public! !
+isAutoBuddy:!accessing-styles!public! !
+isAutoSync!accessing-styles!public! !
+isAutoSync:!accessing-styles!public! !
+isVertical!accessing-styles!public! !
+isVertical:!accessing-styles!public! !
+isWraparound!accessing-styles!public! !
+isWraparound:!accessing-styles!public! !
+nmNotify:!event handling-win32!private! !
+onHScroll:!event handling!private! !
+onPositionChanged:!event handling!public! !
+onVScroll:!event handling!private! !
+radix!accessing!public! !
+radix:!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+setRange:!accessing!private! !
+setStep:!accessing!private! !
+state!accessing!private! !
+udmGetAccel!accessing!private! !
+udmSetAccel:!accessing!private! !
+udnDeltaPos:!event handling-win32!private! !
+wantArrowKeys!accessing-styles!public! !
+wantArrowKeys:!accessing-styles!public! !
+!
 
 !SpinButton class methodsFor!
 
@@ -395,9 +397,11 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_updown32'! !
-!SpinButton class categoriesFor: #defaultModel!models!public! !
-!SpinButton class categoriesFor: #icon!constants!public! !
-!SpinButton class categoriesFor: #initialize!development!initializing!private! !
-!SpinButton class categoriesFor: #themePartName!constants!private! !
-!SpinButton class categoriesFor: #winClassName!constants!private! !
+!SpinButton class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+themePartName!constants!private! !
+winClassName!constants!private! !
+!
 

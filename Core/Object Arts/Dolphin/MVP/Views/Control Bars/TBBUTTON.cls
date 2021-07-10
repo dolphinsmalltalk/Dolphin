@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TBBUTTON
 	instanceVariableNames: ''
@@ -75,18 +75,20 @@ iString: anInteger
 	"Set the receiver's 'iString' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_iString put: anInteger! !
-!TBBUTTON categoriesFor: #dwData!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #dwData:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsState!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsState:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsStyle!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #fsStyle:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iBitmap!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iBitmap:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #idCommand!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #idCommand:!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iString!**compiled accessors**!public! !
-!TBBUTTON categoriesFor: #iString:!**compiled accessors**!public! !
+!TBBUTTON categoriesForMethods!
+dwData!**compiled accessors**!public! !
+dwData:!**compiled accessors**!public! !
+fsState!**compiled accessors**!public! !
+fsState:!**compiled accessors**!public! !
+fsStyle!**compiled accessors**!public! !
+fsStyle:!**compiled accessors**!public! !
+iBitmap!**compiled accessors**!public! !
+iBitmap:!**compiled accessors**!public! !
+idCommand!**compiled accessors**!public! !
+idCommand:!**compiled accessors**!public! !
+iString!**compiled accessors**!public! !
+iString:!**compiled accessors**!public! !
+!
 
 !TBBUTTON class methodsFor!
 
@@ -116,6 +118,8 @@ defineFields
 
 getFieldNames
 	^#(#iBitmap #idCommand #fsState #fsStyle #dwData #iString)! !
-!TBBUTTON class categoriesFor: #defineFields!public!template definition! !
-!TBBUTTON class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TBBUTTON class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

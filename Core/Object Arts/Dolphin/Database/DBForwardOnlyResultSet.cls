@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBResultSet subclass: #DBForwardOnlyResultSet
 	instanceVariableNames: 'position'
@@ -99,15 +99,17 @@ reverseDo: operation
 	it only moves forward through the result set)."
 
 	^self asOrderedCollection reverseDo: operation! !
-!DBForwardOnlyResultSet categoriesFor: #bind:!binding!private! !
-!DBForwardOnlyResultSet categoriesFor: #close!public!realizing/unrealizing! !
-!DBForwardOnlyResultSet categoriesFor: #free!public!realizing/unrealizing! !
-!DBForwardOnlyResultSet categoriesFor: #moveFirst!operations!private! !
-!DBForwardOnlyResultSet categoriesFor: #moveLast!enumerating!private! !
-!DBForwardOnlyResultSet categoriesFor: #moveNext!operations!private! !
-!DBForwardOnlyResultSet categoriesFor: #movePrevious!enumerating!private! !
-!DBForwardOnlyResultSet categoriesFor: #moveTo:!accessing!private! !
-!DBForwardOnlyResultSet categoriesFor: #onStartup!event handling!private! !
-!DBForwardOnlyResultSet categoriesFor: #requery!operations!private! !
-!DBForwardOnlyResultSet categoriesFor: #reverseDo:!enumerating!public! !
+!DBForwardOnlyResultSet categoriesForMethods!
+bind:!binding!private! !
+close!public!realizing/unrealizing! !
+free!public!realizing/unrealizing! !
+moveFirst!operations!private! !
+moveLast!enumerating!private! !
+moveNext!operations!private! !
+movePrevious!enumerating!private! !
+moveTo:!accessing!private! !
+onStartup!event handling!private! !
+requery!operations!private! !
+reverseDo:!enumerating!public! !
+!
 

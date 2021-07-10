@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #TranscriptShell
 	instanceVariableNames: 'outputWindow buffer bufferProtect'
@@ -319,50 +319,52 @@ updateWindow
 		caretPosition: length + 1;
 		replaceSelection: newText.
 	^buffer reset! !
-!TranscriptShell categoriesFor: #<<!public! !
-!TranscriptShell categoriesFor: #addToCommandRoute:!commands!public! !
-!TranscriptShell categoriesFor: #alertUser!operations!private! !
-!TranscriptShell categoriesFor: #basicPrint:!printing!private! !
-!TranscriptShell categoriesFor: #clear!initializing!public! !
-!TranscriptShell categoriesFor: #clearAll!initializing!public! !
-!TranscriptShell categoriesFor: #close!operations!public! !
-!TranscriptShell categoriesFor: #contents!accessing!public! !
-!TranscriptShell categoriesFor: #cr!adding!public! !
-!TranscriptShell categoriesFor: #createComponents!initializing!public! !
-!TranscriptShell categoriesFor: #createSchematicWiring!initializing!public! !
-!TranscriptShell categoriesFor: #crtab!adding!public! !
-!TranscriptShell categoriesFor: #crtab:!adding!public! !
-!TranscriptShell categoriesFor: #defaultHelpId!public! !
-!TranscriptShell categoriesFor: #display:!printing!public! !
-!TranscriptShell categoriesFor: #fileFileIn!commands!public! !
-!TranscriptShell categoriesFor: #flush!buffer!public! !
-!TranscriptShell categoriesFor: #forgetSize!commands!public! !
-!TranscriptShell categoriesFor: #hasOutputWindow!accessing!private! !
-!TranscriptShell categoriesFor: #initialize!initializing!private! !
-!TranscriptShell categoriesFor: #isEmpty!public!testing! !
-!TranscriptShell categoriesFor: #next:put:!operations!public! !
-!TranscriptShell categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!TranscriptShell categoriesFor: #nextPut:!adding!public! !
-!TranscriptShell categoriesFor: #nextPutAll:!adding!public! !
-!TranscriptShell categoriesFor: #notEmpty!public!testing! !
-!TranscriptShell categoriesFor: #onCloseRequested:!event handling!public! !
-!TranscriptShell categoriesFor: #onViewOpened!event handling!private! !
-!TranscriptShell categoriesFor: #onViewRestored:!event handling!public! !
-!TranscriptShell categoriesFor: #position!accessing!public! !
-!TranscriptShell categoriesFor: #position:!accessing!public! !
-!TranscriptShell categoriesFor: #print:!printing!public! !
-!TranscriptShell categoriesFor: #queryCommand:!commands!private! !
-!TranscriptShell categoriesFor: #rememberThisSize!commands!public! !
-!TranscriptShell categoriesFor: #reset!positioning!public! !
-!TranscriptShell categoriesFor: #setToEnd!operations!public! !
-!TranscriptShell categoriesFor: #show!operations!public! !
-!TranscriptShell categoriesFor: #show:!printing!public! !
-!TranscriptShell categoriesFor: #smalltalkFilesType!constants!private! !
-!TranscriptShell categoriesFor: #space!adding!public! !
-!TranscriptShell categoriesFor: #stbSaveOn:!binary filing!public! !
-!TranscriptShell categoriesFor: #tab!accessing!public! !
-!TranscriptShell categoriesFor: #tab:!accessing!public! !
-!TranscriptShell categoriesFor: #updateWindow!private!updating! !
+!TranscriptShell categoriesForMethods!
+<<!public! !
+addToCommandRoute:!commands!public! !
+alertUser!operations!private! !
+basicPrint:!printing!private! !
+clear!initializing!public! !
+clearAll!initializing!public! !
+close!operations!public! !
+contents!accessing!public! !
+cr!adding!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+crtab!adding!public! !
+crtab:!adding!public! !
+defaultHelpId!public! !
+display:!printing!public! !
+fileFileIn!commands!public! !
+flush!buffer!public! !
+forgetSize!commands!public! !
+hasOutputWindow!accessing!private! !
+initialize!initializing!private! !
+isEmpty!public!testing! !
+next:put:!operations!public! !
+next:putAll:startingAt:!accessing!public! !
+nextPut:!adding!public! !
+nextPutAll:!adding!public! !
+notEmpty!public!testing! !
+onCloseRequested:!event handling!public! !
+onViewOpened!event handling!private! !
+onViewRestored:!event handling!public! !
+position!accessing!public! !
+position:!accessing!public! !
+print:!printing!public! !
+queryCommand:!commands!private! !
+rememberThisSize!commands!public! !
+reset!positioning!public! !
+setToEnd!operations!public! !
+show!operations!public! !
+show:!printing!public! !
+smalltalkFilesType!constants!private! !
+space!adding!public! !
+stbSaveOn:!binary filing!public! !
+tab!accessing!public! !
+tab:!accessing!public! !
+updateWindow!private!updating! !
+!
 
 TranscriptShell methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 TranscriptShell methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
@@ -474,19 +476,21 @@ uninitialize
 	allow clean removal from the system."
 
 	self free! !
-!TranscriptShell class categoriesFor: #create!instance creation!public! !
-!TranscriptShell class categoriesFor: #current!instance creation!public! !
-!TranscriptShell class categoriesFor: #default!instance creation!public! !
-!TranscriptShell class categoriesFor: #defaultExtent!options!public! !
-!TranscriptShell class categoriesFor: #defaultExtent:!options!public! !
-!TranscriptShell class categoriesFor: #displayOn:!displaying!public! !
-!TranscriptShell class categoriesFor: #flashOnOutput!options!public! !
-!TranscriptShell class categoriesFor: #flashOnOutput:!options!public! !
-!TranscriptShell class categoriesFor: #free!public!realizing/unrealizing! !
-!TranscriptShell class categoriesFor: #icon!constants!public! !
-!TranscriptShell class categoriesFor: #initialize!development!initializing!private! !
-!TranscriptShell class categoriesFor: #onStartup!events-session!private! !
-!TranscriptShell class categoriesFor: #reset!operations!private! !
-!TranscriptShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!TranscriptShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!TranscriptShell class categoriesForMethods!
+create!instance creation!public! !
+current!instance creation!public! !
+default!instance creation!public! !
+defaultExtent!options!public! !
+defaultExtent:!options!public! !
+displayOn:!displaying!public! !
+flashOnOutput!options!public! !
+flashOnOutput:!options!public! !
+free!public!realizing/unrealizing! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+onStartup!events-session!private! !
+reset!operations!private! !
+resource_Default_view!public!resources-views! !
+uninitialize!class hierarchy-removing!private! !
+!
 

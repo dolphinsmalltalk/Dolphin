@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ISchemaItemCollection
 	instanceVariableNames: ''
@@ -158,18 +158,20 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!ISchemaItemCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!ISchemaItemCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #get_item:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ISchemaItemCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ISchemaItemCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!ISchemaItemCollection categoriesFor: #itemByName:!**auto generated**!methods!public! !
-!ISchemaItemCollection categoriesFor: #ItemByName:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #itemByQName:namespaceURI:!**auto generated**!methods!public! !
-!ISchemaItemCollection categoriesFor: #ItemByQName:namespaceURI:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
-!ISchemaItemCollection categoriesFor: #length!**auto generated**!properties!public! !
+!ISchemaItemCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+get_item:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+get_length:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+itemByName:!**auto generated**!methods!public! !
+ItemByName:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+itemByQName:namespaceURI:!**auto generated**!methods!public! !
+ItemByQName:namespaceURI:item:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
+length!**auto generated**!properties!public! !
+!
 
 !ISchemaItemCollection class methodsFor!
 
@@ -189,5 +191,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!ISchemaItemCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaItemCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

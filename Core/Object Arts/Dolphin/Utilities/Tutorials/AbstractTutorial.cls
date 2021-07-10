@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #AbstractTutorial
 	instanceVariableNames: ''
@@ -58,14 +58,16 @@ welcome
 		title: 'Welcome' 
 		contents: '"Hi, this is a test tutorial."'
 ! !
-!AbstractTutorial categoriesFor: #indexOfLesson:!accessing!public! !
-!AbstractTutorial categoriesFor: #lessonAt:!accessing!public! !
-!AbstractTutorial categoriesFor: #name!accessing!public! !
-!AbstractTutorial categoriesFor: #size!accessing!public! !
-!AbstractTutorial categoriesFor: #tableOfContents!accessing!public! !
-!AbstractTutorial categoriesFor: #testLesson!pages!public! !
-!AbstractTutorial categoriesFor: #theEnd!pages!public! !
-!AbstractTutorial categoriesFor: #welcome!pages!public! !
+!AbstractTutorial categoriesForMethods!
+indexOfLesson:!accessing!public! !
+lessonAt:!accessing!public! !
+name!accessing!public! !
+size!accessing!public! !
+tableOfContents!accessing!public! !
+testLesson!pages!public! !
+theEnd!pages!public! !
+welcome!pages!public! !
+!
 
 !AbstractTutorial class methodsFor!
 
@@ -76,5 +78,7 @@ icon
 		color: Color orchid)
 		textcolor: Color white;
 		yourself)! !
-!AbstractTutorial class categoriesFor: #icon!constants!public! !
+!AbstractTutorial class categoriesForMethods!
+icon!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #ScaledDecimalANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
@@ -940,48 +940,50 @@ testXtruncated
 		conformTo: #'number' selector: #'truncated'.
 	self value: [0.0s3 truncated] should: [:r | r = 0]
 		conformTo: #'number' selector: #'truncated'.! !
-!ScaledDecimalANSITest categoriesFor: #canonicalObject!public! !
-!ScaledDecimalANSITest categoriesFor: #protocol!public! !
-!ScaledDecimalANSITest categoriesFor: #setUp!public! !
-!ScaledDecimalANSITest categoriesFor: #testLiterals!public! !
-!ScaledDecimalANSITest categoriesFor: #testXabs!public! !
-!ScaledDecimalANSITest categoriesFor: #testXasFloat!public! !
-!ScaledDecimalANSITest categoriesFor: #testXasFloatD!public! !
-!ScaledDecimalANSITest categoriesFor: #testXasFloatE!public! !
-!ScaledDecimalANSITest categoriesFor: #testXasFloatQ!public! !
-!ScaledDecimalANSITest categoriesFor: #testXasFraction!public! !
-!ScaledDecimalANSITest categoriesFor: #testXasInteger!public! !
-!ScaledDecimalANSITest categoriesFor: #testXasScaledDecimalX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXbetweenXandX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXceiling!public! !
-!ScaledDecimalANSITest categoriesFor: #testXcopy!public! !
-!ScaledDecimalANSITest categoriesFor: #testXequalityOp!public! !
-!ScaledDecimalANSITest categoriesFor: #testXfloor!public! !
-!ScaledDecimalANSITest categoriesFor: #testXfractionPart!public! !
-!ScaledDecimalANSITest categoriesFor: #testXgreaterThanOp!public! !
-!ScaledDecimalANSITest categoriesFor: #testXgreaterThanOrEqualToOp!public! !
-!ScaledDecimalANSITest categoriesFor: #testXintegerDivideOp!public! !
-!ScaledDecimalANSITest categoriesFor: #testXintegerPart!public! !
-!ScaledDecimalANSITest categoriesFor: #testXlessThanOp!public! !
-!ScaledDecimalANSITest categoriesFor: #testXlessThanOrEqualToOp!public! !
-!ScaledDecimalANSITest categoriesFor: #testXmaxX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXminX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXnegated!public! !
-!ScaledDecimalANSITest categoriesFor: #testXnegative!public! !
-!ScaledDecimalANSITest categoriesFor: #testXpositive!public! !
-!ScaledDecimalANSITest categoriesFor: #testXquoX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXraisedToX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXreciprocal!public! !
-!ScaledDecimalANSITest categoriesFor: #testXremX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXrounded!public! !
-!ScaledDecimalANSITest categoriesFor: #testXscale!public! !
-!ScaledDecimalANSITest categoriesFor: #testXsign!public! !
-!ScaledDecimalANSITest categoriesFor: #testXsqrt!public! !
-!ScaledDecimalANSITest categoriesFor: #testXsquared!public! !
-!ScaledDecimalANSITest categoriesFor: #testXstrictlyPositive!public! !
-!ScaledDecimalANSITest categoriesFor: #testXtoX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXtoXbyX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXtoXbyXdoX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXtoXdoX!public! !
-!ScaledDecimalANSITest categoriesFor: #testXtruncated!public! !
+!ScaledDecimalANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testLiterals!public! !
+testXabs!public! !
+testXasFloat!public! !
+testXasFloatD!public! !
+testXasFloatE!public! !
+testXasFloatQ!public! !
+testXasFraction!public! !
+testXasInteger!public! !
+testXasScaledDecimalX!public! !
+testXbetweenXandX!public! !
+testXceiling!public! !
+testXcopy!public! !
+testXequalityOp!public! !
+testXfloor!public! !
+testXfractionPart!public! !
+testXgreaterThanOp!public! !
+testXgreaterThanOrEqualToOp!public! !
+testXintegerDivideOp!public! !
+testXintegerPart!public! !
+testXlessThanOp!public! !
+testXlessThanOrEqualToOp!public! !
+testXmaxX!public! !
+testXminX!public! !
+testXnegated!public! !
+testXnegative!public! !
+testXpositive!public! !
+testXquoX!public! !
+testXraisedToX!public! !
+testXreciprocal!public! !
+testXremX!public! !
+testXrounded!public! !
+testXscale!public! !
+testXsign!public! !
+testXsqrt!public! !
+testXsquared!public! !
+testXstrictlyPositive!public! !
+testXtoX!public! !
+testXtoXbyX!public! !
+testXtoXbyXdoX!public! !
+testXtoXdoX!public! !
+testXtruncated!public! !
+!
 
